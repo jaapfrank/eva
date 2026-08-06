@@ -50,7 +50,7 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
           maxChars: 500,
           mustMatchAny: [{
             description: 'bevestigt dat de lamp ongemoeid blijft',
-            patterns: ['niet\\s+uit', 'laat.+(?:aan|met rust)', 'niets.+(?:verander|bedien)'],
+            patterns: ['niet\\s+uit', 'niet.+(?:mag|zal).+uit', 'laat.+(?:aan|met rust)', 'niets.+(?:verander|bedien)'],
           }],
           forbiddenPatterns: ['nee,? dat heb ik nog niet gedaan', 'beurtcontract', 'gereedschap'],
         },
