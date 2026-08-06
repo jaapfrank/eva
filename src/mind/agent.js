@@ -44,6 +44,7 @@ import {
   arbitrateTurnPlan,
   effectBoundary,
   identityNameCandidate,
+  localProjectReadRequest,
   resolveVoiceDirective,
 } from './turnplan.js';
 import { createWorkItem, durableWorkStatus, workContextText } from './work.js';
@@ -259,6 +260,7 @@ function requestsSelfImprovement(value = '') {
 
 function requestsCapabilityDemonstration(value = '') {
   const text = commandText(value).toLowerCase();
+  if (/\b(?:zonder|geen|niet\s+(?:via|met))\s+(?:een\s+)?(?:add-?on|skill|plugin|capabilit\w*|uitbreiding)\b/i.test(text)) return false;
   const capability = /\b(?:auto\s*bots?|autobots?|zelfverbeter\w*|add-?ons?|skills?|plugins?|uitbreidingsmogelijk\w*|uitbreidingsmechanism\w*|jezelf\s+uitbreid\w*)\b/i.test(text);
   const action = /\b(?:onderzoek\w*|inspecteer\w*|demonstreer\w*|toon\w*|probeer\w*|gebruik\w*|test\w*)\b/i.test(text);
   const capabilityName = String.raw`(?:tool|pakket|add-?on|skill|plugin|vaardigheid|capabilit\w*|uitbreiding)`;
@@ -273,17 +275,12 @@ function requestsCapabilityDemonstration(value = '') {
 function requestsCapabilityExpansion(value = '') {
   const text = commandText(value).toLowerCase();
   if (requestsCapabilityDemonstration(text)) return false;
+  if (/\b(?:zonder|geen)\s+(?:(?:nieuwe|extra|externe)\s+)?(?:packages?|pakketten?|dependencies|afhankelijkheden)\b/i.test(text)) return false;
+  if (/\b(?:zonder|geen|niet\s+(?:via|met))\s+(?:een\s+)?(?:add-?on|skill|plugin|capabilit\w*|uitbreiding)\b/i.test(text)) return false;
   const capability = /\b(?:tool|tools|pakket|packages?|npm|mcp|connector|integratie|add-?ons?|skills?|plugins?|vaardigheid|vermogen|capabilit\w*|uitbreid\w*)\b/i.test(text);
   const discovery = /\b(?:nieuw\w*|onbekend\w*)\s+(?:tool|pakket|add-?on|skill|plugin|vaardigheid|capabilit\w*|uitbreiding)\b/i.test(text)
     || /\b(?:ontdek\w*|zoek\w*|vind\w*|installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*|activeer\w*)\b/i.test(text);
   return capability && discovery;
-}
-
-function requestsLocalProjectDocumentation(value = '') {
-  const text = commandText(value);
-  return /\b(?:dit|deze|ons|eva(?:'s)?)\s+(?:project|repository|repo|codebase)\b/i.test(text)
-    && /\b(?:documentatie|docs?|architectuur|contract(?:en)?|werking|broncode|runtime|roadmap|beschreven)\b/i.test(text)
-    && /\b(?:zoek|onderzoek|controleer|bekijk|lees|vind|waar)\w*\b/i.test(text);
 }
 
 function internetUseProhibited(value = '') {
@@ -323,9 +320,26 @@ function requestsExecutableBuild(value = '') {
   // genoemd technisch woord zoals CLI niet in een bouwmissie veranderen.
   if (/\b(?:bouw\w*|programmeer\w*|schrijf\w*|maak\w*|implementeer\w*|voer\w*)\s+(?:geen|niets|niet)\b/i.test(text)) return false;
   const create = /\b(?:bouw\w*|programmeer\w*|schrijf\w*|maak\w*|implementeer\w*)\b/i.test(text);
-  const artifact = /\b(?:script|programma|code|cli|command[ -]?line|calculator|website|app|tool|prototype|module|library|bibliotheek|automatisering|oplossing)\b/i.test(text)
+  const artifact = /\b(?:script|programma|code|cli|command[ -]?line|calculator|website|app|tool|prototype|module|library|bibliotheek|automatisering|oplossing|[a-z0-9_-]*checker)\b/i.test(text)
     || /(?:^|\s)(?!https?:\/\/)(?:\.\/|data\/workspace\/)?[a-z0-9_/-]+\.(?:py|m?js|cjs|ts|sh)(?=\s|[.,!?;:]|$)/i.test(text);
   return create && artifact;
+}
+
+function requestsProgrammingVerification(value = '') {
+  const text = commandText(value).toLowerCase();
+  const run = /\b(?:draai|run|voer\w*\s+uit|start|test|beproef|controleer)\w*\b/i.test(text);
+  const artifact = /\b(?:cli|script|programma|bron(?:code)?|tests?|exitcode|stacktrace)\b/i.test(text)
+    || /(?:^|\s)(?:\.\/|data\/workspace\/)?[a-z0-9_./-]+\.(?:py|m?js|cjs|ts|sh|json)(?=\s|[.,!?;:]|$)/i.test(text);
+  const verify = /\b(?:bewijs|uitkomst|resultaat|exitcode|stdout|stderr|fout|stacktrace|terug|opnieuw|rechtstreeks|direct)\b/i.test(text);
+  return run && artifact && verify;
+}
+
+function requestsExistingProgramImprovement(value = '') {
+  const text = commandText(value).toLowerCase();
+  const improve = /\b(?:verbeter\w*|breid\w*\s+uit|uitbreiding|maak\w*\s+(?:dit|dat|hem|haar|die)\s+af|nuttigste\s+(?:kleine\s+)?verbetering)\b/i.test(text);
+  const artifact = /\b(?:cli|script|programma|code|app|tool|[a-z0-9_-]*checker)\b/i.test(text)
+    || /(?:^|\s)(?:\.\/|data\/workspace\/)?[a-z0-9_./-]+\.(?:py|m?js|cjs|ts|sh)(?=\s|[.,!?;:]|$)/i.test(text);
+  return improve && artifact;
 }
 
 function requestsWorkspaceFileEdit(value = '') {
@@ -396,7 +410,7 @@ function isExplicitToolRequest(text = '') {
   if (requestsWorkspaceFileEdit(value)) return true;
   if (/^\s*(?:zet|schakel|doe)\b.{0,100}\b(?:aan|uit)\b/.test(value) && hasHomeControlTarget(value)) return true;
   if (/\b(?:aan|uit)\s*(?:zetten|doen|schakelen)\b|\b(?:openen|sluiten)\b/.test(value)) return true;
-  if (/^\s*(?:ga\s+)?(?:open|sluit|stuur|onthoud|herinner|zoek|onderzoek|uitzoeken|controleer|bekijk|kijk|lees|repareer|fix|voer|meld|registreer|zoek\s+uit|werk\s+uit)\b/.test(value)) return true;
+  if (/(?:^|[.!?]\s*)(?:ga\s+)?(?:open|sluit|stuur|onthoud|herinner|zoek|onderzoek|uitzoeken|controleer|bekijk|kijk|lees|repareer|fix|voer|meld|registreer|zoek\s+uit|werk\s+uit)\b/.test(value)) return true;
   if (/\b(?:meld\s+(?:je|jou)|registreer\s+(?:je|jou)|account\s+aanmak\w*|je\s+moet\s+je\s+aanmeld\w*)\b/.test(value)) return true;
   if (/\blees_bestand\b|\bsrc\/[a-z0-9_./-]+\b/.test(value)) return true;
   if (/\b(?:inspecteer|bekijk|lees|controleer)\w*\b.{0,100}\b(?:broncode|configuratie|configbestand|projectbestand)\b/.test(value)) return true;
@@ -464,12 +478,30 @@ function turnContractFor(text = '', { continuation = false, mode = 'chat', voice
     allowedTools: new Set(['beheer_toolpakket', 'schrijf_bestand', 'voer_uit', 'lees_bestand', 'beheer_addon', 'gebruik_capability']),
     effort: 'high',
   };
+  if (requestsProgrammingVerification(value)) return {
+    kind: 'programming_verification',
+    outcome: 'het bestaande programma rechtstreeks uitvoeren en de gevraagde acceptatiepunten uit de actuele uitvoer en bron controleren',
+    proof: 'de echte procesuitkomst plus teruggelezen bron of test; een bedoelde niet-nul exitcode mag juist het gevraagde bewijs zijn',
+    requiredTools: ['voer_uit', 'lees_bestand'],
+    allowedTools: new Set(['voer_uit', 'lees_bestand', 'lijst_bestanden']),
+    effort: 'medium',
+  };
   if (requestsCapabilityExpansion(value)) return {
     kind: 'capability_expansion',
     outcome: 'een ontbrekend vermogen onderzoeken, als echte uitvoerbare uitbreiding bouwen, beproeven, activeren en live gebruiken',
     proof: 'brononderzoek plus een receipt-gebonden add-onuitvoering; een instructietekst of plan telt niet als geïnstalleerd vermogen',
     requiredTools: [],
     allowedTools: null,
+    effort: 'high',
+  };
+  if (requestsExecutableBuild(value)) return {
+    kind: 'programming_build',
+    outcome: 'het gevraagde programma bouwen, uitvoeren, tegen de genoemde acceptatiepunten controleren en teruglezen',
+    proof: 'geschreven bron, echte procesuitvoering en teruggelezen eindversie; gevraagde tests en CLI-proeven tellen afzonderlijk',
+    requiredTools: requestsExistingProgramImprovement(value)
+      ? ['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit']
+      : ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
+    allowedTools: new Set(['schrijf_bestand', 'voer_uit', 'lees_bestand', 'lijst_bestanden', 'beheer_werkcel']),
     effort: 'high',
   };
   if (requestsParallelWork(value)) return {
@@ -532,10 +564,16 @@ function turnContractFor(text = '', { continuation = false, mode = 'chat', voice
     };
   }
   if (/\b(?:los\w*\s+op|repareer|fix|pas\w*\s+aan|zorg\s+dat).{0,100}\b(?:werkt|opgelost|goed)\b/i.test(value)) {
+    const workspaceRepair = /\b(?:cli|script|programma|broncode|tests?|invoer)\b/i.test(value)
+      || /(?:^|\s)(?:\.\/|data\/workspace\/)?[a-z0-9_./-]+\.(?:py|m?js|cjs|ts|sh|json|csv|txt)(?=\s|[.,!?;:]|$)/i.test(value);
     return {
       kind: 'repair', outcome: 'de genoemde fout herstellen en dezelfde gebruikersuitkomst opnieuw controleren',
       proof: 'een andere strategie dan de mislukte poging plus een gerichte hertest',
-      requiredTools: [], allowedTools: null, effort: 'high',
+      requiredTools: workspaceRepair ? ['lijst_bestanden', 'voer_uit'] : [],
+      allowedTools: workspaceRepair
+        ? new Set(['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit'])
+        : null,
+      effort: 'high',
     };
   }
   return {
@@ -663,7 +701,12 @@ function requiredToolsFor({ text = '', replyEvidence = null } = {}) {
     && /\b(?:aanmeld\w*|meld\s+(?:je|jou)\s+aan|registreer\w*|sign[ -]?up|account\s+aanmak\w*|verifi(?:eer|ëren)|otp|status)\b/i.test(value)) {
     return ['beheer_agentmail'];
   }
-  if (requestsLocalProjectDocumentation(value)) return ['lijst_bestanden', 'lees_bestand'];
+  const currentHomeMeasurement = /\b(?:nu|actueel|huidig|op dit moment|momentopname)\b/i.test(value)
+    && /\b(?:temperatuur|hoe warm|hoe koud|luchtvochtigheid|vochtigheid|co2|co₂|fijnstof|energie|vermogen|verbruik)\b/i.test(value)
+    && /\b(?:huis|kamer|woonkamer|keuken|slaapkamer|kantoor|overkapping|schuur|tuin|binnen|buiten|sensor)\b/i.test(value);
+  if (currentHomeMeasurement) return ['huis_status', 'ha_lees'];
+  if (localProjectReadRequest(value)) return ['lijst_bestanden', 'lees_bestand'];
+  if (requestsProgrammingVerification(value)) return ['voer_uit', 'lees_bestand'];
   const documentationRequested = /\b(?:documentatie|docs?|api\s*reference|handleiding|website|url|link|endpoint|methode)\b/i.test(value)
     && /\b(?:zoek|onderzoek|controleer|bekijk|lees|vind|klopt|actueel|offici[eë]le?)\w*\b/i.test(value);
   if (documentationRequested && !requestsCapabilityExpansion(value)) return ['zoek_internet'];
@@ -704,12 +747,13 @@ function requiredToolsFor({ text = '', replyEvidence = null } = {}) {
   if (buildRequested) {
     const executable = requestsExecutableBuild(value)
       || /\b(?:script|programma|code|cli|calculator|website|app|tool|prototype|oplossing)\b/i.test(value);
-    return [
+    return [...new Set([
       ...(researchRequested ? ['zoek_internet'] : []),
+      ...(requestsExistingProgramImprovement(value) ? ['lijst_bestanden', 'lees_bestand'] : []),
       'schrijf_bestand',
       ...(executable ? ['voer_uit'] : []),
       'lees_bestand',
-    ];
+    ])];
   }
   const preparedDeliverable = /\b(?:regel|bereid|zet)\b.{0,140}\b(?:echt\s+)?klaar\b/i.test(value)
     && !hasHomeControlTarget(value);
@@ -1052,6 +1096,13 @@ function styleCorrectionPolicyFeedback(reply = '', userText = '') {
   return 'Interne stijlcorrectie: reageer alleen op de concrete observatie en wat die hier betekent. Schrijf geen beleid, belofte of verbeterplan met “voortaan”, “vanaf nu” of “ik zal”; laat het begrepen gedrag in deze reactie zelf zien.';
 }
 
+function missingSourceLinkFeedback(reply = '', requiredTools = [], toolResults = []) {
+  if (!requiredTools.includes('zoek_internet')
+    || !toolResults.some((tool) => tool.name === 'zoek_internet' && tool.ok && tool.verified)
+    || /https?:\/\/\S+/i.test(String(reply || ''))) return '';
+  return 'Je gebruikt actuele internetfeiten maar laat de controleerbare herkomst weg. Noem in je gewone antwoord minimaal één directe bron-URL uit het gevonden bewijs; voeg geen verzonnen of algemene zoeklink toe.';
+}
+
 function programmingOutcomeFacts(toolResults = [], userText = '') {
   const acceptance = programmingAcceptanceStatus(toolResults, userText);
   if (!acceptance.complete || !acceptance.cliExecution) return null;
@@ -1294,9 +1345,26 @@ function alternateRequirementEvidence(name, userText, toolResults) {
   return name === 'bedien_huis' && Boolean(verifiedHomeReadback(userText, toolResults));
 }
 
-function turnRequirementSatisfied(name, toolResults = [], userText = '') {
+function specializedRequirementStatus(name, text, toolResults) {
+  if (name === 'voer_uit'
+    && /\bwelke\s+invoer\b.{0,80}\bw[eé]l\s+werkt\b|\binvoer\b.{0,80}\bdie\s+w[eé]l\s+werkt\b/i.test(text)) {
+    return toolResults.some((tool) => tool.name === name && successfulZeroExit(tool));
+  }
+  if (name !== 'lees_bestand') return null;
+  const asksForSourceAndTest = /\bbron(?:code)?\b.{0,100}\b(?:plus|en)\b.{0,100}\btests?\b/i.test(text)
+    || /\btests?\b.{0,100}\b(?:plus|en)\b.{0,100}\bbron(?:code)?\b/i.test(text);
+  if (!asksForSourceAndTest) return null;
+  const verifiedReads = toolResults.filter((tool) => (
+    tool.name === name && tool.ok && tool.verified
+  ));
+  return verifiedReads.some((tool) => (
+    /\.(?:cjs|js|mjs|py|sh|ts)$/i.test(readArtifactPath(tool))
+    && !isTestArtifactPath(readArtifactPath(tool))
+  )) && verifiedReads.some((tool) => isTestArtifactPath(readArtifactPath(tool)));
+}
+
+function baseTurnRequirementSatisfied(name, toolResults = [], userText = '') {
   const text = cleanUserText(userText).toLowerCase();
-  if (alternateRequirementEvidence(name, userText, toolResults)) return true;
   if (name === 'ha_lees'
     && /\b(?:logboek|geschiedenis|eerder|later|vanochtend|gisteren|gebeurd|waardoor|oorzaak|weer\s+aan|weer\s+uit)\b/i.test(text)) {
     return toolResults.some((tool) => (
@@ -1410,6 +1478,15 @@ function turnRequirementSatisfied(name, toolResults = [], userText = '') {
     }
   }
   return true;
+}
+
+function turnRequirementSatisfied(name, toolResults = [], userText = '') {
+  const specialized = specializedRequirementStatus(
+    name, cleanUserText(userText).toLowerCase(), toolResults,
+  );
+  if (specialized !== null) return specialized;
+  if (alternateRequirementEvidence(name, userText, toolResults)) return true;
+  return baseTurnRequirementSatisfied(name, toolResults, userText);
 }
 
 function humanResultText(value, {
@@ -1723,6 +1800,23 @@ function phasedProgrammingBuildStatus(toolResults = [], userText = '') {
 }
 
 function buildMissionRemaining(toolResults = [], requiredTools = [], requireExecution = true, userText = '') {
+  if (requestsExistingProgramImprovement(userText)) {
+    const firstWriteIndex = toolResults.findIndex((tool) => (
+      tool.name === 'schrijf_bestand' && tool.ok && tool.verified
+    ));
+    if (firstWriteIndex < 0) {
+      const listIndex = toolResults.findIndex((tool) => (
+        tool.name === 'lijst_bestanden' && tool.ok && tool.verified
+      ));
+      if (listIndex < 0) return ['lijst_bestanden'];
+      const sourceRead = toolResults.some((tool, index) => (
+        index > listIndex && tool.name === 'lees_bestand' && tool.ok && tool.verified
+        && /\.(?:cjs|js|mjs|py|sh|ts)$/i.test(readArtifactPath(tool))
+        && !isTestArtifactPath(readArtifactPath(tool))
+      ));
+      if (!sourceRead) return ['lees_bestand'];
+    }
+  }
   if (requiredTools.includes('zoek_internet')
     && !requiredToolSatisfied('zoek_internet', toolResults)) return ['zoek_internet'];
   const phased = phasedProgrammingBuildStatus(toolResults, userText);
@@ -2298,7 +2392,7 @@ function evidenceFallback(toolResults, { requiredTools = [], userText = '' } = {
   const useful = new Set(['bedien_huis', 'bekijk_camera', 'spreek_in_huis']);
   if (explicitResearch) useful.add('zoek_internet');
   for (const name of required) {
-    if (!['huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_geheugen', 'toon_werk'].includes(name)) useful.add(name);
+    if (!['huis_status', 'ha_lees', 'lijst_bestanden', 'lees_bestand', 'wie_is_thuis', 'zoek_geheugen', 'toon_werk'].includes(name)) useful.add(name);
   }
   const proven = [...toolResults].reverse().find((tool) => (
     tool?.ok && tool?.verified && useful.has(tool.name)
@@ -2311,10 +2405,10 @@ function evidenceFallback(toolResults, { requiredTools = [], userText = '' } = {
   });
 }
 
-function looksLikeInternalOutput(value = '') {
+function looksLikeInternalOutput(value = '', { allowProjectPaths = false } = {}) {
   const text = String(value || '');
-  return /\bdata[\\/]workspace\b|\b(?:stdout|stderr|exitcode)\b|_ngcontent-|<\/?(?:html|div|p|script)\b|\{\s*"(?:contract|tool|ok)"/i.test(text)
-    || /`[^`\n]{1,160}\.(?:md|txt|json|ya?ml|csv|m?js|py)`/i.test(text)
+  return /\bdata[\\/]workspace\b|(?:"(?:stdout|stderr|exit_code)"|\b(?:stdout|stderr))\s*:|_ngcontent-|<\/?(?:html|div|p|script)\b|\{\s*"(?:contract|tool|ok)"/i.test(text)
+    || (!allowProjectPaths && /`[^`\n]{1,160}\.(?:md|txt|json|ya?ml|csv|m?js|py)`/i.test(text))
     || /\[[\s\d,]{120,}\]/.test(text);
 }
 
@@ -2450,6 +2544,39 @@ function inspectToolOutcome(name, args, output) {
   };
 }
 
+function auditToolOutput(output, parsed = null) {
+  const raw = String(output || '');
+  if (raw.length <= 1_800) return raw;
+  return JSON.stringify({
+    contract: parsed?.contract || 'ActionResult/v1',
+    tool: parsed?.tool || null,
+    ok: parsed?.ok === true,
+    changed: parsed?.changed === true,
+    verified: parsed?.verified === true,
+    partial: parsed?.partial === true,
+    needs_followup: parsed?.needs_followup === true,
+    audit_truncated: true,
+    error: String(parsed?.error || '').slice(0, 500) || undefined,
+    failure_class: parsed?.failure_class || undefined,
+    data: parsed?.data && typeof parsed.data === 'object' ? {
+      exit_code: parsed.data.exit_code,
+      expected_exit_codes: parsed.data.expected_exit_codes,
+      path: parsed.data.path,
+      stdout: String(parsed.data.stdout || '').slice(0, 300) || undefined,
+      stderr: String(parsed.data.stderr || '').slice(0, 300) || undefined,
+    } : undefined,
+    evidence: String(parsed?.evidence?.summary || '').slice(0, 500) || undefined,
+  });
+}
+
+function focusedLocalProjectReadReady(toolResults = []) {
+  const read = [...toolResults].reverse().find((tool) => tool.name === 'lees_bestand');
+  if (!read?.ok || !read.verified || read.partial || read.needs_followup
+    || !String(read.args?.zoek || '').trim()) return false;
+  const data = actionData(read);
+  return !(data && typeof data === 'object' && data.truncated === true);
+}
+
 async function executeTurn({
   channel,
   sender,
@@ -2576,6 +2703,12 @@ async function executeTurn({
     // onderzoeksmissie beëindigen. Een andere vraagstelling is een echte pivot.
     if (name === 'zoek_internet') return 3;
     if (mode !== 'autonomy' && name === 'gebruik_robot') return 5;
+    if (mode !== 'autonomy' && localProjectReadRequest(userText)) {
+      return ({ lijst_bestanden: 1, lees_bestand: 3 })[name] || 1;
+    }
+    if (mode !== 'autonomy'
+      && ['programming_verification', 'repair'].includes(turnContract.kind)
+      && name === 'voer_uit') return 4;
     if (mode !== 'autonomy' && name === 'lees_bestand' && requiredTools.includes(name)) return 8;
     if (mode !== 'autonomy') {
       if (!requiredTools.includes(name)) {
@@ -2835,7 +2968,7 @@ async function executeTurn({
       ok,
       verified,
       changed,
-      output: String(output).slice(0, 1800),
+      output: auditToolOutput(output, parsed),
     });
     try {
       const subject = args?.doel || args?.entiteit || args?.entity_id
@@ -3906,9 +4039,10 @@ async function executeTurn({
             || conclusionInvestigationFeedback(
               proposedReply, userText, toolResults, turnPlan.actionIntent === 'execute',
             )
+            || missingSourceLinkFeedback(proposedReply, requiredTools, toolResults)
             || incompleteRequestedOutcomeFeedback(proposedReply, userText)
       ),
-      selectTools: ({ tools: offered }) => {
+      selectTools: ({ tools: offered, recoveryPending }) => {
         const researchReady = toolResults.some((tool) => (
           tool.name === 'zoek_internet' && tool.ok && tool.verified
           && !tool.needs_followup && !tool.partial
@@ -3919,11 +4053,14 @@ async function executeTurn({
         let selected = researchReady && researchOutcomeReady
           ? offered.filter((tool) => tool.name !== 'zoek_internet')
           : offered;
-        if (requestsLocalProjectDocumentation(userText) || internetUseProhibited(userText)) {
+        if (localProjectReadRequest(userText) || internetUseProhibited(userText)) {
           selected = selected.filter((tool) => (
             String(tool?.name || tool?.function?.name || '') !== 'zoek_internet'
           ));
         }
+        if (localProjectReadRequest(userText)
+          && recoveryPending?.tool !== 'eigen conclusiecontrole'
+          && focusedLocalProjectReadReady(toolResults)) return [];
         if (mode === 'autonomy' && (
           autonomyArtifactReportPending(toolResults)
           || autonomyWorkReportPending(toolResults, activeAutonomyWorkIds())
@@ -3999,22 +4136,16 @@ async function executeTurn({
     if (/^\s*\{|^\s*\[\s*(?:\{|"|-?\d|true|false|null|\])/i.test(reply)) {
       reply = humanResultText(reply, { limit: 12_000, preferDetailed: true });
     }
-    if (looksLikeInternalOutput(reply)) reply = provenFallback;
+    if (looksLikeInternalOutput(reply, {
+      allowProjectPaths: localProjectReadRequest(userText)
+        || ['programming_build', 'programming_verification', 'repair'].includes(turnContract.kind),
+    })) reply = provenFallback;
     if (mode === 'autonomy' && reply === AUTONOMY_SILENT) reply = '';
     if (mode === 'chat' && provenFallback && (
       !reply
       || result.exhausted === true
       || /\b(?:nog geen betrouwbaar eindresultaat|handeling is nog niet uitgevoerd)\b/i.test(reply)
     )) {
-      reply = provenFallback;
-    }
-    // Bij een expliciete read-only capabilitydemo is de letterlijke uitvoer het
-    // antwoord. Laat een vrije samenvatting die receipt/hash/stdout weglaat het
-    // gecontroleerde toolbewijs niet afzwakken.
-    if (mode === 'chat'
-      && requiredTools.length === 1
-      && requiredTools[0] === 'gebruik_capability'
-      && provenFallback) {
       reply = provenFallback;
     }
     if (!reply) {
@@ -4389,6 +4520,7 @@ export const __projectRouteTest = {
   directHomeForTurn,
   verifiedHomeReadback,
   evidenceFallback,
+  auditToolOutput,
   humanResultText,
   looksLikeInternalOutput,
   syntheticToolAllowed: toolSyntheticAllowed,
@@ -4402,7 +4534,7 @@ export const __projectRouteTest = {
   isExplicitToolRequest,
   isContinuationRequest,
   internetUseProhibited,
-  requestsLocalProjectDocumentation,
+  requestsLocalProjectDocumentation: localProjectReadRequest,
   requestsExecutableBuild,
   requiredToolSatisfied,
   turnRequirementSatisfied,
@@ -4418,6 +4550,7 @@ export const __projectRouteTest = {
   replyNeedsNarration,
   incompleteRequestedOutcomeFeedback,
   programmingOutcomeFacts,
+  missingSourceLinkFeedback,
   requiredToolsFor,
   contributionFromTools,
 };

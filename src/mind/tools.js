@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { isUtf8 } from 'node:buffer';
 import { spawn } from 'node:child_process';
 import { config } from '../config.js';
+import { redactSensitiveText } from '../security/redaction.js';
 import { isNight } from '../util.js';
 import {
   addMessage,
@@ -733,6 +735,162 @@ function resolveReadablePath(input) {
   return real;
 }
 
+const PROJECT_SEARCH_EXTENSIONS = new Set([
+  '.cjs', '.css', '.html', '.js', '.json', '.md', '.mjs', '.py', '.service', '.txt', '.yaml', '.yml',
+]);
+const PROJECT_SEARCH_BASENAMES = new Set(['agents.md', 'license', 'readme']);
+const PROJECT_SEARCH_IGNORED_DIRECTORIES = new Set([
+  '.cache', '.git', '.npm-cache', '.venv', 'build', 'coverage', 'dist', 'node_modules', 'venv', '__pycache__',
+]);
+const SEARCH_CONTEXT_STOPWORDS = new Set([
+  'alles', 'bestaan', 'deze', 'eigen', 'even', 'haar', 'hier', 'kunnen', 'laat',
+  'naar', 'niet', 'onze', 'staan', 'verder', 'welke', 'worden', 'zelf', 'eva',
+]);
+
+function normalizedSearchTerms(value, maximum = 16) {
+  const terms = [...new Set(normalize(value).split(/[^\p{L}\p{N}_.-]+/u)
+    .filter((term) => term.length >= 3))];
+  const informative = terms.length > 1 ? terms.filter((term) => term !== 'eva') : terms;
+  return informative.slice(0, maximum);
+}
+
+function searchTermOccurs(normalizedText, term) {
+  if (term.length > 5) return normalizedText.includes(term);
+  return normalizedText.split(/[^\p{L}\p{N}_.-]+/u).includes(term);
+}
+
+/** @param {string} readable */
+function readSearchableProjectFile(readable) {
+  let descriptor;
+  try {
+    descriptor = fs.openSync(readable, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+    const stat = fs.fstatSync(descriptor);
+    const extension = path.extname(readable).toLowerCase();
+    const basename = path.basename(readable).toLowerCase();
+    if (stat.size > 512_000
+      || (!PROJECT_SEARCH_EXTENSIONS.has(extension) && !PROJECT_SEARCH_BASENAMES.has(basename))) return null;
+    const content = fs.readFileSync(descriptor);
+    if (content.includes(0) || !isUtf8(content)) return null;
+    return { stat, content };
+  } catch {
+    return null;
+  } finally {
+    if (descriptor != null) fs.closeSync(descriptor);
+  }
+}
+
+/** @param {Buffer} content @param {string[]} terms @param {string[]} requiredTerms */
+function bestProjectSearchLine(content, terms, requiredTerms = []) {
+  const lines = content.toString('utf8').split(/\r?\n/);
+  /** @type {{ index: number, coverage: number, heading: number, excerpt?: string } | null} */
+  let best = null;
+  for (const [index, line] of lines.entries()) {
+    const normalizedLine = normalize(line);
+    const coverage = terms.reduce((total, term) => total + (searchTermOccurs(normalizedLine, term) ? 1 : 0), 0);
+    const directCoverage = requiredTerms.reduce(
+      (total, term) => total + (searchTermOccurs(normalizedLine, term) ? 1 : 0), 0,
+    );
+    if (requiredTerms.length && !directCoverage) continue;
+    if (!coverage) continue;
+    const heading = /^\s{0,3}(?:#{1,6}\s+|\|)/u.test(line) ? 1 : 0;
+    if (!best || coverage > best.coverage
+      || (coverage === best.coverage && heading > best.heading)) best = { index, coverage, heading };
+  }
+  if (!best) return null;
+  const start = Math.max(0, best.index - 2);
+  const end = Math.min(lines.length, best.index + 3);
+  best.excerpt = lines.slice(start, end)
+    .map((line, offset) => `${start + offset + 1}: ${line}`)
+    .join('\n');
+  return best;
+}
+
+/**
+ * @param {string} directory
+ * @param {string} query
+ * @param {{ messageContext?: { syntheticTest?: boolean } }} [context]
+ */
+function searchReadableTree(directory, query, context = {}) {
+  const dataRoot = path.resolve(config.dataDir);
+  const workspaceRoot = fs.realpathSync(config.workspaceDir);
+  if (pathInside(dataRoot, directory) && !pathInside(workspaceRoot, directory)) {
+    throw new Error('recursief zoeken in runtime-data is afgeschermd; gebruik de projectroot of data/workspace');
+  }
+  const rawQuery = String(query || '').trim().slice(0, 240);
+  const terms = normalizedSearchTerms(rawQuery);
+  if (!terms.length) return [];
+  /** @type {Array<{ name: string, type: string, size: number, modified_ts: string, match: string, line?: number, excerpt?: string, _score: number }>} */
+  const results = [];
+  let visited = 0;
+  let scannedBytes = 0;
+  /** @param {string} current @param {number} depth */
+  const scan = (current, depth = 0) => {
+    if (depth > 6 || visited >= 1_500 || scannedBytes >= 8_000_000) return;
+    let entries;
+    try {
+      entries = fs.readdirSync(current, { withFileTypes: true })
+        .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
+    } catch { return; }
+    for (const entry of entries) {
+      if (visited >= 1_500 || scannedBytes >= 8_000_000) break;
+      visited += 1;
+      if (entry.isSymbolicLink()) continue;
+      const absolute = path.join(current, entry.name);
+      if (context?.messageContext?.syntheticTest !== true && isSyntheticArtifactPath(absolute)) continue;
+      if (entry.isDirectory()) {
+        if (PROJECT_SEARCH_IGNORED_DIRECTORIES.has(entry.name.toLowerCase())) continue;
+        if (current === config.root && entry.name === 'data') continue;
+        try { resolveReadablePath(absolute); } catch { continue; }
+        scan(absolute, depth + 1);
+        continue;
+      }
+      if (!entry.isFile()) continue;
+      let readable;
+      let file;
+      try {
+        readable = resolveReadablePath(absolute);
+        file = readSearchableProjectFile(readable);
+      } catch { continue; }
+      if (!file) continue;
+      const { stat, content } = file;
+      scannedBytes += content.length;
+      const relative = path.relative(config.root, readable).replaceAll(path.sep, '/');
+      const normalizedName = normalize(relative);
+      const nameCoverage = terms.reduce(
+        (total, term) => total + (searchTermOccurs(normalizedName, term) ? 1 : 0), 0,
+      );
+      const nameMatches = nameCoverage > 0;
+      const best = bestProjectSearchLine(content, terms);
+      if (!nameMatches && !best) continue;
+      const safeRelative = redactSensitiveText(relative);
+      const safeExcerpt = best ? redactSensitiveText(best.excerpt) : '';
+      results.push({
+        name: safeRelative,
+        type: 'file',
+        size: stat.size,
+        modified_ts: stat.mtime.toISOString(),
+        match: best ? 'content' : 'name',
+        ...(best ? { line: best.index + 1, excerpt: clean(safeExcerpt, 360) } : {}),
+        _score: Math.max(nameCoverage, Number(best?.coverage || 0)) * 100
+          + (relative.startsWith('docs/') ? 25 : /^readme(?:\.|$)/iu.test(relative) ? 20 : 0)
+          + (relative.startsWith('test/') ? -10 : 0)
+          + (best ? 10 : 0) + Number(best?.heading || 0),
+      });
+    }
+  };
+  scan(directory);
+  const ranked = results
+    .sort((a, b) => b._score - a._score || a.name.localeCompare(b.name, 'nl'))
+    .slice(0, 5)
+    .map(({ _score, ...entry }) => entry);
+  const selected = [];
+  for (const entry of ranked) {
+    if (selected.length && JSON.stringify([...selected, entry]).length > 1_500) break;
+    selected.push(entry);
+  }
+  return selected;
+}
+
 function assertNoWritableSymlink(absolute, { includeTarget = true } = {}) {
   const root = fs.realpathSync(WRITABLE_ROOT);
   if (absolute === WRITABLE_ROOT) return;
@@ -1037,10 +1195,10 @@ export const TOOLS = [
   },
   {
     name: 'lijst_bestanden',
-    description: 'Lijst bestanden en mappen binnen Eva haar project of data/workspace. Gebruik zoek om in een grote map alleen passende namen te krijgen en volgorde=nieuwste wanneer de meest recente kandidaat nodig is.',
+    description: 'Lijst bestanden en mappen binnen Eva haar project of data/workspace. Gebruik pad "." voor vragen over dit project, de repo, architectuur of broncode; data/workspace is alleen de standaard voor gemaakte werkstukken. Met zoek wordt veilig en recursief in bestandsnamen en leesbare tekst gezocht; lees daarna de beste bron gericht of gepagineerd.',
     parameters: obj({
-      pad: str('Map om te bekijken, standaard data/workspace'),
-      zoek: str('Optionele woorden of eenvoudige reguliere expressie voor de naam'),
+      pad: str('Map om te bekijken; gebruik . voor de projectroot, standaard data/workspace'),
+      zoek: str('Optionele woorden voor gerangschikte zoeking in naam en inhoud'),
       volgorde: str('naam of nieuwste'),
     }),
   },
@@ -1050,7 +1208,7 @@ export const TOOLS = [
     parameters: obj({
       programma: str('Programmanaam'),
       argumenten: { type: 'array', items: { type: 'string' }, description: 'Afzonderlijke argumenten' },
-      werkmap: str('Werkmap binnen data/workspace'),
+      werkmap: str('Projectrelatief werkmappad dat letterlijk met data/workspace begint'),
       verwachte_exitcodes: { type: 'array', items: { type: 'number' }, description: 'Geldige uitkomsten voor deze proef; standaard [0]' },
     }, ['programma']),
   },
@@ -1092,6 +1250,7 @@ export const TOOLS = [
     parameters: obj({
       naam: str('Optionele naam of slug van een actieve capability'),
       argumenten: { type: 'array', items: { type: 'string' }, description: 'Alleen voor een actieve add-on; runtime-argumenten' },
+      verwachte_exitcodes: { type: 'array', items: { type: 'number' }, description: 'Geldige procesuitkomsten voor deze concrete demonstratie; standaard [0]' },
     }),
   },
   {
@@ -1709,17 +1868,16 @@ async function executeRawTool(name, args = {}, context = {}) {
       const content = fs.readFileSync(file, 'utf8');
       const lines = content.split(/\r?\n/);
       if (String(args.zoek || '').trim()) {
-        let pattern;
-        try { pattern = new RegExp(String(args.zoek), 'i'); } catch { pattern = null; }
-        const needle = normalize(args.zoek);
-        const selected = new Set();
-        lines.forEach((line, index) => {
-          if ((pattern && pattern.test(line)) || (!pattern && normalize(line).includes(needle))) {
-            for (let cursor = Math.max(0, index - 4); cursor <= Math.min(lines.length - 1, index + 4); cursor += 1) selected.add(cursor);
-          }
-        });
-        if (!selected.size) return JSON.stringify({ ok: false, reason: `geen treffers voor ${args.zoek} in ${args.pad}` });
-        return clean([...selected].sort((a, b) => a - b).map((index) => `${index + 1}: ${lines[index]}`).join('\n'));
+        const directTerms = normalizedSearchTerms(args.zoek);
+        const contextTerms = normalizedSearchTerms(context?.userText, 32)
+          .filter((term) => !SEARCH_CONTEXT_STOPWORDS.has(term));
+        const terms = [...new Set([...directTerms, ...contextTerms])].slice(0, 32);
+        const best = bestProjectSearchLine(Buffer.from(content, 'utf8'), terms, directTerms);
+        if (!best) throw new Error(`geen treffers voor ${args.zoek} in ${args.pad}`);
+        const start = Math.max(0, best.index - 12);
+        const end = Math.min(lines.length, best.index + 13);
+        return clean(lines.slice(start, end)
+          .map((line, index) => `${start + index + 1}: ${line}`).join('\n'));
       }
       if (args.vanaf_regel != null || args.aantal_regels != null) {
         const start = Math.max(0, Math.floor(Number(args.vanaf_regel) || 1) - 1);
@@ -1768,9 +1926,7 @@ async function executeRawTool(name, args = {}, context = {}) {
       const directory = resolveReadablePath(args.pad || 'data/workspace');
       rejectSyntheticArtifactLeak(directory, context);
       const query = String(args.zoek || '').trim();
-      let matcher = null;
-      try { matcher = query ? new RegExp(query, 'i') : null; } catch { matcher = null; }
-      const terms = query.toLowerCase().split(/[^\p{L}\p{N}_.-]+/u).filter(Boolean);
+      if (query) return JSON.stringify(searchReadableTree(directory, query, context));
       let entries = fs.readdirSync(directory, { withFileTypes: true })
         .filter((entry) => context?.messageContext?.syntheticTest === true
           || !isSyntheticArtifactPath(path.join(directory, entry.name)))
@@ -1783,10 +1939,6 @@ async function executeRawTool(name, args = {}, context = {}) {
             modified_ts: stat.mtime.toISOString(),
           };
         });
-      if (query) entries = entries.filter((entry) => (
-        (matcher && matcher.test(entry.name))
-        || (!matcher && terms.every((term) => entry.name.toLowerCase().includes(term)))
-      ));
       entries.sort(String(args.volgorde || '').toLowerCase() === 'nieuwste'
         ? (a, b) => Date.parse(b.modified_ts) - Date.parse(a.modified_ts)
         : (a, b) => a.name.localeCompare(b.name, 'nl'));
@@ -1850,6 +2002,7 @@ async function executeRawTool(name, args = {}, context = {}) {
       }
       return JSON.stringify({
         ok: true,
+        verified: true,
         changed: true,
         capability: operation === 'activeer'
           ? activateCapability('skill', args.naam, args.receipt_id)
@@ -1902,6 +2055,7 @@ async function executeRawTool(name, args = {}, context = {}) {
       }
       return JSON.stringify({
         ok: true,
+        verified: true,
         changed: true,
         capability: operation === 'activeer'
           ? activateCapability('addon', args.naam, args.receipt_id)
@@ -1926,7 +2080,7 @@ async function executeRawTool(name, args = {}, context = {}) {
         used.runtime,
         [path.join(config.root, used.entrypoint), ...(args.argumenten || [])],
         config.workspaceDir,
-        [0],
+        normalizeExpectedExitCodes(args.verwachte_exitcodes),
       ));
       return JSON.stringify({
         ...result,
@@ -2634,15 +2788,15 @@ function parsedToolOutput(raw) {
 }
 
 function compactToolData(parsed, raw, serializedData) {
-  if (serializedData.length <= 14_000) return parsed ?? String(raw);
+  if (serializedData.length <= 8_000) return parsed ?? String(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    return { truncated: true, text: clean(raw, 12_000) };
+    return { truncated: true, text: clean(raw, 7_000) };
   }
 
   const text = parsed.text || parsed.message || parsed.info || parsed.stdout || '';
   return {
     truncated: true,
-    ...(text ? { text: clean(text, 12_000) } : {}),
+    ...(text ? { text: clean(text, 7_000) } : {}),
     ...(parsed.stdout ? { stdout: clean(parsed.stdout, 4_000) } : {}),
     ...(typeof parsed.verified === 'boolean' ? { verified: parsed.verified } : {}),
     ...(typeof parsed.demonstrated === 'boolean' ? { demonstrated: parsed.demonstrated } : {}),
@@ -2725,7 +2879,7 @@ export async function executeTool(name, args = {}, context = {}) {
     });
   }
   try {
-    const raw = await executeRawTool(name, args, context);
+    const raw = redactSensitiveText(await executeRawTool(name, args, context));
     const parsed = parsedToolOutput(raw);
     const ok = parsed?.ok === false
       ? false
@@ -2735,9 +2889,13 @@ export async function executeTool(name, args = {}, context = {}) {
       : toolChangesByDefault(name) && ok;
     const verified = verifiedToolResult(name, parsed, ok);
     const reason = clean(parsed?.reason || parsed?.error || '', 1200);
-    const summary = clean(parsed?.message || parsed?.info || reason || raw, 1600);
+    const summary = Array.isArray(parsed)
+      ? `${parsed.length} resultaat${parsed.length === 1 ? '' : 'en'} gelezen.`
+      : clean(parsed?.message || parsed?.info || reason || raw, 1600);
     const serializedData = parsed == null ? String(raw) : JSON.stringify(parsed);
     const data = compactToolData(parsed, raw, serializedData);
+    const outputTruncated = data && typeof data === 'object' && !Array.isArray(data)
+      && data.truncated === true;
     const failure = ok ? null : classifyToolFailure(reason || raw);
     return JSON.stringify({
       contract: 'ActionResult/v1',
@@ -2749,10 +2907,10 @@ export async function executeTool(name, args = {}, context = {}) {
         source: name,
         summary,
       },
-      needs_followup: typeof parsed?.needs_followup === 'boolean'
+      needs_followup: outputTruncated || (typeof parsed?.needs_followup === 'boolean'
         ? parsed.needs_followup
-        : !verified,
-      partial: parsed?.partial === true,
+        : !verified),
+      partial: outputTruncated || parsed?.partial === true,
       ...(parsed?.waiting_for ? { waiting_for: clean(parsed.waiting_for, 80) } : {}),
       ...(failure || {}),
       risk: context.mode === 'autonomy' && toolChangesByDefault(name) ? 'autonomous' : 'normal',
@@ -2761,7 +2919,8 @@ export async function executeTool(name, args = {}, context = {}) {
       data,
     });
   } catch (error) {
-    const failure = classifyToolFailure(error?.message || error);
+    const safeError = redactSensitiveText(error?.message || error);
+    const failure = classifyToolFailure(safeError);
     return JSON.stringify({
       contract: 'ActionResult/v1',
       tool: name,
@@ -2772,7 +2931,7 @@ export async function executeTool(name, args = {}, context = {}) {
       needs_followup: true,
       risk: 'normal',
       human_message: '',
-      error: clean(error?.message || error, 1200),
+      error: clean(safeError, 1200),
       ...failure,
     });
   }

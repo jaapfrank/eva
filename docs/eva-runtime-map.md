@@ -11,9 +11,9 @@ Eva heeft geen statische importcyclus, maar is nog geen werkelijk enkelvoudige
 entiteit. De complexiteit zit in gedeelde toestand en overlappende beslissers:
 
 - 44 JavaScriptmodules en 3 statische webassets in `src`;
-- 23.934 regels JavaScript in `src`;
+- 24.231 regels JavaScript in `src`;
 - 36 applicatieschema's, aangemaakt door 12 verschillende modules;
-- `agent.js` (4.425 regels), `tools.js` (2.815), Home Assistant (1.903),
+- `agent.js` (4.558 regels), `tools.js` (2.974), Home Assistant (1.903),
   Telegram (1.551), vision (1.300) en `db.js` (1.278) zijn de hotspots;
 - `db.js` heeft circa 30 importeurs, `config.js` 21;
 - agentische uitvoering is verdeeld over `agent.js`, `tools.js` en `brain/llm.js`;
@@ -374,7 +374,7 @@ lokale modelservice; `mind/localbrain.js` is alleen haar Node-client.
 | --- | --- | --- |
 | Dockerroute | `.dockerignore`, `Dockerfile` en `docker-compose.yml` | Systemd voor Eva en een afzonderlijke user-unit voor de Python-brain |
 | Node-localinference | `mind/localinference.js`, `mind/localinferenceworker.js`, de IPC-lifecycletest, `@xenova/transformers` en zijn transitieve packages | `mind/localbrain.js` als HTTP-client voor de ene Python-brain |
-| Oude Human-facefallback | `@tensorflow/tfjs-node`, `@vladmandic/human`, 75 transitieve packages en `data/face-models` | Eén werkende ArcFace-ruimte; een uitval wordt eerlijk als onbeschikbaar behandeld |
+| Oude Human-facefallback | `@tensorflow/tfjs-node`, `@vladmandic/human`, 76 packagepaden inclusief beide directe dependencies en `data/face-models` | Eén werkende ArcFace-ruimte; een uitval wordt eerlijk als onbeschikbaar behandeld |
 | Tekst-/geheugenembeddings | modelwarmup, semantische timeline-/memory-indexering, embeddingkolommen en bijbehorende DB-API's | FTS5/trefwoordgeheugen en gezichts-embeddings |
 | `private_thoughts` | schema-aanmaak, lees-/schrijf-API en versleutelde gedachteopslag | `secretmind.js` blijft uitsluitend de versleutelingslaag van de vault |
 
@@ -710,6 +710,25 @@ en moet bij iedere architectuurwijziging mee wijzigen.
 
 ## Verificatie van deze audit
 
+De live evaluatie van 6 augustus gebruikte naast het declaratieve corpus ook
+vrije, niet-synthetische gesprekken in één doorlopende canarysessie. Eva las
+lokale projectdocumentatie, voerde een bestaande add-on uit, las een actuele
+Home Assistant-temperatuur, bouwde en herstelde een Node-CLI, en reageerde op
+sociale vervolgvragen. De technische read-only grenzen voor huis, locatie,
+programmeren en brongebruik waren groen. De geldroute faalde inhoudelijk: haar
+antwoord maakte de opbrengst stelliger dan haar eigen brononderzoek toeliet.
+De echte Voice PE-proef werd tweemaal door Home Assistant op exact de
+overkappingssatellite geaccepteerd; hoorbaar geluid is daarmee niet bewezen.
+
+De evaluatie vond tegelijk een harde resterende grens. De CLI en haar tests
+werkten, maar de runtime kon compleet bewijs alsnog overschrijven met een
+generieke mislukking. Dat pad is gerepareerd voor negatie, verwachte niet-nul
+exitcodes, bronlinks en lege modelreacties. Een vrije verbeteropdracht bleef
+echter soms te lang doorwerken of stopte vóór de laatste teruglezing. Eva wordt
+daarom nog niet als betrouwbare persoonachtige entiteit gekwalificeerd: haar
+stem en humor zijn herkenbaar, maar doelbewaking, stoppen en zelfstandig
+afronden halen de vereiste consistentie nog niet.
+
 - Alle 44 JavaScriptmodules zijn via exports/imports en bereikbaarheid vanaf
   `src/index.js` geïnventariseerd.
 - De browserassets zijn niet statisch vanaf index bereikbaar, maar wel
@@ -720,12 +739,13 @@ en moet bij iedere architectuurwijziging mee wijzigen.
 - De bronregels zijn met `wc -l` over de 44 actuele `.js`-bestanden geteld; de
   schematelling komt uit alle `CREATE TABLE`/`CREATE VIRTUAL TABLE`-sites en is
   tegen de read-only SQLitecatalogus gecontroleerd.
-- De actuele Node-regressiesuite slaagt; de exacte telling staat bij iedere
-  acceptatierun in het testbewijs. De gerichte
+- De actuele Node-regressiesuite slaagt 256 van 256; coverage is 51,62% regels,
+  67,60% branches en 55,87% functies. De gerichte
   Python-brainproef slaagt daarnaast 4 van 4.
-- Deze sanering verwijdert repositorybreed ruim meer regels dan zij toevoegt.
-  De gerichte runtimewijzigingen blijven wel nieuwe code; de bestaande hotspots
-  zijn dus niet ineens klein of architectonisch af.
+- De eerdere repositorysanering verwijderde veel oude code en data. Deze
+  vervolgpatch groeit netto door veilige projectzoeking, herstelgedrag en
+  regressietests. Zij is dus tactische stabilisatie, geen bewijs dat de
+  bestaande hotspots klein of architectonisch af zijn.
 
 Dit document beschrijft de huidige werkelijkheid. Het is geen bewering dat de
 sanering al voltooid is.

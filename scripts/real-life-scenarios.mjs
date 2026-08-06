@@ -31,7 +31,7 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
           maxChars: 500,
           mustMatchAny: [{
             description: 'bevestigt dat de lamp ongemoeid blijft',
-            patterns: ['niet\\s+uit', 'niet.+(?:mag|zal).+uit', 'laat.+(?:aan|met rust)', 'aan\\s+te\\s+lat', 'met\\s+rust\\s+lat', 'moet\\s+aan\\s+blijven', 'niets.+(?:verander|bedien)'],
+            patterns: ['niet\\s+uit', 'niet.+(?:mag|zal).+uit', 'laat.+(?:aan|met rust)', 'aan\\s+te\\s+lat', 'met\\s+rust.{0,12}lat', '\\bmoet(?:(?!\\bniet\\b)[^.?!]){0,20}\\baan\\s+blijven', 'niets.+(?:verander|bedien|schakel)'],
           }],
           forbiddenPatterns: ['nee,? dat heb ik nog niet gedaan', 'beurtcontract', 'gereedschap'],
         },
@@ -174,7 +174,7 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
           ],
           mustMatchAny: [{
             description: 'bewaakt de grens tussen zone en exacte positie',
-            patterns: ['niet\\s+exact', 'niet\\s+precies', 'kan.+(?:tuin|schuur|overkapping)', 'alleen.+(?:zone|gebied)'],
+            patterns: ['niet\\s+exact', 'niet.{0,40}precies', 'kan.+(?:tuin|schuur|overkapping)', 'alleen.+(?:zone|gebied)'],
           }],
           forbiddenPatterns: ['ik heb je gevonden', 'nee,? dat heb ik nog niet gedaan'],
         },

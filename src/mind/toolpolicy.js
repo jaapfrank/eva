@@ -71,9 +71,9 @@ export const TOOL_POLICY = freezeMetadata({
   beheer_agentmail: mixed(TOOL_EFFECT.external, [
     'status', 'berichten', 'inbox', 'lezen', 'list', 'zoeken', 'zoek', 'search',
   ], full('delegated lane:research lane:workspace lane:family proof:project grounding', { synthetic: 'deny', report: 'effect', durable: true, changesByDefault: true, recoveryTools: ['zoek_internet'] })),
-  lees_bestand: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace contribution:making proof:project grounding reasoning:mechanical', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 3, diagnosticFallback: true, recoveryTools: ['lijst_bestanden'] })),
+  lees_bestand: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace contribution:making proof:project grounding reasoning:mechanical', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 3, diagnosticFallback: true, recoveryScope: 'workspace-read' })),
   schrijf_bestand: fixed(TOOL_EFFECT.workspace, bounded('lane:research lane:workspace primary:workspace contribution:making proof:project reasoning:code', { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true, verification: 'ok', recoveryTools: ['lijst_bestanden', 'voer_uit'] })),
-  lijst_bestanden: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace proof:project', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, diagnosticFallback: true })),
+  lijst_bestanden: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace proof:project', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, diagnosticFallback: true, recoveryScope: 'workspace-read' })),
   voer_uit: fixed(TOOL_EFFECT.workspace, bounded('lane:research lane:workspace primary:workspace contribution:making proof:project grounding reasoning:code', { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true, verification: 'ok', proofRank: 5 })),
   maak_vaardigheid: mixed(TOOL_EFFECT.workspace, ['lijst'], bounded('contribution:making reasoning:code', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
   beheer_addon: mixed(TOOL_EFFECT.workspace, ['lijst'], bounded('contribution:making reasoning:code', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
@@ -118,6 +118,16 @@ export function toolNamesForRecovery(requiredNames = []) {
   const onlyPolicy = required.length === 1 ? toolPolicy(required[0]) : null;
   if (onlyPolicy?.exclusiveRecovery === true) {
     return new Set([required[0], ...(onlyPolicy.recoveryTools || [])]);
+  }
+
+  const scopes = new Set(required.map((name) => toolPolicy(name)?.recoveryScope).filter(Boolean));
+  if (scopes.size === 1 && required.every((name) => toolPolicy(name)?.recoveryScope)) {
+    const [scope] = scopes;
+    const names = new Set(required);
+    for (const [name, policy] of Object.entries(TOOL_POLICY)) {
+      if (policy.recoveryScope === scope) names.add(name);
+    }
+    return names;
   }
 
   const names = new Set(required);

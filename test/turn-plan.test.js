@@ -41,6 +41,29 @@ test('maak niets laat bij een hypothetische programmeervraag geen halve leescycl
   assert.equal(plan.actionIntent, 'forbid');
 });
 
+test('verander niets behoudt een expliciete lokale documentatie-uitlezing', () => {
+  const plan = arbitrateTurnPlan({
+    text: 'Zoek in dit project waar de contracten staan. Verander niks.',
+    baseContract: { kind: 'conversation', requiredTools: [] },
+    baseRequiredTools: ['lijst_bestanden', 'lees_bestand'],
+    effectForTool: effects,
+  });
+  assert.deepEqual(plan.requiredTools, ['lijst_bestanden', 'lees_bestand']);
+  assert.equal(plan.effectPolicy.deniedEffects.includes('workspace'), true);
+  assert.deepEqual(plan.effectPolicy.allowedEffects, []);
+});
+
+test('onze eigen repo gebruikt dezelfde lokale documentatieroute', () => {
+  const plan = arbitrateTurnPlan({
+    text: 'Hoe staat het met die acht architectuurdelen? Zoek het in onze eigen repo uit.',
+    baseRequiredTools: ['lijst_bestanden', 'lees_bestand'],
+    actionRequested: true,
+    effectForTool: (name) => name === 'schrijf_bestand' ? 'workspace' : 'read',
+  });
+  assert.deepEqual(plan.requiredTools, ['lijst_bestanden', 'lees_bestand']);
+  assert.deepEqual(plan.effectPolicy.allowedEffects, []);
+});
+
 test('een echte maar nog generieke opdracht houdt uitvoerintentie en effectruimte', () => {
   const plan = arbitrateTurnPlan({
     text: 'Repareer dit.', actionRequested: true,

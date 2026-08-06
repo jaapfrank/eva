@@ -17,6 +17,7 @@ const {
 } = await import('../src/mind/toolpolicy.js');
 const { executeTool, TOOLS } = await import('../src/mind/tools.js');
 const { db } = await import('../src/db.js');
+const { registerSensitiveValues } = await import('../src/security/redaction.js');
 
 after(() => {
   db.close();
@@ -39,6 +40,7 @@ test('centrale metadata dekt iedere kerntool exact eenmaal', () => {
     if (policy.proofRank != null) assert.ok(Number(policy.proofRank) >= 1, name);
     if (policy.diagnosticFallback != null) assert.equal(typeof policy.diagnosticFallback, 'boolean', name);
     if (policy.exclusiveRecovery != null) assert.equal(typeof policy.exclusiveRecovery, 'boolean', name);
+    if (policy.recoveryScope != null) assert.equal(typeof policy.recoveryScope, 'string', name);
     if (policy.recoveryTools != null) {
       assert.ok(Array.isArray(policy.recoveryTools), name);
       assert.deepEqual([...new Set(policy.recoveryTools)], policy.recoveryTools, name);
@@ -53,6 +55,19 @@ test('centrale metadata dekt iedere kerntool exact eenmaal', () => {
       if (tag.startsWith('primary:')) assert.ok(policy.tags.split(/\s+/u).includes(tag.replace('primary:', 'lane:')), `${name}:${tag}`);
     }
   }
+  const scopes = new Map();
+  for (const [name, policy] of Object.entries(TOOL_POLICY)) {
+    if (!policy.recoveryScope) continue;
+    assert.ok(policy.recoveryScope.trim(), name);
+    const members = scopes.get(policy.recoveryScope) || [];
+    members.push(name);
+    scopes.set(policy.recoveryScope, members);
+    assert.equal(policy.effect, TOOL_EFFECT.read, name);
+    assert.equal(policy.changesByDefault, false, name);
+    assert.equal(policy.durable, false, name);
+    assert.notEqual(policy.exclusiveRecovery, true, name);
+  }
+  for (const [scope, members] of scopes) assert.ok(members.length >= 2, scope);
 });
 
 test('declaratieve herstelroutering bewaart het bestaande aanbod exact', () => {
@@ -83,9 +98,11 @@ test('declaratieve herstelroutering bewaart het bestaande aanbod exact', () => {
     [...toolNamesForRecovery(['schrijf_bestand'])].sort(),
     expectedGeneric(['schrijf_bestand'], ['lijst_bestanden', 'voer_uit']),
   );
+  assert.deepEqual([...toolNamesForRecovery(['lees_bestand'])].sort(), ['lees_bestand', 'lijst_bestanden']);
+  assert.deepEqual([...toolNamesForRecovery(['lijst_bestanden'])].sort(), ['lees_bestand', 'lijst_bestanden']);
   assert.deepEqual(
-    [...toolNamesForRecovery(['lees_bestand'])].sort(),
-    expectedGeneric(['lees_bestand'], ['lijst_bestanden']),
+    [...toolNamesForRecovery(['lijst_bestanden', 'lees_bestand'])].sort(),
+    ['lees_bestand', 'lijst_bestanden'],
   );
   assert.deepEqual(
     [...toolNamesForRecovery(['beheer_agentmail'])].sort(),
@@ -95,6 +112,119 @@ test('declaratieve herstelroutering bewaart het bestaande aanbod exact', () => {
     [...toolNamesForRecovery(['beheer_aanwezigheid', 'beheer_aanwezigheid'])].sort(),
     expectedGeneric(['beheer_aanwezigheid']),
   );
+});
+
+test('projectzoeking vindt veilig gerangschikte inhoud zonder afgeschermde bestanden', async () => {
+  const root = path.join(dataDir, 'workspace');
+  const nested = path.join(root, 'docs', 'diep');
+  fs.mkdirSync(nested, { recursive: true });
+  fs.writeFileSync(path.join(nested, 'kaart.md'), [
+    '# Kaart',
+    'Een losse contractverwijzing.',
+    'Hier staan acht doelcontracten met hun geplande status.',
+  ].join('\n'));
+  fs.writeFileSync(path.join(root, '.env.backup'), 'contracten=mag-nooit-lekken');
+  fs.writeFileSync(path.join(root, 'contract-alleen-naam.md'), 'Geen relevante inhoud.');
+  fs.mkdirSync(path.join(root, 'docs'), { recursive: true });
+  fs.mkdirSync(path.join(root, 'src'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'docs', 'een-term.md'), 'Alleen alpha.');
+  fs.writeFileSync(path.join(root, 'src', 'volledige-treffer.js'), 'alpha beta gamma');
+  fs.writeFileSync(path.join(root, 'groot.md'), `acht contracten gepland ${'x'.repeat(520_000)}`);
+  fs.writeFileSync(path.join(root, 'binair.md'), Buffer.from('acht contracten gepland\0verborgen'));
+  fs.writeFileSync(path.join(root, 'ongeldig.md'), Buffer.from([0xff, 0xfe, ...Buffer.from('acht contracten gepland')]));
+  fs.mkdirSync(path.join(root, '.GIT'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.GIT', 'verstopt.md'), 'acht contracten gepland');
+  fs.symlinkSync(path.join(nested, 'kaart.md'), path.join(root, 'contract-link.md'));
+  const secret = 'search-canary-value-92841';
+  const expansionSecret = 'cny92841';
+  registerSensitiveValues([
+    ['SEARCH_CANARY', secret],
+    ['SEARCH_EXPANSION_CANARY_WITH_A_VERY_LONG_LABEL_FOR_BUDGET_TESTING', expansionSecret],
+  ]);
+  fs.writeFileSync(path.join(root, 'publiek.md'), `acht contracten gepland ${secret} ${`${expansionSecret} `.repeat(42)}`);
+
+  const result = JSON.parse(await executeTool('lijst_bestanden', {
+    pad: root,
+    zoek: 'acht|contracten|gepland',
+  }, { mode: 'chat' }));
+  assert.equal(result.ok, true);
+  assert.equal(result.verified, true);
+  assert.equal(result.data[0].name.endsWith('docs/diep/kaart.md'), true);
+  assert.equal(result.data[0].line, 3);
+  assert.match(result.data[0].excerpt, /acht doelcontracten/i);
+  assert.equal(result.data.some((entry) => entry.name.includes('.env')), false);
+  assert.equal(result.data.some((entry) => /groot|binair|ongeldig|contract-link|\.GIT/.test(entry.name)), false);
+  assert.equal(JSON.stringify(result).includes(secret), false);
+  assert.match(JSON.stringify(result), /AFGESCHERMD:SEARCH_CANARY/);
+  assert.ok(JSON.stringify(result).length <= 3_000);
+
+  const repeated = JSON.parse(await executeTool('lijst_bestanden', {
+    pad: root,
+    zoek: 'acht|contracten|gepland',
+  }, { mode: 'chat' }));
+  assert.deepEqual(repeated.data.map((entry) => entry.name), result.data.map((entry) => entry.name));
+  const coverageRank = JSON.parse(await executeTool('lijst_bestanden', {
+    pad: root,
+    zoek: 'alpha|beta|gamma',
+  }, { mode: 'chat' }));
+  assert.equal(coverageRank.data[0].name.endsWith('src/volledige-treffer.js'), true);
+});
+
+test('projectzoeking weigert runtime-data maar houdt de werkruimte beschikbaar', async () => {
+  fs.mkdirSync(path.join(dataDir, 'runtime'), { recursive: true });
+  fs.writeFileSync(path.join(dataDir, 'runtime', 'status.txt'), 'zoekterm runtime');
+  const blocked = JSON.parse(await executeTool('lijst_bestanden', {
+    pad: dataDir,
+    zoek: 'zoekterm',
+  }, { mode: 'chat' }));
+  assert.equal(blocked.ok, false);
+  assert.match(blocked.error, /(?:runtime-data is afgeschermd|buiten Eva haar project)/i);
+
+  const allowed = JSON.parse(await executeTool('lijst_bestanden', {
+    pad: path.join(dataDir, 'workspace'),
+    zoek: 'doelcontracten',
+  }, { mode: 'chat' }));
+  assert.equal(allowed.ok, true);
+});
+
+test('afgekorte tooldata blijft geldige expliciet gedeeltelijke ActionResult', async () => {
+  const file = path.join(dataDir, 'workspace', 'lang.txt');
+  fs.writeFileSync(file, `${'lange regel '.repeat(24)}\n`.repeat(2_000));
+  const output = await executeTool('lees_bestand', { pad: file, aantal_regels: 2_000 }, { mode: 'chat' });
+  const result = JSON.parse(output);
+  assert.equal(result.ok, true);
+  assert.equal(result.verified, true);
+  assert.equal(result.partial, true);
+  assert.equal(result.needs_followup, true);
+  assert.equal(result.data.truncated, true);
+});
+
+test('gerichte bestandzoeking geeft de beste samenhangende passage en geen trefferstort', async () => {
+  const file = path.join(dataDir, 'workspace', 'gericht.md');
+  const lines = Array.from({ length: 180 }, (_, index) => `regel ${index + 1}: alleen alpha`);
+  lines[139] = 'alpha beta gamma: hier begint het relevante overzicht';
+  lines[145] = 'Worker Runtime | gepland';
+  lines[146] = 'Attention Runtime | grotendeels actief';
+  fs.writeFileSync(file, lines.join('\n'));
+  const output = await executeTool('lees_bestand', {
+    pad: file,
+    zoek: 'alpha|beta|gamma',
+  }, { mode: 'chat' });
+  const result = JSON.parse(output);
+  assert.equal(result.partial, false);
+  assert.match(result.data, /alpha beta gamma/);
+  assert.match(result.data, /Worker Runtime \| gepland/);
+  assert.match(result.data, /Attention Runtime \| grotendeels actief/);
+  assert.doesNotMatch(result.data, /^1: /m);
+
+  const contextOnly = path.join(dataDir, 'workspace', 'alleen-context.md');
+  fs.writeFileSync(contextOnly, 'architectuur gepland maar zonder de expliciete zoekterm');
+  const noDirectHit = JSON.parse(await executeTool('lees_bestand', {
+    pad: contextOnly,
+    zoek: 'unieke-naald',
+  }, { mode: 'chat', userText: 'Waar staat de architectuur gepland?' }));
+  assert.equal(noDirectHit.ok, false);
+  assert.match(noDirectHit.error, /geen treffers/i);
 });
 
 test('centrale changed-default bewaart exact de bestaande result-normalisatie', () => {

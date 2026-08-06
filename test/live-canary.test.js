@@ -86,6 +86,22 @@ test('beoordelaar vindt contract-, effect- en fallbackfouten tegelijk', () => {
   assert.match(result.failures.join('\n'), /verboden patroon/);
 });
 
+test('negatiebeoordelaar accepteert de tegengestelde huisintentie niet', () => {
+  const scenario = REAL_LIFE_SCENARIOS.find((item) => item.id === 'house-negation-explanation');
+  const observation = {
+    contract: { kind: 'conversation', requiredTools: [], offeredTools: [] },
+    actions: [],
+  };
+  assert.equal(evaluateObservation(scenario.steps[0].expected, {
+    ...observation,
+    reply: 'De lamp moet niet aan blijven.',
+  }).ok, false);
+  assert.equal(evaluateObservation(scenario.steps[0].expected, {
+    ...observation,
+    reply: 'Ik begrijp dat de lamp gewoon moet blijven zoals hij is: hij moet gewoon aan blijven.',
+  }).ok, true);
+});
+
 test('tijdlijnextractie bindt contract en acties aan dezelfde turn-id', () => {
   const meta = (value) => JSON.stringify(value);
   const rows = [

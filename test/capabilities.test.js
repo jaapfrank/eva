@@ -70,7 +70,7 @@ test('een add-on is checksumgebonden en blijft in de geïsoleerde werkruimte', a
   const workspace = path.join(dataDir, 'workspace');
   fs.mkdirSync(workspace, { recursive: true });
   const entrypoint = path.join(workspace, 'voorbeeld-addon.mjs');
-  fs.writeFileSync(entrypoint, "console.log('ok');\n", 'utf8');
+  fs.writeFileSync(entrypoint, "if (process.argv.includes('--verwachte-fout')) { console.error('verwachte fout'); process.exit(1); } console.log('ok');\n", 'utf8');
   const staged = JSON.parse(await executeTool('beheer_addon', {
     bewerking: 'stage',
     naam: 'Voorbeeld add-on',
@@ -94,6 +94,16 @@ test('een add-on is checksumgebonden en blijft in de geïsoleerde werkruimte', a
     bewerking: 'activeer', naam: 'Voorbeeld add-on', receipt_id: tested.data.receipt.id,
   }, { mode: 'autonomy' }));
   assert.equal(active.ok, true);
+  assert.equal(active.verified, true);
+  const expectedFailure = JSON.parse(await executeTool('gebruik_capability', {
+    naam: 'Voorbeeld add-on',
+    argumenten: ['--verwachte-fout'],
+    verwachte_exitcodes: [1],
+  }, { mode: 'chat' }));
+  assert.equal(expectedFailure.ok, true);
+  assert.equal(expectedFailure.verified, true);
+  assert.equal(expectedFailure.data.demonstrated, true);
+  assert.equal(expectedFailure.data.exit_code, 1);
   fs.writeFileSync(entrypoint, "console.log('gewijzigd');\n", 'utf8');
   const stale = JSON.parse(await executeTool('beheer_addon', {
     bewerking: 'activeer', naam: 'Voorbeeld add-on', receipt_id: tested.data.receipt.id,

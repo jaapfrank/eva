@@ -463,7 +463,10 @@ export async function runAgent({
   const tracksRequirements = typeof requiredToolsRemaining === 'function';
   let roundLimit = maxRounds;
   let conclusionRecoveryExtensions = 0;
+  let requirementCompletionExtensions = 0;
   let finalReminderAdded = false;
+  let toolFreeConclusionPending = false;
+  let emptyConclusionRetries = 0;
   const total = Number(totalTimeoutMs);
   const deadline = Number.isFinite(total) && total > 0 ? Date.now() + total : null;
   const remaining = () => {
@@ -485,23 +488,30 @@ export async function runAgent({
     if (typeof shouldYield === 'function' && shouldYield()) {
       return { text: '', output: [], yielded: true };
     }
-    // De laatste modelronde is gereserveerd voor een gewoon antwoord. Voorheen
-    // volgde na maxRounds nóg een extra call; een simpele beurt kon daardoor
-    // ongemerkt negen modelaanroepen doen. maxRounds is nu werkelijk de harde
-    // bovengrens, inclusief de afronding.
-    const finalRound = round === roundLimit - 1;
-    let roundTools = finalRound && !allowToolOnFinalRound ? [] : tools;
-    if (roundTools.length && typeof selectTools === 'function') {
-      const selected = selectTools({ round, finalRound, tools: roundTools });
-      if (Array.isArray(selected)) roundTools = selected;
-    }
+    // De laatste ronde is voor het antwoord, behalve wanneer exact daar nog
+    // één contractvereiste open blijkt. Dan reserveren we eenmalig een
+    // gereedschapsronde plus een echte antwoordronde.
+    let finalRound = round === roundLimit - 1;
     const requiredNow = typeof requiredToolsRemaining === 'function'
       ? requiredToolsRemaining({ round, finalRound })
       : [];
     const requiredRemaining = (Array.isArray(requiredNow) ? requiredNow : [])
       .map((name) => String(name || '').trim()).filter(Boolean);
-    // Een eerdere routefout blijft actief totdat het gebruikersdoel aantoonbaar
-    // rond is. Een geslaagde diagnose is nog geen geslaagde opdracht.
+    if (finalRound && requiredRemaining.length && !allowToolOnFinalRound
+      && requirementCompletionExtensions < 1) {
+      roundLimit += 1;
+      requirementCompletionExtensions += 1;
+      finalRound = false;
+    }
+    let roundTools = finalRound && !allowToolOnFinalRound ? [] : tools;
+    if (roundTools.length && typeof selectTools === 'function') {
+      const selected = selectTools({ round, finalRound, tools: roundTools, recoveryPending });
+      if (Array.isArray(selected)) roundTools = selected;
+    }
+    if (toolFreeConclusionPending) roundTools = [];
+    // Een eerdere routefout verdwijnt pas na een gecontroleerde alternatieve
+    // stap of zodra het gebruikersdoel rond is. De open vereisten blijven ook
+    // na zo'n diagnose apart leidend.
     if (tracksRequirements && requiredRemaining.length === 0) recoveryPending = null;
     // Een missiestap verklaart zelf de verplichte gereedschapvolgorde. Bied per
     // ronde alleen het eerstvolgende nog ontbrekende gereedschap aan. Een model
@@ -553,6 +563,17 @@ export async function runAgent({
     });
     if (!toolCalls.length) {
       if (!mustCallTool) {
+        const emptyConclusion = !String(text || '').trim() && emptyConclusionRetries < 1;
+        if (emptyConclusion) {
+          if (finalRound) roundLimit += 1;
+          emptyConclusionRetries += 1;
+          toolFreeConclusionPending = true;
+          convo.push(...output.map(stripIds));
+          convo.push(msg('user', performedToolCalls > 0
+            ? 'De bronhandelingen zijn afgerond. Formuleer nu vanuit het gevonden bewijs een gewoon, direct antwoord op de oorspronkelijke gebruikersvraag. Geef geen lege reactie, ruwe bronuitvoer of intern werkverslag.'
+            : 'Je vorige reactie was leeg. Beantwoord nu de oorspronkelijke gebruikersvraag direct in je eigen gewone stem; roep geen gereedschap aan en geef geen intern werkverslag.'));
+          continue;
+        }
         const correction = typeof validateFinalText === 'function'
           ? validateFinalText({ text, round, finalRound, performedToolCalls })
           : '';
@@ -651,7 +672,7 @@ export async function runAgent({
       convo.push({ type: 'function_call_output', call_id: call.call_id, output: resultText.slice(0, toolOutputLimit) });
     }
     if (roundFailure) recoveryPending = roundFailure;
-    else if (!tracksRequirements && roundSuccess) recoveryPending = null;
+    else if (roundSuccess) recoveryPending = null;
     if (recoveryPending && !finalRound) {
       const uncertainty = recoveryPending.effectUncertain
         ? ' Het effect kan al zijn opgetreden: lees daarom eerst de actuele toestand terug en herhaal de mutatie niet blind.'

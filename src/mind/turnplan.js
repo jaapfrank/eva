@@ -21,6 +21,13 @@ function withoutDiscourseLead(value = '') {
     .trim();
 }
 
+export function localProjectReadRequest(value = '') {
+  const text = plainText(value);
+  return /\b(?:dit|deze|ons|onze|eva(?:'s)?)(?:\s+eigen)?\s+(?:project|repository|repo|codebase)\b/iu.test(text)
+    && /\b(?:documentatie|docs?|architectuur\w*|contract(?:en)?|werking|broncode|runtime|roadmap|beschreven)\b/iu.test(text)
+    && /\b(?:zoek|onderzoek|controleer|bekijk|lees|vind|waar)\w*\b/iu.test(text);
+}
+
 function contrastiveNegation(value = '') {
   return /\bniet\b.{0,100}\bmaar\b/iu.test(value);
 }
@@ -192,7 +199,8 @@ export function arbitrateTurnPlan({
 
   if (boundary.denied.length) {
     requiredTools = requiredTools.filter((name) => !boundary.denied.includes(effectForTool(name, {})));
-    const explicitWorkspaceRead = /\b(?:lees|bekijk|controleer|inspecteer)\b.{0,100}\b(?:bestand|broncode|configuratie|projectmap|repository)\b/iu.test(text);
+    const explicitWorkspaceRead = localProjectReadRequest(text)
+      || /\b(?:lees|bekijk|controleer|inspecteer)\b.{0,100}\b(?:bestand|broncode|configuratie|projectmap|repository)\b/iu.test(text);
     if (boundary.denied.includes('workspace') && !explicitWorkspaceRead) {
       // Een hypothetische programmeervraag met "maak niets" is uitleg, geen
       // halve bouwcyclus waarin alleen de toevallig read-only stap overblijft.

@@ -234,21 +234,11 @@ export async function recognizeFaceDetailed(buffer) {
   return detail;
 }
 
-/** Herken de meest prominente persoon op een beeld. Geeft {person, gelijkenis} of null. */
-export async function recognizeFace(buffer) {
-  const detail = await recognizeFaceDetailed(buffer);
-  return detail?.recognized ? {
-    person: detail.person,
-    gelijkenis: detail.gelijkenis,
-    marge: detail.marge,
-  } : null;
-}
-
 function quarantineInconsistentLegacyFaces() {
   const key = 'faces_legacy_quarantine_v2';
   if (kvGet(key, false)) return;
   try {
-    const rows = db.prepare("SELECT id, person, vec FROM faces WHERE coalesce(backend, 'human') = 'arcface' AND quality IS NULL AND coalesce(active, 1) != 0").all()
+    const rows = db.prepare("SELECT id, person, vec FROM faces WHERE backend='arcface' AND quality IS NULL AND coalesce(active, 1) != 0").all()
       .map((r) => ({ ...r, v: Array.from(bufToVec(r.vec) || []) }))
       .filter((r) => r.v.length);
     const bad = [];
@@ -265,7 +255,7 @@ function quarantineInconsistentLegacyFaces() {
 }
 
 /** Bereid de gezichtslaag voor. De centrale localbrain-monitor bewaakt de service;
- *  deze module beheert alleen haar eigen embeddings en terugvalroute. */
+ *  deze module beheert alleen haar eigen embeddings. */
 export function warmupFaceRec() {
   quarantineInconsistentLegacyFaces();
   // De centrale localbrain-monitor is de enige health-poller. Twee checks met
@@ -275,28 +265,4 @@ export function warmupFaceRec() {
     const brain = brainServiceStatus();
     serviceStatus = brain.ok ? 'ok' : brain.bevestigdOnbereikbaar ? 'onbereikbaar' : serviceStatus;
   }, 9_000);
-}
-
-export function faceRecStatus() {
-  const brain = brainServiceStatus();
-  if (brain.ok || serviceStatus === 'ok') return 'klaar';
-  if (brain.bevestigdOnbereikbaar || serviceStatus === 'onbereikbaar') return 'mislukt';
-  return 'laden';
-}
-
-export function knownFaceCount() {
-  return db.prepare('SELECT COUNT(DISTINCT person) c FROM faces WHERE coalesce(active, 1) != 0').get().c;
-}
-
-export function faceRecDebugStatus() {
-  quarantineInconsistentLegacyFaces();
-  const brain = brainServiceStatus();
-  const rows = db.prepare("SELECT person, coalesce(backend, 'human') backend, coalesce(active, 1) active, COUNT(*) n FROM faces GROUP BY person, coalesce(backend, 'human'), coalesce(active, 1) ORDER BY person, backend, active DESC").all();
-  return {
-    service: brain.ok ? 'ok' : brain.bevestigdOnbereikbaar ? 'onbereikbaar' : serviceStatus,
-    backend: 'arcface',
-    bekendActief: knownFaceCount(),
-    breinservice: brainServiceStatus(),
-    rijen: rows,
-  };
 }

@@ -79,6 +79,41 @@ test('expliciete opdrachten verplichten de passende kerntools', () => {
     required({ text: 'Zoek zelf in dit project waar de acht architectuurcontracten beschreven staan. Lees de documentatie echt.' }),
     ['lijst_bestanden', 'lees_bestand'],
   );
+  assert.deepEqual(
+    required({ text: 'Hoe staat het met die acht architectuurdelen? Zoek het in onze eigen repo uit.' }),
+    ['lijst_bestanden', 'lees_bestand'],
+  );
+  assert.deepEqual(
+    required({ text: 'Hoe warm is het nu in de woonkamer? Zoek zelf de juiste actuele sensor.' }),
+    ['huis_status', 'ha_lees'],
+  );
+  assert.deepEqual(
+    required({ text: 'Bouw een kleine Node.js CLI zonder externe packages. Test en draai hem echt.' }),
+    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
+  );
+  assert.equal(
+    __projectRouteTest.turnContractFor('Bouw een kleine Node.js CLI zonder externe packages. Test en draai hem echt.').kind,
+    'programming_build',
+  );
+  const parallelBuild = 'Bouw een Node.js CLI, voer tests uit en laat workers dit parallel uitvoeren.';
+  const parallelBuildContract = __projectRouteTest.turnContractFor(parallelBuild);
+  assert.equal(parallelBuildContract.kind, 'programming_build');
+  assert.deepEqual(required({ text: parallelBuild }), ['beheer_werkcel']);
+  assert.equal(parallelBuildContract.allowedTools.has('beheer_werkcel'), true);
+  const initiative = 'Ik wil deze kostenchecker morgen echt kunnen gebruiken voor een simpel boodschappenlijstje. Pak zelf de nuttigste kleine verbetering en maak die af.';
+  assert.deepEqual(
+    required({ text: initiative }),
+    ['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit'],
+  );
+  assert.equal(__projectRouteTest.turnContractFor(initiative).kind, 'programming_build');
+  const verificationText = 'Draai de bestaande CLI rechtstreeks met fout.json, controleer exitcode 1 en lees de bron terug. Geen internet en geen add-on.';
+  assert.deepEqual(required({ text: verificationText }), ['voer_uit', 'lees_bestand']);
+  const verification = __projectRouteTest.turnContractFor(verificationText);
+  assert.equal(verification.kind, 'programming_verification');
+  assert.deepEqual([...verification.allowedTools], ['voer_uit', 'lees_bestand', 'lijst_bestanden']);
+  const liveFollowup = 'Je hebt de bron, tests en voorbeeldbestanden al gemaakt. Maak nu alleen het ontbrekende bewijs af: draai de gewone CLI rechtstreeks met zonder-prijs.json, controleer exitcode 1, een korte Nederlandse fout en geen stacktrace, en lees bron plus test terug. Geen internet, geen add-on en niet herbouwen. Geef daarna gewoon kort het eindresultaat.';
+  assert.deepEqual(required({ text: liveFollowup }), ['voer_uit', 'lees_bestand']);
+  assert.equal(__projectRouteTest.turnContractFor(liveFollowup).kind, 'programming_verification');
   assert.equal(
     __projectRouteTest.requestsLocalProjectDocumentation('Waar staan de contracten in deze codebase beschreven?'),
     true,
@@ -389,6 +424,25 @@ test('anaforische opdrachten blijven echte opdrachten, ook in beleefde vraagvorm
   ]) assert.equal(isAction(phrase), false, phrase);
 });
 
+test('een uitvoeropdracht na een probleembeschrijving blijft een echte opdracht', () => {
+  const recovery = 'voorbeelden/bestaat-niet.json doet het niet. Zoek uit wat er aan de hand is en zorg dat ik meteen weet welke invoer wél werkt.';
+  assert.equal(__projectRouteTest.isExplicitToolRequest(recovery), true);
+  const contract = __projectRouteTest.turnContractFor(recovery);
+  assert.equal(contract.kind, 'repair');
+  assert.deepEqual(contract.requiredTools, ['lijst_bestanden', 'voer_uit']);
+  assert.deepEqual([...contract.allowedTools], ['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit']);
+  const missingRun = {
+    ...tool({ name: 'voer_uit', changed: true, data: { exit_code: 1, stderr: 'niet gevonden' } }),
+    args: { programma: 'node', argumenten: ['kostenchecker.cjs', 'bestaat-niet.json'] },
+  };
+  const workingRun = {
+    ...tool({ name: 'voer_uit', changed: true, data: { exit_code: 0, stdout: '547' } }),
+    args: { programma: 'node', argumenten: ['kostenchecker.cjs', 'geldig.json'] },
+  };
+  assert.equal(__projectRouteTest.turnRequirementSatisfied('voer_uit', [missingRun], recovery), false);
+  assert.equal(__projectRouteTest.turnRequirementSatisfied('voer_uit', [missingRun, workingRun], recovery), true);
+});
+
 test('aanwezigheidsbeheer is uitvoerbaar maar nooit muterend in een synthetische test', () => {
   assert.equal(__projectRouteTest.syntheticToolAllowed('beheer_aanwezigheid'), false);
   const selected = __projectRouteTest.chatToolNamesFor(['beheer_aanwezigheid']);
@@ -433,6 +487,14 @@ test('gedeeltelijk bewijs met vervolgwerk voldoet niet aan een uitkomstcontract'
     output: JSON.stringify({ ok: true, verified: true, partial: true, needs_followup: true, waiting_for: 'human_otp' }),
   };
   assert.equal(__projectRouteTest.requiredToolSatisfied('beheer_agentmail', [waiting]), true);
+});
+
+test('bron plus test teruglezen vereist beide werkstukken', () => {
+  const request = 'Lees bron plus test terug en geef dan de uitkomst.';
+  const source = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/kostenchecker.cjs' } };
+  const tests = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/kostenchecker.test.cjs' } };
+  assert.equal(__projectRouteTest.turnRequirementSatisfied('lees_bestand', [source], request), false);
+  assert.equal(__projectRouteTest.turnRequirementSatisfied('lees_bestand', [source, tests], request), true);
 });
 
 test('een HA-tijdlijnvraag vereist werkelijk een entiteitslogboek en geen algemene states-dump', () => {
@@ -522,6 +584,41 @@ test('dubbel verpakte toolresultaten worden gewone mensentaal', () => {
   ], { requiredTools: ['zoek_internet'], userText: 'Hoe kunnen we geld verdienen?' });
   assert.match(requiredFallback, /Drie concrete problemen/);
   assert.doesNotMatch(requiredFallback, /RUWE INTERNE UITVOER/);
+  const readOutput = JSON.stringify({
+    contract: 'ActionResult/v1', tool: 'lees_bestand', ok: true, verified: true,
+    data: '1: rauwe bronregel\n2: nog een rauwe bronregel',
+  });
+  assert.equal(__projectRouteTest.evidenceFallback([{
+    name: 'lees_bestand', ok: true, verified: true, output: readOutput,
+  }], { requiredTools: ['lees_bestand'], userText: 'Zoek dit uit.' }), '');
+  assert.equal(__projectRouteTest.evidenceFallback([{
+    name: 'lijst_bestanden', ok: true, verified: true, output: readOutput,
+  }], { requiredTools: ['lijst_bestanden'], userText: 'Zoek dit uit.' }), '');
+});
+
+test('afgekorte audituitvoer blijft geldige compacte JSON', () => {
+  const parsed = {
+    contract: 'ActionResult/v1', tool: 'lees_bestand', ok: true, verified: true,
+    partial: false, needs_followup: false, evidence: { summary: 'bewijs '.repeat(500) },
+  };
+  const compact = __projectRouteTest.auditToolOutput(JSON.stringify({ ...parsed, data: 'x'.repeat(8_000) }), parsed);
+  const audited = JSON.parse(compact);
+  assert.equal(audited.audit_truncated, true);
+  assert.equal(audited.tool, 'lees_bestand');
+  assert.ok(compact.length < 1_800);
+  const failed = {
+    contract: 'ActionResult/v1', tool: 'voer_uit', ok: false, verified: false,
+    error: 'programma ontbreekt', failure_class: 'missing_entrypoint',
+    data: { exit_code: 2, expected_exit_codes: [0, 1], stderr: 'bestand niet gevonden' },
+    evidence: { summary: 'x'.repeat(3_000) },
+  };
+  const compactFailure = JSON.parse(__projectRouteTest.auditToolOutput(
+    JSON.stringify({ ...failed, padding: 'x'.repeat(8_000) }), failed,
+  ));
+  assert.equal(compactFailure.error, 'programma ontbreekt');
+  assert.equal(compactFailure.failure_class, 'missing_entrypoint');
+  assert.equal(compactFailure.data.exit_code, 2);
+  assert.equal(compactFailure.data.stderr, 'bestand niet gevonden');
 });
 
 test('zelfopdeling en interne kanaaltaal moeten vóór aflevering worden vernederlandst', () => {
@@ -529,6 +626,25 @@ test('zelfopdeling en interne kanaaltaal moeten vóór aflevering worden vernede
   assert.equal(needsNarration('In deze beurt zijn de Home Assistant-tools niet aangeboden.'), true);
   assert.equal(needsNarration('Dat hoort bij een ander systeem dan deze route.'), true);
   assert.equal(needsNarration('Ik krijg de overkapping nu niet bereikt.'), false);
+});
+
+test('een gevraagd projectpad is gewone bronvermelding maar ruwe uitvoer blijft intern', () => {
+  assert.equal(__projectRouteTest.looksLikeInternalOutput('Het staat in `docs/eva-runtime-map.md`.'), true);
+  assert.equal(__projectRouteTest.looksLikeInternalOutput(
+    'Het staat in `docs/eva-runtime-map.md`.', { allowProjectPaths: true },
+  ), false);
+  assert.equal(__projectRouteTest.looksLikeInternalOutput(
+    '`docs/eva-runtime-map.md` zegt dit. stdout: rauw', { allowProjectPaths: true },
+  ), true);
+  assert.equal(__projectRouteTest.looksLikeInternalOutput(
+    'De foutproef slaagde met exitcode 1; de melding is kort en er staat geen stacktrace.',
+  ), false);
+  assert.equal(__projectRouteTest.looksLikeInternalOutput(
+    'Gebruik `voorbeelden/geldig.json`; die gaf 547.', { allowProjectPaths: true },
+  ), false);
+  assert.equal(__projectRouteTest.looksLikeInternalOutput(
+    'Lees data/workspace/geheim.txt', { allowProjectPaths: true },
+  ), true);
 });
 
 test('een inhoudelijke correctie wordt geen voortaan-beleidsverklaring', () => {
@@ -544,6 +660,22 @@ test('een inhoudelijke correctie wordt geen voortaan-beleidsverklaring', () => {
     feedback(
       'De net geopende voordeur maakte jou inderdaad de logische persoon.',
       'Je had kunnen weten dat ik het was omdat de voordeur net open was gegaan.',
+    ),
+    '',
+  );
+});
+
+test('actuele internetclaims blijven zonder directe bronlink onvolledig', () => {
+  const webProof = tool({ name: 'zoek_internet', data: { sources: ['https://voorbeeld.nl/vraag'] } });
+  assert.match(
+    __projectRouteTest.missingSourceLinkFeedback(
+      'Er is nu aantoonbare vraag en honderd euro is haalbaar.', ['zoek_internet'], [webProof],
+    ),
+    /bron-URL/,
+  );
+  assert.equal(
+    __projectRouteTest.missingSourceLinkFeedback(
+      'De actuele bron staat op https://voorbeeld.nl/vraag.', ['zoek_internet'], [webProof],
     ),
     '',
   );
@@ -1861,4 +1993,85 @@ test('na gereedschap komt de oorspronkelijke gesprekstaak weer als laatste conte
   const latest = finalInput.at(-1)?.content?.[0]?.text || '';
   assert.match(latest, /tafeltoon/);
   assert.equal(result.text, 'Gewoon antwoord.');
+});
+
+test('een lege afronding na bewijs krijgt exact één toolvrije synthesekans', async () => {
+  let round = 0;
+  const offered = [];
+  const result = await runAgent({
+    instructions: 'test',
+    input: [],
+    tools: [{ name: 'lees_bestand', description: 'test', parameters: { type: 'object' } }],
+    complete: async ({ tools }) => {
+      offered.push(tools.map((item) => item.name));
+      if (round++ === 0) return {
+        output: [{ type: 'function_call', call_id: 'read-1', name: 'lees_bestand', arguments: '{}' }],
+        text: '',
+        toolCalls: [{ call_id: 'read-1', name: 'lees_bestand', arguments: '{}' }],
+      };
+      if (round === 2) return { output: [], text: '', toolCalls: [] };
+      return { output: [], text: 'Het gewone antwoord uit het bewijs.', toolCalls: [] };
+    },
+    executeTool: async () => JSON.stringify({ ok: true, verified: true, data: 'bewijs' }),
+    maxRounds: 4,
+  });
+  assert.deepEqual(offered, [['lees_bestand'], ['lees_bestand'], []]);
+  assert.equal(result.text, 'Het gewone antwoord uit het bewijs.');
+});
+
+test('een lege gewone gespreksreactie krijgt exact één nieuwe antwoordkans', async () => {
+  let calls = 0;
+  const result = await runAgent({
+    instructions: 'test',
+    input: [{ type: 'message', role: 'user', content: [{ type: 'input_text', text: 'Hoe kijk je daarop terug?' }] }],
+    tools: [],
+    complete: async () => {
+      calls += 1;
+      return calls === 1
+        ? { output: [], text: '', toolCalls: [] }
+        : { output: [], text: 'Ik maakte van een ommetje een wereldreis.', toolCalls: [] };
+    },
+    maxRounds: 2,
+  });
+  assert.equal(calls, 2);
+  assert.equal(result.text, 'Ik maakte van een ommetje een wereldreis.');
+});
+
+test('een open contractstap op de laatste ronde krijgt nog uitvoering én afronding', async () => {
+  let wrote = false;
+  let read = false;
+  let calls = 0;
+  const offeredTools = [];
+  const result = await runAgent({
+    instructions: 'test',
+    input: [],
+    tools: [
+      { name: 'schrijf_bestand', description: 'schrijf', parameters: { type: 'object' } },
+      { name: 'lees_bestand', description: 'lees', parameters: { type: 'object' } },
+    ],
+    requiredToolsRemaining: () => (wrote ? (read ? [] : ['lees_bestand']) : ['schrijf_bestand']),
+    requireToolCall: () => !wrote || !read,
+    complete: async ({ tools }) => {
+      calls += 1;
+      offeredTools.push(tools.map((tool) => tool.name));
+      const name = tools[0]?.name;
+      if (name) return {
+        output: [{ type: 'function_call', call_id: `c-${calls}`, name, arguments: '{}' }],
+        text: '',
+        toolCalls: [{ call_id: `c-${calls}`, name, arguments: '{}' }],
+      };
+      return { output: [], text: 'Gebouwd en teruggelezen.', toolCalls: [] };
+    },
+    executeTool: async (name) => {
+      if (name === 'schrijf_bestand') wrote = true;
+      if (name === 'lees_bestand') read = true;
+      return JSON.stringify({ ok: true, verified: true });
+    },
+    maxRounds: 2,
+  });
+  assert.equal(wrote, true);
+  assert.equal(read, true);
+  assert.equal(calls, 3);
+  assert.deepEqual(offeredTools, [['schrijf_bestand'], ['lees_bestand'], []]);
+  assert.equal(result.text, 'Gebouwd en teruggelezen.');
 });
