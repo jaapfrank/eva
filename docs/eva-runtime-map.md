@@ -430,11 +430,10 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `HABITABILITY.md`, `eva_stil_wijzen_v0_1.md` | Gedrags-/onderzoeksnotities | Geen actieve runtimecode |
 
 Naast de 112 gevolgde repositorybestanden staan lokaal ook een Python-venv,
-scratch-/meetbestanden, logs, caches en genegeerde credentials/backups. Die zijn
-niet als productcode in de graaf opgenomen. De aangetroffen `.env`-backup en
-private-keybestanden zijn niet door Git gevolgd en hebben mode `0600`, maar horen
-ook dan niet in de projectmap te blijven. Verplaats of vernietig ze afzonderlijk
-via een gecontroleerde secret-cleanup; alleen `.gitignore` is geen sanering.
+scratch-/meetbestanden, logs en caches. Die zijn niet als productcode in de graaf
+opgenomen. De tijdens deze audit aangetroffen genegeerde `.env`-backup en losse
+private/public-keykopieën zijn na controle herstelbaar naar de desktop-prullenbak
+verplaatst. Alleen `.gitignore` was daarvoor geen sanering.
 
 ## SQLite-eigenaarschap
 
