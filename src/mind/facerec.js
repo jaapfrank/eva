@@ -58,7 +58,13 @@ async function serviceFaces(buffer) {
       return (j.gezichten || [])
         .filter((f) => Array.isArray(f.embedding) && f.embedding.length)
         .map((f) => ({ embedding: Float32Array.from(f.embedding), score: f.det_score || 0, oppervlak: f.oppervlak || 0, bbox: f.bbox || null, backend: 'arcface' }));
-    } catch {
+    } catch (error) {
+      // Een 4xx van de bereikbare brein-service is een fout in dit frame, geen
+      // service-uitval. Nogmaals dezelfde bytes sturen geeft alleen dubbel lawaai.
+      if (error?.retryable === false) {
+        serviceStatus = 'ok';
+        return [];
+      }
       if (poging === 0) { await new Promise((r) => setTimeout(r, 1200)); continue; }
       serviceStatus = 'onbereikbaar';
       return null; // pas na 2 pogingen: val terug op Human
@@ -153,7 +159,7 @@ function heeftArcfaceFaces() {
 
 /** Detecteer alle gezichten in een beeld; geef embeddings + score + grootte + backend. */
 export async function detectFaces(buffer) {
-  if (!buffer) return [];
+  if (!buffer || !Number(buffer.length)) return [];
   const viaService = await serviceFaces(buffer);
   if (viaService) return viaService;       // ArcFace (primair)
   // Service hapert even. Bestaan er al ArcFace-gezichten? Dan NIET terugvallen op Human: die ruimte

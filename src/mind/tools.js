@@ -462,8 +462,12 @@ function entityScore(state, target) {
   const label = normalize(`${state.entity_id} ${friendlyName(state)}`);
   const targetWords = words(target);
   const candidateWords = words(label);
+  const objectId = String(state.entity_id.split('.')[1] || '').toLowerCase();
   let score = 0;
   if (state.entity_id.toLowerCase() === String(target || '').toLowerCase()) score += 1000;
+  // De slug is Home Assistants stabiele identiteit. Een exact passend object-id
+  // wint van vijf integraties die toevallig dezelfde friendly_name publiceren.
+  if (targetWords.length && targetWords.join('_') === objectId) score += 300;
   if (targetNormalized && label.includes(targetNormalized)) score += 120;
   for (const targetWord of targetWords) {
     if (candidateWords.includes(targetWord)) score += 24;
@@ -492,7 +496,9 @@ function resolveHomeEntity(states, target) {
   const first = ranked[0];
   const second = ranked[1];
   if (!first) return { state: null, alternatives: [], ambiguous: false };
-  const ambiguous = !!second && first.score < 100 && second.score >= first.score - 3;
+  // Een hoge score maakt een gelijkspel niet minder dubbelzinnig. Alleen een
+  // duidelijke winnaar (bijvoorbeeld een exacte entity-id/slug) mag handelen.
+  const ambiguous = !!second && second.score >= first.score - 3;
   return {
     state: ambiguous ? null : first.state,
     ambiguous,
@@ -624,7 +630,18 @@ async function operateHome({ target, action, value = null }) {
     .catch((error) => ({ result: null, error }));
   if (expected == null) {
     const service = await serviceCall;
-    if (service.error) throw service.error;
+    if (service.error) {
+      return {
+        ok: false,
+        changed: false,
+        verified: false,
+        entity_id: entity.entity_id,
+        name: friendlyName(entity),
+        before: entity.state,
+        expected: null,
+        reason: service.error?.message || String(service.error),
+      };
+    }
   }
   const verification = await verifyEntityState(entity.entity_id, expected, {
     timeoutMs: 3_500,
@@ -632,7 +649,19 @@ async function operateHome({ target, action, value = null }) {
   });
   if (expected != null && !verification?.ok && !verification?.reachableVerified) {
     const service = await serviceCall;
-    if (service.error) throw service.error;
+    if (service.error) {
+      return {
+        ok: false,
+        changed: false,
+        verified: false,
+        entity_id: entity.entity_id,
+        name: friendlyName(entity),
+        before: entity.state,
+        expected,
+        reason: service.error?.message || String(service.error),
+        evidence: { assessment: verification },
+      };
+    }
   }
   const after = expected != null && (verification?.ok || verification?.reachableVerified)
     ? {
@@ -2678,6 +2707,8 @@ export const __toolsTest = {
   classifyToolFailure,
   emptyAutonomousWebFinding,
   homeOperationOutcome,
+  entityScore,
+  resolveHomeEntity,
   normalizeExpectedExitCodes,
   proofToolFitsSubject,
 };

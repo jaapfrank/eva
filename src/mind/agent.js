@@ -126,6 +126,11 @@ function shouldBindDurableUserEpisode({ projectWork = false, explicitTool = fals
   return projectWork || (explicitTool && (buildWork || requiredToolCount > 1 || longWork));
 }
 
+function syntheticConversationCanBePurged(value = '') {
+  return /^(?:voice:)?(?:test:|eva-test-|blackbox|live-|workcell-|toolpackage-|capability-|persona-eval)/i
+    .test(String(value));
+}
+
 // Oud duurzaam werk en het nieuwe doelportfolio vormen vanaf nu één boog. Dit
 // is een eenmalige, idempotente adoptie; open beloften verdwijnen niet omdat ze
 // vóór de portfolio-migratie zijn ontstaan.
@@ -133,15 +138,23 @@ adoptUnboundWorkEpisodes();
 recoverDeliveredEpisodeReceipts();
 recoverStrandedDeliveryWork();
 for (const row of db.prepare(`
-  SELECT DISTINCT json_extract(meta, '$.conversationId') AS conversation_id
+  SELECT DISTINCT
+    json_extract(meta, '$.conversationId') AS conversation_id,
+    json_extract(meta, '$.originMessageId') AS origin_message_id
   FROM timeline
-  WHERE (kind = 'chat_in' AND json_extract(meta, '$.messageContext.syntheticTest') = 1)
-     OR (kind = 'chat_out' AND json_extract(meta, '$.syntheticTest') = 1)
+  WHERE json_extract(meta, '$.syntheticTest') = 1
+     OR json_extract(meta, '$.messageContext.syntheticTest') = 1
 `).all()) {
-  if (row.conversation_id) {
-    // De append-only timeline bewaart de evaluatie-audit. De gewone
-    // gesprekscontext mag haar niet als gezinsherinnering of autonome aanleiding lezen.
-    db.prepare('DELETE FROM messages WHERE conversation_id = ?').run(row.conversation_id);
+  // Nieuwe proeven schrijven helemaal geen message-rij. Voor historische
+  // evaluaties mag cleanup alleen de exact herleidbare rij of een expliciete
+  // testconversation verwijderen — nooit een echte thread als `voice:jaap`.
+  const messageId = Number(row.origin_message_id);
+  if (Number.isSafeInteger(messageId) && messageId > 0) {
+    db.prepare('DELETE FROM messages WHERE id = ?').run(messageId);
+  }
+  const conversation = String(row.conversation_id || '');
+  if (syntheticConversationCanBePurged(conversation)) {
+    db.prepare('DELETE FROM messages WHERE conversation_id = ?').run(conversation);
   }
 }
 const AUTONOMY_DISCOVERY_LIMIT = 4;
@@ -701,6 +714,12 @@ function requiredToolsFor({ text = '', replyEvidence = null } = {}) {
 
 function chatToolNamesFor(requiredTools = []) {
   if (!requiredTools.length) return null;
+  // Een concrete huisopdracht is geen algemene diagnosemissie. Na een
+  // routefout mag Eva alleen dezelfde capability met een beter doel proberen
+  // of de actuele toestand teruglezen.
+  if (requiredTools.length === 1 && requiredTools[0] === 'bedien_huis') {
+    return new Set(['bedien_huis', 'ha_lees']);
+  }
   const names = new Set(requiredTools);
   // Deze read-only vermogens zijn na een mislukte voorkeursroute beschikbaar
   // voor diagnose en een materieel andere aanpak. runAgent biedt vóór een fout
@@ -724,20 +743,26 @@ function chatToolNamesFor(requiredTools = []) {
 
 function directHomeCommand(text = '') {
   const value = commandText(text).trim();
-  let match = value.match(/^\s*(?:zet|schakel|doe)\s+(.{1,160}?)\s+(?:weer\s+)?(aan|uit)\s*[.!?]*$/i);
+  let match = value.match(/^\s*(?:zet|schakel|doe)\s+(.{1,100}?)\s+(?:weer\s+)?(aan|uit)\s+(?:in|onder|op|bij)\s+(?:de\s+|het\s+)?(.{1,60}?)\s*[.!?]*$/i);
   let target;
   let action;
   if (match) {
-    [, target, action] = match;
+    target = `${match[1]} in ${match[3]}`;
+    action = match[2];
   } else {
-    match = value.match(/^\s*(open|sluit)\s+(.{1,160}?)\s*[.!?]*$/i);
+    match = value.match(/^\s*(?:zet|schakel|doe)\s+(.{1,160}?)\s+(?:weer\s+)?(aan|uit)\s*[.!?]*$/i);
     if (match) {
-      action = /^open$/i.test(match[1]) ? 'open' : 'dicht';
-      target = match[2];
-    } else {
-      match = value.match(/^\s*(.{1,160}?)\s+(aan|uit)\s*(?:zetten|doen|schakelen)\s*[.!?]*$/i);
-      if (!match) return null;
       [, target, action] = match;
+    } else {
+      match = value.match(/^\s*(open|sluit)\s+(.{1,160}?)\s*[.!?]*$/i);
+      if (match) {
+        action = /^open$/i.test(match[1]) ? 'open' : 'dicht';
+        target = match[2];
+      } else {
+        match = value.match(/^\s*(.{1,160}?)\s+(aan|uit)\s*(?:zetten|doen|schakelen)\s*[.!?]*$/i);
+        if (!match) return null;
+        [, target, action] = match;
+      }
     }
   }
   target = String(target || '').replace(/^\s*(?:de|het|die|dat)\s+/i, '').trim();
@@ -1301,8 +1326,40 @@ function requiredToolSatisfied(name, toolResults = []) {
   });
 }
 
+function verifiedHomeReadback(userText, toolResults = []) {
+  const command = directHomeCommand(userText);
+  const expected = ({ aan: 'on', uit: 'off', open: 'open', dicht: 'closed' })[command?.actie];
+  if (!command || !expected) return null;
+  let lastMutation = -1;
+  let attemptedEntityId = '';
+  for (let index = toolResults.length - 1; index >= 0; index -= 1) {
+    if (toolResults[index]?.name === 'bedien_huis') {
+      lastMutation = index;
+      attemptedEntityId = String(actionData(toolResults[index])?.entity_id || '').toLowerCase();
+      break;
+    }
+  }
+  // Alleen dezelfde, door bedien_huis ondubbelzinnig opgeloste HA-entiteit mag
+  // de mislukte mutatie achteraf certificeren. Vrije woordoverlap is bij
+  // duplicate friendly names geen identiteit en dus geen bewijs.
+  if (lastMutation < 0 || !attemptedEntityId) return null;
+  for (let index = toolResults.length - 1; index > lastMutation; index -= 1) {
+    const tool = toolResults[index];
+    if (tool.name !== 'ha_lees' || !tool.ok || !tool.verified) continue;
+    const data = actionData(tool) || {};
+    if (String(data.entity_id || '').toLowerCase() === attemptedEntityId
+      && data.state === expected) return tool;
+  }
+  return null;
+}
+
+function alternateRequirementEvidence(name, userText, toolResults) {
+  return name === 'bedien_huis' && Boolean(verifiedHomeReadback(userText, toolResults));
+}
+
 function turnRequirementSatisfied(name, toolResults = [], userText = '') {
   const text = cleanUserText(userText).toLowerCase();
+  if (alternateRequirementEvidence(name, userText, toolResults)) return true;
   if (name === 'ha_lees'
     && /\b(?:logboek|geschiedenis|eerder|later|vanochtend|gisteren|gebeurd|waardoor|oorzaak|weer\s+aan|weer\s+uit)\b/i.test(text)) {
     return toolResults.some((tool) => (
@@ -2830,6 +2887,7 @@ async function executeTurn({
       internalOnly: true,
       turnId,
       mode,
+      syntheticTest,
       tool: name,
       args,
       ok,
@@ -3212,6 +3270,7 @@ async function executeTurn({
         channel,
         conversationId,
         sender: person,
+        syntheticTest,
         messageContext,
         replyTo,
       });
@@ -3355,6 +3414,7 @@ async function executeTurn({
         internalOnly: true,
         turnId,
         mode,
+        syntheticTest,
         kind: turnContract.kind,
         requiredTools,
         offeredTools: ['spreek_in_huis'],
@@ -3449,15 +3509,13 @@ async function executeTurn({
       if (action.ok && action.verified) {
         const parsed = JSON.parse(String(output));
         const detailed = humanResultText(parsed);
-        const reply = parsed?.needs_followup
-          ? detailed
-          : renderHouseActionResult({
-            target: directHome.doel,
-            action: directHome.actie,
-            ok: action.ok,
-            verified: action.verified,
-            changed: action.changed,
-          });
+        const reply = detailed || renderHouseActionResult({
+          target: directHome.doel,
+          action: directHome.actie,
+          ok: action.ok,
+          verified: action.verified,
+          changed: action.changed,
+        });
         return answerTurn(reply, { toolFinal: true });
       }
     }
@@ -3567,6 +3625,7 @@ async function executeTurn({
         internalOnly: true,
         turnId,
         mode,
+        syntheticTest,
         missingPlannedTools,
         forbiddenRequiredTools,
         actionIntent: turnPlan.actionIntent,
@@ -3577,6 +3636,7 @@ async function executeTurn({
       internalOnly: true,
       turnId,
       mode,
+      syntheticTest,
       kind: turnContract.kind,
       requiredTools,
       offeredTools: tools.map((tool) => tool.name),
@@ -3942,10 +4002,14 @@ async function executeTurn({
           return Number(toolNameAttempts.get(name) || 0) < attemptLimitFor(name);
         });
       },
-      roundTimeoutMs: mode === 'autonomy' ? 90_000 : longWork ? 120_000 : 45_000,
+      roundTimeoutMs: mode === 'autonomy'
+        ? 90_000
+        : channel === 'voice' ? 10_000
+          : longWork ? 120_000 : 45_000,
       totalTimeoutMs: mode === 'autonomy'
         ? (config.autonomyFull ? config.autonomyTurnMinutes : 6) * 60_000
-        : longWork ? 300_000
+        : channel === 'voice' ? 24_000
+          : longWork ? 300_000
           : (requiredTools.length || explicitTool) ? 240_000
             : 90_000,
       rateLimitRetries: 2,
@@ -3957,7 +4021,9 @@ async function executeTurn({
         ? () => runtime.interactivePending > 0
           || Number(runtime.activeInteractive || 0) > 0
           || runtime.interactionEpoch !== autonomyEpoch
-        : null,
+        : channel === 'voice' && typeof messageContext?.isCurrent === 'function'
+          ? () => !messageContext.isCurrent()
+          : null,
       stopAfterToolRound: () => {
         if (mode === 'autonomy' && autonomyStopReady(toolResults, {
           allowSignalOnly: !hasOpenDurableWork,
@@ -3967,7 +4033,13 @@ async function executeTurn({
         // alleen of het werk echt af is; zij is geen vast antwoordsjabloon.
         if (mode !== 'chat' || requiredTools.length !== 1 || requiredTools[0] !== 'bedien_huis') return false;
         const action = [...toolResults].reverse().find((tool) => tool.name === 'bedien_huis');
-        if (!action?.ok || !action?.verified) return false;
+        const readback = verifiedHomeReadback(userText, toolResults);
+        if ((!action?.ok || !action?.verified) && !readback) return false;
+        if (readback) {
+          const data = actionData(readback) || {};
+          const state = ({ on: 'aan', off: 'uit', open: 'open', closed: 'dicht' })[data.state] || data.state;
+          return `${data.name || directHomeCommand(userText)?.doel || 'Het apparaat'} staat ${state}.`;
+        }
         try {
           const parsed = JSON.parse(String(action.output || ''));
           return parsed.human_message || parsed.evidence?.summary || false;
@@ -4157,7 +4229,8 @@ export function handleMessageDetailed(input) {
   });
   runtime.interactivePending += 1;
   runtime.interactionEpoch += 1;
-  return queueFor(conversationId, () => executeTurn({
+  const queueKey = String(input?.messageContext?.queueKey || conversationId);
+  return queueFor(queueKey, () => executeTurn({
     ...input,
     channel,
     sender,
@@ -4372,11 +4445,13 @@ export const __projectRouteTest = {
   confirmedRecognitionName,
   directHomeCommand,
   directHomeForTurn,
+  verifiedHomeReadback,
   evidenceFallback,
   humanResultText,
   looksLikeInternalOutput,
   syntheticToolAllowed: toolSyntheticAllowed,
   syntheticReplyNeedsPersistentState,
+  syntheticConversationCanBePurged,
   stripSyntheticFutureClaims,
   styleCorrectionPolicyFeedback,
   shouldBindDurableUserEpisode,

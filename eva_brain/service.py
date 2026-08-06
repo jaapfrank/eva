@@ -22,13 +22,13 @@ try:
 except RuntimeError:
     pass
 
-import io, base64, threading
+import io, base64, binascii, threading
 import numpy as np
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, UnidentifiedImageError
 import torch.nn as nn
 import torchvision.transforms as T
 import cv2
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 try:
     import pillow_heif
@@ -124,9 +124,44 @@ def _open(path):
     return ImageOps.exif_transpose(Image.open(path)).convert('RGB')
 
 
+class ImagePayloadError(ValueError):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
+
+
 def _open_b64(b64):
-    raw = base64.b64decode(b64)
-    return ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert('RGB')
+    value = str(b64 or '').strip()
+    if not value:
+        raise ImagePayloadError('empty_image', 'afbeeldingsgegevens ontbreken')
+    try:
+        raw = base64.b64decode(value, validate=True)
+    except (binascii.Error, ValueError) as exc:
+        raise ImagePayloadError(
+            'invalid_base64',
+            'afbeeldingsgegevens zijn geen geldige base64',
+        ) from exc
+    if not raw:
+        raise ImagePayloadError('empty_image', 'afbeeldingsgegevens ontbreken')
+    try:
+        with Image.open(io.BytesIO(raw)) as source:
+            source.load()  # forceer decode binnen de gecontroleerde foutgrens
+            return ImageOps.exif_transpose(source).convert('RGB')
+    except (UnidentifiedImageError, OSError, ValueError) as exc:
+        raise ImagePayloadError(
+            'invalid_image',
+            'afbeeldingsgegevens bevatten geen ondersteund beeld',
+        ) from exc
+
+
+def _open_request_b64(value):
+    try:
+        return _open_b64(value)
+    except ImagePayloadError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail={'code': exc.code, 'message': str(exc)},
+        ) from None
 
 
 def _faces_from_img(im):
@@ -183,7 +218,7 @@ def faces(req: PathReq):
 
 @app.post('/faces_b64')
 def faces_b64(req: BytesReq):
-    return _faces_from_img(_open_b64(req.image_b64))
+    return _faces_from_img(_open_request_b64(req.image_b64))
 
 
 @app.post('/embed')
@@ -195,4 +230,4 @@ def embed(req: PathReq):
 
 @app.post('/embed_b64')
 def embed_b64(req: BytesReq):
-    return _embed_img(_open_b64(req.image_b64))
+    return _embed_img(_open_request_b64(req.image_b64))

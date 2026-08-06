@@ -172,9 +172,26 @@ export async function brainPost(path, body, { kind = 'call', timeoutMs = 8000 } 
       body: JSON.stringify(body || {}),
       signal: AbortSignal.timeout(timeoutMs),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const j = await res.json();
-    if (j.fout) throw new Error(j.fout);
+    let j = null;
+    try { j = await res.json(); } catch { /* fouttekst hieronder blijft bruikbaar */ }
+    if (!res.ok) {
+      const detail = typeof j?.detail === 'string' ? j.detail : j?.detail?.message;
+      const message = j?.fout || detail || `HTTP ${res.status}`;
+      const error = Object.assign(new Error(message), {
+        status: res.status,
+        code: j?.code || j?.detail?.code || null,
+        retryable: res.status === 408 || res.status === 429 || res.status >= 500,
+      });
+      throw error;
+    }
+    if (!j || typeof j !== 'object') throw new Error('Brein-service gaf geen geldig JSON-resultaat.');
+    if (j.fout) {
+      const error = Object.assign(new Error(j.fout), {
+        code: j.code || null,
+        retryable: false,
+      });
+      throw error;
+    }
     status.reachable = true;
     status.ok = true;
     status.lastError = null;
@@ -186,6 +203,7 @@ export async function brainPost(path, body, { kind = 'call', timeoutMs = 8000 } 
     const msg = (e && e.message) || String(e);
     // Een mislukte specifieke operatie bewijst niet dat de hele service weg is.
     // Alleen de centrale health-monitor mag die conclusie na meerdere fouten trekken.
+    if (Number.isInteger(e?.status)) status.reachable = true;
     status.lastError = msg;
     record(kind, { ok: false, ms: Date.now() - t0, error: msg });
     throw e;

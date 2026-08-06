@@ -613,9 +613,12 @@ export async function runAgent({
         const timeLeft = remaining();
         // Reserveer altijd tijd voor de volgende modelronde, zodat een geslaagde
         // tooluitkomst nog in gewone taal kan worden afgerond.
+        const finalizationReserveMs = Number.isFinite(total) && total > 0
+          ? Math.min(45_000, Math.max(1_000, Math.floor(total * 0.25)))
+          : 45_000;
         const toolTimeoutMs = timeLeft == null
           ? null
-          : Math.max(1_000, Math.min(120_000, timeLeft - 45_000));
+          : Math.max(1_000, Math.min(120_000, timeLeft - finalizationReserveMs));
         resultText = String(await executeTool(call.name, args, {
           deadlineTs: deadline,
           timeoutMs: toolTimeoutMs,

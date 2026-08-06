@@ -11,9 +11,9 @@ Eva heeft geen statische importcyclus, maar is nog geen werkelijk enkelvoudige
 entiteit. De complexiteit zit in gedeelde toestand en overlappende beslissers:
 
 - 45 JavaScriptmodules en 3 statische webassets in `src`;
-- 24.338 regels JavaScript in `src`;
+- 24.540 regels JavaScript in `src`;
 - 37 SQLite-tabellen, aangemaakt door 12 verschillende modules;
-- `agent.js` (4.406 regels), `tools.js` (2.685), Home Assistant (1.900),
+- `agent.js` (4.481 regels), `tools.js` (2.716), Home Assistant (1.903),
   Telegram (1.551), `db.js` (1.302) en vision (1.300) zijn de hotspots;
 - `db.js` heeft circa 30 importeurs, `config.js` 21;
 - agentische uitvoering is verdeeld over `agent.js`, `tools.js` en `brain/llm.js`;
@@ -305,8 +305,8 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 
 | Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
 | --- | --- | --- | --- |
-| `src/mind/agent.js` | Conversatie- en autonomie-orchestrator | → 18-20 interne modules; ← Telegram, web, voice, autonomy | Intent, context, routing, bewijs, lifecycle en antwoord in 4.406 regels |
-| `src/mind/tools.js` | 33 toolschema's, aanbodfilter, executor en handlers | → 15-17 interne modules | Catalogus, policy, verificatie en businessflows vermengd |
+| `src/mind/agent.js` | Conversatie- en autonomie-orchestrator | → 18-20 interne modules; ← Telegram, web, voice, autonomy | Intent, context, routing, bewijs, lifecycle en antwoord in 4.481 regels |
+| `src/mind/tools.js` | 33 toolschema's, aanbodfilter, executor en handlers | → 15-17 interne modules | Catalogus, policy, verificatie en businessflows in 2.716 regels vermengd |
 | `src/mind/toolpolicy.js` | Declaratieve effecten, autonomie, tags, verificatie en bewijsrang | ← llm, agent, social, tools, live scenarios | Nieuwe canonieke bron; resterende afgeleide groepen moeten alleen hiervan lezen |
 | `src/mind/turnplan.js` | Pure effectgrenzen, voicevervolg, locatie en identiteit | ← agent | Intentclassificatie bestaat daarnaast nog uitgebreid in agent |
 | `src/mind/persona.js` | Character core, chat/spoken/autonomous voice en renderers | → util, config; ← agent, communication, perception, reminders | Geen exclusief eigenaarschap over zichtbare tekst |
@@ -349,17 +349,14 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `src/web/public/style.css` | Dashboardstyling | ← index.html | Alleen presentatie |
 | `src/web/public/eva.glb` | Binair 3D-avatarmodel | runtime ← app.js | Appearance state staat los van het modelasset |
 
-## Pythonservice en offline replaybestanden
+## Pythonservice en offline trainingsbestanden
 
 | Bestand | Functie | Runtimekoppeling |
 | --- | --- | --- |
 | `eva_brain/service.py` | FastAPI-service voor InsightFace/Torch beeld- en gezichtsinferentie | HTTP vanaf `mind/localbrain.js` |
+| `eva_brain/test_service.py` | Invoervalidatie voor lege, kapotte en geldige afbeeldingspayloads | Gerichte unittest van de Pythonservice |
 | `eva_brain/ingest.py` | Afbeeldingen normaliseren en voorbereiden | Offline datasetstap |
 | `eva_brain/train_encoder.py` | Eigen encoder trainen | Offline training |
-| `eva_brain/replay/explore.py` | SQLite-verkenningsanalyse | Handmatige/offline replay |
-| `eva_brain/replay/cadence.py` | Cadansanalyse uit SQLite | Handmatige/offline replay |
-| `eva_brain/replay/threads.py` | Gespreksdraad-analyse | Handmatige/offline replay |
-| `eva_brain/replay/volharding01.py` | Grote volhardings-/continuïteitsanalyse | Handmatige/offline replay, niet geïmporteerd door runtime |
 
 ## Scripts
 
@@ -373,7 +370,7 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 
 ## Testbestanden
 
-De 24 testbestanden zijn geen runtimeonderdelen. Ze zijn wel onderdeel van de
+De 25 JavaScript-testbestanden zijn geen runtimeonderdelen. Ze zijn wel onderdeel van de
 architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 
 | Bestand | Hoofddekking |
@@ -390,6 +387,7 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `test/housemate-voice.test.js` | Persona, stijl en vaste renderers |
 | `test/live-canary.test.js` | Scenarioselectie en gedragsbeoordelaar |
 | `test/llm-recovery.test.js` | Model/toolretry en fallback |
+| `test/localbrain-validation.test.js` | Node-classificatie van gecontroleerde brain-4xx/5xx-fouten |
 | `test/minimal-core-contract.test.js` | Brede agent-, tool-, bewijs- en autonomieregressies |
 | `test/perception-policy.test.js` | Camerameldgrenzen |
 | `test/portfolio-continuity.test.js` | Doelen, episodes, delivery en recovery |
@@ -412,28 +410,52 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `.gitignore` | Uitsluiting van secrets, runtime-output, scratch en dependencies | Verbergt lokale artefacten; is geen opruimmechanisme |
 | `.dockerignore` | Container-buildscope | Houdt lokale state en dependencies uit het image |
 | `.env.example` | Publieke configuratietemplate | Werkelijke `.env` hoort buiten Git |
-| `tsconfig.json`, `pyrightconfig.json` | JS/Python typeanalyse | Typebaseline is nog niet nul |
+| `tsconfig.json` | JavaScript-typeanalyse | Typebaseline is nog niet nul; Python heeft nog geen actieve typegate |
 | `eslint.config.js`, `eslint.complexity.config.js` | Lint- en complexiteitsregels | Baselines laten bekende schuld toe |
 | `quality-baseline.json` | Tijdelijke bovengrens voor bekende diagnoses | Geen kwaliteitsbewijs op zichzelf |
 | `Dockerfile`, `docker-compose.yml` | Containerroute | Naast systemd een tweede deploymentroute |
 | `deploy/eva.service` | Gedocumenteerde systemd-unit | Dit is de unit die README installeert |
-| `eva.service` | Oudere tweede systemd-unit | Wijkt inhoudelijk af en is waarschijnlijk stale |
-| `README.md` | Installatie en featureoverzicht | Bevat meerdere historische claims die niet meer bij de huidige minimale runtime passen |
+| `README.md` | Installatie en featureoverzicht | Noemt alleen aantoonbare actuele routes en markeert gedeeltelijke architectuur expliciet |
 | `docs/house-entity-v1.md` | Product-/gedragscontract | Ontwerpbron, geen uitvoerbewijs |
+| `docs/eva-runtime-map.md` | Volledige actuele bestands- en koppelingskaart | Canonieke technische bron |
 | `docs/eva-endbeeld-roadmap.md` | Gewenst eindbeeld en fasering | Roadmap |
 | `docs/durable-work-lifecycle.md` | Lifecyclecontract | Moet met work/portfolio code gelijk blijven |
-| `docs/eva-als-proces.md` | Conceptuele entiteitsarchitectuur | Ontwerp, niet automatisch actueel |
-| `docs/brein-onderzoek.md` | Onderzoek naar brein/inferentie | Referentiedocument |
 | `docs/live-acceptance-2026-08-04.md` | Momentopname live acceptatie | Datumgebonden bewijs |
-| `docs/codex-handoff.md` | Historische overdracht | Kan stale beslissingen bevatten |
-| `docs/lilith-plan-v1.md`, `Eva_Lilith_Habitability_Review.md` | Lilith/Habitability ontwerp en review | Geen actieve runtimecode |
-| `HABITABILITY.md`, `eva_stil_wijzen_v0_1.md` | Gedrags-/onderzoeksnotities | Geen actieve runtimecode |
 
-Naast de 112 gevolgde repositorybestanden staan lokaal ook een Python-venv,
-scratch-/meetbestanden, logs en caches. Die zijn niet als productcode in de graaf
-opgenomen. De tijdens deze audit aangetroffen genegeerde `.env`-backup en losse
-private/public-keykopieën zijn na controle herstelbaar naar de desktop-prullenbak
-verplaatst. Alleen `.gitignore` was daarvoor geen sanering.
+Na sanering zijn er 101 gevolgde repositorybestanden, waarvan 13 direct in de
+root. De root bevat daarnaast alleen de lokale `.env`, Gitmetadata, dependencies
+en `data/`. De actieve Pythonomgeving staat onder
+`data/runtime/eva-brain-venv`; de bijbehorende user-unit is aangepast en live
+via `/health` gecontroleerd.
+
+## Runtimewerkruimte: wat ieder overgebleven topitem is
+
+`data/workspace` ging tijdens deze audit van 153.207 bestanden/22 GB naar 2.443
+reguliere bestanden/623 MB, gemeten op 6 augustus 2026 na de capabilitycontrole.
+Gegenereerde venvs, ESPHome-buildcache, npm-output, stale
+pidfiles, een dubbele gitclone en een fout backup-archief zijn verwijderd.
+
+| Pad/groep | Status en functie |
+| --- | --- |
+| `ACTIEVE-LOKALE-GEREEDSCHAPPEN.md` | Menselijk overzicht van de drie actieve lokale add-ons |
+| `sha256-bestand.cjs`, `json-diep-vergelijken.js`, `tekst-unified-diff.py` | Exacte entrypoints van actieve, checksumgebonden capabilities |
+| `sha256-bestand.test.cjs`, `fast-deep-equal-healthcheck.js`, `test-tekst-unified-diff.py` | Gerichte proeven bij die drie entrypoints |
+| `antwoord_afmaakpoort_v3.py`, `zelfverbeterpoort.test.js`, `actuele-uitleesclaim-proef.js`, `test-voice-pe-direct.cjs` | Vier actieve, checksumgebonden skillproeven op hun gemanifesteerde rootpaden |
+| `zelfverbeterpoort.js` | Implementatie die bij de actieve zelfverbeterpoortproef hoort |
+| `package.json` | Lokaal CommonJS-grensbestand waardoor de `.js`-capabilityscripts onafhankelijk van Eva's ESM-root draaien |
+| `extensions/` | Actieve lokale dependency van `json-diep-vergelijken`; niet opruimen zonder capabilitymigratie |
+| `camera_trigger_frames/` | Door de actieve perceptionruntime beheerde tijdelijke cameraframes |
+| `esphome_voice_patch/`, `ha_voice_pe_src/` | Actuele Voice PE-bron/config; gegenereerde `.esphome`-buildstate is verwijderd |
+| `openwakeword_hey_eva/`, `wakeword_eva/` | Wakewordbron, trainingsconfig en onderzoeksresultaten; virtuele omgevingen zijn verwijderd |
+| `backups/` | Kleine clean/verified Voice PE-backups met checksums; de 6,67-GB venv/buildsnapshot is verwijderd |
+| `archive/robot-erik-research/` | Afgesloten robot/Dreame/Valetudo-onderzoek, niet actief geladen |
+| `archive/historical-work/` | Terminale audits, energieonderzoeken en reparatieproeven, niet actief geladen |
+| `archive/loose-artifacts-through-2026-08-06/` | 314 voormalige losse werkproducten; historische set, geen actieve capability-entrypoints |
+
+Privésleutels en sleutelhoudende diagnoselogs staan niet meer in de uitvoerbare
+werkruimte. Eén exemplaar per werkelijk verschillend sleutelformaat staat met
+modus 600 onder `data/private/legacy-device-access`; byte-identieke kopieën zijn
+verwijderd. Sleutelrotatie en redactie van oudere DB/backups blijven nodig.
 
 ## SQLite-eigenaarschap
 
@@ -544,8 +566,22 @@ schrijven. Dit patroon mag daarom niet in Eva worden gekopieerd.
 
 ### Gecombineerd doelontwerp voor Eva
 
-De vergelijking verandert de bestaande saneringsvolgorde niet, maar maakt de
-contracten scherper:
+Dit zijn doelcontracten, geen acht voltooide subsystemen. De broncode-audit geeft
+de huidige status als volgt:
+
+| Contract | Status op 6 augustus 2026 | Werkelijk bewijs |
+| --- | --- | --- |
+| Entity Kernel | gepland | `persona.js` staat vooraan, maar identiteit en zichtbare tekst hebben meerdere eigenaars |
+| Turn Kernel | gedeeltelijk | `turnplan.js` levert één planobject; `agent.js` classificeert en regisseert daarnaast opnieuw |
+| Capability Registry | gedeeltelijk | schema's, policy, dispatch en allowlists staan nog in verschillende bronnen |
+| Capability Runtime | gedeeltelijk | add-ons hebben receipts/activatie; npm-pakketten worden geen first-class tools |
+| Learning Loop | gedeeltelijk | lessen, errorbook en explorations bestaan, maar niet één meten-activeren-terugdraaien-loop |
+| Worker Runtime | gepland | workcells zijn alleen begrensde webonderzoekstromen, geen algemene workers |
+| Attention Runtime | grotendeels actief | 15-minutencadans, zelfstandig doelkeuze en 120-minuten dagbudget zijn live |
+| Delivery Runtime | gedeeltelijk | Telegram, voice, reminders en perceptie hebben nog afzonderlijke bezorgpaden |
+
+De vergelijking verandert de bestaande saneringsvolgorde niet, maar maakt het
+doel van ieder contract scherper:
 
 1. **Entity Kernel** — één duurzame `EvaIdentity` met karakter, relaties,
    waarden, nieuwsgierigheid en autobiografische continuïteit. Deze staat vooraan
@@ -641,9 +677,9 @@ anders verplaatst dezelfde dubbelzinnigheid alleen naar meer bestanden.
 
 ### P2 — deployment en documentatie opschonen
 
-Verwijder of archiveer de oude root-`eva.service`, corrigeer historische
-README-features en markeer momentopnamedocumenten als historisch. Deze kaart is
-voortaan de technische bron en moet bij iedere architectuurwijziging mee wijzigen.
+De oude root-unit en strijdige historische documenten zijn verwijderd; README
+noemt alleen nog aantoonbare routes. Deze kaart is voortaan de technische bron
+en moet bij iedere architectuurwijziging mee wijzigen.
 
 ## Verificatie van deze audit
 
@@ -654,10 +690,11 @@ voortaan de technische bron en moet bij iedere architectuurwijziging mee wijzige
 - De statische graaf bevat geen importcyclus.
 - Dynamische imports, bus-events, timers, callbacks, childprocessen, HTTP-routes,
   transportregistraties en schema-eigenaars zijn afzonderlijk gezocht.
-- De actuele regressiesuite slaagt: 225 van 225 tests.
-- De gelijktijdige registry/lifecyclesanering is buiten documentatie en tests
-  netto `+1` regel (`+303/-302`); de regressietests zijn netto `+70`. De wijziging
-  is dus geen nieuwe productcodedump, hoewel de bestaande hotspots groot blijven.
+- De actuele Node-regressiesuite slaagt: 230 van 230 tests; de gerichte
+  Python-brainproef slaagt daarnaast 4 van 4.
+- Deze sanering verwijdert repositorybreed ruim meer regels dan zij toevoegt.
+  De gerichte runtimewijzigingen blijven wel nieuwe code; de bestaande hotspots
+  zijn dus niet ineens klein of architectonisch af.
 
 Dit document beschrijft de huidige werkelijkheid. Het is geen bewering dat de
 sanering al voltooid is.

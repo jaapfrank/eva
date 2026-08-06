@@ -15,41 +15,26 @@ Het bindende ontwerpcontract staat in
 
 | Onderdeel | Wat het doet |
 | --- | --- |
-| 🧠 Brein | ChatGPT via OAuth-login met je Plus/Pro-abonnement (zelfde flow als OpenClaw/Codex), met optionele API-key-fallback |
-| 💗 Regulatietoestand | energie, nieuwsgierigheid, verbondenheid en spanning sturen toon en initiatief zonder menselijke gevoelens te veinzen |
-| 🧠 Geheugen | SQLite + volletekst-zoeken; 's nachts destilleert ze de dag tot blijvende herinneringen |
-| 🌙 Slaap & dromen | slaapt 's nachts (instelbaar), verwerkt de dag en droomt — leesbaar op het dashboard |
-| 💓 Eigen leven | elke ~12 min een "hartslag": ze denkt na, schrijft dagboek, en onderneemt soms zelf iets |
-| 👂 Opmerkzaam | let uit zichzelf op wat opvalt (deur lang open, lampen aan terwijl niemand thuis is, open raam bij kou, rook/CO/lekkage) en beslist zelf of ze reageert |
-| 🔁 Ritme | eigen dagmomenten (goedemorgen, avond-afronding, weekterugblik) en leert wanneer wie meestal thuiskomt |
-| 🎉 Erbij horen | viert verjaardagen, feestdagen en haar eigen "kom-in-huis-dag"; mist mensen die ze een tijd niet sprak |
-| 🌊 Bewustzijnsstroom | continue innerlijke lus (nooit volledig "weg"), één verenigde geest, echte driften die teruglopen en onderhouden moeten worden, een altijd-aanwezig werkgeheugen |
-| 🧠 Associatief geheugen | herinnert op betekenis (lokale embeddings, geen key) i.p.v. alleen trefwoorden |
-| 🛠️ Zelf-uitbreiding | kan zelfstandig onderzoeken, werkstukken bouwen en programma's in haar geïsoleerde werkruimte uitvoeren |
-| 📶 Wifi (optioneel) | met een UniFi-key: telefoons op/van de wifi + onbekend-apparaat-meldingen (klaar, slaapt tot er een key is) |
-| 🏠 Huis | wie is thuis, lampen, muziek, klimaat; bedienen kan (sloten/alarmen nooit) |
-| 🔧 Beheer | volledige HA-admin: automatiseringen/scripts maken, zones, personen, entiteiten, integraties (verwijderen van integraties/gebruikers is hard geblokkeerd) |
-| 👀 Ogen | de 3 camera's (deurbel, straat, tuin) bekijken en beschrijven; foto's doorsturen via Telegram |
-| 🙋 Gezichten | leert mensen herkennen via de camera; is uit zichzelf nieuwsgierig naar wie ze niet kent en vraagt om namen |
-| 🔔 Deur | merkt aanbellen/beweging op, kijkt zelf wie er is, kan bezoekers via de deurbel te woord staan |
-| 🔊 Stem | praten door één speaker of overal (Sonos/Chromecast), via de deurbel, of als gesproken bericht via Telegram (niet 's nachts) |
-| 🧍 Lichaam | haar 3D-model op het dashboard kleurt/kleedt ze zelf (thema, kleur, aura, accessoires) en ze reageert fysiek (juichen, dansen, zwaaien) — aura kleurt mee met haar bui |
-| ⚽ Meeleven | volgt Oranje, trekt het oranje aan en juicht mee (confetti + lampen knipperen + door de speakers) als Nederland scoort |
-| 🎙️ Voice-brug | `POST /api/voice` zodat je via Home Assistant Assist tegen Eva kunt praten en haar antwoord hardop terugkomt |
-| ⏰ Herinneringen | "herinner me morgen om 8 uur aan…" — via Telegram én hardop in huis |
-| 📱 Telegram | chatten vanaf je telefoon; Eva stuurt ook uit zichzelf wel eens iets (met daglimiet) |
-| 🖥 Dashboard | live stemming, wat ze nu doet, tijdlijn, dagboek, dromen, geheugen, chat en haar 3D-model |
-| 🧭 Vermogenskaart | één zelfbeeld van wat ze kan/heeft en wat actief, beperkt of uit is |
-| 🌱 Vermogensgroei | merkt ontbrekende vermogens op, houdt ze duurzaam bij, en kan ze als eigen initiatief bouwen/testen/afronden |
-| 🪞 Gespreksreflectie | verwerkt gesprekken achteraf tot lessen, follow-ups, fouten en vermogensgaten |
-| 🔎 Ervaringsreflectie | zoekt patronen in haar eigen acties en maakt herhaalde blokkades automatisch tot fouten/vermogensgaten |
-| 🧯 Foutenboek | bewaart missers met oorzaak, effect en volgende-keer-regel zodat ze niet blijft herhalen |
-| 😏 Humorgevoel | leert per persoon welke humor past, wat niet goed valt, en wanneer ze juist serieus moet blijven |
-| 🔁 Gezinsrituelen | herkent kleine terugkerende gewoontes, stelt ze voorzichtig voor en voert actieve rituelen op het juiste moment uit |
-| 🧭 Reactiekompas | leert van hoe haar acties bij het gezin landen en remt spontane berichten af als die te veel worden |
-| 👂 Toonkompas | hoort menselijke toon zoals haast, frustratie, kwetsbaarheid, warmte of speelsheid en stemt haar reactie daarop af |
-| 🗣️ Communicatieprofielen | leert per persoon of diegene kort, uitgebreid, warm, zakelijk, speels, met/zonder emoji en met meer/minder initiatief aangesproken wil worden |
-| 📌 Opvolgkompas | bewaart beloften en terugkompunten, voedt ze terug in haar hartslag en rondt ze later actief af |
+| Model | OpenAI via OAuth, met optionele API-keyfallback |
+| Kanalen | dashboard, Telegram en Home Assistant Assist gebruiken dezelfde agentroute |
+| Huis | actuele HA-status lezen en toegestane lampen, schakelaars, media, klimaat en covers bedienen; sloten en alarmen zijn uitgesloten |
+| Voice PE | antwoorden en gerichte omroepen via expliciet toegestane Assist Satellites |
+| Robot | Valetudo-status, kaart, camera en begrensde beweging via één robotintegratie |
+| Camera en gezichten | deurbel/tuin/straat beoordelen, bruikbare gezichten leren en foto's via Telegram bezorgen |
+| Geheugen | lokale SQLite-opslag, gespreksarchief, full-text retrieval en optionele lokale embeddings |
+| Gezin | expliciete bewonersrollen, aanwezigheid en compacte relationele feedback |
+| Autonomie | bij `full` iedere 15 minuten aandacht en minimaal 120 minuten zelfstandig dagbudget; Eva kiest binnen dat budget zelf doelen |
+| Duurzaam werk | doelen, episodes, checkpoints, leases en bewijsgebonden afronding |
+| Werkruimte | bestanden maken/lezen en programma's geïsoleerd uitvoeren; de werkruimte zelf is runtime-output, geen tweede bronrepository |
+| Capabilities | skills/add-ons kunnen worden gestaged, getest en checksumgebonden geactiveerd; npm-pakketten worden nog niet automatisch first-class tools |
+| Parallel onderzoek | begrensde webonderzoekstromen; dit is nog geen algemene subagent-runtime |
+| Herinneringen | plannen, tonen en annuleren met bezorging via de actieve kanalen |
+| Dashboard | chat, status, tijdlijn, geheugen en 3D-avatar |
+
+De gewenste Entity/Turn/Capability/Learning/Worker/Attention/Delivery-contracten
+staan in de runtimekaart met hun echte status. Alleen Attention is grotendeels
+aanwezig; de overige contracten zijn gedeeltelijk of gepland en worden hier dus
+niet als afgeronde features verkocht.
 
 ## Starten
 
@@ -60,7 +45,7 @@ npm start
 ```
 
 Open dan **`http://localhost:3210`**. Netwerktoegang staat standaard uit. Stel voor
-toegang vanaf een ander apparaat zowel `WEB_HOST` als een sterk `WEB_TOKEN` in.
+toegang vanaf een ander apparaat zowel `WEB_HOST` als een sterk `EVA_WEB_TOKEN` in.
 
 ### 1. Eva's brein inloggen (eenmalig)
 
@@ -88,7 +73,6 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 | Sleutel | Betekenis |
 | --- | --- |
 | `SLEEP_START` / `WAKE_TIME` | Eva's bedtijd en wektijd (standaard 23:30–07:30) |
-| `HEARTBEAT_MINUTES` | hoe vaak ze een momentje voor zichzelf neemt |
 | `EVA_AUTONOMY_LEVEL` | `full` geeft Eva zelfstandige doelkeuze en toegang tot alle normale gereedschappen |
 | `EVA_AUTONOMY_INTERVAL_MINUTES` | basiscadans voor zelfstandige aandacht; bij `full` standaard 15 minuten |
 | `EVA_AUTONOMY_CONVERSATION_PAUSE_MINUTES` | korte voorrang voor een gesprek voordat zelfstandig werk wordt hervat |
@@ -101,7 +85,7 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 | `EVA_BRAIN_URL` | zware lokale/remote breinservice voor gezichten en beeld-encoder; standaard `http://127.0.0.1:3220`, op een 24/7 mini-pc kan dit naar de RTX-machine wijzen |
 | `ALLOW_HOME_CONTROL` | `false` = alleen kijken/voelen, niets bedienen |
 | `WEB_HOST` | dashboardbinding; standaard `127.0.0.1` |
-| `WEB_TOKEN` | verplicht wanneer `WEB_HOST` niet alleen lokaal bindt |
+| `EVA_WEB_TOKEN` | verplicht wanneer `WEB_HOST` niet alleen lokaal bindt |
 
 ## Altijd aan laten staan (systemd)
 

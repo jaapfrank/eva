@@ -22,8 +22,9 @@ ADD https://vladmandic.github.io/human-models/models/blazeface.bin  /home/eva/mo
 ADD https://vladmandic.github.io/human-models/models/faceres.json   /home/eva/models/faceres.json
 ADD https://vladmandic.github.io/human-models/models/faceres.bin    /home/eva/models/faceres.bin
 
-# dan haar code
+# dan haar code en het enige script dat de productieruntime zelf start
 COPY src ./src
+COPY scripts/eva-backup.mjs ./scripts/eva-backup.mjs
 
 # haar leven en haar eigen brein-model cachen in het volume, zodat het blijft
 ENV NODE_ENV=production \

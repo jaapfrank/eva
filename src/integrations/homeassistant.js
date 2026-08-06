@@ -362,6 +362,8 @@ function handleMessage(msg) {
       if (msg.event?.event_type === 'state_changed') onStateChanged(msg.event.data);
       else if (msg.event?.event_type === 'eva_voice_query') {
         bus.emit('voice_query', msg.event.data || {});
+      } else if (msg.event?.event_type === 'eva_voice_reply_ack') {
+        bus.emit('voice_reply_ack', msg.event.data || {});
       }
       break;
   }
@@ -522,6 +524,7 @@ async function onAuthenticated() {
   try {
     await wsCommand({ type: 'subscribe_events', event_type: 'state_changed' });
     await wsCommand({ type: 'subscribe_events', event_type: 'eva_voice_query' });
+    await wsCommand({ type: 'subscribe_events', event_type: 'eva_voice_reply_ack' });
     const all = await wsCommand({ type: 'get_states' }, 20_000);
     states.clear();
     for (const st of all) states.set(st.entity_id, st);

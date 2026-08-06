@@ -20,7 +20,7 @@ const {
 } = await import('../src/mind/autonomy.js');
 const { runAgent } = await import('../src/brain/llm.js');
 const { __toolsTest, executeTool, toolsForTurn } = await import('../src/mind/tools.js');
-const { normalizeVoiceConversationId } = await import('../src/mind/voicebridge.js');
+const { normalizeVoiceConversationId, __voiceBridgeTest } = await import('../src/mind/voicebridge.js');
 const {
   archiveTelegramMessage,
   claimTurnToolExecution,
@@ -222,6 +222,10 @@ test('alleen een ondubbelzinnige enkelvoudige huisopdracht gebruikt de snelle ke
     doel: 'licht buiten',
     actie: 'aan',
   });
+  assert.deepEqual(parse('Schakel de TV uit in de overkapping.'), {
+    doel: 'TV in overkapping',
+    actie: 'uit',
+  });
 
   const route = __projectRouteTest.directHomeForTurn;
   assert.deepEqual(route({
@@ -232,6 +236,61 @@ test('alleen een ondubbelzinnige enkelvoudige huisopdracht gebruikt de snelle ke
     mode: 'chat', requiredTools: ['bedien_huis'], syntheticTest: true,
     userText: 'Zet de spotjes onder de overkapping uit.',
   }), null);
+});
+
+test('huisdoelen kiezen een exacte slug en handelen nooit op een friendly-name-gelijkspel', () => {
+  const resolve = __toolsTest.resolveHomeEntity;
+  const states = [
+    { entity_id: 'media_player.tv_overkapping_2', state: 'idle', attributes: { friendly_name: 'Tv overkapping' } },
+    { entity_id: 'media_player.googletv1069_2', state: 'idle', attributes: { friendly_name: 'Tv overkapping' } },
+    { entity_id: 'media_player.tv_overkapping', state: 'off', attributes: { friendly_name: 'Tv overkapping' } },
+  ];
+  assert.equal(resolve(states, 'tv in de overkapping').state.entity_id, 'media_player.tv_overkapping');
+  const tied = resolve(states.slice(0, 2), 'Tv overkapping');
+  assert.equal(tied.state, null);
+  assert.equal(tied.ambiguous, true);
+});
+
+test('een concrete huisopdracht blijft binnen bediening en één gerichte uitleesroute', () => {
+  assert.deepEqual(
+    [...__projectRouteTest.chatToolNamesFor(['bedien_huis'])].sort(),
+    ['bedien_huis', 'ha_lees'],
+  );
+  const results = [
+    tool({
+      name: 'bedien_huis', ok: false, verified: false,
+      data: { entity_id: 'media_player.tv_overkapping' },
+    }),
+    tool({
+      name: 'ha_lees',
+      data: { entity_id: 'media_player.tv_overkapping', name: 'Tv overkapping', state: 'off' },
+    }),
+  ];
+  assert.equal(
+    __projectRouteTest.verifiedHomeReadback('Schakel de TV uit in de overkapping.', results)?.name,
+    'ha_lees',
+  );
+  const wrongDuplicate = [
+    tool({
+      name: 'bedien_huis', ok: false, verified: false,
+      data: { entity_id: 'switch.heater_overkapping' },
+    }),
+    tool({
+      name: 'ha_lees',
+      data: { entity_id: 'switch.heater_overkapping_guest', name: 'Heater overkapping', state: 'off' },
+    }),
+  ];
+  assert.equal(
+    __projectRouteTest.verifiedHomeReadback('Zet de heater uit in de overkapping.', wrongDuplicate),
+    null,
+  );
+  assert.equal(
+    __projectRouteTest.verifiedHomeReadback('Zet de heater uit in de overkapping.', [
+      tool({ name: 'bedien_huis', ok: false, verified: false }),
+      wrongDuplicate[1],
+    ]),
+    null,
+  );
 });
 
 test('een voorbereide autonome terugmelding bewaart exact tekst, ontvanger en retry-identiteit', () => {
@@ -1528,6 +1587,23 @@ test('voice-sessies hebben altijd precies een bruikbare voice-prefix', () => {
   assert.equal(normalizeVoiceConversationId('voice:voice:Jaap', 'Lola'), 'voice:jaap');
   assert.equal(normalizeVoiceConversationId('VOICE : VOICE : Jaap', 'Lola'), 'voice:jaap');
   assert.equal(normalizeVoiceConversationId('', ''), 'voice:huisgenoot');
+});
+
+test('voiceproeven dragen expliciete provenance en voeren niet de markering uit', () => {
+  const parse = __voiceBridgeTest.voiceRequestInput;
+  assert.deepEqual(parse({ vraag: '__eva_test__ Schakel de tv uit.' }, 'run-7'), {
+    text: 'Schakel de tv uit.',
+    syntheticTest: true,
+    syntheticConversationId: 'test:run-7',
+  });
+  assert.deepEqual(parse({ vraag: 'Hoe gaat het?' }, 'run-8'), {
+    text: 'Hoe gaat het?',
+    syntheticTest: false,
+    syntheticConversationId: '',
+  });
+  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:jaap'), false);
+  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:eva-test-run-8'), true);
+  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:test:run-8'), true);
 });
 
 test('een niet meer aangeboden verplichte tool dwingt geen willekeurige modelcalls af', async () => {

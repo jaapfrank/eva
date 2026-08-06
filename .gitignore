@@ -47,26 +47,5 @@ id_rsa.*
 Thumbs.db
 /scratch_*
 /_*.cjs
-/live*.json
-/live*.txt
-/hermeting_*
-/scep_*_out.json
-/c_p-*.txt
-/curacao_goal_watch.out
-/wait_out.sh
-
-# Historical one-off measurements and local operator state
-/.claude/*.lock
-/5
-/rijk/
-/dash_canon.html
-/curacao_goal_watch.py
-/onafh_codegat_check.py
-/scep_controls.py
-/scep_primary_repro.json
-/summarize.py
-/test-foot.mjs
-/uitbreidingsscan.json
-/wereldgat_*.py
 /eva_brain/replay/LOCK_*.md
 /eva_brain/replay/out_*.txt

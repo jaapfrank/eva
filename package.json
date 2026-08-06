@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "login": "node src/brain/oauth.js",
-    "test": "TMPDIR=/tmp node --test test/agentmail-integration.test.js test/autonomy-safety.test.js test/capabilities.test.js test/cognitive-integration.test.js test/curiosity-loop.test.js test/full-autonomy.test.js test/emotional-life.test.js test/household-model.test.js test/housemate-voice.test.js test/llm-recovery.test.js test/social-continuity.test.js test/voice-pe-routing.test.js test/web-access.test.js test/minimal-core-contract.test.js test/perception-policy.test.js test/portfolio-continuity.test.js test/telegram-message-archive.test.js test/telegram-outbox-core.test.js test/telegram-transport.test.js test/vision-pending-identity.test.js scripts/localinference-lifecycle.test.mjs",
+    "test": "npm run test:all",
     "test:all": "TMPDIR=/tmp node --test test/*.test.js scripts/*.test.mjs",
     "typecheck": "node scripts/quality-gate.mjs typecheck",
     "lint": "node scripts/quality-gate.mjs lint",
