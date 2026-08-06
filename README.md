@@ -21,7 +21,7 @@ Het bindende ontwerpcontract staat in
 | Voice PE | antwoorden en gerichte omroepen via expliciet toegestane Assist Satellites |
 | Robot | Valetudo-status, kaart, camera en begrensde beweging via één robotintegratie |
 | Camera en gezichten | deurbel/tuin/straat beoordelen, bruikbare gezichten leren en foto's via Telegram bezorgen |
-| Geheugen | lokale SQLite-opslag, gespreksarchief, full-text retrieval en optionele lokale embeddings |
+| Geheugen | lokale SQLite-opslag, gespreksarchief en full-text retrieval |
 | Gezin | expliciete bewonersrollen, aanwezigheid en compacte relationele feedback |
 | Autonomie | bij `full` iedere 15 minuten aandacht en minimaal 120 minuten zelfstandig dagbudget; Eva kiest binnen dat budget zelf doelen |
 | Duurzaam werk | doelen, episodes, checkpoints, leases en bewijsgebonden afronding |
@@ -93,6 +93,20 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 sudo install -m 0644 deploy/eva.service /etc/systemd/system/eva.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now eva
+```
+
+Systemd is de enige ondersteunde deploymentroute. De eerdere halve Dockerroute
+is verwijderd: die miste de Python-brain/GPU, de user-systemd-sandbox voor
+werkruimteprogramma's en live-pariteit met deze installatie.
+
+De lokale beeldbrain heeft een eigen user-unit en dependency-lock:
+
+```bash
+python3 -m venv data/runtime/eva-brain-venv
+data/runtime/eva-brain-venv/bin/python -m pip install -r eva_brain/requirements.lock
+install -m 0644 deploy/eva-brain.service ~/.config/systemd/user/eva-brein.service
+systemctl --user daemon-reload
+systemctl --user enable --now eva-brein
 ```
 
 ## Goed om te weten

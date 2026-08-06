@@ -291,7 +291,7 @@ export function attentionContextText(now = new Date()) {
       lines.push(`- aspiratie #${item.id}: ${item.text}${item.next_step ? ` | eerdere volgende stap: ${item.next_step}` : ''}`);
     }
   }
-  lines.push('Kies zelf wat je werkelijk wilt onderzoeken. Voor een nieuwe verkenning leg je vóór de tweede inhoudelijke toolactie met verkenning_bijhouden je eigen vraag, hypothese, verwachte waarneming, actiebudget en stop/pivotregel vast. Geef ook een stabiele onderwerp_sleutel en minstens twee concrete onderwerp_ankers. De kern leidt daarnaast zelf een canonieke identiteit af uit de inhoud: vrije labels kunnen een eerder besluit dus niet met synoniemen omzeilen. Noem bij een onbekend domein een concrete entity:, event: of artifact: ook letterlijk in je vraag of hypothese. De kern schrijft het onderwerp of antwoord niet voor. Rond een bereikt budget af of verander aantoonbaar van aanpak.');
+  lines.push('Kies zelf wat je werkelijk wilt onderzoeken. Voor een nieuwe verkenning leg je vóór de tweede inhoudelijke toolactie met verkenning_bijhouden je eigen vraag, hypothese, verwachte waarneming, actiebudget en stop/pivotregel vast. Geef ook een stabiele onderwerp_sleutel en minstens twee concrete onderwerp_ankers. De kern gebruikt herkenbare entiteiten en gebeurtenissen waar die bestaan, maar een nieuw onderwerp hoeft niet in een vooraf geschreven woordenlijst te passen. Rond een bereikt budget af of verander aantoonbaar van aanpak.');
   return lines.join('\n');
 }
 
@@ -547,12 +547,6 @@ function explorationIdentity({ topicKey, topicAnchors, ...content } = {}) {
     };
   }
   const topicFeatures = deriveTopicFeatures({ ...content, topic_anchors: anchors });
-  if (!topicFeatures.subjects.length && !topicFeatures.strong_ids.length) {
-    return {
-      ok: false,
-      reason: 'de inhoud levert nog geen controleerbare canonieke onderwerpidentiteit op; noem het concrete onderwerp of een entity:, event: of artifact: letterlijk in vraag of hypothese',
-    };
-  }
   return { ok: true, topicKey: key, topicAnchors: anchors, topicFeatures };
 }
 
@@ -566,16 +560,19 @@ function sameExplorationTopic(item, candidate) {
   const prior = item?.topic_features?.version === TOPIC_FEATURE_VERSION ? item.topic_features : deriveTopicFeatures(item);
   const current = candidate?.topic_features?.version === TOPIC_FEATURE_VERSION ? candidate.topic_features : deriveTopicFeatures(candidate);
   const sharedStrongId = intersects(prior.strong_ids, current.strong_ids);
+  const priorKey = normalizeTopicPart(item?.topic_key);
+  const currentKey = normalizeTopicPart(candidate?.topic_key);
   for (const family of [/^(?:entity|device):/, /^event:/, /^project:/, /^work:/, /^goal:/, /^aspiration:/, /^artifact:/]) {
     const priorFamily = prior.strong_ids.filter((id) => family.test(id));
     const currentFamily = current.strong_ids.filter((id) => family.test(id));
     if (priorFamily.length && currentFamily.length && !intersects(priorFamily, currentFamily)) return false;
+    if (priorFamily.length !== currentFamily.length && priorKey !== currentKey) return false;
   }
   const priorFocus = prior.focus_subject || prior.focus_subjects?.[0] || null;
   const currentFocus = current.focus_subject || current.focus_subjects?.[0] || null;
-  if (!priorFocus || priorFocus !== currentFocus) return false;
-  const priorKey = normalizeTopicPart(item?.topic_key);
-  const currentKey = normalizeTopicPart(candidate?.topic_key);
+  if (!priorFocus || !currentFocus) return !priorFocus && !currentFocus
+    && priorKey.length >= 4 && priorKey === currentKey;
+  if (priorFocus !== currentFocus) return false;
   if (sharedStrongId && priorKey.length >= 4 && priorKey === currentKey) return true;
   if (!sharedStrongId && prior.contexts.length && current.contexts.length
     && !intersects(prior.contexts, current.contexts)) return false;

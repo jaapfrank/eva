@@ -6,6 +6,7 @@ import test from 'node:test';
 const dataDir = fs.mkdtempSync(path.join('/tmp', 'eva-core-contract-'));
 process.env.EVA_DATA_DIR = dataDir;
 process.env.EVA_TEST_SECRET = 'must-not-leak';
+process.env.HA_TOKEN = 'test-ha-token-that-must-never-be-persisted';
 process.env.EVA_AUTONOMY_LEVEL = 'bounded';
 // Deze suite test ook de expliciet ingeschakelde oude autonome bouwcyclus.
 // De productie-default wordt apart fail-closed getest.
@@ -21,10 +22,15 @@ const {
 const { runAgent } = await import('../src/brain/llm.js');
 const { __toolsTest, executeTool, toolsForTurn } = await import('../src/mind/tools.js');
 const { normalizeVoiceConversationId, __voiceBridgeTest } = await import('../src/mind/voicebridge.js');
+const { registerSensitiveValues } = await import('../src/security/redaction.js');
 const {
   archiveTelegramMessage,
+  backupData,
   claimTurnToolExecution,
   completeTurnToolExecution,
+  db,
+  logTimeline,
+  latestDailyBackup,
   telegramOutboundByDedupeKey,
 } = await import('../src/db.js');
 const {
@@ -69,6 +75,23 @@ test('expliciete opdrachten verplichten de passende kerntools', () => {
   assert.deepEqual(required({ text: 'Kun je light.unifi_schuur_led uitzetten?' }), ['bedien_huis']);
   assert.deepEqual(required({ text: 'Zoek uit welke warmtepomp nu het zuinigst is' }), ['zoek_internet']);
   assert.deepEqual(required({ text: 'Kun je uitzoeken welke warmtepomp nu het zuinigst is?' }), ['zoek_internet']);
+  assert.deepEqual(
+    required({ text: 'Zoek zelf in dit project waar de acht architectuurcontracten beschreven staan. Lees de documentatie echt.' }),
+    ['lijst_bestanden', 'lees_bestand'],
+  );
+  assert.equal(
+    __projectRouteTest.requestsLocalProjectDocumentation('Waar staan de contracten in deze codebase beschreven?'),
+    true,
+  );
+  assert.equal(__projectRouteTest.internetUseProhibited('Maak dit zonder internet of webzoekactie.'), true);
+  assert.deepEqual(
+    required({ text: 'Gebruik je bestaande actieve addon tekst-unified-diff echt: oud is uit en nieuw is aan.' }),
+    ['gebruik_capability'],
+  );
+  assert.equal(
+    __projectRouteTest.turnContractFor('Gebruik je bestaande actieve addon tekst-unified-diff echt: oud is uit en nieuw is aan.').kind,
+    'capability_demo',
+  );
   assert.deepEqual(
     required({ text: 'Bouw een werkende calculator als programma' }),
     ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
@@ -428,6 +451,13 @@ test('een HA-tijdlijnvraag vereist werkelijk een entiteitslogboek en geen algeme
   assert.equal(__projectRouteTest.turnRequirementSatisfied('ha_lees', [general, logbook], userText), true);
 });
 
+test('een Home Assistant-logboekpad bewaart een ISO-tijdzone in de query', () => {
+  assert.equal(
+    __toolsTest.normalizeHaReadPath('/api/logbook/2026-08-01T00:00:00+02:00?entity=media_player.xbox&end_time=2026-08-06T17:00:00+02:00'),
+    '/api/logbook/2026-08-01T00:00:00+02:00?entity=media_player.xbox&end_time=2026-08-06T17:00:00%2B02:00',
+  );
+});
+
 test('een uitzoekopdracht eindigt niet met alleen een aangekondigde volgende route', () => {
   const feedback = __projectRouteTest.incompleteRequestedOutcomeFeedback(
     'Ik pak de Home Assistant-logboekroute zelf; dit bronbestand was de verkeerde lade.',
@@ -535,7 +565,7 @@ test('een capabilitydemonstratie valt terug op controleerbare gewone taal', () =
   });
   assert.match(answer, /antwoord-afmaakpoort v2/);
   assert.match(answer, /receipt #12/);
-  assert.doesNotMatch(answer, /\{\"/);
+  assert.doesNotMatch(answer, /\{"/);
 });
 
 test('nieuw bewijs binnen hetzelfde project is geen dubbele autonome melding', () => {
@@ -1240,6 +1270,21 @@ test('een verwachte exitcode maakt een gemeld ontbrekend geheim niet succesvol',
   assert.match(result.error, /uitvoerfout/);
 });
 
+test('een toegestane exitcode maakt een ontbrekend programma-entrypoint niet succesvol', async () => {
+  const workspace = path.join(dataDir, 'workspace');
+  fs.mkdirSync(workspace, { recursive: true });
+  const result = JSON.parse(await executeTool('voer_uit', {
+    programma: 'python3',
+    argumenten: ['bestaat-zeker-niet.py'],
+    werkmap: workspace,
+    verwachte_exitcodes: [0, 2],
+  }, { mode: 'autonomy' }));
+  assert.equal(result.ok, false);
+  assert.equal(result.verified, false);
+  assert.equal(result.changed, false);
+  assert.match(result.error, /entrypoint bestaat niet/);
+});
+
 test('een falende bouwproef stuurt terug naar repareren en telt niet als voltooid', () => {
   const write = {
     ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/proef.py' } }),
@@ -1473,6 +1518,9 @@ test('autonome programmas krijgen geen Eva-secrets mee', async () => {
 test('autonome programmas zitten in een echte mount- en procesisolatie', async () => {
   const workspace = path.join(dataDir, 'workspace');
   fs.mkdirSync(workspace, { recursive: true });
+  const extensions = path.join(workspace, 'extensions');
+  fs.mkdirSync(extensions, { recursive: true });
+  fs.writeFileSync(path.join(extensions, 'integrity.txt'), 'vast\n', 'utf8');
   const program = path.join(workspace, 'sandbox-check.mjs');
   fs.writeFileSync(program, `
 import fs from 'node:fs';
@@ -1489,6 +1537,7 @@ console.log(JSON.stringify({
   env: probe('/home/administrator/project/Bottie/.env', 'read'),
   docker: probe('/var/run/docker.sock', 'read'),
   outside: probe(path.resolve(process.cwd(), '..', 'escape.txt'), 'write'),
+  extensions: probe(path.join(process.cwd(), 'extensions', 'integrity.txt'), 'write'),
   interfaces: fs.readdirSync('/sys/class/net').sort(),
 }));
 `, 'utf8');
@@ -1503,9 +1552,87 @@ console.log(JSON.stringify({
   for (const name of ['source', 'env', 'docker']) {
     assert.notEqual(probe[name], 'accessible', `${name} ontsnapte uit de sandbox`);
   }
+  assert.notEqual(probe.extensions, 'accessible', 'een programma kon een geactiveerde extensie vervangen');
+  assert.equal(fs.readFileSync(path.join(extensions, 'integrity.txt'), 'utf8'), 'vast\n');
   assert.deepEqual(probe.interfaces, ['lo']);
   // De private /tmp mag beschrijfbaar zijn, maar die write mag niet op de host verschijnen.
   assert.equal(fs.existsSync(path.join(dataDir, 'escape.txt')), false);
+});
+
+test('lees- en schrijftools volgen geen symlink naar afgeschermde data', async () => {
+  const workspace = path.join(dataDir, 'workspace');
+  const privateDir = path.join(dataDir, 'private');
+  fs.mkdirSync(workspace, { recursive: true });
+  fs.mkdirSync(privateDir, { recursive: true });
+  const secretFile = path.join(privateDir, 'do-not-touch.txt');
+  fs.writeFileSync(secretFile, 'blijft-ongewijzigd\n', { mode: 0o600 });
+  const escape = path.join(workspace, 'escape-private');
+  fs.symlinkSync(privateDir, escape, 'dir');
+
+  const read = JSON.parse(await executeTool('lees_bestand', {
+    pad: path.join(escape, 'do-not-touch.txt'),
+  }));
+  assert.equal(read.ok, false);
+  assert.equal(read.verified, false);
+
+  const write = JSON.parse(await executeTool('schrijf_bestand', {
+    pad: path.join(escape, 'do-not-touch.txt'),
+    inhoud: 'overschreven\n',
+  }, { mode: 'autonomy' }));
+  assert.equal(write.ok, false);
+  assert.equal(write.verified, false);
+  assert.equal(fs.readFileSync(secretFile, 'utf8'), 'blijft-ongewijzigd\n');
+});
+
+test('afgeschermde bestandssoorten zijn ook direct uit de werkruimte onleesbaar', async () => {
+  const workspace = path.join(dataDir, 'workspace');
+  const files = ['secrets.yaml', 'herstel.db', '.env.backup'];
+  for (const name of files) {
+    const file = path.join(workspace, name);
+    fs.writeFileSync(file, 'gevoelig\n', { mode: 0o600 });
+    const result = JSON.parse(await executeTool('lees_bestand', { pad: file }));
+    assert.equal(result.ok, false, name);
+    assert.equal(result.verified, false, name);
+  }
+});
+
+test('persistente tijdlijn- en toolreceipts redigeren actuele geheimwaarden centraal', () => {
+  const secret = process.env.HA_TOKEN;
+  const vaultSecret = 'vault-canary-must-not-persist';
+  registerSensitiveValues([['VAULT_TEST', vaultSecret]]);
+  const event = logTimeline('system', `canary ${secret}`, { nested: { secret } });
+  const vaultEvent = logTimeline('system', `canary ${vaultSecret}`, { nested: { vaultSecret } });
+  claimTurnToolExecution({ executionKey: 'redaction-canary', turnId: 'redaction', tool: 'probe', args: { secret } });
+  completeTurnToolExecution('redaction-canary', `uitvoer ${secret}`);
+  const timeline = db.prepare('SELECT content,meta FROM timeline WHERE id=?').get(event.id);
+  const vaultTimeline = db.prepare('SELECT content,meta FROM timeline WHERE id=?').get(vaultEvent.id);
+  const execution = db.prepare('SELECT args,output FROM turn_tool_executions WHERE execution_key=?').get('redaction-canary');
+  assert.equal(JSON.stringify({ timeline, execution }).includes(secret), false);
+  assert.equal(JSON.stringify(vaultTimeline).includes(vaultSecret), false);
+  assert.match(timeline.content, /AFGESCHERMD:HA_TOKEN/);
+  assert.match(vaultTimeline.content, /AFGESCHERMD:VAULT_TEST/);
+});
+
+test('dagbackup wordt pas na checksum en SQLite-integriteit atomair zichtbaar', async () => {
+  const directory = path.join(dataDir, 'backup-contract');
+  const destination = await backupData(directory);
+  assert.equal(fs.existsSync(destination), true);
+  assert.equal(fs.existsSync(`${destination}.sha256`), true);
+  assert.equal(fs.statSync(destination).mode & 0o777, 0o600);
+  assert.equal(latestDailyBackup(directory)?.path, destination);
+
+  for (let index = 0; index < 11; index += 1) {
+    const corrupt = path.join(directory, `eva-2099-01-${String(index + 1).padStart(2, '0')}-00-00-00.db`);
+    fs.writeFileSync(corrupt, 'geen sqlite', { mode: 0o600 });
+    fs.writeFileSync(`${corrupt}.sha256`, `${'0'.repeat(64)}  ${path.basename(corrupt)}\n`, { mode: 0o600 });
+  }
+  assert.equal(latestDailyBackup(directory)?.path, destination);
+  await backupData(directory);
+  assert.equal(fs.existsSync(destination), true, 'corrupte nieuwere namen mogen geldig herstelpunt niet evicten');
+  assert.deepEqual(
+    fs.readdirSync(directory).filter((name) => name.includes('.partial')),
+    [],
+  );
 });
 
 test('Telegram-uitvoer is terug te vinden op de duurzame deduplicatiesleutel', () => {

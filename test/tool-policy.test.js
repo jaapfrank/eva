@@ -13,6 +13,7 @@ const {
   toolAllowedByPolicy,
   toolChangesByDefault,
   toolEffect,
+  toolNamesForRecovery,
 } = await import('../src/mind/toolpolicy.js');
 const { executeTool, TOOLS } = await import('../src/mind/tools.js');
 const { db } = await import('../src/db.js');
@@ -36,11 +37,64 @@ test('centrale metadata dekt iedere kerntool exact eenmaal', () => {
     assert.equal(typeof policy.tags, 'string', name);
     if (policy.verification) assert.ok(['explicit', 'ok'].includes(policy.verification), name);
     if (policy.proofRank != null) assert.ok(Number(policy.proofRank) >= 1, name);
+    if (policy.diagnosticFallback != null) assert.equal(typeof policy.diagnosticFallback, 'boolean', name);
+    if (policy.exclusiveRecovery != null) assert.equal(typeof policy.exclusiveRecovery, 'boolean', name);
+    if (policy.recoveryTools != null) {
+      assert.ok(Array.isArray(policy.recoveryTools), name);
+      assert.deepEqual([...new Set(policy.recoveryTools)], policy.recoveryTools, name);
+      for (const recoveryTool of policy.recoveryTools) {
+        assert.ok(TOOL_POLICY[recoveryTool], `${name}:${recoveryTool}`);
+        assert.notEqual(recoveryTool, name, `${name}:${recoveryTool}`);
+      }
+    }
+    if (policy.exclusiveRecovery === true) assert.ok(policy.recoveryTools?.length > 0, name);
     for (const tag of policy.tags.split(/\s+/u).filter(Boolean)) {
       assert.match(tag, /^(?:discovery|house|free|delegated|grounding|lane:(?:house|research|workspace|family)|primary:(?:house|research|workspace|family)|contribution:(?:house|research|making|contact)|proof:(?:house|project)|reasoning:(?:code|mechanical))$/, `${name}:${tag}`);
       if (tag.startsWith('primary:')) assert.ok(policy.tags.split(/\s+/u).includes(tag.replace('primary:', 'lane:')), `${name}:${tag}`);
     }
   }
+});
+
+test('declaratieve herstelroutering bewaart het bestaande aanbod exact', () => {
+  const diagnostics = [
+    'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_internet', 'lees_bestand',
+    'lijst_bestanden', 'zoek_geheugen', 'zoek_gesprek', 'toon_herinneringen', 'toon_werk',
+  ];
+  assert.deepEqual(
+    Object.entries(TOOL_POLICY)
+      .filter(([, policy]) => policy.diagnosticFallback === true)
+      .map(([name]) => name)
+      .sort(),
+    [...diagnostics].sort(),
+  );
+  assert.deepEqual(
+    Object.entries(TOOL_POLICY)
+      .filter(([, policy]) => policy.exclusiveRecovery === true)
+      .map(([name]) => name),
+    ['bedien_huis'],
+  );
+
+  const expectedGeneric = (required, companions = []) => [
+    ...new Set([...required, ...diagnostics, ...companions]),
+  ].sort();
+  assert.equal(toolNamesForRecovery([]), null);
+  assert.deepEqual([...toolNamesForRecovery(['bedien_huis'])].sort(), ['bedien_huis', 'ha_lees']);
+  assert.deepEqual(
+    [...toolNamesForRecovery(['schrijf_bestand'])].sort(),
+    expectedGeneric(['schrijf_bestand'], ['lijst_bestanden', 'voer_uit']),
+  );
+  assert.deepEqual(
+    [...toolNamesForRecovery(['lees_bestand'])].sort(),
+    expectedGeneric(['lees_bestand'], ['lijst_bestanden']),
+  );
+  assert.deepEqual(
+    [...toolNamesForRecovery(['beheer_agentmail'])].sort(),
+    expectedGeneric(['beheer_agentmail'], ['zoek_internet']),
+  );
+  assert.deepEqual(
+    [...toolNamesForRecovery(['beheer_aanwezigheid', 'beheer_aanwezigheid'])].sort(),
+    expectedGeneric(['beheer_aanwezigheid']),
+  );
 });
 
 test('centrale changed-default bewaart exact de bestaande result-normalisatie', () => {

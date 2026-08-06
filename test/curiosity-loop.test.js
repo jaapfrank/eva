@@ -394,7 +394,8 @@ test('canonieke lineage houdt verschillende sterke lamp-IDs uit elkaar en dezelf
   db.prepare('DELETE FROM eva_explorations WHERE source=?').run(source);
 });
 
-test('vrije labels alleen zijn niet beslissend en onbekende inhoud wordt expliciet geweigerd', () => {
+test('een werkelijk nieuw onderwerp hoeft niet in een vaste domeinwoordenlijst te passen', () => {
+  const source = `unknown-identity-${Date.now()}`;
   const result = rawStartExploration({
     topicKey: 'mystery_domain',
     topicAnchors: ['domain:made-up-one', 'constraint:made-up-two'],
@@ -403,21 +404,42 @@ test('vrije labels alleen zijn niet beslissend en onbekende inhoud wordt explici
     hypothesis: 'Een florp kan mogelijk bij een zibble passen.',
     expectedObservation: 'Er verschijnt een onbekende maar concrete uitkomst.',
     stopRule: 'Stop na de eerste onbekende waarneming.',
-    source: `unknown-identity-${Date.now()}`,
+    source,
   });
-  assert.equal(result.ok, false);
-  assert.match(result.reason, /canonieke onderwerpidentiteit/);
-  const fakeGoal = rawStartExploration({
-    topicKey: 'fake_goal_identity',
-    topicAnchors: ['goal:florp', 'constraint:zibble'],
-    question: 'Welke florp past het best bij de zibble?',
-    whyNow: 'Een verzonnen goal mag geen identiteit verlenen.',
-    hypothesis: 'Goal florp bestaat niet in het duurzame doelenboek.',
-    expectedObservation: 'De start wordt geweigerd.',
-    stopRule: 'Stop na de identiteitscontrole.',
-    source: `fake-goal-${Date.now()}`,
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.exploration.topic_features.subjects, []);
+  const duplicate = rawStartExploration({
+    topicKey: 'mystery_domain',
+    topicAnchors: ['domain:made-up-one', 'constraint:made-up-two'],
+    question: 'Welke andere florp past het best bij een zibble?',
+    whyNow: 'Hetzelfde onbekende onderwerp loopt al.',
+    hypothesis: 'Een tweede florp kan mogelijk bij een zibble passen.',
+    expectedObservation: 'Er verschijnt nog een onbekende uitkomst.',
+    stopRule: 'Stop na de eerste waarneming.',
+    source,
   });
-  assert.equal(fakeGoal.ok, false);
+  assert.equal(duplicate.ok, true);
+  assert.equal(duplicate.changed, false);
+  assert.equal(duplicate.exploration.id, result.exploration.id);
+  db.prepare('DELETE FROM eva_explorations WHERE source=?').run(source);
+});
+
+test('een exacte nieuwe entity wordt niet gekaapt door een generiek eerder lampbesluit', () => {
+  const prior = {
+    topic_key: 'elements_light_cause',
+    question: 'Waardoor ging de lamp vannacht aan?',
+    hypothesis: 'Het light-logboek toont mogelijk de actor.',
+    expected_observation: 'De lamp toont een overgang.',
+    stop_rule: 'Alleen lezen.',
+  };
+  const current = {
+    topic_key: 'gang_light_group_membership',
+    question: 'Is entity:light.gang_lamp een overlappende lichtgroep?',
+    hypothesis: 'light.gang_lamp bevat groepsleden.',
+    expected_observation: 'De attributen tonen de leden.',
+    stop_rule: 'Alleen lezen.',
+  };
+  assert.equal(__curiosityTest.sameExplorationTopic(prior, current), false);
 });
 
 test('gedeeltelijk genoemde nep-entity-ankers kunnen dezelfde lampkwestie niet splitsen', () => {
@@ -769,8 +791,8 @@ test('expliciete onderwerpidentiteit koppelt Perseïden niet aan een energiechec
     stopRule: 'Stop zonder controleerbaar event.',
     source,
   });
-  assert.equal(fakeEvent.ok, false);
-  assert.deepEqual(fakeEvent.prior_exploration.topic_features.strong_ids, ['event:perseids-2026']);
+  assert.equal(fakeEvent.ok, true);
+  assert.deepEqual(fakeEvent.exploration.topic_features.strong_ids, []);
   db.prepare('DELETE FROM eva_explorations WHERE source=?').run(source);
 });
 

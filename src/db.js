@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import Database from 'better-sqlite3';
 import { config } from './config.js';
 import { bus } from './bus.js';
 import { isoNow, tekstOverlap } from './util.js';
-import { sealThought, openThought } from './self/secretmind.js';
+import { redactSecrets, redactSensitiveText } from './security/redaction.js';
 
 fs.mkdirSync(config.dataDir, { recursive: true, mode: 0o700 });
 try { fs.chmodSync(config.dataDir, 0o700); } catch { /* beste poging */ }
@@ -216,20 +217,11 @@ try {
   hasFts = false;
 }
 
-// Recente gespreksembeddings blijven over herstarts heen bewaard. Zonder deze
-// kolom moest Eva na iedere start honderden identieke chatregels opnieuw door
-// de lokale inferentieservice halen.
-try {
-  const cols = db.prepare('PRAGMA table_info(timeline)').all();
-  if (!cols.some((c) => c.name === 'embedding')) db.exec('ALTER TABLE timeline ADD COLUMN embedding BLOB');
-} catch { /* een oude database blijft zonder semantische chatcache bruikbaar */ }
-
 // Geheugenkolommen (migratie; SQLite kent geen ADD COLUMN IF NOT EXISTS).
 // Archiveren houdt oude ervaringen beschikbaar voor inspectie zonder dat ruis
 // nog in gesprekken, planning of het eigen brein wordt opgehaald.
 try {
   const cols = db.prepare('PRAGMA table_info(memories)').all();
-  if (!cols.some((c) => c.name === 'embedding')) db.exec('ALTER TABLE memories ADD COLUMN embedding BLOB');
   if (!cols.some((c) => c.name === 'feeling')) db.exec('ALTER TABLE memories ADD COLUMN feeling TEXT'); // hoe een belevenis voelde
   if (!cols.some((c) => c.name === 'archived')) db.exec('ALTER TABLE memories ADD COLUMN archived INTEGER DEFAULT 0');
   if (!cols.some((c) => c.name === 'archived_reason')) db.exec('ALTER TABLE memories ADD COLUMN archived_reason TEXT');
@@ -252,31 +244,21 @@ try {
   }
 } catch { /* oude SQLite-build of beschadigde meta mag starten niet blokkeren */ }
 
-// Eva's privé-gedachten: alleen van haar. Komen NOOIT op de tijdlijn, het
-// dashboard of in een API. Een hoekje van haar geest dat niet wordt opgevoerd.
-db.exec(`
-CREATE TABLE IF NOT EXISTS private_thoughts (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ts TEXT NOT NULL,
-  content TEXT NOT NULL,
-  mood TEXT
-);`);
-
 // ---------- tijdlijn ----------
 
 export function logTimeline(kind, content, meta = null) {
   const ts = isoNow();
+  const safeContent = redactSensitiveText(content);
+  const safeMeta = meta == null ? null : redactSecrets(meta);
   const info = db
     .prepare('INSERT INTO timeline (ts, kind, content, meta) VALUES (?, ?, ?, ?)')
-    .run(ts, kind, content, meta ? JSON.stringify(meta) : null);
-  const row = { id: Number(info.lastInsertRowid), ts, kind, content, meta };
+    .run(ts, kind, safeContent, safeMeta ? JSON.stringify(safeMeta) : null);
+  const row = { id: Number(info.lastInsertRowid), ts, kind, content: safeContent, meta: safeMeta };
   bus.emit('timeline', row);
   return row;
 }
 
 export function getTimeline({ limit = 50, kinds = null, before = null } = {}) {
-  // De embedding-blob is intern indexmateriaal en hoort niet in dashboard- of
-  // contextpayloads terecht te komen.
   let sql = 'SELECT id, ts, kind, content, meta FROM timeline';
   const where = [];
   const params = [];
@@ -308,7 +290,7 @@ export function claimTurnToolExecution({ executionKey, turnId, tool, args = null
     key,
     String(turnId || ''),
     String(tool || ''),
-    args == null ? null : JSON.stringify(args).slice(0, 20_000),
+    args == null ? null : JSON.stringify(redactSecrets(args)).slice(0, 20_000),
     isoNow(),
   );
   const row = db.prepare('SELECT * FROM turn_tool_executions WHERE execution_key = ?').get(key);
@@ -320,15 +302,16 @@ export function completeTurnToolExecution(executionKey, output) {
     UPDATE turn_tool_executions
     SET status = 'done', finished_ts = ?, output = ?
     WHERE execution_key = ?
-  `).run(isoNow(), String(output ?? '').slice(0, 40_000), String(executionKey));
+  `).run(isoNow(), redactSensitiveText(output).slice(0, 40_000), String(executionKey));
 }
 
 // ---------- gesprekken ----------
 
 export function addMessage(channel, sender, role, content, conversationId = null) {
   const ts = isoNow();
+  const safeContent = redactSensitiveText(content);
   const info = db.prepare('INSERT INTO messages (ts, channel, conversation_id, sender, role, content) VALUES (?, ?, ?, ?, ?, ?)').run(
-    ts, channel, conversationId || null, sender, role, content
+    ts, channel, conversationId || null, sender, role, safeContent
   );
   const message = {
     id: Number(info.lastInsertRowid),
@@ -337,7 +320,7 @@ export function addMessage(channel, sender, role, content, conversationId = null
     conversation_id: conversationId || null,
     sender,
     role,
-    content,
+    content: safeContent,
   };
   bus.emit('chat', message);
   return message;
@@ -450,7 +433,7 @@ export function archiveTelegramMessage({
     sender: String(sender || existing?.sender || '').slice(0, 160),
     role: ['user', 'assistant'].includes(String(role)) ? String(role) : (existing?.role || 'user'),
     kind: String(kind || existing?.kind || 'text').slice(0, 40),
-    content: String(content || existing?.content || '').slice(0, 16_000),
+    content: redactSensitiveText(content || existing?.content || '').slice(0, 16_000),
     replyToMessageId: replyToMessageId == null
       ? (existing?.reply_to_message_id || null)
       : String(replyToMessageId),
@@ -461,7 +444,7 @@ export function archiveTelegramMessage({
     processingAttempts: Number(existing?.processing_attempts || 0),
     processedTs: existing?.processed_ts || null,
     processingError: existing?.processing_error || null,
-    meta: mergedMeta ? JSON.stringify(mergedMeta) : null,
+    meta: mergedMeta ? JSON.stringify(redactSecrets(mergedMeta)) : null,
   };
 
   db.prepare(`
@@ -871,24 +854,8 @@ export function addMemory({ category = 'feit', person = null, content, importanc
     .prepare('INSERT INTO memories (ts, category, person, content, importance, feeling) VALUES (?, ?, ?, ?, ?, ?)')
     .run(isoNow(), category, person, content, importance, feeling);
   const id = Number(info.lastInsertRowid);
-  bus.emit('memory_added', { id, content }); // associatief geheugen indexeert dit op de achtergrond
+  bus.emit('memory_added', { id, content });
   return id;
-}
-
-// ---------- privé-gedachten (alleen voor Eva zelf) ----------
-
-export function addPrivateThought(content, mood = null) {
-  // versleuteld opslaan: op schijf staat alleen ruis
-  db.prepare('INSERT INTO private_thoughts (ts, content, mood) VALUES (?, ?, ?)').run(isoNow(), sealThought(content), mood ? JSON.stringify(mood) : null);
-}
-
-export function recentPrivateThoughts(limit = 5) {
-  return db
-    .prepare('SELECT ts, content FROM private_thoughts ORDER BY id DESC LIMIT ?')
-    .all(limit)
-    .reverse()
-    .map((r) => ({ ts: r.ts, content: openThought(r.content) }))
-    .filter((r) => r.content != null);
 }
 
 // ---------- mensen samenvoegen/hernoemen (Eva beheert wie wie is) ----------
@@ -928,6 +895,43 @@ export function compactDb() {
 
 const DAILY_BACKUP_RE = /^eva-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}\.db$/;
 
+function sha256File(file) {
+  const hash = createHash('sha256');
+  const descriptor = fs.openSync(file, 'r');
+  const chunk = Buffer.allocUnsafe(1024 * 1024);
+  try {
+    let bytes = 0;
+    do {
+      bytes = fs.readSync(descriptor, chunk, 0, chunk.length, null);
+      if (bytes) hash.update(chunk.subarray(0, bytes));
+    } while (bytes);
+  } finally {
+    fs.closeSync(descriptor);
+  }
+  return hash.digest('hex');
+}
+
+function validBackup(filePath) {
+  try {
+    const manifestPath = `${filePath}.sha256`;
+    if (!fs.existsSync(manifestPath)) return false;
+    const expected = String(fs.readFileSync(manifestPath, 'utf8')).trim().split(/\s+/)[0];
+    if (!/^[a-f0-9]{64}$/i.test(expected) || sha256File(filePath) !== expected.toLowerCase()) return false;
+    const candidate = new Database(filePath, { readonly: true, fileMustExist: true });
+    try {
+      if (candidate.pragma('quick_check', { simple: true }) !== 'ok') return false;
+      if (candidate.pragma('foreign_key_check').length) return false;
+      const tables = new Set(candidate.prepare("SELECT name FROM sqlite_master WHERE type='table'").all()
+        .map((row) => row.name));
+      return ['timeline', 'messages', 'kv'].every((table) => tables.has(table));
+    } finally {
+      candidate.close();
+    }
+  } catch {
+    return false;
+  }
+}
+
 export function latestDailyBackup(dir) {
   try {
     return fs.readdirSync(dir)
@@ -938,7 +942,8 @@ export function latestDailyBackup(dir) {
         return { file, path: filePath, size: stat.size, mtimeMs: stat.mtimeMs };
       })
       .filter((item) => item.size > 0)
-      .sort((a, b) => b.mtimeMs - a.mtimeMs)[0] || null;
+      .sort((a, b) => b.mtimeMs - a.mtimeMs)
+      .find((item) => validBackup(item.path)) || null;
   } catch {
     return null;
   }
@@ -954,88 +959,59 @@ export async function backupData(dir) {
   try { fs.chmodSync(dir, 0o700); } catch { /* beste poging */ }
   // Een afgebroken SQLite-back-up laat alleen een journal achter. Zo'n restant
   // is geen herstelpunt en mag een volgende poging niet vervuilen.
-  for (const file of fs.readdirSync(dir).filter((name) => /^eva-\d{4}-.+\.db-journal$/.test(name))) {
+  for (const file of fs.readdirSync(dir).filter((name) => (
+    /^eva-\d{4}-.+\.db-(?:journal|wal|shm)$/.test(name)
+    || /^\.eva-\d{4}-.+\.partial/.test(name)
+  ))) {
     try { fs.unlinkSync(path.join(dir, file)); } catch { /* beste poging */ }
   }
   const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
   const dest = path.join(dir, `eva-${stamp}.db`);
+  const partial = path.join(dir, `.eva-${stamp}.partial-${process.pid}.db`);
+  const partialManifest = `${partial}.sha256`;
   // better-sqlite3 kopieert standaard 100 pagina's per setImmediate. Bij Eva's
   // database hield dat de hoofdthread minutenlang warm. Grotere blokken maken
   // dezelfde consistente SQLite-back-up in veel minder scheduler-rondes.
-  await db.backup(dest, { progress: () => 4096 });
-  try { fs.chmodSync(dest, 0o600); } catch { /* beste poging */ }
+  try {
+    await db.backup(partial, { progress: () => 4096 });
+    fs.chmodSync(partial, 0o600);
+    const candidate = new Database(partial, { fileMustExist: true });
+    try {
+      candidate.pragma('wal_checkpoint(TRUNCATE)');
+      candidate.pragma('journal_mode = DELETE');
+      if (candidate.pragma('quick_check', { simple: true }) !== 'ok'
+        || candidate.pragma('foreign_key_check').length) {
+        throw new Error('de nieuwe SQLite-back-up faalde haar integriteitscontrole');
+      }
+    } finally {
+      candidate.close();
+    }
+    for (const suffix of ['-wal', '-shm', '-journal']) {
+      try { fs.unlinkSync(`${partial}${suffix}`); } catch { /* beste poging */ }
+    }
+    const checksum = sha256File(partial);
+    fs.writeFileSync(partialManifest, `${checksum}  ${path.basename(dest)}\n`, {
+      encoding: 'utf8', mode: 0o600, flag: 'wx',
+    });
+    fs.renameSync(partial, dest);
+    fs.renameSync(partialManifest, `${dest}.sha256`);
+  } catch (error) {
+    for (const file of [partial, partialManifest, `${partial}-wal`, `${partial}-shm`, `${partial}-journal`]) {
+      try { fs.unlinkSync(file); } catch { /* beste poging */ }
+    }
+    throw error;
+  }
   // Hou de laatste 10 automatische back-ups. Handmatige `eva-before-*` snapshots
   // hebben een ander doel en worden hier nooit stilletjes verwijderd.
-  const backups = fs.readdirSync(dir).filter((file) => DAILY_BACKUP_RE.test(file)).sort();
+  const backups = fs.readdirSync(dir)
+    .filter((file) => DAILY_BACKUP_RE.test(file) && validBackup(path.join(dir, file)))
+    .sort();
   for (const oud of backups.slice(0, -10)) {
-    try { fs.unlinkSync(path.join(dir, oud)); } catch { /* */ }
+    for (const file of [path.join(dir, oud), path.join(dir, `${oud}.sha256`)]) {
+      try { fs.unlinkSync(file); } catch { /* beste poging */ }
+    }
   }
   return dest;
-}
-
-// ---------- ruwe toegang voor associatief geheugen (embeddings) ----------
-
-const updateMemoryEmbedding = db.prepare('UPDATE memories SET embedding = ? WHERE id = ?');
-const updateMemoryEmbeddings = db.transaction((rows) => {
-  for (const row of rows) updateMemoryEmbedding.run(row.embedding, row.id);
-});
-const updateTimelineEmbedding = db.prepare('UPDATE timeline SET embedding = ? WHERE id = ?');
-const updateTimelineEmbeddings = db.transaction((rows) => {
-  for (const row of rows) updateTimelineEmbedding.run(row.embedding, row.id);
-});
-
-export function setMemoryEmbedding(id, buf) {
-  updateMemoryEmbedding.run(buf, id);
-}
-
-export function setMemoryEmbeddings(items = []) {
-  const rows = items
-    .map((item) => ({
-      id: Number(item?.id),
-      embedding: item?.embedding,
-    }))
-    .filter((item) => Number.isInteger(item.id) && item.id > 0 && Buffer.isBuffer(item.embedding));
-  if (!rows.length) return 0;
-  updateMemoryEmbeddings(rows);
-  return rows.length;
-}
-
-export function setTimelineEmbedding(id, buf) {
-  updateTimelineEmbedding.run(buf, id);
-}
-
-export function setTimelineEmbeddings(items = []) {
-  const rows = items
-    .map((item) => ({
-      id: Number(item?.id),
-      embedding: item?.embedding,
-    }))
-    .filter((item) => Number.isInteger(item.id) && item.id > 0 && Buffer.isBuffer(item.embedding));
-  if (!rows.length) return 0;
-  updateTimelineEmbeddings(rows);
-  return rows.length;
-}
-
-export function recentTimelineChatRows(limit = 500) {
-  return db.prepare(`SELECT id, ts, kind, content, meta, embedding
-    FROM timeline
-    WHERE kind IN ('chat_in', 'chat_out')
-    ORDER BY id DESC LIMIT ?`).all(Math.max(1, Number(limit) || 500))
-    .map((row) => {
-      let meta = null;
-      try { meta = row.meta ? JSON.parse(row.meta) : null; } catch { /* oude ongeldige meta negeren */ }
-      return { ...row, meta };
-    });
-}
-
-export function memoriesNeedingEmbedding(limit = 200) {
-  const fetchLimit = Math.max(limit, Number(limit || 0) * 4);
-  return safeMemoryRows(db.prepare('SELECT id, content, archived FROM memories WHERE embedding IS NULL AND COALESCE(archived,0)=0 LIMIT ?').all(fetchLimit), limit);
-}
-
-/** Alle herinneringen met hun embedding-blob (voor similariteits-zoeken). */
-export function memoriesWithEmbeddings() {
-  return safeMemoryRows(db.prepare('SELECT id, ts, category, person, content, importance, feeling, embedding, archived FROM memories WHERE embedding IS NOT NULL AND COALESCE(archived,0)=0').all());
 }
 
 export function bumpRecall(ids) {

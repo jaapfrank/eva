@@ -21,7 +21,12 @@ import { getAppearance } from '../mind/appearance.js';
 import { autonomyStatus } from '../mind/autonomy.js';
 import { listCapabilities } from '../mind/capabilities.js';
 import { normalizeVoiceConversationId } from '../mind/voicebridge.js';
-import { assertSafeWebBinding, familyTimelineEntry, requestAuthorized } from './access.js';
+import {
+  assertSafeWebBinding,
+  familyTimelineEntry,
+  normalizeWebConversationId,
+  requestAuthorized,
+} from './access.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BUS_EVENTS = ['timeline', 'mood', 'activity', 'chat', 'auth', 'house', 'appearance', 'expression'];
@@ -167,13 +172,21 @@ export async function startWeb() {
     const text = String(req.body?.text || '').trim();
     if (!text) return res.status(400).json({ error: 'Geen tekst meegegeven.' });
     try {
+      const conversationId = normalizeWebConversationId(
+        req.body?.conversation_id || req.body?.session_id,
+        sender,
+      );
       const result = await handleMessageDetailed({
         channel: 'web',
         sender,
         text,
-        messageContext: { identityTrusted: true, syntheticTest: req.body?.synthetic === true },
+        messageContext: {
+          conversationId,
+          identityTrusted: true,
+          syntheticTest: req.body?.synthetic === true,
+        },
       });
-      res.json({ reply: result.reply });
+      res.json({ reply: result.reply, conversation_id: conversationId, turn_id: result.turnId || null });
       recordDeliveredReply(result, { accepted: true, transport: 'http' });
       return undefined;
     } catch (error) {

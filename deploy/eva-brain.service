@@ -1,0 +1,14 @@
+[Unit]
+Description=Eva brainservice (ArcFace en beeldencoder)
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/administrator/project/Bottie
+Environment=EVA_ENCODER=/home/administrator/project/Bottie/data/runtime/eva-brain-data/encoder_pilot.pt
+Environment=EVA_FACE_MODEL_ROOT=/home/administrator/project/Bottie/data/runtime/eva-brain-models/insightface
+ExecStart=/home/administrator/project/Bottie/data/runtime/eva-brain-venv/bin/python -m uvicorn eva_brain.service:app --host 127.0.0.1 --port 3220
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

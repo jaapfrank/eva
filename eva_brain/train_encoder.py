@@ -14,7 +14,12 @@ try:
 except Exception:
     pass
 
-FRAMES = sys.argv[1] if len(sys.argv) > 1 else '/home/administrator/eva-archief/frames'
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_ROOT = os.environ.get(
+    'EVA_BRAIN_DATA',
+    os.path.join(PROJECT_ROOT, 'data', 'runtime', 'eva-brain-data'),
+)
+FRAMES = sys.argv[1] if len(sys.argv) > 1 else os.path.join(DATA_ROOT, 'frames')
 LATENT = 128
 dev = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -87,6 +92,7 @@ S = Zn @ Zn.T; S.fill_diagonal_(-1)
 nn_sim = S.max(1).values.mean().item()
 print(f'representatie-spreiding (std/dim, ~0=ingestort, gezond>0.3): {spread:.3f}')
 print(f'gem. cosine naar dichtstbijzijnde beeld (structuur, >toeval~0): {nn_sim:.3f}')
-os.makedirs('/home/administrator/eva-archief', exist_ok=True)
-torch.save(enc.state_dict(), '/home/administrator/eva-archief/encoder_pilot.pt')
-print('encoder bewaard: /home/administrator/eva-archief/encoder_pilot.pt')
+os.makedirs(DATA_ROOT, exist_ok=True)
+encoder_path = os.path.join(DATA_ROOT, 'encoder_pilot.pt')
+torch.save(enc.state_dict(), encoder_path)
+print(f'encoder bewaard: {encoder_path}')

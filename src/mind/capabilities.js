@@ -44,7 +44,7 @@ const KINDS = new Set(['skill', 'addon']);
 const STATUSES = new Set(['staged', 'active', 'disabled', 'quarantined']);
 
 function clean(value, limit = 4_000) {
-  return String(value ?? '').replace(/\u0000/g, '').trim().slice(0, limit);
+  return String(value ?? '').replaceAll('\u0000', '').trim().slice(0, limit);
 }
 
 function slugify(value) {

@@ -23,6 +23,7 @@ import {
   syncHouseholdRolesFromPresence,
 } from './mind/household.js';
 import { runtimeVersion } from './runtimeversion.js';
+import { registerVaultSecretsForRedaction } from './self/vault.js';
 
 console.log(`
   Eva start:
@@ -30,6 +31,7 @@ console.log(`
 `);
 
 fs.mkdirSync(config.workspaceDir, { recursive: true });
+registerVaultSecretsForRedaction();
 
 // Start de gedeelde episode- en aandachtstoestand voordat sensoren gebeurtenissen
 // kunnen uitsturen. Adapters blijven zintuigen/uitgangen, niet losse Eva's.

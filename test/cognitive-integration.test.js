@@ -14,7 +14,6 @@ const {
   closeCognitiveEpisode,
   cognitiveContextText,
   cognitiveState,
-  ingestCognitiveEvent,
   recordCognitiveAction,
   recordCognitiveOutcome,
   startCognitiveCore,

@@ -1,16 +1,9 @@
 // Echte gezichtsherkenning — nu via de lokale brein-service (ArcFace, 512-dim).
 //
-// ArcFace (InsightFace) is duidelijk sterker dan het oude @vladmandic/human
-// (~99,86% vs ~99,38% op LFW, en veel robuuster bij wisselend licht/hoek/leeftijd —
-// belangrijk voor een gezinsarchief van jaren). De brein-service draait lokaal op de
-// GPU. Human blijft als LAZY terugval: alleen als de service even niet bereikbaar is,
-// zodat haar zicht nooit helemaal uitvalt.
-//
-// Embeddings van de twee backends leven in verschillende ruimtes (512 vs 1024 dim);
-// daarom onthouden we per gezicht de backend en vergelijken we alleen binnen dezelfde.
-import fs from 'node:fs';
+// ArcFace draait lokaal op de GPU. Dit is bewust de enige embeddingruimte: een
+// tweede, onverenigbare fallback maakte een tijdelijke service-uitval vroeger tot
+// foutief vergeten of vervuilde gezichtsvectoren.
 import db, { logTimeline, kvGet, kvSet } from '../db.js';
-import { config } from '../config.js';
 import { vecToBuf, bufToVec } from './embeddings.js';
 import { brainPost, brainServiceStatus } from './localbrain.js';
 
@@ -21,7 +14,6 @@ import { brainPost, brainServiceStatus } from './localbrain.js';
 const DREMPEL_ARC_LEGACY = 0.38;
 const DREMPEL_ARC_GOED = 0.30;
 const MARGE_ARC = 0.065;
-const DREMPEL_HUMAN = 0.35;  // Human's eigen gekalibreerde gelijkenis
 const MIN_LEER_SCORE = 0.58;
 const MIN_LEER_OPPERVLAK = 1200;
 const MIN_HERKEN_OPPERVLAK = 700;
@@ -48,15 +40,14 @@ function cosine(a, b) {
 
 // ---------- primair: brein-service (ArcFace op de GPU) ----------
 async function serviceFaces(buffer) {
-  // De ArcFace-service is de PRIMAIRE ruimte; een transiente hapering (traag/GPU-druk) liet faces terugvallen op
-  // de 'human'-ruimte, die NIET matcht met arcface-embeddings -> Eva 'vergat' bekende gezichten en vroeg opnieuw.
-  // Daarom: kort retryen (8s, dan nog eens) vóór we terugvallen, zodat de faces-DB consistent arcface blijft.
+  // Een transiente hapering mag de consistente ArcFace-ruimte niet veranderen.
+  // Daarom: kort retryen (8s, dan nog eens) en daarna dit frame overslaan.
   for (let poging = 0; poging < 2; poging++) {
     try {
       const j = await brainPost('/faces_b64', { image_b64: buffer.toString('base64') }, { kind: 'faces_b64', timeoutMs: 8000 });
       serviceStatus = 'ok';
       return (j.gezichten || [])
-        .filter((f) => Array.isArray(f.embedding) && f.embedding.length)
+        .filter((f) => Array.isArray(f.embedding) && f.embedding.length === 512)
         .map((f) => ({ embedding: Float32Array.from(f.embedding), score: f.det_score || 0, oppervlak: f.oppervlak || 0, bbox: f.bbox || null, backend: 'arcface' }));
     } catch (error) {
       // Een 4xx van de bereikbare brein-service is een fout in dit frame, geen
@@ -67,105 +58,25 @@ async function serviceFaces(buffer) {
       }
       if (poging === 0) { await new Promise((r) => setTimeout(r, 1200)); continue; }
       serviceStatus = 'onbereikbaar';
-      return null; // pas na 2 pogingen: val terug op Human
+      return null;
     }
   }
   return null;
 }
 
-// ---------- terugval: @vladmandic/human (lazy — alleen geladen als de service uitvalt) ----------
-function modelBase() {
-  if (process.env.EVA_FACE_MODELS) return process.env.EVA_FACE_MODELS;
-  const lokaal = `${config.root}/data/face-models`;
-  if (fs.existsSync(`${lokaal}/faceres.json`) && fs.existsSync(`${lokaal}/blazeface.json`)) return `file://${lokaal}/`;
-  return 'https://vladmandic.github.io/human-models/models/';
-}
+// ---------- publieke API ----------
 
-let human = null;
-let humanStatus = 'koud'; // koud | laden | klaar | mislukt
-let humanBelofte = null;
-
-async function humanModel() {
-  if (humanStatus === 'klaar') return human;
-  if (humanStatus === 'mislukt') return null;
-  if (humanBelofte) return humanBelofte;
-  humanStatus = 'laden';
-  humanBelofte = (async () => {
-    try {
-      const tf = (await import('@tensorflow/tfjs-node')).default;
-      const HumanMod = await import('@vladmandic/human');
-      const Human = HumanMod.Human || HumanMod.default;
-      human = new Human({
-        backend: 'tensorflow',
-        modelBasePath: modelBase(),
-        face: {
-          enabled: true, detector: { rotation: false, maxDetected: 5, minConfidence: 0.4 }, mesh: { enabled: false },
-          iris: { enabled: false }, emotion: { enabled: false }, description: { enabled: true },
-          antispoof: { enabled: false }, liveness: { enabled: false },
-        },
-        body: { enabled: false }, hand: { enabled: false }, object: { enabled: false }, gesture: { enabled: false }, filter: { enabled: false },
-      });
-      human._tf = tf;
-      await human.load();
-      human._sim = (a, b) => {
-        try {
-          if (human.match?.similarity) return human.match.similarity(a, b);
-          if (typeof human.similarity === 'function') return human.similarity(a, b);
-        } catch { /* val terug op cosinus */ }
-        return cosine(a, b);
-      };
-      humanStatus = 'klaar';
-      logTimeline('system', 'Gezichtsherkenning-terugval (Human) geladen 👁️');
-      return human;
-    } catch (e) {
-      humanStatus = 'mislukt';
-      logTimeline('system', `Gezicht-terugval (Human) niet beschikbaar (${(e && e.message) || e}).`);
-      return null;
-    }
-  })();
-  return humanBelofte;
-}
-
-async function detectFacesHuman(buffer) {
-  const m = await humanModel();
-  if (!m || !buffer) return [];
-  let t = null;
-  try {
-    t = m._tf.node.decodeImage(buffer, 3);
-    const res = await m.detect(t);
-    return (res.face || [])
-      .filter((f) => f.embedding && f.embedding.length)
-      .map((f) => ({ embedding: Float32Array.from(f.embedding), score: f.score || 0, oppervlak: (f.box?.[2] || 0) * (f.box?.[3] || 0), backend: 'human' }));
-  } catch {
-    return [];
-  } finally {
-    if (t) t.dispose();
-  }
-}
-
-// ---------- publieke API (backend-bewust) ----------
-
-// Zodra ArcFace-gezichten bestaan is ArcFace de ENIGE waarheid. Human-embeddings leven in een
-// andere ruimte (1024 vs 512-dim) en matchen daar nooit mee — terugvallen op Human bij een
-// service-hapering vervuilde juist de DB en brak de herkenning. We cachen of er arcface-rijen zijn.
-let _arcfaceAanwezig = null;
-function heeftArcfaceFaces() {
-  if (_arcfaceAanwezig === null) {
-    try { _arcfaceAanwezig = !!db.prepare("SELECT 1 FROM faces WHERE backend='arcface' LIMIT 1").get(); }
-    catch { _arcfaceAanwezig = false; }
-  }
-  return _arcfaceAanwezig;
+async function detectFacesResult(buffer) {
+  if (!buffer || !Number(buffer.length)) return { available: true, faces: [] };
+  const faces = await serviceFaces(buffer);
+  return faces === null
+    ? { available: false, faces: [], error: 'breinservice tijdelijk niet bereikbaar' }
+    : { available: true, faces };
 }
 
 /** Detecteer alle gezichten in een beeld; geef embeddings + score + grootte + backend. */
 export async function detectFaces(buffer) {
-  if (!buffer || !Number(buffer.length)) return [];
-  const viaService = await serviceFaces(buffer);
-  if (viaService) return viaService;       // ArcFace (primair)
-  // Service hapert even. Bestaan er al ArcFace-gezichten? Dan NIET terugvallen op Human: die ruimte
-  // matcht toch niet en zou de DB vervuilen. Liever deze frame niets herkennen; de volgende lukt wel.
-  if (heeftArcfaceFaces()) return [];
-  return detectFacesHuman(buffer);          // alleen bij een verse install waar ArcFace nog nooit liep
+  return (await detectFacesResult(buffer)).faces;
 }
 
 function faceQuality(face) {
@@ -212,7 +123,16 @@ export async function learnFace(person, buffer, { sourceRef = null, replaceSourc
       .run(note, person);
     return true;
   }
-  const faces = await detectFaces(buffer);
+  const detection = await detectFacesResult(buffer);
+  if (!detection.available) {
+    logTimeline('system', `Gezicht niet geleerd voor ${person}: ${detection.error}.`, {
+      faceLearn: false,
+      person,
+      reden: detection.error,
+    });
+    return false;
+  }
+  const faces = detection.faces;
   if (!faces.length) {
     if (replaceSource) deactivateFaceSource(note);
     return false;
@@ -224,36 +144,29 @@ export async function learnFace(person, buffer, { sourceRef = null, replaceSourc
     logTimeline('system', `Gezicht niet geleerd voor ${person}: ${leerbaar.reden}.`, { faceLearn: false, person, reden: leerbaar.reden });
     return false;
   }
-  // Geen Human-gezicht opslaan als er al ArcFace-gezichten zijn: dat is een onmatchbare vervuiling
-  // (precies waardoor Frank een dood 'human'-embedding kreeg). Dan liever niets leren dan fout leren.
-  if (beste.backend !== 'arcface' && heeftArcfaceFaces()) {
-    if (replaceSource) deactivateFaceSource(note);
-    return false;
-  }
   db.transaction(() => {
     deactivateFaceSource(note);
     db.prepare('INSERT INTO faces (person, vec, backend, ts, quality, det_score, oppervlak, active, note) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)')
       .run(person, vecToBuf(beste.embedding), beste.backend, new Date().toISOString(), leerbaar.quality, Number(beste.score || 0), Number(beste.oppervlak || 0), note);
   })();
-  if (beste.backend === 'arcface') _arcfaceAanwezig = true;
   return true;
 }
 
-function acceptatieDrempel(row, backend) {
-  if (backend !== 'arcface') return DREMPEL_HUMAN;
+function acceptatieDrempel(row) {
   const q = row.quality == null ? null : Number(row.quality);
   if (q == null || !Number.isFinite(q)) return DREMPEL_ARC_LEGACY;
   return q >= 0.5 ? DREMPEL_ARC_GOED : 0.33;
 }
 
-function rowScore(score, row, backend) {
+function rowScore(score, row) {
   const q = row.quality == null ? 0.45 : Math.max(0.25, Math.min(1, Number(row.quality) || 0.45));
-  return backend === 'arcface' ? score * (0.85 + 0.3 * q) : score;
+  return score * (0.85 + 0.3 * q);
 }
 
 /** Herken de meest prominente persoon op een beeld, inclusief diagnose voor inleren. */
 export async function recognizeFaceDetailed(buffer) {
-  const faces = await detectFaces(buffer);
+  const detection = await detectFacesResult(buffer);
+  const faces = detection.faces;
   const leeg = {
     recognized: false,
     person: null,
@@ -263,7 +176,7 @@ export async function recognizeFaceDetailed(buffer) {
     largestArea: 0,
     detScore: 0,
     backend: null,
-    reason: 'geen gezicht',
+    reason: detection.available ? 'geen gezicht' : detection.error,
   };
   if (!faces.length) return leeg;
   const gezicht = faces.sort((a, b) => b.oppervlak - a.oppervlak)[0];
@@ -285,15 +198,13 @@ export async function recognizeFaceDetailed(buffer) {
     return { ...basis, reason: `gezicht te klein (${gezicht.oppervlak || 0}px)` };
   }
   const e = Array.from(gezicht.embedding);
-  // alleen vergelijken binnen dezelfde embedding-ruimte (oude rijen zonder backend = 'human')
-  const rijen = db.prepare("SELECT id, person, vec, quality FROM faces WHERE coalesce(backend, 'human') = ? AND coalesce(active, 1) != 0").all(backend);
-  const sim = backend === 'arcface' ? cosine : ((a, b) => (human?._sim ? human._sim(a, b) : cosine(a, b)));
+  const rijen = db.prepare("SELECT id, person, vec, quality FROM faces WHERE backend='arcface' AND coalesce(active, 1) != 0").all();
   let beste = null;
   for (const r of rijen) {
     const v = bufToVec(r.vec);
     if (!v || v.length !== e.length) continue;
-    const score = sim(e, Array.from(v));
-    const gewogen = rowScore(score, r, backend);
+    const score = cosine(e, Array.from(v));
+    const gewogen = rowScore(score, r);
     if (!beste || gewogen > beste.gewogen) beste = { person: r.person, gelijkenis: score, gewogen, row: r };
   }
   if (!beste) return { ...basis, reason: 'geen actieve bekende gezichten in deze embeddingruimte' };
@@ -302,14 +213,14 @@ export async function recognizeFaceDetailed(buffer) {
     if (r.person === beste.person) continue;
     const v = bufToVec(r.vec);
     if (!v || v.length !== e.length) continue;
-    const score = sim(e, Array.from(v));
-    const gewogen = rowScore(score, r, backend);
+    const score = cosine(e, Array.from(v));
+    const gewogen = rowScore(score, r);
     if (!runner || gewogen > runner.gewogen) runner = { person: r.person, gelijkenis: score, gewogen };
   }
-  const drempel = acceptatieDrempel(beste.row, backend);
+  const drempel = acceptatieDrempel(beste.row);
   const marge = runner ? beste.gelijkenis - runner.gelijkenis : 1;
   const sterk = beste.gelijkenis >= 0.45;
-  const accept = beste.gelijkenis >= drempel && (backend !== 'arcface' || sterk || marge >= MARGE_ARC);
+  const accept = beste.gelijkenis >= drempel && (sterk || marge >= MARGE_ARC);
   const detail = {
     ...basis,
     recognized: accept,
@@ -369,8 +280,7 @@ export function warmupFaceRec() {
 export function faceRecStatus() {
   const brain = brainServiceStatus();
   if (brain.ok || serviceStatus === 'ok') return 'klaar';
-  if (humanStatus === 'klaar') return 'klaar';
-  if ((brain.bevestigdOnbereikbaar || serviceStatus === 'onbereikbaar') && humanStatus === 'mislukt') return 'mislukt';
+  if (brain.bevestigdOnbereikbaar || serviceStatus === 'onbereikbaar') return 'mislukt';
   return 'laden';
 }
 
@@ -384,7 +294,7 @@ export function faceRecDebugStatus() {
   const rows = db.prepare("SELECT person, coalesce(backend, 'human') backend, coalesce(active, 1) active, COUNT(*) n FROM faces GROUP BY person, coalesce(backend, 'human'), coalesce(active, 1) ORDER BY person, backend, active DESC").all();
   return {
     service: brain.ok ? 'ok' : brain.bevestigdOnbereikbaar ? 'onbereikbaar' : serviceStatus,
-    human: humanStatus,
+    backend: 'arcface',
     bekendActief: knownFaceCount(),
     breinservice: brainServiceStatus(),
     rijen: rows,

@@ -10,11 +10,11 @@ bestandsinventaris.
 Eva heeft geen statische importcyclus, maar is nog geen werkelijk enkelvoudige
 entiteit. De complexiteit zit in gedeelde toestand en overlappende beslissers:
 
-- 45 JavaScriptmodules en 3 statische webassets in `src`;
-- 24.540 regels JavaScript in `src`;
-- 37 SQLite-tabellen, aangemaakt door 12 verschillende modules;
-- `agent.js` (4.481 regels), `tools.js` (2.716), Home Assistant (1.903),
-  Telegram (1.551), `db.js` (1.302) en vision (1.300) zijn de hotspots;
+- 44 JavaScriptmodules en 3 statische webassets in `src`;
+- 23.934 regels JavaScript in `src`;
+- 36 applicatieschema's, aangemaakt door 12 verschillende modules;
+- `agent.js` (4.425 regels), `tools.js` (2.815), Home Assistant (1.903),
+  Telegram (1.551), vision (1.300) en `db.js` (1.278) zijn de hotspots;
 - `db.js` heeft circa 30 importeurs, `config.js` 21;
 - agentische uitvoering is verdeeld over `agent.js`, `tools.js` en `brain/llm.js`;
 - duurzame identiteit en voortgang zijn verdeeld over work, portfolio,
@@ -80,10 +80,11 @@ flowchart LR
     Perception[mind/perception.js]
     VisionMemory[mind/vision.js]
     Face[mind/facerec.js]
-    Embed[mind/embeddings.js]
-    LocalInference[mind/localinference.js]
-    Worker[mind/localinferenceworker.js]
-    BrainService[mind/localbrain.js + eva_brain]
+    Embed[mind/embeddings.js: face-vectorbytes]
+    BrainClient[mind/localbrain.js]
+    BrainService[eva_brain/service.py]
+    BrainUnit[deploy/eva-brain.service]
+    BrainLock[eva_brain/requirements.lock]
   end
 
   subgraph Extensions[Zelfuitbreiding]
@@ -137,9 +138,10 @@ flowchart LR
   Bus --> Web
   Perception --> Face
   VisionMemory --> Face
-  Face --> Embed --> LocalInference
-  LocalInference -. fork .-> Worker
-  Face --> BrainService
+  Face --> Embed
+  Face --> BrainClient --> BrainService
+  BrainUnit -. start .-> BrainService
+  BrainLock -. dependencies .-> BrainService
 
   Work --> DB
   Portfolio --> DB
@@ -158,7 +160,7 @@ flowchart LR
 
 De pijlen hierboven zijn zowel statische imports als belangrijke verborgen
 runtimeverbindingen. De graaf heeft geen statische cyclus. Callbackregistratie,
-EventEmitter-events, SQLite, HTTP, `fork()` en `systemd-run` maken de runtime
+EventEmitter-events, SQLite, HTTP en `systemd-run` maken de runtime
 desondanks veel sterker gekoppeld dan de importgraaf laat zien.
 
 ## Eén gebruikersbeurt
@@ -235,8 +237,8 @@ flowchart TD
 
   House[Directe huisactie] --> Renderer[renderHouseActionResult]
   Renderer --> Answer
-  Auto[Autonoom resultaat] --> Composer[communication composer]
-  Composer --> Transport
+  Auto[Autonoom resultaat] --> Gate[communication send/silent gate]
+  Gate --> Transport
   Camera[Camera-event] --> CameraRenderer[renderCameraNotice]
   CameraRenderer --> Transport
   Reminder[Reminder] --> ReminderRenderer[renderReminderText]
@@ -254,8 +256,9 @@ Concrete oorzaken:
 2. Een eenvoudige huisactie gebruikt een deterministische renderer en soms
    direct `human_message` uit een tool. Dat is bewijsbaar, maar nauwelijks
    relationeel of contextgevoelig.
-3. Autonome communicatie gebruikt een aparte low-effort composer met alleen de
-   character core, eigen cooldowns en eigen tekstfilters.
+3. De vroegere tweede autonome antwoordcomposer is verwijderd. `runAgent` kiest
+   nu de tekst; `communication.js` mag alleen verzenden, stilhouden of om gewone
+   thuistaal vragen en herschrijft Eva's gekozen bericht nooit.
 4. Camera- en herinneringsmeldingen gaan via eigen renderers rechtstreeks naar
    de transportcallback; de levende gespreksroute wordt overgeslagen.
 5. Telegram-toegang/fouten en voicebridge-fouten bevatten eigen vaste zinnen.
@@ -284,7 +287,7 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `src/config.js` | Omgevingsvariabelen normaliseren tot runtimeconfig | ← 21 modules | Lokale adapters valideren daarnaast zelf configuratie |
 | `src/bus.js` | Singleton EventEmitter | ← 12 modules | Verborgen globale koppeling en impliciete eventcontracten |
 | `src/util.js` | Tijd-, tekst-, overlap-, nacht- en errorhelpers | ← 13 modules | Tekstnormalisatie bestaat ook in agent, tools en turnplan |
-| `src/db.js` | SQLitebootstrap en API voor gesprek, geheugen, mensen, reminders, aspiraties, KV en audit | → config, bus, util, secretmind; ← circa 30 modules | God-module; slechts 12 van 37 tabellen staan hier |
+| `src/db.js` | SQLitebootstrap en API voor gesprek, geheugen, mensen, reminders, aspiraties, KV en audit | → config, bus, util, security/redaction; ← 29 modules | God-module; slechts 11 van 36 applicatieschema's staan hier |
 | `src/runtimeversion.js` | Hash van geladen broncode | → config; ← index, web | Provenance overlapt capability- en installerreceipts |
 | `src/reminders.js` | Reminderloop en bezorging | → db, config, util, HA, tools, persona | Eigen delivery- en formuleringroute |
 | `src/brain/oauth.js` | OpenAI OAuth/PKCE, refresh en callbackserver | → config, bus | Eigen authbestand naast de centrale vault |
@@ -298,19 +301,20 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `src/integrations/telegram.js` | Telegram inbound/outbound, archief, dedupe, media en frameextractie | → db, agent, tools, vision, llm | Transport, conversation state en media-analyse vermengd |
 | `src/integrations/robot.js` | Valetudo-status, kaart, camera en beweging | → config, HA | Robotzicht overlapt vision en HA-camera's |
 | `src/integrations/agentmail.js` | Signup, OTP, inbox en verzenden | → db, vault | Accountworkflow en delivery deels ook in tools/agent |
-| `src/self/secretmind.js` | AES-GCM sealing/opening | → config; ← db, vault | Twee secretconsumenten met verschillend opslagmodel |
-| `src/self/vault.js` | Versleutelde secrets en identiteit boven KV | → db, secretmind | OAuth gebruikt niet deze vault |
+| `src/self/secretmind.js` | AES-GCM sealing/opening voor de vault | → config; ← vault | OAuth gebruikt een afzonderlijke opslagroute |
+| `src/self/vault.js` | Versleutelde secrets, identiteit en registratie bij centrale redactie | → db, secretmind, security/redaction | OAuth gebruikt niet deze vault |
+| `src/security/redaction.js` | Centrale exacte en patroonredactie vóór opslag/modelreceipt | → config; ← db, agent, vault | Redigeert config- en dynamisch geregistreerde vaultwaarden |
 
 ### Centrale mind, identiteit en werk
 
 | Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
 | --- | --- | --- | --- |
-| `src/mind/agent.js` | Conversatie- en autonomie-orchestrator | → 18-20 interne modules; ← Telegram, web, voice, autonomy | Intent, context, routing, bewijs, lifecycle en antwoord in 4.481 regels |
-| `src/mind/tools.js` | 33 toolschema's, aanbodfilter, executor en handlers | → 15-17 interne modules | Catalogus, policy, verificatie en businessflows in 2.716 regels vermengd |
-| `src/mind/toolpolicy.js` | Declaratieve effecten, autonomie, tags, verificatie en bewijsrang | ← llm, agent, social, tools, live scenarios | Nieuwe canonieke bron; resterende afgeleide groepen moeten alleen hiervan lezen |
+| `src/mind/agent.js` | Conversatie- en autonomie-orchestrator | → 18-20 interne modules; ← Telegram, web, voice, autonomy | Intent, context, routing, bewijs, lifecycle en antwoord in 4.425 regels |
+| `src/mind/tools.js` | 33 toolschema's, aanbodfilter, executor en handlers | → 15-17 interne modules | Catalogus, verificatie en businessflows in circa 2.815 regels vermengd |
+| `src/mind/toolpolicy.js` | Declaratieve effecten, autonomie, tags, verificatie, bewijsrang en herstelrouting | ← llm, agent, social, tools, live scenarios | Canonieke beleidsbron; toolschema en handlerdispatch staan nog in tools.js |
 | `src/mind/turnplan.js` | Pure effectgrenzen, voicevervolg, locatie en identiteit | ← agent | Intentclassificatie bestaat daarnaast nog uitgebreid in agent |
 | `src/mind/persona.js` | Character core, chat/spoken/autonomous voice en renderers | → util, config; ← agent, communication, perception, reminders | Geen exclusief eigenaarschap over zichtbare tekst |
-| `src/mind/communication.js` | Autonome contactkeuze, cooldown, fact lock en formulering | → llm, db, persona, household, social | Tweede antwoordcomposer naast agent |
+| `src/mind/communication.js` | Pure autonome send/silent/rewrite-gate en cooldown | ← agent | Geen modelcall en geen tweede formuleringseigenaar meer |
 | `src/mind/social.js` | Zelfbeeld, relationele lessen en continuïteitscontext | → db, toolpolicy | Overlap met household, emotions, persona en cognitive |
 | `src/mind/household.js` | Gezinsrollen, presence-sync en relationele feedback | → db | Persoonsmodel raakt ook db, Telegram en vision/facerec |
 | `src/mind/appearance.js` | Avatarstijl en tijdelijke expressies | → bus, db | Mood/aura koppelt indirect aan emotions en web |
@@ -325,17 +329,15 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `src/mind/toolinstaller.js` | npm-discovery, installatie, inspectie en activatie | → db, config, filesystem, systemd-run | Geïnstalleerde packages worden nergens automatisch als nieuwe adapter geladen |
 | `src/mind/errorbook.js` | Persistent foutenboek en preventielessen | → db, util | Gebeurtenissen overlappen timeline en cognitive events |
 
-### Perceptie en lokale inferentie
+### Perceptie en brainservice
 
 | Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
 | --- | --- | --- | --- |
 | `src/mind/vision.js` | Beeldbeschrijving, fotoarchief, naamleren en observatiecorrecties | → db, llm, HA, facerec, errorbook | Grote overlap met perception en facerec |
 | `src/mind/perception.js` | Eventgedreven camera-/deurbelbeoordeling en fotomelding | → bus, facerec, tools, persona | Eigen selectie-, cooldown- en antwoordroute |
-| `src/mind/facerec.js` | Detectie, leren en herkennen met fallbacks | → db, embeddings, localbrain | Twee inferencebackends en modelstatussen |
-| `src/mind/embeddings.js` | Embeddingstatus, vectorconversie en cosine | → db, localinference | Tussenlaag tussen facerec en worker |
-| `src/mind/localbrain.js` | Health/client voor Python brainservice | → config, db | Tweede modelbackend naast localinference |
-| `src/mind/localinference.js` | IPC-manager en lifecycle voor childworker | → config | Start worker via `fork`, dus niet zichtbaar in importgraaf |
-| `src/mind/localinferenceworker.js` | TF predictors/policy en MiniLM embeddings | runtime ← localinference | Afzonderlijke modelhost naast Pythonservice |
+| `src/mind/facerec.js` | Detectie, leren en herkennen via ArcFace | → db, embeddings, localbrain | Eén embeddingruimte; bij brainuitval blijft bestaand gezichtbewijs ongemoeid |
+| `src/mind/embeddings.js` | Bufferconversie voor gezichts-embeddings | ← facerec | Kleine serialisatiehulp; geen eigen modelhost meer |
+| `src/mind/localbrain.js` | HTTP-client, healthmonitor en statusboekhouding voor de Python-brainservice | → config, db | Enige actieve lokale modelbackend; kan lokaal of op een aparte GPU-host draaien |
 | `src/mind/voicebridge.js` | HA voice-event naar de centrale agent en receipt terug | → bus, db, HA, agent | Voice-intent/routing zit ook in HA, turnplan en agent |
 
 ### Web en statische assets
@@ -357,6 +359,31 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `eva_brain/test_service.py` | Invoervalidatie voor lege, kapotte en geldige afbeeldingspayloads | Gerichte unittest van de Pythonservice |
 | `eva_brain/ingest.py` | Afbeeldingen normaliseren en voorbereiden | Offline datasetstap |
 | `eva_brain/train_encoder.py` | Eigen encoder trainen | Offline training |
+| `eva_brain/requirements.lock` | Volledig vastgezette Python/CUDA-omgeving met 71 distributieversies | Installatiebron voor `data/runtime/eva-brain-venv` |
+
+`deploy/eva-brain.service` start deze service als user-unit op loopbackpoort
+3220 met expliciete paden onder `data/runtime`. Tijdens deze audit was de
+geïnstalleerde unit `eva-brein.service` actief; `/health` bevestigde CUDA,
+opgewarmde detectie en herkenning en een geladen encoder. Alle 71 versiepins uit
+de lock kwamen exact overeen met de actieve venv. Dit is de enige actieve zware
+lokale modelservice; `mind/localbrain.js` is alleen haar Node-client.
+
+## Bewust verwijderde routes en state
+
+| Verwijderd | Wat werkelijk weg is | Wat bewust blijft |
+| --- | --- | --- |
+| Dockerroute | `.dockerignore`, `Dockerfile` en `docker-compose.yml` | Systemd voor Eva en een afzonderlijke user-unit voor de Python-brain |
+| Node-localinference | `mind/localinference.js`, `mind/localinferenceworker.js`, de IPC-lifecycletest, `@xenova/transformers` en zijn transitieve packages | `mind/localbrain.js` als HTTP-client voor de ene Python-brain |
+| Oude Human-facefallback | `@tensorflow/tfjs-node`, `@vladmandic/human`, 75 transitieve packages en `data/face-models` | Eén werkende ArcFace-ruimte; een uitval wordt eerlijk als onbeschikbaar behandeld |
+| Tekst-/geheugenembeddings | modelwarmup, semantische timeline-/memory-indexering, embeddingkolommen en bijbehorende DB-API's | FTS5/trefwoordgeheugen en gezichts-embeddings |
+| `private_thoughts` | schema-aanmaak, lees-/schrijf-API en versleutelde gedachteopslag | `secretmind.js` blijft uitsluitend de versleutelingslaag van de vault |
+
+De naam `mind/embeddings.js` is daardoor geen achtergebleven tweede
+inferenceservice: het bestand bevat nog slechts 15 regels voor veilige
+serialisatie van gezichtsvectoren van/naar SQLitebuffers. De actuele
+`data/eva.db` bevat noch `private_thoughts`, noch embeddingkolommen op `timeline`
+of `memories`. Oude externe backups kunnen die historische velden uiteraard nog
+wel bevatten.
 
 ## Scripts
 
@@ -365,8 +392,8 @@ SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
 | `scripts/real-life-scenarios.mjs` | Declaratieve echte gespreksscenario's | Leest toolpolicy voor effectsets |
 | `scripts/live-canary.mjs` | Stuurt live berichten, leest health/timeline en beoordeelt gedrag | Draait tegen de echte service |
 | `scripts/quality-gate.mjs` | Baselinegates voor typecheck, lint en complexiteit | Leest `quality-baseline.json` |
-| `scripts/localinference-lifecycle.test.mjs` | Proces-/IPC-lifecycletest voor lokale worker | Onderdeel van `npm test` |
-| `scripts/eva-backup.mjs` | SQLite/data-backup | Gespawnd door `index.js` |
+| `scripts/sanitize-secret-history.mjs` | Exacte config- en vaultwaarden uit SQLitehistorie redigeren | Alleen offline met Eva gestopt; waarde-vrije rapportage |
+| `scripts/eva-backup.mjs` | Gevalideerde, checksumgebonden SQLitebackup | Gespawnd door `index.js` |
 
 ## Testbestanden
 
@@ -391,7 +418,7 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `test/minimal-core-contract.test.js` | Brede agent-, tool-, bewijs- en autonomieregressies |
 | `test/perception-policy.test.js` | Camerameldgrenzen |
 | `test/portfolio-continuity.test.js` | Doelen, episodes, delivery en recovery |
-| `test/social-continuity.test.js` | Zelfbeeld, relaties en autonome composer |
+| `test/social-continuity.test.js` | Zelfbeeld, relaties en autonome aflevergrens |
 | `test/telegram-message-archive.test.js` | Telegramarchief en claims |
 | `test/telegram-outbox-core.test.js` | Prepared outbox en hervatting |
 | `test/telegram-transport.test.js` | Ontvangers, dedupe, reply en media |
@@ -408,13 +435,12 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `package.json`, `package-lock.json` | Node-runtime, dependencies en commando's | Canonieke JS-build/testdefinitie |
 | `.c8rc.json` | Coverageconfiguratie | Stuurt de `c8`-rapportage |
 | `.gitignore` | Uitsluiting van secrets, runtime-output, scratch en dependencies | Verbergt lokale artefacten; is geen opruimmechanisme |
-| `.dockerignore` | Container-buildscope | Houdt lokale state en dependencies uit het image |
 | `.env.example` | Publieke configuratietemplate | Werkelijke `.env` hoort buiten Git |
 | `tsconfig.json` | JavaScript-typeanalyse | Typebaseline is nog niet nul; Python heeft nog geen actieve typegate |
 | `eslint.config.js`, `eslint.complexity.config.js` | Lint- en complexiteitsregels | Baselines laten bekende schuld toe |
 | `quality-baseline.json` | Tijdelijke bovengrens voor bekende diagnoses | Geen kwaliteitsbewijs op zichzelf |
-| `Dockerfile`, `docker-compose.yml` | Containerroute | Naast systemd een tweede deploymentroute |
 | `deploy/eva.service` | Gedocumenteerde systemd-unit | Dit is de unit die README installeert |
+| `deploy/eva-brain.service`, `eva_brain/requirements.lock` | Reproduceerbare user-unit en volledige Python/CUDA-lock | Actieve zware beeldbackend; niet onderdeel van de Node-package-lock |
 | `README.md` | Installatie en featureoverzicht | Noemt alleen aantoonbare actuele routes en markeert gedeeltelijke architectuur expliciet |
 | `docs/house-entity-v1.md` | Product-/gedragscontract | Ontwerpbron, geen uitvoerbewijs |
 | `docs/eva-runtime-map.md` | Volledige actuele bestands- en koppelingskaart | Canonieke technische bron |
@@ -422,18 +448,21 @@ architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
 | `docs/durable-work-lifecycle.md` | Lifecyclecontract | Moet met work/portfolio code gelijk blijven |
 | `docs/live-acceptance-2026-08-04.md` | Momentopname live acceptatie | Datumgebonden bewijs |
 
-Na sanering zijn er 101 gevolgde repositorybestanden, waarvan 13 direct in de
-root. De root bevat daarnaast alleen de lokale `.env`, Gitmetadata, dependencies
-en `data/`. De actieve Pythonomgeving staat onder
+Na toepassing van de zichtbare deleties en toevoegingen bevat de werkboom 99
+versiebeheerbare repositorybestanden: 95 reeds gevolgde bestaande bestanden en
+4 nog toe te voegen bestanden. Daarvan staan er 10 direct in de root. De
+Git-index toont vóór staging nog 101/13, omdat de zes verwijderingen daarin nog
+staan; dat is geen tweede codebase. De root bevat daarnaast alleen de lokale
+`.env`, Gitmetadata, dependencies en `data/`. De actieve Pythonomgeving staat onder
 `data/runtime/eva-brain-venv`; de bijbehorende user-unit is aangepast en live
 via `/health` gecontroleerd.
 
 ## Runtimewerkruimte: wat ieder overgebleven topitem is
 
-`data/workspace` ging tijdens deze audit van 153.207 bestanden/22 GB naar 2.443
-reguliere bestanden/623 MB, gemeten op 6 augustus 2026 na de capabilitycontrole.
+`data/workspace` ging tijdens deze audit van 153.207 bestanden/22 GB naar 260
+reguliere bestanden/12 MB, gemeten op 6 augustus 2026 na de capabilitycontrole.
 Gegenereerde venvs, ESPHome-buildcache, npm-output, stale
-pidfiles, een dubbele gitclone en een fout backup-archief zijn verwijderd.
+pidfiles, herdownloadbare onderzoeksclones en oude archiefmappen zijn verwijderd.
 
 | Pad/groep | Status en functie |
 | --- | --- |
@@ -444,24 +473,19 @@ pidfiles, een dubbele gitclone en een fout backup-archief zijn verwijderd.
 | `zelfverbeterpoort.js` | Implementatie die bij de actieve zelfverbeterpoortproef hoort |
 | `package.json` | Lokaal CommonJS-grensbestand waardoor de `.js`-capabilityscripts onafhankelijk van Eva's ESM-root draaien |
 | `extensions/` | Actieve lokale dependency van `json-diep-vergelijken`; niet opruimen zonder capabilitymigratie |
-| `camera_trigger_frames/` | Door de actieve perceptionruntime beheerde tijdelijke cameraframes |
 | `esphome_voice_patch/`, `ha_voice_pe_src/` | Actuele Voice PE-bron/config; gegenereerde `.esphome`-buildstate is verwijderd |
 | `openwakeword_hey_eva/`, `wakeword_eva/` | Wakewordbron, trainingsconfig en onderzoeksresultaten; virtuele omgevingen zijn verwijderd |
-| `backups/` | Kleine clean/verified Voice PE-backups met checksums; de 6,67-GB venv/buildsnapshot is verwijderd |
-| `archive/robot-erik-research/` | Afgesloten robot/Dreame/Valetudo-onderzoek, niet actief geladen |
-| `archive/historical-work/` | Terminale audits, energieonderzoeken en reparatieproeven, niet actief geladen |
-| `archive/loose-artifacts-through-2026-08-06/` | 314 voormalige losse werkproducten; historische set, geen actieve capability-entrypoints |
-
 Privésleutels en sleutelhoudende diagnoselogs staan niet meer in de uitvoerbare
 werkruimte. Eén exemplaar per werkelijk verschillend sleutelformaat staat met
 modus 600 onder `data/private/legacy-device-access`; byte-identieke kopieën zijn
-verwijderd. Sleutelrotatie en redactie van oudere DB/backups blijven nodig.
+verwijderd. De live-DB en beide herstelarchieven zijn exact tegen de actuele
+env- en vaultwaarden gescand en schoon bevonden.
 
 ## SQLite-eigenaarschap
 
 | Schema-eigenaar | Aantal tabellen | Domein |
 | --- | ---: | --- |
-| `db.js` | 12 | timeline, messages, Telegram, toolreceipts, memories, emotions, reminders, people, KV, aspirations, private thoughts |
+| `db.js` | 11 | timeline, messages, Telegram, toolreceipts, memories, memory-FTS, emotions, reminders, people, KV en aspirations |
 | `portfolio.js` | 6 | goals, projects, episodes, events, origins, deliveryreceipts |
 | `cognitive.js` | 3 | cognitive state, events en episodes |
 | `vision.js` | 3 | nameable photos, messagekoppeling en observatiecorrecties |
@@ -476,13 +500,16 @@ verwijderd. Sleutelrotatie en redactie van oudere DB/backups blijven nodig.
 
 Vrijwel al deze modules migreren bij import dezelfde SQLitefile. Daardoor zijn
 importvolgorde, testsetup en datamigratie onbedoeld deel van het domeingedrag.
+De 36 hierboven zijn de door de bron aangemaakte applicatieschema's, inclusief
+de virtuele FTS-tabel. De actuele SQLitecatalogus toont daarnaast zeven interne
+SQLite-/FTS-tabellen en komt fysiek dus op 43; die interne tabellen hebben geen
+aparte Eva-module als eigenaar.
 
 ## Verborgen koppelingen
 
 - Telegram registreert messenger-, foto- en voicecallbacks in `tools.js`; dit
   vormt runtime een terugrand van tools naar Telegram zonder statische import.
 - `tools.js` laadt `vision.js` dynamisch.
-- `localinference.js` start `localinferenceworker.js` met `fork()`.
 - `index.js` spawnt het backupscript.
 - `tools.js` en `toolinstaller.js` hebben afzonderlijke `systemd-run`-sandboxes.
 - Telegram en robot starten elk ffmpeg.
@@ -498,7 +525,7 @@ actuele officiële documentatie en broncode, met deze bronmomenten:
 
 - OpenClaw: actuele officiële runtime- en skilldocumentatie;
 - Hermes Agent: `NousResearch/hermes-agent` op commit
-  `aaf9688519cca58dd5f76a589a0911aff269b060`;
+  `6e9cae6`;
 - Agent Zero: `agent0ai/agent-zero` op commit
   `5ff106a2d489d17c2a3b378521a8f29fb29cf77d`.
 
@@ -663,7 +690,7 @@ loader, capabilityadvertentie, policybinding, healthcheck en rollback toe.
 
 ### P1 — schema en audit centraliseren
 
-Verplaats de 37 schema's naar één migratielaag. Kies één audit-eventenvelop en
+Verplaats de 36 schema's naar één migratielaag. Kies één audit-eventenvelop en
 projecteer daaruit timeline, cognitive events, errorbook, relatiefeedback en
 install-events waar mogelijk, in plaats van dezelfde gebeurtenis vijfmaal los
 te interpreteren.
@@ -683,14 +710,18 @@ en moet bij iedere architectuurwijziging mee wijzigen.
 
 ## Verificatie van deze audit
 
-- Alle 45 JavaScriptmodules zijn via exports/imports en bereikbaarheid vanaf
+- Alle 44 JavaScriptmodules zijn via exports/imports en bereikbaarheid vanaf
   `src/index.js` geïnventariseerd.
-- `localinferenceworker.js` en de browserassets zijn niet statisch vanaf index
-  bereikbaar, maar wel aantoonbaar via childprocess/static serving.
+- De browserassets zijn niet statisch vanaf index bereikbaar, maar wel
+  aantoonbaar via static serving.
 - De statische graaf bevat geen importcyclus.
 - Dynamische imports, bus-events, timers, callbacks, childprocessen, HTTP-routes,
   transportregistraties en schema-eigenaars zijn afzonderlijk gezocht.
-- De actuele Node-regressiesuite slaagt: 230 van 230 tests; de gerichte
+- De bronregels zijn met `wc -l` over de 44 actuele `.js`-bestanden geteld; de
+  schematelling komt uit alle `CREATE TABLE`/`CREATE VIRTUAL TABLE`-sites en is
+  tegen de read-only SQLitecatalogus gecontroleerd.
+- De actuele Node-regressiesuite slaagt; de exacte telling staat bij iedere
+  acceptatierun in het testbewijs. De gerichte
   Python-brainproef slaagt daarnaast 4 van 4.
 - Deze sanering verwijdert repositorybreed ruim meer regels dan zij toevoegt.
   De gerichte runtimewijzigingen blijven wel nieuwe code; de bestaande hotspots

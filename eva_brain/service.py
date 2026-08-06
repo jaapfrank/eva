@@ -40,7 +40,16 @@ from insightface.model_zoo import model_zoo
 from insightface.utils import ensure_available
 
 DEV = 'cuda' if torch.cuda.is_available() else 'cpu'
-ENC_PATH = os.environ.get('EVA_ENCODER', '/home/administrator/eva-archief/encoder_pilot.pt')
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RUNTIME_ROOT = os.path.join(PROJECT_ROOT, 'data', 'runtime')
+ENC_PATH = os.environ.get(
+    'EVA_ENCODER',
+    os.path.join(RUNTIME_ROOT, 'eva-brain-data', 'encoder_pilot.pt'),
+)
+FACE_MODEL_ROOT = os.environ.get(
+    'EVA_FACE_MODEL_ROOT',
+    os.path.join(RUNTIME_ROOT, 'eva-brain-models', 'insightface'),
+)
 cv2.setNumThreads(BRAIN_CPU_THREADS)
 FACE_PROVIDERS = ['CUDAExecutionProvider', 'CPUExecutionProvider']
 FACE_PROVIDER_OPTIONS = [
@@ -78,7 +87,7 @@ _model_lock = threading.Lock()
 class FocusedFaceAnalysis(FaceAnalysis):
     """InsightFace zonder drie ongebruikte CUDA-sessies."""
 
-    def __init__(self, name='buffalo_l', root='~/.insightface'):
+    def __init__(self, name='buffalo_l', root=FACE_MODEL_ROOT):
         self.models = {}
         model_dir = ensure_available('models', name, root=root)
         for filename in ('det_10g.onnx', 'w600k_r50.onnx'):

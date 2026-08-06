@@ -68,7 +68,7 @@ function nowIso() {
 }
 
 function clean(value, limit = 2_000) {
-  return String(value ?? '').replace(/\u0000/g, '').trim().slice(0, limit);
+  return String(value ?? '').replaceAll('\u0000', '').trim().slice(0, limit);
 }
 
 function json(value, fallback = {}) {
@@ -110,11 +110,38 @@ function packageSlug(packageName, version) {
   return `${base}-${digest(`${packageName}@${version}`).slice(0, 10)}`;
 }
 
-function safeTarget(slug) {
+function pathInside(root, target) {
+  return target === root || target.startsWith(`${root}${path.sep}`);
+}
+
+function checkedExtensionsRoot({ mustExist = false } = {}) {
+  const workspace = fs.realpathSync(config.workspaceDir);
   const root = path.resolve(EXTENSIONS_ROOT);
+  if (!pathInside(workspace, root)) throw new Error('extensiemap valt buiten de werkruimte');
+  if (!fs.existsSync(root)) {
+    if (mustExist) throw new Error('extensiemap bestaat niet');
+    return root;
+  }
+  const stat = fs.lstatSync(root);
+  if (stat.isSymbolicLink() || !stat.isDirectory()) {
+    throw new Error('extensiemap moet een echte werkruimtemap zijn');
+  }
+  const real = fs.realpathSync(root);
+  if (!pathInside(workspace, real)) throw new Error('extensiemap wijst buiten de werkruimte');
+  return real;
+}
+
+function safeTarget(slug) {
+  const root = checkedExtensionsRoot();
   const target = path.resolve(root, slug);
-  if (!slug || target === root || !target.startsWith(`${root}${path.sep}`)) {
+  if (!slug || target === root || !pathInside(root, target)) {
     throw new Error('ongeldig extensiedoel');
+  }
+  if (fs.existsSync(target)) {
+    const stat = fs.lstatSync(target);
+    if (stat.isSymbolicLink()) throw new Error('extensiedoel mag geen symlink zijn');
+    const real = fs.realpathSync(target);
+    if (!pathInside(root, real)) throw new Error('extensiedoel wijst buiten de extensiemap');
   }
   return target;
 }
@@ -294,8 +321,13 @@ function upsertDiscovery(record) {
 
 async function removeTemporary(target) {
   const resolved = path.resolve(target);
-  const root = path.resolve(EXTENSIONS_ROOT);
+  const root = checkedExtensionsRoot();
   if (!resolved.startsWith(`${root}${path.sep}.install-`)) return;
+  const stat = await fs.promises.lstat(resolved).catch(() => null);
+  if (stat?.isSymbolicLink()) {
+    await fs.promises.unlink(resolved);
+    return;
+  }
   await fs.promises.rm(resolved, { recursive: true, force: true });
 }
 
@@ -544,6 +576,7 @@ export async function install(first, second = null) {
   }
 
   await fs.promises.mkdir(EXTENSIONS_ROOT, { recursive: true, mode: 0o700 });
+  checkedExtensionsRoot({ mustExist: true });
   const target = safeTarget(item.slug);
   if (fs.existsSync(target)) {
     throw new Error('extensiedoel bestaat al zonder geldige stagingreceipt');

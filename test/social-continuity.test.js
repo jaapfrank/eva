@@ -7,16 +7,16 @@ import test, { after } from 'node:test';
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-social-continuity-'));
 process.env.EVA_DATA_DIR = dataDir;
 
-const { addAspiration, addMemory, addMessage, db, logTimeline } = await import('../src/db.js');
+const { addAspiration, addMemory, db, logTimeline } = await import('../src/db.js');
 const {
   relationshipLessonFromText,
   selfMemoryFacets,
   selfContinuityContextText,
 } = await import('../src/mind/social.js');
 const {
-  __communicationTest,
   autonomousMessageNeedsAccountability,
-  composeAutonomousMessage,
+  autonomousMessageNeedsRewrite,
+  reviewAutonomousMessage,
   routineAutonomousMessageCoolingDown,
 } = await import('../src/mind/communication.js');
 
@@ -95,61 +95,17 @@ test('routinecontact koelt af maar een fout blijft harde accountability', () => 
   );
 });
 
-test('de autonome composer mag stil zijn en bewaakt harde toestandfeiten', async () => {
-  const silent = await composeAutonomousMessage({
-    draft: 'Ik dacht even aan jullie.',
-    complete: async () => ({
-      text: JSON.stringify({ decision: 'silent', text: '', reason: 'geen aanleiding' }),
-    }),
-  });
-  assert.equal(silent.decision, 'silent');
-
-  const required = await composeAutonomousMessage({
-    draft: 'De tuinlamp staat nu uit.',
-    mustDeliver: true,
-    complete: async () => ({
-      text: JSON.stringify({ decision: 'send', text: 'De tuinlamp staat nu aan.', reason: 'kort' }),
-    }),
-  });
+test('de autonome aflevergrens herschrijft Eva haar gekozen tekst nooit', () => {
+  const required = reviewAutonomousMessage('De tuinlamp staat nu uit.', { mustDeliver: true });
   assert.equal(required.decision, 'send');
   assert.equal(required.text, 'De tuinlamp staat nu uit.');
-  assert.equal(
-    __communicationTest.parseComposition('{"decision":"silent","text":""}', 'feit', true).decision,
-    'send',
-  );
-  assert.equal(
-    __communicationTest.externalizeInternalLanguage(
-      'Ik heb de spots gecontroleerd uitgezet en daarna de uitstand gecontroleerd.',
-    ),
-    'Ik heb de spots uitgezet.',
-  );
-  assert.equal(
-    __communicationTest.compositionContradictsDraft(
-      "De spots stonden aan, de tv’s waren stil en de deuren dicht. Ik heb de spots uitgezet.",
-      "De spots stonden aan, de tv’s waren uit en de deuren dicht. Ik heb de spots uitgezet.",
-    ),
-    true,
-  );
+  assert.equal(autonomousMessageNeedsRewrite('Receipt 4 bewijst de uitstand.'), true);
+  assert.equal(reviewAutonomousMessage('Receipt 4 bewijst de uitstand.').decision, 'rewrite');
 });
 
-test('de afleverstem krijgt de directe gespreksthread en verzint geen entity-id', async () => {
-  addMessage('telegram', 'Jaap', 'user', 'Dat moet jij doen.', 'telegram:jaap');
-  addMessage('telegram', 'Eva', 'assistant', 'Ik pak Lola haar koppeling zelf aan.', 'telegram:jaap');
-  let prompt = '';
-  const composed = await composeAutonomousMessage({
-    draft: 'Lola gebruikt nu alleen device_tracker.unifi_lola.',
-    conversationId: 'telegram:jaap',
-    mustDeliver: true,
-    complete: async ({ input }) => {
-      prompt = input[0].content[0].text;
-      return { text: JSON.stringify({
-        decision: 'send',
-        text: 'Lola gebruikt nu alleen device_tracker.verzonnen.',
-        reason: 'kort',
-      }) };
-    },
-  });
-  assert.match(prompt, /Jaap: Dat moet jij doen/);
-  assert.match(prompt, /Eva: Ik pak Lola haar koppeling zelf aan/);
-  assert.equal(composed.text, 'Lola gebruikt nu alleen device_tracker.unifi_lola.');
+test('de aflevergrens laat gewone huisgenoottaal exact staan', () => {
+  const message = 'Lola gebruikt nu alleen haar eigen telefoon voor de thuisstatus.';
+  const reviewed = reviewAutonomousMessage(message, { mustDeliver: true });
+  assert.equal(reviewed.decision, 'send');
+  assert.equal(reviewed.text, message);
 });

@@ -33,6 +33,18 @@ export function requestAuthorized(req, expectedToken = '') {
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
+export function normalizeWebConversationId(value = '', sender = 'huisgenoot') {
+  const requested = String(value || '').trim().replace(/^(?:web\s*:\s*)+/i, '');
+  const fallback = String(sender || 'huisgenoot').trim();
+  const identity = (requested || fallback)
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[^a-z0-9._:-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 120) || 'huisgenoot';
+  return `web:${identity}`;
+}
+
 export function familyTimelineEntry(row) {
   if (!row || row.meta?.internalOnly === true) return false;
   if (row.meta?.syntheticTest === true

@@ -90,6 +90,8 @@ const HOME_LOCALITY_KEY = 'eva_home_locality_v1';
 const AUTONOMY_TOPIC_QUIET_MS = 7 * 24 * 3600_000;
 const READABLE_ROOTS = [config.root, config.workspaceDir].map((value) => path.resolve(value));
 const WRITABLE_ROOT = path.resolve(config.workspaceDir);
+const SENSITIVE_READ_ROOTS = ['private', 'backups', 'runtime']
+  .map((name) => path.resolve(config.dataDir, name));
 const SAFE_PROGRAMS = new Set(['node', 'npm', 'npx', 'python', 'python3', 'git']);
 const SAFE_EXECUTABLES = new Map([
   ['node', '/usr/bin/node'],
@@ -285,7 +287,8 @@ function autonomousMessageHasNewResult(current, previous) {
 function autonomousMessageIsInternalProgress(value) {
   const text = String(value || '');
   if (/\bdata[\\/]workspace\b|\/(?:home|tmp)\/|\b(?:stdout|stderr|exitcode)\b|```|\{\s*"(?:ok|contract|tool)"/i.test(text)
-    || /\b(?:mijn\s+)?(?:huidige\s+)?werkruimte\b|\bregistratieaanroep\b|\bvanuit\s+deze\s+route\b|\btechnische\s+(?:route|blokkade)\b/i.test(text)) {
+    || /\b(?:mijn\s+)?(?:huidige\s+)?werkruimte\b|\bregistratieaanroep\b|\bvanuit\s+deze\s+route\b|\btechnische\s+(?:route|blokkade)\b/i.test(text)
+    || /\b(?:aanwezigheidsbewijs|uitstand|bewijsgrens|delivery|receipt|werkpunt|werkboek|entity[_ -]?id|tool(?:call)?|op\s+naam\s+gegokt)\b/i.test(text)) {
     return true;
   }
   const signals = [
@@ -700,26 +703,80 @@ async function operateHome({ target, action, value = null }) {
   };
 }
 
+function pathInside(root, candidate) {
+  return candidate === root || candidate.startsWith(`${root}${path.sep}`);
+}
+
+function sensitiveReadablePath(realPath) {
+  const relative = path.relative(config.root, realPath).replaceAll(path.sep, '/');
+  const basename = path.basename(realPath);
+  return SENSITIVE_READ_ROOTS.some((root) => pathInside(root, realPath))
+    || /(?:^|\/)data\/eva\.db(?:-(?:wal|shm))?$/i.test(relative)
+    || /(?:^|\/)(?:\.env(?:[._-][^/]*)?|auth\.json|credentials?\.json|secrets?\.ya?ml|\.eva_mind_key)$/i.test(relative)
+    || /(?:^|\/)[^/]*(?:id_rsa|\.ppk|\.pem|\.key|\.sqlite3?|\.db)(?:-(?:wal|shm))?$/i.test(relative)
+    || /^\.(?:npmrc|netrc|git-credentials)$/i.test(basename);
+}
+
 function resolveReadablePath(input) {
   const raw = String(input || '').trim();
   const absolute = path.resolve(raw.startsWith('/') ? raw : path.join(config.root, raw));
-  if (!READABLE_ROOTS.some((root) => absolute === root || absolute.startsWith(`${root}${path.sep}`))) {
+  if (!READABLE_ROOTS.some((root) => pathInside(root, absolute))) {
     throw new Error('pad valt buiten Eva haar project en werkruimte');
   }
-  const relative = path.relative(config.root, absolute);
-  if (/(?:^|\/)(?:\.env|auth\.json|eva\.db(?:-|$)|\.eva_mind_key|[^/]*(?:id_rsa|\.ppk|\.pem|\.key))(?:\/|$)/i.test(relative)) {
+  const real = fs.realpathSync(absolute);
+  if (!READABLE_ROOTS.some((root) => pathInside(fs.realpathSync(root), real))) {
+    throw new Error('pad wijst buiten Eva haar project en werkruimte');
+  }
+  if (sensitiveReadablePath(real)) {
     throw new Error('dit bestand bevat afgeschermde gegevens');
   }
-  return absolute;
+  return real;
+}
+
+function assertNoWritableSymlink(absolute, { includeTarget = true } = {}) {
+  const root = fs.realpathSync(WRITABLE_ROOT);
+  if (absolute === WRITABLE_ROOT) return;
+  const relative = path.relative(WRITABLE_ROOT, absolute);
+  let current = WRITABLE_ROOT;
+  const parts = relative.split(path.sep).filter(Boolean);
+  const count = includeTarget ? parts.length : Math.max(0, parts.length - 1);
+  for (const part of parts.slice(0, count)) {
+    current = path.join(current, part);
+    if (!fs.existsSync(current)) break;
+    const stat = fs.lstatSync(current);
+    if (stat.isSymbolicLink()) throw new Error('symlinks zijn niet toegestaan in een schrijfpad');
+  }
+  const existingParent = fs.existsSync(path.dirname(absolute))
+    ? fs.realpathSync(path.dirname(absolute))
+    : root;
+  if (!pathInside(root, existingParent)) throw new Error('schrijfpad wijst buiten data/workspace');
 }
 
 function resolveWritablePath(input) {
   const raw = String(input || '').trim();
   const absolute = path.resolve(raw.startsWith('/') ? raw : path.join(config.root, raw));
-  if (!(absolute === WRITABLE_ROOT || absolute.startsWith(`${WRITABLE_ROOT}${path.sep}`))) {
+  if (!pathInside(WRITABLE_ROOT, absolute)) {
     throw new Error('schrijven mag alleen in data/workspace');
   }
+  assertNoWritableSymlink(absolute);
   return absolute;
+}
+
+function ensureWritableDirectory(directory) {
+  const relative = path.relative(WRITABLE_ROOT, directory);
+  let current = WRITABLE_ROOT;
+  for (const part of relative.split(path.sep).filter(Boolean)) {
+    current = path.join(current, part);
+    if (fs.existsSync(current)) {
+      const stat = fs.lstatSync(current);
+      if (stat.isSymbolicLink() || !stat.isDirectory()) {
+        throw new Error('ieder onderdeel van een schrijfpad moet een echte werkruimtemap zijn');
+      }
+    } else {
+      fs.mkdirSync(current, { mode: 0o700 });
+    }
+  }
+  assertNoWritableSymlink(directory);
 }
 
 function isSyntheticArtifactPath(value) {
@@ -738,10 +795,15 @@ function workspaceCwd(input = '') {
   const absolute = value
     ? path.resolve(value.startsWith('/') ? value : path.join(config.root, value))
     : WRITABLE_ROOT;
-  if (!(absolute === WRITABLE_ROOT || absolute.startsWith(`${WRITABLE_ROOT}${path.sep}`))) {
+  if (!pathInside(WRITABLE_ROOT, absolute)) {
     throw new Error('programma\'s mogen alleen vanuit data/workspace draaien');
   }
-  return absolute;
+  assertNoWritableSymlink(absolute);
+  const real = fs.realpathSync(absolute);
+  if (!pathInside(fs.realpathSync(WRITABLE_ROOT), real)) {
+    throw new Error('programmawerkmap wijst buiten data/workspace');
+  }
+  return real;
 }
 
 function inferredBoundTestArguments(testEntrypoint, priorToolResults = []) {
@@ -770,6 +832,15 @@ function normalizeExpectedExitCodes(values) {
   return [...new Set(codes.length ? codes : [0])].slice(0, 12);
 }
 
+function normalizeHaReadPath(value = '') {
+  const apiPath = String(value).trim();
+  const queryAt = apiPath.indexOf('?');
+  if (queryAt < 0) return apiPath;
+  // In een query wordt een kale '+' als spatie gelezen. LLM's schrijven een
+  // ISO-offset vaak als +02:00; behoud die letterlijk voor Home Assistant.
+  return `${apiPath.slice(0, queryAt + 1)}${apiPath.slice(queryAt + 1).replaceAll('+', '%2B')}`;
+}
+
 async function runProgram(program, args = [], cwd = '', expectedExitCodes = [0]) {
   const executable = path.basename(String(program || '').trim());
   if (!SAFE_PROGRAMS.has(executable)) throw new Error(`programma "${executable}" is niet toegestaan`);
@@ -783,6 +854,20 @@ async function runProgram(program, args = [], cwd = '', expectedExitCodes = [0])
     throw new Error('Node inline-uitvoering is niet toegestaan; voer een bestand uit de werkruimte uit');
   }
   const workingDirectory = workspaceCwd(cwd);
+  // Voor Node en Python is het eerste niet-optieargument het programma dat
+  // Eva zegt uit te voeren. Een verwachte exitcode mag nooit een ontbrekend
+  // entrypoint in een geslaagde proef veranderen.
+  if (['node', 'python', 'python3'].includes(executable)) {
+    const entrypoint = safeArgs.find((argument) => !argument.startsWith('-'));
+    if (entrypoint) {
+      const absoluteEntrypoint = path.resolve(
+        entrypoint.startsWith('/') ? entrypoint : path.join(workingDirectory, entrypoint),
+      );
+      if (!fs.existsSync(absoluteEntrypoint) || !fs.statSync(absoluteEntrypoint).isFile()) {
+        throw new Error(`programma-entrypoint bestaat niet: ${entrypoint}`);
+      }
+    }
+  }
   const childEnv = {
     PATH: process.env.PATH || '/usr/local/bin:/usr/bin:/bin',
     LANG: process.env.LANG || 'C.UTF-8',
@@ -801,6 +886,7 @@ async function runProgram(program, args = [], cwd = '', expectedExitCodes = [0])
     '--property=ProtectSystem=strict',
     '--property=ProtectHome=tmpfs',
     `--property=BindPaths=${WRITABLE_ROOT}`,
+    `--property=ReadOnlyPaths=-${path.join(WRITABLE_ROOT, 'extensions')}`,
     `--property=WorkingDirectory=${workingDirectory}`,
     '--property=PrivateTmp=yes',
     '--property=PrivateDevices=yes',
@@ -1169,7 +1255,7 @@ export const TOOLS = [
       stopregel: str('Wanneer stoppen of aantoonbaar pivoteren'),
       max_acties: num('Maximaal 2-12 inhoudelijke toolacties'),
       onderwerp_sleutel: str('Verplichte stabiele semantische sleutel bij start; hergebruik exact dezelfde sleutel voor hetzelfde beslisdomein'),
-      onderwerp_ankers: { type: 'array', items: { type: 'string' }, description: 'Bij start minstens twee duurzame ankers. De kern valideert en canonicaliseert deze tegen de vraag/hypothese; vrije synoniemen omzeilen eerdere besluiten niet. Noem sterke entity:/event:/artifact:-waarden ook letterlijk in de inhoud.' },
+      onderwerp_ankers: { type: 'array', items: { type: 'string' }, description: 'Bij start minstens twee stabiele ankers. Gebruik een echte entity:/event:/artifact:-waarde als die bestaat; nieuwe onderwerpen zijn ook toegestaan.' },
       aspiratie_id: num('Optionele gekoppelde eigen aspiratie'),
       bewijs: str('Nieuwe concrete waarneming'),
       resultaat: str('Conclusie, weerlegging, bruikbaar resultaat of bewezen stopreden'),
@@ -1529,7 +1615,7 @@ async function executeRawTool(name, args = {}, context = {}) {
           ? JSON.stringify(compactState(state))
           : JSON.stringify({ ok: false, reason: `Home Assistant-entiteit ${entityId} bestaat niet` });
       }
-      const apiPath = String(args.pad || '').trim();
+      const apiPath = normalizeHaReadPath(args.pad || '');
       if (!/^\/api\/(?:config|states(?:\/[^?]+)?|logbook(?:\/[^?]+)?)(?:\?|$)/.test(apiPath)) {
         return JSON.stringify({ ok: false, reason: 'alleen config, states en logbook mogen worden gelezen' });
       }
@@ -1659,12 +1745,24 @@ async function executeRawTool(name, args = {}, context = {}) {
           message: 'Bestand was al exact gelijk; er is niets herschreven.',
         });
       }
-      fs.mkdirSync(path.dirname(file), { recursive: true });
-      const temp = `${file}.eva-tmp-${process.pid}`;
-      fs.writeFileSync(temp, content, 'utf8');
-      fs.renameSync(temp, file);
-      const stat = fs.statSync(file);
-      return JSON.stringify({ ok: true, changed: true, path: path.relative(config.root, file), bytes: stat.size });
+      ensureWritableDirectory(path.dirname(file));
+      const checkedFile = resolveWritablePath(file);
+      const temp = `${checkedFile}.eva-tmp-${process.pid}-${Date.now()}`;
+      const descriptor = fs.openSync(
+        temp,
+        fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_NOFOLLOW,
+        0o600,
+      );
+      try {
+        fs.writeFileSync(descriptor, content, 'utf8');
+        fs.fsyncSync(descriptor);
+      } finally {
+        fs.closeSync(descriptor);
+      }
+      fs.renameSync(temp, checkedFile);
+      fs.chmodSync(checkedFile, 0o600);
+      const stat = fs.statSync(checkedFile);
+      return JSON.stringify({ ok: true, changed: true, path: path.relative(config.root, checkedFile), bytes: stat.size });
     }
     case 'lijst_bestanden': {
       const directory = resolveReadablePath(args.pad || 'data/workspace');
@@ -2710,6 +2808,7 @@ export const __toolsTest = {
   entityScore,
   resolveHomeEntity,
   normalizeExpectedExitCodes,
+  normalizeHaReadPath,
   proofToolFitsSubject,
 };
 

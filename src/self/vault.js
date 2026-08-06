@@ -1,6 +1,7 @@
 // Eva's kluis en identiteit. Geheimen staan versleuteld in de database; de
 // lokale sleutel staat apart en is alleen leesbaar voor het service-account.
 import { kvGet, kvSet } from '../db.js';
+import { registerSensitiveValues } from '../security/redaction.js';
 import { openThought, sealThought } from './secretmind.js';
 
 const VAULT = 'vault';
@@ -44,6 +45,7 @@ export function setSecret(sleutel, waarde) {
   const v = readVault();
   v[String(sleutel)] = encrypt(waarde);
   kvSet(VAULT, v);
+  registerSensitiveValues([[`VAULT_${sleutel}`, String(waarde)]]);
 }
 
 export function getSecret(sleutel) {
@@ -55,6 +57,15 @@ export function getSecret(sleutel) {
 export function listSecretKeys() {
   migrateLegacySecrets();
   return Object.keys(readVault());
+}
+
+export function registerVaultSecretsForRedaction() {
+  migrateLegacySecrets();
+  const vault = readVault();
+  return registerSensitiveValues(Object.entries(vault).flatMap(([name, value]) => {
+    const opened = decrypt(value);
+    return opened ? [[`VAULT_${name}`, opened]] : [];
+  }));
 }
 
 export function deleteSecret(sleutel) {

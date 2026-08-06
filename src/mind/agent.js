@@ -1,6 +1,7 @@
 import { performance } from 'node:perf_hooks';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { redactSensitiveText } from '../security/redaction.js';
 import { bus } from '../bus.js';
 import {
   addMessage,
@@ -35,6 +36,7 @@ import {
   toolEffect,
   toolHasTag,
   toolIsDurable,
+  toolNamesForRecovery,
   toolRequiresEffectReport,
   toolSyntheticAllowed,
 } from './toolpolicy.js';
@@ -49,8 +51,7 @@ import { householdContextText, recordRelationshipFeedback } from './household.js
 import { relationshipLessonFromText, selfContinuityContextText } from './social.js';
 import {
   autonomousMessageNeedsAccountability,
-  composeAutonomousMessage,
-  factualDeliveryFallback,
+  reviewAutonomousMessage,
 } from './communication.js';
 import { capabilityContextText } from './capabilities.js';
 import {
@@ -260,16 +261,34 @@ function requestsCapabilityDemonstration(value = '') {
   const text = commandText(value).toLowerCase();
   const capability = /\b(?:auto\s*bots?|autobots?|zelfverbeter\w*|add-?ons?|skills?|plugins?|uitbreidingsmogelijk\w*|uitbreidingsmechanism\w*|jezelf\s+uitbreid\w*)\b/i.test(text);
   const action = /\b(?:onderzoek\w*|inspecteer\w*|demonstreer\w*|toon\w*|probeer\w*|gebruik\w*|test\w*)\b/i.test(text);
-  const asksForNewCapability = /\b(?:nieuw|nieuwe|onbekend|ontdek\w*|zoek\w*\s+(?:een|naar)|installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*|activeer\w*)\b/i.test(text)
-    && !/\b(?:wat\s+je\s+(?:al|eerder)\s+(?:hebt|gemaakt)|bestaand|bestaande|huidig|huidige|daadwerkelijk\s+werkt|hoe\s+.*\s+werkt)\b/i.test(text);
+  const capabilityName = String.raw`(?:tool|pakket|add-?on|skill|plugin|vaardigheid|capabilit\w*|uitbreiding)`;
+  const asksForNewCapability = new RegExp(
+    String.raw`\b(?:nieuw\w*|onbekend\w*)\s+${capabilityName}\b|\b(?:zoek\s+(?:een|naar\s+een)|installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*)\b.{0,100}\b${capabilityName}\b|\b${capabilityName}\b.{0,100}\b(?:installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*)\b`,
+    'i',
+  ).test(text)
+    && !/\b(?:wat\s+je\s+(?:al|eerder)\s+(?:hebt|gemaakt)|bestaand|bestaande|actief|actieve|huidig|huidige|daadwerkelijk\s+werkt|hoe\s+.*\s+werkt)\b/i.test(text);
   return capability && action && !asksForNewCapability;
 }
 
 function requestsCapabilityExpansion(value = '') {
   const text = commandText(value).toLowerCase();
+  if (requestsCapabilityDemonstration(text)) return false;
   const capability = /\b(?:tool|tools|pakket|packages?|npm|mcp|connector|integratie|add-?ons?|skills?|plugins?|vaardigheid|vermogen|capabilit\w*|uitbreid\w*)\b/i.test(text);
-  const discovery = /\b(?:nieuw|nieuwe|onbekend|ontdek\w*|zoek\w*|vind\w*|installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*|activeer\w*)\b/i.test(text);
+  const discovery = /\b(?:nieuw\w*|onbekend\w*)\s+(?:tool|pakket|add-?on|skill|plugin|vaardigheid|capabilit\w*|uitbreiding)\b/i.test(text)
+    || /\b(?:ontdek\w*|zoek\w*|vind\w*|installeer\w*|registreer\w*|voeg\w*\s+toe|bouw\w*|maak\w*|ontwikkel\w*|activeer\w*)\b/i.test(text);
   return capability && discovery;
+}
+
+function requestsLocalProjectDocumentation(value = '') {
+  const text = commandText(value);
+  return /\b(?:dit|deze|ons|eva(?:'s)?)\s+(?:project|repository|repo|codebase)\b/i.test(text)
+    && /\b(?:documentatie|docs?|architectuur|contract(?:en)?|werking|broncode|runtime|roadmap|beschreven)\b/i.test(text)
+    && /\b(?:zoek|onderzoek|controleer|bekijk|lees|vind|waar)\w*\b/i.test(text);
+}
+
+function internetUseProhibited(value = '') {
+  return /\b(?:geen|zonder|niet(?:\s+op)?(?:\s+het)?)\s+(?:internet|web(?:zoek\w*)?|online)\b/i
+    .test(commandText(value));
 }
 
 function requestsParallelWork(value = '') {
@@ -644,6 +663,7 @@ function requiredToolsFor({ text = '', replyEvidence = null } = {}) {
     && /\b(?:aanmeld\w*|meld\s+(?:je|jou)\s+aan|registreer\w*|sign[ -]?up|account\s+aanmak\w*|verifi(?:eer|ëren)|otp|status)\b/i.test(value)) {
     return ['beheer_agentmail'];
   }
+  if (requestsLocalProjectDocumentation(value)) return ['lijst_bestanden', 'lees_bestand'];
   const documentationRequested = /\b(?:documentatie|docs?|api\s*reference|handleiding|website|url|link|endpoint|methode)\b/i.test(value)
     && /\b(?:zoek|onderzoek|controleer|bekijk|lees|vind|klopt|actueel|offici[eë]le?)\w*\b/i.test(value);
   if (documentationRequested && !requestsCapabilityExpansion(value)) return ['zoek_internet'];
@@ -713,32 +733,7 @@ function requiredToolsFor({ text = '', replyEvidence = null } = {}) {
 }
 
 function chatToolNamesFor(requiredTools = []) {
-  if (!requiredTools.length) return null;
-  // Een concrete huisopdracht is geen algemene diagnosemissie. Na een
-  // routefout mag Eva alleen dezelfde capability met een beter doel proberen
-  // of de actuele toestand teruglezen.
-  if (requiredTools.length === 1 && requiredTools[0] === 'bedien_huis') {
-    return new Set(['bedien_huis', 'ha_lees']);
-  }
-  const names = new Set(requiredTools);
-  // Deze read-only vermogens zijn na een mislukte voorkeursroute beschikbaar
-  // voor diagnose en een materieel andere aanpak. runAgent biedt vóór een fout
-  // nog steeds uitsluitend de eerstvolgende vereiste tool aan.
-  for (const name of [
-    'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_internet', 'lees_bestand',
-    'lijst_bestanden', 'zoek_geheugen', 'zoek_gesprek', 'toon_herinneringen', 'toon_werk',
-  ]) names.add(name);
-  if (requiredTools.includes('schrijf_bestand')) {
-    names.add('lijst_bestanden');
-    // Eva may freely choose a document or executable. If she chooses code, the
-    // same mission must be able to execute it instead of claiming an unrun demo.
-    names.add('voer_uit');
-  }
-  if (requiredTools.includes('lees_bestand')) names.add('lijst_bestanden');
-  // Bij een providerhandeling blijft actuele documentatie een veilige
-  // alternatieve route wanneer de directe API een fout geeft.
-  if (requiredTools.includes('beheer_agentmail')) names.add('zoek_internet');
-  return names;
+  return toolNamesForRecovery(requiredTools);
 }
 
 function directHomeCommand(text = '') {
@@ -1242,64 +1237,6 @@ function pendingDeliveryForWork(item) {
     attempts: Math.max(0, Number(delivery.attempts) || 0),
     dedupeKey: String(delivery.dedupeKey || '').trim() || null,
   };
-}
-
-function resolvePreparedDeliverySilently(item, episode, reason = 'niet relevant genoeg voor een gezinsbericht') {
-  if (!item || episode?.delivery_policy === 'required') return false;
-  const state = durableWorkState(item);
-  delete state.pending_delivery;
-  if (episode && !['closed', 'abandoned'].includes(episode.state)) {
-    transitionGoalEpisode(episode.id, {
-      state: 'closed',
-      checkpoint: episode.checkpoint || item.evidence || reason,
-      proofSummary: episode.proof_summary || item.evidence || '',
-      nextAction: '',
-      wakeTs: '',
-      work: { state, wait: {}, result: item.result || item.evidence || reason },
-    });
-  } else {
-    updateDurableWork(item.id, {
-      status: 'done', state, nextStep: '', currentStep: '', nextWakeTs: '', wait: {},
-      result: item.result || item.evidence || reason, proofAccepted: true,
-    });
-  }
-  return true;
-}
-
-async function conversationalAutonomousDelivery({
-  text,
-  recipient = null,
-  evidence = '',
-  toolResults = [],
-  required = false,
-  conversationId = null,
-} = {}) {
-  const draft = String(text || '').trim();
-  if (!draft) return { decision: 'silent', text: '', reason: 'empty' };
-  try {
-    return await composeAutonomousMessage({
-      draft,
-      recipient,
-      evidence,
-      toolResults,
-      conversationId,
-      mustDeliver: required || autonomousMessageNeedsAccountability(draft),
-    });
-  } catch (error) {
-    logTimeline('system', `Conversationele afleverlaag viel terug op het gegronde concept: ${errMsg(error)}`, {
-      internalOnly: true,
-      autonomous: true,
-      component: 'communication_composer',
-    });
-    if (!required && !autonomousMessageNeedsAccountability(draft)) {
-      return { decision: 'silent', text: '', reason: 'composer_error_retry_later' };
-    }
-    return {
-      decision: 'send',
-      text: factualDeliveryFallback(draft, toolResults).slice(0, 800),
-      reason: 'composer_error_fact_fallback',
-    };
-  }
 }
 
 function directHomeForTurn({ mode, requiredTools = [], userText = '', syntheticTest = false } = {}) {
@@ -2292,7 +2229,12 @@ function evidenceFallback(toolResults, { requiredTools = [], userText = '' } = {
         : `De add-on is in de vaste sandbox uitgevoerd met ${data.sandbox?.join(' en ') || 'beperkte rechten'}.`;
       const demoOutput = String(data?.stdout || data?.text || '')
         .trim()
-        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
+        .split('')
+        .filter((character) => {
+          const code = character.charCodeAt(0);
+          return code > 31 || [9, 10, 13].includes(code);
+        })
+        .join('')
         .slice(0, 800);
       return [
         `${capability.name} v${capability.version} is aantoonbaar gebruikt nadat receipt #${data.receipt_id} en de actuele inhoudshash overeenkwamen.`,
@@ -2651,7 +2593,7 @@ async function executeTurn({
       }
       return 2;
     }
-    if (config.autonomyFull) return name === 'stuur_bericht' ? 1 : 8;
+    if (config.autonomyFull) return name === 'stuur_bericht' ? 2 : 8;
     return ({
       schrijf_bestand: 3,
       voer_uit: 3,
@@ -2691,7 +2633,7 @@ async function executeTurn({
         error: 'De vorige procesbeurt stopte tijdens deze handeling. Ik voer haar niet blind dubbel uit; de actuele toestand moet eerst worden gecontroleerd.',
       });
     }
-    const output = await actForTurn(name, args, governedContext);
+    const output = redactSensitiveText(await actForTurn(name, args, governedContext));
     completeTurnToolExecution(executionKey, output);
     return output;
   };
@@ -3357,27 +3299,8 @@ async function executeTurn({
       ? pendingDeliveryForWork(durableCommand)
       : null;
     if (preparedDelivery) {
-      const preparedComposition = await conversationalAutonomousDelivery({
-        text: preparedDelivery.text,
-        recipient: preparedDelivery.recipient,
-        evidence: preparedDelivery.facts
-          || durableGoalEpisode?.proof_summary || durableCommand?.evidence || '',
-        toolResults,
-        required: durableGoalEpisode?.delivery_policy === 'required',
-        conversationId: durableGoalEpisode?.origin_conversation_id || null,
-      });
-      // Bestaande verplichte afleveringen worden nooit stil weggegooid. Een
-      // discretionair resultaat mag bij herbeoordeling wel intern blijven.
-      if (preparedComposition.decision === 'silent') {
-        resolvePreparedDeliverySilently(
-          durableCommand,
-          durableGoalEpisode,
-          preparedComposition.reason,
-        );
-        return answerTurn('', { toolFinal: true, deliverySuppressed: true });
-      }
       const args = {
-        tekst: preparedComposition.text,
+        tekst: preparedDelivery.text,
         ...(preparedDelivery.recipient ? { aan: preparedDelivery.recipient } : {}),
       };
       setActivity('bezorgt een eerder voorbereid resultaat', {
@@ -3400,7 +3323,7 @@ async function executeTurn({
         preparedDeliveryDedupeKey: preparedDelivery.dedupeKey,
       });
       const action = recordToolOutput('stuur_bericht', args, output);
-      return answerTurn(action.ok && action.verified ? preparedComposition.text : '', {
+      return answerTurn(action.ok && action.verified ? preparedDelivery.text : '', {
         toolFinal: true,
       });
     }
@@ -3885,15 +3808,21 @@ async function executeTurn({
           return output;
         }
         if (mode === 'autonomy' && !syntheticTest && name === 'stuur_bericht') {
-          const composition = await conversationalAutonomousDelivery({
-            text: args.tekst,
-            recipient: args.aan || durableGoalEpisode?.delivery_target || null,
-            evidence: durableGoalEpisode?.proof_summary || durableCommand?.evidence || '',
-            toolResults,
-            required: durableGoalEpisode?.delivery_policy === 'required',
-            conversationId: durableGoalEpisode?.origin_conversation_id || null,
+          if (toolResults.some((tool) => tool.name === 'stuur_bericht'
+            && tool.ok === true && tool.verified === true && tool.changed === true)) {
+            const output = JSON.stringify({
+              contract: 'ActionResult/v1', tool: 'stuur_bericht', ok: false,
+              changed: false, verified: false, needs_followup: false,
+              error: 'In deze aandachtbeurt is al één gezinsbericht bezorgd.',
+            });
+            recordToolOutput(name, args, output);
+            return output;
+          }
+          const review = reviewAutonomousMessage(args.tekst, {
+            mustDeliver: durableGoalEpisode?.delivery_policy === 'required'
+              || autonomousMessageNeedsAccountability(args.tekst),
           });
-          if (composition.decision === 'silent') {
+          if (review.decision === 'silent') {
             const output = JSON.stringify({
               contract: 'ActionResult/v1',
               tool: 'stuur_bericht',
@@ -3901,14 +3830,22 @@ async function executeTurn({
               changed: false,
               verified: true,
               needs_followup: false,
-              evidence: { source: 'communication_judgment', summary: composition.reason },
+              evidence: { source: 'communication_judgment', summary: review.reason },
               human_message: 'Dit resultaat blijft bewust intern; er is geen gezinsbericht verstuurd.',
-              data: { suppressed: true, reason: composition.reason },
+              data: { suppressed: true, reason: review.reason },
             });
             recordToolOutput(name, args, output);
             return output;
           }
-          args = { ...args, tekst: composition.text };
+          if (review.decision === 'rewrite') {
+            const output = JSON.stringify({
+              contract: 'ActionResult/v1', tool: 'stuur_bericht', ok: false,
+              changed: false, verified: false, needs_followup: true,
+              error: 'Formuleer hetzelfde concrete gevolg opnieuw in gewone thuistaal, zonder interne bewijs-, tool-, registry- of entitytaal.',
+            });
+            recordToolOutput(name, args, output);
+            return output;
+          }
         }
         setActivity(`gebruikt ${name}`, { ...runtime.current, tool: name });
         const output = await executeForTurn(name, args, {
@@ -3982,6 +3919,11 @@ async function executeTurn({
         let selected = researchReady && researchOutcomeReady
           ? offered.filter((tool) => tool.name !== 'zoek_internet')
           : offered;
+        if (requestsLocalProjectDocumentation(userText) || internetUseProhibited(userText)) {
+          selected = selected.filter((tool) => (
+            String(tool?.name || tool?.function?.name || '') !== 'zoek_internet'
+          ));
+        }
         if (mode === 'autonomy' && (
           autonomyArtifactReportPending(toolResults)
           || autonomyWorkReportPending(toolResults, activeAutonomyWorkIds())
@@ -4459,6 +4401,8 @@ export const __projectRouteTest = {
   incompleteAutonomousWrite,
   isExplicitToolRequest,
   isContinuationRequest,
+  internetUseProhibited,
+  requestsLocalProjectDocumentation,
   requestsExecutableBuild,
   requiredToolSatisfied,
   turnRequirementSatisfied,

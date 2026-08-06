@@ -201,7 +201,7 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
             description: 'antwoordt met een begrensde actuele zone of eerlijk ontbrekend bewijs',
             patterns: ['binnen', 'buiten', 'overkapping', 'tuin', 'schuur', 'woonkamer', 'niet\\s+(?:precies|exact|vaststellen)', 'preciezer.+niet'],
           }],
-          forbiddenPatterns: ['zonder.+(?:te\s+)?(?:controleren|lezen).+onder de overkapping', 'ik heb je gevonden'],
+          forbiddenPatterns: ['zonder.+(?:te\\s+)?(?:controleren|lezen).+onder de overkapping', 'ik heb je gevonden'],
         },
       },
     }],

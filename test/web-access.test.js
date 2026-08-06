@@ -5,6 +5,7 @@ import {
   assertSafeWebBinding,
   familyTimelineEntry,
   isLoopbackHost,
+  normalizeWebConversationId,
   requestAuthorized,
 } from '../src/web/access.js';
 
@@ -41,4 +42,13 @@ test('API-token wordt constant vergeleken en een zelfgekozen sender verleent gee
   assert.equal(requestAuthorized({
     headers: { authorization: 'Bearer fout', 'x-eva-sender': 'Jaap' },
   }, expected), false);
+});
+
+test('webgesprekken kunnen een begrensde canarysessie gebruiken zonder een ander kanaal te kapen', () => {
+  assert.equal(normalizeWebConversationId('', 'Jaap'), 'web:jaap');
+  assert.equal(
+    normalizeWebConversationId('web:live-canary:20260806/A 7', 'Jaap'),
+    'web:live-canary:20260806-a-7',
+  );
+  assert.equal(normalizeWebConversationId('telegram:123', 'Jaap'), 'web:telegram:123');
 });

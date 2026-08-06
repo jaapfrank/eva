@@ -63,7 +63,10 @@ export function appraise({ drives = null, surprise = null } = {}) {
   const d = {};
   const add = (k, v) => { d[k] = (d[k] || 0) + v; };
   if (drives) {
-    const tekort = (v) => Math.max(0, 0.5 - (Number(v) ?? 0.5)); // hoever onder "oké" (0..0.5)
+    const tekort = (v) => {
+      const value = Number(v);
+      return Math.max(0, 0.5 - (Number.isFinite(value) ? value : 0.5));
+    }; // hoever onder "oké" (0..0.5)
     add('eenzaamheid', 0.045 * tekort(drives.verbondenheid));
     add('geluk', -0.03 * tekort(drives.verbondenheid) - 0.025 * tekort(drives.betekenis));
     add('nieuwsgierigheid', 0.05 * tekort(drives.prikkeling));
