@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17383a">
+  <title>Eva</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/vendor/three/build/three.module.js",
+        "three/addons/": "/vendor/three/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="presence" class="presence" aria-label="Eva's aanwezigheid">
+      <canvas id="eva-canvas" aria-label="Eva in 3D"></canvas>
+      <div class="presence-brand">
+        <span class="presence-kicker">thuis bij jullie</span>
+        <h1>Eva</h1>
+        <p id="mood-summary">wordt wakker...</p>
+      </div>
+
+      <div id="accessories" class="accessories" aria-hidden="true"></div>
+      <div id="expression" class="expression hidden" aria-live="polite"></div>
+      <p id="model-fallback" class="model-fallback hidden">Mijn beeld kon niet laden.</p>
+
+      <div class="presence-footer">
+        <span class="presence-live"><i></i> aanwezig</span>
+        <strong id="activity">start op...</strong>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="mobile-brand">
+          <strong>Eva</strong>
+          <span id="mobile-activity">start op...</span>
+        </div>
+
+        <nav class="tabs" aria-label="Dashboardweergave">
+          <button class="tab active" data-view="now" type="button">Nu</button>
+          <button class="tab" data-view="chat" type="button">Gesprek</button>
+          <button class="tab" data-view="memory" type="button">Geheugen</button>
+          <button class="tab" data-view="process" type="button">Proces</button>
+        </nav>
+
+        <div class="health">
+          <span id="ha-status" class="status">Huis</span>
+          <span id="auth-status" class="status">ChatGPT</span>
+          <button id="login" class="quiet hidden" type="button">Inloggen</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="view-now" class="view active">
+          <section class="focus-band">
+            <div>
+              <span class="label">Hier ben ik nu mee bezig</span>
+              <strong id="current-focus">Eva luistert.</strong>
+              <p id="current-focus-detail" class="focus-detail hidden"></p>
+            </div>
+            <div class="focus-meta">
+              <span id="updated" class="muted"></span>
+              <button id="refresh" class="icon-button" type="button" title="Vernieuwen" aria-label="Vernieuwen">&#8635;</button>
+            </div>
+          </section>
+
+          <section class="pulse" aria-label="Eva vandaag">
+            <div class="mood-meter">
+              <div class="section-heading">
+                <h2>Hoe ik erbij zit</h2>
+                <span id="mood-word" class="mood-word">wakker</span>
+              </div>
+              <div id="mood-bars" class="mood-bars">
+                <div><span>Blij</span><i><b id="mood-geluk"></b></i></div>
+                <div><span>Energie</span><i><b id="mood-energie"></b></i></div>
+                <div><span>Nieuwsgierig</span><i><b id="mood-nieuwsgierigheid"></b></i></div>
+                <div><span>Rust</span><i><b id="mood-rust"></b></i></div>
+              </div>
+            </div>
+
+            <div class="day-numbers">
+              <div><strong id="memory-count">-</strong><span>herinneringen</span></div>
+              <div><strong id="message-count">-</strong><span>berichten vandaag</span></div>
+              <div><strong id="reminder-count">-</strong><span>open opvolgingen</span></div>
+            </div>
+          </section>
+
+          <div class="work-grid">
+            <section class="plain-section">
+              <div class="section-heading">
+                <h2>Open werk</h2>
+                <span id="open-count" class="count">0</span>
+              </div>
+              <ul id="open-work" class="item-list"></ul>
+              <p id="open-empty" class="empty">Ik heb nu niets openstaan.</p>
+            </section>
+
+            <section class="plain-section proven-section">
+              <div class="section-heading">
+                <h2>Vandaag echt gedaan</h2>
+                <span id="done-count" class="count">0</span>
+              </div>
+              <ul id="done-work" class="item-list"></ul>
+              <p id="done-empty" class="empty">Nog niets dat ik eerlijk als resultaat kan aanwijzen.</p>
+            </section>
+          </div>
+
+          <div class="life-grid">
+            <section class="plain-section timeline-section">
+              <div class="section-heading">
+                <h2>Thuis en in gesprek</h2>
+                <span class="section-accent">live</span>
+              </div>
+              <ul id="timeline" class="timeline"></ul>
+            </section>
+
+            <aside class="autonomy-section">
+              <span class="label">Zelfstandig verder</span>
+              <strong id="next-autonomy">Ik kijk wat mijn volgende echte stap is.</strong>
+              <p id="autonomy-detail"></p>
+              <small id="autonomy-time"></small>
+            </aside>
+          </div>
+        </section>
+
+        <section id="view-chat" class="view">
+          <div class="view-heading">
+            <span class="label">Rechtstreeks</span>
+            <h2>Praat met Eva</h2>
+          </div>
+          <div class="chat-layout">
+            <div id="chat-log" class="chat-log" aria-live="polite"></div>
+            <form id="chat-form" class="chat-form">
+              <label class="sender-field">
+                <span>Naam</span>
+                <input id="chat-sender" value="Jaap" autocomplete="name">
+              </label>
+              <label class="message-field">
+                <span>Bericht</span>
+                <textarea id="chat-text" rows="3" required></textarea>
+              </label>
+              <button id="send" type="submit">Stuur</button>
+            </form>
+          </div>
+        </section>
+
+        <section id="view-memory" class="view">
+          <div class="view-heading memory-heading">
+            <div>
+              <span class="label">Wat bij me blijft</span>
+              <h2>Geheugen</h2>
+            </div>
+            <form id="memory-search" class="search">
+              <input id="memory-query" type="search" placeholder="Zoek herinneringen" aria-label="Zoek herinneringen">
+              <button type="submit">Zoek</button>
+            </form>
+          </div>
+          <div class="memory-grid">
+            <section class="plain-section memory-list-section">
+              <h2>Herinneringen</h2>
+              <ul id="memories" class="item-list"></ul>
+            </section>
+            <section class="plain-section people-section">
+              <h2>Mensen</h2>
+              <ul id="people" class="item-list compact"></ul>
+              <h2 class="subheading">Op tijd onthouden</h2>
+              <ul id="reminders" class="item-list compact"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section id="view-process" class="view">
+          <div class="view-heading">
+            <span class="label">Mijn werkende kern</span>
+            <h2>Van waarnemen naar spreken</h2>
+          </div>
+
+          <ol class="flow" aria-label="Eva processtroom">
+            <li><span>1</span><b>Waarnemen</b><small>bericht, beeld of gebeurtenis</small></li>
+            <li><span>2</span><b>Begrijpen</b><small>context en bedoeling</small></li>
+            <li class="key"><span>3</span><b>Vastleggen</b><small>opdracht of volgende stap</small></li>
+            <li><span>4</span><b>Handelen</b><small>gereedschap en uitvoering</small></li>
+            <li><span>5</span><b>Controleren</b><small>bewijs en gevolg</small></li>
+            <li><span>6</span><b>Onthouden</b><small>wat werkelijk veranderde</small></li>
+            <li><span>7</span><b>Spreken</b><small>een eerlijk antwoord</small></li>
+          </ol>
+
+          <div class="process-details">
+            <section>
+              <h2>Zelfstandig werk</h2>
+              <p>Open werk gaat opnieuw door dezelfde kern. Een timer mag mij wakker maken, maar kan geen resultaat of persoonlijkheid verzinnen.</p>
+            </section>
+            <section>
+              <h2>Mijn bewijsgrens</h2>
+              <p>Een handeling telt pas wanneer het resultaat gecontroleerd is. Zonder bewijs blijft het werk open of benoem ik precies wat ontbreekt.</p>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

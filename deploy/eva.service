@@ -1,0 +1,24 @@
+[Unit]
+Description=Eva digitale huisentiteit
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=administrator
+Group=administrator
+WorkingDirectory=/home/administrator/project/Bottie
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+KillSignal=SIGTERM
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=eva
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+# Eva's huis, klaar om neer te zetten — ook op een nieuwe (Linux) machine.
+#
+# Starten:   docker compose up -d --build
+# Bekijken:  docker compose logs -f
+# Verhuizen: kopieer deze map + de ./data-map naar de nieuwe machine en draai
+#            opnieuw `docker compose up -d --build`. Haar leven (./data) verhuist mee.
+services:
+  eva:
+    build: .
+    container_name: eva
+    restart: unless-stopped
+    env_file: .env
+    # network_mode: host laat haar het huisnetwerk delen: ze bereikt
+    # homeassistant.local, is op het LAN bereikbaar (dashboard + Telegram),
+    # en de ChatGPT-login-callback op poort 1455 werkt. Ideaal op een Linux-host
+    # (de nieuwe mini-pc). Op Docker Desktop/Windows werkt host-networking anders;
+    # gebruik daar in plaats hiervan de 'ports'-regels hieronder + HA_URL=<ip>.
+    network_mode: host
+    # ports:
+    #   - "3210:3210"   # dashboard
+    #   - "1455:1455"   # ChatGPT-login callback
+    volumes:
+      - ./data:/home/eva/app/data   # haar geheugen en wezen — blijft bewaard

@@ -1,0 +1,17 @@
+{
+  "all": true,
+  "include": [
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "src/web/public/**"
+  ],
+  "reporter": [
+    "text-summary"
+  ],
+  "check-coverage": true,
+  "lines": 48,
+  "functions": 50,
+  "branches": 64,
+  "statements": 48
+}

@@ -1,0 +1,7 @@
+node_modules
+data
+.git
+*.log
+test-*.mjs
+inspect.mjs
+cleanup.mjs

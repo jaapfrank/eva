@@ -1,0 +1,12 @@
+[Unit]
+Description=Eva huisbot
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/administrator/project/Bottie
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
