@@ -468,6 +468,117 @@ importvolgorde, testsetup en datamigratie onbedoeld deel van het domeingedrag.
   web-SSE; work, db, OAuth, appearance en emotions publiceren andere events.
 - De browser koppelt HTML aan app/style, app aan GLB en app aan API/SSE.
 
+## Referentiearchitecturen: OpenClaw, Hermes Agent en Agent Zero
+
+Deze drie projecten zijn vergelijkbare agentplatforms, maar geen van drie is
+kant-en-klaar het ontwerp voor een huisentiteit. De vergelijking is gemaakt op
+actuele officiële documentatie en broncode, met deze bronmomenten:
+
+- OpenClaw: actuele officiële runtime- en skilldocumentatie;
+- Hermes Agent: `NousResearch/hermes-agent` op commit
+  `aaf9688519cca58dd5f76a589a0911aff269b060`;
+- Agent Zero: `agent0ai/agent-zero` op commit
+  `5ff106a2d489d17c2a3b378521a8f29fb29cf77d`.
+
+Primaire bronnen: [OpenClaw runtime](https://docs.openclaw.ai/agent-runtime-architecture),
+[OpenClaw skills](https://docs.openclaw.ai/tools/skills),
+[Hermes featureoverzicht](https://hermes-agent.nousresearch.com/docs/user-guide/features/overview/),
+[Hermes skills](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills),
+[Hermes broncode](https://github.com/NousResearch/hermes-agent),
+[Agent Zero broncode](https://github.com/agent0ai/agent-zero),
+[Agent Zero plugins](https://github.com/agent0ai/agent-zero/blob/main/plugins/README.md)
+en [Agent Zero gebruiksmodel](https://github.com/agent0ai/agent-zero/blob/main/docs/guides/usage.md).
+
+| Aspect | OpenClaw | Hermes Agent | Agent Zero | Besluit voor Eva |
+| --- | --- | --- | --- | --- |
+| Kernruntime | Herbruikbare agent-core, attempt-loop, sessies en een voorbereide runtimecatalogus | Eén conversation loop met afzonderlijke prompt-, tool-, memory-, review- en deliveryservices | Eén monologue/message-loop met lifecycle-extensies rond vrijwel iedere stap | Eén Eva-loop met expliciete fasen; geen tweede agentische regisseur |
+| Identiteit | Workspace/contextbestanden worden in de sessiecontext opgebouwd | `SOUL.md` staat expliciet als eerste identiteitsslot in de system prompt | Profielprompts, gedragsgeheugen, protocol, project en plugins kunnen allemaal gedrag toevoegen | Eén duurzame Eva-identiteit vóór operationele context; kanaal en tool mogen haar stem niet vervangen |
+| Tools | Runtimecatalogus en op omgeving gefilterde skills | Eén `ToolRegistry` bezit schema, handler, toolset, beschikbaarheid en dispatch | Tools worden per profiel-/pluginpad gevonden; MCP is een tweede lookup | Hermes' enkele declaratieve registry overnemen als patroon |
+| Skills | Gefilterde `SKILL.md`-instructies uit meerdere scopes | Progressief geladen `SKILL.md`; de agent kan ze zelf maken en bijwerken | Skills worden op aanvraag of als actieve protocoltekst geladen | Skills zijn procedureel geheugen, geen nieuwe persoonlijkheid en geen bewijs van werkende code |
+| Uitbreidingen | Plugin-SDK en voorbereide runtimegeneratie | Manifest plus `register(ctx)` kan echte tools, hooks en providers registreren | `plugin.yaml` kan tools, API, UI, profielen en zeer veel lifecycle-hooks leveren | Eén capabilitymanifest en loader; wel echte runtime-registratie, geen hookwoud |
+| Geheugen/leren | Sessies en file-based memory; skillworkshop/goedkeuring | `MEMORY.md`/`USER.md`, sessiezoeking en een achtergrondreview die skills kan maken of verbeteren | Meerdere memorygebieden met retrieval en consolidatie; documentatie waarschuwt expliciet dat curatie nodig blijft | Ervaring naar kandidaatles/skill, testen, activeren, meten en terugdraaien; nooit ongecontroleerd kerncode herschrijven |
+| Subagents | Afzonderlijke agentruns/sessies voor gedelegeerd werk | Geïsoleerde kinderen met beperkt toolset en terminal; resultaat terug naar ouder | Hiërarchische superior/subordinate-contexten en profielspecialisatie | Subagents zijn tijdelijke werkers van Eva, geen afzonderlijke delen van haar persoon |
+| Autonomie | Gateway, cron, skills en sessies vormen een always-on basis | Cronjobs kunnen skills gebruiken en resultaten via kanalen bezorgen | Scheduler/tasks en plugins leveren automations | Eva's aandachtcyclus kiest zelf doelen; scheduler wekt haar alleen en schrijft niet voor wie ze is |
+| Herstel en bewijs | Sessieruntime en gatewaycontracten | Checkpoints, verificatie-stop, toolguardrails en duurzame delivery ledger | Time Travel, toolhooks en zichtbare desktop/interventie | Eén effectreceipt, één lifecycle en één outbox; bewijs begrenst claims, niet nieuwsgierigheid of doelkeuze |
+
+### Wat Hermes concreet beter oplost
+
+Hermes laat drie patronen zien die direct bij Eva's sanering passen:
+
+1. `SOUL.md` wordt in `agent/system_prompt.py` vóór tool- en werkinstructies
+   geplaatst en vervangt de generieke fallbackidentiteit. Dat is sterker dan
+   Eva's huidige karakterblok midden in een groot operationeel pakket.
+2. `tools/registry.py` is daadwerkelijk de enige registry voor schema, handler,
+   toolset, availability check, resultaatcontract en dispatch. Plugins
+   registreren via hetzelfde contract en mogen ingebouwde tools niet stil
+   overschrijven.
+3. De leerroute maakt onderscheid tussen feiten (`MEMORY.md`/`USER.md`) en
+   procedures (skills). Na voldoende toolwerk kan een aparte achtergrondreview
+   een skill maken of verbeteren, zonder zijn reviewgesprek in de echte sessie
+   te schrijven.
+
+Dit is echter niet hetzelfde als volledige autonome zelfverbetering. De review
+wordt na een gewone beurt en op een teller gestart, is best-effort en leert
+hoofdzakelijk geheugen en procedures. Bovendien is
+`agent/conversation_loop.py` in de onderzochte versie 7.334 regels en de
+pluginmanager 2.510 regels. Hermes bewijst dus een aantal goede contracten,
+maar ook dat veel herstelpaden en features opnieuw een god-loop kunnen vormen.
+
+### Wat Agent Zero concreet beter oplost
+
+Agent Zero heeft de volwassenste zichtbare uitbreidingsoppervlakte van deze
+drie referenties. Een pluginmanifest kan echte tools, API-routes, UI, skills,
+profielen, instellingen en lifecycle-extensies bijdragen. Projecten isoleren
+workspace, instructies, geheugen, geheimen en repositories. De Linuxdesktop is
+een bruikbaar voorbeeld voor Eva's robot/camera-ambitie: waarnemen en handelen
+kan als inspecteerbare, onderbreekbare omgeving worden aangeboden in plaats van
+als losse teksttool.
+
+Voor Eva's persoonlijkheid is Agent Zero juist een waarschuwing. De standaard
+hoofdprofielen noemen zichzelf een "autonomous json ai agent" en sturen iedere
+beurt door verplichte velden als `thoughts`, `headline`, `tool_name` en
+`tool_args`. Daarnaast kunnen tientallen geordende lifecyclemappen de system
+prompt, toolargumenten, resultaten en uiteindelijke output muteren. Dat levert
+veel uitbreidbaarheid op, maar maakt gedrag moeilijk aan één stem toe te
+schrijven. Dit patroon mag daarom niet in Eva worden gekopieerd.
+
+### Gecombineerd doelontwerp voor Eva
+
+De vergelijking verandert de bestaande saneringsvolgorde niet, maar maakt de
+contracten scherper:
+
+1. **Entity Kernel** — één duurzame `EvaIdentity` met karakter, relaties,
+   waarden, nieuwsgierigheid en autobiografische continuïteit. Deze staat vooraan
+   in iedere modelcontext en wordt niet per kanaal of taakprofiel vervangen.
+2. **Turn Kernel** — één `TurnUnderstanding` stroomt door begrijpen, doel kiezen,
+   handelen, controleren en antwoorden. Slechts de antwoordfase produceert
+   zichtbare taal.
+3. **Capability Registry** — één entry per capability met schema, uitvoerder,
+   effecten, permissions, health, bewijscontract en versie. Ingebouwd, MCP en
+   geïnstalleerd gebruiken dezelfde lookup en dispatch.
+4. **Capability Runtime** — een installatie wordt pas actief na manifestcontrole,
+   bron/provenance, geïsoleerde proef, contracttests en healthcheck. Activatie is
+   atomair en terugdraaibaar; alleen bestanden downloaden telt niet als kunnen.
+5. **Learning Loop** — ervaring wordt een kandidaatles of kandidaat-skill;
+   Eva onderzoekt bronnen, bouwt een proef, voert echte scenario's uit, meet het
+   resultaat en activeert, herziet of archiveert. Kerncodewijzigingen blijven
+   een afzonderlijk, versieerbaar softwaretraject.
+6. **Worker Runtime** — subagents krijgen een taak, minimale context en
+   capabilities en leveren getypeerd bewijs terug. Ze krijgen geen eigen Eva-
+   identiteit en spreken het gezin niet rechtstreeks toe.
+7. **Attention Runtime** — de twee uur dagelijkse autonomie is een budget waarbinnen
+   Eva zelf doelen en vervolgstappen kiest. Cron/timers zijn alleen wake-ups;
+   mislukking leidt tot documentatie, diagnose, alternatief of een bewust
+   stopbesluit, niet meteen tot teruggeven aan de gebruiker.
+8. **Delivery Runtime** — één outbox bezorgt gesprekken, spontane observaties,
+   reminders, voice en achtergrondresultaten. Een kanaaladapter mag inhoud niet
+   herschrijven, behalve technisch formaat en lengte.
+
+Daarmee wordt AutoBots-achtig uitbreiden geen verzameling scripts in Eva's
+hoofd. Het wordt een gecontroleerd vermogen van dezelfde entiteit: zij ontdekt
+een behoefte, leert of bouwt een capability, bewijst dat die werkt, neemt hem op
+in haar ene gereedschapsbeeld en gebruikt hem later vanuit dezelfde identiteit.
+
 ## Duplicatieclusters en saneringsvolgorde
 
 ### P0 — één interpretatie en één antwoord-eigenaar
