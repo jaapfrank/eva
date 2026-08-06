@@ -1,201 +1,553 @@
-# Eva Runtimekaart
+# Eva: actuele codebase- en runtimekaart
 
-Dit document is het architectuurcontract voor Eva. Het beschrijft niet wat de
-code *bedoelt* te doen, maar welke component op ieder moment eigenaar is van een
-bericht, handeling, resultaat en verzending.
+Datum audit: 6 augustus 2026. Deze kaart is uit de actuele broncode opgebouwd,
+niet uit eerdere ontwerpdocumenten. Gegenereerde dependencies (`node_modules`),
+runtimegegevens (`data`), coverage-output en Git-objecten vallen buiten de
+bestandsinventaris.
 
-## Oude live route (31 juli 2026)
+## Conclusie
 
-```mermaid
-flowchart TD
-    TG[Telegram] --> TA[Telegram archief en reply/foto-context]
-    WEB[Web chat] --> AG
-    VOICE[Home Assistant voice] --> AG
-    TA --> AG[agent.routeMessage]
+Eva heeft geen statische importcyclus, maar is nog geen werkelijk enkelvoudige
+entiteit. De complexiteit zit in gedeelde toestand en overlappende beslissers:
 
-    AG --> FR{Vroege speciale route?}
-    FR --> FACE[Face antwoordroute]
-    FR --> HOME[Snelle huisroute]
-    FR --> PROP[Voorstelroute]
-    FR --> EVID[Bewijs-vraagroute]
-    FR --> MAIN[agent.handle]
+- 45 JavaScriptmodules en 3 statische webassets in `src`;
+- 24.338 regels JavaScript in `src`;
+- 37 SQLite-tabellen, aangemaakt door 12 verschillende modules;
+- `agent.js` (4.406 regels), `tools.js` (2.685), Home Assistant (1.900),
+  Telegram (1.551), `db.js` (1.302) en vision (1.300) zijn de hotspots;
+- `db.js` heeft circa 30 importeurs, `config.js` 21;
+- agentische uitvoering is verdeeld over `agent.js`, `tools.js` en `brain/llm.js`;
+- duurzame identiteit en voortgang zijn verdeeld over work, portfolio,
+  curiosity, cognitive episodes, aspirations en workcells;
+- zichtbare tekst kan uit de hoofdpersona komen, maar ook uit minimaal zes
+  bypass- of fallbackroutes.
 
-    MAIN --> INTENT[coreturn.classifyIntent]
-    MAIN --> THREAD1[Commitment thread resolver]
-    MAIN --> THREAD2[Mission thread resolver]
-    MAIN --> THREAD3[Follow-up resolver]
-    MAIN --> PLAN1[Turnplan / LLM planner]
-    PLAN1 --> COMMIT[Commitment ledger]
-    PLAN1 --> TOOLS[Toolselectie en mandaat]
-    TOOLS --> LLM[LLM + toolloop]
-    LLM --> VERIFY1[Coreturn bewijscontrole]
+De aanname dat Eva's persoonlijkheid niet goed bij het model komt is dus
+gedeeltelijk juist. De hoofdroute krijgt `persona.js` wel, maar die persona is
+niet de enige eigenaar van wat het gezin uiteindelijk leest of hoort.
 
-    VERIFY1 --> DIRECT[Direct antwoord]
-    VERIFY1 --> OPDR[Opdrachtenboek]
-    OPDR --> PLAN2[Executive plant opnieuw]
-    PLAN2 --> MISSION[Mission ledger]
-    MISSION --> HEART[Heartbeat worker]
-    HEART --> COG[Cognition + eigen coreturn]
-    COG --> VERIFY2[Mission verifier]
-    VERIFY2 --> SPEECH[Speech renderer]
-
-    DIRECT --> REWRITE[Coreturn antwoordherschrijving]
-    SPEECH --> REWRITE
-    REWRITE --> ATT[Attention director]
-    ATT --> ARB[Output arbiter]
-    ARB --> DEDUPE[Telegram transport-dedupe]
-    DEDUPE --> FAMILY[Gezin]
-
-    COMMIT -.status.-> STATUS[Dashboard werkstatus]
-    OPDR -.status.-> STATUS
-    MISSION -.status.-> STATUS
-    THREAD3 -.status.-> STATUS
-```
-
-Probleem: intentie wordt tot negen keer beslist, werk heeft vier statusbronnen,
-en tekst kan drie keer inhoudelijk veranderen. Een verzendstatus kan bovendien
-teruglekken naar de werkstatus. Daardoor kan Eva intern tegelijk klaar, open en
-gemeld zijn.
-
-## Actieve minimale route
+## Werkelijke componentkaart
 
 ```mermaid
-flowchart TD
-    TG[Telegram-adapter] --> ARCHIVE[Sla bericht en exacte reply/foto op]
-    WEB[Web-adapter] --> TURN
-    VOICE[HA voice-adapter] --> TURN
-    ARCHIVE --> TURN[agent.handleMessageDetailed]
+flowchart LR
+  subgraph Triggers[Kanalen en triggers]
+    Browser[Browser]
+    Telegram[Telegram]
+    HAVoice[HA Voice Assist]
+    HAEvents[HA state-events]
+    Clock[Autonomietimer]
+    ReminderClock[Herinneringstimer]
+  end
 
-    TURN --> QUEUE[Een seriële rij per gesprek]
-    QUEUE --> QUICK{Eenduidige enkele huisactie?}
-    QUICK -->|ja| TOOLS
-    QUICK -->|nee| CONTEXT[Bouw één context: gesprek + geheugen + gezin + actuele HA]
-    CONTEXT --> LOOP[runAgent: één model/tool-lus]
-    LOOP --> TOOLS[tools.executeTool]
-    TOOLS --> VERIFY[Tool geeft een ActionResult met bewijs terug]
-    VERIFY --> LOOP
-    VERIFY -->|actie bewezen| ANSWER
-    LOOP --> ANSWER[Een eindantwoord in Eva's ene persona]
-    ANSWER --> PREPARE{Telegram?}
-    PREPARE -->|ja| OUTBOX[Antwoord duurzaam aan bronbericht koppelen]
-    PREPARE -->|nee| TRANSPORT[Exact één antwoordtransport]
-    OUTBOX --> TRANSPORT
-    TRANSPORT --> FAMILY[Gezin]
-    TRANSPORT --> DELIVERED[Pas nu als gezegd opslaan]
+  subgraph Bootstrap[Proces]
+    Index[index.js]
+    Config[config.js]
+    Bus[bus.js]
+  end
 
-    HAEVENT[Betekenisvolle HA-signalen] --> INBOX[Een begrensde signaal-inbox]
-    INBOX --> CLOCK[Autonomietimer]
-    CLOCK --> SAFE[Dezelfde loop, veilige toolset]
-    SAFE --> LOOP
-    SAFE -.alleen bij gecontroleerd resultaat.-> TRANSPORT
+  subgraph Core[Gesprek en handelen]
+    Agent[mind/agent.js]
+    TurnPlan[mind/turnplan.js]
+    Persona[mind/persona.js]
+    LLM[brain/llm.js]
+    Tools[mind/tools.js]
+    Policy[mind/toolpolicy.js]
+    Composer[mind/communication.js]
+  end
 
-    HA[Home Assistant-events] --> CAMERA[Camera-adapter]
-    CAMERA --> FACE[Lokale gezichtsherkenning]
-    FACE --> FILTER{Binnen meldgebied en deurbel/bekend/leerbaar na rusttijd?}
-    FILTER -->|nee| INTERNAL[Alleen interne waarneming]
-    FILTER -->|ja| PHOTO[Een gekoppelde Telegram-foto]
-    PHOTO --> FAMILY
+  subgraph State[Duurzame identiteit en werk]
+    DB[db.js / SQLite]
+    Work[mind/work.js]
+    Portfolio[mind/portfolio.js]
+    Curiosity[mind/curiosity.js]
+    Cognitive[mind/cognitive.js]
+    Workcells[mind/workcells.js]
+    Household[mind/household.js]
+    Social[mind/social.js]
+    Emotions[mind/emotions.js]
+  end
 
-    REM[Herinneringstimer] --> DUE[Lees vervallen reminder]
-    DUE --> TRANSPORT
+  subgraph Adapters[Adapters en effecten]
+    HA[integrations/homeassistant.js]
+    Robot[integrations/robot.js]
+    AgentMail[integrations/agentmail.js]
+    VoiceBridge[mind/voicebridge.js]
+    TelegramAdapter[integrations/telegram.js]
+    Web[web/server.js]
+  end
 
-    WORK[Een duurzaam werkboek] <--> LOOP
+  subgraph Vision[Waarneming]
+    Perception[mind/perception.js]
+    VisionMemory[mind/vision.js]
+    Face[mind/facerec.js]
+    Embed[mind/embeddings.js]
+    LocalInference[mind/localinference.js]
+    Worker[mind/localinferenceworker.js]
+    BrainService[mind/localbrain.js + eva_brain]
+  end
+
+  subgraph Extensions[Zelfuitbreiding]
+    Capabilities[mind/capabilities.js]
+    Installer[mind/toolinstaller.js]
+  end
+
+  Index --> Web
+  Index --> TelegramAdapter
+  Index --> HA
+  Index --> VoiceBridge
+  Index --> Clock
+  Index --> ReminderClock
+  Index --> Perception
+  Index --> Cognitive
+  Index --> Emotions
+
+  Browser --> Web --> Agent
+  Telegram --> TelegramAdapter --> Agent
+  HAVoice --> HA --> Bus --> VoiceBridge --> Agent
+  Clock --> Agent
+  HAEvents --> HA --> Bus
+
+  Agent --> TurnPlan
+  Agent --> Persona
+  Agent --> LLM
+  Agent --> Tools
+  Agent --> Composer
+  LLM --> Policy
+  Tools --> Policy
+
+  Agent --> Work
+  Agent --> Portfolio
+  Agent --> Curiosity
+  Agent --> Cognitive
+  Agent --> Household
+  Agent --> Social
+  Agent --> Emotions
+
+  Tools --> HA
+  Tools --> Robot
+  Tools --> AgentMail
+  Tools --> Workcells
+  Tools --> Capabilities
+  Tools --> Installer
+  Tools -. dynamische import .-> VisionMemory
+
+  Bus --> Cognitive
+  Bus --> Perception
+  Bus --> Clock
+  Bus --> Web
+  Perception --> Face
+  VisionMemory --> Face
+  Face --> Embed --> LocalInference
+  LocalInference -. fork .-> Worker
+  Face --> BrainService
+
+  Work --> DB
+  Portfolio --> DB
+  Curiosity --> DB
+  Cognitive --> DB
+  Workcells --> DB
+  Household --> DB
+  Social --> DB
+  Emotions --> DB
+  Capabilities --> DB
+  Installer --> DB
+  Config --> Agent
+  Config --> Tools
+  Config --> HA
 ```
 
-### Beurt als sequentie
+De pijlen hierboven zijn zowel statische imports als belangrijke verborgen
+runtimeverbindingen. De graaf heeft geen statische cyclus. Callbackregistratie,
+EventEmitter-events, SQLite, HTTP, `fork()` en `systemd-run` maken de runtime
+desondanks veel sterker gekoppeld dan de importgraaf laat zien.
+
+## Eén gebruikersbeurt
 
 ```mermaid
 sequenceDiagram
-    participant M as Huisgenoot
-    participant A as Adapter
-    participant E as Eva-agentloop
-    participant T as Gereedschap
-    participant X as Externe bron
+  participant U as Huisgenoot
+  participant A as Kanaaladapter
+  participant E as agent.executeTurn
+  participant P as Interpretatie en turnplan
+  participant C as Context en persona
+  participant L as brain.runAgent
+  participant T as tools.executeTool
+  participant V as Validators en fallbacks
+  participant D as Delivery en status
 
-    M->>A: bericht / opdracht
-    A->>A: archiveer exact bericht en reply
-    A->>E: een InboundEnvelope
-    E->>E: gesprek, geheugen en HA-context
-    loop Tot eindantwoord of echte blokkade
-        E->>T: toolcall
-        T->>X: lees of verander
-        X-->>T: resultaat
-        T-->>E: feitelijke uitkomst
-    end
-    E-->>A: één eindantwoord
-    A-->>M: één publicatie
+  U->>A: tekst, reply, foto of spraak
+  A->>A: archiveer, dedupliceer en bouw context
+  A->>E: handleMessageDetailed
+  E->>P: meerdere regex/classifierpasses
+  P-->>E: contract, vereiste tools en effectgrens
+  E->>C: persona + huis + gezin + geheugen + werk + emotie
+  C->>L: instructions, conversation en aangeboden tools
+  loop model/toolrondes
+    L->>T: toolcall
+    T-->>L: ActionResult en bewijs
+  end
+  L-->>V: voorgesteld antwoord
+  V->>V: conclusiecontrole, JSON-strip, interne-taalfilter,
+  V->>V: bewijsfallback en vaste fout-/ontkenningszinnen
+  V-->>E: definitieve tekst
+  E->>D: werk/episode/cognitive status
+  D->>A: reply
+  A-->>U: Telegram, web of voice
 ```
 
-## Actieve bronkoppeling
+`executeTurn` is dus nog niet opgedeeld in begrijpen, handelen, controleren en
+antwoorden. Die vier verantwoordelijkheden bestaan wel, maar zitten samen in
+één functiegebied in `agent.js`, met een tweede uitvoeringsregisseur in
+`brain/llm.js` en businessflows in `tools.js`.
 
-| Stap | Bestand | Verantwoordelijkheid |
+## Waarom Eva nog als bot kan klinken
+
+### De hoofdroute
+
+De normale chatroute gebruikt `persona.buildInstructions`. Daarin staan
+`EVA_CHARACTER_CORE`, chat- of spreekstijl, huiscontext, gezinscontext,
+herinneringen, autonomie-instructies en een style reminder. De persona wordt dus
+niet vergeten.
+
+Daarna voegen `agent.js` en de tool-loop echter veel operationele tekst toe:
+bewijsgrenzen, missiestatus, retrybeleid, gereedschapvolgorde, vervolgwerk,
+portfolio, capabilitycontext, cognitieve context en een laatste antwoordreminder.
+De persoonlijkheid is één blok in een veel groter instructiepakket.
+
+### Tekst die na het model nog kan veranderen
+
+```mermaid
+flowchart TD
+  Model[Modelantwoord met persona] --> Validate[validateFinalText]
+  Validate --> Style[styleCorrectionPolicyFeedback]
+  Validate --> Investigate[conclusionInvestigationFeedback]
+  Validate --> Outcome[incompleteRequestedOutcomeFeedback]
+  Style --> Retry[Nieuwe modelronde]
+  Investigate --> Retry
+  Outcome --> Retry
+  Retry --> Raw[Voorgesteld eindantwoord]
+  Raw --> JSON[humanResultText bij JSON]
+  JSON --> Internal[looksLikeInternalOutput]
+  Internal --> Proof[evidenceFallback]
+  Proof --> Hard[vaste bewijs- en foutzinnen]
+  Hard --> Answer[answerTurn]
+  Answer --> Transport[Telegram, web of voice]
+
+  House[Directe huisactie] --> Renderer[renderHouseActionResult]
+  Renderer --> Answer
+  Auto[Autonoom resultaat] --> Composer[communication composer]
+  Composer --> Transport
+  Camera[Camera-event] --> CameraRenderer[renderCameraNotice]
+  CameraRenderer --> Transport
+  Reminder[Reminder] --> ReminderRenderer[renderReminderText]
+  ReminderRenderer --> Transport
+  AdapterError[Telegram/voice fout] --> Fixed[vaste adaptertekst]
+  Fixed --> Transport
+```
+
+Concrete oorzaken:
+
+1. `agent.js` kan een vrij modelantwoord vervangen door onder meer “Hier kwam
+   ik nog niet uit”, “Nee, dit is nog niet af”, “Nee, dat heb ik nog niet
+   gedaan”, “Dat ging mis...” of een bewijsfallback. Veiligheid is terecht, maar
+   bewijscontrole en formulering zijn hier dezelfde stap.
+2. Een eenvoudige huisactie gebruikt een deterministische renderer en soms
+   direct `human_message` uit een tool. Dat is bewijsbaar, maar nauwelijks
+   relationeel of contextgevoelig.
+3. Autonome communicatie gebruikt een aparte low-effort composer met alleen de
+   character core, eigen cooldowns en eigen tekstfilters.
+4. Camera- en herinneringsmeldingen gaan via eigen renderers rechtstreeks naar
+   de transportcallback; de levende gespreksroute wordt overgeslagen.
+5. Telegram-toegang/fouten en voicebridge-fouten bevatten eigen vaste zinnen.
+6. “Wie Eva is” wordt gevoed door persona, social, household, emotions,
+   cognitive state, memories en eerdere gesprekken. Geen component bezit het
+   uiteindelijke relationele zelfbeeld.
+7. De tests controleren veel grenzen en vaste formuleringen. De live canary
+   controleert gedrag zonder golden antwoord, maar langdurige karaktercoherentie
+   over meerdere echte gesprekken is nog geen harde acceptatiepoort.
+
+De gewenste oplossing is daarom niet méér karaktertekst. Er moet één
+antwoord-eigenaar komen die een getypeerde, bewezen uitkomst ontvangt en binnen
+dezelfde duurzame Eva-identiteit beslist wat zij zegt. Veiligheidsvalidators
+mogen claims blokkeren of feiten teruggeven, maar niet zelf de eindstem worden.
+
+## Inventaris van alle productie-artefacten
+
+Notatie: `→` zijn de belangrijkste uitgaande interne verbindingen. Gedeelde
+SQLite en bus-events staan apart omdat ze niet volledig uit imports blijken.
+
+### Proces, configuratie en modelprovider
+
+| Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
+| --- | --- | --- | --- |
+| `src/index.js` | Bootstrap, subsystemen starten, onderhoud, backup en shutdown | → config, db, OAuth, HA, Telegram, web, voice, autonomy, perception, emotions, cognitive, household, runtimeversion | Herstel/startbeleid zit ook in work, portfolio, cognitive en autonomy |
+| `src/config.js` | Omgevingsvariabelen normaliseren tot runtimeconfig | ← 21 modules | Lokale adapters valideren daarnaast zelf configuratie |
+| `src/bus.js` | Singleton EventEmitter | ← 12 modules | Verborgen globale koppeling en impliciete eventcontracten |
+| `src/util.js` | Tijd-, tekst-, overlap-, nacht- en errorhelpers | ← 13 modules | Tekstnormalisatie bestaat ook in agent, tools en turnplan |
+| `src/db.js` | SQLitebootstrap en API voor gesprek, geheugen, mensen, reminders, aspiraties, KV en audit | → config, bus, util, secretmind; ← circa 30 modules | God-module; slechts 12 van 37 tabellen staan hier |
+| `src/runtimeversion.js` | Hash van geladen broncode | → config; ← index, web | Provenance overlapt capability- en installerreceipts |
+| `src/reminders.js` | Reminderloop en bezorging | → db, config, util, HA, tools, persona | Eigen delivery- en formuleringroute |
+| `src/brain/oauth.js` | OpenAI OAuth/PKCE, refresh en callbackserver | → config, bus | Eigen authbestand naast de centrale vault |
+| `src/brain/llm.js` | Providerclient, modelkeuze, websearch en model/tool-loop | → config, db, toolpolicy, OAuth | Retry, toolselectie en bewijsregie overlappen agent/tools |
+
+### Integraties en geheimen
+
+| Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
+| --- | --- | --- | --- |
+| `src/integrations/homeassistant.js` | HA WebSocketcache, REST/services, presence, camera, UniFi en spraak | → config, bus, db, util, vault | Meerdere adapters in één bestand; raakt robot, vision, voice en reminders |
+| `src/integrations/telegram.js` | Telegram inbound/outbound, archief, dedupe, media en frameextractie | → db, agent, tools, vision, llm | Transport, conversation state en media-analyse vermengd |
+| `src/integrations/robot.js` | Valetudo-status, kaart, camera en beweging | → config, HA | Robotzicht overlapt vision en HA-camera's |
+| `src/integrations/agentmail.js` | Signup, OTP, inbox en verzenden | → db, vault | Accountworkflow en delivery deels ook in tools/agent |
+| `src/self/secretmind.js` | AES-GCM sealing/opening | → config; ← db, vault | Twee secretconsumenten met verschillend opslagmodel |
+| `src/self/vault.js` | Versleutelde secrets en identiteit boven KV | → db, secretmind | OAuth gebruikt niet deze vault |
+
+### Centrale mind, identiteit en werk
+
+| Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
+| --- | --- | --- | --- |
+| `src/mind/agent.js` | Conversatie- en autonomie-orchestrator | → 18-20 interne modules; ← Telegram, web, voice, autonomy | Intent, context, routing, bewijs, lifecycle en antwoord in 4.406 regels |
+| `src/mind/tools.js` | 33 toolschema's, aanbodfilter, executor en handlers | → 15-17 interne modules | Catalogus, policy, verificatie en businessflows vermengd |
+| `src/mind/toolpolicy.js` | Declaratieve effecten, autonomie, tags, verificatie en bewijsrang | ← llm, agent, social, tools, live scenarios | Nieuwe canonieke bron; resterende afgeleide groepen moeten alleen hiervan lezen |
+| `src/mind/turnplan.js` | Pure effectgrenzen, voicevervolg, locatie en identiteit | ← agent | Intentclassificatie bestaat daarnaast nog uitgebreid in agent |
+| `src/mind/persona.js` | Character core, chat/spoken/autonomous voice en renderers | → util, config; ← agent, communication, perception, reminders | Geen exclusief eigenaarschap over zichtbare tekst |
+| `src/mind/communication.js` | Autonome contactkeuze, cooldown, fact lock en formulering | → llm, db, persona, household, social | Tweede antwoordcomposer naast agent |
+| `src/mind/social.js` | Zelfbeeld, relationele lessen en continuïteitscontext | → db, toolpolicy | Overlap met household, emotions, persona en cognitive |
+| `src/mind/household.js` | Gezinsrollen, presence-sync en relationele feedback | → db | Persoonsmodel raakt ook db, Telegram en vision/facerec |
+| `src/mind/appearance.js` | Avatarstijl en tijdelijke expressies | → bus, db | Mood/aura koppelt indirect aan emotions en web |
+| `src/mind/emotions.js` | Moodvector, appraisal, decay en gedragsadvies | → bus, db, util | Identiteitscontext overlapt social/cognitive/persona |
+| `src/mind/cognitive.js` | Cognitieve toestand, events en episodes | → bus, db, util | Tweede episodebegrip naast goal episodes |
+| `src/mind/autonomy.js` | Scheduler, twee-uursbudget, wake-signalen en autonome beurten | → agent, work, curiosity, portfolio, bus, db | Prioritering en voortzetting zitten ook in agent/portfolio |
+| `src/mind/curiosity.js` | Verkenningen, lineage, bewijsbudget en stopregels | → db | Derde duurzame lifecycle naast work/portfolio/cognitive |
+| `src/mind/portfolio.js` | Doelen, projecten, episodes, deliveryreceipts en projectie | → db, work | Overlap met work, aspirations en curiosity |
+| `src/mind/work.js` | Work-item CRUD, leases, checkpoints en recovery | → db, bus | Tweede statusmodel/projectie rond dezelfde klus |
+| `src/mind/workcells.js` | Parallel onderzoek met streams en runs | → db, llm | Eigen work lifecycle naast work/portfolio |
+| `src/mind/capabilities.js` | Skill/add-on staging, receipts, activatie en gebruik | → db, config, filesystem | Overlap met toolinstaller; alleen bestaande capability-wrapper wordt gebruikt |
+| `src/mind/toolinstaller.js` | npm-discovery, installatie, inspectie en activatie | → db, config, filesystem, systemd-run | Geïnstalleerde packages worden nergens automatisch als nieuwe adapter geladen |
+| `src/mind/errorbook.js` | Persistent foutenboek en preventielessen | → db, util | Gebeurtenissen overlappen timeline en cognitive events |
+
+### Perceptie en lokale inferentie
+
+| Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
+| --- | --- | --- | --- |
+| `src/mind/vision.js` | Beeldbeschrijving, fotoarchief, naamleren en observatiecorrecties | → db, llm, HA, facerec, errorbook | Grote overlap met perception en facerec |
+| `src/mind/perception.js` | Eventgedreven camera-/deurbelbeoordeling en fotomelding | → bus, facerec, tools, persona | Eigen selectie-, cooldown- en antwoordroute |
+| `src/mind/facerec.js` | Detectie, leren en herkennen met fallbacks | → db, embeddings, localbrain | Twee inferencebackends en modelstatussen |
+| `src/mind/embeddings.js` | Embeddingstatus, vectorconversie en cosine | → db, localinference | Tussenlaag tussen facerec en worker |
+| `src/mind/localbrain.js` | Health/client voor Python brainservice | → config, db | Tweede modelbackend naast localinference |
+| `src/mind/localinference.js` | IPC-manager en lifecycle voor childworker | → config | Start worker via `fork`, dus niet zichtbaar in importgraaf |
+| `src/mind/localinferenceworker.js` | TF predictors/policy en MiniLM embeddings | runtime ← localinference | Afzonderlijke modelhost naast Pythonservice |
+| `src/mind/voicebridge.js` | HA voice-event naar de centrale agent en receipt terug | → bus, db, HA, agent | Voice-intent/routing zit ook in HA, turnplan en agent |
+
+### Web en statische assets
+
+| Bestand | Primaire functie | Belangrijkste koppelingen | Overlap/risico |
+| --- | --- | --- | --- |
+| `src/web/access.js` | Bindbeveiliging, tokencontrole en timelinefilter | ← web/server | Family visibility wordt ook bij writes bepaald |
+| `src/web/server.js` | Express API, chat/voice/auth/status, SSE en static serving | → 14 interne modules | Presentatielaag leest en combineert veel kernstate direct |
+| `src/web/public/app.js` | Dashboardcontroller, chat, SSE en Three-avatar | → API, EventSource, Three | UI-status spiegelt server/bus |
+| `src/web/public/index.html` | Dashboard-DOM en importmap | → app.js, style.css | Alleen presentatie |
+| `src/web/public/style.css` | Dashboardstyling | ← index.html | Alleen presentatie |
+| `src/web/public/eva.glb` | Binair 3D-avatarmodel | runtime ← app.js | Appearance state staat los van het modelasset |
+
+## Pythonservice en offline replaybestanden
+
+| Bestand | Functie | Runtimekoppeling |
 | --- | --- | --- |
-| Processtart | `src/index.js` | Start uitsluitend adapters en de ene kern |
-| Gespreksbeurt | `src/mind/agent.js` | Rij, context, model/tool-lus en één antwoord |
-| Persoonlijkheid | `src/mind/persona.js` | Eén stabiele Eva-stem |
-| Gereedschap | `src/mind/tools.js` | HA, onderzoek, bestanden, geheugen en verzending |
-| Telegram | `src/integrations/telegram.js` | Archief, reply/fotobewijs en transport |
-| Huiscontext | `src/integrations/homeassistant.js` | Toestand, acties en zintuig-events |
-| Camera | `src/mind/perception.js` | Event, lokale herkenning en gekoppelde foto |
-| Autonomie | `src/mind/autonomy.js` | Timing en begrensde HA-signaal-inbox; betekenis blijft in `agent.js` |
-| Duurzaam werk | `src/mind/work.js` | Alleen doel, volgende stap, bewijs, status en eigenaar |
-| Dashboard | `src/web/server.js` | Projectie van agentstatus, geen eigen werkmodel |
+| `eva_brain/service.py` | FastAPI-service voor InsightFace/Torch beeld- en gezichtsinferentie | HTTP vanaf `mind/localbrain.js` |
+| `eva_brain/ingest.py` | Afbeeldingen normaliseren en voorbereiden | Offline datasetstap |
+| `eva_brain/train_encoder.py` | Eigen encoder trainen | Offline training |
+| `eva_brain/replay/explore.py` | SQLite-verkenningsanalyse | Handmatige/offline replay |
+| `eva_brain/replay/cadence.py` | Cadansanalyse uit SQLite | Handmatige/offline replay |
+| `eva_brain/replay/threads.py` | Gespreksdraad-analyse | Handmatige/offline replay |
+| `eva_brain/replay/volharding01.py` | Grote volhardings-/continuïteitsanalyse | Handmatige/offline replay, niet geïmporteerd door runtime |
 
-De runtime bestaat nu uit 31 JavaScriptmodules en 11.431 regels, inclusief de
-statische dashboardclient en de lokale inference-worker. De 78 niet-bereikbare
-oude regisseurs zijn fysiek verwijderd. De afzonderlijke Python-breinservice
-voor ArcFace en de eigen encoder blijft bestaan. De toestand van voor deze
-opschoning staat in
-`data/backups/eva-code-before-minimal-core-20260731.tar.gz`.
+## Scripts
 
-## Eigenaarschap
+| Bestand | Functie | Koppeling |
+| --- | --- | --- |
+| `scripts/real-life-scenarios.mjs` | Declaratieve echte gespreksscenario's | Leest toolpolicy voor effectsets |
+| `scripts/live-canary.mjs` | Stuurt live berichten, leest health/timeline en beoordeelt gedrag | Draait tegen de echte service |
+| `scripts/quality-gate.mjs` | Baselinegates voor typecheck, lint en complexiteit | Leest `quality-baseline.json` |
+| `scripts/localinference-lifecycle.test.mjs` | Proces-/IPC-lifecycletest voor lokale worker | Onderdeel van `npm test` |
+| `scripts/eva-backup.mjs` | SQLite/data-backup | Gespawnd door `index.js` |
 
-| Vraag | Enige eigenaar |
+## Testbestanden
+
+De 24 testbestanden zijn geen runtimeonderdelen. Ze zijn wel onderdeel van de
+architectuur omdat ze vastleggen wat bij sanering niet mag veranderen.
+
+| Bestand | Hoofddekking |
 | --- | --- |
-| Wat bedoelt dit bericht? | De ene agentloop |
-| Welke gespreksdraad hoort erbij? | Exacte reply-context, anders recente sessie |
-| Welke actie wordt uitgevoerd? | Het gekozen gereedschap |
-| Is de actie gelukt? | De teruggegeven gereedschapsuitkomst |
-| Hoe klinkt Eva? | De ene Eva-persona in de agentprompt |
-| Is iets naar het gezin gestuurd? | Het Telegram/web-transport |
-| Mag autonomie iets in huis veranderen? | In `full` wel voor normale omkeerbare apparaten, met actuele controle en readback; nooit voor sloten, alarmen of geheimen |
+| `test/agentmail-integration.test.js` | AgentMail signup/OTP/secrets |
+| `test/autonomy-safety.test.js` | Effectgrenzen van autonome tools |
+| `test/capabilities.test.js` | Skill/add-on receipts en activatie |
+| `test/cognitive-integration.test.js` | Cognitieve episodes, preemptie en events |
+| `test/curiosity-loop.test.js` | Verkenningslineage, bewijs en stopbesluiten |
+| `test/emotional-life.test.js` | Mood/appraisal zonder extra mandaat |
+| `test/episode-lifecycle-transition.test.js` | Atomaire episode/work lifecycle |
+| `test/full-autonomy.test.js` | Volledige autonomie, werkruimte en twee-uursbudget |
+| `test/household-model.test.js` | Rollen, gezinscontext en feedback |
+| `test/housemate-voice.test.js` | Persona, stijl en vaste renderers |
+| `test/live-canary.test.js` | Scenarioselectie en gedragsbeoordelaar |
+| `test/llm-recovery.test.js` | Model/toolretry en fallback |
+| `test/minimal-core-contract.test.js` | Brede agent-, tool-, bewijs- en autonomieregressies |
+| `test/perception-policy.test.js` | Camerameldgrenzen |
+| `test/portfolio-continuity.test.js` | Doelen, episodes, delivery en recovery |
+| `test/social-continuity.test.js` | Zelfbeeld, relaties en autonome composer |
+| `test/telegram-message-archive.test.js` | Telegramarchief en claims |
+| `test/telegram-outbox-core.test.js` | Prepared outbox en hervatting |
+| `test/telegram-transport.test.js` | Ontvangers, dedupe, reply en media |
+| `test/tool-policy.test.js` | Centrale effect- en uitvoerpolicy |
+| `test/turn-plan.test.js` | Negatie, contrast, voice en intentgrenzen |
+| `test/vision-pending-identity.test.js` | Foto-identiteitsflow |
+| `test/voice-pe-routing.test.js` | Assist Satellite-doelen zonder fallback |
+| `test/web-access.test.js` | Webbinding, token en zichtbaarheid |
 
-## Harde invarianten
+## Configuratie, deployment en documentatie
 
-1. Een inkomend bericht levert maximaal een zichtbaar antwoord op.
-2. Een actieclaim mag alleen steunen op een tooluitkomst uit dezelfde beurt.
-3. Een reply-id gaat altijd voor tekstuele of fuzzy draadherkenning.
-4. Home Assistant bepaalt de thuislocatie. Eva kiest geen plaats uit modelkennis.
-5. Tussenstanden worden niet spontaan verzonden.
-6. In `full` kiest Eva zelfstandig doelen en mag ze onderzoeken, bouwen, programma's
-   in haar werkruimte uitvoeren, communiceren en normale omkeerbare huisapparaten
-   bedienen. Geheimen, sloten/alarmen en wijzigingen buiten haar werkruimte blijven
-   technisch onbereikbaar.
-7. Een voorstel is geen bijdrage totdat de bruikbaarheid is onderzocht.
-8. Geen transportstatus mag een inhoudelijke werkstatus veranderen.
-9. Een programma uit Eva's werkruimte krijgt geen procesgeheimen of tokens mee.
-10. Een Telegram-reply wordt voor verzending duurzaam aan het ene bronbericht
-    gekoppeld en na een herstart hervat in plaats van opnieuw bedacht.
-
-## OpenClaw-vergelijking
-
-Voor deze vergelijking is OpenClaw op 31 juli 2026 ondiep gekloond op commit
-`d2b869eda722`. We nemen geen code over; we gebruiken alleen dezelfde nuttige
-grenzen:
-
-| OpenClaw-bron | Wat daar leidend is | Eva-equivalent |
+| Bestand/groep | Functie | Bevinding |
 | --- | --- | --- |
-| `packages/agent-core/src/agent.ts` | Een stateful `Agent` bezit transcript, tools en wachtrijen | `src/mind/agent.js` |
-| `packages/agent-core/src/agent-loop.ts` | Assistent -> toolcalls -> toolresultaten -> volgende beurt, in één loop | `runAgent` in `src/brain/llm.js` |
-| `src/agents/embedded-agent-runner/lanes.ts` | Een seriële lane per sessie | `queueFor(conversationId)` |
-| `src/agents/embedded-agent-runner/run-orchestrator.ts` | Eén session-lane rond een run | `handleMessageDetailed` |
+| `package.json`, `package-lock.json` | Node-runtime, dependencies en commando's | Canonieke JS-build/testdefinitie |
+| `.c8rc.json` | Coverageconfiguratie | Stuurt de `c8`-rapportage |
+| `.gitignore` | Uitsluiting van secrets, runtime-output, scratch en dependencies | Verbergt lokale artefacten; is geen opruimmechanisme |
+| `.dockerignore` | Container-buildscope | Houdt lokale state en dependencies uit het image |
+| `.env.example` | Publieke configuratietemplate | Werkelijke `.env` hoort buiten Git |
+| `tsconfig.json`, `pyrightconfig.json` | JS/Python typeanalyse | Typebaseline is nog niet nul |
+| `eslint.config.js`, `eslint.complexity.config.js` | Lint- en complexiteitsregels | Baselines laten bekende schuld toe |
+| `quality-baseline.json` | Tijdelijke bovengrens voor bekende diagnoses | Geen kwaliteitsbewijs op zichzelf |
+| `Dockerfile`, `docker-compose.yml` | Containerroute | Naast systemd een tweede deploymentroute |
+| `deploy/eva.service` | Gedocumenteerde systemd-unit | Dit is de unit die README installeert |
+| `eva.service` | Oudere tweede systemd-unit | Wijkt inhoudelijk af en is waarschijnlijk stale |
+| `README.md` | Installatie en featureoverzicht | Bevat meerdere historische claims die niet meer bij de huidige minimale runtime passen |
+| `docs/house-entity-v1.md` | Product-/gedragscontract | Ontwerpbron, geen uitvoerbewijs |
+| `docs/eva-endbeeld-roadmap.md` | Gewenst eindbeeld en fasering | Roadmap |
+| `docs/durable-work-lifecycle.md` | Lifecyclecontract | Moet met work/portfolio code gelijk blijven |
+| `docs/eva-als-proces.md` | Conceptuele entiteitsarchitectuur | Ontwerp, niet automatisch actueel |
+| `docs/brein-onderzoek.md` | Onderzoek naar brein/inferentie | Referentiedocument |
+| `docs/live-acceptance-2026-08-04.md` | Momentopname live acceptatie | Datumgebonden bewijs |
+| `docs/codex-handoff.md` | Historische overdracht | Kan stale beslissingen bevatten |
+| `docs/lilith-plan-v1.md`, `Eva_Lilith_Habitability_Review.md` | Lilith/Habitability ontwerp en review | Geen actieve runtimecode |
+| `HABITABILITY.md`, `eva_stil_wijzen_v0_1.md` | Gedrags-/onderzoeksnotities | Geen actieve runtimecode |
 
-OpenClaw is zelf een groot algemeen platform; minder regels kopiëren is dus
-niet het leerpunt. Het leerpunt is eigenaarschap: adapters beslissen niet wat
-een bericht betekent, tools schrijven niet het eindantwoord en een sessie heeft
-maar één actieve agent-run.
+Naast de 112 gevolgde repositorybestanden staan lokaal ook een Python-venv,
+scratch-/meetbestanden, logs, caches en genegeerde credentials/backups. Die zijn
+niet als productcode in de graaf opgenomen. De aangetroffen `.env`-backup en
+private-keybestanden zijn niet door Git gevolgd en hebben mode `0600`, maar horen
+ook dan niet in de projectmap te blijven. Verplaats of vernietig ze afzonderlijk
+via een gecontroleerde secret-cleanup; alleen `.gitignore` is geen sanering.
 
-Officiële referenties:
+## SQLite-eigenaarschap
 
-- <https://docs.openclaw.ai/agent-runtime-architecture>
-- <https://docs.openclaw.ai/openclaw-agent-runtime>
+| Schema-eigenaar | Aantal tabellen | Domein |
+| --- | ---: | --- |
+| `db.js` | 12 | timeline, messages, Telegram, toolreceipts, memories, emotions, reminders, people, KV, aspirations, private thoughts |
+| `portfolio.js` | 6 | goals, projects, episodes, events, origins, deliveryreceipts |
+| `cognitive.js` | 3 | cognitive state, events en episodes |
+| `vision.js` | 3 | nameable photos, messagekoppeling en observatiecorrecties |
+| `workcells.js` | 3 | cells, streams en runs |
+| `capabilities.js` | 2 | capabilities en receipts |
+| `household.js` | 2 | rollen en relationship feedback |
+| `toolinstaller.js` | 2 | installaties en events |
+| `work.js` | 1 | work items |
+| `curiosity.js` | 1 | explorations |
+| `facerec.js` | 1 | faces |
+| `errorbook.js` | 1 | error book |
+
+Vrijwel al deze modules migreren bij import dezelfde SQLitefile. Daardoor zijn
+importvolgorde, testsetup en datamigratie onbedoeld deel van het domeingedrag.
+
+## Verborgen koppelingen
+
+- Telegram registreert messenger-, foto- en voicecallbacks in `tools.js`; dit
+  vormt runtime een terugrand van tools naar Telegram zonder statische import.
+- `tools.js` laadt `vision.js` dynamisch.
+- `localinference.js` start `localinferenceworker.js` met `fork()`.
+- `index.js` spawnt het backupscript.
+- `tools.js` en `toolinstaller.js` hebben afzonderlijke `systemd-run`-sandboxes.
+- Telegram en robot starten elk ffmpeg.
+- HA-events lopen via de globale bus naar cognitive, autonomy, perception en
+  web-SSE; work, db, OAuth, appearance en emotions publiceren andere events.
+- De browser koppelt HTML aan app/style, app aan GLB en app aan API/SSE.
+
+## Duplicatieclusters en saneringsvolgorde
+
+### P0 — één interpretatie en één antwoord-eigenaar
+
+Maak per beurt één `TurnUnderstanding` met gesprekshandeling, referentie,
+ontkenning/contrast, gevraagd effect, gewenste uitkomst en onzekerheden.
+`agent.js`, `turnplan.js`, required-toolselectie en directe routes lezen hetzelfde
+resultaat. Laat vervolgens één antwoordcomponent alle zichtbare tekst formuleren
+uit een getypeerde uitkomst; validators mogen alleen claims afkeuren en feiten
+teruggeven.
+
+### P0 — agentische uitvoering ontvlechten
+
+Splits `executeTurn` langs de bestaande natuurlijke grenzen:
+
+1. begrijpen;
+2. context en doel kiezen;
+3. handelen via één tool-loop;
+4. bewijs controleren;
+5. lifecycle atomair bijwerken;
+6. antwoorden en bezorgen.
+
+`brain/llm.js` wordt de enige model/tool-loop. `tools.js` houdt declaratieve
+schema's plus dunne handlers; domeinworkflows verhuizen naar hun eigen services.
+
+### P0 — één canonieke duurzame status
+
+De huidige sanering maakt goal episode leidend voor eraan gebonden work-items.
+Dat moet worden doorgetrokken: definieer expliciet welke begrippen echt anders
+zijn (doel, project, episode, exploration, workcell) en verwijder status/wake/
+proofvelden die alleen hetzelfde lifecyclefeit opnieuw opslaan.
+
+### P1 — delivery en spontane communicatie
+
+Maak één outbox/deliveryservice voor chatreply, autonoom bericht, reminder,
+camerafoto en voice. Kanaaladapters bezorgen alleen. Dezelfde Eva-antwoordlaag
+bepaalt tekst en stilte; transport bewaakt idempotentie en receipts.
+
+### P1 — extensies echt uitvoerbaar maken
+
+`capabilities.js` en `toolinstaller.js` kunnen artefacten installeren, hashen,
+testen en activeren, maar geïnstalleerde packages worden niet dynamisch als
+nieuwe adapter/tool geladen. Er is dus nog geen volwaardige AutoBots-achtige
+extensieruntime. Voeg pas na consolidatie één manifestcontract, geïsoleerde
+loader, capabilityadvertentie, policybinding, healthcheck en rollback toe.
+
+### P1 — schema en audit centraliseren
+
+Verplaats de 37 schema's naar één migratielaag. Kies één audit-eventenvelop en
+projecteer daaruit timeline, cognitive events, errorbook, relatiefeedback en
+install-events waar mogelijk, in plaats van dezelfde gebeurtenis vijfmaal los
+te interpreteren.
+
+### P2 — brede adapters opdelen
+
+Deel Home Assistant op in state/presence, actuation, camera/Protect en speech;
+deel Telegram op in archief, inbound media en outbound transport; deel vision op
+in capture, recognition en identity learning. Doe dit pas na de P0-contracten,
+anders verplaatst dezelfde dubbelzinnigheid alleen naar meer bestanden.
+
+### P2 — deployment en documentatie opschonen
+
+Verwijder of archiveer de oude root-`eva.service`, corrigeer historische
+README-features en markeer momentopnamedocumenten als historisch. Deze kaart is
+voortaan de technische bron en moet bij iedere architectuurwijziging mee wijzigen.
+
+## Verificatie van deze audit
+
+- Alle 45 JavaScriptmodules zijn via exports/imports en bereikbaarheid vanaf
+  `src/index.js` geïnventariseerd.
+- `localinferenceworker.js` en de browserassets zijn niet statisch vanaf index
+  bereikbaar, maar wel aantoonbaar via childprocess/static serving.
+- De statische graaf bevat geen importcyclus.
+- Dynamische imports, bus-events, timers, callbacks, childprocessen, HTTP-routes,
+  transportregistraties en schema-eigenaars zijn afzonderlijk gezocht.
+- De actuele regressiesuite slaagt: 225 van 225 tests.
+- De gelijktijdige registry/lifecyclesanering is buiten documentatie en tests
+  netto `+1` regel (`+303/-302`); de regressietests zijn netto `+70`. De wijziging
+  is dus geen nieuwe productcodedump, hoewel de bestaande hotspots groot blijven.
+
+Dit document beschrijft de huidige werkelijkheid. Het is geen bewering dat de
+sanering al voltooid is.

@@ -289,6 +289,24 @@ test('natuurlijke AgentMail-vervolgtaal houdt dezelfde uitvoeropdracht vast', ()
   );
 });
 
+test('anaforische opdrachten blijven echte opdrachten, ook in beleefde vraagvorm', () => {
+  const isAction = __projectRouteTest.isExplicitToolRequest;
+  for (const phrase of [
+    'Maak dat.',
+    'Werk dit uit.',
+    'Kun je dit repareren?',
+    'Kun je dit voor mij uitzoeken?',
+  ]) assert.equal(isAction(phrase), true, phrase);
+  for (const phrase of [
+    'Wat vind je daarvan?',
+    'Dit kan ik zelf repareren.',
+    'Dat wil ik later uitzoeken.',
+    'Dit hoef je niet te repareren.',
+    'Repareer dit niet.',
+    'Werk dit niet uit.',
+  ]) assert.equal(isAction(phrase), false, phrase);
+});
+
 test('aanwezigheidsbeheer is uitvoerbaar maar nooit muterend in een synthetische test', () => {
   assert.equal(__projectRouteTest.syntheticToolAllowed('beheer_aanwezigheid'), false);
   const selected = __projectRouteTest.chatToolNamesFor(['beheer_aanwezigheid']);

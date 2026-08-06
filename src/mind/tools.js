@@ -31,11 +31,7 @@ import {
   whoIsHome,
 } from '../integrations/homeassistant.js';
 import { searchWeb } from '../brain/llm.js';
-import {
-  createWorkItem,
-  listWorkItems,
-  updateWorkItem,
-} from './work.js';
+import { listWorkItems } from './work.js';
 import {
   activateCapability,
   capabilityTestSpec,
@@ -54,10 +50,13 @@ import { listExplorations, startExploration, updateExploration } from './curiosi
 import {
   episodeNeedsDelivery,
   episodeHasDelivery,
+  createDurableWork,
+  episodeForWork,
   goalEpisodeById,
   manageGoal,
   recordEpisodeDelivery,
   transitionGoalEpisode,
+  updateDurableWork,
 } from './portfolio.js';
 import { listSecretKeys } from '../self/vault.js';
 import {
@@ -78,8 +77,12 @@ import {
 } from './toolinstaller.js';
 import {
   toolAllowedByPolicy,
+  toolAvailableInAutonomy,
   toolChangesByDefault,
   toolEffect,
+  toolHasTag,
+  toolProofRank,
+  toolVerification,
 } from './toolpolicy.js';
 
 const MAX_TOOL_OUTPUT = 24_000;
@@ -1295,30 +1298,9 @@ function compactToolPackage(item) {
   };
 }
 
-const BOUNDED_AUTONOMY_TOOL_NAMES = new Set([
-  'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_internet', 'lees_bestand',
-  'schrijf_bestand', 'lijst_bestanden', 'voer_uit', 'onthoud', 'zoek_geheugen',
-  'toon_herinneringen', 'bekijk_camera', 'stuur_bericht',
-  'werk_bijhouden', 'verkenning_bijhouden', 'signalen_afhandelen',
-  'maak_vaardigheid', 'beheer_addon', 'gebruik_capability', 'inspecteer_vermogen', 'beheer_werkcel', 'beheer_toolpakket',
-]);
-
-const FULL_AUTONOMY_TOOL_NAMES = new Set([
-  'huis_status', 'bedien_huis', 'gebruik_robot', 'ha_lees', 'wie_is_thuis', 'beheer_aanwezigheid', 'zoek_internet', 'lees_bestand',
-  'schrijf_bestand', 'lijst_bestanden', 'voer_uit', 'onthoud', 'zoek_geheugen',
-  'zoek_gesprek', 'zet_herinnering', 'toon_herinneringen', 'annuleer_herinnering',
-  'bekijk_camera', 'spreek_in_huis', 'stuur_bericht', 'doel_bijhouden', 'werk_bijhouden', 'verkenning_bijhouden',
-  'toon_werk', 'signalen_afhandelen',
-  'maak_vaardigheid', 'beheer_addon', 'gebruik_capability', 'inspecteer_vermogen', 'beheer_werkcel', 'beheer_toolpakket',
-  'beheer_agentmail',
-]);
-
 export function toolsForTurn({ mode = 'chat' } = {}) {
   if (mode !== 'autonomy') return [...TOOLS];
-  const names = config.autonomyFull
-    ? FULL_AUTONOMY_TOOL_NAMES
-    : BOUNDED_AUTONOMY_TOOL_NAMES;
-  return TOOLS.filter((tool) => names.has(tool.name));
+  return TOOLS.filter((tool) => toolAvailableInAutonomy(tool.name, config.autonomyFull));
 }
 
 export const chatTools = () => toolsForTurn({ mode: 'chat' });
@@ -1360,8 +1342,8 @@ function proofToolFitsSubject(subject, toolName) {
   const value = normalize(subject);
   const projectWork = /\b(?:audit|bestand|code|config|klant|koper|markt|prijs|product|programma|reddit|software|thread|verkoop|website)\b/i.test(value);
   const houseWork = /\b(?:aanwezig|camera|deur|gezin|home assistant|huis|lamp|licht|raam|sensor|temperatuur)\b/i.test(value);
-  const houseProof = ['huis_status', 'ha_lees', 'wie_is_thuis', 'bekijk_camera'].includes(toolName);
-  const projectProof = ['zoek_internet', 'lees_bestand', 'schrijf_bestand', 'lijst_bestanden', 'voer_uit', 'beheer_agentmail'].includes(toolName);
+  const houseProof = toolHasTag(toolName, 'proof:house');
+  const projectProof = toolHasTag(toolName, 'proof:project');
   if (projectWork && houseProof) return false;
   if (houseWork && !projectWork && projectProof) return false;
   return true;
@@ -2156,11 +2138,7 @@ async function executeRawTool(name, args = {}, context = {}) {
       const grounding = [...(context.priorToolResults || [])].reverse().find((result) => (
         result?.ok === true
         && result?.verified === true
-        && [
-          'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_internet',
-          'lees_bestand', 'voer_uit', 'zoek_geheugen', 'zoek_gesprek',
-          'bekijk_camera', 'bedien_huis', 'beheer_agentmail',
-        ].includes(result?.name)
+        && toolHasTag(result?.name, 'grounding')
         && evidenceMatches(args.tekst, result)
       ));
       if (!grounding && !config.autonomyFull) {
@@ -2256,7 +2234,7 @@ async function executeRawTool(name, args = {}, context = {}) {
             });
           }
         }
-        let item = createWorkItem({
+        let { workItem: item } = createDurableWork({
           source: mode === 'autonomy' ? 'autonomy' : 'user',
           owner: mode === 'autonomy' ? null : context.sender || null,
           title: args.titel,
@@ -2264,11 +2242,15 @@ async function executeRawTool(name, args = {}, context = {}) {
           nextStep: args.volgende_stap || '',
           definitionOfDone: args.definitie_klaar || args.doel,
           priority: args.prioriteit,
+        }, {
+          originKind: mode === 'autonomy' ? 'self' : 'user',
+          originChannel: mode === 'autonomy' ? 'autonomy' : 'chat',
+          requester: mode === 'autonomy' ? null : context.sender || null,
         });
         if (args.fase != null || args.toestand_json != null || args.hervatten_na != null || args.doel_sleutel != null) {
           const state = args.toestand_json ? JSON.parse(args.toestand_json) : {};
           if (args.doel_sleutel) state.goal_key = String(args.doel_sleutel);
-          item = updateWorkItem(item.id, {
+          item = updateDurableWork(item.id, {
             currentStep: args.fase,
             state,
             nextWakeTs: args.hervatten_na,
@@ -2304,6 +2286,10 @@ async function executeRawTool(name, args = {}, context = {}) {
           item: current,
         });
       }
+      const contextEpisode = goalEpisodeById(context.activeGoalEpisodeId);
+      const boundEpisode = contextEpisode && Number(contextEpisode.work_item_id) === id
+        ? contextEpisode
+        : episodeForWork(id);
       let status = operation === 'afronden'
         ? 'done'
         : operation === 'blokkeer'
@@ -2320,12 +2306,11 @@ async function executeRawTool(name, args = {}, context = {}) {
           : new Date(Date.now() + 6 * 60 * 60_000).toISOString())
         : null;
       if (selfReviewInstead) status = 'open';
-      const activeEpisode = goalEpisodeById(context.activeGoalEpisodeId);
       const waitsForRequiredDelivery = status === 'done'
-        && activeEpisode?.delivery_policy === 'required'
-        && !episodeHasDelivery(activeEpisode.id);
+        && boundEpisode?.delivery_policy === 'required'
+        && !episodeHasDelivery(boundEpisode.id);
       if (waitsForRequiredDelivery) status = 'open';
-      if (mode === 'autonomy' && status === 'done' && !context.activeGoalEpisodeId) {
+      if (mode === 'autonomy' && status === 'done' && !boundEpisode) {
         const reported = (context.priorToolResults || []).some((result) => (
           result?.name === 'stuur_bericht' && result?.ok === true && result?.verified === true
         ));
@@ -2340,20 +2325,15 @@ async function executeRawTool(name, args = {}, context = {}) {
       const workSubject = current
         ? `${current.title} ${current.goal} ${current.next_step || ''}`
         : '';
-      const proofRank = new Map([
-        ['voer_uit', 5], ['bedien_huis', 5], ['zoek_internet', 4],
-        ['bekijk_camera', 4], ['lees_bestand', 3], ['huis_status', 2], ['ha_lees', 2],
-      ]);
       const proof = (context.priorToolResults || [])
         .filter((result) => !['werk_bijhouden', 'toon_werk'].includes(result?.name)
           && evidenceMatches(workSubject, result))
         .sort((left, right) => (
-          Number(proofRank.get(right.name) || 1) - Number(proofRank.get(left.name) || 1)
+          toolProofRank(right.name) - toolProofRank(left.name)
         ))[0];
       let storedState = null;
       try { storedState = JSON.parse(String(current?.state_json || '{}')); } catch { storedState = {}; }
       const workChange = {
-          status,
           nextStep: waitsForRequiredDelivery
             ? 'Bezorg het gecontroleerde resultaat aan de oorspronkelijke verzoeker.'
             : args.volgende_stap,
@@ -2381,9 +2361,6 @@ async function executeRawTool(name, args = {}, context = {}) {
           result: args.resultaat,
           proofAccepted: !!proof,
         };
-      const boundEpisode = activeEpisode && Number(activeEpisode.work_item_id) === id
-        ? activeEpisode
-        : null;
       let item;
       if (boundEpisode) {
         const delivered = episodeHasDelivery(boundEpisode.id);
@@ -2417,7 +2394,7 @@ async function executeRawTool(name, args = {}, context = {}) {
         });
         item = transitioned?.workItem;
       } else {
-        item = updateWorkItem(id, workChange);
+        item = updateDurableWork(id, { ...workChange, status });
       }
       const changed = ['status', 'next_step', 'evidence', 'last_action', 'result',
         'current_step', 'state_json', 'next_wake_ts', 'definition_of_done', 'priority', 'revision']
@@ -2566,15 +2543,9 @@ function compactToolData(parsed, raw, serializedData) {
 function verifiedToolResult(name, parsed, ok) {
   if (!ok) return false;
   if (typeof parsed?.verified === 'boolean') return parsed.verified;
-  if (name === 'bedien_huis') return parsed?.verified === true;
-  if (name === 'gebruik_robot') return parsed?.verified === true;
-  if (name === 'beheer_aanwezigheid') return parsed?.verified === true;
-  if (name === 'voer_uit') return parsed?.ok === true;
-  if (['schrijf_bestand', 'onthoud', 'zet_herinnering', 'annuleer_herinnering',
-    'leer_gezicht_van_foto', 'spreek_in_huis', 'stuur_bericht'].includes(name)) {
-    return parsed?.ok === true;
-  }
-  if (['maak_vaardigheid', 'beheer_addon', 'beheer_werkcel', 'beheer_toolpakket'].includes(name)) return parsed?.verified === true;
+  const verification = toolVerification(name);
+  if (verification === 'explicit') return false;
+  if (verification === 'ok') return parsed?.ok === true;
   // Leestools bewijzen dat de bron is geraadpleegd, niet dat de wereld veranderde.
   return true;
 }

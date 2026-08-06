@@ -96,17 +96,24 @@ export function createWorkItem({
   `).get(item.title, item.owner);
   if (existing) {
     const nextStep = item.nextStep || existing.next_step || '';
-    if (existing.goal === item.goal
-      && String(existing.next_step || '') === String(nextStep || '')
-      && existing.status === 'open') {
-      return existing;
+    const bound = db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='eva_goal_episodes'").get()
+      && db.prepare('SELECT id FROM eva_goal_episodes WHERE work_item_id=? LIMIT 1').get(existing.id);
+    if (bound) {
+      if (existing.goal === item.goal
+        && String(existing.next_step || '') === String(nextStep || '')) return existing;
+      // Een andere bedoeling met dezelfde titel is nieuw werk; de bestaande
+      // episode mag niet stil worden heropend of herschreven.
+    } else {
+      if (existing.goal === item.goal
+        && String(existing.next_step || '') === String(nextStep || '')
+        && existing.status === 'open') return existing;
+      db.prepare(`
+        UPDATE eva_work_items
+        SET updated_ts = ?, goal = ?, next_step = COALESCE(NULLIF(?, ''), next_step), status = 'open'
+        WHERE id = ?
+      `).run(nowIso(), item.goal, item.nextStep, existing.id);
+      return announce(row(existing.id));
     }
-    db.prepare(`
-      UPDATE eva_work_items
-      SET updated_ts = ?, goal = ?, next_step = COALESCE(NULLIF(?, ''), next_step), status = 'open'
-      WHERE id = ?
-    `).run(nowIso(), item.goal, item.nextStep, existing.id);
-    return announce(row(existing.id));
   }
 
   const ts = nowIso();

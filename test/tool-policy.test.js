@@ -32,6 +32,14 @@ test('centrale metadata dekt iedere kerntool exact eenmaal', () => {
     assert.equal(typeof policy.report, 'string', name);
     assert.equal(typeof policy.durable, 'boolean', name);
     assert.equal(typeof policy.changesByDefault, 'boolean', name);
+    assert.ok(['bounded', 'full', 'none'].includes(policy.autonomy), name);
+    assert.equal(typeof policy.tags, 'string', name);
+    if (policy.verification) assert.ok(['explicit', 'ok'].includes(policy.verification), name);
+    if (policy.proofRank != null) assert.ok(Number(policy.proofRank) >= 1, name);
+    for (const tag of policy.tags.split(/\s+/u).filter(Boolean)) {
+      assert.match(tag, /^(?:discovery|house|free|delegated|grounding|lane:(?:house|research|workspace|family)|primary:(?:house|research|workspace|family)|contribution:(?:house|research|making|contact)|proof:(?:house|project)|reasoning:(?:code|mechanical))$/, `${name}:${tag}`);
+      if (tag.startsWith('primary:')) assert.ok(policy.tags.split(/\s+/u).includes(tag.replace('primary:', 'lane:')), `${name}:${tag}`);
+    }
   }
 });
 

@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { db } from '../db.js';
+import { createWorkItem, updateWorkItem } from './work.js';
 
 const ROOT_GOAL_KEY = 'eva_housemate';
 
@@ -690,6 +691,13 @@ export function ensureEpisodeForWorkItem(item, {
   })();
 }
 
+export function createDurableWork(item, origin = {}) {
+  return db.transaction(() => {
+    const workItem = createWorkItem(item);
+    return { workItem, episode: ensureEpisodeForWorkItem(workItem, origin) };
+  })();
+}
+
 export function adoptUnboundWorkEpisodes() {
   const table = db.prepare(
     "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'eva_work_items'",
@@ -890,6 +898,32 @@ function transitionGoalEpisodeInTransaction(episodeId, {
 // bewust andere aggregates en schrijven niet via deze API.
 export function transitionGoalEpisode(episodeId, options = {}) {
   return db.transaction(() => transitionGoalEpisodeInTransaction(episodeId, options))();
+}
+
+// Enige runtime-ingang voor een bestaand werkpunt: gebonden werk volgt de
+// episode atomair; alleen oud of nog ongebonden werk gebruikt de legacywriter.
+export function updateDurableWork(workItemId, work = {}) {
+  const episode = episodeForWork(workItemId);
+  if (!episode) return updateWorkItem(workItemId, work);
+  const currentWork = workRow(workItemId);
+  const projectedStatus = EPISODE_WORK_STATUS[episode.state];
+  const requestedStatus = clean(work.status, 20);
+  const state = !requestedStatus || requestedStatus === projectedStatus
+    ? episode.state
+    : ({ open: 'executing', blocked: 'blocked', done: 'closed', cancelled: 'abandoned' })[requestedStatus];
+  if (!state) throw new Error(`ongeldige werkstatus: ${requestedStatus}`);
+  if (state === 'closed'
+    && (work.proofAccepted !== true || !clean(work.evidence || currentWork?.evidence))) {
+    throw new Error('werk mag pas klaar met geaccepteerd en geverifieerd resultaatbewijs');
+  }
+  return transitionGoalEpisode(episode.id, {
+    state,
+    nextAction: work.nextStep,
+    checkpoint: work.evidence,
+    proofSummary: work.evidence,
+    wakeTs: work.nextWakeTs,
+    work,
+  })?.workItem || null;
 }
 
 // Compatibiliteit voor bestaande callers: alle lifecycle-schrijfregels lopen

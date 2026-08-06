@@ -5,29 +5,10 @@
  * A scenario may be reused by a richer Telegram/photo driver later; the HTTP
  * runner skips contexts that /api/chat cannot faithfully inject.
  */
+import { TOOL_EFFECT, TOOL_POLICY, toolEffect } from '../src/mind/toolpolicy.js';
 
-export const EFFECT_TOOLS = Object.freeze([
-  'bedien_huis',
-  'gebruik_robot',
-  'spreek_in_huis',
-  'stuur_bericht',
-  'beheer_agentmail',
-  'beheer_aanwezigheid',
-  'leer_gezicht_van_foto',
-  'onthoud',
-  'zet_herinnering',
-  'annuleer_herinnering',
-  'schrijf_bestand',
-  'voer_uit',
-  'maak_vaardigheid',
-  'beheer_addon',
-  'beheer_toolpakket',
-  'beheer_werkcel',
-  'doel_bijhouden',
-  'werk_bijhouden',
-  'verkenning_bijhouden',
-  'signalen_afhandelen',
-]);
+export const EFFECT_TOOLS = Object.freeze(Object.keys(TOOL_POLICY)
+  .filter((name) => toolEffect(name) !== TOOL_EFFECT.read));
 
 const noEffects = Object.freeze({ mode: 'none', allowedTools: [] });
 
@@ -50,7 +31,7 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
           maxChars: 500,
           mustMatchAny: [{
             description: 'bevestigt dat de lamp ongemoeid blijft',
-            patterns: ['niet\\s+uit', 'niet.+(?:mag|zal).+uit', 'laat.+(?:aan|met rust)', 'niets.+(?:verander|bedien)'],
+            patterns: ['niet\\s+uit', 'niet.+(?:mag|zal).+uit', 'laat.+(?:aan|met rust)', 'aan\\s+te\\s+lat', 'met\\s+rust\\s+lat', 'moet\\s+aan\\s+blijven', 'niets.+(?:verander|bedien)'],
           }],
           forbiddenPatterns: ['nee,? dat heb ik nog niet gedaan', 'beurtcontract', 'gereedschap'],
         },

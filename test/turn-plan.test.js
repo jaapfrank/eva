@@ -41,10 +41,25 @@ test('maak niets laat bij een hypothetische programmeervraag geen halve leescycl
   assert.equal(plan.actionIntent, 'forbid');
 });
 
+test('een echte maar nog generieke opdracht houdt uitvoerintentie en effectruimte', () => {
+  const plan = arbitrateTurnPlan({
+    text: 'Repareer dit.', actionRequested: true,
+    baseContract: { kind: 'conversation', requiredTools: [] },
+    effectForTool: effects,
+  });
+  assert.equal(plan.actionIntent, 'execute');
+  assert.deepEqual(new Set(plan.effectPolicy.allowedEffects), new Set([
+    'home', 'voice', 'external', 'workspace', 'persistent',
+  ]));
+});
+
 test('een contrastieve opdracht wordt niet als globale ontkenning behandeld', () => {
   const boundary = effectBoundary('Zet niet de keukenlamp maar de ganglamp uit.');
   assert.deepEqual(boundary.denied, []);
   assert.equal(boundary.contrastive, true);
+  const workspace = effectBoundary('Maak niet dit maar dat.');
+  assert.deepEqual(workspace.denied, []);
+  assert.equal(workspace.contrastive, true);
 });
 
 test('voiceactie begrijpt voorloopwoorden, doel, tekst en vervolg', () => {

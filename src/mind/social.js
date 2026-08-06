@@ -1,4 +1,5 @@
 import { activeAspirations, allMemories, getTimeline } from '../db.js';
+import { toolHasTag } from './toolpolicy.js';
 
 const BOTLIKE_CRITICISM = /\b(?:bot|chatbot|robot(?:achtig)?|geen\s+persoon|niet\s+(?:als\s+)?(?:een\s+)?persoon|geen\s+huisgenoot|zakelijk|helpdesk|gescript|standaard(?:antwoord|zin)|persoonlijkheid)\b/i;
 const NATURAL_VOICE_CRITICISM = /\b(?:praat\s+(?:eens\s+)?normaal|niet\s+zo\s+glad|tegeltjeswijsheid|gemaakt(?:e)?\s+(?:humor|warmte)|echte\s+humor|menselijker|natuurlijker)\b/i;
@@ -106,10 +107,10 @@ export function relationshipLessonFromText(text = '') {
 
 function contributionLane(row) {
   const action = String(row?.meta?.lastAction || '');
-  if (['bedien_huis', 'huis_status', 'ha_lees', 'wie_is_thuis', 'bekijk_camera', 'spreek_in_huis'].includes(action)) return 'huis';
-  if (action === 'zoek_internet') return 'onderzoek';
-  if (['schrijf_bestand', 'lees_bestand', 'voer_uit', 'maak_vaardigheid', 'beheer_addon', 'gebruik_capability'].includes(action)) return 'maken';
-  if (action === 'stuur_bericht') return 'contact';
+  if (toolHasTag(action, 'contribution:house')) return 'huis';
+  if (toolHasTag(action, 'contribution:research')) return 'onderzoek';
+  if (toolHasTag(action, 'contribution:making')) return 'maken';
+  if (toolHasTag(action, 'contribution:contact')) return 'contact';
   return 'anders';
 }
 

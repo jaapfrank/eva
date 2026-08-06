@@ -17,6 +17,7 @@ const {
   recordEpisodeDelivery,
   recoverStrandedDeliveryWork,
   transitionGoalEpisode,
+  updateDurableWork,
 } = await import('../src/mind/portfolio.js');
 
 after(() => {
@@ -87,6 +88,28 @@ test('episode-overgang en werkprojectie wijzigen atomair', () => {
   assert.equal(db.prepare('SELECT status FROM eva_work_items WHERE id=?').get(work.id).status, 'blocked');
 });
 
+test('de runtimewerkroute houdt checkpoint en episode gelijk en dedupe heropent niet', () => {
+  const { work, episode } = linkedEpisode();
+  const wakeTs = '2026-08-07T10:00:00.000Z';
+  const updated = updateDurableWork(work.id, {
+    status: 'blocked', nextStep: 'Wacht op de netbeheerder.',
+    evidence: 'De aansluiting is gecontroleerd.', nextWakeTs: wakeTs,
+  });
+  const currentEpisode = goalEpisodeById(episode.id);
+  assert.equal(updated.status, 'blocked');
+  assert.equal(currentEpisode.state, 'blocked');
+  assert.equal(currentEpisode.next_action, updated.next_step);
+  assert.equal(currentEpisode.proof_summary, updated.evidence);
+  assert.equal(currentEpisode.wake_ts, updated.next_wake_ts);
+
+  const duplicate = createWorkItem({
+    source: work.source, owner: work.owner, title: work.title,
+    goal: 'Deze invoer mag gebonden werk niet stil heropenen.', nextStep: 'Foute heropening.',
+  });
+  assert.notEqual(duplicate.id, work.id);
+  assert.equal(db.prepare('SELECT status FROM eva_work_items WHERE id=?').get(work.id).status, 'blocked');
+});
+
 test('required delivery is een invariant van de canonieke writer', () => {
   const { work, episode } = linkedEpisode({ deliveryPolicy: 'required', originKind: 'user' });
   transitionGoalEpisode(episode.id, {
@@ -107,6 +130,20 @@ test('required delivery is een invariant van de canonieke writer', () => {
   });
   assert.equal(goalEpisodeById(episode.id).state, 'closed');
   assert.equal(db.prepare('SELECT status FROM eva_work_items WHERE id=?').get(work.id).status, 'done');
+});
+
+test('de generieke werkroute sluit ook milestonewerk nooit zonder bewijs', () => {
+  const { work } = linkedEpisode();
+  assert.throws(
+    () => updateDurableWork(work.id, { status: 'done' }),
+    /geaccepteerd en geverifieerd resultaatbewijs/,
+  );
+  assert.throws(
+    () => updateDurableWork(work.id, {
+      status: 'done', evidence: 'Ik zeg zelf dat het klaar is.', proofAccepted: false,
+    }),
+    /geaccepteerd en geverifieerd resultaatbewijs/,
+  );
 });
 
 test('dezelfde transition-key is ook na replay exact één overgang', () => {

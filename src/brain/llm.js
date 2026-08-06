@@ -3,6 +3,7 @@
 import crypto from 'node:crypto';
 import { config } from '../config.js';
 import { kvGet, kvSet } from '../db.js';
+import { toolHasTag } from '../mind/toolpolicy.js';
 import { getAccess, authStatus } from './oauth.js';
 
 const CHATGPT_RESPONSES_URL = 'https://chatgpt.com/backend-api/codex/responses';
@@ -406,10 +407,6 @@ Beantwoord precies de gestelde onderzoeksvraag. Gebruik bij voorkeur primaire br
   return { text, searched, searchCalls, sources: sourceUrlsFrom([text, output]), usage };
 }
 
-// Gereedschappen die diep nadenken verdienen: zodra Eva hieraan begint,
-// schakelt haar redeneren omhoog (high) voor de rest van die gedachte.
-const CODE_TOOLS = new Set(['voer_uit', 'schrijf_bestand', 'maak_vaardigheid', 'beheer_addon', 'beheer_toolpakket']);
-
 /**
  * Tool-loop: laat het model tools aanroepen tot het een gewoon antwoord geeft.
  * effort kan per ronde omhoog escaleren (naar escalatedEffort) zodra een
@@ -536,7 +533,7 @@ export async function runAgent({
       convo.push(msg('user', String(finalContextReminder).slice(0, 1_500)));
       finalReminderAdded = true;
     }
-    const mechanicalStep = ['lees_bestand', 'gebruik_capability'].includes(requiredRemaining[0]);
+    const mechanicalStep = toolHasTag(requiredRemaining[0], 'reasoning:mechanical');
     const roundEffort = mechanicalStep
       ? mechanicalEffort
       : performedToolCalls > 0 && !mustCallTool
@@ -602,7 +599,7 @@ export async function runAgent({
       if (typeof shouldYield === 'function' && shouldYield()) {
         return { text: '', output: [], yielded: true };
       }
-      if (CODE_TOOLS.has(call.name)) huidigEffort = escalatedEffort; // bouwen → diep nadenken
+      if (toolHasTag(call.name, 'reasoning:code')) huidigEffort = escalatedEffort;
       performedToolCalls += 1;
       let args = {};
       try {

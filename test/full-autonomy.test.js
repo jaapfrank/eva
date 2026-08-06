@@ -126,7 +126,7 @@ test('zelf-oplosbaar bewijsgebrek wordt een geplande review en geen permanent bl
     bewerking: 'blokkeer', id: item.id,
     volgende_stap: 'Probeer bij de review een andere primaire bron.',
   }, {
-    mode: 'autonomy', activeWorkId: item.id, activeGoalEpisodeId: episode.id,
+    mode: 'autonomy', activeWorkId: item.id,
     priorToolResults: [],
   }));
   assert.equal(reviewed.ok, true);
@@ -270,7 +270,7 @@ test('bewezen afgerond milestonewerk blijft done en sluit zijn episode', async (
   const done = JSON.parse(await executeTool('werk_bijhouden', {
     bewerking: 'afronden', id: item.id, resultaat: 'Het unieke terminaalbewijs is uitgevoerd.',
   }, {
-    mode: 'autonomy', activeWorkId: item.id, activeGoalEpisodeId: episode.id,
+    mode: 'autonomy', activeWorkId: item.id,
     priorToolResults: [{
       name: 'voer_uit', args: runArgs, output: JSON.stringify(run),
       ok: run.ok, verified: run.verified,

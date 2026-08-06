@@ -46,7 +46,7 @@ export function effectBoundary(text = '') {
   if (/\b(?:verstuur|verzend|mail|publiceer|plaats)\b.{0,80}\b(?:niets|niks|niet)\b|\b(?:niets|niks)\s+extern\b/iu.test(value)) {
     denied.add('external');
   }
-  if (/\b(?:maak|bouw|programmeer|schrijf|voer)\b.{0,80}\b(?:niets|niks|niet|geen)\b|\b(?:maak|schrijf)\s+(?:in\s+deze\s+(?:proef|test)\s+)?(?:niets|niks)\b/iu.test(value)) {
+  if (!contrastive && (/\b(?:maak|bouw|programmeer|schrijf|voer)\b.{0,80}\b(?:niets|niks|niet|geen)\b|\b(?:maak|schrijf)\s+(?:in\s+deze\s+(?:proef|test)\s+)?(?:niets|niks)\b/iu.test(value))) {
     denied.add('workspace');
   }
   if (/\b(?:onthoud|bewaar|plan|maak\s+een\s+taak)\b.{0,60}\b(?:niets|niks|niet)\b/iu.test(value)) {
@@ -160,9 +160,10 @@ export function identityNameCandidate(text = '', sender = '') {
 export function arbitrateTurnPlan({
   mode = 'chat',
   text = '',
-  baseContract,
+  baseContract = /** @type {any} */ ({}),
   baseRequiredTools = [],
   baseDirectAction = null,
+  actionRequested = false,
   voiceDirective = null,
   effectForTool = () => 'read',
 } = {}) {
@@ -171,7 +172,7 @@ export function arbitrateTurnPlan({
   let requiredTools = [...new Set(baseRequiredTools)];
   let directAction = baseDirectAction;
   if (boundary.contrastive) directAction = null;
-  let actionIntent = requiredTools.length || directAction ? 'execute' : 'respond';
+  let actionIntent = requiredTools.length || directAction || actionRequested ? 'execute' : 'respond';
 
   if (voiceDirective?.requested) {
     contract.kind = 'voice_action';
@@ -204,7 +205,8 @@ export function arbitrateTurnPlan({
   const allowedEffects = new Set(['read']);
   if (mode === 'autonomy') EFFECTS.forEach((effect) => allowedEffects.add(effect));
   if (actionIntent === 'execute') {
-    requiredTools.forEach((name) => allowedEffects.add(effectForTool(name, {})));
+    if (actionRequested && !requiredTools.length) EFFECTS.forEach((effect) => allowedEffects.add(effect));
+    else requiredTools.forEach((name) => allowedEffects.add(effectForTool(name, {})));
   }
   boundary.denied.forEach((effect) => allowedEffects.delete(effect));
   const effectPolicy = {

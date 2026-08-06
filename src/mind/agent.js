@@ -33,6 +33,7 @@ import { executeTool, homeContextText, toolsForTurn } from './tools.js';
 import {
   toolAllowedByPolicy,
   toolEffect,
+  toolHasTag,
   toolIsDurable,
   toolRequiresEffectReport,
   toolSyntheticAllowed,
@@ -43,7 +44,7 @@ import {
   identityNameCandidate,
   resolveVoiceDirective,
 } from './turnplan.js';
-import { createWorkItem, durableWorkStatus, updateWorkItem, workContextText } from './work.js';
+import { createWorkItem, durableWorkStatus, workContextText } from './work.js';
 import { householdContextText, recordRelationshipFeedback } from './household.js';
 import { relationshipLessonFromText, selfContinuityContextText } from './social.js';
 import {
@@ -76,8 +77,9 @@ import {
   recordEpisodeDelivery,
   recoverDeliveredEpisodeReceipts,
   recoverStrandedDeliveryWork,
-  requireEpisodeDelivery,
   selectPortfolioCommitment,
+  transitionGoalEpisode,
+  updateDurableWork,
   updateGoalEpisode,
 } from './portfolio.js';
 import { errMsg, tekstOverlap } from '../util.js';
@@ -104,9 +106,6 @@ function autonomyEffectRequiresReport(toolOrName, args = null) {
     if (!target || target === 'eva') return false;
   }
   return true;
-}
-function syntheticToolAllowed(name) {
-  return toolSyntheticAllowed(name);
 }
 function syntheticReplyNeedsPersistentState(text = '') {
   const value = String(text || '');
@@ -146,27 +145,6 @@ for (const row of db.prepare(`
   }
 }
 const AUTONOMY_DISCOVERY_LIMIT = 4;
-const AUTONOMY_DISCOVERY_TOOLS = new Set([
-  'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_internet',
-  'lees_bestand', 'lijst_bestanden', 'zoek_geheugen',
-  'toon_herinneringen', 'bekijk_camera', 'gebruik_robot', 'inspecteer_vermogen',
-  'beheer_werkcel', 'beheer_toolpakket',
-]);
-const AUTONOMY_HOUSE_TOOLS = new Set([
-  'huis_status', 'ha_lees', 'wie_is_thuis', 'bekijk_camera',
-  'bedien_huis', 'gebruik_robot', 'spreek_in_huis', 'beheer_aanwezigheid',
-]);
-const FREE_HOUSEHOLD_AUTONOMY_TOOLS = new Set([
-  'huis_status', 'ha_lees', 'wie_is_thuis', 'zoek_geheugen',
-  'toon_herinneringen', 'bekijk_camera', 'stuur_bericht',
-  'signalen_afhandelen', 'toon_werk',
-]);
-const AUTONOMY_LANES = Object.freeze({
-  house: new Set(['huis_status', 'ha_lees', 'wie_is_thuis', 'bekijk_camera', 'zoek_gesprek', 'stuur_bericht', 'signalen_afhandelen', 'toon_werk', 'werk_bijhouden']),
-  research: new Set(['zoek_internet', 'beheer_werkcel', 'beheer_toolpakket', 'inspecteer_vermogen', 'lees_bestand', 'schrijf_bestand', 'lijst_bestanden', 'voer_uit', 'beheer_agentmail', 'stuur_bericht', 'signalen_afhandelen', 'werk_bijhouden']),
-  workspace: new Set(['zoek_internet', 'beheer_werkcel', 'beheer_toolpakket', 'inspecteer_vermogen', 'lees_bestand', 'schrijf_bestand', 'lijst_bestanden', 'voer_uit', 'beheer_agentmail', 'stuur_bericht', 'signalen_afhandelen', 'toon_werk', 'werk_bijhouden']),
-  family: new Set(['zoek_geheugen', 'zoek_gesprek', 'inspecteer_vermogen', 'onthoud', 'wie_is_thuis', 'beheer_agentmail', 'stuur_bericht', 'signalen_afhandelen', 'toon_werk', 'werk_bijhouden']),
-});
 const runtime = {
   active: 0,
   activity: 'luistert',
@@ -364,7 +342,25 @@ function workspaceFileEditRemaining(toolResults = [], requiredTools = [], userTe
 }
 
 function isExplicitToolRequest(text = '') {
+  const raw = cleanUserText(text);
   const value = commandText(text).toLowerCase();
+  // Begrijp de grammaticale rol van een anaforische verwijzing in plaats van
+  // exacte opdrachten op te sommen. commandText verwijdert eerst een beleefd
+  // vraagkader, zodat zowel "maak dat" als "kun je dit repareren" hier landen.
+  const reference = String.raw`(?:dit|dat|het|hier|daar|hiermee|daarmee|ermee)`;
+  const directive = String.raw`(?:maak|werk|repareer|fix|regel|onderzoek|zoek|controleer|bekijk|lees|schrijf|bouw|voer|meld|registreer|installeer|activeer|probeer|los|pas)`;
+  const infinitive = String.raw`(?:maken|uitwerken|repareren|fixen|regelen|onderzoeken|uitzoeken|controleren|bekijken|lezen|schrijven|bouwen|uitvoeren|melden|registreren|installeren|activeren|proberen|oplossen|aanpassen)`;
+  const contrastive = /\bniet\b.{0,100}\bmaar\b/i.test(value);
+  const negated = /\bniet\b/i.test(value) && !contrastive;
+  const directiveLed = new RegExp(
+    String.raw`^\s*(?:${directive})\w*\b.{0,32}\b${reference}\b`, 'i',
+  ).test(value);
+  if (directiveLed && negated) return false;
+  if (directiveLed && !negated) return true;
+  const politeRequest = /^\s*(?:(?:kun|kan|wil|zou)\s+(?:je|jij)|wil\s+je)\b/i.test(raw);
+  if (politeRequest && !negated && new RegExp(
+    String.raw`^\s*${reference}\b.{0,48}\b${infinitive}\b`, 'i',
+  ).test(value)) return true;
   if (requestsWorkspaceFileEdit(value)) return true;
   if (/^\s*(?:zet|schakel|doe)\b.{0,100}\b(?:aan|uit)\b/.test(value) && hasHomeControlTarget(value)) return true;
   if (/\b(?:aan|uit)\s*(?:zetten|doen|schakelen)\b|\b(?:openen|sluiten)\b/.test(value)) return true;
@@ -956,8 +952,12 @@ function claimsCompletedAction(value = '') {
     .test(String(value || ''));
 }
 
-function conclusionInvestigationFeedback(reply = '', userText = '', toolResults = []) {
+function conclusionInvestigationFeedback(reply = '', userText = '', toolResults = [], actionRequested = null) {
   const answer = String(reply || '').trim();
+  const inspectConclusion = actionRequested == null
+    ? /(?:^|[.!?]\s*)(?:zoek(?:\s+uit)?|onderzoek|controleer|diagnosticeer|probeer|maak|doe|regel|los)\b/i.test(userText)
+    : actionRequested;
+  if (effectBoundary(userText).actionIntent || !inspectConclusion) return '';
   const scope = `${userText}\n${answer}`;
   const claimsIncapacity = /\b(?:(?:kan|kon)\s+ik\b.{0,80}\bniet|kan\s+(?:eva|dit|dat|het)\b.{0,80}\bniet|kunnen\s+(?:we|dit|dat)\b.{0,80}\bniet|ik\s+kom\s+(?:nu\s+)?niet\s+bij|heb\s+ik\s+geen\s+toegang|geen\s+(?:schrijf|uitvoer|api|netwerk|account|browser|systeem)?toegang|niet\s+(?:ondersteund|beschikbaar|bereikbaar|mogelijk)|ontbreekt\s+(?:mij|me|hier)|(?:loop|liep)\s+ik\s+(?:nu\s+)?op\s+vast|daardoor\s+kan\s+ik\b.{0,100}\bniet|zoekroute\s+(?:hapert|werkt\s+niet)|ik\s+kan\b.{0,100}\b(?:niet\s+openen|niet\s+uitvoeren|niet\s+vaststellen|niet\s+bereiken))\b/i.test(answer);
   if (!claimsIncapacity) return '';
@@ -982,11 +982,11 @@ function conclusionInvestigationFeedback(reply = '', userText = '', toolResults 
     return officialIntent && tekstOverlap(userText, `${query} ${evidence}`) >= 0.04;
   });
   const inspectedSelf = toolResults.some((tool) => (
-    ['lees_bestand', 'gebruik_capability'].includes(tool.name)
+    toolHasTag(tool.name, 'reasoning:mechanical')
     && tool.ok && tool.verified
   ));
   const attemptedAction = toolResults.some((tool) => (
-    !['zoek_internet', 'lees_bestand', 'lijst_bestanden', 'zoek_geheugen', 'zoek_gesprek', 'toon_werk', 'toon_herinneringen'].includes(tool.name)
+    toolEffect(tool.name, tool.args) !== 'read'
     && (tool.changed === true || tool.ok !== true || tool.verified !== true)
     && tekstOverlap(userText, `${JSON.stringify(tool.args || {})} ${tool.evidence?.summary || tool.output || ''}`) >= 0.04
   ));
@@ -1086,16 +1086,11 @@ function autonomyToolAllowed(name, {
   if (full) return true;
   if (['schrijf_bestand', 'voer_uit'].includes(String(name || '')) && !codeExecution) return false;
   if (hasOpenWork || hasPendingSignals || openExploration) return true;
-  return FREE_HOUSEHOLD_AUTONOMY_TOOLS.has(String(name || ''));
+  return toolHasTag(name, 'free');
 }
 
-const DELEGATED_EXTERNAL_EFFECT_TOOLS = new Set([
-  'bedien_huis', 'gebruik_robot', 'beheer_aanwezigheid', 'beheer_agentmail',
-  'zet_herinnering', 'annuleer_herinnering', 'spreek_in_huis', 'leer_gezicht_van_foto',
-]);
-
 function delegatedWorkAllowsTool(name, item = null) {
-  if (!String(item?.owner || '').trim() || !DELEGATED_EXTERNAL_EFFECT_TOOLS.has(name)) return true;
+  if (!String(item?.owner || '').trim() || !toolHasTag(name, 'delegated')) return true;
   const scope = `${item.title || ''} ${item.goal || ''} ${item.next_step || ''} ${item.current_step || ''}`.toLowerCase();
   if (name === 'bedien_huis') {
     return hasHomeControlTarget(scope)
@@ -1228,23 +1223,19 @@ function resolvePreparedDeliverySilently(item, episode, reason = 'niet relevant 
   if (!item || episode?.delivery_policy === 'required') return false;
   const state = durableWorkState(item);
   delete state.pending_delivery;
-  updateWorkItem(item.id, {
-    status: 'done',
-    state,
-    nextStep: '',
-    currentStep: '',
-    nextWakeTs: '',
-    wait: {},
-    result: item.result || item.evidence || reason,
-    proofAccepted: true,
-  });
   if (episode && !['closed', 'abandoned'].includes(episode.state)) {
-    updateGoalEpisode(episode.id, {
+    transitionGoalEpisode(episode.id, {
       state: 'closed',
       checkpoint: episode.checkpoint || item.evidence || reason,
       proofSummary: episode.proof_summary || item.evidence || '',
       nextAction: '',
       wakeTs: '',
+      work: { state, wait: {}, result: item.result || item.evidence || reason },
+    });
+  } else {
+    updateDurableWork(item.id, {
+      status: 'done', state, nextStep: '', currentStep: '', nextWakeTs: '', wait: {},
+      result: item.result || item.evidence || reason, proofAccepted: true,
     });
   }
   return true;
@@ -1833,14 +1824,10 @@ function completedBuildReply(toolResults = []) {
 }
 
 function autonomyLaneForTool(name = '') {
-  if (name === 'signalen_afhandelen') return null;
   // Een brede statuslezing is context, geen keuze om de hele beurt aan het huis te wijden.
-  if (name === 'huis_status') return null;
-  if (['ha_lees', 'wie_is_thuis', 'bekijk_camera', 'beheer_aanwezigheid'].includes(name)) return 'house';
-  if (['zoek_internet', 'beheer_werkcel', 'beheer_toolpakket'].includes(name)) return 'research';
-  if (['lees_bestand', 'schrijf_bestand', 'lijst_bestanden', 'voer_uit'].includes(name)) return 'workspace';
-  if (['zoek_geheugen', 'onthoud'].includes(name)) return 'family';
-  return null;
+  if (['signalen_afhandelen', 'huis_status'].includes(name)) return null;
+  return ['house', 'research', 'workspace', 'family']
+    .find((lane) => toolHasTag(name, `primary:${lane}`)) || null;
 }
 
 function autonomyLaneForWork(item = null) {
@@ -1856,9 +1843,7 @@ function autonomyLaneForWork(item = null) {
 function autonomyProofRelevantToWork(item, tool) {
   if (!item || !tool?.ok || !tool?.verified) return false;
   const workLane = autonomyLaneForWork(item);
-  const proofLane = ['huis_status', 'ha_lees', 'wie_is_thuis', 'bekijk_camera', 'beheer_aanwezigheid'].includes(tool.name)
-    ? 'house'
-    : autonomyLaneForTool(tool.name);
+  const proofLane = toolHasTag(tool.name, 'proof:house') ? 'house' : autonomyLaneForTool(tool.name);
   if (!proofLane) return false;
   if (['research', 'workspace'].includes(workLane)) {
     return ['research', 'workspace'].includes(proofLane);
@@ -1916,14 +1901,14 @@ function incompleteAutonomousWrite(toolResults = []) {
 }
 
 function autonomyDiscoveryAllowed(name, toolResults = [], full = config.autonomyFull) {
-  if (!AUTONOMY_DISCOVERY_TOOLS.has(name)) return true;
+  if (!toolHasTag(name, 'discovery')) return true;
   if (name === 'lees_bestand' && incompleteAutonomousWrite(toolResults)) return true;
   const sameToolFailures = toolResults.filter((tool) => (
     tool.name === name && tool.ok === false
   )).length;
   if (sameToolFailures >= 2) return false;
   const used = toolResults.filter((tool) => (
-    AUTONOMY_DISCOVERY_TOOLS.has(tool.name)
+    toolHasTag(tool.name, 'discovery')
   )).length;
   return used < (full ? AUTONOMY_DISCOVERY_LIMIT + 2 : AUTONOMY_DISCOVERY_LIMIT);
 }
@@ -1934,7 +1919,7 @@ function autonomyLaneAllows(name, lane, toolResults = [], full = config.autonomy
   if (lane === 'research' && name === 'lees_bestand' && incompleteAutonomousWrite(toolResults)) {
     return true;
   }
-  return AUTONOMY_LANES[lane]?.has(name) === true;
+  return toolHasTag(name, `lane:${lane}`);
 }
 
 function autonomousArtifactReadIndex(toolResults = []) {
@@ -2395,12 +2380,15 @@ function understandTurn({
       ...(baseContract.requiredTools || []),
     ])]
     : [];
+  const actionRequested = mode === 'chat'
+    && (isExplicitToolRequest(userText) || continuationRequest);
   const turnPlan = arbitrateTurnPlan({
     mode,
     text: userText,
     baseContract,
     baseRequiredTools,
     baseDirectAction: baseRequiredTools.includes('bedien_huis') ? directHomeCommand(userText) : null,
+    actionRequested,
     voiceDirective,
     effectForTool: toolEffect,
   });
@@ -2412,7 +2400,8 @@ function understandTurn({
     && (isDurableProjectRequest(userText) || continuationRequest);
   const longWork = mode === 'autonomy' || projectWork || isLongWork(userText);
   const explicitTool = mode === 'chat'
-    && (isExplicitToolRequest(userText) || continuationRequest);
+    && turnPlan.actionIntent === 'execute'
+    && actionRequested;
   const recapOnly = mode === 'chat' && isWorkRecapQuery(userText);
   const reflectiveQuestion = mode === 'chat' && isReflectiveQuestion(userText);
   const buildWork = requiredTools.includes('schrijf_bestand');
@@ -2674,8 +2663,7 @@ async function executeTurn({
         attempts,
         dedupeKey: previous?.dedupeKey || `episode:${durableGoalEpisode?.id || '-'}:prepared-delivery`,
       };
-      durableCommand = updateWorkItem(durableCommand.id, {
-        status: 'open',
+      const deliveryWork = {
         state: { ...workState, pending_delivery: payload },
         nextWakeTs: resumeAfter,
         wait: {
@@ -2684,12 +2672,15 @@ async function executeTurn({
           attempts,
         },
         nextStep: 'Beoordeel het geverifieerde resultaat opnieuw en bezorg het alleen passend.',
-      });
-      if (durableGoalEpisode) durableGoalEpisode = updateGoalEpisode(durableGoalEpisode.id, {
-        state: 'delivery_pending', wakeTs: resumeAfter,
-        nextAction: 'Beoordeel het geverifieerde resultaat opnieuw en bezorg het alleen passend.',
-        sessionRef: turnId,
-      });
+      };
+      if (durableGoalEpisode) {
+        const transition = transitionGoalEpisode(durableGoalEpisode.id, {
+          state: 'delivery_pending', wakeTs: resumeAfter,
+          nextAction: deliveryWork.nextStep, sessionRef: turnId, work: deliveryWork,
+        });
+        durableGoalEpisode = transition.episode;
+        durableCommand = transition.workItem;
+      } else durableCommand = updateDurableWork(durableCommand.id, deliveryWork);
     }
     const workItem = name === 'werk_bijhouden' ? actionData(recorded)?.item : null;
     if (!syntheticTest && Number.isFinite(Number(workItem?.id))) {
@@ -2749,16 +2740,19 @@ async function executeTurn({
       && recorded.ok && recorded.verified && recorded.changed && durableCommand) {
       const due = actionData(recorded)?.due;
       if (Number.isFinite(Date.parse(due || ''))) {
-        durableCommand = updateWorkItem(durableCommand.id, {
+        const reminderWork = {
           nextWakeTs: due,
           wait: { reason: 'self_reminder', reminderId: actionData(recorded)?.id || null },
           currentStep: durableCommand.current_step || durableCommand.next_step || '',
-        });
-        if (durableGoalEpisode) durableGoalEpisode = updateGoalEpisode(durableGoalEpisode.id, {
-          state: 'waiting', wakeTs: due,
-          nextAction: durableCommand.current_step || durableCommand.next_step || '',
-          sessionRef: turnId,
-        });
+        };
+        if (durableGoalEpisode) {
+          const transition = transitionGoalEpisode(durableGoalEpisode.id, {
+            state: 'waiting', wakeTs: due, nextAction: reminderWork.currentStep,
+            sessionRef: turnId, work: reminderWork,
+          });
+          durableGoalEpisode = transition.episode;
+          durableCommand = transition.workItem;
+        } else durableCommand = updateDurableWork(durableCommand.id, reminderWork);
       }
     }
     if (mode === 'autonomy' && !syntheticTest && durableGoalEpisode
@@ -2767,18 +2761,16 @@ async function executeTurn({
       const proof = readableEvidence(
         recorded.evidence?.summary || recorded.output || `${name} is uitgevoerd`,
       ).slice(0, 1_200);
-      durableGoalEpisode = requireEpisodeDelivery(durableGoalEpisode.id, {
-        deliveryTarget: durableGoalEpisode.delivery_target || 'gezin',
-      });
-      durableGoalEpisode = updateGoalEpisode(durableGoalEpisode.id, {
+      const transition = transitionGoalEpisode(durableGoalEpisode.id, {
         state: 'delivery_pending', checkpoint: proof, proofSummary: proof,
         nextAction: 'Bezorg het concrete effect kort aan het gezin.',
+        deliveryPolicy: 'required',
+        deliveryTarget: durableGoalEpisode.delivery_target || 'gezin',
         sessionRef: turnId,
+        work: { evidence: proof, lastAction: name },
       });
-      if (durableCommand) updateWorkItem(durableCommand.id, {
-        status: 'open', nextStep: 'Bezorg het concrete effect kort aan het gezin.',
-        evidence: proof, lastAction: name,
-      });
+      durableGoalEpisode = transition.episode;
+      if (transition.workItem) durableCommand = transition.workItem;
     }
     if (mode === 'autonomy' && !syntheticTest && !durableGoalEpisode
       && autonomyEffectRequiresReport(name, args)
@@ -2797,39 +2789,21 @@ async function executeTurn({
           priority: 80,
           visibleToFamily: true,
         });
-        updateWorkItem(command.id, {
-          status: 'open', nextStep: 'Bezorg het concrete effect kort aan het gezin.',
-          evidence: proof, lastAction: name,
-        });
         const existing = episodeForWork(command.id);
-        if (existing) {
-          return {
-            command,
-            episode: updateGoalEpisode(existing.id, {
-              state: 'delivery_pending', checkpoint: proof, proofSummary: proof,
-              nextAction: 'Bezorg het concrete effect kort aan het gezin.',
-              sessionRef: turnId,
-            }),
-          };
-        }
-        const episode = createGoalEpisode({
-          goalKey: 'household_value',
-          title: command.title,
-          outcome: command.goal,
-          definitionOfDone: command.definition_of_done,
-          originKind: 'self',
-          originChannel: 'autonomy',
-          deliveryPolicy: 'required',
-          nextAction: 'Bezorg het concrete effect kort aan het gezin.',
+        const episode = existing || bindEpisodeToWork(createGoalEpisode({
+          goalKey: 'household_value', title: command.title, outcome: command.goal,
+          definitionOfDone: command.definition_of_done, originKind: 'self',
+          originChannel: 'autonomy', deliveryPolicy: 'required',
+          nextAction: command.next_step,
+        }).id, command.id);
+        const transition = transitionGoalEpisode(episode.id, {
+          state: 'delivery_pending', checkpoint: proof, proofSummary: proof,
+          nextAction: command.next_step, sessionRef: turnId,
+          work: { evidence: proof, lastAction: name },
         });
-        const bound = bindEpisodeToWork(episode.id, command.id);
         return {
-          command,
-          episode: updateGoalEpisode(bound.id, {
-            state: 'delivery_pending', checkpoint: proof, proofSummary: proof,
-            nextAction: 'Bezorg het concrete effect kort aan het gezin.',
-            sessionRef: turnId,
-          }),
+          command: transition.workItem,
+          episode: transition.episode,
         };
       })());
       boundAutonomyWorkId = durableCommand.id;
@@ -2917,7 +2891,7 @@ async function executeTurn({
       ));
       if (!proof) continue;
       try {
-        const item = updateWorkItem(current.id, {
+        const item = updateDurableWork(current.id, {
           status: current.status,
           evidence: checkpointEvidence(proof) || undefined,
           lastAction: proof.name,
@@ -2964,7 +2938,7 @@ async function executeTurn({
       && !['toon_werk', 'lijst_bestanden', 'werk_bijhouden', 'signalen_afhandelen', 'stuur_bericht'].includes(tool.name)
     ));
     if (!proof) return null;
-    const updated = updateWorkItem(current.id, {
+    const updated = updateDurableWork(current.id, {
       status: current.status,
       evidence: checkpointEvidence(proof) || undefined,
       lastAction: proof.name,
@@ -2998,7 +2972,7 @@ async function executeTurn({
           const before = durableWorkStatus().open.find((item) => (
             Number(item.id) === Number(initialOpenWorkIds[0])
           ));
-          const updated = updateWorkItem(initialOpenWorkIds[0], {
+          const updated = updateDurableWork(initialOpenWorkIds[0], {
             status: 'open',
             nextStep,
             evidence: checkpointEvidence(latestProof) || undefined,
@@ -3054,34 +3028,36 @@ async function executeTurn({
           ? episodeHasDelivery(durableGoalEpisode.id)
           : false;
         const waitingForDelivery = deliveryRequired && !deliverySent;
-        updateWorkItem(durableCommand.id, {
-          status: waitingForDelivery ? 'open' : 'done',
-          nextStep: waitingForDelivery
-            ? mode === 'autonomy'
-              ? 'Bezorg het gecontroleerde resultaat kort aan het gezin.'
-              : 'Bezorg het gecontroleerde resultaat kort aan de oorspronkelijke verzoeker.'
-            : '',
+        const nextAction = waitingForDelivery
+          ? mode === 'autonomy'
+            ? 'Bezorg het gecontroleerde resultaat kort aan het gezin.'
+            : 'Bezorg het gecontroleerde resultaat kort aan de oorspronkelijke verzoeker.'
+          : '';
+        const work = {
+          nextStep: nextAction,
           evidence,
           lastAction: contribution.name,
           result: answer || evidence,
-          proofAccepted: !waitingForDelivery,
-        });
-        if (durableGoalEpisode) updateGoalEpisode(durableGoalEpisode.id, {
-          state: waitingForDelivery
+        };
+        if (durableGoalEpisode) {
+          const transition = transitionGoalEpisode(durableGoalEpisode.id, {
+            state: waitingForDelivery
             ? 'delivery_pending'
             : deliverySent || (mode === 'autonomy'
               && durableGoalEpisode.delivery_policy !== 'required')
               ? 'closed'
               : 'verifying',
-          checkpoint: evidence,
-          proofSummary: evidence,
-          nextAction: waitingForDelivery
-            ? mode === 'autonomy'
-              ? 'Bezorg het gecontroleerde resultaat kort aan het gezin.'
-              : 'Bezorg het gecontroleerde resultaat in het oorspronkelijke gesprek.'
-            : '',
-          sessionRef: turnId,
-        });
+            checkpoint: evidence, proofSummary: evidence, nextAction,
+            sessionRef: turnId, work,
+          });
+          durableGoalEpisode = transition.episode;
+          durableCommand = transition.workItem;
+        } else {
+          durableCommand = updateDurableWork(durableCommand.id, {
+            ...work, status: waitingForDelivery ? 'open' : 'done',
+            proofAccepted: !waitingForDelivery,
+          });
+        }
       }
     } else if (durableCommand) {
       const currentCommand = db.prepare('SELECT * FROM eva_work_items WHERE id=?')
@@ -3103,18 +3079,20 @@ async function executeTurn({
         ));
         if (checkpoint) {
           const evidence = checkpointEvidence(checkpoint);
-          continuation = updateWorkItem(durableCommand.id, {
-            status: 'open',
+          const work = {
             evidence: evidence || undefined,
             lastAction: checkpoint.name,
             result: answer || undefined,
-          });
-          if (durableGoalEpisode) updateGoalEpisode(durableGoalEpisode.id, {
-            state: 'waiting',
-            checkpoint: evidence || answer || '',
-            nextAction: continuation?.next_step || durableCommand.next_step || '',
-            sessionRef: turnId,
-          });
+          };
+          if (durableGoalEpisode) {
+            const transition = transitionGoalEpisode(durableGoalEpisode.id, {
+              state: 'waiting', checkpoint: evidence || answer || '',
+              nextAction: durableCommand.next_step || '', sessionRef: turnId, work,
+            });
+            durableGoalEpisode = transition.episode;
+            durableCommand = transition.workItem;
+            continuation = transition.workItem;
+          } else continuation = updateDurableWork(durableCommand.id, { ...work, status: 'open' });
         }
       }
     }
@@ -3494,14 +3472,14 @@ async function executeTurn({
       || (!subjectiveHouseExperience
         && /\b(?:huis|thuis|huishoud|kamer|lamp|licht|deur|raam|camera|frontcamera|temperatuur|verwarming|woonkamer|overkapping|speaker|voice|home\s+assistant|ha-verbinding|eriks?|robot(?:stofzuiger)?|stofzuiger(?:robot)?)\b/i.test(`${userText}\n${continuationAnchor}`));
     const allowHouseTools = includeHomeSnapshot || hasOpenDurableWork
-      || requiredTools.some((name) => AUTONOMY_HOUSE_TOOLS.has(name));
+      || requiredTools.some((name) => toolHasTag(name, 'house'));
     const mayNeedLiveEvidence = /(?:^|[.!?]\s*)(?:zoek|onderzoek|uitzoek(?:en)?|vergelijk|controleer|bekijk|lees|vind|diagnosticeer)\b/i.test(userText)
       || /\b(?:actueel|vandaag|nu|website|url|link|bron(?:nen)?|documentatie|bestand|project|gesprek(?:ken)?|tijdlijn|status|inbox)\b/i.test(userText);
     conversationOnly = mode === 'chat'
       && turnContract.kind === 'conversation'
       && !explicitTool && !requiredTools.length && !projectWork && !recapOnly
       && !continuationRequest
-      && !includeHomeSnapshot && !mayNeedLiveEvidence;
+      && !mayNeedLiveEvidence;
     const [homeContext, memories] = await Promise.all([
       homeContextText({
         query: userText,
@@ -3554,16 +3532,18 @@ async function executeTurn({
     const allowedChatTools = mode === 'chat'
       ? turnPlan.allowedToolNames || chatToolNamesFor(requiredTools)
       : null;
-    const tools = recapOnly
+    const tools = recapOnly || conversationOnly
       ? []
       : toolsForTurn({ mode }).filter((tool) => (
         (!conversationOnly || toolEffect(tool.name, {}) === 'read')
         &&
+        (turnPlan.actionIntent !== 'forbid' || requiredTools.includes(tool.name))
+        &&
         (!allowedChatTools || allowedChatTools.has(tool.name))
         && toolAllowedByPolicy(tool.name, {}, turnPlan.effectPolicy)
-        && (!syntheticTest || syntheticToolAllowed(tool.name))
+        && (!syntheticTest || toolSyntheticAllowed(tool.name))
         && (channel === 'telegram' || messageContext?.identityTrusted === true || tool.name !== 'zoek_gesprek')
-        && (allowHouseTools || !AUTONOMY_HOUSE_TOOLS.has(tool.name))
+        && (allowHouseTools || !toolHasTag(tool.name, 'house'))
         && (!continuationRequest || continuationNeedsCode || tool.name !== 'voer_uit')
         && (!continuationRequest || continuationNeedsResearch || tool.name !== 'zoek_internet')
         && (!continuationRequest || continuationWork || !['toon_werk', 'werk_bijhouden'].includes(tool.name))
@@ -3791,13 +3771,6 @@ async function executeTurn({
                   || 'De bedoeling is uitgevoerd of bewust verworpen, met gecontroleerd bewijs en een passend eindbesluit.',
                 priority: 80, visibleToFamily: true,
               });
-              if (exploration) updateWorkItem(command.id, {
-                state: {
-                  exploration_id: exploration.id,
-                  hypothesis: exploration.hypothesis,
-                  stop_rule: exploration.stop_rule,
-                },
-              });
               const episode = createGoalEpisode({
                 goalKey: 'household_value', title: command.title,
                 outcome: command.goal, definitionOfDone: command.definition_of_done,
@@ -3805,7 +3778,16 @@ async function executeTurn({
                 deliveryPolicy: 'milestone',
                 nextAction: command.next_step,
               });
-              return { command: updateWorkItem(command.id, {}), episode: bindEpisodeToWork(episode.id, command.id) };
+              const bound = bindEpisodeToWork(episode.id, command.id);
+              const transition = transitionGoalEpisode(bound.id, {
+                state: bound.state,
+                work: exploration ? { state: {
+                  exploration_id: exploration.id,
+                  hypothesis: exploration.hypothesis,
+                  stop_rule: exploration.stop_rule,
+                } } : {},
+              });
+              return { command: transition.workItem, episode: transition.episode };
             })());
             boundAutonomyWorkId = durableCommand.id;
           }
@@ -3924,7 +3906,9 @@ async function executeTurn({
         syntheticTest && syntheticReplyNeedsPersistentState(proposedReply)
           ? 'Interne conclusiecontrole, geen uitspraak van de bewoner: deze geïsoleerde proef heeft geen duurzaam hervat- of meldingsrecht. Claim geen toekomstige handeling of vastgelegd hervatmoment; geef direct alleen wat in deze beurt werkelijk is aangetoond, zonder erkenning, excuus of verbeterplan.'
           : styleCorrectionPolicyFeedback(proposedReply, userText)
-            || conclusionInvestigationFeedback(proposedReply, userText, toolResults)
+            || conclusionInvestigationFeedback(
+              proposedReply, userText, toolResults, turnPlan.actionIntent === 'execute',
+            )
             || incompleteRequestedOutcomeFeedback(proposedReply, userText)
       ),
       selectTools: ({ tools: offered }) => {
@@ -4071,11 +4055,13 @@ async function executeTurn({
 
 
     if (mode === 'chat' && (
-      conclusionInvestigationFeedback(reply, userText, toolResults)
+      conclusionInvestigationFeedback(reply, userText, toolResults, turnPlan.actionIntent === 'execute')
       || incompleteRequestedOutcomeFeedback(reply, userText)
     )) {
       const grounded = evidenceFallback(toolResults, { requiredTools, userText });
-      reply = grounded && !conclusionInvestigationFeedback(grounded, userText, toolResults)
+      reply = grounded && !conclusionInvestigationFeedback(
+        grounded, userText, toolResults, turnPlan.actionIntent === 'execute',
+      )
         ? grounded
         : 'Ik heb nog geen onderbouwde uitkomst. Daarom trek ik nu niet de conclusie dat dit niet kan.';
     }
@@ -4389,13 +4375,14 @@ export const __projectRouteTest = {
   evidenceFallback,
   humanResultText,
   looksLikeInternalOutput,
-  syntheticToolAllowed,
+  syntheticToolAllowed: toolSyntheticAllowed,
   syntheticReplyNeedsPersistentState,
   stripSyntheticFutureClaims,
   styleCorrectionPolicyFeedback,
   shouldBindDurableUserEpisode,
   identityNameFromText,
   incompleteAutonomousWrite,
+  isExplicitToolRequest,
   isContinuationRequest,
   requestsExecutableBuild,
   requiredToolSatisfied,

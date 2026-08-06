@@ -34,6 +34,10 @@ function mixed(defaultEffect, readOperations, extras = {}) {
   };
 }
 
+const bounded = (tags, extras) => ({ autonomy: 'bounded', tags, ...extras });
+const full = (tags, extras) => ({ autonomy: 'full', tags, ...extras });
+const never = (tags, extras) => ({ autonomy: 'none', tags, ...extras });
+
 function freezeMetadata(metadata) {
   return Object.freeze(Object.fromEntries(Object.entries(metadata).map(([name, policy]) => [
     name,
@@ -52,45 +56,62 @@ function freezeMetadata(metadata) {
  * worden. `changesByDefault` bewaart exact de bestaande ActionResult-normalisatie.
  */
 export const TOOL_POLICY = freezeMetadata({
-  huis_status: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  bedien_huis: fixed(TOOL_EFFECT.home, { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true }),
-  gebruik_robot: mixed(TOOL_EFFECT.home, ['status', 'kaart', 'kijk'], { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true }),
-  ha_lees: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  wie_is_thuis: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  beheer_aanwezigheid: mixed(TOOL_EFFECT.home, ['bekijk'], { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true }),
-  zoek_internet: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
+  huis_status: fixed(TOOL_EFFECT.read, bounded('discovery house free lane:house contribution:house proof:house grounding', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 2 })),
+  bedien_huis: fixed(TOOL_EFFECT.home, full('house delegated contribution:house grounding', { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true, verification: 'explicit', proofRank: 5 })),
+  gebruik_robot: mixed(TOOL_EFFECT.home, ['status', 'kaart', 'kijk'], full('discovery house delegated', { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true, verification: 'explicit' })),
+  ha_lees: fixed(TOOL_EFFECT.read, bounded('discovery house free lane:house primary:house contribution:house proof:house grounding', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 2 })),
+  wie_is_thuis: fixed(TOOL_EFFECT.read, bounded('discovery house free lane:house lane:family primary:house contribution:house proof:house grounding', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false })),
+  beheer_aanwezigheid: mixed(TOOL_EFFECT.home, ['bekijk'], full('house delegated lane:house primary:house', { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true, verification: 'explicit' })),
+  zoek_internet: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:research contribution:research proof:project grounding', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 4 })),
   beheer_agentmail: mixed(TOOL_EFFECT.external, [
     'status', 'berichten', 'inbox', 'lezen', 'list', 'zoeken', 'zoek', 'search',
-  ], { synthetic: 'deny', report: 'effect', durable: true, changesByDefault: true }),
-  lees_bestand: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  schrijf_bestand: fixed(TOOL_EFFECT.workspace, { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true }),
-  lijst_bestanden: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  voer_uit: fixed(TOOL_EFFECT.workspace, { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true }),
-  maak_vaardigheid: mixed(TOOL_EFFECT.workspace, ['lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  beheer_addon: mixed(TOOL_EFFECT.workspace, ['lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  gebruik_capability: fixed(TOOL_EFFECT.workspace, { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: false }),
-  inspecteer_vermogen: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  beheer_werkcel: mixed(TOOL_EFFECT.persistent, ['status', 'lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  beheer_toolpakket: mixed(TOOL_EFFECT.workspace, ['inspecteer', 'status', 'lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  onthoud: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  zoek_geheugen: fixed(TOOL_EFFECT.read, { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false }),
-  zoek_gesprek: fixed(TOOL_EFFECT.read, { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false }),
-  zet_herinnering: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true }),
-  toon_herinneringen: fixed(TOOL_EFFECT.read, { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false }),
-  annuleer_herinnering: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'effect', durable: true, changesByDefault: true }),
-  bekijk_camera: fixed(TOOL_EFFECT.read, { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false }),
-  leer_gezicht_van_foto: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  spreek_in_huis: fixed(TOOL_EFFECT.voice, { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  stuur_bericht: fixed(TOOL_EFFECT.external, { synthetic: 'deny', report: 'delivery', durable: true, changesByDefault: true }),
-  doel_bijhouden: mixed(TOOL_EFFECT.persistent, ['list', 'lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false }),
-  werk_bijhouden: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false }),
-  verkenning_bijhouden: mixed(TOOL_EFFECT.persistent, ['list', 'lijst'], { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true }),
-  toon_werk: fixed(TOOL_EFFECT.read, { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false }),
-  signalen_afhandelen: fixed(TOOL_EFFECT.persistent, { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false }),
+  ], full('delegated lane:research lane:workspace lane:family proof:project grounding', { synthetic: 'deny', report: 'effect', durable: true, changesByDefault: true })),
+  lees_bestand: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace contribution:making proof:project grounding reasoning:mechanical', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 3 })),
+  schrijf_bestand: fixed(TOOL_EFFECT.workspace, bounded('lane:research lane:workspace primary:workspace contribution:making proof:project reasoning:code', { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true, verification: 'ok' })),
+  lijst_bestanden: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace primary:workspace proof:project', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false })),
+  voer_uit: fixed(TOOL_EFFECT.workspace, bounded('lane:research lane:workspace primary:workspace contribution:making proof:project grounding reasoning:code', { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: true, verification: 'ok', proofRank: 5 })),
+  maak_vaardigheid: mixed(TOOL_EFFECT.workspace, ['lijst'], bounded('contribution:making reasoning:code', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
+  beheer_addon: mixed(TOOL_EFFECT.workspace, ['lijst'], bounded('contribution:making reasoning:code', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
+  gebruik_capability: fixed(TOOL_EFFECT.workspace, bounded('contribution:making reasoning:mechanical', { synthetic: 'isolated', report: 'none', durable: true, changesByDefault: false })),
+  inspecteer_vermogen: fixed(TOOL_EFFECT.read, bounded('discovery lane:research lane:workspace lane:family', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false })),
+  beheer_werkcel: mixed(TOOL_EFFECT.persistent, ['status', 'lijst'], bounded('discovery lane:research lane:workspace primary:research', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
+  beheer_toolpakket: mixed(TOOL_EFFECT.workspace, ['inspecteer', 'status', 'lijst'], bounded('discovery lane:research lane:workspace primary:research reasoning:code', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'explicit' })),
+  onthoud: fixed(TOOL_EFFECT.persistent, bounded('lane:family primary:family', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'ok' })),
+  zoek_geheugen: fixed(TOOL_EFFECT.read, bounded('discovery free lane:family primary:family grounding', { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false })),
+  zoek_gesprek: fixed(TOOL_EFFECT.read, full('lane:house lane:family grounding', { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false })),
+  zet_herinnering: fixed(TOOL_EFFECT.persistent, full('delegated', { synthetic: 'deny', report: 'conditional', durable: true, changesByDefault: true, verification: 'ok' })),
+  toon_herinneringen: fixed(TOOL_EFFECT.read, bounded('discovery free', { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false })),
+  annuleer_herinnering: fixed(TOOL_EFFECT.persistent, full('delegated', { synthetic: 'deny', report: 'effect', durable: true, changesByDefault: true, verification: 'ok' })),
+  bekijk_camera: fixed(TOOL_EFFECT.read, bounded('discovery house free lane:house primary:house contribution:house proof:house grounding', { synthetic: 'allow', report: 'none', durable: false, changesByDefault: false, proofRank: 4 })),
+  leer_gezicht_van_foto: fixed(TOOL_EFFECT.persistent, never('delegated', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'ok' })),
+  spreek_in_huis: fixed(TOOL_EFFECT.voice, full('house delegated contribution:house', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true, verification: 'ok' })),
+  stuur_bericht: fixed(TOOL_EFFECT.external, bounded('free lane:house lane:research lane:workspace lane:family contribution:contact', { synthetic: 'deny', report: 'delivery', durable: true, changesByDefault: true, verification: 'ok' })),
+  doel_bijhouden: mixed(TOOL_EFFECT.persistent, ['list', 'lijst'], full('', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false })),
+  werk_bijhouden: fixed(TOOL_EFFECT.persistent, bounded('lane:house lane:research lane:workspace lane:family', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false })),
+  verkenning_bijhouden: mixed(TOOL_EFFECT.persistent, ['list', 'lijst'], bounded('', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: true })),
+  toon_werk: fixed(TOOL_EFFECT.read, full('free lane:house lane:workspace lane:family', { synthetic: 'deny', report: 'none', durable: false, changesByDefault: false })),
+  signalen_afhandelen: fixed(TOOL_EFFECT.persistent, bounded('free lane:house lane:research lane:workspace lane:family', { synthetic: 'deny', report: 'none', durable: true, changesByDefault: false })),
 });
 
 export function toolPolicy(name) {
   return TOOL_POLICY[String(name || '')] || null;
+}
+
+export function toolHasTag(name, tag) {
+  return String(toolPolicy(name)?.tags || '').split(/\s+/u).includes(String(tag || ''));
+}
+
+export function toolAvailableInAutonomy(name, fullAutonomy = false) {
+  const profile = toolPolicy(name)?.autonomy;
+  return profile === 'bounded' || (fullAutonomy && profile === 'full');
+}
+
+export function toolVerification(name) {
+  return toolPolicy(name)?.verification || 'read';
+}
+
+export function toolProofRank(name) {
+  return Number(toolPolicy(name)?.proofRank) || 1;
 }
 
 export function toolSyntheticAllowed(name) {
