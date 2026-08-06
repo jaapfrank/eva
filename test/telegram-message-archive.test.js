@@ -23,7 +23,7 @@ const {
   upsertPerson,
 } = await import('../src/db.js');
 const { telegramPollingOptions } = await import('../src/integrations/telegram.js');
-const { chatToolsForText, makeExecutor } = await import('../src/mind/tools.js');
+const { toolsForTurn, makeExecutor } = await import('../src/mind/tools.js');
 
 after(() => {
   db.close();
@@ -145,7 +145,7 @@ test('onderbroken verwerking wordt bij herstart opnieuw claimbaar', () => {
 
 test('Eva kan haar lokale Telegram-gesprek als kernvaardigheid teruglezen', async () => {
   upsertPerson('Jaap', { telegram_id: 42 });
-  const available = chatToolsForText('Wat zei ik eerder over die foto?');
+  const available = toolsForTurn({ mode: 'chat' });
   assert.equal(available.some((tool) => tool.name === 'zoek_gesprek'), true);
 
   const execute = makeExecutor({

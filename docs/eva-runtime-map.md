@@ -11,9 +11,9 @@ Eva heeft geen statische importcyclus, maar is nog geen werkelijk enkelvoudige
 entiteit. De complexiteit zit in gedeelde toestand en overlappende beslissers:
 
 - 44 JavaScriptmodules en 3 statische webassets in `src`;
-- 24.231 regels JavaScript in `src`;
+- 24.219 regels JavaScript in `src`;
 - 36 applicatieschema's, aangemaakt door 12 verschillende modules;
-- `agent.js` (4.558 regels), `tools.js` (2.974), Home Assistant (1.903),
+- `agent.js` (4.541 regels), `tools.js` (2.969), Home Assistant (1.903),
   Telegram (1.551), vision (1.300) en `db.js` (1.278) zijn de hotspots;
 - `db.js` heeft circa 30 importeurs, `config.js` 21;
 - agentische uitvoering is verdeeld over `agent.js`, `tools.js` en `brain/llm.js`;
@@ -739,8 +739,8 @@ afronden halen de vereiste consistentie nog niet.
 - De bronregels zijn met `wc -l` over de 44 actuele `.js`-bestanden geteld; de
   schematelling komt uit alle `CREATE TABLE`/`CREATE VIRTUAL TABLE`-sites en is
   tegen de read-only SQLitecatalogus gecontroleerd.
-- De actuele Node-regressiesuite slaagt 256 van 256; coverage is 51,62% regels,
-  67,60% branches en 55,87% functies. De gerichte
+- De actuele Node-regressiesuite slaagt 256 van 256; coverage is 51,67% regels,
+  67,60% branches en 56,00% functies. De gerichte
   Python-brainproef slaagt daarnaast 4 van 4.
 - De eerdere repositorysanering verwijderde veel oude code en data. Deze
   vervolgpatch groeit netto door veilige projectzoeking, herstelgedrag en

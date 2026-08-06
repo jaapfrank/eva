@@ -1577,11 +1577,6 @@ export function toolsForTurn({ mode = 'chat' } = {}) {
   return TOOLS.filter((tool) => toolAvailableInAutonomy(tool.name, config.autonomyFull));
 }
 
-export const chatTools = () => toolsForTurn({ mode: 'chat' });
-export const chatToolsForText = () => toolsForTurn({ mode: 'chat' });
-export const voiceTools = () => toolsForTurn({ mode: 'chat' });
-export const heartbeatTools = () => toolsForTurn({ mode: 'autonomy' });
-
 const PROOF_STOP_WORDS = new Set([
   'actie', 'alleen', 'bestand', 'bron', 'controle', 'echt', 'gezin', 'goed',
   'informatie', 'klaar', 'maken', 'resultaat', 'stap', 'vandaag', 'werk',

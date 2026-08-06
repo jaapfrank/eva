@@ -4103,29 +4103,12 @@ async function executeTurn({
         : channel === 'voice' && typeof messageContext?.isCurrent === 'function'
           ? () => !messageContext.isCurrent()
           : null,
-      stopAfterToolRound: () => {
-        if (mode === 'autonomy' && autonomyStopReady(toolResults, {
+      stopAfterToolRound: mode === 'autonomy'
+        ? () => autonomyStopReady(toolResults, {
           allowSignalOnly: !hasOpenDurableWork,
           requiredWorkIds: activeAutonomyWorkIds(),
-        })) return AUTONOMY_SILENT;
-        // Laat Eva zelf het bewezen resultaat uitleggen. De artifactcontrole bepaalt
-        // alleen of het werk echt af is; zij is geen vast antwoordsjabloon.
-        if (mode !== 'chat' || requiredTools.length !== 1 || requiredTools[0] !== 'bedien_huis') return false;
-        const action = [...toolResults].reverse().find((tool) => tool.name === 'bedien_huis');
-        const readback = verifiedHomeReadback(userText, toolResults);
-        if ((!action?.ok || !action?.verified) && !readback) return false;
-        if (readback) {
-          const data = actionData(readback) || {};
-          const state = ({ on: 'aan', off: 'uit', open: 'open', closed: 'dicht' })[data.state] || data.state;
-          return `${data.name || directHomeCommand(userText)?.doel || 'Het apparaat'} staat ${state}.`;
-        }
-        try {
-          const parsed = JSON.parse(String(action.output || ''));
-          return parsed.human_message || parsed.evidence?.summary || false;
-        } catch {
-          return false;
-        }
-      },
+        }) ? AUTONOMY_SILENT : false
+        : null,
     });
 
     const provenFallback = evidenceFallback(toolResults, { requiredTools, userText });
