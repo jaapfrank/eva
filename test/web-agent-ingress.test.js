@@ -213,7 +213,7 @@ function omittedMaterialUnderstanding(text) {
   }]);
 }
 
-test('webrequest krijgt vóór antwoord een stabiele duurzame agent-ingress en replayt zonder provider', async () => {
+test('web case 1: echte chatroute bindt request, replay en ACK exact duurzaam', async () => {
   const originalFetch = globalThis.fetch;
   const text = 'Hoe gaat het vandaag met je?';
   const reply = 'Goed. Ik ben aandachtig en rustig aanwezig.';
@@ -227,34 +227,130 @@ test('webrequest krijgt vóór antwoord een stabiele duurzame agent-ingress en r
       ? replyUnderstanding(text, reply)
       : textResponse(reply);
   };
+  const server = await startWeb();
+  const address = server.address();
+  assert.ok(address && typeof address === 'object');
+  const post = () => postAckBoundHttp({
+    nativeFetch: originalFetch, address, route: '/api/chat', requestId: messageId,
+    body: { text, conversation_id: conversationId, request_id: messageId },
+  });
+  const conflictingPost = async ({ changedText = text, clientAckPublicKey }) => {
+    const response = await originalFetch(
+      `http://127.0.0.1:${address.port}/api/chat`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 'Idempotency-Key': messageId,
+        },
+        body: JSON.stringify({
+          text: changedText, conversation_id: conversationId, request_id: messageId,
+          client_ack_public_key: clientAckPublicKey,
+        }),
+      },
+    );
+    const bodyBytes = Buffer.from(await response.arrayBuffer());
+    const body = JSON.parse(bodyBytes.toString('utf8'));
+    assert.equal(bodyBytes.toString('utf8'), canonicalJson(body));
+    return { response, body, bodyBytes };
+  };
   let first;
-  let replay;
+  let firstWireBase64;
+  let firstBody;
   try {
-    first = await handleMessageDetailed({
-      channel: 'web', sender: 'Jaap', text,
-      messageContext: { conversationId, messageId, identityTrusted: true },
-    });
+    first = await post();
+    assert.equal(first.response.status, 200, first.bodyBytes.toString('utf8'));
+    assert.equal(first.body.reply, reply);
+    assert.equal(first.body.conversation_id, conversationId);
+    assert.equal(first.body.request_id, messageId);
+    assert.equal(first.body.request_replay_scope, 'durable_http_ingress');
+    assert.match(first.body.turn_id, /^web:/u);
     const callsAfterFirst = providerCalls;
-    replay = await handleMessageDetailed({
-      channel: 'web', sender: 'Jaap', text,
-      messageContext: { conversationId, messageId, identityTrusted: true },
-    });
+    assert.equal(callsAfterFirst > 0, true);
+    const replay = await post();
+    assert.equal(replay.response.status, 200, replay.bodyBytes.toString('utf8'));
+    assert.equal(replay.response.headers.get('Idempotency-Replayed'), 'true');
+    assert.deepEqual(replay.body, first.body);
+    assert.deepEqual(replay.bodyBytes, first.bodyBytes);
     assert.equal(providerCalls, callsAfterFirst,
       'dezelfde request mag provider of tools niet opnieuw bereiken');
-    await assert.rejects(() => handleMessageDetailed({
-      channel: 'web', sender: 'Jaap', text: `${text} andere inhoud`,
-      messageContext: { conversationId, messageId, identityTrusted: true },
-    }), /andere handeling gebonden/iu);
+
+    const countsBeforeConflicts = {
+      requests: db.prepare(`SELECT count(*) AS count FROM eva_http_ingress_requests
+        WHERE channel='web' AND conversation_id=? AND request_id=?`)
+        .get(conversationId, messageId).count,
+      executions: db.prepare(`SELECT count(*) AS count FROM turn_tool_executions
+        WHERE tool='@turn/understanding' AND json_extract(args,'$.channel')='web'
+          AND json_extract(args,'$.conversationId')=?
+          AND json_extract(args,'$.messageId')=?`).get(conversationId, messageId).count,
+    };
+    assert.deepEqual(countsBeforeConflicts, { requests: 1, executions: 1 });
+    const changedText = await conflictingPost({
+      changedText: `${text} Andere inhoud.`, clientAckPublicKey: httpClientAckPublicKey,
+    });
+    assert.equal(changedText.response.status, 409, changedText.bodyBytes.toString('utf8'));
+    assert.equal(changedText.body.reason, 'request_intent_conflict');
+    assert.equal(Object.hasOwn(changedText.body, '_httpDelivery'), false);
+
+    const otherKeyPair = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+    const otherJwk = otherKeyPair.publicKey.export({ format: 'jwk' });
+    const changedKey = await conflictingPost({
+      clientAckPublicKey: {
+        contract: 'HttpClientAckPublicKey/v3', algorithm: 'ES256',
+        kty: 'EC', crv: 'P-256', x: otherJwk.x, y: otherJwk.y,
+      },
+    });
+    assert.equal(changedKey.response.status, 409, changedKey.bodyBytes.toString('utf8'));
+    assert.equal(changedKey.body.reason, 'request_intent_conflict');
+    assert.equal(Object.hasOwn(changedKey.body, '_httpDelivery'), false);
     assert.equal(providerCalls, callsAfterFirst,
-      'dezelfde request-id met andere inhoud faalt vóór de provider');
+      'dezelfde request-id met andere tekst of ACK-sleutel faalt vóór de provider');
+    assert.deepEqual({
+      requests: db.prepare(`SELECT count(*) AS count FROM eva_http_ingress_requests
+        WHERE channel='web' AND conversation_id=? AND request_id=?`)
+        .get(conversationId, messageId).count,
+      executions: db.prepare(`SELECT count(*) AS count FROM turn_tool_executions
+        WHERE tool='@turn/understanding' AND json_extract(args,'$.channel')='web'
+          AND json_extract(args,'$.conversationId')=?
+          AND json_extract(args,'$.messageId')=?`).get(conversationId, messageId).count,
+    }, countsBeforeConflicts, 'conflicten maken geen tweede request of uitvoering');
+
+    const acknowledged = await acknowledgeAckBoundHttp({
+      nativeFetch: originalFetch, address, exchange: first,
+    });
+    const duplicateResponse = await originalFetch(
+      `http://127.0.0.1:${address.port}/api/http-delivery/ack`,
+      {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(acknowledged.ack),
+      },
+    );
+    const duplicateBytes = Buffer.from(await duplicateResponse.arrayBuffer());
+    const duplicateBody = JSON.parse(duplicateBytes.toString('utf8'));
+    assert.equal(duplicateResponse.status, 200, duplicateBytes.toString('utf8'));
+    assert.deepEqual(duplicateBody, acknowledged.body);
+    assert.equal(db.prepare(`SELECT count(*) AS count
+      FROM eva_http_delivery_ack_receipts_v3 WHERE request_ref=?`)
+      .get(first.envelope.requestRef).count, 1);
+    assert.equal(db.prepare(`SELECT count(*) AS count FROM timeline
+      WHERE kind='chat_out' AND json_extract(meta,'$.conversationId')=?`)
+      .get(conversationId).count, 1);
+    assert.equal(db.prepare(`SELECT count(*) AS count FROM messages
+      WHERE channel='web' AND conversation_id=? AND role='assistant'`)
+      .get(conversationId).count, 1);
+    firstBody = first.body;
+    firstWireBase64 = first.bodyBytes.toString('base64');
   } finally {
     globalThis.fetch = originalFetch;
+    await new Promise((resolve) => server.close(resolve));
   }
 
-  assert.equal(replay.replayed, true);
-  assert.equal(replay.reply, first.reply);
-  assert.equal(replay.turnId, first.turnId);
-  assert.equal(replay.originMessageId, messageId);
+  const durableResult = preparedUnderstandingIngressReplay({
+    channel: 'web', conversationId, messageId, sender: 'Jaap',
+  });
+  assert.equal(durableResult.replayed, true);
+  assert.equal(durableResult.reply, reply);
+  assert.equal(durableResult.turnId, firstBody.turn_id);
+  assert.equal(durableResult.originMessageId, messageId);
   assert.equal(db.prepare(`SELECT count(*) AS count FROM messages
     WHERE channel='web' AND conversation_id=? AND role='user'`).get(conversationId).count, 1);
   assert.equal(db.prepare(`SELECT count(*) AS count FROM timeline
@@ -266,31 +362,42 @@ test('webrequest krijgt vóór antwoord een stabiele duurzame agent-ingress en r
   assert.equal(ingress.status, 'done');
   const prepared = JSON.parse(ingress.output);
   assert.equal(prepared.contract, 'PreparedUnderstandingTurn/v1');
-  assert.equal(prepared.turnId, first.turnId);
-  assert.equal(prepared.reply, first.reply);
+  assert.equal(prepared.turnId, durableResult.turnId);
+  assert.equal(prepared.reply, durableResult.reply);
   assert.match(prepared.sha256, /^[a-f0-9]{64}$/u);
-  assert.equal(verifiedPreparedUnderstandingTurnForResult(first, {
+  assert.equal(verifiedPreparedUnderstandingTurnForResult(durableResult, {
     channel: 'web', conversationId, messageId,
   })?.sha256, prepared.sha256);
   assert.equal(verifiedPreparedUnderstandingTurnForResult({
-    ...first, reply: `${first.reply} vervalst`,
+    ...durableResult, reply: `${durableResult.reply} vervalst`,
   }, { channel: 'web', conversationId, messageId }), null);
   assert.equal(preparedUnderstandingIngressReplay({
     channel: 'web', conversationId, messageId, sender: 'Jaap',
-  })?.reply, first.reply);
+  })?.reply, durableResult.reply);
 
   const restarted = spawnSync(process.execPath, ['--input-type=module', '-e', `
+    const nativeFetch=globalThis.fetch;
     let providerCalls=0;
-    globalThis.fetch=async()=>{providerCalls+=1;throw new Error('provider mag niet starten')};
-    const {handleMessageDetailed}=await import('./src/mind/agent.js');
-    const replay=await handleMessageDetailed(${JSON.stringify({
-      channel: 'web', sender: 'Jaap', text,
-      messageContext: { conversationId, messageId, identityTrusted: true },
-    })});
+    globalThis.fetch=async(input,init)=>{
+      if(String(input).startsWith('http://127.0.0.1:')) return nativeFetch(input,init);
+      providerCalls+=1;throw new Error('provider mag niet starten');
+    };
+    const {startWeb}=await import('./src/web/server.js');
+    const server=await startWeb();
+    const address=server.address();
+    const response=await nativeFetch('http://127.0.0.1:'+address.port+'/api/chat',{
+      method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':${JSON.stringify(messageId)}},
+      body:JSON.stringify({text:${JSON.stringify(text)},conversation_id:${JSON.stringify(conversationId)},request_id:${JSON.stringify(messageId)},client_ack_public_key:${JSON.stringify(httpClientAckPublicKey)}}),
+    });
+    const bodyBytes=Buffer.from(await response.arrayBuffer());
+    await new Promise(resolve=>server.close(resolve));
     const {db}=await import('./src/db.js');
-    console.log(JSON.stringify({providerCalls,replay}));
+    console.log(JSON.stringify({status:response.status,
+      replayed:response.headers.get('Idempotency-Replayed'),
+      bodyBase64:bodyBytes.toString('base64'),providerCalls,
+      requests:db.prepare("SELECT count(*) count FROM eva_http_ingress_requests WHERE channel='web' AND conversation_id=? AND request_id=?").get(${JSON.stringify(conversationId)},${JSON.stringify(messageId)}).count,
+      executions:db.prepare("SELECT count(*) count FROM turn_tool_executions WHERE tool='@turn/understanding' AND json_extract(args,'$.channel')='web' AND json_extract(args,'$.conversationId')=? AND json_extract(args,'$.messageId')=?").get(${JSON.stringify(conversationId)},${JSON.stringify(messageId)}).count}));
     db.close();
-    process.exit(0);
   `], {
     cwd: path.resolve(new URL('..', import.meta.url).pathname),
     encoding: 'utf8', timeout: 30_000,
@@ -302,10 +409,12 @@ test('webrequest krijgt vóór antwoord een stabiele duurzame agent-ingress en r
   });
   assert.equal(restarted.status, 0, restarted.stderr || restarted.stdout);
   const restartedOutcome = JSON.parse(restarted.stdout.trim().split('\n').at(-1));
+  assert.equal(restartedOutcome.status, 200);
+  assert.equal(restartedOutcome.replayed, 'true');
   assert.equal(restartedOutcome.providerCalls, 0);
-  assert.equal(restartedOutcome.replay.replayed, true);
-  assert.equal(restartedOutcome.replay.turnId, first.turnId);
-  assert.equal(restartedOutcome.replay.reply, first.reply);
+  assert.equal(restartedOutcome.bodyBase64, firstWireBase64);
+  assert.equal(restartedOutcome.requests, 1);
+  assert.equal(restartedOutcome.executions, 1);
 });
 
 test('een ingehaalde webbeurt bewaart een exact Prepared supersession-resultaat', async () => {
