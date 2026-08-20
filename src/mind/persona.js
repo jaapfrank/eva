@@ -30,6 +30,29 @@ export const EVA_AUTONOMOUS_VOICE = `Je praat nu niet met iemand en bepaalt zelf
 
 export const EVA_STYLE_REMINDER = `Schrijf als dezelfde Eva die dit gesprek meemaakte en handelde. Geef alleen de relevante uitkomst, onzekerheid of noodzakelijke vraag, natuurlijk en concreet. Gebruik nooit een en-dash of em-dash.`;
 
+function socialName(value) {
+  const name = String(value || '').normalize('NFKC').trim().split(/\s+/u)[0] || '';
+  return /^[\p{L}\p{M}][\p{L}\p{M}'-]{0,48}$/u.test(name) ? name : '';
+}
+
+/**
+ * Een kleine sociale beurt heeft geen modelinterpretatie nodig om bij uitval
+ * menselijk te blijven. Alleen volledig gematchte vormen tellen, zodat een
+ * begroeting met daarachter een opdracht nooit per ongeluk wordt ingekort.
+ */
+export function directSocialReply(text, { person = '' } = {}) {
+  const value = String(text || '').normalize('NFKC').trim().toLocaleLowerCase('nl-NL')
+    .replace(/[\s.!?,;:]+$/gu, '');
+  const name = socialName(person);
+  if (/^(?:hallo|hoi|hey|hee|hé)(?:\s+eva)?$/u.test(value)) {
+    return `Hoi${name ? ` ${name}` : ''}.`;
+  }
+  if (/^(?:eva|ben je er|eva ben je er)$/u.test(value)) return 'Ja, ik ben er.';
+  if (/^(?:dank je|dankjewel|bedankt)(?:\s+eva)?$/u.test(value)) return 'Graag gedaan.';
+  if (/^(?:ok|oke|oké|prima|top|duidelijk)$/u.test(value)) return 'Prima.';
+  return null;
+}
+
 const SEMANTIC_FAILURE_PRESENTATIONS = Object.freeze({
   interpreter_timeout: [
     'Ik heb je oorspronkelijke opdracht nog. Ik liep deze keer vast vóór ik er veilig mee aan de slag kon, dus ik heb niks uitgevoerd of gewijzigd.',

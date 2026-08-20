@@ -34,7 +34,13 @@ import {
 import { config } from '../config.js';
 import { chatComplete, executionModelFailureText, msg, runExecutionDriver } from '../brain/llm.js';
 import { applyInteractionFeedback, moodActionGuidance } from './emotions.js';
-import { buildRedactedInstructions, renderHouseActionResult, semanticFailurePresentation, semanticFailureReplyFeedback } from './persona.js';
+import {
+  buildRedactedInstructions,
+  directSocialReply,
+  renderHouseActionResult,
+  semanticFailurePresentation,
+  semanticFailureReplyFeedback,
+} from './persona.js';
 import {
   executeTool, bindContinuityContextPlan, bindExecutionHandle,
   bindExplorationTerminalContributionExecution, bindHomeContextRecoveryPlan, bindSignalAssessmentPlan,
@@ -5491,6 +5497,7 @@ async function finishSemanticFailureTurn(options) {
   const temporaryTransportFailure = ['voice', 'telegram'].includes(channel)
     && ['interpreter_timeout', 'interpreter_unavailable'].includes(semanticTurn.error);
   const decisionRetrySummary = semanticTurn.result?.failure?.decisionRetrySummary;
+  const socialReply = mode === 'chat' ? directSocialReply(userText, { person }) : null;
   const repairableDecisionFailure = ['voice', 'telegram', 'web'].includes(channel)
     && semanticTurn.error === 'interpreter_malformed'
     && validation === 'selected_denied_action'
@@ -5498,6 +5505,7 @@ async function finishSemanticFailureTurn(options) {
     && Number(decisionRetrySummary.selectCount) >= 1
     && Number(decisionRetrySummary.excludeCount) >= 1;
   const durableHandoff = mode === 'chat' && !syntheticTest
+    && !socialReply
     && messageContext?.identityTrusted === true
     && (temporaryTransportFailure || repairableDecisionFailure);
   if (durableHandoff) {
@@ -5508,6 +5516,13 @@ async function finishSemanticFailureTurn(options) {
   }
   let reply = '';
   if (mode !== 'autonomy') {
+    if (socialReply) {
+      assertTurnCurrent();
+      return finishTurn(socialReply, {
+        error: semanticTurn.error,
+        ...failureMetadata,
+      });
+    }
     const presentation = semanticFailurePresentation(semanticTurn.error);
     assertTurnCurrent();
     reply = await composeEvaReply({
