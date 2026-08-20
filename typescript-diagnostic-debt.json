@@ -1,8 +1,8 @@
 {
   "schema": 4,
   "contract": "EvaTypeScriptDiagnosticDebt/v4",
-  "maximum": 516,
-  "snapshotCount": 516,
+  "maximum": 515,
+  "snapshotCount": 515,
   "compiler": {
     "compilerSha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
     "name": "typescript",
@@ -105,16 +105,16 @@
     "sha256": "f6c88d121d08f3495d19134ceae1f75d08cd2043d8a995dd477fa2e7844ede83"
   },
   "programInputs": {
-    "bytes": 9950040,
+    "bytes": 10011359,
     "count": 297,
-    "sha256": "7436a691ef9390143878cc1caa8cf5ec3f8b8b376a7b5236b867a6488905ac22"
+    "sha256": "586c8150b3e472dee9651169efe6c6b237ddda05bd2cc3200e29a1af087c6672"
   },
   "dependencies": {
-    "bytes": 191247931,
-    "count": 5837,
-    "sha256": "6e05ed7c75ecd1a9ecbd193d7ecddd905f81011f75608e30d22aafc2bcae45a9"
+    "bytes": 110920213,
+    "count": 5835,
+    "sha256": "52db216c284920651860f42ee24fbf5673a09282606dfa5335579f6c2aa52b4c"
   },
-  "inputReceiptSha256": "49689a88a34b7b78ea8abed87bd0cfac5bd0445dfe7291fe30773aadca9d9345",
+  "inputReceiptSha256": "8c2fc9553f049465cd3f58f4d6b091d2ec5a5fb8b361213c1d5f9b49607da4b5",
   "provenance": {
     "scope": "worktree-snapshot",
     "releaseEligible": false
@@ -129,19 +129,19 @@
       "count": 1
     },
     {
-      "fingerprint": "0068f210637072e05f8ca085d1a3b6143f49a5551816da8c392dce5595880558",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "78f264a048f6c7d013ec6d6aa3cef56bd49c0f3d3174bc48caf1d682981cac00",
-      "siteSha256": "e5199d04361fa10a3b65befb102cde9a3e57d81ef2719f49d6cebd36a76c2487",
+      "fingerprint": "0059352f9d509105024a43805edc681ded9436ff733c3b158b3d639e1c9ade41",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "9fce2fad2fd1577ee64c39fa6dd8b4bfcb9db4bb96c43bf18b339ac0cc9da075",
       "count": 1
     },
     {
-      "fingerprint": "00786072ea190e4bc0a186ef0e7d6dd8ec9742ed4ac70b83c82f73e6c613adb4",
+      "fingerprint": "0090d053b076d0470abcca09ac247f3ea9673f46adef0bf9e38f9864e6cc3bae",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "1d1f656ceccdb96e44e3bfc982ca9106d09670464b7ad6dd326c1439ade16087",
-      "siteSha256": "62e4e62694b87ee80525d0eb1568dc6d00e68aadb6c255baad67fa9e74abd277",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "dc2e85da215d75de51af4278bc6fb6b2e69781da21d85dc23c652f756a52217c",
       "count": 1
     },
     {
@@ -153,35 +153,27 @@
       "count": 1
     },
     {
-      "fingerprint": "012a222ab4dd8829d04d4d6b8c7addc6a5a0c8e748ae408d721ed39f8b64dcd7",
+      "fingerprint": "009e08ac3da456769d2843bc9785b3c5d6b73fdf4fbc181cb254a45f71ce6003",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "25efe61bda639662db77a6af809ca1687ec93cb8886ed845b803bbf0c683e22a",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "f93cf1729b00f00d6cceb6056b9dce7aeae2b3690213e31962a11dc4f9ab2b92",
       "count": 1
     },
     {
-      "fingerprint": "0204750e8c889c0df99ef5255904c4c8176724ef9b5931c047e35863dd17ddfc",
+      "fingerprint": "00bea06b5eb767f9d64751d3e3ca97e9921de3ced75549558e6731ec628fb7fa",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "bac074bca56e5b80e32342f068c66b87da5f98eec2d9c6b8ad596ceab981eeca",
+      "messageSha256": "46e4873add94be51cb43594176ce75744e5dddc43ea3e1db3aecbc247776e0e1",
+      "siteSha256": "0ebe59c3e3c3dc22545e11f1cbcd903cc8cc66ce032047f41b6a781d38686dbf",
       "count": 1
     },
     {
-      "fingerprint": "020b4da7294cd8be50dd854eaac16629e0ec8e5e5e516e9147c23a003356bf5b",
+      "fingerprint": "013773e0e7679c5524958c8c71cca60f5327954a96ce959f1c6eb1d08f04d52d",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
-      "siteSha256": "1befa9d686498e055a07050c4ca9cce63bc8e9315cd93a35e3e1b11c25d13569",
-      "count": 1
-    },
-    {
-      "fingerprint": "0245d1a74d36b5748791d8b85c193d2004d5d0a3ff82ae4a1ff13fadbe4dd529",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
-      "siteSha256": "6a77343035ff28ee4f67de816a5ea01052ddaa0d64bacd5bd0cacb43d4bd00f7",
+      "messageSha256": "d27094d791898c99007e42bd6642fb009c07727bcfcb6daafdbb6c2c366e4d37",
+      "siteSha256": "f27f0d8b58c55743ac9d2fe08ba4ca44b9c056d2bf8fa715e0f04c5edb88aa97",
       "count": 1
     },
     {
@@ -201,30 +193,6 @@
       "count": 1
     },
     {
-      "fingerprint": "03253ac97ff4464f6fde433ffea142d63c6a27e08e2d71e969b2c79dfc05fd12",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
-      "siteSha256": "605b1314bdab40d27efad1260f146dd7191b7e82c1f7034774f564e2d3328a69",
-      "count": 1
-    },
-    {
-      "fingerprint": "0330560be0377f0e9e40cc297307e2c0dd4ddff4b3df9edea0b43f7d77a0e783",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "0dc825cf3507c48a5211a1cd265ecb60b4ce40a71890683131b9b375d974870f",
-      "siteSha256": "d30aaee992ce0697c42b4ba3c25f75e10609069c5bf97a89afab1626dbd182fc",
-      "count": 1
-    },
-    {
-      "fingerprint": "0356d40ccea6cbc5eefda9ea23f2c99e5ffa1fd201440e7f6dd241b3d4043708",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "63b64688a7b5615e64c4618b4822615fb4ecdf6083e51855fed4576fce2458f3",
-      "count": 1
-    },
-    {
       "fingerprint": "035ec0a296a0dab9813699200faa9c0ce732b07280908f0a8a11efd9f1132a22",
       "code": 2339,
       "file": "src/mind/curiosity.js",
@@ -241,43 +209,27 @@
       "count": 1
     },
     {
-      "fingerprint": "043a0f54241b9a118b24d37c368646a95fa9561bee7e0c40fa63a90b458d6f6a",
+      "fingerprint": "045015e142ed3afa4e22ba220e1eb1346740ff6652cd06a1208d0db0846b6324",
       "code": 2339,
       "file": "src/mind/portfolio.js",
       "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "bb7c061cce623d653512816242b73b85882824a635c725db9d3ac029b796b537",
+      "siteSha256": "a3d5cf34d3392124ac701450363a6c128674da2861c0dd75c6dde3fe6e00e0cb",
       "count": 1
     },
     {
-      "fingerprint": "0501939315e9970e9bcc979355ea0aed4a8e88fc20c163c17a92f9fa97021671",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "37aac8d8e25e012e8f45282f8865009a93825041fefb4d3a70d1f63ee1e02e09",
-      "siteSha256": "1b6e62ea65e6a4ecf5dc1d8ba9f414bcccdbad6256975fd4731ec7e00f7b9c6a",
-      "count": 1
-    },
-    {
-      "fingerprint": "0510395568e4f1c3c1722d3b64d86f93a95977e1ea081d638e59eeec389c2f3f",
+      "fingerprint": "04afde2edf6c7fa166002f35daf57ac1e3c6e3c913286bfc4981b91c3fe2eb05",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "d3629860e4edeff7083370eed6edcdcb4f7e05da8e75cb1df96d1e142df6f348",
-      "siteSha256": "2aba60a0ab8b4e09c801530b53a65614a2dcae401d7ad0105b2407d19f63e04a",
+      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
+      "siteSha256": "14f6221ed729f207fb100a2f5bf3b53990a9604eca316bd3cd06692d7cd82642",
       "count": 1
     },
     {
-      "fingerprint": "05fc35b99511181617f36f6c0435559c7a3d350afcbeb34bf95f81399200abe7",
+      "fingerprint": "04fce41d95655ed90bdd38999af1a4c9204ffcf2b0ae32ebef5c6c20f48db3b0",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
-      "siteSha256": "a3d09b547b9487b4ea2e42bfc5739f96e2d45c9d9a5d7a1668e13f3006a403c9",
-      "count": 1
-    },
-    {
-      "fingerprint": "06fe8b50431af9b8dff9c741998d73b9bced63b8841a4df13b0615bd59f805f6",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
-      "siteSha256": "f360dbda2effb3e693c533592570e107a29f88d5cd965415ec284f58858a83b4",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "8bb19c252f07a25a82f4b27246eda0f5cda39299b25be501fa4b3b936181009e",
       "count": 1
     },
     {
@@ -297,19 +249,19 @@
       "count": 1
     },
     {
+      "fingerprint": "080d74a04b512cb12ea1af25dbbaf9728b4ee6dfed450b3bc5ee3656057a4fe8",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
+      "siteSha256": "9f3b1b60407cae331cb272528cbeb46ffa198483dc1c715130ad50742e0dc1d5",
+      "count": 1
+    },
+    {
       "fingerprint": "092bfe70db5543a9950a51b75c70f7156e879f50bdc107d5067ebeba9d68f3ce",
       "code": 2339,
       "file": "src/mind/household.js",
       "messageSha256": "078fbde481c6cf268a7c20ec445566b27dbe098ad6cf7f52022331953b71f6d7",
       "siteSha256": "7c4fc56807524536dfc43efb62608c5b73c66c96c6126d8b308b34d534f7d744",
-      "count": 1
-    },
-    {
-      "fingerprint": "0942a9d233afc6a4ff2d88cd3f8142b09f79094db477762a99cb8e6d8ff8926c",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
-      "siteSha256": "dd231e5657bb55cf1a365f7f2b3817a44a9278b9febfa148703a8e058b7535a7",
       "count": 1
     },
     {
@@ -337,19 +289,19 @@
       "count": 1
     },
     {
-      "fingerprint": "0a27fc4f6b7bf522732cd9e727058410c47fed72d77bdce411fdf66daa94afc0",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "6b42073df5036596cb37ace72ed7a4fad9bb31c2e63a787a11d41c5d7474c062",
-      "count": 1
-    },
-    {
       "fingerprint": "0a621e8d3dea38dc9343a9448d04330e31421e81df60a8fb1614651963535ab3",
       "code": 2322,
       "file": "src/db.js",
       "messageSha256": "6eee91b0e6a3bb143508c73f5afbebc8b9ebc0cdcac955b944e9bd637fd53e40",
       "siteSha256": "7fbd0a2f4bb824b2ceabea10d0bfb27291ce5a97788d18996796c8e3a159caa8",
+      "count": 1
+    },
+    {
+      "fingerprint": "0b382548a895d96179c0f565abc0a5f19bb464677cda11a3c35fc762e27adda6",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "243a9e7e393009be589736e655eb35f03b6b28140f0598f766be3cb6f3009ce5",
       "count": 1
     },
     {
@@ -361,19 +313,27 @@
       "count": 1
     },
     {
-      "fingerprint": "0b6ebe4fe88061369da32a82a4806cd8d0a3fbde93ef8ae9dba34a7d6e2a00dd",
-      "code": 2353,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
-      "siteSha256": "86b72c7facaeff882888331c1b499777938a68e8bc80db9c66911a515e68c47a",
-      "count": 1
-    },
-    {
       "fingerprint": "0b9a24fb1d9c71ce67435406bb7606f4957a0a727a5febd1acdf3b866f930f37",
       "code": 2339,
       "file": "src/mind/cognitive.js",
       "messageSha256": "79d9cde54892d3d2552ca13edf8b565e89cd9d2322dceabdcd63b548148ff943",
       "siteSha256": "4ba715d494656cc4443a91dc3c646dcfa109c9502916a3524c33e34eb0169fb2",
+      "count": 1
+    },
+    {
+      "fingerprint": "0bc5e5116a3a2a369700102a9995cb0a8644ef2e01e4021f157ab90d37a6c283",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "25815f5c899184a0a1517a8a6fe06009d65a8a257224ea86c12b40c3d6fb0070",
+      "siteSha256": "e74aae7b10f02cee575e019487e698557974353d585c6aa09fedb43ca81459e8",
+      "count": 1
+    },
+    {
+      "fingerprint": "0bfb5b444f6f9fa9f25a62953a315879aaa4c884f449182162200644563e3816",
+      "code": 2353,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
+      "siteSha256": "fa91c84281c02505defab648373fb555c7af89c4cda9f2998472b7e6124db38a",
       "count": 1
     },
     {
@@ -385,19 +345,19 @@
       "count": 1
     },
     {
+      "fingerprint": "0c062eea6c250fbc70ec76b00c99b87cc7ea5189472a16ca5b58c18f2500f4e7",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "73a3583b82e48c87f2e01569efe21360f118f964b00b275e02f2e4875190bf5e",
+      "count": 1
+    },
+    {
       "fingerprint": "0cb5cef16b388669bfeaa9e445b8d5db135125c47e2d73acd4f6bae4788bbef4",
       "code": 2339,
       "file": "src/mind/work.js",
       "messageSha256": "ed6e8aa18c4e93943662ee6c3ddae2f7cd8ec05d62980490b0b115dad2179d35",
       "siteSha256": "43d6ec2408c3b53c680f2892bec5bf1ff79ac3ed1e6088e1e6e5bc0bdf772a19",
-      "count": 1
-    },
-    {
-      "fingerprint": "0d4b67833a4158deb93b732cb34793fd2c04a3d3b2f4cf530465a06722ea9483",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
-      "siteSha256": "ff5de8bf283030b3087130e2132f138279d0866f542b795decf16602d7b60dd5",
       "count": 1
     },
     {
@@ -409,11 +369,19 @@
       "count": 1
     },
     {
-      "fingerprint": "0dd21f513d6051be0bb7225f2178ee9f3b40e48027c0e90c4cfe57557341181d",
+      "fingerprint": "0da175d5c78005f5e956cd7938a6c337d212cbcac545b73e84f1c35c76427720",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "40f6cd3579d894d5f1627d626e4f50d9419d098e404a9b5034eee53f82ff3e8d",
+      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
+      "siteSha256": "f16c5fe2a3050813c422b2c5119ef98963a1c6225aba77dfa76d91c5e437eb34",
+      "count": 1
+    },
+    {
+      "fingerprint": "0daba30249fe1e57f24c6d698c138db032d3f451079b27d0bcdccaf9ab01e866",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "36674689bb6535a2c4d48c06d2549d3a47aaa753d796e3e4d1b0be22b641b908",
+      "siteSha256": "3a82056bd493b5719ac93960bee97b08740b068dc4985faef687cf32062a9687",
       "count": 1
     },
     {
@@ -433,11 +401,27 @@
       "count": 1
     },
     {
-      "fingerprint": "0eb4c5d0a3904cde5415d4948978856e301a6c540de1a27bf63c218bf36e5a44",
-      "code": 2339,
+      "fingerprint": "0e8e94c77e23a76049d6645be9147b5ac3d85058e826b22602ad8804ccecefe3",
+      "code": 2769,
       "file": "src/mind/agent.js",
+      "messageSha256": "0b6bef3b99b0bf11767a64918c34b0624dacc3f194b7dddb940a3ae7b2249e7d",
+      "siteSha256": "639522795bdde4134006fd91a9c1a0e4829e1d0e717abdecf721db34eb90741c",
+      "count": 1
+    },
+    {
+      "fingerprint": "0e9719854bad85d2083d69282e40a6279096cd04eac2099c4487669fc89e7e86",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "47c74df5ecae27a08ed27078247c83fa29d85f82039d1812cb305effc8f11353",
+      "siteSha256": "16af8817342d37c15bd615c4a70058c5e198efb13b5b4fc7b41f436fcf44c6d3",
+      "count": 1
+    },
+    {
+      "fingerprint": "0f997312460beddeb326dc6e9c2ca488fb67b535a0fd66916974620f97dac585",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "4c9f468ba9edd9eeb2beaf8db44e9bbe6e39fb6608c5cea35f0bd9dbe4333b3f",
+      "siteSha256": "9f78a7847e7fd140818b59e8959acd42dcd0d3e3f56acf7d167338773da4dfac",
       "count": 1
     },
     {
@@ -457,11 +441,19 @@
       "count": 1
     },
     {
-      "fingerprint": "10401b805e9e2480266addb27cda7294a97520b80d8a60ca2669b63523c323c6",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "683a2afe64088267ea98b244b9d4869456e4f2e7996500fe5ce5f2a82ffd8984",
+      "fingerprint": "0fd9a66920e58baa7efdd5c46aec1fa20b731317514f7a290af626f52ac35cd1",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "4ff40c5630587e1b949d29db79762757d211068943fb433db2e164117b3239c9",
+      "count": 1
+    },
+    {
+      "fingerprint": "11399af98d2ac93d839b0c1089734193b8a6e8d04fe59e3e5f067540e4658928",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "387fda326a96a3ce3614135ac39b323c29b02f78fb45e345927f6386dee2cc16",
       "count": 1
     },
     {
@@ -473,19 +465,19 @@
       "count": 1
     },
     {
+      "fingerprint": "1161472632c087ffcac0b25b61c4c752f3a4094be850dd5785559f3dd4c64402",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
+      "siteSha256": "fece919a43d21622bf6d6647a845577354b05f75d4c489d5e8eca817061a7929",
+      "count": 1
+    },
+    {
       "fingerprint": "1194b3b63feb0590e7701cc684f3b3853a9f96214d6e30a9bf9e22b2acf489da",
       "code": 2339,
       "file": "src/mind/curiosity.js",
       "messageSha256": "bedd281084c23d8e3e052b2b47e722ae5f5753d273a7d362c5828235f9b8d555",
       "siteSha256": "f7281bdfa74c0bb0d605892fe34e06b1154fee47ee2215021fe6e99e33666b3a",
-      "count": 1
-    },
-    {
-      "fingerprint": "123800bacedf032cb47934a7ed0e16e25d0f7e101e7fec9932956233a3bfa2f4",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "88910767f10ab05193913fecca98643bed174dba4de23f7737a8854f24cefc7f",
-      "siteSha256": "7190568fb05ca3629cf2eb932adb3bb54b623c82dcd7642892354c17fbf73ebc",
       "count": 1
     },
     {
@@ -497,11 +489,11 @@
       "count": 1
     },
     {
-      "fingerprint": "138276d24f58bed4c73b355421d82716f9e776c273cd0ea48aabf493267104ff",
+      "fingerprint": "12a370b8fa929010c3bcb0b4b85180dccdffe58e838350651f076ff602b5d9ec",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cc96495e175c65aa84aed2b9df3d7bf1bcb4177d65210b6a56e1ad44eec3738c",
-      "siteSha256": "5e58ef9d26d1ac4f6ffc1ee289f283b7c69785f4821b5e8ba506536f69fbb164",
+      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
+      "siteSha256": "2c3f182de285f661a0d0db441fb5902faf48180fdbab29596db1a64af54a7eb2",
       "count": 1
     },
     {
@@ -513,19 +505,35 @@
       "count": 1
     },
     {
-      "fingerprint": "13a33ae58ac6c60d364c5f30d221b9e4d679daf1aa4e57461ad48c780cfd79a7",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
-      "siteSha256": "a8dfffbc69d90990b11bc0adb0a6aacaf23d8f3ae30a6b5f268e87e51f933ad2",
-      "count": 1
-    },
-    {
       "fingerprint": "143c45ab37044ded0b3fce3a70c8db3c1b99cfee7ada9aa0a1d295e9d855be12",
       "code": 2339,
       "file": "src/mind/vision.js",
       "messageSha256": "b4dbb89ad1aaa8d70a7ee9137ee0b99cacdc15cda79c44962786f6e1b5efd3a1",
       "siteSha256": "839b287b796b4bd8978358ccd8958844be240132c9de60bf92768d0227c84958",
+      "count": 1
+    },
+    {
+      "fingerprint": "149ff820f36e1c13c06ae0a508c9a4858ce4367f292e26c85e4bdbb78dae521d",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "56df56807efae2f4c286a702de269c680614461a0de52820d0af8760d6bc7a09",
+      "count": 1
+    },
+    {
+      "fingerprint": "1519a338cfd8e86a463e6226c44460961d65e5f2a28d2c4ebc8667121c722906",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
+      "siteSha256": "67df56b7a59d7c1f1294b7b2878bd32441d615f1d907e1adb2743e8edb78f89a",
+      "count": 1
+    },
+    {
+      "fingerprint": "1586a5c1630904942ab29e0ca4e63fa73f28c8a98ca38b9102b856c9b6e3fc00",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "66e25d7e2ad8bbaec148a6d84c156234a97fbd94547064d95ee5259c5636e374",
       "count": 1
     },
     {
@@ -537,19 +545,11 @@
       "count": 1
     },
     {
-      "fingerprint": "16c5e2f450fd0dfdd63bb142038d2209aaa6db4d2a5d687245831666f33e08c1",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "0f0eea4441b3856a319cf5d5fdef15e86643b6e4430cd09ece21d4462a55b3e3",
-      "count": 1
-    },
-    {
-      "fingerprint": "16f0c7ad54f0e80998a3499fec777d6a8c97d17a89ff57762086d38990391e83",
+      "fingerprint": "16f1fd855738088e14a3d3b4c26d190ce81a3ecc827d8d608a79af7a488ca7a1",
       "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
-      "siteSha256": "f8b6d1d1fa2c744f9d186058735c41f4c440b16a8419db198f3070d097629d56",
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "3f18c7276c4c291dbc864ff954b08d021f04f5a0918a7c73b0f188d7473d0a22",
       "count": 1
     },
     {
@@ -558,6 +558,22 @@
       "file": "src/mind/curiosity.js",
       "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
       "siteSha256": "60e10d549441e4df1ad04c4da7e92a2fe77775c8c6faa9149b6c4043c133eb86",
+      "count": 1
+    },
+    {
+      "fingerprint": "17433dc4af11638e93bd455e41fa24a47358f8a1643ebaf597ae3636acc77c01",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "90a6c67f7693c0cd457bc18e2fccb8cf3f94a0f56194807e92203cadb81e6af9",
+      "count": 1
+    },
+    {
+      "fingerprint": "1768d6011200cd34607df13b652f734658abe28112d46dae4992faca5938b1c5",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
+      "siteSha256": "f62c10499e6e0b99cfa932d69e271440e041b813d0349db5aa06c718b72fbf64",
       "count": 1
     },
     {
@@ -577,35 +593,19 @@
       "count": 1
     },
     {
-      "fingerprint": "188cebc5b0ebdbc58bf68d1db7f36379049adf5be3247b62eb4f940823baa778",
+      "fingerprint": "186359d0f95b3fe348e35c778d76c9b0027d30b8196b729ab6fe71e76a58b4ef",
       "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "88910767f10ab05193913fecca98643bed174dba4de23f7737a8854f24cefc7f",
+      "siteSha256": "4f59d7e050b068d53ed69922fa66e0292482114050d3b1bed788e0c239ee0071",
+      "count": 1
+    },
+    {
+      "fingerprint": "189c71c3e2206bce5a713f04687393cf6209525bb026d0527aab9ef2091f3dbd",
+      "code": 2353,
       "file": "src/mind/agent.js",
-      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
-      "siteSha256": "a63b73841e32cbe2578dba050bd9c8395b32dad098c778004ac641f86d129b9f",
-      "count": 1
-    },
-    {
-      "fingerprint": "18ae9d3c78725934c4ef5e5510f4cd38311548bca437c5e469c198353dcdeb0d",
-      "code": 2554,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
-      "siteSha256": "329524bc942ad5b09c1ad5d9d36800b60f11c395fdec2c1dfe3d12df368254d7",
-      "count": 1
-    },
-    {
-      "fingerprint": "18c58064e669f5ceda6c66c25f59607d64aad3fd73bdd172aee1405656f199bb",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
-      "siteSha256": "fb07952e59868543bb9ac99fec1ad913a3f2971f8f30f04ff6420c3c5325ee39",
-      "count": 1
-    },
-    {
-      "fingerprint": "190b77d49c6f237a78f342458af6963c21c579578fb9b92d4d8a298bc442db5f",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "f5e209c61f63ba662b51e8de638169f2731c9c1ffd76cabfc2c436c414cb8ceb",
-      "siteSha256": "80ac72ac85f77833233ab5e9d66cec1ddbbbc04872f88afec4a9fd484c327eb4",
+      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
+      "siteSha256": "f69be992f0b2b329b28779bd96d12e72fc3ce4fb3d80808f3e529a096e7ec53b",
       "count": 1
     },
     {
@@ -617,11 +617,11 @@
       "count": 1
     },
     {
-      "fingerprint": "1a4dd2a2b390d531bba7b71f198f44a2ade8a2e930f5649060e9e2b9c32f87fd",
-      "code": 2554,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
-      "siteSha256": "6eef3a3b0ba8ba43cfe4f58b35e8d2895b4ee6aeeaf95943d4113b2b5079db67",
+      "fingerprint": "1ac7bd2fca0ba9c0dd59a37f5c21286ce6653d15e8e535a680e3d8126ad9b594",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
+      "siteSha256": "5e48b27b74a0e7817bbed260ce40951dd17f684b45e2a190fbfc1984dc0a5e0e",
       "count": 1
     },
     {
@@ -649,27 +649,27 @@
       "count": 1
     },
     {
-      "fingerprint": "1dd30e9957d38c13082b02e60d026e8488d18d98c00c59ad579b6fb52a14fe6f",
-      "code": 2322,
+      "fingerprint": "1d466a63359f2e3fed62598eb90fdbda45165a71f37c09f310fd63de33d7c3c6",
+      "code": 2339,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "e2235842315d20fa300b561d0a1da31394fa789846de4d51aa14dbec245f59b5",
-      "siteSha256": "45ba452bd16a860d1534525876214779fb95fec38e125390113e73352f17a3be",
+      "messageSha256": "1d1f656ceccdb96e44e3bfc982ca9106d09670464b7ad6dd326c1439ade16087",
+      "siteSha256": "875523a63def557b95a76b553fac212cdbd4f8508e32d7e9ef98c3d0bd32f065",
       "count": 1
     },
     {
-      "fingerprint": "1e43e04ed97b44e1ab577aea6fdfe9d31289d6241199efdc68205c8f863a7351",
+      "fingerprint": "1e3cb423a90094f4f4c337a4c535ed314eeecd8a69cc3e121edb8b568daead2c",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
-      "siteSha256": "0e5571604963faa2ede53df7cf523f2cbaba7cc7cba283fb909a3892e89f0260",
+      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
+      "siteSha256": "11284c9bad6e0195839c737f49f64e5c981d2298deab89242063b17bcd0cf01e",
       "count": 1
     },
     {
-      "fingerprint": "1eb0ea9f2bcd1a431503fbd8e8ca6571faa3438baff5f054d25c4d1211864697",
+      "fingerprint": "1eefdcd9e5892acdfe07e1ea21d11dbc5b7da6f20dd63395cd2ac5fdfe13ac70",
       "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
-      "siteSha256": "37779d48edc8b7eb9e36b9458c5985422c724b6f52ab020dcb9524eb077aa400",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "d8143d35b787863e066a874ca0070bffb1e9fb7e370ae9696f777e9b2e4ef23d",
+      "siteSha256": "e070ad6deedbfd2f1c2f25975698dc6e7090c141f089daf8f747513e38c1c4d7",
       "count": 1
     },
     {
@@ -697,6 +697,14 @@
       "count": 1
     },
     {
+      "fingerprint": "204d1f918a5436b1be3716d5499c7566994078e5283e69a2182a23af16fcfccc",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "71e7bbf320aa12e26eb9f39f7d10a9c9b00b118dab834d47d250b04111ec352f",
+      "count": 1
+    },
+    {
       "fingerprint": "206f788b6e042ba6d75cc24af7935cc39ea30c5123e25dbfef8076166de4340c",
       "code": 2339,
       "file": "src/mind/workcells.js",
@@ -705,43 +713,19 @@
       "count": 1
     },
     {
-      "fingerprint": "21134be7bcf21dbac06eed9851f7cc3b99a29d87d68301f0fbf47b320d155f36",
+      "fingerprint": "20fc6151ff91ca49cc3a2f2b8d6e515f45476778c2712a1f38d15fef42f2fbc0",
       "code": 2353,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "2d74f7394e4cfdeb4e6f5335be2ea19a5fbcfa7e0abcfec165d77e4239230cb6",
+      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
+      "siteSha256": "5e973b3f95a07b5795ad123ee23275a981fa20fe6b8d6e2171704d8a21f1eb47",
       "count": 1
     },
     {
-      "fingerprint": "2159ec18847427340da65bc6e9204f348e697ebdef0df8f32734ce9c76b12aca",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "541785f89b6e14fb87a93310c0a3644779b867ff8a68336353fce79fbbbe182b",
-      "count": 1
-    },
-    {
-      "fingerprint": "2172f6805a6c32a2ac01451eccb1604004675c84df27bd37c58d055f1beab297",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
-      "siteSha256": "aee290d0eddfe0389aefd4a38d2b38a320cbe49310d51313b3cdab521468afd4",
-      "count": 1
-    },
-    {
-      "fingerprint": "21a18af5d306353e974fbf2f0ba4021fbe54052dd9407db82901a2036cfe3d24",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "a2499bb35a8e8d36a052cb1375981b6e207dcbd1899bc907615e94432b2d1087",
-      "siteSha256": "77ebd2ac764969f441e5be1a213670c8b0048fa8c734ea3def0c38f6e56ab661",
-      "count": 1
-    },
-    {
-      "fingerprint": "21cc351a3913f2cf623384fe1788baca11134ecdf7ffbd177bbfe747bc893956",
+      "fingerprint": "212fc78e20c1c1f2f023e5bf5a8cb08f85999e5847589a1cd99307c850825a3c",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "94eae3cc38aaea250d694c442bc23aa97e53fa91d2b71b5168062788d35539ea",
-      "siteSha256": "b835976d7a1b1bce16981c2604bc26b7469b6012b6dd0364a200c10dd9086030",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "4aa49503f69f269962865fb72e2ed4d74ecbee1a55c41dfca23e63acb067c3bf",
       "count": 1
     },
     {
@@ -753,14 +737,6 @@
       "count": 1
     },
     {
-      "fingerprint": "21e4cfa2f6e0eaf4da0d56d395261ed751fbf02b6202925408cc0c56d94311ae",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "876f9bdb848d7b23f115cd8258bc37c5bab2b1d0ccb9a9d5460a4a8676aac49a",
-      "count": 1
-    },
-    {
       "fingerprint": "22f1aea8ac9f7b7cb0b34aa6617bfb3e8fe660fafb28d0e58d579ff6ee05820f",
       "code": 2554,
       "file": "src/mind/voicebridge.js",
@@ -769,11 +745,11 @@
       "count": 1
     },
     {
-      "fingerprint": "235bbfadc5ef2a441685b1bcc8dfa5b66a51261a3a787ff61a65bb332be3a7b4",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
-      "siteSha256": "6786ee52271b908d38ba34d00cf9c36c4eee17870ef520ad8115b188b1259aab",
+      "fingerprint": "23687cee8aae185838dde743ab5453950abed30f4b3229dabe1b5782a671776c",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "c320d3f5dbc525d00c2788de22ea17de2578144520aae6ba4d58a9b7200ae247",
       "count": 1
     },
     {
@@ -809,6 +785,30 @@
       "count": 1
     },
     {
+      "fingerprint": "24b282af055cecdfce885f232f2a0f617db37f0f2da4ab617af02376527b642d",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
+      "siteSha256": "e60b9a8e00571a7909d4d6185fc230a846aada344f790ffabef9281eaa92a8ea",
+      "count": 1
+    },
+    {
+      "fingerprint": "255881f8c20f911cd6c48d59f3bb357dcefe5aea283f5a100637921cb386933f",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "0dc825cf3507c48a5211a1cd265ecb60b4ce40a71890683131b9b375d974870f",
+      "siteSha256": "21de8b0a0d3b6659ae7d2740f61d439dfacd79d91e3c42905c8714af8aebc298",
+      "count": 1
+    },
+    {
+      "fingerprint": "259c8fa4c0e32709b4281273437d2556c5fa86d6ccd117cdfaa1c906ab8f5b99",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "518d7c4d7711a0b70f5399464e56e2dc41e60ce724f9183804fd4590e8cf86f3",
+      "count": 1
+    },
+    {
       "fingerprint": "2634b4a65afa7b543a12aa8337acbbee2d755cea15eb0aff363d742b3d7a807d",
       "code": 2339,
       "file": "src/mind/workcells.js",
@@ -822,30 +822,6 @@
       "file": "src/mind/cognitive.js",
       "messageSha256": "03c3ddea5623ad7c851c4ad97754c071b5bacff45d08353fc8e40ffd151dfc6b",
       "siteSha256": "1168c1e939946ec3f9f5efcf8e96b4f59d7eac107c1d0e4b0745b39b82e6395b",
-      "count": 1
-    },
-    {
-      "fingerprint": "280520d84da846dbf150f16906d1ab02cc60b778449cdde62bfe174fbdc62815",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
-      "siteSha256": "6620747c83dc2be544a4ef2b7d39a125771485c96e23ebf772ca7f3ce0051ae6",
-      "count": 1
-    },
-    {
-      "fingerprint": "287c73a2b098800adaf399a73ca01dde1bd9ea5c8f968594ef315ea2dc148114",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
-      "siteSha256": "41b15c81aec21f463f89882cd78019e202503a71e7c63c93675f010062ade881",
-      "count": 1
-    },
-    {
-      "fingerprint": "28975b0a4a92e7bc9a3fb8deb42a06460fd4857322c7f821dbf9705680634763",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "7bf721d915ab05fa7103739cf65d1d5bfc35c816d1e660de559ebcd0015a6fd8",
       "count": 1
     },
     {
@@ -873,11 +849,11 @@
       "count": 1
     },
     {
-      "fingerprint": "2a7dece40b2d5a9f29b615417dc03321cf9d55f2ee9a187f52e1b62c97332951",
+      "fingerprint": "2a220a5f0743e32621ca1cf408746b262eb26135bd52a5e4254a38a8000eda0e",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "f61318cb7c30269737ee33d51e7fe4418227b12ab8782425780c0f672630faa1",
-      "siteSha256": "92943c3d83d2653702b9e7fd623bd4570b06854f6aab6d26a81002178a90f6f3",
+      "file": "src/mind/agent.js",
+      "messageSha256": "37aac8d8e25e012e8f45282f8865009a93825041fefb4d3a70d1f63ee1e02e09",
+      "siteSha256": "213fc557589a72b5b6ead94d4c55b1de7ddb3108d2d18016f24af91944a88f24",
       "count": 1
     },
     {
@@ -889,11 +865,11 @@
       "count": 1
     },
     {
-      "fingerprint": "2af2038d2739a76595a9bdd66269ca44bef13c8fed5d0d5f1c1c515a457267eb",
+      "fingerprint": "2ac3f1e9d9db25a0512c6c770e7c6400c485acbe2de7bf8c9abba0f7c04d97f8",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a81fe43194e5c145148037b4a10ad9c2ae162e4bfd74645095982277e69bc1f",
-      "siteSha256": "b0755327e1c07f49dcbeb784a50890bee86a0a361cb8022fe461ab0beea4b934",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "e38ca5540c913422559b990fb714163ce9dc7ebec8d9753b6b122b22f8657e7e",
       "count": 1
     },
     {
@@ -902,14 +878,6 @@
       "file": "src/mind/cognitive.js",
       "messageSha256": "03c3ddea5623ad7c851c4ad97754c071b5bacff45d08353fc8e40ffd151dfc6b",
       "siteSha256": "0a81f7a5e214576a4a3e8246700cede4abf8187a0fd1efff6db7a51280a464a4",
-      "count": 1
-    },
-    {
-      "fingerprint": "2b1943539096bed32c7558b45a2ec345b0e5f46fd67f6deb0a7912bfb798f09b",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "ba057cacf259281929213f56eb52cccaac1b151867bc4b71456d2297a7acd7e6",
-      "siteSha256": "738a40e65adf273b0d5237d98d88f5185e4cb0f1b390569a87ada7046aa98347",
       "count": 1
     },
     {
@@ -945,6 +913,14 @@
       "count": 1
     },
     {
+      "fingerprint": "2d47c69703b7b32cc4d32b0db0e30846852ee04e07383686ed3728579316b8ef",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "30cc60e1fdd4d75023665bc8427640150283a183107a46e2dd53be173acd19ec",
+      "siteSha256": "50e325f855d0c5839630ac107d33f7a345ebb363d5646b48382151695e84f5e7",
+      "count": 1
+    },
+    {
       "fingerprint": "2d9bd8c1606ff2c6fc680b650cf2bf7f7189d020938a7be14e66ec5b2094c824",
       "code": 2339,
       "file": "src/mind/cognitive.js",
@@ -953,19 +929,11 @@
       "count": 1
     },
     {
-      "fingerprint": "2e5f7ef0addf04fe056d95ae1bf205ca84befc249c4f2f816d5e3ed97c0ebc25",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "f635774d9b16ef5d6522dd0ef0f7bdeb3b4fc66c5fd299c7cba495a6012202b8",
-      "siteSha256": "a1dbc8623bdc66c4786fe0a5f57b254b3ba6716e17d53008669d6b69af8c7c75",
-      "count": 1
-    },
-    {
-      "fingerprint": "2e6276913e05ecc1406c733579984c0d2d70b5dd26b3d4a3c4b3bcfa3d77229f",
+      "fingerprint": "2df2f0450d95709f392bebe0196c5d4d95c2f21ad03bbee5c7c2f374f0fe245d",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "179cfc8d924edee5332a8f70f2232db1c37587d2ae3e19e2b5e09ed52b8d97c9",
+      "siteSha256": "d278a2ff8d5de2eb0f7d6efe6833a2866d8e8e82dc9aaf3f291568a33052e846",
       "count": 1
     },
     {
@@ -977,11 +945,19 @@
       "count": 1
     },
     {
-      "fingerprint": "2f8826d70b2080dd1910823c1c2fd806f9c345678682e26939b71a4a768d5f3e",
+      "fingerprint": "2f316b39a018b1cb797ffdb4e6dd39469fc6c301885bc83a33bbc444c81a3afe",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
-      "siteSha256": "65ac29ed11265bc4fc8be8944acecbcf15e975d05a46a0cf2ce1ab15f13de7ca",
+      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
+      "siteSha256": "a9106358b450319ffd06d7a28b702ad54f173d97192a3d47b6094ac8cf384f48",
+      "count": 1
+    },
+    {
+      "fingerprint": "3007166383cb4bea0b1955125cf23ea0eaccae7b097f89e2c453852c7a2e58eb",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "a0eb5eefd30c9dcbf8c443d66fcfb6b217a91ae548ed1722ebcc5c2ee80f075c",
       "count": 1
     },
     {
@@ -990,6 +966,22 @@
       "file": "src/db.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
       "siteSha256": "e8bb737c0131146afb26e3a2ec56899998afc762f1c958c22e692e382683bf2a",
+      "count": 1
+    },
+    {
+      "fingerprint": "306df8456b06ed441159a75baaa4b8138091785facdf840de0ea375119c4c4ca",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
+      "siteSha256": "832c256321c81430b512bb6744c9397b360dcfde6222adb6f6da5998b62701e0",
+      "count": 1
+    },
+    {
+      "fingerprint": "308d9090a4ec07f69691014319e2f5ccb089932469ea2d16f0e114a9bbcc92be",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
+      "siteSha256": "4d723e7d9d08df2a1eae87590b55fdf475f99d9d7a70b70c8e26326b5cc16938",
       "count": 1
     },
     {
@@ -1009,19 +1001,67 @@
       "count": 1
     },
     {
-      "fingerprint": "32b4f95928d3c940576d49fc9e11a57ce8366b04b3cda0e7b6fc95f8729f857b",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "0586b458dafd59a2c1c784398984cb1f115af692cdff7b584ad0e0d1244ad434",
+      "fingerprint": "31badafc813216502ca4f712e85a9ebb3e1d1b1ca7e08446d790d7b9f5e16c24",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
+      "siteSha256": "708a5079b6ff3b88602d990f89ae3f77de16e9f9b529f3e07e92d556c1ac62ee",
       "count": 1
     },
     {
-      "fingerprint": "35cb70d14df021a2a2bc0ade64a10a43aa575a9dee5349745a470e674fae1d50",
+      "fingerprint": "31df64636387f7d148c415215f647c6dbe171e014171a412718304ca221d19a2",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "39773a9e4765e2079bd3c9953e56aa8e0d53e62485bbd12f6c2844d65f653333",
+      "siteSha256": "a380ce341391da4123a87a6b9f808271905d08534bce34c9641068a575db6509",
+      "count": 1
+    },
+    {
+      "fingerprint": "31f241cf616af4e3bb072c3c86fd508f7edcaf7a98726f349f978e6e44aaa0eb",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "3af802aacd7cf0910f2354a6c886ca217cdd7c8b4f0a28e0b7512a735a79ae3e",
+      "count": 1
+    },
+    {
+      "fingerprint": "321906ff219acbb4eae4a218b379db6556bf4d19a1476c6cf18b9b425f4ed873",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "65a09869040bb474fd00447089ec29500ac3f38348ef5715cb726635ac589bdd",
+      "siteSha256": "3c96759adec810f08ae25f8a3e0a1889fe19e14ce41e52b4ff269d5466f7b20d",
+      "count": 1
+    },
+    {
+      "fingerprint": "32f0fd74b5d38cf8247134ac823f9c4263c54249a99c48a7d7200021242dce3f",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
+      "siteSha256": "3f3bb947a1b7262d1be890f43b815737d906beaf8d5459d8867f2bc1a66d2270",
+      "count": 1
+    },
+    {
+      "fingerprint": "331e7cb56732540a93b6f833f69508a7b14b7ecb4222285d72fecab59496ab04",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "1330e48e80e5f0be0148e3473d3ea19dd5d20daca88b08105ef14fb4649ca2bd",
+      "siteSha256": "a30b31d46d78d24a1f70fcadbdea9c15f9efe037fe153a1bc81619adc1116088",
+      "count": 1
+    },
+    {
+      "fingerprint": "34bd4b1dda0b270ffb53958f1520aae0ea4974ea2713a6d9161ef37438a8cf46",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "2cc55a4b839d05739a7718b168cd2b9cd77cfcbc3866cade2855e3592f0e62fc",
+      "count": 1
+    },
+    {
+      "fingerprint": "35320551e1701d912975110dac7ee49042b1b3bde8e7ec499c748956b6f7b42a",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "36674689bb6535a2c4d48c06d2549d3a47aaa753d796e3e4d1b0be22b641b908",
+      "siteSha256": "ad629e41321344f1ecb710326e47d354e0c8c34cff043dec911440d52cdf53f7",
       "count": 1
     },
     {
@@ -1033,11 +1073,11 @@
       "count": 1
     },
     {
-      "fingerprint": "3806af84f7ee25f855e87e5121fc48414353316f5e37511fb8b1b7860da8a732",
-      "code": 2353,
+      "fingerprint": "3763b86838118bb3afc216bf6245be513a321cf3bdb3dffe4b0b6cc41c4d73ca",
+      "code": 2339,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "0812e87bc594fefeea22b3145fb46b6fdd375d9d18ded72b26bb3087ec29f584",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "80af66a803af532420e14f5b794e823913a6864b714573ffe07b9008d4a8a426",
       "count": 1
     },
     {
@@ -1049,11 +1089,11 @@
       "count": 1
     },
     {
-      "fingerprint": "387fa772a819bf56529a530063e993fd8b9b26782f6152af8497df3972c24cc7",
+      "fingerprint": "38d469caae12a1b76f2865a5123a6440d4022549360e1c0ac60230eaf654dc31",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "92f5188bd1a2b547b11a2282b45089bc7ad809c41ec8452a1a7729189afa149d",
+      "messageSha256": "78f264a048f6c7d013ec6d6aa3cef56bd49c0f3d3174bc48caf1d682981cac00",
+      "siteSha256": "21e21527e49336e0e9f3c89691207a313ff253b84ef3025cd508cb1efca68a7a",
       "count": 1
     },
     {
@@ -1065,19 +1105,27 @@
       "count": 1
     },
     {
+      "fingerprint": "39f258f976b470af5b8819f4ac3073780555f7b62b8a36832c5369624761b954",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
+      "siteSha256": "c41ee360fa599a452a09b7eb4b4b4386659b6d2a18c9f2924fdb8117a03cbf7f",
+      "count": 1
+    },
+    {
+      "fingerprint": "3a1e4ce8e72b474931d500c38e9f8893cb1a1791ed01977ddb2bb2885f70c2c8",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "ceba48fffeb3c5a7ee27a5597e3e11b14992aa577cd58de2a2148cf74e045b89",
+      "siteSha256": "4df7e8ea9c3dd007ae4b3c1d653d12c187d7c98304ceefc914df0c10d47e764d",
+      "count": 1
+    },
+    {
       "fingerprint": "3a7f73290ccf81ea0527afb420c738dbe32326b0eabf51c9fa09fbf972dd0b1b",
       "code": 2339,
       "file": "src/db.js",
       "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
       "siteSha256": "13da34c44185c9a2a9df6a3c24401b43339a0d5333042846c7306445672e324c",
-      "count": 1
-    },
-    {
-      "fingerprint": "3aef45efc3896befe3c4cca2372b420ffd55dd8a0045fc453b7aeeb0de8f87cd",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "fab59f7c765b11c16183333f29e5473a8ce0b42f4accb97ee8792d05694eb38e",
-      "siteSha256": "1539be4741503611af563a9387081db0fa073f3ec23084bd9773c24d962b2f76",
       "count": 1
     },
     {
@@ -1089,11 +1137,11 @@
       "count": 1
     },
     {
-      "fingerprint": "3d638bd0ac555010b086dea40c9f7bc6087deac1da971d5f21b2029809d0ad50",
+      "fingerprint": "3cb4176e39ec99bf83d0d7b2572135f6d93b26fb2950c3661c828ff432442986",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "30cc60e1fdd4d75023665bc8427640150283a183107a46e2dd53be173acd19ec",
-      "siteSha256": "5c3ea83a35f2ec78829f410dc510c4d223dd27ff1fc38e855926c2b446f87271",
+      "file": "src/mind/agent.js",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "4b633e9672826c063ccfd3dc6a58c2a6542dedfd69409c8d8665a99816941709",
       "count": 1
     },
     {
@@ -1105,22 +1153,6 @@
       "count": 1
     },
     {
-      "fingerprint": "3db014c6d0903627cb7bc085ac74d23b39046b2e0de80e267d8deacc6648775b",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
-      "siteSha256": "32f8e38eb7460e59727bf7b575c7826702e505a8462a55d479268e4d6d5977ee",
-      "count": 1
-    },
-    {
-      "fingerprint": "3dbe3f052efcc618fea6785426f1b871864e1f881fb7cde1839458326521774e",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "20404651dabc696a79d3c83a67dbffea3c4c820c5697e50c751d7dcfe4cd5e1a",
-      "count": 1
-    },
-    {
       "fingerprint": "3ddf2afac87816da63e4ac91a15dfcfe32324dd22821c363b007a3e5b566c580",
       "code": 2339,
       "file": "src/mind/curiosity.js",
@@ -1129,19 +1161,11 @@
       "count": 1
     },
     {
-      "fingerprint": "3e1858661b1c547618675c1b0ceffd15096a1fe8e149076c0762a716b008bfc8",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "12c0e7baf88ecd8d25d0f4b00c41f2892fc622a715644ec16263db2ba07c2a8a",
-      "siteSha256": "cb341ab0fa4959814497fff6866cd8a2b477d35320f0fb311a19a50f96a737f8",
-      "count": 1
-    },
-    {
-      "fingerprint": "3e8326d20ca4c1805d2d1211005cc5561799fd41ad734c3ad8caad25ddc4c845",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "ca98af46b7cc7d619c26ec565ac58091614485117be367a6cb3e713edba71c15",
+      "fingerprint": "3dfdea44566df51c9840c6f3c681a2816cb848946606ebc34d2e6319eb8a7c6e",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
+      "siteSha256": "07495001a8e281aceb139ed71bc0a1bc0016058ec7c22455fb6e546384b1d213",
       "count": 1
     },
     {
@@ -1161,11 +1185,11 @@
       "count": 1
     },
     {
-      "fingerprint": "400ba8f3bb14f2b38816a962dceaa9dee1707e6dbacef0a4b7e453a5d144ee32",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
-      "siteSha256": "4b6756f04ecc5da8b618d01f83a2d19142e6d775940cf41b6e0ef812e3eb6c26",
+      "fingerprint": "3fea8aa0c012c776bfa7222c0883109b12168927656912c3a6a78698f3e2d1ae",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "1e1484ad14aec9d6f45000677fcacdf173b9f78d10c4bffbf5934244e161f666",
+      "siteSha256": "9d05cf3f2b389857e599ac56d2eed37c69f96fd886e736a326b46682fc72ad08",
       "count": 1
     },
     {
@@ -1177,11 +1201,11 @@
       "count": 1
     },
     {
-      "fingerprint": "40e8bd56a0013c8c80d432d0474539b178e3b3cf5e946c1119ca1aa53eb6a875",
-      "code": 2322,
+      "fingerprint": "41143c0134514829c3f9d291b4a156480352a4cb85880a5d90beee245ef609c4",
+      "code": 2353,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "1d7fd4920e1a1d7c6863b22b61b7e24223d3d022d27ac7e8f5fbf830e32dd4cc",
-      "siteSha256": "f79818bb529287bb1ea28ff08593073237d3388aaf6b8692369e092d28cef09b",
+      "messageSha256": "1d4a8d22381c720696adf707f674ca1658ca0f34e899e00baa60c6137c8975a5",
+      "siteSha256": "e4a14673e83606831b70e6eab442449f007a9b54af5ea53aeefe4469d8b8985b",
       "count": 1
     },
     {
@@ -1190,22 +1214,6 @@
       "file": "src/db.js",
       "messageSha256": "9b335ef87988e25d5e7d2bda0f7ba01bec2994456478d82557bd6b972924b8a4",
       "siteSha256": "0b701288bdae009da12345d878cee31070d320ae6b687e45beba3e848b556a14",
-      "count": 1
-    },
-    {
-      "fingerprint": "41dea556aa83ff2520b9dbd14ef7ab125a6da61895d20d06f3d932560bf97276",
-      "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
-      "siteSha256": "57c0dd35be5a8f569c528e45d55435e86e2659d0fc8649aa9eb784c8522403b3",
-      "count": 1
-    },
-    {
-      "fingerprint": "41dec63d2b7aa781f29757c65266d7c8788ce10f14a0dd1592272d89b39dbfc9",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "319dc6e61eb01e42a761839d21dd328337b3e47e8042c5b8337cf9b9d43ef860",
       "count": 1
     },
     {
@@ -1225,22 +1233,6 @@
       "count": 1
     },
     {
-      "fingerprint": "4237e46d3ea380522b109d2b1bdff0d7810ea05336fc40be4412b7060c83bc96",
-      "code": 2561,
-      "file": "src/mind/agent.js",
-      "messageSha256": "9c9b73521735dd395c69df08e202c1dab76a54d9d57d411009f1d4067a36a8c9",
-      "siteSha256": "4f1e0d5b2544a5be806888ad6e47ad925415f07b434673f4e4aae6920b47df75",
-      "count": 1
-    },
-    {
-      "fingerprint": "427ce36283aa81b0bf057e64d55d1a99bc93bed7416e48143e6e3367df67625b",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "653ab31b98aca56d52ddf8ff5e76576157b3deb3b11bdc81c3a496f8fc5ecd2f",
-      "count": 1
-    },
-    {
       "fingerprint": "42ad90323e00514ab29723ecbf26fdd0c07f6b488eb159309d40647372f1df61",
       "code": 2339,
       "file": "src/mind/workcells.js",
@@ -1257,19 +1249,51 @@
       "count": 1
     },
     {
-      "fingerprint": "438137853d8c2ca34d2f3d217a5b26ab770a0de65819cbbe2c03288d65a51b72",
+      "fingerprint": "430be9d696bd2a860c844a55b3ddbcb26166d864afb47cb510ba47bc770a8d7d",
       "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
-      "siteSha256": "e5831c94d972a0a9d8151560f34030563b7432a3fd0d4d9e5d9a4e602606a20e",
+      "file": "src/mind/agent.js",
+      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
+      "siteSha256": "fb3ec9fcb6987b941024316216e857f0af00e803c8d1e67805664bb663f8f8f3",
       "count": 1
     },
     {
-      "fingerprint": "4419a353c22ef12b362af8ad57d0b323d8303901823f07bf7103ab2e6592cb7b",
+      "fingerprint": "43aac6d9dd507de891f5a04dd0fc93c2cc5eff421a2f1d45959d172265278b45",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
+      "siteSha256": "afd85eccf1b639a440c2fe558d9ce96956d3bebf8b9f3c2d2c52ee1b2686d738",
+      "count": 1
+    },
+    {
+      "fingerprint": "440a946e741c963a1fe8b74a409fd8d43c775d27a2143180123c07ac6b821ba7",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "8ffd12b9601878c4ab3f7a21dea0fb0a3cf2de40879279ea635017907ed005ea",
+      "siteSha256": "c73916a4cbde9447a72a281bd719d0118473c0dd37b352d49919d03d25e6da15",
+      "count": 1
+    },
+    {
+      "fingerprint": "4442111b15bc36396f18b8457dc33235f9df567ad214aba542a873e2b2427f22",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "9c24cd2478c56a909e46f4b159b4a199fd5a588626f3803040a063ca7829dcbb",
+      "siteSha256": "750ecec74a94d12a0d01a2273b61ad2652f32ea3905b2bdb2d759182fbc0ab47",
+      "count": 1
+    },
+    {
+      "fingerprint": "44872e9b173cabe72a4f4fa353a0758ffab31f1f2e59f127a6052d07086c253e",
+      "code": 2769,
+      "file": "src/mind/agent.js",
+      "messageSha256": "5e11bf135a2977d91f880bfe8f424a1f8c4ea550c18293f6ab029056eeac7850",
+      "siteSha256": "547c9a07b69fdda8f296b440154287c9ca80d25bece6a7200e1961041a8ac775",
+      "count": 1
+    },
+    {
+      "fingerprint": "448fb0db686cd67d2d117de342371630fef8b38bc8c563e16230eb818acf5d26",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "9eba0fff5ed7b3438f87712be3b129aebd1979828094c5fe3001b19464195b26",
       "count": 1
     },
     {
@@ -1281,19 +1305,19 @@
       "count": 1
     },
     {
-      "fingerprint": "4511188c0075177e17bea1ad12fc660cc3856f4d8dbfb6288f7aee3f1cff612d",
+      "fingerprint": "44db9dd815ccda0243c40d1ebf59322d932fb3f426f9b4a4edb11c4db3d31e86",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
-      "siteSha256": "73f9469263f424e66cd59a00f472dcd6a16cb2280a53bb69690e1cef1646168e",
+      "messageSha256": "b3eb2eeb94f59acdd4efe6a64befa9f335084db59d3beab17c5501ac36fc4da0",
+      "siteSha256": "be37cf0e623485a793cc177d733528862c3235d1ab04946c184e159f78abb1a6",
       "count": 1
     },
     {
-      "fingerprint": "451dc3a798dd406b299dfbe9a8f1173447db8b982a4e4a565fb9ced8d3005a13",
+      "fingerprint": "45169d25f8b12feb35167ff7441940e9c416804a00e595e8f06747d2f71978bd",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "28c4619e04ae99e3b2495ae07e59541170d0f0a9866c004222753aaacae887d1",
-      "siteSha256": "ea93140b5acfcd3442e6c0489e0d8b2078e8276e3e2fb3b3bf8921dfd683da99",
+      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
+      "siteSha256": "93a3882d08ca5cb413d2ae55184375ee3b67e472d48875f57f804745cd1ae4f3",
       "count": 1
     },
     {
@@ -1305,11 +1329,11 @@
       "count": 1
     },
     {
-      "fingerprint": "45abbd818dbf5a1f9a46c5bb18f5d01e04d310dc8bac73ebe00fd0f9440f47fe",
-      "code": 2345,
-      "file": "src/turnauthority.js",
-      "messageSha256": "654e2ecee2a92275aac8364e44c18b858d17c56c9fde6ecf48c9d0118076e8ec",
-      "siteSha256": "eeb51f2e4a0ad3b4d5c759bbb363f809bf9e4ac00631c0f6d76fc589d4add599",
+      "fingerprint": "464ddea764e8b6e61010631ab106330358367d346cd83d59422deee5d71b4532",
+      "code": 2561,
+      "file": "src/mind/agent.js",
+      "messageSha256": "9c9b73521735dd395c69df08e202c1dab76a54d9d57d411009f1d4067a36a8c9",
+      "siteSha256": "628e036caa16d554f2c6bd960ec6cc70022e93c3364fa0ff2ba28258a45fe26c",
       "count": 1
     },
     {
@@ -1337,14 +1361,6 @@
       "count": 1
     },
     {
-      "fingerprint": "475e98b72a697b3e7908fc3284d04c82d85dd26db456bb538c985ef5f35b13ab",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
-      "siteSha256": "4049907190acc61bc7a1bad8d31b111b6fa48f7b14e9b35da7c841271f10e424",
-      "count": 1
-    },
-    {
       "fingerprint": "479cc2b7d119122df2ec3f8f44e0ee1e98e18c54edb91099ce29372ba0246cd6",
       "code": 2339,
       "file": "src/mind/capabilities.js",
@@ -1361,35 +1377,27 @@
       "count": 1
     },
     {
-      "fingerprint": "490e64e01cbf677d14a5f33ecb970fe0556f6b847a72be4c7652075f11dff7f8",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
-      "siteSha256": "bbcd87b741c6b18b1bfaa423674473a61bcfcb0413b74315cedb9a1ce1c845fa",
-      "count": 1
-    },
-    {
-      "fingerprint": "49d4216da1e0a17adb6878e5588592102649eaddfecf8c940b8180b981b92e24",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "f74f449583a7b3c9ad4df94861b3e57bf2dab7119576e8e77cf43318c462497b",
-      "count": 1
-    },
-    {
-      "fingerprint": "4b5e1c82908a763f71b529fc833ce80b142cc752975e0916a3a5f559fb04ddd8",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "88e63e950643b599683d8ef643c6c10ad458c3c5d6c048651090594543b7d1da",
-      "count": 1
-    },
-    {
-      "fingerprint": "4c090727aad8fe54e5f7c0c83afa68c2cf4ee7830288c3aa1ad2d6d7e3451bef",
+      "fingerprint": "48642ab6663c7d4546e3de080567476c5c906927e7a1443f1f5cebbc85e76163",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "2c032a00878099100f71911a5e624d96c6459fac8e9dbb9001ad1cfcf75260a8",
+      "siteSha256": "2865ebfa893245b65eef1ff9e13bb970941cfd91e704863fd3083623ea25b406",
+      "count": 1
+    },
+    {
+      "fingerprint": "4b650a6cd90d6fbd62501dc255fb7490ee513b0faa93f5ec1c99e480a9a128dd",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
+      "siteSha256": "c687ee4897ce8ce9b0f6b0cc35d46bd47f33e75652d20728f117bd43eacb7734",
+      "count": 1
+    },
+    {
+      "fingerprint": "4c68df47db4ec075d4705ae31a9b4bc02a48b92c10e412e26f2f996d7235ace3",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
+      "siteSha256": "0ca2fb5f9fe46fb508710223efa98dc635268aa0d61554929c1b18606d5f3b1a",
       "count": 1
     },
     {
@@ -1409,11 +1417,11 @@
       "count": 1
     },
     {
-      "fingerprint": "4e0a4d3fcb18498515835395286d4f248f9059bff2aee554c03e07cabeb73b65",
-      "code": 2339,
+      "fingerprint": "4e4a194c8f304f446cfbc41a711139a67503c9d6a412e95910546f4c65442ad0",
+      "code": 2554,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "a2499bb35a8e8d36a052cb1375981b6e207dcbd1899bc907615e94432b2d1087",
-      "siteSha256": "4626c06d4c693ebe44ac1bca7f9dc5f092e884374ed034f7853fa150c4b94c6b",
+      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
+      "siteSha256": "508ca5c8c0174d7e8fb10907d0993fc0b83cd53d573dbec4f16c72323141b0d0",
       "count": 1
     },
     {
@@ -1425,27 +1433,19 @@
       "count": 1
     },
     {
-      "fingerprint": "4ebd5648b010429363926e5ad51ed4e36247741ba41286b561f853952ce71170",
-      "code": 2554,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
-      "siteSha256": "d309d46743096afb57baf8c7451eb737759b33e5bdd3fbbf69539c2e28181493",
-      "count": 1
-    },
-    {
-      "fingerprint": "4ef58739c35e4ea9035f8ced6454bdaa31acd380e9e01197003aac86dfc9c9f7",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "2ab59be369902a66df322ce3e1656ee97814c177680a8ed8ca7f19addb9a872b",
-      "count": 1
-    },
-    {
       "fingerprint": "4f0db9e75e81aaa80c4635bd1e1447d82512dea797f2c77d4e134d3f24e3a30d",
       "code": 2339,
       "file": "src/mind/cognitive.js",
       "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
       "siteSha256": "98995328cf6df72f485de7311791ffd6100306ecd03b4ccd47453084e6b02b76",
+      "count": 1
+    },
+    {
+      "fingerprint": "4f3f5cc66fb921331492be78c3d1fea617d1ee6de56550fbac08a49593ff1e13",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
+      "siteSha256": "c08d44ba7e8dd96a5479b48b40f969eeb310d3357bd11252a18f88af0fa9ceee",
       "count": 1
     },
     {
@@ -1457,19 +1457,19 @@
       "count": 1
     },
     {
-      "fingerprint": "506356eb3cb0a8c9d0762237de234e112bde46ad9139a9ec3355d381517971c0",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "3e346aca87dbbfe0335621fdc5e77de89ba2557184a6c3d5e21170005f9f12e4",
-      "count": 1
-    },
-    {
-      "fingerprint": "50e31565f836d1fef8da72ef867d6ea8e2d99fda93aa101045033e2a0fb58fda",
+      "fingerprint": "4fa8240e4713f73ebd66fbf48a83272faefc1cae6204e6fea8f172fd5c5353bb",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "beb615c4f7e6f12c98031dd27284366c74eef714e69d6fbc3e1de85ab33eb060",
+      "siteSha256": "cd4090a67901ddc3286e37785d9c99b886d5b8a1af25a27e29834a4e9b59ceec",
+      "count": 1
+    },
+    {
+      "fingerprint": "4fb5509d51e756f677320c5c5d06fe31f26f36f143e620f9eca18a06a397b3df",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "249c9e8c83bfe4432b0140ad27d18bd38b6e9211ed564e3b1cf3d8f310644597",
       "count": 1
     },
     {
@@ -1481,11 +1481,11 @@
       "count": 1
     },
     {
-      "fingerprint": "51a2dc636c3a3526e1acd4a80f29aa86e6f62207aba40f48d9a7e1573da96909",
+      "fingerprint": "513f8f26c47a8afe5d5ecc695e01f35be75971d0d609deeb12f25571a356b538",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
-      "siteSha256": "b4e6594bbb035b9c03cde30a3a81289f9f03beec40d7134b90923361aea83afe",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "6e95e618e1edf4677f9c1e9b3a6cdaa80657d8bdd9090ba43ed161e5e9baa669",
       "count": 1
     },
     {
@@ -1505,6 +1505,14 @@
       "count": 1
     },
     {
+      "fingerprint": "53764747103561cf2e651f281496201a799d5f33cef975851196ad95a8685a63",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "1e82917f67a02456eb1d2710519385123ea6abe2a3c8f27bbc667bb832947063",
+      "count": 1
+    },
+    {
       "fingerprint": "53a3c1fcf85df643ef30e4f3e45dc57ee5ba2384150dbdea5bcc7af83cf7815a",
       "code": 2339,
       "file": "src/mind/facerec.js",
@@ -1521,27 +1529,19 @@
       "count": 1
     },
     {
-      "fingerprint": "54691cdfb1a8b2ace345cfdd5c626a680575326bd6598e437f3895c88c135c6e",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
-      "siteSha256": "76edfa29d7d0d44ee39f1ee3bbf870062ab52f1f8ae24f65a14382267d992fea",
-      "count": 1
-    },
-    {
-      "fingerprint": "552b3739d639c105e4acf69b5bd58eca0004811aede8948ea36af80b971c21ba",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
-      "siteSha256": "fde7085857812557f58e1f024622f4654466f4242f14bf954f64ee1b9b939cb2",
-      "count": 1
-    },
-    {
-      "fingerprint": "555db68ca01922ef1ce7201bb5bd179d3b58b86ad8cfe949dd4dbf0418a3e770",
+      "fingerprint": "541ebbf17b7c3c897e6f742fa5ac510e3fe33491e395df06ea3773428d775fcf",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "211c3080f65d2da8409929cfd6417932d0f972d23297bb69ab4cc67a1d747b6a",
-      "siteSha256": "cf310ff6d4cfeb2f8e3af15c07fe1900821aefb473a4f26f469f2377bc276ad9",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "d4a9c6b8e660bba86d8fc5b3b813c8bc478dcd3e0afbbd789f660938c2f0ad4e",
+      "count": 1
+    },
+    {
+      "fingerprint": "55d6c142ed0ef951bf1cc1cd9cbc2ece7876c0ade0206bcf5b6187e09c060ba9",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
+      "siteSha256": "6a7d1d38dad79832b77843105b04549993cf3df37849bd17e1037652b3005abd",
       "count": 1
     },
     {
@@ -1553,27 +1553,75 @@
       "count": 1
     },
     {
-      "fingerprint": "5739f9dadc9357ec5132327ab7f14763c64616582eacafa846babf44eb57c8bd",
+      "fingerprint": "573f97dbf5f68de284fe11de9479165554b4260b6c8cf587447f77856e593a7c",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "7737c5bfc9c6217f10a8b0551d95304c9240b515c4a85fe3264b1ba58a0b5b21",
-      "siteSha256": "edf58d7f3bfdb9c80a3b8f2641a0443cc677a3225cd3489e2b2aab91340e5e35",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
+      "siteSha256": "1951b5d0d117cbbb7436861074f493a5ab911ecbcd1ec0c0c6ba8ca37f6e539d",
       "count": 1
     },
     {
-      "fingerprint": "5848aa77e55a5469e3013b915cf2dd10354287d08cb2373a02ab100807cbbfea",
+      "fingerprint": "57e75d405da33bf90000a74305422c1dce7b68d1c3e9508d955983d603ef9b9d",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "c373ad607792ce1e3676a12ea66aff68c3b8b8c458760da93bafbb97288e37ba",
+      "siteSha256": "fc41b2a4cd789c13fc6e5e3aec26a58e517b2f90f46273593f93f170a989fb76",
+      "count": 1
+    },
+    {
+      "fingerprint": "584c64bac1876d385d7c9a3fc10d33edb8a4d177b47be489eb387a4e895f2777",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
+      "siteSha256": "1fd5913735064f87ce74d9fd48cc22dd7c0508e824a59ce6e6dc824943ea5d57",
+      "count": 1
+    },
+    {
+      "fingerprint": "5852acf26c866720ceacf2c278cdfb8eb48eeca8d8a5f60c73d3c0eacb726bb9",
+      "code": 2353,
+      "file": "src/mind/agent.js",
+      "messageSha256": "a98c3621a2dc9cca13bcdb4e533a323474a09cb4aa9786c0ae00529dbccf19e3",
+      "siteSha256": "839f31243bb192b52390546a2c0c9a8b4cca557b29fabc0dd86addb848944242",
+      "count": 1
+    },
+    {
+      "fingerprint": "586b51148e28b7bd150e26b05c2e16665248182e41197ea2a4c2691340fc6795",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "f61318cb7c30269737ee33d51e7fe4418227b12ab8782425780c0f672630faa1",
+      "siteSha256": "78327859757adfeb01b9f55e8a1a78f6e47d169a8eb07b5e2b16b0450e8ea459",
+      "count": 1
+    },
+    {
+      "fingerprint": "58b85151f62af59fbd57425dab7a4cab2314cc1071d45293cb49f7741753d132",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "f4fe844386a37d631da8fc26f0571a4ec72d2c6aa839c4f23b2c73440c360b31",
+      "siteSha256": "4cd7c9c172ec3f9d8889fefdbb1a8dae929b8095f8fbcbacaefbbbed6197f98d",
       "count": 1
     },
     {
-      "fingerprint": "58e18e9af5513c20a14785d43a3335f6cd459b45bce057a00842126cbbde8b54",
-      "code": 2353,
+      "fingerprint": "597c20e6bd54e5620b7c919c780c7ae1b721eaa0c80d001ce7a92f29c4aabfa7",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
+      "siteSha256": "2ade67fd5838dffa844c32cd98907d5cc42408a218f2271a535e4032b9d498f9",
+      "count": 1
+    },
+    {
+      "fingerprint": "599280667a6cd2f92d1be7ef1607eb9ec8d72b4752c3cd27698f8141a902fb35",
+      "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
-      "siteSha256": "ffc68879f064c2d3da97520e0a302f77f4d78a488cc8015cb4cc7450075250dd",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "c493743e7f248981a1ea20b6cee3f0cfbb37368f5d606fb60a402a3d937b0419",
+      "count": 1
+    },
+    {
+      "fingerprint": "59bf20964cfecba5e2db576c0f52a8c8cffbe92048ce476b427bf03be5bbae88",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "201229bc50f87d89115743f9f36619c984acd55c4cb3dc4f12025014b345bbe1",
       "count": 1
     },
     {
@@ -1585,27 +1633,19 @@
       "count": 1
     },
     {
-      "fingerprint": "5be6fa3f3315a366b91d86dd3fe2498330b76877e92759b575615f53f2833b90",
+      "fingerprint": "5b87a447556506520bfe7739bf47b26d66e2fb757d54dd4d059dd9f08f539c93",
       "code": 2339,
-      "file": "src/mind/agent.js",
+      "file": "src/mind/portfolio.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "705b448d79a5fb353da40fb11f51b637225df42811efc6563fb14b42b4c22116",
+      "siteSha256": "dd4b1a63fa45bc6258d7d32aac9a7358189e769fb4a8c6748e0fa0850bfdfd14",
       "count": 1
     },
     {
-      "fingerprint": "5c34928d39a34ff00c45f204243dae80cc93f7d82f43e67646858448b1400018",
-      "code": 2769,
-      "file": "src/mind/agent.js",
-      "messageSha256": "0b6bef3b99b0bf11767a64918c34b0624dacc3f194b7dddb940a3ae7b2249e7d",
-      "siteSha256": "74fd35f46b82fe9b35fa10688e5d79dca928d30cbc3977576817085e819a8084",
-      "count": 1
-    },
-    {
-      "fingerprint": "5c5d59de8474551245dc9c5547d47ea30f4fd435092f370d161578d5fcf4fc4c",
-      "code": 2554,
+      "fingerprint": "5b9fc35a3d08b96c0a55cc106c4a7f82824106c61642027c541cc6e234ca3fb5",
+      "code": 2353,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
-      "siteSha256": "7ae0c04e30e3df09cdf16a7e11eab51723d0446184af06b32765760b9831b8b2",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "8fbdd0ed6a2d99e2db4b3eeff98a7174cce41d22bc9f60fc5bd95257bccf33af",
       "count": 1
     },
     {
@@ -1614,22 +1654,6 @@
       "file": "src/mind/work.js",
       "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
       "siteSha256": "b8f16f618d75d9ebdc12f9d272ec8b49ba69839c02ea63f5f0d089862b150eab",
-      "count": 1
-    },
-    {
-      "fingerprint": "5d38ee3c47a0f1aa16e9f1a3d3f3d806000aac25d9e4703920fa1b8c2259a826",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "f3aff5ba08901b6011c369084aab3bb25296e6186a653f466278f0657393e7ad",
-      "count": 1
-    },
-    {
-      "fingerprint": "5d515299dadc7b7f3383d4c73f214035e6f145864c211f60eff2b81d2c9b0a5f",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cc96495e175c65aa84aed2b9df3d7bf1bcb4177d65210b6a56e1ad44eec3738c",
-      "siteSha256": "4c4299c6b9ef8f52a1e2ff39ec7283f242b167cd9d8de28e92a12cf209dbdc10",
       "count": 1
     },
     {
@@ -1657,19 +1681,11 @@
       "count": 1
     },
     {
-      "fingerprint": "5e7b9e39deaafbc6307fd476507ed25bc5360d6a04adb1b383c9ecfcd7f5e8f2",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "d258aa46f25d00cf871c8a5ddf352f30c6294e9124e855bb3624c5b198fbd70e",
-      "count": 1
-    },
-    {
-      "fingerprint": "5e93bacce110d10c430f9d5533b5fba03a558895e96306e2b81eabc0cca29d10",
+      "fingerprint": "5ec325893987fee588c54ac3f2aed541342c3effe9a776ab8233a5b5f68fb1ac",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
-      "siteSha256": "1fe675fa267c9f329ddd2505b3fc4f32768602d170d9040306ba907dec369ef7",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "e95a66de0424a750831d0515d5392ea4672bbb3f6265f736d2de8dbf6d7bb175",
       "count": 1
     },
     {
@@ -1681,19 +1697,19 @@
       "count": 1
     },
     {
+      "fingerprint": "5fc677a313f8989643d70a746198436a4a7b6ecbc83d809e802dee8babcd69bf",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "0db6fcaac512681db9f9069119d5081f60629cb50f7412e440ceaf9f131f8f3b",
+      "count": 1
+    },
+    {
       "fingerprint": "601bf973294773a3a5051ff91cc837e65a040f2d77521685f3ace68a0788b9f4",
       "code": 2339,
       "file": "src/db.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
       "siteSha256": "91b44f738f34af9549a4e0c916b983150a1b171bacd8fa32cd838c9b23edd1c7",
-      "count": 1
-    },
-    {
-      "fingerprint": "608d6d1dadd8415885e497b26e381d7f515744fcefe632507c56fd40fce6f257",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "36674689bb6535a2c4d48c06d2549d3a47aaa753d796e3e4d1b0be22b641b908",
-      "siteSha256": "2156de944663fa2ebc6a2672688d76363c293666e9bae1baf0c22eb95172eae9",
       "count": 1
     },
     {
@@ -1705,22 +1721,6 @@
       "count": 1
     },
     {
-      "fingerprint": "620848e48d65b41c8a96fc905234c65fd03558d897b6122395563d53d2535d22",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "27cffe165d472c984fea8c0706b9f738c525daea0564975943aefff85c6b2d0d",
-      "count": 1
-    },
-    {
-      "fingerprint": "6238aba455b86b8edde02174864c0756c83b03becf519988727fca1bc7410ef9",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "0b3edd232bdf40593c72cdab20dc9524994050a38024d0f480cf8dab1c452bc6",
-      "siteSha256": "69778e6fba0757f86db408013f86e555349854dea91f5ad80a4af8970c12fa4f",
-      "count": 1
-    },
-    {
       "fingerprint": "626e19b6d19ae2f6798568c03a7b0f3185633046d1c4d016d9ac5b7a487a8760",
       "code": 2339,
       "file": "src/mind/curiosity.js",
@@ -1729,27 +1729,11 @@
       "count": 1
     },
     {
-      "fingerprint": "63356c4f838c2c23befdf4f09cad7de807fa6fc1d50d9a0ba6aa408a640ac22e",
+      "fingerprint": "652bdc7c6ecf346929fb74bb991d7d3cdf8762bd838b734a49fced80c7f73e1b",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "1e38c93c5c7f708c41ee9fcfc80c0c5f47f3633846b0fecc879461d79fc8f55e",
-      "count": 1
-    },
-    {
-      "fingerprint": "6380f14159dbde9f0532c6d82644a8db2942ddc6433b47f32ae2423212173149",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
-      "siteSha256": "3a024b7712c006c3abcaada3fe9aa4cb36c139094f49f32bc02b13fdcdad210f",
-      "count": 1
-    },
-    {
-      "fingerprint": "668dd016ee1264e9000ea414b6e46f9077f3113fa6b0f555350ab4a2f2ea817c",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "149f15e5b602de2222dd145330af19dd0313c9bbf08492d49cb7158f15942649",
+      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
+      "siteSha256": "7a36927380ec1fc6cedb8b6cef4e1ec22c088712400a4f21593c94497ebcc79b",
       "count": 1
     },
     {
@@ -1769,6 +1753,14 @@
       "count": 1
     },
     {
+      "fingerprint": "66e0babad4cda26d6f32ee59d78f262e7c9677bbe8fc01e1e4d2d864e695ad4a",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "223cd6534679b368ed1272ce3a7601a61da813eaf73dd42e29b966bc08fb5443",
+      "siteSha256": "18848a53d18dacbdee60efac19259c48a420ddedc0f1c8061fcc2bfb80145c88",
+      "count": 1
+    },
+    {
       "fingerprint": "672968fcb95ad30520cd67f17dc9ba22528b37fc232e7ab4a89328a26da7a0f1",
       "code": 2339,
       "file": "src/mind/facerec.js",
@@ -1785,19 +1777,27 @@
       "count": 1
     },
     {
+      "fingerprint": "679fa1a258db2991e91d5924bd43cec93afef5a21b29b4588ce51077311811ad",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
+      "siteSha256": "5092aa178d321a217f18760ded9790da1b4060445cc8be592d420a5ff06da644",
+      "count": 1
+    },
+    {
+      "fingerprint": "67a531d7bf33fb32f1450550d0712ce2b59d4aa5ff9216561732e0a80989cc2e",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "34510a56cdc2c116da5c36a654af84900052a635489ea22a1943c0767b670e67",
+      "siteSha256": "b47c57aaab615e5cd078df566bb9a87b31af428fcf68cea1bf9f88c2d6040608",
+      "count": 1
+    },
+    {
       "fingerprint": "68110b270be4ef9510b715b1e94d2066297b1b8a2b9a2753a5f56be404f8645a",
       "code": 2339,
       "file": "src/mind/work.js",
       "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
       "siteSha256": "eaee4243239465700d1bbfbb0fd3f64c7247a94ccf39e7ede5d1a1360fe05d99",
-      "count": 1
-    },
-    {
-      "fingerprint": "683a56ae6c2e791dbb90d36bebdc0f0a99feabb05cc11f531a95a8ff9e4e41f5",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "251c58bc828ec14b404e49676b76b3227a602df47a5889e6c358b976cc5a1229",
       "count": 1
     },
     {
@@ -1809,14 +1809,6 @@
       "count": 1
     },
     {
-      "fingerprint": "68c3918408ef58a3d208c2924f7115bf0e762503fcfa1f94fdc334db62b75d83",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "47c74df5ecae27a08ed27078247c83fa29d85f82039d1812cb305effc8f11353",
-      "siteSha256": "20ca1ca133da32e284ea34156d534a645b3ccfc101d9c656d2ebb950e6aad7e9",
-      "count": 1
-    },
-    {
       "fingerprint": "68d623db19ce796ec667dc1ec56b5e33ead7dfb3bfef502f9e9a65b6c3077f0e",
       "code": 2769,
       "file": "src/integrations/homeassistant.js",
@@ -1825,19 +1817,27 @@
       "count": 1
     },
     {
-      "fingerprint": "6952caeb79d70d7dffe004d5004d8828569ad89f412e9547ba16a63e69e96d44",
+      "fingerprint": "695e039820f05c82cf7198453313cc64a23335d6e5ddac6320367fe2a50b6a5d",
       "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "34510a56cdc2c116da5c36a654af84900052a635489ea22a1943c0767b670e67",
-      "siteSha256": "1bbb6b4671183469e19cf14fa5f49fdac853a3028f2b985a646cd46baab46ce3",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "0b3edd232bdf40593c72cdab20dc9524994050a38024d0f480cf8dab1c452bc6",
+      "siteSha256": "8007010fc0f03e8839e9c4d9b284b775eeddb9a731a50448878118c660fb9a28",
       "count": 1
     },
     {
-      "fingerprint": "6b101895fd37a690b1f48abc668d15159947722bfff401cabd7fb49807b5af41",
+      "fingerprint": "6a1785603823ba806973b5be42a24097cbbbda992404262bb3142ec54f5a59d8",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
-      "siteSha256": "7e3f0f25ee04dcbfc235b7ca1b041fdd496959c07ec2b9f469ea6c33305ce9e3",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "bce5939642b4739e79d3e4784c09005ef97122ecf09ee91f4e5e00f0f8c06fb8",
+      "count": 1
+    },
+    {
+      "fingerprint": "6b3b757ea4f9cfe4e4ac4d5662348d07648977242ad28b0c611ea3413795da35",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "7a7cf542eb271c3ff13fe5152087b374cec4171b3cde326e2b07d5ccc06698a5",
+      "siteSha256": "8a83aac5697f6421acaf93c2ca4bbf2cca03ea262cc1c0287f502b4d33e87e6d",
       "count": 1
     },
     {
@@ -1849,19 +1849,27 @@
       "count": 1
     },
     {
-      "fingerprint": "6c2ef88943b0ba959ce2172660659d81df5001763028fb0510e35d440cbb1dc4",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "74a7245ce841951360a190b6c6b1afd38b08d10be8f4269d67256988ad3dc208",
-      "count": 1
-    },
-    {
       "fingerprint": "6cb63fdb0e71464350e499aa5266ee92b7a807ef381da38cb92c78f73f9adf44",
       "code": 2339,
       "file": "src/mind/cognitive.js",
       "messageSha256": "0ce50ccf0737c8046fd7585dfb9747f6b195b313110b97af441bf3c898e0325a",
       "siteSha256": "6fc091b8dc9fa72cf00e558eb1457d4e9c7513b227cd22ef240235cd95cfc564",
+      "count": 1
+    },
+    {
+      "fingerprint": "6cfe56b8df4ec5c1f814cb01a3d3152d73c979f85c12602b3a22b3a9833f07f7",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "af05e89a1f5a66a666fd22c08dc6fc8127a0ad4532619190171eab8635b79a67",
+      "siteSha256": "3ab7836bb64b414cb1cb148a67cc707936bb3abd21646ea038f827f139f7991c",
+      "count": 1
+    },
+    {
+      "fingerprint": "6d026aa10b5cca8563a742f9eee597123162014e73a1c3458178fcc42d9c583d",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "47c74df5ecae27a08ed27078247c83fa29d85f82039d1812cb305effc8f11353",
+      "siteSha256": "fcb3c1f40649a06a3f57bc5e0b3f3e796eb1d3783a491318d7a4f23c58494e13",
       "count": 1
     },
     {
@@ -1873,51 +1881,27 @@
       "count": 1
     },
     {
-      "fingerprint": "6e8ac51ed916ec503d6a56935ebfa0c65b2e4d14ecee6a8f7c38863f5453ba18",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "af05e89a1f5a66a666fd22c08dc6fc8127a0ad4532619190171eab8635b79a67",
-      "siteSha256": "419ff6480a053dd145c47dd3cdea9a06dd8915d874ddf60950f14143e7922c6a",
-      "count": 1
-    },
-    {
-      "fingerprint": "6f0ac0cd9a8dd4ae35561186dd4940cae59b65c87b2db5643795aacb25fcc88f",
+      "fingerprint": "6eabded61a2d546f66f045b5804ecdeb768b135c163b9ad2cffd30bb42651281",
       "code": 2339,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "4738c2a57cb54e19b803ebbcda147a0f7985cd59b925e1cabe0f17861b9ae1ec",
-      "siteSha256": "5a16c8383697025ae3a0a6772912b01b8e5520bd18d16bf5e76f7acc7683fa25",
+      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
+      "siteSha256": "5b67c04e055ab36e39ad0962e2161f9a8cbf5d0baf36fc7094922e73571e0388",
       "count": 1
     },
     {
-      "fingerprint": "6fd32d4070e2db7472a0e2d1496c7344ebee64ebb24c2fb0da0c36fffbc87c12",
+      "fingerprint": "6ed5ad1443db2a39afd72f1b11f2733eeaffd73b829be42ab8bb47ffb1c40cf9",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "7e403c5dd5b3e7fa23d6c7fcd96bfc218c3ba2637b47a5714cc2e7a7ffee5abe",
-      "siteSha256": "41b3ee3dfc21b5a89b25b9f5950aa0f77ad0b3229cebe4d9ce475e9c2858cf07",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "a3ac045718d0a33ded684261e144d8e99e4e91f732be356c4f0aa2b2646f5fef",
       "count": 1
     },
     {
-      "fingerprint": "70b27ca43cf5ba176c208da44518d91f644a3532f45e9beb304c72fb625ed877",
+      "fingerprint": "71125ac09e8ed7ba4e025aef92422c7a61f0ca56ad64362df473a948800a740f",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "ab06f3c85cd04bb073192fef4d34bc844881343f9bc24b5b2bd6859517f922f1",
-      "count": 1
-    },
-    {
-      "fingerprint": "71471fbfc84e84f6e84c6c0b1151f742de71f3be96e3fea49e0345e321b75a56",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "fd8a6479377ed30a67e82ba6b37be8d6f6e68612f02fb772c0ee35bc6676f9cd",
-      "count": 1
-    },
-    {
-      "fingerprint": "71e6200440d59ad7e0f3deb60ac0b3ce7a6d903e877e1ee72a7ac9d1373001c6",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
-      "siteSha256": "1a88097705b5f19a99ccaa7098a4ec9bb0c8cf16c33d76bd4f1c7512fe3fdaab",
+      "siteSha256": "3e8397df2a8e2b81e50657c846cb3f19a8fddd9a25fafc71fce909de335a9541",
       "count": 1
     },
     {
@@ -1945,19 +1929,19 @@
       "count": 1
     },
     {
-      "fingerprint": "72f6bd05d9ba9d6c19b5c496a27947576c94f0e55f97e291181b21982e1fe3da",
+      "fingerprint": "73f7f6dcaa63467c391598ce64bb6993ddeb48260cb996d7cbcfb5631af44846",
       "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "421b5489f6c73875e01ed64eaa84a9c4ec687d02965ac1ec0ca9a12bc614cb30",
+      "file": "src/mind/agent.js",
+      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
+      "siteSha256": "5267b7ce80b814a039d1b1537e032e053f2066b2121b017d3af198066550af71",
       "count": 1
     },
     {
-      "fingerprint": "7433cdfeade8c22d615b82f772a447f21852f130d99af106cae6c8e108ee0319",
+      "fingerprint": "747c6cfba7b102b93a08b57e7741be2b326fbb66fb5dcf4f3d57c91d92c12940",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "37aac8d8e25e012e8f45282f8865009a93825041fefb4d3a70d1f63ee1e02e09",
-      "siteSha256": "a83a26a0e184656dd069749ac64129eaeb8ab0100abe19934ee69c5c2ec23499",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "cd17c0e5a4f84721bcff0a44c1afb724ea2cae705fc2768966d3b5dc06914a75",
       "count": 1
     },
     {
@@ -1969,6 +1953,14 @@
       "count": 1
     },
     {
+      "fingerprint": "755887956e26d01400511c16312a8bac4fbf5775106031e8b63643148e43005d",
+      "code": 2353,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
+      "siteSha256": "69b5fb8a85f89ba9a31f04bab21f3b98eab2a43ac13d27bab2f25f44bd2514d6",
+      "count": 1
+    },
+    {
       "fingerprint": "756049e46d438554dbc4cc8f7dcc86bb1a48f75a58401e31bfdd14eec4d65021",
       "code": 2339,
       "file": "src/db.js",
@@ -1977,19 +1969,11 @@
       "count": 1
     },
     {
-      "fingerprint": "75622776adc3f478eb7403f7be776dba759428535c40428160c60bfaab5526fd",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "5e65a6337e0df6e1f775423356b8b19319aa5b6f070427cfc86506c991cc8706",
-      "siteSha256": "6111a567448cb8f168ca7f2797a578607f6fe025030359f57a63257aad231060",
-      "count": 1
-    },
-    {
-      "fingerprint": "768f029cb6ab395b883f5a1f2697929edb23317b13be69123de1ddca67c701a2",
+      "fingerprint": "76324ae73d157e9967649a4010eacb19cac4aa7f649358439cad94dd797f4aaf",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
-      "siteSha256": "c0ad594b92137f448a2ffa0eac4a295f7e7d8b5cf36f3ec1149b8280bc37763e",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "846a6ca370adddb8466fe5529024d9b050978bdb7318f4e22be76d30ac6fb371",
       "count": 1
     },
     {
@@ -2001,11 +1985,19 @@
       "count": 1
     },
     {
-      "fingerprint": "772f530236cba9e05c6963d3e37d1a23e17b3b24f6cfa9f6746c683b641eecf2",
+      "fingerprint": "770aaa5e169255956795ca0af2ca5018b6c543ebbb716b2cc3b64fb4b6760241",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "a9d024c56ca1e518856add57f950fb6b40a5b06799d709c2ca5b6b92344d02a2",
+      "count": 1
+    },
+    {
+      "fingerprint": "788b14084a49f5d0f9744a1396baf83a5e18eec564941ba139666303bb020a0a",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "0e115d59a66e3f7ff8036225c63b0a0a7fabbb78189b33b561152b97ebbcab2d",
+      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
+      "siteSha256": "8f1e7579b47bd3cab5ffa0e8322c6b597181fbd51578603f5947f94eccaadc28",
       "count": 1
     },
     {
@@ -2041,14 +2033,6 @@
       "count": 1
     },
     {
-      "fingerprint": "7a0686bdf20f25f6dcbafbf888b8b8fdf26f8cc07dfbd8676cb450cc16965ba6",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "4126e952646ddfb81f2ff538395e5ce317e174f8cb5d3688c36be4c7eac05bbe",
-      "count": 1
-    },
-    {
       "fingerprint": "7a264f39c803ed16c58b512742df0b86819b59418124e6f2559004d1459cb03b",
       "code": 2339,
       "file": "src/mind/cognitive.js",
@@ -2057,11 +2041,11 @@
       "count": 1
     },
     {
-      "fingerprint": "7a834eab12e5efac6e0b1f982cdb05ec7e5e1bb39d84a5e5e0beca054c28c300",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "8a87bfa99eeee174de7c5f71c6023f6ea2f99f880828d614998c6e4c2caa25be",
+      "fingerprint": "7a426137c791d0625c5f66cda28336be60db49bb07ec13c0d68db4143d3d2614",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
+      "siteSha256": "07ff339e903da88c93c034b0a7d35c07c58b250f74d148f42a5395691801d22f",
       "count": 1
     },
     {
@@ -2073,11 +2057,11 @@
       "count": 1
     },
     {
-      "fingerprint": "7b3d4ca4c0fdc0f88f9446ded965a2676dbcc6ff14a9bcc65feb1aa43c2b6d10",
-      "code": 2345,
-      "file": "src/mind/agent.js",
-      "messageSha256": "766aecea5eb9eacf11367ee103cd5a7cc01bfd242d0a58cb3f80e9fc292f26a9",
-      "siteSha256": "7de89cff2fe52efb42970e813a5ec79cfd3065826ef760a11008c6195c326349",
+      "fingerprint": "7b2a48c90c1ddef490ea6bafb1cf768bbee4f68cc46b5e95cd18e51397705697",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "f9aac1f096184091897b6fb4dd90e6a04ee43fffe5c34c703a5e706d812bac7d",
       "count": 1
     },
     {
@@ -2097,14 +2081,6 @@
       "count": 1
     },
     {
-      "fingerprint": "7b9360d6563df2a9b790b9ed98497735be197d90f4351cae65c339223688e72b",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "9439bcc451870b6ee6a56610b6b4af7341323269f9b78844a176e47dd841c36c",
-      "siteSha256": "bb45dca32e25cc14e6efa07d39fd161156b3e2b7a8e67729baa5f706b80be137",
-      "count": 1
-    },
-    {
       "fingerprint": "7bbcc1e20a5a8b7890ddb5cf162b06d33ff6290babcd33e4add97d6ca9c2c971",
       "code": 2339,
       "file": "src/mind/work.js",
@@ -2121,11 +2097,11 @@
       "count": 1
     },
     {
-      "fingerprint": "7c9099fff482095175874a8d19d48a76501f62911a86bf14e182e05f57a66cdd",
-      "code": 2769,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "7b4cf5223be12a59393c17f3a0ac045207d814dcf8b08a735a57a5c2461537ef",
-      "siteSha256": "d00ef6a698ded6cbea0229b159bb4c66fbb44f1b249815d6a765cbf93c2eef1d",
+      "fingerprint": "7c981ffaf760248c0bda0d2d12c8aabb17a8be074e5ae43a01e1cc0cd105fc37",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "fb7f23a50a8073dc3b362b8545095bfdc9c7395475da31be766b69e2a2255006",
       "count": 1
     },
     {
@@ -2142,6 +2118,14 @@
       "file": "src/mind/household.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
       "siteSha256": "c62fbdb10381115391fc4b7c3a7e8cdaacc0b5810e398b50e64e5b9d89bc5c87",
+      "count": 1
+    },
+    {
+      "fingerprint": "7ce88fb3cc7197d8cf380a6e7d1eeb3247621bf8cd533db293a61dc864bd8554",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "211c3080f65d2da8409929cfd6417932d0f972d23297bb69ab4cc67a1d747b6a",
+      "siteSha256": "024ecc7a26e2dd6da62377e84aa720677122063f474d5381d23793ac49756472",
       "count": 1
     },
     {
@@ -2169,19 +2153,11 @@
       "count": 1
     },
     {
-      "fingerprint": "7e3f56dd230882cdc0a282c57709a5f02782348679c9bf999772d893455a1d0c",
+      "fingerprint": "7e81381c7c254595a407f1cd492afb6c33af426508d8f36af7e1005d2ac50aa8",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "c710900db81eabde042d6b749ab05623e76cd6db264d8bd48c003f842bbbfff6",
-      "count": 1
-    },
-    {
-      "fingerprint": "7e944316109ee6aad0c560e87a23dd445e747186f92ec8f938995f3cb8cd8804",
-      "code": 2554,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
-      "siteSha256": "ed273acb393740f3c59479f383c4243ed76cc5a42609abbd089d01ac2555194f",
+      "file": "src/mind/agent.js",
+      "messageSha256": "7cf455cf9b934194957bc3ffbe195309717b47cf0c11543c2c37cff39ae3ccb1",
+      "siteSha256": "4c1639237e63f5fdbc2f8d8a0a054e488645c47288620c56b287cd5310e02355",
       "count": 1
     },
     {
@@ -2225,11 +2201,27 @@
       "count": 1
     },
     {
+      "fingerprint": "7fcff3396f89fd45020054f987016584af9e5c59a94327bd5c7f8b5b444e1a2e",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
+      "siteSha256": "a6cce254fb3940f0933c1ba14a3174330c8fcbd13b92515bc8fb3d02ef4dbd1e",
+      "count": 1
+    },
+    {
       "fingerprint": "7fd2b79d4dbb9a5a5a9f384f3c4f030c30509f970ef7d1635518076b498715b3",
       "code": 2339,
       "file": "src/mind/workcells.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
       "siteSha256": "237992c8d9bece88dcf5b1f23b00044710bd9f65c3615621000459cf755477ae",
+      "count": 1
+    },
+    {
+      "fingerprint": "7ffcbbda48adb2207fd03a19170553bde60ed182ca4bd7e9481b7488cbe08e13",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "eb44ea2fb7e00e023271314bd4ceafc4bb93e7a65bc974749e13a0ecd10a071e",
       "count": 1
     },
     {
@@ -2249,27 +2241,11 @@
       "count": 1
     },
     {
-      "fingerprint": "80f93a13e20a9fce2d1148d233dc6fde48d1ec821afb017f2e72407d03095422",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "f798e6cbc24d753c1606428f6bbd6dc52f5c97d86d326c08021754eb1a464c92",
-      "count": 1
-    },
-    {
-      "fingerprint": "81db3baf8fe26bfcc8d9c714f1fba7ad308614f8cc186cee20af7de1886fd4df",
+      "fingerprint": "807bde861bfac82ae999aa5bc804342682849076bc6e5d533da2f87498b3e0d6",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "56e0f780f541795b99f55418eb8d32abfdad8814e6cbe023ccdbd8104c37c3aa",
-      "count": 1
-    },
-    {
-      "fingerprint": "8220a4314a6c8aadc39fa1fc8f50fbb95521f9fe417d3bf08c2570549a26994c",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "093a817e111e0c8f829b861b4539f95edeeb906beeccec24e9bd38ff484fdc68",
+      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
+      "siteSha256": "738aefd42202fc0e72a490ef431eb03df6128182338bde71a8b45067d744abd9",
       "count": 1
     },
     {
@@ -2289,19 +2265,11 @@
       "count": 1
     },
     {
-      "fingerprint": "830cfa9e51b116b45f90688926f858b710733903a9d229c9f615015d58a16ff7",
+      "fingerprint": "8339b82924bd655e33214e82fc94dc1c89fea86c60b348a07258b000e64f14f2",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "549337efb041776cea8ed99c15e5b6c431b8b622447962b61c1f0607678669e0",
-      "count": 1
-    },
-    {
-      "fingerprint": "8391b5bff7e7719d17ebcbac13e1d8d70fa55fdd5c737415bc7bdcbd48a5fb26",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "42c2e0fdf6e2d3a38df9b71aaff6d516bcc5072c0a307f9214940e4892bb88c5",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "f7b0e3cb057d613c55b9c99ba463e9d461789ad78aaf33869b3bf8ac15efa131",
       "count": 1
     },
     {
@@ -2313,6 +2281,14 @@
       "count": 1
     },
     {
+      "fingerprint": "841f147af831ed52be12ef3578c2a731418145cfbee602acff44e617ed2612f9",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
+      "siteSha256": "026d5baa96c510103495be896748d8e5208df284879c0c4814c14757a1d10f91",
+      "count": 1
+    },
+    {
       "fingerprint": "848cbf216786054f57b02c765ff63df708d8f454d12d20155112dd18f75dc05f",
       "code": 2339,
       "file": "src/mind/perception.js",
@@ -2321,51 +2297,51 @@
       "count": 1
     },
     {
-      "fingerprint": "84f4edb27fe285494e3c71c091f3f6c63fd7bb923ecb711bdb8c52c8a37dd87d",
+      "fingerprint": "84d583eb4adcd811fd56f52f2f6971f8b344156062ff0d4de4a4db62628931f1",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "d8143d35b787863e066a874ca0070bffb1e9fb7e370ae9696f777e9b2e4ef23d",
-      "siteSha256": "f54b5efbfd56ee6f4990913303869ec95a569eeaadcdc3a540e6a23a5cfa0e05",
+      "file": "src/mind/agent.js",
+      "messageSha256": "95df40bd2becebe49c087e18271f198a63a1679a51c247ab1c3d92f08ad2c7f8",
+      "siteSha256": "353a8c22ff9bd0e58d87b68670817cea7b8c581f74b4884b47821adf389a7d6f",
       "count": 1
     },
     {
-      "fingerprint": "856bc1e744a86aabb9683800fe0d95a2c683e9e81e4d668f561c745544d8dc45",
+      "fingerprint": "8712e4cfdc3dbad3e34f75227d653cf3814704c16496ddc8d9ac46aa812ec783",
+      "code": 2345,
+      "file": "src/mind/agent.js",
+      "messageSha256": "766aecea5eb9eacf11367ee103cd5a7cc01bfd242d0a58cb3f80e9fc292f26a9",
+      "siteSha256": "57d695b70f4022eca2f32abf018bf0140bb1c1c36c6d0129b770fb1f4c993e04",
+      "count": 1
+    },
+    {
+      "fingerprint": "8813e313907101a657d9354cb1a66767df26ed3c9f4a5085da11eee08e6bd446",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "5ff765fdea40205acae8fa7d1438ab4be6a27bb4519060d1bf57e4c534d94be5",
+      "siteSha256": "33a12cd75ccff577c884b19d64f6926005aa6418e6598427ff2f648364073be9",
       "count": 1
     },
     {
-      "fingerprint": "85ad11ca27078f54a5219aa53c2ba5302d2218407fb2553485075b76302c115e",
+      "fingerprint": "88ef1440f8f615e35aaf11798d642f11dc1da0c23e0ade018a4c508d9621639b",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "dc461414c4cc69a323fddcb0afd75280f7ad616e1115ffd5f8958ed9cca687b0",
+      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
+      "siteSha256": "7ab2963c2903e8995e6a5555aa0a6dd911332ccb048a538d45c9f53d2467005b",
       "count": 1
     },
     {
-      "fingerprint": "85b9fb649b987d906ac338d8cd0507fd98f1c520d3ddb3478775581e9206a8b9",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "46e4873add94be51cb43594176ce75744e5dddc43ea3e1db3aecbc247776e0e1",
-      "siteSha256": "1ce08bf34a7025e3aa8dc2dfdae201d7b3885ba72a03640309f3f429f55a05c1",
-      "count": 1
-    },
-    {
-      "fingerprint": "8749d51a564583d0d1895f23ef0767c98d579d5f52e4af1ffe575ba2f0217c60",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "2278bf6920c2691a859cc8ee370d12b824c0eddec30f86f94a6a6b951a01373a",
-      "count": 1
-    },
-    {
-      "fingerprint": "88d05dafba836520dedfeb64f7d4a48926f73c5d5bc587807f87576b2b7534ee",
+      "fingerprint": "897ad8ff4df74b44a1b7b45d3e829be496e24866cfa2e18182c072e3057af1b4",
       "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "5a4ad1cdd54b374b1e53a23ea4899c701588b21ea505f9de6e091167d6cfaf6b",
+      "count": 1
+    },
+    {
+      "fingerprint": "89cdc86f088c4def0464072561eb87191c7dfcad05bab20212cf278b480e1713",
+      "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "1d4a8d22381c720696adf707f674ca1658ca0f34e899e00baa60c6137c8975a5",
-      "siteSha256": "0b435405edcebbde2cce7f4b6c542d75976641660cd04092e168537b3f32b2e6",
+      "messageSha256": "12c0e7baf88ecd8d25d0f4b00c41f2892fc622a715644ec16263db2ba07c2a8a",
+      "siteSha256": "7442da3a5d154538ace9d3dee4a07837b6a100f424091af8b0780e001a58a819",
       "count": 1
     },
     {
@@ -2377,19 +2353,11 @@
       "count": 1
     },
     {
-      "fingerprint": "8a0f89055fc9e239848aeb87fcbfacb560f1ed5c71e936a83270c2958abf8ae1",
+      "fingerprint": "8ccfc4a9268442880b7185afb89689771c3e85302b190d65bdecae7b0f80179d",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "12c0e7baf88ecd8d25d0f4b00c41f2892fc622a715644ec16263db2ba07c2a8a",
-      "siteSha256": "f18e1a69f6a030c7fb40f6cb0e700126acaf7b4b39eac8d19288714b786027a9",
-      "count": 1
-    },
-    {
-      "fingerprint": "8a3f22081e39c2da1954866a83ce6a407ea429e138947f55e16737fe77dbb477",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "b4a25c2e0af7261426afc06b1712588e07668d84a830bc4ea8e5559a047d481d",
-      "siteSha256": "04e450ea5f5e737a7c07082bc7f1612d9c2a7b52c15ebc47e53b4becb9494373",
+      "file": "src/mind/agent.js",
+      "messageSha256": "d2ac950c0ffbabbdb8850e3b6a61c9a11f660ef0df82cec7ca6f17a52a6a02bc",
+      "siteSha256": "20c8cbfb4107fd99e285f215a27b8f826674782dd4331401216be529af5dc0f7",
       "count": 1
     },
     {
@@ -2401,43 +2369,11 @@
       "count": 1
     },
     {
-      "fingerprint": "8d2ce86271abf2aa45e729813e43754297c106049ffe5ec6c8d7ed3d6a04e372",
+      "fingerprint": "8dd9146322599b77a58d1a4189df661cda1b5ceeddd39d8e0e67cd7219edaed4",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "d3629860e4edeff7083370eed6edcdcb4f7e05da8e75cb1df96d1e142df6f348",
-      "siteSha256": "643cb524b1970f06235f5937fcaaf639e9b51b6a8517c6ccd3076629bd16e2cb",
-      "count": 1
-    },
-    {
-      "fingerprint": "8d504ff00c677bec6566835b07018bb3d731d9262b9d5148d667737ab936a285",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "140878f2763d628c1e07829613062eddb1786fee1425c048082b23ce8c10d347",
-      "count": 1
-    },
-    {
-      "fingerprint": "8d808c2687480fafe6f54e5bb13f67e90666f95438c46d8b59859fe3df11383f",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "59df02604bcd15ac8eff1ac6ad3fff1fba1771bbade8bfa403ee5d0a35514acb",
-      "count": 1
-    },
-    {
-      "fingerprint": "8df3a0acc4e9bf7df31cf8fb0a5ede9df12de97fcb54f8707a5395e3360f3057",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "ceba48fffeb3c5a7ee27a5597e3e11b14992aa577cd58de2a2148cf74e045b89",
-      "siteSha256": "b83bd4e1dc6661c37588096103a6bd9e9f32928c2589485a2c13e55370a2b6cb",
-      "count": 1
-    },
-    {
-      "fingerprint": "8e4bb224b26687a888c446c62bcd2d6aabedfa3d6c8af23b92418cfbfc77e0a4",
-      "code": 2353,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
-      "siteSha256": "69ea33901e57e54f7d6a8f32af1d4412764f982db80864bf025bbb61396a022b",
+      "siteSha256": "55888d42453c1e4928d44d6fcbb898e502e57caec02efdcbfc7b4e19e9ee7750",
       "count": 1
     },
     {
@@ -2457,19 +2393,19 @@
       "count": 1
     },
     {
-      "fingerprint": "8fe37af1eb5001930ebd47cb3767b02c5fa7935d393892eca844d98fd5b5a481",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "7b55b05475b1713c915094a2495278fe95e35a8ba426dbcab17daa6652e24695",
-      "count": 1
-    },
-    {
       "fingerprint": "9073f7a8db4cec0c5b04f01d533c5226b625ea462b4da193beb9a1024515174d",
       "code": 2339,
       "file": "src/mind/workcells.js",
       "messageSha256": "e1146ae4539eea28b4b6beae842a761c56cfb4a8b7c0546327af8671527a401f",
       "siteSha256": "fdaf11380af6b52570c2ecef82ff4b786aa5ef5291075645f7e93809688b705b",
+      "count": 1
+    },
+    {
+      "fingerprint": "9079d892212ac642990f3ff96a39e8414980e924a4c2de19a5eb0c274319f2a7",
+      "code": 2339,
+      "file": "src/mind/persona.js",
+      "messageSha256": "822f76e4677396dfc925d21ec1a9c294e16daf1a1f774794da3c47dc2cc0cbfe",
+      "siteSha256": "49adc48e8d6d58c35b38bd2e3b4a9667e83ba0af6cf0baf3f90af11b4f083dae",
       "count": 1
     },
     {
@@ -2489,19 +2425,43 @@
       "count": 1
     },
     {
-      "fingerprint": "915e07ad5e86c63ad83b0dd08edf71d0fe89ae51190c2a15e880ad1d3eb45f66",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "38a3fcd15b74b29da0ba907a1072a2d71b601c637e598895848d8fc68f2b2d74",
-      "siteSha256": "305c6e9785907d556e3b63dcf22092c329047713af83f23c832d179d54620a94",
+      "fingerprint": "9182087be8d3a35d1e024f1574970c90c80039ac8016dd8dd1cde631ded0d35b",
+      "code": 2554,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
+      "siteSha256": "55b3009cfd3f266345b49b4deca24c288d214d4aef860aa6b107d8ecb559f21b",
       "count": 1
     },
     {
-      "fingerprint": "9318389eb354b0cc00e1fceb11d9819fe723d54756f7921f0afae2145639d44c",
+      "fingerprint": "92046bc21ccf846f9a0a4eff39531a61aba57988dc6f03b42c9e3cd0b37fd5d9",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
+      "siteSha256": "fa6ec5525d68660391faf2e6acb8bb54d36934fe2a1b0362cb7019c76503d495",
+      "count": 1
+    },
+    {
+      "fingerprint": "9308cca1fa0996cb052c96b14ff1dfa553a9c5c7dd1606cbcd3b693084ebbe82",
+      "code": 2322,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "1d7fd4920e1a1d7c6863b22b61b7e24223d3d022d27ac7e8f5fbf830e32dd4cc",
+      "siteSha256": "9ab6765f6a7d65e3e4df33efbf958f6385c5fe61f23ae4e5b69e953807b33557",
+      "count": 1
+    },
+    {
+      "fingerprint": "93529f434ae5d71f6c6096598ebe33c92643747479ca9f76d95ffc0a098888b0",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "ee628d8e619b51df4f72be68ff81d636ae1f26ac649a6f3bd3e96b56858c344e",
+      "count": 1
+    },
+    {
+      "fingerprint": "935f17ca097c541295996ca06c67cbcc50dff91a3565fd2ef845a485a020ca4f",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "993e6c63b6e0ecff47afb725b96db14297b4bfb9adf340120837ec5185ac2fdc",
-      "siteSha256": "9dd9c00474f4eb19add2f95916fcf28a1ca9281e2b6e882b02c589350395fd4e",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "9b6dfe931229aa0b05c39c05b4a9f7cfbb53d0e013cd285818438fda8c1092a8",
       "count": 1
     },
     {
@@ -2537,11 +2497,11 @@
       "count": 1
     },
     {
-      "fingerprint": "9510e033c2b5137262a71a2e6fc11a8e86de8e6e6d9bcde0f1449be7c951b786",
+      "fingerprint": "94e9f58a447a470e5f9a9ce0f84f89bb2fb5d3282be49ddf9cb3f7a60b86c391",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
-      "siteSha256": "00810bba2b23bbd943ae17ce92c18e2eaa4b8a85ad77a7cd199da192bd5e0139",
+      "messageSha256": "628c3d26580e353d19932dd31df2af8cd6cff0093114ecbd99960e5c1adf5f15",
+      "siteSha256": "50911762d728bdb5cecf1c12b923ad7a420d72def55e59ca0b840be16f8c440b",
       "count": 1
     },
     {
@@ -2553,22 +2513,6 @@
       "count": 1
     },
     {
-      "fingerprint": "9597335d0eb2de55ed1da7db7ffbabfb17310d1c0e608856aab6d8210c8b0214",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "95df40bd2becebe49c087e18271f198a63a1679a51c247ab1c3d92f08ad2c7f8",
-      "siteSha256": "d4b731659f680f35a7efe637db3c260e59d8bec5c0272e5ab79434b573c83caf",
-      "count": 1
-    },
-    {
-      "fingerprint": "95c14f309db619fbd9ceabd34dfcff081e9adb69c0f2aaa55fe3409961666ea0",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
-      "siteSha256": "03ff5505e3eabd54ef1939537072765228329473bf280a0dbf1f15c5a4b08a81",
-      "count": 1
-    },
-    {
       "fingerprint": "95d56a43ff6ebfe7bd68d42075e61b0739450939daa9ff82b4075342ee16908c",
       "code": 2339,
       "file": "src/mind/curiosity.js",
@@ -2577,11 +2521,11 @@
       "count": 1
     },
     {
-      "fingerprint": "96cee2dc58a112eaa2e918e5272c5a514dd2aa8a6caf5ab1da19d12f8042f98c",
+      "fingerprint": "9772f1edf8bbaf9e396815faaa55ebf0f0b716e03453ea70e051d75b2301760f",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
-      "siteSha256": "41d874a36b2410b51126833f2369645a9feddf2f071f3cb6a8d130de3c02d3f0",
+      "messageSha256": "f635774d9b16ef5d6522dd0ef0f7bdeb3b4fc66c5fd299c7cba495a6012202b8",
+      "siteSha256": "bfa6b5f0f30f85d44dd2420131d7d7326f57314970c5a560649b0e0412ae5893",
       "count": 1
     },
     {
@@ -2593,6 +2537,22 @@
       "count": 1
     },
     {
+      "fingerprint": "977ed3d333ff938babe34db6e4b3e50cf3082bf6d3756a695e1b8f15b3f9a8f7",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "fab59f7c765b11c16183333f29e5473a8ce0b42f4accb97ee8792d05694eb38e",
+      "siteSha256": "186b9dd12386373134ff2481436a6f9e9d3ec3339e1f36f630614bf1daf0de62",
+      "count": 1
+    },
+    {
+      "fingerprint": "98253cf6791f005818b1dc3002ae0f037567da1c477649d1d4903379ae258a69",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "b39f417fc849872eb04bc7d53d580d27fb69fe25a9b7343e6d085e169caba2f3",
+      "siteSha256": "d2ccfef28d8344eb61375e7414762f90d878c4e501c261dae29f30dd18b57c5a",
+      "count": 1
+    },
+    {
       "fingerprint": "9847c556f6a8f4f6c8cc8f146a503b29485cccc37eae0bda4f1714f54e7bbc66",
       "code": 2339,
       "file": "src/mind/cognitive.js",
@@ -2601,19 +2561,19 @@
       "count": 1
     },
     {
-      "fingerprint": "98db0906b64fdef03aebc9b42c5374668d543273126332c33da9c34d4df86616",
+      "fingerprint": "9898abe962324e3cba775192f118927d5871c7638feda795e6724bd053c33d46",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "223cd6534679b368ed1272ce3a7601a61da813eaf73dd42e29b966bc08fb5443",
-      "siteSha256": "d3b678886aea31b3a090f0d728e7971f653fbd36633db18716f6e17d2de189ad",
+      "messageSha256": "28c4619e04ae99e3b2495ae07e59541170d0f0a9866c004222753aaacae887d1",
+      "siteSha256": "988e57ec757f611b73532bfa2b231022b364375e030f333658937fde66d767da",
       "count": 1
     },
     {
-      "fingerprint": "9982f22e8177148aa1a01a699adec461a0073fd030345a91cca2435e6f2f3699",
+      "fingerprint": "99d3d95c998b47e44b6577a387e813ef00a4524e1745ad75921802f68decd6d8",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "749f29731736e92308ae78322e20157c01534169bde01bc381aecc36ac6d9572",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "9439bcc451870b6ee6a56610b6b4af7341323269f9b78844a176e47dd841c36c",
+      "siteSha256": "20dad1973b867d8c58394247a1936eccd66b18f30bbb924db57c9d201a1a7161",
       "count": 1
     },
     {
@@ -2633,19 +2593,11 @@
       "count": 1
     },
     {
-      "fingerprint": "9a8c37067dd4911a7a6e50fc5951f60a670436ba229c6580b262c662c7ac4daa",
+      "fingerprint": "9adb6bf03f5827c585fc8820fa513802ca64b2b726aa9960e56b115d195fff6f",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "ba3d5f5f08fdf7781a212faad62c8d1b0b13b83cf9b1821bc500e106443a04a3",
-      "count": 1
-    },
-    {
-      "fingerprint": "9ae930c067e89c8a66a73acf03ea7b378512a7c2aa1d742605d24dde858394cb",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
-      "siteSha256": "c901cb62d969ba70169db535526c879a8b8fe4ec370452df96a51e938a1cc4e5",
+      "messageSha256": "be1461d0774f0665daa65d73f80ace93152ef3f26bbcfd394759bb478353c1c8",
+      "siteSha256": "91c43994284ab30f02ce6fcd21166d85989680290d96de95f5554b74a27b9b21",
       "count": 1
     },
     {
@@ -2665,11 +2617,11 @@
       "count": 1
     },
     {
-      "fingerprint": "9b29c966b4f1f728857b783cb5d45227a4cbe97c7d6f140af8b99a8a7ee00d09",
+      "fingerprint": "9c0ca9f4aeaf2beb1298670ba4cf2eac74375450075b5a2e0823a68a069a1072",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "544e5a34f544be8b5fedf2d33eff7fbf46f561a7c59001833d4ac4094c01dcee",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "3701c81b96ab6689de189558c206b26964231ce0298d1a476b4394640a2c72d0",
+      "siteSha256": "c4ac451638b1fe03e656f0f2edc4409dbc608cf1828889784372b8d1310b855b",
       "count": 1
     },
     {
@@ -2681,19 +2633,19 @@
       "count": 1
     },
     {
-      "fingerprint": "9d2290b4352a13b093815dc623f20ee892498941741c45acbc6c5567ca61eea5",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "a02b479c1bf4f1e0579a5678c88a4141dd5b5d9ab8c356b8b65440de25c22de1",
+      "fingerprint": "9c20325d526dfee05fcbc07a36bde0e2974fd933399f684fca861c26b8a1435c",
+      "code": 2353,
+      "file": "src/mind/agent.js",
+      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
+      "siteSha256": "471b07bad82589ef3105d05d39d46c4cb35617f0e8d6f689a309d19a048ff976",
       "count": 1
     },
     {
-      "fingerprint": "9d50163bb59841ba9db0fe190adcaa0e18d758622b9813771997878cd094cfeb",
+      "fingerprint": "9d5c356d470de610feab8735db2cf2e6aeb695c0ef78569892c2318a76f38d6c",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "36674689bb6535a2c4d48c06d2549d3a47aaa753d796e3e4d1b0be22b641b908",
-      "siteSha256": "43f283f298af1edde54a0ab32c437b35e39bf1008be3d4c5e739e86e915ac986",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "a9c563f913a3446a1f04d7a05fb6e04a478af911183f66076464158637b6230a",
       "count": 1
     },
     {
@@ -2705,11 +2657,27 @@
       "count": 1
     },
     {
-      "fingerprint": "9db67b17eb1e1391f93578e6c0a2c8aa58e7ac436e1eee5ce8e488d3b8eae184",
+      "fingerprint": "9dd86d366aa267679b11c222eb389a692a1dd136e9c8a71529ceefda0b58bcd5",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
+      "siteSha256": "b0fa6c35403a56b59e00d497c045d50986e60189c1f8c8b9505ac3104e2df09e",
+      "count": 1
+    },
+    {
+      "fingerprint": "9e58101322eaff0abd772bf65779fe1253150cf9568dfa3071f365ecea0c87fa",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "4a16401dd249013a5328ce92eb6b541c13b98e0d9fddc4e6cbed26197cbe0716",
+      "count": 1
+    },
+    {
+      "fingerprint": "9f40373935baec877d061317fde69072012d40aafa52f3588a0f085ac9ce84c9",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
-      "siteSha256": "86127eb1a589264a5c7fc327815a2d455d3e6ae4b0b7253807064fd61ef02f2d",
+      "messageSha256": "f61318cb7c30269737ee33d51e7fe4418227b12ab8782425780c0f672630faa1",
+      "siteSha256": "be6292ee58e28d52c1d2497653ff35ae7f417ad597b3f9bdeb09f1bf16d352e8",
       "count": 1
     },
     {
@@ -2721,19 +2689,11 @@
       "count": 1
     },
     {
-      "fingerprint": "9fc0dcc9c05c257b1819c8814530e36909377d31c1cc469223d13d05c2308d4b",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "b577264c7340fdd1acfbdf54d079f5701809174e037a93497e870732a67bf0f9",
-      "count": 1
-    },
-    {
-      "fingerprint": "a086f038bfd80bcd8b72f10331b8f42c6db86eee3d6385ef44587fff648b2728",
+      "fingerprint": "9f9bee386d33dcddf9c05f53aa84f8717aa5aa39a838f3cd8f1ff16241be84af",
       "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "a98c3621a2dc9cca13bcdb4e533a323474a09cb4aa9786c0ae00529dbccf19e3",
-      "siteSha256": "2eabc47434896ae22eb165519ff43e3929e0668ef61bd515f3393c39dbd2c30b",
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
+      "siteSha256": "cfedd4920f24063f506bb45e38678ab8ce86c004ede85aab3c32f4cef49951e3",
       "count": 1
     },
     {
@@ -2745,27 +2705,35 @@
       "count": 1
     },
     {
-      "fingerprint": "a0b618b576e1304d204575dfdce365e792b44f4e773003ffdfbcd1d32b82ac09",
+      "fingerprint": "a281405382de753c5a1418fa691c8eebcbc2a7d6856b569724f316b22e51b835",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "eacf2e787be970743ef7cd6f4d0eda1978f00650e7da2fc6b011079852d30d67",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "cb88c80ca2fac7bc055207daa9f5012ec560f1bbe624940c59cb3f9aeefecdea",
       "count": 1
     },
     {
-      "fingerprint": "a178c80908e2b0642a15af558c348f4b4ea59e316722016d1fa6228be709f26e",
+      "fingerprint": "a2b8788e9e6319177fdfaf09018a0e5484e9068a840edb551b0826471f19b1b4",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "af5c078a4ff2e70eb079b81e458c3163ee2376cd8455426026fffbce34a4bc6e",
+      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
+      "siteSha256": "a68a4176de4a336bb67db9d1838aa30e876ebd23bae4ca3055176786213b1fb6",
       "count": 1
     },
     {
-      "fingerprint": "a285816d6d551cfc71561b1822c9700e8340f9ed2d260259a57005274e720c90",
+      "fingerprint": "a2f5f7aff8dc06d895239ef5727240cb7b7f538b4d0c950f872f283a21b02550",
       "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "aeba483624cb50dd88d1130dcbe0287b1ab558ed3b84ca2831102533c506592b",
-      "siteSha256": "5b8ed1228278b4b31d301b45667c935bd347e7092323dc8372b7a139df6de48c",
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "fe7c580f3954287a5b27be44c58d6d53b04bbb7d32743d9792b307742ecca128",
+      "count": 1
+    },
+    {
+      "fingerprint": "a2ff1a798a35180c5ec32b27039dc5bfb0b1f008874a667f806030f963f3bf23",
+      "code": 2554,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
+      "siteSha256": "b2605f1eed6fab412fd7ea825826bb3a793ed293d08170f9f0bbf50b09331d6d",
       "count": 1
     },
     {
@@ -2785,19 +2753,35 @@
       "count": 1
     },
     {
-      "fingerprint": "a5ad78d078bdcf0674173cc7a2f42de42e4c6486306542a86771d9503556986e",
+      "fingerprint": "a4b4a808be0bf8d9aabe9f0aed29795653c49aa1bddb47af0b62b58b7c9d30bc",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "61119307451f3f9c986ce1cba581732c4b71d0ec1c1356f18cf9674c605dea56",
+      "messageSha256": "0b3edd232bdf40593c72cdab20dc9524994050a38024d0f480cf8dab1c452bc6",
+      "siteSha256": "cf96df9eeae8ec248644d64fdc4577b63c2e479516072431a536b6a1bff4afc4",
       "count": 1
     },
     {
-      "fingerprint": "a5af59b0717348c6a0b9548165cf16e628574863285c05cca54af55598edb396",
+      "fingerprint": "a4e08ebcba624e29a28006b9e62d66452a8a7e25ba490bbc1d5ca93707a21a2b",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "55d9391c0cd37fd880dd9c25cd52e61dc994d1b47d70bc6290d69f4d8c22c1ef",
+      "count": 1
+    },
+    {
+      "fingerprint": "a55046de1d86cdec838ae1528777964d1726da07b682c79a053a1c70b5c0d548",
       "code": 2339,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "b39f417fc849872eb04bc7d53d580d27fb69fe25a9b7343e6d085e169caba2f3",
-      "siteSha256": "182277e84a6a4be9d654931dd5b73c04a2f41bc0adf62c37bd2d6badbb93332d",
+      "messageSha256": "4738c2a57cb54e19b803ebbcda147a0f7985cd59b925e1cabe0f17861b9ae1ec",
+      "siteSha256": "fabfc9c2759736cb9d74e678d1f4e46201c2ad9df7f9628dbd71ff36c947f145",
+      "count": 1
+    },
+    {
+      "fingerprint": "a5eb5568298b38e788a35083f5b4fa62aefa52d46a3d79da397f0a50bee86cc3",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "a2499bb35a8e8d36a052cb1375981b6e207dcbd1899bc907615e94432b2d1087",
+      "siteSha256": "375787798bf61b44fbd30e5397ccece60553f470202079393be670c6644c3fdb",
       "count": 1
     },
     {
@@ -2809,19 +2793,11 @@
       "count": 1
     },
     {
-      "fingerprint": "a610d0f927c0f2f933febea8b9ba179550fb4cdded16090f17574a4cd995b1a4",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "0aa9ecdb9a4660a8f9a2b04464d1ab0c286a84f8bc5eba7d3bd18b499557f0d5",
-      "count": 1
-    },
-    {
-      "fingerprint": "a6d70cb4b27489be8621bbe7d5fa8ab7a5b4427d864d935a61e138f862bcf855",
+      "fingerprint": "a6ca821addf7de7548c831adaea1ba29632c7e303e697eb45b97966cd8706943",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "d64786c8bcb5bb8a4646d598aa3661674d6f2bea17de1f8fd8079d7d4a061cfd",
-      "siteSha256": "c1472de0634bd0f0361238a82d0843e11eb399d68369002de28d66fc57c85703",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "d935d9e86c82a8cb60d4b725aa0e2d637a1e05f73e0fa2db077560c88a63c9cf",
       "count": 1
     },
     {
@@ -2833,11 +2809,11 @@
       "count": 1
     },
     {
-      "fingerprint": "a89977b5c011106c76efb724c67d0a5268f608d9da6ddedf808e63f00712f69f",
+      "fingerprint": "a70ef5aff30fec982fd635485ccec7f8405f2fb7ac9d7e53aec5dd03fdf83a8e",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "7013df4a0a961fd854693386169369a12cf4ae3fc8aa81340588f9dd722a2c29",
-      "siteSha256": "5148e18539537931b72b1b469c64100fa885834ef46d6de3b0437134c7e929a6",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "5371ec467d04873e66ce6951c5ea9f536d89073973887de72a955eafc67b16d4",
       "count": 1
     },
     {
@@ -2849,6 +2825,22 @@
       "count": 1
     },
     {
+      "fingerprint": "a8e19cd9e117b6f4ace99a9fd696b90bc265b769ab93ec1b308efd29a3fbc60a",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "de349a72e60fbc2235fa8c79044c7056d853846196ee258149604f3537d42d06",
+      "count": 1
+    },
+    {
+      "fingerprint": "a953d7757e6a9a96c8c810d343d224ca03f987817ead502deb08cfa738a56634",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "7737c5bfc9c6217f10a8b0551d95304c9240b515c4a85fe3264b1ba58a0b5b21",
+      "siteSha256": "c98908e96737f6cbc80fc1b9e54180da14e060b791d52910e89a073c9ca257d3",
+      "count": 1
+    },
+    {
       "fingerprint": "a9b372d467b19235089cc0503b92e54f09e8c9478775c76dc7f3b504cd380ba4",
       "code": 2339,
       "file": "src/mind/capabilities.js",
@@ -2857,19 +2849,11 @@
       "count": 1
     },
     {
-      "fingerprint": "a9f79e4e66e42e4a4bfbbdb55ca1846e11187d55fe37ebe2c5f1656f972f0853",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "f61318cb7c30269737ee33d51e7fe4418227b12ab8782425780c0f672630faa1",
-      "siteSha256": "d709bcb2d9d813d8980e28f4011a727362a7a3fef31e2675586f430a1e93ab66",
-      "count": 1
-    },
-    {
-      "fingerprint": "ab12a208aa2cef7da188193864a20b435c074654d5711888ce5cbe41c27f3e83",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "36b16bca4ef2a2e6e1833f7f94fb309bf814d2af558f8c804b0a5dda8957412c",
+      "fingerprint": "aa7d51da049ed63e4cd58e1d551710a67a9054cc30045e18e1f1a82a668b85f8",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "298010e30d378dc280766c4a0c70a1b6c7667a7aafad820c445ca4ce4f66fc55",
       "count": 1
     },
     {
@@ -2889,19 +2873,19 @@
       "count": 1
     },
     {
+      "fingerprint": "abed9aa066e12690c3fb87cfa503df626747ca8a47f046bf43dc3df6ebd098b3",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "c59c308fdd2a6f2426a89893a9fbb448e9aaf8e3a33ce0614ce0ce30e957b3ba",
+      "count": 1
+    },
+    {
       "fingerprint": "abf37a41ea481fdc2ea68a055b336955a869be961019a86b2bce519969c3ff5d",
       "code": 2339,
       "file": "src/mind/curiosity.js",
       "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
       "siteSha256": "61e047770384baa246971a9d122684547eeb27e7b5512c4ea2c91e16ddd57544",
-      "count": 1
-    },
-    {
-      "fingerprint": "ac2149a295f637ee1d7980eae20bcfb8bdac18363548c01c6e2c01dd702cbedb",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "9c53ca41de26824dab64523ee1e0176f120231f44e520a93cf182975439e687e",
       "count": 1
     },
     {
@@ -2921,11 +2905,11 @@
       "count": 1
     },
     {
-      "fingerprint": "acc14f16923723ae5ab0b661ed76c7caa258ba6caf4c54e077b5f21784af381a",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "ba057cacf259281929213f56eb52cccaac1b151867bc4b71456d2297a7acd7e6",
-      "siteSha256": "d2191022d116023ea4e57ba5239bcdf63865884e1dea7b0746fd1bfade240c00",
+      "fingerprint": "ad750108b1fd52ba690044b9c692447ae5ddc2cedda320e137e054decf3fd041",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "7b18ca3a821334e8824e020210c059f8eb3419e9f5321f63e59a0e21a006b8f5",
       "count": 1
     },
     {
@@ -2953,27 +2937,19 @@
       "count": 1
     },
     {
-      "fingerprint": "aeae42c2f26e9bf3b6c1e75f27aea56742dcd05d94123b8d0aadf86d8abd7ef4",
+      "fingerprint": "ae35d127e3b8e84c5a9eacbf8c59e93db435a3b61ec778d539bd8a541882fd47",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "9bba5d76262890a537fa8c0eec9ce26cc70076b427a1081a77a94d8fab5c2b44",
-      "count": 1
-    },
-    {
-      "fingerprint": "aeaf0fc552c06b3c9ea04807da6b92836fcc20e97b9c21660f664b044533b11c",
-      "code": 2353,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
-      "siteSha256": "50bfe14bc20e02f8bb3222d601fd3e12d9b5e38cdf215b8723ec6519d84104af",
+      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
+      "siteSha256": "4c47c9c1cdfa06f97831bd31c644e1e9d9c60e95f0fb6e6778a4e89da4e2e063",
       "count": 1
     },
     {
-      "fingerprint": "aeedb5d75b8f525cc22054aa40c6aa731197e45ec59cd5a5826db84e1069cb04",
+      "fingerprint": "ae4c5871395b467a9aba2d927def297e204052bbd1170e4e11ddb1a9a3a52e54",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "e422152cab509f6eb5c273b1f0918ac83e1bdbb32fb784c51eede9ae8e4c6c7f",
+      "siteSha256": "5a847d47b2bc1d21493d48349384ea786d7083ddd3f425b0e43f22a6dafdc52f",
       "count": 1
     },
     {
@@ -2985,27 +2961,11 @@
       "count": 1
     },
     {
-      "fingerprint": "b15019c8984c3ad8345b02f23d501751c40758207b892cc1f935b8aea653f8d4",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "4be066f819f0d55757ab1803706911544c8624d4c55d96f015963730706ce724",
-      "count": 1
-    },
-    {
       "fingerprint": "b1b2b12f9a6e0a23ea3e38bce144ccb89fbef1e9ac707eebef58faa62cea5124",
       "code": 2339,
       "file": "src/mind/facerec.js",
       "messageSha256": "2a280d762b9aa3c32094a9cd7b027e39997143da1f9d2354fc9d22818f97450f",
       "siteSha256": "d2a2e46320ecfce304b1d01b0f7714dfe123ed39215bc76e2468b1f8b5f4249a",
-      "count": 1
-    },
-    {
-      "fingerprint": "b2459daaf9102aa43b6b39c2cfc79779b8461d07394cbece0b020b3ce6e67059",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "9c40327aee79a6adee530778541344e745e966ccdb9fd34aa6ab7d4279679bae",
       "count": 1
     },
     {
@@ -3033,19 +2993,19 @@
       "count": 1
     },
     {
+      "fingerprint": "b3f7f27d9cb01ee01d555b17e013b87c7675b80e9b6984beb004cb73c5498a34",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "30cc60e1fdd4d75023665bc8427640150283a183107a46e2dd53be173acd19ec",
+      "siteSha256": "95da4f0a4e4b3a3047b76141096681e112a47e8eded2ddda7ea8bedcc4c2ef6f",
+      "count": 1
+    },
+    {
       "fingerprint": "b453075724be239cbb04073750e75b5957f82478889eb0f495d5269e2a1edfe6",
       "code": 2339,
       "file": "src/db.js",
       "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
       "siteSha256": "53828b58aa67a40940c406b7169bff9ce191011c913da584a95438c40d8957bc",
-      "count": 1
-    },
-    {
-      "fingerprint": "b500e663e60884e239923415615aa2b3fcbf487f297b5912ae3b3999fb8e9f05",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
-      "siteSha256": "9acd2f861eb225f18b7d3f9723aa43b751efbf827488397b4cc1988aaac67f20",
       "count": 1
     },
     {
@@ -3065,27 +3025,19 @@
       "count": 1
     },
     {
-      "fingerprint": "b57ad4cc50efdcf29211c61ffec0c15ad367133e235ab27e1af63e199b0e3f4b",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "c8e3b0324fbf36d296b720ef8e3b60499550d63f4ded3b49572fa9af3b9c5f6d",
+      "fingerprint": "b5bffe5223e75a2afce1945ed9f76b695a7d47688aaf937fb50ae8ad434c656e",
+      "code": 2353,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
+      "siteSha256": "e507e51aaca33bb9e81930a20f571b491b12a8b1f39a84726439b6d4eb537c85",
       "count": 1
     },
     {
-      "fingerprint": "b5b0c189aa69cd89ecb1b3706c7531a61cf45a9b225ba4936307e8ccd273ab1b",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "87fbd97509903317a3fb0df367d6bc178796c79c478042f6cfdc4002650d6f78",
-      "siteSha256": "26ea8b36f194a64b91f830ea512845e8d10cdcc855c6cc99bb53bc540fc7dc5f",
-      "count": 1
-    },
-    {
-      "fingerprint": "b6ade7e99376b695af12c488deeb19289d26a0046c8ae49b4a4f93f00e82e7c8",
+      "fingerprint": "b67b37cad145401e63c77267fd3506255088f64eda2e81f9415875883ffff366",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "30cc60e1fdd4d75023665bc8427640150283a183107a46e2dd53be173acd19ec",
-      "siteSha256": "be1919c6f6d6c10192dbf7498a08aac7f4392e779727a74ffb0f27ed55ca7a71",
+      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
+      "siteSha256": "dc41459b7c118640844802a6d5225e0a31653bed2dcc14b04efc9150fc72280b",
       "count": 1
     },
     {
@@ -3097,19 +3049,19 @@
       "count": 1
     },
     {
+      "fingerprint": "b7999cb7e1c0138e120f5b4b1938276285393bee20e5eb472f8c99bf6d0637e7",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "d3629860e4edeff7083370eed6edcdcb4f7e05da8e75cb1df96d1e142df6f348",
+      "siteSha256": "d6872afb9af860f9b61113a900525cf6598ff40f8f6c39e1b7f0db51b8bf278a",
+      "count": 1
+    },
+    {
       "fingerprint": "b7da2bef8a89e8d63cb6bef10320054f75e4438afd0747e0b8472d8e2c31345f",
       "code": 2339,
       "file": "src/mind/cognitive.js",
       "messageSha256": "af05e89a1f5a66a666fd22c08dc6fc8127a0ad4532619190171eab8635b79a67",
       "siteSha256": "868e94776069bcb7616ff348b118e8e3c3f42c2e74c64d0cf5198a0bc738e43e",
-      "count": 1
-    },
-    {
-      "fingerprint": "b849034671b5fa355a85c1fd94225074b0a69e5bf3a820de2a23372abf3344a0",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "ec153213268f3f23393cb03716dbb080c3fc1c40e36a5f0b3dfce94a8c4e12b0",
       "count": 1
     },
     {
@@ -3121,19 +3073,27 @@
       "count": 1
     },
     {
-      "fingerprint": "b8f0b993d1013af8d6a4b178b771ed730891c076db2be3a178b08a18606a76b6",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
-      "siteSha256": "96a28bd45baec5b3909728a063b93091639880991ecb419492bf84d872152ec0",
-      "count": 1
-    },
-    {
       "fingerprint": "b91a7f1aef851be250d83d9c5df4b9a5885f822836e38dc8b1529e6f9bb48df0",
       "code": 2339,
       "file": "src/mind/vision.js",
       "messageSha256": "1bdbac7785ff1188f6134379d04f03fba0bf5f728e1a27206217411e98ac1fd1",
       "siteSha256": "12378ed29b805dbe1e3b3c0c6d480e7d0fa0c98f62a4f86a0b4a94f6480af666",
+      "count": 1
+    },
+    {
+      "fingerprint": "b950d2afb9b0f90e82a6e85799ed84f216d2a0c050697c9defa0b32d488ac51c",
+      "code": 2353,
+      "file": "src/mind/agent.js",
+      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
+      "siteSha256": "f0636ae0d1fbe29bb62cb894b0c1713b0a6a24b17daf733f9780e56b54cfa3f2",
+      "count": 1
+    },
+    {
+      "fingerprint": "b98058baf1d01b8a7fce9bf53852a55a13ff198d12c37ee3e37642931c7a21bd",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "460f9f4c0265a29ad23226a5a7dc70abc2ac03c29c6ce47112ff933800a4d96e",
       "count": 1
     },
     {
@@ -3145,11 +3105,35 @@
       "count": 1
     },
     {
-      "fingerprint": "ba692e7c3a4833105a6b4ad18ccce5c363fbc2a57d3d0ba74f3614429d7c88fa",
+      "fingerprint": "bada8882a1e6553727d359b020efb155c7dcfba20b9f59f4bb73ca926fe3f7a2",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
+      "siteSha256": "049b6fae0cc5f1f160827c9f18b5bca084b489fb82833af495318ed3a522fe52",
+      "count": 1
+    },
+    {
+      "fingerprint": "bb206595ab36d4c4b28ae8cfd41f4edacf18d85826ededbbd758e96c1fbe3811",
+      "code": 2339,
+      "file": "src/mind/persona.js",
+      "messageSha256": "cb90fb98b38af71a63886bf24ec08ee91adbd0e3782f78b3e662b620d5cc7cb9",
+      "siteSha256": "624cdff11dfdd584f578d44f643da91e9c308d875199b9a7590b18d0b3c95415",
+      "count": 1
+    },
+    {
+      "fingerprint": "bbb25a796aba1d42da105e176538f595cca768e2ee70cf7d583add3b38d2cbff",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "38a3fcd15b74b29da0ba907a1072a2d71b601c637e598895848d8fc68f2b2d74",
+      "siteSha256": "7bd69c5b68e03cbdbfb0b2c85987c4cf659442069876f63d7364d0b3eb736337",
+      "count": 1
+    },
+    {
+      "fingerprint": "bbb25d30b53d52c43e1392b13ebdff5d7576a75cf09603ff40d81f1e60474bf1",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "3d2135a3a6b42c03e59f963112ee4e1ac91637e34a5ecc243cb4b9663f3cfa21",
+      "siteSha256": "c560bd85c6b094532bf6702097d4029715e6fedae01e0f521d7c609db41cf058",
       "count": 1
     },
     {
@@ -3169,30 +3153,6 @@
       "count": 1
     },
     {
-      "fingerprint": "bd2f7ad321d944813fa0b84bd6e5cae97445909cfd2bd252fd75698352271353",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
-      "siteSha256": "60e02c3aef863726220bdef81210f4a11463f5bf5daf8c05240cf8850c286773",
-      "count": 1
-    },
-    {
-      "fingerprint": "bd73d580385d6997ba918e02598a577b50858bfd7902bfb634812e7a95464b87",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
-      "siteSha256": "63b1eb7d371ee8607a11c58642de37f76738a2fa33a9ef8ed7500f9f1847e22b",
-      "count": 1
-    },
-    {
-      "fingerprint": "be19a152971ef52783c8c2e21df6496e16040f661396810186358561d336f705",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
-      "siteSha256": "751ad30d0adf02df055b7405f787f19fbab7c2c0384bc092610d3cc259b7d370",
-      "count": 1
-    },
-    {
       "fingerprint": "be30cfc7018b9878e03afd9e098f622001b5755096624b5a1522e22f7ccd63eb",
       "code": 2339,
       "file": "src/mind/workcells.js",
@@ -3201,11 +3161,67 @@
       "count": 1
     },
     {
-      "fingerprint": "bf28d1d7813f5f808d75460b9e469a2fa3a953474386730cad3265168b43355b",
+      "fingerprint": "be6efe6106bc83b6aa386cd0346e9eb811d73c95bf1b19bf846ff6d2d93db82b",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "a2499bb35a8e8d36a052cb1375981b6e207dcbd1899bc907615e94432b2d1087",
+      "siteSha256": "b6477f56bf804956e88f6f187e10f9e8583d9a3a06f0b0aabee77fde43ff046f",
+      "count": 1
+    },
+    {
+      "fingerprint": "bed34bf2208df5b799a907aaa6d6fae2c4533f3597b10528fabe66640c9faac2",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "37187a9c16753ac81c56d70b86e4fcf19c8ac46b7027cd014d2877220488561a",
+      "siteSha256": "ed3e556de9f4a7a9bba59fb680c83efbfbb0a2dc82aba4fbd4c6bdd0ddac0eea",
+      "count": 1
+    },
+    {
+      "fingerprint": "bf20f7facd11742b9c117a115090cb186d1fbd29781adf3e1962f52d27a5a96f",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "67261a91bebdcfe90e1cd48dd73a0c9a0bdb5283420652858e945d6f55dab981",
+      "count": 1
+    },
+    {
+      "fingerprint": "bf9ba6ead2ca83a9613f004ec1c5c900567b0bf46a3158f2de74dd1d3f63ce4e",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "e0ebb183fd82be07e89c03252538d9f9b8a84c4228e69f1fd2b12c0e47491aa9",
+      "count": 1
+    },
+    {
+      "fingerprint": "bf9cb6c488bae79428b75a309c0a759d05adb66d190b8b544dd46796eebd7881",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "d321a031b0eacb740409f741dab22ffe25a8da2b0c723e42db8384e89c03c8b9",
+      "count": 1
+    },
+    {
+      "fingerprint": "bfaf35f4f6d4c3bac5b56871f5279effea707fe3a7559b0fcee8f46be04ac871",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "628c3d26580e353d19932dd31df2af8cd6cff0093114ecbd99960e5c1adf5f15",
+      "siteSha256": "04e63e6cded056f89a6bd1dbe0532f0ce74aa1633454329f0075cdc298911a62",
+      "count": 1
+    },
+    {
+      "fingerprint": "c08577fba6a7181706ac566ee25371e9f98ea7f25d24c347004a89839775fda5",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "f5e209c61f63ba662b51e8de638169f2731c9c1ffd76cabfc2c436c414cb8ceb",
+      "siteSha256": "1d199effbac8964f3e0b125e3c1a104ff6ee8c515b5aaab950a7638dca80dcda",
+      "count": 1
+    },
+    {
+      "fingerprint": "c08a0725f25782cf11a7d2e3ec0dc9ec003debb18229906693b1a0f793eb4ebf",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
+      "siteSha256": "f874e25b63e3f7021a54505294ecbec6e201c666e46effc28b2f7a41870163a6",
       "count": 1
     },
     {
@@ -3217,11 +3233,11 @@
       "count": 1
     },
     {
-      "fingerprint": "c1f8afdfb4136f0835f1a04a1bec444a93b2e01a4aa9c56a8eceae3b5001f7dd",
+      "fingerprint": "c1e1dcf90774b6fe4d804cc79a24d5a01bd7c7d5754ce2c97b545eaa05b371bc",
       "code": 2339,
       "file": "src/mind/portfolio.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "d601eba8e926c700d822842886c43a2fb039ef9914d650f32e8cf258e9f55cb8",
+      "siteSha256": "65a8bfebc5fd8763aa011230d2d7b83c2df519dd13f2c32b37c502638540eb5a",
       "count": 1
     },
     {
@@ -3230,6 +3246,46 @@
       "file": "src/mind/curiosity.js",
       "messageSha256": "bedd281084c23d8e3e052b2b47e722ae5f5753d273a7d362c5828235f9b8d555",
       "siteSha256": "6b6aa5f389b1804713662c677354f37ce8c56be53b5d092f3dc88c44eb1c570c",
+      "count": 1
+    },
+    {
+      "fingerprint": "c2c780359dee3956ff163d204fad9a68bb5029368764b4bb958bbd0eaea01aba",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
+      "siteSha256": "96aab360cf5ff60cd212cff3748609342cc97e2fb583591d80a79918a40e18e7",
+      "count": 1
+    },
+    {
+      "fingerprint": "c2e9784464ad73b69132da3a12c55e5fa8b52f26f681ae561d3fd31bb4b57de9",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "527811590a29ab544c9a336c162b03a2e29f09cfe2110ae46fba9f6f51d6fd93",
+      "siteSha256": "a492c8c76d240bbdea9640a47d04d4ab570af3f7accb3b10a3bf0de89001ff1c",
+      "count": 1
+    },
+    {
+      "fingerprint": "c3004cc1b6d2081568b012c0a91b91e2d8a56cb14643bc97d40d9eb0cdb23d31",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "ba057cacf259281929213f56eb52cccaac1b151867bc4b71456d2297a7acd7e6",
+      "siteSha256": "b6d934aa56afcb60accdcd985c4c8e1d9d8f75317d03fcb9f21b698581d0abea",
+      "count": 1
+    },
+    {
+      "fingerprint": "c3042a89b123bcc9227a3477209e495b08639ee976c27d739acd0d1dffa68b62",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "5e65a6337e0df6e1f775423356b8b19319aa5b6f070427cfc86506c991cc8706",
+      "siteSha256": "c4a6c55f42e139cea94cd87fcc7e5becef58d6259d3d823d734dc978011cce28",
+      "count": 1
+    },
+    {
+      "fingerprint": "c3a79b0a30b3f06976a14f018aca73a69a91c828affbf1311c42efc432dba867",
+      "code": 2339,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "a9b0cdf546117536e403fe0eff4f2211270ae113cfcb60dacf98de29b215146c",
+      "siteSha256": "6bf8b637ebe7737d39186738c17c92779fd0e8b86236e9b0a0f30341ce21b013",
       "count": 1
     },
     {
@@ -3249,27 +3305,11 @@
       "count": 1
     },
     {
-      "fingerprint": "c587f65aad7c58b300143dad5343c1732f0792c707f7c61f497fabd3e4c86e80",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "2715dcd5238000f3cbf0d74a7bfd9c4ec8e2633e1386e7e0518a148eb142c635",
-      "count": 1
-    },
-    {
-      "fingerprint": "c5a55a8e36f8a592d83f231c2f4ee381e72dd523dc9b017b78a5bbe55ff1b726",
+      "fingerprint": "c63f3f5f9a5927da0805672d36ca0d3a28c44d29e835f9404459f18104c1eb62",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "0bd85dc0aa524b32a09639a2016eb43ba283463c7f93005df24f48e0fa02584c",
-      "siteSha256": "38b493d4d6e69ee35cba939c6ff56e193f11384eae4f2aa8e7cd1bb52ff25248",
-      "count": 1
-    },
-    {
-      "fingerprint": "c5c84a366fbe313143577bbf57f864ac250a56c721a5df78d3d8c1446583ea02",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
-      "siteSha256": "92a08d367af07aba9969e7313e587e10bb9a6a5e1422d7b624881111df0e560d",
+      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
+      "siteSha256": "9e93d5029eddcafc28219fde07ac7ebbb23286de4e91b2252603d5ed328c45ac",
       "count": 1
     },
     {
@@ -3281,11 +3321,11 @@
       "count": 1
     },
     {
-      "fingerprint": "c7471a85567accc5df01be4d176a803b4992a8d02ecc0c25c896b294c65eb52b",
+      "fingerprint": "c7876be8fa516084d3f4ec0a87ee11243cf7d47f5abdd2008955701718ca7187",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "5686c05ef259f3fc2350958f2e44a654aa0e4dcc8aafb2971eceaf1809f475cb",
+      "siteSha256": "41d95b50826dfa963deb841b56a1d28af7a08b3a52b3d86188bfd0a8f998c3c9",
       "count": 1
     },
     {
@@ -3305,6 +3345,14 @@
       "count": 1
     },
     {
+      "fingerprint": "c7ff2823aae44afed9ef648bb1fc6666ee05db1bc8051370bd5860f6b3ad4d32",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
+      "siteSha256": "6e2c7ecf3aa9efcd9af5cfe10759d966e88ac595635f5fb50c381a9e964e0a13",
+      "count": 1
+    },
+    {
       "fingerprint": "c8568e2fbe7aea9637787071b0c18b68e4b8a7d3ce0cf31ee1dbba9f3a757e1b",
       "code": 2339,
       "file": "src/mind/work.js",
@@ -3313,11 +3361,11 @@
       "count": 1
     },
     {
-      "fingerprint": "c859d0a16064183f4ff02e1b21fa8febe3cce7f1887f510c024c5039bd478bda",
+      "fingerprint": "c91e99dc828d1768d163a58e2797084c3667a19278d6ebca195528ea7e793a68",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "fb4674d5e70a3977d5cc14443e1b4f86961abcd3637bfe07f8e75dd9ed352bad",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "4925d736ab927b3b7dcc5023427d60fef058eebee3e0617c715643c757ba2998",
       "count": 1
     },
     {
@@ -3326,6 +3374,14 @@
       "file": "src/mind/household.js",
       "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
       "siteSha256": "b1d04c0fcbe975768cca4982c6e0dad0ce40bf7503252268de01a118054cb161",
+      "count": 1
+    },
+    {
+      "fingerprint": "ca00d479375aea95eabcfa0fd4b160df094a70f931e5c60b45d5cb78176383dd",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "8990a3bc682d3ac65bf590014591dbefcec581fa563d64dfdd4014e6b1733a0a",
       "count": 1
     },
     {
@@ -3353,19 +3409,11 @@
       "count": 1
     },
     {
-      "fingerprint": "cba29535b9b531ebcea87f3b6b1578144fa655310865549e7d51776e66c4686c",
+      "fingerprint": "ccdafac098c219cd6b7f5de34545f3bb5fc8b9c78f749c491613aa5b2a4e0891",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "16f358fe4ee59431f3b0a45cd777823a5d09ec5961542488a86b711b833d8b07",
-      "count": 1
-    },
-    {
-      "fingerprint": "ccfb35e2c48cb4894f08155184bc7a0920c324b72eaa13d0bc7fb855387ce1b5",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "0ffd093728164f4227bf9f753737ceab8362f281fdb7b6bab43fc834af8f2f7f",
-      "siteSha256": "7282073e1d9528ad7eb4c3e0715ff95aaaa01fc751f5496b49b6ca68653451a3",
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "acdfe61baef1d4d1b4c289d7698c47a9e041bb76b39bf74fa9004086121b09de",
+      "siteSha256": "818c09a5eca4b28b75f807e910bb5b6967e5e8b71f7b152cf9be1e16fb3338fb",
       "count": 1
     },
     {
@@ -3377,11 +3425,11 @@
       "count": 1
     },
     {
-      "fingerprint": "cd54d2680a684c891585874a52cac0d750f4df60f0a87a6990e7b59903d416cb",
+      "fingerprint": "cdcb5b9417b5616daed9cb39c4531410f745716ef653c250dc80904f9337af4d",
       "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "1ea86aee35e85354ce1f74dc74320691cc657030f2ebed6a37d4a37b1e7a04d1",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "1d4a8d22381c720696adf707f674ca1658ca0f34e899e00baa60c6137c8975a5",
+      "siteSha256": "edc32851487fe212e37f1d6351d5b9304cb6e15003b415ab830519bc2b7ebf21",
       "count": 1
     },
     {
@@ -3401,51 +3449,19 @@
       "count": 1
     },
     {
-      "fingerprint": "cf1931c7befa71bb2597b3b04c450376da9548510f6c0e403bebba1dbde2f353",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
-      "siteSha256": "c0784a0e1ea43c130a907f227e8a6f75fca8b3521a136a402f927390b876f4ad",
-      "count": 1
-    },
-    {
-      "fingerprint": "cf33a6274987efa1516df56bc4e75f45fb1fe67b65bae7d79357947c440e614b",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
-      "siteSha256": "6eb5a6aab8ffe0a573ccb031873f43cc46460a1c73f4d4c95c4bd8d4f701bee3",
-      "count": 1
-    },
-    {
-      "fingerprint": "cfb65bc3eebd4bc481108422d56956eaac6dcd385224f7e3431483f81cdd7173",
-      "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "66693839aad2075ec8b8cf8dfe186d3c5b1fd4b4110da1def88baad28b87b3b3",
-      "siteSha256": "20fdbf3b1ded74790a279c22eecaaf31f145339286bb6f0c00d93a57b1f0b863",
-      "count": 1
-    },
-    {
-      "fingerprint": "cfd26a79c2196036333b260765ad443de7863898a455f49cdec1b22e9a2e25be",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "d0f8835187a544c12a3c483793516b6fa49473a6bf2af6c278a1a5cd288709c4",
-      "count": 1
-    },
-    {
-      "fingerprint": "d0385a4d45d12c08e3ace4717e40875269b5bad6aecc1cfabd05e8879161121f",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "014c20f6ad395a590a0e536a34f320af047dd0374f8395824c2ecac54799e26e",
-      "count": 1
-    },
-    {
-      "fingerprint": "d05af37c109336d68809a856807346f56a34f672cdecc2fe51e4bc7dc88077fb",
-      "code": 2353,
+      "fingerprint": "ce573f9670d814d7fe2fdf07bf61bb7ad6d1ac8ed053edc84de0e812370cc59e",
+      "code": 2554,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "d6740cf1b61fce82151e21a746bd33b947b58e38361525e721524b16397765c8",
+      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
+      "siteSha256": "7ec2b1eff4a3276e7ee86168ac078caab393b1d46fee18c15e22124fa56f554f",
+      "count": 1
+    },
+    {
+      "fingerprint": "cfca9d7d14fd002c4c768ede1e216e00545fd16ee3df7028b09f570e5894d40f",
+      "code": 2554,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "1840e856b08ec5fd7cb925bf199fa220379a916406f84b2956f0c9e33dd1d897",
+      "siteSha256": "3fbd05c915a7c291b87be744eac3610936abb2da0535ca50c36a7cbbbcc9d768",
       "count": 1
     },
     {
@@ -3465,11 +3481,11 @@
       "count": 1
     },
     {
-      "fingerprint": "d1f2b17d3e0a003e944f352a20fd2ed5c66698b55b81d492482abf264452f6d3",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "54de08181265d4ccc669ba017753a39ada24ff60940ed76f3833dde222cbd85a",
+      "fingerprint": "d185462143fe39872ff678efff0d1147f567a3c1308035a280316cd39c44e5df",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "1f2165aaa6f7cea2a6b674a266507144706d2baa9a1603be6d549f08e632bbbc",
       "count": 1
     },
     {
@@ -3478,6 +3494,30 @@
       "file": "src/mind/workcells.js",
       "messageSha256": "3cedd06f9b93fbccd1a2eacc7ffce7fda0fd9e96c3a4570c14bf4c1cd6b9f2b5",
       "siteSha256": "3672f6babea100f2ddcfb1cd19a63829ac5ca0668876cc093673637d49c3b0ca",
+      "count": 1
+    },
+    {
+      "fingerprint": "d241cec9ecc11ea4cc4539b0bef8c22f18d6af798563d14c2b8bce4768b5a29c",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "7013df4a0a961fd854693386169369a12cf4ae3fc8aa81340588f9dd722a2c29",
+      "siteSha256": "67a71a50552af75d9cda58c94e91eebf5d955f471455c316feef6401650a1d27",
+      "count": 1
+    },
+    {
+      "fingerprint": "d2606eb9305c7d932a990bb5f417dc867c72cca5b8ed917f75b9773c7471f1a2",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a81fe43194e5c145148037b4a10ad9c2ae162e4bfd74645095982277e69bc1f",
+      "siteSha256": "5a7a3d148f3f355d29dbfb52f58a71ec7d03d7e28d407664da01911806884475",
+      "count": 1
+    },
+    {
+      "fingerprint": "d27ea395406866b82672028e2b4fe45f16c725aca07a5c360d8ac348132c8c81",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "87fbd97509903317a3fb0df367d6bc178796c79c478042f6cfdc4002650d6f78",
+      "siteSha256": "71e3e287e36baf0e558106273a8ea5b0d7c73a6e7a2c3bc24f9c5ad538f8de76",
       "count": 1
     },
     {
@@ -3497,14 +3537,6 @@
       "count": 1
     },
     {
-      "fingerprint": "d38f2ac5a91b5496b5375a38be30bf50f1958bab9740cf2ed9473931ce24f4f7",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "4e04b90f5e79b5cd02e65d326994878e005af7895398f7c23d7c132b73a7dec4",
-      "count": 1
-    },
-    {
       "fingerprint": "d3fe68e0e05864c21a47b3aaa9c2f086c9769bdeca3ac1d334731f9965be7e96",
       "code": 2339,
       "file": "src/mind/cognitive.js",
@@ -3521,19 +3553,35 @@
       "count": 1
     },
     {
-      "fingerprint": "d52d43806f821fcdf2656489899f4cd5e3067c90e91ffae31b3a65a50b7bf0b2",
+      "fingerprint": "d42aac333c984eba7a5e335e0dd42f93bb4572ae54beb3a7b79823295c11f82b",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "8ebf1fa925d8df04022364fc007f9232420490aa8418fc8ec776123f6d190420",
-      "siteSha256": "b31a0f17a432a01fb4cc38dd4987d81fb02ea22fe072c7e06477eb079a610eab",
+      "messageSha256": "25815f5c899184a0a1517a8a6fe06009d65a8a257224ea86c12b40c3d6fb0070",
+      "siteSha256": "32a7e07c891ef1a8998545fd343b7d68468981a47a2d7929bb91cd5db291a4e8",
       "count": 1
     },
     {
-      "fingerprint": "d5a6e0d5f5e891e4ab5618b19e69b9e2435f36384e901693078d0e7e8a97f86a",
+      "fingerprint": "d58280ba7926f18ca114684bf57338bc41fe3d28dc664b70936487148bbcb18a",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "ed8bda46de954867fe8f0ed7b237c78f6b207270ce3bf0e8cd8d3f7650a6980b",
-      "siteSha256": "e476243babb23086ecdce415cf093a24d27a3a1fa28f9a9b9c85602021e960ea",
+      "file": "src/mind/agent.js",
+      "messageSha256": "f15f97b9181288afb1a6126e5139de7629be0c2121cf848ce523e836a38c77d4",
+      "siteSha256": "a0faed0748219d842c95199698fe0a8059e9afaaa03feb3a8b6cb395803d5b7d",
+      "count": 1
+    },
+    {
+      "fingerprint": "d58480a05e2aeb153410752851d9984762c71e92b7d058d5ff0e3c561f34dd99",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
+      "siteSha256": "90eecdb010e72a74d3a849f2789987b4a82dc05ade7b0b7ad141aebbb966b1a6",
+      "count": 1
+    },
+    {
+      "fingerprint": "d5addf44ee321a08875907375efe943dec396225c97e7d3540d79efa4b44a9d3",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "722da2cdfa6e6cb3010314494c03d4b601861294af10c2dde0dd83310fd86e10",
       "count": 1
     },
     {
@@ -3542,14 +3590,6 @@
       "file": "src/mind/perception.js",
       "messageSha256": "29189976170910de14340b6efcc5f9fdfa583fb6ebaf6be817e4f8f5219563cb",
       "siteSha256": "530b73c02dc4a321fbf9ac48b323a516dbc9f5c13952cf78d6b9dfcab713202b",
-      "count": 1
-    },
-    {
-      "fingerprint": "d637108ab594c9c8f6443bc80bb3bb1009219d074b387de71779b38b7f8486c6",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "39773a9e4765e2079bd3c9953e56aa8e0d53e62485bbd12f6c2844d65f653333",
-      "siteSha256": "1f5688e368f10dd30c580ab18b3848dd82ff6d1531e3d53c03e2ea1d0f8c51d6",
       "count": 1
     },
     {
@@ -3569,19 +3609,11 @@
       "count": 1
     },
     {
-      "fingerprint": "d670271ffd95907eeee4c806139758470339a66dd1475888de7e4d949436a0db",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "f76b698d6239f21156a29f57959635a89e7fb3664dc6668c84183d8aadd79a5a",
-      "siteSha256": "d7a8582fe42f7338516aaf07f78ab7bb1fab1ecc86f5640a9697f5fffb7a8d46",
-      "count": 1
-    },
-    {
-      "fingerprint": "d6b20c14202f35ee4f8ca7deb276e05ffaf190d7a5d28824df52ad809ef742c2",
+      "fingerprint": "d6f90f62c9fe69f5addf66d32ed485f4e96ba410cf3d6af6f224ecd195e54668",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "f8271e7301b82d54802daa0eb57e2c92503f50f75977359670a6ba877e3e958b",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "7cc3a682c189da4688db8f071b9080717619993c7cd2e77e14327bf1b7901f97",
       "count": 1
     },
     {
@@ -3593,19 +3625,19 @@
       "count": 1
     },
     {
-      "fingerprint": "d84ebcea874372e13d4eecf0b3b25a334a3f1ffaa9f1418d3a9faaef3e5390db",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "47c74df5ecae27a08ed27078247c83fa29d85f82039d1812cb305effc8f11353",
-      "siteSha256": "ab6905f149670bc1d1bfe645e65ea8ae9f665443400c6c172137106897284ec0",
-      "count": 1
-    },
-    {
       "fingerprint": "d872801058cea88bd55992efb13190ab6899d2b0831269868d922138829d8bab",
       "code": 2339,
       "file": "src/mind/household.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
       "siteSha256": "eb7190556302810ff895da10ce7ccb3a52deb61c62cf89784da592ce57787fed",
+      "count": 1
+    },
+    {
+      "fingerprint": "d9427e25cccac8f4663ce710c645b5e26ef7e7e720571a3c63ef1e8cf1e673be",
+      "code": 2769,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "7b4cf5223be12a59393c17f3a0ac045207d814dcf8b08a735a57a5c2461537ef",
+      "siteSha256": "8f993c7e492a60ac65b450f25f109ebc15a83c8954d6601786e2cf0a4eef45df",
       "count": 1
     },
     {
@@ -3617,43 +3649,19 @@
       "count": 1
     },
     {
-      "fingerprint": "d99fef3f05259d6136b6b15c73a74851c65b29bfd58ee5b8793e707fe6b5271d",
-      "code": 2353,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "1d4a8d22381c720696adf707f674ca1658ca0f34e899e00baa60c6137c8975a5",
-      "siteSha256": "bd04f70e719b6dafd0c5c4b554a98d88f7853b2dde9eeecf598a5111e0807b3d",
-      "count": 1
-    },
-    {
-      "fingerprint": "da4d648b3ec8c05495b70de1d36b078f66c736de21587fd6d5bab9fabb233d92",
+      "fingerprint": "da882c7ce8dd7bef6885085945f6fbbf6349d86575a7e3e90c066111d539bf80",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "5fd11f6aa3b956b6dad239af282fe6e4cde22938700d1945b0c0def30755947a",
+      "siteSha256": "43dbc49d27e15a8d545997cf3be3a64930a3eb209b17c66f3f46d1764ca9c8d9",
       "count": 1
     },
     {
-      "fingerprint": "da83cf3ea4c9d12cfe64f07bf24eae4089413d8526d494af1cf8e556e5413567",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
-      "siteSha256": "70937a812300a2e3131dad46d80a1ce293311ae2989f9cde2fc23e885d135de5",
-      "count": 1
-    },
-    {
-      "fingerprint": "daf9cb2307b9d1a954c4b9e03b24203a1d68a72eef2e7071d7f60badbb088107",
+      "fingerprint": "db1041635088bf9ffdb59537e35a0bb2b1a84a03538ac189bab06ada9c31769c",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
-      "siteSha256": "89faa592164ae055fe7041846bfda1eb3903556643307b802ed46108a19e8151",
-      "count": 1
-    },
-    {
-      "fingerprint": "db2e6ef201f76e1f213f0f65f3434f6918dc5b7616c6ff2483faf48222ad43f5",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "410b1467897e3d39e6830449102a7bb60633b2fa3c34d4d29de829d923ea2be0",
+      "messageSha256": "edf0ff87b424e5a17b507da33af21eb18e5f7b01870a847a17d26aacca77bb25",
+      "siteSha256": "1d85d1532ee500fe3e547b15573cacc60607cf8e106c2d1aa7c94fd2a56eefee",
       "count": 1
     },
     {
@@ -3665,19 +3673,11 @@
       "count": 1
     },
     {
-      "fingerprint": "dbbba27ee77abe0f2cd70dc6b779439491723ed465aceb0667f89b9b4da93b13",
+      "fingerprint": "db81c9ceb9dc2326eba3b7d944de5aea843b9267fbfe17b9466a99938b656b0d",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "883bbe38c7f6696f1d36b069c6edb93b746e12537422f65bf133e4df8128c117",
-      "siteSha256": "dc46389b2129b42ea91223ad04052f87e2461685bc7f012fd68461be28f32766",
-      "count": 1
-    },
-    {
-      "fingerprint": "dc26ceb0bfbdc6f5c4c136742cceb6c6b1a6b34b199e1292cb24467aee0f7c9f",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "63df00d921a98dac487bf9734aadb54e19af1c92d203a2071373bf297f69c42f",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "6caf91335d35af2504e9ec2212d3a56b782cedac7b2bd5f0790ab88612ca4636",
       "count": 1
     },
     {
@@ -3689,19 +3689,27 @@
       "count": 1
     },
     {
-      "fingerprint": "dd28c8bb5c3d2f5270b14b1c719e59911c527f19362c8617a24ff26354510c6a",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "699c4c900bb02ef6ef74784e11f67c2418c829e0e7411c168393bd70f8a62161",
-      "count": 1
-    },
-    {
       "fingerprint": "dd51562d9cc59737144afa9efd2547f39c1e7e6e7e6245398bd61a99c2c15cd4",
       "code": 2339,
       "file": "src/mind/social.js",
       "messageSha256": "624e97725e11a46e6317f6079df82f084b17540d544402bab1a49fde83b5ab44",
       "siteSha256": "ae05650ca95bca39358d7c6a30cd1311d34a41b61c4497b6fef674689b01258b",
+      "count": 1
+    },
+    {
+      "fingerprint": "dd6f1f89cb3cfc9be61f9137690f0ca9ad0decf0db6986d8245ad7147d5bb1d3",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "4ef80a7ff1490dfcb938e043cdffb276b8fa2c0dd76c30595be69e128fd094f3",
+      "count": 1
+    },
+    {
+      "fingerprint": "ddde3ca806507d6a04d673bd7828b2b662488194d26014715359b97e7302fff3",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "6355bb0144dca6560f851de4de87b5112f24f7b11c88723a671410aeb0dca4fc",
       "count": 1
     },
     {
@@ -3713,19 +3721,11 @@
       "count": 1
     },
     {
-      "fingerprint": "de4baad820146d69ea050fcf736a260f3d547f1280231ecc2b1822557420f04f",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "4ba3e293e157ad3f1b3eb27a5d9f258e819dcccfb6aba495d961a09852ecf2db",
-      "count": 1
-    },
-    {
-      "fingerprint": "de9a6a3745d9f33154b408511379a8d051bc4c6e161ddb9db1c2a40ebb0ff2d4",
+      "fingerprint": "de9d5fa03f66f69e9420ab2d69948ddd6572089bd426570bcfac0e8c134a3969",
       "code": 2339,
       "file": "src/mind/portfolio.js",
       "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
-      "siteSha256": "a9180dd930d9a342a7a249a61aefb8e7bd956f9495e279e337f8e7f8ee1c8b3b",
+      "siteSha256": "dbb5632126c0a79b1b2e41eb88b734170e99439e9b486ac09f1a751d670a774c",
       "count": 1
     },
     {
@@ -3737,27 +3737,51 @@
       "count": 1
     },
     {
-      "fingerprint": "df7081e24f8db1ac1ede1ec8e47fad61f11a3e260198294e7ef778bf032f5265",
+      "fingerprint": "df54a0d67b30dbb23d0e1ed7a678fd5b9b70b013443aa39080ad19ff33bfdf00",
       "code": 2339,
-      "file": "src/mind/persona.js",
-      "messageSha256": "cb90fb98b38af71a63886bf24ec08ee91adbd0e3782f78b3e662b620d5cc7cb9",
-      "siteSha256": "0a74d9e0f525d41e4b39c64dfa650c1f70dd47292719cfef340a8c8cd75ce006",
+      "file": "src/mind/agent.js",
+      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
+      "siteSha256": "1357995c1268fea63c261112c7d7594f6cfe4386ed5327ff69ec6a3084f7e4e4",
       "count": 1
     },
     {
-      "fingerprint": "dfd969461f56da3b3516549eb6041be9d68eeb3757b2306ae939b2c370ec6573",
+      "fingerprint": "df8a0890232816ce0b494ff74e4bb6d2c2244920222487a19c77a49713a47600",
       "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "1d1f656ceccdb96e44e3bfc982ca9106d09670464b7ad6dd326c1439ade16087",
-      "siteSha256": "ba77a34356e38a487cd9f0055ca384b3c9f548f3180ee4de23d8fe5ba4ca9f93",
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "9bd9f1993de5d2da83fd4e65df6fad0cd940fb0c4b24287ba9d9e8cb0baff047",
       "count": 1
     },
     {
-      "fingerprint": "e0fa8a82b8e6a5b527b1751849abee99ce07896e0b605fbf4d957d85771a1591",
-      "code": 2353,
+      "fingerprint": "dfb4f20bda0c5b336e535eb50afae12d551168d6640a49cab93292d032105f9e",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "37aac8d8e25e012e8f45282f8865009a93825041fefb4d3a70d1f63ee1e02e09",
+      "siteSha256": "ee014a29c4ca49a02e8cc695f0843a0302b3fb1792e100e7049dd0943cb1d583",
+      "count": 1
+    },
+    {
+      "fingerprint": "e0239d7c23ab2a2057c63aa4936f5f9aacbb588eb2523487fcc7335e69631d64",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "883bbe38c7f6696f1d36b069c6edb93b746e12537422f65bf133e4df8128c117",
+      "siteSha256": "f697f254a07f3428464f1dabc321b7e0f4563e885bd3930ba4f8c6692b843f30",
+      "count": 1
+    },
+    {
+      "fingerprint": "e093e01be831a6ede9a733a2946c94df17faa630127ae02efa06addcddff872f",
+      "code": 2339,
       "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "8691b30ebc9b59da246d94d1101e01594f58293c9adbb299449266cb0c797b62",
+      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
+      "siteSha256": "ba0efd2d3065519bf61d70e509cbfbdbab61fc3675f74dead44739ba24e05e2c",
+      "count": 1
+    },
+    {
+      "fingerprint": "e1bd3f24edbd79f5eb7498db90ca93f0b78df06d2c95bac86541f3097bb33291",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "3859d3df36c5535161d62b37deec0632e48edada773377177bfb3a2e6c74ae33",
       "count": 1
     },
     {
@@ -3769,19 +3793,11 @@
       "count": 1
     },
     {
-      "fingerprint": "e1db5786d985844ec2f78a6834096ebc2acd365e4596fc909f6ab543d07820a2",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
-      "siteSha256": "3de6e2480caeb214a33bcfe382e9f42fbe66302fe8e1fd6063ef0a5da2511bdf",
-      "count": 1
-    },
-    {
-      "fingerprint": "e1fe5c820f143f1fed672d58ce6146fac170e061efb5b609e37786f9eb8aa7fd",
+      "fingerprint": "e2232f53eb3034e358e30fa58377e3de50b16e56586a8e7ec392361371d1fc83",
       "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "6ae7901b35170125a0704b043f8d8720644d866ff11eedb2d723dbdd939a536d",
-      "siteSha256": "2ce28292e74b32ed709fa621130234645b4776f76e3a7295d4a3ac7fbeb2b7be",
+      "file": "src/mind/agent.js",
+      "messageSha256": "993e6c63b6e0ecff47afb725b96db14297b4bfb9adf340120837ec5185ac2fdc",
+      "siteSha256": "4b2ead3b117473beef09a25572ed6c64ffd5e3018b037186428e5a5a931819f5",
       "count": 1
     },
     {
@@ -3801,6 +3817,22 @@
       "count": 1
     },
     {
+      "fingerprint": "e299fcd781a5358b42dfe0596f20d730fa7aa6d9620c91293bb9f01750526b4c",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "ab6cad8d7b68ae3bf31df6184c3eb0084ab7dd0bf4f584b1a0b9c807a8a945ee",
+      "count": 1
+    },
+    {
+      "fingerprint": "e2ac89adf0e1db8d841ca83058e46b5940bd9ec80a7bb50b37072811361abfb0",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "862f58e8ca76fb12ab8d59437d1eed4dfebec23937cd273a2ef2162afb800aef",
+      "count": 1
+    },
+    {
       "fingerprint": "e2e35494986eee1edf7e64ca53d23e61cba9ec6996c04ca80d4d47120d3bc9ad",
       "code": 2339,
       "file": "src/db.js",
@@ -3817,6 +3849,14 @@
       "count": 1
     },
     {
+      "fingerprint": "e3d3fe78f9cdbfe4ee400e887344fbbcad7f32b4510cdf74ef6046e7814dce81",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "2ea7a7626aa3caec94b524c28b7b7d5c37d783bbd62bf86fb085ccb2949354c3",
+      "count": 1
+    },
+    {
       "fingerprint": "e46d32631605197d2bb36a6fa18c960e7c861757e718edfb4ee8afd1b57034e6",
       "code": 2339,
       "file": "src/db.js",
@@ -3825,51 +3865,51 @@
       "count": 1
     },
     {
-      "fingerprint": "e4f8a733d3241600add0643793ec4f5269c48bb37acaa1d866d825319b32e284",
+      "fingerprint": "e50fde02a49e7b65862bce119f6779dcf7783e307b24f4de1f03326afe19c893",
       "code": 2339,
       "file": "src/mind/agent.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "8d88f0da72197da14a93f7c866a2ec1d4b6704d93609e75918a1a2df2bab5e97",
+      "siteSha256": "7cfed02f5d9a41d18e13011e1eed2021b129e492624e1c9dab3efb9337e5f435",
       "count": 1
     },
     {
-      "fingerprint": "e5b4a0fa72d818e53bab286152e88222cc6da4e439e85c3a4ca182249f225da8",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
-      "siteSha256": "e4727a175693623c03ebaeed4e42876ece556f61a16cf35d063062be9e5e8bfd",
+      "fingerprint": "e5f58a906380bc2bf42a6809a1094e8ec8d3ac782997f9cbcee7945897b943e9",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "ba057cacf259281929213f56eb52cccaac1b151867bc4b71456d2297a7acd7e6",
+      "siteSha256": "12535c2c949a37f1366ce803bd160b1394d3c4e6a2ff4d793d22ee2323e9953f",
       "count": 1
     },
     {
-      "fingerprint": "e60f59100eceb3b3ae43a60e2ec312639d39e7eafa7e292f297f659528d7a0f0",
+      "fingerprint": "e6d7601921bcaf33d45f1e3d03b3ab47cdc855309ff0fda3828e29946e2e3d21",
       "code": 2339,
       "file": "src/mind/portfolio.js",
-      "messageSha256": "25815f5c899184a0a1517a8a6fe06009d65a8a257224ea86c12b40c3d6fb0070",
-      "siteSha256": "c80261c23ef646c9fdeac17c0edcab1b0eb81951ba48c06c3ae53e15d05604f1",
+      "messageSha256": "6ae7901b35170125a0704b043f8d8720644d866ff11eedb2d723dbdd939a536d",
+      "siteSha256": "50659c90339c22a5c47dea051de4d0b6302f1c12d94c5cd5ea2066bc5e8f9485",
       "count": 1
     },
     {
-      "fingerprint": "e6f42cc24b28f5952545ac6b97698dd33f973be15e78c92eb991214875cf9795",
-      "code": 2769,
-      "file": "src/mind/agent.js",
-      "messageSha256": "5e11bf135a2977d91f880bfe8f424a1f8c4ea550c18293f6ab029056eeac7850",
-      "siteSha256": "9321fe70914f7722c8181cc4320fa40ce414a060dd677be9551cdcb47d7fcc7b",
+      "fingerprint": "e780ac13dc39d9b74e16ef1929f936a02c11733b45825ea7dd192342ebeee04a",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "d64786c8bcb5bb8a4646d598aa3661674d6f2bea17de1f8fd8079d7d4a061cfd",
+      "siteSha256": "6e0bd5dbadead8997eb1239b2f5d9fb6221a2ddb3a29b2d23d12464f6515f8cd",
       "count": 1
     },
     {
-      "fingerprint": "e7b45c3393d5c8b34c4c2026084ba1ee85f93571536b63cdd74441686b2ad894",
+      "fingerprint": "e84bd59b73b64ab2296bd4846dba62de20e320827b57aba11d763f8879fc356f",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "b4a25c2e0af7261426afc06b1712588e07668d84a830bc4ea8e5559a047d481d",
+      "siteSha256": "b9cafb29a794b422543ff74306436036d23e69c44698bf3a36ac596bd6cd97eb",
+      "count": 1
+    },
+    {
+      "fingerprint": "e8a4c298525d20c9816a488514db3a8311288a8ef7b074d7650aa4d309242652",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
-      "siteSha256": "acb9ebb518ac5cc9645833c98be90a777533ffd93fbfd99952d6f41f96416938",
-      "count": 1
-    },
-    {
-      "fingerprint": "e7ec4b5b56ae11d6cf135d0051e3dcf1c740e4727306e947e0d2e0a6d66d28de",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "990766c4c470d0b510e1a0ec9fe0562c10507ceb72117ac4d0f4db801e29d34b",
+      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
+      "siteSha256": "0e5e0d3b8570921376a12cf30e498a6dea356e4a82ba7ff6690fa545af346cef",
       "count": 1
     },
     {
@@ -3881,14 +3921,6 @@
       "count": 1
     },
     {
-      "fingerprint": "e9d48f487d4b6aeff46ed2430f869fadcc88fcedfe89db01ec7187c2e20ffb72",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "be1461d0774f0665daa65d73f80ace93152ef3f26bbcfd394759bb478353c1c8",
-      "siteSha256": "e442407a6049d50c0c4773a9e394b962c192986dae46c73806fb76345ab35920",
-      "count": 1
-    },
-    {
       "fingerprint": "ea4db4490bd7ba8fa1dbca9a1027eed789e733d506190089dc23d603ac683fc0",
       "code": 2339,
       "file": "src/mind/vision.js",
@@ -3897,11 +3929,11 @@
       "count": 1
     },
     {
-      "fingerprint": "ea83df30fd69254959db85cef22c0d1e3e837e6c61ca9d17f5bfe2b5dd85604f",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "166094c36fabba4b80bcb2cab93d03d26c1ec4e9e42d9d014b1af664a8264d98",
-      "siteSha256": "a54cf47769950567b9dcf57c4ffb001fc5d0ae1196267c8f3959607219a70a4d",
+      "fingerprint": "ea7fdf63583599b89698ef9b8b2d97f0544b028bdefa88a927a7279c4a276bd1",
+      "code": 2322,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "e2235842315d20fa300b561d0a1da31394fa789846de4d51aa14dbec245f59b5",
+      "siteSha256": "e683381b1c7acefe06cd4e1d290522876263a4464fb3afd0507327f6a06f5678",
       "count": 1
     },
     {
@@ -3913,6 +3945,14 @@
       "count": 1
     },
     {
+      "fingerprint": "eae4421dca2bdc2f2261c65b09c5c68eca9eb04646d69852be912cdcf2cd7f02",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "d3629860e4edeff7083370eed6edcdcb4f7e05da8e75cb1df96d1e142df6f348",
+      "siteSha256": "5f1027c56da23c1e3bac63c23d2f1abfae885fe92f3e81bbddccc878afe7a547",
+      "count": 1
+    },
+    {
       "fingerprint": "eb389fad9350b2f785e4e96c3431bac58a18a000ed46570c7de573ebef2f6eec",
       "code": 2339,
       "file": "src/db.js",
@@ -3921,11 +3961,11 @@
       "count": 1
     },
     {
-      "fingerprint": "ec32f43b5d4e522f645ae16bef9f8a2afc313205eaca53464670b3802480a135",
+      "fingerprint": "ebe1e32944f6e6a5ce0550ae6cd790b7ca8174901f07809d292a7f5105d00530",
       "code": 2339,
-      "file": "src/mind/persona.js",
-      "messageSha256": "822f76e4677396dfc925d21ec1a9c294e16daf1a1f774794da3c47dc2cc0cbfe",
-      "siteSha256": "79fbb334b3445fcc465963fc4168d7299f24dd9c537bcca9cf2f1b2de4944e99",
+      "file": "src/mind/agent.js",
+      "messageSha256": "a312e4be75692837e0366feba3146f2f46af54f982ad4a3ee262ddcdd386cebf",
+      "siteSha256": "3a120b6cb73b19c6582ebfbd343fbb48fffbba54aaccac2bd0c1c730d8cbd3fb",
       "count": 1
     },
     {
@@ -3945,11 +3985,11 @@
       "count": 1
     },
     {
-      "fingerprint": "eccb5907d6e0b3fb0165885e9d61af4b3e2e33bc536a88107a2442c946fefcb2",
-      "code": 2353,
-      "file": "src/mind/agent.js",
-      "messageSha256": "6476a1e4d5e103915ca6c40b739e672676034cb163d306b72069293fd1d119be",
-      "siteSha256": "b28822bae16488f46f008245fcbd935774da68f55ed771fbe8cfa8f8e42c7ed4",
+      "fingerprint": "ecdfd93775409017aaea100d09ab1564e1a8150f695e98bc8881943ded2f6226",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
+      "siteSha256": "c513999a0245f4505a31217e5a557d6a2f51aba71c593f83e9cf0206eb8ca674",
       "count": 1
     },
     {
@@ -3969,19 +4009,11 @@
       "count": 1
     },
     {
-      "fingerprint": "ee5225bb57535848864b665abbde46519551fc2fde245cdc27ca3c590f4f7dd2",
+      "fingerprint": "eeffdb1fcd3f38533e701daf060e92cecca0a60f9e5fa7466bd783be381e3353",
       "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
-      "siteSha256": "b3febc1f2b483951d9f5a68deb10d73036e741846e59e46ac016537b3fabbf88",
-      "count": 1
-    },
-    {
-      "fingerprint": "ef68832cb86b99c03b15f50a36ddcb270c2610a98c9a4ea9561fcee4f33603df",
-      "code": 2339,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "65a09869040bb474fd00447089ec29500ac3f38348ef5715cb726635ac589bdd",
-      "siteSha256": "6cdfdcffe43df68f83d73c0292a6d3bd25dd76f3abcf271a31d3cc7b59e34a44",
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "12c0e7baf88ecd8d25d0f4b00c41f2892fc622a715644ec16263db2ba07c2a8a",
+      "siteSha256": "0e6b6909a3f301ffa413919562b5b407a4772b448e3fe00aa06d6ee41e75a7c4",
       "count": 1
     },
     {
@@ -3993,35 +4025,11 @@
       "count": 1
     },
     {
-      "fingerprint": "efbdcf9a3b1fef6d77878e157c08e4ff33f671138c70c0866c663c50990d5438",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "1e1484ad14aec9d6f45000677fcacdf173b9f78d10c4bffbf5934244e161f666",
-      "siteSha256": "9fcf576d100f928689b58b2409eff59d7d3c4f59903bb5389798c1f3713f7d63",
-      "count": 1
-    },
-    {
-      "fingerprint": "f036fac3108b20d048e3ca1c464b93d6933ec6cb37d1b9b3a76c1812f936aaeb",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "24544d43083da7ee12c9bf32fda34b0f8d225792c9f14f33b46eccd8c5dbf17a",
-      "count": 1
-    },
-    {
-      "fingerprint": "f0898d8d029cfbac745acb8b4e952a8920bfee866f0b0dd30b755ea613149028",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "7cf455cf9b934194957bc3ffbe195309717b47cf0c11543c2c37cff39ae3ccb1",
-      "siteSha256": "dbdb40d61abbf2f304435ec9b561328fe263a53536d6d34dc726d85a85bceec9",
-      "count": 1
-    },
-    {
-      "fingerprint": "f15487d6ebaeab10b99137bcccde71d093988c3370475b3d36e525d7bc9d3c91",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "b3eb2eeb94f59acdd4efe6a64befa9f335084db59d3beab17c5501ac36fc4da0",
-      "siteSha256": "910ac74103a4785def85b0c27c1958ab36b6dfd1fa67612bee21a9b33ab097f4",
+      "fingerprint": "eff1e76d5da7d29d55582d4fe38c64fc3b0dc5a66c8d6cc08224d8d73e47afe2",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
+      "siteSha256": "5596ed57db4be7baedf7586b88a90beaa904a3339e62e80c2b6b5d31b5950c36",
       "count": 1
     },
     {
@@ -4041,14 +4049,6 @@
       "count": 1
     },
     {
-      "fingerprint": "f266a7d045cb34f7d354adad714ca00310e6f55e67d64dfea6df56837660f107",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "0b3edd232bdf40593c72cdab20dc9524994050a38024d0f480cf8dab1c452bc6",
-      "siteSha256": "f52449741aeb631286d4ad6b4fdec417e410cf6d6eaf55ae97a72ba720fb4b7b",
-      "count": 1
-    },
-    {
       "fingerprint": "f27197e2360e4ac1f225fb19fa6e2af9e06d4044fd8ac039d1835298bea491ab",
       "code": 2339,
       "file": "src/mind/cognitive.js",
@@ -4057,35 +4057,11 @@
       "count": 1
     },
     {
-      "fingerprint": "f28efebb67faaa724a7c2f5e8fc6e83dc7364fb2f30f34490b7219851ba939c9",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "77d77191e9e1a6a6e54d40bd0129e1f9b8dd3f4c7a4c044300ee79b7d28b28e9",
-      "siteSha256": "757b256567eec9a827292e076cee7ee1f387e8579742920c82467ba8c58781f2",
-      "count": 1
-    },
-    {
-      "fingerprint": "f3d41fb24eb6888021f35ad2fd48c468f394e51a5341c385751f00741d4124cd",
+      "fingerprint": "f31d38a4d93ffa2f582df412f61232def9e95d28764a1a514ff37cd1ad0e23f8",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "d2ac950c0ffbabbdb8850e3b6a61c9a11f660ef0df82cec7ca6f17a52a6a02bc",
-      "siteSha256": "8e2d6af71d92ca164d3c6dc03924acda2744602a5afd0291382e52cca2965dd3",
-      "count": 1
-    },
-    {
-      "fingerprint": "f3f5630b24505aafb91dae952d8ba87d36a0feda1c56cba6e5a4fb0caf06fb4f",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "c373ad607792ce1e3676a12ea66aff68c3b8b8c458760da93bafbb97288e37ba",
-      "siteSha256": "4774a4b1f18f1e9bf904a1c2862e48c1dbdc48b1d187ff609bcc7d74a2b6910d",
-      "count": 1
-    },
-    {
-      "fingerprint": "f3f60557a50e8db9f7afe470ba26c3e9cfb4ceccd12130c0a75aad5c2dc1234a",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "cbdc69b736eb9c21085f461494636f79692114da3cdacb9907133d93cbf9d504",
+      "messageSha256": "94eae3cc38aaea250d694c442bc23aa97e53fa91d2b71b5168062788d35539ea",
+      "siteSha256": "441f31976c0bc5899a53065d83fa804f4bdda130eb80f42ba46e3cc58b95676e",
       "count": 1
     },
     {
@@ -4094,6 +4070,22 @@
       "file": "src/mind/cognitive.js",
       "messageSha256": "303a89fcc49c218e2ee466fccba1d134d54cfe1f2d1538beb11f5775809b7548",
       "siteSha256": "d015b90d30b7dd8322a5cdf348543cd607605c64a56aa8e69243de15d963e371",
+      "count": 1
+    },
+    {
+      "fingerprint": "f4852d812d6e917d8ef8aad462cce41930cf45cbf603144d4a92c4c3dcda674a",
+      "code": 2353,
+      "file": "src/mind/agent.js",
+      "messageSha256": "aeba483624cb50dd88d1130dcbe0287b1ab558ed3b84ca2831102533c506592b",
+      "siteSha256": "ed56fa57f3b8c8443cf4c959ea1768369690f6002dc281b11477096a01933af4",
+      "count": 1
+    },
+    {
+      "fingerprint": "f4cd027a6363c38c06165d6f68bb6c329bd4de87ed8ab8556ff7ac93aa41a8c5",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "a0277320e79871c89ef4ae1d2c36e94046fbc42872a384ee260c3b1ec38174d8",
+      "siteSha256": "0ae6e531fe6a96b20e7519ba953ff8be120eb9325396c8a392dec6e87c502490",
       "count": 1
     },
     {
@@ -4121,11 +4113,19 @@
       "count": 1
     },
     {
-      "fingerprint": "f7a93f561d8b62491ccdd9a061bbfc167b81d3d0a9546e016da7fc71d5182f1f",
+      "fingerprint": "f7aeba7fbe093e61627286a40199df6a5c52f1f9125894ce70cb42c437033bda",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "29e89e25bd55321eb1578dbab2623e972a26d198fbccd1ce815ecd12f6e6c94d",
+      "messageSha256": "1d1f656ceccdb96e44e3bfc982ca9106d09670464b7ad6dd326c1439ade16087",
+      "siteSha256": "8a609d0291b66f7e49c0d086352e8b7ce63f5237029032f71bf92d3dff7d303c",
+      "count": 1
+    },
+    {
+      "fingerprint": "f7b90478fb80f6306e88bac4ba7823297bdc677c7bd8e676b7ac3df076168f52",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "6a55df8375f0aa079f10bb38b9fe6ae111c6050835205a9a45a46fd3d231b7ce",
       "count": 1
     },
     {
@@ -4137,14 +4137,6 @@
       "count": 1
     },
     {
-      "fingerprint": "f810a3f751028fe79942bea5e4ac8dc282ef7b3849819d569944beec1cec1aba",
-      "code": 2353,
-      "file": "src/integrations/telegram.js",
-      "messageSha256": "6382cef368745da4f447374fcc854721abbe0ee8c94225efe64265a03fee3676",
-      "siteSha256": "1ffb9f8556f4efcb48b739d2e4ca4b711920247b92084535d5305cd734dd288f",
-      "count": 1
-    },
-    {
       "fingerprint": "f9ac5acbb8e169404e4f5a2d22af048d94818c69f00f2ab66bc5b602d72b61d5",
       "code": 2339,
       "file": "src/mind/household.js",
@@ -4153,27 +4145,27 @@
       "count": 1
     },
     {
-      "fingerprint": "f9c9c8a5090faa59a39fb42985fb109b269abf469d8b1c1a2ad627d280e986a2",
+      "fingerprint": "f9e1d56abe6ffdd8417c30185510ca2011224a2a338e886b39064d76ee06b135",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "0bd85dc0aa524b32a09639a2016eb43ba283463c7f93005df24f48e0fa02584c",
+      "siteSha256": "9d583619f6991ba5fda3994beca2e13d96ed96eeb9fb485bfdbb335b9b3dd036",
+      "count": 1
+    },
+    {
+      "fingerprint": "fb91e2400c810fe4864e3592a604a472713c4f8db07d6716de373db34b309cbb",
+      "code": 2339,
+      "file": "src/mind/portfolio.js",
+      "messageSha256": "6a97342e40917a9641ad067841d14e465ac28b36a115645f7f89aefff9bf8b5b",
+      "siteSha256": "f88654351ae3f6f33cdb30cbefbba0ff1cf5a658fe82de6fabc787edc0ba7d5e",
+      "count": 1
+    },
+    {
+      "fingerprint": "fbf63f641caa576fe203b6bed1b0fcf2e336050d66ee55f2fe44208bc8df5f93",
       "code": 2339,
       "file": "src/mind/agent.js",
-      "messageSha256": "9c24cd2478c56a909e46f4b159b4a199fd5a588626f3803040a063ca7829dcbb",
-      "siteSha256": "32b689529d5072ab538b45165b98d23fd0f44dda1d7161d43eedbb6e5ac4eb43",
-      "count": 1
-    },
-    {
-      "fingerprint": "fa31a02eae916eba75b7d60ef2cc69719c6cdeb2b060b3f38928bfe48756d6ea",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "7a7cf542eb271c3ff13fe5152087b374cec4171b3cde326e2b07d5ccc06698a5",
-      "siteSha256": "93efec2bda848c3efd4f22b1ec75074a1863583c836ce22dac404631c33f1f18",
-      "count": 1
-    },
-    {
-      "fingerprint": "fa9e3d6b04c7112268e8ddd253590dae26b874db4e289519f82600328be8842a",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
       "messageSha256": "cebf00858a9f66d45b018ca7e4bcc2f3b22029d594b6fffdfc9ad557344b22e4",
-      "siteSha256": "3a61177417cf42c6de8a839eea0fa7acd55b9548745a6030fc9b645da6488889",
+      "siteSha256": "0830c91eeb3c7c3cc286f947af948f48d00cd6a11603960d4df0539d3bd40f65",
       "count": 1
     },
     {
@@ -4182,6 +4174,22 @@
       "file": "src/mind/workcells.js",
       "messageSha256": "e1146ae4539eea28b4b6beae842a761c56cfb4a8b7c0546327af8671527a401f",
       "siteSha256": "9b8ba74e5bf553a01fdae08920150fcf29d9eb9d821ffadcd2d365176fc73f93",
+      "count": 1
+    },
+    {
+      "fingerprint": "fcbbf796f62f4ba362946e3a8125465f4c3a00c67a358e523a2d725542e64eaf",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "d88d6d0c8224dc35b9b98bc9936f865bda2bfe4823ce461af205f5e0bb749984",
+      "siteSha256": "0f2aaf362a9ef954642d1843a2e2a8a4c49678ed5d6399b5c1f2a05944ded3fe",
+      "count": 1
+    },
+    {
+      "fingerprint": "fcbee37b43a36cfa6d4f34b5ad6e9605a66d81209e6c424c296b33f309560abb",
+      "code": 2339,
+      "file": "src/mind/agent.js",
+      "messageSha256": "7e403c5dd5b3e7fa23d6c7fcd96bfc218c3ba2637b47a5714cc2e7a7ffee5abe",
+      "siteSha256": "4b2d78444ad35c401ff8988fe04e283babd1bd9da93742c5b7e934cd90275c70",
       "count": 1
     },
     {
@@ -4201,19 +4209,19 @@
       "count": 1
     },
     {
+      "fingerprint": "fe1ca286517487a66e39e3ebcc6e22149a82a11a23febc434bdee2effb9b38c7",
+      "code": 2353,
+      "file": "src/integrations/telegram.js",
+      "messageSha256": "8bf8168af58954e6afeaacc94f92a0cefe63e95b4babf03fad677d342455942b",
+      "siteSha256": "cbf71bfb9ab6ce558a4c2e44881f7e0aba1def7bd7dff4e9a7b0a71a639ac787",
+      "count": 1
+    },
+    {
       "fingerprint": "fe58873ba049ac9021933dd5b18f3c79f98137ec248e3cefb34c625b722db23c",
       "code": 2353,
       "file": "src/mind/perception.js",
       "messageSha256": "502d268f4e996b9b4fc94c02b130b8a3b9840470676e52652ed5fa0af7072679",
       "siteSha256": "35dfe55070b156ada2a50efe2010e2781edf8ca79dcd56fb75cc6221511d21e3",
-      "count": 1
-    },
-    {
-      "fingerprint": "fe715cf4d9a75dff2413cef5f9f457563a07b9c5f697f2494e8c0b9420b55105",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "25815f5c899184a0a1517a8a6fe06009d65a8a257224ea86c12b40c3d6fb0070",
-      "siteSha256": "d000c58027641f63e5f91701a5df8292dd94cb1f7afb8049e6f0409328b7a89f",
       "count": 1
     },
     {
@@ -4230,22 +4238,6 @@
       "file": "src/db.js",
       "messageSha256": "d989daad8a2c332e163767d323b24460b454f05c72057869a3b8a1c9595fee16",
       "siteSha256": "fbd1855219180733ca1696ad0213d9e88c68caa8f7a7c1ea3e2d5c9fe3304b64",
-      "count": 1
-    },
-    {
-      "fingerprint": "ff5e66f4d8f0cc698a840888241d9be65afbf130c36cd552ddb829c641aad048",
-      "code": 2339,
-      "file": "src/mind/portfolio.js",
-      "messageSha256": "bd3ee846d3e645960408f8027b40d90fe27ece48908367d343cee074d3e3db3f",
-      "siteSha256": "f57ede74143553cc10fb5611f2efa33c02d71c4caf10a1d52fc3e31c0fc7d532",
-      "count": 1
-    },
-    {
-      "fingerprint": "fff53253e52c41732847f94badeee7a9a35881b4f47bf5894fe67066d26b6b9b",
-      "code": 2339,
-      "file": "src/mind/agent.js",
-      "messageSha256": "d27094d791898c99007e42bd6642fb009c07727bcfcb6daafdbb6c2c366e4d37",
-      "siteSha256": "04a166c1db55495f41cdf9828b1e6cc185888f43d967595021dda63e6832683c",
       "count": 1
     }
   ]

@@ -1,9 +1,9 @@
 {
   "schema": "EvaRuntimeContractMap/v1",
-  "sourceDigest": "41b73f378b7a15342b3487decafec77f3b580aca9b6b6ff6ef2893c072415b6f",
+  "sourceDigest": "ae881720a24a89821bfa4f73ede26cad75f94c14705754037bd33addeae6c7af",
   "summary": {
     "files": 76,
-    "localEdges": 326,
+    "localEdges": 331,
     "dynamicEdges": 19,
     "cycles": 0,
     "runtimeCycles": 1
@@ -33,23 +33,23 @@
     {
       "domain": "integrations",
       "files": 4,
-      "lines": 6331,
+      "lines": 6374,
       "localEdges": 20,
       "exports": 49
     },
     {
       "domain": "mind",
       "files": 45,
-      "lines": 57500,
-      "localEdges": 214,
-      "exports": 510
+      "lines": 57841,
+      "localEdges": 217,
+      "exports": 511
     },
     {
       "domain": "runtime",
       "files": 10,
-      "lines": 8095,
-      "localEdges": 34,
-      "exports": 186
+      "lines": 8787,
+      "localEdges": 35,
+      "exports": 193
     },
     {
       "domain": "secrets",
@@ -68,9 +68,9 @@
     {
       "domain": "web",
       "files": 8,
-      "lines": 6619,
-      "localEdges": 45,
-      "exports": 51
+      "lines": 6838,
+      "localEdges": 46,
+      "exports": 54
     }
   ],
   "entrypoints": [
@@ -131,7 +131,9 @@
       "src/mind/workcells.js",
       "src/self/vault.js",
       "src/voiceauthority.js",
-      "src/web/httpingress.js"
+      "src/web/httpdelivery.js",
+      "src/web/httpingress.js",
+      "src/web/httpresponseauthority.js"
     ]
   ],
   "files": [
@@ -613,9 +615,9 @@
     {
       "file": "src/config.js",
       "domain": "runtime",
-      "bytes": 23142,
-      "lines": 556,
-      "sha256": "23b46c2c87001b6b3b8bf36b0dd0790458c0eaaaf621991bffce6d8c47573386",
+      "bytes": 23915,
+      "lines": 570,
+      "sha256": "af5cf9703c82e17f528e995fd26dba0d3e5d203210e81d90f554efa116cf1b35",
       "imports": [
         {
           "specifier": "dotenv/config",
@@ -718,17 +720,17 @@
         {
           "name": "parseVoiceAssistSatelliteTargets",
           "kind": "function",
-          "line": 429
+          "line": 437
         },
         {
           "name": "config",
           "kind": "value",
-          "line": 459
+          "line": 467
         },
         {
           "name": "default",
           "kind": "default",
-          "line": 555
+          "line": 569
         }
       ],
       "sql": {
@@ -1578,9 +1580,9 @@
     {
       "file": "src/index.js",
       "domain": "runtime",
-      "bytes": 4476,
-      "lines": 127,
-      "sha256": "465281cb39135b629e294dfa4045678ca624f6eec34cffc8b472680791b80b61",
+      "bytes": 4798,
+      "lines": 132,
+      "sha256": "c964e662064a5765ec1973a5802e4c6a66268c18561cf6efdd754841dd6e46ae",
       "imports": [
         {
           "specifier": "node:fs",
@@ -2140,9 +2142,9 @@
     {
       "file": "src/integrations/telegram.js",
       "domain": "integrations",
-      "bytes": 143726,
-      "lines": 3447,
-      "sha256": "4875e605bbb55bbc7877dfbe2194f27136415c511437ff5bd8d9a9f81008563d",
+      "bytes": 145284,
+      "lines": 3490,
+      "sha256": "04cfd9980285b2c6dd1c711b7084475826e4022f7ff081cb64e732feb6144b08",
       "imports": [
         {
           "specifier": "grammy",
@@ -2285,31 +2287,31 @@
         {
           "specifier": "../mind/agent.js",
           "kind": "dynamic",
-          "line": 1811,
+          "line": 1854,
           "target": "src/mind/agent.js"
         },
         {
           "specifier": "../mind/agent.js",
           "kind": "dynamic",
-          "line": 1889,
+          "line": 1932,
           "target": "src/mind/agent.js"
         },
         {
           "specifier": "../mind/agent.js",
           "kind": "dynamic",
-          "line": 2566,
+          "line": 2609,
           "target": "src/mind/agent.js"
         },
         {
           "specifier": "../mind/agent.js",
           "kind": "dynamic",
-          "line": 2634,
+          "line": 2677,
           "target": "src/mind/agent.js"
         },
         {
           "specifier": "../mind/agent.js",
           "kind": "dynamic",
-          "line": 2683,
+          "line": 2726,
           "target": "src/mind/agent.js"
         }
       ],
@@ -2341,37 +2343,37 @@
         {
           "name": "verifiedTelegramDeliveryAuthority",
           "kind": "function",
-          "line": 1633
+          "line": 1643
         },
         {
           "name": "consumeTelegramDeliveryAuthority",
           "kind": "function",
-          "line": 1645
+          "line": 1655
         },
         {
           "name": "startTelegram",
           "kind": "function",
-          "line": 2349
+          "line": 2392
         },
         {
           "name": "telegramPollingOptions",
           "kind": "function",
-          "line": 2719
+          "line": 2762
         },
         {
           "name": "sendToFamily",
           "kind": "function",
-          "line": 3423
+          "line": 3466
         },
         {
           "name": "sendPhotoToFamily",
           "kind": "function",
-          "line": 3430
+          "line": 3473
         },
         {
           "name": "sendVoiceToFamily",
           "kind": "function",
-          "line": 3439
+          "line": 3482
         }
       ],
       "sql": {
@@ -2405,9 +2407,9 @@
     {
       "file": "src/mind/agent.js",
       "domain": "mind",
-      "bytes": 504611,
-      "lines": 10777,
-      "sha256": "b1b87e3283784ac2e4e7aec22b9655a48af88e31cbc92d21516a3a0972f7357e",
+      "bytes": 513704,
+      "lines": 10975,
+      "sha256": "7004a69d5aeba38ebcdb681382cc6f432d49c74aa95647029b7a37f4df5ba5fe",
       "imports": [
         {
           "specifier": "node:perf_hooks",
@@ -2466,169 +2468,175 @@
         {
           "specifier": "./tools.js",
           "kind": "static",
-          "line": 38,
+          "line": 44,
           "target": "src/mind/tools.js"
         },
         {
           "specifier": "./home.js",
           "kind": "static",
-          "line": 55,
+          "line": 61,
           "target": "src/mind/home.js"
         },
         {
           "specifier": "./monitoringcontract.js",
           "kind": "static",
-          "line": 56,
+          "line": 62,
           "target": "src/mind/monitoringcontract.js"
         },
         {
           "specifier": "./perceptionattention.js",
           "kind": "static",
-          "line": 67,
+          "line": 73,
           "target": "src/mind/perceptionattention.js"
         },
         {
           "specifier": "./signals.js",
           "kind": "static",
-          "line": 68,
+          "line": 74,
           "target": "src/mind/signals.js"
         },
         {
           "specifier": "./understanding.js",
           "kind": "static",
-          "line": 69,
+          "line": 75,
           "target": "src/mind/understanding.js"
         },
         {
           "specifier": "./turnunderstandingoutcome.js",
           "kind": "static",
-          "line": 93,
+          "line": 99,
           "target": "src/mind/turnunderstandingoutcome.js"
         },
         {
           "specifier": "./turnplan.js",
           "kind": "static",
-          "line": 94,
+          "line": 100,
           "target": "src/mind/turnplan.js"
         },
         {
           "specifier": "./work.js",
           "kind": "static",
-          "line": 100,
+          "line": 106,
           "target": "src/mind/work.js"
         },
         {
           "specifier": "./household.js",
           "kind": "static",
-          "line": 101,
+          "line": 107,
           "target": "src/mind/household.js"
         },
         {
           "specifier": "../web/httpingress.js",
           "kind": "static",
-          "line": 102,
+          "line": 108,
           "target": "src/web/httpingress.js"
+        },
+        {
+          "specifier": "../web/httpdelivery.js",
+          "kind": "static",
+          "line": 113,
+          "target": "src/web/httpdelivery.js"
         },
         {
           "specifier": "./learning.js",
           "kind": "static",
-          "line": 106,
+          "line": 117,
           "target": "src/mind/learning.js"
         },
         {
           "specifier": "./social.js",
           "kind": "static",
-          "line": 118,
+          "line": 129,
           "target": "src/mind/social.js"
         },
         {
           "specifier": "./communication.js",
           "kind": "static",
-          "line": 124,
+          "line": 135,
           "target": "src/mind/communication.js"
         },
         {
           "specifier": "./cognitive.js",
           "kind": "static",
-          "line": 135,
+          "line": 146,
           "target": "src/mind/cognitive.js"
         },
         {
           "specifier": "./curiosity.js",
           "kind": "static",
-          "line": 142,
+          "line": 153,
           "target": "src/mind/curiosity.js"
         },
         {
           "specifier": "./runtimecontroller.js",
           "kind": "static",
-          "line": 149,
+          "line": 160,
           "target": "src/mind/runtimecontroller.js"
         },
         {
           "specifier": "./selfattentioncontext.js",
           "kind": "static",
-          "line": 154,
+          "line": 165,
           "target": "src/mind/selfattentioncontext.js"
         },
         {
           "specifier": "./projectexecution.js",
           "kind": "static",
-          "line": 155,
+          "line": 166,
           "target": "src/mind/projectexecution.js"
         },
         {
           "specifier": "./materialcompletion.js",
           "kind": "static",
-          "line": 175,
+          "line": 186,
           "target": "src/mind/materialcompletion.js"
         },
         {
           "specifier": "./artifacts.js",
           "kind": "static",
-          "line": 183,
+          "line": 194,
           "target": "src/mind/artifacts.js"
         },
         {
           "specifier": "../integrations/telegram.js",
           "kind": "static",
-          "line": 189,
+          "line": 200,
           "target": "src/integrations/telegram.js"
         },
         {
           "specifier": "./voicebridge.js",
           "kind": "static",
-          "line": 196,
+          "line": 207,
           "target": "src/mind/voicebridge.js"
         },
         {
           "specifier": "../turnauthority.js",
           "kind": "static",
-          "line": 201,
+          "line": 212,
           "target": "src/turnauthority.js"
         },
         {
           "specifier": "../voiceauthority.js",
           "kind": "static",
-          "line": 208,
+          "line": 220,
           "target": "src/voiceauthority.js"
         },
         {
           "specifier": "../executionledger.js",
           "kind": "static",
-          "line": 213,
+          "line": 225,
           "target": "src/executionledger.js"
         },
         {
           "specifier": "./portfolio.js",
           "kind": "static",
-          "line": 221,
+          "line": 233,
           "target": "src/mind/portfolio.js"
         },
         {
           "specifier": "../util.js",
           "kind": "static",
-          "line": 259,
+          "line": 271,
           "target": "src/util.js"
         }
       ],
@@ -2643,62 +2651,62 @@
         {
           "name": "recoverInterruptedTelegramUnderstandingIngress",
           "kind": "function",
-          "line": 6111
+          "line": 6211
         },
         {
           "name": "inspectPreparedTelegramUnderstandingRecovery",
           "kind": "function",
-          "line": 6419
+          "line": 6519
         },
         {
           "name": "preparedUnderstandingIngressReplay",
           "kind": "function",
-          "line": 6459
+          "line": 6559
         },
         {
           "name": "verifiedTelegramDurableHandoffProjection",
           "kind": "function",
-          "line": 6504
+          "line": 6604
         },
         {
           "name": "verifiedPreparedUnderstandingTurnForResult",
           "kind": "function",
-          "line": 6577
+          "line": 6677
         },
         {
           "name": "verifiedVoiceFinalDeliveryRecoveryRequest",
           "kind": "function",
-          "line": 6607
+          "line": 6730
         },
         {
           "name": "verifiedVoiceFinalDeliveryRecoveryForResult",
           "kind": "function",
-          "line": 6612
+          "line": 6735
         },
         {
           "name": "handleMessageDetailed",
           "kind": "function",
-          "line": 10239
+          "line": 10362
         },
         {
           "name": "recordDeliveredReply",
           "kind": "function",
-          "line": 10449
+          "line": 10617
         },
         {
           "name": "deliveredReplyRecorded",
           "kind": "function",
-          "line": 10527
+          "line": 10719
         },
         {
           "name": "runAutonomousTurn",
           "kind": "function",
-          "line": 10579
+          "line": 10771
         },
         {
           "name": "agentStatus",
           "kind": "function",
-          "line": 10661
+          "line": 10859
         }
       ],
       "sql": {
@@ -2706,6 +2714,7 @@
           "aspirations",
           "eva_episode_origins",
           "eva_explorations",
+          "eva_http_ingress_claim_events",
           "eva_work_items",
           "people",
           "telegram_messages",
@@ -3015,9 +3024,9 @@
     {
       "file": "src/mind/autonomy.js",
       "domain": "mind",
-      "bytes": 43232,
-      "lines": 1047,
-      "sha256": "1839322311f75ff290f6bbae84c90d2041bfaf016f2d923115d936e98679133c",
+      "bytes": 43794,
+      "lines": 1064,
+      "sha256": "076fbc774659e3046877e30e0a2fb9ca6e566862f6e8f71e799a5ea74c8b0ee7",
       "imports": [
         {
           "specifier": "../config.js",
@@ -3094,32 +3103,32 @@
         {
           "name": "shouldQueueWorldSignal",
           "kind": "function",
-          "line": 567
+          "line": 570
         },
         {
           "name": "shouldWakeForWorldSignal",
           "kind": "function",
-          "line": 596
+          "line": 599
         },
         {
           "name": "hasNightUrgentSignal",
           "kind": "function",
-          "line": 603
+          "line": 606
         },
         {
           "name": "startAutonomy",
           "kind": "function",
-          "line": 973
+          "line": 978
         },
         {
           "name": "autonomyStatus",
           "kind": "function",
-          "line": 996
+          "line": 1003
         },
         {
           "name": "__autonomyScheduleTest",
           "kind": "value",
-          "line": 1016
+          "line": 1033
         }
       ],
       "sql": {
@@ -5427,9 +5436,9 @@
     {
       "file": "src/mind/persona.js",
       "domain": "mind",
-      "bytes": 14881,
-      "lines": 213,
-      "sha256": "e9e266adc0209dcbad2b0529ea5523a86f4fb8dd6ec6f67dc00ae887a522ac65",
+      "bytes": 15904,
+      "lines": 236,
+      "sha256": "e39a5c119db22073ee747c485bfde5ad080613083314314298c7630f34a05fb6",
       "imports": [
         {
           "specifier": "../util.js",
@@ -5488,44 +5497,49 @@
           "line": 31
         },
         {
+          "name": "directSocialReply",
+          "kind": "function",
+          "line": 43
+        },
+        {
           "name": "semanticFailurePresentation",
           "kind": "function",
-          "line": 52
+          "line": 75
         },
         {
           "name": "semanticFailureReplyFeedback",
           "kind": "function",
-          "line": 67
+          "line": 90
         },
         {
           "name": "renderHouseActionResult",
           "kind": "function",
-          "line": 130
+          "line": 153
         },
         {
           "name": "renderCameraNotice",
           "kind": "function",
-          "line": 152
+          "line": 175
         },
         {
           "name": "renderReminderText",
           "kind": "function",
-          "line": 165
+          "line": 188
         },
         {
           "name": "buildInstructions",
           "kind": "function",
-          "line": 171
+          "line": 194
         },
         {
           "name": "buildRedactedInstructions",
           "kind": "value",
-          "line": 210
+          "line": 233
         },
         {
           "name": "default",
           "kind": "default",
-          "line": 212
+          "line": 235
         }
       ],
       "sql": {
@@ -5545,9 +5559,9 @@
     {
       "file": "src/mind/portfolio.js",
       "domain": "mind",
-      "bytes": 239172,
-      "lines": 5177,
-      "sha256": "22f5787c7d9006c344df37a2bccf5ae279a86eaed81dc91b14548b50bc903cfd",
+      "bytes": 243654,
+      "lines": 5277,
+      "sha256": "de14d6a69559b3e98d3c5a1b54093e2eb496780d01de6ea3d755aff15c611e46",
       "imports": [
         {
           "specifier": "node:crypto",
@@ -5574,45 +5588,57 @@
           "target": "src/voiceauthority.js"
         },
         {
-          "specifier": "../security/redaction.js",
+          "specifier": "../web/httpdelivery.js",
           "kind": "static",
           "line": 19,
+          "target": "src/web/httpdelivery.js"
+        },
+        {
+          "specifier": "../web/httpingress.js",
+          "kind": "static",
+          "line": 20,
+          "target": "src/web/httpingress.js"
+        },
+        {
+          "specifier": "../security/redaction.js",
+          "kind": "static",
+          "line": 21,
           "target": "src/security/redaction.js"
         },
         {
           "specifier": "../util.js",
           "kind": "static",
-          "line": 20,
+          "line": 22,
           "target": "src/util.js"
         },
         {
           "specifier": "./understanding.js",
           "kind": "static",
-          "line": 21,
+          "line": 23,
           "target": "src/mind/understanding.js"
         },
         {
           "specifier": "./home.js",
           "kind": "static",
-          "line": 26,
+          "line": 28,
           "target": "src/mind/home.js"
         },
         {
           "specifier": "./work.js",
           "kind": "static",
-          "line": 27,
+          "line": 29,
           "target": "src/mind/work.js"
         },
         {
           "specifier": "./artifacts.js",
           "kind": "static",
-          "line": 28,
+          "line": 30,
           "target": "src/mind/artifacts.js"
         },
         {
           "specifier": "./monitoringcontract.js",
           "kind": "static",
-          "line": 32,
+          "line": 34,
           "target": "src/mind/monitoringcontract.js"
         }
       ],
@@ -5629,252 +5655,252 @@
         {
           "name": "EPISODE_TRANSITIONS",
           "kind": "value",
-          "line": 696
+          "line": 698
         },
         {
           "name": "materializeExplorationEconomicHandoff",
           "kind": "function",
-          "line": 961
+          "line": 963
         },
         {
           "name": "replayExplorationEconomicHandoff",
           "kind": "function",
-          "line": 1083
+          "line": 1085
         },
         {
           "name": "listGoals",
           "kind": "function",
-          "line": 1095
+          "line": 1097
         },
         {
           "name": "dueGoalAttention",
           "kind": "function",
-          "line": 1102
+          "line": 1104
         },
         {
           "name": "manageGoal",
           "kind": "function",
-          "line": 1202
+          "line": 1204
         },
         {
           "name": "goalEpisodeById",
           "kind": "function",
-          "line": 1230
+          "line": 1232
         },
         {
           "name": "attachEpisodeOrigin",
           "kind": "function",
-          "line": 1339
+          "line": 1341
         },
         {
           "name": "createGoalEpisode",
           "kind": "function",
-          "line": 1416
+          "line": 1418
         },
         {
           "name": "bindEpisodeToWork",
           "kind": "function",
-          "line": 1479
+          "line": 1481
         },
         {
           "name": "ensureEpisodeForWorkItem",
           "kind": "function",
-          "line": 1501
+          "line": 1503
         },
         {
           "name": "createDurableWork",
           "kind": "function",
-          "line": 1562
+          "line": 1564
         },
         {
           "name": "recoverInterruptedUnderstandingIngresses",
           "kind": "function",
-          "line": 1895
+          "line": 1897
         },
         {
           "name": "interpretationRetryResume",
           "kind": "function",
-          "line": 1902
+          "line": 1904
         },
         {
           "name": "abandonInterpretationRetry",
           "kind": "function",
-          "line": 1925
+          "line": 1927
         },
         {
           "name": "interpretationReplyPreparationBinding",
           "kind": "function",
-          "line": 1938
+          "line": 1940
         },
         {
           "name": "verifyInterpretationRetryPendingDelivery",
           "kind": "function",
-          "line": 2090
+          "line": 2092
         },
         {
           "name": "interpretationReplyDeliveryGate",
           "kind": "function",
-          "line": 2108
+          "line": 2110
         },
         {
           "name": "resolveInterpretationRetryFailure",
           "kind": "function",
-          "line": 2161
+          "line": 2163
         },
         {
           "name": "completeInterpretationRetry",
           "kind": "function",
-          "line": 2240
+          "line": 2242
         },
         {
           "name": "registeredInterpretationRetryHandoffForOrigin",
           "kind": "function",
-          "line": 2588
+          "line": 2590
         },
         {
           "name": "createInterpretationRetryHandoff",
           "kind": "function",
-          "line": 2732
+          "line": 2734
         },
         {
           "name": "cancelInterpretationRetryForConversation",
           "kind": "function",
-          "line": 2841
+          "line": 2843
         },
         {
           "name": "adoptUnboundWorkEpisodes",
           "kind": "function",
-          "line": 2850
+          "line": 2852
         },
         {
           "name": "recoverStrandedDeliveryWork",
           "kind": "function",
-          "line": 2904
+          "line": 2906
         },
         {
           "name": "freezeEpisodeDelivery",
           "kind": "function",
-          "line": 2958
+          "line": 2960
         },
         {
           "name": "reconcileFrozenEpisodeDeliveries",
           "kind": "function",
-          "line": 3013
+          "line": 3015
         },
         {
           "name": "episodeForWork",
           "kind": "function",
-          "line": 3045
+          "line": 3047
         },
         {
           "name": "openEpisodeForConversation",
           "kind": "function",
-          "line": 3054
+          "line": 3056
         },
         {
           "name": "conversationWorkReceipt",
           "kind": "function",
-          "line": 3069
+          "line": 3071
         },
         {
           "name": "recentEpisodeArtifactReceipts",
           "kind": "function",
-          "line": 3100
+          "line": 3102
         },
         {
           "name": "episodeDeliveryOrigin",
           "kind": "function",
-          "line": 3132
+          "line": 3134
         },
         {
           "name": "transitionGoalEpisode",
           "kind": "function",
-          "line": 3449
+          "line": 3451
         },
         {
           "name": "updateDurableWork",
           "kind": "function",
-          "line": 3456
+          "line": 3458
         },
         {
           "name": "updateGoalEpisode",
           "kind": "function",
-          "line": 3482
+          "line": 3484
         },
         {
           "name": "reconcileTerminalProjects",
           "kind": "function",
-          "line": 3486
+          "line": 3488
         },
         {
           "name": "requiredTelegramOriginBinding",
           "kind": "function",
-          "line": 3530
+          "line": 3532
         },
         {
           "name": "verifyMonitoringLifecycleAuthority",
           "kind": "function",
-          "line": 4229
+          "line": 4231
         },
         {
           "name": "acceptedMonitoringDeliveryReceiptCandidate",
           "kind": "function",
-          "line": 4251
+          "line": 4253
         },
         {
           "name": "reconcileAcceptedMonitoringDelivery",
           "kind": "function",
-          "line": 4310
+          "line": 4312
         },
         {
           "name": "verifiedTelegramFinalDeliveryOrigin",
           "kind": "function",
-          "line": 4518
+          "line": 4520
         },
         {
           "name": "sealFinalDeliveryReply",
           "kind": "function",
-          "line": 4696
+          "line": 4792
         },
         {
           "name": "recordEpisodeDelivery",
           "kind": "function",
-          "line": 4958
+          "line": 5054
         },
         {
           "name": "recoverDeliveredEpisodeReceipts",
           "kind": "function",
-          "line": 5013
+          "line": 5109
         },
         {
           "name": "episodeNeedsDelivery",
           "kind": "function",
-          "line": 5054
+          "line": 5154
         },
         {
           "name": "episodeHasDelivery",
           "kind": "function",
-          "line": 5060
+          "line": 5160
         },
         {
           "name": "episodeHasFinalDelivery",
           "kind": "function",
-          "line": 5065
+          "line": 5165
         },
         {
           "name": "createAutoBoundTurnWork",
           "kind": "function",
-          "line": 5078
+          "line": 5178
         },
         {
           "name": "oneShotAutoBoundMemoryContribution",
           "kind": "function",
-          "line": 5106
+          "line": 5206
         },
         {
           "name": "selectPortfolioCommitment",
           "kind": "function",
-          "line": 5134
+          "line": 5234
         }
       ],
       "sql": {
@@ -6650,9 +6676,9 @@
     {
       "file": "src/mind/tools.js",
       "domain": "mind",
-      "bytes": 284414,
-      "lines": 5447,
-      "sha256": "774d9c4e0615693f985c2415220686ac8a8ca4a6010d2df22575ad2564bf80eb",
+      "bytes": 284637,
+      "lines": 5450,
+      "sha256": "6b01698261e9bd168ed69812266cc1a4a26efb53bc160f824df20ff96a1ff950",
       "imports": [
         {
           "specifier": "node:fs",
@@ -6849,31 +6875,31 @@
         {
           "specifier": "./vision.js",
           "kind": "dynamic",
-          "line": 3195,
+          "line": 3198,
           "target": "src/mind/vision.js"
         },
         {
           "specifier": "./vision.js",
           "kind": "dynamic",
-          "line": 3216,
+          "line": 3219,
           "target": "src/mind/vision.js"
         },
         {
           "specifier": "./vision.js",
           "kind": "dynamic",
-          "line": 4010,
+          "line": 4013,
           "target": "src/mind/vision.js"
         },
         {
           "specifier": "./vision.js",
           "kind": "dynamic",
-          "line": 4023,
+          "line": 4026,
           "target": "src/mind/vision.js"
         },
         {
           "specifier": "./vision.js",
           "kind": "dynamic",
-          "line": 4028,
+          "line": 4031,
           "target": "src/mind/vision.js"
         }
       ],
@@ -7084,27 +7110,27 @@
         {
           "name": "toolChangesByDefault",
           "kind": "function",
-          "line": 2859
+          "line": 2862
         },
         {
           "name": "toolsForTurn",
           "kind": "function",
-          "line": 2887
+          "line": 2890
         },
         {
           "name": "executeTool",
           "kind": "function",
-          "line": 5385
+          "line": 5388
         },
         {
           "name": "makeExecutor",
           "kind": "function",
-          "line": 5431
+          "line": 5434
         },
         {
           "name": "__toolsTest",
           "kind": "value",
-          "line": 5437
+          "line": 5440
         }
       ],
       "sql": {
@@ -8649,9 +8675,9 @@
     {
       "file": "src/turnauthority.js",
       "domain": "runtime",
-      "bytes": 26420,
-      "lines": 586,
-      "sha256": "8a092cf94a9d18af684f941f4f13b1b16a85cc25949b1ee80f13452529e59c62",
+      "bytes": 60125,
+      "lines": 1259,
+      "sha256": "b365ffe69252cf506e7c10fc327fbf5e6998519178fc7269c4661927cc52a1a6",
       "imports": [
         {
           "specifier": "node:crypto",
@@ -8670,6 +8696,12 @@
           "kind": "static",
           "line": 8,
           "target": "src/util.js"
+        },
+        {
+          "specifier": "./web/httpack.js",
+          "kind": "static",
+          "line": 9,
+          "target": "src/web/httpack.js"
         }
       ],
       "importedBy": [
@@ -8685,51 +8717,89 @@
         {
           "name": "TURN_UNDERSTANDING_AUTHORITY_CONTRACT",
           "kind": "value",
-          "line": 10
+          "line": 11
+        },
+        {
+          "name": "TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2",
+          "kind": "value",
+          "line": 13
         },
         {
           "name": "TURN_UNDERSTANDING_AUTHORITY_TABLE",
           "kind": "value",
-          "line": 12
+          "line": 15
+        },
+        {
+          "name": "TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME",
+          "kind": "value",
+          "line": 61
+        },
+        {
+          "name": "TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL",
+          "kind": "value",
+          "line": 63
+        },
+        {
+          "name": "TURN_UNDERSTANDING_AUTHORITY_HTTP_SOURCE_V1_TABLE_SQL",
+          "kind": "value",
+          "line": 110
         },
         {
           "name": "TURN_UNDERSTANDING_AUTHORITY_TABLE_SQL",
           "kind": "value",
-          "line": 29
+          "line": 159
         },
         {
           "name": "TURN_UNDERSTANDING_AUTHORITY_TRIGGER_SQL",
           "kind": "value",
-          "line": 76
+          "line": 185
+        },
+        {
+          "name": "TURN_UNDERSTANDING_AUTHORITY_PRIOR_TABLE_SQL",
+          "kind": "value",
+          "line": 263
+        },
+        {
+          "name": "TURN_UNDERSTANDING_AUTHORITY_PRIOR_TRIGGER_SQL",
+          "kind": "value",
+          "line": 274
         },
         {
           "name": "turnUnderstandingAuthorityStoreStatus",
           "kind": "function",
-          "line": 377
+          "line": 737
         },
         {
           "name": "requireTurnUnderstandingAuthorityStore",
           "kind": "function",
-          "line": 406
+          "line": 766
         },
         {
           "name": "initializeTurnUnderstandingAuthorityStore",
           "kind": "function",
-          "line": 416
+          "line": 776
         },
         {
           "name": "turnUnderstandingAuthorityBody",
           "kind": "function",
-          "line": 498
+          "line": 1122
         },
         {
           "name": "turnUnderstandingAuthorityRecord",
           "kind": "function",
-          "line": 525
+          "line": 1153
+        },
+        {
+          "name": "existingHttpTurnAuthorityBindingsExact",
+          "kind": "function",
+          "line": 1228
         }
       ],
       "sql": {
         "reads": [
+          "eva_http_client_ack_bindings_v3",
+          "eva_http_ingress_claim_events",
+          "eva_http_ingress_requests",
           "sqlite_master",
           "sqlite_temp_master",
           "turn_tool_executions"
@@ -9179,6 +9249,7 @@
         }
       ],
       "importedBy": [
+        "src/turnauthority.js",
         "src/web/httpdelivery.js",
         "src/web/httpingress.js",
         "src/web/httpresponseauthority.js"
@@ -9235,9 +9306,9 @@
     {
       "file": "src/web/httpdelivery.js",
       "domain": "web",
-      "bytes": 84745,
-      "lines": 1844,
-      "sha256": "daa8a04df5428d357964dec6b643afa04f3d0d2d74fe00c9769dd6a06155a518",
+      "bytes": 88921,
+      "lines": 1936,
+      "sha256": "ab55c713e62bfbd31c575d8717751dff61f9c30241d9b85c22d37c1a251cb4b1",
       "imports": [
         {
           "specifier": "node:crypto",
@@ -9270,91 +9341,109 @@
           "target": "src/web/httpresponseauthority.js"
         },
         {
-          "specifier": "./sqliteindexattestation.js",
+          "specifier": "./httpingress.js",
           "kind": "static",
           "line": 15,
+          "target": "src/web/httpingress.js"
+        },
+        {
+          "specifier": "./sqliteindexattestation.js",
+          "kind": "static",
+          "line": 16,
           "target": "src/web/sqliteindexattestation.js"
         },
         {
           "specifier": "./httpack.js",
           "kind": "re-export",
-          "line": 17,
+          "line": 18,
           "target": "src/web/httpack.js"
         }
       ],
       "importedBy": [
+        "src/mind/agent.js",
+        "src/mind/portfolio.js",
         "src/web/server.js"
       ],
       "exports": [
         {
           "name": "canonicalHttpClientAckPreimage",
           "kind": "re-export",
-          "line": 17
+          "line": 18
         },
         {
           "name": "verifyHttpClientAck",
           "kind": "re-export",
-          "line": 17
+          "line": 18
         },
         {
           "name": "httpDeliveryStoreStatus",
           "kind": "function",
-          "line": 1469
+          "line": 1471
         },
         {
           "name": "beginHttpDelivery",
           "kind": "function",
-          "line": 1477
+          "line": 1479
         },
         {
           "name": "replayHttpDelivery",
           "kind": "function",
-          "line": 1518
+          "line": 1521
         },
         {
           "name": "claimHttpDeliveryWrite",
           "kind": "function",
-          "line": 1529
+          "line": 1532
         },
         {
           "name": "claimHttpDeliveryTransmission",
           "kind": "function",
-          "line": 1594
+          "line": 1597
         },
         {
           "name": "finishHttpDeliveryWrite",
           "kind": "function",
-          "line": 1672
+          "line": 1675
         },
         {
           "name": "finishHttpDeliveryTransmission",
           "kind": "function",
-          "line": 1689
+          "line": 1692
         },
         {
           "name": "abandonHttpDeliveryWrite",
           "kind": "function",
-          "line": 1709
+          "line": 1712
         },
         {
           "name": "abandonHttpDeliveryTransmission",
           "kind": "function",
-          "line": 1725
+          "line": 1728
         },
         {
           "name": "httpDeliveryWriteAuthorityCurrent",
           "kind": "function",
-          "line": 1741
+          "line": 1744
         },
         {
           "name": "httpDeliveryTransmissionAuthorityCurrent",
           "kind": "function",
-          "line": 1748
+          "line": 1751
+        },
+        {
+          "name": "verifiedAcknowledgedHttpAgentDeliveryProof",
+          "kind": "function",
+          "line": 1842
+        },
+        {
+          "name": "releaseAcknowledgedHttpAgentDeliveryProof",
+          "kind": "function",
+          "line": 1848
         },
         {
           "name": "acknowledgeHttpDelivery",
           "kind": "function",
-          "line": 1764
+          "line": 1856
         }
       ],
       "sql": {
@@ -9363,6 +9452,7 @@
           "eva_http_delivery_attempt_events_v3",
           "eva_http_delivery_items_v3",
           "eva_http_delivery_transmission_events_v3",
+          "eva_http_ingress_requests",
           "eva_http_response_authorities_v3",
           "sqlite_master",
           "sqlite_temp_master"
@@ -9390,9 +9480,9 @@
     {
       "file": "src/web/httpingress.js",
       "domain": "web",
-      "bytes": 107760,
-      "lines": 2440,
-      "sha256": "be360bbfa5d99216e003074d64f1d1a8438c039018bdb036423121265ff0ffe0",
+      "bytes": 111368,
+      "lines": 2522,
+      "sha256": "f1e5cef814b8d225c054354994e735b53ee0abe97de8010e2a35376adf879314",
       "imports": [
         {
           "specifier": "node:crypto",
@@ -9427,36 +9517,38 @@
         {
           "specifier": "../mind/understanding.js",
           "kind": "static",
-          "line": 7,
+          "line": 12,
           "target": "src/mind/understanding.js"
         },
         {
           "specifier": "../util.js",
           "kind": "static",
-          "line": 11,
+          "line": 16,
           "target": "src/util.js"
         },
         {
           "specifier": "./httpack.js",
           "kind": "static",
-          "line": 12,
+          "line": 17,
           "target": "src/web/httpack.js"
         },
         {
           "specifier": "./requestidentity.js",
           "kind": "static",
-          "line": 13,
+          "line": 18,
           "target": "src/web/requestidentity.js"
         },
         {
           "specifier": "./sqliteindexattestation.js",
           "kind": "static",
-          "line": 14,
+          "line": 19,
           "target": "src/web/sqliteindexattestation.js"
         }
       ],
       "importedBy": [
         "src/mind/agent.js",
+        "src/mind/portfolio.js",
+        "src/web/httpdelivery.js",
         "src/web/httpresponseauthority.js",
         "src/web/server.js"
       ],
@@ -9464,62 +9556,67 @@
         {
           "name": "httpIngressStoreStatus",
           "kind": "function",
-          "line": 924
+          "line": 964
         },
         {
           "name": "canonicalHttpIntentSha256",
           "kind": "function",
-          "line": 997
+          "line": 1037
         },
         {
           "name": "issueVerifiedHttpResultAuthority",
           "kind": "function",
-          "line": 1136
+          "line": 1176
         },
         {
           "name": "durableHttpIngressResponseBoundaryStatus",
           "kind": "function",
-          "line": 1986
+          "line": 2026
         },
         {
           "name": "consumeDurableHttpIngressResponseAuthority",
           "kind": "function",
-          "line": 1994
+          "line": 2034
         },
         {
           "name": "httpIngressAuthorityCurrent",
           "kind": "function",
-          "line": 2063
+          "line": 2103
         },
         {
           "name": "verifiedHttpIngressExecutionAuthority",
           "kind": "function",
-          "line": 2073
+          "line": 2113
+        },
+        {
+          "name": "verifiedDurableHttpIngressUnderstandingSource",
+          "kind": "function",
+          "line": 2136
         },
         {
           "name": "renewHttpIngressAuthority",
           "kind": "function",
-          "line": 2096
+          "line": 2178
         },
         {
           "name": "releaseHttpIngressAuthority",
           "kind": "function",
-          "line": 2117
+          "line": 2199
         },
         {
           "name": "beginHttpIngress",
           "kind": "function",
-          "line": 2137
+          "line": 2219
         },
         {
           "name": "prepareHttpResponse",
           "kind": "function",
-          "line": 2266
+          "line": 2348
         },
         {
           "name": "settleHttpIngress",
           "kind": "function",
-          "line": 2393
+          "line": 2475
         }
       ],
       "sql": {
@@ -9883,9 +9980,9 @@
     {
       "file": "src/web/server.js",
       "domain": "web",
-      "bytes": 50283,
-      "lines": 1275,
-      "sha256": "8aad39ddee35dd118a5ea5db1dddced26fd5dbde2501492f5a3675b6e420d49b",
+      "bytes": 52077,
+      "lines": 1320,
+      "sha256": "0b5a5db09ed0043f4176a353882eccf2585eea697ce1fd950e08613357e59b44",
       "imports": [
         {
           "specifier": "node:crypto",
@@ -10034,19 +10131,19 @@
         {
           "specifier": "./httpdelivery.js",
           "kind": "static",
-          "line": 59,
+          "line": 61,
           "target": "src/web/httpdelivery.js"
         },
         {
           "specifier": "./httpresponseauthority.js",
           "kind": "static",
-          "line": 72,
+          "line": 74,
           "target": "src/web/httpresponseauthority.js"
         },
         {
           "specifier": "./access.js",
           "kind": "re-export",
-          "line": 110,
+          "line": 112,
           "target": "src/web/access.js"
         }
       ],
@@ -10057,22 +10154,22 @@
         {
           "name": "publicBusEventData",
           "kind": "function",
-          "line": 100
+          "line": 102
         },
         {
           "name": "familyTimelineEntry",
           "kind": "re-export",
-          "line": 110
+          "line": 112
         },
         {
           "name": "startWeb",
           "kind": "function",
-          "line": 743
+          "line": 785
         },
         {
           "name": "default",
           "kind": "default",
-          "line": 1274
+          "line": 1319
         }
       ],
       "sql": {

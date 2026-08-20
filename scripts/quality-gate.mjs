@@ -37,6 +37,16 @@ const TYPECHECK_DEBT_CONTRACT = 'EvaTypeScriptDiagnosticDebt/v4';
 const TYPECHECK_DIAGNOSTIC_CONTRACT = 'EvaTypeScriptDiagnostic/v3';
 const TYPECHECK_INPUT_RECEIPT_CONTRACT = 'EvaTypeScriptInputReceipt/v3';
 const TYPECHECK_DEBT_MANIFEST = 'typescript-diagnostic-debt.json';
+const TYPECHECK_NON_COMPILER_INPUT_CONTRACT = Object.freeze({
+  contract: 'EvaTypeScriptNonCompilerInputs/v1',
+  exactRepositoryPaths: Object.freeze([
+    'docs/eva-repository-inventory.generated.json',
+    'docs/eva-repository-inventory.generated.md',
+  ]),
+});
+const TYPECHECK_NON_COMPILER_INPUTS = new Set(
+  TYPECHECK_NON_COMPILER_INPUT_CONTRACT.exactRepositoryPaths,
+);
 const TYPECHECK_PRIVATE_WORKER_PROTOCOL = 'EvaTypeScriptPrivateWorker/v1';
 const EXPECTED_TYPESCRIPT_VERSION = '5.9.3';
 const HASH_PATTERN = /^[a-f0-9]{64}$/u;
@@ -733,6 +743,10 @@ function loadConfiguration(configFile, snapshotFileSystem, expectedRoot = root, 
 
 const REPOSITORY_TOPOLOGY_EXCLUDES = new Set(['.git', 'coverage', 'data', 'dist']);
 
+function isTypeScriptNonCompilerInput(relative) {
+  return TYPECHECK_NON_COMPILER_INPUTS.has(relative.split(path.sep).join('/'));
+}
+
 function assertNoExcludedSemanticPath(file, expectedRoot, label) {
   const absolute = path.resolve(file);
   if (absolute === TYPESCRIPT_PACKAGE_ROOT
@@ -741,6 +755,9 @@ function assertNoExcludedSemanticPath(file, expectedRoot, label) {
   const relative = path.relative(repository, absolute);
   if (!relative || (!relative.startsWith(`..${path.sep}`) && relative !== '..'
       && !path.isAbsolute(relative))) {
+    if (isTypeScriptNonCompilerInput(relative)) {
+      throw new Error(`${label} gebruikt gegenereerde repository-inventaris als niet-compilerinput`);
+    }
     const [first] = relative.split(path.sep);
     if (REPOSITORY_TOPOLOGY_EXCLUDES.has(first)) {
       throw new Error(`${label} gebruikt uitgesloten root ${first} zonder inhoudsreceipt`);
@@ -841,7 +858,11 @@ function topologyBinding(nodes, snapshots) {
   return Object.freeze({
     count: topology.length,
     bytes: inventory.bytes,
-    sha256: sha256(JSON.stringify({ topology, files })),
+    sha256: sha256(JSON.stringify({
+      nonCompilerInputs: TYPECHECK_NON_COMPILER_INPUT_CONTRACT,
+      topology,
+      files,
+    })),
   });
 }
 
@@ -863,11 +884,12 @@ function captureDependencies(expectedRoot = root, budget = null) {
   const nodes = new Map();
   let count = 0;
   const visit = (absolute, relative, depth) => {
+    const normalized = relative.split(path.sep).join('/') || '.';
+    if (isTypeScriptNonCompilerInput(normalized)) return;
     budget?.check();
     const status = fs.lstatSync(absolute, { bigint: true });
     count += 1;
     budget?.tree({ count, bytes: 0, depth });
-    const normalized = relative.split(path.sep).join('/') || '.';
     let type;
     let link = null;
     let target = null;
@@ -981,6 +1003,10 @@ function createSnapshotFileSystem(dependencyState, compilerTree, expectedRoot = 
       || absolute.startsWith(`${repository}${path.sep}`);
     if (!compiler && !inRepository) return null;
     if (inRepository && absolute !== repository) {
+      const relative = path.relative(repository, absolute).split(path.sep).join('/');
+      if (isTypeScriptNonCompilerInput(relative)) {
+        throw new Error(`${label} probeert gegenereerde repository-inventaris als semantische input te lezen`);
+      }
       if (absolute === resolve(repository, TYPECHECK_DEBT_MANIFEST)) {
         throw new Error(`${label} probeert het TypeScript-manifest als semantische input te lezen`);
       }

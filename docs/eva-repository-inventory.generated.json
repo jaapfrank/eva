@@ -224,12 +224,12 @@
     }
   ],
   "summary": {
-    "files": 279,
-    "present": 276,
-    "tracked": 96,
-    "untracked": 180,
-    "tombstones": 3,
-    "policyErrors": 195
+    "files": 291,
+    "present": 291,
+    "tracked": 291,
+    "untracked": 0,
+    "tombstones": 0,
+    "policyErrors": 9
   },
   "classificationRules": [
     {
@@ -255,7 +255,7 @@
     {
       "id": "documentation",
       "role": "documentation",
-      "matchCount": 8
+      "matchCount": 9
     },
     {
       "id": "python-test",
@@ -290,7 +290,7 @@
     {
       "id": "operator-script",
       "role": "operation",
-      "matchCount": 8
+      "matchCount": 11
     },
     {
       "id": "browser-asset",
@@ -300,32 +300,20 @@
     {
       "id": "source-runtime",
       "role": "product-runtime",
-      "matchCount": 77
+      "matchCount": 75
     },
     {
       "id": "test-entry",
       "role": "verification",
-      "matchCount": 118
+      "matchCount": 127
     },
     {
       "id": "test-helper",
       "role": "verification-fixture",
-      "matchCount": 22
+      "matchCount": 23
     }
   ],
   "policyErrors": [
-    {
-      "code": "TRACKED_TOMBSTONE",
-      "path": "src/mind/errorbook.js"
-    },
-    {
-      "code": "TRACKED_TOMBSTONE",
-      "path": "src/mind/toolpolicy.js"
-    },
-    {
-      "code": "TRACKED_TOMBSTONE",
-      "path": "test/vision-pending-identity.test.js"
-    },
     {
       "code": "UNGATED_TEST",
       "path": "eva_brain/test_service.py"
@@ -340,19 +328,7 @@
     },
     {
       "code": "UNRESOLVED_DISPOSITION_DELETE",
-      "path": "src/mind/errorbook.js"
-    },
-    {
-      "code": "UNRESOLVED_DISPOSITION_DELETE",
-      "path": "src/mind/toolpolicy.js"
-    },
-    {
-      "code": "UNRESOLVED_DISPOSITION_DELETE",
       "path": "src/mind/voiceingress.js"
-    },
-    {
-      "code": "UNRESOLVED_DISPOSITION_DELETE",
-      "path": "test/vision-pending-identity.test.js"
     },
     {
       "code": "UNRESOLVED_DISPOSITION_INTEGRATE",
@@ -373,726 +349,6 @@
     {
       "code": "UNRESOLVED_DISPOSITION_QUARANTINE",
       "path": "scripts/sanitize-secret-history.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "benchmark/eva-agent-benchmark-v1.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-maintainer-recover.service"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-maintainer.conf"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-maintainer.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-maintainer.path"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-maintainer.service"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-repair-protocol.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-runtime-self-repair.example.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-voice-bridge-automation.yaml"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/eva-voice-pe-hey-eva.patch"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "deploy/install-eva-runtime-maintainer.sh"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-agent-benchmark-v1.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-repository-inventory.generated.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-repository-inventory.generated.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-runtime-contract-map.generated.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-runtime-contract-map.generated.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/eva-runtime-contracts.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "docs/incident-2026-08-13-ledger-test-import.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "native/workspace_writer_broker.c"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/execution-ledger-production14-recovery.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/execution-ledger-production14-recovery.test.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/execution-ledger-quiescent-snapshot.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/execution-ledger-quiescent-snapshot.test.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/generate-repository-inventory.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/generate-runtime-contract-map.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/lab/plan-run.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/run-isolated-tests-bootstrap"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/run-isolated-tests-bootstrap.c"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/run-isolated-tests-release.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/run-isolated-tests.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "scripts/run-isolated-tests.test.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/executionledger.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/artifactcollections.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/artifacts.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/economichandoff.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/home.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/learning.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/materialcompletion.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/materiallifecycle.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/monitoringcontract.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/perceptionattention.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/perceptiondecision.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/perceptionexecutor.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/projectexecution.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/runtimecontroller.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/selfattentioncontext.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/signals.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/telegramdelivery.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/turnunderstandingoutcome.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/understanding.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/voiceingress.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/workcompletion.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/workspacefilemanifest.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/mind/workspacegeneration.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/turnauthority.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/voiceauthority.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/httpack.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/httpdelivery.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/httpingress.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/httpresponseauthority.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/public/autonomycard.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/public/httpackclient.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/requestidentity.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "src/web/sqliteindexattestation.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/agent-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/artifact-collections.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/artifact-receipt-projection.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/artifact-versions.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/aspiration-attention-rotation.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/authentic-ha-voice-test-server.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/autonomy-card-visibility.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/autonomy-runtime-ingress.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/behavior-learning-integration.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/browser-http-ack-client.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/cognitive-no-action-continuity.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/conversation-opportunity-scheduler.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/conversation-opportunity-search.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/curiosity-outcome-liveness.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/data-directory-guard.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/doorbell-ingress-priority.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/doorbell-intercom.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/eva-agent-benchmark-v1.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/execution-ledger-live-predecessor.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/execution-ledger-main-schema.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/execution-ledger-v2.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/exploration-attention-backoff.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/exploration-family-result.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/failed-telegram-handoff-recovery.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/family-autonomy-three-domain-acceptance.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/family-experience-restart.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/family-work-status-visibility.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/family-workspace-write.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/free-autonomy-continuation.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/free-no-action-runtime-continuity.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/free-research-continuity.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/generic-read-agent-loop.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/homeassistant-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/http-authority-boundary.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/http-delivery-v3.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/http-delivery.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/http-ingress.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/http-server-ack-integration.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/interpretation-handoff-idempotency.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/interpretation-resume-authority-runtime.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/isolated-data-dir.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/lab-plan-run.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/learning-availability.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/learning-loop.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/llm-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/material-completion-runtime.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/material-completion.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/material-lifecycle.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/memory-hygiene.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/memory-web.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/monitoring-contract-host-builder.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/monitoring-contract-v2.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/monitoring-required-ingress-admission.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-failed-telegram-handoff-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-failed-telegram-handoff.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-ha-voice-authority-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-ha-voice-authority.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-interrupted-telegram-effect-startup-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-interrupted-telegram-effect-startup.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-interrupted-telegram-startup-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-interrupted-telegram-startup.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-monitoring-v2-restart-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-monitoring-v2-restart.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-telegram-direct-recovery-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-telegram-direct-recovery.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-telegram-done-restart-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-telegram-done-restart.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-telegram-release-boundary.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-turn-understanding-authority.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-voice-delivery-transaction.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-voice-drain-continuity-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-voice-drain-continuity.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-voice-restart-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/native-voice-restart.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/partial-home-success.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-attention.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-availability.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-camera-selection.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-decision.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-executor.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-scheduler-liveness.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/perception-web-privacy.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/quality-gate-diagnostic-debt.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/relationship-feedback-ingress.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/repository-inventory.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/requester-owned-home-target.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/runtime-self-repair.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/self-attention-exploration-scheduler.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/self-attention-ingress.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/signal-liveness.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/telegram-conditional-temperature-monitoring.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/telegram-monitoring-language-provider-canary.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/telegram-partial-fanout-projection.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/telegram-per-child-current.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/telegram-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-authority-predecessor-fixture.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-authority-predecessor-migration.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-authority-store-initialization.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-understanding-authority-fixture.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-understanding-authority.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/turn-understanding.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/user-facing-text.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/voice-delivery-authority-store.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/voiceauthority-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/voicebridge-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/web-agent-ingress.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/web-request-identity.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/web-server-test-agent.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/web-server-test-composition.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/web-server-test-state.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/work-completion-contract.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/work-completion-lifecycle.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/workspace-file-manifest.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/workspace-generation.test.js"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "test/workspace-writer-broker-native.test.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "typescript-diagnostic-debt.json"
     }
   ],
   "edges": [
@@ -1653,6 +909,12 @@
       "from": "src/mind/agent.js",
       "to": "src/voiceauthority.js",
       "evidence": "../voiceauthority.js"
+    },
+    {
+      "kind": "import",
+      "from": "src/mind/agent.js",
+      "to": "src/web/httpdelivery.js",
+      "evidence": "../web/httpdelivery.js"
     },
     {
       "kind": "import",
@@ -2298,6 +1560,18 @@
     },
     {
       "kind": "import",
+      "from": "src/mind/portfolio.js",
+      "to": "src/web/httpdelivery.js",
+      "evidence": "../web/httpdelivery.js"
+    },
+    {
+      "kind": "import",
+      "from": "src/mind/portfolio.js",
+      "to": "src/web/httpingress.js",
+      "evidence": "../web/httpingress.js"
+    },
+    {
+      "kind": "import",
       "from": "src/mind/projectexecution.js",
       "to": "src/config.js",
       "evidence": "../config.js"
@@ -2838,6 +2112,12 @@
     },
     {
       "kind": "import",
+      "from": "src/turnauthority.js",
+      "to": "src/web/httpack.js",
+      "evidence": "./web/httpack.js"
+    },
+    {
+      "kind": "import",
       "from": "src/voiceauthority.js",
       "to": "src/integrations/homeassistant.js",
       "evidence": "./integrations/homeassistant.js"
@@ -2877,6 +2157,12 @@
       "from": "src/web/httpdelivery.js",
       "to": "src/web/httpack.js",
       "evidence": "./httpack.js"
+    },
+    {
+      "kind": "import",
+      "from": "src/web/httpdelivery.js",
+      "to": "src/web/httpingress.js",
+      "evidence": "./httpingress.js"
     },
     {
       "kind": "import",
@@ -3231,6 +2517,72 @@
       "from": "test/autonomy-card-visibility.test.js",
       "to": "src/web/server.js",
       "evidence": "../src/web/server.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled-health.test.js",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled-health.test.js",
+      "to": "src/web/server.js",
+      "evidence": "../src/web/server.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled.test.js",
+      "to": "src/bus.js",
+      "evidence": "../src/bus.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled.test.js",
+      "to": "src/config.js",
+      "evidence": "../src/config.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled.test.js",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled.test.js",
+      "to": "src/mind/agent.js",
+      "evidence": "../src/mind/agent.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-disabled.test.js",
+      "to": "src/mind/autonomy.js",
+      "evidence": "../src/mind/autonomy.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-enabled-opt-in.test.js",
+      "to": "src/bus.js",
+      "evidence": "../src/bus.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-enabled-opt-in.test.js",
+      "to": "src/config.js",
+      "evidence": "../src/config.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-enabled-opt-in.test.js",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/autonomy-enabled-opt-in.test.js",
+      "to": "src/mind/autonomy.js",
+      "evidence": "../src/mind/autonomy.js"
     },
     {
       "kind": "import",
@@ -3943,6 +3295,12 @@
     {
       "kind": "import",
       "from": "test/http-ingress.test.js",
+      "to": "src/turnauthority.js",
+      "evidence": "../src/turnauthority.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/http-ingress.test.js",
       "to": "src/util.js",
       "evidence": "../src/util.js"
     },
@@ -4026,6 +3384,30 @@
     },
     {
       "kind": "import",
+      "from": "test/http-turn-authority-retroactive-fixture.mjs",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/http-turn-authority-retroactive-fixture.mjs",
+      "to": "src/turnauthority.js",
+      "evidence": "../src/turnauthority.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/http-turn-authority-retroactive-fixture.mjs",
+      "to": "src/util.js",
+      "evidence": "../src/util.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/http-turn-authority-retroactive-fixture.mjs",
+      "to": "src/web/httpingress.js",
+      "evidence": "../src/web/httpingress.js"
+    },
+    {
+      "kind": "import",
       "from": "test/interpretation-handoff-idempotency.test.js",
       "to": "src/db.js",
       "evidence": "../src/db.js"
@@ -4068,9 +3450,33 @@
     },
     {
       "kind": "import",
+      "from": "test/lab-adapter-contract.test.js",
+      "to": "scripts/lab/adapter-contract.mjs",
+      "evidence": "../scripts/lab/adapter-contract.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "test/lab-effect-broker.test.js",
+      "to": "scripts/lab/effect-broker.mjs",
+      "evidence": "../scripts/lab/effect-broker.mjs"
+    },
+    {
+      "kind": "import",
       "from": "test/lab-plan-run.test.js",
       "to": "scripts/lab/plan-run.mjs",
       "evidence": "../scripts/lab/plan-run.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "test/lab-result-ledger.test.js",
+      "to": "scripts/lab/plan-run.mjs",
+      "evidence": "../scripts/lab/plan-run.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "test/lab-result-ledger.test.js",
+      "to": "scripts/lab/result-ledger.mjs",
+      "evidence": "../scripts/lab/result-ledger.mjs"
     },
     {
       "kind": "import",
@@ -5094,6 +4500,24 @@
     },
     {
       "kind": "import",
+      "from": "test/recovery-runtime-tool-policy.test.js",
+      "to": "src/config.js",
+      "evidence": "../src/config.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/recovery-runtime-tool-policy.test.js",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/recovery-runtime-tool-policy.test.js",
+      "to": "src/mind/tools.js",
+      "evidence": "../src/mind/tools.js"
+    },
+    {
+      "kind": "import",
       "from": "test/relationship-feedback-ingress.test.js",
       "to": "src/db.js",
       "evidence": "../src/db.js"
@@ -5442,6 +4866,30 @@
     },
     {
       "kind": "import",
+      "from": "test/telegram-social-failure.test.js",
+      "to": "src/db.js",
+      "evidence": "../src/db.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/telegram-social-failure.test.js",
+      "to": "src/integrations/telegram.js",
+      "evidence": "../src/integrations/telegram.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/telegram-social-failure.test.js",
+      "to": "src/mind/persona.js",
+      "evidence": "../src/mind/persona.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/telegram-social-failure.test.js",
+      "to": "test/telegram-test-composition.js",
+      "evidence": "./telegram-test-composition.js"
+    },
+    {
+      "kind": "import",
       "from": "test/telegram-transport.test.js",
       "to": "src/db.js",
       "evidence": "../src/db.js"
@@ -5563,6 +5011,12 @@
     {
       "kind": "import",
       "from": "test/turn-authority-predecessor-fixture.mjs",
+      "to": "src/util.js",
+      "evidence": "../src/util.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/turn-authority-predecessor-fixture.mjs",
       "to": "test/turn-understanding-authority-fixture.js",
       "evidence": "./turn-understanding-authority-fixture.js"
     },
@@ -5601,6 +5055,12 @@
       "from": "test/turn-understanding-authority-fixture.js",
       "to": "src/util.js",
       "evidence": "../src/util.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/turn-understanding-authority-fixture.js",
+      "to": "src/web/httpack.js",
+      "evidence": "../src/web/httpack.js"
     },
     {
       "kind": "import",
@@ -5809,6 +5269,12 @@
     {
       "kind": "import",
       "from": "test/web-agent-ingress.test.js",
+      "to": "src/config.js",
+      "evidence": "../src/config.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/web-agent-ingress.test.js",
       "to": "src/db.js",
       "evidence": "../src/db.js"
     },
@@ -5821,8 +5287,20 @@
     {
       "kind": "import",
       "from": "test/web-agent-ingress.test.js",
+      "to": "src/mind/portfolio.js",
+      "evidence": "../src/mind/portfolio.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/web-agent-ingress.test.js",
       "to": "src/util.js",
       "evidence": "../src/util.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/web-agent-ingress.test.js",
+      "to": "src/web/httpack.js",
+      "evidence": "../src/web/httpack.js"
     },
     {
       "kind": "import",
@@ -6163,6 +5641,24 @@
     {
       "kind": "package-test-glob",
       "from": "package.json",
+      "to": "test/autonomy-disabled-health.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/autonomy-disabled.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/autonomy-enabled-opt-in.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
       "to": "test/autonomy-runtime-ingress.test.js",
       "evidence": "test:all"
     },
@@ -6409,7 +5905,25 @@
     {
       "kind": "package-test-glob",
       "from": "package.json",
+      "to": "test/lab-adapter-contract.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/lab-effect-broker.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
       "to": "test/lab-plan-run.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/lab-result-ledger.test.js",
       "evidence": "test:all"
     },
     {
@@ -6637,6 +6151,24 @@
     {
       "kind": "package-test-glob",
       "from": "package.json",
+      "to": "test/recovery-runtime-config.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/recovery-runtime-startup.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/recovery-runtime-tool-policy.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
       "to": "test/relationship-feedback-ingress.test.js",
       "evidence": "test:all"
     },
@@ -6716,6 +6248,12 @@
       "kind": "package-test-glob",
       "from": "package.json",
       "to": "test/telegram-per-child-current.test.js",
+      "evidence": "test:all"
+    },
+    {
+      "kind": "package-test-glob",
+      "from": "package.json",
+      "to": "test/telegram-social-failure.test.js",
       "evidence": "test:all"
     },
     {
@@ -6996,6 +6534,18 @@
     },
     {
       "kind": "subprocess",
+      "from": "test/recovery-runtime-config.test.js",
+      "to": "src/config.js",
+      "evidence": "src/config.js"
+    },
+    {
+      "kind": "subprocess",
+      "from": "test/recovery-runtime-startup.test.js",
+      "to": "src/index.js",
+      "evidence": "src/index.js"
+    },
+    {
+      "kind": "subprocess",
       "from": "test/runtime-self-repair.test.js",
       "to": "src/config.js",
       "evidence": "src/config.js"
@@ -7035,6 +6585,18 @@
       "from": "test/turn-authority-predecessor-fixture.mjs",
       "to": "src/db.js",
       "evidence": "src/db.js"
+    },
+    {
+      "kind": "subprocess",
+      "from": "test/turn-authority-predecessor-fixture.mjs",
+      "to": "src/turnauthority.js",
+      "evidence": "src/turnauthority.js"
+    },
+    {
+      "kind": "subprocess",
+      "from": "test/turn-authority-predecessor-fixture.mjs",
+      "to": "src/util.js",
+      "evidence": "src/util.js"
     },
     {
       "kind": "subprocess",
@@ -7356,6 +6918,12 @@
     },
     {
       "kind": "test-fixture",
+      "from": "test/telegram-social-failure.test.js",
+      "to": "test/telegram-test-composition.js",
+      "evidence": "./telegram-test-composition.js"
+    },
+    {
+      "kind": "test-fixture",
       "from": "test/telegram-transport.test.js",
       "to": "test/homeassistant-test-composition.js",
       "evidence": "./homeassistant-test-composition.js"
@@ -7465,8 +7033,8 @@
       "path": ".env.example",
       "gitState": "tracked",
       "present": true,
-      "bytes": 1717,
-      "contentSha256": "13ba5a5c4f94fd07f663cdb9d033e4263a35f074629db48989947de7abcc807f",
+      "bytes": 1911,
+      "contentSha256": "c81c356f2c8a24f432a33564b2d85518ba3f6dbeb43d3f5d63c2f94698696bca",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -7531,8 +7099,8 @@
       "path": "README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7334,
-      "contentSha256": "d86ca1843edcaad54d03b454d04aa05764d942e04b62bf7ceea4fa3d926a83c3",
+      "bytes": 7582,
+      "contentSha256": "cab6d98cf2d599fe1b0665543ccd241f26671ba3acc58f5a4421f3c0081b9943",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -7562,7 +7130,7 @@
     },
     {
       "path": "benchmark/eva-agent-benchmark-v1.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 31406,
       "contentSha256": "e88836313d8b394f226eec40f8f90f2237615b5f9f76a7865f8134dab9f093b5",
@@ -7586,9 +7154,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -7630,7 +7198,7 @@
     },
     {
       "path": "deploy/eva-runtime-maintainer-recover.service",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 234,
       "contentSha256": "0c0787d9c5885b92bf6b93758258720fbd3f62ea56b4a2760a67a2b1db9508c8",
@@ -7666,14 +7234,14 @@
         "systemd-unit"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-maintainer.conf",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 320,
       "contentSha256": "4be0e75c75d50fe12d1486144fe67070729c498d45477bbb5749986d44ffc628",
@@ -7706,14 +7274,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-maintainer.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 84038,
       "contentSha256": "50385dd9b1907c9d493cef8dd33c8166772659e24f4b4349a82a8e7e7428bb39",
@@ -7766,14 +7334,14 @@
         "systemd-exec:deploy/eva-runtime-maintainer.service"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-maintainer.path",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 267,
       "contentSha256": "795524146a21b70ea12c59d27dc52e438dfde98981998e2f6bf8bf9ef3103e02",
@@ -7803,14 +7371,14 @@
         "systemd-unit"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-maintainer.service",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 340,
       "contentSha256": "384943a8b41d47fa153d4519bc5df11d7e8277ec244cbe93c2f607037c1ef297",
@@ -7846,14 +7414,14 @@
         "systemd-unit"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-repair-protocol.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 29120,
       "contentSha256": "f9065eb6af9f882ff1cf7d268080051c67e1db8c0b4df625a511fe1d734e0951",
@@ -7902,14 +7470,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-runtime-self-repair.example.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 525,
       "contentSha256": "b0d11f290ac9643a48175138a952bdb4547416ee4a1bb0f0025e4a0a886d8b6c",
@@ -7937,14 +7505,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-voice-bridge-automation.yaml",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4364,
       "contentSha256": "3d78362e2b5c3d8ebfbdcd18bc2849bf411dbb4833366150d0359ae4d887eb59",
@@ -7972,14 +7540,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva-voice-pe-hey-eva.patch",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3106,
       "contentSha256": "7baa09916aef7622572e9c719e1711b83b57a489dc2e1ebc1a98b1d19febb53d",
@@ -8007,17 +7575,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "deploy/eva.service",
       "gitState": "tracked",
       "present": true,
-      "bytes": 548,
-      "contentSha256": "d61f1c7cdc6e2840490a8ce4da6efe582aa292e6b99d71cdab403a1b6e3b7e12",
+      "bytes": 625,
+      "contentSha256": "c21fdde30cdc9d9842a9fc879c1d6594ce18c30d8abb890595fee53d85e7c2f7",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "deployment",
@@ -8056,7 +7624,7 @@
     },
     {
       "path": "deploy/install-eva-runtime-maintainer.sh",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 14712,
       "contentSha256": "ac55741d7da104b206a4c5973418a6d38b696b7303752923293cea804cab8cb5",
@@ -8086,9 +7654,9 @@
         "manual-installer"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -8124,10 +7692,10 @@
     },
     {
       "path": "docs/eva-agent-benchmark-v1.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 16780,
-      "contentSha256": "e7577258669308fb852eb86c8cc8b7a55a9fb30ddd85ef63c075e865d975cf89",
+      "bytes": 18462,
+      "contentSha256": "101c952680d745292fae2369e1dbde6d4cd3fbf2a55a8eae91a40e065ece4213",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "documentation",
@@ -8148,9 +7716,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -8185,10 +7753,41 @@
       }
     },
     {
-      "path": "docs/eva-repository-inventory.generated.json",
-      "gitState": "untracked",
+      "path": "docs/eva-rebuild-plan-2026-08-20.md",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 586250,
+      "bytes": 13846,
+      "contentSha256": "65265c00f77902ca0118e8bd396e127e9a6cbb356d5a1a5dca57e198f488884d",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "documentation",
+      "matchingRuleIds": [
+        "documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "docs/eva-repository-inventory.generated.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 592964,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -8212,16 +7811,16 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "docs/eva-repository-inventory.generated.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 124547,
+      "bytes": 117508,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -8245,17 +7844,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "docs/eva-runtime-contract-map.generated.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 243458,
-      "contentSha256": "91f7f2a423ae9e9e97474e39e1dfb673882ec8fad65463dc200f1d59273edce8",
+      "bytes": 246207,
+      "contentSha256": "8022f1e89c1376c3988fcf58a6c32d2cc0a84f44cc33bc2cd952ba94389700af",
       "hashMode": "exact-bytes",
       "role": "generated",
       "roleRuleId": "generated-doc",
@@ -8278,17 +7877,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "docs/eva-runtime-contract-map.generated.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 118895,
-      "contentSha256": "91323b53db04cb987e3c018c34e1a7131b1874dde989b183756a7b145a86fd83",
+      "bytes": 120103,
+      "contentSha256": "2cbfca0097297d651205793bbfa1cdbf82a0944915b9c77a0884ee5ce3330854",
       "hashMode": "exact-bytes",
       "role": "generated",
       "roleRuleId": "generated-doc",
@@ -8311,17 +7910,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "docs/eva-runtime-contracts.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 72494,
-      "contentSha256": "62daefbdf1aa9cc302807c828df3f7142c5ea3e4fb6be0fdc35b2c384ed4eff0",
+      "bytes": 80976,
+      "contentSha256": "55bacb4a2b9829a0d55e97f51d18fb301c04c80c9e5fc2cddf885842111cc869",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "documentation",
@@ -8342,9 +7941,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -8411,7 +8010,7 @@
     },
     {
       "path": "docs/incident-2026-08-13-ledger-test-import.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 12016,
       "contentSha256": "5801cb32b914feeedf21d648c1c6ff01a4f7ec6f18f2b905c3840aaef91f87fb",
@@ -8435,9 +8034,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -8722,7 +8321,7 @@
     },
     {
       "path": "native/workspace_writer_broker.c",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 62180,
       "contentSha256": "cf076ff37fecb8ea366ff8315dc6ccdb97edac7dfffba30d986b25ca79ca29fd",
@@ -8750,7 +8349,7 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "blocked-unresolved-disposition"
       }
@@ -8792,8 +8391,8 @@
       "path": "package.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 1735,
-      "contentSha256": "a3655bff7780fad43d49a5b9cf9cd457ea9341273a53635201f6aac8f1805537",
+      "bytes": 1783,
+      "contentSha256": "4808c7f21146fec96186aed3e11626df29a36ec09677cff0b43243cb95e2ead4",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -8826,7 +8425,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 84,
-      "contentSha256": "adf4477b681194d979a153fd6167f2fc911e811db8d63e6de70bfa960a0ed206",
+      "contentSha256": "8a35996992d991c17e6fa7b3f85b6fecc7eb12e918e00f6e4a7b705683c9ef3a",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -8899,7 +8498,7 @@
     },
     {
       "path": "scripts/execution-ledger-production14-recovery.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 131556,
       "contentSha256": "2950ba139540d5f4e32021df62949284eb14041e5de0455aba0e56feb0fccfbc",
@@ -8929,14 +8528,14 @@
         "manual-operator-command"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/execution-ledger-production14-recovery.test.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 85119,
       "contentSha256": "099a4cbd4e6251a4c74004af283a06d85e27f0c26f9cf100f388c5053f995376",
@@ -8969,14 +8568,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/execution-ledger-quiescent-snapshot.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1058851,
       "contentSha256": "41ce879953c9de58e85dde10446f8822ab86bb585b0d97580ef095bd6ffb16d9",
@@ -9006,14 +8605,14 @@
         "manual-operator-command"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/execution-ledger-quiescent-snapshot.test.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 42965,
       "contentSha256": "966cfe10072b1d35ee3c3f7080dcb437e2e194c3774e0d6e3c705481b2738ab9",
@@ -9046,14 +8645,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/generate-repository-inventory.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 48696,
       "contentSha256": "1b5638760398cd7cffe7397057d6a4afa58d5e7a7a0c6282d0baf9fdf2123aab",
@@ -9088,14 +8687,14 @@
         "package-script:package.json"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/generate-runtime-contract-map.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 20898,
       "contentSha256": "d90d74b3966b8765c3654fba57057949d6bda49b2acd7c118c719326420b4626",
@@ -9130,17 +8729,101 @@
         "package-script:package.json"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "scripts/lab/adapter-contract.mjs",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7255,
+      "contentSha256": "da68fab913b95beedbaaef364fafdb0edde98ccb47d84f320c4bd69a0a6160ba",
+      "hashMode": "exact-bytes",
+      "role": "operation",
+      "roleRuleId": "operator-script",
+      "matchingRuleIds": [
+        "operator-script"
+      ],
+      "owner": "operations",
+      "inputs": [
+        "explicit operator invocation"
+      ],
+      "outputs": [
+        "report, backup or recovery artifact"
+      ],
+      "state": [
+        "operator-selected filesystem or database state"
+      ],
+      "effects": [
+        "may mutate only under its declared operator contract"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "test/lab-adapter-contract.test.js"
+        }
+      ],
+      "entrypointEvidence": [
+        "manual-operator-command"
+      ],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "scripts/lab/effect-broker.mjs",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7135,
+      "contentSha256": "b4f6e97be74c416e7fcb4ae1609cef770440806a08fe160e204afcb8a7667bdb",
+      "hashMode": "exact-bytes",
+      "role": "operation",
+      "roleRuleId": "operator-script",
+      "matchingRuleIds": [
+        "operator-script"
+      ],
+      "owner": "operations",
+      "inputs": [
+        "explicit operator invocation"
+      ],
+      "outputs": [
+        "report, backup or recovery artifact"
+      ],
+      "state": [
+        "operator-selected filesystem or database state"
+      ],
+      "effects": [
+        "may mutate only under its declared operator contract"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "test/lab-effect-broker.test.js"
+        }
+      ],
+      "entrypointEvidence": [
+        "manual-operator-command"
+      ],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/lab/plan-run.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 6920,
-      "contentSha256": "a5a6b93552db964b205cf0ee549633e8f230e6f3d3260244680e6cd2478a2550",
+      "bytes": 7482,
+      "contentSha256": "b9f1cdecbf67ae16b095a9adf563521b4e4babc68e1e65fc491e4e643b6b3454",
       "hashMode": "exact-bytes",
       "role": "operation",
       "roleRuleId": "operator-script",
@@ -9166,15 +8849,61 @@
         {
           "kind": "import",
           "from": "test/lab-plan-run.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/lab-result-ledger.test.js"
         }
       ],
       "entrypointEvidence": [
         "manual-operator-command"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "scripts/lab/result-ledger.mjs",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 11353,
+      "contentSha256": "f94f080d7aad7c529e815df2c6cd96e3f5fdf43f01d6a146291bc72c3ef81d63",
+      "hashMode": "exact-bytes",
+      "role": "operation",
+      "roleRuleId": "operator-script",
+      "matchingRuleIds": [
+        "operator-script"
+      ],
+      "owner": "operations",
+      "inputs": [
+        "explicit operator invocation"
+      ],
+      "outputs": [
+        "report, backup or recovery artifact"
+      ],
+      "state": [
+        "operator-selected filesystem or database state"
+      ],
+      "effects": [
+        "may mutate only under its declared operator contract"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "test/lab-result-ledger.test.js"
+        }
+      ],
+      "entrypointEvidence": [
+        "manual-operator-command"
+      ],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -9223,8 +8952,8 @@
       "path": "scripts/quality-gate.mjs",
       "gitState": "tracked",
       "present": true,
-      "bytes": 93944,
-      "contentSha256": "6f492c2d9dfbfb785c26e27e098ce3f3806b2e5b28a1cc15c9bd79fed4316df4",
+      "bytes": 95007,
+      "contentSha256": "131e66754e31e66b7d832cb08c0769ee78fbceabbcdf4d7ad2e16ee986ed5baa",
       "hashMode": "exact-bytes",
       "role": "operation",
       "roleRuleId": "operator-script",
@@ -9319,7 +9048,7 @@
     },
     {
       "path": "scripts/run-isolated-tests-bootstrap",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 739256,
       "contentSha256": "320d84306d8f23d21ea2bad40bbfe8bff1ca7ab3acf60c6baba3f5f59a1a7882",
@@ -9358,14 +9087,14 @@
         "package-script:package.json"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/run-isolated-tests-bootstrap.c",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 40710,
       "contentSha256": "fa7234de4eced386f02c37555de31fbbbcea8b3f5fc01259bc9ffcd467f8628b",
@@ -9398,14 +9127,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/run-isolated-tests-release.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1477,
       "contentSha256": "35a09a439574c5e661dca39d83fc9fbf0415e492a1893d4ad487778e6413c35c",
@@ -9438,14 +9167,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/run-isolated-tests.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 74684,
       "contentSha256": "012dc998e0804eaa6216c8acbde1d1dd83f591c8cd0d2a239ba288234cc19d27",
@@ -9478,14 +9207,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "scripts/run-isolated-tests.test.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 51887,
       "contentSha256": "7d954208b97bf39cc6bb9e3ac6591a60046bbfc39206db8c1ea210560faf6c4a",
@@ -9518,9 +9247,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -9768,6 +9497,14 @@
         },
         {
           "kind": "import",
+          "from": "test/autonomy-disabled.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-enabled-opt-in.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/cognitive-integration.test.js"
         },
         {
@@ -9822,8 +9559,8 @@
       "path": "src/config.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 23142,
-      "contentSha256": "23b46c2c87001b6b3b8bf36b0dd0790458c0eaaaf621991bffce6d8c47573386",
+      "bytes": 23915,
+      "contentSha256": "af5cf9703c82e17f528e995fd26dba0d3e5d203210e81d90f554efa116cf1b35",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -9976,6 +9713,14 @@
         },
         {
           "kind": "import",
+          "from": "test/autonomy-disabled.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-enabled-opt-in.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/data-directory-guard.test.js"
         },
         {
@@ -10020,6 +9765,10 @@
         },
         {
           "kind": "import",
+          "from": "test/recovery-runtime-tool-policy.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/signal-liveness.test.js"
         },
         {
@@ -10036,6 +9785,10 @@
         },
         {
           "kind": "import",
+          "from": "test/web-agent-ingress.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/work-completion-lifecycle.test.js"
         },
         {
@@ -10048,11 +9801,16 @@
         },
         {
           "kind": "subprocess",
+          "from": "test/recovery-runtime-config.test.js"
+        },
+        {
+          "kind": "subprocess",
           "from": "test/runtime-self-repair.test.js"
         }
       ],
       "entrypointEvidence": [
         "subprocess:test/data-directory-guard.test.js",
+        "subprocess:test/recovery-runtime-config.test.js",
         "subprocess:test/runtime-self-repair.test.js"
       ],
       "release": {
@@ -10275,6 +10033,18 @@
         },
         {
           "kind": "import",
+          "from": "test/autonomy-disabled-health.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-disabled.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-enabled-opt-in.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/autonomy-runtime-ingress.test.js"
         },
         {
@@ -10380,6 +10150,10 @@
         {
           "kind": "import",
           "from": "test/http-server-ack-integration.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/http-turn-authority-retroactive-fixture.mjs"
         },
         {
           "kind": "import",
@@ -10519,6 +10293,10 @@
         },
         {
           "kind": "import",
+          "from": "test/recovery-runtime-tool-policy.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/relationship-feedback-ingress.test.js"
         },
         {
@@ -10552,6 +10330,10 @@
         {
           "kind": "import",
           "from": "test/telegram-outbox-core.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/telegram-social-failure.test.js"
         },
         {
           "kind": "import",
@@ -10662,7 +10444,7 @@
     },
     {
       "path": "src/executionledger.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 24411,
       "contentSha256": "0219d63292deff80aa86d8b49e62c849e34a5179bda84b3bf3507c2d3cd67aec",
@@ -10739,17 +10521,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/index.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4476,
-      "contentSha256": "465281cb39135b629e294dfa4045678ca624f6eec34cffc8b472680791b80b61",
+      "bytes": 4798,
+      "contentSha256": "c964e662064a5765ec1973a5802e4c6a66268c18561cf6efdd754841dd6e46ae",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -10781,6 +10563,10 @@
           "from": "test/data-directory-guard.test.js"
         },
         {
+          "kind": "subprocess",
+          "from": "test/recovery-runtime-startup.test.js"
+        },
+        {
           "kind": "systemd-exec",
           "from": "deploy/eva.service"
         }
@@ -10789,6 +10575,7 @@
         "package-main",
         "package-script:package.json",
         "subprocess:test/data-directory-guard.test.js",
+        "subprocess:test/recovery-runtime-startup.test.js",
         "systemd-exec:deploy/eva.service"
       ],
       "release": {
@@ -11021,8 +10808,8 @@
       "path": "src/integrations/telegram.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 143726,
-      "contentSha256": "4875e605bbb55bbc7877dfbe2194f27136415c511437ff5bd8d9a9f81008563d",
+      "bytes": 145284,
+      "contentSha256": "04cfd9980285b2c6dd1c711b7084475826e4022f7ff081cb64e732feb6144b08",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -11115,6 +10902,10 @@
         },
         {
           "kind": "import",
+          "from": "test/telegram-social-failure.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/telegram-transport.test.js"
         },
         {
@@ -11140,8 +10931,8 @@
       "path": "src/mind/agent.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 504611,
-      "contentSha256": "b1b87e3283784ac2e4e7aec22b9655a48af88e31cbc92d21516a3a0972f7357e",
+      "bytes": 513704,
+      "contentSha256": "7004a69d5aeba38ebcdb681382cc6f432d49c74aa95647029b7a37f4df5ba5fe",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -11183,6 +10974,10 @@
         {
           "kind": "import",
           "from": "src/web/server.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-disabled.test.js"
         },
         {
           "kind": "import",
@@ -11362,7 +11157,7 @@
     },
     {
       "path": "src/mind/artifactcollections.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 149131,
       "contentSha256": "4baebc57ee3953a04fb72b3b323a8bec8935b8c790aa08ec5cbcdfb60d5292e8",
@@ -11395,14 +11190,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "blocked-unresolved-disposition"
       }
     },
     {
       "path": "src/mind/artifacts.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 69510,
       "contentSha256": "df598fc41d977694babb758f37a3b6ebe4aba6b11f3834756c85f1595a4e1ae9",
@@ -11455,17 +11250,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/autonomy.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 43232,
-      "contentSha256": "1839322311f75ff290f6bbae84c90d2041bfaf016f2d923115d936e98679133c",
+      "bytes": 43794,
+      "contentSha256": "076fbc774659e3046877e30e0a2fb9ca6e566862f6e8f71e799a5ea74c8b0ee7",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -11499,6 +11294,14 @@
         {
           "kind": "import",
           "from": "test/autonomy-card-visibility.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-disabled.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-enabled-opt-in.test.js"
         },
         {
           "kind": "import",
@@ -11774,7 +11577,7 @@
     },
     {
       "path": "src/mind/economichandoff.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4730,
       "contentSha256": "30afabb9e902d1c4d854ae39bb29f73009cbdbb060ba096eafa133368433e9e5",
@@ -11807,9 +11610,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -11905,41 +11708,6 @@
       }
     },
     {
-      "path": "src/mind/errorbook.js",
-      "gitState": "tombstone",
-      "present": false,
-      "bytes": null,
-      "contentSha256": null,
-      "hashMode": "absent",
-      "role": "product-runtime",
-      "roleRuleId": "source-runtime",
-      "matchingRuleIds": [
-        "source-runtime"
-      ],
-      "owner": "eva-runtime",
-      "inputs": [
-        "issued runtime input and dependencies"
-      ],
-      "outputs": [
-        "runtime result or capability"
-      ],
-      "state": [
-        "runtime-owned durable or process state"
-      ],
-      "effects": [
-        "module-specific runtime effects"
-      ],
-      "decision": "delete",
-      "decisionReason": "confirmed replaced tombstone",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": false,
-        "status": "blocked-unresolved-disposition"
-      }
-    },
-    {
       "path": "src/mind/facerec.js",
       "gitState": "tracked",
       "present": true,
@@ -11989,7 +11757,7 @@
     },
     {
       "path": "src/mind/home.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 69184,
       "contentSha256": "4098496c44737545d4f78da3cb58a6ea9ddbdae4265dfdf439bed52176eb67db",
@@ -12042,9 +11810,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -12149,7 +11917,7 @@
     },
     {
       "path": "src/mind/learning.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 64512,
       "contentSha256": "b15e8affbe1f995f649789dd0cbcd487b40c9ba29b120a5d71850c63427841ab",
@@ -12202,9 +11970,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -12253,7 +12021,7 @@
     },
     {
       "path": "src/mind/materialcompletion.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 31001,
       "contentSha256": "afc24d61d50632736430d262d0307818193fa8ccb284f413a1239cb6f49edbb3",
@@ -12298,14 +12066,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/materiallifecycle.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 183357,
       "contentSha256": "c417f271bd91b2777ccb86a305cc43825ca870f9c8b7aa9c3462f01d56435ec5",
@@ -12338,14 +12106,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "blocked-unresolved-disposition"
       }
     },
     {
       "path": "src/mind/monitoringcontract.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 68910,
       "contentSha256": "f70ec3e0895d68556538441d3be6a687c0650c7b6e9ac03aa702689febfb2e58",
@@ -12402,9 +12170,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -12461,7 +12229,7 @@
     },
     {
       "path": "src/mind/perceptionattention.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 47534,
       "contentSha256": "1a7614cd12a72d7c96e1e61af15d8289158690ba59226950572b19714483c74f",
@@ -12530,14 +12298,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/perceptiondecision.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4224,
       "contentSha256": "e860e3a8c932da3be967d14b750dac221c51ce406d4bbc67463022fc40acb8d4",
@@ -12574,14 +12342,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/perceptionexecutor.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5888,
       "contentSha256": "7fe59797d60367c4f9f2ae8d66437d5b47ccf749312ef7abc03f026656c24733",
@@ -12618,17 +12386,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/persona.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 14881,
-      "contentSha256": "e9e266adc0209dcbad2b0529ea5523a86f4fb8dd6ec6f67dc00ae887a522ac65",
+      "bytes": 15904,
+      "contentSha256": "e39a5c119db22073ee747c485bfde5ad080613083314314298c7630f34a05fb6",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -12674,6 +12442,10 @@
         {
           "kind": "import",
           "from": "test/minimal-core-contract.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/telegram-social-failure.test.js"
         }
       ],
       "entrypointEvidence": [],
@@ -12687,8 +12459,8 @@
       "path": "src/mind/portfolio.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 239172,
-      "contentSha256": "22f5787c7d9006c344df37a2bccf5ae279a86eaed81dc91b14548b50bc903cfd",
+      "bytes": 243654,
+      "contentSha256": "de14d6a69559b3e98d3c5a1b54093e2eb496780d01de6ea3d755aff15c611e46",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -12829,6 +12601,10 @@
         },
         {
           "kind": "import",
+          "from": "test/web-agent-ingress.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/work-completion-lifecycle.test.js"
         },
         {
@@ -12847,7 +12623,7 @@
     },
     {
       "path": "src/mind/projectexecution.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 21843,
       "contentSha256": "2c6e07237c92e949682de494954964504fad661f82fe836974b48dc4cbe8d639",
@@ -12892,14 +12668,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/runtimecontroller.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 31474,
       "contentSha256": "c992667fbe44dea9671e5cca37f753309a7d8cbd171d311f8fff2c58a399b3ad",
@@ -12972,14 +12748,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/selfattentioncontext.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 7099,
       "contentSha256": "0ebbfedd681ee3ff7981d2c6756773c9a07b209a383f949bf4e6f77b3a0941bc",
@@ -13032,14 +12808,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/signals.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 9212,
       "contentSha256": "7d2481a5060c0919908cb2edee00170f3cbacb0dd9dcd6e7ade86b0b3c7ae721",
@@ -13100,9 +12876,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -13151,7 +12927,7 @@
     },
     {
       "path": "src/mind/telegramdelivery.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 13573,
       "contentSha256": "b25b998aa8123f451d74d691f29a296206fc4d7edc6a63ae4a22b307da1f311e",
@@ -13184,9 +12960,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -13230,46 +13006,11 @@
       }
     },
     {
-      "path": "src/mind/toolpolicy.js",
-      "gitState": "tombstone",
-      "present": false,
-      "bytes": null,
-      "contentSha256": null,
-      "hashMode": "absent",
-      "role": "product-runtime",
-      "roleRuleId": "source-runtime",
-      "matchingRuleIds": [
-        "source-runtime"
-      ],
-      "owner": "eva-runtime",
-      "inputs": [
-        "issued runtime input and dependencies"
-      ],
-      "outputs": [
-        "runtime result or capability"
-      ],
-      "state": [
-        "runtime-owned durable or process state"
-      ],
-      "effects": [
-        "module-specific runtime effects"
-      ],
-      "decision": "delete",
-      "decisionReason": "confirmed replaced tombstone",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": false,
-        "status": "blocked-unresolved-disposition"
-      }
-    },
-    {
       "path": "src/mind/tools.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 284414,
-      "contentSha256": "774d9c4e0615693f985c2415220686ac8a8ca4a6010d2df22575ad2564bf80eb",
+      "bytes": 284637,
+      "contentSha256": "6b01698261e9bd168ed69812266cc1a4a26efb53bc160f824df20ff96a1ff950",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -13363,6 +13104,10 @@
         {
           "kind": "import",
           "from": "test/partial-home-success.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/recovery-runtime-tool-policy.test.js"
         },
         {
           "kind": "import",
@@ -13484,7 +13229,7 @@
     },
     {
       "path": "src/mind/turnunderstandingoutcome.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 7824,
       "contentSha256": "f5808ed15b1f052b58b917b09c903ee6a6d83ebe9ec58ddb5d121a164dc3a8f5",
@@ -13525,14 +13270,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/understanding.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 249999,
       "contentSha256": "3128083bd4f3cb511d5bd7105438db5e0ef280b0478f5141b365062b7c52de42",
@@ -13637,9 +13382,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -13784,7 +13529,7 @@
     },
     {
       "path": "src/mind/voiceingress.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 201,
       "contentSha256": "1764f39d80b278b073dfd607c8eb7807015e3794d1b4146127bb0afdd53d4b16",
@@ -13821,7 +13566,7 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "blocked-unresolved-disposition"
       }
@@ -13948,7 +13693,7 @@
     },
     {
       "path": "src/mind/workcompletion.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 109086,
       "contentSha256": "145dc48825bba1f75cb4a6829c228c7c0d77cff81460f9354e7d9ae52e6d93a6",
@@ -13989,14 +13734,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "blocked-unresolved-disposition"
       }
     },
     {
       "path": "src/mind/workspacefilemanifest.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 13277,
       "contentSha256": "76a8a70dbbb2839a874f397b5a23f7111d4142d1602887bc7e796b519aa95629",
@@ -14033,14 +13778,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/mind/workspacegeneration.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 59042,
       "contentSha256": "2b2e2050eba9e647a081cf7e15fa28259c7b8b6176888233a568f1fef0993dc3",
@@ -14077,9 +13822,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -14384,10 +14129,10 @@
     },
     {
       "path": "src/turnauthority.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 26420,
-      "contentSha256": "8a092cf94a9d18af684f941f4f13b1b16a85cc25949b1ee80f13452529e59c62",
+      "bytes": 60125,
+      "contentSha256": "b365ffe69252cf506e7c10fc327fbf5e6998519178fc7269c4661927cc52a1a6",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -14440,6 +14185,14 @@
         },
         {
           "kind": "import",
+          "from": "test/http-ingress.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/http-turn-authority-retroactive-fixture.mjs"
+        },
+        {
+          "kind": "import",
           "from": "test/native-telegram-direct-recovery-fixture.mjs"
         },
         {
@@ -14473,13 +14226,19 @@
         {
           "kind": "import",
           "from": "test/work-completion-contract.test.js"
+        },
+        {
+          "kind": "subprocess",
+          "from": "test/turn-authority-predecessor-fixture.mjs"
         }
       ],
-      "entrypointEvidence": [],
+      "entrypointEvidence": [
+        "subprocess:test/turn-authority-predecessor-fixture.mjs"
+      ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -14696,6 +14455,10 @@
         },
         {
           "kind": "import",
+          "from": "test/http-turn-authority-retroactive-fixture.mjs"
+        },
+        {
+          "kind": "import",
           "from": "test/interpretation-handoff-idempotency.test.js"
         },
         {
@@ -14744,6 +14507,10 @@
         },
         {
           "kind": "import",
+          "from": "test/turn-authority-predecessor-fixture.mjs"
+        },
+        {
+          "kind": "import",
           "from": "test/turn-understanding-authority-fixture.js"
         },
         {
@@ -14777,10 +14544,15 @@
         {
           "kind": "subprocess",
           "from": "scripts/execution-ledger-production14-recovery.test.mjs"
+        },
+        {
+          "kind": "subprocess",
+          "from": "test/turn-authority-predecessor-fixture.mjs"
         }
       ],
       "entrypointEvidence": [
-        "subprocess:scripts/execution-ledger-production14-recovery.test.mjs"
+        "subprocess:scripts/execution-ledger-production14-recovery.test.mjs",
+        "subprocess:test/turn-authority-predecessor-fixture.mjs"
       ],
       "release": {
         "includedInTrackedRelease": true,
@@ -14790,7 +14562,7 @@
     },
     {
       "path": "src/voiceauthority.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 52709,
       "contentSha256": "df51fad15ca156292f3309cd1f458713c44ffc8003297aebe33c3fec6a74830e",
@@ -14859,9 +14631,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -14914,7 +14686,7 @@
     },
     {
       "path": "src/web/httpack.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 8142,
       "contentSha256": "b1998958a4a8932a2b39860b48cfe730bc6f1f2ff9655bec5faa51b52682d145",
@@ -14946,6 +14718,10 @@
         },
         {
           "kind": "import",
+          "from": "src/turnauthority.js"
+        },
+        {
+          "kind": "import",
           "from": "src/web/httpdelivery.js"
         },
         {
@@ -14970,70 +14746,30 @@
         },
         {
           "kind": "import",
+          "from": "test/turn-understanding-authority-fixture.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/web-agent-ingress.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/web-request-identity.test.js"
         }
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/web/httpdelivery.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 84745,
-      "contentSha256": "daa8a04df5428d357964dec6b643afa04f3d0d2d74fe00c9769dd6a06155a518",
-      "hashMode": "exact-bytes",
-      "role": "product-runtime",
-      "roleRuleId": "source-runtime",
-      "matchingRuleIds": [
-        "source-runtime"
-      ],
-      "owner": "eva-runtime",
-      "inputs": [
-        "issued runtime input and dependencies"
-      ],
-      "outputs": [
-        "runtime result or capability"
-      ],
-      "state": [
-        "runtime-owned durable or process state"
-      ],
-      "effects": [
-        "module-specific runtime effects"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [
-        {
-          "kind": "import",
-          "from": "src/web/server.js"
-        },
-        {
-          "kind": "import",
-          "from": "test/http-delivery-v3.test.js"
-        },
-        {
-          "kind": "import",
-          "from": "test/http-delivery.test.js"
-        }
-      ],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "src/web/httpingress.js",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 107760,
-      "contentSha256": "be360bbfa5d99216e003074d64f1d1a8438c039018bdb036423121265ff0ffe0",
+      "bytes": 88921,
+      "contentSha256": "ab55c713e62bfbd31c575d8717751dff61f9c30241d9b85c22d37c1a251cb4b1",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -15062,6 +14798,70 @@
         },
         {
           "kind": "import",
+          "from": "src/mind/portfolio.js"
+        },
+        {
+          "kind": "import",
+          "from": "src/web/server.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/http-delivery-v3.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/http-delivery.test.js"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "src/web/httpingress.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 111368,
+      "contentSha256": "f1e5cef814b8d225c054354994e735b53ee0abe97de8010e2a35376adf879314",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "source-runtime",
+      "matchingRuleIds": [
+        "source-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "src/mind/agent.js"
+        },
+        {
+          "kind": "import",
+          "from": "src/mind/portfolio.js"
+        },
+        {
+          "kind": "import",
+          "from": "src/web/httpdelivery.js"
+        },
+        {
+          "kind": "import",
           "from": "src/web/httpresponseauthority.js"
         },
         {
@@ -15086,6 +14886,10 @@
         },
         {
           "kind": "import",
+          "from": "test/http-turn-authority-retroactive-fixture.mjs"
+        },
+        {
+          "kind": "import",
           "from": "test/monitoring-required-ingress-admission.test.js"
         },
         {
@@ -15105,14 +14909,14 @@
         "subprocess:test/http-server-ack-integration.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/web/httpresponseauthority.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 30506,
       "contentSha256": "c383e2b15c82e27b6baf107b7eec289dc407c74f1350d60747820074717b938f",
@@ -15161,9 +14965,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -15214,7 +15018,7 @@
     },
     {
       "path": "src/web/public/autonomycard.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4127,
       "contentSha256": "2338418ce945850f1988600e8e9759d64f93760bcdd0e8b1dd229b112b4cfb5c",
@@ -15259,9 +15063,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -15310,7 +15114,7 @@
     },
     {
       "path": "src/web/public/httpackclient.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 40454,
       "contentSha256": "7fe77f96ae0b1b76bf198881b48210a8f143397c59a06fabc80b6eb03dd6fa9e",
@@ -15347,9 +15151,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -15438,7 +15242,7 @@
     },
     {
       "path": "src/web/requestidentity.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3624,
       "contentSha256": "f8e981bfef284aedd9b25d9ebbcc8bb59c6babdac53e71abf8eec2c2580571e2",
@@ -15479,17 +15283,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "src/web/server.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 50283,
-      "contentSha256": "8aad39ddee35dd118a5ea5db1dddced26fd5dbde2501492f5a3675b6e420d49b",
+      "bytes": 52077,
+      "contentSha256": "0b5a5db09ed0043f4176a353882eccf2585eea697ce1fd950e08613357e59b44",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "source-runtime",
@@ -15519,6 +15323,10 @@
         {
           "kind": "import",
           "from": "test/autonomy-card-visibility.test.js"
+        },
+        {
+          "kind": "import",
+          "from": "test/autonomy-disabled-health.test.js"
         },
         {
           "kind": "import",
@@ -15564,7 +15372,7 @@
     },
     {
       "path": "src/web/sqliteindexattestation.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2120,
       "contentSha256": "dbb83aaf7b49d78ff8297075c16417116948fa5cac3ab0b0153da74ec9a4547b",
@@ -15609,14 +15417,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/agent-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3125,
       "contentSha256": "00779ba550d8a5bff26a0bd86e66014439257970b6fba3be8b8da2c6fa416800",
@@ -15725,9 +15533,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -15772,7 +15580,7 @@
     },
     {
       "path": "test/artifact-collections.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 61831,
       "contentSha256": "6798381ac1c25cafe04c3f8aee5254be44312f4532c629cd20f27e8da065b341",
@@ -15805,14 +15613,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/artifact-receipt-projection.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4300,
       "contentSha256": "04eb7e434f7d2b026c7e67a987a374b4edbf2f4bbd526eb6bcb914f70ddc5e23",
@@ -15845,14 +15653,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/artifact-versions.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 57011,
       "contentSha256": "f206a015ef8754a02ed3f871ac41c7b9aa0b1b45bd0880f28f173f2676a365b7",
@@ -15885,17 +15693,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/aspiration-attention-rotation.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 17679,
-      "contentSha256": "8f4c80c27d75433ded6d34b3ed6c930e4b19986d7119b3735fa0103c4c3bbfa4",
+      "bytes": 17739,
+      "contentSha256": "662622e11238ec204f1250876167b09ebc8b5657db5149fa79a928251af9786e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -15925,14 +15733,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/authentic-ha-voice-test-server.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2810,
       "contentSha256": "64e8e173d346c05b536a3bf421ccf2b28adba3b398d6a6f0253c53723c859aa0",
@@ -15960,17 +15768,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/autonomy-card-visibility.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 20586,
-      "contentSha256": "071df84b6e30c49464ac855666abcfd5ab653ed174ec587cc170bc9f415a06c8",
+      "bytes": 20821,
+      "contentSha256": "37a0fb54f170e6e450542fc0df961b0e1415680532ca783184c1f3f3b6f7a1f7",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16000,17 +15808,137 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/autonomy-disabled-health.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1527,
+      "contentSha256": "b771b66aa8ed7d0227182880413152b8b768abeaf1f211fead962bec9a9e0920",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/autonomy-disabled.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2870,
+      "contentSha256": "af832439697850694e362446c8c2b4bf1fe1016f099c40e87f84a237b271b54e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/autonomy-enabled-opt-in.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1903,
+      "contentSha256": "e92f35fd0bdfbc6637b5bee2a9df76483bd2756cd0ec2a3df7708680049b8bc8",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/autonomy-runtime-ingress.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 19061,
-      "contentSha256": "90f75961fc612d076e63cc8f8615aba2ca045b31919460d3801da159e8cf21be",
+      "bytes": 19227,
+      "contentSha256": "dd9fad46b01e27294f38f19442405da97ddf5e79daf3933accc971685518ed2e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16040,17 +15968,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/autonomy-safety.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17558,
-      "contentSha256": "8abd51edea00f1752c98b6c3f0fc5e8ff1b0212a8c1746b14b7833790f5b69f9",
+      "bytes": 17702,
+      "contentSha256": "9aa189ff9a757da90096e27565bc48c8a00a6f0bcfeb0d80484b9f8465f3ff02",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16087,7 +16015,7 @@
     },
     {
       "path": "test/behavior-learning-integration.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 9405,
       "contentSha256": "fb6fa107c1b160e3250069d74a8d0bb50db7e7e0c495a0ea868ae42b984445df",
@@ -16120,14 +16048,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/browser-http-ack-client.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 32262,
       "contentSha256": "6d178e8e2f15c79742d6bed486891f2e591b199b3eb550eab690d2806ac163ee",
@@ -16160,17 +16088,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/capabilities.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6720,
-      "contentSha256": "052458c43682a8806a3710cc5a606a2071c0d53c97d72f15652b3f84cc513c96",
+      "bytes": 6804,
+      "contentSha256": "29b9744aafe60af113f70c05b162175ec50a52d698fa3f6427e161ff0bab3662",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16247,7 +16175,7 @@
     },
     {
       "path": "test/cognitive-no-action-continuity.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 9892,
       "contentSha256": "64303260704f8db65ad5481a540bde35892a4433faabc8d5a9a2296b352e9b62",
@@ -16280,17 +16208,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/conversation-opportunity-scheduler.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 7723,
-      "contentSha256": "a20f3a8f4c66cdc462913f763615024832251043a176bc6c6f4c42b8ad75b40d",
+      "bytes": 7807,
+      "contentSha256": "3335157973e425dfa2d723dd59aee8478332b089e9c3ba923725da96c38fb90a",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16320,14 +16248,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/conversation-opportunity-search.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 13845,
       "contentSha256": "9e1688aa203eeb0ddda9c2798eb3669de15bd0ead723ddc70bdf37cdb7617159",
@@ -16360,9 +16288,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -16407,7 +16335,7 @@
     },
     {
       "path": "test/curiosity-outcome-liveness.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 8464,
       "contentSha256": "9b0b4b5591b501e36502a49702c143f5591cd94bf603eb17d8409d6c6c79a46e",
@@ -16440,14 +16368,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/data-directory-guard.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 35016,
       "contentSha256": "4ad590aec7b23e06ca0b2dbb525e528311378b44c50f0183392b54aaa7a2e1a0",
@@ -16480,14 +16408,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/doorbell-ingress-priority.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4161,
       "contentSha256": "87e3197c7b9c12711e58c5606edb29d4796cd1df3780d663d2eacc44a358a87f",
@@ -16520,14 +16448,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/doorbell-intercom.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 7298,
       "contentSha256": "cacd5cc095dd1f39cf21ca1a62f5e0f824863f6b456ddb9a0ab142a4a63fcef3",
@@ -16560,9 +16488,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -16647,7 +16575,7 @@
     },
     {
       "path": "test/eva-agent-benchmark-v1.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2646,
       "contentSha256": "0133820f1a85c196bdcdd7b752bd66a112c683a8326bf4539dd3591afc882edd",
@@ -16680,14 +16608,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/execution-ledger-live-predecessor.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5295,
       "contentSha256": "6881a6e9cd693d7236d4816d0461f637096105b788b1e13a71a80800cccce625",
@@ -16720,14 +16648,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/execution-ledger-main-schema.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2924,
       "contentSha256": "5e56dc8b960f1075b11134eaa40c2e06003b8d39706d36ebbab09d869a5a64c3",
@@ -16760,14 +16688,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/execution-ledger-v2.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 47280,
       "contentSha256": "718cb673d217150002d5b4cac78079d49405a482aa7b717b75f1d6b9cf03ed61",
@@ -16800,17 +16728,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/exploration-attention-backoff.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 55690,
-      "contentSha256": "9d8b5cd734186e1e5196cce1bbc28c2e95d6bdfaf0d3c2a0b39d907a3a7aafcc",
+      "bytes": 55780,
+      "contentSha256": "f7a222f0b0fbd7be06f8fb4e53678f23b68f01b5fef4151f9b27ba892f6ecae9",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16840,14 +16768,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/exploration-family-result.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 24618,
       "contentSha256": "4323a60ebbf6ee4d5e954efdb393dee89c0e1ac6368da972d5f7984337bf4427",
@@ -16880,14 +16808,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/failed-telegram-handoff-recovery.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 27041,
       "contentSha256": "9e504264656f768e4f72cfed46b7e2f66149c2c39f8fba0bac2f96bf6e823014",
@@ -16920,17 +16848,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/family-autonomy-three-domain-acceptance.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 24183,
-      "contentSha256": "156db25f7446e601f86794d483830ddb36d202fc839d8438394292d763d64f9b",
+      "bytes": 24267,
+      "contentSha256": "0d3d7456b4a9842f3ecfc393ac3578c8342bd78073a7f908588d77aabaada021",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -16960,17 +16888,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/family-experience-restart.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 7821,
-      "contentSha256": "337ea811b827d6fcffa91cf480b4f85e211cf190bdcb244fd2285cd9121bfaea",
+      "bytes": 7851,
+      "contentSha256": "92e4641a66ccefa398a29c0a5a053ee3a974806e3134af8d97a5a92b7db6fc65",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17000,17 +16928,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/family-work-status-visibility.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 9766,
-      "contentSha256": "0c4a7992fc111b0c6d1810e4947b90509bcbc0b63fc6c4a688819671cd5b4e4b",
+      "bytes": 9850,
+      "contentSha256": "bca216f7d83733dc566360df4914b8c290132b82c49d811a9d6fb19e3e56d1c4",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17040,14 +16968,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/family-workspace-write.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2361,
       "contentSha256": "4fd779c515ece055f3a40de8876767187dfcd70edd62eb51045b1cc4686de88d",
@@ -17080,17 +17008,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/free-autonomy-continuation.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 23904,
-      "contentSha256": "9279bf5342c0e6581f17f0d3af4c63e46251a90a692f2e8d4633db6670d2d809",
+      "bytes": 23934,
+      "contentSha256": "a00f3e15c86f10df980dd20a8d3e794f3953865eb34f0950bd799663de6a5202",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17120,17 +17048,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/free-no-action-runtime-continuity.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 20204,
-      "contentSha256": "3aa3ce77939860c13fcd29eb17a6a364812b54ff367067aebe35baa162ac5aa0",
+      "bytes": 20234,
+      "contentSha256": "30ce2586f09ebe5de2bcc71bd79fc3fdee82c78cd8bc64f13ba4396d22f4d2cb",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17160,17 +17088,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/free-research-continuity.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 27084,
-      "contentSha256": "58990758277a822bc503e7dfa804ad7a058750943d920c5ee63a56ff8ee160d1",
+      "bytes": 27114,
+      "contentSha256": "a40bdf9b640cf3d124326dd103f502d755305a942f8a7c98b467b0f06298d473",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17200,17 +17128,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/full-autonomy.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 367786,
-      "contentSha256": "34d8410386158183f939c560f992d6ba19fbfc344c05b998ce48d0b32f5baf3e",
+      "bytes": 368315,
+      "contentSha256": "9932798f5f3db6412e8aba61dd8aa93fdbf89b6a505ea1f901a66ef13b88d789",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17247,7 +17175,7 @@
     },
     {
       "path": "test/generic-read-agent-loop.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 47607,
       "contentSha256": "f328ad0c8a52d4c62cb11b1d49a4e649f79eeab76cb11a2b49313a712e5ff1dc",
@@ -17280,14 +17208,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/homeassistant-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1825,
       "contentSha256": "2137fbc4b25e3fc54f91a04a37c9e265f32dea44778620d07af2ee2694d5b336",
@@ -17396,9 +17324,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -17483,7 +17411,7 @@
     },
     {
       "path": "test/http-authority-boundary.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 12397,
       "contentSha256": "264fd33bdfa875dafc43ee67b96c3ca61e128296ef71f406ee0cfcd7f695ecb5",
@@ -17516,17 +17444,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/http-delivery-v3.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 5029,
-      "contentSha256": "57b274c709b0ddb179fd94ab66ad03cf5071c1f5dede461b3bb481c3f83d2730",
+      "bytes": 9064,
+      "contentSha256": "c03c96380ac50f7c5aa037cb6ce92d6e2f4c77262381080012ef6e2a1f7672a8",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17556,14 +17484,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/http-delivery.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 38358,
       "contentSha256": "8d85b985c69f038147db915a37d35b9b6ba079158aea3df60f27b7056a3af180",
@@ -17596,17 +17524,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/http-ingress.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 27716,
-      "contentSha256": "10df5dc81f833f1aee3e289bf722dea9de64f5005ffec430d3836d1fe4712eab",
+      "bytes": 31773,
+      "contentSha256": "f599741a872f35557f17c696a9ac34fb490e42ce4d05e1bd2b7dc4461a7e571d",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17636,17 +17564,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/http-server-ack-integration.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 23272,
-      "contentSha256": "8959a59740802b1c81b1c99be1903436ae727e77a58b5ba6a65d9ad10a193eb9",
+      "bytes": 24082,
+      "contentSha256": "8dad2fd05cb7b49355b015aa5778a73b354529bfd076aae31ea1aa9db7950264",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17676,14 +17604,49 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/http-turn-authority-retroactive-fixture.mjs",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7538,
+      "contentSha256": "443687705d82de8ca549ad530d4164fedd93dc44ee3272c01264d4058dfb7680",
+      "hashMode": "exact-bytes",
+      "role": "verification-fixture",
+      "roleRuleId": "test-helper",
+      "matchingRuleIds": [
+        "test-helper"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "test setup"
+      ],
+      "outputs": [
+        "fixture capability or child process"
+      ],
+      "state": [
+        "temporary test state"
+      ],
+      "effects": [
+        "only through a consuming test"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/interpretation-handoff-idempotency.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 32519,
       "contentSha256": "6d9317c063f1c663cc19a0035ed4053c1439efad90f16356ddfd00e923ef157b",
@@ -17716,17 +17679,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/interpretation-resume-authority-runtime.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 2507,
-      "contentSha256": "e5ae06993b018e64fdf0d4f53c9967f49fbc755eee850d9cca6179396f96eaca",
+      "bytes": 2591,
+      "contentSha256": "4353dcfd3d0faa6048518e0d78942155787fc0c4812a368fe7b8904334180419",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -17756,14 +17719,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/isolated-data-dir.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 541,
       "contentSha256": "44ebf3de150ebe88ad0f144ef0824bbc64cb422e41cc678aba111ad8de93b5b8",
@@ -17820,14 +17783,94 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/lab-adapter-contract.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4306,
+      "contentSha256": "65f7339a037577d7d2686555e56f68d3f500a6e1f1a1056ab654ce63d6d7149c",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/lab-effect-broker.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3779,
+      "contentSha256": "888b2e7aa3c34ac45ddf97c83b807bfc8c7c7a0a3442368c00b9103e15a7ffa7",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/lab-plan-run.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2477,
       "contentSha256": "88c31bf7575b7b82fb39b1a4706d93d145d7fe08f535aabd77254968f9148321",
@@ -17860,14 +17903,54 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/lab-result-ledger.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4094,
+      "contentSha256": "d4212aa8504537be8398a39f752d23880b2b289c234df5d21a6ff2dea5b1a115",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/learning-availability.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4915,
       "contentSha256": "98ae063cb07481ce4cd5ac24248079f9d1b7c4341fecfdd39e88b733da5ee503",
@@ -17900,14 +17983,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/learning-loop.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 25736,
       "contentSha256": "ef5ea39bef6854723026931f6c3adc6be15951f74902979b0d0d219595367cde",
@@ -17940,9 +18023,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -18027,7 +18110,7 @@
     },
     {
       "path": "test/llm-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 876,
       "contentSha256": "f9e1a165025f58c15a31367b0bf4b69dc960303b9cdb99e9e99b3f4420bd3652",
@@ -18064,9 +18147,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -18111,10 +18194,10 @@
     },
     {
       "path": "test/material-completion-runtime.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 22004,
-      "contentSha256": "f0a8ba2bdb565ca0a1a87e78c553faed85d9ec954005afab8fb2462c9b233374",
+      "bytes": 22088,
+      "contentSha256": "c2738a271e3691f3750ed9046c213552fe51c3f8a987caa849d1595944aba38f",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -18144,14 +18227,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/material-completion.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 27210,
       "contentSha256": "33c179b41d968131aa26498a23864d7d4e4506ee58d3acb26f06d04408f0dbb9",
@@ -18184,14 +18267,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/material-lifecycle.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 91509,
       "contentSha256": "97c14e55ef6347f94ba68e34508feb436469e55a1967e3f70e9e746b392eb588",
@@ -18224,14 +18307,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/memory-hygiene.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 29202,
       "contentSha256": "30d47bae35a5e499430ea542d3a555e68c3ff3a57a8ff2244b0ba626d3d41ce8",
@@ -18264,14 +18347,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/memory-web.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 11396,
       "contentSha256": "77cd74cebe4212ac1caf68f488509ebdca192af703d35c974ad534cf5f7eb428",
@@ -18304,17 +18387,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/minimal-core-contract.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 167353,
-      "contentSha256": "b11576688d30c7033aed89760b2b5896c2797701bdc2c3a38f500c07a321ad5a",
+      "bytes": 167437,
+      "contentSha256": "802f9865eb47cd96621e4c42ac5fea052c3884fd54598d1f40619aaf21414794",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -18351,7 +18434,7 @@
     },
     {
       "path": "test/monitoring-contract-host-builder.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5431,
       "contentSha256": "3295f1221286af27fd27838ded0bf96bc8a73ed0321e7d3f61bd40a183e19bc8",
@@ -18384,14 +18467,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/monitoring-contract-v2.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 34987,
       "contentSha256": "713cca800bc51c52f20a9e01306b55f831ce3e6ba7dde64fb9b4907f1efd2d5d",
@@ -18424,17 +18507,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/monitoring-required-ingress-admission.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 7675,
-      "contentSha256": "4355c01156a2b8ee4f82a3fdb4ead6f56d875d217dfe362beadf5faebed5f8c0",
+      "bytes": 7759,
+      "contentSha256": "99792b80919ba79850a23ccdc7b05940ed75d58d86cd773262f0f2aa29f493d4",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -18464,17 +18547,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-failed-telegram-handoff-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 11615,
-      "contentSha256": "ee236a9c3d2e757397a41f6412ffedc59ce798bba700fa335e85f8a38214d6c5",
+      "bytes": 11699,
+      "contentSha256": "3ed04bbcbc5ecdfc81167c52232ad01c66a41d150cf09b48fab160b4995e8108",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -18506,14 +18589,14 @@
         "subprocess:test/native-failed-telegram-handoff.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-failed-telegram-handoff.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1404,
       "contentSha256": "2ee75b7533a08b1300792144854502df6a2fcd351f8b766f0b0d55c77bdbb680",
@@ -18546,14 +18629,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-ha-voice-authority-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 25446,
       "contentSha256": "0aefabcd35b963af7ae09a716c45d4e9c8c9a6aaaa868b38f1c21deda6949c71",
@@ -18581,14 +18664,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-ha-voice-authority.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 7149,
       "contentSha256": "4b9c65c3df969e8e92489eef3af83ac0c439554ccddf26efd6e33a85be9f3282",
@@ -18621,17 +18704,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-interrupted-telegram-effect-startup-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 16550,
-      "contentSha256": "13571deebada8908576881e093e5c5cb2c24389b4a214721e8141099f4556529",
+      "bytes": 16634,
+      "contentSha256": "d8c8832728be746a61b7b32b6708ec914d565a2f01cf9dc36b0d1ac048f33872",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -18663,14 +18746,14 @@
         "subprocess:test/native-interrupted-telegram-effect-startup.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-interrupted-telegram-effect-startup.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 8540,
       "contentSha256": "94ec53c524d3d5cff1cdf441e2c1d7e0380d823da6fac5d008fbffff84dd969d",
@@ -18703,17 +18786,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-interrupted-telegram-startup-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 4451,
-      "contentSha256": "f7737eec834778132011b4553d966f814e68f42b8547624675edc72cf17b7407",
+      "bytes": 4535,
+      "contentSha256": "c90ae6780e8ac1a08a38075f758ea1b374365dfca0fad47470ce8c1f991465a3",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -18745,14 +18828,14 @@
         "subprocess:test/native-interrupted-telegram-startup.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-interrupted-telegram-startup.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1702,
       "contentSha256": "da9fd43a14fb06eb7ebffddfc41f5ef140239f7dc25e8ce65e1524f519d17db7",
@@ -18785,17 +18868,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-monitoring-v2-restart-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 61467,
-      "contentSha256": "96aee6bbaee721deef3fef1a7f3ba9cd5d8a668b9c62178656e8f298960881c7",
+      "bytes": 61551,
+      "contentSha256": "5806ac5ad21219228f94de3ab04a7bbb664ec9bae0f5637e851e69a20cf00fb0",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -18820,14 +18903,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-monitoring-v2-restart.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 43511,
       "contentSha256": "5a0ab553acfdd39b8c51312eb288b787336725d6734fbd90ba730f5e21d21b60",
@@ -18860,14 +18943,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-telegram-direct-recovery-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 15651,
       "contentSha256": "c1e474603f25926d57e645e1e9a6d4ea9c30dc8700833949a89b3a9158d782f6",
@@ -18895,14 +18978,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-telegram-direct-recovery.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5617,
       "contentSha256": "34c44869d7ac5f5fcaa15e4af8fa686ab88d6bd0d109cce38f40e8f1219397f2",
@@ -18935,14 +19018,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-telegram-done-restart-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 14796,
       "contentSha256": "f971b1c1a953719beb39af4b0628f48fff47b4792f5a651686b84d4d19ac18bf",
@@ -18970,14 +19053,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-telegram-done-restart.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3085,
       "contentSha256": "af0478140af0fed9c6d27f44f1885c609c710b9f6fb018fc260f71fba1941d50",
@@ -19010,14 +19093,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-telegram-release-boundary.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3474,
       "contentSha256": "8556d58408cb37084f4b2ca7d0312b7f74720271504bc73e7551fa711dc1011a",
@@ -19050,14 +19133,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-turn-understanding-authority.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 23266,
       "contentSha256": "71e502616526d1f454bbddfa89f8b024ab4bcbfb367ac07836cb204eac59af7d",
@@ -19090,14 +19173,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-voice-delivery-transaction.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 9218,
       "contentSha256": "f6ecbe27d47cc37d24dee512b6f907c00a35b1b4c7cad66bdb3e41a5dcd72a5c",
@@ -19130,14 +19213,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-voice-drain-continuity-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 11532,
       "contentSha256": "d71d2c1bda39baa9f3a4dd22c3f9a1105cf9458006d88761f194d6f063bb6088",
@@ -19165,14 +19248,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-voice-drain-continuity.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 2391,
       "contentSha256": "da9c1077817111d05cec63fe5a19f74ad33ea2839024930d3a03b858bb0ab3e6",
@@ -19205,14 +19288,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-voice-restart-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 15010,
       "contentSha256": "7b4e738e73dc0d04ecbdbee2ff2a21191e62ddab784411464da746745d0e1d98",
@@ -19240,14 +19323,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/native-voice-restart.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4814,
       "contentSha256": "5f29517f0f147937e67048b85d753b85c9cc715f8d84c2025db54385186fcf42",
@@ -19280,14 +19363,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/partial-home-success.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 40824,
       "contentSha256": "737459221aea38d4fdf2353ac7ab6d1453a6a3b11c777e636c617e468af3b850",
@@ -19320,14 +19403,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-attention.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 12610,
       "contentSha256": "cdff178e6e416d9e82fcfda1e01f64e88b4f15d07143789966f1106fdf8a8c7b",
@@ -19360,14 +19443,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-availability.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3697,
       "contentSha256": "8d0abbd9b6d1a97076e816bd1d16b5a7fad2d6bc5fe68062c93d094b49ab5b97",
@@ -19400,14 +19483,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-camera-selection.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 10138,
       "contentSha256": "e172bb4cbd40f73082cb34222819a502d234634c475fc523b79f4205f47e7953",
@@ -19440,14 +19523,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-decision.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 4548,
       "contentSha256": "5d4e23f30fd3c19a3ddcecae37831be6ff4e67f3fc03a8a19ed42f5085991bde",
@@ -19480,14 +19563,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-executor.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 9336,
       "contentSha256": "0719d8d5141876116e3277887c7b81f761bb0f143483f8e6256afd1a99cb3dd8",
@@ -19520,9 +19603,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -19567,10 +19650,10 @@
     },
     {
       "path": "test/perception-scheduler-liveness.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 13509,
-      "contentSha256": "6f6a4278f770a19fbd7592dc4abb8948cfc6e565b717eb1acd9930eb1815e65d",
+      "bytes": 13539,
+      "contentSha256": "56a80aae225fc08df48fa4560ec471169db318adeec2f32ac0f888f1d7a3a382",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -19600,14 +19683,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/perception-web-privacy.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1183,
       "contentSha256": "e3a33235e3301720ed35065eac5f3e40b36be6ac71ea8ba3f99d600381bfa510",
@@ -19640,9 +19723,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -19687,10 +19770,10 @@
     },
     {
       "path": "test/quality-gate-diagnostic-debt.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 80873,
-      "contentSha256": "eee138f285f7a667095fcecc0a3e2abb5d67765acf7fcd49b621d986c19674b7",
+      "bytes": 84293,
+      "contentSha256": "39fd30be924fd72c333daddbce7c5fdc924f817ee8c41d718623202d0cbfc797",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -19720,14 +19803,134 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/recovery-runtime-config.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2438,
+      "contentSha256": "4042b18178a4f51e20d98dbe8d960b03fba752a9673a4c2069b4a9c382095bfe",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/recovery-runtime-startup.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7642,
+      "contentSha256": "b19a8c375664d7fbd069920a6bebb9cb263a13a2823162fc2cd131e9039a4362",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/recovery-runtime-tool-policy.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3258,
+      "contentSha256": "8cdccd8616c59e0c175fe86f08dc366592aed570e9efc5550221bd63e6e2b162",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/relationship-feedback-ingress.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5132,
       "contentSha256": "54be4da5b187d807748d43e6793cf6a19374c9423aa29aac984274bda7ff1202",
@@ -19760,14 +19963,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/repository-inventory.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 39833,
       "contentSha256": "030a7a5dc0dd6e334cd6afe2662a6c4d61ff14cfe85cebc0d820774818a476e7",
@@ -19800,14 +20003,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/requester-owned-home-target.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 8613,
       "contentSha256": "8f43173468c851f59b986e636071cc0dcd1b68d8920b01d5f26c10605bd7a28f",
@@ -19840,14 +20043,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/runtime-self-repair.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 95245,
       "contentSha256": "194b3161e197af485ef9c5a7f065cf6c9b064d0a92f698471c44b5d3c17cfe86",
@@ -19880,17 +20083,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/self-attention-exploration-scheduler.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 141257,
-      "contentSha256": "8d477e5b71cd047296100ea96db057e26a410908a842e38c86da5ece10800491",
+      "bytes": 141347,
+      "contentSha256": "0c51259c3c06c85dca4d7a93850487edc32a28db9dba7ed1fad159449860c5ea",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -19920,17 +20123,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/self-attention-ingress.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 47522,
-      "contentSha256": "cd6f0030981addaec186a460819fae195f8d4c4a2d4c014673b59f2a1add2e66",
+      "bytes": 47606,
+      "contentSha256": "d0458e10301eac3e2d261205a3e41d989ca9703210b9d89f1804fb7b80fa8c1b",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -19960,17 +20163,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/signal-liveness.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 22106,
-      "contentSha256": "7dac4e9274f66f05dddd691dd668c3f9e1f196d5c4714b4dd7abfd4bc8dd4c7f",
+      "bytes": 22190,
+      "contentSha256": "3fb6ee16f6c237604a2bde0365c17ca0efc0696cae257741b682dbea2945c112",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20000,9 +20203,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -20047,10 +20250,10 @@
     },
     {
       "path": "test/telegram-conditional-temperature-monitoring.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 31644,
-      "contentSha256": "921c9ee0709f121e75977aebe022f97e596e7237ef68bdd3b93936437315adc7",
+      "bytes": 31728,
+      "contentSha256": "54bc74d76ca081cd8d488661d4b606703d06f6fbe1551d7300492a4a10594e7e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20080,9 +20283,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -20127,10 +20330,10 @@
     },
     {
       "path": "test/telegram-monitoring-language-provider-canary.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 5722,
-      "contentSha256": "f4c7c71eb769d15195a62bae8f840fe3bb3b8726d7908234b454ef4d43eac9d8",
+      "bytes": 5806,
+      "contentSha256": "812b313e0e6e4ee93cfffae853b35fda5d30f5f04b2b652b41af05c00411a680",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20160,17 +20363,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/telegram-outbox-core.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 88474,
-      "contentSha256": "cb5222bcfffc360c15ceb0efeb060123d81d5529ff59768019a118ea70003a14",
+      "bytes": 90227,
+      "contentSha256": "6c6ca306e74217d629a980f0c3a62f91690707ce8d02b5ecf3e29de44c7cd25f",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20207,7 +20410,7 @@
     },
     {
       "path": "test/telegram-partial-fanout-projection.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 6479,
       "contentSha256": "2246e7ca64cd6763642dace2758603110e7ef6519c421d2c6658614e534f65b7",
@@ -20240,14 +20443,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/telegram-per-child-current.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 10546,
       "contentSha256": "112680a18c76699f1f93efbf6e800c4ab49053c376f15615819cc254a54ebe0b",
@@ -20280,14 +20483,54 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "test/telegram-social-failure.test.js",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3083,
+      "contentSha256": "501dae69774bdf711893f181d2a05062a84b0dbda427bf18a49ebe7fa4e530da",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "test-entry",
+      "matchingRuleIds": [
+        "test-entry"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "package-test-glob",
+          "from": "package.json"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/telegram-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3372,
       "contentSha256": "52cefcd2a24cba160916171f56c259d6ab630accd8f8de42a4e8b82e140c9185",
@@ -20347,6 +20590,10 @@
         },
         {
           "kind": "import",
+          "from": "test/telegram-social-failure.test.js"
+        },
+        {
+          "kind": "import",
           "from": "test/telegram-transport.test.js"
         },
         {
@@ -20391,6 +20638,10 @@
         },
         {
           "kind": "test-fixture",
+          "from": "test/telegram-social-failure.test.js"
+        },
+        {
+          "kind": "test-fixture",
           "from": "test/telegram-transport.test.js"
         }
       ],
@@ -20399,9 +20650,9 @@
         "subprocess:test/telegram-outbox-core.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -20448,8 +20699,8 @@
       "path": "test/tool-policy.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 148004,
-      "contentSha256": "b24638909bb1e1292c570d31d0f65cddd871213ea68667a7d0b8fd3cf0662df5",
+      "bytes": 148045,
+      "contentSha256": "b12aed26593d5e77a5b13b55f3a17c252e39533ee3128bd483f8f40077c1d64e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20486,10 +20737,10 @@
     },
     {
       "path": "test/turn-authority-predecessor-fixture.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 4639,
-      "contentSha256": "664cc90b7ea6005bbcad5e42bbfec4e7ffcc514db8d2be1380f6608dbcf07c32",
+      "bytes": 22124,
+      "contentSha256": "1c0c6fd32de6971a9341fd828cb099fe4af1ba2803c1f096a3f67b2022475c82",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -20514,17 +20765,17 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/turn-authority-predecessor-migration.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 1679,
-      "contentSha256": "fd55c1bfa08afb0482ce42c48fe9ae90050fc61e6eec8501e576ee3c3cfcb144",
+      "bytes": 6029,
+      "contentSha256": "81e392190d188507d9dc3e1f0824e433309c8f8c1c4236db24107f197a1ef79a",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20554,14 +20805,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/turn-authority-store-initialization.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1876,
       "contentSha256": "568e5a880ff2c89bcb6f3a6732964264d136879b6e8bae23e9de35f1a049375c",
@@ -20594,9 +20845,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -20641,10 +20892,10 @@
     },
     {
       "path": "test/turn-understanding-authority-fixture.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 9070,
-      "contentSha256": "90326deeea363f98b6413fe68aa9ff23daebceada140246144908e1630d47e29",
+      "bytes": 18954,
+      "contentSha256": "9de62e6ed37c39acd1d11a5d50998775f65e4232605eb28a3dd6b6822962246b",
       "hashMode": "exact-bytes",
       "role": "verification-fixture",
       "roleRuleId": "test-helper",
@@ -20750,17 +21001,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/turn-understanding-authority.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 36915,
-      "contentSha256": "9d82cb81621a77df46995d8a9eb58e3fecf19e4632224c88541bdb110171a4ee",
+      "bytes": 58956,
+      "contentSha256": "9f676e010f2425b45ec043b28d63ac34c4f60244827141dfd44be5d6b652ac40",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -20790,14 +21041,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/turn-understanding.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 377365,
       "contentSha256": "b2d49b1aa2d522976c08cde6ce511c83be6af941f962e3098cc1ef9da24252bd",
@@ -20830,14 +21081,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/user-facing-text.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3178,
       "contentSha256": "3b4db7bcf0fd3c53f03f455aca3950cab44b500ab4d42524369673bc7ed7231e",
@@ -20870,49 +21121,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "test/vision-pending-identity.test.js",
-      "gitState": "tombstone",
-      "present": false,
-      "bytes": null,
-      "contentSha256": null,
-      "hashMode": "absent",
-      "role": "verification",
-      "roleRuleId": "test-entry",
-      "matchingRuleIds": [
-        "test-entry"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "delete",
-      "decisionReason": "confirmed replaced tombstone",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": false,
-        "status": "blocked-unresolved-disposition"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/voice-delivery-authority-store.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 14923,
       "contentSha256": "251fcf5b7579fe9a989bff4f48e988ebca3e48c6b366c336ded0b57b5d7323a1",
@@ -20945,9 +21161,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -20992,7 +21208,7 @@
     },
     {
       "path": "test/voiceauthority-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1390,
       "contentSha256": "7c2ca81ec5e9866fd7d1282ba13e24e1f9a21f05962ac129c03465aba2d4ccce",
@@ -21053,14 +21269,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/voicebridge-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3506,
       "contentSha256": "29382a0503b17b33aa7d98e4eedc9673d3c8a49c00be341d3b3157e45f187e93",
@@ -21145,9 +21361,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -21192,10 +21408,10 @@
     },
     {
       "path": "test/web-agent-ingress.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 24193,
-      "contentSha256": "e49cf961a334a97cbc80735eb44bb57854472ca035131dab12fd64ec8bcb2f37",
+      "bytes": 46621,
+      "contentSha256": "e59f4d6902b6eb4d1b7d807e25cc4e85a241210a6f9cbe673a06b6daa2bfe102",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -21225,14 +21441,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/web-request-identity.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 18813,
       "contentSha256": "0c8f882d8e7fa648242e2654e69b719e07e35321dd512bd209570ec5d0d47c8a",
@@ -21265,14 +21481,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/web-server-test-agent.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 243,
       "contentSha256": "19148c1acdb048556a40a04ac2c85b74333be007dd00d914feda1c983fafc70f",
@@ -21300,14 +21516,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/web-server-test-composition.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 854,
       "contentSha256": "5b684302676ea52cde4141e10dc432e54a463a22495737104d523cb10c920771",
@@ -21358,14 +21574,14 @@
         "subprocess:test/http-server-ack-integration.test.js"
       ],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/web-server-test-state.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1300,
       "contentSha256": "76365452afb09c52b881718d7c234ba6c72b321f3e2a53bbeaf4b9614ca4f12c",
@@ -21402,14 +21618,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/work-completion-contract.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 49194,
       "contentSha256": "3bd7bc9b27c430784984a4b752cd5dc6a09fa0641dc424b7584d0e107b6c1841",
@@ -21442,17 +21658,17 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/work-completion-lifecycle.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 49076,
-      "contentSha256": "9ce154a92b7a3f04719de060cd90497b2a1ae90154b973362e363cc00d3b38e9",
+      "bytes": 49160,
+      "contentSha256": "e4238ec4fb2c62d04344910e5ff81bc14e30bdac0d1497835bf9c282ebb6a01b",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -21482,14 +21698,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/workspace-file-manifest.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 11439,
       "contentSha256": "9dc18d732fa10cd7ea238fd9c4f55bf1eae2ff1cc00351ef606a71ebcb5b5fe7",
@@ -21522,14 +21738,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/workspace-generation.test.js",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 52583,
       "contentSha256": "7f629f1dacd731f0b5196d9bdb8e2c56058baf2098d3dfffba162f57009a92d9",
@@ -21562,14 +21778,14 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
       "path": "test/workspace-writer-broker-native.test.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 43317,
       "contentSha256": "c09278c03f2a5090ed2f8602729fce3eb5604d660b4168a25c320db26396c9eb",
@@ -21602,9 +21818,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -21642,10 +21858,10 @@
     },
     {
       "path": "typescript-diagnostic-debt.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 187395,
-      "contentSha256": "b7fc285eb3fa8e0845508713f34e5db418c6242d23bef88c31525360b3546c1e",
+      "bytes": 187040,
+      "contentSha256": "0a01005fd69816b3284f2f9970045837523bfef80d227fe7fabb114207c60d67",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -21668,11 +21884,11 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     }
   ],
-  "sourceDigest": "6d0811f9b1aff31528094c78fcea40a2cd4aa8d9ef8d9f0f256105efbcea26d3"
+  "sourceDigest": "df5cc4458fb1bde5f37d4b58a6ff540c339ab189e3b7d710b51e1f8efd773778"
 }

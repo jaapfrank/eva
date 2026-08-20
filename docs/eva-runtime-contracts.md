@@ -1,8 +1,8 @@
 # Eva runtimecontracten en foutlokalisatie
 
-Status: architectuurbron voor de actuele werkboom van 16 augustus 2026.
+Status: architectuurbron voor de actuele werkboom van 20 augustus 2026.
 
-<!-- eva-runtime-source-digest: 41b73f378b7a15342b3487decafec77f3b580aca9b6b6ff6ef2893c072415b6f -->
+<!-- eva-runtime-source-digest: ae881720a24a89821bfa4f73ede26cad75f94c14705754037bd33addeae6c7af -->
 
 Deze kaart heeft een ander doel dan een gewone componentbeschrijving. Iedere
 pijl benoemt een concreet runtimecontract: welke gegevens binnenkomen, welke
@@ -27,6 +27,15 @@ package-selectie staan in de repository-inventaris. Een test geldt pas als
 bewijs voor een semantische contractpijl wanneer die koppeling in een gerichte
 acceptatie of contracttest zelf expliciet is gemaakt. De inventaris doet dus
 geen algemene dekkingsclaim op basis van alleen een bestandsnaam.
+
+De historische audit in `eva-runtime-map.md` is bij deze review opnieuw met de
+actuele bron vergeleken. De kerneigenaars zijn niet verplaatst: `agent.js`
+regisseert de beurt, `tools.js` bezit de registry, `portfolio.js` bezit de
+episode-lifecycle en de kanaaladapters bezitten hun transport. Sinds die audit
+zijn wel drie grenzen aangescherpt: herstelmodus begrenst proces-I/O, HTTP-voice
+heeft een eigen duurzame ingressbron naast native HA voice, en delivery sluit
+pas met kanaalspecifiek ACK-bewijs. Daarom blijft de historische kaart een
+gedateerde audit en is dit document de actuele semantische bron.
 
 ## Werkwijze bij iedere fout
 
@@ -176,27 +185,45 @@ sequenceDiagram
   participant L as timers and background loops
 
   I->>DB: import, pad/sidecarattestatie, SQLite open, DDL en storechecks
-  I->>I: workspace, vaultredactie, cognitive core en perception
+  I->>I: workspace, vaultredactie en cognitive core
   I->>W: startWeb, alleen bij geldige HTTP stores
-  I->>HA: connectHA, asynchroon tot auth, subscriptions en state snapshot
-  I->>V: startVoiceBridge plus acknowledged-delivery recovery
-  I->>T: synchrone restartrecovery
-  T->>T: start polling en prepared-reply outbox
-  I->>L: reminders, emotions, autonomy, maintain en backupchild
+  alt EVA_RUNTIME_MODE is byte-exact normal
+    I->>HA: start perception en connectHA
+    I->>V: startVoiceBridge plus acknowledged-delivery recovery
+    I->>T: synchrone restartrecovery
+    T->>T: start polling en prepared-reply outbox
+    I->>L: reminders, onderhoud en backupchild
+    opt EVA_AUTONOMY_ENABLED is exact true
+      I->>L: autonomy scheduler, listeners en timers
+    end
+  else recovery
+    I->>I: geen externe achtergrondconnector, perception, reminder, autonomy, onderhoud of backup-I/O
+    W->>W: expliciete webbeurt mag provider en externe read-tools aanroepen
+  end
+  I->>L: emotional life zonder externe connectorstart
 ```
 
 Web kan dus al luisteren voordat HA volledig authenticated en subscribed is.
-HA-afhankelijke handlers moeten hun eigen readiness controleren. Telegram
-polling begint pas na de synchrone Telegram-recovery; voice heeft daarnaast een
-eigen achtergrond-drain voor reeds geacknowledgede deliveries.
+In de veilige herstelmodus is dat lokale webpad de enige gestarte adapter. De
+modus start geen externe achtergrondconnectoren en blokkeert iedere non-read
+tool, maar een expliciete webbeurt mag nog wel de provider en externe read-tools
+zoals HA-read of webread aanroepen. `external_effects_enabled=false` is daarom
+geen nul-outboundgarantie. Alleen de byte-exacte waarde `normal` opent de
+achtergrondconnectoren en non-read tools.
+Ook in normale modus start autonomie pas na de afzonderlijke expliciete waarde
+`EVA_AUTONOMY_ENABLED=true`. HA-afhankelijke handlers moeten hun eigen readiness
+controleren. Telegram polling begint pas na de synchrone Telegram-recovery;
+native voice heeft daarnaast een eigen achtergrond-drain voor reeds
+geacknowledgede HA-deliveries.
 
 ## Canonieke gegevensobjecten
 
 | Object | Producent | Verplichte invoer | Uitvoer | Consumenten | Foutbetekenis |
 | --- | --- | --- | --- | --- | --- |
-| Kanaal-ingressauthority | Telegram, HTTP-ingress of voicebridge | authentieke transportbron, request/message-id, conversatie, identiteit | opaque capability plus herleidbare bronhash | `agent.js` | geen beurt starten |
+| Kanaal-ingressauthority | Telegram, HTTP-ingress of voicebridge | authentieke transportbron, request/message-id, conversatie, identiteit en actuele claimgeneratie | opaque capability plus herleidbare bronhash; HTTP voegt exact claimevent toe | `agent.js` | geen beurt starten |
 | `TurnEnvelope` | host/orchestrator in `agent.js` met constructor uit `understanding.js` | ruwe tekst, requester, kanaal, gesprek, context | begrensde immutable modelinvoer | `understandTurn` | fail closed zonder effecten |
 | `TurnUnderstanding` | `understanding.js` | envelope, capabilitycatalogus, provideruitkomst, hostguards | gehashte dialoogact, requirements, acties, planning en monitoring | `agent.js`, `tools.js` | retry binnen budget, daarna semantische fout |
+| `TurnUnderstandingExecutionAuthority/v1` en `/v2` | `agent.js` plus storegrenzen in `turnauthority.js` | exact started `@turn/understanding`, kanaalbron en generatie; v2 vereist een HTTP claimeventref | append-only sidecar die execution, bron en issuance bindt | understanding-replay, portfolio en delivery | ontbrekende, ambigue of gewijzigde binding maakt de store of rij ongeldig |
 | `CapabilityCatalogPrompt/v2` | `understanding.js` | volledig genormaliseerde hostcatalogus met 49 capabilities en 93 operations | deterministische interned promptprojectie van operations, expliciete validatievelden, field maps/types, proofsets, rebind/source/freshness en geselecteerde modelzichtbare executionvelden; descriptions en host-only executionmetadata blijven erbuiten | de providercallbacks van `understandTurn` en `decideTurnStep` | projectiefout faalt gesloten; budgetdrift blokkeert release en mag niet met verlies van de geprojecteerde validatiesemantiek worden gerepareerd |
 | Issued plan | `tools.js` | geverifieerde understanding plus capability | exact tool, args, requirement-id, effect en bewijsregels | `executeTool` | geen uitvoering bij mismatch |
 | Execution record | `db.js` / `executionledger.js` | issued plan, execution key, args | monotone ledgerstatus plus outputhash | agent, recovery, replyguards | collision of onzekere uitvoering |
@@ -208,7 +235,7 @@ eigen achtergrond-drain voor reeds geacknowledgede deliveries.
 | Durable monitoringstate | agent/tools plus `portfolio.js` / `work.js` | geldig monitoringcontract en work-start | contract in work `state_json`, episode en wake | autonomy en monitoringcycle | geen durable monitor zonder episode/workbinding |
 | Antwoordclaim | `communication.js` en `persona.js` | understanding plus echte receipts | begrensde natuurlijke tekst | kanaaladapter | rewrite of vaste veilige fouttekst |
 | Telegram accepted transport/archivebewijs | Telegramadapter plus ledger/archive | canonical tekst, frozen target, dedupekey en API-resultaat | accepted receipt met exact Telegram message-id plus intact, niet-ingetrokken Eva-archive | portfolio en replay | bewijst acceptatie door Telegram, niet menselijk lezen |
-| HTTP acknowledged deliverybewijs | HTTP response/deliverychain | canonical wire, write generation, clientkey en signature | signed client-ACKreceipt | HTTP replay en deliveryprojectie | socketfinish alleen is onvoldoende |
+| HTTP acknowledged deliverybewijs | HTTP response/deliverychain | canonical wire, write generation, clientkey en signature | signed client-ACKreceipt plus attempt-scoped agentproof voor HTTP-voice | HTTP replay, agent en deliveryprojectie | socketfinish of een ACK van het verkeerde route- of kanaaltype is onvoldoende |
 | Voice acknowledged deliverybewijs | voicebridge plus voiceauthority | exact offer, querybron en authenticated HA-ACK | append-only ACK en delivered projectie | voice recovery en agent delivery | event-post zonder HA-ACK is onvoldoende |
 
 ## Gedeelde ABI's die voorheen impliciet waren
@@ -268,6 +295,27 @@ tekening. Daardoor kon een lokale wijziging elders semantiek verliezen.
     exacte `verified_empty`-manifest overblijft. Een ontbrekend/ongeldig
     manifest, planmarker of andere started/done/transport-child domineert en
     eindigt `effect_reconciliation_required` zonder provider, tool of send.
+14. Herstelmodus is een globale grens voor automatische externe start en
+    non-read tools. Iedere waarde van `EVA_RUNTIME_MODE` behalve byte-exact
+    `normal` blokkeert externe achtergrondconnectoren, perception, reminders,
+    autonomy, onderhoud en backups. Toolpolicy laat in die modus alleen als read
+    geclassificeerde tools toe. Een expliciete webbeurt mag de provider en zulke
+    externe read-tools, waaronder HA-read en webread, wel aanroepen. Daarom
+    betekent `external_effects_enabled=false` niet nul outbound verkeer. Een
+    caller, modelplan of lokale effectpolicy kan de non-readgrens niet verruimen.
+15. Autonomie is ook in normale modus opt-in. Zonder exact
+    `EVA_AUTONOMY_ENABLED=true` ontstaan geen schedulerlistener, timer, lease of
+    providercall en geeft een directe autonomous entry een vaste disabled
+    uitkomst terug.
+16. Native HA voice en HTTP-voice delen het kanaallabel `voice`, maar nooit hun
+    authority. Native voice gebruikt een bodygebonden `voice_ingress` v1-bron
+    en HA-ACK. `/api/voice` gebruikt een bodyloze `http_voice_ingress` v2-bron,
+    een append-only HTTP-claimevent en een getekende client-ACK. De duurzame
+    source kind, niet een caller-controlled transportlabel, kiest de verifier.
+17. Bij provideruitval mag alleen een volledig gematchte kleine sociale chatzin
+    via `persona.js` een vaste menselijke reactie krijgen. Die route start geen
+    tweede modelcall, durable handoff, workitem of episode. Een begroeting met
+    extra opdrachttekst valt nooit onder deze uitzondering.
 
 ## Bekende architectuurverschillen en nog niet aangesloten code
 
@@ -729,10 +777,11 @@ Recovery mag een eerdere externe handeling nooit opnieuw uitvoeren om alleen een
 antwoord te herstellen.
 
 De vierde Telegrammachine bewaart eerst de exacte prepared reply in de inboundrow
-(`integrations/telegram.js:1656-1670`). Een normale live `processing`-beurt gaat
-daarna direct naar transport. Alleen crashherstel selecteert een `received` of
-`failed` row met prepared binding en claimt haar opnieuw naar `processing`
-(`db.js:2230-2257,2282-2328`, `integrations/telegram.js:1715-1727,1880-1908`).
+(`integrations/telegram.js:1598-1769`). Ook een aanwezige semantische foutcode is
+onderdeel van de binding en moet bij replay bytegelijk terugkomen. Een normale
+live `processing`-beurt gaat daarna via dezelfde duurzame fanoutmachine als
+andere Telegramdelivery. Alleen crashherstel selecteert een `received` of
+`failed` row met prepared binding en claimt haar opnieuw naar `processing`.
 De inboundstatus wordt routespecifiek: `completed` na normale delivery of
 pre-transport supersession zonder send, `failed` na een niet-terminale fout,
 `delivery_uncertain` na een ambigu effect en `delivery_rejected` na een
@@ -740,6 +789,10 @@ terminale weigering (`db.js:2331-2368`,
 `integrations/telegram.js:1697-1724,1792-1827,1880-1908`). Het onderliggende transport gebruikt
 `transport_sending`, `transport_retryable`, `transport_rejected`,
 `transport_uncertain` en `transport_accepted` (`integrations/telegram.js:524-650`).
+De directe reply is aan het duurzame fanoutmanifest gebonden en bewaart de
+delivery-dedupekey als episode-idempotencysleutel. Een lokale beurtsleutel zonder
+volledig fanoutmanifest is geen vervangend transportbewijs
+(`integrations/telegram.js:1661-1713,3241-3380`).
 De childledger wordt eerst `transport_accepted`; pas daarna wordt het
 assistantarchief gereconcilieerd (`integrations/telegram.js:397-454,645-650`).
 Een restart met accepted ledgerbewijs valideert hetzelfde receipt en herstelt het
@@ -787,13 +840,36 @@ stateDiagram-v2
 
 HTTP heeft geen generieke startupdrain. De request, prepared response, write- en
 transmissionevents zijn append-only en een herhaalde request hervat via dezelfde
-ingress- en leasecontracten (`web/server.js:521-739`,
-`web/httpingress.js:2137-2423`, `web/httpdelivery.js:1477-1842`). Een
+ingress- en leasecontracten (`web/server.js:440-783`,
+`web/httpingress.js:2103-2521`, `web/httpdelivery.js:1479-1935`). Een
 `res.finish` bewijst alleen dat die write/transmission is afgerond. Pas de exact
 ondertekende client-ACK maakt de delivery `acknowledged`. De browser-UI hervat
 haar requestflow vanuit IndexedDB (`web/public/app.js:634-730,825-830`). De
 exacte request-, response- en ACK-binding, opslag, cleanup en retry staan in
 `web/public/httpackclient.js:451-491,506-577,713-877`.
+
+Webchat en `/api/voice` delen deze HTTP-machines, maar krijgen verschillende
+duurzame bronsoorten. Webchat gebruikt `http_ingress`; `/api/voice` gebruikt
+`http_voice_ingress`. Iedere nieuwe HTTP-understandingauthority is v2 en bindt
+de request, intenthash, claimgeneratie en het exacte append-only acquired- of
+renewed-claimevent. De issuance-tijd is exact de creatietijd van dat event.
+Native Telegram en native HA voice blijven bodygebonden v1-bronnen. De
+storemigratie accepteert alleen de exact bekende voorgangers, reconstrueert voor
+iedere historische HTTP-v1-rij precies een uniek claimevent en bewaart alle oude
+velden, hashes en outputbytes. Geen of meer dan een kandidaat faalt gesloten en
+rolt de atomische initialisatie terug (`turnauthority.js:532-801`,
+`web/httpingress.js:740-929`).
+
+Voor HTTP-voice projecteert `httpdelivery.js` een acknowledged state bovendien
+naar een opaque, attempt-scoped `AcknowledgedHttpAgentDeliveryProof/v1`. Iedere
+verificatie leest request, route, source kind, prepared resultaat, wire en ACK
+opnieuw uit duurzame state. Alleen `http-voice` met `/api/voice` mag daarna in
+één transactie de episode-receipt en `chat_out` vastleggen. Een gewone web-ACK,
+een native HA voicebewijs of een caller-controlled transportlabel kan deze grens
+niet passeren. Na een crash mag dezelfde duurzame ACK een nieuwe lokale poging
+autoriseren; de receipt- en chatprojectie blijven transactioneel idempotent
+(`web/httpdelivery.js:1759-1928`, `mind/agent.js:10446-10708`,
+`mind/portfolio.js:4607-4736`).
 
 ### Native voice crash en replay
 
@@ -817,7 +893,7 @@ offer-intent- en eventpostroute staat in `mind/voicebridge.js:703-877`;
 ACK-validatie en opslag in `609-700`. Een bij een
 crash al vastgelegde gen3-ACK blijft via de startup- en backgrounddrain
 projecteerbaar (`439-573`). Gen4 ontstaat pas bij de exact gebonden
-`recordDeliveredReply`-projectie (`mind/agent.js:9559-9615`). Ook dit bewijst een
+`recordDeliveredReply`-projectie (`mind/agent.js:10617-10708`). Ook dit bewijst een
 geauthenticeerde kanaal-ACK, niet dat een bewoner het antwoord hoorde. Alleen
 gen3 wordt bij startup gedraind; een query of offer-intent zonder ACK wordt niet
 als delivery gereplayd (`mind/voicebridge.js:439-455,836-883`).
@@ -845,9 +921,13 @@ receipt, row of exacte functie-uitvoer correct is bewezen.
 
 | Pijl | Eerste eigenaar | Actueel anker |
 | --- | --- | --- |
-| Telegram update -> authentieke beurtbron | `integrations/telegram.js` | archive/claim en private source rond regels 1278-1474; startup op 2293 |
-| Web request -> durable ingressauthority | `web/httpingress.js` | authority rond 2063; `beginHttpIngress` op 2137 |
+| procesconfig -> recovery of normale adapterstart | `config.js`, `index.js` | runtimegrens config 417-423; conditionele bootstrap index 53-99 |
+| Telegram update -> authentieke beurtbron | `integrations/telegram.js` | archive/claim en private source rond regels 1278-1474; startup op 2392 |
+| Web request -> durable ingressauthority | `web/httpingress.js` | authority rond 2103; durable source op 2136; `beginHttpIngress` op 2219 |
+| HTTP-claim -> v2 understandingauthority | `mind/agent.js`, `turnauthority.js` | HTTP-source en insert agent 5631-5767; migratie en storegrens turnauthority 532-801, 1153-1257 |
+| HTTP-voice client-ACK -> finale aflevering | `web/httpdelivery.js`, `mind/agent.js`, `mind/portfolio.js` | attempt-proof 1759-1928; agentprojectie 10446-10708; finale receiptverificatie 4607-4736 |
 | HA voice event -> private turnbron | `mind/voicebridge.js` | provenance 332-421; querypad 703-891 |
+| providerfout bij exacte kleine sociale beurt -> vaste menselijke reply | `mind/persona.js`, `mind/agent.js` | `directSocialReply` op 43; semantische failureroute rond 5508 |
 | turntekst -> deterministic hostgrens | `mind/turnplan.js` | effect/monitoring 386-585 |
 | hostcatalogus -> interned expliciete validatieprojectie | `mind/understanding.js` | `normalizeCatalog` 624-689; `catalogPrompt` 1050-1159; `understandTurn`-modelrequest rond 3275 en `decideTurnStep` rond 4127 |
 | envelope -> issued understanding | `mind/understanding.js` | `understandTurn` rond 3435-3820 |
@@ -855,19 +935,19 @@ receipt, row of exacte functie-uitvoer correct is bewezen.
 | plan -> ledgerclaim -> uitvoering | `mind/agent.js`, `mind/tools.js` | agent 6521-6601; `executeTool` 5191-5239 |
 | natuurlijke HA-ref -> entitybinding | `mind/home.js` | binder 544-576; context 828; operation 1531 |
 | prior partial Home -> same-entity vervolgread -> begrensde reply | `mind/tools.js`, `mind/agent.js`, `mind/communication.js` | prior execution en private binding tools 1614-1810; automatische observation agent 6728; ledger/replyguard communication 371-590 |
-| receipts -> natuurlijke reply | `mind/agent.js`, `mind/communication.js` | composer 4713-4890; guards 98-475 |
-| issued reply -> accepted Telegramdelivery | `integrations/telegram.js` | prepared reply 1656; sendauthority 1750; outbox 1880 |
-| delivered result -> message/episode receipt | `mind/agent.js`, `mind/portfolio.js` | `recordDeliveredReply` 9559-9635; portfolio 3851-3993 |
+| receipts -> natuurlijke reply | `mind/agent.js`, `mind/communication.js` | composer vanaf 5223; guards 98-475 |
+| issued reply -> accepted Telegramdelivery | `integrations/telegram.js` | prepared binding 1598; fanoutpublicatie 1661; delivery 1772 |
+| delivered result -> message/episode receipt | `mind/agent.js`, `mind/portfolio.js` | `recordDeliveredReply` 10617-10708; `recordEpisodeDelivery` vanaf 5054 |
 | monitorrequest -> broncontract | `turnplan.js`, `understanding.js`, `monitoringcontract.js` | hostrequest, issued bindings en compact gehasht MonitoringContract/v2 |
 | waiting monitor -> uncached reads -> notify/silent | `mind/agent.js`, `mind/tools.js`, `mind/understanding.js`, `monitoringcontract.js` | lifecycleverificatie, exacte REST-readfacts en host-bound outcome |
 | monitoring pending -> begrensde Telegramwire | `mind/monitoringcontract.js`, `mind/tools.js`, `integrations/telegram.js` | H-120 schedulerwake, H-90 wirestart, H-30 per-child en abortsignal |
 | accepted monitoringfanout -> receipt-only restart | `db.js`, `mind/portfolio.js`, `mind/agent.js` | exacte child-/archief-/fanoutledger, acceptatietijd en atomische receiptclosure zonder resend |
-| scheduler wake -> autonomous turn | `mind/autonomy.js`, `mind/agent.js` | scheduler 636-903; autonomous entry 9689-9768 |
+| scheduler wake -> autonomous turn | `mind/autonomy.js`, `mind/agent.js` | scheduler vanaf 682 en opt-in start op 978; autonomous entry op 10771 |
 | HA cameraevent -> durable deurbelplan | `homeassistant.js`, `perception.js`, `perceptionattention.js` | HA event 1174-1249; perception ingress 432-447; evidence 502-573; claim/plan/effect 623-810 |
 | toolbericht -> exact Telegram childreceipt | `tools.js`, `telegramdelivery.js`, `telegram.js` | tools 4292-4399; registry 212-317; transport 524-695 |
-| interrupted parent -> effectmanifestdisposition | `mind/agent.js`, `executionledger.js` | manifest/plan persistence en classificatie agent 5223-5675; specs/classifier ledger 303-410 |
-| accepted direct reply -> no-resend recovery | `db.js`, `integrations/telegram.js`, `mind/agent.js` | exact receipt/archivebewijs db 990-1107; startupadoptie Telegram 1097-1174; disposition agent 5261-5322 |
-| procesrestart -> overige Telegram recovery | `integrations/telegram.js` | done replay rond 1493; prepared outbox rond 1888; startup rond 2301 |
+| interrupted parent -> effectmanifestdisposition | `mind/agent.js`, `executionledger.js` | manifest/plan persistence en classificatie agent 5802-6210; specs/classifier ledger 303-410 |
+| accepted direct reply -> no-resend recovery | `db.js`, `integrations/telegram.js`, `mind/agent.js` | exact receipt/archivebewijs db 990-1107; startupadoptie Telegram 1139-1221; disposition agent vanaf 6211 |
+| procesrestart -> overige Telegram recovery | `integrations/telegram.js` | handoffrecovery vanaf 1139; prepared delivery rond 1716-1840; startup op 2392 |
 
 ## Impactregel
 
@@ -876,16 +956,21 @@ genoemde ketencontrole.
 
 | Wijziging | Direct geraakte contracten | Verplichte ketens |
 | --- | --- | --- |
+| `config.js` of `index.js` | herstelmodus, adapterstart, autonomy opt-in en operationele timers | recovery-start zonder extern effect, normale start, healthprojectie en shutdown |
 | `turnplan.js` | effect, monitoring, vervolgdetectie | gewone chat, home-opdracht, monitoring, negatie/historie |
 | `understanding.js` | alle issued meanings, modelretry en `CapabilityCatalogPrompt/v2` | chat, tools, monitoring, autonomy, 49/93-validatieronde, payload <16 KB en directe callback-request <30 KB |
 | `monitoringcontract.js` | binding-, fact-, outcome-, lifecycle-, pending- en tijdgrenzen | pure max8-contractmatrix, restart, expiry, schedule en deterministic renderer |
-| `agent.js` | context, receiptselectie, completion, parent-effectmanifest en antwoord | alle kanalen, Home-vervolg en recovery |
-| `tools.js` | registry, binding, policy, uitvoering en prior-Homebinding | iedere toolcall, Home-vervolg, autonomy en monitoring |
+| `agent.js` | context, receiptselectie, completion, parent-effectmanifest, source-discriminatie en antwoord | alle kanalen, Home-vervolg, social-failure en recovery |
+| `tools.js` | registry, binding, globale recoverypolicy, uitvoering en prior-Homebinding | iedere toolcall, recovery read-only, Home-vervolg, autonomy en monitoring |
 | `communication.js` | feit-, effect- en totaliteitsclaims | gewone reply, partial Home en same-entity vervolgread |
 | `home.js` | HA discovery, target, readback en partial semantics | home control, status, monitoring, vervolg |
-| `portfolio.js` of `work.js` | durable lifecycle en deliverybeleid | monitoring, autonomy, crash/replay |
-| `integrations/telegram.js` | ingress, identity, archive, outbox en recovery | directe chat, interrupted parent, media, prepared replay en accepted/retryable/rejected/uncertain transport |
+| `portfolio.js` of `work.js` | durable lifecycle en deliverybeleid | monitoring, autonomy, HTTP-voice final delivery en crash/replay |
+| `integrations/telegram.js` | ingress, identity, archive, prepared errorbinding, fanout, outbox en recovery | directe chat, interrupted parent, media, prepared replay en accepted/retryable/rejected/uncertain transport |
 | `executionledger.js` | schema, manifest/planrecords en recoveryclassificatie | iedere ledgerclaim en interrupted-parentrecovery |
+| `turnauthority.js` | v1/v2 sourcebinding, claimevent, append-only store en exacte migratie | Telegram, native voice, web, HTTP-voice, predecessormigratie en corrupte store |
+| `web/httpingress.js`, `web/httpdelivery.js` of `web/server.js` | requestclaim, durable source, wire, ACK en final delivery | webchat en HTTP-voice live, duplicate, conflict, crash, fresh-process replay en cross-channel forge |
+| `persona.js` | stem, foutpresentatie en exact kleine sociale failover | normale chat, sociale provideruitval en opdracht met begroeting |
+| `autonomy.js` | schedulerstart, timer, leases en status | disabled, normale opt-in, gesprekssupersession en herstart |
 | `db.js` | schema, gedeelde opslagcontracten en Telegram replyproof | startup, migratie, alle lezers/writers en no-resend recovery |
 | `util.js` | receipt-completeness en zichtbare tekst | alle domeinen en alle kanalen |
 
@@ -900,13 +985,13 @@ functiecallsites.
 
 | Bestand | Invoer | Uitvoer | Bijwerking of duurzame state | Contracteigendom |
 | --- | --- | --- | --- | --- |
-| `src/index.js` | config, database en subsystemmodules | draaiend proces en shutdown | start listeners, timers, recovery en onderhoud | enige servicebootstrap |
-| `src/config.js` | environment, `.env`, filesystemmetadata | gevalideerde runtimeconfig | leest paden en attestaties, geen domeineffect | configuratie en data-rootveiligheid |
+| `src/index.js` | config, database en subsystemmodules | herstelruntime of normale runtime plus shutdown | start altijd kern en lokaal web; start connectoren, perception, reminders, autonomy, onderhoud en backup alleen achter hun gates | enige servicebootstrap en proces-effectgrens |
+| `src/config.js` | environment, `.env`, filesystemmetadata | gevalideerde runtimeconfig met recovery- en autonomy-gates | leest paden en attestaties, geen domeineffect | configuratie, data-rootveiligheid en fail-closed runtimekeuze |
 | `src/bus.js` | interne eventpublicaties | EventEmitter-events | proceslokale toestand | enige algemene eventbus |
 | `src/util.js` | tekst, tijd, ActionResults en artefactreceipts | canonieke tekst, foutclassificatie en compacte receipts | geen eigen I/O | gedeelde normalisatie, geen domeinbesluit |
 | `src/db.js` | SQLiteconfig en canonical domein/transportintents | claims, CAS-transities, archivequeries en proofvalidators, inclusief exact accepted direct-replybewijs | WAL; timeline/messages; Telegram ingress/archive; `turn_tool_executions`; KV inclusief schedulerstate; geheugen/personen/reminders | generieke opslag, exact intentmatch, observationlogging en transport/archivebewijs |
 | `src/executionledger.js` | SQLitehandle, schemastatus en started understanding-parent | ledgerstatus, schemamanifest, deterministische effectmanifest/plan-specs en volledige recoveryclassificatie | initialiseert of valideert `turn_tool_executions`; schrijft zelf geen runtime-record | execution-ledgerschema en pure interrupted-parent effectgrens |
-| `src/turnauthority.js` | database en canonical understandingbody | understanding-authorityrecord | authoritytabel en triggers | duurzame semantische authority |
+| `src/turnauthority.js` | database, exact started execution, kanaalbron en voor HTTP request-, ACKbinding- en claimeventhistorie | v1 native of v2 HTTP understanding-authorityrecord | append-only authoritytabel, live HTTP-claimtrigger en bytebehoudende exacte predecessormigraties | duurzame semantische source-authority en migratiegrens |
 | `src/voiceauthority.js` | HA voice events, offers, ACKs en delivery | geverifieerde recoveryproofs | append-only voice-authoritytabellen | voice query tot acknowledged en geprojecteerde delivery |
 | `src/runtimeversion.js` | geladen bronbestanden en config | runtimecodehash en versieprojectie | leest bronmetadata | loaded-versus-disk provenance |
 | `src/reminders.js` | due reminders en timing | remindertekst plus deliveryresultaat | completeert reminder, start timer | tijdgebaseerde reminders, niet monitoring |
@@ -917,7 +1002,7 @@ functiecallsites.
 
 | Bestand | Invoer | Uitvoer | Bijwerking of duurzame state | Contracteigendom |
 | --- | --- | --- | --- | --- |
-| `src/integrations/telegram.js` | grammY updates, media, private authorities, started-parentrecovery en prepared deliveries | geauthenticeerde beurten, typed recoverydispositions en transportreceipts | archiveert, claimt, adopteert interrupted parents, verstuurt, dedupliceert en herstelt | Telegram ingress, no-resend recovery en transport |
+| `src/integrations/telegram.js` | grammY updates, media, private authorities, started-parentrecovery en prepared deliveries | geauthenticeerde beurten, typed recoverydispositions en volledige fanoutreceipts | archiveert, bindt prepared reply plus foutcode, claimt, adopteert interrupted parents, verstuurt, dedupliceert en herstelt | Telegram ingress, durable fanout, no-resend recovery en transport |
 | `src/integrations/homeassistant.js` | HA WebSocket/REST, entity-id, serviceplan en voice events | statecache, verse reads, service- en voicebewijzen | netwerkcalls naar HA en eventpublicatie | ruwe HA-adapter, geen taalresolutie |
 | `src/integrations/robot.js` | robotcommando of capturevraag | status, kaart, frame of controle-uitkomst | Valetudo/HA-netwerkeffect | robotadapter |
 | `src/integrations/agentmail.js` | account-, inbox- of sendrequest | mailstatus en messages | externe AgentMail-calls en lokale registratie | mailadapter |
@@ -926,7 +1011,7 @@ functiecallsites.
 
 | Bestand | Invoer | Uitvoer | Bijwerking of duurzame state | Contracteigendom |
 | --- | --- | --- | --- | --- |
-| `src/mind/agent.js` | kanaalauthority, tekst, identiteit, context of autonomy-origin | antwoord, toolreceipts, durable turn outcome en typed interrupted-parentdisposition | regisseert effectmanifest/planmarker, observationledger, work, episodes en reply | end-to-end beurtorchestratie, manifestprioriteit en Home-vervolg |
+| `src/mind/agent.js` | kanaalauthority, tekst, identiteit, context of autonomy-origin | antwoord, toolreceipts, durable turn outcome en typed interrupted-parentdisposition | regisseert effectmanifest/planmarker, observationledger, work, episodes en reply; discrimineert native en HTTP-voicebron, mint v2 HTTP-sidecars en projecteert ACK-gebonden delivery transactioneel | end-to-end beurtorchestratie, manifestprioriteit, sourcekeuze en Home-vervolg |
 | `src/mind/turnplan.js` | letterlijke usertekst en bounded context | effectboundary, monitoringrequest en laatste toolguard | puur, geen I/O | deterministic hostintentiegrenzen |
 | `src/mind/understanding.js` | TurnEnvelope, volledige hostcatalogus, modelcallback, turnplan- en agentguards | interned `CapabilityCatalogPrompt/v2` met expliciete validatieprojectie, immutable issued TurnUnderstanding, monitoringcontract of outcome | tijdelijke issued objectauthority; duurzame recordauthority via `turnauthority.js`; descriptions en host-only executionmetadata blijven buiten de prompt en geven geen authority | modelbetekenisnormalisatie binnen hostgrenzen, payload <16 KB en directe callback-requestcanary <30 KB |
 | `src/mind/monitoringcontract.js` | issued TurnUnderstanding-semantiek, exacte executionledgerprojecties, requester-origin, facts, outcome en tijd | compacte gehashte contract-, binding-, fact-, lifecycle-, pending-, receipt- en transportwindowprojecties | geen eigen I/O; alle issuers en normalizers zijn pure fail-closed projecties | enige monitoring-v2 schema-, hash-, max8-byte-, freshness-, renderer- en H-120/H-90/H-30-grens |
@@ -934,7 +1019,7 @@ functiecallsites.
 | `src/mind/tools.js` | understanding, capability, plan, args, executioncontext en verified prior executions | issued plan, executionhandle, ActionResult en private `BoundedHomePartialContinuation/v1` | toolbeleid, handlercalls en receiptregistratie; one-shot prior-Homeplanbinding | enige toolregistry, planbinding en exact prior Home-vervolg |
 | `src/mind/projectexecution.js` | workspaceplan, tooldata en artefactreceipts | buildstatus, verplichtingen en executiontrace | geen directe writes | programmeeracceptatie en bewijsinterpretatie |
 | `src/mind/communication.js` | understanding, receipts, work, voorgestelde reply en ledger-backed Home-vervolgbewijs | claimfeedback, rewrite/silent/sendbesluit | leest exact prior `bedien_huis` completionrecord en current `ha_lees` observation; geen model- of transportcall | antwoordclaims, partial-homekwalificatie en scheiding actuele groepstate/historische unavailable leden |
-| `src/mind/persona.js` | mode, identiteit, relatiecontext en geverifieerde feiten | instructies of hostgerenderde tekst | geen I/O | Eva-stem en semantische foutpresentatie |
+| `src/mind/persona.js` | mode, identiteit, relatiecontext, geverifieerde feiten of exact kleine sociale beurt | instructies, hostgerenderde tekst of begrensde sociale failover | geen I/O; sociale match geeft geen work of authority | Eva-stem, sociale continuiteit en semantische foutpresentatie |
 
 ### Huis, persoon en continuiteit
 
@@ -953,8 +1038,8 @@ functiecallsites.
 | Bestand | Invoer | Uitvoer | Bijwerking of duurzame state | Contracteigendom |
 | --- | --- | --- | --- | --- |
 | `src/mind/work.js` | work CRUD, claim en checkpoint | workitem of lease-uitkomst | `eva_work_items` en workevents | uitvoeringsprojectie voor werk |
-| `src/mind/portfolio.js` | goals, work, origins, interpretation handoffs, deliverybeleid en receipts | commitmentselectie, episode/workprojectie, retry- en deliverytransities | goals, projects, episodes/events, intent heads/effect receipts, origins, immutable retry registry en delivery receipts | canonieke durable episode-lifecycle |
-| `src/mind/autonomy.js` | tijd, due work, world signals, perception-ready en aandacht | exact een wakekeuze, gemunte schedulercontext en settlementinput | timers en KV `eva_autonomy_scheduler_v1` met last/next run, budget, pending/quarantined signals en receipts; workleases | scheduler en prioritering |
+| `src/mind/portfolio.js` | goals, work, origins, interpretation handoffs, deliverybeleid en Telegram-, native voice- of HTTP-voicebewijs | commitmentselectie, episode/workprojectie, retry- en deliverytransities | goals, projects, episodes/events, intent heads/effect receipts, origins, immutable retry registry en exact finale delivery receipts | canonieke durable episode-lifecycle en finale receiptverificatie |
+| `src/mind/autonomy.js` | expliciete enable-gate, tijd, due work, world signals, perception-ready en aandacht | disabled status of exact een wakekeuze, gemunte schedulercontext en settlementinput | zonder opt-in geen listener, timer of lease; anders KV `eva_autonomy_scheduler_v1`, timers en workleases | opt-in scheduler en prioritering |
 | `src/mind/curiosity.js` | aspirations, explorationbewijs en aandacht | exploration, due attention en settlement | explorationstate en opportunitycursorclaim | begrensde nieuwsgierigheid |
 | `src/mind/selfattentioncontext.js` | issued explorationattention | providercontext en continuationcapability | proceslokale issued authority | self-attentioncontextbinding |
 | `src/mind/signals.js` | HA/world snapshots en scopes | routable batch, quarantine en ACK-set | geen eigen externe I/O | world-signalfiltering |
@@ -999,12 +1084,12 @@ functiecallsites.
 
 | Bestand | Invoer | Uitvoer | Bijwerking of duurzame state | Contracteigendom |
 | --- | --- | --- | --- | --- |
-| `src/web/server.js` | HTTP/SSE requests en runtime state | API-responses, static assets en busupdates | Expresslistener en deliverycalls | webadapter en publieke projectie |
+| `src/web/server.js` | HTTP/SSE requests, runtime state en onderscheiden `/api/chat` of `/api/voice` intent | API-responses, static assets, busupdates en ACK-reconciliatie | lokale Expresslistener, duurzame requestflow en deliverycalls; health toont recovery en autonomy-gates | webadapter, HTTP-voice bronbinding en publieke projectie |
 | `src/web/access.js` | host, token, conversation-id en timeline-item | accessbesluit en familyprojectie | geen I/O | webtoegang en privacyprojectie |
 | `src/web/requestidentity.js` | publieke request-id en hostscope | canonical requestidentity en single-flightresultaat | proceslokale requestbinding | publieke request-idgrens |
-| `src/web/httpingress.js` | requestidentity, body, resultauthority en ACKbinding | ingressclaim, prepared response en settlement | ingress/prepared/claim/state-tabellen | durable HTTP-ingress lifecycle |
+| `src/web/httpingress.js` | requestidentity, canonical intent, resultauthority, ACKbinding en executionclaim | ingressclaim, prepared response, settlement en geverifieerde duurzame web- of HTTP-voicebron | ingress/prepared/claim/state-tabellen plus atomische installatie en retroactieve validatie van de turnauthoritytrigger | durable HTTP-ingress lifecycle en bronprovenance |
 | `src/web/httpresponseauthority.js` | prepared response en ingressstate | eenmalige responseauthority | response-authoritytabel | HTTP-responsepublicatieauthority |
-| `src/web/httpdelivery.js` | responseauthority, wirebytes en client-ACK | idempotent deliveryitem/claims, herhaalbare transmission en signed ACKreceipt | delivery/attempt/transmission/ACK-tabellen | durable dedupe en acknowledged HTTP-delivery, niet exact eenmaal verzonden bytes |
+| `src/web/httpdelivery.js` | responseauthority, wirebytes, client-ACK en duurzame ingressbron | idempotent deliveryitem/claims, herhaalbare transmission, signed ACKreceipt en attempt-scoped HTTP-voice agentproof | delivery/attempt/transmission/ACK-tabellen; proof blijft proceslokaal en wordt telkens duurzaam hergeverifieerd | durable dedupe en acknowledged HTTP-delivery, niet exact eenmaal verzonden bytes |
 | `src/web/httpack.js` | wirehash, public key en signature | geverifieerde client-ACK | cryptografische verificatie | browser-ACKformaat |
 | `src/web/sqliteindexattestation.js` | SQLite schema/indexmetadata | exacte indexsignatures | leest schema | indexintegriteit |
 | `src/web/public/app.js` | DOM, API, SSE en avatarassets | dashboardgedrag en gebruikersrequests | browsernetwerk en UI-state | hoofd-dashboardclient |

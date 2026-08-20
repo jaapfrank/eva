@@ -989,6 +989,77 @@ if (!result.ok) { console.error(result.failures.join('\\n')); process.exit(1); }
   assert.notEqual(moved.status, 0, 'manifestpad/type/topologie was niet gebonden');
 });
 
+test('manifest -> repository-inventaris -> typecheck heeft een stabiel bewijs-fixed-point', (t) => {
+  const root = sourceFixture(t);
+  installTypeScriptLink(root);
+  fs.writeFileSync(path.join(root, 'src/fixture.js'), 'export const value = true;\n');
+  fs.mkdirSync(path.join(root, 'docs'));
+  const manifestPath = path.join(root, 'typescript-diagnostic-debt.json');
+  fs.writeFileSync(manifestPath, '{}\n');
+  const otherGenerated = path.join(root, 'docs/eva-runtime-contract-map.generated.json');
+  fs.writeFileSync(otherGenerated, '{"generation":1}\n');
+
+  const beforeInventory = collectTypeScriptDebtEvidence(root);
+  const manifest = createTypeScriptDebtManifest(
+    beforeInventory, beforeInventory.diagnostics.length,
+  );
+  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+  const writeInventoryGeneration = (generation) => {
+    for (const [name, contents] of [
+      ['eva-repository-inventory.generated.json', `{"generation":${generation}}\n`],
+      ['eva-repository-inventory.generated.md', `# generation ${generation}\n`],
+    ]) {
+      const target = path.join(root, 'docs', name);
+      const temporary = `${target}.tmp`;
+      fs.writeFileSync(temporary, contents, { flag: 'wx' });
+      fs.renameSync(temporary, target);
+    }
+  };
+
+  writeInventoryGeneration(1);
+  const afterFirstInventory = collectTypeScriptDebtEvidence(root);
+  assert.deepEqual(afterFirstInventory.dependencies, beforeInventory.dependencies,
+    'eerste inventory-output verscheen ten onrechte in de TypeScript-dependencyreceipt');
+  assert.equal(afterFirstInventory.inputReceiptSha256, beforeInventory.inputReceiptSha256);
+  assert.equal(evaluateTypeScriptDebt({
+    manifest, evidence: afterFirstInventory, baselineMaximum: manifest.maximum,
+  }).ok, true, 'inventorygeneratie maakte het zojuist geschreven debtmanifest stale');
+
+  writeInventoryGeneration(2);
+  const afterSecondInventory = collectTypeScriptDebtEvidence(root);
+  assert.deepEqual(afterSecondInventory.dependencies, beforeInventory.dependencies,
+    'atomische inventory-regeneratie veranderde de TypeScript-dependencyreceipt');
+  assert.equal(afterSecondInventory.inputReceiptSha256, beforeInventory.inputReceiptSha256);
+
+  fs.writeFileSync(otherGenerated, '{"generation":2}\n');
+  const afterOtherGeneratedChange = collectTypeScriptDebtEvidence(root);
+  assert.notDeepEqual(afterOtherGeneratedChange.dependencies, beforeInventory.dependencies,
+    'een ander gegenereerd architectuurbestand werd ten onrechte uitgesloten');
+});
+
+test('repository-inventory self-output kan geen semantische TypeScript-input worden', (t) => {
+  const root = sourceFixture(t);
+  installTypeScriptLink(root);
+  fs.mkdirSync(path.join(root, 'docs'));
+  fs.writeFileSync(path.join(root, 'docs/eva-repository-inventory.generated.json'), '{}\n');
+  fs.writeFileSync(path.join(root, 'src/fixture.js'), [
+    "import inventory from '../docs/eva-repository-inventory.generated.json';",
+    'void inventory;',
+    '',
+  ].join('\n'));
+  fs.writeFileSync(path.join(root, 'tsconfig.json'), `${JSON.stringify({
+    compilerOptions: {
+      allowJs: true, checkJs: true, noEmit: true, resolveJsonModule: true,
+      module: 'esnext', moduleResolution: 'node', types: [],
+    },
+    include: ['src/**/*.js'],
+  }, null, 2)}\n`);
+
+  assert.throws(() => collectTypeScriptDebtEvidence(root),
+    /repository-inventaris|niet-compilerinput|semantische input/iu);
+});
+
 test('compiler cache ontstaan na gate-import maar vóór collect faalt onmiddellijk gesloten', (t) => {
   const root = sourceFixture(t);
   installTypeScriptCopy(root);

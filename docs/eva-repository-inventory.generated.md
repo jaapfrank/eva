@@ -3,211 +3,25 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40a2cd4aa8d9ef8d9f0f256105efbcea26d3`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `df5cc4458fb1bde5f37d4b58a6ff540c339ab189e3b7d710b51e1f8efd773778`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 279 | 276 | 96 | 180 | 3 | 195 |
+| 291 | 291 | 291 | 0 | 0 | 9 |
 
 ## Policyfouten
 
-- `TRACKED_TOMBSTONE`: `src/mind/errorbook.js`
-- `TRACKED_TOMBSTONE`: `src/mind/toolpolicy.js`
-- `TRACKED_TOMBSTONE`: `test/vision-pending-identity.test.js`
 - `UNGATED_TEST`: `eva_brain/test_service.py`
 - `UNRESOLVED_DISPOSITION_ARCHIVE`: `docs/eva-runtime-map.md`
 - `UNRESOLVED_DISPOSITION_ARCHIVE`: `docs/live-acceptance-2026-08-04.md`
-- `UNRESOLVED_DISPOSITION_DELETE`: `src/mind/errorbook.js`
-- `UNRESOLVED_DISPOSITION_DELETE`: `src/mind/toolpolicy.js`
 - `UNRESOLVED_DISPOSITION_DELETE`: `src/mind/voiceingress.js`
-- `UNRESOLVED_DISPOSITION_DELETE`: `test/vision-pending-identity.test.js`
 - `UNRESOLVED_DISPOSITION_INTEGRATE`: `native/workspace_writer_broker.c`
 - `UNRESOLVED_DISPOSITION_ISOLATE`: `src/mind/artifactcollections.js`
 - `UNRESOLVED_DISPOSITION_ISOLATE`: `src/mind/materiallifecycle.js`
 - `UNRESOLVED_DISPOSITION_ISOLATE`: `src/mind/workcompletion.js`
 - `UNRESOLVED_DISPOSITION_QUARANTINE`: `scripts/sanitize-secret-history.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `benchmark/eva-agent-benchmark-v1.json`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-maintainer-recover.service`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-maintainer.conf`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-maintainer.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-maintainer.path`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-maintainer.service`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-repair-protocol.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-runtime-self-repair.example.json`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-voice-bridge-automation.yaml`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/eva-voice-pe-hey-eva.patch`
-- `UNTRACKED_REPOSITORY_FILE`: `deploy/install-eva-runtime-maintainer.sh`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-agent-benchmark-v1.md`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-repository-inventory.generated.json`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-repository-inventory.generated.md`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-runtime-contract-map.generated.json`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-runtime-contract-map.generated.md`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/eva-runtime-contracts.md`
-- `UNTRACKED_REPOSITORY_FILE`: `docs/incident-2026-08-13-ledger-test-import.md`
-- `UNTRACKED_REPOSITORY_FILE`: `native/workspace_writer_broker.c`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/execution-ledger-production14-recovery.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/execution-ledger-production14-recovery.test.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/execution-ledger-quiescent-snapshot.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/execution-ledger-quiescent-snapshot.test.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/generate-repository-inventory.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/generate-runtime-contract-map.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/lab/plan-run.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/run-isolated-tests-bootstrap`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/run-isolated-tests-bootstrap.c`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/run-isolated-tests-release.json`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/run-isolated-tests.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `scripts/run-isolated-tests.test.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `src/executionledger.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/artifactcollections.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/artifacts.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/economichandoff.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/home.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/learning.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/materialcompletion.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/materiallifecycle.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/monitoringcontract.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/perceptionattention.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/perceptiondecision.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/perceptionexecutor.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/projectexecution.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/runtimecontroller.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/selfattentioncontext.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/signals.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/telegramdelivery.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/turnunderstandingoutcome.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/understanding.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/voiceingress.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/workcompletion.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/workspacefilemanifest.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/mind/workspacegeneration.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/turnauthority.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/voiceauthority.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/httpack.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/httpdelivery.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/httpingress.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/httpresponseauthority.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/public/autonomycard.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/public/httpackclient.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/requestidentity.js`
-- `UNTRACKED_REPOSITORY_FILE`: `src/web/sqliteindexattestation.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/agent-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/artifact-collections.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/artifact-receipt-projection.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/artifact-versions.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/aspiration-attention-rotation.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/authentic-ha-voice-test-server.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/autonomy-card-visibility.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/autonomy-runtime-ingress.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/behavior-learning-integration.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/browser-http-ack-client.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/cognitive-no-action-continuity.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/conversation-opportunity-scheduler.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/conversation-opportunity-search.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/curiosity-outcome-liveness.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/data-directory-guard.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/doorbell-ingress-priority.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/doorbell-intercom.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/eva-agent-benchmark-v1.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/execution-ledger-live-predecessor.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/execution-ledger-main-schema.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/execution-ledger-v2.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/exploration-attention-backoff.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/exploration-family-result.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/failed-telegram-handoff-recovery.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/family-autonomy-three-domain-acceptance.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/family-experience-restart.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/family-work-status-visibility.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/family-workspace-write.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/free-autonomy-continuation.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/free-no-action-runtime-continuity.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/free-research-continuity.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/generic-read-agent-loop.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/homeassistant-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/http-authority-boundary.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/http-delivery-v3.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/http-delivery.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/http-ingress.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/http-server-ack-integration.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/interpretation-handoff-idempotency.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/interpretation-resume-authority-runtime.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/isolated-data-dir.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/lab-plan-run.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/learning-availability.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/learning-loop.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/llm-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/material-completion-runtime.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/material-completion.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/material-lifecycle.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/memory-hygiene.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/memory-web.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/monitoring-contract-host-builder.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/monitoring-contract-v2.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/monitoring-required-ingress-admission.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-failed-telegram-handoff-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-failed-telegram-handoff.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-ha-voice-authority-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-ha-voice-authority.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-interrupted-telegram-effect-startup-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-interrupted-telegram-effect-startup.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-interrupted-telegram-startup-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-interrupted-telegram-startup.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-monitoring-v2-restart-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-monitoring-v2-restart.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-telegram-direct-recovery-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-telegram-direct-recovery.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-telegram-done-restart-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-telegram-done-restart.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-telegram-release-boundary.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-turn-understanding-authority.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-voice-delivery-transaction.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-voice-drain-continuity-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-voice-drain-continuity.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-voice-restart-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/native-voice-restart.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/partial-home-success.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-attention.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-availability.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-camera-selection.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-decision.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-executor.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-scheduler-liveness.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/perception-web-privacy.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/quality-gate-diagnostic-debt.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/relationship-feedback-ingress.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/repository-inventory.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/requester-owned-home-target.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/runtime-self-repair.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/self-attention-exploration-scheduler.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/self-attention-ingress.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/signal-liveness.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/telegram-conditional-temperature-monitoring.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/telegram-monitoring-language-provider-canary.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/telegram-partial-fanout-projection.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/telegram-per-child-current.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/telegram-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-authority-predecessor-fixture.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-authority-predecessor-migration.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-authority-store-initialization.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-understanding-authority-fixture.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-understanding-authority.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/turn-understanding.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/user-facing-text.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/voice-delivery-authority-store.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/voiceauthority-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/voicebridge-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/web-agent-ingress.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/web-request-identity.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/web-server-test-agent.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/web-server-test-composition.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/web-server-test-state.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/work-completion-contract.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/work-completion-lifecycle.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/workspace-file-manifest.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/workspace-generation.test.js`
-- `UNTRACKED_REPOSITORY_FILE`: `test/workspace-writer-broker-native.test.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `typescript-diagnostic-debt.json`
 
 ## Actielijst
 
@@ -218,12 +32,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | `native/workspace_writer_broker.c` | `integrate` | missing OS-exclusive writer required by the production contract |
 | `scripts/sanitize-secret-history.mjs` | `quarantine` | effectful offline database rewrite lacks an attested operator gate |
 | `src/mind/artifactcollections.js` | `isolate` | dormant unfinished subsystem; move outside production source |
-| `src/mind/errorbook.js` | `delete` | confirmed replaced tombstone |
 | `src/mind/materiallifecycle.js` | `isolate` | dormant unfinished subsystem; move outside production source |
-| `src/mind/toolpolicy.js` | `delete` | confirmed replaced tombstone |
 | `src/mind/voiceingress.js` | `delete` | redundant re-export with no production consumer |
 | `src/mind/workcompletion.js` | `isolate` | dormant unfinished subsystem; move outside production source |
-| `test/vision-pending-identity.test.js` | `delete` | confirmed replaced tombstone |
 
 ## Rollen
 
@@ -233,51 +44,52 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | `benchmark` | `benchmark` | 1 |
 | `deployment` | `deployment` | 12 |
 | `generated-doc` | `generated` | 4 |
-| `documentation` | `documentation` | 8 |
+| `documentation` | `documentation` | 9 |
 | `python-test` | `verification` | 1 |
 | `python-runtime` | `separate-service` | 4 |
 | `native-prototype` | `experimental` | 1 |
 | `script-test` | `verification` | 2 |
 | `isolated-runner` | `verification-runtime` | 5 |
 | `architecture-tool` | `verification-runtime` | 2 |
-| `operator-script` | `operation` | 8 |
+| `operator-script` | `operation` | 11 |
 | `browser-asset` | `browser` | 3 |
-| `source-runtime` | `product-runtime` | 77 |
-| `test-entry` | `verification` | 118 |
-| `test-helper` | `verification-fixture` | 22 |
+| `source-runtime` | `product-runtime` | 75 |
+| `test-entry` | `verification` | 127 |
+| `test-helper` | `verification-fixture` | 23 |
 
 ## Bestanden
 
 | Pad | Git | Rol | Release | Besluit | Bytes |
 | --- | --- | --- | --- | --- | ---: |
 | `.c8rc.json` | tracked | repository-config | included-tracked-critical | keep | 290 |
-| `.env.example` | tracked | repository-config | included-tracked-critical | keep | 1717 |
+| `.env.example` | tracked | repository-config | included-tracked-critical | keep | 1911 |
 | `.gitignore` | tracked | repository-config | included-tracked-critical | keep | 667 |
-| `README.md` | tracked | repository-config | included-tracked-critical | keep | 7334 |
-| `benchmark/eva-agent-benchmark-v1.json` | untracked | benchmark | blocked-untracked | keep | 31406 |
+| `README.md` | tracked | repository-config | included-tracked-critical | keep | 7582 |
+| `benchmark/eva-agent-benchmark-v1.json` | tracked | benchmark | included-tracked-critical | keep | 31406 |
 | `deploy/eva-brain.service` | tracked | deployment | included-tracked-critical | keep | 471 |
-| `deploy/eva-runtime-maintainer-recover.service` | untracked | deployment | blocked-untracked | keep | 234 |
-| `deploy/eva-runtime-maintainer.conf` | untracked | deployment | blocked-untracked | keep | 320 |
-| `deploy/eva-runtime-maintainer.mjs` | untracked | deployment | blocked-untracked | keep | 84038 |
-| `deploy/eva-runtime-maintainer.path` | untracked | deployment | blocked-untracked | keep | 267 |
-| `deploy/eva-runtime-maintainer.service` | untracked | deployment | blocked-untracked | keep | 340 |
-| `deploy/eva-runtime-repair-protocol.mjs` | untracked | deployment | blocked-untracked | keep | 29120 |
-| `deploy/eva-runtime-self-repair.example.json` | untracked | deployment | blocked-untracked | keep | 525 |
-| `deploy/eva-voice-bridge-automation.yaml` | untracked | deployment | blocked-untracked | keep | 4364 |
-| `deploy/eva-voice-pe-hey-eva.patch` | untracked | deployment | blocked-untracked | keep | 3106 |
-| `deploy/eva.service` | tracked | deployment | included-tracked-critical | keep | 548 |
-| `deploy/install-eva-runtime-maintainer.sh` | untracked | deployment | blocked-untracked | keep | 14712 |
+| `deploy/eva-runtime-maintainer-recover.service` | tracked | deployment | included-tracked-critical | keep | 234 |
+| `deploy/eva-runtime-maintainer.conf` | tracked | deployment | included-tracked-critical | keep | 320 |
+| `deploy/eva-runtime-maintainer.mjs` | tracked | deployment | included-tracked-critical | keep | 84038 |
+| `deploy/eva-runtime-maintainer.path` | tracked | deployment | included-tracked-critical | keep | 267 |
+| `deploy/eva-runtime-maintainer.service` | tracked | deployment | included-tracked-critical | keep | 340 |
+| `deploy/eva-runtime-repair-protocol.mjs` | tracked | deployment | included-tracked-critical | keep | 29120 |
+| `deploy/eva-runtime-self-repair.example.json` | tracked | deployment | included-tracked-critical | keep | 525 |
+| `deploy/eva-voice-bridge-automation.yaml` | tracked | deployment | included-tracked-critical | keep | 4364 |
+| `deploy/eva-voice-pe-hey-eva.patch` | tracked | deployment | included-tracked-critical | keep | 3106 |
+| `deploy/eva.service` | tracked | deployment | included-tracked-critical | keep | 625 |
+| `deploy/install-eva-runtime-maintainer.sh` | tracked | deployment | included-tracked-critical | keep | 14712 |
 | `docs/durable-work-lifecycle.md` | tracked | documentation | included-tracked-noncritical | keep | 1652 |
-| `docs/eva-agent-benchmark-v1.md` | untracked | documentation | blocked-untracked | keep | 16780 |
+| `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
-| `docs/eva-repository-inventory.generated.json` | untracked | generated | blocked-untracked | keep | 586250 |
-| `docs/eva-repository-inventory.generated.md` | untracked | generated | blocked-untracked | keep | 124547 |
-| `docs/eva-runtime-contract-map.generated.json` | untracked | generated | blocked-untracked | keep | 243458 |
-| `docs/eva-runtime-contract-map.generated.md` | untracked | generated | blocked-untracked | keep | 118895 |
-| `docs/eva-runtime-contracts.md` | untracked | documentation | blocked-untracked | keep | 72494 |
+| `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 13846 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 592964 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 117508 |
+| `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
+| `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
+| `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
 | `docs/eva-runtime-map.md` | tracked | documentation | blocked-unresolved-disposition | archive | 66153 |
 | `docs/house-entity-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 4397 |
-| `docs/incident-2026-08-13-ledger-test-import.md` | untracked | documentation | blocked-untracked | keep | 12016 |
+| `docs/incident-2026-08-13-ledger-test-import.md` | tracked | documentation | included-tracked-noncritical | keep | 12016 |
 | `docs/live-acceptance-2026-08-04.md` | tracked | documentation | blocked-unresolved-disposition | archive | 5727 |
 | `eslint.complexity.config.js` | tracked | repository-config | included-tracked-critical | keep | 858 |
 | `eslint.config.js` | tracked | repository-config | included-tracked-critical | keep | 1430 |
@@ -286,249 +98,260 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | `eva_brain/service.py` | tracked | separate-service | included-tracked-critical | keep | 8232 |
 | `eva_brain/test_service.py` | tracked | verification | included-tracked-critical | keep | 1296 |
 | `eva_brain/train_encoder.py` | tracked | separate-service | included-tracked-critical | keep | 3667 |
-| `native/workspace_writer_broker.c` | untracked | experimental | blocked-unresolved-disposition | integrate | 62180 |
+| `native/workspace_writer_broker.c` | tracked | experimental | blocked-unresolved-disposition | integrate | 62180 |
 | `package-lock.json` | tracked | repository-config | included-tracked-critical | keep | 128273 |
-| `package.json` | tracked | repository-config | included-tracked-critical | keep | 1735 |
+| `package.json` | tracked | repository-config | included-tracked-critical | keep | 1783 |
 | `quality-baseline.json` | tracked | repository-config | included-tracked-critical | keep | 84 |
 | `scripts/eva-backup.mjs` | tracked | operation | included-tracked-critical | keep | 296 |
-| `scripts/execution-ledger-production14-recovery.mjs` | untracked | operation | blocked-untracked | keep | 131556 |
-| `scripts/execution-ledger-production14-recovery.test.mjs` | untracked | verification | blocked-untracked | keep | 85119 |
-| `scripts/execution-ledger-quiescent-snapshot.mjs` | untracked | operation | blocked-untracked | keep | 1058851 |
-| `scripts/execution-ledger-quiescent-snapshot.test.mjs` | untracked | verification | blocked-untracked | keep | 42965 |
-| `scripts/generate-repository-inventory.mjs` | untracked | verification-runtime | blocked-untracked | keep | 48696 |
-| `scripts/generate-runtime-contract-map.mjs` | untracked | verification-runtime | blocked-untracked | keep | 20898 |
-| `scripts/lab/plan-run.mjs` | untracked | operation | blocked-untracked | keep | 6920 |
+| `scripts/execution-ledger-production14-recovery.mjs` | tracked | operation | included-tracked-critical | keep | 131556 |
+| `scripts/execution-ledger-production14-recovery.test.mjs` | tracked | verification | included-tracked-critical | keep | 85119 |
+| `scripts/execution-ledger-quiescent-snapshot.mjs` | tracked | operation | included-tracked-critical | keep | 1058851 |
+| `scripts/execution-ledger-quiescent-snapshot.test.mjs` | tracked | verification | included-tracked-critical | keep | 42965 |
+| `scripts/generate-repository-inventory.mjs` | tracked | verification-runtime | included-tracked-critical | keep | 48696 |
+| `scripts/generate-runtime-contract-map.mjs` | tracked | verification-runtime | included-tracked-critical | keep | 20898 |
+| `scripts/lab/adapter-contract.mjs` | tracked | operation | included-tracked-critical | keep | 7255 |
+| `scripts/lab/effect-broker.mjs` | tracked | operation | included-tracked-critical | keep | 7135 |
+| `scripts/lab/plan-run.mjs` | tracked | operation | included-tracked-critical | keep | 7482 |
+| `scripts/lab/result-ledger.mjs` | tracked | operation | included-tracked-critical | keep | 11353 |
 | `scripts/live-canary.mjs` | tracked | operation | included-tracked-critical | keep | 50300 |
-| `scripts/quality-gate.mjs` | tracked | operation | included-tracked-critical | keep | 93944 |
+| `scripts/quality-gate.mjs` | tracked | operation | included-tracked-critical | keep | 95007 |
 | `scripts/real-life-scenarios.mjs` | tracked | operation | included-tracked-critical | keep | 24157 |
-| `scripts/run-isolated-tests-bootstrap` | untracked | verification-runtime | blocked-untracked | keep | 739256 |
-| `scripts/run-isolated-tests-bootstrap.c` | untracked | verification-runtime | blocked-untracked | keep | 40710 |
-| `scripts/run-isolated-tests-release.json` | untracked | verification-runtime | blocked-untracked | keep | 1477 |
-| `scripts/run-isolated-tests.mjs` | untracked | verification-runtime | blocked-untracked | keep | 74684 |
-| `scripts/run-isolated-tests.test.mjs` | untracked | verification-runtime | blocked-untracked | keep | 51887 |
+| `scripts/run-isolated-tests-bootstrap` | tracked | verification-runtime | included-tracked-critical | keep | 739256 |
+| `scripts/run-isolated-tests-bootstrap.c` | tracked | verification-runtime | included-tracked-critical | keep | 40710 |
+| `scripts/run-isolated-tests-release.json` | tracked | verification-runtime | included-tracked-critical | keep | 1477 |
+| `scripts/run-isolated-tests.mjs` | tracked | verification-runtime | included-tracked-critical | keep | 74684 |
+| `scripts/run-isolated-tests.test.mjs` | tracked | verification-runtime | included-tracked-critical | keep | 51887 |
 | `scripts/sanitize-secret-history.mjs` | tracked | operation | blocked-unresolved-disposition | quarantine | 5870 |
 | `src/brain/llm.js` | tracked | product-runtime | included-tracked-critical | keep | 62781 |
 | `src/brain/oauth.js` | tracked | product-runtime | included-tracked-critical | keep | 7670 |
 | `src/bus.js` | tracked | product-runtime | included-tracked-critical | keep | 659 |
-| `src/config.js` | tracked | product-runtime | included-tracked-critical | keep | 23142 |
+| `src/config.js` | tracked | product-runtime | included-tracked-critical | keep | 23915 |
 | `src/db.js` | tracked | product-runtime | included-tracked-critical | keep | 198350 |
-| `src/executionledger.js` | untracked | product-runtime | blocked-untracked | keep | 24411 |
-| `src/index.js` | tracked | product-runtime | included-tracked-critical | keep | 4476 |
+| `src/executionledger.js` | tracked | product-runtime | included-tracked-critical | keep | 24411 |
+| `src/index.js` | tracked | product-runtime | included-tracked-critical | keep | 4798 |
 | `src/integrations/agentmail.js` | tracked | product-runtime | included-tracked-critical | keep | 8713 |
 | `src/integrations/homeassistant.js` | tracked | product-runtime | included-tracked-critical | keep | 95992 |
 | `src/integrations/robot.js` | tracked | product-runtime | included-tracked-critical | keep | 13295 |
-| `src/integrations/telegram.js` | tracked | product-runtime | included-tracked-critical | keep | 143726 |
-| `src/mind/agent.js` | tracked | product-runtime | included-tracked-critical | keep | 504611 |
+| `src/integrations/telegram.js` | tracked | product-runtime | included-tracked-critical | keep | 145284 |
+| `src/mind/agent.js` | tracked | product-runtime | included-tracked-critical | keep | 513704 |
 | `src/mind/appearance.js` | tracked | product-runtime | included-tracked-critical | keep | 645 |
-| `src/mind/artifactcollections.js` | untracked | product-runtime | blocked-unresolved-disposition | isolate | 149131 |
-| `src/mind/artifacts.js` | untracked | product-runtime | blocked-untracked | keep | 69510 |
-| `src/mind/autonomy.js` | tracked | product-runtime | included-tracked-critical | keep | 43232 |
+| `src/mind/artifactcollections.js` | tracked | product-runtime | blocked-unresolved-disposition | isolate | 149131 |
+| `src/mind/artifacts.js` | tracked | product-runtime | included-tracked-critical | keep | 69510 |
+| `src/mind/autonomy.js` | tracked | product-runtime | included-tracked-critical | keep | 43794 |
 | `src/mind/capabilities.js` | tracked | product-runtime | included-tracked-critical | keep | 17752 |
 | `src/mind/cognitive.js` | tracked | product-runtime | included-tracked-critical | keep | 30278 |
 | `src/mind/communication.js` | tracked | product-runtime | included-tracked-critical | keep | 39426 |
 | `src/mind/curiosity.js` | tracked | product-runtime | included-tracked-critical | keep | 89488 |
-| `src/mind/economichandoff.js` | untracked | product-runtime | blocked-untracked | keep | 4730 |
+| `src/mind/economichandoff.js` | tracked | product-runtime | included-tracked-critical | keep | 4730 |
 | `src/mind/embeddings.js` | tracked | product-runtime | included-tracked-critical | keep | 724 |
 | `src/mind/emotions.js` | tracked | product-runtime | included-tracked-critical | keep | 5900 |
-| `src/mind/errorbook.js` | tombstone | product-runtime | blocked-unresolved-disposition | delete |  |
 | `src/mind/facerec.js` | tracked | product-runtime | included-tracked-critical | keep | 12226 |
-| `src/mind/home.js` | untracked | product-runtime | blocked-untracked | keep | 69184 |
+| `src/mind/home.js` | tracked | product-runtime | included-tracked-critical | keep | 69184 |
 | `src/mind/household.js` | tracked | product-runtime | included-tracked-critical | keep | 16416 |
-| `src/mind/learning.js` | untracked | product-runtime | blocked-untracked | keep | 64512 |
+| `src/mind/learning.js` | tracked | product-runtime | included-tracked-critical | keep | 64512 |
 | `src/mind/localbrain.js` | tracked | product-runtime | included-tracked-critical | keep | 4263 |
-| `src/mind/materialcompletion.js` | untracked | product-runtime | blocked-untracked | keep | 31001 |
-| `src/mind/materiallifecycle.js` | untracked | product-runtime | blocked-unresolved-disposition | isolate | 183357 |
-| `src/mind/monitoringcontract.js` | untracked | product-runtime | blocked-untracked | keep | 68910 |
+| `src/mind/materialcompletion.js` | tracked | product-runtime | included-tracked-critical | keep | 31001 |
+| `src/mind/materiallifecycle.js` | tracked | product-runtime | blocked-unresolved-disposition | isolate | 183357 |
+| `src/mind/monitoringcontract.js` | tracked | product-runtime | included-tracked-critical | keep | 68910 |
 | `src/mind/perception.js` | tracked | product-runtime | included-tracked-critical | keep | 17516 |
-| `src/mind/perceptionattention.js` | untracked | product-runtime | blocked-untracked | keep | 47534 |
-| `src/mind/perceptiondecision.js` | untracked | product-runtime | blocked-untracked | keep | 4224 |
-| `src/mind/perceptionexecutor.js` | untracked | product-runtime | blocked-untracked | keep | 5888 |
-| `src/mind/persona.js` | tracked | product-runtime | included-tracked-critical | keep | 14881 |
-| `src/mind/portfolio.js` | tracked | product-runtime | included-tracked-critical | keep | 239172 |
-| `src/mind/projectexecution.js` | untracked | product-runtime | blocked-untracked | keep | 21843 |
-| `src/mind/runtimecontroller.js` | untracked | product-runtime | blocked-untracked | keep | 31474 |
-| `src/mind/selfattentioncontext.js` | untracked | product-runtime | blocked-untracked | keep | 7099 |
-| `src/mind/signals.js` | untracked | product-runtime | blocked-untracked | keep | 9212 |
+| `src/mind/perceptionattention.js` | tracked | product-runtime | included-tracked-critical | keep | 47534 |
+| `src/mind/perceptiondecision.js` | tracked | product-runtime | included-tracked-critical | keep | 4224 |
+| `src/mind/perceptionexecutor.js` | tracked | product-runtime | included-tracked-critical | keep | 5888 |
+| `src/mind/persona.js` | tracked | product-runtime | included-tracked-critical | keep | 15904 |
+| `src/mind/portfolio.js` | tracked | product-runtime | included-tracked-critical | keep | 243654 |
+| `src/mind/projectexecution.js` | tracked | product-runtime | included-tracked-critical | keep | 21843 |
+| `src/mind/runtimecontroller.js` | tracked | product-runtime | included-tracked-critical | keep | 31474 |
+| `src/mind/selfattentioncontext.js` | tracked | product-runtime | included-tracked-critical | keep | 7099 |
+| `src/mind/signals.js` | tracked | product-runtime | included-tracked-critical | keep | 9212 |
 | `src/mind/social.js` | tracked | product-runtime | included-tracked-critical | keep | 17987 |
-| `src/mind/telegramdelivery.js` | untracked | product-runtime | blocked-untracked | keep | 13573 |
+| `src/mind/telegramdelivery.js` | tracked | product-runtime | included-tracked-critical | keep | 13573 |
 | `src/mind/toolinstaller.js` | tracked | product-runtime | included-tracked-critical | keep | 32649 |
-| `src/mind/toolpolicy.js` | tombstone | product-runtime | blocked-unresolved-disposition | delete |  |
-| `src/mind/tools.js` | tracked | product-runtime | included-tracked-critical | keep | 284414 |
+| `src/mind/tools.js` | tracked | product-runtime | included-tracked-critical | keep | 284637 |
 | `src/mind/turnplan.js` | tracked | product-runtime | included-tracked-critical | keep | 37584 |
-| `src/mind/turnunderstandingoutcome.js` | untracked | product-runtime | blocked-untracked | keep | 7824 |
-| `src/mind/understanding.js` | untracked | product-runtime | blocked-untracked | keep | 249999 |
+| `src/mind/turnunderstandingoutcome.js` | tracked | product-runtime | included-tracked-critical | keep | 7824 |
+| `src/mind/understanding.js` | tracked | product-runtime | included-tracked-critical | keep | 249999 |
 | `src/mind/vision.js` | tracked | product-runtime | included-tracked-critical | keep | 21974 |
 | `src/mind/voicebridge.js` | tracked | product-runtime | included-tracked-critical | keep | 36641 |
-| `src/mind/voiceingress.js` | untracked | product-runtime | blocked-unresolved-disposition | delete | 201 |
+| `src/mind/voiceingress.js` | tracked | product-runtime | blocked-unresolved-disposition | delete | 201 |
 | `src/mind/work.js` | tracked | product-runtime | included-tracked-critical | keep | 12842 |
 | `src/mind/workcells.js` | tracked | product-runtime | included-tracked-critical | keep | 20560 |
-| `src/mind/workcompletion.js` | untracked | product-runtime | blocked-unresolved-disposition | isolate | 109086 |
-| `src/mind/workspacefilemanifest.js` | untracked | product-runtime | blocked-untracked | keep | 13277 |
-| `src/mind/workspacegeneration.js` | untracked | product-runtime | blocked-untracked | keep | 59042 |
+| `src/mind/workcompletion.js` | tracked | product-runtime | blocked-unresolved-disposition | isolate | 109086 |
+| `src/mind/workspacefilemanifest.js` | tracked | product-runtime | included-tracked-critical | keep | 13277 |
+| `src/mind/workspacegeneration.js` | tracked | product-runtime | included-tracked-critical | keep | 59042 |
 | `src/reminders.js` | tracked | product-runtime | included-tracked-critical | keep | 3164 |
 | `src/runtimeversion.js` | tracked | product-runtime | included-tracked-critical | keep | 1483 |
 | `src/security/redaction.js` | tracked | product-runtime | included-tracked-critical | keep | 1918 |
 | `src/self/secretmind.js` | tracked | product-runtime | included-tracked-critical | keep | 2843 |
 | `src/self/vault.js` | tracked | product-runtime | included-tracked-critical | keep | 2276 |
-| `src/turnauthority.js` | untracked | product-runtime | blocked-untracked | keep | 26420 |
+| `src/turnauthority.js` | tracked | product-runtime | included-tracked-critical | keep | 60125 |
 | `src/util.js` | tracked | product-runtime | included-tracked-critical | keep | 22642 |
-| `src/voiceauthority.js` | untracked | product-runtime | blocked-untracked | keep | 52709 |
+| `src/voiceauthority.js` | tracked | product-runtime | included-tracked-critical | keep | 52709 |
 | `src/web/access.js` | tracked | product-runtime | included-tracked-critical | keep | 1989 |
-| `src/web/httpack.js` | untracked | product-runtime | blocked-untracked | keep | 8142 |
-| `src/web/httpdelivery.js` | untracked | product-runtime | blocked-untracked | keep | 84745 |
-| `src/web/httpingress.js` | untracked | product-runtime | blocked-untracked | keep | 107760 |
-| `src/web/httpresponseauthority.js` | untracked | product-runtime | blocked-untracked | keep | 30506 |
+| `src/web/httpack.js` | tracked | product-runtime | included-tracked-critical | keep | 8142 |
+| `src/web/httpdelivery.js` | tracked | product-runtime | included-tracked-critical | keep | 88921 |
+| `src/web/httpingress.js` | tracked | product-runtime | included-tracked-critical | keep | 111368 |
+| `src/web/httpresponseauthority.js` | tracked | product-runtime | included-tracked-critical | keep | 30506 |
 | `src/web/public/app.js` | tracked | product-runtime | included-tracked-critical | keep | 38804 |
-| `src/web/public/autonomycard.js` | untracked | product-runtime | blocked-untracked | keep | 4127 |
+| `src/web/public/autonomycard.js` | tracked | product-runtime | included-tracked-critical | keep | 4127 |
 | `src/web/public/eva.glb` | tracked | browser | included-tracked-critical | keep | 6498864 |
-| `src/web/public/httpackclient.js` | untracked | product-runtime | blocked-untracked | keep | 40454 |
+| `src/web/public/httpackclient.js` | tracked | product-runtime | included-tracked-critical | keep | 40454 |
 | `src/web/public/index.html` | tracked | browser | included-tracked-critical | keep | 9652 |
 | `src/web/public/style.css` | tracked | browser | included-tracked-critical | keep | 14529 |
-| `src/web/requestidentity.js` | untracked | product-runtime | blocked-untracked | keep | 3624 |
-| `src/web/server.js` | tracked | product-runtime | included-tracked-critical | keep | 50283 |
-| `src/web/sqliteindexattestation.js` | untracked | product-runtime | blocked-untracked | keep | 2120 |
-| `test/agent-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 3125 |
+| `src/web/requestidentity.js` | tracked | product-runtime | included-tracked-critical | keep | 3624 |
+| `src/web/server.js` | tracked | product-runtime | included-tracked-critical | keep | 52077 |
+| `src/web/sqliteindexattestation.js` | tracked | product-runtime | included-tracked-critical | keep | 2120 |
+| `test/agent-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 3125 |
 | `test/agentmail-integration.test.js` | tracked | verification | included-tracked-critical | keep | 2030 |
-| `test/artifact-collections.test.js` | untracked | verification | blocked-untracked | keep | 61831 |
-| `test/artifact-receipt-projection.test.js` | untracked | verification | blocked-untracked | keep | 4300 |
-| `test/artifact-versions.test.js` | untracked | verification | blocked-untracked | keep | 57011 |
-| `test/aspiration-attention-rotation.test.js` | untracked | verification | blocked-untracked | keep | 17679 |
-| `test/authentic-ha-voice-test-server.js` | untracked | verification-fixture | blocked-untracked | keep | 2810 |
-| `test/autonomy-card-visibility.test.js` | untracked | verification | blocked-untracked | keep | 20586 |
-| `test/autonomy-runtime-ingress.test.js` | untracked | verification | blocked-untracked | keep | 19061 |
-| `test/autonomy-safety.test.js` | tracked | verification | included-tracked-critical | keep | 17558 |
-| `test/behavior-learning-integration.test.js` | untracked | verification | blocked-untracked | keep | 9405 |
-| `test/browser-http-ack-client.test.js` | untracked | verification | blocked-untracked | keep | 32262 |
-| `test/capabilities.test.js` | tracked | verification | included-tracked-critical | keep | 6720 |
+| `test/artifact-collections.test.js` | tracked | verification | included-tracked-critical | keep | 61831 |
+| `test/artifact-receipt-projection.test.js` | tracked | verification | included-tracked-critical | keep | 4300 |
+| `test/artifact-versions.test.js` | tracked | verification | included-tracked-critical | keep | 57011 |
+| `test/aspiration-attention-rotation.test.js` | tracked | verification | included-tracked-critical | keep | 17739 |
+| `test/authentic-ha-voice-test-server.js` | tracked | verification-fixture | included-tracked-critical | keep | 2810 |
+| `test/autonomy-card-visibility.test.js` | tracked | verification | included-tracked-critical | keep | 20821 |
+| `test/autonomy-disabled-health.test.js` | tracked | verification | included-tracked-critical | keep | 1527 |
+| `test/autonomy-disabled.test.js` | tracked | verification | included-tracked-critical | keep | 2870 |
+| `test/autonomy-enabled-opt-in.test.js` | tracked | verification | included-tracked-critical | keep | 1903 |
+| `test/autonomy-runtime-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 19227 |
+| `test/autonomy-safety.test.js` | tracked | verification | included-tracked-critical | keep | 17702 |
+| `test/behavior-learning-integration.test.js` | tracked | verification | included-tracked-critical | keep | 9405 |
+| `test/browser-http-ack-client.test.js` | tracked | verification | included-tracked-critical | keep | 32262 |
+| `test/capabilities.test.js` | tracked | verification | included-tracked-critical | keep | 6804 |
 | `test/cognitive-integration.test.js` | tracked | verification | included-tracked-critical | keep | 12353 |
-| `test/cognitive-no-action-continuity.test.js` | untracked | verification | blocked-untracked | keep | 9892 |
-| `test/conversation-opportunity-scheduler.test.js` | untracked | verification | blocked-untracked | keep | 7723 |
-| `test/conversation-opportunity-search.test.js` | untracked | verification | blocked-untracked | keep | 13845 |
+| `test/cognitive-no-action-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 9892 |
+| `test/conversation-opportunity-scheduler.test.js` | tracked | verification | included-tracked-critical | keep | 7807 |
+| `test/conversation-opportunity-search.test.js` | tracked | verification | included-tracked-critical | keep | 13845 |
 | `test/curiosity-loop.test.js` | tracked | verification | included-tracked-critical | keep | 41218 |
-| `test/curiosity-outcome-liveness.test.js` | untracked | verification | blocked-untracked | keep | 8464 |
-| `test/data-directory-guard.test.js` | untracked | verification | blocked-untracked | keep | 35016 |
-| `test/doorbell-ingress-priority.test.js` | untracked | verification | blocked-untracked | keep | 4161 |
-| `test/doorbell-intercom.test.js` | untracked | verification | blocked-untracked | keep | 7298 |
+| `test/curiosity-outcome-liveness.test.js` | tracked | verification | included-tracked-critical | keep | 8464 |
+| `test/data-directory-guard.test.js` | tracked | verification | included-tracked-critical | keep | 35016 |
+| `test/doorbell-ingress-priority.test.js` | tracked | verification | included-tracked-critical | keep | 4161 |
+| `test/doorbell-intercom.test.js` | tracked | verification | included-tracked-critical | keep | 7298 |
 | `test/emotional-life.test.js` | tracked | verification | included-tracked-critical | keep | 3175 |
 | `test/episode-lifecycle-transition.test.js` | tracked | verification | included-tracked-critical | keep | 7622 |
-| `test/eva-agent-benchmark-v1.test.js` | untracked | verification | blocked-untracked | keep | 2646 |
-| `test/execution-ledger-live-predecessor.test.js` | untracked | verification | blocked-untracked | keep | 5295 |
-| `test/execution-ledger-main-schema.test.js` | untracked | verification | blocked-untracked | keep | 2924 |
-| `test/execution-ledger-v2.test.js` | untracked | verification | blocked-untracked | keep | 47280 |
-| `test/exploration-attention-backoff.test.js` | untracked | verification | blocked-untracked | keep | 55690 |
-| `test/exploration-family-result.test.js` | untracked | verification | blocked-untracked | keep | 24618 |
-| `test/failed-telegram-handoff-recovery.test.js` | untracked | verification | blocked-untracked | keep | 27041 |
-| `test/family-autonomy-three-domain-acceptance.test.js` | untracked | verification | blocked-untracked | keep | 24183 |
-| `test/family-experience-restart.test.js` | untracked | verification | blocked-untracked | keep | 7821 |
-| `test/family-work-status-visibility.test.js` | untracked | verification | blocked-untracked | keep | 9766 |
-| `test/family-workspace-write.test.js` | untracked | verification | blocked-untracked | keep | 2361 |
-| `test/free-autonomy-continuation.test.js` | untracked | verification | blocked-untracked | keep | 23904 |
-| `test/free-no-action-runtime-continuity.test.js` | untracked | verification | blocked-untracked | keep | 20204 |
-| `test/free-research-continuity.test.js` | untracked | verification | blocked-untracked | keep | 27084 |
-| `test/full-autonomy.test.js` | tracked | verification | included-tracked-critical | keep | 367786 |
-| `test/generic-read-agent-loop.test.js` | untracked | verification | blocked-untracked | keep | 47607 |
-| `test/homeassistant-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 1825 |
+| `test/eva-agent-benchmark-v1.test.js` | tracked | verification | included-tracked-critical | keep | 2646 |
+| `test/execution-ledger-live-predecessor.test.js` | tracked | verification | included-tracked-critical | keep | 5295 |
+| `test/execution-ledger-main-schema.test.js` | tracked | verification | included-tracked-critical | keep | 2924 |
+| `test/execution-ledger-v2.test.js` | tracked | verification | included-tracked-critical | keep | 47280 |
+| `test/exploration-attention-backoff.test.js` | tracked | verification | included-tracked-critical | keep | 55780 |
+| `test/exploration-family-result.test.js` | tracked | verification | included-tracked-critical | keep | 24618 |
+| `test/failed-telegram-handoff-recovery.test.js` | tracked | verification | included-tracked-critical | keep | 27041 |
+| `test/family-autonomy-three-domain-acceptance.test.js` | tracked | verification | included-tracked-critical | keep | 24267 |
+| `test/family-experience-restart.test.js` | tracked | verification | included-tracked-critical | keep | 7851 |
+| `test/family-work-status-visibility.test.js` | tracked | verification | included-tracked-critical | keep | 9850 |
+| `test/family-workspace-write.test.js` | tracked | verification | included-tracked-critical | keep | 2361 |
+| `test/free-autonomy-continuation.test.js` | tracked | verification | included-tracked-critical | keep | 23934 |
+| `test/free-no-action-runtime-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 20234 |
+| `test/free-research-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 27114 |
+| `test/full-autonomy.test.js` | tracked | verification | included-tracked-critical | keep | 368315 |
+| `test/generic-read-agent-loop.test.js` | tracked | verification | included-tracked-critical | keep | 47607 |
+| `test/homeassistant-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 1825 |
 | `test/household-model.test.js` | tracked | verification | included-tracked-critical | keep | 12437 |
 | `test/housemate-voice.test.js` | tracked | verification | included-tracked-critical | keep | 6029 |
-| `test/http-authority-boundary.test.js` | untracked | verification | blocked-untracked | keep | 12397 |
-| `test/http-delivery-v3.test.js` | untracked | verification | blocked-untracked | keep | 5029 |
-| `test/http-delivery.test.js` | untracked | verification | blocked-untracked | keep | 38358 |
-| `test/http-ingress.test.js` | untracked | verification | blocked-untracked | keep | 27716 |
-| `test/http-server-ack-integration.test.js` | untracked | verification | blocked-untracked | keep | 23272 |
-| `test/interpretation-handoff-idempotency.test.js` | untracked | verification | blocked-untracked | keep | 32519 |
-| `test/interpretation-resume-authority-runtime.test.js` | untracked | verification | blocked-untracked | keep | 2507 |
-| `test/isolated-data-dir.js` | untracked | verification-fixture | blocked-untracked | keep | 541 |
-| `test/lab-plan-run.test.js` | untracked | verification | blocked-untracked | keep | 2477 |
-| `test/learning-availability.test.js` | untracked | verification | blocked-untracked | keep | 4915 |
-| `test/learning-loop.test.js` | untracked | verification | blocked-untracked | keep | 25736 |
+| `test/http-authority-boundary.test.js` | tracked | verification | included-tracked-critical | keep | 12397 |
+| `test/http-delivery-v3.test.js` | tracked | verification | included-tracked-critical | keep | 9064 |
+| `test/http-delivery.test.js` | tracked | verification | included-tracked-critical | keep | 38358 |
+| `test/http-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 31773 |
+| `test/http-server-ack-integration.test.js` | tracked | verification | included-tracked-critical | keep | 24082 |
+| `test/http-turn-authority-retroactive-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 7538 |
+| `test/interpretation-handoff-idempotency.test.js` | tracked | verification | included-tracked-critical | keep | 32519 |
+| `test/interpretation-resume-authority-runtime.test.js` | tracked | verification | included-tracked-critical | keep | 2591 |
+| `test/isolated-data-dir.js` | tracked | verification-fixture | included-tracked-critical | keep | 541 |
+| `test/lab-adapter-contract.test.js` | tracked | verification | included-tracked-critical | keep | 4306 |
+| `test/lab-effect-broker.test.js` | tracked | verification | included-tracked-critical | keep | 3779 |
+| `test/lab-plan-run.test.js` | tracked | verification | included-tracked-critical | keep | 2477 |
+| `test/lab-result-ledger.test.js` | tracked | verification | included-tracked-critical | keep | 4094 |
+| `test/learning-availability.test.js` | tracked | verification | included-tracked-critical | keep | 4915 |
+| `test/learning-loop.test.js` | tracked | verification | included-tracked-critical | keep | 25736 |
 | `test/live-canary.test.js` | tracked | verification | included-tracked-critical | keep | 48433 |
 | `test/llm-recovery.test.js` | tracked | verification | included-tracked-critical | keep | 55526 |
-| `test/llm-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 876 |
+| `test/llm-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 876 |
 | `test/localbrain-validation.test.js` | tracked | verification | included-tracked-critical | keep | 4985 |
-| `test/material-completion-runtime.test.js` | untracked | verification | blocked-untracked | keep | 22004 |
-| `test/material-completion.test.js` | untracked | verification | blocked-untracked | keep | 27210 |
-| `test/material-lifecycle.test.js` | untracked | verification | blocked-untracked | keep | 91509 |
-| `test/memory-hygiene.test.js` | untracked | verification | blocked-untracked | keep | 29202 |
-| `test/memory-web.test.js` | untracked | verification | blocked-untracked | keep | 11396 |
-| `test/minimal-core-contract.test.js` | tracked | verification | included-tracked-critical | keep | 167353 |
-| `test/monitoring-contract-host-builder.test.js` | untracked | verification | blocked-untracked | keep | 5431 |
-| `test/monitoring-contract-v2.test.js` | untracked | verification | blocked-untracked | keep | 34987 |
-| `test/monitoring-required-ingress-admission.test.js` | untracked | verification | blocked-untracked | keep | 7675 |
-| `test/native-failed-telegram-handoff-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 11615 |
-| `test/native-failed-telegram-handoff.test.js` | untracked | verification | blocked-untracked | keep | 1404 |
-| `test/native-ha-voice-authority-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 25446 |
-| `test/native-ha-voice-authority.test.js` | untracked | verification | blocked-untracked | keep | 7149 |
-| `test/native-interrupted-telegram-effect-startup-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 16550 |
-| `test/native-interrupted-telegram-effect-startup.test.js` | untracked | verification | blocked-untracked | keep | 8540 |
-| `test/native-interrupted-telegram-startup-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 4451 |
-| `test/native-interrupted-telegram-startup.test.js` | untracked | verification | blocked-untracked | keep | 1702 |
-| `test/native-monitoring-v2-restart-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 61467 |
-| `test/native-monitoring-v2-restart.test.js` | untracked | verification | blocked-untracked | keep | 43511 |
-| `test/native-telegram-direct-recovery-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 15651 |
-| `test/native-telegram-direct-recovery.test.js` | untracked | verification | blocked-untracked | keep | 5617 |
-| `test/native-telegram-done-restart-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 14796 |
-| `test/native-telegram-done-restart.test.js` | untracked | verification | blocked-untracked | keep | 3085 |
-| `test/native-telegram-release-boundary.test.js` | untracked | verification | blocked-untracked | keep | 3474 |
-| `test/native-turn-understanding-authority.test.js` | untracked | verification | blocked-untracked | keep | 23266 |
-| `test/native-voice-delivery-transaction.test.js` | untracked | verification | blocked-untracked | keep | 9218 |
-| `test/native-voice-drain-continuity-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 11532 |
-| `test/native-voice-drain-continuity.test.js` | untracked | verification | blocked-untracked | keep | 2391 |
-| `test/native-voice-restart-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 15010 |
-| `test/native-voice-restart.test.js` | untracked | verification | blocked-untracked | keep | 4814 |
-| `test/partial-home-success.test.js` | untracked | verification | blocked-untracked | keep | 40824 |
-| `test/perception-attention.test.js` | untracked | verification | blocked-untracked | keep | 12610 |
-| `test/perception-availability.test.js` | untracked | verification | blocked-untracked | keep | 3697 |
-| `test/perception-camera-selection.test.js` | untracked | verification | blocked-untracked | keep | 10138 |
-| `test/perception-decision.test.js` | untracked | verification | blocked-untracked | keep | 4548 |
-| `test/perception-executor.test.js` | untracked | verification | blocked-untracked | keep | 9336 |
+| `test/material-completion-runtime.test.js` | tracked | verification | included-tracked-critical | keep | 22088 |
+| `test/material-completion.test.js` | tracked | verification | included-tracked-critical | keep | 27210 |
+| `test/material-lifecycle.test.js` | tracked | verification | included-tracked-critical | keep | 91509 |
+| `test/memory-hygiene.test.js` | tracked | verification | included-tracked-critical | keep | 29202 |
+| `test/memory-web.test.js` | tracked | verification | included-tracked-critical | keep | 11396 |
+| `test/minimal-core-contract.test.js` | tracked | verification | included-tracked-critical | keep | 167437 |
+| `test/monitoring-contract-host-builder.test.js` | tracked | verification | included-tracked-critical | keep | 5431 |
+| `test/monitoring-contract-v2.test.js` | tracked | verification | included-tracked-critical | keep | 34987 |
+| `test/monitoring-required-ingress-admission.test.js` | tracked | verification | included-tracked-critical | keep | 7759 |
+| `test/native-failed-telegram-handoff-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 11699 |
+| `test/native-failed-telegram-handoff.test.js` | tracked | verification | included-tracked-critical | keep | 1404 |
+| `test/native-ha-voice-authority-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 25446 |
+| `test/native-ha-voice-authority.test.js` | tracked | verification | included-tracked-critical | keep | 7149 |
+| `test/native-interrupted-telegram-effect-startup-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 16634 |
+| `test/native-interrupted-telegram-effect-startup.test.js` | tracked | verification | included-tracked-critical | keep | 8540 |
+| `test/native-interrupted-telegram-startup-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 4535 |
+| `test/native-interrupted-telegram-startup.test.js` | tracked | verification | included-tracked-critical | keep | 1702 |
+| `test/native-monitoring-v2-restart-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 61551 |
+| `test/native-monitoring-v2-restart.test.js` | tracked | verification | included-tracked-critical | keep | 43511 |
+| `test/native-telegram-direct-recovery-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 15651 |
+| `test/native-telegram-direct-recovery.test.js` | tracked | verification | included-tracked-critical | keep | 5617 |
+| `test/native-telegram-done-restart-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 14796 |
+| `test/native-telegram-done-restart.test.js` | tracked | verification | included-tracked-critical | keep | 3085 |
+| `test/native-telegram-release-boundary.test.js` | tracked | verification | included-tracked-critical | keep | 3474 |
+| `test/native-turn-understanding-authority.test.js` | tracked | verification | included-tracked-critical | keep | 23266 |
+| `test/native-voice-delivery-transaction.test.js` | tracked | verification | included-tracked-critical | keep | 9218 |
+| `test/native-voice-drain-continuity-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 11532 |
+| `test/native-voice-drain-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 2391 |
+| `test/native-voice-restart-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 15010 |
+| `test/native-voice-restart.test.js` | tracked | verification | included-tracked-critical | keep | 4814 |
+| `test/partial-home-success.test.js` | tracked | verification | included-tracked-critical | keep | 40824 |
+| `test/perception-attention.test.js` | tracked | verification | included-tracked-critical | keep | 12610 |
+| `test/perception-availability.test.js` | tracked | verification | included-tracked-critical | keep | 3697 |
+| `test/perception-camera-selection.test.js` | tracked | verification | included-tracked-critical | keep | 10138 |
+| `test/perception-decision.test.js` | tracked | verification | included-tracked-critical | keep | 4548 |
+| `test/perception-executor.test.js` | tracked | verification | included-tracked-critical | keep | 9336 |
 | `test/perception-policy.test.js` | tracked | verification | included-tracked-critical | keep | 4364 |
-| `test/perception-scheduler-liveness.test.js` | untracked | verification | blocked-untracked | keep | 13509 |
-| `test/perception-web-privacy.test.js` | untracked | verification | blocked-untracked | keep | 1183 |
+| `test/perception-scheduler-liveness.test.js` | tracked | verification | included-tracked-critical | keep | 13539 |
+| `test/perception-web-privacy.test.js` | tracked | verification | included-tracked-critical | keep | 1183 |
 | `test/portfolio-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 29967 |
-| `test/quality-gate-diagnostic-debt.test.js` | untracked | verification | blocked-untracked | keep | 80873 |
-| `test/relationship-feedback-ingress.test.js` | untracked | verification | blocked-untracked | keep | 5132 |
-| `test/repository-inventory.test.js` | untracked | verification | blocked-untracked | keep | 39833 |
-| `test/requester-owned-home-target.test.js` | untracked | verification | blocked-untracked | keep | 8613 |
-| `test/runtime-self-repair.test.js` | untracked | verification | blocked-untracked | keep | 95245 |
-| `test/self-attention-exploration-scheduler.test.js` | untracked | verification | blocked-untracked | keep | 141257 |
-| `test/self-attention-ingress.test.js` | untracked | verification | blocked-untracked | keep | 47522 |
-| `test/signal-liveness.test.js` | untracked | verification | blocked-untracked | keep | 22106 |
+| `test/quality-gate-diagnostic-debt.test.js` | tracked | verification | included-tracked-critical | keep | 84293 |
+| `test/recovery-runtime-config.test.js` | tracked | verification | included-tracked-critical | keep | 2438 |
+| `test/recovery-runtime-startup.test.js` | tracked | verification | included-tracked-critical | keep | 7642 |
+| `test/recovery-runtime-tool-policy.test.js` | tracked | verification | included-tracked-critical | keep | 3258 |
+| `test/relationship-feedback-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 5132 |
+| `test/repository-inventory.test.js` | tracked | verification | included-tracked-critical | keep | 39833 |
+| `test/requester-owned-home-target.test.js` | tracked | verification | included-tracked-critical | keep | 8613 |
+| `test/runtime-self-repair.test.js` | tracked | verification | included-tracked-critical | keep | 95245 |
+| `test/self-attention-exploration-scheduler.test.js` | tracked | verification | included-tracked-critical | keep | 141347 |
+| `test/self-attention-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 47606 |
+| `test/signal-liveness.test.js` | tracked | verification | included-tracked-critical | keep | 22190 |
 | `test/social-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 15135 |
-| `test/telegram-conditional-temperature-monitoring.test.js` | untracked | verification | blocked-untracked | keep | 31644 |
+| `test/telegram-conditional-temperature-monitoring.test.js` | tracked | verification | included-tracked-critical | keep | 31728 |
 | `test/telegram-message-archive.test.js` | tracked | verification | included-tracked-critical | keep | 5189 |
-| `test/telegram-monitoring-language-provider-canary.test.js` | untracked | verification | blocked-untracked | keep | 5722 |
-| `test/telegram-outbox-core.test.js` | tracked | verification | included-tracked-critical | keep | 88474 |
-| `test/telegram-partial-fanout-projection.test.js` | untracked | verification | blocked-untracked | keep | 6479 |
-| `test/telegram-per-child-current.test.js` | untracked | verification | blocked-untracked | keep | 10546 |
-| `test/telegram-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 3372 |
+| `test/telegram-monitoring-language-provider-canary.test.js` | tracked | verification | included-tracked-critical | keep | 5806 |
+| `test/telegram-outbox-core.test.js` | tracked | verification | included-tracked-critical | keep | 90227 |
+| `test/telegram-partial-fanout-projection.test.js` | tracked | verification | included-tracked-critical | keep | 6479 |
+| `test/telegram-per-child-current.test.js` | tracked | verification | included-tracked-critical | keep | 10546 |
+| `test/telegram-social-failure.test.js` | tracked | verification | included-tracked-critical | keep | 3083 |
+| `test/telegram-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 3372 |
 | `test/telegram-transport.test.js` | tracked | verification | included-tracked-critical | keep | 32250 |
-| `test/tool-policy.test.js` | tracked | verification | included-tracked-critical | keep | 148004 |
-| `test/turn-authority-predecessor-fixture.mjs` | untracked | verification-fixture | blocked-untracked | keep | 4639 |
-| `test/turn-authority-predecessor-migration.test.js` | untracked | verification | blocked-untracked | keep | 1679 |
-| `test/turn-authority-store-initialization.test.js` | untracked | verification | blocked-untracked | keep | 1876 |
+| `test/tool-policy.test.js` | tracked | verification | included-tracked-critical | keep | 148045 |
+| `test/turn-authority-predecessor-fixture.mjs` | tracked | verification-fixture | included-tracked-critical | keep | 22124 |
+| `test/turn-authority-predecessor-migration.test.js` | tracked | verification | included-tracked-critical | keep | 6029 |
+| `test/turn-authority-store-initialization.test.js` | tracked | verification | included-tracked-critical | keep | 1876 |
 | `test/turn-plan.test.js` | tracked | verification | included-tracked-critical | keep | 20187 |
-| `test/turn-understanding-authority-fixture.js` | untracked | verification-fixture | blocked-untracked | keep | 9070 |
-| `test/turn-understanding-authority.test.js` | untracked | verification | blocked-untracked | keep | 36915 |
-| `test/turn-understanding.test.js` | untracked | verification | blocked-untracked | keep | 377365 |
-| `test/user-facing-text.test.js` | untracked | verification | blocked-untracked | keep | 3178 |
-| `test/vision-pending-identity.test.js` | tombstone | verification | blocked-unresolved-disposition | delete |  |
-| `test/voice-delivery-authority-store.test.js` | untracked | verification | blocked-untracked | keep | 14923 |
+| `test/turn-understanding-authority-fixture.js` | tracked | verification-fixture | included-tracked-critical | keep | 18954 |
+| `test/turn-understanding-authority.test.js` | tracked | verification | included-tracked-critical | keep | 58956 |
+| `test/turn-understanding.test.js` | tracked | verification | included-tracked-critical | keep | 377365 |
+| `test/user-facing-text.test.js` | tracked | verification | included-tracked-critical | keep | 3178 |
+| `test/voice-delivery-authority-store.test.js` | tracked | verification | included-tracked-critical | keep | 14923 |
 | `test/voice-pe-routing.test.js` | tracked | verification | included-tracked-critical | keep | 36317 |
-| `test/voiceauthority-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 1390 |
-| `test/voicebridge-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 3506 |
+| `test/voiceauthority-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 1390 |
+| `test/voicebridge-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 3506 |
 | `test/web-access.test.js` | tracked | verification | included-tracked-critical | keep | 2247 |
-| `test/web-agent-ingress.test.js` | untracked | verification | blocked-untracked | keep | 24193 |
-| `test/web-request-identity.test.js` | untracked | verification | blocked-untracked | keep | 18813 |
-| `test/web-server-test-agent.js` | untracked | verification-fixture | blocked-untracked | keep | 243 |
-| `test/web-server-test-composition.js` | untracked | verification-fixture | blocked-untracked | keep | 854 |
-| `test/web-server-test-state.js` | untracked | verification-fixture | blocked-untracked | keep | 1300 |
-| `test/work-completion-contract.test.js` | untracked | verification | blocked-untracked | keep | 49194 |
-| `test/work-completion-lifecycle.test.js` | untracked | verification | blocked-untracked | keep | 49076 |
-| `test/workspace-file-manifest.test.js` | untracked | verification | blocked-untracked | keep | 11439 |
-| `test/workspace-generation.test.js` | untracked | verification | blocked-untracked | keep | 52583 |
-| `test/workspace-writer-broker-native.test.mjs` | untracked | verification | blocked-untracked | keep | 43317 |
+| `test/web-agent-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 46621 |
+| `test/web-request-identity.test.js` | tracked | verification | included-tracked-critical | keep | 18813 |
+| `test/web-server-test-agent.js` | tracked | verification-fixture | included-tracked-critical | keep | 243 |
+| `test/web-server-test-composition.js` | tracked | verification-fixture | included-tracked-critical | keep | 854 |
+| `test/web-server-test-state.js` | tracked | verification-fixture | included-tracked-critical | keep | 1300 |
+| `test/work-completion-contract.test.js` | tracked | verification | included-tracked-critical | keep | 49194 |
+| `test/work-completion-lifecycle.test.js` | tracked | verification | included-tracked-critical | keep | 49160 |
+| `test/workspace-file-manifest.test.js` | tracked | verification | included-tracked-critical | keep | 11439 |
+| `test/workspace-generation.test.js` | tracked | verification | included-tracked-critical | keep | 52583 |
+| `test/workspace-writer-broker-native.test.mjs` | tracked | verification | included-tracked-critical | keep | 43317 |
 | `tsconfig.json` | tracked | repository-config | included-tracked-critical | keep | 560 |
-| `typescript-diagnostic-debt.json` | untracked | repository-config | blocked-untracked | keep | 187395 |
+| `typescript-diagnostic-debt.json` | tracked | repository-config | included-tracked-critical | keep | 187040 |
 
 ## Gedetecteerde randen
 
@@ -627,6 +450,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `src/mind/agent.js` | `src/turnauthority.js` |
 | import | `src/mind/agent.js` | `src/util.js` |
 | import | `src/mind/agent.js` | `src/voiceauthority.js` |
+| import | `src/mind/agent.js` | `src/web/httpdelivery.js` |
 | import | `src/mind/agent.js` | `src/web/httpingress.js` |
 | import | `src/mind/appearance.js` | `src/db.js` |
 | import | `src/mind/artifactcollections.js` | `src/config.js` |
@@ -734,6 +558,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `src/mind/portfolio.js` | `src/turnauthority.js` |
 | import | `src/mind/portfolio.js` | `src/util.js` |
 | import | `src/mind/portfolio.js` | `src/voiceauthority.js` |
+| import | `src/mind/portfolio.js` | `src/web/httpdelivery.js` |
+| import | `src/mind/portfolio.js` | `src/web/httpingress.js` |
 | import | `src/mind/projectexecution.js` | `src/config.js` |
 | import | `src/mind/projectexecution.js` | `src/util.js` |
 | import | `src/mind/runtimecontroller.js` | `deploy/eva-runtime-repair-protocol.mjs` |
@@ -824,6 +650,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `src/self/vault.js` | `src/self/secretmind.js` |
 | import | `src/turnauthority.js` | `src/executionledger.js` |
 | import | `src/turnauthority.js` | `src/util.js` |
+| import | `src/turnauthority.js` | `src/web/httpack.js` |
 | import | `src/voiceauthority.js` | `src/integrations/homeassistant.js` |
 | import | `src/voiceauthority.js` | `src/mind/agent.js` |
 | import | `src/voiceauthority.js` | `src/util.js` |
@@ -831,6 +658,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `src/web/httpdelivery.js` | `src/db.js` |
 | import | `src/web/httpdelivery.js` | `src/util.js` |
 | import | `src/web/httpdelivery.js` | `src/web/httpack.js` |
+| import | `src/web/httpdelivery.js` | `src/web/httpingress.js` |
 | import | `src/web/httpdelivery.js` | `src/web/httpresponseauthority.js` |
 | import | `src/web/httpdelivery.js` | `src/web/sqliteindexattestation.js` |
 | import | `src/web/httpingress.js` | `src/db.js` |
@@ -890,6 +718,17 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/autonomy-card-visibility.test.js` | `src/mind/portfolio.js` |
 | import | `test/autonomy-card-visibility.test.js` | `src/web/public/autonomycard.js` |
 | import | `test/autonomy-card-visibility.test.js` | `src/web/server.js` |
+| import | `test/autonomy-disabled-health.test.js` | `src/db.js` |
+| import | `test/autonomy-disabled-health.test.js` | `src/web/server.js` |
+| import | `test/autonomy-disabled.test.js` | `src/bus.js` |
+| import | `test/autonomy-disabled.test.js` | `src/config.js` |
+| import | `test/autonomy-disabled.test.js` | `src/db.js` |
+| import | `test/autonomy-disabled.test.js` | `src/mind/agent.js` |
+| import | `test/autonomy-disabled.test.js` | `src/mind/autonomy.js` |
+| import | `test/autonomy-enabled-opt-in.test.js` | `src/bus.js` |
+| import | `test/autonomy-enabled-opt-in.test.js` | `src/config.js` |
+| import | `test/autonomy-enabled-opt-in.test.js` | `src/db.js` |
+| import | `test/autonomy-enabled-opt-in.test.js` | `src/mind/autonomy.js` |
 | import | `test/autonomy-runtime-ingress.test.js` | `src/brain/llm.js` |
 | import | `test/autonomy-runtime-ingress.test.js` | `src/db.js` |
 | import | `test/autonomy-runtime-ingress.test.js` | `src/mind/agent.js` |
@@ -1008,6 +847,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/http-delivery.test.js` | `src/web/sqliteindexattestation.js` |
 | import | `test/http-delivery.test.js` | `test/turn-understanding-authority-fixture.js` |
 | import | `test/http-ingress.test.js` | `src/db.js` |
+| import | `test/http-ingress.test.js` | `src/turnauthority.js` |
 | import | `test/http-ingress.test.js` | `src/util.js` |
 | import | `test/http-ingress.test.js` | `src/web/httpack.js` |
 | import | `test/http-ingress.test.js` | `src/web/httpingress.js` |
@@ -1022,6 +862,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/http-server-ack-integration.test.js` | `src/web/server.js` |
 | import | `test/http-server-ack-integration.test.js` | `test/turn-understanding-authority-fixture.js` |
 | import | `test/http-server-ack-integration.test.js` | `test/web-server-test-composition.js` |
+| import | `test/http-turn-authority-retroactive-fixture.mjs` | `src/db.js` |
+| import | `test/http-turn-authority-retroactive-fixture.mjs` | `src/turnauthority.js` |
+| import | `test/http-turn-authority-retroactive-fixture.mjs` | `src/util.js` |
+| import | `test/http-turn-authority-retroactive-fixture.mjs` | `src/web/httpingress.js` |
 | import | `test/interpretation-handoff-idempotency.test.js` | `src/db.js` |
 | import | `test/interpretation-handoff-idempotency.test.js` | `src/mind/portfolio.js` |
 | import | `test/interpretation-handoff-idempotency.test.js` | `src/security/redaction.js` |
@@ -1029,7 +873,11 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/interpretation-resume-authority-runtime.test.js` | `src/db.js` |
 | import | `test/interpretation-resume-authority-runtime.test.js` | `src/mind/agent.js` |
 | import | `test/interpretation-resume-authority-runtime.test.js` | `src/mind/portfolio.js` |
+| import | `test/lab-adapter-contract.test.js` | `scripts/lab/adapter-contract.mjs` |
+| import | `test/lab-effect-broker.test.js` | `scripts/lab/effect-broker.mjs` |
 | import | `test/lab-plan-run.test.js` | `scripts/lab/plan-run.mjs` |
+| import | `test/lab-result-ledger.test.js` | `scripts/lab/plan-run.mjs` |
+| import | `test/lab-result-ledger.test.js` | `scripts/lab/result-ledger.mjs` |
 | import | `test/learning-loop.test.js` | `src/db.js` |
 | import | `test/learning-loop.test.js` | `src/mind/household.js` |
 | import | `test/learning-loop.test.js` | `src/mind/learning.js` |
@@ -1200,6 +1048,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/portfolio-continuity.test.js` | `src/mind/work.js` |
 | import | `test/portfolio-continuity.test.js` | `test/telegram-test-composition.js` |
 | import | `test/quality-gate-diagnostic-debt.test.js` | `scripts/quality-gate.mjs` |
+| import | `test/recovery-runtime-tool-policy.test.js` | `src/config.js` |
+| import | `test/recovery-runtime-tool-policy.test.js` | `src/db.js` |
+| import | `test/recovery-runtime-tool-policy.test.js` | `src/mind/tools.js` |
 | import | `test/relationship-feedback-ingress.test.js` | `src/db.js` |
 | import | `test/relationship-feedback-ingress.test.js` | `src/mind/agent.js` |
 | import | `test/relationship-feedback-ingress.test.js` | `src/mind/household.js` |
@@ -1258,6 +1109,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/telegram-outbox-core.test.js` | `src/turnauthority.js` |
 | import | `test/telegram-outbox-core.test.js` | `src/util.js` |
 | import | `test/telegram-outbox-core.test.js` | `test/telegram-test-composition.js` |
+| import | `test/telegram-social-failure.test.js` | `src/db.js` |
+| import | `test/telegram-social-failure.test.js` | `src/integrations/telegram.js` |
+| import | `test/telegram-social-failure.test.js` | `src/mind/persona.js` |
+| import | `test/telegram-social-failure.test.js` | `test/telegram-test-composition.js` |
 | import | `test/telegram-transport.test.js` | `src/db.js` |
 | import | `test/telegram-transport.test.js` | `src/integrations/homeassistant.js` |
 | import | `test/telegram-transport.test.js` | `src/integrations/telegram.js` |
@@ -1278,6 +1133,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/tool-policy.test.js` | `src/security/redaction.js` |
 | import | `test/turn-authority-predecessor-fixture.mjs` | `src/db.js` |
 | import | `test/turn-authority-predecessor-fixture.mjs` | `src/turnauthority.js` |
+| import | `test/turn-authority-predecessor-fixture.mjs` | `src/util.js` |
 | import | `test/turn-authority-predecessor-fixture.mjs` | `test/turn-understanding-authority-fixture.js` |
 | import | `test/turn-authority-store-initialization.test.js` | `src/executionledger.js` |
 | import | `test/turn-authority-store-initialization.test.js` | `src/turnauthority.js` |
@@ -1285,6 +1141,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/turn-understanding-authority-fixture.js` | `src/security/redaction.js` |
 | import | `test/turn-understanding-authority-fixture.js` | `src/turnauthority.js` |
 | import | `test/turn-understanding-authority-fixture.js` | `src/util.js` |
+| import | `test/turn-understanding-authority-fixture.js` | `src/web/httpack.js` |
 | import | `test/turn-understanding-authority.test.js` | `src/db.js` |
 | import | `test/turn-understanding-authority.test.js` | `src/executionledger.js` |
 | import | `test/turn-understanding-authority.test.js` | `src/mind/agent.js` |
@@ -1319,9 +1176,12 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | import | `test/voice-pe-routing.test.js` | `test/homeassistant-test-composition.js` |
 | import | `test/voice-pe-routing.test.js` | `test/voicebridge-test-composition.js` |
 | import | `test/web-access.test.js` | `src/web/access.js` |
+| import | `test/web-agent-ingress.test.js` | `src/config.js` |
 | import | `test/web-agent-ingress.test.js` | `src/db.js` |
 | import | `test/web-agent-ingress.test.js` | `src/mind/agent.js` |
+| import | `test/web-agent-ingress.test.js` | `src/mind/portfolio.js` |
 | import | `test/web-agent-ingress.test.js` | `src/util.js` |
+| import | `test/web-agent-ingress.test.js` | `src/web/httpack.js` |
 | import | `test/web-agent-ingress.test.js` | `src/web/server.js` |
 | import | `test/web-request-identity.test.js` | `src/db.js` |
 | import | `test/web-request-identity.test.js` | `src/mind/understanding.js` |
@@ -1378,6 +1238,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | package-test-glob | `package.json` | `test/artifact-versions.test.js` |
 | package-test-glob | `package.json` | `test/aspiration-attention-rotation.test.js` |
 | package-test-glob | `package.json` | `test/autonomy-card-visibility.test.js` |
+| package-test-glob | `package.json` | `test/autonomy-disabled-health.test.js` |
+| package-test-glob | `package.json` | `test/autonomy-disabled.test.js` |
+| package-test-glob | `package.json` | `test/autonomy-enabled-opt-in.test.js` |
 | package-test-glob | `package.json` | `test/autonomy-runtime-ingress.test.js` |
 | package-test-glob | `package.json` | `test/autonomy-safety.test.js` |
 | package-test-glob | `package.json` | `test/behavior-learning-integration.test.js` |
@@ -1419,7 +1282,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | package-test-glob | `package.json` | `test/http-server-ack-integration.test.js` |
 | package-test-glob | `package.json` | `test/interpretation-handoff-idempotency.test.js` |
 | package-test-glob | `package.json` | `test/interpretation-resume-authority-runtime.test.js` |
+| package-test-glob | `package.json` | `test/lab-adapter-contract.test.js` |
+| package-test-glob | `package.json` | `test/lab-effect-broker.test.js` |
 | package-test-glob | `package.json` | `test/lab-plan-run.test.js` |
+| package-test-glob | `package.json` | `test/lab-result-ledger.test.js` |
 | package-test-glob | `package.json` | `test/learning-availability.test.js` |
 | package-test-glob | `package.json` | `test/learning-loop.test.js` |
 | package-test-glob | `package.json` | `test/live-canary.test.js` |
@@ -1457,6 +1323,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | package-test-glob | `package.json` | `test/perception-web-privacy.test.js` |
 | package-test-glob | `package.json` | `test/portfolio-continuity.test.js` |
 | package-test-glob | `package.json` | `test/quality-gate-diagnostic-debt.test.js` |
+| package-test-glob | `package.json` | `test/recovery-runtime-config.test.js` |
+| package-test-glob | `package.json` | `test/recovery-runtime-startup.test.js` |
+| package-test-glob | `package.json` | `test/recovery-runtime-tool-policy.test.js` |
 | package-test-glob | `package.json` | `test/relationship-feedback-ingress.test.js` |
 | package-test-glob | `package.json` | `test/repository-inventory.test.js` |
 | package-test-glob | `package.json` | `test/requester-owned-home-target.test.js` |
@@ -1471,6 +1340,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | package-test-glob | `package.json` | `test/telegram-outbox-core.test.js` |
 | package-test-glob | `package.json` | `test/telegram-partial-fanout-projection.test.js` |
 | package-test-glob | `package.json` | `test/telegram-per-child-current.test.js` |
+| package-test-glob | `package.json` | `test/telegram-social-failure.test.js` |
 | package-test-glob | `package.json` | `test/telegram-transport.test.js` |
 | package-test-glob | `package.json` | `test/tool-policy.test.js` |
 | package-test-glob | `package.json` | `test/turn-authority-predecessor-migration.test.js` |
@@ -1517,6 +1387,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | subprocess | `test/native-interrupted-telegram-effect-startup.test.js` | `test/native-interrupted-telegram-effect-startup-fixture.mjs` |
 | subprocess | `test/native-interrupted-telegram-startup.test.js` | `test/native-interrupted-telegram-startup-fixture.mjs` |
 | subprocess | `test/quality-gate-diagnostic-debt.test.js` | `scripts/quality-gate.mjs` |
+| subprocess | `test/recovery-runtime-config.test.js` | `src/config.js` |
+| subprocess | `test/recovery-runtime-startup.test.js` | `src/index.js` |
 | subprocess | `test/runtime-self-repair.test.js` | `src/config.js` |
 | subprocess | `test/runtime-self-repair.test.js` | `src/mind/turnplan.js` |
 | subprocess | `test/telegram-outbox-core.test.js` | `src/db.js` |
@@ -1524,6 +1396,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | subprocess | `test/telegram-outbox-core.test.js` | `src/mind/agent.js` |
 | subprocess | `test/telegram-outbox-core.test.js` | `test/telegram-test-composition.js` |
 | subprocess | `test/turn-authority-predecessor-fixture.mjs` | `src/db.js` |
+| subprocess | `test/turn-authority-predecessor-fixture.mjs` | `src/turnauthority.js` |
+| subprocess | `test/turn-authority-predecessor-fixture.mjs` | `src/util.js` |
 | subprocess | `test/web-agent-ingress.test.js` | `src/db.js` |
 | subprocess | `test/web-agent-ingress.test.js` | `src/mind/agent.js` |
 | subprocess | `test/web-agent-ingress.test.js` | `src/web/server.js` |
@@ -1577,6 +1451,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d0811f9b1aff31528094c78fcea40
 | test-fixture | `test/telegram-monitoring-language-provider-canary.test.js` | `test/agent-test-composition.js` |
 | test-fixture | `test/telegram-monitoring-language-provider-canary.test.js` | `test/telegram-test-composition.js` |
 | test-fixture | `test/telegram-outbox-core.test.js` | `test/telegram-test-composition.js` |
+| test-fixture | `test/telegram-social-failure.test.js` | `test/telegram-test-composition.js` |
 | test-fixture | `test/telegram-transport.test.js` | `test/homeassistant-test-composition.js` |
 | test-fixture | `test/telegram-transport.test.js` | `test/telegram-test-composition.js` |
 | test-fixture | `test/turn-authority-predecessor-fixture.mjs` | `test/turn-understanding-authority-fixture.js` |
