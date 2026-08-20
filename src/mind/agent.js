@@ -10437,6 +10437,12 @@ function recordPendingFinalDelivery(result, delivery, turnId, reply, episode, ca
   if (episode.state !== 'delivery_pending'
     && !(alreadyFinal && result?.finalDeliveryBindingSha256)) return true;
   try {
+    const idempotencyKey = result.channel === 'telegram'
+      ? String(delivery?.dedupeKey || '').trim()
+      : `turn:${turnId}:episode:${episode.id}`;
+    if (!idempotencyKey) {
+      throw new Error('Telegram-delivery mist haar duurzaam bewezen afleveringssleutel');
+    }
     recordEpisodeDelivery(episode.id, {
       deliveredChannel: result.channel || 'unknown',
       deliveryTarget: result.sender || episode.delivery_target,
@@ -10445,7 +10451,7 @@ function recordPendingFinalDelivery(result, delivery, turnId, reply, episode, ca
       deliveredConversationId: result.conversationId || null,
       resultText: reply,
       proofSummary: episode.proof_summary,
-      idempotencyKey: `turn:${turnId}:episode:${episode.id}`,
+      idempotencyKey,
       transport: delivery || {},
       deliveryTurnId: turnId,
       finalDeliveryBinding: suppliedFinalDeliveryBinding(result, capability),

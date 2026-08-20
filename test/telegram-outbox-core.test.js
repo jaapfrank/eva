@@ -558,7 +558,7 @@ test('9c. Telegram-herstel sluit alleen met exact gehashte prepared marker en tr
     deliveredChannel: 'telegram', deliveryTarget: 'Jaap',
     originConversationId: conversationId, originMessageId: '911',
     deliveredConversationId: conversationId, resultText: 'Telegram finaal.',
-    idempotencyKey: `turn:${turnId}:episode:${episode.id}`,
+    idempotencyKey: delivery.dedupeKey,
     transport: delivery, deliveryTurnId: turnId,
     finalDeliveryBinding: { bindingSha256: sealed.bindingSha256, recovery: true },
   }), /duurzame prepared binding/iu);
@@ -571,7 +571,7 @@ test('9c. Telegram-herstel sluit alleen met exact gehashte prepared marker en tr
     deliveredChannel: 'telegram', deliveryTarget: 'Jaap',
     originConversationId: conversationId, originMessageId: '911',
     deliveredConversationId: conversationId, resultText: 'Telegram finaal.',
-    idempotencyKey: `turn:${turnId}:episode:${episode.id}`,
+    idempotencyKey: delivery.dedupeKey,
     transport: delivery, deliveryTurnId: turnId,
     finalDeliveryBinding: { bindingSha256: sealed.bindingSha256, recovery: true },
   });
@@ -1398,18 +1398,17 @@ test('36. een vrije chat_out-boolean kan geen episode-receipt aanmaken', async (
   mockTextSender(async (chatId) => ({
     chat: { id: chatId }, message_id: 3_602, date: 1_786_008_600,
   }));
-  const [message] = await sendTelegramText('139', 'Werkelijk verstuurd.', {
-    dedupeKey: 'user-reply:turn:telegram:139:3601',
+  const deliveryKey = 'user-reply:turn:telegram:139:3601';
+  const delivery = await sendToFamily('Werkelijk verstuurd.', 'Jaap', {
+    directReply: true, directReplyChatId: '139', dedupeKey: deliveryKey,
     directTurnSignalRef: 'turn:telegram:139:3601',
     originPrincipal: 'telegram:42', replyToMessageId: 3601,
   });
+  assert.equal(delivery.accepted, true);
   logTimeline('chat_out', 'Eva -> Jaap: Werkelijk verstuurd.', {
     channel: 'telegram', conversationId: 'telegram:139', turnId: 'telegram:139:3601',
     goalEpisodeId: legitimate.episode.id, originMessageId: '3601',
-    delivery: {
-      accepted: true, transport: 'telegram', kind: 'text',
-      sent: [{ chatId: '139', messageId: '3602', ...message._evaTransport }],
-    },
+    delivery: { ...delivery, dedupeKey: deliveryKey },
   });
   assert.equal(recoverDeliveredEpisodeReceipts(), 1);
   assert.equal(goalEpisodeById(legitimate.episode.id).state, 'closed');
@@ -1956,19 +1955,18 @@ test('51. required episode weigert bewijs zonder exacte Telegramturnref', async 
   }));
   const text = 'Chat, payload, thread, reply en principal kloppen.';
   const key = 'fault-51-required-missing-turn-ref';
-  const [message] = await sendTelegramText('9300', text, {
-    dedupeKey: key, messageThreadId: 111, replyToMessageId: 7_901,
+  const delivery = await sendToFamily(text, 'Jaap', {
+    directReply: true, directReplyChatId: '9300', dedupeKey: key,
+    messageThreadId: 111, replyToMessageId: 7_901,
     originPrincipal: 'telegram:501',
   });
+  assert.equal(delivery.accepted, true);
 
   assert.throws(() => recordEpisodeDelivery(durable.episode.id, {
     deliveredChannel: 'telegram', deliveryTarget: 'Jaap',
     originConversationId: 'telegram:9300', deliveredConversationId: 'telegram:9300',
     resultText: text, idempotencyKey: key,
-    transport: {
-      accepted: true, transport: 'telegram', kind: 'text',
-      sent: [{ chatId: '9300', messageId: '7902', ...message._evaTransport }],
-    },
+    transport: delivery,
   }), /hoort niet bij deze episode of afleveringssleutel/i);
   assert.equal(goalEpisodeById(durable.episode.id).state, 'delivery_pending');
   assert.equal(db.prepare('SELECT count(*) n FROM eva_delivery_receipts WHERE episode_id=?')

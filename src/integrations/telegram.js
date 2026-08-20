@@ -1662,27 +1662,53 @@ async function publishDirectTelegramReply({ ctx, handled }) {
   const identity = directTurnIdentity(ctx);
   const auth = authenticatedTelegramPrincipal(ctx);
   const { payload } = preparedReplyBinding(ctx, handled);
-  const sent = await sendTelegramText(identity.chatId, payload.reply, {
-    replyToMessageId: payload.replyToMessageId,
-    messageThreadId: payload.messageThreadId,
-    dedupeKey: identity.dedupeKey,
-    directTurnSignalRef: identity.signalRef,
-    originPrincipal: auth.principal,
+  const fanout = await fanoutTelegram({
+    kind: 'text',
+    value: payload.reply,
+    aan: String(handled?.sender || identity.chatId),
+    opties: {
+      directReply: true,
+      directReplyChatId: identity.chatId,
+      dedupeKey: identity.dedupeKey,
+      directTurnSignalRef: identity.signalRef,
+      originPrincipal: auth.principal,
+      replyToMessageId: payload.replyToMessageId,
+      messageThreadId: payload.messageThreadId,
+    },
   });
+  if (fanout?.accepted !== true) {
+    const classification = fanout?.retryable === true ? 'retryable'
+      : fanout?.uncertain === true || fanout?.partial === true ? 'uncertain' : 'rejected';
+    throw deliveryError(classification,
+      String(fanout?.info || 'Telegram accepteerde het directe antwoord niet volledig.'), {
+        operationKey: fanout?.fanoutOperationKey
+          || fanout?.failures?.[0]?.operationKey || identity.dedupeKey,
+        acceptedPrefix: Array.isArray(fanout?.sent) ? fanout.sent : [],
+        partial: fanout?.partial === true,
+      });
+  }
+  const sent = fanout.sent;
+  if (!Array.isArray(sent)) {
+    throw deliveryError('uncertain',
+      'Telegramfanout mist haar exact gebonden antwoordsegmenten.', {
+        operationKey: fanout.fanoutOperationKey || identity.dedupeKey,
+      });
+  }
   if (sent.length !== splitTelegramText(payload.reply).length
-    || sent.some((message) => telegramId(message?.chat?.id) !== identity.chatId
-      || !positiveTelegramInteger(message?.message_id))) {
+    || sent.some((message) => telegramId(message?.chatId) !== identity.chatId
+      || !positiveTelegramInteger(message?.messageId))) {
     throw deliveryError('uncertain',
       'Telegram bevestigde niet alle antwoordchunks in exact de oorspronkelijke chat.',
       { operationKey: identity.dedupeKey, acceptedPrefix: sent });
   }
+  const {
+    retract: _privateRetraction,
+    replayed: durableReplay = false,
+    ...durableFanout
+  } = fanout;
   return {
-    ok: true, accepted: true, transport: 'telegram', kind: 'text',
-    deduplicated: sent.length > 0 && sent.every((message) => message._evaRecovered === true),
-    sent: sent.map((message) => ({
-      chatId: String(message.chat.id), messageId: String(message.message_id),
-      ...message._evaTransport,
-    })),
+    ...durableFanout,
+    deduplicated: durableReplay === true,
     ...identity, originPrincipal: auth.principal,
   };
 }

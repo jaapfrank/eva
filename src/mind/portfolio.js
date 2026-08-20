@@ -5032,6 +5032,10 @@ export function recoverDeliveredEpisodeReceipts() {
     const resultText = String(row.content || '').replace(/^Eva\s*(?:->|:)\s*[^:]*:\s*/i, '').trim();
     if (!resultText) continue;
     try {
+      const idempotencyKey = meta.channel === 'telegram'
+        ? clean(meta.delivery?.dedupeKey, 240)
+        : `turn:${meta.turnId}:episode:${episode.id}`;
+      if (!idempotencyKey) continue;
       recordEpisodeDelivery(episode.id, {
         deliveredChannel: meta.channel || 'unknown',
         deliveryTarget: episode.delivery_target,
@@ -5040,7 +5044,7 @@ export function recoverDeliveredEpisodeReceipts() {
         deliveredConversationId: meta.conversationId || null,
         resultText,
         proofSummary: episode.proof_summary,
-        idempotencyKey: `turn:${meta.turnId}:episode:${episode.id}`,
+        idempotencyKey,
         transport: meta.delivery || {},
         deliveryTurnId: meta.turnId || null,
         finalDeliveryBinding: meta.finalDeliveryBindingSha256
