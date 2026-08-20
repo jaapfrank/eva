@@ -406,6 +406,8 @@ disposable Eva 2-kandidaten.
 
 ### Fase 1. Architectuur- en componentkeuze
 
+- Voer het sealed contract in
+  [`eva2-architecture-bakeoff-v1.md`](eva2-architecture-bakeoff-v1.md) uit.
 - Framework-, memory-, taal-, opslag- en connectorbakeoff uitvoeren met dezelfde verticale episode.
 - Install-from-zero, crashherstel, natuurlijke communicatie, exporteerbaarheid, kosten en beheer meten.
 - Eén volledige doelarchitectuur kiezen en vastleggen in een Architecture Decision Record.
