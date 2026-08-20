@@ -8,13 +8,13 @@
     "start": "EVA_DATA_DIR=\"${EVA_DATA_DIR:-./data}\" node src/index.js",
     "login": "EVA_DATA_DIR=\"${EVA_DATA_DIR:-./data}\" node src/brain/oauth.js",
     "test": "npm run test:all",
-    "test:all": "./scripts/run-isolated-tests-bootstrap test/*.test.js test/*.test.mjs scripts/*.test.mjs",
+    "test:all": "EVA_RUNTIME_MODE=normal ./scripts/run-isolated-tests-bootstrap test/*.test.js test/*.test.mjs scripts/*.test.mjs",
     "architecture": "node scripts/generate-runtime-contract-map.mjs && node scripts/generate-repository-inventory.mjs",
     "architecture:check": "node scripts/generate-runtime-contract-map.mjs --check && node scripts/generate-repository-inventory.mjs --check",
     "typecheck": "node scripts/quality-gate.mjs typecheck",
     "lint": "node scripts/quality-gate.mjs lint",
     "complexity": "node scripts/quality-gate.mjs complexity",
-    "coverage": "./scripts/run-isolated-tests-bootstrap --coverage test/*.test.js test/*.test.mjs scripts/*.test.mjs",
+    "coverage": "EVA_RUNTIME_MODE=normal ./scripts/run-isolated-tests-bootstrap --coverage test/*.test.js test/*.test.mjs scripts/*.test.mjs",
     "quality": "npm run architecture:check && npm run typecheck && npm run lint && npm run complexity && npm run coverage"
   },
   "engines": {

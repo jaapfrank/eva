@@ -410,8 +410,15 @@ export function configuredDatabaseFile(name = 'eva.db') {
     : Object.freeze({ accessPath: target, descriptor: null });
 }
 
+// Recovery is de fail-closed procesmodus. Alleen de byte-exacte waarde
+// `normal` opent connectoren en andere externe effecten. Daardoor kan een
+// ontbrekende, verkeerd gespelde of uit een oude omgeving overgebleven waarde
+// nooit stilzwijgend een volledige runtime starten.
+const runtimeMode = env.EVA_RUNTIME_MODE === 'normal' ? 'normal' : 'recovery';
+const recoveryMode = runtimeMode === 'recovery';
+const externalEffectsEnabled = runtimeMode === 'normal';
 const autonomyLevel = String(env.EVA_AUTONOMY_LEVEL || '').trim().toLowerCase();
-const autonomyEnabled = String(env.EVA_AUTONOMY_ENABLED || '').trim().toLowerCase() === 'true';
+const autonomyEnabled = externalEffectsEnabled && env.EVA_AUTONOMY_ENABLED === 'true';
 const autonomyFull = autonomyEnabled && autonomyLevel === 'full';
 
 function numberSetting(name, fallback) {
@@ -503,6 +510,9 @@ export const config = deepFreeze({
   brainUrl: (env.EVA_BRAIN_URL || 'http://127.0.0.1:3220').replace(/\/$/, ''),
 
   tz: env.TZ || 'Europe/Amsterdam',
+  runtimeMode,
+  recoveryMode,
+  externalEffectsEnabled,
   autonomousLlmTimeoutMs: numberSetting('EVA_AUTONOMOUS_LLM_TIMEOUT_MS', 90_000),
   autonomyEnabled,
   autonomyLevel: autonomyEnabled ? (autonomyFull ? 'full' : 'bounded') : 'disabled',

@@ -7,6 +7,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-tool-policy-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_RUNTIME_MODE = 'normal';
 
 const {
   __toolsTest,

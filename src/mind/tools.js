@@ -2839,9 +2839,12 @@ function effectSet(value) {
 }
 
 export function toolAllowedByPolicy(name, args = {}, effectPolicy = null) {
+  const effect = toolEffect(name, args);
+  // Runtime recovery is een globale bovengrens. Een beurt, modelplan of
+  // interne caller kan deze grens niet met een ruimere lokale policy openen.
+  if (config.recoveryMode && effect !== TOOL_EFFECT.read) return false;
   if (effectPolicy == null || effectPolicy === '' || effectPolicy === 'allow'
     || effectPolicy === 'all' || effectPolicy === 'unrestricted') return true;
-  const effect = toolEffect(name, args);
   if (effect === 'unknown') return false;
   const raw = typeof effectPolicy === 'string' ? { mode: effectPolicy } : effectPolicy;
   if (!raw || typeof raw !== 'object') return false;

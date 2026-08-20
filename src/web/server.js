@@ -190,6 +190,14 @@ function healthAutonomyProjection(status) {
   };
 }
 
+function healthRuntimeProjection() {
+  return {
+    mode: config.runtimeMode,
+    recovery: config.recoveryMode,
+    external_effects_enabled: config.externalEffectsEnabled,
+  };
+}
+
 function familyAutonomyDisplayText(value, limit) {
   if (typeof value !== 'string') return null;
   const text = value.normalize('NFKC').replace(/\s+/gu, ' ').trim();
@@ -866,6 +874,7 @@ export async function startWeb() {
       res.json({
         gezond: checks.every((check) => check.ok || check.zacht),
         checks,
+        runtime: healthRuntimeProjection(),
         runtimeVersion: runtimeVersion(),
         llm: llmRuntimeStatus(),
         agent: healthAgentProjection(agent),
@@ -882,6 +891,7 @@ export async function startWeb() {
     try {
       res.json({
         ...agentStatus({ audience: 'family' }),
+        runtime: healthRuntimeProjection(),
         autonomy: familyAutonomyProjection(autonomyStatus()),
       });
     } catch (error) {
@@ -1146,6 +1156,7 @@ export async function startWeb() {
       voornemens: [],
       karakter: { afspraken: [] },
       leeftijdDagen: 0,
+      runtime: healthRuntimeProjection(),
       autonomie: familyAutonomyProjection(autonomyStatus()),
       werkstatus: status,
       vaardigheden: listCapabilities({ status: 'active', limit: 50 }).map((item) => ({

@@ -10,6 +10,7 @@ process.env.EVA_DATA_DIR = dataDir;
 process.env.WEB_HOST = '127.0.0.1';
 process.env.WEB_PORT = '0';
 process.env.OPENAI_API_KEY = 'test-only';
+process.env.EVA_RUNTIME_MODE = 'normal';
 process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.SLEEP_START = '00:00';

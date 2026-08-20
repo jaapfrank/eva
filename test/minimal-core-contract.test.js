@@ -9,6 +9,7 @@ const dataDir = fs.mkdtempSync(path.join('/tmp', 'eva-core-contract-'));
 process.env.EVA_DATA_DIR = dataDir;
 process.env.EVA_TEST_SECRET = 'must-not-leak';
 process.env.HA_TOKEN = 'test-ha-token-that-must-never-be-persisted';
+process.env.EVA_RUNTIME_MODE = 'normal';
 process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'bounded';
 process.env.OPENAI_API_KEY = 'test-only';

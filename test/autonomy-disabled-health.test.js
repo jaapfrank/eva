@@ -10,6 +10,7 @@ process.env.NODE_ENV = 'test';
 process.env.WEB_HOST = '127.0.0.1';
 process.env.WEB_PORT = '0';
 process.env.OPENAI_API_KEY = 'test-only';
+process.env.EVA_RUNTIME_MODE = 'recovery';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 delete process.env.EVA_AUTONOMY_ENABLED;
 
@@ -31,6 +32,11 @@ test('health toont ondubbelzinnig dat de scheduler uit staat', async () => {
   assert.equal(response.status, 200);
   const health = await response.json();
 
+  assert.deepEqual(health.runtime, {
+    mode: 'recovery',
+    recovery: true,
+    external_effects_enabled: false,
+  });
   assert.equal(health.autonomie.enabled, false);
   assert.equal(health.autonomie.scheduler_started, false);
   assert.equal(health.autonomie.running, false);

@@ -50,48 +50,53 @@ if (auth.status !== 'ok' && !config.openaiApiKey) {
   console.log('Let op: ChatGPT is nog niet gekoppeld. Open het dashboard om in te loggen.');
 }
 
-// Registreer de private camerapoort vóór HA live events kan uitsturen.
-startPerception();
+// Externe zintuigen en uitgangen blijven in recovery volledig stil. Web blijft
+// beschikbaar als lokale, expliciet door de gebruiker gestarte herstelroute.
+if (config.externalEffectsEnabled) startPerception();
 
 await startWeb();
 console.log(`Dashboard: http://localhost:${config.webPort}`);
 
-// De adapters starten geen eigen redeneerroute. HA vult alleen de actuele
-// toestand en emits; Telegram en voice sturen hun beurt naar dezelfde agent.
-await connectHA();
-for (const name of config.householdMembers) {
-  try {
-    setPersonHouseholdRole(name, 'household_member', { source: 'configured_household' });
-  } catch {
-    logTimeline('system', `Geconfigureerd gezinslid ${name} bestaat nog niet als bekende persoon.`, {
-      internalOnly: true,
-      household: true,
-    });
+if (config.externalEffectsEnabled) {
+  // De adapters starten geen eigen redeneerroute. HA vult alleen de actuele
+  // toestand en emits; Telegram en voice sturen hun beurt naar dezelfde agent.
+  await connectHA();
+  for (const name of config.householdMembers) {
+    try {
+      setPersonHouseholdRole(name, 'household_member', { source: 'configured_household' });
+    } catch {
+      logTimeline('system', `Geconfigureerd gezinslid ${name} bestaat nog niet als bekende persoon.`, {
+        internalOnly: true,
+        household: true,
+      });
+    }
   }
+  if (config.trustHaPersonMembership) syncHouseholdRolesFromPresence(cachedStates());
+  startVoiceBridge();
+  await startTelegram();
+  startReminderLoop();
 }
-if (config.trustHaPersonMembership) syncHouseholdRolesFromPresence(cachedStates());
-startVoiceBridge();
-await startTelegram();
-startReminderLoop();
 startEmotionalLife();
-if (config.autonomyEnabled) startAutonomy();
+if (config.externalEffectsEnabled && config.autonomyEnabled) startAutonomy();
 
-maintain();
-setInterval(maintain, 6 * 3600_000);
+if (config.externalEffectsEnabled) {
+  maintain();
+  setInterval(maintain, 6 * 3600_000);
 
-const backupDir = path.join(config.logicalDataDir, 'backups');
-let backupProcess = null;
-const runDailyBackupIfDue = () => {
-  if (backupProcess || !dailyBackupDue(backupDir)) return;
-  backupProcess = spawn(process.execPath, [`${config.root}/scripts/eva-backup.mjs`], {
-    cwd: config.root,
-    env: { ...process.env, EVA_DATA_DIR: config.logicalDataDir },
-    stdio: 'ignore',
-  });
-  backupProcess.once('exit', () => { backupProcess = null; });
-};
-setTimeout(runDailyBackupIfDue, 15 * 60_000);
-setInterval(runDailyBackupIfDue, 6 * 3600_000);
+  const backupDir = path.join(config.logicalDataDir, 'backups');
+  let backupProcess = null;
+  const runDailyBackupIfDue = () => {
+    if (backupProcess || !dailyBackupDue(backupDir)) return;
+    backupProcess = spawn(process.execPath, [`${config.root}/scripts/eva-backup.mjs`], {
+      cwd: config.root,
+      env: { ...process.env, EVA_DATA_DIR: config.logicalDataDir },
+      stdio: 'ignore',
+    });
+    backupProcess.once('exit', () => { backupProcess = null; });
+  };
+  setTimeout(runDailyBackupIfDue, 15 * 60_000);
+  setInterval(runDailyBackupIfDue, 6 * 3600_000);
+}
 
 console.log('Eva draait met een enkele gespreks- en handelingslus.\n');
 
