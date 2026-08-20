@@ -1,0 +1,13 @@
+{
+  "protocol": "EvaRuntimeRepair/v3",
+  "root": "/opt/eva",
+  "state_dir": "/opt/eva/data/runtime/self-repair",
+  "maintainer_state_dir": "/var/lib/eva-runtime-maintainer",
+  "service_user": "eva",
+  "runtime_read_group": "eva-runtime-read",
+  "tracked_manifest": "/var/lib/eva-runtime-maintainer/tracked-manifest.json",
+  "release_manifest": "/etc/eva-runtime-self-repair.release.json",
+  "production_grants": [],
+  "health_url": "http://127.0.0.1:3210/api/health",
+  "health_token_file": "/etc/eva-runtime-health.token"
+}

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "allowJs": true,
@@ -16,6 +16,6 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.js"],
+  "include": ["src/**/*.js", "deploy/**/*.mjs"],
   "exclude": ["node_modules", "data", "coverage", "dist"]
 }

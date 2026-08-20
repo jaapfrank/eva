@@ -11,7 +11,8 @@ export default [
     ],
   },
   {
-    files: ['src/**/*.js'],
+    files: ['src/**/*.js', 'deploy/**/*.mjs'],
+    linterOptions: { reportUnusedDisableDirectives: false },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

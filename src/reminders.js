@@ -74,7 +74,13 @@ async function tick() {
   if (running) return;
   running = true;
   try {
-    for (const reminder of dueReminders()) {
+    for (const reminder of /** @type {Array<{
+      id: number,
+      target: string | null,
+      text: string,
+      recurrence: string | null,
+      due_ts: string,
+    }>} */ (dueReminders())) {
       try {
         await deliverReminder(reminder);
       } catch (error) {

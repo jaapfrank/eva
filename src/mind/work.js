@@ -43,8 +43,8 @@ try {
   db.exec('CREATE INDEX IF NOT EXISTS idx_eva_work_wake ON eva_work_items(status, next_wake_ts, priority)');
 } catch { /* een migratie mag Eva niet onnodig uit gesprek houden */ }
 
-const ACTIVE = new Set(['open', 'blocked']);
 const STATUSES = new Set(['open', 'blocked', 'done', 'cancelled']);
+const TERMINAL_STATES = new Set(['done', 'cancelled', 'closed', 'abandoned']);
 
 function nowIso() {
   return new Date().toISOString();
@@ -65,6 +65,38 @@ function announce(item) {
     updated_ts: item.updated_ts,
   });
   return item;
+}
+
+export function terminalWorkProjection(values = {}, status = values.status) {
+  if (!TERMINAL_STATES.has(clean(status, 20))) return {};
+  let stateJson = values.state_json;
+  try {
+    const state = typeof stateJson === 'string' ? JSON.parse(stateJson) : stateJson;
+    if (state && typeof state === 'object' && !Array.isArray(state)) {
+      const nextState = { ...state };
+      delete nextState.pending_delivery;
+      delete nextState.final_delivery_binding;
+      if (nextState.interpretation_reply_binding
+        && typeof nextState.interpretation_reply_binding === 'object') {
+        nextState.interpretation_reply_binding = {
+          ...nextState.interpretation_reply_binding,
+        };
+        delete nextState.interpretation_reply_binding.supersessionScope;
+      }
+      stateJson = typeof stateJson === 'string'
+        ? JSON.stringify(nextState).slice(0, 12_000)
+        : nextState;
+    }
+  } catch { /* bewaar onbekende oudere toestand exact; wis alleen wat herkenbaar is */ }
+  return {
+    next_step: '',
+    current_step: '',
+    state_json: stateJson,
+    wait_json: null,
+    next_wake_ts: null,
+    lease_owner: null,
+    lease_until: null,
+  };
 }
 
 export function createWorkItem({
@@ -138,6 +170,18 @@ export function createWorkItem({
   return announce(row(info.lastInsertRowid));
 }
 
+function validatedWorkStatus(id, current, status, proofAccepted, evidence) {
+  const nextStatus = status ? clean(status, 20) : current.status;
+  if (!STATUSES.has(nextStatus)) throw new Error(`ongeldige werkstatus: ${nextStatus}`);
+  if (['done', 'cancelled'].includes(current.status) && nextStatus !== current.status) {
+    throw new Error(`terminaal werk ${id} kan niet van ${current.status} naar ${nextStatus} terugkeren`);
+  }
+  if (nextStatus === 'done' && (!proofAccepted || !clean(evidence || current.evidence))) {
+    throw new Error('werk mag pas klaar als een eerdere tool in deze beurt het resultaat heeft geverifieerd');
+  }
+  return nextStatus;
+}
+
 export function updateWorkItem(id, {
   status = null,
   nextStep = null,
@@ -159,20 +203,11 @@ export function updateWorkItem(id, {
   if (expectedRevision != null && Number(current.revision || 0) !== Number(expectedRevision)) {
     throw new Error(`werk ${id} veranderde intussen; verwacht revisie ${expectedRevision}, kreeg ${current.revision || 0}`);
   }
-  const nextStatus = status ? clean(status, 20) : current.status;
-  if (!STATUSES.has(nextStatus)) throw new Error(`ongeldige werkstatus: ${nextStatus}`);
-  if (['done', 'cancelled'].includes(current.status) && nextStatus !== current.status) {
-    throw new Error(`terminaal werk ${id} kan niet van ${current.status} naar ${nextStatus} terugkeren`);
-  }
-  if (nextStatus === 'done' && (!proofAccepted || !clean(evidence || current.evidence))) {
-    throw new Error('werk mag pas klaar als een eerdere tool in deze beurt het resultaat heeft geverifieerd');
-  }
+  const nextStatus = validatedWorkStatus(id, current, status, proofAccepted, evidence);
   const cleanedEvidence = evidence == null ? '' : clean(evidence, 2_000);
-  const nextValues = {
+  const proposedValues = {
     status: nextStatus,
-    next_step: ['done', 'cancelled'].includes(nextStatus)
-      ? ''
-      : nextStep == null ? current.next_step : clean(nextStep, 600),
+    next_step: nextStep == null ? current.next_step : clean(nextStep, 600),
     evidence: evidence == null || !cleanedEvidence ? current.evidence : cleanedEvidence,
     last_action: lastAction == null ? current.last_action : clean(lastAction, 120),
     result: result == null ? current.result : clean(result, 2_000),
@@ -185,6 +220,12 @@ export function updateWorkItem(id, {
     definition_of_done: definitionOfDone == null ? current.definition_of_done : clean(definitionOfDone, 1_200),
     priority: priority == null ? current.priority : Math.max(0, Math.min(100, Number(priority) || 50)),
     last_error: lastError == null ? current.last_error : clean(lastError, 1_500),
+    lease_owner: current.lease_owner,
+    lease_until: current.lease_until,
+  };
+  const nextValues = {
+    ...proposedValues,
+    ...terminalWorkProjection(proposedValues, nextStatus),
   };
   const changed = Object.entries(nextValues).some(([field, value]) => (
     String(current[field] ?? '') !== String(value ?? '')
@@ -194,7 +235,8 @@ export function updateWorkItem(id, {
     UPDATE eva_work_items
     SET updated_ts = ?, status = ?, next_step = ?, evidence = ?, last_action = ?, result = ?,
         current_step = ?, state_json = ?, wait_json = ?, next_wake_ts = ?,
-        definition_of_done = ?, priority = ?, last_error = ?, revision = coalesce(revision,0) + 1
+        definition_of_done = ?, priority = ?, last_error = ?, lease_owner = ?, lease_until = ?,
+        revision = coalesce(revision,0) + 1
     WHERE id = ?
   `).run(
     nowIso(),
@@ -210,42 +252,40 @@ export function updateWorkItem(id, {
     nextValues.definition_of_done,
     nextValues.priority,
     nextValues.last_error,
+    nextValues.lease_owner,
+    nextValues.lease_until,
     Number(id),
   );
   return announce(row(id));
 }
 
-export function listWorkItems({ statuses = ['open', 'blocked'], limit = 40 } = {}) {
+export function listWorkItems({
+  statuses = ['open', 'blocked'], limit = 40, offset = 0, order = 'queue',
+  visibleToFamily = null,
+} = {}) {
   const allowed = statuses.filter((status) => STATUSES.has(status));
   if (!allowed.length) return [];
+  const visibilityClause = visibleToFamily == null ? '' : 'AND visible_to_family = ?';
+  const visibilityArgs = visibleToFamily == null ? [] : [visibleToFamily ? 1 : 0];
+  const ordering = order === 'workbook'
+    ? `CASE status WHEN 'open' THEN 0 WHEN 'blocked' THEN 1 ELSE 2 END,
+      CASE WHEN status = 'done' THEN updated_ts END DESC,
+      CASE WHEN status != 'done' THEN coalesce(priority,50) END DESC,
+      updated_ts DESC`
+    : `CASE status WHEN 'open' THEN 0 WHEN 'blocked' THEN 1 ELSE 2 END,
+      coalesce(priority,50) DESC, updated_ts DESC`;
   return db.prepare(`
     SELECT * FROM eva_work_items
     WHERE status IN (${allowed.map(() => '?').join(',')})
-    ORDER BY CASE status WHEN 'open' THEN 0 WHEN 'blocked' THEN 1 ELSE 2 END,
-      coalesce(priority,50) DESC, updated_ts DESC
-    LIMIT ?
-  `).all(...allowed, Math.max(1, Math.min(200, Number(limit) || 40)));
-}
-
-export function workContextText(selectedItems = null) {
-  const items = Array.isArray(selectedItems)
-    ? selectedItems
-    : listWorkItems({ statuses: [...ACTIVE], limit: 12 });
-  if (!items.length) return 'Er staat geen duurzaam werk open.';
-  return items.map((item) => [
-    `#${item.id} ${item.title} (${item.status})`,
-    `revisie: ${Number(item.revision || 0)} | prioriteit: ${Number(item.priority || 50)}`,
-    `doel: ${item.goal}`,
-    item.definition_of_done ? `klaar wanneer: ${item.definition_of_done}` : '',
-    item.next_step ? `volgende stap: ${item.next_step}` : '',
-    item.current_step && item.current_step !== item.next_step ? `actieve fase: ${item.current_step}` : '',
-    item.next_wake_ts ? `hervatten na: ${item.next_wake_ts}` : '',
-    Number(item.attempt_count || 0) ? `poging: ${item.attempt_count}` : '',
-    item.state_json && item.state_json !== '{}'
-      ? `opgeslagen toestand: ${item.state_json.slice(0, 800)}` : '',
-    item.evidence ? `bewijs tot nu toe: ${item.evidence}` : '',
-    item.owner ? `voor: ${item.owner}` : '',
-  ].filter(Boolean).join(' | ')).join('\n');
+      ${visibilityClause}
+    ORDER BY ${ordering}
+    LIMIT ? OFFSET ?
+  `).all(
+    ...allowed,
+    ...visibilityArgs,
+    Math.max(1, Math.min(200, Number(limit) || 40)),
+    Math.max(0, Math.trunc(Number(offset) || 0)),
+  );
 }
 
 export function claimWorkItem(id, {
@@ -286,14 +326,16 @@ export function recoverWorkLeases() {
   return info.changes;
 }
 
-export function durableWorkStatus(now = new Date()) {
+export function durableWorkStatus(now = new Date(), { familyVisibleOnly = false } = {}) {
   const start = new Date(now);
   start.setHours(0, 0, 0, 0);
-  const open = listWorkItems({ statuses: ['open'], limit: 40 });
-  const blocked = listWorkItems({ statuses: ['blocked'], limit: 40 });
+  const visibleToFamily = familyVisibleOnly ? true : null;
+  const open = listWorkItems({ statuses: ['open'], limit: 40, visibleToFamily });
+  const blocked = listWorkItems({ statuses: ['blocked'], limit: 40, visibleToFamily });
   const doneToday = db.prepare(`
     SELECT * FROM eva_work_items
     WHERE status = 'done' AND updated_ts >= ?
+      ${familyVisibleOnly ? 'AND visible_to_family = 1' : ''}
     ORDER BY updated_ts DESC LIMIT 40
   `).all(start.toISOString());
   return { open, blocked, doneToday };

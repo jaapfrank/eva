@@ -1,6 +1,6 @@
 # Eva: technisch eindbeeld en ontwikkelroute
 
-Status: actief technisch kompas en uitvoeringsroadmap — bijgewerkt 2026-08-06
+Status: actief technisch kompas en uitvoeringsroadmap — bijgewerkt 2026-08-08
 
 ## Einddoel
 
@@ -88,11 +88,11 @@ Unit-tests bewaken schema, veiligheid en receipts. Werkelijke kwaliteit wordt be
 - Synthetische live-evaluaties kunnen geen productie-workitems, episodes, projecten, relatiegeheugen of huisacties maken. Bestandsuitvoer gaat naar een afzonderlijke `test-artifacts`-map en toekomstbeloften zonder duurzame planning worden tegengehouden.
 - Productie-aandacht kan `test-artifacts` niet oplijsten, lezen of uitvoeren. Een nieuwe HTTP-voiceproef schreef en las daar wel een bestand, maar liet aantoonbaar nul berichten, doelen, projecten, episodes en herinneringen achter.
 - De familie-REST-tijdlijn en live SSE-stroom verbergen synthetische en gequarantaineerde auditregels; de append-only audit blijft intern intact. Een live meting na de reparatie vond nul zichtbare proefregels.
-- Een oudere synthetische energieproef bleek vóór deze grens toch echte autonomie te hebben gestuurd. Werk #39, episode #6, herinnering #35 en verkenningen #43/#46 zijn daarom niet weggepoetst maar expliciet in quarantaine gezet; vier afgeleide bestanden zijn herstelbaar naar `test-artifacts` verplaatst.
+- Een oudere synthetische energieproef bleek vóór deze grens toch echte autonomie te hebben gestuurd. Werk #39, episode #6, herinnering #35 en verkenningen #43/#46 zijn daarom niet weggepoetst maar expliciet in quarantaine gezet. Vier afgeleide bestanden stonden tijdelijk in `test-artifacts`; na beoordeling is die gegenereerde bestandskopie op 8 augustus verwijderd terwijl de gequarantaineerde auditevents behouden bleven.
 - Een volledig vrije productiecyclus koos daarna zelf voor een actuele nachtelijke huisvraag. Eva controleerde lampen, deuren, media en aanwezigheid, maar bediende niets omdat de beslissende wifi-locatie ontbrak. Haar eigen conclusie was: “Ik heb het nachtelijke buitenlicht bewust laten branden … zonder actuele wifi-locatie van Jaap ga ik niet opnieuw gokken dat de overkapping leeg is.”
 - Crashherstel maakt ook een reeds `open` required/delivery-pending episode onmiddellijk selecteerbaar door wake, wait en oude lease te wissen. Telegram prepared recovery bewaart episode-, work- én message-herkomst.
 - Intentieherkenning onderscheidt een meningsvraag van een opdracht. De exacte tegenproef “Ik wil voor elk apparaat een apart dashboard maken. Goed idee toch?” riep na reparatie geen gereedschap aan en kreeg een inhoudelijk Eva-antwoord; “Maak een dashboard …” blijft wel uitvoerwerk.
-- De volledige lokale suite staat op 180/180 groen. Vaste tests zijn daarbij vangrails; de productieproeven hierboven blijven de inhoudelijke acceptatiebron.
+- De volledige lokale suite stond op dit meetmoment op 180/180 groen. Vaste tests zijn daarbij vangrails; de productieproeven hierboven blijven de inhoudelijke acceptatiebron. De actuele aantallen staan uitsluitend in de runtimekaart en de laatste gate-uitvoer.
 - Een zelfstandige productiecyclus koos zonder gebruikersopdracht een economische onderzoeksvraag, zocht actuele softwarebounties, startte parallel onderzoek, schreef en controleerde een besluitstuk en verwierp kandidaten zonder bewezen uitbetaling.
 - Een latere vrije productiecyclus koos zelf een klein huishoudelijk doel: Eva onderzocht lampen, deuren en media, legde haar hypothese en stopregel vast, schakelde alleen de aantoonbaar ongebruikte overkappingsspots uit en verifieerde de nieuwe toestand. De losse lamp `Buiten` liet ze bewust ongemoeid omdat het bewijs daarvoor zwakker was.
 - De niet-urgente terugmelding van die echte huisactie staat als required episode duurzaam te wachten tot 07:30. Een procesherstart bewaart deze bewuste nachtwacht; pas een werkelijk transportreceipt mag het werk sluiten. Tot die ontvangst is dit dus bewezen handelen, maar nog geen bewezen aflevering.

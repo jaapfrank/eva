@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "installPath": "/usr/local/libexec/eva/run-isolated-tests-bootstrap",
+  "artifact": {
+    "format": "static-linux-x86_64-et_exec",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755",
+    "writableByExecutionIdentity": false
+  },
+  "execution": {
+    "runAsRoot": false,
+    "dedicatedUnprivilegedIdentity": true,
+    "invokeDirectlyOutsideNodeAndNpm": true,
+    "callerContract": "A separate root-owned gate must invoke the attested path as a dedicated non-root identity; the ELF rejects uid/euid 0."
+  },
+  "integration": {
+    "npmPackageScripts": "developer-alias-only-not-a-pre-node-trust-boundary",
+    "rootGate": "separate-required",
+    "releaseStatus": "no-go-until-root-owned-install-and-rootgate-integration"
+  },
+  "claims": {
+    "normalAccidentalComponent": true,
+    "hostileSameUid": false,
+    "normalNestedNodeAvailability": true,
+    "hostileTestEnvironmentWipeAvailability": false,
+    "sameUidCoveragePostprocessing": false,
+    "releaseRootGate": false
+  },
+  "build": {
+    "compiler": "/usr/bin/x86_64-linux-gnu-gcc-13",
+    "arguments": "-static -std=c11 -O2 -Wall -Wextra -Werror -fno-ident -fno-record-gcc-switches -Wl,--build-id=none -s"
+  },
+  "sha256": {
+    "bootstrap": "320d84306d8f23d21ea2bad40bbfe8bff1ca7ab3acf60c6baba3f5f59a1a7882",
+    "bootstrapSource": "fa7234de4eced386f02c37555de31fbbbcea8b3f5fc01259bc9ffcd467f8628b",
+    "runner": "012dc998e0804eaa6216c8acbde1d1dd83f591c8cd0d2a239ba288234cc19d27"
+  }
+}

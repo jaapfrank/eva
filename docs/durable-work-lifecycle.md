@@ -8,8 +8,8 @@ Alle gecombineerde overgangen lopen via `transitionGoalEpisode` in
 `src/mind/portfolio.js`. Die schrijft de episode, de gekoppelde werkprojectie
 en het transition-event in één SQLite-transactie. Een optionele
 `idempotencyKey` maakt herhaling na een procesrestart een no-op. Bestaande
-exports zoals `updateGoalEpisode`, `requireEpisodeDelivery` en
-`recordEpisodeDelivery` delegeren aan dezelfde writer.
+compatibiliteitsexports zoals `updateGoalEpisode` en `recordEpisodeDelivery`
+delegeren aan dezelfde writer.
 
 De projectie is volledig afleidbaar voor lifecycle-status:
 

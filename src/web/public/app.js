@@ -1,5 +1,16 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import {
+  clearPendingHttpDeliveryOrReload,
+  clientAckPublicKey,
+  discardPendingHttpRequest,
+  loadPendingHttpDelivery,
+  retryPendingHttpDelivery,
+  runHttpChatSubmitSingleFlight,
+  storePendingHttpDelivery,
+  storePendingHttpRequest,
+} from './httpackclient.js';
+import { createLoadWork, renderAutonomyCard } from './autonomycard.js';
 
 const $ = (selector) => document.querySelector(selector);
 const suppliedAccessToken = new URLSearchParams(window.location.search).get('token');
@@ -17,16 +28,43 @@ const escapeHtml = (value) => String(value ?? '')
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#039;');
 
-async function json(url, options = null) {
+async function jsonResponse(url, options = null, { allowHttpError = false } = {}) {
   const request = { ...(options || {}) };
   request.headers = {
     ...(request.headers || {}),
     ...(evaAccessToken ? { Authorization: `Bearer ${evaAccessToken}` } : {}),
   };
   const response = await fetch(url, request);
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
-  return body;
+  const bodyBytes = new Uint8Array(await response.arrayBuffer());
+  let rawBody;
+  let body;
+  try {
+    rawBody = new TextDecoder('utf-8', { fatal: true }).decode(bodyBytes);
+    body = JSON.parse(rawBody);
+  } catch {
+    const invalid = new Error('De server gaf geen volledig JSON-antwoord; de uitkomst blijft onzeker.');
+    if (!response.ok) Object.assign(invalid, { status: response.status });
+    throw invalid;
+  }
+  if (!response.ok && !allowHttpError) {
+    throw Object.assign(new Error(body.error || `HTTP ${response.status}`), {
+      status: response.status, body,
+    });
+  }
+  return {
+    body, bodyBytes, ok: response.ok, status: response.status,
+    contentType: response.headers.get('content-type'),
+    writeAttemptRef: response.headers.get('x-eva-http-write-attempt-ref'),
+    writeGeneration: (() => {
+      const raw = response.headers.get('x-eva-http-write-generation');
+      const value = Number(raw);
+      return String(value) === raw ? value : null;
+    })(),
+  };
+}
+
+async function json(url, options = null) {
+  return (await jsonResponse(url, options)).body;
 }
 
 function timeLabel(value) {
@@ -130,6 +168,7 @@ async function loadOverview() {
   setHealth($('#auth-status'), authOk, 'ChatGPT verbonden', 'ChatGPT niet verbonden');
   $('#login').classList.toggle('hidden', authOk);
   $('#memory-count').textContent = String(overview.counts?.memories ?? '-');
+  $('#memory-archived-count').textContent = String(overview.counts?.memoriesArchived ?? '-');
   $('#message-count').textContent = String(overview.counts?.messagesToday ?? '-');
   $('#reminder-count').textContent = String(overview.counts?.remindersOpen ?? '-');
 }
@@ -166,9 +205,7 @@ function uniqueItems(items) {
   });
 }
 
-async function loadWork() {
-  const work = await json('/api/workstatus');
-  setCurrentFocus(work.current_focus);
+function renderWorkStatus(work) {
   $('#updated').textContent = work.ts ? `bijgewerkt ${timeLabel(work.ts)}` : '';
   const open = uniqueItems([...(work.open_commitments || []), ...(work.blocked_items || [])]);
   const done = uniqueItems(work.today_real_steps || []);
@@ -181,31 +218,39 @@ async function loadWork() {
 
   const autonomy = work.autonomy || {};
   const nextRun = new Date(autonomy.next_run_ts || '');
+  let nextAutonomy;
   if (autonomy.running) {
-    $('#next-autonomy').textContent = 'Ik werk hier nu zelfstandig aan.';
+    nextAutonomy = 'De actuele keuze is nog niet betrouwbaar zichtbaar.';
   } else if (open.length && Number.isFinite(nextRun.getTime())) {
-    $('#next-autonomy').textContent = nextRun.getTime() <= Date.now()
+    nextAutonomy = nextRun.getTime() <= Date.now()
       ? 'Ik pak dit zo weer op.'
       : `Om ${timeLabel(nextRun)} ga ik hiermee verder.`;
   } else if (open.length) {
-    $('#next-autonomy').textContent = 'Dit werk blijft open tot ik een echte volgende stap heb gezet.';
+    nextAutonomy = 'Dit werk blijft open tot ik een echte volgende stap heb gezet.';
   } else {
-    $('#next-autonomy').textContent = 'Ik heb nu geen zelfstandig werk openstaan.';
+    nextAutonomy = 'Ik heb nu geen zelfstandig werk openstaan.';
   }
-  $('#autonomy-detail').textContent = open[0]?.next_step
-    ? concise(open[0].next_step, 420)
-    : 'Ik verzin hier geen bezigheid om actief te lijken.';
+  const autonomyDetail = autonomy.running
+    ? 'De actuele reden is nog niet betrouwbaar zichtbaar.'
+    : open.length
+      ? 'De reden wordt zichtbaar zodra ik de volgende stap werkelijk kies.'
+      : 'Ik verzin hier geen bezigheid om actief te lijken.';
   const lastRun = autonomy.last_run_ts ? timeLabel(autonomy.last_run_ts) : '';
-  const lastOutcome = autonomy.last_result?.productive === false
-    && autonomy.last_result?.progressed !== true
-    ? 'nog geen nieuw bewezen resultaat'
-    : autonomy.last_result?.progressed === true
-      ? 'aantoonbaar verder gewerkt'
-      : '';
-  $('#autonomy-time').textContent = [lastRun ? `laatste werksessie ${lastRun}` : '', lastOutcome]
-    .filter(Boolean)
-    .join(' · ');
+  renderAutonomyCard({
+    now: $('#next-autonomy'), why: $('#autonomy-detail'), result: $('#autonomy-time'),
+  }, work, {
+    nowFallback: nextAutonomy,
+    whyFallback: autonomyDetail,
+    resultPrefix: lastRun ? `laatste werksessie ${lastRun}` : '',
+    resultFallback: lastRun ? 'resultaatweergave niet beschikbaar' : '',
+  });
 }
+
+const loadWork = createLoadWork({
+  fetchStatus: () => json('/api/workstatus'),
+  setCurrentFocus,
+  renderStatus: renderWorkStatus,
+});
 
 function timelineItem(item) {
   return `<li>
@@ -222,7 +267,49 @@ async function loadTimeline() {
   $('#timeline').innerHTML = rows.map(timelineItem).join('');
 }
 
+const MEMORY_STATUS_LABEL = {
+  PROTECT: 'beschermd persoonlijk geheugen',
+  KEEP: 'actief geheugen',
+  REVIEW: 'handmatige beoordeling nodig',
+  ARCHIVE_CANDIDATE: 'veilig archiefvoorstel',
+};
+const MEMORY_REASON_LABEL = {
+  exact_placeholder: 'test- of placeholdertekst',
+  exact_normalized_duplicate: 'exact duplicaat',
+  exact_duplicate_metadata_review: 'duplicaat met verschillende metadata',
+  pure_internal_implementation_or_changelog: 'zuiver intern implementatieverslag',
+  mixed_or_protected_technical_content: 'gemengde technische en persoonlijke inhoud',
+  ambiguous_technical_content: 'mogelijk tijdelijke technische toestand',
+  durable_personal_or_household_memory: 'duurzame persoonlijke of huiscontext',
+  no_safe_archive_reason: 'geen veilige archiefreden',
+  human_keep: 'door het huishouden actief bewaard',
+  human_protect: 'door het huishouden tegen opschoning beschermd',
+  memory_review_history_invalid: 'beoordelingshistorie vereist controle',
+};
+
 function memoryItem(item) {
+  const archived = Number(item.archived || 0) === 1;
+  const provenance = item.archiveProvenance || null;
+  const status = archived ? 'gearchiveerd' : MEMORY_STATUS_LABEL[item.status] || 'actief geheugen';
+  const reasonCode = provenance?.reason?.code || item.reasonCode || '';
+  const reason = MEMORY_REASON_LABEL[reasonCode]
+    || (!provenance && archived ? item.archived_reason : '') || '';
+  const replacement = item.replacementId || provenance?.replacement?.memoryId || null;
+  const reviewable = !archived && ['REVIEW', 'ARCHIVE_CANDIDATE'].includes(item.status)
+    && !item.reviewDecision?.invalid;
+  const reopenable = item.reviewDecision
+    && ['keep', 'protect', 'archive'].includes(item.reviewDecision.action);
+  const reviewActions = reviewable ? [
+    `<button type="button" class="quiet" data-memory-review="keep" data-memory-id="${Number(item.id)}">Bewaar actief</button>`,
+    `<button type="button" class="quiet" data-memory-review="protect" data-memory-id="${Number(item.id)}">Bescherm persoonlijk</button>`,
+    `<button type="button" class="quiet danger" data-memory-review="archive" data-memory-id="${Number(item.id)}">Archiveer…</button>`,
+  ].join('') : reopenable
+    ? `<button type="button" class="quiet" data-memory-review="reopen" data-memory-id="${Number(item.id)}">Beoordeling heropenen</button>`
+    : item.status === 'ARCHIVE_CANDIDATE'
+      ? `<button type="button" class="quiet" data-memory-archive="${Number(item.id)}">Archiveer voorstel</button>`
+      : archived && provenance
+        ? `<button type="button" class="quiet" data-memory-restore="${Number(item.id)}">Herstel naar actief</button>`
+        : '';
   return `<li>
     <div class="item-top">
       <strong>${escapeHtml(item.person || item.category || 'Herinnering')}</strong>
@@ -230,16 +317,58 @@ function memoryItem(item) {
     </div>
     <p>${escapeHtml(concise(item.content, 520))}</p>
     <small>${escapeHtml(timeLabel(item.ts))}</small>
+    <span class="memory-state">${escapeHtml(status)}${reason ? ` · ${escapeHtml(reason)}` : ''}${replacement ? ` · vervanger #${Number(replacement)}` : ''}</span>
+    ${reviewable ? '<small class="memory-review-warning">Deze regel is nog actief en kan door Eva worden opgehaald totdat je expliciet archiveert.</small>' : ''}
+    ${reviewActions ? `<div class="memory-actions">${reviewActions}</div>` : ''}
   </li>`;
 }
 
-async function loadMemory(query = '') {
-  const [memories, people, reminders] = await Promise.all([
-    json(`/api/memories${query ? `?q=${encodeURIComponent(query)}` : ''}`),
+let memoryScope = 'active';
+let memoryCursor = null;
+let memoryRows = [];
+let memoryQuery = '';
+let memoryRequestGeneration = 0;
+
+async function loadMemory(query = '', { append = false } = {}) {
+  const normalizedQuery = String(query || '').trim();
+  const requestedScope = memoryScope;
+  if (!append) {
+    memoryCursor = null;
+    memoryRows = [];
+    memoryQuery = normalizedQuery;
+  }
+  const requestedQuery = memoryQuery;
+  const requestedCursor = append ? memoryCursor : null;
+  const requestGeneration = ++memoryRequestGeneration;
+  const parameters = new URLSearchParams({ scope: requestedScope, limit: '100' });
+  if (requestedQuery) parameters.set('q', requestedQuery);
+  if (requestedCursor) parameters.set('before', String(requestedCursor));
+  const [page, memoryOverview, people, reminders] = await Promise.all([
+    json(`/api/memories/page?${parameters}`),
+    json('/api/memories/overview'),
     json('/api/people'),
     json('/api/reminders'),
   ]);
-  $('#memories').innerHTML = memories.map(memoryItem).join('');
+  if (requestGeneration !== memoryRequestGeneration
+    || requestedScope !== memoryScope
+    || requestedQuery !== memoryQuery) return;
+  const incoming = Array.isArray(page.items) ? page.items : [];
+  const known = new Set(memoryRows.map((item) => Number(item.id)));
+  memoryRows = append
+    ? [...memoryRows, ...incoming.filter((item) => !known.has(Number(item.id)))]
+    : incoming;
+  memoryCursor = Number.isSafeInteger(Number(page.nextBefore)) && Number(page.nextBefore) > 0
+    ? Number(page.nextBefore)
+    : null;
+  $('#memories').innerHTML = memoryRows.map(memoryItem).join('');
+  $('#memory-empty').classList.toggle('hidden', memoryRows.length > 0);
+  $('#memory-shown').textContent = `${memoryRows.length} van ${Number(page.matched || 0)} getoond`;
+  $('#memory-more').classList.toggle('hidden', !memoryCursor);
+  $('#memory-summary').textContent = `${memoryOverview.active} actief · ${memoryOverview.review} beoordelen · ${memoryOverview.archiveCandidates} veilige archiefvoorstellen · ${memoryOverview.archived} gearchiveerd`;
+  document.querySelectorAll('[data-memory-scope]').forEach((button) => {
+    if (!(button instanceof HTMLElement)) return;
+    button.classList.toggle('active', button.dataset.memoryScope === memoryScope);
+  });
   $('#people').innerHTML = people.map((person) => `<li>
     <div class="item-top"><strong>${escapeHtml(person.name)}</strong></div>
     ${person.notes ? `<p>${escapeHtml(concise(person.notes, 420))}</p>` : ''}
@@ -256,7 +385,6 @@ let model = null;
 let modelGroup = null;
 let modelRadius = 1;
 let auraLight = null;
-let activeExpression = null;
 let evaRenderer = null;
 
 function validHex(value) {
@@ -290,31 +418,6 @@ function applyAppearance(appearance = {}) {
 
 async function loadAppearance() {
   applyAppearance(await json('/api/appearance'));
-}
-
-const EXPRESSION_LABELS = {
-  juich: 'Yes!',
-  dans: 'Ik dans even.',
-  zwaai: 'Hoi!',
-  knuffel: 'Kom hier.',
-  verdrietig: 'Dit raakt me.',
-  schrik: 'O, wacht.',
-  hart: 'Lief.',
-  knipoog: 'Ik snap je.',
-};
-
-function showExpression(expression = {}) {
-  const duration = Math.max(800, Math.min(15_000, Number(expression.duurMs) || 4_000));
-  activeExpression = { soort: String(expression.soort || ''), until: performance.now() + duration };
-  const element = $('#expression');
-  element.textContent = expression.tekst || EXPRESSION_LABELS[expression.soort] || '';
-  element.classList.toggle('hidden', !element.textContent);
-  window.setTimeout(() => {
-    if (activeExpression && performance.now() >= activeExpression.until) {
-      activeExpression = null;
-      element.classList.add('hidden');
-    }
-  }, duration + 50);
 }
 
 function initEvaScene() {
@@ -427,12 +530,6 @@ function initEvaScene() {
       let turn = Math.sin(seconds * .35) * .025;
       let lift = Math.sin(seconds * .8) * modelRadius * .004;
       let tilt = 0;
-      if (activeExpression && now < activeExpression.until) {
-        if (activeExpression.soort === 'dans') turn += Math.sin(seconds * 5) * .2;
-        if (activeExpression.soort === 'zwaai' || activeExpression.soort === 'knipoog') tilt = Math.sin(seconds * 4) * .04;
-        if (activeExpression.soort === 'juich') lift += Math.abs(Math.sin(seconds * 5)) * modelRadius * .06;
-        if (activeExpression.soort === 'schrik') lift += modelRadius * .035;
-      }
       modelGroup.rotation.y = turn;
       modelGroup.rotation.z = tilt;
       modelGroup.position.y = -modelRadius * .08 + lift;
@@ -442,12 +539,84 @@ function initEvaScene() {
   requestAnimationFrame(animate);
 }
 
-function addChat(role, text) {
+function addChat(role, text, requestId = null) {
   const item = document.createElement('div');
   item.className = `chat-message ${role}`;
+  if (requestId) item.dataset.requestId = requestId;
   item.innerHTML = `<span>${role === 'user' ? escapeHtml($('#chat-sender').value || 'Jij') : 'Eva'}</span><p>${escapeHtml(text)}</p>`;
   $('#chat-log').appendChild(item);
   item.scrollIntoView({ block: 'nearest' });
+  return item;
+}
+
+const CHAT_REQUEST_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]{7,159}$/;
+const ACK_COORDINATE_PATTERN = /^[A-Za-z0-9_-]{43}$/;
+const ACK_RECEIPT_PATTERN = /^http-delivery-ack-v3:[a-f0-9]{64}$/;
+let volatilePendingChat = null;
+let pendingChatLoad = null;
+
+function pendingAckPublicKey(value) {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    && Object.keys(value).sort().join('\0')
+      === ['algorithm', 'contract', 'crv', 'kty', 'x', 'y'].sort().join('\0')
+    && value.contract === 'HttpClientAckPublicKey/v3' && value.algorithm === 'ES256'
+    && value.kty === 'EC' && value.crv === 'P-256'
+    && ACK_COORDINATE_PATTERN.test(value.x) && ACK_COORDINATE_PATTERN.test(value.y);
+}
+
+function pendingChatView(record) {
+  if (!record || !['request_pending', 'ack_pending'].includes(record.state)
+    || !record.request || !CHAT_REQUEST_ID_PATTERN.test(record.request.requestId)
+    || typeof record.request.text !== 'string' || !record.request.text.trim()
+    || typeof record.request.sender !== 'string' || !record.request.sender.trim()
+    || !pendingAckPublicKey(record.request.clientAckPublicKey)) return null;
+  let response = null;
+  if (record.state === 'ack_pending') {
+    let body;
+    try {
+      body = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(record.bodyBytes));
+    } catch { throw new Error('De duurzame pending HTTP-wire is geen exacte UTF-8 JSON.'); }
+    response = {
+      status: record.status, contentType: record.contentType,
+      bodyBytes: new Uint8Array(record.bodyBytes), body,
+    };
+  }
+  return {
+    requestId: record.request.requestId, sender: record.request.sender,
+    text: record.request.text, clientAckPublicKey: record.request.clientAckPublicKey,
+    ack: record.ack, response, lastResponse: '',
+  };
+}
+
+async function pendingChatRequest() {
+  if (volatilePendingChat) return volatilePendingChat;
+  if (!pendingChatLoad) {
+    pendingChatLoad = loadPendingHttpDelivery().then((record) => {
+      volatilePendingChat = pendingChatView(record);
+      return volatilePendingChat;
+    }).finally(() => { pendingChatLoad = null; });
+  }
+  try {
+    return await pendingChatLoad;
+  } catch (error) {
+    throw new Error(`De duurzame pending chat kon niet veilig worden hervat: ${error.message}`);
+  }
+}
+
+function clearPendingChat() {
+  volatilePendingChat = null;
+}
+
+function ensurePendingChatBubble(pending) {
+  const shown = [...$('#chat-log').children]
+    .some((item) => item.dataset.requestId === pending.requestId && item.classList.contains('user'));
+  if (!shown) addChat('user', pending.text, pending.requestId);
+}
+
+function showPendingChatState(pending) {
+  $('#chat-sender').value = pending.sender;
+  ensurePendingChatBubble(pending);
+  $('#send').textContent = 'Opnieuw proberen';
 }
 
 $('.tabs').addEventListener('click', (event) => {
@@ -457,36 +626,285 @@ $('.tabs').addEventListener('click', (event) => {
   document.querySelectorAll('.view').forEach((view) => {
     view.classList.toggle('active', view.id === `view-${tab.dataset.view}`);
   });
-  if (tab.dataset.view === 'memory') loadMemory().catch(console.warn);
+  if (tab.dataset.view === 'memory') {
+    loadMemory($('#memory-query').value.trim()).catch(console.warn);
+  }
 });
 
-$('#chat-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
+async function submitChat() {
   const sender = $('#chat-sender').value.trim() || 'huisgenoot';
   const text = $('#chat-text').value.trim();
-  if (!text) return;
-  addChat('user', text);
+  let pending;
+  try {
+    pending = await pendingChatRequest();
+  } catch (error) {
+    addChat('assistant', error.message);
+    return;
+  }
+  if (pending && text && (pending.text !== text || pending.sender !== sender)) {
+    addChat('assistant', 'Het vorige bericht wacht nog op een veilig antwoord. Probeer dat eerst opnieuw.');
+    return;
+  }
+  if (!pending) {
+    if (!text) return;
+    try {
+      const requestId = crypto.randomUUID();
+      const publicKey = await clientAckPublicKey();
+      const durable = await storePendingHttpRequest({
+        requestId, sender, text, clientAckPublicKey: publicKey,
+      });
+      pending = pendingChatView(durable);
+      volatilePendingChat = pending;
+    } catch (error) {
+      addChat('assistant', `Veilige antwoordbevestiging is niet beschikbaar: ${error.message}`);
+      return;
+    }
+  }
+  ensurePendingChatBubble(pending);
   $('#chat-text').value = '';
   $('#send').disabled = true;
   try {
-    const result = await json('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sender, text }),
+    let durableResponse = pending.response;
+    if (!pending.ack) {
+      const response = await jsonResponse('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': pending.requestId,
+        },
+        body: JSON.stringify({
+          sender: pending.sender, text: pending.text,
+          request_id: pending.requestId,
+          client_ack_public_key: pending.clientAckPublicKey,
+        }),
+      }, { allowHttpError: true });
+      if (response.body.request_id !== pending.requestId) {
+        throw new Error('Het antwoord hoorde niet aantoonbaar bij deze request_id.');
+      }
+      if (!response.body._httpDelivery) {
+        if (!response.ok) {
+          throw Object.assign(new Error(response.body.error || `HTTP ${response.status}`), {
+            status: response.status,
+          });
+        }
+        throw new Error('Het antwoord mist een duurzame client-ACK-uitdaging.');
+      }
+      const durable = await storePendingHttpDelivery({
+        requestId: pending.requestId, sender: pending.sender, text: pending.text,
+        clientAckPublicKey: pending.clientAckPublicKey,
+        status: response.status, contentType: response.contentType,
+        bodyBytes: response.bodyBytes, writeAttemptRef: response.writeAttemptRef,
+        writeGeneration: response.writeGeneration,
+      });
+      pending = pendingChatView(durable);
+      volatilePendingChat = pending;
+      durableResponse = pending.response;
+    }
+    if (!pending.ack || !durableResponse) {
+      throw new Error('De duurzame response-ACK kon niet worden hervat.');
+    }
+    const accepted = await jsonResponse('/api/http-delivery/ack', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pending.ack),
     });
-    addChat('assistant', result.reply);
-    await Promise.all([loadWork(), loadTimeline()]);
+    const acceptedKeys = Object.keys(accepted.body || {}).sort().join('\0');
+    if (acceptedKeys !== [
+      'ack_receipt', 'ack_receipt_ref', 'delivered', 'delivery_ref', 'ok', 'request_ref',
+    ].sort().join('\0') || accepted.body.ok !== true || accepted.body.delivered !== true
+      || accepted.body.request_ref !== pending.ack.requestRef
+      || accepted.body.delivery_ref !== pending.ack.deliveryRef
+      || !ACK_RECEIPT_PATTERN.test(accepted.body.ack_receipt_ref)) {
+      throw new Error('De server heeft de ondertekende response-ACK nog niet verwerkt.');
+    }
+    let clearance;
+    try {
+      clearance = await clearPendingHttpDeliveryOrReload({
+        requestId: pending.requestId, deliveryRef: pending.ack.deliveryRef,
+        ackReceiptRef: accepted.body.ack_receipt_ref,
+        ackReceipt: accepted.body.ack_receipt,
+      });
+    } catch (clearError) {
+      clearPendingChat();
+      addChat('assistant', `De ACK-clear is fail-closed gestopt: ${clearError.message}`);
+      $('#send').textContent = 'Veilig hervatten mislukt';
+      return;
+    }
+    if (clearance.outcome === 'pending_reloaded') {
+      clearPendingChat();
+      const reloadedPending = pendingChatView(clearance.pending);
+      if (!reloadedPending) {
+        addChat('assistant', 'De actuele duurzame pending chat kon niet exact worden herladen.');
+        $('#send').textContent = 'Veilig hervatten mislukt';
+        return;
+      }
+      pending = reloadedPending;
+      volatilePendingChat = reloadedPending;
+      showPendingChatState(reloadedPending);
+      addChat('assistant', 'De pending chat veranderde gelijktijdig; alleen de actuele duurzame state is herladen.');
+      return;
+    }
+    if (!['cleared', 'already_cleared'].includes(clearance.outcome)
+      || clearance.pending !== null) {
+      clearPendingChat();
+      addChat('assistant', 'De ACK-clear gaf geen exacte duurzame eindstatus terug.');
+      $('#send').textContent = 'Veilig hervatten mislukt';
+      return;
+    }
+    const result = durableResponse.body;
+    const responseSignature = `${durableResponse.status}:${String(result.reply || result.error || '')}`;
+    if (result.reply && pending.lastResponse !== responseSignature) {
+      addChat('assistant', result.reply);
+    } else if (result.error && pending.lastResponse !== responseSignature) {
+      addChat('assistant', `De server wees dit verzoek af: ${result.error}`);
+    }
+    clearPendingChat();
+    $('#send').textContent = 'Stuur';
+    try {
+      await Promise.all([loadWork(), loadTimeline()]);
+    } catch (refreshError) {
+      console.warn('De chat is geaccepteerd, maar de dashboardstatus kon niet verversen.', refreshError);
+    }
   } catch (error) {
-    addChat('assistant', `De verbinding liep vast: ${error.message}`);
+    const responseSignature = `error:${error.status || 'network'}:${error.message}`;
+    const retryKeys = Object.keys(error.body || {}).sort().join('\0');
+    const exactRetry = pending.ack && error.status === 409 && retryKeys === [
+      'acknowledged', 'delivered', 'delivery_ref', 'ok', 'request_ref',
+      'retry_wire', 'write_attempt_ref', 'write_generation',
+    ].sort().join('\0') && error.body.ok === false && error.body.acknowledged === false
+      && error.body.delivered === false && error.body.retry_wire === true
+      && error.body.request_ref === pending.ack.requestRef
+      && error.body.delivery_ref === pending.ack.deliveryRef
+      && error.body.write_attempt_ref === pending.ack.writeAttemptRef
+      && error.body.write_generation === pending.ack.writeGeneration;
+    if (exactRetry) {
+      try {
+        const retried = await retryPendingHttpDelivery({
+          requestId: pending.requestId, deliveryRef: pending.ack.deliveryRef,
+          writeAttemptRef: pending.ack.writeAttemptRef,
+          writeGeneration: pending.ack.writeGeneration,
+        });
+        pending = pendingChatView(retried);
+        volatilePendingChat = pending;
+        addChat('assistant', 'De server bevestigde de eerdere write niet; dezelfde duurzame wire wordt opnieuw opgehaald.');
+        $('#send').textContent = 'Opnieuw proberen';
+      } catch (retryError) {
+        addChat('assistant', `De duurzame retry is fail-closed gestopt: ${retryError.message}`);
+        $('#send').textContent = 'Veilig hervatten mislukt';
+      }
+    } else if (pending.ack && error.status === 400 && error.body?.acknowledged === false) {
+      pending = { ...pending, lastResponse: responseSignature };
+      volatilePendingChat = pending;
+      addChat('assistant', 'De server kon de eerdere write nog niet bevestigen. Probeer dezelfde duurzame ACK opnieuw.');
+      $('#send').textContent = 'Opnieuw proberen';
+    } else if (!pending.ack && error.status && error.status >= 400 && error.status < 500) {
+      try { await discardPendingHttpRequest({ requestId: pending.requestId }); } catch {
+        addChat('assistant', 'De geweigerde request kon niet veilig uit pending opslag worden verwijderd.');
+        $('#send').textContent = 'Opnieuw proberen';
+        return;
+      }
+      clearPendingChat();
+      addChat('assistant', `De server wees dit verzoek af: ${error.message}. Start alleen bewust een nieuw verzoek.`);
+      $('#send').textContent = 'Stuur';
+    } else if (pending.lastResponse !== responseSignature) {
+      addChat('assistant', `De verbinding liep vast: ${error.message}. Klik op opnieuw proberen; hetzelfde bericht-ID blijft behouden.`);
+      pending = { ...pending, lastResponse: responseSignature };
+      volatilePendingChat = pending;
+      $('#send').textContent = 'Opnieuw proberen';
+    }
   } finally {
     $('#send').disabled = false;
     $('#chat-text').focus();
   }
+}
+
+$('#chat-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await runHttpChatSubmitSingleFlight(submitChat);
+});
+
+pendingChatRequest().then((restoredPendingChat) => {
+  if (restoredPendingChat) showPendingChatState(restoredPendingChat);
+}).catch((error) => {
+  addChat('assistant', error.message);
+  $('#send').textContent = 'Veilig hervatten mislukt';
 });
 
 $('#memory-search').addEventListener('submit', (event) => {
   event.preventDefault();
   loadMemory($('#memory-query').value.trim()).catch(console.warn);
+});
+
+document.querySelector('.memory-scopes').addEventListener('click', (event) => {
+  const button = event.target instanceof Element
+    ? event.target.closest('[data-memory-scope]') : null;
+  if (!(button instanceof HTMLElement)) return;
+  memoryScope = button.dataset.memoryScope;
+  loadMemory($('#memory-query').value.trim()).catch(console.warn);
+});
+
+$('#memory-more').addEventListener('click', async () => {
+  if (!memoryCursor) return;
+  $('#memory-more').disabled = true;
+  try {
+    await loadMemory(memoryQuery, { append: true });
+  } catch (error) {
+    console.warn(error);
+  } finally {
+    $('#memory-more').disabled = false;
+  }
+});
+
+$('#memories').addEventListener('click', async (event) => {
+  const reviewButton = event.target.closest('[data-memory-review]');
+  if (reviewButton) {
+    const id = Number(reviewButton.dataset.memoryId || 0);
+    const action = String(reviewButton.dataset.memoryReview || '');
+    const item = memoryRows.find((row) => Number(row.id) === id);
+    if (!item || !['keep', 'protect', 'archive', 'reopen'].includes(action)) return;
+    if (action === 'archive' && !window.confirm(
+      'Deze ene regel reversibel uit Eva haar actieve geheugen archiveren?',
+    )) return;
+    if (action === 'reopen' && item.archived && !window.confirm(
+      'Deze ene regel opnieuw activeren voor Eva haar geheugen en context?',
+    )) return;
+    const operationKey = `memory-review:web:${crypto.randomUUID()}`;
+    try {
+      await json('/api/memories/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id,
+          action,
+          revision: item.revision,
+          expectedFingerprint: item.exactFingerprint,
+          operationKey,
+        }),
+      });
+      await Promise.all([loadMemory($('#memory-query').value.trim()), loadOverview()]);
+    } catch (error) {
+      window.alert(error.message);
+    }
+    return;
+  }
+  const archive = event.target.closest('[data-memory-archive]');
+  const restore = event.target.closest('[data-memory-restore]');
+  const id = Number(archive?.dataset.memoryArchive || restore?.dataset.memoryRestore || 0);
+  if (!Number.isSafeInteger(id) || id <= 0) return;
+  if (archive && !window.confirm('Deze regel reversibel uit Eva haar actieve geheugen archiveren?')) return;
+  const endpoint = archive ? 'archive' : 'restore';
+  try {
+    const result = await json(`/api/memories/${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: [id] }),
+    });
+    if (!result.changedIds?.includes(id) && result.refused?.length) {
+      throw new Error('Deze geheugenregel kon niet veilig worden gewijzigd.');
+    }
+    await Promise.all([loadMemory($('#memory-query').value.trim()), loadOverview()]);
+  } catch (error) {
+    window.alert(error.message);
+  }
 });
 
 $('#refresh').addEventListener('click', () => {
@@ -509,8 +927,6 @@ try {
     ? `/api/events?access_token=${encodeURIComponent(evaAccessToken)}`
     : '/api/events';
   const events = new EventSource(eventUrl);
-  events.addEventListener('appearance', (event) => applyAppearance(JSON.parse(event.data)));
-  events.addEventListener('expression', (event) => showExpression(JSON.parse(event.data)));
   events.addEventListener('mood', () => loadOverview().catch(() => {}));
   for (const name of ['timeline', 'activity', 'chat', 'house']) {
     events.addEventListener(name, () => {

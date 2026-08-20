@@ -413,7 +413,7 @@ export function createWorkCell({
   streams,
   concurrency = DEFAULT_CONCURRENCY,
   metadata = {},
-} = {}) {
+} = /** @type {any} */ ({})) {
   const cleanTitle = clean(title, 240);
   const cleanObjective = clean(objective, 4_000);
   if (!cleanTitle || !cleanObjective) throw new Error('een werkcel vereist een titel en concreet doel');
@@ -463,16 +463,6 @@ export function listWorkCells({ statuses = null, limit = 40 } = {}) {
 
 export function getWorkCell(id, { includeRuns = true } = {}) {
   return cellOut(cellRow(id), { includeStreams: true, includeRuns });
-}
-
-export function getWorkCellStream(id, { includeRuns = true } = {}) {
-  const stream = streamOut(db.prepare('SELECT * FROM eva_work_cell_streams WHERE id=?').get(Number(id)));
-  if (!stream || !includeRuns) return stream;
-  return {
-    ...stream,
-    runs: db.prepare('SELECT * FROM eva_work_cell_runs WHERE stream_id=? ORDER BY id')
-      .all(Number(id)).map(runOut),
-  };
 }
 
 function claimStreams(cellId, { retryFailed = false } = {}) {

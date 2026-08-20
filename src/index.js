@@ -1,6 +1,7 @@
 // Eva's processtart. Adapters leveren context; alle taal, tools en antwoorden
 // lopen door src/mind/agent.js.
 import fs from 'node:fs';
+import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { config } from './config.js';
 import {
@@ -49,6 +50,9 @@ if (auth.status !== 'ok' && !config.openaiApiKey) {
   console.log('Let op: ChatGPT is nog niet gekoppeld. Open het dashboard om in te loggen.');
 }
 
+// Registreer de private camerapoort vóór HA live events kan uitsturen.
+startPerception();
+
 await startWeb();
 console.log(`Dashboard: http://localhost:${config.webPort}`);
 
@@ -68,7 +72,6 @@ for (const name of config.householdMembers) {
 if (config.trustHaPersonMembership) syncHouseholdRolesFromPresence(cachedStates());
 startVoiceBridge();
 await startTelegram();
-startPerception();
 startReminderLoop();
 startEmotionalLife();
 startAutonomy();
@@ -76,12 +79,13 @@ startAutonomy();
 maintain();
 setInterval(maintain, 6 * 3600_000);
 
-const backupDir = `${config.root}/data/backups`;
+const backupDir = path.join(config.logicalDataDir, 'backups');
 let backupProcess = null;
 const runDailyBackupIfDue = () => {
   if (backupProcess || !dailyBackupDue(backupDir)) return;
   backupProcess = spawn(process.execPath, [`${config.root}/scripts/eva-backup.mjs`], {
     cwd: config.root,
+    env: { ...process.env, EVA_DATA_DIR: config.logicalDataDir },
     stdio: 'ignore',
   });
   backupProcess.once('exit', () => { backupProcess = null; });
@@ -105,7 +109,7 @@ const shutdown = (signal) => {
 process.on('SIGINT', () => shutdown('SIGINT'));
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('unhandledRejection', (error) => {
-  console.error('Onverwachte fout:', error?.message || error);
+  console.error('Onverwachte fout:', error instanceof Error ? error.message : error);
 });
 process.on('uncaughtException', (error) => {
   console.error('Onverwachte fout:', error?.message || error);

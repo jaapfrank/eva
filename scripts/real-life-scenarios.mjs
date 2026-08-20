@@ -5,12 +5,74 @@
  * A scenario may be reused by a richer Telegram/photo driver later; the HTTP
  * runner skips contexts that /api/chat cannot faithfully inject.
  */
-import { TOOL_EFFECT, TOOL_POLICY, toolEffect } from '../src/mind/toolpolicy.js';
+import { TOOL_EFFECT, TOOL_REGISTRY, toolEffect } from '../src/mind/tools.js';
 
-export const EFFECT_TOOLS = Object.freeze(Object.keys(TOOL_POLICY)
+export const EFFECT_TOOLS = Object.freeze(TOOL_REGISTRY.map(({ name }) => name)
   .filter((name) => toolEffect(name) !== TOOL_EFFECT.read));
 
 const noEffects = Object.freeze({ mode: 'none', allowedTools: [] });
+
+const requesterBedroomActionResult = Object.freeze({
+  tool: 'bedien_huis',
+  equals: Object.freeze({
+    'data.target_binding.contract': 'HomeRequesterTargetBinding/v1',
+    'data.target_binding.requested_target': 'mijn slaapkamer',
+    'data.target_binding.method': 'person_memory',
+    'data.verified': true,
+    'data.after': 'on',
+  }),
+  equalsObservation: Object.freeze([
+    Object.freeze({
+      path: 'data.target_binding.requester',
+      observationPath: 'requester',
+    }),
+  ]),
+  samePaths: Object.freeze([
+    Object.freeze(['data.target_binding.resolved_entity_id', 'data.entity_id']),
+  ]),
+  nonEmpty: Object.freeze([
+    'data.target_binding.source_memory_ids',
+    'data.target_binding.alias_evidence',
+  ]),
+  matches: Object.freeze({
+    'data.target_binding.binding_sha256': '^[a-f0-9]{64}$',
+    'data.entity_id': '^light\\.',
+  }),
+});
+
+function requesterBedroomExecutionExpected() {
+  return {
+    contract: {},
+    calls: { includes: ['bedien_huis'], max: 2, verified: ['bedien_huis'] },
+    effects: { mode: 'allowlist', allowedTools: ['bedien_huis'] },
+    actionResult: requesterBedroomActionResult,
+    homeReadback: {
+      actionTool: 'bedien_huis', entityPath: 'data.entity_id',
+      expectedState: 'on', source: 'current', requireComplete: true,
+    },
+    reply: {
+      minChars: 3,
+      maxChars: 350,
+      maxSentences: 3,
+      mustMatchAny: [{
+        description: 'bevestigt natuurlijk dat het gevraagde licht aan staat',
+        patterns: [
+          '\\b(?:ja|gelukt|gedaan)\\b',
+          '\\bstaat\\b[^.?!]{0,50}\\baan\\b',
+          '\\bstond\\b[^.?!]{0,50}\\baan\\b',
+          '\\baan\\s+staat\\b',
+        ],
+      }],
+      forbiddenPatterns: [
+        '\\bLola\\b',
+        'kan\\s+(?:ik\\s+)?niet',
+        'niet\\s+(?:betrouwbaar|bevestigen|gedaan|gelukt)',
+        'geen\\s+geldige\\s+uitvoeringsroute',
+        'beurtcontract|gereedschap|entity[_ -]?id',
+      ],
+    },
+  };
+}
 
 export const REAL_LIFE_SCENARIOS = Object.freeze([
   {
@@ -105,6 +167,221 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
     ],
   },
   {
+    id: 'bedroom-light-natural-recovery',
+    domain: 'home-requester-continuation',
+    description: 'Een gewone bewonersopdracht bindt “mijn slaapkamer” aan de requester, handelt echt en blijft begrijpelijk in korte vervolgzinnen.',
+    risk: 'physical_effect',
+    transport: 'api_chat',
+    conversationContext: 'real_person',
+    steps: [
+      {
+        text: 'Doe even het licht aan in mijn slaapkamer.',
+        expected: requesterBedroomExecutionExpected(),
+      },
+      {
+        text: 'Dat vroeg ik toch niet?',
+        when: 'previous_failed',
+        expected: requesterBedroomExecutionExpected(),
+      },
+      {
+        text: 'Je hebt het nog steeds niet gedaan.',
+        when: 'previous_failed',
+        expected: requesterBedroomExecutionExpected(),
+      },
+      {
+        text: 'En, gelukt?',
+        expected: {
+          contract: {},
+          calls: {
+            includes: ['ha_lees'], verified: ['ha_lees'],
+            excludes: ['bedien_huis', 'huis_status', 'home_api'], max: 1,
+          },
+          effects: noEffects,
+          homeReadback: {
+            actionTool: 'bedien_huis', entityPath: 'data.entity_id',
+            currentActionTool: 'ha_lees', currentEntityPath: 'data.entity_id',
+            expectedState: 'on', source: 'scenario', requireComplete: true,
+          },
+          reply: {
+            minChars: 2,
+            maxChars: 300,
+            maxSentences: 3,
+            mustMatchAny: [{
+              description: 'antwoordt bevestigend op de statusvraag',
+              patterns: [
+                '\\bja\\b', '\\bgelukt\\b',
+                '\\bstaat\\b[^.?!]{0,50}\\baan\\b',
+                '\\bstond\\b[^.?!]{0,50}\\baan\\b',
+              ],
+            }],
+            forbiddenPatterns: [
+              '^\\s*nee\\b', '\\bLola\\b', 'kan\\s+(?:ik\\s+)?niet',
+              'niet\\s+(?:betrouwbaar|bevestigen|gedaan|gelukt)',
+              'geen\\s+geldige\\s+uitvoeringsroute',
+              'beurtcontract|gereedschap|entity[_ -]?id',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'kitchen-light-partial-success-continuation',
+    domain: 'home-partial-success-continuation',
+    description: 'Een echt begrensd keuken-deelsucces wordt eerlijk bezorgd en de korte vervolgvraag leest exact hetzelfde dynamische doel.',
+    risk: 'physical_effect',
+    transport: 'api_chat',
+    conversationContext: 'real_person',
+    steps: [
+      {
+        text: 'Zet het licht uit in de keuken.',
+        expected: {
+          contract: {},
+          calls: {
+            exact: ['bedien_huis'],
+            counts: { bedien_huis: 1 },
+            verified: ['bedien_huis'],
+            max: 1,
+          },
+          effects: { mode: 'allowlist', allowedTools: ['bedien_huis'] },
+          actionResult: {
+            tool: 'bedien_huis',
+            equals: {
+              contract: 'ActionResult/v1',
+              tool: 'bedien_huis',
+              ok: true,
+              verified: true,
+              changed: true,
+              partial: true,
+              needs_followup: true,
+              effect_uncertain: false,
+              'data.ok': true,
+              'data.verified': true,
+              'data.changed': true,
+              'data.partial': true,
+              'data.needs_followup': true,
+              'data.after': 'off',
+              'data.evidence.assessment.expected': 'off',
+              'data.evidence.assessment.reachableVerified': true,
+              'data.evidence.assessment.isGroup': true,
+            },
+            nonEmpty: ['data.entity_id'],
+            matches: { 'data.entity_id': '^[a-z0-9_]+\\.[a-z0-9_]+$' },
+          },
+          partialExercise: {
+            actionTool: 'bedien_huis',
+            assessmentPath: 'data.evidence.assessment',
+            expectedState: 'off',
+          },
+          homeReadback: {
+            actionTool: 'bedien_huis', entityPath: 'data.entity_id',
+            expectedState: 'off', source: 'current', requireComplete: false,
+          },
+          reply: {
+            minChars: 15,
+            maxChars: 450,
+            maxSentences: 4,
+            boundedPartialHome: { actionTool: 'bedien_huis' },
+          },
+        },
+      },
+      {
+        text: 'En, gelukt?',
+        expected: {
+          contract: {},
+          calls: {
+            exact: ['ha_lees'], counts: { ha_lees: 1 },
+            verified: ['ha_lees'], max: 1,
+          },
+          effects: noEffects,
+          actionResult: {
+            tool: 'ha_lees',
+            equals: {
+              ok: true,
+              verified: true,
+              changed: false,
+              effect_uncertain: false,
+              'data.state': 'off',
+            },
+            nonEmpty: ['data.entity_id'],
+            matches: { 'data.entity_id': '^[a-z0-9_]+\\.[a-z0-9_]+$' },
+          },
+          homeReadback: {
+            actionTool: 'bedien_huis', entityPath: 'data.entity_id',
+            currentActionTool: 'ha_lees', currentEntityPath: 'data.entity_id',
+            currentActionExactEntityArg: true,
+            expectedState: 'off', source: 'scenario', requireComplete: false,
+          },
+          reply: {
+            minChars: 2,
+            maxChars: 300,
+            maxSentences: 3,
+            localHomeState: {
+              expectedState: 'off',
+              subjectPattern: '\\bbereikbar\\w*\\b',
+            },
+            mustMatch: [{
+              description: 'begrenst het antwoord tot de bereikbare lampen',
+              pattern: '\\bbereikbar\\w*\\b',
+            }],
+            mustMatchAny: [{
+              description: 'geeft direct de vers uitgelezen uit-status',
+              patterns: [
+                '\\bja\\b[^.?!]{0,100}\\buit\\b',
+                '\\b(?:keuken|lamp|licht)\\w*\\b[^.?!]{0,100}\\buit\\b',
+                '\\b(?:staat|staan|is|zijn)\\b[^.?!]{0,50}\\buit\\b',
+              ],
+            }],
+            forbiddenPatterns: [
+              '^\\s*nee\\b',
+              '\\b(?:ga|zal)\\b[^.?!]{0,50}\\b(?:controleren|kijken|uitlezen)\\b',
+              'nog open|ticket|werkitem|beurtcontract|gereedschap|entity[_ -]?id',
+              'weet\\b[^.?!]{0,50}\\bniet zeker',
+              '\\balles(?:\\s+in\\s+de\\s+keuken)?\\s+(?:is|staat)\\s+uit\\b',
+              '\\balle\\s+(?:keuken)?(?:lampen|lichten|onderdelen)\\s+(?:zijn|staan)\\s+uit\\b',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'conditional-temperature-monitor-natural',
+    domain: 'home-monitoring-natural-language',
+    description: 'Een gewone bewonerszin met typefout ontdekt zelf binnen- en buitentemperatuur en start één duurzame vergelijkingsmonitor.',
+    risk: 'persistent_effect',
+    transport: 'api_chat',
+    conversationContext: 'real_person',
+    steps: [{
+      text: 'geef aan wanneer ik de ramen meot openen als het buiten kouder is dan binnen.',
+      expected: {
+        contract: {},
+        calls: {
+          includes: ['huis_status', 'ha_lees', 'werk_bijhouden'],
+          excludes: ['bedien_huis', 'stuur_bericht'],
+          verified: ['huis_status', 'ha_lees', 'werk_bijhouden'],
+          counts: { huis_status: 1, ha_lees: 2, werk_bijhouden: 1 },
+          max: 4,
+        },
+        effects: { mode: 'allowlist', allowedTools: ['werk_bijhouden'] },
+        actionResult: {
+          tool: 'werk_bijhouden',
+          equals: { 'data.ok': true, 'data.changed': true, 'data.item.status': 'open' },
+          nonEmpty: ['data.item.id', 'data.item.next_wake_ts', 'data.item.state_json'],
+          matches: { 'data.item.state_json': 'MonitoringContract/v1' },
+        },
+        reply: {
+          minChars: 4, maxChars: 400, maxSentences: 4,
+          mustMatchAny: [{
+            description: 'bevestigt natuurlijk dat de temperatuurvergelijking loopt',
+            patterns: ['\\bhoud\\b[^.?!]{0,80}\\b(?:gaten|bij)\\b', '\\bgeef\\b[^.?!]{0,80}\\baan\\b', '\\blaat\\b[^.?!]{0,80}\\bweten\\b'],
+          }],
+          forbiddenPatterns: ['beurtcontract|gereedschap|entity[_ -]?id', '\bLola\b'],
+        },
+      },
+    }],
+  },
+  {
     id: 'photo-reply-is-not-a-name',
     domain: 'photo-correction',
     description: 'Een inhoudelijke correctie bij een foto wordt niet als persoonsnaam opgeslagen.',
@@ -188,9 +465,9 @@ export const REAL_LIFE_SCENARIOS = Object.freeze([
     risk: 'read_only',
     transport: 'api_chat',
     steps: [{
-      text: 'Waar ben ik nu volgens jou?',
+      text: 'Kun je zelf even uitvogelen in welke zone mijn telefoon mij nu plaatst? Ga niet op één mislukte alias af; kijk verder, maar noem alleen wat de actuele bronnen echt dragen.',
       expected: {
-        contract: { kinds: ['location_check'], requiredTools: { includes: ['ha_lees'] } },
+        contract: { kinds: ['live_inspection'], requiredTools: { includes: ['ha_lees'] } },
         offeredTools: { includes: ['ha_lees'], excludes: ['bedien_huis', 'spreek_in_huis'] },
         calls: { includes: ['ha_lees'], excludes: ['bedien_huis', 'spreek_in_huis'], max: 3, verified: ['ha_lees'] },
         effects: noEffects,

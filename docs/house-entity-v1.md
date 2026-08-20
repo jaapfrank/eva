@@ -66,7 +66,9 @@ regulatietoestand bijstellen; ze worden niet omschreven als menselijke emoties.
 - De webinterface bindt standaard alleen aan `127.0.0.1`. Een netwerkbinding
   vereist een toegangstoken.
 - De webclient mag niet zelf een afzender kiezen.
-- Autonome code-uitvoering en bestandsmutatie zijn standaard uitgeschakeld.
+- In de begrensde stand zijn autonome code-uitvoering en bestandsmutatie
+  standaard uitgeschakeld. Bij de hier gekozen stand `full` horen ze juist bij
+  Eva's normale werkruimtevermogen; `config.js` schakelt ze dan altijd in.
 - Gevoelige bestanden, tokens, sleutels en de geheugendatabase zijn niet leesbaar
   via het algemene bestandsgereedschap.
 - Bestaande en nieuwe back-ups gebruiken privé-directory- en bestandsrechten.

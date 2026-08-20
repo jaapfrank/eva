@@ -1,0 +1,107 @@
+id: eva_voice_bridge_naar_eva
+alias: "Eva: voice bridge naar Eva"
+description: >-
+  Routeert een Home Assistant Voice PE-beurt naar Eva en accepteert alleen een
+  antwoord en ACK voor exact dezelfde Assist-satellite. Een nieuwere uitspraak
+  op diezelfde satellite trekt een nog onbevestigd ouder antwoord in. Vervang
+  vóór installatie de vier EVA_* placeholders door de lokale HA-id's.
+triggers:
+  - trigger: conversation
+    command:
+      - "{vraag}"
+      - "Eva"
+      - "Eva {vraag}"
+      - "Hé Eva"
+      - "Hé Eva {vraag}"
+      - "Hey Eva"
+      - "Hey Eva {vraag}"
+      - "hey eva"
+      - "hey eva {vraag}"
+      - "hey_eva"
+      - "hey_eva {vraag}"
+      - "vraag Eva {vraag}"
+      - "zeg tegen Eva {vraag}"
+conditions: []
+actions:
+  - variables:
+      resolved_satellite: >-
+        {% set satellite = trigger.satellite_id | default('') | trim %}
+        {% set device = trigger.device_id | default('') %}
+        {% if satellite in [
+          'EVA_VOICE_SATELLITE_1',
+          'EVA_VOICE_SATELLITE_2'
+        ] %}
+          {{ satellite }}
+        {% elif device == 'EVA_VOICE_DEVICE_1' %}
+          EVA_VOICE_SATELLITE_1
+        {% elif device == 'EVA_VOICE_DEVICE_2' %}
+          EVA_VOICE_SATELLITE_2
+        {% else %}
+          {{ '' }}
+        {% endif %}
+  - if:
+      - condition: template
+        value_template: "{{ resolved_satellite | trim != '' }}"
+    then:
+      - event: eva_voice_query
+        event_data:
+          id: "{{ context.id }}"
+          vraag: "{{ trigger.slots.vraag | default('ben je daar?') }}"
+          sender: Huisgenoot
+          device_id: "{{ trigger.device_id | default('') }}"
+          satellite: "{{ resolved_satellite | trim }}"
+          conversation_id: "{{ trigger.user_input.conversation_id | default('') }}"
+          synthetic_test: >-
+            {{ ((trigger.user_input.conversation_id | default('')) | string | lower).startswith('eva-test-') }}
+      - wait_for_trigger:
+          - trigger: event
+            id: reply
+            event_type: eva_voice_reply
+            event_data:
+              id: "{{ context.id }}"
+          - trigger: event
+            id: superseded
+            event_type: eva_voice_query
+            event_data:
+              satellite: "{{ resolved_satellite | trim }}"
+        timeout: "00:00:35"
+        continue_on_timeout: true
+      - if:
+          - condition: template
+            value_template: >-
+              {{ wait.trigger is not none
+                 and wait.trigger.id == 'reply'
+                 and (wait.trigger.event.data.satellite | default('') | trim)
+                   == (resolved_satellite | trim)
+                 and (wait.trigger.event.data.delivery_operation_ref | default('') | string)
+                   is match('^home-assistant-voice-reply:[a-f0-9]{64}$')
+                 and (wait.trigger.event.data.payload_sha256 | default('') | string)
+                   is match('^[a-f0-9]{64}$')
+                 and (wait.trigger.event.data.reply_sha256 | default('') | string)
+                   is match('^[a-f0-9]{64}$') }}
+        then:
+          - set_conversation_response: "{{ wait.trigger.event.data.reply }}"
+          - event: eva_voice_reply_ack
+            event_data:
+              id: "{{ wait.trigger.event.data.id }}"
+              accepted: true
+              conversation_id: "{{ wait.trigger.event.data.conversation_id | default('') }}"
+              satellite: "{{ resolved_satellite | trim }}"
+              delivery_operation_ref: "{{ wait.trigger.event.data.delivery_operation_ref }}"
+              payload_sha256: "{{ wait.trigger.event.data.payload_sha256 }}"
+              reply_sha256: "{{ wait.trigger.event.data.reply_sha256 }}"
+              reply: "{{ wait.trigger.event.data.reply }}"
+        else:
+          - if:
+              - condition: template
+                value_template: "{{ wait.trigger is none }}"
+            then:
+              - set_conversation_response: "De spraakverbinding kreeg niet op tijd een antwoord terug."
+            else:
+              # Een ingehaalde pipeline moet expliciet stil eindigen. Zonder deze
+              # lege response spreekt Home Assistant zijn standaard "Done" uit.
+              - set_conversation_response: ""
+    else:
+      - set_conversation_response: "De spraakverbinding kon de actieve Voice PE niet betrouwbaar bepalen."
+mode: parallel
+max: 10

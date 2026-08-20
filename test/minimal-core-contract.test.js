@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
@@ -8,27 +10,56 @@ process.env.EVA_DATA_DIR = dataDir;
 process.env.EVA_TEST_SECRET = 'must-not-leak';
 process.env.HA_TOKEN = 'test-ha-token-that-must-never-be-persisted';
 process.env.EVA_AUTONOMY_LEVEL = 'bounded';
+process.env.OPENAI_API_KEY = 'test-only';
 // Deze suite test ook de expliciet ingeschakelde oude autonome bouwcyclus.
 // De productie-default wordt apart fail-closed getest.
 process.env.EVA_AUTONOMY_CODE_EXECUTION = 'true';
 
-const { __projectRouteTest } = await import('../src/mind/agent.js');
+await import('./voicebridge-test-composition.js');
+await import('./agent-test-composition.js');
+
+const { __projectRouteTest, handleMessageDetailed } = await import('../src/mind/agent.js');
+const { config } = await import('../src/config.js');
 const {
   __autonomyScheduleTest,
   hasNightUrgentSignal,
   shouldQueueWorldSignal,
   shouldWakeForWorldSignal,
 } = await import('../src/mind/autonomy.js');
-const { runAgent } = await import('../src/brain/llm.js');
-const { __toolsTest, executeTool, toolsForTurn } = await import('../src/mind/tools.js');
-const { normalizeVoiceConversationId, __voiceBridgeTest } = await import('../src/mind/voicebridge.js');
+const { runExecutionDriver } = await import('../src/brain/llm.js');
+const {
+  __toolsTest,
+  capabilityCatalog,
+  executeTool,
+  toolsForTurn,
+} = await import('../src/mind/tools.js');
+const { understandTurn } = await import('../src/mind/understanding.js');
+const {
+  boundedRuntimeMs,
+  canonicalJson,
+  executionActionResult,
+  normalizeActionResultState,
+} = await import('../src/util.js');
+const { completedArtifact } = await import('../src/mind/projectexecution.js');
+const { bus } = await import('../src/bus.js');
+const {
+  normalizeVoiceConversationId,
+  startVoiceBridge,
+  __voiceBridgeTest,
+} = await import('../src/mind/voicebridge.js');
+const {
+  homeEffectClaimFeedback,
+  homeReadbackProvesIntent,
+} = await import('../src/mind/communication.js');
 const { registerSensitiveValues } = await import('../src/security/redaction.js');
 const {
   archiveTelegramMessage,
   backupData,
   claimTurnToolExecution,
   completeTurnToolExecution,
+  recordTurnToolObservation,
   db,
+  deriveVoiceRetryIntent,
   logTimeline,
   latestDailyBackup,
   telegramOutboundByDedupeKey,
@@ -46,219 +77,329 @@ const {
   renderReminderText,
 } = await import('../src/mind/persona.js');
 
+function withoutExecutionTrigger(name, operation) {
+  const trigger = db.prepare(`SELECT sql FROM main.sqlite_master
+    WHERE type='trigger' AND name=?`).get(name);
+  assert.ok(trigger?.sql, `missing execution trigger ${name}`);
+  db.exec(`DROP TRIGGER main.${name}`);
+  try { return operation(); } finally { db.exec(trigger.sql); }
+}
+
 function tool({
   name,
   ok = true,
   verified = true,
   changed = false,
+  partial = false,
+  needsFollowup = false,
+  args = {},
   data = null,
 } = {}) {
+  const resultData = data ?? (name === 'voer_uit' ? { exit_code: 0 } : null);
   return {
     name,
+    args,
     ok,
     verified,
     changed,
+    partial,
+    needs_followup: needsFollowup,
     output: JSON.stringify({
       contract: 'ActionResult/v1',
       ok,
       verified,
       changed,
-      data,
+      data: resultData,
     }),
   };
 }
 
-test('expliciete opdrachten verplichten de passende kerntools', () => {
-  const required = __projectRouteTest.requiredToolsFor;
-  assert.deepEqual(required({ text: 'Zet het licht buiten aan' }), ['bedien_huis']);
-  assert.deepEqual(required({ text: 'Kun je het licht buiten aanzetten?' }), ['bedien_huis']);
-  assert.deepEqual(required({ text: 'Kun je light.unifi_schuur_led uitzetten?' }), ['bedien_huis']);
-  assert.deepEqual(required({ text: 'Zoek uit welke warmtepomp nu het zuinigst is' }), ['zoek_internet']);
-  assert.deepEqual(required({ text: 'Kun je uitzoeken welke warmtepomp nu het zuinigst is?' }), ['zoek_internet']);
-  assert.deepEqual(
-    required({ text: 'Zoek zelf in dit project waar de acht architectuurcontracten beschreven staan. Lees de documentatie echt.' }),
-    ['lijst_bestanden', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Hoe staat het met die acht architectuurdelen? Zoek het in onze eigen repo uit.' }),
-    ['lijst_bestanden', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Hoe warm is het nu in de woonkamer? Zoek zelf de juiste actuele sensor.' }),
-    ['huis_status', 'ha_lees'],
-  );
-  assert.deepEqual(
-    required({ text: 'Bouw een kleine Node.js CLI zonder externe packages. Test en draai hem echt.' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-  );
-  assert.equal(
-    __projectRouteTest.turnContractFor('Bouw een kleine Node.js CLI zonder externe packages. Test en draai hem echt.').kind,
-    'programming_build',
-  );
-  const parallelBuild = 'Bouw een Node.js CLI, voer tests uit en laat workers dit parallel uitvoeren.';
-  const parallelBuildContract = __projectRouteTest.turnContractFor(parallelBuild);
-  assert.equal(parallelBuildContract.kind, 'programming_build');
-  assert.deepEqual(required({ text: parallelBuild }), ['beheer_werkcel']);
-  assert.equal(parallelBuildContract.allowedTools.has('beheer_werkcel'), true);
-  const initiative = 'Ik wil deze kostenchecker morgen echt kunnen gebruiken voor een simpel boodschappenlijstje. Pak zelf de nuttigste kleine verbetering en maak die af.';
-  assert.deepEqual(
-    required({ text: initiative }),
-    ['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit'],
-  );
-  assert.equal(__projectRouteTest.turnContractFor(initiative).kind, 'programming_build');
-  const verificationText = 'Draai de bestaande CLI rechtstreeks met fout.json, controleer exitcode 1 en lees de bron terug. Geen internet en geen add-on.';
-  assert.deepEqual(required({ text: verificationText }), ['voer_uit', 'lees_bestand']);
-  const verification = __projectRouteTest.turnContractFor(verificationText);
-  assert.equal(verification.kind, 'programming_verification');
-  assert.deepEqual([...verification.allowedTools], ['voer_uit', 'lees_bestand', 'lijst_bestanden']);
-  const liveFollowup = 'Je hebt de bron, tests en voorbeeldbestanden al gemaakt. Maak nu alleen het ontbrekende bewijs af: draai de gewone CLI rechtstreeks met zonder-prijs.json, controleer exitcode 1, een korte Nederlandse fout en geen stacktrace, en lees bron plus test terug. Geen internet, geen add-on en niet herbouwen. Geef daarna gewoon kort het eindresultaat.';
-  assert.deepEqual(required({ text: liveFollowup }), ['voer_uit', 'lees_bestand']);
-  assert.equal(__projectRouteTest.turnContractFor(liveFollowup).kind, 'programming_verification');
-  assert.equal(
-    __projectRouteTest.requestsLocalProjectDocumentation('Waar staan de contracten in deze codebase beschreven?'),
-    true,
-  );
-  assert.equal(__projectRouteTest.internetUseProhibited('Maak dit zonder internet of webzoekactie.'), true);
-  assert.deepEqual(
-    required({ text: 'Gebruik je bestaande actieve addon tekst-unified-diff echt: oud is uit en nieuw is aan.' }),
-    ['gebruik_capability'],
-  );
-  assert.equal(
-    __projectRouteTest.turnContractFor('Gebruik je bestaande actieve addon tekst-unified-diff echt: oud is uit en nieuw is aan.').kind,
-    'capability_demo',
-  );
-  assert.deepEqual(
-    required({ text: 'Bouw een werkende calculator als programma' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Zet in README-sluipverbruik.txt onderaan een korte uitleg. Draai daarna de test.' }),
-    ['lees_bestand', 'schrijf_bestand', 'voer_uit'],
-  );
-  assert.deepEqual(
-    required({ text: 'Werk de README bij met een voorbeeld.' }),
-    ['lees_bestand', 'schrijf_bestand'],
-  );
-  assert.deepEqual(
-    required({
-      text: 'De spots leken eerst uit. Zoek via Home Assistant uit of ze later weer aan gingen en waardoor.',
+function completedModelResponse(output) {
+  const event = { type: 'response.completed', response: { output } };
+  return new Response(`data: ${JSON.stringify(event)}\n\n`, {
+    status: 200, headers: { 'content-type': 'text/event-stream' },
+  });
+}
+
+function plannedExecution({
+  durable = false,
+  requiredTools = [],
+  turnKind = null,
+  actionRequested = false,
+} = {}) {
+  return {
+    durable,
+    plannedRequiredTools: requiredTools,
+    plannedTurnKind: turnKind,
+    plannedActionRequested: actionRequested,
+  };
+}
+
+function requirementSatisfied(name, tools, text, options = {}) {
+  return __projectRouteTest.turnRequirementSatisfied(name, tools, text, options);
+}
+
+async function homeControlUnderstanding() {
+  const text = 'Zet light.testlamp aan.';
+  const result = await understandTurn({
+    turnId: 'semantic-stage-test', text, channel: 'telegram', origin: 'user',
+  }, {
+    capabilityCatalog: capabilityCatalog(),
+    clock: () => new Date('2026-08-07T12:00:00.000Z'),
+    complete: async () => ({
+      toolCalls: [{
+        name: 'commit_turn_understanding',
+        arguments: JSON.stringify({
+          dialogueAct: 'command',
+          goal: {
+            statement: 'Zet de testlamp aan.',
+            outcome: 'De testlamp staat aantoonbaar aan.',
+            beneficiary: 'requester',
+          },
+          conditions: [],
+          provenance: { sourceSpans: [{ start: 0, end: text.length }], contextHashes: [] },
+          confidence: 0.99,
+          actions: [{
+            capabilityId: 'home.device.control', operationId: 'set', polarity: 'request',
+            semanticInput: { target: 'light.testlamp', desiredState: 'on' },
+            sourceSpans: [{ start: 0, end: text.length }],
+          }],
+          requestedEffects: ['home'],
+          deniedEffects: [],
+          temporal: { mode: 'now', startSourceSpans: [] },
+          durability: 'turn',
+          delivery: { mode: 'reply', target: 'origin' },
+          proofNeeds: ['accepted_result'],
+          ambiguities: [],
+          firstDecision: { kind: 'act', requirementIds: ['r1'], replyDraft: null },
+        }),
+      }],
     }),
-    ['huis_status', 'ha_lees'],
-  );
+  });
+  assert.equal(result.ok, true);
+  return { result, text };
+}
+
+function resignedUnderstanding(understanding, mutate) {
+  const changed = structuredClone(understanding);
+  mutate(changed);
+  const { sha256: _claimed, ...body } = changed;
+  changed.sha256 = createHash('sha256').update(canonicalJson(body)).digest('hex');
+  return changed;
+}
+
+test('semantische foutmeldingen geven de werkelijke oorzaak en beschuldigen de vraag niet', () => {
+  const timeout = __projectRouteTest.semanticFailureReply('interpreter_timeout');
+  const unavailable = __projectRouteTest.semanticFailureReply('interpreter_unavailable');
+  const authority = __projectRouteTest.semanticFailureReply('capability_authority_denied');
+  const malformed = __projectRouteTest.semanticFailureReply('interpreter_malformed');
+  assert.match(timeout, /oorspronkelijke opdracht nog.*vast.*niks uitgevoerd of gewijzigd/iu);
+  assert.match(unavailable, /oorspronkelijke opdracht nog.*niks uitgevoerd of gewijzigd/iu);
+  assert.match(authority, /oorspronkelijke opdracht nog.*snap.*niet uitvoeren.*niks gewijzigd/iu);
+  assert.match(malformed, /oorspronkelijke opdracht nog.*betrouwbare grip.*niks uitgevoerd of gewijzigd/iu);
+  for (const reply of [timeout, unavailable, authority, malformed]) {
+    assert.doesNotMatch(
+      reply,
+      /herhaal|herformuleer|formuleer|korter|zeg.*nog.*keer|taalmodel|modelroute|onderdeel|provider/iu,
+    );
+  }
+});
+
+test('begrip, binding en bevoegdheid houden ieder hun eigen foutstadium', async () => {
+  const { result, text } = await homeControlUnderstanding();
+  const stateOptions = {
+    person: 'Jaap', userText: text, conversationId: 'semantic-stage-test', mode: 'chat',
+  };
+
+  const understanding = __projectRouteTest.semanticTurnState({
+    ...stateOptions,
+    result: { ok: false, failure: { code: 'interpreter_timeout' }, understanding: null },
+    messageContext: {},
+  });
+  assert.deepEqual({
+    stage: understanding.failureStage,
+    understood: understanding.interpretationSucceeded,
+    metadata: __projectRouteTest.semanticFailureResultMetadata(understanding),
+  }, {
+    stage: 'understanding',
+    understood: false,
+    metadata: {
+      understood: false, interpretationFailed: true, failureStage: 'understanding',
+    },
+  });
+
+  const invalidBinding = resignedUnderstanding(result.understanding, (changed) => {
+    changed.actions[0].semanticInput.target = 42;
+  });
+  const binding = __projectRouteTest.semanticTurnState({
+    ...stateOptions,
+    result: { ...result, understanding: invalidBinding },
+    messageContext: {},
+  });
+  assert.equal(binding.failureStage, 'binding');
+  assert.equal(binding.interpretationSucceeded, true);
+  assert.match(binding.turnContract.outcome, /geldige beurtinterpretatie/u);
   assert.deepEqual(
-    required({ text: 'Verwijder Lola haar oude telefoontracker en gebruik alleen device_tracker.unifi_default_5e_eb_f8_cb_fc_27 voor aanwezigheid.' }),
-    ['beheer_aanwezigheid'],
+    __projectRouteTest.semanticFailureResultMetadata(binding),
+    {
+      understood: true,
+      interpretationFailed: false,
+      failureStage: 'binding',
+      planningError: binding.error,
+    },
   );
+
+  const authority = __projectRouteTest.semanticTurnState({
+    ...stateOptions, result, messageContext: { syntheticTest: true },
+  });
+  assert.equal(authority.failureStage, 'authority');
+  assert.equal(authority.interpretationSucceeded, true);
   assert.deepEqual(
-    required({ text: 'Erik staat met een sok in zijn mond en Lola kijkt alsof dit een interventie wordt. Wat denk jij?' }),
-    [],
-  );
-  assert.deepEqual(
-    required({ text: 'Maak deze calculator af: zorg dat de invoer wordt gevalideerd' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Ik wil voor elk apparaat een apart dashboard maken. Goed idee toch?' }),
-    [],
-  );
-  assert.deepEqual(
-    required({ text: 'Maak een dashboard met de belangrijkste apparaten.' }),
-    ['schrijf_bestand', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Zoek honderd actuele problemen, kies de beste en bouw een werkende oplossing.' }),
-    ['zoek_internet', 'schrijf_bestand', 'voer_uit', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Regel iets voor vanavond, bepaal zelf wat past en zet het echt klaar.' }),
-    ['schrijf_bestand', 'lees_bestand'],
-  );
-  assert.deepEqual(
-    required({ text: 'Implementeer en test één kleine veilige eigen verbetering aan jezelf.' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand', 'maak_vaardigheid'],
-  );
-  assert.deepEqual(
-    required({ text: 'Bekijk je recente echte chatbeurten, kies waar je niet doorpakt en verbeter die zwakte met een kleine wijziging in je eigen systeem en een gerichte test.' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand', 'maak_vaardigheid'],
-  );
-  assert.deepEqual(
-    required({ text: 'Onderzoek welke addon-, skill- of pluginmechanismen je werkelijk kunt gebruiken en demonstreer er één veilig.' }),
-    ['gebruik_capability'],
-  );
-  assert.deepEqual(
-    required({ text: 'Bouw een kleine Python-CLI boodschappen_samenvoeger.py, schrijf tests, voer ze uit en controleer een echte CLI-run.' }),
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-  );
-  assert.equal(
-    __projectRouteTest.isDurableProjectRequest('Regel iets voor vanavond en zet het echt klaar.'),
-    true,
-  );
-  assert.deepEqual(
-    required({
-      text: 'Dit is Frank',
-      replyEvidence: { imageDataUrl: 'data:image/jpeg;base64,AA==' },
-    }),
-    ['leer_gezicht_van_foto'],
-  );
-  assert.deepEqual(
-    required({
-      text: 'Nee Jaap.',
-      replyEvidence: { imageDataUrl: 'data:image/jpeg;base64,AA==' },
-    }),
-    ['leer_gezicht_van_foto'],
+    __projectRouteTest.semanticFailureResultMetadata(authority),
+    {
+      understood: true,
+      interpretationFailed: false,
+      failureStage: 'authority',
+      planningError: 'capability_authority_denied',
+    },
   );
 });
 
-test('een beschreven robotscene is geen bedieningsopdracht', () => {
-  const requiredToolsFor = __projectRouteTest.requiredToolsFor;
-  assert.deepEqual(
-    requiredToolsFor({
-      text: 'Erik rijdt met de robotstofzuiger rond met een sok half onder zich, en Lola kijkt alsof ze een interventie gaat houden. Wat denk je?',
-    }),
-    [],
-  );
-  assert.deepEqual(
-    requiredToolsFor({ text: 'De robotstofzuiger draait in de keuken en de hond kijkt ernaar. Grappig toch?' }),
-    [],
-  );
-  assert.deepEqual(requiredToolsFor({ text: 'Erik draait in de keuken.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Erik start om acht uur.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Erik stopt bij de stoel.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Erik keert terug.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Laat Erik met rust.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Start Erik niet; ik beschrijf alleen een scène.' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Waar is de gewone stofzuiger?' }), []);
-  assert.deepEqual(requiredToolsFor({ text: 'Laat Erik even rondrijden in de keuken.' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Kan je Erik terugsturen naar zijn dock?' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Waar is Erik?' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Erik, terug naar je dock.' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Stuur Erik naar zijn dock.' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'De robot moet stoppen.' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Wat doet Erik nu?' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Rijdt Erik nog?' }), ['gebruik_robot']);
-  assert.deepEqual(requiredToolsFor({ text: 'Maak de keuken schoon met Erik.' }), ['gebruik_robot']);
+test('semanticTurnState classificeert monitoring niet opnieuw uit afwijkende vrije tekst', async () => {
+  const { result } = await homeControlUnderstanding();
+  const semantic = __projectRouteTest.semanticTurnState({
+    result,
+    person: 'Jaap',
+    userText: 'Blijf dit twee uur volgen en app me alleen als ik moet bijstellen.',
+    conversationId: 'no-late-monitoring-classifier',
+    messageContext: {},
+    mode: 'chat',
+  });
+
+  assert.equal(semantic.ok, true);
+  assert.equal(semantic.turnContract.kind, 'action');
+  assert.equal(semantic.turnContract.monitoring, undefined);
+  assert.equal(semantic.understanding.monitoring, null);
 });
 
-test('korte foto-antwoorden worden zonder modelgok als identiteit of bevestiging gelezen', () => {
-  const parseName = __projectRouteTest.identityNameFromText;
-  assert.equal(parseName('Dat is Lola', 'Jaap'), 'Lola');
-  assert.equal(parseName('Nee Jaap.', 'Jaap'), 'Jaap');
-  assert.equal(parseName('Dit ben ik', 'Jaap'), 'Jaap');
-  assert.equal(parseName('Dat klopt', 'Jaap'), null);
-
-  assert.equal(
-    __projectRouteTest.confirmedRecognitionName('Dat klopt', {
-      text: 'Jaap is bij G4 Doorbell Pro PoE.\nCamera: G4 Doorbell Pro PoE',
-    }),
-    'Jaap',
-  );
-  assert.equal(
-    __projectRouteTest.confirmedRecognitionName('Dat klopt', {
-      text: 'Er is iemand bij de voordeur.',
-    }),
-    null,
-  );
+test('continue en correct delen één canonieke vervolgact', async () => {
+  const { result, text } = await homeControlUnderstanding();
+  for (const dialogueAct of ['continue', 'correct']) {
+    const understanding = resignedUnderstanding(result.understanding, (changed) => {
+      changed.dialogueAct = dialogueAct;
+    });
+    const semantic = __projectRouteTest.semanticTurnState({
+      result: { ...result, understanding }, person: 'Jaap', userText: text,
+      conversationId: `canonical-${dialogueAct}`, messageContext: {}, mode: 'chat',
+    });
+    assert.equal(semantic.continuationRequest, true, dialogueAct);
+  }
+  const command = __projectRouteTest.semanticTurnState({
+    result, person: 'Jaap', userText: text, conversationId: 'canonical-command',
+    messageContext: {}, mode: 'chat',
+  });
+  assert.equal(command.continuationRequest, false);
 });
+
+test('een geldige interpretatie en de latere planningsfout krijgen aparte tijdlijnfeiten', async () => {
+  const { result, text } = await homeControlUnderstanding();
+  const semanticTurn = __projectRouteTest.semanticTurnState({
+    result,
+    person: 'Jaap',
+    userText: text,
+    conversationId: 'semantic-timeline-test',
+    messageContext: { syntheticTest: true },
+    mode: 'chat',
+  });
+  const timeline = __projectRouteTest.recordSemanticTurnTimeline({
+    semanticTurn,
+    semanticResult: result,
+    turnId: 'semantic-timeline-test',
+    conversationId: 'semantic-timeline-test',
+  });
+  assert.equal(timeline.understanding.kind, 'turn_understanding');
+  assert.equal(timeline.understanding.meta.interpretationSucceeded, true);
+  assert.equal(timeline.understanding.meta.error, null);
+  assert.equal(timeline.understanding.meta.understanding.sourceSha256, result.understanding.sha256);
+  assert.equal(timeline.planning.kind, 'turn_planning');
+  assert.equal(timeline.planning.meta.failureStage, 'authority');
+  assert.equal(timeline.planning.meta.error, 'capability_authority_denied');
+});
+
+test('finishTurn bewaart de semantische foutmetadata in plaats van die stil weg te gooien', () => {
+  const retained = __projectRouteTest.retainedTurnResultMetadata({
+    understood: true,
+    interpretationFailed: false,
+    failureStage: 'binding',
+    planningError: 'capability_binding:invalid_semantic_input',
+    preserveAutonomyReply: true,
+  });
+  assert.deepEqual(retained, {
+    understood: true,
+    interpretationFailed: false,
+    failureStage: 'binding',
+    planningError: 'capability_binding:invalid_semantic_input',
+  });
+});
+
+test('een host-poginglimiet blijft een volledig getypeerde ActionResult', () => {
+  const result = JSON.parse(__projectRouteTest.rejectedToolOutput(
+    'voer_uit', 'poginglimiet bereikt', 'attempt_limit',
+  ));
+  assert.deepEqual({
+    contract: result.contract,
+    tool: result.tool,
+    ok: result.ok,
+    verified: result.verified,
+    partial: result.partial,
+    failure_class: result.failure_class,
+    retryable: result.retryable,
+    effect_uncertain: result.effect_uncertain,
+  }, {
+    contract: 'ActionResult/v1',
+    tool: 'voer_uit',
+    ok: false,
+    verified: false,
+    partial: false,
+    failure_class: 'attempt_limit',
+    retryable: false,
+    effect_uncertain: false,
+  });
+});
+
+test('de inspectielaag bewaart fouttype, retrybaarheid en effectonzekerheid exact', () => {
+  const typedFailure = JSON.stringify({
+    contract: 'ActionResult/v1',
+    tool: 'beheer_agentmail',
+    ok: false,
+    changed: false,
+    verified: false,
+    needs_followup: true,
+    partial: false,
+    failure_class: 'delivery_unconfirmed',
+    retryable: false,
+    effect_uncertain: true,
+  });
+  const { recorded } = __projectRouteTest.inspectToolOutcome(
+    'beheer_agentmail', { actie: 'versturen' }, typedFailure,
+  );
+  assert.deepEqual({
+    failure_class: recorded.failure_class,
+    retryable: recorded.retryable,
+    effect_uncertain: recorded.effect_uncertain,
+  }, {
+    failure_class: 'delivery_unconfirmed',
+    retryable: false,
+    effect_uncertain: true,
+  });
+
+  const untyped = __projectRouteTest.inspectToolOutcome(
+    'zoek_internet', { vraag: 'bron' }, JSON.stringify({ ok: false }),
+  ).recorded;
+  assert.equal(untyped.retryable, null);
+  assert.equal(untyped.effect_uncertain, null);
+});
+
 
 test('alleen een ondubbelzinnige enkelvoudige huisopdracht gebruikt de snelle kernroute', () => {
   const parse = __projectRouteTest.directHomeCommand;
@@ -276,6 +417,8 @@ test('alleen een ondubbelzinnige enkelvoudige huisopdracht gebruikt de snelle ke
   });
   assert.equal(parse('Zet keuken en woonkamer uit.'), null);
   assert.equal(parse('Zet alle verlichting uit.'), null);
+  assert.equal(parse('Zet niet de keukenlamp maar de ganglamp uit.'), null);
+  assert.equal(parse('Zet de lamp niet uit.'), null);
   assert.deepEqual(parse('Kun je het licht buiten aanzetten?'), {
     doel: 'licht buiten',
     actie: 'aan',
@@ -284,16 +427,6 @@ test('alleen een ondubbelzinnige enkelvoudige huisopdracht gebruikt de snelle ke
     doel: 'TV in overkapping',
     actie: 'uit',
   });
-
-  const route = __projectRouteTest.directHomeForTurn;
-  assert.deepEqual(route({
-    mode: 'chat', requiredTools: ['bedien_huis'],
-    userText: 'Zet de spotjes onder de overkapping uit.',
-  }), { doel: 'spotjes onder de overkapping', actie: 'uit' });
-  assert.equal(route({
-    mode: 'chat', requiredTools: ['bedien_huis'], syntheticTest: true,
-    userText: 'Zet de spotjes onder de overkapping uit.',
-  }), null);
 });
 
 test('huisdoelen kiezen een exacte slug en handelen nooit op een friendly-name-gelijkspel', () => {
@@ -310,13 +443,10 @@ test('huisdoelen kiezen een exacte slug en handelen nooit op een friendly-name-g
 });
 
 test('een concrete huisopdracht blijft binnen bediening en één gerichte uitleesroute', () => {
-  assert.deepEqual(
-    [...__projectRouteTest.chatToolNamesFor(['bedien_huis'])].sort(),
-    ['bedien_huis', 'ha_lees'],
-  );
   const results = [
     tool({
       name: 'bedien_huis', ok: false, verified: false,
+      args: { doel: 'tv in de overkapping', actie: 'uit' },
       data: { entity_id: 'media_player.tv_overkapping' },
     }),
     tool({
@@ -359,28 +489,14 @@ test('een voorbereide autonome terugmelding bewaart exact tekst, ontvanger en re
       attempts: 2, dedupeKey: 'episode:7:prepared-delivery',
     } }),
   }), {
+    kind: 'legacy',
     text: 'De spots zijn uit; Buiten liet ik bewust met rust.',
     recipient: 'Jaap', preparedAt: '2026-08-06T00:00:00.000Z',
     attempts: 2, dedupeKey: 'episode:7:prepared-delivery',
   });
 });
 
-test('meerstapswerk blijft een project tot er een echt eindresultaat is', () => {
-  const durable = __projectRouteTest.isDurableProjectRequest;
-  assert.equal(durable('Zoek uit welke warmtepomp nu het zuinigst is.'), false);
-  assert.equal(
-    durable('Ga kijken welke problemen je kunt oplossen en waar je geld voor kunt vragen.'),
-    true,
-  );
-  assert.equal(
-    durable('Zoek honderd actuele problemen, groepeer ze, kies er drie en bouw de beste oplossing.'),
-    true,
-  );
-  assert.equal(__projectRouteTest.isContinuationRequest('Ga daar mee verder.'), true);
-  assert.equal(__projectRouteTest.isContinuationRequest('Maak dit af.'), true);
-  assert.equal(__projectRouteTest.isContinuationRequest('Ja, doe dat.'), true);
-  assert.equal(__projectRouteTest.isContinuationRequest('Vertel eens verder over Hokusai.'), false);
-
+test('een duurzaam zoekresultaat is zonder einduitkomst nog geen bijdrage', () => {
   const searched = tool({ name: 'zoek_internet' });
   assert.equal(
     __projectRouteTest.contributionFromTools(
@@ -393,44 +509,8 @@ test('meerstapswerk blijft een project tot er een echt eindresultaat is', () => 
   );
 });
 
-test('natuurlijke AgentMail-vervolgtaal houdt dezelfde uitvoeropdracht vast', () => {
-  for (const phrase of [
-    'Oké prima ga verder met AgentMail.',
-    'Doe dat dan.',
-    'Meld je aan.',
-    'Je moet je aanmelden.',
-  ]) assert.equal(__projectRouteTest.isContinuationRequest(phrase), true, phrase);
-  assert.deepEqual(
-    __projectRouteTest.requiredToolsFor({ text: 'Meld je aan bij AgentMail.' }),
-    ['beheer_agentmail'],
-  );
-});
-
-test('anaforische opdrachten blijven echte opdrachten, ook in beleefde vraagvorm', () => {
-  const isAction = __projectRouteTest.isExplicitToolRequest;
-  for (const phrase of [
-    'Maak dat.',
-    'Werk dit uit.',
-    'Kun je dit repareren?',
-    'Kun je dit voor mij uitzoeken?',
-  ]) assert.equal(isAction(phrase), true, phrase);
-  for (const phrase of [
-    'Wat vind je daarvan?',
-    'Dit kan ik zelf repareren.',
-    'Dat wil ik later uitzoeken.',
-    'Dit hoef je niet te repareren.',
-    'Repareer dit niet.',
-    'Werk dit niet uit.',
-  ]) assert.equal(isAction(phrase), false, phrase);
-});
-
-test('een uitvoeropdracht na een probleembeschrijving blijft een echte opdracht', () => {
+test('een mislukte uitvoer voldoet pas na een werkend alternatief', () => {
   const recovery = 'voorbeelden/bestaat-niet.json doet het niet. Zoek uit wat er aan de hand is en zorg dat ik meteen weet welke invoer wél werkt.';
-  assert.equal(__projectRouteTest.isExplicitToolRequest(recovery), true);
-  const contract = __projectRouteTest.turnContractFor(recovery);
-  assert.equal(contract.kind, 'repair');
-  assert.deepEqual(contract.requiredTools, ['lijst_bestanden', 'voer_uit']);
-  assert.deepEqual([...contract.allowedTools], ['lijst_bestanden', 'lees_bestand', 'schrijf_bestand', 'voer_uit']);
   const missingRun = {
     ...tool({ name: 'voer_uit', changed: true, data: { exit_code: 1, stderr: 'niet gevonden' } }),
     args: { programma: 'node', argumenten: ['kostenchecker.cjs', 'bestaat-niet.json'] },
@@ -441,39 +521,6 @@ test('een uitvoeropdracht na een probleembeschrijving blijft een echte opdracht'
   };
   assert.equal(__projectRouteTest.turnRequirementSatisfied('voer_uit', [missingRun], recovery), false);
   assert.equal(__projectRouteTest.turnRequirementSatisfied('voer_uit', [missingRun, workingRun], recovery), true);
-});
-
-test('aanwezigheidsbeheer is uitvoerbaar maar nooit muterend in een synthetische test', () => {
-  assert.equal(__projectRouteTest.syntheticToolAllowed('beheer_aanwezigheid'), false);
-  const selected = __projectRouteTest.chatToolNamesFor(['beheer_aanwezigheid']);
-  assert.equal(selected.has('beheer_aanwezigheid'), true);
-  assert.equal(
-    __projectRouteTest.chatToolNamesFor(['zoek_internet']).has('beheer_aanwezigheid'),
-    false,
-  );
-});
-
-test('een gedelegeerde klus kan geen ongerelateerde fysieke zijactie uitvoeren', () => {
-  const allows = __projectRouteTest.delegatedWorkAllowsTool;
-  const presenceWork = {
-    owner: 'Jaap',
-    goal: 'Laat Lola haar aanwezigheid via wifi volgen.',
-    next_step: 'Vervang de person tracker en controleer de thuisstatus.',
-  };
-  assert.equal(allows('beheer_aanwezigheid', presenceWork), true);
-  assert.equal(allows('bedien_huis', presenceWork), false);
-  assert.equal(allows('bedien_huis', {
-    owner: 'Jaap', goal: 'Zet de lamp in de wc uit en controleer dat hij uit staat.',
-  }), true);
-  assert.equal(allows('bedien_huis', { owner: null, goal: 'vrije aandacht' }), true);
-});
-
-test('een providerdomein in voorkeurstaal is geen programmeeropdracht', () => {
-  assert.equal(
-    __projectRouteTest.requestsExecutableBuild('Maakt me niet uit, bijvoorbeeld openmail.sh.'),
-    false,
-  );
-  assert.equal(__projectRouteTest.requestsExecutableBuild('Maak data/workspace/proef.sh.'), true);
 });
 
 test('gedeeltelijk bewijs met vervolgwerk voldoet niet aan een uitkomstcontract', () => {
@@ -532,21 +579,6 @@ test('een uitzoekopdracht eindigt niet met alleen een aangekondigde volgende rou
       'Zoek via Home Assistant uit wat er met de spots gebeurde.',
     ),
     '',
-  );
-});
-
-test('werk iets uit is geen toevallige huis-uit-opdracht', () => {
-  assert.deepEqual(
-    __projectRouteTest.requiredToolsFor({ text: 'Doe dit. Werk het meteen uit tot een resultaat.' }),
-    [],
-  );
-  assert.deepEqual(
-    __projectRouteTest.requiredToolsFor({ text: 'Doe de lamp in het kantoor uit.' }),
-    ['bedien_huis'],
-  );
-  assert.deepEqual(
-    __projectRouteTest.requiredToolsFor({ text: 'Ga uitzoeken waarom je geen toegang hebt tot Home Assistant.' }),
-    ['huis_status', 'ha_lees'],
   );
 });
 
@@ -619,13 +651,68 @@ test('afgekorte audituitvoer blijft geldige compacte JSON', () => {
   assert.equal(compactFailure.failure_class, 'missing_entrypoint');
   assert.equal(compactFailure.data.exit_code, 2);
   assert.equal(compactFailure.data.stderr, 'bestand niet gevonden');
-});
 
-test('zelfopdeling en interne kanaaltaal moeten vóór aflevering worden vernederlandst', () => {
-  const needsNarration = __projectRouteTest.replyNeedsNarration;
-  assert.equal(needsNarration('In deze beurt zijn de Home Assistant-tools niet aangeboden.'), true);
-  assert.equal(needsNarration('Dat hoort bij een ander systeem dan deze route.'), true);
-  assert.equal(needsNarration('Ik krijg de overkapping nu niet bereikt.'), false);
+  const monitoringWork = {
+    contract: 'ActionResult/v1', tool: 'werk_bijhouden', ok: true, changed: true,
+    verified: true, partial: false, needs_followup: false,
+    data: {
+      ok: true, changed: true, proofAccepted: false,
+      item: {
+        id: 110, status: 'open', owner: 'Jaap', title: 'Temperatuur bewaken',
+        next_step: 'Lees de twee gebonden bronnen opnieuw.',
+        definition_of_done: 'De eerste match is eenmaal afgeleverd.',
+        next_wake_ts: '2026-08-15T09:22:38.455Z',
+        state_json: JSON.stringify({
+          nonAuthoritativeState: 'x'.repeat(9_000),
+          monitoring: {
+            contract: 'MonitoringContract/v1',
+            sourceUnderstandingSha256: 'a'.repeat(64),
+            cadenceMs: 300_000,
+            endsAt: null,
+            readBindings: [
+              { entityId: 'weather.forecast_thuis', requirementId: 'r2', name: 'Weer thuis' },
+              { entityId: 'climate.home', requirementId: 'r3', name: 'Home' },
+            ],
+          },
+        }),
+      },
+    },
+    evidence: { summary: 'werkbewijs '.repeat(500) },
+  };
+  const compactWork = JSON.parse(__projectRouteTest.auditToolOutput(
+    JSON.stringify({ ...monitoringWork, padding: 'x'.repeat(8_000) }), monitoringWork,
+  ));
+  assert.deepEqual({
+    ok: compactWork.data.ok,
+    changed: compactWork.data.changed,
+    id: compactWork.data.item.id,
+    status: compactWork.data.item.status,
+    nextWake: compactWork.data.item.next_wake_ts,
+  }, {
+    ok: true, changed: true, id: 110, status: 'open',
+    nextWake: '2026-08-15T09:22:38.455Z',
+  });
+  assert.match(compactWork.data.item.state_json, /MonitoringContract\/v1/u);
+  assert.equal(compactWork.audit_compacted, true);
+  assert.equal(compactWork.data.compacted, true);
+  assert.doesNotMatch(compactWork.data.item.state_json, /nonAuthoritativeState/u);
+
+  const normalizedWork = normalizeActionResultState({
+    raw: JSON.stringify(monitoringWork.data),
+    changesByDefault: true,
+    verification: 'ok',
+    effect: 'persistent',
+    tool: 'werk_bijhouden',
+  });
+  assert.equal(normalizedWork.ok, true);
+  assert.equal(normalizedWork.verified, true);
+  assert.equal(normalizedWork.partial, false);
+  assert.equal(normalizedWork.needsFollowup, false);
+  assert.equal(normalizedWork.failure, null);
+  assert.equal(normalizedWork.data.compacted, true);
+  assert.equal(normalizedWork.data.item.id, 110);
+  assert.equal(normalizedWork.data.item.next_step, 'Lees de twee gebonden bronnen opnieuw.');
+  assert.match(normalizedWork.data.item.state_json, /MonitoringContract\/v1/u);
 });
 
 test('een gevraagd projectpad is gewone bronvermelding maar ruwe uitvoer blijft intern', () => {
@@ -681,6 +768,369 @@ test('actuele internetclaims blijven zonder directe bronlink onvolledig', () => 
   );
 });
 
+test('een echte vervolgcontrole bestaat pas na een duurzame wake én terugmelding', () => {
+  const request = 'Blijf jij het nu bekijken. Geef me tips als ik iets moet doen.';
+  const monitoringOptions = {
+    turnKind: 'monitoring',
+    ...__projectRouteTest.monitoringRequestSpec({
+      text: request,
+      recentThreadRows: [
+        { content: 'Hoe warm is de BBQ nu?' },
+        { content: 'De BBQ is nu 78 graden.' },
+      ],
+      requester: 'Jaap',
+      now: Date.now(),
+    }),
+    sourceReadBound: true,
+  };
+
+  const unscheduled = tool({
+    name: 'werk_bijhouden',
+    changed: true,
+    data: {
+      item: {
+        status: 'open',
+        next_wake_ts: new Date(Date.now() + 5 * 60_000).toISOString(),
+        next_step: 'Ga hier later mee verder.',
+      },
+    },
+  });
+  const scheduled = tool({
+    name: 'werk_bijhouden',
+    changed: true,
+    args: { bewerking: 'update', id: 41 },
+    data: {
+      item: {
+        id: 41,
+        status: 'open',
+        next_wake_ts: new Date(Date.now() + 5 * 60_000).toISOString(),
+        next_step: 'Lees de actuele BBQ- en kerntemperatuur en stuur Jaap alleen een relevante tip terug.',
+      },
+    },
+  });
+  const promise = 'Ja, ik houd de BBQ in de gaten en meld me als je iets moet bijstellen.';
+  assert.equal(requirementSatisfied(
+    'werk_bijhouden', [unscheduled], request, monitoringOptions,
+  ), false);
+  assert.equal(requirementSatisfied(
+    'werk_bijhouden', [scheduled], request, monitoringOptions,
+  ), true);
+  assert.equal(
+    requirementSatisfied(
+      'werk_bijhouden', [scheduled], request, { ...monitoringOptions, workId: 41 },
+    ),
+    true,
+  );
+  assert.equal(
+    requirementSatisfied(
+      'werk_bijhouden', [scheduled], request, { ...monitoringOptions, workId: 42 },
+    ),
+    false,
+  );
+  assert.equal(
+    requirementSatisfied(
+      'werk_bijhouden', [scheduled], request, {
+        ...monitoringOptions, workId: Number.NaN, requireBound: true,
+      },
+    ),
+    false,
+  );
+  const tooLate = tool({
+    ...scheduled,
+    name: 'werk_bijhouden',
+    changed: true,
+    args: { bewerking: 'update', id: 41 },
+    data: {
+      item: {
+        ...JSON.parse(scheduled.output).data.item,
+        next_wake_ts: new Date(Date.now() + 25 * 60 * 60_000).toISOString(),
+      },
+    },
+  });
+  assert.equal(
+    requirementSatisfied(
+      'werk_bijhouden', [tooLate], request, { ...monitoringOptions, workId: 41 },
+    ),
+    false,
+  );
+  assert.match(__projectRouteTest.monitoringPromiseFeedback(promise, true, []), /niet duurzaam gepland/i);
+  assert.match(__projectRouteTest.monitoringPromiseFeedback('Komt goed.', true, []), /niet duurzaam gepland/i);
+  assert.equal(
+    __projectRouteTest.monitoringPromiseFeedback(promise, true, [scheduled], {
+      workId: 41, sourceReadBound: true,
+    }),
+    '',
+  );
+  assert.match(
+    __projectRouteTest.monitoringPromiseFeedback(promise, true, [scheduled], {
+      workId: 42, sourceReadBound: true,
+    }),
+    /niet duurzaam gepland/i,
+  );
+});
+
+test('een bestaande huisstatus wordt niet als Eva haar eigen wijziging verteld', () => {
+  const request = 'Zet de tweede tv in de overkapping uit.';
+  const intent = { doel: 'tweede tv in de overkapping', actie: 'uit' };
+  const unchanged = tool({
+    name: 'bedien_huis',
+    changed: false,
+    args: { doel: 'tweede tv in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'media_player.tv_overkapping_2', name: 'TV overkapping 2',
+      before: 'off', after: 'off',
+    },
+  });
+  const changed = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede tv in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'media_player.tv_overkapping_2', name: 'TV overkapping 2',
+      before: 'on', after: 'off',
+    },
+  });
+  const changedWithGenericFriendlyName = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede tv in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'media_player.tv_overkapping_2', name: 'Televisie',
+      before: 'on', after: 'off',
+    },
+  });
+  const wrongLamp = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede lamp in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'light.lamp_overkapping_2', name: 'Lamp overkapping 2',
+      before: 'on', after: 'off',
+    },
+  });
+  const spoofedTarget = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede tv in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'light.lamp_overkapping_2', name: 'Lamp overkapping 2',
+      before: 'on', after: 'off',
+    },
+  });
+  const wrongArgsForResolvedTv = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede lamp in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'media_player.tv_overkapping_2', name: 'TV overkapping 2',
+      before: 'on', after: 'off',
+    },
+  });
+  const inconsistentResolvedTarget = tool({
+    name: 'bedien_huis',
+    changed: true,
+    args: { doel: 'tweede tv in de overkapping', actie: 'uit' },
+    data: {
+      entity_id: 'light.lamp_overkapping_2', name: 'TV overkapping 2',
+      before: 'on', after: 'off',
+    },
+  });
+  const tvReadback = tool({
+    name: 'ha_lees',
+    data: {
+      entity_id: 'media_player.tv_overkapping_2', name: 'TV overkapping 2', state: 'off',
+    },
+  });
+  const lampReadback = tool({
+    name: 'ha_lees',
+    data: {
+      entity_id: 'light.lamp_overkapping_2', name: 'Lamp overkapping 2', state: 'off',
+    },
+  });
+  assert.match(
+    __projectRouteTest.homeEffectAttributionFeedback('Ik heb hem uitgezet.', request, [unchanged]),
+    /niet aantoonbaar zelf veranderd/i,
+  );
+  assert.equal(
+    __projectRouteTest.homeEffectAttributionFeedback('De tweede tv stond al uit.', request, [unchanged]),
+    '',
+  );
+  assert.equal(
+    __projectRouteTest.homeEffectAttributionFeedback(
+      'Ik heb gecontroleerd dat hij al uit stond; ik heb hem niet uitgezet.', request, [unchanged],
+    ),
+    '',
+  );
+  for (const answer of ['Uitgezet, klaar.', 'Gedaan, hij is nu uit.']) {
+    assert.match(
+      __projectRouteTest.homeEffectAttributionFeedback(answer, request, [unchanged]),
+      /niet aantoonbaar zelf veranderd/i,
+    );
+  }
+  assert.match(
+    __projectRouteTest.homeEffectAttributionFeedback('Ik heb hem uitgezet.', request, [wrongLamp]),
+    /niet aantoonbaar zelf veranderd/i,
+  );
+  for (const receipt of [spoofedTarget, wrongArgsForResolvedTv, inconsistentResolvedTarget]) {
+    assert.match(
+      __projectRouteTest.homeEffectAttributionFeedback('Ik heb hem uitgezet.', request, [receipt]),
+      /niet aantoonbaar zelf veranderd/i,
+    );
+  }
+  for (const answer of ['Ik zette hem uit.', "Heb 'm even uit gedaan.", 'Klaar.']) {
+    assert.match(
+      __projectRouteTest.homeEffectAttributionFeedback(answer, request, [unchanged]),
+      /niet aantoonbaar zelf veranderd/i,
+      answer,
+    );
+    assert.equal(
+      __projectRouteTest.homeEffectAttributionFeedback(answer, request, [changed]),
+      '',
+      answer,
+    );
+  }
+  assert.equal(
+    __projectRouteTest.homeEffectAttributionFeedback('Tv uit.', request, [unchanged]),
+    '',
+  );
+  assert.match(
+    __projectRouteTest.homeEffectAttributionFeedback('Tv uit.', request, [wrongLamp]),
+    /niet voor precies het gevraagde apparaat bevestigd/i,
+  );
+  assert.match(
+    __projectRouteTest.homeEffectAttributionFeedback('Klaar.', request, [wrongLamp]),
+    /niet aantoonbaar zelf veranderd/i,
+  );
+  for (const denial of [
+    'Ik zette hem niet uit.',
+    "Ik heb 'm niet uit gedaan.",
+    'Ik heb hem niet uitgezet.',
+  ]) {
+    assert.equal(
+      __projectRouteTest.homeEffectAttributionFeedback(denial, request, [wrongLamp]),
+      '',
+      denial,
+    );
+  }
+  assert.equal(homeReadbackProvesIntent(intent, [unchanged, tvReadback]), true);
+  assert.equal(homeReadbackProvesIntent(intent, [wrongLamp, lampReadback]), false);
+  assert.equal(homeReadbackProvesIntent(intent, [spoofedTarget, lampReadback]), false);
+  assert.equal(homeReadbackProvesIntent(intent, [unchanged, lampReadback]), false);
+  assert.match(
+    homeEffectClaimFeedback('De tweede tv staat uit.', intent, [wrongLamp, lampReadback], {
+      readbackProven: true,
+    }),
+    /niet voor precies het gevraagde apparaat bevestigd/i,
+  );
+  assert.equal(
+    __projectRouteTest.homeEffectAttributionFeedback('Ik heb hem uitgezet.', request, [changed]),
+    '',
+  );
+  assert.equal(
+    __projectRouteTest.homeEffectAttributionFeedback(
+      'Ik heb hem uitgezet.', request, [changedWithGenericFriendlyName],
+    ),
+    '',
+  );
+});
+
+test('zelfverbetering gebruikt relatiefeedback zonder een tweede geheugenregel', () => {
+  const request = 'Pas je eigen communicatie aan.';
+  const relevantHistory = tool({
+    name: 'zoek_gesprek',
+    data: {
+      count: 2,
+      messages: [
+        { sender: 'Jaap', content: 'Je communicatie klinkt nog steeds te zakelijk.' },
+        { sender: 'Eva', content: 'Ik zal mijn communicatiestijl aanpassen.' },
+      ],
+    },
+  });
+  const unrelatedHistory = tool({
+    name: 'zoek_gesprek',
+    data: { count: 1, messages: [{ content: 'De vuilnisbak is vol.' }] },
+  });
+  assert.equal(
+    requirementSatisfied('zoek_gesprek', [unrelatedHistory], request, {
+      turnKind: 'self_improvement',
+    }),
+    false,
+  );
+  assert.equal(
+    requirementSatisfied('zoek_gesprek', [relevantHistory], request, {
+      turnKind: 'self_improvement',
+    }),
+    true,
+  );
+  assert.equal(__projectRouteTest.shouldAutoBindDurableTool({
+    mode: 'chat', syntheticTest: false, turnKind: 'self_improvement',
+    hasEpisode: false, name: 'zoek_gesprek', recorded: {
+      ok: true, verified: true, changed: false,
+    },
+  }), false);
+});
+
+test('technisch zelfherstel is brongebonden diagnose en geen geheugen- of succesclaim', () => {
+  const request = 'Repareer en test je eigen wakeword-router.';
+  const contract = { kind: 'self_repair' };
+  const proofOptions = { turnKind: contract.kind };
+  assert.equal(
+    requirementSatisfied('zoek_gesprek', [tool({
+      name: 'zoek_gesprek', data: { count: 1, messages: [{ content: 'De vuilnisbak is vol.' }] },
+    })], request, proofOptions),
+    false,
+  );
+  const relevantHistory = tool({
+    name: 'zoek_gesprek',
+    data: { count: 1, messages: [{ content: 'Hey Eva activeerde terwijl niemand het wakeword zei.' }] },
+  });
+  assert.equal(
+    requirementSatisfied('zoek_gesprek', [relevantHistory], request, proofOptions),
+    true,
+  );
+  const listed = tool({ name: 'lijst_bestanden', data: { entries: ['src/voice/wakeword.js'] } });
+  const read = tool({
+    name: 'lees_bestand', args: { pad: 'src/voice/wakeword.js', zoek: 'wakeword' },
+    data: { content: 'wakeword detector routing' },
+  });
+  assert.equal(
+    requirementSatisfied('lees_bestand', [read, listed], request, proofOptions),
+    false,
+  );
+  assert.equal(
+    requirementSatisfied('lees_bestand', [listed, read], request, proofOptions),
+    true,
+  );
+  assert.match(
+    __projectRouteTest.finalReplyFeedback({
+      reply: 'Ik heb de wakeword-router gerepareerd.',
+      mode: 'chat', userText: request, toolResults: [relevantHistory, listed, read],
+      turnContract: contract, turnPlan: { actionIntent: 'execute' },
+    }),
+    /niet (?:gewijzigd|door de root-maintainer toegepast)/i,
+  );
+});
+
+test('iteratieve uitvoering heeft ruimte voor herstel plus eindbewijs en eert autonome aandachtstijd', () => {
+  const chat = __projectRouteTest.iterativeExecutionBudget('chat');
+  const autonomy = __projectRouteTest.iterativeExecutionBudget('autonomy');
+  assert.ok(chat.maxRounds > 12);
+  assert.equal(chat.baseRounds, 12);
+  assert.equal(chat.progressExtensionRounds, 3);
+  assert.equal(chat.totalTimeoutMs, 10 * 60_000);
+  assert.ok(autonomy.maxRounds > chat.maxRounds);
+  assert.equal(autonomy.totalTimeoutMs, config.autonomyTurnMinutes * 60_000);
+});
+
+test('expliciet onvoltooid bewijs wordt niet als een valse klaarclaim behandeld', () => {
+  assert.equal(__projectRouteTest.explicitlyIncompleteAction(
+    'De tests zijn uitgevoerd, maar de laatste teruglezing ontbreekt nog. Dit is nog niet afgerond.',
+  ), true);
+  assert.equal(__projectRouteTest.explicitlyIncompleteAction(
+    'Alles is klaar en volledig gecontroleerd.',
+  ), false);
+});
+
 test('een capabilitydemonstratie valt terug op controleerbare gewone taal', () => {
   const used = tool({
     name: 'gebruik_capability',
@@ -696,7 +1146,8 @@ test('een capabilitydemonstratie valt terug op controleerbare gewone taal', () =
     userText: 'Demonstreer een skill.',
   });
   assert.match(answer, /antwoord-afmaakpoort v2/);
-  assert.match(answer, /receipt #12/);
+  assert.match(answer, /echt (?:geladen en )?gebruikt/);
+  assert.doesNotMatch(answer, /receipt|hash|sandbox/i);
   assert.doesNotMatch(answer, /\{"/);
 });
 
@@ -720,25 +1171,6 @@ test('nieuw bewijs binnen hetzelfde project is geen dubbele autonome melding', (
   assert.equal(__toolsTest.autonomousMessageHasNewResult(doorChanged, doorFirst), true);
 });
 
-test('een expliciete intentie krijgt geen ongerelateerde gereedschappen', () => {
-  const select = __projectRouteTest.chatToolNamesFor;
-  const research = select(['zoek_internet']);
-  assert.equal(research.has('zoek_internet'), true);
-  // Na een mislukte voorkeursroute blijven alleen veilige diagnose-/leesroutes
-  // beschikbaar; muterende tools worden niet stil toegevoegd.
-  for (const name of ['bedien_huis', 'schrijf_bestand', 'voer_uit', 'stuur_bericht']) {
-    assert.equal(research.has(name), false);
-  }
-  const programming = select(['schrijf_bestand', 'voer_uit', 'lees_bestand']);
-  for (const name of ['schrijf_bestand', 'voer_uit', 'lees_bestand', 'lijst_bestanden']) {
-    assert.equal(programming.has(name), true);
-  }
-  for (const name of ['bedien_huis', 'stuur_bericht']) {
-    assert.equal(programming.has(name), false);
-  }
-  assert.equal(select([]), null);
-});
-
 test('synthetische livegesprekken kunnen productieplanning niet besmetten', () => {
   const allowed = __projectRouteTest.syntheticToolAllowed;
   for (const name of [
@@ -760,42 +1192,24 @@ test('synthetische livegesprekken kunnen productieplanning niet besmetten', () =
   );
 });
 
-test('een synthetisch antwoord kan geen echte toekomstige belofte laten staan', () => {
-  const reply = 'Ik heb een controleplan gemaakt. Morgenochtend pak ik dat zelfstandig weer op.';
-  assert.equal(__projectRouteTest.syntheticReplyNeedsPersistentState(reply), true);
-  assert.equal(
-    __projectRouteTest.stripSyntheticFutureClaims(reply),
-    'Ik heb een controleplan gemaakt.',
-  );
-});
-
-test('meerstapsuitvoering krijgt een episode zonder vaste projectwoordenschat', () => {
-  const bind = __projectRouteTest.shouldBindDurableUserEpisode;
-  assert.equal(bind({ explicitTool: true, buildWork: true, requiredToolCount: 3 }), true);
-  assert.equal(bind({ explicitTool: true, requiredToolCount: 2 }), true);
-  assert.equal(bind({ explicitTool: true, requiredToolCount: 1 }), false);
-  assert.equal(bind({ projectWork: true }), true);
-});
-
-test('een terugblik leest bestaand bewijs en is geen nieuwe uitvoeropdracht', () => {
-  const isRecap = __projectRouteTest.isWorkRecapQuery;
-  assert.equal(isRecap('Wat heb je vandaag echt gedaan?'), true);
-  assert.equal(isRecap('Waar ben je nu mee bezig?'), true);
-  assert.equal(
-    isRecap('Waar ben je nu echt mee bezig, wat heb je daarvoor gedaan en wat is de volgende stap?'),
-    true,
-  );
-  assert.equal(isRecap('Wat staat er nog open?'), true);
-  assert.equal(isRecap('Wat heb je zojuist met de schuur-led gedaan en hoe weet je dat?'), true);
-  assert.equal(isRecap('Voer het prijsprogramma opnieuw uit.'), false);
-
+test('een terugblik maakt toevallig toolgebruik niet tot een bijdrage', () => {
   const contribution = __projectRouteTest.contributionFromTools;
   assert.equal(
-    contribution([tool({ name: 'voer_uit' })], 'chat', 'Wat heb je vandaag gedaan?'),
+    contribution(
+      [tool({ name: 'voer_uit' })],
+      'chat',
+      'Wat heb je vandaag gedaan?',
+      plannedExecution(),
+    ),
     null,
   );
   assert.equal(
-    contribution([tool({ name: 'voer_uit' })], 'chat', 'Voer het prijsprogramma uit.')?.name,
+    contribution(
+      [tool({ name: 'voer_uit' })],
+      'chat',
+      'Voer het prijsprogramma uit.',
+      plannedExecution({ requiredTools: ['voer_uit'], actionRequested: true }),
+    )?.name,
     'voer_uit',
   );
 });
@@ -849,13 +1263,6 @@ test('bij meerdere bestanden blijft uitvoerbare broncode het te controleren werk
   );
 });
 
-test('sensorafhandeling blokkeert een open autonoom werkstuk niet', () => {
-  const signal = tool({ name: 'signalen_afhandelen' });
-  assert.equal(__projectRouteTest.autonomyLaneForTool('signalen_afhandelen'), null);
-  assert.equal(__projectRouteTest.autonomyStopReady([signal], { allowSignalOnly: true }), true);
-  assert.equal(__projectRouteTest.autonomyStopReady([signal], { allowSignalOnly: false }), false);
-});
-
 test('bestaand open werk mag in stille uren doorgaan en krijgt snel vervolg', () => {
   const open = { open_commitments: [{ id: 8 }] };
   const idle = { open_commitments: [] };
@@ -886,7 +1293,7 @@ test('een nieuwe aspiratie verdringt geen uitvoerbaar bestaand commitment', () =
   assert.equal(__autonomyScheduleTest.mayStartFreeAttention([{ id: 'deur' }], null), false);
 });
 
-test('autonoom werk stopt pas na rapportage en daarna het meerdaagse checkpoint', () => {
+test('autonoom werk vraagt rapportage en daarna het meerdaagse checkpoint', () => {
   const started = tool({ name: 'werk_bijhouden', changed: true, data: { item: { id: 7, status: 'open' } } });
   const written = {
     ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/resultaat.md' } }),
@@ -894,35 +1301,13 @@ test('autonoom werk stopt pas na rapportage en daarna het meerdaagse checkpoint'
   };
   const read = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/resultaat.md' } };
   const sent = tool({ name: 'stuur_bericht', changed: true });
-  const checkpoint = tool({ name: 'werk_bijhouden', changed: true, data: { item: { id: 7, status: 'open' } } });
   assert.equal(__projectRouteTest.autonomyArtifactReportPending([written, read]), true);
   assert.equal(__projectRouteTest.autonomyArtifactReportPending([written, read, sent]), false);
-  assert.equal(
-    __projectRouteTest.autonomyStopReady([started, written, read], { requiredWorkIds: [7] }),
-    false,
-  );
-  assert.equal(
-    __projectRouteTest.autonomyStopReady(
-      [started, written, read, sent, checkpoint],
-      { requiredWorkIds: [7] },
-    ),
-    false,
-  );
   assert.equal(
     __projectRouteTest.autonomyWorkCheckpointPending([started, written, read, sent], [7]),
     true,
   );
   const done = tool({ name: 'werk_bijhouden', changed: true, data: { item: { id: 7, status: 'done' } } });
-  assert.equal(__projectRouteTest.autonomyWorkReportPending([written, read, done]), true);
-  assert.equal(__projectRouteTest.autonomyWorkReportPending([written, read, done, sent]), false);
-  assert.equal(
-    __projectRouteTest.autonomyStopReady(
-      [started, written, read, sent, done],
-      { requiredWorkIds: [7] },
-    ),
-    true,
-  );
-
   const executed = {
     ...tool({ name: 'voer_uit' }),
     args: {
@@ -936,23 +1321,8 @@ test('autonoom werk stopt pas na rapportage en daarna het meerdaagse checkpoint'
     args: { pad: 'data/workspace/controle.mjs' },
   };
   assert.equal(
-    __projectRouteTest.autonomyWorkReportPending([executed, sourceRead], [7]),
-    false,
-  );
-  assert.equal(
-    __projectRouteTest.autonomyWorkReportPending([executed, sourceRead, sent], [7]),
-    false,
-  );
-  assert.equal(
     __projectRouteTest.autonomyWorkCheckpointPending([executed, sourceRead, done, sent], [7]),
     true,
-  );
-  assert.equal(
-    __projectRouteTest.autonomyStopReady(
-      [executed, sourceRead, done, sent],
-      { requiredWorkIds: [7] },
-    ),
-    false,
   );
 
   const startedHere = tool({
@@ -975,21 +1345,6 @@ test('autonoom werk stopt pas na rapportage en daarna het meerdaagse checkpoint'
     ),
     false,
   );
-});
-
-test('routinehuiswerk mag stil blijven maar een ingrijpend effect wordt teruggemeld', () => {
-  const changedHouse = {
-    ...tool({ name: 'bedien_huis', changed: true }),
-    args: { doel: 'overkappingsspots', actie: 'uit' },
-  };
-  const changedLock = {
-    ...tool({ name: 'bedien_huis', changed: true }),
-    args: { doel: 'achterdeurslot', actie: 'open' },
-  };
-  const sent = tool({ name: 'stuur_bericht', changed: true });
-  assert.equal(__projectRouteTest.autonomyWorkReportPending([changedHouse]), false);
-  assert.equal(__projectRouteTest.autonomyWorkReportPending([changedLock]), true);
-  assert.equal(__projectRouteTest.autonomyWorkReportPending([changedLock, sent]), false);
 });
 
 test('autonoom werk kan niet vóór het gezinsbericht als afgerond worden geboekt', async () => {
@@ -1046,6 +1401,13 @@ test('vrije autonomie kan niet blijven zoeken of oude gesprekken als takenbak ge
     'De controles in deze beurt leverden geen nieuw resultaat op dat een gezinsbeslissing of handeling veranderde.',
   );
   assert.equal(
+    __projectRouteTest.autonomyNoActionReason(
+      'Klaar: `data/workspace/inkomstenkans-start-nu-uitwerken.md` is gecontroleerd en bevat precies drie concrete verkoopteksten.',
+      [],
+    ),
+    'De controles in deze beurt leverden geen nieuw resultaat op dat een gezinsbeslissing of handeling veranderde.',
+  );
+  assert.equal(
     __toolsTest.emptyAutonomousWebFinding('Voor morgen zijn geen aangekondigde afsluitingen of andere verkeershinder gevonden.'),
     true,
   );
@@ -1083,8 +1445,6 @@ test('een open autonoom werkpunt blijft uitvoerbaar en echte voortgang is apart 
       },
     },
   });
-  assert.equal(__projectRouteTest.autonomyHasRunnableWork([open], [8]), true);
-  assert.equal(__projectRouteTest.autonomyStopReady([open], { requiredWorkIds: [8] }), false);
   assert.equal(__projectRouteTest.autonomyProgressFromTools([open])?.made_progress, true);
 
   const unchanged = { ...open, changed: false };
@@ -1181,27 +1541,141 @@ test('de autonome event-inbox bewaart openingen en echte temperatuurstappen, gee
 test('een gewone herinnering of gezichtsnaam wordt geen verzonnen gezinsbijdrage', () => {
   const contribution = __projectRouteTest.contributionFromTools;
   assert.equal(
-    contribution([tool({ name: 'onthoud', changed: true })], 'chat', 'Dat klopt'),
+    contribution([tool({ name: 'onthoud', changed: true })], 'chat', 'Dat klopt', plannedExecution()),
     null,
   );
   assert.equal(
-    contribution([tool({ name: 'leer_gezicht_van_foto', changed: true })], 'chat', 'Dit is Lola'),
+    contribution(
+      [tool({ name: 'leer_gezicht_van_foto', changed: true })],
+      'chat',
+      'Dit is Lola',
+      plannedExecution({ requiredTools: ['leer_gezicht_van_foto'], actionRequested: true }),
+    ),
     null,
   );
   assert.equal(
-    contribution([tool({ name: 'onthoud', changed: true })], 'chat', 'Onthoud dat Lola van thee houdt')?.name,
+    contribution(
+      [tool({ name: 'onthoud', changed: true })],
+      'chat',
+      'Onthoud dat Lola van thee houdt',
+      plannedExecution({ requiredTools: ['onthoud'], actionRequested: true }),
+    )?.name,
     'onthoud',
   );
+});
+
+test('alleen een terminale auto-bound éénstapsvoorkeur mag op transportaflevering wachten', () => {
+  const contribution = __projectRouteTest.contributionFromTools;
+  const memory = {
+    ...tool({ name: 'onthoud', changed: true }),
+    semanticBinding: {
+      capabilityId: 'memory.fact.write', operationId: 'remember',
+      requirementId: 'r1', role: 'primary',
+    },
+  };
+  const primaryPlan = {
+    requirementId: 'r1', toolName: 'onthoud',
+    capabilityId: 'memory.fact.write', operationId: 'remember',
+    supportsDeferred: false,
+  };
+  const validUnderstanding = {
+    durability: 'turn', temporal: { mode: 'now' },
+    source: { origin: 'user' }, monitoring: null,
+  };
+  const autoBoundOneShot = {
+    autoBoundThisTurn: true,
+    turnSucceeded: true,
+    continuation: false,
+    resumed: false,
+    understanding: validUnderstanding,
+    plans: [primaryPlan],
+  };
+  const options = (overrides = {}) => ({
+    durable: true,
+    plannedRequiredTools: ['onthoud'],
+    plannedTurnKind: 'action',
+    plannedActionRequested: true,
+    autoBoundOneShot: { ...autoBoundOneShot, ...overrides },
+  });
+
+  assert.equal(contribution(
+    [memory], 'chat',
+    'Ik heb liever één afgemaakt resultaat dan vijf ideeën—onthoud die voorkeur.',
+    options(),
+  )?.name, 'onthoud');
+  assert.equal(contribution(
+    [memory], 'chat', 'Onthoud dit.', options(),
+  )?.name, 'onthoud', 'na het effect resteert bij composeruitval alleen aflevering');
+
+  const incomplete = [
+    { ...memory, partial: true },
+    { ...memory, needs_followup: true },
+    { ...memory, effect_uncertain: true },
+    { ...memory, ok: false },
+    { ...memory, verified: false },
+    { ...memory, changed: false },
+  ];
+  for (const receipt of incomplete) {
+    assert.equal(contribution([receipt], 'chat', 'Onthoud dit.', options()), null);
+  }
+  for (const boundary of [
+    { turnKind: 'monitoring' },
+    { turnKind: 'continuity' },
+    { oneShot: { plans: [{ ...primaryPlan, supportsDeferred: true }] } },
+    { oneShot: { understanding: { ...validUnderstanding, durability: 'episode' } } },
+    { oneShot: { understanding: { ...validUnderstanding, temporal: { mode: 'later' } } } },
+    { oneShot: { understanding: { ...validUnderstanding, source: { origin: 'resume' } } } },
+    { oneShot: { understanding: { ...validUnderstanding, source: { origin: 'self' } } } },
+    { oneShot: { understanding: { ...validUnderstanding, source: undefined } } },
+    { oneShot: { resumed: true } },
+    { oneShot: { continuation: true } },
+    { oneShot: { plans: [primaryPlan, { ...primaryPlan, requirementId: 'r2' }] } },
+    { oneShot: { turnSucceeded: false } },
+    { oneShot: { autoBoundThisTurn: false } },
+  ]) {
+    assert.equal(contribution([memory], 'chat', 'Onthoud dit.', {
+      ...options(boundary.oneShot),
+      ...(boundary.turnKind ? { plannedTurnKind: boundary.turnKind } : {}),
+    }), null, JSON.stringify(boundary));
+  }
+  assert.equal(contribution([memory], 'chat', 'Onthoud dit.', {
+    ...options(), plannedActionRequested: false,
+  }), null, 'een niet-geselecteerde actie krijgt geen lifecycle-effect');
+  assert.equal(contribution([memory], 'chat', 'Onthoud dit en maak daarna een bestand.', {
+    ...options({ plans: [primaryPlan, {
+      requirementId: 'r2', toolName: 'schrijf_bestand',
+      capabilityId: 'workspace.file.write', operationId: 'write',
+    }] }),
+    plannedRequiredTools: ['onthoud', 'schrijf_bestand'],
+  }), null, 'incidenteel geheugen in groter werk mag het werk niet afronden');
+  for (const semanticBinding of [
+    { ...memory.semanticBinding, capabilityId: 'memory.fact.read' },
+    { ...memory.semanticBinding, operationId: 'search' },
+    { ...memory.semanticBinding, role: 'recovery' },
+  ]) {
+    assert.equal(contribution([{ ...memory, semanticBinding }], 'chat', 'Onthoud dit.', options()),
+      null, JSON.stringify(semanticBinding));
+  }
 });
 
 test('kritiek of een losse herhaling wordt door toevallig toolgebruik geen bijdrage', () => {
   const contribution = __projectRouteTest.contributionFromTools;
   assert.equal(
-    contribution([tool({ name: 'schrijf_bestand', changed: true })], 'chat', 'Daar heb ik niks aan'),
+    contribution(
+      [tool({ name: 'schrijf_bestand', changed: true })],
+      'chat',
+      'Daar heb ik niks aan',
+      plannedExecution(),
+    ),
     null,
   );
   assert.equal(
-    contribution([tool({ name: 'voer_uit', changed: true })], 'chat', 'Alweer'),
+    contribution(
+      [tool({ name: 'voer_uit', changed: true })],
+      'chat',
+      'Alweer',
+      plannedExecution(),
+    ),
     null,
   );
 });
@@ -1210,7 +1684,28 @@ test('een half gebouwd programma telt niet als afgeronde bijdrage', () => {
   const contribution = __projectRouteTest.contributionFromTools;
   const request = 'Bouw een werkend programma in een bestand';
   assert.equal(
-    contribution([tool({ name: 'schrijf_bestand', changed: true })], 'chat', request),
+    contribution(
+      [tool({ name: 'schrijf_bestand', changed: true })],
+      'chat',
+      request,
+      plannedExecution({
+        requiredTools: ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
+        turnKind: 'programming_build',
+        actionRequested: true,
+      }),
+    ),
+    null,
+  );
+  assert.equal(
+    contribution([
+      { ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/rekenaar.mjs' } }), args: { pad: 'data/workspace/rekenaar.mjs' } },
+      { ...tool({ name: 'voer_uit', changed: true }), args: { programma: 'node', argumenten: ['rekenaar.mjs'], werkmap: 'data/workspace' } },
+    ], 'chat', request, plannedExecution({
+      requiredTools: ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
+      turnKind: 'programming_build',
+      actionRequested: true,
+      durable: true,
+    })),
     null,
   );
   assert.equal(
@@ -1218,20 +1713,13 @@ test('een half gebouwd programma telt niet als afgeronde bijdrage', () => {
       { ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/rekenaar.mjs' } }), args: { pad: 'data/workspace/rekenaar.mjs' } },
       { ...tool({ name: 'voer_uit', changed: true }), args: { programma: 'node', argumenten: ['rekenaar.mjs'], werkmap: 'data/workspace' } },
       { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/rekenaar.mjs' } },
-    ], 'chat', request)?.name,
+    ], 'chat', request, plannedExecution({
+      requiredTools: ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
+      turnKind: 'programming_build',
+      actionRequested: true,
+    }))?.name,
     'voer_uit',
   );
-});
-
-test('een bewezen bouwcyclus stopt na schrijven, uitvoeren en teruglezen', () => {
-  const reply = __projectRouteTest.completedBuildReply([
-    { ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/rekenaar.mjs' } }), args: { pad: 'data/workspace/rekenaar.mjs' } },
-    { ...tool({ name: 'voer_uit', changed: true, data: { exit_code: 0, stdout: 'uitkomst: 42' } }), args: { programma: 'node', argumenten: ['rekenaar.mjs'], werkmap: 'data/workspace' } },
-    { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/rekenaar.mjs' } },
-  ]);
-  assert.match(reply, /gemaakt, uitgevoerd en daarna gecontroleerd/i);
-  assert.match(reply, /uitkomst: 42/);
-  assert.doesNotMatch(reply, /data\/workspace/);
 });
 
 test('een gecontroleerd document valt terug op de inhoud en nooit op het interne pad', () => {
@@ -1244,57 +1732,6 @@ test('een gecontroleerd document valt terug op de inhoud en nooit op het interne
   ], { userText: 'Doe dit.' });
   assert.match(reply, /small first milestone/);
   assert.doesNotMatch(reply, /data\/workspace/);
-});
-
-test('vervolgtaal wordt op betekenis herkend zonder gewone uitleg te kapen', () => {
-  for (const phrase of ['Doe dit.', 'Regel dat', 'Zorg dat dit werkt', 'Probeer het opnieuw']) {
-    assert.equal(__projectRouteTest.isContinuationRequest(phrase), true, phrase);
-  }
-  assert.equal(__projectRouteTest.isContinuationRequest('Doe dit. Werk het meteen concreet uit.'), true);
-  assert.equal(__projectRouteTest.isContinuationRequest('Ga hiermee verder en herstel het.'), true);
-  assert.equal(__projectRouteTest.isContinuationRequest('Hoe werkt dit eigenlijk?'), false);
-});
-
-test('een reflectieve vraag biedt geen bijwerking als vervanging voor begrip', () => {
-  assert.equal(__projectRouteTest.isReflectiveQuestion('Werkt de woonkamer Voice PE?'), true);
-  assert.equal(__projectRouteTest.isReflectiveQuestion('Waarom spreek je jezelf tegen?'), true);
-  assert.equal(__projectRouteTest.isReflectiveQuestion('Kun je het kantoorlicht uitzetten?'), false);
-  assert.equal(__projectRouteTest.isReflectiveQuestion('Hoe kunnen we geld verdienen? Onderzoek dit.'), false);
-});
-
-test('beurtcontract begrenst bewijs maar schrijft Eva haar antwoord niet voor', () => {
-  const contribution = __projectRouteTest.turnContractFor(
-    'Wat zou jij vandaag praktisch voor ons huishouden kunnen betekenen?',
-  );
-  assert.equal(contribution.kind, 'household_contribution');
-  assert.equal(contribution.requiredTools.includes('huis_status'), true);
-  assert.equal(typeof contribution.outcome, 'string');
-  assert.equal(
-    __projectRouteTest.turnContractFor('Spreek je jezelf nu tegen?').kind,
-    'conversation',
-  );
-  assert.equal(
-    __projectRouteTest.turnContractFor('Zeg dit via de woonkamer Voice PE.').kind,
-    'voice_action',
-  );
-  assert.equal(
-    __projectRouteTest.turnContractFor('Werkt de woonkamer Voice PE?').kind,
-    'conversation',
-  );
-  assert.equal(
-    __projectRouteTest.turnContractFor('Welke bijdrage kan ons echt geld opleveren en tegen welke prijs?').kind,
-    'earning_route',
-  );
-});
-
-test('een read-only geldvraag dwingt geen ondernemingsartefact af', () => {
-  const contract = __projectRouteTest.turnContractFor(
-    'We willen 100 euro verdienen. Geef alleen de eerste stap. Verander of verstuur in deze test niets.',
-  );
-  assert.equal(contract.kind, 'earning_route');
-  assert.match(contract.outcome, /zonder iets te maken of te wijzigen/);
-  assert.equal(contract.allowedTools.has('zoek_internet'), true);
-  assert.equal(contract.allowedTools.has('schrijf_bestand'), false);
 });
 
 test('interne autonome voortgang blijft buiten het gezinskanaal', () => {
@@ -1380,6 +1817,175 @@ test('een bedoelde niet-nul exitcode telt als gecontroleerde proef', async () =>
   assert.equal(result.verified, true);
   assert.equal(result.data.exit_code, 1);
   assert.deepEqual(result.data.expected_exit_codes, [1]);
+  assert.equal(result.data.artifact_receipts.before.length, 1);
+  assert.equal(result.data.artifact_receipts.before[0].sha256,
+    createHash('sha256').update(fs.readFileSync(path.join(workspace, 'verwachte-exit.mjs'))).digest('hex'));
+  assert.deepEqual(result.data.artifact_receipts.after, result.data.artifact_receipts.before);
+});
+
+test('programmareceipts binden bron en test aan writes, runs en finale readback', async () => {
+  const directory = 'receipt-chain';
+  const sourceArgs = { pad: `${directory}/reken.cjs`, inhoud: 'module.exports = 41;\n' };
+  const testArgs = {
+    pad: `${directory}/reken.test.cjs`,
+    inhoud: "const assert = require('node:assert/strict'); assert.equal(require('./reken.cjs'), 41);\n",
+  };
+  const recorded = (name, args, output) => {
+    const result = JSON.parse(output);
+    return {
+      name, args, output, ok: result.ok, verified: result.verified, changed: result.changed,
+      partial: result.partial, needs_followup: result.needs_followup,
+      semanticBinding: {
+        understandingSha256: 'a'.repeat(64), requirementId: 'receipt-chain',
+      },
+    };
+  };
+  const sourceWrite = recorded('schrijf_bestand', sourceArgs,
+    await executeTool('schrijf_bestand', sourceArgs, { mode: 'chat' }));
+  const testWrite = recorded('schrijf_bestand', testArgs,
+    await executeTool('schrijf_bestand', testArgs, { mode: 'chat' }));
+  const priorToolResults = [sourceWrite, testWrite];
+  const testRunArgs = {
+    programma: 'node', argumenten: ['reken.test.cjs'], werkmap: `data/workspace/${directory}`,
+  };
+  const testRun = recorded('voer_uit', testRunArgs, await executeTool(
+    'voer_uit', testRunArgs, { mode: 'chat', priorToolResults, timeoutMs: 30_000 },
+  ));
+  const sourceRunArgs = {
+    programma: 'node', argumenten: ['reken.cjs'], werkmap: `data/workspace/${directory}`,
+  };
+  const sourceRun = recorded('voer_uit', sourceRunArgs, await executeTool(
+    'voer_uit', sourceRunArgs, { mode: 'chat', priorToolResults, timeoutMs: 30_000 },
+  ));
+  const sourceReadArgs = { pad: `${directory}/reken.cjs` };
+  const sourceRead = recorded('lees_bestand', sourceReadArgs,
+    await executeTool('lees_bestand', sourceReadArgs, { mode: 'chat' }));
+  const testReadArgs = { pad: `${directory}/reken.test.cjs` };
+  const testRead = recorded('lees_bestand', testReadArgs,
+    await executeTool('lees_bestand', testReadArgs, { mode: 'chat' }));
+
+  const runReceipts = JSON.parse(testRun.output).data.artifact_receipts;
+  assert.deepEqual(new Set(runReceipts.before.map((item) => item.path)), new Set([
+    'data/workspace/receipt-chain/reken.cjs',
+    'data/workspace/receipt-chain/reken.test.cjs',
+  ]));
+  assert.deepEqual(runReceipts.after, runReceipts.before);
+  const plan = { requirementId: 'receipt-chain', args: { pad: `${directory}/reken.cjs` } };
+  const missingFinalTestRead = __projectRouteTest.iterativeArtifactStatus(
+    [sourceWrite, testWrite, testRun, sourceRun, sourceRead], plan,
+  );
+  assert.equal(missingFinalTestRead.complete, false);
+  assert.equal(missingFinalTestRead.next, 'readback');
+  assert.equal(missingFinalTestRead.readTarget, 'data/workspace/receipt-chain/reken.test.cjs');
+  const complete = __projectRouteTest.iterativeArtifactStatus(
+    [sourceWrite, testWrite, testRun, sourceRun, sourceRead, testRead], plan,
+  );
+  assert.equal(complete.complete, true);
+
+  const repeatedSourceWrite = recorded('schrijf_bestand', sourceArgs,
+    await executeTool('schrijf_bestand', sourceArgs, { mode: 'chat' }));
+  const repeatedTestWrite = recorded('schrijf_bestand', testArgs,
+    await executeTool('schrijf_bestand', testArgs, { mode: 'chat' }));
+  assert.equal(repeatedSourceWrite.changed, false);
+  assert.equal(repeatedTestWrite.changed, false);
+  const noOpWritesDoNotInvalidateProof = __projectRouteTest.iterativeArtifactStatus(
+    [
+      sourceWrite, testWrite, testRun, sourceRun, sourceRead, testRead,
+      repeatedSourceWrite, repeatedTestWrite,
+    ],
+    plan,
+  );
+  assert.equal(noOpWritesDoNotInvalidateProof.complete, true);
+
+  const tamperedResult = JSON.parse(sourceRun.output);
+  tamperedResult.data.artifact_receipts.before
+    .find((item) => item.path.endsWith('/reken.cjs')).sha256 = '0'.repeat(64);
+  const tamperedRun = { ...sourceRun, output: JSON.stringify(tamperedResult) };
+  const rejected = __projectRouteTest.iterativeArtifactStatus(
+    [sourceWrite, testWrite, testRun, tamperedRun, sourceRead, testRead], plan,
+  );
+  assert.equal(rejected.complete, false);
+  assert.equal(rejected.next, 'write');
+});
+
+test('documentafronding bindt write aan een volledige hashgelijke readback', async () => {
+  const args = {
+    pad: 'document-receipt/resultaat.md',
+    inhoud: '# Gecontroleerd resultaat\n\nAlleen aantoonbare feiten.\n',
+  };
+  const recorded = (name, toolArgs, output) => {
+    const result = JSON.parse(output);
+    return {
+      name, args: toolArgs, output, ok: result.ok, verified: result.verified,
+      changed: result.changed, partial: result.partial,
+      needs_followup: result.needs_followup,
+      semanticBinding: {
+        understandingSha256: 'b'.repeat(64), requirementId: 'document-receipt',
+      },
+    };
+  };
+  const write = recorded('schrijf_bestand', args,
+    await executeTool('schrijf_bestand', args, { mode: 'chat' }));
+  const readArgs = { pad: args.pad };
+  const read = recorded('lees_bestand', readArgs,
+    await executeTool('lees_bestand', readArgs, { mode: 'chat' }));
+  const plan = { requirementId: 'document-receipt', args: { pad: args.pad } };
+  assert.equal(__projectRouteTest.iterativeArtifactStatus([write, read], plan).complete, true);
+  assert.equal(completedArtifact([write, read], {
+    requireExecution: false, path: 'data/workspace/document-receipt/resultaat.md',
+  })?.path, 'data/workspace/document-receipt/resultaat.md');
+
+  const tamperedPayload = JSON.parse(read.output);
+  tamperedPayload.artifact_receipt.sha256 = '0'.repeat(64);
+  const tampered = { ...read, output: JSON.stringify(tamperedPayload) };
+  assert.equal(__projectRouteTest.iterativeArtifactStatus([write, tampered], plan).complete, false);
+  assert.equal(completedArtifact([write, tampered], { requireExecution: false }), null);
+
+  const mismatchedBinding = {
+    ...read,
+    semanticBinding: {
+      understandingSha256: 'c'.repeat(64), requirementId: 'document-receipt',
+    },
+  };
+  assert.equal(completedArtifact([write, mismatchedBinding], { requireExecution: false }), null);
+
+  const partialArgs = { pad: args.pad, vanaf_regel: 1, aantal_regels: 1 };
+  const partialRead = recorded('lees_bestand', partialArgs,
+    await executeTool('lees_bestand', partialArgs, { mode: 'chat' }));
+  assert.equal(JSON.parse(partialRead.output).artifact_receipt.complete_read, false);
+  assert.equal(completedArtifact([write, partialRead], { requireExecution: false }), null);
+});
+
+test('childprogrammatijd blijft binnen de resterende driverdeadline', () => {
+  assert.equal(boundedRuntimeMs(undefined), 120_000);
+  assert.equal(boundedRuntimeMs(10_000), 9_500);
+  assert.equal(boundedRuntimeMs(200), 1);
+  assert.equal(boundedRuntimeMs(999_999), 120_000);
+});
+
+test('afgekorte programma-uitvoer bewaart exitbewijs en levert getypeerd vervolgwerk', async () => {
+  const workspace = path.join(dataDir, 'workspace');
+  const scriptPath = path.join(workspace, 'lange-verwachte-exit.mjs');
+  const write = JSON.parse(await executeTool('schrijf_bestand', {
+    pad: scriptPath,
+    inhoud: "process.stdout.write('x'.repeat(9001)); process.exit(1);\n",
+  }, { mode: 'chat' }));
+  assert.equal(write.ok, true);
+  const result = JSON.parse(await executeTool('voer_uit', {
+    programma: 'node',
+    argumenten: ['lange-verwachte-exit.mjs'],
+    werkmap: workspace,
+    verwachte_exitcodes: [1],
+  }, { mode: 'chat' }));
+  assert.equal(result.ok, true);
+  assert.equal(result.verified, true);
+  assert.equal(result.partial, true);
+  assert.equal(result.needs_followup, true);
+  assert.equal(result.failure_class, 'output_truncated');
+  assert.equal(result.retryable, false);
+  assert.equal(result.effect_uncertain, false);
+  assert.equal(result.data.exit_code, 1);
+  assert.deepEqual(result.data.expected_exit_codes, [1]);
 });
 
 test('een verwachte exitcode maakt een gemeld ontbrekend geheim niet succesvol', async () => {
@@ -1417,25 +2023,6 @@ test('een toegestane exitcode maakt een ontbrekend programma-entrypoint niet suc
   assert.match(result.error, /entrypoint bestaat niet/);
 });
 
-test('een falende bouwproef stuurt terug naar repareren en telt niet als voltooid', () => {
-  const write = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/proef.py' } }),
-    args: { pad: 'data/workspace/proef.py' },
-  };
-  const failed = {
-    ...tool({ name: 'voer_uit', ok: true, data: { exit_code: 1, stderr: 'AssertionError' } }),
-    args: { programma: 'python3', argumenten: ['proef.py'], werkmap: 'data/workspace' },
-  };
-  assert.deepEqual(
-    __projectRouteTest.buildMissionRemaining(
-      [write, failed],
-      ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-      true,
-    ),
-    ['schrijf_bestand'],
-  );
-});
-
 test('vrij gekozen code na een document blijft open tot die code echt is uitgevoerd en gelezen', () => {
   const documentWrite = {
     ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/route.md' } }),
@@ -1448,18 +2035,10 @@ test('vrij gekozen code na een document blijft open tot die code echt is uitgevo
   };
   const base = [documentWrite, documentRead, scriptWrite];
   assert.equal(__projectRouteTest.buildMissionComplete(base, false), false);
-  assert.deepEqual(
-    __projectRouteTest.buildMissionRemaining(base, ['schrijf_bestand', 'lees_bestand'], false),
-    ['voer_uit'],
-  );
   const run = {
     ...tool({ name: 'voer_uit', data: { exit_code: 0 } }),
     args: { programma: 'python3', argumenten: ['demo.py'], werkmap: 'data/workspace' },
   };
-  assert.deepEqual(
-    __projectRouteTest.buildMissionRemaining([...base, run], ['schrijf_bestand', 'lees_bestand'], false),
-    ['lees_bestand'],
-  );
   const scriptRead = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/demo.py' } };
   assert.equal(__projectRouteTest.buildMissionComplete([...base, run, scriptRead], false), true);
 });
@@ -1485,81 +2064,6 @@ test('gevraagde tests en een echte CLI-run zijn afzonderlijke acceptatiebewijzen
     args: { programma: 'python3', argumenten: ['voer_cli_demo.py'], werkmap: 'data/workspace' },
   };
   assert.equal(__projectRouteTest.programmingAcceptanceStatus([testRun, wrapperRun], prompt).complete, true);
-});
-
-test('de bouwmissie biedt tests, voorbeeldbestand en CLI-run in vaste fasen aan', () => {
-  const prompt = 'Schrijf gerichte tests en controleer een echte CLI-run met een apart voorbeeldbestand.';
-  const required = ['schrijf_bestand', 'voer_uit', 'lees_bestand'];
-  const sourceWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/balans.js' } }),
-    args: { pad: 'data/workspace/balans.js' },
-  };
-  const base = [sourceWrite];
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining(base, required, true, prompt), ['schrijf_bestand']);
-
-  const testWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/test_balans.js' } }),
-    args: { pad: 'data/workspace/test_balans.js' },
-  };
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining([...base, testWrite], required, true, prompt), ['voer_uit']);
-  const testRun = {
-    ...tool({ name: 'voer_uit', data: { exit_code: 0, stdout: 'tests passed' } }),
-    args: { programma: 'node', argumenten: ['test_balans.js'], werkmap: 'data/workspace' },
-  };
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining([...base, testWrite, testRun], required, true, prompt), ['schrijf_bestand']);
-  const fixtureWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/voorbeeld.json' } }),
-    args: { pad: 'data/workspace/voorbeeld.json' },
-  };
-  const withFixture = [...base, testWrite, testRun, fixtureWrite];
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining(withFixture, required, true, prompt), ['voer_uit']);
-  const cliRun = {
-    ...tool({ name: 'voer_uit', data: { exit_code: 0, stdout: '{"ok":true}' } }),
-    args: { programma: 'node', argumenten: ['balans.js', 'voorbeeld.json'], werkmap: 'data/workspace' },
-  };
-  const completed = [...withFixture, cliRun];
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining(completed, required, true, prompt), ['lees_bestand']);
-  const sourceRead = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/balans.js' } };
-  const proven = [...completed, sourceRead];
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining(proven, required, true, prompt), []);
-  assert.equal(__projectRouteTest.phasedProgrammingBuildStatus(proven, prompt).complete, true);
-  const facts = __projectRouteTest.programmingOutcomeFacts(proven, prompt);
-  assert.equal(facts.cliOutput, '{"ok":true}');
-  assert.match(facts.facts, /afzonderlijke CLI-run/);
-});
-
-test('geldige programmeerbewijzen blijven geldig als de bron vóór de CLI-run is teruggelezen', () => {
-  const prompt = 'Schrijf gerichte tests en controleer een echte CLI-run met een apart voorbeeldbestand.';
-  const sourceWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/woorden.js' } }),
-    args: { pad: 'data/workspace/woorden.js' },
-  };
-  const testWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/woorden.test.js' } }),
-    args: { pad: 'data/workspace/woorden.test.js' },
-  };
-  const testRun = {
-    ...tool({ name: 'voer_uit', data: { exit_code: 0, stdout: '4 tests geslaagd' } }),
-    args: { programma: 'node', argumenten: ['woorden.test.js'], werkmap: 'data/workspace' },
-  };
-  const sourceRead = { ...tool({ name: 'lees_bestand' }), args: { pad: 'data/workspace/woorden.js' } };
-  const fixtureWrite = {
-    ...tool({ name: 'schrijf_bestand', changed: true, data: { path: 'data/workspace/demo.json' } }),
-    args: { pad: 'data/workspace/demo.json' },
-  };
-  const cliRun = {
-    ...tool({ name: 'voer_uit', data: { exit_code: 0, stdout: '{"aantalUniekeWoorden":3}' } }),
-    args: { programma: 'node', argumenten: ['woorden.js', 'demo.json'], werkmap: 'data/workspace' },
-  };
-  const results = [sourceWrite, testWrite, testRun, sourceRead, fixtureWrite, cliRun];
-  assert.equal(__projectRouteTest.phasedProgrammingBuildStatus(results, prompt).complete, true);
-  assert.deepEqual(__projectRouteTest.buildMissionRemaining(
-    results,
-    ['schrijf_bestand', 'voer_uit', 'lees_bestand'],
-    true,
-    prompt,
-  ), []);
-  assert.equal(__projectRouteTest.programmingOutcomeFacts(results, prompt).cliOutput, '{"aantalUniekeWoorden":3}');
 });
 
 test('duurzaam werk kan niet zonder bewijs als klaar worden geboekt', () => {
@@ -1654,6 +2158,8 @@ test('autonome programmas zitten in een echte mount- en procesisolatie', async (
   fs.mkdirSync(extensions, { recursive: true });
   fs.writeFileSync(path.join(extensions, 'integrity.txt'), 'vast\n', 'utf8');
   const program = path.join(workspace, 'sandbox-check.mjs');
+  const privateSource = path.resolve('src/mind/agent.js');
+  const privateEnv = path.resolve('.env');
   fs.writeFileSync(program, `
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1665,8 +2171,8 @@ const probe = (target, mode) => {
   } catch (error) { return error.code || 'blocked'; }
 };
 console.log(JSON.stringify({
-  source: probe('/home/administrator/project/Bottie/src/mind/agent.js', 'read'),
-  env: probe('/home/administrator/project/Bottie/.env', 'read'),
+  source: probe(${JSON.stringify(privateSource)}, 'read'),
+  env: probe(${JSON.stringify(privateEnv)}, 'read'),
   docker: probe('/var/run/docker.sock', 'read'),
   outside: probe(path.resolve(process.cwd(), '..', 'escape.txt'), 'write'),
   extensions: probe(path.join(process.cwd(), 'extensions', 'integrity.txt'), 'write'),
@@ -1793,6 +2299,483 @@ test('een duurzame toolontvangst voorkomt blinde dubbele uitvoering na herstel',
   assert.equal(replay.row.output, '{"ok":true,"verified":true}');
 });
 
+test('een duurzame uitvoeringssleutel is exact aan haar semantische handeling gebonden', () => {
+  const executionKey = 'semantic-receipt-test';
+  const first = claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:semantic',
+    tool: 'bedien_huis',
+    args: { actie: 'uit', doel: 'lamp' },
+  });
+  assert.equal(first.claimed, true);
+
+  const reorderedReplay = claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:semantic',
+    tool: 'bedien_huis',
+    args: { doel: 'lamp', actie: 'uit' },
+  });
+  assert.equal(reorderedReplay.claimed, false, 'objectvolgorde verandert de betekenis niet');
+
+  assert.throws(() => claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:semantic',
+    tool: 'bedien_huis',
+    args: { doel: 'lamp', actie: 'aan' },
+  }), /andere handeling gebonden/);
+  assert.throws(() => claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:other',
+    tool: 'bedien_huis',
+    args: { doel: 'lamp', actie: 'uit' },
+  }), /andere handeling gebonden/);
+  assert.throws(() => claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:semantic',
+    tool: 'spreek_in_huis',
+    args: { doel: 'lamp', actie: 'uit' },
+  }), /andere handeling gebonden/);
+});
+
+test('de duurzame ledger weigert achteraf gewijzigde argumenten ook vóór voltooiing', () => {
+  const executionKey = 'semantic-args-tamper-test';
+  const intent = {
+    executionKey,
+    turnId: 'telegram:42:tamper',
+    tool: 'bedien_huis',
+    args: { doel: 'overkapping', actie: 'uit' },
+  };
+  claimTurnToolExecution(intent);
+  withoutExecutionTrigger('turn_tool_executions_intent_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET args=? WHERE execution_key=?')
+      .run(canonicalJson({ doel: 'woonkamer', actie: 'aan' }), executionKey);
+  });
+  assert.throws(() => claimTurnToolExecution(intent), /andere handeling|semantische hash/i);
+  assert.throws(
+    () => completeTurnToolExecution(executionKey, '{"ok":true}'),
+    /intentierecordhash/i,
+  );
+});
+
+test('redactie maakt twee verschillende ruwe handelingen niet tot dezelfde receipt', () => {
+  const executionKey = 'semantic-redaction-collision-test';
+  const common = {
+    executionKey, turnId: 'telegram:42:redaction-collision', tool: 'probe',
+  };
+  const first = claimTurnToolExecution({
+    ...common, args: { credential: 'password=eerste-geheim-123' },
+  });
+  assert.match(first.row.args, /AFGESCHERMD:SECRET/);
+  assert.doesNotMatch(first.row.args, /eerste-geheim/);
+  assert.throws(() => claimTurnToolExecution({
+    ...common, args: { credential: 'password=tweede-geheim-456' },
+  }), /andere handeling/i);
+});
+
+test('een oude niet-canonieke ledgerregel blijft expliciet onverifieerbaar', () => {
+  const executionKey = 'legacy-noncanonical-args-test';
+  db.prepare(`INSERT INTO turn_tool_executions
+    (execution_key,turn_id,tool,args,status,started_ts,execution_seq)
+    SELECT ?,?,?,?,?,?,coalesce(max(execution_seq),0)+1 FROM main.turn_tool_executions`).run(
+    executionKey,
+    'telegram:42:legacy-order',
+    'probe',
+    JSON.stringify({ b: 2, a: 1 }),
+    'started',
+    new Date().toISOString(),
+  );
+  assert.throws(() => claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:legacy-order',
+    tool: 'probe',
+    args: { a: 1, b: 2 },
+  }), /legacy.*onverifieerbaar/u);
+  const stored = db.prepare(`SELECT * FROM main.turn_tool_executions
+    WHERE execution_key=?`).get(executionKey);
+  assert.equal(stored.args, JSON.stringify({ b: 2, a: 1 }));
+  assert.equal(stored.intent_record_sha256, null);
+  assert.equal(stored.execution_verification, 'legacy_unverifiable');
+  assert.throws(() => claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:legacy-order',
+    tool: 'probe',
+    args: { a: 1, b: 3 },
+  }), /andere handeling/i);
+});
+
+test('een gepland effect bindt ook understanding, requirement en capability aan zijn receipt', () => {
+  const executionKey = 'semantic-plan-receipt-test';
+  const binding = {
+    understandingSha256: 'a'.repeat(64),
+    requirementId: 'r2',
+    addressesRequirementIds: ['r2'],
+    basisReceiptIds: ['s1'],
+    capabilityId: 'home.entity.control',
+    operationId: 'set',
+    role: 'primary',
+    executionType: 'direct',
+  };
+  const first = claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:bound-plan',
+    tool: 'bedien_huis',
+    args: { doel: 'lamp', actie: 'uit' },
+    semanticBinding: binding,
+  });
+  assert.equal(first.claimed, true);
+  assert.deepEqual(JSON.parse(first.row.semantic_binding), binding);
+  assert.equal(claimTurnToolExecution({
+    executionKey,
+    turnId: 'telegram:42:bound-plan',
+    tool: 'bedien_huis',
+    args: { actie: 'uit', doel: 'lamp' },
+    semanticBinding: { ...binding },
+  }).claimed, false);
+
+  for (const changed of [
+    { requirementId: 'r3' },
+    { capabilityId: 'home.entity.read' },
+    { operationId: 'read' },
+    { understandingSha256: 'b'.repeat(64) },
+    { addressesRequirementIds: ['r3'] },
+    { basisReceiptIds: ['s2'] },
+    { role: 'recovery' },
+    { executionType: 'retry' },
+  ]) {
+    assert.throws(() => claimTurnToolExecution({
+      executionKey,
+      turnId: 'telegram:42:bound-plan',
+      tool: 'bedien_huis',
+      args: { doel: 'lamp', actie: 'uit' },
+      semanticBinding: { ...binding, ...changed },
+    }), /andere handeling gebonden|ongeldige semantische uitvoeringsbinding/);
+  }
+  assert.throws(() => claimTurnToolExecution({
+    executionKey: 'invalid-semantic-plan-receipt',
+    turnId: 'telegram:42:bound-plan',
+    tool: 'bedien_huis',
+    args: {},
+    semanticBinding: { ...binding, understandingSha256: 'niet-een-hash' },
+  }), /ongeldige semantische uitvoeringsbinding/);
+  for (const [index, invalidBinding] of [
+    { ...binding, addressesRequirementIds: ['r3'] },
+    { ...binding, role: '' },
+    { ...binding, extraAuthority: true },
+    { ...binding, basisReceiptIds: ['s1', 's1'] },
+  ].entries()) {
+    assert.throws(() => claimTurnToolExecution({
+      executionKey: `invalid-semantic-binding:${index}`,
+      turnId: 'telegram:42:bound-plan',
+      tool: 'bedien_huis',
+      args: {},
+      semanticBinding: invalidBinding,
+    }), /ongeldige semantische uitvoeringsbinding/);
+  }
+});
+
+test('een duurzame uitvoeringsreceipt kan niet stil naar ander bewijs worden herschreven', () => {
+  const executionKey = 'completion-receipt-test';
+  claimTurnToolExecution({ executionKey, turnId: 'turn:completion', tool: 'probe', args: {} });
+  assert.equal(completeTurnToolExecution(executionKey, '{"ok":true}').completed, true);
+  assert.equal(
+    db.prepare('SELECT output_sha256 FROM turn_tool_executions WHERE execution_key=?')
+      .get(executionKey).output_sha256,
+    createHash('sha256').update('{"ok":true}').digest('hex'),
+  );
+  assert.equal(completeTurnToolExecution(executionKey, '{"ok":true}').completed, false);
+  assert.throws(
+    () => completeTurnToolExecution(executionKey, '{"ok":false}'),
+    /conflicterende eindstatus/,
+  );
+  assert.throws(
+    () => completeTurnToolExecution('missing-completion-receipt', '{}'),
+    /onbekende duurzame tooluitvoering/,
+  );
+});
+
+test('uitvoer- en materiaalhashes weigeren DB-mutatie en NULL blijft fail-closed na herstart', () => {
+  const outputKey = 'completion-output-tamper-test';
+  const outputIntent = {
+    executionKey: outputKey, turnId: 'turn:output-tamper', tool: 'probe', args: { soort: 'output' },
+  };
+  claimTurnToolExecution(outputIntent);
+  completeTurnToolExecution(outputKey, '{"ok":true}');
+  withoutExecutionTrigger('turn_tool_executions_terminal_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET output=? WHERE execution_key=?')
+      .run('{"ok":false}', outputKey);
+  });
+  assert.throws(() => claimTurnToolExecution(outputIntent), /outputhash/i);
+
+  const materialKey = 'completion-material-tamper-test';
+  const materialIntent = {
+    executionKey: materialKey, turnId: 'turn:material-tamper', tool: 'probe', args: { soort: 'materiaal' },
+  };
+  claimTurnToolExecution(materialIntent);
+  completeTurnToolExecution(materialKey, JSON.stringify({
+    ok: true, artifact_receipt: { sha256: 'a'.repeat(64) },
+  }));
+  withoutExecutionTrigger('turn_tool_executions_terminal_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET material_sha256=? WHERE execution_key=?')
+      .run('b'.repeat(64), materialKey);
+  });
+  assert.throws(() => claimTurnToolExecution(materialIntent), /materiaalhash/i);
+
+  const restartKey = 'completion-null-restart-test';
+  const restartIntent = {
+    executionKey: restartKey, turnId: 'turn:null-restart', tool: 'probe', args: { soort: 'restart' },
+  };
+  claimTurnToolExecution(restartIntent);
+  completeTurnToolExecution(restartKey, '{"ok":true}');
+  withoutExecutionTrigger('turn_tool_executions_terminal_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET output_sha256=NULL WHERE execution_key=?')
+      .run(restartKey);
+  });
+  const probe = spawnSync(process.execPath, ['--input-type=module', '-e', `
+    const { claimTurnToolExecution, db } = await import('./src/db.js');
+    try {
+      claimTurnToolExecution(${JSON.stringify(restartIntent)});
+      db.close();
+      process.exit(3);
+    } catch (error) {
+      db.close();
+      process.exit(/outputhash/i.test(String(error?.message || '')) ? 0 : 4);
+    }
+  `], {
+    cwd: path.resolve('.'),
+    env: { ...process.env, EVA_DATA_DIR: dataDir },
+    encoding: 'utf8',
+  });
+  assert.equal(probe.status, 0, probe.stderr || probe.stdout);
+});
+
+test('verse waarnemingen zijn append-only auditbewijs en nooit replaycache', () => {
+  const binding = {
+    understandingSha256: 'c'.repeat(64), requirementId: 'r1',
+    addressesRequirementIds: ['r1'], basisReceiptIds: [],
+    capabilityId: 'workspace.file.read', operationId: 'read',
+    role: 'primary', executionType: null,
+  };
+  const first = recordTurnToolObservation({
+    turnId: 'telegram:42:fresh-read', tool: 'lees_bestand',
+    args: { pad: 'notitie.txt' }, semanticBinding: binding,
+    output: '{"ok":true,"verified":true,"artifact_receipt":{"sha256":"' + 'd'.repeat(64) + '"}}',
+  });
+  const second = recordTurnToolObservation({
+    turnId: 'telegram:42:fresh-read', tool: 'lees_bestand',
+    args: { pad: 'notitie.txt' }, semanticBinding: binding,
+    output: '{"ok":true,"verified":true,"artifact_receipt":{"sha256":"' + 'e'.repeat(64) + '"}}',
+  });
+  assert.notEqual(first.execution_key, second.execution_key);
+  const rows = db.prepare(`SELECT material_sha256 FROM turn_tool_executions
+    WHERE turn_id='telegram:42:fresh-read' ORDER BY rowid`).all();
+  assert.deepEqual(rows.map((row) => row.material_sha256), ['d'.repeat(64), 'e'.repeat(64)]);
+});
+
+function seedVoiceRetryLedger({ conversationId, turnId, args, result }) {
+  const digest = (value) => createHash('sha256').update(String(value)).digest('hex');
+  const recordBody = {
+    contract: 'TurnUnderstandingRecord/v1', sourceSha256: digest(`source:${turnId}`),
+  };
+  logTimeline('turn_understanding', 'voicehandeling begrepen', {
+    internalOnly: true, conversationId, turnId, interpretationSucceeded: true,
+    understanding: {
+      ...recordBody, sha256: digest(canonicalJson(recordBody)),
+    },
+  });
+  const executionKey = `voice-retry-test:${digest(`${turnId}:${canonicalJson(args)}`)}`;
+  claimTurnToolExecution({ executionKey, turnId, tool: 'spreek_in_huis', args });
+  completeTurnToolExecution(executionKey, JSON.stringify(result));
+  return db.prepare('SELECT * FROM turn_tool_executions WHERE execution_key=?').get(executionKey);
+}
+
+const voiceActionResult = (overrides = {}) => ({
+  contract: 'ActionResult/v1', tool: 'spreek_in_huis',
+  ok: true, verified: true, changed: true, ...overrides,
+});
+
+test('VoiceRetry leidt een hashgebonden voltooid effect uit exact de nieuwste conversatiebeurt af', () => {
+  const conversationId = 'voice:retry-success';
+  const row = seedVoiceRetryLedger({
+    conversationId, turnId: 'voice-retry-success-turn',
+    args: { tekst: 'Eten is klaar.', doel: 'overkapping' }, result: voiceActionResult(),
+  });
+  const intent = deriveVoiceRetryIntent({
+    conversationId, now: new Date(Date.parse(row.finished_ts) + 1_000),
+  });
+  assert.equal(intent.contract, 'VoiceRetryIntent/v1');
+  assert.equal(intent.disposition, 'already_completed');
+  assert.deepEqual(intent.action, { tekst: 'Eten is klaar.', doel: 'overkapping' });
+  assert.match(intent.sourceSha256, /^[a-f0-9]{64}$/u);
+  assert.match(intent.effectSha256, /^[a-f0-9]{64}$/u);
+  const { sha256, ...body } = intent;
+  assert.equal(sha256, createHash('sha256').update(canonicalJson(body)).digest('hex'));
+  assert.equal(Object.isFrozen(intent), true);
+  assert.equal(Object.isFrozen(intent.action), true);
+  assert.equal(deriveVoiceRetryIntent({ conversationId: `${conversationId}-ander` }), null);
+});
+
+test('VoiceRetry laat alleen een expliciet veilig pre-effect netwerkfalen opnieuw proberen', () => {
+  const conversationId = 'voice:retry-transient';
+  const row = seedVoiceRetryLedger({
+    conversationId, turnId: 'voice-retry-transient-turn', args: { tekst: 'De deur is open.' },
+    result: voiceActionResult({
+      ok: false, verified: false, changed: false, failure_class: 'transient',
+      retryable: true, effect_uncertain: false,
+    }),
+  });
+  const intent = deriveVoiceRetryIntent({
+    conversationId, now: new Date(Date.parse(row.finished_ts) + 2_000),
+  });
+  assert.equal(intent.disposition, 'retryable_pre_effect');
+  assert.deepEqual(intent.action, { tekst: 'De deur is open.' });
+});
+
+test('VoiceRetry weigert onzekerheid, policy, inner-ledgerargs en redactiemarkers', () => {
+  const cases = [
+    ['uncertain', { tekst: 'Onzeker.' }, voiceActionResult({
+      ok: false, verified: false, changed: false, failure_class: 'transient',
+      retryable: true, effect_uncertain: true,
+    })],
+    ['policy', { tekst: 'Verboden.' }, voiceActionResult({
+      ok: false, verified: false, changed: false, failure_class: 'policy',
+      retryable: true, effect_uncertain: false,
+    })],
+    ['inner', { target: 'assist_satellite.voice_patio', text: 'Inner.' }, voiceActionResult()],
+    ['redacted', { tekst: 'Token [AFGESCHERMD:HA_TOKEN]' }, voiceActionResult()],
+  ];
+  for (const [slug, args, result] of cases) {
+    const conversationId = `voice:retry-${slug}`;
+    const row = seedVoiceRetryLedger({
+      conversationId, turnId: `voice-retry-${slug}-turn`, args, result,
+    });
+    assert.equal(deriveVoiceRetryIntent({
+      conversationId, now: new Date(Date.parse(row.finished_ts) + 1_000),
+    }), null, slug);
+  }
+
+  const corruptConversation = 'voice:retry-corrupt-understanding';
+  seedVoiceRetryLedger({
+    conversationId: corruptConversation, turnId: 'voice-retry-corrupt-turn',
+    args: { tekst: 'Niet uit corrupte bron.' }, result: voiceActionResult(),
+  });
+  const timeline = db.prepare(`SELECT id,meta FROM timeline
+    WHERE kind='turn_understanding' AND json_extract(meta,'$.conversationId')=?
+    ORDER BY id DESC LIMIT 1`).get(corruptConversation);
+  const corruptMeta = JSON.parse(timeline.meta);
+  corruptMeta.understanding.sourceSha256 = 'e'.repeat(64);
+  db.prepare('UPDATE timeline SET meta=? WHERE id=?').run(JSON.stringify(corruptMeta), timeline.id);
+  assert.equal(deriveVoiceRetryIntent({ conversationId: corruptConversation }), null);
+});
+
+test('VoiceRetry vertrouwt geen achteraf gewijzigde args of beurtbinding uit de ledger', () => {
+  const argsConversation = 'voice:retry-args-tamper';
+  const argsRow = seedVoiceRetryLedger({
+    conversationId: argsConversation, turnId: 'voice-retry-args-origin',
+    args: { tekst: 'Originele zin.', doel: 'overkapping' }, result: voiceActionResult(),
+  });
+  withoutExecutionTrigger('turn_tool_executions_intent_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET args=? WHERE execution_key=?').run(
+      canonicalJson({ tekst: 'Gewijzigde zin.', doel: 'woonkamer' }),
+      argsRow.execution_key,
+    );
+  });
+  assert.equal(deriveVoiceRetryIntent({
+    conversationId: argsConversation,
+    now: new Date(Date.parse(argsRow.finished_ts) + 1_000),
+  }), null);
+
+  const outputConversation = 'voice:retry-output-tamper';
+  const outputRow = seedVoiceRetryLedger({
+    conversationId: outputConversation, turnId: 'voice-retry-output-origin',
+    args: { tekst: 'Niet uit gewijzigde uitvoer.' }, result: voiceActionResult(),
+  });
+  withoutExecutionTrigger('turn_tool_executions_terminal_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET output=? WHERE execution_key=?')
+      .run(JSON.stringify(voiceActionResult({ changed: false })), outputRow.execution_key);
+  });
+  assert.equal(deriveVoiceRetryIntent({
+    conversationId: outputConversation,
+    now: new Date(Date.parse(outputRow.finished_ts) + 1_000),
+  }), null);
+
+  const timeConversation = 'voice:retry-time-tamper';
+  const timeRow = seedVoiceRetryLedger({
+    conversationId: timeConversation, turnId: 'voice-retry-time-origin',
+    args: { tekst: 'Deze tijd hoort vast te staan.' }, result: voiceActionResult({
+      ok: false, verified: false, changed: false, failure_class: 'transient',
+      retryable: true, effect_uncertain: false,
+    }),
+  });
+  const forgedFinishedTs = new Date(Date.parse(timeRow.finished_ts) + 60_000).toISOString();
+  withoutExecutionTrigger('turn_tool_executions_terminal_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET finished_ts=? WHERE execution_key=?')
+      .run(forgedFinishedTs, timeRow.execution_key);
+  });
+  assert.equal(deriveVoiceRetryIntent({
+    conversationId: timeConversation,
+    now: new Date(Date.parse(forgedFinishedTs) + 1_000),
+  }), null);
+
+  const originConversation = 'voice:retry-turn-origin';
+  const movedRow = seedVoiceRetryLedger({
+    conversationId: originConversation, turnId: 'voice-retry-turn-origin-id',
+    args: { tekst: 'Hoort alleen bij de oorsprong.' }, result: voiceActionResult(),
+  });
+  const victimConversation = 'voice:retry-turn-victim';
+  const victimTurnId = 'voice-retry-turn-victim-id';
+  const digest = (value) => createHash('sha256').update(String(value)).digest('hex');
+  const recordBody = {
+    contract: 'TurnUnderstandingRecord/v1', sourceSha256: digest(`source:${victimTurnId}`),
+  };
+  logTimeline('turn_understanding', 'slachtofferbeurt begrepen', {
+    internalOnly: true, conversationId: victimConversation, turnId: victimTurnId,
+    interpretationSucceeded: true,
+    understanding: { ...recordBody, sha256: digest(canonicalJson(recordBody)) },
+  });
+  withoutExecutionTrigger('turn_tool_executions_intent_immutable', () => {
+    db.prepare('UPDATE turn_tool_executions SET turn_id=? WHERE execution_key=?')
+      .run(victimTurnId, movedRow.execution_key);
+  });
+  assert.equal(deriveVoiceRetryIntent({
+    conversationId: victimConversation,
+    now: new Date(Date.parse(movedRow.finished_ts) + 1_000),
+  }), null);
+});
+
+test('VoiceRetry vervalt na vijf minuten en graaft niet voorbij een interveniërende understanding', () => {
+  const expiredConversation = 'voice:retry-expired';
+  const expired = seedVoiceRetryLedger({
+    conversationId: expiredConversation, turnId: 'voice-retry-expired-turn',
+    args: { tekst: 'Te oud.' }, result: voiceActionResult(),
+  });
+  assert.equal(deriveVoiceRetryIntent({
+    conversationId: expiredConversation,
+    now: new Date(Date.parse(expired.finished_ts) + 5 * 60_000 + 1),
+  }), null);
+
+  const interveningConversation = 'voice:retry-intervening';
+  seedVoiceRetryLedger({
+    conversationId: interveningConversation, turnId: 'voice-retry-original-turn',
+    args: { tekst: 'Niet opgraven.' }, result: voiceActionResult(),
+  });
+  logTimeline('turn_understanding', 'nieuwe gesprekshandeling', {
+    internalOnly: true, conversationId: interveningConversation,
+    turnId: 'voice-retry-newer-turn', interpretationSucceeded: true,
+    understanding: {
+      contract: 'TurnUnderstandingRecord/v1',
+      sha256: 'c'.repeat(64), sourceSha256: 'd'.repeat(64),
+    },
+  });
+  assert.equal(deriveVoiceRetryIntent({ conversationId: interveningConversation }), null);
+
+  const telegramConversation = 'telegram:42';
+  seedVoiceRetryLedger({
+    conversationId: telegramConversation, turnId: 'telegram:420:1',
+    args: { tekst: 'Verkeerde prefix.' }, result: voiceActionResult(),
+  });
+  assert.equal(deriveVoiceRetryIntent({ conversationId: telegramConversation }), null);
+});
+
 test('camera en herinnering gebruiken de centrale Eva-woordkeuze', () => {
   assert.match(
     renderCameraNotice({
@@ -1808,16 +2791,14 @@ test('camera en herinnering gebruiken de centrale Eva-woordkeuze', () => {
   );
 });
 
-test('een autonoom signaal verdwijnt niet zonder inhoudelijke beoordeling', async () => {
+test('een direct vervalste signaalbeoordeling krijgt geen batchauthority', async () => {
+  const batch = __autonomyScheduleTest.signalBatch([{
+    id: 'signal-123', ts: '2026-08-09T10:00:00.000Z', type: 'entity_state',
+    key: 'sensor.achterdeur_temperature', text: 'Achterdeur Temperature: 26.4 -> 25.8',
+  }]);
   const context = {
     mode: 'autonomy',
-    messageContext: {
-      pendingSignals: [{
-        id: 'signal-123',
-        key: 'sensor.achterdeur_temperature',
-        text: 'Achterdeur Temperature: 26.4 -> 25.8',
-      }],
-    },
+    messageContext: { pendingSignals: batch.signals, signalBatch: batch },
   };
   const empty = JSON.parse(await executeTool('signalen_afhandelen', {
     ids: ['signal-123'],
@@ -1833,12 +2814,56 @@ test('een autonoom signaal verdwijnt niet zonder inhoudelijke beoordeling', asyn
   assert.equal(unrelated.ok, false);
   assert.equal(unrelated.verified, false);
 
-  const assessed = JSON.parse(await executeTool('signalen_afhandelen', {
-    ids: ['signal-123'],
-    oordeel: 'Geen actie nodig: dit was alleen een normale temperatuurdaling.',
+  const forged = JSON.parse(await executeTool('signalen_afhandelen', {
+    dispositie: 'no_action', oordeel: 'Geen actie nodig na de actuele beoordeling.',
   }, context));
-  assert.equal(assessed.ok, true);
-  assert.equal(assessed.verified, true);
+  assert.equal(forged.ok, false);
+  assert.equal(forged.verified, false);
+});
+
+test('de autonomiescheduler vertrouwt alleen een receipt van exact haar eigen signaalbatch', () => {
+  const batch = __autonomyScheduleTest.signalBatch([
+    { id: 'signal-1', ts: '2026-08-09T02:16:15.981Z', key: 'binary_sensor.achterdeur',
+      type: 'entity_state', text: 'Achterdeur: off -> on' },
+    { id: 'signal-2', ts: '2026-08-09T02:16:16.981Z', key: 'sensor.regen',
+      type: 'entity_state', text: 'Regen: droog -> nat' },
+  ]);
+  assert.equal(Object.isFrozen(batch), true);
+  assert.equal(Object.isFrozen(batch.signals), true);
+  assert.match(batch.sha256, /^[a-f0-9]{64}$/u);
+  const output = JSON.stringify({
+    contract: 'ActionResult/v1', ok: true, verified: true,
+    data: { contract: 'SignalAssessmentReceipt/v1', batchId: batch.batchId,
+      batchSha256: batch.sha256, acknowledgedIds: ['signal-1'] },
+  });
+  assert.deepEqual([...__autonomyScheduleTest.acknowledgedSignalIds([
+    { name: 'signalen_afhandelen', args: { ids: ['signal-2'] }, ok: true, verified: true, output },
+  ], batch)], [], 'een gedeeltelijke acknowledgement mag de batch niet verkleinen');
+  const completeOutput = JSON.stringify({
+    contract: 'ActionResult/v1', ok: true, verified: true,
+    data: { contract: 'SignalAssessmentReceipt/v1', batchId: batch.batchId,
+      batchSha256: batch.sha256, acknowledgedIds: ['signal-1', 'signal-2'] },
+  });
+  assert.deepEqual(__autonomyScheduleTest.acknowledgedSignalIds([
+    { name: 'signalen_afhandelen', ok: true, verified: true, output: completeOutput },
+  ], batch), ['signal-1', 'signal-2']);
+  assert.deepEqual([...__autonomyScheduleTest.acknowledgedSignalIds([
+    { name: 'signalen_afhandelen', ok: true, verified: true,
+      output: output.replace(batch.sha256, '0'.repeat(64)) },
+  ], batch)], [], 'een stale of vervalste batchhash mag niets verwijderen');
+  assert.deepEqual([...__autonomyScheduleTest.acknowledgedSignalIds([
+    { name: 'signalen_afhandelen', ok: false, verified: false, output },
+  ], batch)], [], 'een mislukte beoordeling mag niets verwijderen');
+  const current = [
+    { ...batch.signals[0] },
+    { ...batch.signals[1], text: 'Regen: nat -> hard' },
+    { id: 'signal-3', ts: '2026-08-09T02:17:00.000Z', key: 'sensor.wind',
+      type: 'entity_state', text: 'Wind: stil -> stevig' },
+  ];
+  assert.deepEqual(__autonomyScheduleTest.removeAcknowledgedSignalSnapshots(
+    current, batch, ['signal-1', 'signal-2'],
+  ).map((signal) => signal.id), ['signal-2', 'signal-3'],
+  'alleen het exact oorspronkelijke snapshot verdwijnt; wijziging en nieuw signaal blijven');
 });
 
 test('voice-sessies hebben altijd precies een bruikbare voice-prefix', () => {
@@ -1851,227 +2876,1217 @@ test('voice-sessies hebben altijd precies een bruikbare voice-prefix', () => {
 test('voiceproeven dragen expliciete provenance en voeren niet de markering uit', () => {
   const parse = __voiceBridgeTest.voiceRequestInput;
   assert.deepEqual(parse({ vraag: '__eva_test__ Schakel de tv uit.' }, 'run-7'), {
+    rawInput: '__eva_test__ Schakel de tv uit.',
     text: 'Schakel de tv uit.',
     syntheticTest: true,
     syntheticConversationId: 'test:run-7',
   });
   assert.deepEqual(parse({ vraag: 'Hoe gaat het?' }, 'run-8'), {
+    rawInput: 'Hoe gaat het?',
     text: 'Hoe gaat het?',
     syntheticTest: false,
     syntheticConversationId: '',
   });
-  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:jaap'), false);
-  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:eva-test-run-8'), true);
-  assert.equal(__projectRouteTest.syntheticConversationCanBePurged('voice:test:run-8'), true);
 });
 
-test('een niet meer aangeboden verplichte tool dwingt geen willekeurige modelcalls af', async () => {
+test('voicebridge verzint geen bewoner of satellite en levert geen ongebruikt luistercontract', () => {
+  assert.deepEqual(__voiceBridgeTest.voiceRequestProvenance({
+    sender: 'Jaap',
+    satellite: 'overkapping',
+  }), {
+    sender: 'Huisgenoot',
+    identityTrusted: false,
+    satellite: '',
+  });
+  assert.deepEqual(__voiceBridgeTest.voiceRequestProvenance({
+    sender: 'Lola',
+    speaker_id: 'voiceprint-lola',
+    speaker_identity_verified: true,
+    satellite: 'assist_satellite.voice_patio',
+  }), {
+    sender: 'Lola',
+    identityTrusted: true,
+    satellite: 'assist_satellite.voice_patio',
+  });
+
+  const payload = __voiceBridgeTest.voiceReplyPayload({
+    reply: 'Hoi.',
+    question: 'Ben je daar?',
+    responseTimeMs: 12.6,
+    conversationId: 'voice:patio',
+    satellite: 'assist_satellite.voice_patio',
+  });
+  assert.deepEqual(payload, {
+    reply: 'Hoi.',
+    ok: true,
+    vraag: 'Ben je daar?',
+    response_time_ms: 13,
+    conversation_id: 'voice:patio',
+    satellite: 'assist_satellite.voice_patio',
+  });
+  assert.equal('continue_listening' in payload, false);
+  assert.equal('listen_timeout_ms' in payload, false);
+  assert.equal('conversation_active' in payload, false);
+
+  const automation = fs.readFileSync(
+    path.join(process.cwd(), 'deploy/eva-voice-bridge-automation.yaml'),
+    'utf8',
+  );
+  assert.match(automation, /sender:\s+Huisgenoot/);
+  assert.match(automation, /\{% else %\}\s+\{\{ '' \}\}/u);
+  assert.match(automation, /satellite:\s+"\{\{ resolved_satellite \| trim \}\}"/u);
+  assert.doesNotMatch(automation, /continue_listening|listen_timeout_ms/);
+  assert.match(automation, /trigger\.satellite_id/);
+  assert.match(
+    automation,
+    /id:\s+superseded[\s\S]*?event_type:\s+eva_voice_query[\s\S]*?satellite:\s+"\{\{ resolved_satellite \| trim \}\}"/u,
+  );
+  assert.match(automation, /wait\.trigger\.id == 'reply'/u);
+  assert.match(automation, /value_template:\s+"\{\{ wait\.trigger is none \}\}"/u);
+  assert.match(
+    automation,
+    /value_template:\s+"\{\{ wait\.trigger is none \}\}"[\s\S]*?else:[\s\S]*?set_conversation_response:\s+""/u,
+    'een superseded conversation-trigger moet expliciet leeg eindigen, anders zegt HA "Done"',
+  );
+  assert.match(automation, /timeout:\s+"00:00:35"/u);
+  assert.equal(__voiceBridgeTest.voiceDeliveryWindowMs, 32_000);
+  assert.ok(
+    automation.indexOf('trigger.satellite_id') < automation.indexOf('trigger.device_id'),
+    'de exacte Assist-satellite moet vóór de device-fallback worden gebruikt',
+  );
+});
+
+test('voice-lanes gebruiken exact de satellite en nooit een conversation-id als fysieke fallback', () => {
+  const lane = __voiceBridgeTest.voiceLaneKey;
+  assert.equal(
+    lane(' ASSIST_SATELLITE.VOICE_PATIO '),
+    'voice-lane:assist_satellite.voice_patio',
+  );
+  assert.equal(lane('voice:wake-session-1'), 'voice-lane:unresolved');
+  assert.equal(lane('voice:wake-session-2'), 'voice-lane:unresolved');
+  assert.equal(lane(''), 'voice-lane:unresolved');
+});
+
+test('de publieke bus bereikt ook voor een onopgeloste lane geen voice-authority', async () => {
+  const rejected = [];
+  const onTimeline = (row) => {
+    if (row.kind === 'voice_rejected' && row.meta?.id === 'unresolved-live-route') rejected.push(row);
+  };
+  const originalFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('een onopgeloste voice-query mag geen netwerkwerk starten');
+  };
+  bus.on('timeline', onTimeline);
+  try {
+    startVoiceBridge();
+    bus.emit('voice_query', {
+      id: 'unresolved-live-route',
+      vraag: 'Zet de tv uit.',
+      satellite: 'overkapping',
+    });
+    await new Promise((resolve) => setImmediate(resolve));
+  } finally {
+    bus.off('timeline', onTimeline);
+    globalThis.fetch = originalFetch;
+  }
+  assert.equal(fetchCalls, 0);
+  assert.equal(rejected.length, 0);
+});
+
+test('de publieke bus kan zonder request-id geen fysiek event of rejection minten', async () => {
+  const originalFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  const rejectedBefore = db.prepare(`SELECT count(*) AS value FROM main.timeline
+    WHERE kind='voice_rejected'`).get().value;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('een voice-event zonder id mag geen netwerkwerk starten');
+  };
+  try {
+    startVoiceBridge();
+    bus.emit('voice_query', {
+      vraag: 'Zet de tv uit.',
+      satellite: 'assist_satellite.voice_living_room',
+    });
+    await new Promise((resolve) => setImmediate(resolve));
+    await new Promise((resolve) => setImmediate(resolve));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  assert.equal(fetchCalls, 0);
+  const rejectedAfter = db.prepare(`SELECT count(*) AS value FROM main.timeline
+    WHERE kind='voice_rejected'`).get().value;
+  assert.equal(rejectedAfter, rejectedBefore);
+});
+
+test('de gate accepteert geen unresolved of lane-satellite-kruising', () => {
+  const gate = __voiceBridgeTest.createVoiceTurnGate({ clearTimer: () => {} });
+  assert.throws(
+    () => gate.begin(__voiceBridgeTest.voiceLaneKey(''), 'geen-lane'),
+    /voice_lane_unresolved/,
+  );
+  const patio = 'assist_satellite.voice_patio';
+  const living = 'assist_satellite.voice_living_room';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(patio);
+  const isCurrent = gate.begin(laneKey, 'gekruist');
+  assert.equal(gate.track(
+    'gekruist', laneKey, { reply: 'Nooit afleveren.' }, 'timer', living,
+  ), false);
+  assert.equal(isCurrent(), true, 'een deliveryfout trekt de inhoudelijke opdracht niet in');
+  assert.equal(gate.acknowledge('gekruist', living), null);
+  gate.finish(laneKey, 'gekruist');
+  assert.equal(isCurrent(), false);
+});
+
+test('een voice-ACK hoort exact bij de resolved satellite', () => {
+  const gate = __voiceBridgeTest.createVoiceTurnGate({ clearTimer: () => {} });
+  const satellite = 'assist_satellite.voice_patio';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(satellite);
+  gate.begin(laneKey, 'antwoord-1');
+  assert.equal(gate.track(
+    'antwoord-1', laneKey, { reply: 'Hoi.' }, 'timer-1', satellite,
+  ), true);
+  assert.equal(gate.acknowledge('antwoord-1', 'assist_satellite.voice_living_room'), null);
+  assert.equal(
+    gate.acknowledge('antwoord-1', satellite).satellite,
+    satellite,
+  );
+});
+
+test('dezelfde satellite supersedet een oude beurt ondanks verschillende conversation-ids', async () => {
+  const cleared = [];
+  const sent = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const satellite = 'assist_satellite.voice_patio';
+  const first = {
+    conversationId: 'voice:wake-session-1',
+    laneKey: __voiceBridgeTest.voiceLaneKey(satellite),
+  };
+  const second = {
+    conversationId: 'voice:wake-session-2',
+    laneKey: __voiceBridgeTest.voiceLaneKey(satellite),
+  };
+  assert.notEqual(first.conversationId, second.conversationId);
+  assert.equal(first.laneKey, second.laneKey);
+
+  const tvIsCurrent = gate.begin(first.laneKey, 'tv-uit');
+  assert.equal(gate.track(
+    'tv-uit', first.laneKey, { reply: 'Ik heb de tv uitgezet.' }, 'tv-timer', satellite,
+  ), true);
+  const heaterIsCurrent = gate.begin(second.laneKey, 'heater-aan');
+
+  assert.equal(tvIsCurrent(), false);
+  assert.equal(heaterIsCurrent(), true);
+  assert.equal(await gate.deliver('tv-uit', tvIsCurrent, () => sent.push('tv')), false);
+  assert.equal(gate.acknowledge('tv-uit', satellite), null);
+  assert.deepEqual(cleared, ['tv-timer']);
+  assert.equal(gate.track(
+    'heater-aan',
+    second.laneKey,
+    { reply: 'De heater staat aan.' },
+    'heater-timer',
+    satellite,
+  ), true);
+  assert.equal(await gate.deliver(
+    'heater-aan', heaterIsCurrent, () => sent.push('heater'),
+  ), true);
+  assert.deepEqual(sent, ['heater']);
+  assert.equal(
+    gate.acknowledge('heater-aan', satellite).result.reply,
+    'De heater staat aan.',
+  );
+});
+
+test('een oud resultaat dat pas na de nieuwe beurt gereed is passeert de publishgrens niet', async () => {
+  const cleared = [];
+  const sent = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const satellite = 'assist_satellite.voice_patio';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(satellite);
+  const oldIsCurrent = gate.begin(laneKey, 'oude-internetvraag');
+  const newIsCurrent = gate.begin(laneKey, 'nieuw-tv-commando');
+
+  assert.equal(gate.track(
+    'nieuw-tv-commando', laneKey, { reply: 'De tv staat uit.' }, 'new-timer', satellite,
+  ), true);
+  assert.equal(await gate.deliver(
+    'nieuw-tv-commando', newIsCurrent, () => sent.push('nieuw'),
+  ), true);
+  assert.equal(gate.track(
+    'oude-internetvraag', laneKey, { reply: 'Oud resultaat.' }, 'old-timer', satellite,
+  ), false);
+  assert.equal(await gate.deliver(
+    'oude-internetvraag', oldIsCurrent, () => sent.push('oud'),
+  ), false);
+  assert.deepEqual(sent, ['nieuw']);
+  assert.equal(gate.acknowledge('oude-internetvraag', satellite), null);
+  assert.equal(gate.acknowledge('nieuw-tv-commando', satellite).result.reply, 'De tv staat uit.');
+  assert.deepEqual(cleared, ['old-timer', 'new-timer']);
+});
+
+test('verschillende satellites blijven onafhankelijk bij dezelfde conversation-id', async () => {
+  const cleared = [];
+  const sent = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const conversationId = 'voice:jaap';
+  const patio = 'assist_satellite.voice_patio';
+  const living = 'assist_satellite.voice_living_room';
+  const patioLane = __voiceBridgeTest.voiceLaneKey(patio);
+  const livingLane = __voiceBridgeTest.voiceLaneKey(living);
+  const patioIsCurrent = gate.begin(patioLane, 'patio');
+  const livingIsCurrent = gate.begin(livingLane, 'living');
+  assert.equal(conversationId, 'voice:jaap');
+  assert.equal(patioIsCurrent(), true);
+  assert.equal(livingIsCurrent(), true);
+  assert.equal(gate.track(
+    'patio', patioLane, { reply: 'Buiten klaar.' }, 'patio-timer', patio,
+  ), true);
+  assert.equal(gate.track(
+    'living', livingLane, { reply: 'Binnen klaar.' }, 'living-timer', living,
+  ), true);
+  assert.equal(await gate.deliver('living', livingIsCurrent, () => sent.push('living')), true);
+  assert.equal(await gate.deliver('patio', patioIsCurrent, () => sent.push('patio')), true);
+  assert.deepEqual(sent, ['living', 'patio']);
+  assert.equal(gate.acknowledge('living', living).result.reply, 'Binnen klaar.');
+  assert.equal(gate.acknowledge('patio', patio).result.reply, 'Buiten klaar.');
+  assert.deepEqual(cleared, ['living-timer', 'patio-timer']);
+});
+
+test('supersession breekt een coöperatieve send af en weigert de late ACK', async () => {
+  const cleared = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const satellite = 'assist_satellite.voice_patio';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(satellite);
+  const firstIsCurrent = gate.begin(laneKey, 'eerste');
+  assert.equal(gate.track(
+    'eerste', laneKey, { reply: 'Het eerste antwoord.' }, 'eerste-timer', satellite,
+  ), true);
+  let sendStarted;
+  const started = new Promise((resolve) => { sendStarted = resolve; });
+  let observedSignal;
+  const offered = gate.deliver('eerste', firstIsCurrent, (signal) => new Promise((resolve) => {
+    observedSignal = signal;
+    sendStarted();
+    signal.addEventListener('abort', () => resolve(), { once: true });
+  }));
+  await started;
+
+  const secondIsCurrent = gate.begin(laneKey, 'tweede');
+  assert.equal(firstIsCurrent(), false);
+  assert.equal(secondIsCurrent(), true);
+  assert.equal(observedSignal.aborted, true);
+  assert.equal(await offered, false);
+  assert.equal(gate.acknowledge('eerste', satellite), null);
+  assert.deepEqual(cleared, ['eerste-timer']);
+});
+
+test('delivery-expiry breekt de send af maar supersedet de inhoudelijke beurt niet', async () => {
+  let clock = 1_000;
+  const cleared = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    now: () => clock,
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const satellite = 'assist_satellite.voice_patio';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(satellite);
+  const isCurrent = gate.begin(laneKey, 'lang-werk', { deadlineAt: 2_000 });
+  const result = { reply: 'Het werk is af.' };
+  assert.equal(gate.track(
+    'lang-werk', laneKey, result, 'deadline-timer', satellite, 2_000,
+  ), true);
+
+  let sendStarted;
+  const started = new Promise((resolve) => { sendStarted = resolve; });
+  let observedSignal;
+  const delivery = gate.deliver('lang-werk', isCurrent, (signal) => new Promise((resolve) => {
+    observedSignal = signal;
+    sendStarted();
+    signal.addEventListener('abort', () => resolve(false), { once: true });
+  }));
+  await started;
+  clock = 2_000;
+  assert.equal(gate.expire('lang-werk').result, result);
+  assert.equal(observedSignal.aborted, true);
+  assert.equal(await delivery, false);
+  assert.equal(isCurrent(), true, 'de opdrachtlease staat los van de gesloten voicepipeline');
+  assert.equal(gate.acknowledge('lang-werk', satellite), null);
+  assert.deepEqual(cleared, ['deadline-timer']);
+  gate.finish(laneKey, 'lang-werk');
+  assert.equal(isCurrent(), false);
+});
+
+test('een vóór supersession bevestigde delivery blijft historisch bewijs', async () => {
+  const cleared = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const satellite = 'assist_satellite.voice_patio';
+  const laneKey = __voiceBridgeTest.voiceLaneKey(satellite);
+  const firstIsCurrent = gate.begin(laneKey, 'eerste');
+  const result = { turnId: 'turn-eerste', reply: 'Het eerste antwoord.' };
+  assert.equal(gate.track('eerste', laneKey, result, 'eerste-timer', satellite), true);
+  assert.equal(await gate.deliver('eerste', firstIsCurrent, async () => {}), true);
+  const acceptedBeforeSupersession = gate.acknowledge('eerste', satellite);
+  assert.equal(acceptedBeforeSupersession.result, result);
+  assert.deepEqual(cleared, ['eerste-timer']);
+
+  const secondIsCurrent = gate.begin(laneKey, 'tweede');
+  assert.equal(secondIsCurrent(), true);
+  assert.equal(gate.acknowledge('eerste', satellite), null);
+  assert.equal(acceptedBeforeSupersession.result.reply, 'Het eerste antwoord.');
+});
+
+test('de voiceantwoordtermijn begint bij ingress en late tekst is niet verzend- of ACK-baar', async () => {
+  let clock = 1_000;
+  const cleared = [];
+  const sent = [];
+  const gate = __voiceBridgeTest.createVoiceTurnGate({
+    now: () => clock,
+    clearTimer: (timer) => cleared.push(timer),
+  });
+  const laneKey = __voiceBridgeTest.voiceLaneKey('assist_satellite.voice_patio');
+  const satellite = 'assist_satellite.voice_patio';
+  const lateIsCurrent = gate.begin(laneKey, 'late', { deadlineAt: 1_035 });
+  clock = 1_036;
+  assert.equal(lateIsCurrent(), true, 'deadline sluit delivery, niet de inhoudelijke lease');
+  assert.equal(await gate.deliver('late', lateIsCurrent, () => sent.push('late')), false);
+  assert.equal(gate.track(
+    'late', laneKey, { reply: 'Te laat.' }, 'late-timer', satellite, 1_035,
+  ), false);
+  assert.deepEqual(sent, []);
+  assert.deepEqual(cleared, ['late-timer']);
+
+  clock = 2_000;
+  gate.begin(laneKey, 'pending', { deadlineAt: 2_035 });
+  assert.equal(gate.track(
+    'pending', laneKey, { reply: 'Nog op tijd.' }, 'pending-timer', satellite, 2_035,
+  ), true);
+  clock = 2_035;
+  assert.equal(gate.acknowledge('pending', satellite), null);
+  assert.deepEqual(cleared, ['late-timer', 'pending-timer']);
+});
+
+test('de execution-driver toont alleen opaque aliassen en laat verplichting en voltooiing bij de host', async () => {
+  const implementationSpec = 'Maak de parser, voer de randgevallen uit en lees de bron terug.';
+  const understandingSummary = {
+    contract: 'TurnUnderstanding/v1',
+    intent: 'implement',
+    constraints: { internet: false },
+  };
+  const materialize = {
+    alias: 'materialiseer', description: 'Maak het afgesproken artefact.',
+    parameters: { type: 'object', properties: { inhoud: { type: 'string' } }, required: ['inhoud'] },
+    globalToolName: 'schrijf_bestand',
+  };
+  const verify = {
+    alias: 'controleer', description: 'Controleer het gemaakte artefact.',
+    parameters: { type: 'object', properties: { scenario: { type: 'string' } }, required: ['scenario'] },
+    globalToolName: 'voer_uit',
+  };
+  const modelRounds = [];
+  const executions = [];
+  const result = await runExecutionDriver({
+    implementationSpec,
+    understandingSummary,
+    offeredHandles: [materialize, verify],
+    maxRounds: 6,
+    roundTimeoutMs: 2_222,
+    totalTimeoutMs: 10_000,
+    rateLimitRetries: 1,
+    budgetClass: 'foreground',
+    obligations: ({ receipts }) => (receipts.length ? ['controleer'] : ['materialiseer']),
+    done: ({ receipts }) => receipts.length === 2,
+    complete: async (request) => {
+      modelRounds.push(request);
+      const alias = request.tools[0].name;
+      return {
+        output: [{ type: 'function_call', call_id: `driver-${modelRounds.length}`, name: alias, arguments: '{"inhoud":"bron"}' }],
+        text: 'dit mag geen eindantwoord worden',
+        toolCalls: [{ call_id: `driver-${modelRounds.length}`, name: alias, arguments: '{"inhoud":"bron"}' }],
+      };
+    },
+    execute: async (handle, args, context) => {
+      executions.push({ handle, args, context });
+      assert.equal(context.contract, 'ExecutionContext/v1');
+      assert.equal(context.implementationSpec, implementationSpec);
+      assert.equal(Object.isFrozen(context.understandingSummary), true);
+      assert.equal(Object.isFrozen(context.understandingSummary.constraints), true);
+      assert.ok(context.deadlineTs > Date.now());
+      assert.ok(context.timeoutMs > 0);
+      return {
+        contract: 'ActionResult/v1', ok: true, verified: true, changed: true,
+        data: { alias: handle.alias },
+      };
+    },
+  });
+
+  assert.equal(result.contract, 'ExecutionTrace/v1');
+  assert.equal(result.status, 'completed');
+  assert.equal(result.rounds, 2);
+  assert.equal(result.receipts.length, 2);
+  assert.equal('text' in result, false);
+  assert.deepEqual(executions.map(({ handle }) => handle), [materialize, verify]);
+  assert.deepEqual(modelRounds.map(({ tools }) => tools.map(({ name }) => name)), [
+    ['materialiseer'], ['controleer'],
+  ]);
+  assert.deepEqual(Object.keys(modelRounds[0].tools[0]).sort(), ['description', 'name', 'parameters']);
+  assert.doesNotMatch(JSON.stringify(modelRounds[0].tools), /schrijf_bestand|voer_uit/);
+  assert.match(modelRounds[0].instructions, /Maak de parser, voer de randgevallen uit/);
+  assert.match(modelRounds[0].instructions, /"intent":"implement"/);
+  assert.equal(modelRounds[0].toolChoice, 'required');
+  assert.equal(modelRounds[0].rateLimitRetries, 1);
+  assert.equal(modelRounds[0].budgetClass, 'foreground');
+  assert.ok(modelRounds.every(({ timeoutMs }) => timeoutMs > 0 && timeoutMs <= 2_222));
+});
+
+test('een execution-modeltimeout gebruikt exact één lichtere fallback vóór één uitvoering', async () => {
+  const handle = { alias: 'maak', description: 'Maak het artefact.', parameters: { type: 'object' } };
+  const requests = [];
+  let executions = 0;
+  const result = await runExecutionDriver({
+    implementationSpec: 'Maak één aantoonbaar artefact.',
+    understandingSummary: { goal: 'één artefact' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', effort: 'high',
+    fallbackModel: 'gpt-5.6-terra', fallbackEffort: 'medium',
+    roundTimeoutMs: 120_000, totalTimeoutMs: 300_000,
+    obligations: () => ['maak'], done: ({ receipts }) => receipts.length === 1,
+    complete: async (request) => {
+      requests.push(request);
+      if (requests.length === 1) throw new Error('The operation was aborted due to timeout');
+      return {
+        toolCalls: [{ call_id: 'fallback-maak', name: 'maak', arguments: '{}' }],
+      };
+    },
+    execute: async () => {
+      executions += 1;
+      return { contract: 'ActionResult/v1', ok: true, verified: true, changed: true };
+    },
+  });
+
+  assert.equal(result.status, 'completed');
+  assert.equal(result.rounds, 1);
+  assert.equal(executions, 1, 'de fallback kiest alleen; de hosthandeling gebeurt exact één keer');
+  assert.deepEqual(requests.map(({ model, effort }) => [model, effort]), [
+    ['gpt-5.6-sol', 'high'], ['gpt-5.6-terra', 'medium'],
+  ]);
+  assert.ok(requests.every(({ transientRetries }) => transientRetries === 0));
+  assert.equal(result.trace.some(({ type }) => type === 'model_timeout_fallback'), true);
+  assert.equal(result.trace.some(({ type }) => type === 'model_fallback_recovered'), true);
+});
+
+test('twee execution-modeltimeouts stoppen getypeerd en effectvrij vóór de eerste handeling', async () => {
+  const handle = { alias: 'maak', description: 'Maak het artefact.', parameters: { type: 'object' } };
+  const models = [];
+  let executions = 0;
+  const result = await runExecutionDriver({
+    implementationSpec: 'Maak één aantoonbaar artefact.',
+    understandingSummary: { goal: 'één artefact' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', fallbackModel: 'gpt-5.6-terra',
+    obligations: () => ['maak'], done: () => false,
+    complete: async ({ model }) => {
+      models.push(model);
+      throw Object.assign(new Error('request timeout'), { code: 'EVA_LLM_TIMEOUT' });
+    },
+    execute: async () => { executions += 1; },
+  });
+
+  assert.deepEqual(models, ['gpt-5.6-sol', 'gpt-5.6-terra']);
+  assert.equal(executions, 0);
+  assert.equal(result.status, 'blocked');
+  assert.equal(result.code, 'EVA_EXECUTION_MODEL_TIMEOUT');
+  assert.equal(result.reason, 'model_timeout_routes_exhausted');
+  assert.equal(result.phase, 'before_first_action');
+  assert.equal(result.modelAttempts, 2);
+  assert.equal(result.fallbackAttempted, true);
+  assert.equal(result.fallbackFailureKind, 'timeout');
+  assert.deepEqual(result.receipts, []);
+  assert.match(__projectRouteTest.executionModelFailureText(result),
+    /primaire en alternatieve uitvoerroute.*vóór de eerste handeling.*niets uitgevoerd of gewijzigd/iu);
+});
+
+test('yield en een modelprotocolfout openen nooit de execution-fallback', async () => {
+  const handle = { alias: 'maak', description: 'Maak het artefact.', parameters: { type: 'object' } };
+  let yielding = false;
+  let yieldCalls = 0;
+  const yielded = await runExecutionDriver({
+    implementationSpec: 'Maak één aantoonbaar artefact.',
+    understandingSummary: { goal: 'één artefact' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', fallbackModel: 'gpt-5.6-terra',
+    shouldYield: () => yielding, obligations: () => ['maak'], done: () => false,
+    complete: async () => {
+      yieldCalls += 1;
+      yielding = true;
+      throw new Error('The operation was aborted due to timeout');
+    },
+    execute: async () => assert.fail('yield stopt vóór een hosthandeling'),
+  });
+  assert.equal(yielded.status, 'yielded');
+  assert.equal(yieldCalls, 1);
+  assert.equal(yielded.trace.some(({ type }) => type === 'model_timeout_fallback'), false);
+
+  let protocolCalls = 0;
+  const protocol = await runExecutionDriver({
+    implementationSpec: 'Maak één aantoonbaar artefact.',
+    understandingSummary: { goal: 'één artefact' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', fallbackModel: 'gpt-5.6-terra',
+    obligations: () => ['maak'], done: () => false,
+    complete: async () => { protocolCalls += 1; return { toolCalls: [] }; },
+    execute: async () => assert.fail('een protocolfout bereikt geen hosthandeling'),
+  });
+  assert.equal(protocol.status, 'protocol_error');
+  assert.equal(protocolCalls, 1);
+});
+
+test('de totale execution-deadline opent geen tweede modelaanroep en een toolfout geen modelretry', async () => {
+  const handle = { alias: 'maak', description: 'Maak het artefact.', parameters: { type: 'object' } };
+  let deadlineCalls = 0;
+  const deadline = await runExecutionDriver({
+    implementationSpec: 'Maak één aantoonbaar artefact.',
+    understandingSummary: { goal: 'één artefact' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', fallbackModel: 'gpt-5.6-terra',
+    totalTimeoutMs: 50, roundTimeoutMs: 100,
+    obligations: () => ['maak'], done: () => false,
+    complete: async () => {
+      deadlineCalls += 1;
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      throw new Error('The operation was aborted due to timeout');
+    },
+    execute: async () => assert.fail('de deadline ligt vóór de eerste hosthandeling'),
+  });
+  assert.equal(deadlineCalls, 1);
+  assert.equal(deadline.code, 'EVA_EXECUTION_MODEL_TIMEOUT');
+  assert.equal(deadline.fallbackAttempted, false);
+  assert.equal(deadline.fallbackFailureKind, 'deadline');
+
   let modelCalls = 0;
-  const result = await runAgent({
-    instructions: 'test',
-    input: [],
-    tools: [
-      { name: 'annuleer_herinnering', description: 'test', parameters: { type: 'object' } },
-      { name: 'huis_status', description: 'test', parameters: { type: 'object' } },
-    ],
-    executeTool: async () => '{}',
+  let toolCalls = 0;
+  await assert.rejects(runExecutionDriver({
+    implementationSpec: 'Voer één hosthandeling uit.',
+    understandingSummary: { goal: 'één handeling' }, offeredHandles: [handle],
+    model: 'gpt-5.6-sol', fallbackModel: 'gpt-5.6-terra',
+    obligations: () => ['maak'], done: () => false,
     complete: async () => {
       modelCalls += 1;
-      return { output: [], text: '', toolCalls: [] };
+      return { toolCalls: [{ call_id: 'tool-timeout', name: 'maak', arguments: '{}' }] };
     },
-    maxRounds: 10,
-    requireToolCall: true,
-    requiredToolsRemaining: () => ['annuleer_herinnering'],
-    selectTools: ({ tools }) => tools.filter((tool) => tool.name !== 'annuleer_herinnering'),
-  });
-  assert.equal(modelCalls, 0);
-  assert.equal(result.exhausted, true);
-  assert.equal(result.requiredToolUnavailable, 'annuleer_herinnering');
+    execute: async () => {
+      toolCalls += 1;
+      throw new Error('tool timeout');
+    },
+  }), /tool timeout/iu);
+  assert.equal(modelCalls, 1);
+  assert.equal(toolCalls, 1);
 });
 
-test('een mislukte voorkeursroute opent diagnose en een materieel andere aanpak', async () => {
-  const offeredPerRound = [];
-  const calls = [];
-  let searchSucceeded = false;
-  let round = 0;
-  const result = await runAgent({
-    instructions: 'test',
-    input: [],
-    tools: [
-      { name: 'zoek_internet', description: 'zoek', parameters: { type: 'object' } },
-      { name: 'ha_lees', description: 'diagnose', parameters: { type: 'object' } },
-    ],
+test('de execution-driver verlengt alleen bij nieuw bewijs en stopt bij stagnatie', async () => {
+  const handle = {
+    alias: 'werk', description: 'Leg één controleerbare stap vast.',
+    parameters: {
+      type: 'object', additionalProperties: false,
+      properties: { stap: { type: 'integer' } }, required: ['stap'],
+    },
+  };
+  let calls = 0;
+  const progressing = await runExecutionDriver({
+    implementationSpec: 'Maak vijf aantoonbaar verschillende stappen af.',
+    understandingSummary: { goal: 'vijf stappen' }, offeredHandles: [handle],
+    baseRounds: 2, maxRounds: 8, progressExtensionRounds: 2,
+    obligations: () => ['werk'], done: ({ receipts }) => receipts.length === 5,
+    complete: async () => {
+      calls += 1;
+      const args = JSON.stringify({ stap: calls });
+      return { toolCalls: [{ call_id: `p-${calls}`, name: 'werk', arguments: args }] };
+    },
+    execute: async (_offered, args) => ({
+      contract: 'ActionResult/v1', ok: true, verified: true, changed: true,
+      needs_followup: false, partial: false, data: { stap: args.stap },
+    }),
+  });
+  assert.equal(progressing.status, 'completed');
+  assert.equal(progressing.rounds, 5);
+  assert.ok(progressing.trace.some((event) => event.type === 'lease_extended'));
+
+  const stagnant = await runExecutionDriver({
+    implementationSpec: 'Herhaal niet zonder nieuw bewijs.',
+    understandingSummary: { goal: 'één nieuw feit' }, offeredHandles: [handle],
+    baseRounds: 2, maxRounds: 8, progressExtensionRounds: 2,
+    obligations: () => ['werk'], done: () => false,
+    complete: async () => ({
+      toolCalls: [{ call_id: 'zelfde', name: 'werk', arguments: '{"stap":1}' }],
+    }),
+    execute: async () => ({
+      contract: 'ActionResult/v1', ok: true, verified: true, changed: false,
+      needs_followup: false, partial: false, data: { stap: 1 },
+    }),
+  });
+  assert.equal(stagnant.status, 'exhausted');
+  assert.equal(stagnant.reason, 'progress_lease_expired');
+  assert.equal(stagnant.rounds, 3);
+});
+
+test('de execution-driver bindt siblingdoelen exact en laat alleen declaratieve materiaalinhoud vrij', async () => {
+  const write = {
+    alias: 'materialiseer', description: 'Schrijf het exact uitgegeven bestand.',
+    parameters: {
+      type: 'object', additionalProperties: false,
+      properties: {
+        pad: { type: 'string', minLength: 1 },
+        inhoud: { type: 'string', minLength: 1 },
+        toelichting: { type: 'string' },
+      },
+      required: ['pad', 'inhoud'],
+    },
+  };
+  let offeredSchema = null;
+  let executions = 0;
+  const exact = await runExecutionDriver({
+    implementationSpec: 'Schrijf de gerichte proef.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [write], maxRounds: 1,
+    obligations: () => [{
+      alias: write.alias,
+      expectedInput: { pad: 'demo/proef.cjs' },
+      materializableFields: ['inhoud'],
+    }],
+    done: ({ receipts }) => receipts.length === 1,
     complete: async ({ tools }) => {
-      offeredPerRound.push(tools.map((item) => item.name));
-      if (round === 0) {
-        round += 1;
-        return {
-          output: [{ type: 'function_call', call_id: 'a', name: 'zoek_internet', arguments: '{"vraag":"breed"}' }],
-          text: '', toolCalls: [{ call_id: 'a', name: 'zoek_internet', arguments: '{"vraag":"breed"}' }],
-        };
-      }
-      if (round === 1) {
-        round += 1;
-        return {
-          output: [{ type: 'function_call', call_id: 'b', name: 'ha_lees', arguments: '{}' }],
-          text: '', toolCalls: [{ call_id: 'b', name: 'ha_lees', arguments: '{}' }],
-        };
-      }
-      if (round === 2) {
-        round += 1;
-        return {
-          output: [{ type: 'function_call', call_id: 'c', name: 'zoek_internet', arguments: '{"vraag":"directe officiële documentatie"}' }],
-          text: '', toolCalls: [{ call_id: 'c', name: 'zoek_internet', arguments: '{"vraag":"directe officiële documentatie"}' }],
-        };
-      }
-      return { output: [], text: 'Gelukt via een andere route.', toolCalls: [] };
+      offeredSchema = tools[0].parameters;
+      return {
+        output: [], text: '',
+        toolCalls: [{
+          call_id: 'exact-write', name: write.alias,
+          arguments: JSON.stringify({ pad: 'demo/proef.cjs', inhoud: 'assert.ok(true);' }),
+        }],
+      };
     },
-    executeTool: async (name, args) => {
-      calls.push({ name, args });
-      if (name === 'zoek_internet' && args.vraag === 'breed') {
-        return JSON.stringify({ ok: false, verified: false, needs_followup: true, failure_class: 'transient', error: 'timeout' });
-      }
-      if (name === 'zoek_internet') searchSucceeded = true;
-      return JSON.stringify({ ok: true, verified: true, needs_followup: false });
+    execute: async () => {
+      executions += 1;
+      return { contract: 'ActionResult/v1', ok: true, verified: true, changed: true };
     },
-    maxRounds: 5,
-    requireToolCall: () => !searchSucceeded,
-    requiredToolsRemaining: () => searchSucceeded ? [] : ['zoek_internet'],
   });
-  assert.deepEqual(offeredPerRound[0], ['zoek_internet']);
-  assert.deepEqual(offeredPerRound[1], ['zoek_internet', 'ha_lees']);
-  assert.deepEqual(calls.map((call) => call.name), ['zoek_internet', 'ha_lees', 'zoek_internet']);
-  assert.equal(result.text, 'Gelukt via een andere route.');
+  assert.equal(exact.status, 'completed');
+  assert.equal(executions, 1);
+  assert.deepEqual(Object.keys(offeredSchema.properties).sort(), ['inhoud', 'pad']);
+  assert.deepEqual(offeredSchema.properties.pad.enum, ['demo/proef.cjs']);
+  assert.equal(Object.hasOwn(offeredSchema.properties.inhoud, 'enum'), false);
+  assert.deepEqual(new Set(offeredSchema.required), new Set(['pad', 'inhoud']));
+
+  let protocolAttempts = 0;
+  const corrected = await runExecutionDriver({
+    implementationSpec: 'Schrijf de gerichte proef.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [write], maxRounds: 2,
+    obligations: () => [{
+      alias: write.alias,
+      expectedInput: { pad: 'demo/proef.cjs' },
+      materializableFields: ['inhoud'],
+    }],
+    done: ({ receipts }) => receipts.length === 1,
+    complete: async () => {
+      protocolAttempts += 1;
+      return {
+        output: [], text: '',
+        toolCalls: [{
+          call_id: `corrected-write-${protocolAttempts}`, name: write.alias,
+          arguments: JSON.stringify({
+            pad: protocolAttempts === 1 ? 'demo/andere-fixture.cjs' : 'demo/proef.cjs',
+            inhoud: protocolAttempts === 1 ? 'nee' : 'assert.ok(true);',
+          }),
+        }],
+      };
+    },
+    execute: async () => {
+      executions += 1;
+      return { contract: 'ActionResult/v1', ok: true, verified: true, changed: true };
+    },
+  });
+  assert.equal(corrected.status, 'completed');
+  assert.equal(corrected.rounds, 2);
+  assert.equal(corrected.receipts.length, 1);
+  assert.equal(executions, 2, 'een afwijkende fixture bereikt de effectcallback niet');
+  assert.equal(corrected.recovery, null, 'protocolfeedback wordt geen inspect/repair-herstelstaat');
+  assert.equal(corrected.trace.some((item) => (
+    item.type === 'protocol_feedback' && item.reason === 'obligation_arguments_mismatch'
+  )), true);
+
+  let rejectedCalls = 0;
+  const rejected = await runExecutionDriver({
+    implementationSpec: 'Schrijf de gerichte proef.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [write], maxRounds: 3,
+    obligations: () => [{
+      alias: write.alias,
+      expectedInput: { pad: 'demo/proef.cjs' },
+      materializableFields: ['inhoud'],
+    }],
+    done: () => false,
+    complete: async () => {
+      rejectedCalls += 1;
+      return {
+        output: [], text: '',
+        toolCalls: [{
+          call_id: `rejected-write-${rejectedCalls}`, name: write.alias,
+          arguments: JSON.stringify({ pad: 'demo/nog-steeds-verkeerd.cjs', inhoud: 'nee' }),
+        }],
+      };
+    },
+    execute: async () => {
+      executions += 1;
+      return { contract: 'ActionResult/v1', ok: true, verified: true, changed: true };
+    },
+  });
+  assert.equal(rejected.status, 'protocol_error');
+  assert.equal(rejected.reason, 'obligation_arguments_mismatch');
+  assert.equal(rejected.rounds, 2, 'één correctiekans, daarna stopt dezelfde protocolfout');
+  assert.equal(rejected.receipts.length, 0);
+  assert.equal(executions, 2);
+  assert.equal(rejected.recovery, null);
 });
 
-test('een geverifieerde eenvoudige actie kan zonder tweede modelronde afronden', async () => {
+test('samengestelde execution-binding blijft uit provider-enum en wordt exact door de host bewaakt', async () => {
+  const run = {
+    alias: 'execution_proof_run', description: 'Voer het exact gebonden programma uit.',
+    parameters: {
+      type: 'object', additionalProperties: false,
+      properties: {
+        programma: { type: 'string', enum: ['node', 'python3'] },
+        argumenten: { type: 'array', items: { type: 'string' } },
+        werkmap: { type: 'string', minLength: 1 },
+      },
+      required: ['programma', 'argumenten', 'werkmap'],
+    },
+  };
+  const expectedInput = {
+    programma: 'node', argumenten: ['demo.mjs', '--controle'], werkmap: 'crash',
+  };
+  let attempts = 0;
+  let executions = 0;
+  const result = await runExecutionDriver({
+    implementationSpec: 'Voer de reeds geschreven demo met de gebonden argumenten uit.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [run], maxRounds: 2,
+    obligations: () => [{ alias: run.alias, expectedInput, materializableFields: [] }],
+    done: ({ receipts }) => receipts.length === 1,
+    complete: async ({ tools, input }) => {
+      attempts += 1;
+      const schema = tools[0].parameters;
+      assert.deepEqual(schema.properties.programma.enum, ['node']);
+      assert.equal(Object.hasOwn(schema.properties.argumenten, 'enum'), false,
+        'een array als enumlid maakt het provider-schema ongeldig');
+      assert.deepEqual(schema.properties.argumenten.items.enum, ['demo.mjs', '--controle']);
+      assert.equal(schema.properties.argumenten.minItems, 2);
+      assert.equal(schema.properties.argumenten.maxItems, 2);
+      assert.match(schema.properties.argumenten.description,
+        /\["demo\.mjs","--controle"\]/u,
+        'het model krijgt de samengestelde waarde als instructie, niet als ongeldige enum');
+      if (attempts === 2) {
+        const feedback = input.find((item) => item.type === 'function_call_output');
+        assert.deepEqual(JSON.parse(feedback.output).expectedInput, expectedInput,
+          'de ene no-effect correctieronde noemt de exacte hostbinding');
+      }
+      return {
+        output: [], text: '',
+        toolCalls: [{
+          call_id: `composite-${attempts}`, name: run.alias,
+          arguments: JSON.stringify({
+            ...expectedInput,
+            argumenten: attempts === 1 ? ['ander.mjs'] : expectedInput.argumenten,
+          }),
+        }],
+      };
+    },
+    execute: async (_handle, args) => {
+      executions += 1;
+      assert.deepEqual(args, expectedInput);
+      return { contract: 'ActionResult/v1', ok: true, verified: true, changed: false };
+    },
+  });
+  assert.equal(result.status, 'completed');
+  assert.equal(result.rounds, 2);
+  assert.equal(executions, 1, 'de afwijkende array bereikt de effectcallback niet');
+  assert.equal(result.trace.some((item) => (
+    item.type === 'protocol_feedback' && item.reason === 'obligation_arguments_mismatch'
+  )), true);
+});
+
+test('de execution-driver voert nooit meer dan één modeltoolcall per ronde uit', async () => {
+  let executions = 0;
+  const handle = { alias: 'stap', description: 'Eén stap.', parameters: { type: 'object' } };
+  const result = await runExecutionDriver({
+    implementationSpec: 'Doe één stap.',
+    understandingSummary: { intent: 'execute' },
+    offeredHandles: [handle],
+    obligations: () => ['stap'],
+    done: () => false,
+    execute: async () => {
+      executions += 1;
+      return { contract: 'ActionResult/v1', ok: true, verified: true };
+    },
+    complete: async () => ({
+      output: [], text: '',
+      toolCalls: [
+        { call_id: 'a', name: 'stap', arguments: '{}' },
+        { call_id: 'b', name: 'stap', arguments: '{}' },
+      ],
+    }),
+  });
+  assert.equal(result.status, 'protocol_error');
+  assert.equal(result.reason, 'exactly_one_tool_call_required');
+  assert.equal(executions, 0);
+  assert.equal(result.receipts.length, 0);
+});
+
+test('alleen getypeerde ActionResult-velden sturen herstel en onzeker effect blijft zichtbaar', async () => {
+  const mutate = { alias: 'muteer', description: 'Voer de mutatie uit.', parameters: { type: 'object' } };
+  const readback = { alias: 'lees_terug', description: 'Lees de actuele toestand terug.', parameters: { type: 'object' } };
+  const recoveryContexts = [];
+  const modelOffers = [];
+  const result = await runExecutionDriver({
+    implementationSpec: 'Pas de toestand één keer aan.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [mutate, readback],
+    maxRounds: 2,
+    obligations: (context) => {
+      recoveryContexts.push(context.recovery);
+      return context.recovery?.effect_uncertain ? ['lees_terug'] : ['muteer'];
+    },
+    done: ({ receipts }) => receipts.length === 2,
+    complete: async ({ tools }) => {
+      modelOffers.push(tools.map(({ name }) => name));
+      const alias = tools[0].name;
+      return {
+        output: [{ type: 'function_call', call_id: alias, name: alias, arguments: '{}' }],
+        text: '', toolCalls: [{ call_id: alias, name: alias, arguments: '{}' }],
+      };
+    },
+    execute: async (handle) => handle === mutate
+      ? {
+        contract: 'ActionResult/v1', ok: false, verified: false,
+        failure_class: 'declared_route_failure', retryable: false, effect_uncertain: true,
+        error: 'timeout 429 permission denied not found',
+      }
+      : { contract: 'ActionResult/v1', ok: true, verified: true, changed: false },
+  });
+  const declaredRecovery = {
+    contract: 'ExecutionRecovery/v1', receipt: 0, alias: 'muteer',
+    failure_class: 'declared_route_failure', retryable: false, effect_uncertain: true,
+  };
+  assert.deepEqual(recoveryContexts, [null, declaredRecovery]);
+  assert.deepEqual(modelOffers, [['muteer'], ['lees_terug']]);
+  assert.equal(result.status, 'completed');
+  assert.equal(result.receipts.length, 2);
+  assert.equal(result.receipts[0].recoveryReceipt, null);
+  assert.equal(result.receipts[1].recoveryReceipt, 0);
+  assert.deepEqual(result.recovery, declaredRecovery);
+  assert.equal('error' in recoveryContexts[1], false);
+});
+
+test('executionadapter vult ontbrekende typed failurevelden uitsluitend uit het hostreceipt', () => {
+  const raw = {
+    contract: 'ActionResult/v1', ok: true, verified: true, changed: false,
+    partial: true, needs_followup: true, data: { truncated: true },
+  };
+  const recorded = {
+    output: JSON.stringify(raw), failure_class: 'output_truncated',
+    retryable: false, effect_uncertain: false,
+  };
+  assert.deepEqual(executionActionResult(recorded), {
+    ...raw, failure_class: 'output_truncated', retryable: false, effect_uncertain: false,
+  });
+  assert.deepEqual(executionActionResult({
+    ...recorded,
+    output: JSON.stringify({ ...raw, retryable: true }),
+  }), {
+    contract: 'InvalidActionResult/v1', ok: false, verified: false,
+    error: 'conflicting_action_result_metadata:retryable',
+  });
+  const untyped = executionActionResult({ output: JSON.stringify(raw) });
+  assert.equal(Object.hasOwn(untyped, 'failure_class'), false,
+    'zonder getypeerd hostbewijs blijft de driverreceipt bewust ongeldig');
+});
+
+test('geslaagd herstel sluit alleen de gebonden failure en keert daarna terug naar proof-readback', async () => {
+  const aliases = [
+    'execution_proof_run', 'execution_recovery_inspect', 'execution_recovery_repair',
+    'execution_recovery_retest', 'execution_proof_readback',
+  ];
+  const handles = aliases.map((alias) => ({
+    alias, description: alias, parameters: { type: 'object', additionalProperties: false },
+  }));
+  const selected = [];
+  const recoveries = [];
+  const result = await runExecutionDriver({
+    implementationSpec: 'Herstel de mislukte proef en lees daarna het eindartefact terug.',
+    understandingSummary: { authority: 'already_bound' }, offeredHandles: handles,
+    maxRounds: 8, recoveryResolved: __projectRouteTest.iterativeRecoveryResolved,
+    obligations: (context) => {
+      recoveries.push(context.recovery);
+      const retested = context.receipts.some((receipt) => (
+        receipt.alias === 'execution_recovery_retest' && receipt.result?.verified === true
+      ));
+      const obligation = __projectRouteTest.iterativeExecutionObligation(
+        context, { next: retested ? 'readback' : 'run' },
+      );
+      return [`execution_${obligation.lane}_${obligation.type}`];
+    },
+    done: ({ receipts }) => receipts.at(-1)?.alias === 'execution_proof_readback',
+    complete: async ({ tools }) => {
+      const alias = tools[0].name;
+      selected.push(alias);
+      return { toolCalls: [{ call_id: `${alias}-${selected.length}`, name: alias, arguments: '{}' }] };
+    },
+    execute: async (handle) => handle.alias === 'execution_proof_run'
+      ? {
+        contract: 'ActionResult/v1', ok: false, verified: false,
+        needs_followup: true, partial: false, failure_class: 'test_failure',
+        retryable: false, effect_uncertain: true,
+      }
+      : {
+        contract: 'ActionResult/v1', ok: true, verified: true,
+        changed: handle.alias === 'execution_recovery_repair',
+      },
+  });
+
+  assert.equal(result.status, 'completed');
+  assert.deepEqual(selected, aliases);
+  assert.deepEqual(result.receipts.map(({ recoveryReceipt }) => recoveryReceipt), [null, 0, 0, 0, null]);
+  assert.deepEqual(recoveries.map((recovery) => recovery?.alias || null), [
+    null, 'execution_proof_run', 'execution_proof_run', 'execution_proof_run', null,
+  ]);
+  assert.equal(result.recovery, null);
+  assert.equal(result.trace.some(({ type }) => type === 'recovery_resolved'), true);
+  assert.equal(__projectRouteTest.iterativeRecoveryResolved({
+    recovery: { receipt: 0, alias: 'execution_proof_run', effect_uncertain: true },
+    receipt: result.receipts[1],
+  }), false, 'alleen inspecteren verdoezelt een mislukte run niet');
+  assert.equal(__projectRouteTest.iterativeRecoveryResolved({
+    recovery: { receipt: 0, alias: 'execution_proof_run', effect_uncertain: true },
+    receipt: result.receipts[3],
+  }), true, 'een gebonden geslaagde retest sluit de run-failure wel');
+});
+
+test('veel verschillende iteratieve reads verbruiken niet de globale toolnaamlimiet', () => {
+  let globalAttempts = 0;
+  const signatures = new Map();
+  for (let index = 0; index < 20; index += 1) {
+    const signature = `lees_bestand:{"pad":"artefact-${index}.js"}`;
+    signatures.set(signature, Number(signatures.get(signature) || 0) + 1);
+    const state = __projectRouteTest.globalToolNameAttempt(globalAttempts, true, 8);
+    globalAttempts = state.attempts;
+    assert.equal(state.exceeded, false);
+  }
+  assert.equal(globalAttempts, 0);
+  assert.ok([...signatures.values()].every((attempts) => attempts === 1),
+    'de bestaande per-signaturegrens blijft iedere concrete read afzonderlijk begrenzen');
+  const ninthOrdinaryRead = Array.from({ length: 9 }).reduce(
+    (state) => __projectRouteTest.globalToolNameAttempt(state.attempts, false, 8),
+    { attempts: 0, exceeded: false },
+  );
+  assert.equal(ninthOrdinaryRead.exceeded, true, 'buiten de driver blijft de globale grens actief');
+});
+
+test('een andere route heropent een non-retryable handle alleen voor dezelfde herstelreceipt', async () => {
+  const repair = {
+    alias: 'repareer', description: 'Herstel het artefact.',
+    parameters: { type: 'object', properties: {}, additionalProperties: false },
+  };
+  const inspect = {
+    alias: 'inspecteer', description: 'Inspecteer de actuele toestand.',
+    parameters: { type: 'object', properties: {}, additionalProperties: false },
+  };
+  const aliases = [];
+  let repairAttempts = 0;
+  const result = await runExecutionDriver({
+    implementationSpec: 'Herstel pas opnieuw nadat dezelfde mislukte poging gericht is geïnspecteerd.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [repair, inspect],
+    maxRounds: 5,
+    obligations: ({ receipts }) => receipts.length === 0
+      ? [repair.alias]
+      : receipts.length === 1 ? [inspect.alias] : [repair.alias],
+    done: ({ receipts }) => receipts.length === 3,
+    complete: async ({ tools }) => {
+      const alias = tools[0].name;
+      aliases.push(alias);
+      return {
+        output: [{ type: 'function_call', call_id: `${alias}-${aliases.length}`, name: alias, arguments: '{}' }],
+        text: '',
+        toolCalls: [{ call_id: `${alias}-${aliases.length}`, name: alias, arguments: '{}' }],
+      };
+    },
+    execute: async (handle) => {
+      if (handle === inspect) {
+        return { contract: 'ActionResult/v1', ok: true, verified: true, changed: false };
+      }
+      repairAttempts += 1;
+      return repairAttempts === 1
+        ? {
+          contract: 'ActionResult/v1', ok: false, verified: false,
+          needs_followup: true, partial: false,
+          failure_class: 'attempt_limit', retryable: false, effect_uncertain: false,
+        }
+        : { contract: 'ActionResult/v1', ok: true, verified: true, changed: true };
+    },
+  });
+
+  assert.equal(result.status, 'completed');
+  assert.deepEqual(aliases, ['repareer', 'inspecteer', 'repareer']);
+  assert.deepEqual(result.receipts.map((receipt) => receipt.recoveryReceipt), [null, 0, 0]);
+});
+
+test('een non-retryable executionreceipt kan niet dezelfde handle blijven aanbieden', async () => {
+  const repair = {
+    alias: 'execution_recovery_repair',
+    description: 'Herstel het artefact.',
+    parameters: { type: 'object', properties: {}, additionalProperties: false },
+  };
   let modelCalls = 0;
-  let toolDone = false;
-  const result = await runAgent({
-    instructions: 'test',
-    input: [],
-    tools: [{ name: 'bedien_huis', description: 'test', parameters: { type: 'object' } }],
+  let executions = 0;
+  const result = await runExecutionDriver({
+    implementationSpec: 'Herstel het artefact gecontroleerd.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [repair],
+    maxRounds: 8,
+    obligations: () => ['execution_recovery_repair'],
+    done: () => false,
     complete: async () => {
       modelCalls += 1;
       return {
-        output: [{ type: 'function_call', call_id: 'call-1', name: 'bedien_huis', arguments: '{}' }],
+        output: [{
+          type: 'function_call', call_id: `repair-${modelCalls}`,
+          name: repair.alias, arguments: '{}',
+        }],
         text: '',
-        toolCalls: [{ call_id: 'call-1', name: 'bedien_huis', arguments: '{}' }],
+        toolCalls: [{ call_id: `repair-${modelCalls}`, name: repair.alias, arguments: '{}' }],
       };
     },
-    executeTool: async () => {
-      toolDone = true;
-      return JSON.stringify({ ok: true, verified: true, human_message: 'Schuur-led staat aan.' });
+    execute: async () => {
+      executions += 1;
+      return {
+        contract: 'ActionResult/v1', ok: false, verified: false,
+        needs_followup: true, partial: false,
+        failure_class: 'attempt_limit', retryable: false, effect_uncertain: false,
+        error: 'De poginglimiet is bereikt.',
+      };
     },
-    maxRounds: 5,
-    stopAfterToolRound: () => toolDone && 'Schuur-led staat aan.',
   });
+
+  assert.equal(result.status, 'blocked');
+  assert.equal(result.reason, 'non_retryable_obligation');
+  assert.equal(result.receipts.length, 1);
   assert.equal(modelCalls, 1);
-  assert.equal(result.text, 'Schuur-led staat aan.');
+  assert.equal(executions, 1);
+  assert.equal(result.trace.some((item) => (
+    item.type === 'route_rejected' && item.alias === repair.alias
+  )), true);
 });
 
-test('na gereedschap komt de oorspronkelijke gesprekstaak weer als laatste context terug', async () => {
-  let round = 0;
-  let finalInput = [];
-  const result = await runAgent({
-    instructions: 'test',
-    input: [{ type: 'message', role: 'user', content: [{ type: 'input_text', text: 'Praat gewoon.' }] }],
-    tools: [{ name: 'huis_status', description: 'test', parameters: { type: 'object' } }],
-    complete: async ({ input }) => {
-      if (round++ === 0) return {
-        output: [{ type: 'function_call', call_id: 'ctx-1', name: 'huis_status', arguments: '{}' }],
-        text: '',
-        toolCalls: [{ call_id: 'ctx-1', name: 'huis_status', arguments: '{}' }],
-      };
-      finalInput = input;
-      return { output: [], text: 'Gewoon antwoord.', toolCalls: [] };
-    },
-    executeTool: async () => JSON.stringify({ ok: true, verified: true }),
-    maxRounds: 3,
-    finalContextReminder: 'Terug naar de tafeltoon en de oorspronkelijke vraag.',
+test('ongetypeerde fouttekst wordt geen herstelclassificatie en yield stopt vóór modelwerk', async () => {
+  const handle = { alias: 'probeer', description: 'Probeer.', parameters: { type: 'object' } };
+  const base = {
+    implementationSpec: 'Probeer gecontroleerd.',
+    understandingSummary: { intent: 'execute' },
+    offeredHandles: [handle],
+    obligations: () => ['probeer'],
+    done: () => false,
+  };
+  let modelCalls = 0;
+  const yielded = await runExecutionDriver({
+    ...base,
+    shouldYield: () => true,
+    execute: async () => ({ contract: 'ActionResult/v1', ok: true, verified: true }),
+    complete: async () => { modelCalls += 1; return { output: [], text: '', toolCalls: [] }; },
   });
-  const latest = finalInput.at(-1)?.content?.[0]?.text || '';
-  assert.match(latest, /tafeltoon/);
-  assert.equal(result.text, 'Gewoon antwoord.');
+  assert.equal(yielded.status, 'yielded');
+  assert.equal(modelCalls, 0);
+
+  const invalid = await runExecutionDriver({
+    ...base,
+    execute: async () => 'Fout bij probeer: timeout 429',
+    complete: async () => ({
+      output: [{ type: 'function_call', call_id: 'invalid', name: 'probeer', arguments: '{}' }],
+      text: '', toolCalls: [{ call_id: 'invalid', name: 'probeer', arguments: '{}' }],
+    }),
+  });
+  assert.equal(invalid.status, 'protocol_error');
+  assert.equal(invalid.reason, 'invalid_action_result');
+  assert.equal(invalid.recovery, null);
+  assert.equal(invalid.receipts.length, 0);
 });
 
-test('een lege afronding na bewijs krijgt exact één toolvrije synthesekans', async () => {
-  let round = 0;
-  const offered = [];
-  const result = await runAgent({
-    instructions: 'test',
-    input: [],
-    tools: [{ name: 'lees_bestand', description: 'test', parameters: { type: 'object' } }],
-    complete: async ({ tools }) => {
-      offered.push(tools.map((item) => item.name));
-      if (round++ === 0) return {
-        output: [{ type: 'function_call', call_id: 'read-1', name: 'lees_bestand', arguments: '{}' }],
-        text: '',
-        toolCalls: [{ call_id: 'read-1', name: 'lees_bestand', arguments: '{}' }],
-      };
-      if (round === 2) return { output: [], text: '', toolCalls: [] };
-      return { output: [], text: 'Het gewone antwoord uit het bewijs.', toolCalls: [] };
-    },
-    executeTool: async () => JSON.stringify({ ok: true, verified: true, data: 'bewijs' }),
-    maxRounds: 4,
-  });
-  assert.deepEqual(offered, [['lees_bestand'], ['lees_bestand'], []]);
-  assert.equal(result.text, 'Het gewone antwoord uit het bewijs.');
+test('een onbekende execution-verplichting faalt vóór de modelcall', async () => {
+  let modelCalls = 0;
+  await assert.rejects(runExecutionDriver({
+    implementationSpec: 'Voer alleen een uitgegeven handle uit.',
+    understandingSummary: { authority: 'already_bound' },
+    offeredHandles: [{ alias: 'bekend', description: 'Bekende stap.' }],
+    obligations: () => ['onbekend'],
+    done: () => false,
+    execute: async () => ({ contract: 'ActionResult/v1', ok: true, verified: true }),
+    complete: async () => { modelCalls += 1; return { output: [], toolCalls: [] }; },
+  }), /Niet-aangeboden execution-handle verplicht gesteld: onbekend/);
+  assert.equal(modelCalls, 0);
 });
 
-test('een lege gewone gespreksreactie krijgt exact één nieuwe antwoordkans', async () => {
-  let calls = 0;
-  const result = await runAgent({
-    instructions: 'test',
-    input: [{ type: 'message', role: 'user', content: [{ type: 'input_text', text: 'Hoe kijk je daarop terug?' }] }],
-    tools: [],
-    complete: async () => {
-      calls += 1;
-      return calls === 1
-        ? { output: [], text: '', toolCalls: [] }
-        : { output: [], text: 'Ik maakte van een ommetje een wereldreis.', toolCalls: [] };
-    },
-    maxRounds: 2,
-  });
-  assert.equal(calls, 2);
-  assert.equal(result.text, 'Ik maakte van een ommetje een wereldreis.');
-});
-
-test('een open contractstap op de laatste ronde krijgt nog uitvoering én afronding', async () => {
-  let wrote = false;
-  let read = false;
-  let calls = 0;
-  const offeredTools = [];
-  const result = await runAgent({
-    instructions: 'test',
-    input: [],
-    tools: [
-      { name: 'schrijf_bestand', description: 'schrijf', parameters: { type: 'object' } },
-      { name: 'lees_bestand', description: 'lees', parameters: { type: 'object' } },
-    ],
-    requiredToolsRemaining: () => (wrote ? (read ? [] : ['lees_bestand']) : ['schrijf_bestand']),
-    requireToolCall: () => !wrote || !read,
-    complete: async ({ tools }) => {
-      calls += 1;
-      offeredTools.push(tools.map((tool) => tool.name));
-      const name = tools[0]?.name;
-      if (name) return {
-        output: [{ type: 'function_call', call_id: `c-${calls}`, name, arguments: '{}' }],
-        text: '',
-        toolCalls: [{ call_id: `c-${calls}`, name, arguments: '{}' }],
-      };
-      return { output: [], text: 'Gebouwd en teruggelezen.', toolCalls: [] };
-    },
-    executeTool: async (name) => {
-      if (name === 'schrijf_bestand') wrote = true;
-      if (name === 'lees_bestand') read = true;
-      return JSON.stringify({ ok: true, verified: true });
-    },
-    maxRounds: 2,
-  });
-  assert.equal(wrote, true);
-  assert.equal(read, true);
-  assert.equal(calls, 3);
-  assert.deepEqual(offeredTools, [['schrijf_bestand'], ['lees_bestand'], []]);
-  assert.equal(result.text, 'Gebouwd en teruggelezen.');
+test('de echte antwoordgrens weigert ruwe modeltaal en houdt haar gegronde terugval', async () => {
+  const userText = 'Kijk hoeveel bestanden er nu in je werkruimte staan.';
+  fs.mkdirSync(path.join(dataDir, 'workspace'), { recursive: true });
+  fs.writeFileSync(path.join(dataDir, 'workspace', 'grounded-proef.txt'), 'bewijs\n');
+  const originalFetch = globalThis.fetch;
+  let modelCalls = 0;
+  globalThis.fetch = async () => {
+    modelCalls += 1;
+    if (modelCalls >= 2) return completedModelResponse([{
+      type: 'message', role: 'assistant',
+      content: [{ type: 'output_text', text: '{"stdout":"interne uitvoer"}' }],
+    }]);
+    return completedModelResponse([{
+      type: 'function_call', call_id: 'understand-grounded-fallback',
+      name: 'commit_turn_understanding',
+      arguments: JSON.stringify({
+        dialogueAct: 'command',
+        goal: {
+          statement: 'Bekijk de huidige werkruimte.',
+          outcome: 'Het actuele aantal bestanden is gecontroleerd.',
+          beneficiary: 'requester',
+        },
+        conditions: [],
+        provenance: { sourceSpans: [{ start: 0, end: userText.length }], contextHashes: [] },
+        confidence: 0.99,
+        actions: [{
+          capabilityId: 'workspace.file.list', operationId: 'list', polarity: 'request',
+          semanticInput: { pad: 'data/workspace' },
+          sourceSpans: [{ start: 0, end: userText.length }],
+        }],
+        requestedEffects: ['read'], deniedEffects: [],
+        temporal: { mode: 'now', startSourceSpans: [] }, durability: 'turn',
+        delivery: { mode: 'reply', target: 'origin' },
+        proofNeeds: [], ambiguities: [],
+        firstDecision: { kind: 'inspect', requirementIds: ['r1'], replyDraft: null },
+      }),
+    }]);
+  };
+  try {
+    const turn = await handleMessageDetailed({
+      channel: 'test', sender: 'Jaap', text: userText,
+      messageContext: { identityTrusted: true, conversationId: 'test:grounded-fallback' },
+    });
+    assert.equal(modelCalls, 3,
+      'na de eerste afgekeurde formulering volgt exact één bewijsgebonden herstelpoging');
+    assert.equal(turn.reply, turn.tools[0].evidence.summary);
+    assert.match(turn.reply, /^\d+ \S+ gelezen\.$/);
+    assert.doesNotMatch(turn.reply, /stdout|interne uitvoer|\{/i);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });

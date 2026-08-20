@@ -38,9 +38,10 @@ async function request(method, path, { body = null, apiKey = null, fetchImpl = f
     try { data = text ? JSON.parse(text) : {}; } catch { data = { message: text }; }
     if (!response.ok) {
       const reason = data?.detail || data?.message || data?.error || `HTTP ${response.status}`;
-      const error = new Error(`AgentMail ${response.status}: ${typeof reason === 'string' ? reason : JSON.stringify(reason)}`);
-      error.status = response.status;
-      throw error;
+      throw Object.assign(
+        new Error(`AgentMail ${response.status}: ${typeof reason === 'string' ? reason : JSON.stringify(reason)}`),
+        { status: response.status },
+      );
     }
     return data || {};
   } finally {
@@ -73,6 +74,7 @@ export function agentMailStatus() {
   };
 }
 
+/** @param {{humanEmail?: string, username?: string, resend?: boolean}} [input] */
 export async function signUpAgentMail({ humanEmail, username = 'eva-bottie', resend = false } = {}, options = {}) {
   const email = cleanEmail(humanEmail);
   const chosenUsername = cleanUsername(username);
@@ -159,9 +161,10 @@ export async function sendAgentMail({ to = null, subject = '', text = '' } = {},
     { ...options, apiKey },
   );
   if (!result.message_id || !result.thread_id) {
-    const error = new Error('AgentMail accepteerde de e-mail niet met een bericht- en thread-id.');
-    error.effect_uncertain = true;
-    throw error;
+    throw Object.assign(
+      new Error('AgentMail accepteerde de e-mail niet met een bericht- en thread-id.'),
+      { effect_uncertain: true },
+    );
   }
   return {
     ok: true,
@@ -213,5 +216,3 @@ export async function listAgentMailMessages({ limit = 10, query = '' } = {}, opt
       : search ? `Geen berichten gevonden voor “${search}”.` : 'Eva haar inbox is leeg.',
   };
 }
-
-export const __agentMailTest = { BASE_URL, cleanEmail, cleanUsername };

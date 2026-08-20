@@ -10,6 +10,7 @@ process.env.TELEGRAM_BOT_TOKEN = '';
 
 const { db } = await import('../src/db.js');
 const {
+  cameraEventIsFresh,
   cameraNoticeRecognition,
   cleanupTemporaryCameraFrames,
   shouldReportCameraEvent,
@@ -25,6 +26,15 @@ test('een gewone straatdetectie zonder leerbaar gezicht blijft intern', () => {
     type: 'person_detected',
     detail: { recognized: false, learnable: false },
   }), false);
+});
+
+test('alleen een vers en expliciet getimestamped camera-event is bruikbaar', () => {
+  const now = Date.parse('2026-08-12T18:00:00.000Z');
+  assert.equal(cameraEventIsFresh({ triggerTs: new Date(now - 30_000).toISOString() }, now), true);
+  assert.equal(cameraEventIsFresh({}, now), false);
+  assert.equal(cameraEventIsFresh({ triggerTs: 'geen tijd' }, now), false);
+  assert.equal(cameraEventIsFresh({ triggerTs: new Date(now - 121_000).toISOString() }, now), false);
+  assert.equal(cameraEventIsFresh({ triggerTs: new Date(now + 31_000).toISOString() }, now), false);
 });
 
 test('een leerbaar onbekend gezicht mag pas na twee uur opnieuw worden gemeld', () => {
@@ -102,7 +112,7 @@ test('een goed gezicht buiten het afgesproken cameragebied blijft intern', () =>
 });
 
 test('tijdelijke triggerframes verdwijnen na beoordeling zonder replyfoto te raken', async () => {
-  const triggerDir = path.join(dataDir, 'workspace', 'camera_trigger_frames');
+  const triggerDir = path.join(dataDir, 'private', 'camera_trigger_frames');
   mkdirSync(triggerDir, { recursive: true });
   const temporary = path.join(triggerDir, 'tijdelijk.jpg');
   const durable = path.join(triggerDir, 'duurzaam.jpg');

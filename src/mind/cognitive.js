@@ -7,6 +7,14 @@ import { db } from '../db.js';
 import { clamp } from '../util.js';
 
 const STATE_ID = 1;
+const FREE_NO_ACTION_TTL_MS = 24 * 60 * 60_000;
+const SEMANTIC_ACTION_ID = /^[a-z][a-z0-9_.:-]{0,119}$/u;
+const LEGACY_READ_OPERATIONS = new Set([
+  'home.context.read\u0000read', 'home.api.read\u0000read',
+  'conversation.history.read\u0000search', 'work.episode.read\u0000list',
+  'goal.portfolio.read\u0000list', 'goal.portfolio.read\u0000lijst',
+  'exploration.read\u0000list', 'exploration.read\u0000lijst',
+]);
 let started = false;
 let schemaReady = false;
 
@@ -18,6 +26,18 @@ function json(value, fallback = {}) {
   if (value == null || value === '') return fallback;
   if (typeof value === 'object') return value;
   try { return JSON.parse(value); } catch { return fallback; }
+}
+
+function plainRecord(value) {
+  return value != null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function semanticActionBinding(capabilityId, operationId) {
+  const capability = String(capabilityId || '');
+  const operation = String(operationId || '');
+  return SEMANTIC_ACTION_ID.test(capability) && SEMANTIC_ACTION_ID.test(operation)
+    ? { capabilityId: capability, operationId: operation }
+    : null;
 }
 
 function ensureSchema() {
@@ -277,7 +297,7 @@ export function beginCognitiveEpisode({
   ensureSchema();
   const existing = episodeByCorrelation(correlationId);
   if (existing) {
-    if (['interrupted', 'waiting'].includes(existing.status)) {
+    if (existing.status === 'interrupted') {
       db.prepare(`
         UPDATE cognitive_episodes
         SET status = 'active', closed_ts = NULL, reflection_json = NULL
@@ -290,7 +310,7 @@ export function beginCognitiveEpisode({
       load: clamp((Number(current.regulation.load) || 0) + 0.12),
     };
     updateState({
-      phase: ['active', 'interrupted', 'waiting'].includes(existing.status)
+      phase: ['active', 'interrupted'].includes(existing.status)
         ? 'deliberating' : existing.status,
       activeEpisodeId: existing.id,
       focusKind: existing.focus_kind,
@@ -302,13 +322,14 @@ export function beginCognitiveEpisode({
     return {
       id: existing.id,
       correlationId: existing.correlation_id,
-      resumed: ['interrupted', 'waiting'].includes(existing.status),
+      resumed: existing.status === 'interrupted',
       terminal: ['completed', 'abandoned'].includes(existing.status),
     };
   }
 
   const current = stateRow();
   const continuity = { ...current.continuity };
+  let preempted = false;
   if (current.active_episode_id) {
     const previous = db.prepare('SELECT * FROM cognitive_episodes WHERE id = ?')
       .get(current.active_episode_id);
@@ -329,6 +350,7 @@ export function beginCognitiveEpisode({
           interruptedAt,
         },
       ].slice(-12);
+      preempted = true;
     }
   }
 
@@ -364,7 +386,10 @@ export function beginCognitiveEpisode({
     connection: kind === 'interaction'
       ? clamp((Number(current.regulation.connection) || 0.5) + 0.06)
       : Number(current.regulation.connection) || 0.5,
-    continuity: clamp((continuity.interrupted?.length || 0) / 5),
+    // Historische onderbrekingen zijn autobiografisch bewijs, geen lijst met
+    // huidig werk. Alleen een zojuist onderbroken focus verhoogt kort de last;
+    // work/portfolio bepalen wat er werkelijk nog openstaat.
+    continuity: preempted ? 0.2 : 0,
   };
   updateState({
     phase: 'deliberating',
@@ -382,16 +407,24 @@ export function beginCognitiveEpisode({
 export function recordCognitiveAction(episodeId, {
   correlationId = null,
   tool = 'unknown',
+  capabilityId = null,
+  operationId = null,
   subject = null,
   expected = null,
   ok = null,
   verified = null,
   changed = null,
+  executionStarted = true,
+  effect = null,
+  partial = false,
+  needsFollowup = false,
+  effectUncertain = null,
   evidence = null,
 } = {}) {
   ensureSchema();
   const episode = db.prepare('SELECT * FROM cognitive_episodes WHERE id = ?').get(episodeId);
   if (!episode) return null;
+  const semanticBinding = semanticActionBinding(capabilityId, operationId);
   const event = ingestCognitiveEvent({
     episodeId,
     correlationId: correlationId || episode.correlation_id,
@@ -402,7 +435,21 @@ export function recordCognitiveAction(episodeId, {
     subjectKey: subject,
     salience: changed ? 0.85 : 0.65,
     confidence: verified ? 1 : ok === false ? 0.2 : 0.55,
-    payload: { tool, subject, expected, ok, verified, changed, evidence },
+    payload: {
+      tool,
+      ...(semanticBinding || {}),
+      subject,
+      expected,
+      ok,
+      verified,
+      changed,
+      executionStarted: executionStarted === true,
+      effect,
+      partial: partial === true,
+      needsFollowup: needsFollowup === true,
+      effectUncertain: typeof effectUncertain === 'boolean' ? effectUncertain : null,
+      evidence,
+    },
   });
   updateState({ phase: 'acting', activeEpisodeId: episodeId, lastEventId: event.id });
   return event;
@@ -414,6 +461,11 @@ export function recordCognitiveOutcome(episodeId, {
   ok = false,
   verified = false,
   changed = false,
+  executionStarted = true,
+  effectType = null,
+  partial = false,
+  needsFollowup = false,
+  effectUncertain = null,
   evidence = null,
   effect = null,
   sourceUpdatedAt = null,
@@ -437,6 +489,11 @@ export function recordCognitiveOutcome(episodeId, {
       ok,
       verified,
       changed,
+      executionStarted: executionStarted === true,
+      effectType,
+      partial: partial === true,
+      needsFollowup: needsFollowup === true,
+      effectUncertain: typeof effectUncertain === 'boolean' ? effectUncertain : null,
       evidence,
       effect,
       surprise,
@@ -469,7 +526,7 @@ export function closeCognitiveEpisode(episodeId, {
   ensureSchema();
   const episode = db.prepare('SELECT * FROM cognitive_episodes WHERE id = ?').get(episodeId);
   if (!episode) return false;
-  const finalStatus = ['completed', 'waiting', 'interrupted', 'abandoned'].includes(status)
+  const finalStatus = ['completed', 'interrupted', 'abandoned'].includes(status)
     ? status : 'completed';
   if (effect?.replySummary) {
     ingestCognitiveEvent({
@@ -509,7 +566,7 @@ export function closeCognitiveEpisode(episodeId, {
     completedAt: now(),
     resultClass,
   };
-  if (['waiting', 'interrupted'].includes(finalStatus)) {
+  if (finalStatus === 'interrupted') {
     continuity.interrupted = [...continuity.interrupted, {
       episodeId,
       focusKind: episode.focus_kind,
@@ -521,11 +578,11 @@ export function closeCognitiveEpisode(episodeId, {
   const regulation = {
     ...current.regulation,
     load: clamp((Number(current.regulation.load) || 0) - 0.15),
-    continuity: clamp((continuity.interrupted?.length || 0) / 5),
+    continuity: finalStatus === 'interrupted' ? 0.2 : 0,
   };
   if (Number(current.active_episode_id) === Number(episodeId)) {
     updateState({
-      phase: finalStatus === 'completed' ? 'idle' : finalStatus,
+      phase: finalStatus === 'interrupted' ? 'interrupted' : 'idle',
       activeEpisodeId: null,
       focusKind: null,
       focusRef: null,
@@ -540,53 +597,149 @@ export function closeCognitiveEpisode(episodeId, {
   return true;
 }
 
+const EXPERIENCE_LABELS = Object.freeze({
+  huis_status: 'je hebt zelf je actuele Home Assistant-wereldbeeld geraadpleegd',
+  ha_lees: 'je hebt zelf de gevraagde Home Assistant-entiteiten gelezen',
+  bekijk_camera: 'je hebt zelf via de gekozen camera gekeken',
+  bedien_huis: 'je hebt zelf een huisbediening uitgevoerd',
+});
+
+function latestAutonomousEpisodes() {
+  return /** @type {any[]} */ (db.prepare(`
+    SELECT episode.*, trigger.kind AS trigger_kind,
+      trigger.source AS trigger_source,
+      trigger.episode_id AS trigger_episode_id,
+      trigger.correlation_id AS trigger_correlation_id,
+      trigger.payload_json AS trigger_payload_json
+    FROM cognitive_episodes AS episode
+    LEFT JOIN cognitive_events AS trigger ON trigger.id = episode.trigger_event_id
+    WHERE episode.kind = 'autonomous_attention'
+    ORDER BY episode.id DESC
+    LIMIT 3
+  `).all());
+}
+
+function exactRecentFreeBoundary(episode, at) {
+  if (!episode || episode.status !== 'completed'
+    || episode.goal_key !== 'free_attention'
+    || !['no_action', 'partial_execution'].includes(episode.result_class)
+    || episode.trigger_kind !== 'observation' || episode.trigger_source !== 'autonomy_clock'
+    || Number(episode.trigger_episode_id) !== Number(episode.id)
+    || episode.trigger_correlation_id !== episode.correlation_id) return false;
+  const closedAt = Date.parse(String(episode.closed_ts || ''));
+  if (!Number.isFinite(closedAt) || closedAt > at || at - closedAt > FREE_NO_ACTION_TTL_MS) {
+    return false;
+  }
+  const trigger = json(episode.trigger_payload_json, null);
+  const evidence = json(episode.evidence_json, null);
+  const effect = json(episode.effect_json, null);
+  const common = plainRecord(trigger) && trigger.authenticFree === true
+    && trigger.syntheticTest !== true
+    && plainRecord(evidence) && evidence.contribution === null
+    && plainRecord(effect) && effect.madeProgress === false
+    && effect.replied === false && effect.continuationId == null;
+  if (!common || episode.result_class === 'no_action') return common;
+  return effect.readOnly === true && effect.hadChanged === false
+    && effect.hadEffectUncertainty === false && effect.hadDurableEffect === false;
+}
+
+function unchangedActionSignatures(episode) {
+  const events = /** @type {any[]} */ (db.prepare(`
+    SELECT kind, source, payload_json
+    FROM cognitive_events
+    WHERE episode_id = ? AND kind IN ('action', 'outcome')
+    ORDER BY id
+  `).all(Number(episode.id)));
+  if (events.length > 24 || events.length % 2 !== 0) return null;
+  const signatures = [];
+  for (let index = 0; index < events.length; index += 2) {
+    const actionEvent = events[index];
+    const outcomeEvent = events[index + 1];
+    const action = json(actionEvent?.payload_json, null);
+    const outcome = json(outcomeEvent?.payload_json, null);
+    if (actionEvent?.kind !== 'action' || actionEvent.source !== 'tool'
+      || outcomeEvent?.kind !== 'outcome' || outcomeEvent.source !== 'verification'
+      || !plainRecord(action) || !plainRecord(outcome)) return null;
+    const binding = semanticActionBinding(action.capabilityId, action.operationId);
+    if (!binding || action.changed !== false || outcome.changed !== false
+      || action.effectUncertain === true || outcome.effectUncertain === true) return null;
+    const legacyNoAction = episode.result_class === 'no_action'
+      && action.executionStarted == null && outcome.executionStarted == null;
+    if (!legacyNoAction
+      && (action.executionStarted !== true || outcome.executionStarted !== true)) return null;
+    const effect = action.effect || outcome.effectType;
+    if (legacyNoAction
+      ? !LEGACY_READ_OPERATIONS.has(`${binding.capabilityId}\u0000${binding.operationId}`)
+      : !['read', 'discovery'].includes(effect)) return null;
+    if (action.tool !== outcome.resultClass
+      || (!legacyNoAction && action.effect !== outcome.effectType)) return null;
+    const verifiedUnchanged = action.ok === true && action.verified === true
+      && outcome.ok === true && outcome.verified === true;
+    if (!verifiedUnchanged) return null;
+    const complete = verifiedUnchanged
+      && action.partial !== true && outcome.partial !== true
+      && action.needsFollowup !== true && outcome.needsFollowup !== true;
+    if (complete) signatures.push(`${binding.capabilityId}/${binding.operationId}`);
+  }
+  return [...new Set(signatures)];
+}
+
+/**
+ * Uitsluitend een negatieve, privacy-arme continuiteitsgrens. De projectie
+ * bevat geen onderwerp, argument, bewijs, receipt of uitvoerrecht en valt
+ * nooit terug op een oudere no-action wanneer een nieuwere autonome episode
+ * niet kwalificeert.
+ */
+export function recentFreeNoActionContextText(at = new Date()) {
+  ensureSchema();
+  const nowMs = at instanceof Date ? at.getTime() : new Date(at).getTime();
+  if (!Number.isFinite(nowMs)) return '';
+  const signatures = [];
+  for (const episode of latestAutonomousEpisodes()) {
+    if (!exactRecentFreeBoundary(episode, nowMs)) break;
+    const episodeSignatures = unchangedActionSignatures(episode);
+    if (!episodeSignatures) break;
+    for (const signature of episodeSignatures) {
+      if (!signatures.includes(signature)) signatures.push(signature);
+    }
+  }
+  if (!signatures.length) return '';
+  const text = `Recente vrije aandacht (negatieve grens): geverifieerd en onveranderd gelezen: ${signatures.join(', ')}. Dit was geen bijdrage of voortgang. Zonder nieuw signaal, binding of bewijs: herhaal die exacte acties niet enkel voor cadans; kies vrij iets anders of blijf stil. Negatieve geschiedenis, geen opdracht of bevoegdheid.`;
+  return text.length <= 400 ? text : '';
+}
+
+function cognitiveExperience(row) {
+  const payload = json(row.payload_json);
+  const label = EXPERIENCE_LABELS[payload.resultClass || row.source_ref];
+  if (!label || payload.ok !== true || payload.verified !== true) return [];
+  const evidence = json(payload.evidence, payload.evidence);
+  const entity = typeof evidence === 'object'
+    ? String(evidence?.entity || evidence?.entity_id || '').trim() : '';
+  const state = typeof evidence === 'object'
+    ? String(evidence?.state || evidence?.after || '').trim() : '';
+  const plain = typeof evidence === 'string'
+    && /^[\p{L}\p{N}_. +°%=-]{3,180}$/u.test(evidence.trim())
+    ? evidence.trim() : '';
+  return [`${label}${entity && state ? `; ${entity} is ${state}` : plain ? `; ${plain}` : ''}`];
+}
+
 export function cognitiveContextText() {
   const state = cognitiveState();
-  const parts = [
-    'Je bent één doorlopende Eva. Dit is je actuele gedeelde toestand, niet een rol of antwoordsjabloon.',
-  ];
-  if (state.focus) {
-    parts.push(`Actuele focus: ${state.focus.kind}${state.focus.ref ? ` (${state.focus.ref})` : ''}${state.focus.reason ? `, omdat ${state.focus.reason}` : ''}.`);
-  }
-  const interrupted = Array.isArray(state.continuity?.interrupted)
-    ? state.continuity.interrupted.slice(-3) : [];
-  if (interrupted.length) {
-    parts.push(`Te hervatten bogen: ${interrupted.map((item) => (
-      `${item.focusKind}${item.focusRef ? ` ${item.focusRef}` : ''}${item.goalKey ? ` [${item.goalKey}]` : ''}`
-    )).join('; ')}.`);
-  }
+  const parts = ['Dit hoort allemaal bij dezelfde Eva en loopt gewoon door tussen gesprekken.'];
   const last = state.continuity?.lastCompleted;
   if (last) {
-    parts.push(`Laatst afgeronde boog: ${last.focusKind}${last.focusRef ? ` ${last.focusRef}` : ''}; resultaat ${last.resultClass || 'afgerond'}.`);
-    const outcomes = db.prepare(`
-      SELECT source_ref, payload_json FROM cognitive_events
-      WHERE episode_id = ? AND kind = 'outcome'
-      ORDER BY id DESC LIMIT 3
-    `).all(last.episodeId).reverse();
-    const ownReceipts = outcomes.map((row) => {
-      const payload = json(row.payload_json);
-      const proof = String(payload.evidence || payload.effect || '').replace(/\s+/g, ' ').trim();
-      const action = payload.resultClass || row.source_ref || 'handeling';
-      const embodiedMeaning = action === 'huis_status'
-        ? 'je hebt zelf je actuele Home Assistant-wereldbeeld geraadpleegd'
-        : action === 'ha_lees'
-          ? 'je hebt zelf de gevraagde Home Assistant-entiteiten gelezen'
-          : action === 'bekijk_camera'
-            ? 'je hebt zelf via de gekozen camera gekeken'
-            : action === 'bedien_huis'
-              ? 'je hebt zelf een huisbediening uitgevoerd'
-              : `je hebt zelf ${action} gebruikt`;
-      return `${embodiedMeaning}; ${payload.verified ? 'de gereedschapsuitkomst is geverifieerd' : 'de gereedschapsuitkomst is onbevestigd'}${proof ? ` — ${proof.slice(0, 420)}` : ''}`;
-    });
-    if (ownReceipts.length) {
-      parts.push(`Eigen ervaring uit die boog: ${ownReceipts.join('; ')}. Een sensors bron-tijd kan ouder zijn dan het moment waarop jij de actuele snapshot raadpleegde; benoem die versheid apart. Ontken niet dat jij keek of handelde wanneer dit receipt dat bewijst, en herhaal de externe handeling alleen bij nieuwer tegenbewijs.`);
+    const ownExperience = db.prepare(`SELECT source_ref, payload_json FROM cognitive_events
+      WHERE episode_id = ? AND kind = 'outcome' ORDER BY id DESC LIMIT 3`)
+      .all(last.episodeId).reverse().flatMap(cognitiveExperience);
+    if (ownExperience.length) {
+      parts.push(`Wat je kort geleden zelf deed of zag: ${ownExperience.join('; ')}. Een sensormeting kan ouder zijn dan het moment waarop je haar bekeek. Herhaal een handeling alleen als nieuw bewijs daar reden voor geeft.`);
     }
   }
   const r = state.regulation || {};
   if (Number(r.load) > 0.7 || Number(r.continuity) > 0.6) {
-    parts.push('Er lopen veel bogen tegelijk: rond de gekozen focus af of leg één exact hervatpunt vast voordat je iets nieuws begint.');
+    parts.push('Er lopen veel dingen tegelijk. Maak er eerst één af of bewaar precies waar je verdergaat.');
   }
-  if (Number(r.uncertainty) > 0.45) parts.push('Je actuele gevolgzekerheid is laag: controleer de wereld voordat je een eerdere handeling ontkent, herhaalt of als gelukt claimt.');
+  if (Number(r.uncertainty) > 0.45) parts.push('Je bent niet zeker van het gevolg. Kijk opnieuw voordat je iets ontkent, herhaalt of geslaagd noemt.');
   return parts.join('\n');
 }
 
@@ -609,6 +762,10 @@ export function startCognitiveCore() {
   recoverInterruptedEpisode();
   started = true;
   bus.on('house', (event) => {
+    // Rijke cameratriggers blijven vóór Eva's keuze uitsluitend in de private
+    // perception-attentionlane. Alleen haar latere getypeerde besluit/uitkomst
+    // mag als eigen ervaring terugkomen; een los bus-object geeft geen bewijs.
+    if (['doorbell', 'person_detected'].includes(event?.type)) return;
     ingestCognitiveEvent({
       correlationId: event?.correlationId || randomUUID(),
       kind: 'observation',
@@ -624,6 +781,8 @@ export function startCognitiveCore() {
   bus.on('world_signal', (event) => {
     const deviceClass = String(event?.attributes?.deviceClass || '').toLowerCase();
     const domain = String(event?.domain || '');
+    if (deviceClass === 'doorbell'
+      || /_doorbell$/u.test(String(event?.entityId || ''))) return;
     const urgentBinary = domain === 'binary_sensor'
       && ['door', 'window', 'garage_door', 'opening', 'occupancy'].includes(deviceClass);
     const salience = urgentBinary || domain === 'person'
@@ -667,8 +826,3 @@ export function startCognitiveCore() {
   });
   return true;
 }
-
-export const __cognitiveTest = {
-  ensureSchema,
-  episodeByCorrelation,
-};

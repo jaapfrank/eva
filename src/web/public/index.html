@@ -26,7 +26,6 @@
       </div>
 
       <div id="accessories" class="accessories" aria-hidden="true"></div>
-      <div id="expression" class="expression hidden" aria-live="polite"></div>
       <p id="model-fallback" class="model-fallback hidden">Mijn beeld kon niet laden.</p>
 
       <div class="presence-footer">
@@ -86,6 +85,7 @@
 
             <div class="day-numbers">
               <div><strong id="memory-count">-</strong><span>herinneringen</span></div>
+              <div><strong id="memory-archived-count">-</strong><span>in archief</span></div>
               <div><strong id="message-count">-</strong><span>berichten vandaag</span></div>
               <div><strong id="reminder-count">-</strong><span>open opvolgingen</span></div>
             </div>
@@ -163,8 +163,23 @@
           </div>
           <div class="memory-grid">
             <section class="plain-section memory-list-section">
-              <h2>Herinneringen</h2>
+              <div class="section-heading memory-status-heading">
+                <div>
+                  <h2>Herinneringen</h2>
+                  <small id="memory-summary">Alleen actief geheugen beïnvloedt Eva.</small>
+                </div>
+                <div class="memory-scopes" aria-label="Geheugenweergave">
+                  <button type="button" class="quiet active" data-memory-scope="active">Actief</button>
+                  <button type="button" class="quiet" data-memory-scope="review">Beoordelen</button>
+                  <button type="button" class="quiet" data-memory-scope="archive">Archief</button>
+                </div>
+              </div>
               <ul id="memories" class="item-list"></ul>
+              <p id="memory-empty" class="empty hidden">Hier staan nu geen herinneringen.</p>
+              <div class="memory-pagination">
+                <small id="memory-shown" aria-live="polite">0 van 0 getoond</small>
+                <button id="memory-more" type="button" class="quiet hidden">Meer laden</button>
+              </div>
             </section>
             <section class="plain-section people-section">
               <h2>Mensen</h2>

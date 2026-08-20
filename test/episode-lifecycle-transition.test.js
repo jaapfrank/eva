@@ -146,7 +146,7 @@ test('de generieke werkroute sluit ook milestonewerk nooit zonder bewijs', () =>
   );
 });
 
-test('dezelfde transition-key is ook na replay exact één overgang', () => {
+test('een transition-key herhaalt alleen exact dezelfde betekenis', () => {
   const { episode } = linkedEpisode();
   const key = `turn-transition-${episode.id}`;
   const first = transitionGoalEpisode(episode.id, {
@@ -155,10 +155,15 @@ test('dezelfde transition-key is ook na replay exact één overgang', () => {
     idempotencyKey: key,
   });
   const replay = transitionGoalEpisode(episode.id, {
-    state: 'waiting',
-    nextAction: 'Een stale replay mag dit niet overschrijven.',
+    state: 'executing',
+    nextAction: 'Eerste concrete stap.',
     idempotencyKey: key,
   });
+  assert.throws(() => transitionGoalEpisode(episode.id, {
+    state: 'waiting',
+    nextAction: 'Een andere opdracht mag niet onder dezelfde sleutel schuilen.',
+    idempotencyKey: key,
+  }), /al aan een andere overgang gebonden/);
   assert.equal(replay.replayed, true);
   assert.equal(replay.episode.state, 'executing');
   assert.equal(replay.episode.next_action, 'Eerste concrete stap.');

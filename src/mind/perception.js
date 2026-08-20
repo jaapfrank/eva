@@ -3,28 +3,70 @@ import path from 'node:path';
 import { bus } from '../bus.js';
 import { config } from '../config.js';
 import { kvGet, kvSet, logTimeline } from '../db.js';
+import {
+  consumeIssuedCameraTriggerEvent,
+  pendingIssuedCameraTriggerEvent,
+} from '../integrations/homeassistant.js';
 import { recognizeFaceDetailed, warmupFaceRec } from './facerec.js';
 import { sendRegisteredPhoto } from './tools.js';
 import { renderCameraNotice } from './persona.js';
+import {
+  cameraAttentionFingerprint,
+  recordDoorbellEvidence,
+  replacePendingCameraCandidate,
+  selectCameraAttentionCandidate,
+} from './perceptionattention.js';
 
 const QUIET_MS = Math.max(
   60 * 60_000,
-  Number(process.env.EVA_CAMERA_REPORT_QUIET_MINUTES || 90) * 60_000,
+  config.cameraReportQuietMinutes * 60_000,
 );
 const SAME_PERSON_QUIET_MS = 6 * 3600_000;
 const UNKNOWN_QUIET_MS = 2 * 3600_000;
+const REPORT_STATE_LIMIT = 64;
 
 let started = false;
 let processing = false;
 const pending = new Map();
+const pendingDuplicateFingerprints = new Map();
 const REPORT_KEY = 'camera_report_state_v2';
 const REPORT_REGIONS_KEY = 'camera_report_regions_v1';
 
+function boundedRecord(value, timestampFor) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value)
+    .sort((left, right) => Number(timestampFor(right[0], right[1]) || 0)
+      - Number(timestampFor(left[0], left[1]) || 0)
+      || left[0].localeCompare(right[0], 'nl-NL'))
+    .slice(0, REPORT_STATE_LIMIT));
+}
+
+function compactReportState(value) {
+  const source = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  const rawByCamera = source.byCamera && typeof source.byCamera === 'object'
+    ? source.byCamera : {};
+  const attentionSelections = (Array.isArray(source.attentionSelections)
+    ? source.attentionSelections : [])
+    .filter((entry) => entry && typeof entry === 'object'
+      && typeof entry.cameraKey === 'string' && typeof entry.fingerprint === 'string')
+    .slice(0, REPORT_STATE_LIMIT);
+  return {
+    ...source,
+    byCamera: boundedRecord(rawByCamera, (_key, timestamp) => timestamp),
+    personByCamera: boundedRecord(source.personByCamera,
+      (key) => rawByCamera[key]),
+    unknownAt: Number(source.unknownAt || 0),
+    unknownByCamera: boundedRecord(source.unknownByCamera,
+      (_key, timestamp) => timestamp),
+    attentionSelections,
+    attentionCursor: typeof source.attentionCursor === 'string'
+      ? source.attentionCursor : attentionSelections[0]?.cameraKey || null,
+  };
+}
+
 function reportState() {
   const value = kvGet(REPORT_KEY, null);
-  return value && typeof value === 'object'
-    ? { byCamera: {}, personByCamera: {}, unknownAt: 0, ...value }
-    : { byCamera: {}, personByCamera: {}, unknownAt: 0 };
+  return compactReportState(value);
 }
 
 function frameBuffer(frame) {
@@ -33,7 +75,7 @@ function frameBuffer(frame) {
 }
 
 export async function cleanupTemporaryCameraFrames(event) {
-  const root = path.resolve(config.workspaceDir, 'camera_trigger_frames');
+  const root = path.resolve(config.dataDir, 'private', 'camera_trigger_frames');
   const prefix = `${root}${path.sep}`;
   const frames = Array.isArray(event?.frames) && event.frames.length
     ? event.frames
@@ -52,11 +94,53 @@ function cameraKey(event) {
   return String(event.camera || event.sensor || event.waar || 'camera');
 }
 
-function eventIsFresh(event) {
+export function cameraReportHistory(state, key) {
+  const camera = String(key || 'camera');
+  return Object.freeze({
+    previous: Number(state?.byCamera?.[camera] || 0),
+    previousPerson: state?.personByCamera?.[camera] || null,
+    unknownAt: Number(state?.unknownByCamera?.[camera] || 0),
+  });
+}
+
+export function cameraEventIsFresh(event, now = Date.now()) {
   const timestamp = Date.parse(
     event?.triggerTs || event?.frame?.capturedTs || event?.changedAt || '',
   );
-  return !Number.isFinite(timestamp) || Date.now() - timestamp <= 2 * 60_000;
+  const at = Number(now);
+  return Number.isFinite(timestamp) && Number.isFinite(at)
+    && timestamp <= at + 30_000 && at - timestamp <= 2 * 60_000;
+}
+
+/** Kies en onthoud precies één kandidaat uit de actuele camerabatch. */
+export function selectCameraEventForAttention(events, {
+  now = Date.now(),
+  duplicateFingerprints = [],
+} = {}) {
+  const state = reportState();
+  const selection = selectCameraAttentionCandidate(events, {
+    history: state.attentionSelections,
+    lastCameraKey: state.attentionCursor,
+    now,
+    duplicateFingerprints,
+  });
+  if (!selection) return null;
+  const selectedAt = new Date(Number(now)).toISOString();
+  state.attentionSelections = [{
+    cameraKey: selection.cameraKey,
+    fingerprint: selection.fingerprint,
+    selectedAt,
+  }, ...(Array.isArray(state.attentionSelections) ? state.attentionSelections : [])]
+    .slice(0, REPORT_STATE_LIMIT);
+  state.attentionCursor = selection.cameraKey;
+  kvSet(REPORT_KEY, compactReportState(state));
+  return Object.freeze({
+    event: selection.candidate,
+    cameraKey: selection.cameraKey,
+    fingerprint: selection.fingerprint,
+    reason: selection.reason,
+    factors: selection.factors,
+  });
 }
 
 function jpegDimensions(buffer) {
@@ -145,6 +229,54 @@ export function cameraNoticeRecognition(type, detail = null) {
   };
 }
 
+export function cameraAttentionAudit(attention = null) {
+  const reason = typeof attention?.reason === 'string' ? attention.reason.trim() : '';
+  const factors = attention?.factors && typeof attention.factors === 'object'
+    && !Array.isArray(attention.factors) ? attention.factors : null;
+  return Object.freeze({
+    attentionReason: reason || null,
+    attentionFactors: factors,
+  });
+}
+
+export function cameraFamilyCaption({ place, camera, recognition } = {}) {
+  return renderCameraNotice({ place, camera, recognition });
+}
+
+function trustedVisibleCameraDelivery(delivery) {
+  const acceptedChatIds = Array.isArray(delivery?.acceptedChatIds)
+    ? delivery.acceptedChatIds.map((id) => String(id || '').trim()) : [];
+  const failedChatIds = Array.isArray(delivery?.failedChatIds)
+    ? delivery.failedChatIds.map((id) => String(id || '').trim()) : [];
+  if (delivery?.familyVisible !== true || !acceptedChatIds.length
+    || acceptedChatIds.some((id) => !id)
+    || new Set(acceptedChatIds).size !== acceptedChatIds.length
+    || failedChatIds.some((id) => !id || acceptedChatIds.includes(id))
+    || new Set(failedChatIds).size !== failedChatIds.length) return false;
+  const complete = delivery.ok === true && delivery.accepted === true
+    && failedChatIds.length === 0;
+  const partial = delivery.ok === false && delivery.accepted === false
+    && delivery.partial === true && failedChatIds.length > 0;
+  return complete || partial;
+}
+
+export function applyVisibleCameraDeliveryState({
+  state, key, detail, unknown = false, delivery, now = Date.now(),
+} = {}) {
+  const timestamp = Number(now);
+  const camera = String(key || '').trim();
+  if (!state || typeof state !== 'object' || !camera || !Number.isFinite(timestamp)
+    || !trustedVisibleCameraDelivery(delivery)) return false;
+  state.byCamera = { ...(state.byCamera || {}), [camera]: timestamp };
+  if (detail?.recognized) {
+    state.personByCamera = { ...(state.personByCamera || {}), [camera]: detail.person };
+  }
+  if (unknown) {
+    state.unknownByCamera = { ...(state.unknownByCamera || {}), [camera]: timestamp };
+  }
+  return true;
+}
+
 async function recognizeFrames(frames) {
   let best = null;
   for (const frame of frames) {
@@ -161,81 +293,94 @@ async function recognizeFrames(frames) {
   return best;
 }
 
-async function handleCameraEvent(event) {
-  try {
-    if (!['person_detected', 'doorbell'].includes(event?.type) || !eventIsFresh(event)) return;
-    const frames = Array.isArray(event.frames) && event.frames.length
-      ? event.frames
-      : event.frame ? [event.frame] : [];
-    const best = await recognizeFrames(frames);
-    if (!best?.buffer) return;
+function logSuppressedCameraEvent({ event, best, place, detail, region, attention }) {
+  const outsideRegion = !!region && Array.isArray(detail?.bbox)
+    && !faceInsideReportRegion(detail, best.frameSize, region);
+  logTimeline('vision', outsideRegion
+    ? `${place}: gezicht buiten het afgesproken meldgebied genegeerd.`
+    : `${place}: Protect-detectie beoordeeld, geen meldenswaardig of leerbaar gezicht.`, {
+    internalOnly: true, camera: event.camera || null, face: detail || null,
+    frameSize: best.frameSize, reportRegion: region, outsideReportRegion: outsideRegion,
+    suppressed: true, ...cameraAttentionAudit(attention),
+  });
+}
 
-    const place = String(event.waar || best.frame?.cameraName || 'de camera').trim();
-    const detail = best.detail;
-    const state = reportState();
-    const key = cameraKey(event);
-    const region = reportRegion(key);
-    const previous = Number(state.byCamera?.[key] || 0);
-    const unknown = !detail?.recognized && detail?.learnable === true;
-    const shouldSend = shouldReportCameraEvent({
-      type: event.type,
-      detail,
-      previous,
-      previousPerson: state.personByCamera?.[key] || null,
-      unknownAt: state.unknownAt,
-      frameSize: best.frameSize,
-      region,
-    });
-    if (!shouldSend) {
-      const outsideRegion = !!region && Array.isArray(detail?.bbox)
-        && !faceInsideReportRegion(detail, best.frameSize, region);
-      logTimeline('vision', outsideRegion
-        ? `${place}: gezicht buiten het afgesproken meldgebied genegeerd.`
-        : `${place}: Protect-detectie beoordeeld, geen meldenswaardig of leerbaar gezicht.`, {
-        internalOnly: true,
-        camera: event.camera || null,
-        face: detail || null,
-        frameSize: best.frameSize,
-        reportRegion: region,
-        outsideReportRegion: outsideRegion,
-        suppressed: true,
-      });
-      return;
-    }
-    const noticeRecognition = cameraNoticeRecognition(event.type, detail);
-    const caption = renderCameraNotice({
-      place,
-      camera: best.frame?.cameraName || event.camera || place,
-      recognition: noticeRecognition,
-    });
-
-    const sent = await sendRegisteredPhoto(best.buffer, best.frame?.contentType || 'image/jpeg', caption, null, {
-      broadcast: true,
-      cameraKey: key,
-      description: caption,
+async function deliverPersonDetection({ event, best, place, detail, state, key, unknown, attention }) {
+  const noticeRecognition = cameraNoticeRecognition(event.type, detail);
+  const caption = cameraFamilyCaption({ place,
+    camera: best.frame?.cameraName || event.camera || place, recognition: noticeRecognition,
+    reason: attention?.reason });
+  const occurrence = event.correlationId
+    || event.triggerTs || best.frame?.capturedTs || event.changedAt || null;
+  const sent = await sendRegisteredPhoto(best.buffer, best.frame?.contentType || 'image/jpeg', caption,
+    null, { broadcast: true, dedupeKey: occurrence ? `camera:${key}:${occurrence}` : null,
+      cameraKey: key, description: caption,
       suggestedPerson: noticeRecognition?.recognized ? noticeRecognition.person : null,
-      candidateSimilarity: detail?.gelijkenis ?? null,
-      candidateMargin: detail?.marge ?? null,
-    });
-    if (sent?.ok) {
-      const now = Date.now();
-      state.byCamera = { ...(state.byCamera || {}), [key]: now };
-      if (detail?.recognized) {
-        state.personByCamera = { ...(state.personByCamera || {}), [key]: detail.person };
-      }
-      if (unknown) state.unknownAt = now;
-      kvSet(REPORT_KEY, state);
-    }
-    logTimeline('vision', sent?.ok ? caption.split('\n')[0] : `Camerabeeld bij ${place} kon niet worden gemeld.`, {
-      internalOnly: !sent?.ok,
-      familyVisible: sent?.ok === true,
-      camera: event.camera || null,
-      face: detail || null,
-      photoRef: sent?.photoRef || null,
-    });
-  } finally {
-    await cleanupTemporaryCameraFrames(event);
+      candidateSimilarity: detail?.gelijkenis ?? null, candidateMargin: detail?.marge ?? null });
+  const familyVisible = applyVisibleCameraDeliveryState({
+    state, key, detail, unknown, delivery: sent,
+  });
+  if (familyVisible) {
+    kvSet(REPORT_KEY, compactReportState(state));
   }
+  logTimeline('vision', familyVisible ? caption.split('\n')[0]
+    : `Camerabeeld bij ${place} kon niet worden gemeld.`, {
+    internalOnly: !familyVisible, familyVisible,
+    deliveryAccepted: sent?.ok === true && sent?.accepted === true,
+    deliveryPartial: sent?.partial === true,
+    acceptedChatIds: Array.isArray(sent?.acceptedChatIds) ? sent.acceptedChatIds : [],
+    failedChatIds: Array.isArray(sent?.failedChatIds) ? sent.failedChatIds : [],
+    camera: event.camera || null, face: detail || null, photoRef: sent?.photoRef || null,
+    ...cameraAttentionAudit(attention),
+  });
+}
+
+async function handlePersonDetectedEvent(event, attention = null) {
+  const frames = Array.isArray(event.frames) && event.frames.length
+    ? event.frames : event.frame ? [event.frame] : [];
+  const best = await recognizeFrames(frames);
+  if (!best?.buffer) return;
+  const place = String(event.waar || best.frame?.cameraName || 'de camera').trim();
+  const detail = best.detail;
+  const state = reportState();
+  const key = cameraKey(event);
+  const history = cameraReportHistory(state, key);
+  const region = reportRegion(key);
+  const unknown = !detail?.recognized && detail?.learnable === true;
+  const shouldSend = shouldReportCameraEvent({ type: event.type, detail,
+    previous: history.previous,
+    previousPerson: history.previousPerson, unknownAt: history.unknownAt,
+    frameSize: best.frameSize, region });
+  if (!shouldSend) {
+    logSuppressedCameraEvent({ event, best, place, detail, region, attention });
+    return;
+  }
+  await deliverPersonDetection({ event, best, place, detail, state, key, unknown, attention });
+}
+
+async function handleCameraEvent(event, attention = null) {
+  try {
+    if (event?.type !== 'person_detected' || !cameraEventIsFresh(event)) return;
+    await handlePersonDetectedEvent(event, attention);
+  } finally { await cleanupTemporaryCameraFrames(event); }
+}
+
+async function handleDoorbellEvent(event) {
+  try {
+    // recordDoorbellEvidence consumeert de adaptercapability en kopieert het
+    // beeld synchroon naar de private ledger. Doe dit buiten de seriële
+    // herkennings-/fotolane, zodat een vastgelopen gewone cameramelding een
+    // echte deurbel nooit vóór durable registratie kan blokkeren.
+    const recorded = recordDoorbellEvidence(event);
+    if (recorded?.ok) bus.emit('perception_ready', {
+      contract: 'PerceptionReadyNotice/v1', incidentId: recorded.incidentId,
+    });
+  } catch (error) {
+    logTimeline('system', `Deurbelevent kon niet worden verwerkt: ${error?.message || error}`, {
+      internalOnly: true,
+      camera: event?.camera || null,
+    });
+  } finally { await cleanupTemporaryCameraFrames(event); }
 }
 
 async function drain() {
@@ -243,10 +388,16 @@ async function drain() {
   processing = true;
   try {
     while (pending.size) {
-      const [key, event] = pending.entries().next().value;
+      const current = [...pending.values()].filter((event) => cameraEventIsFresh(event));
+      const attention = selectCameraEventForAttention(current, {
+        duplicateFingerprints: [...pendingDuplicateFingerprints.values()],
+      });
+      const event = attention?.event || pending.values().next().value;
+      const key = cameraKey(event);
       pending.delete(key);
+      pendingDuplicateFingerprints.delete(key);
       try {
-        await handleCameraEvent(event);
+        await handleCameraEvent(event, attention);
       } catch (error) {
         logTimeline('system', `Camera-event kon niet worden verwerkt: ${error?.message || error}`, {
           internalOnly: true,
@@ -259,13 +410,39 @@ async function drain() {
   }
 }
 
+function enqueueCameraEvent(event) {
+  const key = cameraKey(event);
+  const displaced = pending.get(key) || null;
+  const fingerprint = cameraAttentionFingerprint(event);
+  if (displaced && cameraAttentionFingerprint(displaced) === fingerprint) {
+    pendingDuplicateFingerprints.set(key, fingerprint);
+  } else {
+    pendingDuplicateFingerprints.delete(key);
+  }
+  void replacePendingCameraCandidate(pending, event, {
+    cleanup: cleanupTemporaryCameraFrames,
+  }).catch((error) => {
+    logTimeline('system', `Verdrongen camerabeeld kon niet worden opgeruimd: ${error?.message || error}`, {
+      internalOnly: true,
+      camera: event?.camera || null,
+    });
+  }).finally(() => drain());
+}
+
 export function startPerception() {
   if (started) return;
   started = true;
   warmupFaceRec();
   bus.on('house', (event) => {
     if (!['person_detected', 'doorbell'].includes(event?.type)) return;
-    pending.set(cameraKey(event), event);
-    drain();
+    if (event.type === 'doorbell') {
+      // Alleen het exacte, nog niet verbruikte adapterobject krijgt toegang tot
+      // core en cleanup. recordDoorbellEvidence consumeert het direct.
+      if (!pendingIssuedCameraTriggerEvent(event)) return;
+      void handleDoorbellEvent(event);
+      return;
+    }
+    if (!consumeIssuedCameraTriggerEvent(event)) return;
+    enqueueCameraEvent(event);
   });
 }

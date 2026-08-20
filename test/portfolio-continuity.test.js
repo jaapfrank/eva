@@ -6,27 +6,36 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-portfolio-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.TELEGRAM_BOT_TOKEN = '';
+process.env.TELEGRAM_ALLOWED_IDS = '51';
+await import('./telegram-test-composition.js');
 
-const { db } = await import('../src/db.js');
+const { archiveTelegramMessage, db } = await import('../src/db.js');
 const { createWorkItem, updateWorkItem } = await import('../src/mind/work.js');
 const {
   attachEpisodeOrigin,
   bindEpisodeToWork,
   createGoalEpisode,
+  episodeDeliveryOrigin,
+  episodeForWork,
   episodeHasDelivery,
   goalEpisodeById,
   ensureEpisodeForWorkItem,
   dueGoalAttention,
   manageGoal,
   openEpisodeForConversation,
+  recentEpisodeArtifactReceipts,
   recordEpisodeDelivery,
   recoverStrandedDeliveryWork,
-  requireEpisodeDelivery,
   selectPortfolioCommitment,
+  transitionGoalEpisode,
   updateGoalEpisode,
 } = await import('../src/mind/portfolio.js');
+const { __telegramTransportTest } = await import('../src/integrations/telegram.js');
+const { sendTelegramText, setBotForTest } = __telegramTransportTest;
 
 after(() => {
+  setBotForTest(null);
   db.close();
   fs.rmSync(dataDir, { recursive: true, force: true });
 });
@@ -74,6 +83,59 @@ test('een gebruikersbelofte sluit pas met een herleidbaar afleveringbewijs', () 
   assert.equal(project.next_action, '');
 });
 
+test('mutable legacy artifactmetadata verleent geen correctie-authority', () => {
+  const conversation = 'web:gesloten-artifactcorrectie';
+  const artifact = { path: 'data/workspace/kostenrapport.py', sha256: 'a'.repeat(64),
+    understandingSha256: 'b'.repeat(64), requirementId: 'r1', role: 'source' };
+  const work = updateWorkItem(createWorkItem({ source: 'chat', title: 'Kostenrapport bouwen',
+    goal: 'Een bewezen rapport opleveren', nextStep: 'Bouw en controleer het rapport.' }).id, {
+    state: { artifact_receipts: [artifact] },
+  });
+  const episode = ensureEpisodeForWorkItem(work, { originKind: 'user', originChannel: 'web',
+    originConversationId: conversation, requester: 'Jaap' });
+  updateGoalEpisode(episode.id, { state: 'delivery_pending', proofSummary: 'script getest en teruggelezen' });
+  recordEpisodeDelivery(episode.id, { deliveredChannel: 'web', originConversationId: conversation,
+    deliveredConversationId: conversation, resultText: 'Het rapportscript is klaar en getest.',
+    idempotencyKey: 'gesloten-artifactcorrectie-v1' });
+
+  assert.equal(openEpisodeForConversation(conversation), null);
+  assert.deepEqual(recentEpisodeArtifactReceipts(conversation), []);
+  assert.deepEqual(recentEpisodeArtifactReceipts('web:ander-gesprek'), []);
+
+  const newer = createGoalEpisode({ title: 'Een nieuw open doel', outcome: 'Nog niet af',
+    originKind: 'user', originChannel: 'web', originConversationId: conversation, requester: 'Jaap' });
+  bindEpisodeToWork(newer.id, createWorkItem({ source: 'chat', title: 'Nieuw open werk',
+    goal: 'Bewijs dat open werk voorgaat', nextStep: 'Ga verder.' }).id);
+  assert.deepEqual(recentEpisodeArtifactReceipts(conversation), [],
+    'een open episode mag niet stil terugvallen op een ouder gesloten artefact');
+});
+
+test('ook ongebonden geannuleerd werk verliest alle hervat- en aflevertoestand maar geen bewijs', () => {
+  const work = createWorkItem({
+    source: 'autonomy', title: 'Stop een zinloze zelfstandige proef',
+    goal: 'Bewaar de leerwaarde en laat geen spookwake achter', nextStep: 'Probeer later opnieuw.',
+  });
+  db.prepare(`UPDATE eva_work_items SET current_step=?, state_json=?, wait_json=?,
+    next_wake_ts=?, lease_owner=?, lease_until=?, evidence=? WHERE id=?`).run(
+    'Een oude vervolgstap.',
+    JSON.stringify({ pending_delivery: { text: 'stale' }, learning: 'de route leverde niets op' }),
+    JSON.stringify({ reason: 'later' }), '2099-01-01T00:00:00.000Z',
+    'eva:oud', '2099-01-01T00:05:00.000Z', 'drie pogingen gaven geen bruikbaar signaal', work.id,
+  );
+
+  const cancelled = updateWorkItem(work.id, { status: 'cancelled' });
+  assert.equal(cancelled.status, 'cancelled');
+  assert.equal(cancelled.next_step, '');
+  assert.equal(cancelled.current_step, '');
+  assert.equal(cancelled.wait_json, null);
+  assert.equal(cancelled.next_wake_ts, null);
+  assert.equal(cancelled.lease_owner, null);
+  assert.equal(cancelled.lease_until, null);
+  assert.deepEqual(JSON.parse(cancelled.state_json), { learning: 'de route leverde niets op' });
+  assert.equal(cancelled.evidence, 'drie pogingen gaven geen bruikbaar signaal');
+  assert.equal(episodeForWork(work.id), null);
+});
+
 test('Eva kan een eigen langetermijndoel maken en nieuw werk daar werkelijk aan binden', () => {
   const created = manageGoal({
     operation: 'create', title: 'Een stiller energiehuis bouwen',
@@ -108,13 +170,78 @@ test('een zelfgekozen doel zonder open werk keert op zijn reviewmoment terug in 
   const attention = dueGoalAttention(new Date());
   assert.equal(attention.kind, 'goal');
   assert.equal(attention.key, created.goal.goal_key);
-  assert.match(attention.text, /doel_bijhouden/);
-  manageGoal({
+  assert.equal(attention.revision, Number(created.goal.revision) + 1);
+  assert.match(attention.text, /bijstellen.*pauzeren.*afronden.*verlaten/u);
+  assert.doesNotMatch(attention.text, /passend werk begint|werk starten/u);
+  const stale = manageGoal({
     operation: 'update', goalKey: created.goal.goal_key,
+    expectedRevision: attention.revision + 1,
     nextReviewTs: new Date(Date.now() + 86_400_000).toISOString(),
   });
+  assert.equal(stale.ok, false);
+  db.prepare("UPDATE eva_goals SET status='paused' WHERE goal_key=?").run(created.goal.goal_key);
+  assert.equal(manageGoal({ operation: 'update', goalKey: created.goal.goal_key,
+    expectedRevision: attention.revision,
+    nextReviewTs: new Date(Date.now() + 86_400_000).toISOString() }).ok, false,
+  'de geattesteerde revisie mag geen niet-actieve drift muteren');
+  db.prepare("UPDATE eva_goals SET status='active', source='conversation' WHERE goal_key=?")
+    .run(created.goal.goal_key);
+  assert.equal(manageGoal({ operation: 'update', goalKey: created.goal.goal_key,
+    expectedRevision: attention.revision,
+    nextReviewTs: new Date(Date.now() + 86_400_000).toISOString() }).ok, false,
+  'de geattesteerde revisie mag geen source-drift muteren');
+  db.prepare("UPDATE eva_goals SET source='self' WHERE goal_key=?").run(created.goal.goal_key);
+  const updated = manageGoal({
+    operation: 'update', goalKey: created.goal.goal_key,
+    expectedRevision: attention.revision,
+    nextReviewTs: new Date(Date.now() + 86_400_000).toISOString(),
+  });
+  assert.equal(updated.ok, true);
+  assert.equal(manageGoal({ operation: 'pause', goalKey: created.goal.goal_key,
+    expectedRevision: attention.revision }).ok, false,
+  'dezelfde geattesteerde revisie kan geen tweede doelmutatie dragen');
   assert.notEqual(dueGoalAttention(new Date())?.key, created.goal.goal_key);
   manageGoal({ operation: 'abandon', goalKey: created.goal.goal_key });
+});
+
+test('doel-CAS onderscheidt legacy, publieke revisie en private id-plus-revisie', () => {
+  const create = (title) => manageGoal({
+    operation: 'create', title,
+    intent: 'Deze zelfstandige richting met een exact botsingsvrij reviewbesluit beheren.',
+    why: 'Een doelreview mag nooit een gelijkende sibling muteren.',
+    beneficiary: 'Eva en het gezin', horizon: 'de komende week',
+    successMetrics: ['exact één doelrij verandert per geldige CAS'], source: 'self',
+    nextReviewTs: new Date(Date.now() + 86_400_000).toISOString(),
+  }).goal;
+  const first = create('Private CAS richting een');
+  const sibling = create('Private CAS richting twee');
+  const siblingBefore = db.prepare('SELECT * FROM eva_goals WHERE id=?').get(sibling.id);
+
+  const idOnly = manageGoal({
+    operation: 'pause', goalKey: first.goal_key, expectedGoalId: sibling.id,
+  });
+  assert.equal(idOnly.ok, false);
+  assert.deepEqual(db.prepare('SELECT * FROM eva_goals WHERE id=?').get(sibling.id),
+    siblingBefore, 'een id-only attest mag geen sibling met velden van het eerste doel overschrijven');
+
+  const revisionOnly = manageGoal({
+    operation: 'update', goalKey: first.goal_key, expectedRevision: first.revision,
+    nextReviewTs: new Date(Date.now() + 2 * 86_400_000).toISOString(),
+  });
+  assert.equal(revisionOnly.ok, true, 'de bestaande publieke revision-only CAS blijft werken');
+
+  const privateCas = manageGoal({
+    operation: 'pause', goalKey: first.goal_key,
+    expectedGoalId: first.id, expectedRevision: revisionOnly.goal.revision,
+  });
+  assert.equal(privateCas.ok, true);
+  assert.equal(privateCas.goal.id, first.id);
+  assert.equal(privateCas.goal.status, 'paused');
+
+  assert.equal(manageGoal({ operation: 'resume', goalKey: first.goal_key }).ok, true,
+    'de legacyroute zonder attest blijft beschikbaar');
+  manageGoal({ operation: 'abandon', goalKey: first.goal_key });
+  manageGoal({ operation: 'abandon', goalKey: sibling.goal_key });
 });
 
 test('doelreviews roteren duurzaam en gedeelde huisrichtingen zijn niet muteerbaar', () => {
@@ -168,6 +295,11 @@ test('dezelfde transportaanbieding veroorzaakt precies één receipt en één ev
     ...input,
     idempotencyKey: 'transport-opnieuw-9-andere-key',
   });
+  assert.throws(() => recordEpisodeDelivery(episode.id, {
+    ...input,
+    resultText: 'Een strijdig resultaat.',
+    idempotencyKey: 'transport-opnieuw-9',
+  }), /botst met bestaand afleveringsbewijs/);
 
   assert.equal(second.id, first.id);
   assert.equal(replayWithAnotherKey.id, first.id);
@@ -218,6 +350,27 @@ test('één doorlopende klus bewaart iedere gespreksherkomst en de echte aflever
   assert.equal(receipt.origin_message_id, 'bericht-b');
   assert.equal(receipt.delivered_conversation_id, 'voice-vervolg');
   assert.equal(openEpisodeForConversation('voice-vervolg'), null);
+});
+
+test('een aflevercaller kan niet zelf een nog onbekende oorsprong minten', () => {
+  const episode = createGoalEpisode({
+    title: 'Behoud de echte oorsprong',
+    outcome: 'Accepteer alleen een vooraf aan deze episode gebonden gesprek',
+    originKind: 'user',
+    originChannel: 'voice',
+    originConversationId: 'voice:werkelijk',
+    originMessageId: 'voice-werkelijk-1',
+    requester: 'Jaap',
+  });
+  updateGoalEpisode(episode.id, { state: 'delivery_pending' });
+  assert.throws(() => recordEpisodeDelivery(episode.id, {
+    deliveredChannel: 'voice',
+    originConversationId: 'voice:verzonnen',
+    deliveredConversationId: 'voice:verzonnen',
+    resultText: 'Klaar.',
+    idempotencyKey: 'voice-verzonnen-origin',
+  }), /niet naar een vooraf gebonden oorsprong/);
+  assert.equal(episodeHasDelivery(episode.id), false);
 });
 
 test('een required episode kan niet zonder receipt sluiten of andermans key hergebruiken', () => {
@@ -310,7 +463,7 @@ test('een bewuste nachtelijke afleverwacht blijft bij herstart slapen', () => {
   });
   const episode = createGoalEpisode({
     title: work.title, outcome: work.goal, originKind: 'self',
-    originChannel: 'autonomy', deliveryPolicy: 'required',
+    originChannel: 'autonomy', deliveryPolicy: 'required', deliveryTarget: 'gezin',
   });
   bindEpisodeToWork(episode.id, work.id);
   updateGoalEpisode(episode.id, { state: 'delivery_pending' });
@@ -335,7 +488,7 @@ test('een afleverretry met backoff blijft bij herstart slapen', () => {
   });
   const episode = createGoalEpisode({
     title: work.title, outcome: work.goal, originKind: 'self',
-    originChannel: 'autonomy', deliveryPolicy: 'required',
+    originChannel: 'autonomy', deliveryPolicy: 'required', deliveryTarget: 'gezin',
   });
   bindEpisodeToWork(episode.id, work.id);
   updateGoalEpisode(episode.id, { state: 'delivery_pending' });
@@ -354,10 +507,119 @@ test('een materieel effect promoveert bestaand zelfwerk naar verplichte afleveri
     originKind: 'self',
     deliveryPolicy: 'milestone',
   });
-  const promoted = requireEpisodeDelivery(episode.id, { deliveryTarget: 'gezin' });
+  const promoted = transitionGoalEpisode(episode.id, {
+    state: episode.state,
+    deliveryPolicy: 'required',
+    deliveryTarget: 'gezin',
+    eventKind: 'delivery_required',
+  }).episode;
   assert.equal(promoted.delivery_policy, 'required');
   assert.equal(promoted.delivery_target, 'gezin');
   assert.throws(() => updateGoalEpisode(episode.id, { state: 'closed' }), /afleveringbewijs/);
+});
+
+test('expliciet stille gebruikersmonitoring houdt duurzaam geen afleverdoel', () => {
+  const episode = createGoalEpisode({
+    title: 'Stil de kamertemperatuur volgen',
+    outcome: 'De temperatuur volgen zonder berichten te sturen',
+    originKind: 'user',
+    originChannel: 'telegram',
+    originConversationId: 'telegram:stil-41',
+    requester: 'Jaap',
+    deliveryPolicy: 'milestone',
+    deliveryTarget: null,
+  });
+  assert.equal(episode.delivery_policy, 'milestone');
+  assert.equal(episode.delivery_target, null);
+
+  const continued = updateGoalEpisode(episode.id, {
+    state: 'waiting',
+    deliveryTarget: 'Jaap',
+    wakeTs: '2026-08-08T10:00:00.000Z',
+  });
+  assert.equal(continued.delivery_policy, 'milestone');
+  assert.equal(continued.delivery_target, null);
+
+  const promoted = transitionGoalEpisode(episode.id, {
+    state: continued.state,
+    deliveryPolicy: 'required',
+    deliveryTarget: continued.requester,
+    eventKind: 'delivery_required',
+  }).episode;
+  assert.equal(promoted.delivery_policy, 'required');
+  assert.equal(promoted.delivery_target, 'Jaap');
+});
+
+test('een required Telegramreceipt blijft aan herkomst én echt transport gepind', async () => {
+  archiveTelegramMessage({
+    chatId: 'eerste-51', messageId: 'eerste-bericht', sender: 'Jaap', role: 'user',
+    processingStatus: 'completed',
+    meta: { inbound: true, fromTelegramId: '501' },
+  });
+  const episode = createGoalEpisode({
+    title: 'Telegramresultaat terugbrengen',
+    outcome: 'Het resultaat in de oorspronkelijke chat bezorgen',
+    originKind: 'user',
+    originChannel: 'telegram',
+    originConversationId: 'telegram:eerste-51',
+    originMessageId: 'eerste-bericht',
+    requester: 'Jaap',
+  });
+  attachEpisodeOrigin(episode.id, {
+    originKind: 'user',
+    originChannel: 'telegram',
+    originConversationId: 'telegram:latere-52',
+    originMessageId: 'later-bericht',
+    requester: 'Jaap',
+  });
+  updateGoalEpisode(episode.id, { state: 'delivery_pending' });
+  assert.equal(
+    episodeDeliveryOrigin(episode.id, 'telegram').origin_conversation_id,
+    'telegram:eerste-51',
+  );
+
+  assert.throws(() => recordEpisodeDelivery(episode.id, {
+    deliveredChannel: 'telegram',
+    deliveryTarget: 'Jaap',
+    originConversationId: 'telegram:eerste-51',
+    deliveredConversationId: 'telegram:latere-52',
+    resultText: 'Klaar.',
+    idempotencyKey: 'telegram-verkeerde-chat-51',
+  }), /niet bevestigd in telegram:eerste-51/);
+  assert.equal(episodeHasDelivery(episode.id), false);
+
+  assert.throws(() => recordEpisodeDelivery(episode.id, {
+    deliveredChannel: 'telegram',
+    deliveryTarget: 'Jaap',
+    originConversationId: 'telegram:eerste-51',
+    deliveredConversationId: 'telegram:eerste-51',
+    resultText: 'Klaar.',
+    idempotencyKey: 'telegram-juiste-chat-51',
+  }), /acceptatiebewijs/i);
+
+  setBotForTest({ api: { sendMessage: async (chatId, text) => ({
+    chat: { id: chatId }, message_id: 5_151, date: 1_786_011_000, text,
+  }) } });
+  const [message] = await sendTelegramText('eerste-51', 'Klaar.', {
+    dedupeKey: 'telegram-juiste-chat-51',
+    directTurnSignalRef: 'turn:telegram:eerste-51:eerste-bericht',
+    originPrincipal: 'telegram:501',
+  });
+  const receipt = recordEpisodeDelivery(episode.id, {
+    deliveredChannel: 'telegram',
+    deliveryTarget: 'Jaap',
+    originConversationId: 'telegram:eerste-51',
+    deliveredConversationId: 'telegram:eerste-51',
+    resultText: 'Klaar.',
+    idempotencyKey: 'telegram-juiste-chat-51',
+    transport: {
+      accepted: true, transport: 'telegram', kind: 'text',
+      sent: [{ chatId: 'eerste-51', messageId: '5151', ...message._evaTransport }],
+    },
+  });
+  assert.equal(receipt.origin_conversation_id, 'telegram:eerste-51');
+  assert.equal(receipt.origin_message_id, 'eerste-bericht');
+  assert.equal(receipt.delivered_conversation_id, 'telegram:eerste-51');
 });
 
 test('de portefeuille kiest betekenisvol en niet simpelweg het eerste open werk', () => {

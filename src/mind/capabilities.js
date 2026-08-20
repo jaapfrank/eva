@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import db from '../db.js';
 import { config } from '../config.js';
+import { listSecretKeys } from '../self/vault.js';
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS eva_capabilities (
@@ -86,7 +87,7 @@ export function stageSkill({
   testEntrypoint,
   testRuntime = 'node',
   testArguments = [],
-} = {}) {
+} = /** @type {any} */ ({})) {
   const slug = slugify(name);
   const body = clean(instructions, 8_000);
   if (!slug || !body) throw new Error('een vaardigheid heeft een naam en concrete werkwijze nodig');
@@ -151,7 +152,9 @@ export function getCapability(kind, name) {
   return KINDS.has(safeKind) && slug ? capability(safeKind, slug) : null;
 }
 
-export function stageAddon({ name, description = '', manifest = {}, triggers = [] } = {}) {
+export function stageAddon({
+  name, description = '', manifest = {}, triggers = [],
+} = /** @type {any} */ ({})) {
   const slug = slugify(name);
   if (!slug) throw new Error('een add-on heeft een naam nodig');
   const entry = workspaceEntrypoint(manifest?.entrypoint);
@@ -321,22 +324,60 @@ function words(value) {
   return new Set(clean(value, 2_000).toLowerCase().match(/[a-zà-ÿ0-9]{3,}/g) || []);
 }
 
+const INVENTORY_STOP_WORDS = new Set([
+  'aan', 'als', 'dat', 'deze', 'dit', 'een', 'eigen', 'heeft', 'het', 'hoe', 'kan', 'kun',
+  'met', 'niet', 'of', 'ondersteunt', 'voor', 'wat', 'welke', 'zijn',
+]);
+function ranked(items, score, limit = 8) {
+  return items.map((item) => ({ item, score: score(item) })).filter(({ score: value }) => value > 0)
+    .sort((left, right) => right.score - left.score).slice(0, limit).map(({ item }) => item);
+}
+
+export function capabilityInventory(question = '', coreTools = [], offeredToolNames = []) {
+  const terms = [...words(question)].filter((term) => !INVENTORY_STOP_WORDS.has(term));
+  const score = (value) => terms.reduce((total, term) => (
+    total + (String(value || '').toLowerCase().includes(term) ? 1 : 0)
+  ), 0);
+  const offered = new Set(offeredToolNames.map(String));
+  const matchingTools = ranked(coreTools.filter((tool) => tool.name !== 'inspecteer_vermogen'),
+    (tool) => score(`${tool.name} ${tool.description}`)).map((tool) => ({
+    name: tool.name, description: tool.description, offered_this_turn: offered.has(tool.name),
+    parameters: Object.entries(tool.parameters?.properties || {}).map(([name, schema]) => ({
+      name, type: schema?.type || null, description: schema?.description || '',
+    })),
+  }));
+  const sourceRefs = ranked(['src/integrations', 'src/mind'].flatMap((relative) => {
+    const directory = path.join(config.root, relative);
+    return fs.existsSync(directory) ? fs.readdirSync(directory, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && /\.[cm]?js$/i.test(entry.name))
+      .map((entry) => `${relative}/${entry.name}`) : [];
+  }), (source) => score(path.basename(source).replace(/\.[^.]+$/, '')));
+  const extensions = ranked(listCapabilities({ limit: 100 }),
+    (item) => score(`${item.name} ${item.slug} ${item.description} ${(item.triggers || []).join(' ')}`))
+    .map(({ kind, name, status, version, updated_ts: updatedTs }) => ({
+      kind, name, status, version, updated_ts: updatedTs,
+    }));
+  const secretNames = listSecretKeys().filter((name) => score(name) > 0);
+  return {
+    ok: true, changed: false, verified: true,
+    message: `Passende kerntools: ${matchingTools.map((tool) => `${tool.name}${tool.offered_this_turn ? ' (aangeboden)' : ' (niet aangeboden)'}`).join(', ') || 'geen'}. Relevante bronbestanden: ${sourceRefs.join(', ') || 'geen automatisch gevonden'}. Passende extensies: ${extensions.map((item) => `${item.name} (${item.status})`).join(', ') || 'geen'}. Geconfigureerde geheimnamen: ${secretNames.join(', ') || 'geen passende naam gevonden'}.`,
+    question: String(question || '').trim(), source_refs: sourceRefs,
+    configured_secret_names: secretNames, matching_tools: matchingTools, matching_extensions: extensions,
+    note: 'Geheimwaarden zijn niet gelezen of getoond. Een descriptor bewijst beschikbaarheid; werking vereist zo nodig een read-only statusprobe of echte actie.',
+  };
+}
+
 export function capabilityContextText(seed = '') {
   const wanted = words(seed);
-  const active = listCapabilities({ status: 'active', limit: 30 })
-    .map((item) => {
+  const active = ranked(listCapabilities({ status: 'active', limit: 30 }), (item) => {
       // Triggers mogen woordgroepen zijn. Vergelijk hun losse betekeniswoorden;
       // anders matcht "actuele uitleesclaim" nooit op een gewone zin.
       const terms = [
         ...item.triggers.flatMap((trigger) => [...words(trigger)]),
         ...words(`${item.name} ${item.description}`),
       ];
-      return { item, score: terms.filter((term) => wanted.has(term)).length };
-    })
-    .filter(({ score }) => !seed || score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 4)
-    .map(({ item }) => item);
+      return !seed ? 1 : terms.filter((term) => wanted.has(term)).length;
+    }, 4);
   if (!active.length) return '';
   return active.map((item) => item.kind === 'skill'
     ? `Vaardigheid ${item.name} v${item.version}: ${item.instructions}`

@@ -5,10 +5,12 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=administrator
-Group=administrator
-WorkingDirectory=/home/administrator/project/Bottie
-ExecStart=/usr/bin/node src/index.js
+User=eva
+Group=eva
+SupplementaryGroups=eva-runtime-read
+WorkingDirectory=/opt/eva
+Environment=EVA_DATA_DIR=/opt/eva/data
+ExecStart=/usr/bin/node /opt/eva/src/index.js
 Restart=always
 RestartSec=5
 TimeoutStopSec=20
@@ -16,6 +18,7 @@ KillSignal=SIGTERM
 UMask=0077
 NoNewPrivileges=true
 PrivateTmp=true
+UnsetEnvironment=EVA_WEB_TOKEN WEB_HOST
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=eva

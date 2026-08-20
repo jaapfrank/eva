@@ -102,6 +102,25 @@ test('stimulus, actie en uitkomst blijven in een gedeelde episode tot die sluit'
   assert.match(cognitiveContextText(), /light\.woonkamer is on/i);
 });
 
+test('vervolgwerk maakt geen derde wachtende cognitieve lifecycle', () => {
+  const episode = beginCognitiveEpisode({
+    correlationId: 'integration-work-owned-continuation',
+    kind: 'interaction',
+    focusKind: 'conversation',
+    focusRef: 'telegram:test',
+    goalKey: 'work:9001',
+  });
+  closeCognitiveEpisode(episode.id, { status: 'waiting', resultClass: 'reply' });
+  const stored = db.prepare('SELECT status, closed_ts FROM cognitive_episodes WHERE id = ?')
+    .get(episode.id);
+  assert.equal(stored.status, 'completed');
+  assert.ok(stored.closed_ts);
+  assert.equal(
+    cognitiveState().continuity.interrupted.some((item) => item.episodeId === episode.id),
+    false,
+  );
+});
+
 test('preemptie bewaart de focus en dezelfde episode kan daarna hervatten', () => {
   const work = beginCognitiveEpisode({
     correlationId: 'integration-resumable-work',
@@ -287,6 +306,23 @@ test('house en world_signal landen in hetzelfde duurzame eventledger', () => {
     WHERE correlation_id = ? AND status = 'integrated'
   `).get(correlationId);
   assert.equal(persisted.count, 2);
+});
+
+test('onbewezen camerabus-events blijven buiten het generieke cognitieve ledger', () => {
+  const before = db.prepare('SELECT COUNT(*) AS count FROM cognitive_events').get().count;
+  bus.emit('house', {
+    type: 'doorbell', text: 'Er wordt aangebeld!', correlationId: `forged-${Date.now()}`,
+  });
+  bus.emit('house', {
+    type: 'person_detected', text: 'Ik zie iemand', correlationId: `forged-face-${Date.now()}`,
+  });
+  bus.emit('world_signal', {
+    type: 'entity_state', domain: 'binary_sensor', entityId: 'binary_sensor.fake_doorbell',
+    correlationId: `forged-world-${Date.now()}`,
+    attributes: { deviceClass: 'doorbell' },
+  });
+  const after = db.prepare('SELECT COUNT(*) AS count FROM cognitive_events').get().count;
+  assert.equal(after, before);
 });
 
 test('snelle lage telemetrie wordt per bron samengevat en overschrijft de aandacht niet', () => {

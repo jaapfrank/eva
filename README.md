@@ -9,7 +9,13 @@ via de aanwezige apparaten bijdragen.
 
 Het bindende ontwerpcontract staat in
 [`docs/house-entity-v1.md`](docs/house-entity-v1.md). De technische route staat in
-[`docs/eva-runtime-map.md`](docs/eva-runtime-map.md).
+[`docs/eva-runtime-contracts.md`](docs/eva-runtime-contracts.md). De mechanische
+JavaScript-runtimekaart wordt gegenereerd in
+[`docs/eva-runtime-contract-map.generated.md`](docs/eva-runtime-contract-map.generated.md).
+De repositorybrede inventaris met Git-, gate-, release- en opruimstatus staat in
+[`docs/eva-repository-inventory.generated.md`](docs/eva-repository-inventory.generated.md).
+De oudere [`docs/eva-runtime-map.md`](docs/eva-runtime-map.md) blijft als
+architectuuraudit van 8 augustus bewaard.
 
 ## Wat zit erin
 
@@ -39,7 +45,7 @@ niet als afgeronde features verkocht.
 ## Starten
 
 ```bash
-cd ~/project/Bottie
+cd /pad/naar/eva
 npm install        # eenmalig
 npm start
 ```
@@ -89,6 +95,10 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 
 ## Altijd aan laten staan (systemd)
 
+De meegeleverde units gebruiken `/opt/eva` als neutrale voorbeeldroot. Installeer
+de repository daar, of laat `deploy/install-eva-runtime-maintainer.sh` de unit uit
+een root-owned configuratie op het werkelijke absolute projectpad projecteren.
+
 ```bash
 sudo install -m 0644 deploy/eva.service /etc/systemd/system/eva.service
 sudo systemctl daemon-reload
@@ -99,7 +109,8 @@ Systemd is de enige ondersteunde deploymentroute. De eerdere halve Dockerroute
 is verwijderd: die miste de Python-brain/GPU, de user-systemd-sandbox voor
 werkruimteprogramma's en live-pariteit met deze installatie.
 
-De lokale beeldbrain heeft een eigen user-unit en dependency-lock:
+De lokale beeldbrain heeft een eigen user-unit en dependency-lock. Pas ook daar
+`/opt/eva` aan wanneer de repository elders staat:
 
 ```bash
 python3 -m venv data/runtime/eva-brain-venv

@@ -5,7 +5,6 @@ import { registerSensitiveValues } from '../security/redaction.js';
 import { openThought, sealThought } from './secretmind.js';
 
 const VAULT = 'vault';
-const IDENT = 'identiteit';
 const ENVELOPE = 'encrypted:';
 
 function readVault() {
@@ -66,20 +65,4 @@ export function registerVaultSecretsForRedaction() {
     const opened = decrypt(value);
     return opened ? [[`VAULT_${name}`, opened]] : [];
   }));
-}
-
-export function deleteSecret(sleutel) {
-  migrateLegacySecrets();
-  const v = readVault();
-  delete v[String(sleutel)];
-  kvSet(VAULT, v);
-}
-
-export function getIdentity() {
-  return kvGet(IDENT, {});
-}
-
-export function setIdentity(partial) {
-  kvSet(IDENT, { ...kvGet(IDENT, {}), ...partial });
-  return getIdentity();
 }

@@ -60,24 +60,25 @@ export function authStatus() {
   return { status: 'expired', email: auth.email || undefined };
 }
 
-async function tokenRequest(params) {
+async function tokenRequest(params, { signal = undefined } = {}) {
   const res = await fetch(TOKEN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(params).toString(),
+    signal,
   });
   const text = await res.text();
   if (!res.ok) throw new Error(`OAuth token-request mislukt (${res.status}): ${text.slice(0, 300)}`);
   return JSON.parse(text);
 }
 
-async function refreshTokens(auth) {
+async function refreshTokens(auth, { signal = undefined } = {}) {
   const tokens = await tokenRequest({
     grant_type: 'refresh_token',
     refresh_token: auth.refresh_token,
     client_id: CLIENT_ID,
     scope: 'openid profile email',
-  });
+  }, { signal });
   const updated = enrich({ ...auth, ...tokens, refresh_token: tokens.refresh_token || auth.refresh_token });
   // behoud velden die de refresh-response niet meestuurt
   updated.account_id = updated.account_id || auth.account_id;
@@ -88,7 +89,7 @@ async function refreshTokens(auth) {
 }
 
 /** Geef een geldig access-token + account-id; ververst automatisch. */
-export async function getAccess({ forceRefresh = false } = {}) {
+export async function getAccess({ forceRefresh = false, signal = undefined } = {}) {
   let auth = loadAuth();
   if (!auth || !auth.access_token) {
     throw new Error('Niet ingelogd bij ChatGPT. Log in via het dashboard of met: npm run login');
@@ -96,7 +97,7 @@ export async function getAccess({ forceRefresh = false } = {}) {
   if (forceRefresh || auth.expires_at < Date.now() + 5 * 60_000) {
     if (!auth.refresh_token) throw new Error('ChatGPT-sessie verlopen en geen refresh-token. Log opnieuw in.');
     try {
-      auth = await refreshTokens(auth);
+      auth = await refreshTokens(auth, { signal });
     } catch (e) {
       bus.emit('auth', authStatus());
       throw new Error(`ChatGPT-token verversen mislukt: ${e.message}. Log opnieuw in via het dashboard.`);
@@ -106,6 +107,7 @@ export async function getAccess({ forceRefresh = false } = {}) {
 }
 
 let loginServer = null;
+let loginFlowCompletion = Promise.resolve(false);
 
 /** Start de browser-loginflow; geeft de URL terug die de gebruiker moet openen. */
 export async function startLoginFlow() {
@@ -156,7 +158,7 @@ export async function startLoginFlow() {
         });
         saveAuth(enrich(tokens));
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end(html('Gelukt! 💚', 'Eva is ingelogd bij ChatGPT. Je kunt dit tabblad sluiten — ze gaat zo aan de slag.'));
+        res.end(html('Gelukt! 💚', 'Eva is ingelogd bij ChatGPT. Je kunt dit tabblad sluiten. Ze gaat zo aan de slag.'));
         bus.emit('auth', authStatus());
         resolve(true);
       } catch (e) {
@@ -181,7 +183,7 @@ export async function startLoginFlow() {
     }, 10 * 60_000).unref();
   });
 
-  startLoginFlow.lastPromise = done;
+  loginFlowCompletion = done;
   return { authUrl };
 }
 
@@ -190,7 +192,7 @@ if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1].rep
   const { authUrl } = await startLoginFlow();
   console.log('\nOpen deze link in je browser om Eva in te loggen bij ChatGPT:\n');
   console.log(authUrl + '\n');
-  const ok = await startLoginFlow.lastPromise;
+  const ok = await loginFlowCompletion;
   const st = authStatus();
   console.log(ok && st.status === 'ok' ? `Ingelogd als ${st.email || 'onbekend'} (${st.plan || 'ChatGPT'}) ✔` : 'Inloggen niet gelukt.');
   process.exit(ok ? 0 : 1);

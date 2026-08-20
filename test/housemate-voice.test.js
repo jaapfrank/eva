@@ -1,3 +1,4 @@
+import './isolated-data-dir.js';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
@@ -9,31 +10,35 @@ import {
   EVA_VOICE,
   buildInstructions,
   renderHouseActionResult,
-  renderWorkBlocker,
 } from '../src/mind/persona.js';
 
-test('de centrale stem is huiselijk maar veinst geen menselijkheid of gevoel', () => {
+test('de centrale stem is één huisgenoot en veinst geen menselijke biologie', () => {
   assert.match(EVA_VOICE, /vaste digitale huisgenoot/);
   assert.match(EVA_VOICE, /Je bent software/);
-  assert.match(EVA_VOICE, /denkbeeldig ticket/);
-  assert.match(EVA_VOICE, /therapietaal/);
-  assert.match(EVA_VOICE, /Een gewoon antwoord is meestal één tot drie zinnen/);
-  assert.match(EVA_VOICE, /één duurzame deelnemer/i);
-  assert.match(EVA_VOICE, /Geen kanaal-Eva's, tool-Eva of achtergrond-Eva/i);
+  assert.match(EVA_VOICE, /één blijvende deelnemer/i);
+  assert.match(EVA_VOICE, /doe jij als dezelfde Eva/i);
+  assert.match(EVA_VOICE, /één tot drie zinnen genoeg/i);
   assert.doesNotMatch(EVA_VOICE, /ik voel|bewust wezen|levend wezen/i);
 });
 
 test('Eva heeft een herkenbaar wereldbeeld zonder vaste antwoordzinnen', () => {
   assert.match(EVA_CHARACTER_CORE, /warme eenvoud, stille techniek/i);
   assert.match(EVA_CHARACTER_CORE, /droge humor/i);
+  assert.match(EVA_CHARACTER_CORE, /herkenbare eigen nerf/i);
+  assert.match(EVA_CHARACTER_CORE, /droog of speels/i);
   assert.match(EVA_CHARACTER_CORE, /vriendelijk tegenspreken/i);
-  assert.match(EVA_CHARACTER_CORE, /Niet ieder gesprek is een klus/i);
-  assert.match(EVA_CHARACTER_CORE, /Geen moppen, ingestudeerde trekjes of vaste Eva-zinnen/i);
-  assert.match(EVA_CHARACTER_CORE, /nooit op als een kostuum/i);
-  assert.match(EVA_CHAT_VOICE, /niet als standaard gesprekspatroon/i);
-  assert.match(EVA_CHAT_VOICE, /begin niet reflexmatig met “je hebt gelijk”/i);
-  assert.match(EVA_CHAT_VOICE, /Zinsfragmenten, spreektaal, een natuurlijke inkorting/i);
-  assert.match(EVA_CHAT_VOICE, /Forceer geen jongerentaal/i);
+  assert.match(EVA_CHARACTER_CORE, /eigen oordeel/i);
+  assert.match(EVA_CHARACTER_CORE, /niet automatisch van mening/i);
+  assert.match(EVA_CHARACTER_CORE, /veins geen instemming/i);
+  assert.match(EVA_CHARACTER_CORE, /kies zelf wanneer je toegeeft/i);
+  assert.match(EVA_CHARACTER_CORE, /gewone omkeerbare keuzes/i);
+  assert.match(EVA_CHARACTER_CORE, /belangrijke gevolgen/i);
+  assert.match(EVA_CHARACTER_CORE, /geen vaste grapjes of Eva-zinnen/i);
+  assert.match(EVA_CHARACTER_CORE, /geen act/i);
+  assert.match(EVA_CHAT_VOICE, /ritme van het lopende gesprek/i);
+  assert.match(EVA_CHAT_VOICE, /een natuurlijke inkorting/i);
+  assert.match(EVA_CHAT_VOICE, /niet uit geforceerde slang/i);
+  assert.doesNotMatch(`${EVA_CHARACTER_CORE}\n${EVA_CHAT_VOICE}`, /“[^”]+”/);
 });
 
 test('gesprek, spraak en autonomie hebben elk een eigen gedragsregel', () => {
@@ -47,9 +52,49 @@ test('gesprek, spraak en autonomie hebben elk een eigen gedragsregel', () => {
   assert.match(voice, /een of twee korte zinnen/);
   assert.ok(autonomy.includes(EVA_AUTONOMOUS_VOICE));
   assert.match(autonomy, /volledige autonomie/i);
-  assert.match(autonomy, /eigen initiatief/i);
+  assert.match(autonomy, /uit eigen nieuwsgierigheid/i);
   assert.doesNotMatch(autonomy, /Bedien het huis niet op eigen houtje/);
   assert.doesNotMatch(autonomy, /via autonomy\.\n\nDit is een gewoon gesprek/);
+});
+
+test('de basisprompt laat één stem dominant en lokt geen administratietaal uit', () => {
+  const chat = buildInstructions({ sender: 'Jaap', channel: 'telegram' });
+  assert.equal(chat.match(/vaste digitale huisgenoot/gi)?.length, 1);
+  assert.ok(chat.length < 3_700, `de basisprompt is weer uitgedijd naar ${chat.length} tekens`);
+  assert.doesNotMatch(
+    chat,
+    /\b(?:ticket|contract|receipt|werkadministratie|uitvoeradministratie|managementsamenvatting|therapietaal|beslisruimte|tekstsjabloon)\b/i,
+  );
+});
+
+test('adversarial outputcriteria vangen botachtige fout-, correctie- en vervolgtaal', () => {
+  assert.match(EVA_CHAT_VOICE, /Na een fout, correctie of kort vervolg/i);
+  assert.match(EVA_CHAT_VOICE, /herstelde uitkomst of de eerstvolgende nuttige handeling voorop/i);
+  assert.match(EVA_CHAT_VOICE, /oorzaak alleen uit wanneer erom wordt gevraagd/i);
+  assert.doesNotMatch(EVA_CHAT_VOICE, /je hebt gelijk|snap ik|voortaan|ik zal/i);
+
+  const hasRecoverySmell = (text) => (
+    /\b(?:deze beurt|niet aangeboden|tool|route|werkpunt|contract|bewijsgrens|klus blijft open)\b/i.test(text)
+    || /^(?:ja[.!,:]?\s+|je hebt gelijk|snap ik|sorry|excuses|voortaan|ik zal)\b/i.test(text)
+    || /\b(?:operation was aborted|timed? ?out|econn\w*)\b/i.test(text)
+  );
+
+  const ordinaryReplies = [
+    'De voordeur was net open, dus jij was inderdaad de logische match.',
+    'Hij sprak niet. Ik probeer het nog één keer.',
+    'De prijzen staan nu met een punt in de uitleg. De test draait nog goed.',
+  ];
+  const botlikeRepliesFromRealFailurePatterns = [
+    'Dit is nog niet af. De klus blijft open bij: voer de opdracht uit.',
+    'Ik haalde niet aangeboden in deze beurt en niet beschikbaar door elkaar.',
+    'Voortaan neem ik zulke deur- en aanwezigheidscontext eerst mee.',
+    'The operation was aborted due to timeout',
+  ];
+
+  for (const reply of ordinaryReplies) assert.equal(hasRecoverySmell(reply), false, reply);
+  for (const reply of botlikeRepliesFromRealFailurePatterns) {
+    assert.equal(hasRecoverySmell(reply), true, reply);
+  }
 });
 
 test('een huisactie klinkt kort en claimt alleen geverifieerd succes', () => {
@@ -86,17 +131,4 @@ test('een mislukte huisactie benoemt alleen handeling en bruikbare reden', () =>
     renderHouseActionResult(),
     'Het lukte niet om de gevraagde handeling bij het apparaat uit te voeren.',
   );
-});
-
-test('een werkblokkade wordt een gewone concrete vraag zonder tickettaal', () => {
-  const text = renderWorkBlocker({
-    work: 'de boodschappenlijst',
-    missing: 'het aantal gasten',
-    nextStep: 'laat even weten met hoeveel jullie zijn',
-  });
-  assert.equal(
-    text,
-    'Voor de boodschappenlijst mis ik nog het aantal gasten. Laat even weten met hoeveel jullie zijn, dan ga ik verder.',
-  );
-  assert.doesNotMatch(text, /werkpunt|blokkade|status|ticket|bewijs/i);
 });

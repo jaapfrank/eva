@@ -1,13 +1,13 @@
 import WebSocket from 'ws';
+import { createHash, randomBytes } from 'node:crypto';
 import dns from 'node:dns/promises';
 import fs from 'node:fs/promises';
 import https from 'node:https';
-import net from 'node:net';
 import path from 'node:path';
 import { config } from '../config.js';
 import { bus } from '../bus.js';
 import { logTimeline } from '../db.js';
-import { errMsg } from '../util.js';
+import { canonicalJson, errMsg, normalizeUserFacingText } from '../util.js';
 import { getSecret } from '../self/vault.js';
 
 // Een HA-basis-URL met een IP dat ándere apparaten (Sonos!) kunnen bereiken —
@@ -45,16 +45,32 @@ let pingTimer = null;
 let msgId = 1;
 const pending = new Map();   // id -> {resolve, reject, timer} voor WS-commando's
 const states = new Map();    // entity_id -> state-object (cache)
+let socketGeneration = 0;
+const haSocketStates = new WeakMap();
+const issuedHaVoiceEvents = new WeakMap();
+const consumedHaVoiceEvents = new WeakSet();
+const verifiedHaVoiceEventSources = new WeakMap();
+const acceptedHaVoiceEventIdentities = new Map();
+const HA_ADAPTER_INSTANCE_SHA256 = createHash('sha256').update(randomBytes(32)).digest('hex');
+const HA_VOICE_FRAME_MAX_BYTES = 32 * 1024;
+const HA_VOICE_REQUEST_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/u;
 let offlineLogged = false;   // voorkom timeline-spam bij herhaald falen
-const TRIGGER_FRAME_DIR = path.join(config.workspaceDir, 'camera_trigger_frames');
-const PERSON_INCIDENT_QUIET_MS = Math.max(30_000, Number(process.env.EVA_CAMERA_INCIDENT_QUIET_MS || 180_000));
-const DOORBELL_INCIDENT_QUIET_MS = Math.max(3_000, Number(process.env.EVA_DOORBELL_INCIDENT_QUIET_MS || 10_000));
-const TRIGGER_FRAME_MAX_FILES = Math.max(60, Number(process.env.EVA_TRIGGER_FRAME_MAX_FILES || 600));
+const TRIGGER_FRAME_DIR = path.join(config.dataDir, 'private', 'camera_trigger_frames');
+const PERSON_INCIDENT_QUIET_MS = Math.max(30_000, config.cameraIncidentQuietMs);
+const DOORBELL_INCIDENT_QUIET_MS = Math.max(3_000, config.doorbellIncidentQuietMs);
+const TRIGGER_FRAME_MAX_FILES = Math.max(60, config.triggerFrameMaxFiles);
 const TRIGGER_FRAME_MAX_AGE_MS = Math.max(
   6 * 3600_000,
-  Number(process.env.EVA_TRIGGER_FRAME_RETENTION_HOURS || 48) * 3600_000
+  config.triggerFrameRetentionHours * 3600_000
 );
+const CAMERA_SNAPSHOT_TIMEOUT_MS = 12_000;
+const CAMERA_SNAPSHOT_MAX_BYTES = 12 * 1024 * 1024;
+const UNIFI_CAMERA_LIST_MAX_BYTES = 4 * 1024 * 1024;
+const TTS_PREFLIGHT_TIMEOUT_MS = 8_000;
+const TTS_AUDIO_MAX_BYTES = 8 * 1024 * 1024;
 const cameraIncidents = new Map(); // camera/sensor -> lopend Protect-incident
+const ISSUED_CAMERA_TRIGGER_EVENTS = new WeakSet();
+const CONSUMED_CAMERA_TRIGGER_EVENTS = new WeakSet();
 let triggerPrunePromise = null;
 let lastTriggerPruneAt = 0;
 
@@ -172,13 +188,6 @@ function scheduleTriggerFramePrune({ force = false } = {}) {
   return triggerPrunePromise;
 }
 
-export const __cameraIncidentTest = {
-  decide: cameraIncidentDecision,
-  reset() { cameraIncidents.clear(); },
-  quietMs: PERSON_INCIDENT_QUIET_MS,
-  doorbellQuietMs: DOORBELL_INCIDENT_QUIET_MS,
-};
-
 async function restGet(path) {
   const res = await fetch(config.haUrl + path, {
     headers: headers(),
@@ -189,8 +198,8 @@ async function restGet(path) {
 }
 
 /** Alle states: uit de WS-cache als die er is, anders via REST. */
-export async function allStates() {
-  if (connected && states.size) return [...states.values()];
+export async function allStates({ forceRefresh = false } = {}) {
+  if (!forceRefresh && connected && states.size) return [...states.values()];
   return restGet('/api/states');
 }
 
@@ -200,98 +209,18 @@ export function haConnected() {
   return connected;
 }
 
-/** Laat hogere lagen een reeds ontvangen HA-status gebruiken zonder opnieuw te
- * pollen. De adapter blijft eigenaar van de cache; bellers krijgen alleen het
- * actuele statusobject terug. */
-export function cachedState(entityId) {
-  return states.get(String(entityId || '').toLowerCase()) || null;
-}
-
 /** Alleen-lezen bronfoto voor lagen die een verstreken event-wachtpunt eenmaal
  * moeten verzoenen. De adapter blijft eigenaar van de cache. */
 export function cachedStates() {
   return [...states.values()];
 }
 
-function tcpCheck(host, port, timeoutMs = 1200) {
-  return new Promise((resolve) => {
-    const sock = net.createConnection({ host, port });
-    let done = false;
-    const finish = (ok, detail) => {
-      if (done) return;
-      done = true;
-      try { sock.destroy(); } catch { /* negeer */ }
-      resolve({ ok, detail });
-    };
-    sock.setTimeout(timeoutMs, () => finish(false, 'timeout'));
-    sock.on('connect', () => finish(true, 'open'));
-    sock.on('error', (e) => finish(false, errMsg(e)));
-  });
-}
-
-export async function diagnoseHA({ timeoutMs = 1500 } = {}) {
-  const out = {
-    url: config.haUrl,
-    connected,
-    host: null,
-    port: 8123,
-    dns: null,
-    tcp: null,
-    rest: null,
-    conclusie: '',
-    advies: '',
-  };
-  try {
-    const u = new URL(config.haUrl);
-    out.host = u.hostname;
-    out.port = Number(u.port || (u.protocol === 'https:' ? 443 : 80));
-    try {
-      const d = await dns.lookup(u.hostname, { family: 4 });
-      out.dns = { ok: true, address: d.address };
-    } catch (e) {
-      out.dns = { ok: false, error: errMsg(e) };
-      out.conclusie = `DNS voor ${u.hostname} faalt`;
-      out.advies = 'controleer netwerknaam of HA-adres';
-      return out;
-    }
-
-    out.tcp = await tcpCheck(out.dns.address || u.hostname, out.port, timeoutMs);
-    if (!out.tcp.ok) {
-      out.conclusie = `HA-host/poort ${out.host}:${out.port} is niet bereikbaar`;
-      out.advies = 'controleer of de HA-machine aan staat of netwerk heeft';
-      return out;
-    }
-
-    try {
-      const res = await fetch(`${config.haUrl}/api/`, {
-        headers: headers(),
-        signal: AbortSignal.timeout(timeoutMs),
-      });
-      const text = await res.text().catch(() => '');
-      out.rest = { ok: res.ok, status: res.status, body: text.slice(0, 120) };
-      out.conclusie = res.ok
-        ? 'HA API antwoordt'
-        : `HA API antwoordt met HTTP ${res.status}`;
-      out.advies = res.ok ? 'probeer de actie opnieuw' : 'controleer HA-auth/API-status';
-      return out;
-    } catch (e) {
-      out.rest = { ok: false, error: errMsg(e) };
-      out.conclusie = `HA-host leeft, maar de HA-app/API geeft geen antwoord`;
-      out.advies = 'doe ff een power cycle van Home Assistant';
-      return out;
-    }
-  } catch (e) {
-    out.conclusie = `HA-diagnose mislukte: ${errMsg(e)}`;
-    out.advies = 'controleer HA handmatig';
-    return out;
-  }
-}
-
-/** Verbindt met de HA WebSocket API; herverbindt zelf met backoff. Throwt nooit. */
-export async function connectHA() {
+/** Verbindt met de HA WebSocket API; herverbindt zelf met backoff. Throwt nooit.
+ * Een read-only kwalificatieproces kan frameonderhoud expliciet overslaan. */
+export async function connectHA({ runMaintenance = true } = {}) {
   if (started) return;
   started = true;
-  scheduleTriggerFramePrune({ force: true });
+  if (runMaintenance) scheduleTriggerFramePrune({ force: true });
   if (!config.haToken) {
     logTimeline('system', 'Home Assistant: geen HA_TOKEN ingesteld, integratie inactief');
     return;
@@ -300,18 +229,27 @@ export async function connectHA() {
 }
 
 function openSocket() {
+  let socket;
   try {
     // handshakeTimeout: anders kan een stil gedropte TCP-connect minutenlang hangen
-    ws = new WebSocket(WS_URL, { handshakeTimeout: 15_000 });
+    socket = new WebSocket(WS_URL, { handshakeTimeout: 15_000 });
   } catch (e) {
     onDisconnected(errMsg(e));
     return;
   }
+  const generation = ++socketGeneration;
+  ws = socket;
+  connected = false;
+  haSocketStates.set(socket, {
+    generation, authenticated: false, subscribed: false,
+    subscriptionIds: new Map(),
+  });
 
-  ws.on('message', (raw) => {
+  socket.on('message', (raw) => {
+    const frame = Buffer.isBuffer(raw) ? Buffer.from(raw) : Buffer.from(raw);
     let msg;
     try {
-      msg = JSON.parse(raw.toString());
+      msg = JSON.parse(frame.toString('utf8'));
     } catch {
       return;
     }
@@ -319,25 +257,171 @@ function openSocket() {
     // de hele WS-message-handler platleggen — anders vallen ook de eva_voice_query-events stil
     // en werkt spraak niet meer. Elk event wordt geïsoleerd afgehandeld.
     try {
-      handleMessage(msg);
+      handleMessage(socket, generation, msg, frame);
     } catch (e) {
       logTimeline('system', `HA-event overgeslagen na fout: ${errMsg(e).slice(0, 160)}`);
     }
   });
 
-  ws.on('pong', () => { ws._alive = true; });
-  ws.on('error', (e) => { ws._lastError = errMsg(e); });
-  ws.on('close', () => onDisconnected(ws?._lastError || 'verbinding gesloten'));
+  socket.on('pong', () => { socket._alive = true; });
+  socket.on('error', (e) => { socket._lastError = errMsg(e); });
+  socket.on('close', () => onDisconnected(
+    socket._lastError || 'verbinding gesloten', socket, generation,
+  ));
 }
 
-function handleMessage(msg) {
+function currentHaSocket(socket, generation, { requireSubscribed = false } = {}) {
+  const state = socket && haSocketStates.get(socket);
+  return Boolean(state && ws === socket && state.generation === generation
+    && socket.readyState === WebSocket.OPEN
+    && state.authenticated === true
+    && (!requireSubscribed || (state.subscribed === true && connected === true)));
+}
+
+function issueHaVoiceEvent(socket, generation, msg, frame) {
+  const eventType = String(msg?.event?.event_type || '');
+  const state = socket && haSocketStates.get(socket);
+  if (!['eva_voice_query', 'eva_voice_reply_ack'].includes(eventType)
+    || !Number.isSafeInteger(Number(msg?.id))
+    || Number(msg.id) !== Number(state?.subscriptionIds?.get(eventType))
+    || !currentHaSocket(socket, generation, { requireSubscribed: true })
+    || !Buffer.isBuffer(frame) || frame.length < 2 || frame.length > HA_VOICE_FRAME_MAX_BYTES) {
+    return null;
+  }
+  const frameText = frame.toString('utf8');
+  if (!Buffer.from(frameText, 'utf8').equals(frame)) return null;
+  const frameSha256 = createHash('sha256').update(frame).digest('hex');
+  const bodyJson = canonicalJson({
+    contract: 'HomeAssistantVoiceEventEvidence/v1',
+    adapterInstanceSha256: HA_ADAPTER_INSTANCE_SHA256,
+    socketGeneration: generation,
+    eventType,
+    frameByteLength: frame.length,
+    frameSha256,
+    frameBase64: frame.toString('base64'),
+    event: msg,
+  });
+  if (Buffer.byteLength(bodyJson, 'utf8') > 64 * 1024) return null;
+  const requestId = String(msg?.event?.data?.id || '');
+  if (!HA_VOICE_REQUEST_ID.test(requestId)) return null;
+  const eventIdentity = `${eventType}:${requestId}`;
+  // Een request-id is gedurende deze boot exact één fysiek query- of ACK-event.
+  // Een identieke replay of gewijzigde rebind mint dus ook na reconnect geen cap.
+  if (acceptedHaVoiceEventIdentities.has(eventIdentity)) return null;
+  if (acceptedHaVoiceEventIdentities.size >= 50_000) return null;
+  acceptedHaVoiceEventIdentities.set(eventIdentity, frameSha256);
+  const sourceRef = `home-assistant-websocket:${createHash('sha256').update(canonicalJson({
+    contract: 'HomeAssistantVoiceEventIdentity/v1',
+    adapterInstanceSha256: HA_ADAPTER_INSTANCE_SHA256,
+    socketGeneration: generation,
+    eventType,
+    requestId,
+    frameSha256,
+  })).digest('hex')}`;
+  const capability = Object.freeze({});
+  issuedHaVoiceEvents.set(capability, Object.freeze({
+    eventType, bodyJson, sourceRef,
+    sourceSha256: createHash('sha256').update(bodyJson).digest('hex'),
+    socketGeneration: generation,
+    adapterInstanceSha256: HA_ADAPTER_INSTANCE_SHA256,
+    isCurrent: () => currentHaSocket(socket, generation, { requireSubscribed: true }),
+  }));
+  setTimeout(() => {
+    if (!consumedHaVoiceEvents.has(capability)) issuedHaVoiceEvents.delete(capability);
+  }, 30_000).unref?.();
+  return capability;
+}
+
+/**
+ * Alleen-lezen transportverificatie van een eenmalige capability. De capability
+ * zelf kan uitsluitend in de actuele authenticated+subscribed WS-handler ontstaan.
+ */
+export function verifiedAuthenticatedHaVoiceEvent(capability, expectedEventType) {
+  const issued = capability && typeof capability === 'object'
+    ? issuedHaVoiceEvents.get(capability) : null;
+  if (!issued || consumedHaVoiceEvents.has(capability)
+    || issued.eventType !== expectedEventType || issued.isCurrent() !== true) return null;
+  let body;
+  try { body = JSON.parse(issued.bodyJson); } catch { return null; }
+  if (canonicalJson(body) !== issued.bodyJson
+    || body.eventType !== issued.eventType
+    || body.adapterInstanceSha256 !== issued.adapterInstanceSha256
+    || Number(body.socketGeneration) !== issued.socketGeneration) return null;
+  const source = Object.freeze({
+    eventType: issued.eventType,
+    data: Object.freeze({ ...(body.event?.event?.data || {}) }),
+    sourceRef: issued.sourceRef,
+    sourceSha256: issued.sourceSha256,
+    sourceBodyJson: issued.bodyJson,
+    socketGeneration: issued.socketGeneration,
+    adapterInstanceSha256: issued.adapterInstanceSha256,
+    isCurrent: issued.isCurrent,
+  });
+  verifiedHaVoiceEventSources.set(source, Object.freeze({
+    capability,
+    eventType: issued.eventType,
+    sourceRef: issued.sourceRef,
+    sourceSha256: issued.sourceSha256,
+    bodyJson: issued.bodyJson,
+  }));
+  return source;
+}
+
+/** Consumeer pas nadat de duurzame eventprojectie aantoonbaar gecommit is. */
+export function consumeAuthenticatedHaVoiceEvent(capability, expectedEventType, source) {
+  const issued = capability && typeof capability === 'object'
+    ? issuedHaVoiceEvents.get(capability) : null;
+  const verified = source && typeof source === 'object'
+    ? verifiedHaVoiceEventSources.get(source) : null;
+  if (!issued || !verified || consumedHaVoiceEvents.has(capability)
+    || verified.capability !== capability
+    || verified.eventType !== expectedEventType
+    || issued.eventType !== expectedEventType
+    || verified.sourceRef !== issued.sourceRef
+    || verified.sourceSha256 !== issued.sourceSha256
+    || verified.bodyJson !== issued.bodyJson
+    || source.sourceRef !== issued.sourceRef
+    || source.sourceSha256 !== issued.sourceSha256
+    || source.sourceBodyJson !== issued.bodyJson) return false;
+  consumedHaVoiceEvents.add(capability);
+  issuedHaVoiceEvents.delete(capability);
+  verifiedHaVoiceEventSources.delete(source);
+  return true;
+}
+
+function dispatchHaVoiceEvent(socket, generation, msg, frame) {
+  const capability = issueHaVoiceEvent(socket, generation, msg, frame);
+  if (!capability) return;
+  const eventType = msg.event.event_type;
+  import('../mind/voicebridge.js').then(async (voiceBridge) => {
+    if (eventType === 'eva_voice_query') {
+      await voiceBridge.acceptAuthenticatedHaVoiceQuery(capability);
+    } else {
+      await voiceBridge.acceptAuthenticatedHaVoiceReplyAck(capability);
+    }
+  }).catch((error) => {
+    logTimeline('system', `Geauthenticeerd HA-voice-event kon niet worden verwerkt: ${errMsg(error)}`, {
+      internalOnly: true,
+      eventType,
+    });
+  });
+}
+
+function handleMessage(socket, generation, msg, frame) {
   switch (msg.type) {
     case 'auth_required':
-      ws.send(JSON.stringify({ type: 'auth', access_token: config.haToken }));
+      if (ws !== socket || haSocketStates.get(socket)?.generation !== generation) break;
+      connected = false;
+      haSocketStates.get(socket).authenticated = false;
+      haSocketStates.get(socket).subscribed = false;
+      haSocketStates.get(socket).subscriptionIds.clear();
+      socket.send(JSON.stringify({ type: 'auth', access_token: config.haToken }));
       break;
 
     case 'auth_ok':
-      onAuthenticated();
+      if (ws !== socket || haSocketStates.get(socket)?.generation !== generation) break;
+      haSocketStates.get(socket).authenticated = true;
+      onAuthenticated(socket, generation);
       break;
 
     case 'auth_invalid':
@@ -345,41 +429,54 @@ function handleMessage(msg) {
         familyVisible: true, homeAssistantAuthFailure: true, technicalError: msg.message || 'auth_invalid',
       });
       offlineLogged = true; // niet nogmaals loggen bij de close die volgt of bij retries
-      try { ws.close(); } catch { /* negeer */ }
+      try { socket.close(); } catch { /* negeer */ }
       break;
 
     case 'result': {
       const p = pending.get(msg.id);
-      if (!p) break;
+      if (!p || p.socket !== socket || p.generation !== generation) break;
       pending.delete(msg.id);
       clearTimeout(p.timer);
-      if (msg.success) p.resolve(msg.result);
+      if (msg.success) p.resolve(p.includeCommandId
+        ? Object.freeze({ commandId: Number(msg.id), result: msg.result })
+        : msg.result);
       else p.reject(new Error(msg.error?.message || 'WS-commando mislukt'));
       break;
     }
 
     case 'event':
+      if (Number(msg.id) !== Number(
+        haSocketStates.get(socket)?.subscriptionIds?.get(msg.event?.event_type),
+      )) break;
       if (msg.event?.event_type === 'state_changed') onStateChanged(msg.event.data);
       else if (msg.event?.event_type === 'eva_voice_query') {
-        bus.emit('voice_query', msg.event.data || {});
+        dispatchHaVoiceEvent(socket, generation, msg, frame);
       } else if (msg.event?.event_type === 'eva_voice_reply_ack') {
-        bus.emit('voice_reply_ack', msg.event.data || {});
+        dispatchHaVoiceEvent(socket, generation, msg, frame);
       }
       break;
   }
 }
 
 /** Stuur een WS-commando en wacht op het result. Ook voor beheer (admin-API). */
-export function wsCommand(payload, timeoutMs = 10_000) {
+function wsCommand(payload, timeoutMs = 10_000, binding = null, includeCommandId = false) {
   return new Promise((resolve, reject) => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return reject(new Error('WS niet verbonden'));
+    const socket = binding?.socket || ws;
+    const generation = binding?.generation ?? haSocketStates.get(socket)?.generation;
+    if (!socket || socket.readyState !== WebSocket.OPEN
+      || !Number.isSafeInteger(generation)
+      || (binding && !currentHaSocket(socket, generation))) {
+      return reject(new Error('WS niet verbonden'));
+    }
     const id = msgId++;
     const timer = setTimeout(() => {
       pending.delete(id);
       reject(new Error('WS-commando timeout'));
     }, timeoutMs);
-    pending.set(id, { resolve, reject, timer });
-    ws.send(JSON.stringify({ id, ...payload }));
+    pending.set(id, {
+      resolve, reject, timer, socket, generation, includeCommandId: includeCommandId === true,
+    });
+    socket.send(JSON.stringify({ id, ...payload }));
   });
 }
 
@@ -411,6 +508,208 @@ export async function listPersonConfigurations() {
   };
 }
 
+// Toolresultaten boven 8 kB worden centraal als gedeeltelijk gecompacteerd.
+// Houd één inventarispagina daar dus bewust onder, met een expliciete totaalstand
+// wanneer een uitzonderlijk grote integratie niet volledig past.
+const INTEGRATION_INVENTORY_LIMITS = Object.freeze({ entries: 10, devices: 14, entities: 42 });
+export const HA_INTEGRATION_SLUG_PATTERN = /^(?!all$)[a-z0-9_]{1,64}$/u;
+
+function registryList(result, key) {
+  if (Array.isArray(result)) return result;
+  return Array.isArray(result?.[key]) ? result[key] : null;
+}
+
+function integrationSlug(value) {
+  const slug = String(value || '').trim(); return HA_INTEGRATION_SLUG_PATTERN.test(slug) ? slug : '';
+}
+
+function inventoryReadFailure(failures) {
+  const reason = failures.map((failure) => failure.reason).join(' ');
+  if (/auth|permission|unauthor|forbidden|toegang/iu.test(reason)) {
+    return { failure_class: 'permission', retryable: false, effect_uncertain: false };
+  }
+  return {
+    failure_class: /timeout|tijdslimiet/iu.test(reason) ? 'transient' : 'unavailable',
+    retryable: true,
+    effect_uncertain: false,
+  };
+}
+
+function deviceConfigEntryIds(device) {
+  return [...new Set([
+    ...(Array.isArray(device?.config_entries) ? device.config_entries : []),
+    device?.config_entry_id,
+  ].filter((value) => value != null && String(value)).map(String))];
+}
+
+/**
+ * Lees één integratie als samenhangende, verse HA-inventaris. Config entries,
+ * apparaten, entity-registry en states komen uit vier officiële read-only
+ * WebSocket-opdrachten; zo hoeft een hogere laag geen losse lijsten zelf te
+ * koppelen of platformnamen te raden.
+ */
+export async function listIntegrationInventory(integration, {
+  command = wsCommand,
+  limits = INTEGRATION_INVENTORY_LIMITS,
+} = {}) {
+  const domain = integrationSlug(integration);
+  if (!domain) {
+    return { ok: false, changed: false, verified: false, reason: 'een exacte integratieslug ontbreekt' };
+  }
+  const sources = [
+    { name: 'config_entries', payload: { type: 'config_entries/get', domain }, key: 'entries' },
+    { name: 'devices', payload: { type: 'config/device_registry/list' }, key: 'devices' },
+    { name: 'entities', payload: { type: 'config/entity_registry/list' }, key: 'entities' },
+    { name: 'states', payload: { type: 'get_states' }, key: 'states' },
+  ];
+  const settled = await Promise.allSettled(sources.map(({ payload }) => command(payload, 20_000)));
+  const failures = settled.flatMap((result, index) => (
+    result.status === 'rejected'
+      ? [{ source: sources[index].name, reason: errMsg(result.reason).slice(0, 180) }]
+      : []
+  ));
+  if (failures.length) {
+    return {
+      ok: false, changed: false, verified: false, integration: domain,
+      reason: 'de Home Assistant-inventaris is niet volledig leesbaar', missing_sources: failures,
+      needs_followup: true, ...inventoryReadFailure(failures),
+    };
+  }
+  const lists = Object.fromEntries(settled.map((result, index) => [
+    sources[index].name,
+    result.status === 'fulfilled' ? registryList(result.value, sources[index].key) : null,
+  ]));
+  const malformed = sources.map(({ name }) => name).filter((name) => lists[name] == null);
+  if (malformed.length) {
+    return {
+      ok: false, changed: false, verified: false, integration: domain,
+      reason: 'Home Assistant gaf geen geldige volledige inventarislijsten terug',
+      missing_sources: malformed.map((source) => ({ source, reason: 'ongeldige antwoordvorm' })),
+      needs_followup: true, failure_class: 'invalid_input', retryable: false,
+      effect_uncertain: false,
+    };
+  }
+
+  const entries = lists.config_entries.filter((entry) => String(entry?.domain || '').toLowerCase() === domain);
+  const entryIds = new Set(entries.map((entry) => String(entry?.entry_id || '')).filter(Boolean));
+  const integrationIdentifier = (device) => (Array.isArray(device?.identifiers) ? device.identifiers : [])
+    .some((identifier) => Array.isArray(identifier)
+      && String(identifier[0] || '').toLowerCase() === domain);
+  const directlyMatchedEntities = lists.entities.filter((entity) => (
+    entryIds.has(String(entity?.config_entry_id || ''))
+    || String(entity?.platform || '').toLowerCase() === domain
+  ));
+  const directlyMatchedDeviceIds = new Set(directlyMatchedEntities
+    .map((entity) => String(entity?.device_id || '')).filter(Boolean));
+  const devices = lists.devices.filter((device) => (
+    deviceConfigEntryIds(device).some((entryId) => entryIds.has(entryId)) || integrationIdentifier(device)
+      || directlyMatchedDeviceIds.has(String(device?.id || ''))
+  ));
+  const deviceIds = new Set(devices.map((device) => String(device?.id || '')).filter(Boolean));
+  const entities = lists.entities.filter((entity) => (
+    entryIds.has(String(entity?.config_entry_id || ''))
+    || deviceIds.has(String(entity?.device_id || ''))
+    || String(entity?.platform || '').toLowerCase() === domain
+  ));
+  const stateById = new Map(lists.states.map((state) => [String(state?.entity_id || ''), state]));
+  const entitiesByDevice = new Map();
+  for (const entity of entities) {
+    const deviceId = String(entity?.device_id || '');
+    const list = entitiesByDevice.get(deviceId) || [];
+    list.push(entity);
+    entitiesByDevice.set(deviceId, list);
+  }
+  const entityEvidence = (entity) => {
+    const entityId = String(entity?.entity_id || '');
+    const state = stateById.get(entityId);
+    const name = entity?.name || entity?.original_name || state?.attributes?.friendly_name || null;
+    return {
+      entity_id: entityId,
+      ...(name ? { name } : {}),
+      ...(entity?.platform && String(entity.platform).toLowerCase() !== domain
+        ? { platform: entity.platform } : {}),
+      ...(entity?.disabled_by ? { disabled_by: entity.disabled_by } : {}),
+      ...(entity?.hidden_by ? { hidden_by: entity.hidden_by } : {}),
+      ...(state ? { state: state.state, state_verified: true } : { state_verified: false }),
+    };
+  };
+  const boundedEntries = entries.slice(0, Math.max(1, Number(limits.entries) || 1)).map((entry) => ({
+    entry_id: entry?.entry_id || null,
+    title: entry?.title || null,
+    state: entry?.state || null,
+    ...(entry?.source ? { source: entry.source } : {}),
+    ...(entry?.disabled_by ? { disabled_by: entry.disabled_by } : {}),
+  }));
+  let remainingEntities = Math.max(1, Number(limits.entities) || 1);
+  const boundedDevices = devices.slice(0, Math.max(1, Number(limits.devices) || 1)).map((device) => {
+    const allLinked = entitiesByDevice.get(String(device?.id || '')) || [];
+    const linked = allLinked
+      .slice(0, remainingEntities);
+    remainingEntities -= linked.length;
+    return {
+      device_id: device?.id || null,
+      name: device?.name_by_user || device?.name || null,
+      manufacturer: device?.manufacturer || null,
+      model: device?.model || null,
+      ...(device?.area_id ? { area_id: device.area_id } : {}),
+      config_entry_ids: deviceConfigEntryIds(device).filter((id) => entryIds.has(id)),
+      identifiers: (Array.isArray(device?.identifiers) ? device.identifiers : []).slice(0, 3),
+      ...(device?.disabled_by ? { disabled_by: device.disabled_by } : {}),
+      entity_count: allLinked.length,
+      entities: linked.map(entityEvidence),
+    };
+  });
+  const orphanEntities = (entitiesByDevice.get('') || [])
+    .slice(0, remainingEntities).map(entityEvidence);
+  const returnedEntityCount = boundedDevices.reduce((sum, device) => sum + device.entities.length, 0)
+    + orphanEntities.length;
+  let truncated = boundedEntries.length < entries.length || boundedDevices.length < devices.length
+    || returnedEntityCount < entities.length;
+  const inventory = {
+    ok: true, changed: false, verified: true, complete: !truncated,
+    partial: truncated, needs_followup: truncated, truncated, integration: domain,
+    counts: {
+      config_entries: entries.length, devices: devices.length, entities: entities.length,
+      returned_config_entries: boundedEntries.length, returned_devices: boundedDevices.length,
+      returned_entities: returnedEntityCount,
+    },
+    config_entries: boundedEntries, devices: boundedDevices, entities_without_device: orphanEntities,
+    source_commands: sources.map(({ payload }) => payload.type),
+    evidence_contract: 'entry_id, device_id en entity_id zijn de exacte sleutels uit de genoemde verse registrybronnen; een state met state_verified=true komt uit get_states.',
+    limitations: [
+      'Deze inventaris bewijst de huidige HA-koppelingen en states, niet compatibiliteit met een nog niet gekozen doelintegratie.',
+      'Lokale sleutels, pairingcodes en cloudreferenties staan niet in deze registry-uitlezing.',
+      ...(truncated ? ['De uitvoer is begrensd; niet ieder gevonden item staat in dit resultaat.'] : []),
+    ],
+  };
+  // De centrale ActionResult-grens compacteert boven 8 kB en zou dan juist de
+  // itemlijst verliezen. Snoei uitzonderlijk lange registrynamen daarom hier
+  // transparant, mét totale en geretourneerde aantallen.
+  while (Buffer.byteLength(JSON.stringify(inventory)) > 7_800) {
+    const deviceWithEntities = [...inventory.devices].reverse()
+      .find((device) => device.entities.length);
+    if (inventory.entities_without_device.length) inventory.entities_without_device.pop();
+    else if (deviceWithEntities) deviceWithEntities.entities.pop();
+    else if (inventory.devices.length) inventory.devices.pop();
+    else if (inventory.config_entries.length > 1) inventory.config_entries.pop();
+    else break;
+    truncated = true;
+    inventory.complete = false;
+    inventory.partial = true;
+    inventory.needs_followup = true;
+    inventory.truncated = true;
+    inventory.counts.returned_config_entries = inventory.config_entries.length;
+    inventory.counts.returned_devices = inventory.devices.length;
+    inventory.counts.returned_entities = inventory.devices.reduce(
+      (sum, device) => sum + device.entities.length, inventory.entities_without_device.length,
+    );
+    if (!inventory.limitations.some((line) => /uitvoer is begrensd/iu.test(line))) {
+      inventory.limitations.push('De uitvoer is begrensd; niet ieder gevonden item staat in dit resultaat.');
+    }
+  }
+  return inventory;
+}
+
 function normalizePersonLookup(value) {
   return String(value || '')
     .normalize('NFD')
@@ -425,7 +724,12 @@ function normalizePersonLookup(value) {
  * daarna zowel de storageconfig als de zichtbare person.*-state. Deze functie
  * raadt nooit op een gedeeltelijke naam en accepteert alleen bestaande
  * device_tracker-entiteiten. */
-export async function setPersonTrackers(personQuery, deviceTrackers) {
+export async function setPersonTrackers(personQuery, deviceTrackers, {
+  isCurrent = () => true,
+  listPersonConfigurations: readPeople = listPersonConfigurations,
+  wsCommand: mutatePerson = wsCommand,
+  stateStore = states,
+} = {}) {
   const query = normalizePersonLookup(personQuery);
   const requested = [...new Set((Array.isArray(deviceTrackers) ? deviceTrackers : [])
     .map((entityId) => String(entityId || '').trim().toLowerCase())
@@ -438,12 +742,12 @@ export async function setPersonTrackers(personQuery, deviceTrackers) {
   if (invalid.length) {
     return { ok: false, changed: false, verified: false, reason: `ongeldige device_tracker: ${invalid.join(', ')}` };
   }
-  const missing = requested.filter((entityId) => !states.has(entityId));
+  const missing = requested.filter((entityId) => !stateStore.has(entityId));
   if (missing.length) {
     return { ok: false, changed: false, verified: false, reason: `tracker bestaat niet in Home Assistant: ${missing.join(', ')}` };
   }
 
-  const before = await listPersonConfigurations();
+  const before = await readPeople();
   const all = [...before.storage, ...before.config];
   const exact = all.filter((person) => {
     const id = normalizePersonLookup(person.id);
@@ -477,16 +781,26 @@ export async function setPersonTrackers(personQuery, deviceTrackers) {
     };
   }
 
-  await wsCommand({
+  let current = false;
+  try { current = Boolean(isCurrent()); } catch { current = false; }
+  if (!current) {
+    return {
+      ok: false, changed: false, verified: false, stale: true,
+      failure_class: 'conflict', retryable: false, effect_uncertain: false,
+      needs_followup: false,
+      reason: 'voicebeurt is ingehaald; de aanwezigheidstrackers zijn niet gewijzigd',
+    };
+  }
+  await mutatePerson({
     type: 'person/update',
     person_id: person.id,
     device_trackers: newTrackers,
   });
-  const after = await listPersonConfigurations();
+  const after = await readPeople();
   const stored = after.storage.find((candidate) => candidate.id === person.id);
   const verifiedTrackers = [...(stored?.device_trackers || [])].sort();
   const verified = JSON.stringify(verifiedTrackers) === JSON.stringify(newTrackers);
-  const personState = states.get(`person.${person.id}`) || null;
+  const personState = stateStore.get(`person.${person.id}`) || null;
   return {
     ok: verified,
     changed: verified,
@@ -503,43 +817,76 @@ export async function setPersonTrackers(personQuery, deviceTrackers) {
   };
 }
 
-async function onAuthenticated() {
-  connected = true;
+async function onAuthenticated(socket, generation) {
+  if (!currentHaSocket(socket, generation)) return;
   backoff = BACKOFF_START;
-  if (offlineLogged) logTimeline('system', 'Weer verbonden met Home Assistant', { internalOnly: true, homeAssistantConnection: true });
-  else logTimeline('system', 'Verbonden met Home Assistant', { internalOnly: true, homeAssistantConnection: true });
-  offlineLogged = false;
-  bus.emit('ha_connected', { ts: Date.now() });
 
   // keepalive: ping elke 30s, geen pong = verbinding kapot
-  ws._alive = true;
+  socket._alive = true;
   clearInterval(pingTimer);
   pingTimer = setInterval(() => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    if (!ws._alive) { try { ws.terminate(); } catch { /* negeer */ } return; }
-    ws._alive = false;
-    try { ws.ping(); } catch { /* negeer */ }
+    if (!currentHaSocket(socket, generation)) return;
+    if (!socket._alive) { try { socket.terminate(); } catch { /* negeer */ } return; }
+    socket._alive = false;
+    try { socket.ping(); } catch { /* negeer */ }
   }, 30_000);
+  pingTimer.unref?.();
 
   try {
-    await wsCommand({ type: 'subscribe_events', event_type: 'state_changed' });
-    await wsCommand({ type: 'subscribe_events', event_type: 'eva_voice_query' });
-    await wsCommand({ type: 'subscribe_events', event_type: 'eva_voice_reply_ack' });
-    const all = await wsCommand({ type: 'get_states' }, 20_000);
+    const binding = { socket, generation };
+    const eventTypes = ['state_changed', 'eva_voice_query', 'eva_voice_reply_ack'];
+    const subscriptionReceipts = [];
+    for (const eventType of eventTypes) {
+      const receipt = await wsCommand(
+        { type: 'subscribe_events', event_type: eventType }, 10_000, binding, true,
+      );
+      subscriptionReceipts.push([eventType, Number(receipt?.commandId)]);
+    }
+    const subscriptionIds = new Map(subscriptionReceipts);
+    if (subscriptionIds.size !== eventTypes.length
+      || new Set(subscriptionIds.values()).size !== eventTypes.length
+      || [...subscriptionIds.values()].some((id) => !Number.isSafeInteger(id) || id < 1)) {
+      throw new Error("HA gaf geen exacte unieke subscription-id's terug");
+    }
+    const all = await wsCommand({ type: 'get_states' }, 20_000, binding);
+    if (!currentHaSocket(socket, generation)) throw new Error('WS-generatie is ingehaald');
     states.clear();
     for (const st of all) states.set(st.entity_id, st);
+    const state = haSocketStates.get(socket);
+    state.subscriptionIds = subscriptionIds;
+    state.subscribed = true;
+    connected = true;
+    if (offlineLogged) logTimeline('system', 'Weer verbonden met Home Assistant', { internalOnly: true, homeAssistantConnection: true });
+    else logTimeline('system', 'Verbonden met Home Assistant', { internalOnly: true, homeAssistantConnection: true });
+    offlineLogged = false;
     // Live events kunnen tijdens downtime zijn gemist. Hogere lagen krijgen na
     // iedere reconnect één complete, actuele bronfoto om hun gewapende wachters
     // te verzoenen zonder zelf te gaan pollen.
     bus.emit('ha_snapshot_ready', { ts: Date.now(), states: all });
   } catch (e) {
+    if (ws === socket) {
+      connected = false;
+      const state = haSocketStates.get(socket);
+      if (state) {
+        state.subscribed = false;
+        state.subscriptionIds.clear();
+      }
+      try { socket.close(); } catch { /* negeer */ }
+    }
     logTimeline('system', `Home Assistant: initialisatie mislukt (${errMsg(e)})`);
   }
 }
 
-function onDisconnected(reason) {
+function onDisconnected(reason, socket = ws, generation = haSocketStates.get(socket)?.generation) {
+  if (socket && (ws !== socket || haSocketStates.get(socket)?.generation !== generation)) return;
   const wasConnected = connected;
   connected = false;
+  const state = socket && haSocketStates.get(socket);
+  if (state) {
+    state.authenticated = false;
+    state.subscribed = false;
+    state.subscriptionIds.clear();
+  }
   clearInterval(pingTimer);
   for (const [id, p] of pending) {
     clearTimeout(p.timer);
@@ -555,10 +902,106 @@ function onDisconnected(reason) {
   }
   clearTimeout(reconnectTimer);
   reconnectTimer = setTimeout(openSocket, backoff);
+  reconnectTimer.unref?.();
   backoff = Math.min(backoff * 2, BACKOFF_MAX);
 }
 
 // ---------- state-changes verwerken ----------
+
+function emitWorldStateSignal(entityId, oldState, newState, naam, correlationId, changedAt) {
+  bus.emit('world_signal', {
+    source: 'home_assistant',
+    type: 'entity_state',
+    entityId,
+    domain: entityId.split('.')[0] || null,
+    friendlyName: naam,
+    correlationId,
+    oldState: oldState.state,
+    newState: newState.state,
+    changedAt,
+    attributes: {
+      deviceClass: newState.attributes?.device_class || null,
+      sourceType: newState.attributes?.source_type || null,
+      unit_of_measurement: newState.attributes?.unit_of_measurement || null,
+      current_temperature: newState.attributes?.current_temperature ?? null,
+      previous_current_temperature: oldState.attributes?.current_temperature ?? null,
+      temperature: newState.attributes?.temperature ?? null,
+      previous_temperature: oldState.attributes?.temperature ?? null,
+      current_humidity: newState.attributes?.current_humidity ?? null,
+      humidity: newState.attributes?.humidity ?? null,
+      illuminance: newState.attributes?.illuminance ?? null,
+      battery_level: newState.attributes?.battery_level ?? null,
+    },
+  });
+}
+
+function handlePersonStateChange(entityId, oldState, newState, naam, correlationId) {
+  const was = oldState.state === 'home';
+  const is = newState.state === 'home';
+  if (was === is) return;
+  const text = is ? `${naam} is thuisgekomen 🏠` : `${naam} is weggegaan`;
+  logTimeline('house', text);
+  bus.emit('house', {
+    type: is ? 'arrival' : 'departure', source: 'home_assistant', entityId,
+    correlationId, person: naam, oldState: oldState.state, newState: newState.state,
+    changedAt: newState.last_changed || new Date().toISOString(), text,
+  });
+}
+
+function handleSunStateChange(entityId, newState, correlationId, changedAt) {
+  if (!['above_horizon', 'below_horizon'].includes(newState.state)) return;
+  const text = newState.state === 'above_horizon' ? 'De zon is opgekomen ☀️' : 'De zon is ondergegaan 🌙';
+  logTimeline('house', text);
+  bus.emit('house', {
+    type: 'sun', source: 'home_assistant', entityId, correlationId, changedAt, text,
+  });
+}
+
+function emitPrivateDoorbell(entityId, newState, correlationId) {
+  const cam = camEntityVoorSensor(entityId);
+  const accepted = captureAndEmit({
+    type: 'doorbell', camera: cam, sensor: entityId, correlationId,
+    text: 'Er wordt aangebeld! 🔔', priority: true,
+    triggerTs: newState.last_changed || new Date().toISOString(),
+  }, cam);
+  if (accepted) logTimeline('vision', 'Een deurbeltrigger is privé voor Eva\'s keuze vastgelegd.', {
+    internalOnly: true, camera: cam, privatePerceptionIngress: true,
+  });
+}
+
+function handleBinarySensorStateChange(entityId, oldState, newState, {
+  naam, correlationId, changedAt,
+}) {
+  const dc = newState.attributes?.device_class;
+  if (/_doorbell$/.test(entityId) && oldState.state !== 'on' && newState.state === 'on') {
+    emitPrivateDoorbell(entityId, newState, correlationId);
+    return;
+  }
+  if ((dc === 'door' || dc === 'garage_door')
+    && oldState.state === 'off' && newState.state === 'on') {
+    bus.emit('house', {
+      type: 'door', source: 'home_assistant', entityId,
+      correlationId, changedAt, text: `De ${naam} is opengegaan`,
+    });
+    return;
+  }
+  if (!/_person_detected(_\d+)?$/.test(entityId)
+    || oldState.state !== 'off' || newState.state !== 'on') return;
+  const cam = camEntityVoorSensor(entityId);
+  const waar = (naam || '').replace(/person detected/i, '').trim() || 'een camera';
+  logTimeline('house', `Camera zag mogelijk een persoon bij ${waar}`, {
+    internalOnly: true, camera: cam, sensor: entityId, personDetected: true,
+  });
+  captureAndEmit({
+    type: 'person_detected', camera: cam, sensor: entityId, correlationId, waar,
+    text: `Ik zie iemand bij ${waar}`, priority: true,
+    triggerTs: newState.last_changed || new Date().toISOString(),
+    detection: {
+      source: 'unifi_protect', filter: 'person_detected', object: 'person', sensor: entityId,
+      startedAt: newState.last_changed || null,
+    },
+  }, cam);
+}
 
 function onStateChanged({ entity_id, old_state, new_state }) {
   if (!entity_id) return;
@@ -582,34 +1025,18 @@ function onStateChanged({ entity_id, old_state, new_state }) {
   const changedAt = new_state.last_updated || new_state.last_changed || new Date().toISOString();
   const correlationId = `ha:${entity_id}:${changedAt}`;
 
+  const privateDoorbellTrigger = (entity_id.startsWith('event.')
+      && new_state.attributes?.device_class === 'doorbell')
+    || (entity_id.startsWith('binary_sensor.') && /_doorbell$/u.test(entity_id));
+
   // Eén generieke zintuigstroom voor hogere lagen. Opvolging, projectregie en
   // leren hoeven Home Assistant zo niet opnieuw te pollen of zelf alle
   // entiteitstypen te kennen: ze kunnen wachten tot de adapter een echte
-  // verandering meldt en daarna alleen gericht verifiëren.
-  bus.emit('world_signal', {
-    source: 'home_assistant',
-    type: 'entity_state',
-    entityId: entity_id,
-    domain: entity_id.split('.')[0] || null,
-    friendlyName: naam,
-    correlationId,
-    oldState: old_state.state,
-    newState: new_state.state,
-    changedAt,
-    attributes: {
-      deviceClass: new_state.attributes?.device_class || null,
-      sourceType: new_state.attributes?.source_type || null,
-      unit_of_measurement: new_state.attributes?.unit_of_measurement || null,
-      current_temperature: new_state.attributes?.current_temperature ?? null,
-      previous_current_temperature: old_state.attributes?.current_temperature ?? null,
-      temperature: new_state.attributes?.temperature ?? null,
-      previous_temperature: old_state.attributes?.temperature ?? null,
-      current_humidity: new_state.attributes?.current_humidity ?? null,
-      humidity: new_state.attributes?.humidity ?? null,
-      illuminance: new_state.attributes?.illuminance ?? null,
-      battery_level: new_state.attributes?.battery_level ?? null,
-    },
-  });
+  // verandering meldt en daarna alleen gericht verifiëren. Een deurbeltrigger
+  // blijft echter uitsluitend in haar private, eenmalig geattesteerde lane.
+  if (!privateDoorbellTrigger) emitWorldStateSignal(
+    entity_id, old_state, new_state, naam, correlationId, changedAt,
+  );
 
   // De specifieke aankomst-, deur- en camera-events hieronder horen alleen bij
   // een echte hoofdstatusovergang, niet bij een los bijgewerkt attribuut.
@@ -617,119 +1044,26 @@ function onStateChanged({ entity_id, old_state, new_state }) {
 
   // personen: thuiskomen / weggaan
   if (entity_id.startsWith('person.')) {
-    const was = old_state.state === 'home';
-    const is = new_state.state === 'home';
-    if (was !== is) {
-      const text = is ? `${naam} is thuisgekomen 🏠` : `${naam} is weggegaan`;
-      logTimeline('house', text);
-      bus.emit('house', {
-        type: is ? 'arrival' : 'departure',
-        source: 'home_assistant',
-        entityId: entity_id,
-        correlationId,
-        person: naam,
-        oldState: old_state.state,
-        newState: new_state.state,
-        changedAt: new_state.last_changed || new Date().toISOString(),
-        text,
-      });
-    }
+    handlePersonStateChange(entity_id, old_state, new_state, naam, correlationId);
     return;
   }
 
   // zon op/onder
   if (entity_id === 'sun.sun') {
-    if (new_state.state === 'above_horizon' || new_state.state === 'below_horizon') {
-      const text = new_state.state === 'above_horizon' ? 'De zon is opgekomen ☀️' : 'De zon is ondergegaan 🌙';
-      logTimeline('house', text);
-      bus.emit('house', {
-        type: 'sun', source: 'home_assistant', entityId: entity_id,
-        correlationId, changedAt, text,
-      });
-    }
+    handleSunStateChange(entity_id, new_state, correlationId, changedAt);
     return;
   }
 
   // deurbel ingedrukt: event.*-entiteit met device_class 'doorbell' (state = tijdstempel)
   if (entity_id.startsWith('event.') && new_state.attributes?.device_class === 'doorbell') {
-    const cam = camEntityVoorSensor(entity_id);
-    const text = 'Er wordt aangebeld! 🔔';
-    const accepted = captureAndEmit({
-      type: 'doorbell',
-      camera: cam,
-      sensor: entity_id,
-      correlationId,
-      text,
-      priority: true,
-      triggerTs: new_state.last_changed || new Date().toISOString(),
-    }, cam);
-    if (accepted) logTimeline('house', text, { camera: cam });
+    emitPrivateDoorbell(entity_id, new_state, correlationId);
     return;
   }
 
   if (entity_id.startsWith('binary_sensor.')) {
-    const dc = new_state.attributes?.device_class;
-
-    // deurbel ingedrukt: UniFi Protect exposeert de betrouwbare deurbelknop hier als
-    // binary_sensor.g4_doorbell_pro_poe_doorbell (dezelfde entiteit die de HA-automatisering
-    // "Deurbel" gebruikt). Reageer alleen op de overgang naar 'on'; niet op vaag
-    // event.*-gedrag, zodat ik niet ten onrechte zeg dat er is aangebeld.
-    if (/_doorbell$/.test(entity_id) && old_state.state !== 'on' && new_state.state === 'on') {
-      const cam = camEntityVoorSensor(entity_id);
-      const text = 'Er wordt aangebeld! 🔔';
-      const accepted = captureAndEmit({
-        type: 'doorbell',
-        camera: cam,
-        sensor: entity_id,
-        correlationId,
-        text,
-        priority: true,
-        triggerTs: new_state.last_changed || new Date().toISOString(),
-      }, cam);
-      if (accepted) logTimeline('house', text, { camera: cam });
-      return;
-    }
-
-    // deuren: alleen op de bus (timeline zou spam worden)
-    if ((dc === 'door' || dc === 'garage_door') && old_state.state === 'off' && new_state.state === 'on') {
-      bus.emit('house', {
-        type: 'door', source: 'home_assistant', entityId: entity_id,
-        correlationId, changedAt, text: `De ${naam} is opengegaan`,
-      });
-      return;
-    }
-
-    // iemand gezien door een camera (UniFi person_detected): off -> on.
-    // Let op de optionele _N-suffix: UniFi noemt de tweede camera op één toestel
-    // bv. g5_pro_person_detected_2 (tuin) — zonder die suffix mee te nemen triggerde die nooit.
-    if (/_person_detected(_\d+)?$/.test(entity_id) && old_state.state === 'off' && new_state.state === 'on') {
-      const cam = camEntityVoorSensor(entity_id);
-      const waar = (naam || '').replace(/person detected/i, '').trim() || 'een camera';
-      logTimeline('house', `Camera zag mogelijk een persoon bij ${waar}`, {
-        internalOnly: true,
-        camera: cam,
-        sensor: entity_id,
-        personDetected: true,
-      });
-      captureAndEmit({
-        type: 'person_detected',
-        camera: cam,
-        sensor: entity_id,
-        correlationId,
-        waar,
-        text: `Ik zie iemand bij ${waar}`,
-        priority: true,
-        triggerTs: new_state.last_changed || new Date().toISOString(),
-        detection: {
-          source: 'unifi_protect',
-          filter: 'person_detected',
-          object: 'person',
-          sensor: entity_id,
-          startedAt: new_state.last_changed || null,
-        },
-      }, cam);
-      return;
-    }
+    handleBinarySensorStateChange(entity_id, old_state, new_state, {
+      naam, correlationId, changedAt,
+    });
   }
 }
 
@@ -753,19 +1087,45 @@ function camEntityVoorSensor(sensorEntity) {
 
 /** Leg het beeld METEEN bij de trigger vast (snapshots zijn snel) en emit dan pas,
  *  zodat de foto de persoon toont op het moment van aanbellen/bewegen — niet 15s later. */
-async function captureTriggerFrame(event, cam, { index = 0, total = 1 } = {}) {
-  const shot = await cameraSnapshot(cam);
+async function captureTriggerFrame(event, cam, {
+  index = 0,
+  total = 1,
+  snapshot = cameraSnapshot,
+  timeoutMs = CAMERA_SNAPSHOT_TIMEOUT_MS,
+} = {}) {
+  const controller = new AbortController();
+  let timeout;
+  const deadline = new Promise((_, reject) => {
+    timeout = setTimeout(() => {
+      controller.abort(new Error('camera snapshot deadline'));
+      reject(new Error(`Camerabeeld van ${cam} overschreed de opnamedeadline`));
+    }, Math.max(1, Number(timeoutMs) || CAMERA_SNAPSHOT_TIMEOUT_MS));
+  });
+  let shot;
+  try {
+    shot = await Promise.race([
+      Promise.resolve().then(() => snapshot(cam, {
+        signal: controller.signal,
+        maxBytes: CAMERA_SNAPSHOT_MAX_BYTES,
+      })),
+      deadline,
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
   const contentType = shot.contentType || 'image/jpeg';
   const capturedTs = new Date().toISOString();
   const cameraName = shot.cameraName || friendlyName(states.get(cam)) || cam;
   let file = null;
   try {
-    await fs.mkdir(TRIGGER_FRAME_DIR, { recursive: true });
+    await fs.mkdir(TRIGGER_FRAME_DIR, { recursive: true, mode: 0o700 });
+    await fs.chmod(TRIGGER_FRAME_DIR, 0o700);
     const naam = safeFilePart(cameraName);
     const stamp = capturedTs.replace(/[:.]/g, '-');
     const burst = total > 1 ? `_b${index + 1}-van-${total}` : '';
     file = path.join(TRIGGER_FRAME_DIR, `${stamp}_${naam}_${safeFilePart(event.type)}${burst}.${imageExt(contentType)}`);
-    await fs.writeFile(file, shot.buffer);
+    await fs.writeFile(file, shot.buffer, { mode: 0o600 });
+    await fs.chmod(file, 0o600);
   } catch (e) {
     logTimeline('system', `Triggerbeeld kon niet worden opgeslagen voor ${cam}: ${errMsg(e).slice(0, 120)}`);
   }
@@ -784,6 +1144,38 @@ async function captureTriggerFrame(event, cam, { index = 0, total = 1 } = {}) {
     temporary: true,
     detection: event.detection || null,
   };
+}
+
+async function captureAndIssue(event, cam, captureOptions = undefined) {
+  if (cam) {
+    const burstDelays = event.type === 'person_detected' ? [0, 700, 1600] : [0];
+    const frames = [];
+    for (let i = 0; i < burstDelays.length; i += 1) {
+      if (burstDelays[i]) await delay(burstDelays[i]);
+      try {
+        frames.push(await captureTriggerFrame(event, cam, {
+          index: i,
+          total: burstDelays.length,
+          ...captureOptions,
+        }));
+      } catch (e) {
+        logTimeline('system', `Geen triggerbeeld ${i + 1}/${burstDelays.length} voor ${cam}: ${errMsg(e).slice(0, 120)}`);
+      }
+    }
+    if (frames.length) {
+      event.frame = frames[0];
+      event.frames = frames;
+    }
+  }
+  const frames = Object.freeze((Array.isArray(event.frames) ? event.frames : [])
+    .map((frame) => Object.freeze({ ...frame })));
+  const issued = Object.freeze({
+    ...event,
+    ...(frames.length ? { frame: frames[0], frames } : { frame: null, frames }),
+  });
+  ISSUED_CAMERA_TRIGGER_EVENTS.add(issued);
+  bus.emit('house', issued);
+  return issued;
 }
 
 function captureAndEmit(event, cam) {
@@ -805,123 +1197,31 @@ function captureAndEmit(event, cam) {
     scheduleTriggerFramePrune();
   }
 
-  (async () => {
-    if (cam) {
-      const burstDelays = event.type === 'person_detected' ? [0, 700, 1600] : [0];
-      const frames = [];
-      for (let i = 0; i < burstDelays.length; i += 1) {
-        if (burstDelays[i]) await delay(burstDelays[i]);
-        try {
-          frames.push(await captureTriggerFrame(event, cam, { index: i, total: burstDelays.length }));
-        } catch (e) {
-          logTimeline('system', `Geen triggerbeeld ${i + 1}/${burstDelays.length} voor ${cam}: ${errMsg(e).slice(0, 120)}`);
-        }
-      }
-      if (frames.length) {
-        event.frame = frames[0];
-        event.frames = frames;
-      }
-    }
-    bus.emit('house', event);
-  })();
+  void captureAndIssue(event, cam).catch((error) => {
+    logTimeline('system', `Camera-incident kon niet worden uitgegeven: ${errMsg(error).slice(0, 160)}`);
+  });
   return true;
 }
 
-// ---------- snapshot van het huis ----------
-
-const OPEN_CLASSES = ['door', 'window', 'garage_door', 'opening'];
-
-/** Compacte samenvatting van de huidige staat van het huis. */
-export async function snapshot() {
-  const all = await allStates();
-  const byDomain = (d) => all.filter((s) => s.entity_id.startsWith(d + '.'));
-
-  const personen = byDomain('person').map((s) => ({ naam: friendlyName(s), thuis: s.state === 'home' }));
-
-  const lampenAan = byDomain('light')
-    .filter((s) => s.state === 'on')
-    .slice(0, 10)
-    .map(friendlyName);
-
-  const spelers = byDomain('media_player')
-    .filter((s) => s.state === 'playing')
-    .map((s) => ({ naam: friendlyName(s), status: s.state, titel: s.attributes?.media_title || null }));
-
-  const klimaat = byDomain('climate').map((s) => ({
-    entityId: s.entity_id,
-    naam: friendlyName(s),
-    huidigeTemp: s.attributes?.current_temperature ?? null,
-    doelTemp: s.attributes?.temperature ?? null,
-  }));
-
-  const w = byDomain('weather')[0];
-  const weer = w ? { conditie: w.state, temperatuur: w.attributes?.temperature ?? null } : null;
-
-  const zon = all.find((s) => s.entity_id === 'sun.sun')?.state === 'below_horizon' ? 'onder' : 'op';
-
-  const binSensors = byDomain('binary_sensor');
-  const deurenOpen = binSensors
-    .filter((s) => OPEN_CLASSES.includes(s.attributes?.device_class) && s.state === 'on')
-    .map(friendlyName);
-  const bewegingRecent = binSensors
-    .filter((s) => s.attributes?.device_class === 'motion' && s.state === 'on')
-    .map(friendlyName);
-
-  return { personen, lampenAan, spelers, klimaat, weer, zon, deurenOpen, bewegingRecent };
+/**
+ * Verbruik exact eenmaal een camera-event dat deze adapter zelf na de echte
+ * HA-trigger en snapshotpoging heeft uitgegeven. Een structureel gelijk
+ * bus-object krijgt hierdoor nooit waarnemings- of vervolgbevoegdheid.
+ */
+export function consumeIssuedCameraTriggerEvent(event) {
+  if (!event || typeof event !== 'object'
+    || !ISSUED_CAMERA_TRIGGER_EVENTS.has(event)
+    || CONSUMED_CAMERA_TRIGGER_EVENTS.has(event)) return null;
+  CONSUMED_CAMERA_TRIGGER_EVENTS.add(event);
+  return event;
 }
 
-// vertaling van veelvoorkomende weerstates naar het Nederlands
-const WEER_NL = {
-  'clear-night': 'helder',
-  cloudy: 'bewolkt',
-  exceptional: 'uitzonderlijk weer',
-  fog: 'mistig',
-  hail: 'hagel',
-  lightning: 'onweer',
-  'lightning-rainy': 'onweer met regen',
-  partlycloudy: 'half bewolkt',
-  pouring: 'stortregen',
-  rainy: 'regenachtig',
-  snowy: 'sneeuw',
-  'snowy-rainy': 'natte sneeuw',
-  sunny: 'zonnig',
-  windy: 'winderig',
-  'windy-variant': 'winderig',
-};
-
-/** Korte Nederlandse beschrijving van een snapshot, voor in een LLM-prompt. */
-export function snapshotText(snap) {
-  const zinnen = [];
-
-  const thuis = snap.personen?.filter((p) => p.thuis).map((p) => p.naam) || [];
-  zinnen.push(thuis.length ? `Thuis: ${thuis.join(', ')}.` : 'Er is niemand thuis.');
-
-  const lampen = snap.lampenAan || [];
-  if (lampen.length) zinnen.push(`${lampen.length} lamp${lampen.length === 1 ? '' : 'en'} aan (${lampen.join(', ')}).`);
-  else zinnen.push('Alle lampen zijn uit.');
-
-  for (const sp of snap.spelers || []) {
-    zinnen.push(sp.titel ? `${sp.naam} speelt '${sp.titel}'.` : `${sp.naam} speelt iets af.`);
-  }
-
-  if (snap.weer) {
-    const cond = WEER_NL[snap.weer.conditie] || snap.weer.conditie;
-    zinnen.push(snap.weer.temperatuur != null ? `Het is ${snap.weer.temperatuur}°C en ${cond}.` : `Het weer: ${cond}.`);
-  }
-
-  zinnen.push(snap.zon === 'op' ? 'De zon is op.' : 'De zon is onder.');
-
-  if (snap.deurenOpen?.length) zinnen.push(`Open: ${snap.deurenOpen.join(', ')}.`);
-  if (snap.bewegingRecent?.length) zinnen.push(`Beweging bij: ${snap.bewegingRecent.join(', ')}.`);
-
-  const binnen = (snap.klimaat || []).filter((k) => k.huidigeTemp != null).slice(0, 10);
-  if (binnen.length) {
-    zinnen.push(`Binnentemperaturen: ${binnen.map((k) => (
-      `${k.naam} ${k.huidigeTemp}°C${k.entityId ? ` (${k.entityId})` : ''}`
-    )).join(', ')}.`);
-  }
-
-  return zinnen.join(' ');
+/** Niet-consumerende identitycheck voor de wachtrij vóór enige byte-/file-I/O. */
+export function pendingIssuedCameraTriggerEvent(event) {
+  return event && typeof event === 'object'
+    && ISSUED_CAMERA_TRIGGER_EVENTS.has(event)
+    && !CONSUMED_CAMERA_TRIGGER_EVENTS.has(event)
+    ? event : null;
 }
 
 /** Namen van iedereen die nu thuis is (person.* met state 'home'). */
@@ -980,7 +1280,9 @@ export async function presenceDetails(person = '') {
 // ---------- REST: services, states, camera's ----------
 
 /** Roept een HA-service aan via REST en geeft het JSON-antwoord terug. */
-export async function callService(domain, service, data = {}, { timeoutMs = 10_000, target = null } = {}) {
+export async function callService(domain, service, data = {}, {
+  timeoutMs = 10_000, target = null, noTransportFallback = false,
+} = {}) {
   if (connected) {
     try {
       return await wsCommand({
@@ -992,7 +1294,8 @@ export async function callService(domain, service, data = {}, { timeoutMs = 10_0
         return_response: false,
       }, Math.min(Math.max(500, Number(timeoutMs) || 10_000), 3_000));
     } catch (error) {
-      if (domain === 'assist_satellite' && service === 'announce') {
+      if (noTransportFallback === true
+        || (domain === 'assist_satellite' && service === 'announce')) {
         error.uncertainExecution = true;
         throw error;
       }
@@ -1009,26 +1312,71 @@ export async function callService(domain, service, data = {}, { timeoutMs = 10_0
   });
   if (!res.ok) {
     const body = await res.text().catch(() => '');
-    throw new Error(`Service ${domain}.${service} mislukt: HTTP ${res.status}${body ? ` — ${body.slice(0, 200)}` : ''}`);
+    throw new Error(`Service ${domain}.${service} mislukt: HTTP ${res.status}${body ? `: ${body.slice(0, 200)}` : ''}`);
   }
   return res.json();
 }
 
+function requestAbortLease(externalSignal, timeoutMs) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => {
+    if (!controller.signal.aborted) {
+      controller.abort(new DOMException('Home Assistant request timeout', 'TimeoutError'));
+    }
+  }, timeoutMs);
+  timeout.unref?.();
+
+  let detachExternal = () => {};
+  if (externalSignal != null) {
+    if (typeof externalSignal.addEventListener !== 'function') {
+      clearTimeout(timeout);
+      throw new TypeError('signal moet een AbortSignal zijn');
+    }
+    const forwardAbort = () => {
+      if (!controller.signal.aborted) controller.abort(externalSignal.reason);
+    };
+    if (externalSignal.aborted) forwardAbort();
+    else {
+      externalSignal.addEventListener('abort', forwardAbort, { once: true });
+      detachExternal = () => externalSignal.removeEventListener('abort', forwardAbort);
+    }
+  }
+
+  return {
+    signal: controller.signal,
+    dispose() {
+      clearTimeout(timeout);
+      detachExternal();
+    },
+  };
+}
+
 /** Generieke REST-call naar Home Assistant (voor beheer: automatiseringen, scripts, config). */
-export async function restCall(method, path, body = null, { timeoutMs = 10_000 } = {}) {
+export async function restCall(method, path, body = null, {
+  timeoutMs = 10_000,
+  signal = null,
+} = {}) {
   if (!path.startsWith('/api/')) throw new Error('pad moet met /api/ beginnen');
-  const res = await fetch(config.haUrl + path, {
-    method,
-    headers: headers(),
-    body: body != null ? JSON.stringify(body) : undefined,
-    signal: AbortSignal.timeout(Math.max(250, Number(timeoutMs) || 10_000)),
-  });
-  const text = await res.text().catch(() => '');
-  if (!res.ok) throw new Error(`HA ${method} ${path} mislukt: HTTP ${res.status}${text ? ` — ${text.slice(0, 300)}` : ''}`);
+  const abortLease = requestAbortLease(
+    signal,
+    Math.max(250, Number(timeoutMs) || 10_000),
+  );
   try {
-    return JSON.parse(text);
-  } catch {
-    return text;
+    const res = await fetch(config.haUrl + path, {
+      method,
+      headers: headers(),
+      body: body != null ? JSON.stringify(body) : undefined,
+      signal: abortLease.signal,
+    });
+    const text = await res.text().catch(() => '');
+    if (!res.ok) throw new Error(`HA ${method} ${path} mislukt: HTTP ${res.status}${text ? `: ${text.slice(0, 300)}` : ''}`);
+    try {
+      return JSON.parse(text);
+    } catch {
+      return text;
+    }
+  } finally {
+    abortLease.dispose();
   }
 }
 
@@ -1057,7 +1405,7 @@ function readableEntityState(state, fallbackId = '') {
  * Beoordeel een readback op het werkelijke doel. Bij een HA-lichtgroep betekent
  * `on` alleen dat minstens één lid aan is; dat bewijst niet dat alle lampen aanstaan.
  */
-export function assessEntityState(target, memberStates = [], expectedState = null) {
+function assessEntityState(target, memberStates = [], expectedState = null) {
   const expected = expectedState ? String(expectedState) : null;
   const memberIds = Array.isArray(target?.attributes?.entity_id)
     ? target.attributes.entity_id.map(String).filter(Boolean)
@@ -1156,7 +1504,6 @@ export async function verifyEntityState(entityId, expectedState, {
 const CAM_UITSLUITEN = /erik|vacuum|_map|stofzuig/i;
 const CAM_KANAAL_SUFFIX = /\s*(high|low)\s*resolution\s*channel.*$|\s*\(insecure\)\s*$/i;
 const UNIFI_PROTECT_BASE = '/proxy/protect/integration/v1';
-const UNIFI_PROTECT_FALLBACK_HOST = '10.0.20.133';
 let unifiProtectCache = { ts: 0, cameras: null };
 const unifiProtectMeldingen = new Set();
 
@@ -1169,7 +1516,7 @@ const schoneCamNaam = (st) =>
     .trim();
 
 /** Alle camera-entiteiten, ongefilterd (voor zoeken op (deel)naam). */
-export async function rawCameras() {
+async function rawCameras() {
   const all = await allStates();
   return all
     .filter((s) => s.entity_id.startsWith('camera.'))
@@ -1239,15 +1586,87 @@ export async function findCamera(zoek) {
 }
 
 function doorbellSpeaker(all) {
-  const sp = all.find(
-    (s) => s.entity_id.startsWith('media_player.') && /doorbell|deurbel/i.test(s.entity_id)
+  const matches = all.filter(
+    (s) => s.entity_id.startsWith('media_player.')
+      && /doorbell|deurbel/i.test(s.entity_id),
   );
-  return sp?.entity_id || null;
+  return matches.length === 1 ? matches[0].entity_id : null;
 }
 
-/** Speaker-entity van de deurbel, of null. */
-export async function getDoorbellSpeaker() {
-  return doorbellSpeaker(await allStates());
+/**
+ * Los uitsluitend het vaste intercomendpoint op dat werkelijk bij de lokale
+ * deurbel hoort. Een model of hogere laag kan hier geen willekeurige speaker
+ * invullen en er bestaat bewust geen fuzzy/defaultfallback.
+ */
+export function resolveDoorbellIntercomTarget(cameraEntity, stateRows = []) {
+  const camera = String(cameraEntity || '').trim().toLowerCase();
+  const all = Array.isArray(stateRows) ? stateRows : [];
+  if (!/^camera\.[a-z0-9_]+$/u.test(camera)) return null;
+  const cameraState = all.find((state) => String(state?.entity_id || '').toLowerCase() === camera);
+  if (!cameraState || !/doorbell|deurbel/iu.test(String(cameraState.entity_id || ''))) {
+    return null;
+  }
+  const speakerEntity = doorbellSpeaker(all);
+  const speakerState = all.find((state) => state?.entity_id === speakerEntity);
+  if (!speakerEntity || !speakerState
+    || ['unavailable', 'unknown'].includes(String(speakerState.state || '').toLowerCase())) return null;
+  return Object.freeze({
+    contract: 'DoorbellIntercomTarget/v1',
+    cameraEntity: cameraState.entity_id,
+    speakerEntity,
+  });
+}
+
+/** Los het private deurbelendpoint op tegen de actuele adaptercache. */
+export function currentDoorbellIntercomTarget(cameraEntity) {
+  return resolveDoorbellIntercomTarget(cameraEntity, cachedStates());
+}
+
+/**
+ * Eén smalle hoorbare deurbelroute. `speak` krijgt het exact geverifieerde
+ * endpoint, zodat haar algemene speakerselectie nooit in beeld komt.
+ */
+export async function announceOnDoorbellIntercom(text, cameraEntity, options = {}) {
+  const message = String(text || '').trim();
+  if (!message || message.length > 500) {
+    return { ok: false, accepted: false, uncertain: false,
+      error: 'deurbelspraak vereist 1-500 tekens' };
+  }
+  try {
+    const all = await allStates();
+    const target = resolveDoorbellIntercomTarget(cameraEntity, all);
+    if (!target) return { ok: false, accepted: false, uncertain: false,
+      error: 'geen exact gekoppelde beschikbare deurbelintercom' };
+    const expectedSpeaker = String(options?.expectedSpeakerEntity || '').trim();
+    if (expectedSpeaker && expectedSpeaker !== target.speakerEntity) {
+      return {
+        ok: false,
+        accepted: false,
+        uncertain: false,
+        stale: true,
+        error: 'de exact gebonden deurbelintercom is intussen gewijzigd',
+      };
+    }
+    const result = await speak(message, target.speakerEntity, {
+      ...options,
+      noTransportFallback: true,
+    });
+    return {
+      ...result,
+      accepted: result?.ok === true,
+      uncertain: result?.uncertain === true,
+      target: target.speakerEntity,
+      camera: target.cameraEntity,
+      acceptance: result?.ok === true ? 'home_assistant_call_completed' : null,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      accepted: false,
+      uncertain: serviceTimeoutIsAmbiguous(error),
+      error: errMsg(error),
+    };
+  }
 }
 
 const normCam = (s) =>
@@ -1262,7 +1681,7 @@ function unifiProtectKeys() {
 }
 
 function unifiProtectHosts() {
-  return [...new Set([config.unifiHost, secret('unifi_protect_host'), UNIFI_PROTECT_FALLBACK_HOST].filter(Boolean))];
+  return [...new Set([config.unifiHost, secret('unifi_protect_host')].filter(Boolean))];
 }
 
 function parseUnifiHost(raw) {
@@ -1279,8 +1698,17 @@ function parseUnifiHost(raw) {
   }
 }
 
-function unifiProtectRaw(host, key, pathname, accept) {
+function unifiProtectRaw(host, key, pathname, accept, {
+  signal = undefined,
+  maxBytes = CAMERA_SNAPSHOT_MAX_BYTES,
+} = {}) {
   return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      fn(value);
+    };
     const req = https.request({
       hostname: host.hostname,
       port: host.port,
@@ -1289,27 +1717,50 @@ function unifiProtectRaw(host, key, pathname, accept) {
       rejectUnauthorized: false,
       timeout: 10_000,
       headers: { 'X-API-KEY': key, Accept: accept, 'User-Agent': 'Eva/1.0' },
+      ...(signal ? { signal } : {}),
     }, (res) => {
       const chunks = [];
-      res.on('data', (d) => chunks.push(d));
+      let size = 0;
+      const declared = Number(res.headers['content-length']);
+      if (Number.isFinite(declared) && declared > maxBytes) {
+        finish(reject, new Error('UniFi Protect antwoord is te groot'));
+        res.destroy();
+        return;
+      }
+      res.on('data', (d) => {
+        size += d.length;
+        if (size > maxBytes) {
+          finish(reject, new Error('UniFi Protect antwoord overschrijdt de groottelimiet'));
+          res.destroy();
+          return;
+        }
+        chunks.push(d);
+      });
+      res.on('error', (error) => finish(reject, error));
       res.on('end', () => {
+        if (settled) return;
         const body = Buffer.concat(chunks);
         if ((res.statusCode || 500) < 200 || (res.statusCode || 500) >= 300) {
           const preview = body.toString('utf8').slice(0, 160);
           const e = new Error(`UniFi Protect HTTP ${res.statusCode}: ${preview}`);
           e.statusCode = res.statusCode;
-          return reject(e);
+          finish(reject, e);
+          return;
         }
-        resolve({ body, headers: res.headers });
+        finish(resolve, { body, headers: res.headers });
       });
     });
-    req.on('error', reject);
+    req.on('error', (error) => finish(reject, error));
     req.setTimeout(10_000, () => req.destroy(new Error('timeout naar UniFi Protect')));
     req.end();
   });
 }
 
-async function unifiProtectBuffer(pathname, { accept = 'application/json' } = {}) {
+async function unifiProtectBuffer(pathname, {
+  accept = 'application/json',
+  signal = undefined,
+  maxBytes = CAMERA_SNAPSHOT_MAX_BYTES,
+} = {}) {
   const hosts = unifiProtectHosts().map(parseUnifiHost).filter(Boolean);
   const keys = unifiProtectKeys();
   if (!hosts.length || !keys.length) throw new Error('UniFi Protect niet ingesteld');
@@ -1318,7 +1769,7 @@ async function unifiProtectBuffer(pathname, { accept = 'application/json' } = {}
   for (const host of hosts) {
     for (const key of keys) {
       try {
-        return await unifiProtectRaw(host, key, pathname, accept);
+        return await unifiProtectRaw(host, key, pathname, accept, { signal, maxBytes });
       } catch (e) {
         laatsteFout = e;
       }
@@ -1327,9 +1778,12 @@ async function unifiProtectBuffer(pathname, { accept = 'application/json' } = {}
   throw laatsteFout || new Error('UniFi Protect niet bereikbaar');
 }
 
-async function unifiProtectCameras() {
+async function unifiProtectCameras({ signal = undefined } = {}) {
   if (unifiProtectCache.cameras && Date.now() - unifiProtectCache.ts < 60_000) return unifiProtectCache.cameras;
-  const { body } = await unifiProtectBuffer(`${UNIFI_PROTECT_BASE}/cameras`);
+  const { body } = await unifiProtectBuffer(`${UNIFI_PROTECT_BASE}/cameras`, {
+    signal,
+    maxBytes: UNIFI_CAMERA_LIST_MAX_BYTES,
+  });
   const json = JSON.parse(body.toString('utf8'));
   const lijst = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : []);
   const cameras = lijst
@@ -1369,14 +1823,17 @@ function kiesUnifiCamera(entityId, cameras) {
   return null;
 }
 
-async function unifiProtectSnapshot(entityId) {
+async function unifiProtectSnapshot(entityId, { signal = undefined } = {}) {
   try {
-    const cameras = await unifiProtectCameras();
+    const cameras = await unifiProtectCameras({ signal });
     const camera = kiesUnifiCamera(entityId, cameras);
     if (!camera) return null;
-    const { body, headers } = await unifiProtectBuffer(`${UNIFI_PROTECT_BASE}/cameras/${camera.id}/snapshot`, { accept: 'image/jpeg' });
+    const { body, headers } = await unifiProtectBuffer(`${UNIFI_PROTECT_BASE}/cameras/${camera.id}/snapshot`, {
+      accept: 'image/jpeg', signal, maxBytes: CAMERA_SNAPSHOT_MAX_BYTES,
+    });
     const type = String(headers['content-type'] || 'image/jpeg');
-    if (!/image/i.test(type) || body.length < 1000 || body[0] !== 0xff || body[1] !== 0xd8) return null;
+    if (!/^image\/jpeg(?:;|$)/iu.test(type) || body.length < 1000
+      || body[0] !== 0xff || body[1] !== 0xd8) return null;
     return { buffer: body, contentType: type, source: 'unifi-protect', cameraName: camera.name };
   } catch (e) {
     const sleutel = `protect:${entityId}`;
@@ -1388,27 +1845,65 @@ async function unifiProtectSnapshot(entityId) {
   }
 }
 
+async function readBoundedImageResponse(response, maxBytes = CAMERA_SNAPSHOT_MAX_BYTES) {
+  const contentType = String(response?.headers?.get?.('content-type') || '').toLowerCase();
+  if (!/^image\/(?:jpeg|png|webp)(?:;|$)/u.test(contentType)) {
+    throw new Error('Cameraantwoord heeft geen toegestaan beeldtype');
+  }
+  return readBoundedResponseBody(response, maxBytes, 'Cameraantwoord');
+}
+
+async function readBoundedResponseBody(response, maxBytes, label) {
+  const declared = Number(response?.headers?.get?.('content-length'));
+  if (Number.isFinite(declared) && declared > maxBytes) {
+    throw new Error(`${label} is te groot`);
+  }
+  if (response.body?.getReader) {
+    const reader = response.body.getReader();
+    const chunks = [];
+    let size = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = Buffer.from(value);
+        size += chunk.length;
+        if (size > maxBytes) {
+          await reader.cancel(`${label} overschrijdt de groottelimiet`);
+          throw new Error(`${label} overschrijdt de groottelimiet`);
+        }
+        chunks.push(chunk);
+      }
+    } finally {
+      reader.releaseLock();
+    }
+    return Buffer.concat(chunks);
+  }
+  const body = Buffer.from(await response.arrayBuffer());
+  if (body.length > maxBytes) throw new Error(`${label} overschrijdt de groottelimiet`);
+  return body;
+}
+
 /** Stilstaand beeld van een camera: eerst direct via UniFi Protect, daarna HA /api/camera_proxy. */
-export async function cameraSnapshot(entityId) {
-  const direct = await unifiProtectSnapshot(entityId);
+export async function cameraSnapshot(entityId, {
+  signal = undefined,
+  maxBytes = CAMERA_SNAPSHOT_MAX_BYTES,
+} = {}) {
+  const direct = await unifiProtectSnapshot(entityId, { signal });
   if (direct) return direct;
 
   let res;
   try {
-    res = await fetch(`${config.haUrl}/api/camera_proxy/${entityId}`, { headers: headers() });
+    res = await fetch(`${config.haUrl}/api/camera_proxy/${entityId}`, {
+      headers: headers(),
+      ...(signal ? { signal } : {}),
+    });
   } catch (e) {
     throw new Error(`Camerabeeld van ${entityId} ophalen mislukt: ${errMsg(e)}`);
   }
   if (!res.ok) throw new Error(`Camerabeeld van ${entityId} ophalen mislukt: HTTP ${res.status}`);
-  const buffer = Buffer.from(await res.arrayBuffer());
-  return { buffer, contentType: res.headers.get('content-type') || 'image/jpeg', source: 'home-assistant' };
-}
-
-export async function listMediaPlayers() {
-  const all = await allStates();
-  return all
-    .filter((s) => s.entity_id.startsWith('media_player.'))
-    .map((s) => ({ entity_id: s.entity_id, name: friendlyName(s), state: s.state }));
+  const buffer = await readBoundedImageResponse(res, Math.min(maxBytes, CAMERA_SNAPSHOT_MAX_BYTES));
+  return { buffer, contentType: res.headers.get('content-type'), source: 'home-assistant' };
 }
 
 // ---------- spraak door het huis ----------
@@ -1443,7 +1938,8 @@ function defaultSpeakers(all) {
 }
 
 function serviceTimeoutIsAmbiguous(error) {
-  return /(?:timeout|timed out|aborted due to timeout|operation was aborted)/i.test(errMsg(error));
+  return error?.uncertainExecution === true
+    || /(?:timeout|timed out|aborted due to timeout|operation was aborted)/i.test(errMsg(error));
 }
 
 function normalizedVoiceTarget(value) {
@@ -1510,7 +2006,7 @@ export function resolveVoiceAssistSatelliteTarget(requestedTarget = null, {
 
 /** Pure serviceplanning, apart testbaar zonder Home Assistant of geluid. */
 export function voiceAssistSatelliteAnnouncementPlan(text, requestedTarget = null, options = {}) {
-  const message = String(text || '').replace(/\s+/g, ' ').trim();
+  const message = normalizeUserFacingText(text).replace(/\s+/g, ' ').trim();
   if (!message) return { ok: false, reason: 'de omroeptekst is leeg' };
   const target = resolveVoiceAssistSatelliteTarget(requestedTarget, options);
   if (!target.ok) return target;
@@ -1526,13 +2022,6 @@ export function voiceAssistSatelliteAnnouncementPlan(text, requestedTarget = nul
     },
   };
 }
-
-export const __speechTest = {
-  defaultSpeakers,
-  resolveVoiceAssistSatelliteTarget,
-  serviceTimeoutIsAmbiguous,
-  voiceAssistSatelliteAnnouncementPlan,
-};
 
 /**
  * Omroep via exact één toegestane Assist satellite. Een expliciet of default
@@ -1559,7 +2048,8 @@ export async function announceOnVoiceAssistSatellite(text, requestedTarget = nul
         reason: `Voice PE-doel ${targetLabel} bestaat niet in Home Assistant`,
       };
     }
-    if (['unavailable', 'unknown'].includes(String(targetState.state))) {
+    let reportedUnavailable = ['unavailable', 'unknown'].includes(String(targetState.state));
+    if (reportedUnavailable) {
       const refreshState = typeof options.refreshState === 'function'
         ? options.refreshState
         : !Array.isArray(options.states)
@@ -1571,16 +2061,7 @@ export async function announceOnVoiceAssistSatellite(text, requestedTarget = nul
       if (fresh?.entity_id === plan.target.entityId
         && !['unavailable', 'unknown'].includes(String(fresh.state))) {
         targetState = fresh;
-      } else {
-        return {
-          ok: false,
-          verified: true,
-          changed: false,
-          target: plan.target.entityId,
-          target_alias: plan.target.alias,
-          service: `${plan.domain}.${plan.service}`,
-          reason: `Home Assistant markeert Voice PE ${targetLabel} als ${fresh?.state || targetState.state}`,
-        };
+        reportedUnavailable = false;
       }
     }
 
@@ -1594,6 +2075,9 @@ export async function announceOnVoiceAssistSatellite(text, requestedTarget = nul
       target: plan.target.entityId,
       target_alias: plan.target.alias,
       target_source: plan.target.source,
+      ...(reportedUnavailable ? {
+        stale_target_state: String(targetState.state),
+      } : {}),
       service: `${plan.domain}.${plan.service}`,
       message: `De omroepopdracht is door Home Assistant geaccepteerd voor ${targetLabel}.`,
     };
@@ -1632,98 +2116,28 @@ export async function announceOnVoiceAssistSatellite(text, requestedTarget = nul
         };
       }
     }
+    const failureText = errMsg(error);
+    const safelyRetryable = !uncertain
+      && /(?:HTTP 5\d\d|unavailable|onbereikbaar|connection refused|econnrefused|netwerk)/iu
+        .test(failureText);
     return {
       ok: false,
       verified: false,
       changed: false,
       uncertain,
+      effect_uncertain: uncertain,
+      failure_class: safelyRetryable ? 'unavailable'
+        : uncertain ? 'uncertain_effect' : 'unknown',
+      retryable: safelyRetryable,
+      needs_followup: true,
       target: plan.target.entityId,
       target_alias: plan.target.alias,
       service: `${plan.domain}.${plan.service}`,
       reason: uncertain
         ? `De omroep naar ${targetLabel} bleef onbevestigd; er is niet naar een andere speaker uitgeweken.`
-        : `De omroep naar ${targetLabel} is mislukt: ${errMsg(error)}`,
+        : `De omroep naar ${targetLabel} is mislukt: ${failureText}`,
     };
   }
-}
-
-/** Alle bruikbare speakers (ontdubbeld), zonder de deurbel. Voor "overal praten". */
-export async function allSpeakers() {
-  const all = await allStates();
-  return dedupe(speelbareSpelers(all).filter((s) => !/doorbell|deurbel/i.test(s.entity_id))).map((s) => s.entity_id);
-}
-
-// ---------- kamer-routering: praten waar iemand is ----------
-
-// Kamer (area) -> media_player-entity_ids, uit de HA area-registry. Gecachet (5 min);
-// zo weet Eva welke speaker in welke kamer staat, ook als de naam dat niet verraadt.
-let _areaMap = null, _areaMapTs = 0, _entArea = null;
-async function areaSpeakerMap() {
-  if (_areaMap && Date.now() - _areaMapTs < 5 * 60_000) return _areaMap;
-  try {
-    const [areas, ents, devs] = await Promise.all([
-      wsCommand({ type: 'config/area_registry/list' }),
-      wsCommand({ type: 'config/entity_registry/list' }),
-      wsCommand({ type: 'config/device_registry/list' }),
-    ]);
-    const areaNaam = Object.fromEntries(areas.map((a) => [a.area_id, a.name]));
-    const devArea = Object.fromEntries(devs.map((d) => [d.id, d.area_id]));
-    const map = {};
-    const entArea = {};
-    for (const e of ents) {
-      const aid = e.area_id || devArea[e.device_id];
-      if (aid && areaNaam[aid]) entArea[e.entity_id] = areaNaam[aid];
-      if (!e.entity_id.startsWith('media_player.') || !aid || !areaNaam[aid]) continue;
-      (map[areaNaam[aid].toLowerCase()] ||= []).push(e.entity_id);
-    }
-    _areaMap = map; _entArea = entArea; _areaMapTs = Date.now();
-    return map;
-  } catch {
-    return _areaMap || {};
-  }
-}
-
-/** In welke kamer hoort een entiteit (camera/sensor/speaker)? Of null. */
-export async function areaOfEntity(entityId) {
-  await areaSpeakerMap();
-  return (_entArea && _entArea[entityId]) || null;
-}
-
-// Hoe het gezin kamers noemt vs. hoe ze in HA heten.
-const KAMER_SYNONIEM = { tuin: 'buiten', achtertuin: 'buiten', voortuin: 'buiten', overkapping: 'buiten', garage: 'schuur' };
-
-/** Beschikbare, voorkeurs-gesorteerde speakers in een kamer (lege array = onbekend/leeg). */
-export async function speakersInRoom(room) {
-  if (!room) return [];
-  const map = await areaSpeakerMap();
-  let z = String(room).toLowerCase().trim();
-  if (KAMER_SYNONIEM[z]) z = KAMER_SYNONIEM[z];
-  let ids = map[z];
-  if (!ids) { const k = Object.keys(map).find((n) => n.includes(z) || z.includes(n)); ids = k ? map[k] : []; }
-  if (!ids || !ids.length) return [];
-  const all = await allStates();
-  const speelbaar = new Set(speelbareSpelers(all).filter((s) => !/doorbell|deurbel/i.test(s.entity_id)).map((s) => s.entity_id));
-  const inRoom = ids.filter((id) => speelbaar.has(id));
-  const voorkeur = inRoom.filter((id) => /sonos|cast|nest|gc\b|google|roam/i.test(id));
-  const kies = voorkeur.length ? voorkeur : inRoom;
-  return dedupe(kies.map((id) => all.find((s) => s.entity_id === id)).filter(Boolean)).map((s) => s.entity_id);
-}
-
-/** Welke kamers hebben (nu) een bruikbare speaker? Zodat Eva weet waar ze kan praten. */
-export async function roomsWithSpeakers() {
-  const map = await areaSpeakerMap();
-  const uit = [];
-  for (const naam of Object.keys(map)) if ((await speakersInRoom(naam)).length) uit.push(naam);
-  return uit;
-}
-
-/** Praat in een specifieke kamer; matcht die niets, val terug op naam-matching/standaard. */
-export async function speakInArea(room, text, options = {}) {
-  const isCurrent = typeof options?.isCurrent === 'function' ? options.isCurrent : () => true;
-  if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
-  const ids = await speakersInRoom(room);
-  if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
-  return ids.length ? speak(text, ids, options) : speak(text, room || null, options);
 }
 
 /** Vertaal targets (entity_ids, naamfragmenten, of 'overal'/'alle') naar echte media_player-entity_ids. */
@@ -1745,35 +2159,6 @@ function resolveSpeakers(all, target) {
   return uit.size ? [...uit] : defaultSpeakers(all);
 }
 
-/**
- * Maak gesproken audio (mp3) van tekst via Home Assistant's TTS.
- * Geeft {buffer, contentType} terug; throwt met leesbare fout.
- */
-export async function synthesizeSpeech(text, { engine = null } = {}) {
-  const all = await allStates();
-  const engines = engine
-    ? [engine]
-    : ['tts.openai_tts', 'tts.home_assistant_cloud', 'tts.piper']
-        .filter((e) => all.some((s) => s.entity_id === e && s.state !== 'unavailable'));
-  if (!engines.length) throw new Error('geen TTS-engine beschikbaar in Home Assistant');
-
-  let laatsteFout = 'onbekend';
-  for (const eng of engines) {
-    try {
-      const r = await restCall('POST', '/api/tts_get_url', { engine_id: eng, message: text });
-      const path = r?.path || (r?.url ? new URL(r.url).pathname : null);
-      if (!path) { laatsteFout = 'geen audiopad terug'; continue; }
-      const res = await fetch(config.haUrl + path, { headers: headers() });
-      if (!res.ok) { laatsteFout = `audio ophalen HTTP ${res.status}`; continue; }
-      const buffer = Buffer.from(await res.arrayBuffer());
-      return { buffer, contentType: res.headers.get('content-type') || 'audio/mpeg', engine: eng };
-    } catch (e) {
-      laatsteFout = errMsg(e);
-    }
-  }
-  throw new Error(`spraak maken mislukt: ${laatsteFout}`);
-}
-
 // Voorkeursvolgorde van TTS-stemmen: haar eigen ElevenLabs-stem (zodra die er is),
 // dan de natuurlijke Nabu Casa-cloudstem, dan OpenAI, dan het lokale Piper als
 // robuuste terugval. Stuk/onbeschikbare engines worden vanzelf overgeslagen.
@@ -1784,38 +2169,90 @@ const TTS_VOORKEUR = ['tts.elevenlabs', 'tts.home_assistant_cloud', 'tts.openai_
  * een speaker ernaartoe sturen. Zo claimt Eva nooit meer dat ze sprak terwijl er een
  * kapot/onbereikbaar audio-pad uitkwam (de stille-Sonos-bug). Geeft {url, engine} of {error}.
  */
-async function playableTtsUrl(all, text) {
-  const base = await reachableBase();
-  const kandidaten = TTS_VOORKEUR.filter((e) => all.some((s) => s.entity_id === e && s.state !== 'unavailable'));
-  for (const s of all) {
-    if (s.entity_id.startsWith('tts.') && s.state !== 'unavailable' && !kandidaten.includes(s.entity_id)) kandidaten.push(s.entity_id);
-  }
-  let laatste = 'geen werkende TTS-engine';
-  for (const eng of kandidaten) {
-    try {
-      const r = await restCall('POST', '/api/tts_get_url', { engine_id: eng, message: text });
-      const path = r?.path || (r?.url ? new URL(r.url).pathname : null);
-      if (!path) { laatste = `${eng}: geen audiopad`; continue; }
-      const url = base + path; // bereikbaar LAN-adres, niet het interne docker-IP
-      const res = await fetch(url, { headers: headers() });
-      if (!res.ok) { laatste = `${eng}: audio HTTP ${res.status}`; continue; }
-      const bytes = (await res.arrayBuffer()).byteLength;
-      if (bytes < 500) { laatste = `${eng}: lege audio (${bytes}b)`; continue; }
-      return { url, engine: eng, bytes };
-    } catch (e) {
-      laatste = `${eng}: ${errMsg(e)}`;
-    }
-  }
-  return { error: laatste };
+function ttsPreflightLease(isCurrent, timeoutMs) {
+  const controller = new AbortController();
+  const current = () => {
+    try { return isCurrent() === true; } catch { return false; }
+  };
+  const abort = (reason) => {
+    if (!controller.signal.aborted) controller.abort(reason);
+  };
+  const check = () => {
+    if (!current()) abort(new DOMException('TTS-preflight is ingehaald', 'AbortError'));
+  };
+  const timeout = setTimeout(() => {
+    abort(new DOMException('TTS-preflight timeout', 'TimeoutError'));
+  }, Math.max(250, Number(timeoutMs) || TTS_PREFLIGHT_TIMEOUT_MS));
+  const interval = setInterval(check, 50);
+  check();
+  return {
+    signal: controller.signal,
+    current,
+    dispose() { clearTimeout(timeout); clearInterval(interval); },
+  };
 }
 
-/** Diagnose: welke TTS-stem werkt nu echt? Voor zelfcontrole, zonder geluid te maken. */
-export async function speechSelfTest() {
-  const all = await allStates();
-  const audio = await playableTtsUrl(all, 'Dit is een stille test van Eva.');
-  return audio.url
-    ? { ok: true, engine: audio.engine, bytes: audio.bytes, speakers: resolveSpeakers(all, null) }
-    : { ok: false, error: audio.error, speakers: resolveSpeakers(all, null) };
+function withAbort(promise, signal) {
+  if (signal.aborted) return Promise.reject(signal.reason);
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => signal.addEventListener(
+      'abort', () => reject(signal.reason), { once: true },
+    )),
+  ]);
+}
+
+async function playableTtsUrl(all, text, {
+  isCurrent = () => true,
+  timeoutMs = TTS_PREFLIGHT_TIMEOUT_MS,
+} = {}) {
+  const lease = ttsPreflightLease(isCurrent, timeoutMs);
+  let laatste = 'geen werkende TTS-engine';
+  try {
+    const base = await withAbort(reachableBase(), lease.signal);
+    const kandidaten = TTS_VOORKEUR.filter((engine) => all.some(
+      (state) => state.entity_id === engine && state.state !== 'unavailable',
+    ));
+    for (const state of all) {
+      if (state.entity_id.startsWith('tts.') && state.state !== 'unavailable'
+        && !kandidaten.includes(state.entity_id)) kandidaten.push(state.entity_id);
+    }
+    for (const engine of kandidaten) {
+      if (!lease.current() || lease.signal.aborted) break;
+      try {
+        const generated = await restCall('POST', '/api/tts_get_url', {
+          engine_id: engine, message: text,
+        }, { timeoutMs, signal: lease.signal });
+        if (!lease.current() || lease.signal.aborted) break;
+        const audioPath = generated?.path
+          || (generated?.url ? new URL(generated.url).pathname : null);
+        if (!audioPath) { laatste = `${engine}: geen audiopad`; continue; }
+        const url = base + audioPath; // bereikbaar LAN-adres, niet het interne docker-IP
+        const response = await fetch(url, { headers: headers(), signal: lease.signal });
+        if (!response.ok) { laatste = `${engine}: audio HTTP ${response.status}`; continue; }
+        const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+        if (!/^audio\/(?:mpeg|mp3|wav|x-wav|ogg|webm)(?:;|$)/u.test(contentType)) {
+          laatste = `${engine}: ongeldig audiotype`; continue;
+        }
+        const audio = await readBoundedResponseBody(
+          response, TTS_AUDIO_MAX_BYTES, 'TTS-audio',
+        );
+        if (!lease.current() || lease.signal.aborted) break;
+        if (audio.length < 500) { laatste = `${engine}: lege audio (${audio.length}b)`; continue; }
+        return { url, engine, bytes: audio.length };
+      } catch (error) {
+        laatste = `${engine}: ${errMsg(error)}`;
+        if (lease.signal.aborted) break;
+      }
+    }
+    return {
+      error: lease.signal.aborted
+        ? `TTS-preflight afgebroken: ${errMsg(lease.signal.reason)}` : laatste,
+      stale: !lease.current(),
+    };
+  } finally {
+    lease.dispose();
+  }
 }
 
 /**
@@ -1825,7 +2262,11 @@ export async function speechSelfTest() {
  * Geeft {ok, via?, error?} terug en throwt nooit.
  */
 export async function speak(text, entityIds = null, options = {}) {
+  const message = normalizeUserFacingText(text).trim();
+  if (!message) return { ok: false, uncertain: false, error: 'spraaktekst is leeg' };
   const isCurrent = typeof options?.isCurrent === 'function' ? options.isCurrent : () => true;
+  const mutationOptions = options?.noTransportFallback === true
+    ? { noTransportFallback: true } : undefined;
   try {
     if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
     const all = await allStates();
@@ -1837,8 +2278,15 @@ export async function speak(text, entityIds = null, options = {}) {
     // 1) Beste route (werkt op Sonos én Cast): maak een TTS-bestand, controleer dat de
     //    audio écht op te halen is, geef de speaker die bereikbare URL en speel het als
     //    'announce' af — dan dempt de muziek even en hoor je écht woorden.
-    const audio = await playableTtsUrl(all, text);
+    const audio = await playableTtsUrl(all, message, {
+      isCurrent,
+      timeoutMs: options?.preflightTimeoutMs,
+    });
     if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
+    if (!audio.url && options?.noTransportFallback === true) {
+      return { ok: false, stale: audio.stale === true, uncertain: false,
+        error: audio.error || 'geen aantoonbaar afspeelbare TTS-audio' };
+    }
     if (audio.url) {
       try {
         if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
@@ -1847,22 +2295,24 @@ export async function speak(text, entityIds = null, options = {}) {
           media_content_id: audio.url,
           media_content_type: 'music',
           announce: true,
-        });
+        }, mutationOptions);
         return { ok: true, via: `${audio.engine} → ${spelers.join(', ')}`, engine: audio.engine };
       } catch (error) {
         // Een afgebroken HTTP-wachttermijn zegt niet dat HA de opdracht niet
         // uitvoerde. Meteen een tweede route proberen kan dezelfde zin dubbel
         // afspelen; laat de volgende gebeurtenis liever opnieuw proberen.
-        if (serviceTimeoutIsAmbiguous(error)) {
+        if (options?.noTransportFallback === true || serviceTimeoutIsAmbiguous(error)) {
           return { ok: false, uncertain: true, error: `speakeropdracht bleef onbevestigd: ${errMsg(error)}` };
         }
         // sommige spelers lusten geen 'announce' → probeer tts.speak met dezelfde engine
         try {
           if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
-          await callService('tts', 'speak', { entity_id: audio.engine, media_player_entity_id: spelers, message: text });
+          await callService('tts', 'speak', {
+            entity_id: audio.engine, media_player_entity_id: spelers, message,
+          }, mutationOptions);
           return { ok: true, via: `${audio.engine} (speak) → ${spelers.join(', ')}`, engine: audio.engine };
         } catch (fallbackError) {
-          if (serviceTimeoutIsAmbiguous(fallbackError)) {
+          if (options?.noTransportFallback === true || serviceTimeoutIsAmbiguous(fallbackError)) {
             return { ok: false, uncertain: true, error: `speakeropdracht bleef onbevestigd: ${errMsg(fallbackError)}` };
           }
           // val verder terug bij een expliciete afwijzing
@@ -1877,8 +2327,8 @@ export async function speak(text, entityIds = null, options = {}) {
       await callService('tts', 'speak', {
         entity_id: ttsEntity.entity_id,
         media_player_entity_id: spelers,
-        message: text,
-      });
+        message,
+      }, mutationOptions);
       return { ok: true, via: `${ttsEntity.entity_id} → ${spelers.join(', ')}` };
     }
 
@@ -1895,9 +2345,13 @@ export async function speak(text, entityIds = null, options = {}) {
     if (!say) return { ok: false, error: 'geen TTS-dienst gevonden in Home Assistant' };
 
     if (!isCurrent()) return { ok: false, stale: true, error: 'ingehaald door een direct gesprek' };
-    await callService('tts', say, { entity_id: spelers, message: text });
+    await callService('tts', say, { entity_id: spelers, message }, mutationOptions);
     return { ok: true, via: `tts.${say} → ${spelers.join(', ')}` };
   } catch (e) {
-    return { ok: false, error: errMsg(e) };
+    return {
+      ok: false,
+      uncertain: serviceTimeoutIsAmbiguous(e) || options?.noTransportFallback === true,
+      error: errMsg(e),
+    };
   }
 }

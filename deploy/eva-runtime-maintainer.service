@@ -1,0 +1,13 @@
+[Unit]
+Description=Eva root-owned runtime maintainer
+OnFailure=eva-runtime-maintainer-recover.service
+StartLimitIntervalSec=3600
+StartLimitBurst=12
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+TimeoutStartSec=1500
+ExecStart=/usr/bin/node /usr/local/libexec/eva-runtime-maintainer.mjs --requests /etc/eva-runtime-self-repair.json

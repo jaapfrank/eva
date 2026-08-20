@@ -55,33 +55,6 @@ export function applyEvent(type, note = null) {
 }
 
 /**
- * Laat de regulatietoestand mede voortkomen uit interne behoeften en gemeten
- * verrassing. Dit is geen claim over biologisch of subjectief voelen: de
- * waarden hebben pas betekenis wanneer ze keuzes en aandacht causaal kleuren.
- */
-export function appraise({ drives = null, surprise = null } = {}) {
-  const d = {};
-  const add = (k, v) => { d[k] = (d[k] || 0) + v; };
-  if (drives) {
-    const tekort = (v) => {
-      const value = Number(v);
-      return Math.max(0, 0.5 - (Number.isFinite(value) ? value : 0.5));
-    }; // hoever onder "oké" (0..0.5)
-    add('eenzaamheid', 0.045 * tekort(drives.verbondenheid));
-    add('geluk', -0.03 * tekort(drives.verbondenheid) - 0.025 * tekort(drives.betekenis));
-    add('nieuwsgierigheid', 0.05 * tekort(drives.prikkeling));
-    add('energie', -0.025 * tekort(drives.prikkeling));
-    add('stress', 0.05 * tekort(drives.rust));
-  }
-  if (typeof surprise === 'number') {
-    // een onvoorspelbare wereld maakt alert en nieuwsgierig; een voorspelbare kalmeert
-    add('nieuwsgierigheid', 0.04 * (surprise - 0.35));
-    add('stress', 0.03 * Math.max(0, surprise - 0.5));
-  }
-  if (Object.keys(d).length) nudge(d, 'appraisal');
-}
-
-/**
  * De expressieve stemming volgt langzaam uit Eva's werkelijk gemeten werking.
  * Ze is dus geen onafhankelijke beslisser meer die bij ieder bericht een vaste
  * emotieknop indrukt.
@@ -118,8 +91,8 @@ function niveau(v, laag, midden, hoog) {
   return laag;
 }
 
-export function moodSummary() {
-  const m = mood;
+export function moodSummary(current = {}) {
+  const m = { ...getMood(), ...current };
   const delen = [];
   delen.push(niveau(m.geluk, 'een beetje somber', 'rustig tevreden', 'vrolijk'));
   delen.push(niveau(m.energie, 'moe', 'redelijk energiek', 'vol energie'));
@@ -131,23 +104,14 @@ export function moodSummary() {
 }
 
 export function moodActionGuidance(current = getMood()) {
+  const grounded = `Je huidige gegronde stemming is ${moodSummary(current)} en loopt door tussen beurten. Laat dit alleen natuurlijk meewegen in toon en tempo; verzin geen oorzaak of lichamelijke ervaring.`;
   if (Number(current.stress) >= 0.6) {
-    return 'Houd deze beurt klein en rustig; begin nu niet aan iets groots of riskants.';
+    return `${grounded} Houd deze beurt klein en rustig; begin nu niet aan iets groots of riskants.`;
   }
   if (Number(current.energie) < 0.35) {
-    return 'Kies iets kleins dat je kunt afronden of blijf stil; begin nu niet aan een groot project.';
+    return `${grounded} Kies iets kleins dat je kunt afronden of blijf stil; begin nu niet aan een groot project.`;
   }
-  return 'Er is vanuit je huidige tempo geen reden om deze beurt extra klein te houden.';
-}
-
-export function moodEmoji() {
-  const m = mood;
-  if (m.energie < 0.25) return '🥱';
-  if (m.stress >= 0.6) return '😰';
-  if (m.eenzaamheid >= 0.6) return '🥺';
-  if (m.geluk >= 0.75) return '😄';
-  if (m.geluk <= 0.35) return '😔';
-  return '🙂';
+  return grounded;
 }
 
 /**
@@ -191,8 +155,4 @@ export function startEmotionalLife({ decayMinutes = 30 } = {}) {
   decayTimer = setInterval(() => decayTick(0.08), intervalMs);
   decayTimer.unref?.();
   return true;
-}
-
-export function emotionalLifeStatus() {
-  return { started: emotionalLifeStarted, decayActive: !!decayTimer, mood: getMood() };
 }

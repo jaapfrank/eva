@@ -35,7 +35,7 @@ export default [
     ],
   },
   {
-    files: ['src/**/*.js', 'test/**/*.js', 'scripts/**/*.mjs'],
+    files: ['src/**/*.js', 'test/**/*.js', 'scripts/**/*.mjs', 'deploy/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

@@ -10,6 +10,34 @@ const execFileAsync = promisify(execFile);
 const CAPABILITY_PATH = '/api/v2/robot/capabilities/HighResolutionManualControlCapability';
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+function turnIsCurrent(isCurrent) {
+  try { return typeof isCurrent !== 'function' || isCurrent() !== false; } catch { return false; }
+}
+
+function staleRobotResult(extra = {}) {
+  return {
+    ok: false,
+    verified: false,
+    changed: false,
+    stale: true,
+    failure_class: 'conflict',
+    retryable: false,
+    effect_uncertain: false,
+    needs_followup: false,
+    reason: 'voicebeurt is ingehaald; er is geen nieuwe robotactie gestart',
+    ...extra,
+  };
+}
+
+function staleRobotError() {
+  return Object.assign(new Error('voicebeurt is ingehaald'), {
+    code: 'EVA_TURN_SUPERSEDED',
+    failure_class: 'conflict',
+    retryable: false,
+    effect_uncertain: false,
+  });
+}
+
 function compact(state) {
   if (!state) return null;
   return {
@@ -100,7 +128,7 @@ export async function captureRobotFrame({ timeoutMs = 8_000 } = {}) {
   await fs.mkdir(dir, { recursive: true, mode: 0o700 });
   const target = path.join(dir, `erik-${Date.now()}.jpg`);
   try {
-    await execFileAsync(ffmpegPath, [
+    await execFileAsync(/** @type {string} */ (/** @type {unknown} */ (ffmpegPath)), [
       '-hide_banner', '-loglevel', 'error', '-y',
       '-f', 'h264', '-i', config.robotCameraStream,
       '-frames:v', '1', '-q:v', '3', target,
@@ -114,7 +142,12 @@ export async function captureRobotFrame({ timeoutMs = 8_000 } = {}) {
   }
 }
 
-export async function controlRobot(action) {
+export async function controlRobot(action, {
+  isCurrent = () => true,
+  getState: readState = getState,
+  callService: mutateService = callService,
+  delay: wait = delay,
+} = {}) {
   const normalized = String(action || '').trim().toLowerCase();
   const services = {
     start: 'start', schoonmaken: 'start', pause: 'pause', pauze: 'pause',
@@ -122,9 +155,13 @@ export async function controlRobot(action) {
   };
   const service = services[normalized];
   if (!service) return { ok: false, changed: false, reason: `onbekende robotactie ${action}` };
-  const before = await getState(config.robotEntityId, { preferCache: false });
+  const before = await readState(config.robotEntityId, { preferCache: false });
+  // De verse statusuitlezing kan de eventloop vrijgeven. Controleer daarom aan
+  // de fysieke grens opnieuw, niet alleen bij binnenkomst van de tool.
+  if (!turnIsCurrent(isCurrent)) return staleRobotResult({ before: compact(before) });
   if (!before) return { ok: false, changed: false, reason: `${config.robotEntityId} bestaat niet` };
-  await callService('vacuum', service, { entity_id: config.robotEntityId });
+  if (!turnIsCurrent(isCurrent)) return staleRobotResult({ before: compact(before) });
+  await mutateService('vacuum', service, { entity_id: config.robotEntityId });
   const expected = service === 'start'
     ? new Set(['cleaning'])
     : service === 'pause'
@@ -134,8 +171,8 @@ export async function controlRobot(action) {
         : new Set(['idle', 'docked', 'paused']);
   let after = null;
   for (let attempt = 0; attempt < 10; attempt += 1) {
-    await delay(350);
-    after = await getState(config.robotEntityId, { preferCache: false });
+    await wait(350);
+    after = await readState(config.robotEntityId, { preferCache: false });
     if (expected.has(String(after?.state))) break;
   }
   const verified = expected.has(String(after?.state));
@@ -152,8 +189,16 @@ export async function controlRobot(action) {
   };
 }
 
-export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 } = {}) {
-  const before = await robotStatus();
+export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 } = {}, {
+  isCurrent = () => true,
+  robotStatus: readStatus = robotStatus,
+  captureRobotFrame: captureFrame = captureRobotFrame,
+  valetudo: mutateManualControl = valetudo,
+  delay: wait = delay,
+  controlRobot: safetyControl = controlRobot,
+} = {}) {
+  const before = await readStatus();
+  if (!turnIsCurrent(isCurrent)) return staleRobotResult({ before });
   const robot = before.robot;
   if (!before.ok) return { ok: false, changed: false, reason: 'Erik is niet bereikbaar' };
   if (!['docked', 'idle', 'paused'].includes(robot.state)) {
@@ -185,7 +230,7 @@ export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 
   // Bewijs zicht vóór iedere wijziging van de handmatige modus. Ook "enable"
   // verandert de robottoestand en hoort dus niet vóór de veiligheidsvoorwaarde.
   try {
-    firstFrame = await captureRobotFrame();
+    firstFrame = await captureFrame();
   } catch (error) {
     return {
       ok: false,
@@ -198,30 +243,35 @@ export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 
       recovery: `geen beweging en handmatige modus bleef ${before.high_resolution_manual_control?.enabled === true ? 'onverwacht aan' : 'uit'}`,
     };
   }
+  if (!turnIsCurrent(isCurrent)) return staleRobotResult({ before });
   try {
-    await valetudo('PUT', CAPABILITY_PATH, { action: 'enable' });
-    await delay(1_000);
-    await valetudo('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle } });
+    if (!turnIsCurrent(isCurrent)) throw staleRobotError();
+    await mutateManualControl('PUT', CAPABILITY_PATH, { action: 'enable' });
+    await wait(1_000);
+    if (!turnIsCurrent(isCurrent)) throw staleRobotError();
+    await mutateManualControl('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle } });
     moved = true;
-    await delay(pulseMs);
-    await valetudo('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle: 0 } });
-    await delay(500);
-    secondFrame = await captureRobotFrame();
+    await wait(pulseMs);
+    await mutateManualControl('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle: 0 } });
+    await wait(500);
+    secondFrame = await captureFrame();
   } catch (error) {
     failure = error;
   } finally {
-    await valetudo('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle: 0 } }).catch(() => {});
-    await valetudo('PUT', CAPABILITY_PATH, { action: 'disable' }).catch(() => {});
+    // Na enable/beweging zijn nulvector en disable veiligheidsopruiming. Die
+    // mogen juist ook na supersession doorgaan; er start dan niets nieuws.
+    await mutateManualControl('PUT', CAPABILITY_PATH, { action: 'move', vector: { velocity: 0, angle: 0 } }).catch(() => {});
+    await mutateManualControl('PUT', CAPABILITY_PATH, { action: 'disable' }).catch(() => {});
   }
-  let after = await robotStatus();
+  let after = await readStatus();
   if (!['docked', 'idle'].includes(after.robot?.state)) {
-    await controlRobot('stop').catch(() => {});
-    await controlRobot('dock').catch(() => {});
+    await safetyControl('stop').catch(() => {});
+    await safetyControl('dock').catch(() => {});
   }
-  let end = await robotStatus();
+  let end = await readStatus();
   for (let attempt = 0; attempt < 40 && !['docked', 'idle'].includes(end.robot?.state); attempt += 1) {
-    await delay(500);
-    end = await robotStatus();
+    await wait(500);
+    end = await readStatus();
   }
   if (failure) {
     return {
@@ -229,6 +279,13 @@ export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 
       changed: moved,
       verified: ['docked', 'idle'].includes(end.robot?.state),
       reason: failure.message,
+      ...(failure.code === 'EVA_TURN_SUPERSEDED' ? {
+        stale: true,
+        failure_class: 'conflict',
+        retryable: false,
+        effect_uncertain: false,
+        needs_followup: false,
+      } : {}),
       before,
       camera_before: firstFrame ? { path: firstFrame.path, bytes: firstFrame.bytes } : null,
       after: end,
@@ -247,5 +304,3 @@ export async function exploreWithRobot({ direction = 'rechts', durationMs = 250 
     after: end,
   };
 }
-
-export const __robotTest = { compact };

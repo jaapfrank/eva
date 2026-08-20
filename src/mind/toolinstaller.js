@@ -457,7 +457,7 @@ async function hashTree(root) {
           const stream = fs.createReadStream(absolute);
           stream.on('data', (chunk) => hasher.update(chunk));
           stream.on('error', reject);
-          stream.on('end', resolve);
+          stream.on('end', () => resolve());
         });
         hasher.update('\0');
       } else {
@@ -535,7 +535,7 @@ function installArgs(first, second) {
 }
 
 /** Haal officiële npm-registrymetadata op en bewaar de exacte gevonden versie. */
-export async function discover(first, second = 'latest') {
+async function discover(first, second = 'latest') {
   const request = first && typeof first === 'object'
     ? {
       packageName: first.packageName || first.name || first.package,
@@ -551,7 +551,7 @@ export async function discover(first, second = 'latest') {
  * Installeer exact package@version in een netwerktoegestane maar verder strikte
  * systemd-sandbox. De package wordt daarna alleen geïnventariseerd en gestaged.
  */
-export async function install(first, second = null) {
+async function install(first, second = null) {
   const request = installArgs(first, second);
   const packageName = normalizePackageName(request.packageName);
   const version = normalizeExactVersion(request.version);
@@ -633,7 +633,7 @@ export async function install(first, second = null) {
 }
 
 /** Diepe, niet-uitvoerende integriteitsinspectie van registry en stagingboom. */
-export async function inspect(identifier, version = null) {
+async function inspect(identifier, version = null) {
   const item = byIdentifier(identifier, version);
   if (!item) return null;
   const events = db.prepare(`SELECT ts,from_status,to_status,detail
@@ -659,7 +659,7 @@ export async function inspect(identifier, version = null) {
 }
 
 /** Lijst installatierecords zonder packagecode te laden of uit te voeren. */
-export function list({ status: wantedStatus = null, packageName = null, limit = 100 } = {}) {
+function list({ status: wantedStatus = null, packageName = null, limit = 100 } = {}) {
   const clauses = [];
   const args = [];
   if (wantedStatus != null) {
@@ -682,7 +682,7 @@ export function list({ status: wantedStatus = null, packageName = null, limit = 
  * Lees status, of zet een bestaande staging expliciet disabled/quarantined.
  * Alleen activate() mag health_checked/active schrijven.
  */
-export function status(identifier, nextStatus = null, reason = '') {
+function status(identifier, nextStatus = null, reason = '') {
   let requested = nextStatus;
   let detail = reason;
   if (identifier && typeof identifier === 'object' && nextStatus == null) {
@@ -709,7 +709,7 @@ export function status(identifier, nextStatus = null, reason = '') {
  * een aparte, passende sandbox hebben uitgevoerd en de exacte artifact-checksum
  * in de receipt teruggeven.
  */
-export async function activate(identifier, suppliedReceipt = null) {
+async function activate(identifier, suppliedReceipt = null) {
   const receipt = suppliedReceipt || (identifier && typeof identifier === 'object'
     ? identifier.healthReceipt || identifier.receipt
     : null);

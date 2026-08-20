@@ -1,51 +1,29 @@
-import crypto from 'node:crypto';
-import fs from 'node:fs';
 import path from 'node:path';
 import { config } from './config.js';
+import { dependencyTreeSha256, runtimeTreeSha256 } from '../deploy/eva-runtime-repair-protocol.mjs';
 
 const startedAt = new Date().toISOString();
 
-function sourceFiles(dir) {
-  const rows = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) rows.push(...sourceFiles(full));
-    else if (entry.isFile() && /\.(?:js|mjs|json)$/i.test(entry.name)) rows.push(full);
-  }
-  return rows;
+export function runtimeCodeSha256({ root = config.root, overrides = new Map() } = {}) {
+  return runtimeTreeSha256(root, overrides);
 }
 
-function codeHash() {
-  const hash = crypto.createHash('sha256');
-  const roots = [
-    path.join(config.root, 'src'),
-    path.join(config.root, 'package.json'),
-    path.join(config.root, 'package-lock.json'),
-  ];
-  const files = roots.flatMap((target) => {
-    try {
-      return fs.statSync(target).isDirectory() ? sourceFiles(target) : [target];
-    } catch {
-      return [];
-    }
-  }).sort();
-  for (const file of files) {
-    hash.update(path.relative(config.root, file));
-    hash.update('\0');
-    hash.update(fs.readFileSync(file));
-    hash.update('\0');
-  }
-  return hash.digest('hex');
-}
-
-const loadedCodeSha256 = codeHash();
+const loadedCodeSha256 = runtimeCodeSha256();
+const loadedDependencySha256 = dependencyTreeSha256(path.join(config.root, 'node_modules'));
 let recentDiskHash = loadedCodeSha256;
+let recentDependencyHash = loadedDependencySha256;
 let recentDiskCheck = 0;
+let recentDependencyCheck = Date.now();
 
 export function runtimeVersion() {
   if (Date.now() - recentDiskCheck > 1000) {
     recentDiskCheck = Date.now();
-    try { recentDiskHash = codeHash(); } catch { /* houd de laatste controle */ }
+    try { recentDiskHash = runtimeCodeSha256(); } catch { recentDiskHash = null; }
+  }
+  if (Date.now() - recentDependencyCheck > 30_000) {
+    recentDependencyCheck = Date.now();
+    try { recentDependencyHash = dependencyTreeSha256(path.join(config.root, 'node_modules')); }
+    catch { recentDependencyHash = null; }
   }
   return {
     pid: process.pid,
@@ -53,5 +31,8 @@ export function runtimeVersion() {
     loaded_code_sha256: loadedCodeSha256,
     disk_code_sha256: recentDiskHash,
     code_matches_disk: loadedCodeSha256 === recentDiskHash,
+    loaded_dependency_tree_sha256: loadedDependencySha256,
+    disk_dependency_tree_sha256: recentDependencyHash,
+    dependency_matches_disk: loadedDependencySha256 === recentDependencyHash,
   };
 }

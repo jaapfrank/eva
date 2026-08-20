@@ -4,7 +4,7 @@
 // RTX-machine draait. Daarom maken we de status expliciet: endpoint, device, local/remote,
 // laatste gebruik en simpele succes/fout-tellers per soort werk.
 import { config } from '../config.js';
-import { kvGet, kvSet, logTimeline } from '../db.js';
+import { kvGet, kvSet } from '../db.js';
 
 const KEY = 'localbrain_status_v1';
 const MAX_KINDS = 12;
@@ -34,12 +34,6 @@ function emptyStats() {
 let status = { ...emptyStats(), ...(kvGet(KEY, null) || {}) };
 status.url = config.brainUrl;
 status.remote = isRemoteBrain(config.brainUrl);
-let monitorTimer = null;
-
-export function brainServiceUrl() {
-  return config.brainUrl;
-}
-
 export function isRemoteBrain(url = config.brainUrl) {
   try {
     const u = new URL(url);
@@ -91,77 +85,6 @@ export function brainServiceStatus() {
   };
 }
 
-function healthFailureDecision({ previousFailures = 0, lastOk = null, now = Date.now() } = {}) {
-  const failures = Math.max(0, Number(previousFailures || 0)) + 1;
-  const lastOkMs = Date.parse(lastOk || '');
-  const staleSinceOk = !Number.isFinite(lastOkMs) || Number(now) - lastOkMs >= 8 * 60_000;
-  return { failures, confirmedDown: failures >= 3 && staleSinceOk };
-}
-
-export async function brainHealth({ timeoutMs = 8000, logChange = false, authoritative = false } = {}) {
-  const wasConfirmedDown = status.confirmedDown === true;
-  const t0 = Date.now();
-  try {
-    const res = await fetch(`${config.brainUrl}/health`, { signal: AbortSignal.timeout(timeoutMs) });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const j = await res.json();
-    status = {
-      ...status,
-      url: config.brainUrl,
-      remote: isRemoteBrain(config.brainUrl),
-      reachable: true,
-      ok: !!j.ok,
-      device: j.device || null,
-      facesReady: !!j.faces_klaar,
-      encoderTrained: !!j.encoder_getraind,
-      lastHealth: nowIso(),
-      lastError: null,
-      healthFailures: 0,
-      confirmedDown: false,
-    };
-    record('health', { ok: true, ms: Date.now() - t0 });
-    if (logChange && wasConfirmedDown && status.ok) {
-      logTimeline('system', 'Mijn lokale zicht- en leerfuncties zijn weer beschikbaar.', {
-        localbrain: brainServiceStatus(), familyVisible: true,
-      });
-    }
-    return brainServiceStatus();
-  } catch (e) {
-    const error = (e && e.message) || String(e);
-    if (!authoritative) {
-      return {
-        ...brainServiceStatus(),
-        bereikbaar: false,
-        ok: false,
-        laatsteFout: error,
-        probeMislukt: true,
-      };
-    }
-    const { failures, confirmedDown } = healthFailureDecision({
-      previousFailures: status.healthFailures,
-      lastOk: status.lastOk,
-    });
-    status = {
-      ...status,
-      url: config.brainUrl,
-      remote: isRemoteBrain(config.brainUrl),
-      reachable: confirmedDown ? false : status.reachable,
-      ok: confirmedDown ? false : status.ok,
-      lastHealth: nowIso(),
-      lastError: error,
-      healthFailures: failures,
-      confirmedDown,
-    };
-    record('health', { ok: false, ms: Date.now() - t0, error: status.lastError });
-    if (logChange && confirmedDown && !wasConfirmedDown) {
-      logTimeline('system', 'Mijn lokale zicht- en leerfuncties zijn tijdelijk niet beschikbaar; ik blijf ze zelf opnieuw proberen.', {
-        localbrain: brainServiceStatus(), technicalError: status.lastError, familyVisible: true,
-      });
-    }
-    return brainServiceStatus();
-  }
-}
-
 export async function brainPost(path, body, { kind = 'call', timeoutMs = 8000 } = {}) {
   const route = String(path || '').startsWith('/') ? String(path) : `/${path}`;
   const t0 = Date.now();
@@ -202,22 +125,10 @@ export async function brainPost(path, body, { kind = 'call', timeoutMs = 8000 } 
   } catch (e) {
     const msg = (e && e.message) || String(e);
     // Een mislukte specifieke operatie bewijst niet dat de hele service weg is.
-    // Alleen de centrale health-monitor mag die conclusie na meerdere fouten trekken.
+    // De aanroepende zintuigroute beslist of en hoe zij tijdelijk terugvalt.
     if (Number.isInteger(e?.status)) status.reachable = true;
     status.lastError = msg;
     record(kind, { ok: false, ms: Date.now() - t0, error: msg });
     throw e;
   }
 }
-
-export function startLocalBrainMonitor() {
-  if (monitorTimer) return monitorTimer;
-  brainHealth({ timeoutMs: 8000, logChange: true, authoritative: true }).catch(() => {});
-  monitorTimer = setInterval(
-    () => brainHealth({ timeoutMs: 8000, logChange: true, authoritative: true }).catch(() => {}),
-    5 * 60_000,
-  );
-  return monitorTimer;
-}
-
-export const __localbrainTest = { healthFailureDecision };
