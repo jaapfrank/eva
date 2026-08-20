@@ -5,9 +5,11 @@ Status: actief plan, 20 augustus 2026
 Dit document is het technische kompas voor het herstel en de herbouw van Eva. Het is geen bewijs dat een fase al voltooid is. Alleen de genoemde acceptatie-evidence mag een fase sluiten.
 
 Huidige fase: [ADR-0001](adr-0001-eva2-living-core.md) heeft de Eva 2-doelstack als
-`selected_for_validation` vastgelegd. De volledige kandidaat is nog niet productiegeaccepteerd.
-De volgende stap is uitsluitend het Eva 1-transition manifest: bepalen wat behouden,
-geconverteerd, gearchiveerd, herbouwd of verwijderd wordt. Er wordt nog niets gemigreerd.
+`selected_for_validation` vastgelegd. Het
+[Eva 1-transition manifest](eva1-to-eva2-transition-manifest-2026-08-20.md) classificeert nu alle
+72 tabellen, 140.099 rijen, capabilityfamilies en gevoelige assetklassen. De volgende stap is de
+schone Eva 2-bouwkaart en de vooraf verzegelde eerste vertical. Er wordt nog niets gemigreerd en
+de volledige kandidaat is nog niet productiegeaccepteerd.
 
 ## Einddoel
 

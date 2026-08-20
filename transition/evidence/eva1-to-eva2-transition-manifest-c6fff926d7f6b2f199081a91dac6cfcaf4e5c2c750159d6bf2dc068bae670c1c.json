@@ -1,0 +1,732 @@
+{
+  "contract": "Eva1ToEva2TransitionManifest/v1",
+  "status": "selected_not_migrated",
+  "decisionDate": "2026-08-20",
+  "governingArchitecture": {
+    "adr": "docs/adr-0001-eva2-living-core.md",
+    "adrSha256": "73b53e392b8e3b65d1241bff46bb92144960a2620dbd45f3c9d3526d9f07910d",
+    "candidateHead": "7b56f754d0bb303a6174eb10ee5c785eacd053ae",
+    "candidateTree": "70d64d999ffadd6545b10487edfc12c8a83edc7b",
+    "eva1SourceTree": "6e6427d4664034324a52aea83117cbf5523ea8fe"
+  },
+  "sourceCheckpoint": {
+    "recoveryManifestPath": "/home/administrator/project/Bottie-recovery/2026-08-20T1536CEST/RECOVERY-MANIFEST.md",
+    "recoveryCommit": "147e8496e04a7d24caad923a5a88bdd71a28c58b",
+    "recoveryTree": "cfdc6b96d499bd31cf514485b6de91cecbe2efcd",
+    "recoveryManifestSha256": "2fa3ff0b2f4bb58c92b225f60cfc63ff7998c24f8614cc87c1419c8a146c8bd4",
+    "logicalDatabaseSha256": "951e31e32105bba5576653094bd2d473c85e7e23f73842d961c1eae933a2cd1f",
+    "logicalDatabasePath": "/home/administrator/project/Bottie-recovery/2026-08-20T1536CEST/db-logical/eva-logical-2026-08-20T1542CEST.db",
+    "logicalDatabaseBytes": 146538496,
+    "logicalDatabaseTables": 72,
+    "logicalDatabaseRows": 140099,
+    "logicalDatabaseQuickCheck": "ok",
+    "logicalDatabaseForeignKeyViolations": 0,
+    "databaseAuditMode": "sqlite mode=ro&immutable=1 plus query_only=ON; verify source with sha256sum before and after and reconcile sqlite_schema table counts",
+    "sensitiveArchiveSha256": "074e665ba0408bf66f11183216fd82781d5b211b9b89d720756322a32d2072a7",
+    "sensitiveArchivePath": "/home/administrator/project/Bottie-recovery/2026-08-20T1536CEST/sensitive-instance-state.tar.gz",
+    "sensitiveArchiveBytes": 474153118,
+    "sensitiveArchiveEntries": 641,
+    "sensitiveArchiveFiles": 526,
+    "sensitiveArchiveDirectories": 115,
+    "sensitiveArchiveInspection": "headers_only_not_extracted; verify full source with sha256sum and enumerate with tar -tzf without extraction",
+    "evaService": {
+      "active": false,
+      "enabled": false
+    }
+  },
+  "decisionRules": {
+    "keep": "User-authored bytes or proven domain semantics are preserved, but never inherit Eva1 execution authority.",
+    "convert": "A deterministic converter must create a typed Eva2 candidate with source provenance; activation may require owner confirmation.",
+    "archive-only": "Retained only in the access-controlled recovery checkpoint or a later encrypted audit package; unavailable to normal model context and runtime authority.",
+    "rebuild": "Discard legacy projection or runtime state and derive it again only from Eva2 authority or newly confirmed configuration.",
+    "delete-exclude": "Excluded from every Eva2 import; physical removal or crypto-shred follows privacy, reachability, and rollback approval.",
+    "unspecified": "Anything not explicitly selected by this manifest is excluded from Eva2.",
+    "overlapPrecedence": "delete-exclude always wins over archive-only, rebuild, convert and glob overlap. Recovery custody never authorizes Eva2 import."
+  },
+  "capabilityDispositionManifest": {
+    "path": "transition/evidence/eva1-capability-disposition-80e429e336826399bc9fac512013ae255dd4ccd4207d19c0905ace23ea581eb7.json",
+    "sha256": "80e429e336826399bc9fac512013ae255dd4ccd4207d19c0905ace23ea581eb7",
+    "capabilities": 49,
+    "operations": 93
+  },
+  "databaseDispositionTotals": {
+    "keep": 2948,
+    "convert": 1499,
+    "archive-only": 69689,
+    "rebuild": 10775,
+    "delete-exclude": 55188,
+    "total": 140099
+  },
+  "databaseSelections": [
+    {
+      "itemId": "db.keep.conversation-content",
+      "disposition": "keep",
+      "source": [{"table": "messages", "predicate": "all rows", "rows": 2948}],
+      "targetOwner": "eva_core.conversations/messages",
+      "transformId": "legacy-conversation-envelope-v1",
+      "activation": "legacy transcript only; never fact or effect authority; excluded from normal model context until tenant, principal and test-or-synthetic status are confirmed",
+      "privacy": "direct personal conversation content",
+      "retention": "owner-selected numeric policy required before import",
+      "oracle": "2948 stable source mappings; user=1236; assistant=1712; telegram=2416; voice=356; web=176; bytehash preserved; no name-only principal merge",
+      "deletePath": "conversation/principal erase removes payload, derived facts, objectrefs, projections, and backup copies within the configured SLA"
+    },
+    {
+      "itemId": "db.convert.principals-and-relations",
+      "disposition": "convert",
+      "source": [
+        {"table": "people", "predicate": "all rows become review candidates", "rows": 19},
+        {"table": "household_person_roles", "predicate": "all rows; activation requires reconfirmation", "rows": 2},
+        {"table": "relationship_feedback", "predicate": "all rows as low-trust correction candidates", "rows": 6}
+      ],
+      "targetOwner": "eva_core.principals/relationships and eva_memory.source_events",
+      "transformId": "legacy-principal-relation-candidates-v1",
+      "activation": "only confirmed principal and channel ownership; two configured household roles are candidates, not automatic truth",
+      "privacy": "PII and two Telegram identifiers",
+      "retention": "owner-selected numeric policy required before import",
+      "oracle": "no test/camera/name-only merge; last_seen is not imported as a person fact; six feedback rows retain legacy-unverified provenance",
+      "deletePath": "principal erase cascades connector binding, relation candidates, memory and selected media"
+    },
+    {
+      "itemId": "db.convert.active-memory-candidates",
+      "disposition": "convert",
+      "source": [{"table": "memories", "predicate": "archived=0", "rows": 1212}],
+      "targetOwner": "eva_memory.source_events/current_fact_candidates",
+      "transformId": "legacy-memory-candidate-v1",
+      "activation": "legacy_unverified and non-actionable until provenance is reconstructed or the owner confirms it",
+      "privacy": "personal facts, preferences, identities and events",
+      "retention": "fact-type and owner-specific numeric policy required before import",
+      "oracle": "every row has source database, table, primary key and canonical row hash; no row becomes current truth by import alone",
+      "deletePath": "erase source event, candidate/current fact, projections and linked object; retain only a non-identifying tombstone"
+    },
+    {
+      "itemId": "db.convert.paused-commitment-candidates",
+      "disposition": "convert",
+      "source": [
+        {"table": "eva_goals", "predicate": "status='active'", "rows": 5},
+        {"table": "eva_projects", "predicate": "status='active' and linked to selected blocked episode", "rows": 2},
+        {"table": "eva_goal_episodes", "predicate": "state='blocked' and full selected goal/project/work chain; frozen ids 82 and 83", "rows": 2},
+        {"table": "eva_work_items", "predicate": "status='blocked' and linked to selected blocked episode", "rows": 2},
+        {"table": "eva_episode_events", "predicate": "episode_id in (82,83)", "rows": 18},
+        {"table": "eva_episode_origins", "predicate": "episode_id in (82,83)", "rows": 2}
+      ],
+      "targetOwner": "eva_core legacy commitment review only; never an executable episode",
+      "transformId": "legacy-commitment-review-v1",
+      "activation": "blocked_requires_reconciliation; import performs no model, connector, delivery or effect call and never imports a runnable episode",
+      "privacy": "personal requests and work history",
+      "retention": "owner decision required during review",
+      "reconciliation": "A sealed LegacyEffectReconciliation/v1 must bind every related turn_tool_execution, delivery, artifact, legacy effect manifest and current external readback. Only proven zero_effects or fully reconciled state may, after explicit owner consent, create a separate fresh Eva2 episode. Ambiguous or unreadable state remains blocked_requires_reconciliation. Reauthorization alone is never effect authority.",
+      "oracle": "exactly two blocked review roots; neither receives a runnable Eva2 request id or generation during import; legacy steps are never replayed",
+      "deletePath": "decline, cancel or supersede the review candidate without executing it"
+    },
+    {
+      "itemId": "db.convert.selected-media-and-corrections",
+      "disposition": "convert",
+      "source": [
+        {"table": "nameable_photos", "predicate": "exists nameable_photo_messages where photo_id=nameable_photos.id", "rows": 107, "bytes": 18180259},
+        {"table": "nameable_photo_messages", "predicate": "all rows", "rows": 107},
+        {"table": "observation_corrections", "predicate": "all active source-linked rows", "rows": 2}
+      ],
+      "targetOwner": "encrypted content-addressed object store plus eva_evidence objectrefs; corrections in eva_memory",
+      "transformId": "legacy-consented-media-candidate-v1",
+      "preCopyGate": "per-object owner and depicted-subject consent, lawful purpose and numeric retention must all be sealed before any blob leaves the recovery checkpoint; copyAuthorized=false until satisfied",
+      "activation": "automated captions and suggestions are not identity facts",
+      "privacy": "special-category household and biometric-adjacent media",
+      "retention": "per-object purpose and numeric deadline required before import",
+      "oracle": "source byte SHA-256 and size preserved; no BLOB in PostgreSQL; selected link and correction references remain exact",
+      "deletePath": "remove objectref, captions, facts and projections, then crypto-shred object key and expire backups"
+    },
+    {
+      "itemId": "db.convert.identity-pack-candidates",
+      "disposition": "convert",
+      "source": [{
+        "table": "kv",
+        "predicate": "key in explicit six-key IdentityPack allowlist",
+        "rows": 6,
+        "keys": [
+          "appearance", "character", "communication_profiles_v1", "drives", "eva_geboortedag", "humor_profile_v1"
+        ]
+      }],
+      "targetOwner": "versioned IdentityPack",
+      "transformId": "legacy-identity-pack-review-v1",
+      "activation": "each value requires explicit owner review and signature; no wholesale KV import",
+      "privacy": "identity and communication preferences",
+      "retention": "IdentityPack version retention set before import",
+      "oracle": "importer rejects every key outside this six-key allowlist; IdentityPack cannot define proof, effect or success policy; Eva and Mira packs work without source changes",
+      "deletePath": "replace or roll back IdentityPack version; erase related facts separately"
+    },
+    {
+      "itemId": "db.convert.installation-connector-config-candidates",
+      "disposition": "convert",
+      "source": [{
+        "table": "kv",
+        "predicate": "key in explicit two-key installation and connector-config allowlist",
+        "rows": 2,
+        "keys": ["camera_report_regions_v1", "eva_home_locality_v1"]
+      }],
+      "targetOwner": "confirmed installation profile and connector configuration",
+      "transformId": "legacy-installation-config-review-v1",
+      "activation": "each value requires explicit owner review, typed target schema and signature; neither key grants connector authority",
+      "privacy": "household locality and camera-region configuration",
+      "retention": "installation/config version retention set before import",
+      "oracle": "no credential, device binding, effect policy or proof rule is imported",
+      "deletePath": "replace or remove configuration version and derived projections"
+    },
+    {
+      "itemId": "db.convert.relation-routine-candidates",
+      "disposition": "convert",
+      "source": [{
+        "table": "kv",
+        "predicate": "key in explicit five-key relationship and routine allowlist",
+        "rows": 5,
+        "keys": ["routine_avond", "routine_ochtend", "routine_week", "shared_rituals_v1", "social_care_threads"]
+      }],
+      "targetOwner": "eva_core confirmed relationships/routines",
+      "transformId": "legacy-relation-routine-review-v1",
+      "activation": "each value requires explicit owner review, affected-principal confirmation where applicable and signature",
+      "privacy": "household routines, relationships and care threads",
+      "retention": "relationship/routine retention set before import",
+      "oracle": "no key becomes autonomous schedule, reminder, success rule or effect authority",
+      "deletePath": "erase or supersede confirmed relationship/routine source and projections"
+    },
+    {
+      "itemId": "db.archive.telegram-transport",
+      "disposition": "archive-only",
+      "source": [{"table": "telegram_messages", "predicate": "all rows", "rows": 573}],
+      "targetOwner": "encrypted legacy audit archive",
+      "transformId": "legacy-telegram-audit-v1",
+      "activation": "never a second conversation authority",
+      "privacy": "chat identifiers, content and media references",
+      "retention": "numeric archive deadline required before packaging",
+      "oracle": "473 text and 100 photo envelopes retained; 445 text rows overlap a messages row on content and role; the remaining 28 text rows and all 100 photo envelopes are archive review candidates, not canonical conversation imports; no text-only dedupe",
+      "deletePath": "archive expiry or principal erasure"
+    },
+    {
+      "itemId": "db.archive.archived-memory",
+      "disposition": "archive-only",
+      "source": [{"table": "memories", "predicate": "archived=1", "rows": 1975}],
+      "targetOwner": "encrypted legacy audit archive",
+      "transformId": "legacy-archived-memory-audit-v1",
+      "activation": "excluded from recall and model context",
+      "privacy": "personal legacy memory",
+      "retention": "numeric archive deadline required",
+      "oracle": "archive bit and canonical row hash preserved",
+      "deletePath": "archive expiry or privacy erasure"
+    },
+    {
+      "itemId": "db.archive.cognition-history",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "cognitive_episodes", "predicate": "all rows", "rows": 1616},
+        {"table": "cognitive_events", "predicate": "all rows", "rows": 22099},
+        {"table": "eva_explorations", "predicate": "all rows", "rows": 123},
+        {"table": "error_book", "predicate": "all rows", "rows": 118}
+      ],
+      "targetOwner": "offline incident corpus",
+      "transformId": "legacy-cognition-incident-archive-v1",
+      "activation": "not identity, memory truth or runtime eventstore",
+      "privacy": "may contain household observations and prompts",
+      "retention": "incident-specific numeric deadline required",
+      "oracle": "23956 rows remain only in the access-controlled recovery checkpoint; every later derived archive package must be encrypted; selected failures may become language-neutral scenarios",
+      "deletePath": "archive expiry after scenario extraction and rollback acceptance"
+    },
+    {
+      "itemId": "db.archive.terminal-work-history",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "eva_projects", "predicate": "status!='active'", "rows": 63},
+        {"table": "eva_goal_episodes", "predicate": "state!='blocked'", "rows": 63},
+        {"table": "eva_work_items", "predicate": "status!='blocked'", "rows": 96},
+        {"table": "eva_episode_events", "predicate": "episode_id not in (82,83)", "rows": 507},
+        {"table": "eva_episode_origins", "predicate": "episode_id not in (82,83)", "rows": 77},
+        {"table": "eva_delivery_receipts", "predicate": "all rows", "rows": 30}
+      ],
+      "targetOwner": "offline incident and rollback evidence",
+      "transformId": "legacy-terminal-work-audit-v1",
+      "activation": "never current work or proof of current external state",
+      "privacy": "requests, outputs and delivery targets",
+      "retention": "numeric archive deadline required",
+      "oracle": "836 rows; no episode or effect resumes",
+      "deletePath": "archive expiry after new scenario and rollback evidence is accepted"
+    },
+    {
+      "itemId": "db.archive.reminders-and-aspirations",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "reminders", "predicate": "all rows; none are open", "rows": 36},
+        {"table": "aspirations", "predicate": "all rows", "rows": 10}
+      ],
+      "targetOwner": "offline personal history",
+      "transformId": "legacy-reminder-aspiration-audit-v1",
+      "activation": "no reminder, goal or initiative becomes active",
+      "privacy": "personal routines and generated aspirations",
+      "retention": "owner review before archive packaging",
+      "oracle": "24 done plus 12 cancelled reminders; zero open reminders",
+      "deletePath": "archive expiry or owner erasure"
+    },
+    {
+      "itemId": "db.archive.http-proof-and-authority",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "eva_http_ingress_requests", "predicate": "all rows", "rows": 37},
+        {"table": "eva_http_client_ack_bindings_v3", "predicate": "all rows", "rows": 37},
+        {"table": "eva_http_prepared_responses", "predicate": "all rows", "rows": 37},
+        {"table": "eva_http_response_authorities_v3", "predicate": "all rows", "rows": 37},
+        {"table": "eva_http_delivery_items_v3", "predicate": "all rows", "rows": 37},
+        {"table": "eva_http_delivery_ack_receipts_v3", "predicate": "all rows", "rows": 33},
+        {"table": "eva_turn_understanding_authorities_v1", "predicate": "all rows", "rows": 63}
+      ],
+      "targetOwner": "immutable Eva1 recovery archive only",
+      "transformId": "none",
+      "activation": "never Eva2 ingress, delivery, effect or understanding authority",
+      "privacy": "requests, replies, public keys, signatures and source envelopes",
+      "retention": "kept through rollback warranty, then reviewed numerically",
+      "oracle": "281 rows remain bound only to the source database hash; the unresolved legacy wire-preimage mismatch remains fail-closed",
+      "deletePath": "archive expiry or conversation/principal privacy erase"
+    },
+    {
+      "itemId": "db.archive.http-coordination",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "eva_http_delivery_attempt_events_v3", "predicate": "all rows", "rows": 74},
+        {"table": "eva_http_ingress_claim_events", "predicate": "all rows", "rows": 278},
+        {"table": "eva_http_ingress_state_events", "predicate": "all rows", "rows": 74}
+      ],
+      "targetOwner": "offline incident archive",
+      "transformId": "legacy-http-coordination-audit-v1",
+      "activation": "never runtime lease or state",
+      "privacy": "request and execution coordination metadata",
+      "retention": "rollback warranty plus numeric review",
+      "oracle": "426 rows; no claim, lease or attempt is resumed",
+      "deletePath": "archive expiry"
+    },
+    {
+      "itemId": "db.archive.execution-and-handoff",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "turn_tool_executions", "predicate": "all rows", "rows": 731},
+        {"table": "eva_interpretation_retry_handoffs", "predicate": "all rows", "rows": 8}
+      ],
+      "targetOwner": "offline incident archive and language-neutral oracle extraction",
+      "transformId": "legacy-execution-audit-v1",
+      "activation": "never execution authority and never replayed",
+      "privacy": "tool inputs, outputs and message context",
+      "retention": "incident-specific numeric deadline required",
+      "oracle": "739 rows; three stranded telegram fanout records remain historical only",
+      "deletePath": "archive expiry after oracle extraction"
+    },
+    {
+      "itemId": "db.archive.doorbell",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "eva_doorbell_events", "predicate": "all rows", "rows": 16},
+        {"table": "eva_doorbell_incidents", "predicate": "all rows", "rows": 3},
+        {"table": "eva_doorbell_plans", "predicate": "all rows", "rows": 3},
+        {"table": "eva_doorbell_sources", "predicate": "all rows", "rows": 3}
+      ],
+      "targetOwner": "offline privacy-restricted incident archive",
+      "transformId": "legacy-doorbell-audit-v1",
+      "activation": "no current incident or principal fact",
+      "privacy": "household security and possible visitor identity",
+      "retention": "short numeric security retention required",
+      "oracle": "all three incidents are settled and frame payloads released",
+      "deletePath": "retention expiry or subject request"
+    },
+    {
+      "itemId": "db.archive.capability-workcell-workspace",
+      "disposition": "archive-only",
+      "source": [
+        {"table": "eva_capabilities", "predicate": "all rows", "rows": 9},
+        {"table": "eva_capability_receipts", "predicate": "all rows", "rows": 8},
+        {"table": "eva_tool_installations", "predicate": "all rows", "rows": 1},
+        {"table": "eva_tool_install_events", "predicate": "all rows", "rows": 6},
+        {"table": "eva_work_cells", "predicate": "all rows", "rows": 8},
+        {"table": "eva_work_cell_streams", "predicate": "all rows", "rows": 20},
+        {"table": "eva_work_cell_runs", "predicate": "all rows", "rows": 35},
+        {"table": "eva_workspace_generation_claims_v1", "predicate": "all rows", "rows": 2},
+        {"table": "eva_workspace_generation_outcomes_v1", "predicate": "all rows", "rows": 2}
+      ],
+      "targetOwner": "offline supply-chain and incident archive",
+      "transformId": "legacy-capability-audit-v1",
+      "activation": "no code, instructions, package, path or worker is executable after import",
+      "privacy": "may contain local paths and generated source",
+      "retention": "rollback warranty plus numeric review",
+      "oracle": "91 rows remain data only; capability behavior is rebuilt from signed manifests",
+      "deletePath": "archive expiry after replacement connector/workspace evidence exists"
+    },
+    {
+      "itemId": "db.archive.legacy-selfmodel-kv",
+      "disposition": "archive-only",
+      "source": [{
+        "table": "kv",
+        "predicate": "key in explicit 19-key archive list",
+        "rows": 19,
+        "keys": [
+          "eva_agentmail_account_v1", "eva_self_model_v1", "eva_voorstellen", "ha_workspace_snapshot_provenance_v1",
+          "home_brain_latest", "innerlife", "journal_semantics_v2", "kern_spanningen", "mood", "motivation_state_v2",
+          "nightly_learning_v2", "nightly_learning_v3", "nightly_relation_digest_v1", "opdrachtenboek", "policybrain_v1",
+          "recent_surprises", "transition", "transition_acties", "workingmemory"
+        ]
+      }],
+      "targetOwner": "offline personal/incident archive",
+      "transformId": "legacy-kv-audit-v1",
+      "activation": "never current self, account, mood, policy or working memory",
+      "privacy": "personal inferences and account metadata",
+      "retention": "owner review plus numeric deadline",
+      "oracle": "exact allowlist only; account credentials are excluded separately",
+      "deletePath": "archive expiry or privacy erase"
+    },
+    {
+      "itemId": "db.archive.timeline-selected",
+      "disposition": "archive-only",
+      "source": [{"table": "timeline", "predicate": "kind not in ('chat_in','chat_out','vaardigheid','vision','house','action')", "rows": 40722}],
+      "targetOwner": "offline incident archive",
+      "transformId": "legacy-timeline-incident-audit-v1",
+      "activation": "not a live eventstore, identity or model context",
+      "privacy": "system, prompt, household and interaction traces",
+      "retention": "incident window and numeric deadline required",
+      "oracle": "only explicitly named incident windows may be extracted into language-neutral scenarios",
+      "deletePath": "archive expiry after oracle extraction"
+    },
+    {
+      "itemId": "db.rebuild.memory-search",
+      "disposition": "rebuild",
+      "source": [
+        {"table": "memories_fts", "predicate": "all rows", "rows": 3187},
+        {"table": "memories_fts_config", "predicate": "all rows", "rows": 1},
+        {"table": "memories_fts_data", "predicate": "all rows", "rows": 92},
+        {"table": "memories_fts_docsize", "predicate": "all rows", "rows": 3187},
+        {"table": "memories_fts_idx", "predicate": "all rows", "rows": 88}
+      ],
+      "targetOwner": "eva_projection full-text",
+      "transformId": "eva2-rebuild-memory-search-v1",
+      "activation": "derived only from accepted Eva2 memory authority",
+      "privacy": "inherits source fact privacy",
+      "retention": "same or shorter than source",
+      "oracle": "6555 legacy rows imported as zero rows; rebuild is equivalent and fully erasable",
+      "deletePath": "drop and rebuild projection"
+    },
+    {
+      "itemId": "db.rebuild.timeline-chat-projection",
+      "disposition": "rebuild",
+      "source": [{"table": "timeline", "predicate": "kind in ('chat_in','chat_out')", "rows": 4150}],
+      "targetOwner": "eva_projection conversation activity",
+      "transformId": "eva2-rebuild-conversation-projection-v1",
+      "activation": "derived only from selected canonical messages",
+      "privacy": "inherits conversation privacy",
+      "retention": "same or shorter than source",
+      "oracle": "zero timeline rows imported; projection counts and source hashes reconcile",
+      "deletePath": "drop and rebuild projection"
+    },
+    {
+      "itemId": "db.rebuild-runtime-state",
+      "disposition": "rebuild",
+      "source": [
+        {"table": "kv", "predicate": "key in explicit 66-key runtime/projection list", "rows": 66, "keys": [
+          "autonomy_metrics", "avg_action_surprise", "avg_surprise", "camera_report_state_v2", "causal_total", "cockpit_work_attempts",
+          "encoder", "eva_autonomy_scheduler_v1", "eva_runtime_observation_v1", "executive_runtime_v1", "family_agenda_cursors_v1",
+          "home_brain_runtime", "homestate_index", "initiative_state", "lessons", "llm_runtime_status_v1", "localbrain_status_v1",
+          "night_urgent_handled", "nightly_reflection_retry_v1", "observer_cooldowns", "observer_event_waits", "observer_snoozes",
+          "opdracht_triage", "portfolio.execution_intent_heads.backfill.v1", "predictor", "proactief_2026-06-12",
+          "proactief_2026-06-13", "proactief_2026-06-14", "proactief_2026-06-15", "proactief_2026-06-16",
+          "proactief_2026-06-17", "proactief_2026-06-18", "proactief_2026-06-20", "proactief_2026-06-25",
+          "proactief_2026-06-26", "proactief_2026-06-30", "proactief_2026-07-01", "proactief_2026-07-02",
+          "proactief_2026-07-03", "proactief_2026-07-04", "proactief_2026-07-05", "proactief_2026-07-06",
+          "proactief_2026-07-07", "proactief_2026-07-08", "proactief_2026-07-09", "proactief_2026-07-10",
+          "proactief_2026-07-11", "proactief_2026-07-12", "proactief_2026-07-13", "proactief_2026-07-14",
+          "proactief_2026-07-15", "proactief_2026-07-17", "proactief_2026-07-20", "proactief_2026-07-22",
+          "proactief_2026-07-23", "proactief_2026-07-26", "proactief_2026-07-27", "proactief_2026-07-29",
+          "proactief_2026-07-30", "proactief_2026-07-31", "quiet_night_project_work", "reaction_proactive_pause_until",
+          "relations_digested_until", "schuur_core_fix_notified_20260713", "self_diagnose_latest_v2", "voice_conversation_sessions_v1"
+        ]},
+        {"table": "cognitive_state", "predicate": "all rows", "rows": 1},
+        {"table": "eva_failed_telegram_recovery_scan_cursor_v1", "predicate": "all rows", "rows": 1},
+        {"table": "eva_workspace_generation_state_v1", "predicate": "all rows", "rows": 2}
+      ],
+      "targetOwner": "new Living Core state and rebuildable projections",
+      "transformId": "eva2-clean-runtime-state-v1",
+      "activation": "starts empty or from newly confirmed configuration",
+      "privacy": "may contain derived household state",
+      "retention": "bounded by new state/projection policy",
+      "oracle": "70 legacy rows imported as zero rows; clean install behaves deterministically",
+      "deletePath": "drop projection/state and rebuild"
+    },
+    {
+      "itemId": "db.delete.timeline-sensor-tool-noise",
+      "disposition": "delete-exclude",
+      "source": [{"table": "timeline", "predicate": "kind in ('vaardigheid','vision','house','action')", "rows": 50526}],
+      "targetOwner": "none",
+      "transformId": "none",
+      "activation": "never imported",
+      "privacy": "household telemetry and tool traces",
+      "retention": "source deletion only after referenced incident/effect evidence is separately sealed",
+      "oracle": "20684 vaardigheid, 17007 vision, 8396 house and 4439 action rows excluded",
+      "deletePath": "privacy-aware purge from all recovery copies after rollback approval"
+    },
+    {
+      "itemId": "db.delete.emotion-log",
+      "disposition": "delete-exclude",
+      "source": [{"table": "emotion_log", "predicate": "all rows", "rows": 4121}],
+      "targetOwner": "none; bounded presence regulation is rebuilt",
+      "transformId": "none",
+      "activation": "never imported as feeling, identity or memory",
+      "privacy": "derived personal/household inference",
+      "retention": "exclude immediately; physical source purge after rollback approval",
+      "oracle": "zero rows in Eva2 and no derived fact",
+      "deletePath": "purge from all recovery copies or earlier on privacy request"
+    },
+    {
+      "itemId": "db.delete.unselected-camera-context",
+      "disposition": "delete-exclude",
+      "source": [{"table": "nameable_photos", "predicate": "not exists nameable_photo_messages where photo_id=nameable_photos.id", "rows": 508, "bytes": 30873923}],
+      "targetOwner": "none",
+      "transformId": "none",
+      "activation": "never imported",
+      "privacy": "highly sensitive household imagery",
+      "retention": "shortest applicable privacy retention; purge after reachability check",
+      "oracle": "zero selected objectrefs and no dangling correction/message link",
+      "deletePath": "delete DB BLOB and every archive/frame copy, then verify hash absence"
+    },
+    {
+      "itemId": "db.delete-face-embeddings",
+      "disposition": "delete-exclude",
+      "source": [{"table": "faces", "predicate": "all rows", "rows": 29}],
+      "targetOwner": "none; optional consented enrolment is a new connector flow",
+      "transformId": "none",
+      "activation": "never imported",
+      "privacy": "biometric embeddings for eight labels; no consent or retention field",
+      "retention": "exclude immediately; physical purge after privacy/rollback approval",
+      "oracle": "zero legacy vectors, labels or model bytes in DB, export and object store",
+      "deletePath": "crypto-shred and retrain only from new consented enrolment"
+    },
+    {
+      "itemId": "db.delete-transient-secret-kv",
+      "disposition": "delete-exclude",
+      "source": [{"table": "kv", "predicate": "key in explicit four-key denylist", "rows": 4, "keys": ["_diag", "alert_speech_drafts_v1", "faces_legacy_quarantine_v2", "vault"]}],
+      "targetOwner": "none",
+      "transformId": "none",
+      "activation": "never imported or exported",
+      "privacy": "vault contains plaintext credential fields; other rows are transient or biometric quarantine",
+      "retention": "rotate/invalidate credentials before any Eva2 connector activation",
+      "oracle": "zero-secret scan of database, portable export, evidence and logs",
+      "deletePath": "provider/device revocation plus secure purge of every source copy after approved recovery window"
+    }
+  ],
+  "zeroRowLegacySchemas": {
+    "disposition": "delete-exclude",
+    "semantics": "Zero legacy rows and their legacy schema are excluded. Any needed Eva2 behavior is rebuilt separately from versioned contracts; an empty legacy schema conveys no capability or target schema.",
+    "tables": [
+      "eva_artifact_objects", "eva_artifact_seals", "eva_artifact_versions",
+      "eva_behavior_canary_deliveries", "eva_behavior_experiment_events", "eva_behavior_experiments",
+      "eva_behavior_feedback_settlements", "eva_conversation_opportunity_cursors",
+      "eva_execution_effect_receipts", "eva_execution_intent_heads",
+      "eva_http_delivery_transmission_events_v3", "eva_voice_delivery_authority_events_v1",
+      "memory_review_events"
+    ]
+  },
+  "capabilityTransitions": [
+    {
+      "itemId": "capability.contracts-and-oracles",
+      "disposition": "keep",
+      "sources": ["docs/adr-0001-eva2-living-core.md", "docs/eva-rebuild-plan-2026-08-20.md", "docs/durable-work-lifecycle.md", "docs/eva-runtime-contracts.md", "docs/house-entity-v1.md", "benchmark/eva-agent-benchmark-v1.json"],
+      "keep": "outcome-first evidence, episode authority, conflict/supersession, effect intent/receipt/readback, delivery closure, incident scenarios R1-R6 and X1-X5",
+      "exclude": "claims that Eva1 modules, tables or fixtures are correct implementations"
+    },
+    {
+      "itemId": "capability.identity-presence",
+      "disposition": "convert",
+      "sources": ["src/mind/persona.js", "src/mind/appearance.js", "src/mind/communication.js", "src/mind/household.js", "src/mind/social.js"],
+      "target": "IdentityPack plus Presence/Relationship contracts",
+      "keep": "warm, practical, curious, slightly stubborn, normal concise Dutch, software honesty, few necessary questions, verify before claiming success, no internal jargon, no em/en dashes",
+      "exclude": "hardcoded Eva/Jaap/home, regex replies, canned renderers, inferred people and mood machinery"
+    },
+    {
+      "itemId": "capability.ingress-planning",
+      "disposition": "rebuild",
+      "sources": ["src/mind/understanding.js", "src/mind/turnunderstandingoutcome.js", "src/mind/turnplan.js", "src/turnauthority.js", "src/web/requestidentity.js", "src/mind/agent.js"],
+      "target": "bounded TurnEnvelope, powerless ModelDecision, host-issued ValidatedPlan and durable generation/supersession",
+      "keep": "source identity, request/message id, principal, conversation, input hash, typed action/result semantics",
+      "exclude": "JavaScript orchestrator, regex authority, WeakMap/WeakSet, sidecars and SQLite migrations"
+    },
+    {
+      "itemId": "capability.episode-effect-delivery",
+      "disposition": "rebuild",
+      "sources": ["src/executionledger.js", "src/mind/portfolio.js", "src/mind/work.js", "src/reminders.js", "src/mind/monitoringcontract.js", "src/mind/artifacts.js", "src/mind/telegramdelivery.js", "src/voiceauthority.js", "src/web/httpdelivery.js", "src/web/httpresponseauthority.js"],
+      "target": "eva_core episodes/commitments, eva_effects intents/attempts/receipts/readbacks/deliveries and eva_evidence",
+      "keep": "monotone generation, stable idempotency, typed ambiguity, exact readback, original condition and content-addressed lineage",
+      "exclude": "legacy SQLite state, absolute paths, timers, PID/boot identity and old authorities"
+    },
+    {
+      "itemId": "capability.catalog-forge",
+      "disposition": "rebuild",
+      "sources": ["src/mind/tools.js", "src/mind/capabilities.js", "src/mind/toolinstaller.js"],
+      "target": "signed CapabilityManifest plus quarantined Connector Forge",
+      "keep": "capability/operation id, input schema, effect class, scope, idempotency, proof floor, freshness and staged-tested-active/quarantined lifecycle",
+      "exclude": "handlers, npm state, in-process secrets/DB and model-accessible runtime changes"
+    },
+    {
+      "itemId": "capability.connectors",
+      "disposition": "rebuild",
+      "sources": ["src/integrations/homeassistant.js", "src/integrations/telegram.js", "src/integrations/agentmail.js", "src/integrations/robot.js", "src/mind/voicebridge.js", "src/mind/perceptionattention.js", "src/mind/signals.js", "src/web/httpingress.js", "src/web/httpdelivery.js"],
+      "target": "isolated versioned JSON-RPC stdio workers with operation-scoped credentials",
+      "keep": "provider resource/message ids, partial result, receipt/readback, reconcile-before-resend and distinct transport/source types",
+      "exclude": "Node clients, provider code in core, HA special status, caches as proof and shared process environment"
+    },
+    {
+      "itemId": "capability.workspace",
+      "disposition": "rebuild",
+      "sources": ["src/mind/workspacegeneration.js", "src/mind/workspacefilemanifest.js", "native/workspace_writer_broker.c"],
+      "target": "isolated workspace worker and content-addressed artifact contract",
+      "keep": "single writer, generation, path/root bounds, content manifest, ambiguity and exact readback",
+      "exclude": "C/JS executables, absolute paths and legacy workspace authority"
+    },
+    {
+      "itemId": "capability.learning-autonomy",
+      "disposition": "rebuild",
+      "phase": "after_first_vertical",
+      "sources": ["src/mind/autonomy.js", "src/mind/curiosity.js", "src/mind/learning.js", "src/mind/workcells.js"],
+      "target": "one durable Attention loop and evidence/canary/rollback Learning contract",
+      "keep": "budget, typed wake, stop rule, explicit commitment, benchmark and rollback",
+      "exclude": "interval/listener loops, KV scheduler state, retry storms, self-edit and generated goals as identity"
+    },
+    {
+      "itemId": "capability.test-evidence",
+      "disposition": "convert",
+      "sources": ["test/", "scripts/lab/", "scripts/live-canary.mjs", "scripts/real-life-scenarios.mjs", "docs/incident-2026-08-13-ledger-test-import.md", "docs/live-acceptance-2026-08-04.md"],
+      "target": "versioned language-neutral scenario fixtures with external before/after oracles",
+      "keep": "incident inputs, forbidden/allowed effects, receipts/readbacks, crashes and natural outcome criteria",
+      "exclude": "fixtures that seed private legacy rows, test-only seams and green unit counts as live evidence"
+    },
+    {
+      "itemId": "capability.eva1-executable-runtime",
+      "disposition": "archive-only",
+      "sources": ["src/**/*.js", "eva_brain/**", "native/**", "deploy/**", "scripts/**"],
+      "target": "immutable rollback and mapping archive only",
+      "keep": "source for forensics and contract extraction",
+      "exclude": "every executable/import into the Python Living Core"
+    }
+  ],
+  "nonDatabaseAssets": [
+    {
+      "itemId": "asset.secrets-and-credentials",
+      "disposition": "delete-exclude",
+      "sources": [".env", "data/.eva_mind_key", "data/auth.json", "data/private/voice-pe-devices/secrets.yaml", "data/private/voice-pe-devices/*qr*", "data/private/legacy-device-access/device.id_rsa", "kv[vault]"],
+      "target": "new installation key and operation-scoped credential broker references only",
+      "oracle": "all old credentials rotated/revoked; zero-secret scan of DB/export/evidence/logs; provider readback with newly issued credential",
+      "custody": "The Eva2 converter never opens or receives .eva_mind_key, kv[vault], decrypted credentials, provisioning QR data or any equivalent secret. The old mind key remains only with the closed Eva1 rollback custodian until rollback retirement.",
+      "deletePath": "revoke all provider/device secrets and crypto-shred recovery-held secret material only after approved rollback retirement"
+    },
+    {
+      "itemId": "asset.workspace-documents",
+      "disposition": "archive-only",
+      "sources": ["data/workspace passive documents; no file is currently selected for import"],
+      "target": "offline review archive; a future content-addressed signed selection manifest may nominate individual files for the encrypted object store",
+      "activation": "none in this manifest",
+      "oracle": "no workspace file enters Eva2 without a new signed manifest binding exact path-independent content hash, owner, rights, purpose, MIME and numeric retention; importer never executes content",
+      "deletePath": "remove objectref/projections and crypto-shred object key"
+    },
+    {
+      "itemId": "asset.workspace-code-and-vendor",
+      "disposition": "archive-only",
+      "sources": ["data/workspace/extensions", "data/workspace/node_modules", "data/private/vendor-sources", "data/private/historical-quarantine", "data/private/historical-source"],
+      "target": "none; dependencies are newly resolved from signed manifests",
+      "oracle": "no executable, Git metadata, hook, package tree or quarantined instruction in Eva2 image/import",
+      "deletePath": "archive expiry after rollback acceptance"
+    },
+    {
+      "itemId": "asset.camera-media",
+      "disposition": "delete-exclude",
+      "sources": ["data/private/camera_trigger_frames", "data/private/legacy_camera_trigger_frames", "data/private/perception_incidents", "data/workspace/robot_frames", "data/private/deploy_backups/*frames*"],
+      "target": "none; any future exception requires a new content-addressed signed selection manifest and is outside this decision",
+      "preCopyGate": "no object may leave the recovery checkpoint without owner and depicted-subject consent, purpose, rights and numeric retention",
+      "oracle": "zero selected bytes under this manifest; future hash-based reachability and subject-consent manifest required",
+      "deletePath": "delete every copy and verify hash absence"
+    },
+    {
+      "itemId": "asset.face-and-vision-models",
+      "disposition": "delete-exclude",
+      "sources": ["face vectors", "encoder/training artifacts", "pilot models", "automatic labels"],
+      "target": "new opt-in enrolment only",
+      "oracle": "separate subject consent, model card, new dataset/model hashes and erase test",
+      "deletePath": "crypto-shred old vectors, source frames and model artifacts"
+    },
+    {
+      "itemId": "asset.wakeword",
+      "disposition": "rebuild",
+      "sources": ["newly acquired, licensed and explicitly consented training/evaluation assets only"],
+      "target": "optional IdentityPack-bound voice connector asset",
+      "oracle": "selected name, consent, pinned licensed source, model card, false-accept/false-reject corpus, firmware receipt/readback and rollback",
+      "deletePath": "remove model/firmware binding; fallback to push-to-talk or neutral approved wakeword"
+    },
+    {
+      "itemId": "asset.legacy-wakeword-forensics",
+      "disposition": "archive-only",
+      "sources": ["deploy/eva-voice-pe-hey-eva.patch", "data/private/historical-quarantine/wakeword-openwakeword-*"],
+      "target": "offline recovery forensics only; never a rebuild input",
+      "overlapRule": "delete-exclude wins for every secret, QR, biometric sample, model and training artifact; data/private/voice-pe-devices is not selected here",
+      "oracle": "zero legacy wakeword byte enters Eva2 build, IdentityPack, model training or connector image",
+      "deletePath": "expire forensic references after replacement proof and rollback acceptance"
+    },
+    {
+      "itemId": "asset.installation-and-backups",
+      "disposition": "archive-only",
+      "sources": ["installed-eva.service", "installed-eva-data-dir.conf", "raw-quiescent-source", "db-logical", "failed-validator-source", "failed-validator-target", "data/private/backup-archive"],
+      "target": "signed OCI plus eva CLI and EvaPortableArchive/v1",
+      "overlapRule": "archive custody does not select embedded data: delete-exclude wins for secrets, QR data, credentials, biometrics, models, training media, package trees and executables in every backup or source snapshot",
+      "oracle": "create from zero, export/restore on second clean installation, update with pending episode, rollback and uninstall without Git worktree",
+      "deletePath": "recovery archives only after accepted Eva2 restore, rollback warranty and privacy obligations; failed snapshot is never imported"
+    },
+    {
+      "itemId": "asset.ui-avatar-presentation",
+      "disposition": "archive-only",
+      "sources": ["src/web/public/eva.glb", "src/web/public/index.html", "src/web/public/style.css", "src/web/public/app.js", "src/web/public/autonomycard.js", "src/web/public/httpackclient.js"],
+      "target": "offline design reference only; presentation preferences may be newly expressed in IdentityPack data",
+      "activation": "eva.glb requires rights verification and explicit owner selection in a new signed manifest; no JavaScript, HTML, CSS or model asset executes or ships by this decision",
+      "oracle": "fresh UI and optional avatar remain name/identity configurable and contain no Eva1 runtime authority",
+      "deletePath": "expire archive after accepted replacement and rights review"
+    },
+    {
+      "itemId": "asset.generated-runtime-maps",
+      "disposition": "archive-only",
+      "sources": ["docs/eva-runtime-contract-map.generated.json", "docs/eva-runtime-contract-map.generated.md", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
+      "target": "offline architecture and inventory evidence only",
+      "activation": "never runtime configuration, executable input or Eva2 source of truth",
+      "oracle": "Eva2 regenerates its own maps from its own signed source and migration graph",
+      "deletePath": "archive expiry after Eva2 replacement evidence and rollback acceptance"
+    }
+  ],
+  "universalImportGates": [
+    "ADR-0001 vertical gates are green before any data importer runs.",
+    "Every selected row has source database SHA-256, table, legacy primary key and canonical row hash.",
+    "The converter runs twice with byte-identical canonical JSONL and no model, connector or external I/O.",
+    "Every selected item has tenant/principal, provenance, privacy class, numeric retention and delete SLA.",
+    "Media and document bytes cannot leave the recovery checkpoint until their item-specific pre-copy or signed-selection gate is satisfied.",
+    "Legacy commitments cannot create runnable episodes until LegacyEffectReconciliation/v1 proves zero effects or fully reconciles every effect, delivery, artifact and current external readback; owner reauthorization alone is insufficient.",
+    "Importer rejects secrets, absolute host paths, executable payloads, test identities and unmapped relations.",
+    "Import into an empty installation is idempotent and creates no active effect or resumed work.",
+    "EvaPortableArchive/v1 restores into a second clean installation and a generic reader reconstructs the selected data while DBOS and Eva1 are absent.",
+    "Pre-import export/backup plus batch deletion and crypto-shred prove rollback and privacy erasure.",
+    "A release signing key signs the final row-level selection and converter output before migration."
+  ],
+  "neverImport": [
+    "Eva1 JavaScript, Python, C, shell or package trees as executable Living Core code",
+    "SQLite schema, numeric IDs as global identity, scattered DDL or the whole database",
+    "old master keys, tokens, passwords, auth files, SSH keys, QR codes or decrypted vault fields",
+    "hardcoded Eva, Jaap, household, wakeword, provider account or absolute host/device bindings",
+    "unconsented biometrics, face vectors, encoder models, wakeword training media or automatic identity suggestions",
+    "mood, emotion, innerlife, scheduler, retry, autonomy, cache, cursor or circuit state as a living identity",
+    "pending work, effects, deliveries or authorities that can resume automatically",
+    "old receipts or readbacks as proof of current external state",
+    "tool installations, extensions, vendor checkouts, Git hooks, node_modules, virtual environments or quarantined instructions",
+    "FTS, vectors, telemetry, timeline machinery or DBOS internals as canonical data",
+    "the failed strict snapshot, empty validator report or raw WAL as an Eva2 restore source"
+  ],
+  "authorization": {
+    "dataMigrationAuthorized": false,
+    "serviceStartAuthorized": false,
+    "eva1CodeImportAuthorized": false,
+    "physicalDeletionPerformed": false,
+    "selectionSealedByContentHash": true,
+    "releaseSignaturePresent": false,
+    "releaseSignatureRequiredBeforeImport": true
+  }
+}
