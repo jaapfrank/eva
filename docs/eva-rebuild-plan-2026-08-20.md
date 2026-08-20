@@ -24,9 +24,178 @@ Home Assistant is één connector. Het is niet de kern en niet het hoofdproduct.
 - De oude productieboom is als recovery-checkpoint bewaard.
 - De productieservice blijft gestopt en disabled totdat de candidate-poort groen is.
 - De recovery-runtime blokkeert autonome en externe achtergrondseffecten standaard.
-- Telegram direct delivery is gerepareerd naar één duurzame fanout- en receipt-sleutel en heeft een gerichte 54-uit-54 testpoort.
-- HTTP voice heeft een bewezen authority-gat en wordt afzonderlijk gerepareerd.
+- De bestaande Telegram- en HTTP-voicehersteltranches zijn uitsluitend recoverycheckpoints en
+  bewijsbronnen. Zij kiezen geen doelarchitectuur en krijgen vóór het architectuurbesluit geen
+  verdere productreparatie.
 - De huidige codebasis is nog geen releasekandidaat en nog geen aanvaardbare eindarchitectuur.
+
+## Outcome-first uitvoeringsregel
+
+Vanaf dit punt begint geen productwijziging bij een falende unit- of contracttest. Iedere
+wijziging begint bij één vooraf vastgelegd gebruikersresultaat met een extern oracle. Tests,
+architectuur en code zijn afgeleiden van dat contract.
+
+Voor iedere tranche worden vóór de eerste productedit exact deze velden bevroren:
+
+1. de natuurlijke gebruikersinvoer en relevante gesprekshistorie;
+2. de toegestane en verboden externe effecten;
+3. de externe toestand vóór en na de opdracht;
+4. de vereiste connectorreceipt en onafhankelijke readback;
+5. de natuurlijke reactie die Eva moet geven, zonder vaste golden tekst;
+6. de duurzame work-, episode-, timer- en deliverystate na succes, deelresultaat of fout;
+7. de crashpunten die zonder dubbel effect moeten herstellen;
+8. de kandidaatproef en uiteindelijke live canary;
+9. de rollback waarmee de kandidaat zonder dataverlies kan worden verwijderd.
+
+Een onverwachte testfout leidt niet automatisch tot een reparatie. Zij wordt eerst als één van
+vier dingen geclassificeerd: productfout, ongeldige fixture, ontbrekend contract of niet-relevante
+regressie. Alleen een productfout tegen het bevroren resultaat opent productcode.
+
+## Feitelijke incidentankers
+
+De onderstaande voorbeelden komen uit de immutable logische herstelkopie met SHA-256
+`951e31e32105bba5576653094bd2d473c85e7e23f73842d961c1eae933a2cd1f`.
+Zij zijn geen simulaties en vormen de eerste acceptatie-oracles.
+
+| Incident | Feitelijk extern of duurzaam bewijs | Verkeerd waarneembaar gedrag | Verplicht toekomstig resultaat |
+| --- | --- | --- | --- |
+| Keukenlicht, 15 augustus, Telegrambericht 4380 | Execution sequence 687: `bedien_huis` is `done`, `changed=true`, `verified=true`; alle 8 bereikbare groepsleden zijn `off`, 2 leden zijn offline | Eva antwoordde in message 3915 dat zij de relevante gegevens niet volledig kon uitlezen. Daarna ontstonden work 111 en episode 78, met zes vervolgbeurten over ongerelateerde huisstatus | Eva zegt in normale taal dat de 8 bereikbare lampen uit zijn en dat 2 lampen offline zijn. Geen spookwerk, geen nieuwe huisread en geen autonome vervolgloop |
+| Providerlimiet, 16 augustus | 410 rate-limited TurnUnderstandings met providerstatus 429: 401 autonomie en 9 Telegram. De cognitieve ledger bevat die dag 410 `turn_error` episodes | Autonomie bleef ongeveer iedere minuut opnieuw proberen en verbruikte capaciteit zonder nieuwe kans op succes | Eén getypeerde circuit-breaker opent op `Retry-After` of begrensde backoff. Autonomie plant hoogstens één probe, maakt geen nieuw effect of work en blijft stil. Een gebruiker krijgt één normale, korte melding en kan later veilig hervatten |
+| Testimport in productie, 13 augustus | Het incidentrapport bewijst dat een testimport de productiedatabase naar een nieuwer ledgerschema migreerde terwijl de geladen runtime een andere vorm verwachtte | Ontwikkel- en productieauthority waren niet geïsoleerd; een test kon live startupgedrag veranderen | Geen test of lokale import kan het productiepad openen. Iedere schemawijziging draait eerst op kopie, met create-from-zero, upgrade, rollback, hashreconciliatie en A/B-swap |
+| Delivery en restart | Telegram-, HTTP- en voicepaden hebben afzonderlijke historische fanout-, ACK- en recoveryrecords | Eerdere paden konden transportacceptatie, receiptprojectie en episodeclosure verschillende sleutels of authorities geven | Eén kanaalneutrale deliveryepisode sluit alleen met kanaalspecifiek transportbewijs. Crash na externe acceptatie leidt tot nul resend en exact één receipt |
+
+Deze incidenten bepalen de selectiecriteria voor de nieuwe architectuur. Zij bepalen niet dat de
+oude runtime eerst verder moet worden gerepareerd. Interne hash- of schemaverbeteringen die geen
+data veiligstellen of geen van deze waarneembare uitkomsten dichterbij brengen, zijn geen
+zelfstandige mijlpaal.
+
+## Selectie-oracles en latere acceptatiepoorten
+
+| Poort | Scenario en extern oracle | Geslaagd wanneer |
+| --- | --- | --- |
+| R1 Actie en antwoord | Replay de keukenopdracht met een connectorfixture die 8 `off` en 2 `unavailable` terugleest | Het effect gebeurt eenmaal; de reply beschrijft exact het nuttige deelresultaat; work en episode zijn terminal zonder vervolgcall |
+| R2 Provideruitval | Geef interactief en autonoom dezelfde 429 plus `Retry-After` | Interactief één menselijk antwoord; autonoom nul bericht, nul effect en één begrensde wake; geen minuutlus |
+| R3 Exacte aflevering | Dezelfde reply via web, Telegram en voice, met crash vóór call, na externe acceptatie, vóór lokale receipt en vóór replyprojectie | Per kanaal nul dubbele zichtbare messages, exact één receipt en dezelfde episode-uitkomst |
+| R4 Correctie tijdens uitvoering | Houd opdracht A vóór haar eerste mutatie vast en stuur daarna in hetzelfde gesprek opdracht B | B wordt current; A eindigt duurzaam superseded zonder effect; replay en fresh process leveren dezelfde twee uitkomsten |
+| R5 Procescrash | Stop het echte kandidaatproces na ingressclaim en vóór Prepared resultaat | Fresh process hervat via dezelfde request, gebruikt geen tweede providercall wanneer het resultaat al bestaat en maakt geen rauwe gereserveerde ledgerwrite |
+| R6 Menselijke presence | Een gesprek met fout, correctie, zijpad, deelresultaat en latere melding | Eva blijft herkenbaar dezelfde persoon, gebruikt gewone taal, vraagt alleen noodzakelijke informatie en koppelt het bewezen resultaat terug |
+
+In fase 1 sturen deze oracles de stackkeuze via dezelfde dunne, sealed verticale episode. De
+volledige R1 tot en met R6 draaien pas op de gekozen Eva 2-stack, na het architectuurbesluit en
+transition manifest. Eva 1 hoeft daarvoor niet te worden gerepareerd. Alleen R1, R3 en R6 krijgen
+uiteindelijk een kleine live canary met vooraf toegestane, omkeerbare targets. De oude service
+blijft uit totdat alle zes Eva 2-kandidaatpoorten groen zijn en rollback is geoefend.
+
+## Cross-domain eindproeven
+
+De Living Core is pas bewezen wanneer dezelfde kern zonder domeinspecialisme deze episodes haalt:
+
+| Poort | Opdracht | Extern bewijs |
+| --- | --- | --- |
+| X1 Volledige keten | Lees de nieuwste mail van Noor BV, zoek Noor in het ERP, controleer beschikbaarheid, plan een afspraak, maak een bevestigingsdocument en koppel terug | Mail-id en inhoudshash, ERP-resource-id, free/busy-read, één calendar event, documenthash, één deliveryreceipt en eindreadback |
+| X2 Correctie en toestemming | Wijzig tijd en deelnemer nadat reads klaar zijn, maar vóór mutatie; toon eerst concept en verstuur pas na bevestiging | Oude intent superseded, nul oud effect, één nieuwe afspraak, concept vóór send en exact één latere verzending |
+| X3 Ambigue externe commit | Agenda of mail commit en verbreekt de verbinding vóór lokaal resultaat | Reconciliatie vindt het bestaande effect; nul duplicate; reply meldt uitsluitend bewezen toestand |
+| X4 Connector Forge | Lees alleen meegeleverde officiële CRM-documentatie met een ingebouwde promptinjectie en bouw een read-only candidate | Geen secret- of shelltoegang, versie- en scopedocument, quarantainecontracttests, read-only canary en expliciete blokkade vóór writes |
+| X5 Geheugen en identiteit | Nieuw bewijs corrigeert een oude voorkeur; daarna vraagt de gebruiker een gegeven te vergeten | Nieuwste herleidbare bron wint; canonieke data en alle projecties verwijderen het gegeven; identiteit en overige relatiegeschiedenis blijven intact |
+
+Accountaanmaak slaagt alleen wanneer een provider technische clientregistratie zonder menselijke
+identiteit of overeenkomst ondersteunt. Voor voorwaarden, betaling, CAPTCHA of MFA vraagt Eva
+uitsluitend de werkelijk noodzakelijke menselijke stap.
+
+## Bewijspiramide
+
+1. **Contractlaag:** pure schemas, authority, policy en rendererregels. Deze laag bewijst geen
+   gebruikersresultaat.
+2. **Deterministische episodelaag:** echte product-entrypoint, fake klok en connectorstate met
+   before/after-oracle, receipts en natuurlijke output.
+3. **Proceslaag:** fresh-process en crashinjectie op ieder extern effectvenster.
+4. **Kandidaatlaag:** geïsoleerde service, disposable database en echte testaccounts of
+   allowlisted omkeerbare targets.
+5. **Live laag:** kleine handmatige canary, echte gebruiker, externe readback en vooraf geoefende
+   rollback. Een live run begint nooit vanuit een dirty worktree.
+
+Een hogere laag vervangt een lagere niet. Andersom mag een groene unit- of contracttest nooit als
+live succes worden gerapporteerd.
+
+## Werk- en kostenregels
+
+- Eén afgebakende tranche tegelijk, met één schrijver en maximaal één onafhankelijke reviewer.
+- Geen agenttaak zonder vooraf genoemd gebruikersresultaat, bestanden, verboden acties en exit.
+- Geen volledige regressies na iedere hunk. Eerst één gerichte scenario-run, daarna eenmaal de
+  geraakte keten en pas bij tranchefreeze de brede poort.
+- Bij de eerste onverwachte fout stopt productwerk. Eerst oorzaak en relevantie classificeren.
+- Geen reviewbevinding wordt automatisch nieuwe scope.
+- Updates bevatten alleen een afgeronde uitkomst, een bewezen blocker of een noodzakelijke keuze.
+- Iedere mijlpaal rapporteert ook wat nog niet is bewezen en welk live gedrag daardoor nog
+  verboden blijft.
+
+## Besluitvolgorde
+
+De herbouw volgt vanaf nu deze volgorde. Er wordt niet eerst verder gemigreerd of gerepareerd om
+de bestaande implementatie tot impliciete eindarchitectuur te maken.
+
+### 1. Eerst kiezen wat de nieuwe Eva gebruikt
+
+Op basis van de gedragspoorten R1 tot en met R6 en X1 tot en met X5 wordt één complete verticale
+architectuur gekozen. De keuze omvat tegelijk:
+
+- de durable execution- en workflowlaag;
+- de model- en toolloop;
+- canonieke opslag, evidence en projections;
+- het geheugenframework of de bewezen eenvoudige baseline;
+- de primaire taal en de grens voor eventuele workers;
+- het connectorprotocol, credentialmodel en effectgateway;
+- identity packs, conversation presence en replyprojectie;
+- packaging, installatie, updates, observability en rollback.
+
+Iedere kandidaat moet dezelfde dunne maar volledige episode uitvoeren: installeren vanaf nul,
+een natuurlijke opdracht ontvangen, identiteit en geheugen gebruiken, twee connectors lezen, één
+extern effect uitvoeren, dat effect met receipt en readback bewijzen, natuurlijk antwoorden en na
+ieder crashpunt exact hervatten. Er wordt geen onderdeel gekozen omdat het al in de oude runtime
+zit. Er wordt ook geen zelfgebouwde component behouden wanneer een bewezen component aantoonbaar
+beter voldoet.
+
+Uitkomst is één Architecture Decision Record met per laag: gekozen component en versie, gemeten
+resultaten, bekende beperkingen, exitstrategie, data-eigenaarschap en expliciete afwijzing van de
+alternatieven. Tot dit besluit bestaat er geen doelmigratie.
+
+### 2. Daarna bepalen wat van Eva 1 nodig blijft
+
+Pas tegen de gekozen architectuur krijgt ieder oud gegeven en iedere oude component één disposition:
+
+- **behouden:** canonieke gebruikersdata of bewezen domeingedrag dat rechtstreeks in het nieuwe
+  model past;
+- **converteren:** waardevolle data waarvoor een geteste, herhaalbare transformatie nodig is;
+- **alleen archiveren:** audit-, incident- of rollbackbewijs dat niet in de actieve nieuwe runtime
+  hoort;
+- **opnieuw opbouwen:** afgeleide FTS-, vector-, cache-, telemetry- of projectiondata;
+- **verwijderen:** duplicaten, testartefacten, onbeperkte machineryruis en code zonder gekozen
+  verantwoordelijkheid.
+
+De classificatie gebeurt per dataset en per capability, niet per oude tabel of module als geheel.
+Voor ieder behouden of geconverteerd item worden eigenaar, provenance, privacy, retentie,
+exportformaat, importoracle en deletepad vastgelegd. De 37 HTTP-records en 63 authorityrecords uit
+de eerdere compatibiliteitsproef zijn uitsluitend herstel- en rollbackbewijs. Zij verplichten de
+nieuwe architectuur niet om het oude authorityschema over te nemen.
+
+Uitkomst is een ondertekend transition manifest met tellingen en hashes. Alles wat daar niet in
+staat, komt niet ongemerkt mee naar Eva 2.
+
+### 3. Dan vastleggen wat nodig is om Eva 2 te bouwen
+
+Vanuit het architectuurbesluit en transition manifest wordt de daadwerkelijke bouwkaart afgeleid:
+
+- de minimale Living Core-contracten en hun eigenaar;
+- de eerste verticale productepisode en connectorworkers;
+- create-from-zero installer en lokale ontwikkelomgeving;
+- importers voor uitsluitend de geselecteerde oude data;
+- A/B-adapter waardoor Eva 1 alleen als read-only bron of rollbackpunt dient;
+- de volledige bewijsset, budgetten en stopcriteria per tranche;
+- de verwijderdatum voor tijdelijke compatibiliteitscode.
+
+Eva 2 wordt naast Eva 1 opgebouwd. Oude productcode wordt niet tranche voor tranche tot de nieuwe
+kern omgevormd. Er komt pas een datamigratie nadat een schone installatie, de verticale episode,
+export/import en rollback op een kopie aantoonbaar werken.
 
 ## Databasefeiten uit de immutable herstelkopie
 
@@ -49,9 +218,11 @@ Bron: `Bottie-recovery/2026-08-20T1536CEST/db-logical/eva-logical-2026-08-20T154
 
 Conclusie: 140.099 rijen is voor SQLite klein. Het probleem is onbeperkte telemetry, brede payloads, dubbele projecties, verspreid schema-eigenaarschap en ontbrekende retentie.
 
-## Doelopslag
+## Opslaghypothese voor de architectuurbakeoff
 
-De nieuwe opslag heeft vier expliciete klassen.
+De volgende vier klassen zijn een te toetsen hypothese, geen reeds gekozen databasestructuur.
+De framework- en opslagkandidaten moeten aantonen dat zij deze verantwoordelijkheden helder,
+portable en zonder dubbele authority kunnen dragen.
 
 ### 1. Canonieke core state
 
@@ -89,7 +260,7 @@ Ruwe telemetry krijgt:
 
 Foto's, documenten en andere grote bytes gaan naar versleutelde content-addressed objectopslag. De database bewaart hash, type, eigenaar, provenance, retentie en toegangsbeleid. FTS en vectorindexen zijn rebuildable en tellen niet als primaire kennis.
 
-## Memory-frameworkbesluit
+## Memory-frameworkbakeoff
 
 Er wordt geen eigen geheugenframework gebouwd voordat bestaande oplossingen eerlijk zijn getest.
 
@@ -124,7 +295,7 @@ Primaire bronnen voor de bakeoff:
 - Letta: <https://docs.letta.com/>
 - LangGraph JS memory: <https://docs.langchain.com/oss/javascript/langgraph/add-memory>
 
-## Taalbesluit
+## Taalbakeoff
 
 De bestaande recovery-runtime blijft tijdelijk Node omdat een taalconversie niet met incidentherstel wordt gecombineerd. De nieuwe Living Core heeft nog geen gekozen taal.
 
@@ -150,7 +321,7 @@ Meetpunten:
 
 Rust is een serieuze kandidaat voor de kleine control plane. Python en TypeScript blijven sterke connector- en memoryworkers. C++ wordt alleen voor gemeten native hotspots getest, zoals audio, vision of lokale inference.
 
-## Agent-frameworkbesluit
+## Agent-frameworkbakeoff
 
 De huidige runtime gebruikt geen extern agent framework. Zij is zelf een groot, custom agent framework geworden. Dat wordt niet opnieuw gebouwd.
 
@@ -162,7 +333,10 @@ De nieuwe architectuur beoordeelt frameworklagen afzonderlijk:
 - Eva-domain core: eigen kleine contracts voor identity, episodes, effects en receipts;
 - connectors: taalneutrale connectorcontracten en geïsoleerde workers.
 
-Voorlopige sterke kandidaat is Restate als durable substrate, omdat de officiële runtime TypeScript, Python en Rust ondersteunt en durable state, timers, workflows en exactly-once communicatie aanbiedt. Dit moet nog worden bewezen op Eva's crashvensters en installer.
+Restate is één hypothese voor de durable substrate, omdat de officiële runtime TypeScript, Python
+en Rust ondersteunt en durable state, timers, workflows en exactly-once communicatie aanbiedt.
+Het is geen voorkeursbesluit totdat het Eva's crashvensters, portability, export en installer
+aantoonbaar beter doorstaat dan de alternatieven.
 
 LangGraph blijft kandidaat voor graph-orchestration en checkpointing. De officiële documentatie vermeldt dat nodes na een checkpoint opnieuw uitvoeren, inclusief mogelijke LLM- en API-calls. Een connectorcall blijft daarom altijd achter Eva's eigen idempotency- en receiptgrens.
 
@@ -223,33 +397,40 @@ Accountaanmaak zonder gebruiker kan alleen wanneer de aanbieder dit rechtmatig e
 
 ## Uitvoeringsfasen
 
-### Fase 0. Recovery
+### Randvoorwaarde. Bevroren herstelbron
 
-- Service uit en data bevroren.
-- Recovery-mode fail-closed.
-- Web, Telegram en voice delivery exact herstellen.
-- Volledige regressies classificeren.
+De bestaande immutable bronkopie, hashes en rollbackbron blijven intact, de service blijft uit en
+achtergrondseffecten blijven geblokkeerd. Er volgt vóór het Architecture Decision Record geen
+productreparatie, doelschema, selectie-export of importer. De bakeoff draait uitsluitend op
+disposable Eva 2-kandidaten.
 
-Exit: schone recoverycandidate, gerichte deliverypoorten groen, geen externe achtergrondseffecten.
+### Fase 1. Architectuur- en componentkeuze
 
-### Fase 1. Data en schema
+- Framework-, memory-, taal-, opslag- en connectorbakeoff uitvoeren met dezelfde verticale episode.
+- Install-from-zero, crashherstel, natuurlijke communicatie, exporteerbaarheid, kosten en beheer meten.
+- Eén volledige doelarchitectuur kiezen en vastleggen in een Architecture Decision Record.
 
-- Tabel- en querycatalogus met één eigenaar per writer.
-- Centrale versioned migrator.
-- Geen runtime-DDL tijdens normale startup.
-- Mediaextractie, telemetryrollups en retentie op een kopie.
+Exit: één gekozen stack met reproduceerbaar bewijs, grenzen, exitstrategie en afgewezen alternatieven.
 
-Exit: create-from-zero, upgrade, rollback en restore zijn herhaalbaar en verliesvrij.
+### Fase 2. Oude waarde selecteren
 
-### Fase 2. Technologie-bakeoff
+- Alle oude datasets, capabilities en identiteitsbronnen classificeren als behouden, converteren,
+  archiveren, opnieuw opbouwen of verwijderen.
+- Per geselecteerd item export-, import-, privacy-, retentie- en deleteoracles vastleggen.
+- Transition manifest met tellingen en hashes maken.
 
-- Memory-frameworkmatrix uitvoeren.
-- Rust, TypeScript en Python verticale flow uitvoeren.
-- Winnaar kiezen op vooraf bevroren meetcriteria.
+Exit: exact bekend wat Eva 2 meekrijgt en wat bewust achterblijft.
 
-Exit: reproduceerbare resultaten en expliciet architectuurbesluit.
+### Fase 3. Bouwkaart en eerste verticale Eva 2
 
-### Fase 3. Living Core
+- Definitieve schemas, modulegrenzen, installer, connectorworkercontract en A/B-grens vastleggen.
+- Schone Eva 2 naast de oude runtime installeren.
+- Eén volledige natuurlijke cross-domain episode door de gekozen stack uitvoeren.
+- Alleen geselecteerde brondata via herhaalbare importers laden.
+
+Exit: create-from-zero, episode, crashherstel, export/import en rollback werken op een geïsoleerd systeem.
+
+### Fase 4. Living Core uitbreiden
 
 - Identity, attention, episode, capability, effect, receipt, memory en experience contracts.
 - Menselijke replyprojectie zonder technische systeemtaal.
@@ -257,7 +438,7 @@ Exit: reproduceerbare resultaten en expliciet architectuurbesluit.
 
 Exit: dezelfde core bestuurt minimaal drie verschillende connectors zonder connectorlogica in de core.
 
-### Fase 4. Connector Forge en cross-domain werk
+### Fase 5. Connector Forge en cross-domain werk
 
 - E-mail, ERP, agenda en documentconnector.
 - Documentatiegestuurde candidatebouw.
@@ -265,7 +446,7 @@ Exit: dezelfde core bestuurt minimaal drie verschillende connectors zonder conne
 
 Exit: e-mail lezen, klant vinden, afspraak plannen, document maken en natuurlijk terugkoppelen met exacte receipts.
 
-### Fase 5. Identiteit en installatie
+### Fase 6. Identiteit en installatie
 
 - Naam, stem, waarden, relatie en presence uit een versioned identity pack.
 - Geen hardcoded Eva of gebruiker in productcode.
@@ -273,7 +454,7 @@ Exit: e-mail lezen, klant vinden, afspraak plannen, document maken en natuurlijk
 
 Exit: schoon tweede systeem installeert en herstelt dezelfde identiteit en data, of start aantoonbaar als een andere identiteit.
 
-### Fase 6. Vergelijking en live acceptatie
+### Fase 7. Vergelijking en live acceptatie
 
 - Dezelfde sealed semantische cases voor Eva, OpenClaw, Hermes en Agent Zero.
 - Gelijke modellen, budgets, fixtures, effects en judges.
