@@ -4,6 +4,11 @@ Status: actief plan, 20 augustus 2026
 
 Dit document is het technische kompas voor het herstel en de herbouw van Eva. Het is geen bewijs dat een fase al voltooid is. Alleen de genoemde acceptatie-evidence mag een fase sluiten.
 
+Huidige fase: [ADR-0001](adr-0001-eva2-living-core.md) heeft de Eva 2-doelstack als
+`selected_for_validation` vastgelegd. De volledige kandidaat is nog niet productiegeaccepteerd.
+De volgende stap is uitsluitend het Eva 1-transition manifest: bepalen wat behouden,
+geconverteerd, gearchiveerd, herbouwd of verwijderd wordt. Er wordt nog niets gemigreerd.
+
 ## Einddoel
 
 Eva wordt een installeerbare, hernoembare en menselijke digitale persoon die:

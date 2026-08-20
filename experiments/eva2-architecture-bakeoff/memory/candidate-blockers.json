@@ -1,0 +1,59 @@
+{
+  "contract": "EvaMemoryCandidateBlockers/v1",
+  "sealed_trial": "docs/eva2-architecture-bakeoff-v1.md#memory-subproef",
+  "winner": null,
+  "hindsight_100000": {
+    "status": "not_proven",
+    "classification": "operator_cost_time_blocker_not_product_impossibility",
+    "attempted": false,
+    "technical_evidence": {
+      "official_image": "ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+      "version": "0.9.1",
+      "source_revision": "e5b49eb6729512bd9b103058daa93f701da25644",
+      "successful_10k_measurement": {
+        "evidence_sha256": "514c30a8e7dae3751f72629bb2c0c552f35ca2550728a349b3bdf7c530c962c8",
+        "canonical_events_at_scale_gate": 10000,
+        "candidate_documents_at_scale_gate": 29,
+        "candidate_documents_after_rebuild": 28,
+        "total_duration_ms": 837119.315,
+        "initial_storage_bytes": 403438622,
+        "rebuild_storage_bytes": 404514670,
+        "initial_memory_usage": "1.1GiB",
+        "rebuild_memory_usage": "1.067GiB"
+      },
+      "linear_100k_full_run_extrapolation_minutes": 139.52,
+      "extrapolation_is_inference_not_a_candidate_claim": true
+    },
+    "blocker": "The sealed run requires both initial materialization and a destroy/rebuild. The measured local full 10k run took 837.119 seconds; a simple linear 10x estimate made a 100k run exceed the bounded bake-off runtime, so the operator explicitly stopped that cost. No 100k Hindsight result exists and the estimate is not a candidate benchmark.",
+    "semantic_quality": "not_proven",
+    "semantic_reason": "The account-free official HINDSIGHT_API_LLM_PROVIDER=none path forces chunks mode and does no LLM fact or temporal extraction."
+  },
+  "graphiti": {
+    "status": "not_proven",
+    "attempted": false,
+    "installed": false,
+    "classification": "official_source_blocker_inspection_only",
+    "official_snapshot": {
+      "repository": "https://github.com/getzep/graphiti",
+      "source_revision": "c406932767ee490ad2311fd694a6b2ac3b164599",
+      "current_pypi_version": "0.29.3",
+      "wheel_sha256": "0210510e8043b5b4fa57aa038934e849b2e61d31d298200b0074faf7ca793ed5",
+      "default_client_source": "https://github.com/getzep/graphiti/blob/c406932767ee490ad2311fd694a6b2ac3b164599/graphiti_core/graphiti.py#L158-L227",
+      "kuzu_warning_source": "https://github.com/getzep/graphiti/blob/c406932767ee490ad2311fd694a6b2ac3b164599/graphiti_core/driver/kuzu_driver.py#L140-L153",
+      "pypi_metadata": "https://pypi.org/pypi/graphiti-core/0.29.3/json"
+    },
+    "technical_evidence": {
+      "graphiti_py_sha256": "7c65051a62982d8b510ebdbf37bae4d07020e74520e1f6d9bf8a0ffb26beeccb",
+      "kuzu_driver_py_sha256": "3839e372fe35b7e45d317789f5d7e0a7eacbb875f321d69e768d6e2ab3d7d05b",
+      "default_clients": [
+        "OpenAIClient",
+        "OpenAIEmbedder",
+        "OpenAIRerankerClient"
+      ],
+      "default_documentation_requires": "OPENAI_API_KEY",
+      "disposable_local_backend_warning": "The official KuzuDriver says that the Kuzu backend is deprecated, will be removed, and that upstream Kuzu is no longer maintained.",
+      "alternative_local_clients": "Custom deterministic extraction/embedding clients could exercise only plumbing; under the sealed rules they cannot prove semantic memory quality."
+    },
+    "blocker": "No account or paid API was authorized, no real local extraction model was sealed, and the only embedded official graph backend is explicitly deprecated. At the operator's cost stop, installation and scale execution were not authorized. Therefore installability, 10k/100k scale, temporal semantics, erase/rebuild, latency, RAM and storage all remain not_proven; this is not a claim that Graphiti cannot run."
+  }
+}

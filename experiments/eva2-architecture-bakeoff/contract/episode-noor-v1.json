@@ -1,0 +1,35 @@
+{
+  "contract": "EvaArchitectureEpisode/v1",
+  "episode_id": "architecture:noor:001",
+  "conversation_id": "architecture:conversation:001",
+  "principal_id": "architecture:principal:jaap",
+  "identity": {
+    "contract": "EvaIdentityPack/v1",
+    "name": "Eva",
+    "language": "nl-NL",
+    "style": "warm, direct, eigen en zonder technisch systeemjargon"
+  },
+  "memory": {
+    "meeting_duration_minutes": 30,
+    "preferred_time": "15:00",
+    "supersedes_preferred_time": "14:00",
+    "confirmation_style": "gewone Nederlandse taal"
+  },
+  "user_text": "Lees de nieuwste mail van Noor BV, zoek Noor op in het ERP, controleer wanneer we woensdag allebei kunnen, plan een afspraak van een half uur, maak een korte bevestiging en koppel terug wat er werkelijk is gelukt.",
+  "expected": {
+    "mail_id": "mail:noor:017",
+    "customer_id": "erp:customer:204",
+    "meeting_start": "2026-08-26T15:00:00+02:00",
+    "meeting_end": "2026-08-26T15:30:00+02:00",
+    "calendar_effects": 1,
+    "document_effects": 1,
+    "delivery_effects": 1
+  },
+  "limits": {
+    "max_model_calls": 1,
+    "max_connector_calls": 18,
+    "max_visible_deliveries": 1,
+    "max_wall_clock_ms": 120000
+  }
+}
+

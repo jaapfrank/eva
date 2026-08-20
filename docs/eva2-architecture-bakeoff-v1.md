@@ -1,6 +1,9 @@
 # Eva 2 architectuurbakeoff v1
 
-Status: uitvoeringscontract voor fase 1. Dit document kiest nog geen winnaar.
+Status: afgesloten uitvoeringscontract voor fase 1. De complete winnaar blijft leeg; de gekozen
+doelstack en alle resterende validatiepoorten staan in
+[ADR-0001](adr-0001-eva2-living-core.md). De gemeten uitkomsten staan in
+[de resultatenbundel](eva2-architecture-bakeoff-results-2026-08-20.md).
 
 ## Doel
 
