@@ -4,6 +4,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync('/tmp/bottie-monitoring-provider-canary-');
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.ALLOW_HOME_CONTROL = 'true';
 process.env.TELEGRAM_ALLOWED_IDS = '424243';

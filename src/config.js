@@ -411,7 +411,8 @@ export function configuredDatabaseFile(name = 'eva.db') {
 }
 
 const autonomyLevel = String(env.EVA_AUTONOMY_LEVEL || '').trim().toLowerCase();
-const autonomyFull = autonomyLevel === 'full';
+const autonomyEnabled = String(env.EVA_AUTONOMY_ENABLED || '').trim().toLowerCase() === 'true';
+const autonomyFull = autonomyEnabled && autonomyLevel === 'full';
 
 function numberSetting(name, fallback) {
   const raw = String(env[name] ?? '').trim();
@@ -503,23 +504,26 @@ export const config = deepFreeze({
 
   tz: env.TZ || 'Europe/Amsterdam',
   autonomousLlmTimeoutMs: numberSetting('EVA_AUTONOMOUS_LLM_TIMEOUT_MS', 90_000),
-  autonomyLevel: autonomyFull ? 'full' : 'bounded',
+  autonomyEnabled,
+  autonomyLevel: autonomyEnabled ? (autonomyFull ? 'full' : 'bounded') : 'disabled',
   autonomyFull,
-  autonomyOpenExploration: autonomyFull || env.EVA_AUTONOMY_OPEN_EXPLORATION === 'true',
-  autonomyCodeExecution: autonomyFull || env.EVA_AUTONOMY_CODE_EXECUTION === 'true',
+  autonomyOpenExploration: autonomyEnabled
+    && (autonomyFull || env.EVA_AUTONOMY_OPEN_EXPLORATION === 'true'),
+  autonomyCodeExecution: autonomyEnabled
+    && (autonomyFull || env.EVA_AUTONOMY_CODE_EXECUTION === 'true'),
   autonomyIntervalMinutes: numberSetting('EVA_AUTONOMY_INTERVAL_MINUTES', autonomyFull ? 15 : 75),
   autonomyConversationPauseMinutes: numberSetting(
     'EVA_AUTONOMY_CONVERSATION_PAUSE_MINUTES', autonomyFull ? 2 : 20,
   ),
   // Full autonomy gets a real daily work allocation, not just short attention pings.
-  autonomyDailyWorkMinutes: Math.max(
+  autonomyDailyWorkMinutes: autonomyEnabled ? Math.max(
     120,
     Math.min(480, numberSetting('EVA_AUTONOMY_DAILY_WORK_MINUTES', 120)),
-  ),
-  autonomyTurnMinutes: Math.max(
+  ) : 0,
+  autonomyTurnMinutes: autonomyEnabled ? Math.max(
     15,
     Math.min(60, numberSetting('EVA_AUTONOMY_TURN_MINUTES', autonomyFull ? 30 : 15)),
-  ),
+  ) : 0,
   autonomyActiveWorkIntervalMinutes: numberSetting(
     'EVA_ACTIVE_WORK_INTERVAL_MINUTES', autonomyFull ? 10 : 30,
   ),

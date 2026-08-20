@@ -2525,7 +2525,7 @@ test('verse aspiration-start bindt exact één providerread aan haar nieuwe expl
   const result = spawnSync(process.execPath, ['--input-type=module'], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 20_000,
     input: `(${schedulerExplorationScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       EVA_TEST_STOP_AFTER_ASPIRATION_PROVIDER: '1',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
@@ -2542,13 +2542,13 @@ test('publieke scheduler bindt verse self-attention vóór tweede inhoudelijke a
   const result = spawnSync(process.execPath, ['--input-type=module'], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 35_000,
     input: `(${schedulerExplorationScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   const restart = result.status === 0 ? spawnSync(process.execPath, ['--input-type=module'], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 15_000,
     input: `(${terminalContributionRestartScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   }) : null;
   fs.rmSync(childDir, { recursive: true, force: true });

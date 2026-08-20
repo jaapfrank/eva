@@ -16,6 +16,7 @@ process.env.EVA_DATA_DIR = dataDir;
 process.env.OPENAI_API_KEY = 'native-interrupted-telegram-effect-test-only';
 process.env.TELEGRAM_BOT_TOKEN = '123456789:native-interrupted-telegram-effect-test';
 process.env.TELEGRAM_ALLOWED_IDS = '424242';
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.HA_URL = 'http://native-ha.invalid';
 process.env.HA_TOKEN = 'native-interrupted-telegram-effect-ha-token';

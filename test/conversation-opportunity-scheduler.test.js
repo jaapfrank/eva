@@ -4,6 +4,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync('/tmp/bottie-conversation-scheduler-');
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.OPENAI_API_KEY = 'conversation-scheduler-test-only';
 process.env.SLEEP_START = '00:00';

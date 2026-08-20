@@ -10584,6 +10584,12 @@ export function runAutonomousTurn({
   goalEpisodeId = null,
   schedulerContext = null,
 } = {}) {
+  if (!config.autonomyEnabled) return Promise.resolve(Object.freeze({
+    reply: '', turnId: null, channel: 'autonomy', sender: 'Eva',
+    conversationId: 'autonomy:eva', tools: Object.freeze([]), contribution: null,
+    continuation: null, progress: null, noActionReason: null,
+    disabled: true, yielded: true,
+  }));
   const schedulerEpoch = schedulerContext == null
     ? null : verifiedAutonomyInteractionEpoch(schedulerContext);
   if ((schedulerContext != null && (schedulerEpoch == null

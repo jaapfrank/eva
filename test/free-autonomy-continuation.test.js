@@ -415,7 +415,7 @@ function runScenario(scenario) {
   const result = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${freeAutonomyContinuationScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 25_000,
-    env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       EVA_MODEL_VOICE: 'gpt-5.6-terra', OPENAI_API_KEY: 'test-only-openai-key',
       EVA_CONTINUATION_SCENARIO: scenario, SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });

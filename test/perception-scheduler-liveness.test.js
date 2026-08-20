@@ -259,7 +259,7 @@ function runIsolatedScenario(kind) {
       env: {
         ...process.env,
         EVA_DATA_DIR: dataDir,
-        EVA_AUTONOMY_LEVEL: 'full',
+        EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
         OPENAI_API_KEY: 'test-only',
         NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT || 'child-v8',
         SLEEP_START: '00:00',

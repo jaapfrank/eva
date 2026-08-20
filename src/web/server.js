@@ -176,6 +176,8 @@ function healthLastAutonomyResult(result) {
 
 function healthAutonomyProjection(status) {
   return {
+    enabled: status?.enabled === true,
+    scheduler_started: status?.scheduler_started === true,
     running: status?.running === true,
     current_selection: healthSchedulerSelection(status?.current_selection),
     last_run_ts: safeTimestamp(status?.last_run_ts),

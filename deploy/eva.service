@@ -10,6 +10,7 @@ Group=eva
 SupplementaryGroups=eva-runtime-read
 WorkingDirectory=/opt/eva
 Environment=EVA_DATA_DIR=/opt/eva/data
+Environment=EVA_AUTONOMY_ENABLED=false
 ExecStart=/usr/bin/node /opt/eva/src/index.js
 Restart=always
 RestartSec=5

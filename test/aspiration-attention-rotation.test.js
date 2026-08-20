@@ -303,7 +303,7 @@ test('bewonerspreemptie laat aspiration-attention werkelijk due', () => {
   const result = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${yieldedAspirationScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 20_000,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   fs.rmSync(childDir, { recursive: true, force: true });
@@ -330,7 +330,7 @@ test('ontsnapte schedulerfout laat de aspiratie over een echte restart due', () 
   const crashed = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${escapedSchedulerFailureScenario.toString()})().catch((error) => { console.error(error); process.exit(24); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 30_000,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   assert.equal(crashed.status, 23, `${crashed.stdout}\n${crashed.stderr}`);

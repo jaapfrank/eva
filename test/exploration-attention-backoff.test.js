@@ -1075,7 +1075,7 @@ test('publieke scheduler deferreert vroeg zonder I/O en geeft daarna #9 en #10 e
   runScenario('exploration-public-scheduler', publicSchedulerBackoffScenario, {
     timeout: 40_000,
     oauth: true,
-    env: { EVA_AUTONOMY_LEVEL: 'full', EVA_AUTONOMY_INTERVAL_MINUTES: '15',
+    env: { EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full', EVA_AUTONOMY_INTERVAL_MINUTES: '15',
       EVA_AUTONOMY_DAILY_WORK_MINUTES: '120', OPENAI_API_KEY: 'test-only',
       SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
@@ -1085,7 +1085,7 @@ test('bewonerspreemptie laat exploration-attention exact ongemoeid', () => {
   runScenario('exploration-yield', yieldedExplorationScenario, {
     timeout: 25_000,
     oauth: true,
-    env: { EVA_AUTONOMY_LEVEL: 'full', EVA_AUTONOMY_INTERVAL_MINUTES: '15',
+    env: { EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full', EVA_AUTONOMY_INTERVAL_MINUTES: '15',
       EVA_AUTONOMY_DAILY_WORK_MINUTES: '120', OPENAI_API_KEY: 'test-only',
       SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
@@ -1097,7 +1097,7 @@ test('mislukte KV-publicatie rolt explorationdeferral terug en restart geeft een
     access_token: 'test-oauth-token', account_id: 'test-account',
     expires_at: Date.now() + 60 * 60_000,
   }));
-  const env = { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+  const env = { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
     EVA_AUTONOMY_INTERVAL_MINUTES: '15', EVA_AUTONOMY_DAILY_WORK_MINUTES: '120',
     OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' };
   const escaped = spawnSync(process.execPath, ['--input-type=module', '-e',

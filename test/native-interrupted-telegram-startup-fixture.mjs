@@ -8,6 +8,7 @@ process.env.EVA_DATA_DIR = dataDir;
 process.env.OPENAI_API_KEY = 'native-interrupted-telegram-test-only';
 process.env.TELEGRAM_BOT_TOKEN = '123456789:native-interrupted-telegram-test';
 process.env.TELEGRAM_ALLOWED_IDS = '424242';
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 
 const { Bot } = await import('grammy');

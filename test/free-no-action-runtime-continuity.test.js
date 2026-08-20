@@ -430,7 +430,7 @@ test('echte vrije no-action wordt privacy-arm in de volgende vrije schedulerbeur
     env: {
       ...process.env,
       EVA_DATA_DIR: dataDir,
-      EVA_AUTONOMY_LEVEL: 'full',
+      EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only-openai-key',
       SLEEP_START: '00:00',
       WAKE_TIME: '00:00',

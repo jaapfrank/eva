@@ -6,6 +6,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-capabilities-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 
 const { db } = await import('../src/db.js');

@@ -129,7 +129,7 @@ function runPhase(dataDir, phase, dueTs) {
     OPENAI_API_KEY: 'family-experience-test-only',
     TELEGRAM_ALLOWED_IDS: '424242',
     TELEGRAM_BOT_TOKEN: '',
-    EVA_AUTONOMY_LEVEL: 'full',
+    EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
     EVA_RUNTIME_DISABLE_INFERENCE: 'true',
     EVA_RUNTIME_DISABLE_WORLD_LEARNING: 'true',
     SLEEP_START: '00:00',

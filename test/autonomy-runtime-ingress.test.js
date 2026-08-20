@@ -6,6 +6,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-autonomy-ingress-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.OPENAI_API_KEY = 'test-only';
 process.env.SLEEP_START = '23:59';
@@ -374,9 +375,10 @@ test('/api/health ontsluit uitsluitend de begrensde observabilityprojecties', as
       interaction_epoch: agentStatus().interaction_epoch,
     });
     assert.deepEqual(Object.keys(health.autonomie).sort(), [
-      'current_selection', 'last_result', 'last_run_ts', 'next_run_ts',
-      'pending_signal_count', 'quarantined_signal_count', 'running',
+      'current_selection', 'enabled', 'last_result', 'last_run_ts', 'next_run_ts',
+      'pending_signal_count', 'quarantined_signal_count', 'running', 'scheduler_started',
     ]);
+    assert.equal(health.autonomie.enabled, true);
     assert.equal(health.autonomie.current_selection, null);
     assert.equal(health.autonomie.pending_signal_count, 1);
     assert.equal(health.autonomie.quarantined_signal_count, 1);

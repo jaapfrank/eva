@@ -35,6 +35,7 @@ const setClock = (value) => {
 };
 
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.ALLOW_HOME_CONTROL = 'true';
 process.env.OPENAI_API_KEY = 'native-monitoring-v2-test-only';

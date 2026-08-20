@@ -464,7 +464,7 @@ test('vrije authentieke research wordt exact eenmaal een stille observation-cont
   const result = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${freeResearchContinuityScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 40_000,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only-openai-key', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   fs.rmSync(childDir, { recursive: true, force: true });

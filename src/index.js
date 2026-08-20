@@ -74,7 +74,7 @@ startVoiceBridge();
 await startTelegram();
 startReminderLoop();
 startEmotionalLife();
-startAutonomy();
+if (config.autonomyEnabled) startAutonomy();
 
 maintain();
 setInterval(maintain, 6 * 3600_000);

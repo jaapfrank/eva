@@ -7,6 +7,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-autonomy-safety-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'bounded';
 process.env.OPENAI_API_KEY = 'test-only';
 process.env.SLEEP_START = '00:00';
@@ -291,7 +292,7 @@ test('de scheduler hervat gekozen werk en handelt daarna de actuele deur- en tem
   const result = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${schedulerIsolationScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 35_000,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   fs.rmSync(childDir, { recursive: true, force: true });
@@ -303,7 +304,7 @@ test('schedulerselectie wordt ook bij falende leasevrijgave onvoorwaardelijk gew
   const result = spawnSync(process.execPath, ['--input-type=module', '-e',
     `(${schedulerReleaseFailureScenario.toString()})().then(() => process.exit(0)).catch((error) => { console.error(error); process.exit(1); })`], {
     cwd: process.cwd(), encoding: 'utf8', timeout: 15_000,
-    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_LEVEL: 'full',
+    env: { ...process.env, EVA_DATA_DIR: childDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
   });
   fs.rmSync(childDir, { recursive: true, force: true });

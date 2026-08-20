@@ -7,6 +7,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync('/tmp/bottie-full-autonomy-');
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.ALLOW_HOME_CONTROL = 'true';
 process.env.OPENAI_API_KEY = 'test-only';
@@ -2875,7 +2876,7 @@ test('duurzaam voice-herstel stopt ook bij een nieuwere ingress op dezelfde fysi
     `;
     const child = spawnSync(process.execPath, ['--input-type=module', '-e', childScript], {
       cwd: config.root, encoding: 'utf8', timeout: 30_000,
-      env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_LEVEL: 'full',
+      env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
         OPENAI_API_KEY: 'test-only', SLEEP_START: '00:00', WAKE_TIME: '00:00' },
     });
     assert.equal(child.status, 0, child.stderr || child.stdout);
@@ -3520,7 +3521,7 @@ test('reply-only crashherstel verzegelt alleen de echte modeldraft en levert die
     `;
     const child = spawnSync(process.execPath, ['--input-type=module', '-e', childScript], {
       cwd: config.root, encoding: 'utf8', timeout: 30_000,
-      env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_LEVEL: 'full',
+      env: { ...process.env, EVA_DATA_DIR: dataDir, EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
         OPENAI_API_KEY: 'test-only', TELEGRAM_BOT_TOKEN: '',
         SLEEP_START: '00:00', WAKE_TIME: '00:00' },
     });
@@ -4816,7 +4817,7 @@ test('Telegram-429 hervat na procescrash exact, muteert eenmaal en levert eenmaa
     env: {
       ...process.env,
       EVA_DATA_DIR: dataDir,
-      EVA_AUTONOMY_LEVEL: 'full',
+      EVA_AUTONOMY_ENABLED: 'true', EVA_AUTONOMY_LEVEL: 'full',
       OPENAI_API_KEY: 'test-only',
       TELEGRAM_BOT_TOKEN: '',
       SLEEP_START: '00:00',

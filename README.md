@@ -79,7 +79,8 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 | Sleutel | Betekenis |
 | --- | --- |
 | `SLEEP_START` / `WAKE_TIME` | Eva's bedtijd en wektijd (standaard 23:30–07:30) |
-| `EVA_AUTONOMY_LEVEL` | `full` geeft Eva zelfstandige doelkeuze en toegang tot alle normale gereedschappen |
+| `EVA_AUTONOMY_ENABLED` | Alleen exact `true` start zelfstandig werk; standaard en herstelmodus zijn `false` |
+| `EVA_AUTONOMY_LEVEL` | Niveau voor zelfstandig werk nadat `EVA_AUTONOMY_ENABLED=true` expliciet is gezet |
 | `EVA_AUTONOMY_INTERVAL_MINUTES` | basiscadans voor zelfstandige aandacht; bij `full` standaard 15 minuten |
 | `EVA_AUTONOMY_CONVERSATION_PAUSE_MINUTES` | korte voorrang voor een gesprek voordat zelfstandig werk wordt hervat |
 | `EVA_MODEL` | standaard `gpt-5.6-sol` (de OAuth-route accepteert alleen modellen die jouw ChatGPT-abonnement aanbiedt) |

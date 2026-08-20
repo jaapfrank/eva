@@ -6,6 +6,7 @@ import test, { after } from 'node:test';
 const dataDir = fs.mkdtempSync('/tmp/bottie-family-autonomy-acceptance-');
 process.env.EVA_DATA_DIR = dataDir;
 process.env.OPENAI_API_KEY = 'family-autonomy-acceptance-test-only';
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.SLEEP_START = '00:00';
 process.env.WAKE_TIME = '00:00';

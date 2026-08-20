@@ -6,6 +6,7 @@ import test, { after } from 'node:test';
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'bottie-self-attention-ingress-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_AUTONOMY_ENABLED = 'true';
 process.env.EVA_AUTONOMY_LEVEL = 'full';
 process.env.OPENAI_API_KEY = 'test-only';
 process.env.SLEEP_START = '23:59';

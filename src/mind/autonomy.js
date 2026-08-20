@@ -70,6 +70,7 @@ const AUTONOMY_INTERNAL_REFERENCE = /(?:^|\s)(?:aspiration|exploration|goal|work
 const AUTONOMY_UUID = /(?:^|[^a-f0-9])[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}(?:$|[^a-f0-9])/iu;
 const AUTONOMY_HASH = /(?:^|[^a-f0-9])(?:[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64})(?:$|[^a-f0-9])/iu;
 let timer = null;
+let schedulerStarted = false;
 let running = false;
 let currentSelection = null;
 let listenersStarted = false;
@@ -515,6 +516,7 @@ function schedulerDelay(nextRunTs, now = Date.now()) {
 }
 
 function armTimer() {
+  if (!config.autonomyEnabled || !schedulerStarted) return false;
   if (timer) clearTimeout(timer);
   timer = setTimeout(() => {
     timer = null;
@@ -527,6 +529,7 @@ function armTimer() {
       })
       .finally(armTimer);
   }, schedulerDelay(readState().next_run_ts));
+  return true;
 }
 
 function signalText(signal) {
@@ -677,6 +680,7 @@ function shouldBackoffExploration(result) {
 }
 
 async function runOnce(reason = 'periodieke vrije aandacht') {
+  if (!config.autonomyEnabled || !schedulerStarted) return false;
   if (running) return null;
   const status = agentStatus();
   const urgentMonitoringDelivery = urgentDueMonitoringDelivery();
@@ -952,6 +956,7 @@ async function runOnce(reason = 'periodieke vrije aandacht') {
 }
 
 async function tick() {
+  if (!config.autonomyEnabled || !schedulerStarted) return false;
   const state = withCurrentDailyBudget(readState());
   const due = Date.parse(state.next_run_ts || '') || 0;
   if (Date.now() < due) return;
@@ -971,7 +976,7 @@ async function tick() {
 }
 
 export function startAutonomy() {
-  if (timer) return;
+  if (!config.autonomyEnabled || schedulerStarted) return false;
   recoverWorkLeases();
   try { initializePerceptionIncidentRuntime(); } catch (error) {
     logTimeline('system', `Private deurbelrecovery bleef uit: ${error?.message || error}`, {
@@ -990,13 +995,25 @@ export function startAutonomy() {
     }
   }
   startSignalInbox();
+  schedulerStarted = true;
   armTimer();
+  return true;
 }
 
 export function autonomyStatus() {
+  if (!config.autonomyEnabled) {
+    return Object.freeze({
+      enabled: false,
+      scheduler_started: false,
+      running: false,
+      level: 'disabled',
+    });
+  }
   const state = withCurrentDailyBudget(readState());
   const display = autonomyDisplayProjection(state);
   return {
+    enabled: true,
+    scheduler_started: schedulerStarted,
     running,
     level: config.autonomyLevel,
     cadence_minutes: Math.round(BASE_CADENCE_MS / 60_000),
