@@ -1,0 +1,20 @@
+{
+  "contract": "EvaTestClientAckKey/v1",
+  "classification": "public_test_fixture_not_a_secret",
+  "algorithm": "ES256",
+  "publicJwk": {
+    "kty": "EC",
+    "x": "kjdKmKqJrs2oDmFdxxGV5PDR9vLEUoB3fAPi3xKCHG8",
+    "y": "y5lqcu0ByH6-InTIh072XMNVW-qZrUQ4p-7t95bemr4",
+    "crv": "P-256"
+  },
+  "privateJwk": {
+    "kty": "EC",
+    "x": "kjdKmKqJrs2oDmFdxxGV5PDR9vLEUoB3fAPi3xKCHG8",
+    "y": "y5lqcu0ByH6-InTIh072XMNVW-qZrUQ4p-7t95bemr4",
+    "crv": "P-256",
+    "d": "lc5UKx3Waff7cfUbCZzOdfWCJOEhWyD0w6Qi3YT_Hzw"
+  },
+  "publicJwkCanonicalSha256": "5bb0d99f6da06462346c922d989d913f3308d616dfbf52f70fdd4544c0065b83",
+  "productionUseAuthorized": false
+}

@@ -1,0 +1,94 @@
+{
+  "contract": "Eva2Step3DesignFreeze/v1",
+  "status": "reviewed_and_authorized_for_4a_only",
+  "decisionDate": "2026-08-20",
+  "basis": {
+    "branch": "recovery/v2-containment",
+    "step2Commit": "ac948b17bf4996e918420687e52908450266711c",
+    "adrPath": "docs/adr-0001-eva2-living-core.md",
+    "adrSha256": "73b53e392b8e3b65d1241bff46bb92144960a2620dbd45f3c9d3526d9f07910d",
+    "transitionManifestPath": "transition/evidence/eva1-to-eva2-transition-manifest-c6fff926d7f6b2f199081a91dac6cfcaf4e5c2c750159d6bf2dc068bae670c1c.json",
+    "transitionManifestSha256": "c6fff926d7f6b2f199081a91dac6cfcaf4e5c2c750159d6bf2dc068bae670c1c"
+  },
+  "designArtifacts": [
+    {
+      "path": "docs/eva2-build-map-2026-08-20.md",
+      "sha256": "188731302df263427ad499102e0d2be9ca11bf5321d81959d492d4604243fd3b"
+    },
+    {
+      "path": "docs/eva2-build-map-core-contracts.md",
+      "sha256": "877a0d25b637ef0f3bbfe3286ab40b5c40d7a0e50dbc3bf4af14504426bf0d63"
+    },
+    {
+      "path": "docs/eva2-build-map-platform.md",
+      "sha256": "244b2f2e397d4ce11e245d573b266dee443f77b85d0bd456d7e4b9cd66fa98f1"
+    },
+    {
+      "path": "docs/eva2-build-map-presence-evidence.md",
+      "sha256": "69d391ba4e3b3363c4d1d3cb6471c1510b68e974f5d8e61088356b6020328ed8"
+    },
+    {
+      "path": "design/evidence/eva2-first-vertical-contract-2c9ffb7a2ae6fd9b34cc4c29f73e6b3b2212f6a96232090ddbdbcfb02ad5b9a1.json",
+      "sha256": "2c9ffb7a2ae6fd9b34cc4c29f73e6b3b2212f6a96232090ddbdbcfb02ad5b9a1"
+    },
+    {
+      "path": "design/fixtures/noor-client-ack-key-v1.json",
+      "sha256": "330476faf5f2317d0edfaa991cc7dd344711353188d6c504f9629a780d5f4e93",
+      "classification": "public_test_fixture_not_a_secret",
+      "productionUseAuthorized": false
+    }
+  ],
+  "architectureDecision": {
+    "livingCore": "Python 3.12.14",
+    "canonicalAuthority": "PostgreSQL 16.13 eva_* schemas",
+    "durableExecutor": "DBOS Python 2.30.0 subject to the mandatory 4C atomic commit gate",
+    "modelBoundary": "pydantic-ai-slim 2.32.1 as a powerless purpose-scoped adapter",
+    "memoryAuthority": "canonical SQL plus rebuildable PostgreSQL full-text",
+    "externalMemoryFrameworkSelected": false,
+    "legacyExecutableImports": 0
+  },
+  "firstVertical": {
+    "businessReads": 4,
+    "businessEffects": 2,
+    "confirmationDeliveries": 1,
+    "outcomeDeliveries": 1,
+    "requiredEffectProofs": 4,
+    "requiredProviderReadbacks": 3,
+    "requiredOutcomeChannelProofs": 1,
+    "requiredCrashPoints": 15,
+    "requiredVariants": 14
+  },
+  "buildOrder": [
+    "4A contract budget platform and release skeleton",
+    "4B minimal migration domain and repository atomicity slice",
+    "4C immediate DBOS one-commit crash proof",
+    "4D full schema and deterministic cross-domain vertical",
+    "4E process security portability export and A/B proof",
+    "4F real model adapter and quarantined Connector Forge",
+    "4G separately approved disposable real connector canary",
+    "5 separately authorized selected Eva 1 importers"
+  ],
+  "review": {
+    "independentReviewers": 3,
+    "openP0": 0,
+    "openP1": 0,
+    "testsAloneCanAcceptProduct": false,
+    "realExternalReceiptsAndReadbacksStillRequired": true
+  },
+  "authorization": {
+    "implementationRoot": "eva2/",
+    "tranche4AImplementationAuthorized": true,
+    "tranche4BOrLaterAuthorizedBeforePriorGate": false,
+    "eva1CodeImportAuthorized": false,
+    "eva1DataMigrationAuthorized": false,
+    "productionCredentialsAuthorized": false,
+    "liveConnectorWritesAuthorized": false,
+    "productionServiceStartAuthorized": false,
+    "productionPromotionAuthorized": false
+  },
+  "safetyState": {
+    "evaServiceExpectedActive": false,
+    "evaServiceExpectedEnabled": false,
+    "liveDatabaseAccessAuthorized": false
+  }
+}
