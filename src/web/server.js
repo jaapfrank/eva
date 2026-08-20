@@ -55,6 +55,8 @@ import {
   releaseHttpIngressAuthority,
   renewHttpIngressAuthority,
   settleHttpIngress,
+  verifiedDurableHttpIngressUnderstandingSource,
+  verifiedHttpIngressExecutionAuthority,
 } from './httpingress.js';
 import {
   acknowledgeHttpDelivery,
@@ -285,10 +287,35 @@ function issueServerHttpResultAuthority(result, preparationAuthority) {
   return issueVerifiedHttpResultAuthority(result, preparationAuthority);
 }
 
-function resultProof({ result, identity, intent, sender, verifyResult }) {
+function exactHttpVoiceSource({ identity, intent, preparationAuthority = null }) {
+  if (identity.channel !== 'voice') return null;
+  const durable = verifiedDurableHttpIngressUnderstandingSource({
+    channel: identity.channel, conversationId: identity.conversationId,
+    requestId: identity.requestId,
+  });
+  if (!durable || durable.route !== '/api/voice') return null;
+  if (preparationAuthority) {
+    const current = verifiedHttpIngressExecutionAuthority(preparationAuthority, {
+      channel: identity.channel, conversationId: identity.conversationId,
+      requestId: identity.requestId, intent,
+    });
+    if (!current || current.requestRef !== durable.sourceRef
+      || current.intentSha256 !== durable.sourceSha256
+      || Number(current.generation) !== durable.sourceGeneration) return null;
+  }
+  return durable;
+}
+
+function resultProof({
+  result, identity, intent, sender, verifyResult, preparationAuthority,
+}) {
+  const voiceSource = identity.channel === 'voice'
+    ? exactHttpVoiceSource({ identity, intent, preparationAuthority }) : null;
+  if (identity.channel === 'voice' && !voiceSource) return null;
   const proof = verifyResult(result, {
     channel: identity.channel, conversationId: identity.conversationId,
     messageId: identity.requestId, rawText: intent.rawText, sender,
+    ...(voiceSource || {}),
   });
   return verifyPreparedUnderstandingTurn(proof, {
     channel: identity.channel, conversationId: identity.conversationId,
@@ -439,6 +466,8 @@ async function reconcileAcknowledgedHttpDelivery({ acknowledged, replayResult, r
   const recoveredProof = verifyResult(replayedResult, {
     channel: identity.channel, conversationId: identity.conversationId,
     messageId: identity.requestId, sender,
+    ...(identity.channel === 'voice'
+      ? exactHttpVoiceSource({ identity, intent: null }) || {} : {}),
   });
   if (!recoveredProof) {
     throw new Error('duurzaam HTTP-antwoord mist exact heruitgegeven agentresultaat');
@@ -454,7 +483,7 @@ async function reconcileAcknowledgedHttpDelivery({ acknowledged, replayResult, r
     durableHttpRequestRef: requestRef,
     clientAckReceiptRef: acknowledged.ack.ackReceiptRef,
     httpWireSha256: acknowledged.delivery.wireSha256,
-  });
+  }, acknowledged.agentDeliveryProof);
   if (!recorded && !verifyDelivery(result)) {
     throw new Error('duurzaam HTTP-antwoord mist exacte afleverreceipt');
   }
@@ -635,7 +664,10 @@ async function executeDurableHttpRequest({
     let result;
     try {
       result = await execute(begun.preparationAuthority);
-      const proof = resultProof({ result, identity, intent, sender, verifyResult });
+      const proof = resultProof({
+        result, identity, intent, sender, verifyResult,
+        preparationAuthority: begun.preparationAuthority,
+      });
       if (!proof) throw new Error('agentresultaat mist exact duurzaam beurtbewijs');
       const resultAuthority = issueServerHttpResultAuthority(
         result, begun.preparationAuthority,

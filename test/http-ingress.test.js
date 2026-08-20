@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { createHash, generateKeyPairSync } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -11,6 +12,10 @@ process.env.EVA_HTTP_INGRESS_CLAIM_LEASE_MS = '100';
 
 const { db } = await import('../src/db.js');
 const { canonicalJson } = await import('../src/util.js');
+const {
+  TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME,
+  TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL,
+} = await import('../src/turnauthority.js');
 const { seedAuthorizedTurnUnderstanding } = await import(
   './turn-understanding-authority-fixture.js'
 );
@@ -66,6 +71,27 @@ function withoutTrigger(name, callback) {
   } finally {
     db.exec('ROLLBACK');
   }
+}
+
+function runRetroactiveAuthorityFixture(mode, fixtureDataDir) {
+  const fixture = path.join(
+    path.dirname(new URL(import.meta.url).pathname),
+    'http-turn-authority-retroactive-fixture.mjs',
+  );
+  return spawnSync(process.execPath, [fixture, mode, fixtureDataDir], {
+    cwd: path.resolve(new URL('..', import.meta.url).pathname),
+    encoding: 'utf8', timeout: 30_000,
+    env: {
+      ...process.env, EVA_DATA_DIR: fixtureDataDir, TMPDIR: '/tmp',
+      EVA_RUNTIME_DISABLE_INFERENCE: 'true',
+      EVA_RUNTIME_DISABLE_WORLD_LEARNING: 'true',
+    },
+  });
+}
+
+function retroactiveAuthorityStatus(child) {
+  assert.equal(child.status, 0, child.stderr || child.stdout);
+  return JSON.parse(child.stdout.trim().split('\n').at(-1));
 }
 
 function start(label, { keys = keyPair(), withKey = true } = {}) {
@@ -574,4 +600,74 @@ test('opaque response-authority faalt gesloten bij ingress dependency-drift', ()
     requestId: durable.requestId, intent: durable.intent,
   });
   assert.equal(issueHttpResponseAuthority(finalReplay.responseAuthority).kind, 'issued');
+});
+
+test('HTTP-ingress attesteert de late-sidecar trigger bytegelijk', () => {
+  assert.equal(ingress.httpIngressStoreStatus().available, true);
+  withoutTrigger(TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME, () => {
+    const missing = ingress.httpIngressStoreStatus();
+    assert.equal(missing.available, false);
+    assert.equal(missing.reason, 'http_ingress_schema_http_turn_authority_trigger_invalid');
+  });
+  assert.equal(ingress.httpIngressStoreStatus().available, true);
+
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    db.exec(`DROP TRIGGER main.${TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME}`);
+    db.exec(TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL.replace(
+      'HTTP turn authority requires a live exact execution claim',
+      'HTTP turn authority drift',
+    ));
+    const changed = ingress.httpIngressStoreStatus();
+    assert.equal(changed.available, false);
+    assert.match(changed.reason, /turn_understanding_authority|trigger_invalid/iu);
+  } finally {
+    db.exec('ROLLBACK');
+  }
+  assert.equal(ingress.httpIngressStoreStatus().available, true);
+});
+
+test('triggerinstallatie weigert een vooraf ingevoegde HTTP-sidecar buiten claiminterval', () => {
+  const retroDataDir = fs.mkdtempSync(path.join(
+    os.tmpdir(), 'bottie-http-turn-authority-retroactive-',
+  ));
+  try {
+    const seeded = runRetroactiveAuthorityFixture('seed', retroDataDir);
+    assert.equal(seeded.status, 0, seeded.stderr || seeded.stdout);
+    const status = retroactiveAuthorityStatus(
+      runRetroactiveAuthorityFixture('inspect', retroDataDir),
+    );
+    assert.equal(status.available, false, JSON.stringify(status));
+    assert.match(status.reason, /existing_http_turn_authority|initialization/iu);
+    assert.equal(status.before.httpBoundary, 0);
+    assert.equal(status.after.httpBoundary, 0);
+    assert.equal(status.after.authorityRowsBase64, status.before.authorityRowsBase64);
+    assert.equal(status.after.authoritySchemaBase64, status.before.authoritySchemaBase64);
+    assert.equal(status.after.schemaVersion, status.before.schemaVersion);
+  } finally {
+    fs.rmSync(retroDataDir, { recursive: true, force: true });
+  }
+});
+
+test('een eenmaal gemigreerde HTTP-v1 claim-ref blijft geldig na same-ms release', () => {
+  const retroDataDir = fs.mkdtempSync(path.join(
+    os.tmpdir(), 'bottie-http-turn-authority-v1-release-',
+  ));
+  try {
+    const seeded = runRetroactiveAuthorityFixture('seed-valid', retroDataDir);
+    assert.equal(seeded.status, 0, seeded.stderr || seeded.stdout);
+    const admitted = retroactiveAuthorityStatus(
+      runRetroactiveAuthorityFixture('inspect', retroDataDir),
+    );
+    assert.equal(admitted.available, true, JSON.stringify(admitted));
+
+    const released = runRetroactiveAuthorityFixture('release', retroDataDir);
+    assert.equal(released.status, 0, released.stderr || released.stdout);
+    const restarted = retroactiveAuthorityStatus(
+      runRetroactiveAuthorityFixture('inspect', retroDataDir),
+    );
+    assert.equal(restarted.available, true, JSON.stringify(restarted));
+  } finally {
+    fs.rmSync(retroDataDir, { recursive: true, force: true });
+  }
 });

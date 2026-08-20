@@ -30,7 +30,11 @@ const {
   projectTurnUnderstandingTerminalOutcome,
 } = await import('../src/mind/turnunderstandingoutcome.js');
 const {
+  TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2,
+  TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME,
   turnUnderstandingAuthorityStoreStatus: inspectTurnUnderstandingAuthorityStore,
+  turnUnderstandingAuthorityBody,
+  turnUnderstandingAuthorityRecord,
 } = await import('../src/turnauthority.js');
 const {
   classifyTurnEffectManifest,
@@ -39,6 +43,8 @@ const {
 const {
   beginHttpIngress,
   issueVerifiedHttpResultAuthority,
+  releaseHttpIngressAuthority,
+  verifiedHttpIngressExecutionAuthority,
 } = await import('../src/web/httpingress.js');
 const {
   handleMessageDetailed,
@@ -309,21 +315,27 @@ test('de sidecarstatus faalt gesloten op TEMP-shadow en append-only drift', () =
       'web', zeroGenerationIdentity.conversationId, zeroGenerationIdentity.messageId,
       'http_ingress', `http-ingress:${suffix}-generation`, '9'.repeat(64), generation,
       `${generation === 0 ? 'a' : 'b'}`.repeat(64), new Date().toISOString(),
-    ), /CHECK constraint failed/iu);
+    ), /CHECK constraint failed|HTTP turn authority requires a live exact execution claim/iu);
   }
 
-  assert.throws(() => db.prepare(`INSERT INTO
-    main.eva_turn_understanding_authorities_v1 (
-      contract,execution_key,execution_seq,intent_record_sha256,channel,
-      conversation_id,message_id,source_kind,source_ref,source_sha256,
-      source_generation,authority_sha256,issued_ts
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(
-    'TurnUnderstandingExecutionAuthority/v1',
-    `turn-understanding:${'3'.repeat(64)}`, 1, '4'.repeat(64),
-    'web', 'web:no-ledger', 'request-no-ledger', 'http_ingress',
-    'http-ingress:no-ledger', '5'.repeat(64), 1, '6'.repeat(64),
-    new Date().toISOString(),
-  ), /requires exact started V2 execution/u);
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    db.exec(`DROP TRIGGER main.${TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME}`);
+    assert.throws(() => db.prepare(`INSERT INTO
+      main.eva_turn_understanding_authorities_v1 (
+        contract,execution_key,execution_seq,intent_record_sha256,channel,
+        conversation_id,message_id,source_kind,source_ref,source_sha256,
+        source_generation,authority_sha256,issued_ts
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(
+      'TurnUnderstandingExecutionAuthority/v1',
+      `turn-understanding:${'3'.repeat(64)}`, 1, '4'.repeat(64),
+      'web', 'web:no-ledger', 'request-no-ledger', 'http_ingress',
+      'http-ingress:no-ledger', '5'.repeat(64), 1, '6'.repeat(64),
+      new Date().toISOString(),
+    ), /requires exact started V2 execution/u);
+  } finally {
+    db.exec('ROLLBACK');
+  }
 });
 
 test('terminal-outcomes zijn exact getypeerd en de pure projector begrenst uitvoer', () => {
@@ -523,6 +535,342 @@ test('publieke voice- en Telegram-issuers kunnen geen @turn-authority minten', a
   assert.equal(count, 0);
 });
 
+test('een zelfgehashte HTTP-voice sidecar zonder duurzame ingressbron wordt geweigerd', () => {
+  const identity = {
+    channel: 'voice', conversationId: 'voice:http-source-sidecar',
+    messageId: 'http-voice-source-sidecar-1',
+  };
+  const row = insertStartedExecution({
+    executionKey: `turn-understanding:${sha256(canonicalJson(identity))}`,
+    turnId: `ingress:voice:${identity.conversationId}:${identity.messageId}`,
+    tool: '@turn/understanding',
+    args: {
+      ...identity, requester: 'Jaap', originalText: 'Bewijs deze HTTP-voicebron.',
+      sessionRef: '', supersessionScope: null, supersessionToken: null,
+      syntheticTest: true,
+    },
+  });
+  const draft = {
+    contract: 'TurnUnderstandingExecutionAuthority/v1',
+    execution_key: row.execution_key, execution_seq: row.execution_seq,
+    intent_record_sha256: row.intent_record_sha256,
+    channel: identity.channel, conversation_id: identity.conversationId,
+    message_id: identity.messageId, source_kind: 'http_voice_ingress',
+    source_ref: `http-ingress:${'4'.repeat(64)}`, source_sha256: '5'.repeat(64),
+    source_body_json: null, source_generation: 1, authority_sha256: '',
+    issued_ts: new Date().toISOString(),
+  };
+  draft.authority_sha256 = sha256(canonicalJson(
+    turnUnderstandingAuthorityBody(draft, row),
+  ));
+  assert.throws(() => db.prepare(`INSERT INTO main.eva_turn_understanding_authorities_v1 (
+    contract,execution_key,execution_seq,intent_record_sha256,channel,
+    conversation_id,message_id,source_kind,source_ref,source_sha256,source_body_json,
+    source_generation,authority_sha256,issued_ts
+  ) VALUES (@contract,@execution_key,@execution_seq,@intent_record_sha256,@channel,
+    @conversation_id,@message_id,@source_kind,@source_ref,@source_sha256,@source_body_json,
+    @source_generation,@authority_sha256,@issued_ts)`).run(draft),
+  /HTTP turn authority requires a live exact execution claim/iu);
+  assert.equal(db.prepare(`SELECT count(*) AS value
+    FROM main.eva_turn_understanding_authorities_v1 WHERE execution_key=?`)
+    .get(row.execution_key).value, 0);
+  assert.equal(turnUnderstandingAuthorityRecord(db, row), null);
+});
+
+test('een zelfgehashte websidecar zonder duurzame ingressbron wordt geweigerd', () => {
+  const identity = {
+    channel: 'web', conversationId: 'web:http-source-sidecar-forged',
+    messageId: 'web-source-sidecar-forged-1',
+  };
+  const row = insertStartedExecution({
+    executionKey: `turn-understanding:${sha256(canonicalJson(identity))}`,
+    turnId: `ingress:web:${identity.conversationId}:${identity.messageId}`,
+    tool: '@turn/understanding',
+    args: {
+      ...identity, requester: 'Jaap', originalText: 'Bewijs deze vervalste webbron.',
+      sessionRef: '', supersessionScope: null, supersessionToken: null,
+      syntheticTest: true,
+    },
+  });
+  const draft = {
+    contract: 'TurnUnderstandingExecutionAuthority/v1',
+    execution_key: row.execution_key, execution_seq: row.execution_seq,
+    intent_record_sha256: row.intent_record_sha256,
+    channel: identity.channel, conversation_id: identity.conversationId,
+    message_id: identity.messageId, source_kind: 'http_ingress',
+    source_ref: `http-ingress:${'6'.repeat(64)}`, source_sha256: '7'.repeat(64),
+    source_body_json: null, source_generation: 1, authority_sha256: '',
+    issued_ts: new Date().toISOString(),
+  };
+  draft.authority_sha256 = sha256(canonicalJson(
+    turnUnderstandingAuthorityBody(draft, row),
+  ));
+  assert.throws(() => db.prepare(`INSERT INTO main.eva_turn_understanding_authorities_v1 (
+    contract,execution_key,execution_seq,intent_record_sha256,channel,
+    conversation_id,message_id,source_kind,source_ref,source_sha256,source_body_json,
+    source_generation,authority_sha256,issued_ts
+  ) VALUES (@contract,@execution_key,@execution_seq,@intent_record_sha256,@channel,
+    @conversation_id,@message_id,@source_kind,@source_ref,@source_sha256,@source_body_json,
+    @source_generation,@authority_sha256,@issued_ts)`).run(draft),
+  /HTTP turn authority requires a live exact execution claim/iu);
+  assert.equal(db.prepare(`SELECT count(*) AS value
+    FROM main.eva_turn_understanding_authorities_v1 WHERE execution_key=?`)
+    .get(row.execution_key).value, 0);
+  assert.equal(turnUnderstandingAuthorityRecord(db, row), null);
+});
+
+test('beide HTTP-sourcekinds bewijzen een echte request-, ACK- en execution-claimketen', () => {
+  for (const channel of ['web', 'voice']) {
+    const sourceKind = channel === 'voice' ? 'http_voice_ingress' : 'http_ingress';
+    const route = channel === 'voice' ? '/api/voice' : '/api/chat';
+    const identity = {
+      channel, conversationId: `${channel}:durable-http-source`,
+      messageId: `${channel}-durable-http-source-1`,
+    };
+    const intent = {
+      contract: 'PublicHttpIntent/v1', route, sender: 'Jaap',
+      rawText: `Bewijs deze duurzame ${channel}-bron.`,
+      conversationId: identity.conversationId, syntheticTest: true,
+      ...(channel === 'voice' ? { shouldSpeak: false, speaker: null } : {}),
+      clientAckPublicKey: clientAckPublicKey(),
+    };
+    const begun = beginHttpIngress({
+      channel, conversationId: identity.conversationId,
+      requestId: identity.messageId, intent,
+    });
+    assert.equal(begun.kind, 'started');
+    const source = verifiedHttpIngressExecutionAuthority(
+      begun.preparationAuthority,
+      {
+        channel, conversationId: identity.conversationId,
+        requestId: identity.messageId, intent,
+      },
+    );
+    assert.ok(source);
+    const row = insertStartedExecution({
+      executionKey: `turn-understanding:${sha256(canonicalJson(identity))}`,
+      turnId: `ingress:${channel}:${identity.conversationId}:${identity.messageId}`,
+      tool: '@turn/understanding',
+      args: {
+        ...identity, requester: intent.sender, originalText: intent.rawText.trim(),
+        sessionRef: '', supersessionScope: null, supersessionToken: null,
+        syntheticTest: true,
+      },
+    });
+    const draft = {
+      contract: TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2,
+      execution_key: row.execution_key, execution_seq: row.execution_seq,
+      intent_record_sha256: row.intent_record_sha256,
+      channel, conversation_id: identity.conversationId,
+      message_id: identity.messageId, source_kind: sourceKind,
+      source_ref: source.requestRef, source_sha256: source.intentSha256,
+      source_body_json: null, source_generation: source.generation,
+      source_claim_event_ref: source.claimEventRef,
+      authority_sha256: '', issued_ts: db.prepare(`SELECT created_ts FROM
+        main.eva_http_ingress_claim_events WHERE claim_event_ref=?`).get(
+        source.claimEventRef,
+      ).created_ts,
+    };
+    draft.authority_sha256 = sha256(canonicalJson(
+      turnUnderstandingAuthorityBody(draft, row),
+    ));
+    assert.equal(db.prepare(`INSERT INTO main.eva_turn_understanding_authorities_v1 (
+      contract,execution_key,execution_seq,intent_record_sha256,channel,
+      conversation_id,message_id,source_kind,source_ref,source_sha256,source_body_json,
+      source_generation,source_claim_event_ref,authority_sha256,issued_ts
+    ) VALUES (@contract,@execution_key,@execution_seq,@intent_record_sha256,@channel,
+      @conversation_id,@message_id,@source_kind,@source_ref,@source_sha256,@source_body_json,
+      @source_generation,@source_claim_event_ref,@authority_sha256,@issued_ts)`).run(draft).changes, 1);
+    const durable = turnUnderstandingAuthorityRecord(db, row);
+    assert.equal(durable?.sourceKind, sourceKind);
+    assert.equal(durable?.sourceClaimEventRef, source.claimEventRef);
+    assert.equal(Object.hasOwn(durable || {}, 'sourceBodyJson'), false);
+    const nonCanonicalBinding = readOnlyDatabaseProxy({
+      tamperGet(sql, _parameters, value) {
+        return sql.includes('eva_http_client_ack_bindings_v3') && value
+          ? { ...value, binding_json: '{}' } : value;
+      },
+    });
+    assert.equal(turnUnderstandingAuthorityRecord(nonCanonicalBinding, row), null);
+    const forgedClaimGeneration = readOnlyDatabaseProxy({
+      tamperAll(sql, _parameters, value) {
+        return sql.includes('eva_http_ingress_claim_events')
+          ? value.map((event, index) => index === 0
+            ? { ...event, generation: Number(event.generation) + 1 } : event)
+          : value;
+      },
+    });
+    assert.equal(turnUnderstandingAuthorityRecord(forgedClaimGeneration, row), null);
+    const mutableIngressBoundary = readOnlyDatabaseProxy({
+      tamperGet(sql, parameters, value) {
+        return sql.includes('sqlite_master')
+          && parameters[0] === 'eva_http_ingress_requests_no_update' ? null : value;
+      },
+    });
+    assert.equal(turnUnderstandingAuthorityRecord(mutableIngressBoundary, row), null);
+    const missingIssuanceBoundary = readOnlyDatabaseProxy({
+      tamperGet(sql, parameters, value) {
+        return sql.includes('sqlite_master')
+          && parameters[0]
+            === 'eva_turn_understanding_authorities_v1_http_live_claim' ? null : value;
+      },
+    });
+    assert.equal(turnUnderstandingAuthorityRecord(missingIssuanceBoundary, row), null);
+    const changedIssuanceBoundary = readOnlyDatabaseProxy({
+      tamperGet(sql, parameters, value) {
+        return sql.includes('sqlite_master')
+          && parameters[0]
+            === 'eva_turn_understanding_authorities_v1_http_live_claim' && value
+          ? { ...value, sql: `${value.sql}\nSELECT 1` } : value;
+      },
+    });
+    assert.equal(turnUnderstandingAuthorityRecord(changedIssuanceBoundary, row), null);
+    assert.equal(releaseHttpIngressAuthority(begun.preparationAuthority).released, true);
+  }
+});
+
+test('een vrijgegeven HTTP-claim kan achteraf geen oude-generatie sidecar krijgen', () => {
+  for (const channel of ['web', 'voice']) {
+    const sourceKind = channel === 'voice' ? 'http_voice_ingress' : 'http_ingress';
+    const route = channel === 'voice' ? '/api/voice' : '/api/chat';
+    const identity = {
+      channel, conversationId: `${channel}:released-http-sidecar`,
+      messageId: `${channel}-released-http-sidecar-1`,
+    };
+    const intent = {
+      contract: 'PublicHttpIntent/v1', route, sender: 'Jaap',
+      rawText: `Weiger deze late ${channel}-sidecar.`,
+      conversationId: identity.conversationId, syntheticTest: true,
+      ...(channel === 'voice' ? { shouldSpeak: false, speaker: null } : {}),
+      clientAckPublicKey: clientAckPublicKey(),
+    };
+    const begun = beginHttpIngress({
+      channel, conversationId: identity.conversationId,
+      requestId: identity.messageId, intent,
+    });
+    assert.equal(begun.kind, 'started');
+    const source = verifiedHttpIngressExecutionAuthority(
+      begun.preparationAuthority,
+      {
+        channel, conversationId: identity.conversationId,
+        requestId: identity.messageId, intent,
+      },
+    );
+    assert.ok(source);
+    assert.equal(releaseHttpIngressAuthority(begun.preparationAuthority).released, true);
+    const row = insertStartedExecution({
+      executionKey: `turn-understanding:${sha256(canonicalJson(identity))}`,
+      turnId: `ingress:${channel}:${identity.conversationId}:${identity.messageId}`,
+      tool: '@turn/understanding',
+      args: {
+        ...identity, requester: intent.sender, originalText: intent.rawText.trim(),
+        sessionRef: '', supersessionScope: null, supersessionToken: null,
+        syntheticTest: true,
+      },
+    });
+    const draft = {
+      contract: 'TurnUnderstandingExecutionAuthority/v1',
+      execution_key: row.execution_key, execution_seq: row.execution_seq,
+      intent_record_sha256: row.intent_record_sha256,
+      channel, conversation_id: identity.conversationId,
+      message_id: identity.messageId, source_kind: sourceKind,
+      source_ref: source.requestRef, source_sha256: source.intentSha256,
+      source_body_json: null, source_generation: source.generation,
+      authority_sha256: '', issued_ts: new Date().toISOString(),
+    };
+    draft.authority_sha256 = sha256(canonicalJson(
+      turnUnderstandingAuthorityBody(draft, row),
+    ));
+    let rejected = false;
+    try {
+      db.prepare(`INSERT INTO main.eva_turn_understanding_authorities_v1 (
+        contract,execution_key,execution_seq,intent_record_sha256,channel,
+        conversation_id,message_id,source_kind,source_ref,source_sha256,source_body_json,
+        source_generation,authority_sha256,issued_ts
+      ) VALUES (@contract,@execution_key,@execution_seq,@intent_record_sha256,@channel,
+        @conversation_id,@message_id,@source_kind,@source_ref,@source_sha256,@source_body_json,
+        @source_generation,@authority_sha256,@issued_ts)`).run(draft);
+    } catch { rejected = true; }
+    assert.equal(turnUnderstandingAuthorityRecord(db, row), null);
+    assert.equal(rejected, true, `${channel} moet de late sidecar al bij INSERT blokkeren`);
+  }
+});
+
+test('HTTP-voice weigert booleans, forgery, ambiguiteit, stale claims en cross-route claims', () => {
+  const before = Number(db.prepare(`SELECT count(*) AS value FROM main.turn_tool_executions
+    WHERE tool='@turn/understanding'`).get().value);
+  const text = 'Deze bron mag niet worden vervalst.';
+  const attempt = (messageId, messageContext, conversationId = 'voice:http-authority-negative') => assert.throws(
+    () => handleMessageDetailed({
+      channel: 'voice', sender: 'Jaap', text,
+      messageContext: {
+        conversationId, messageId,
+        identityTrusted: true, syntheticTest: true, ...messageContext,
+      },
+    }),
+    (error) => ['EVA_TURN_AUTHORITY_INGRESS_UNAVAILABLE',
+      'EVA_TURN_AUTHORITY_INGRESS_MISMATCH'].includes(error?.code),
+  );
+  attempt('http-voice-bool-1', { httpVoiceIngress: true });
+  attempt('http-voice-forged-1', {
+    httpIngressAuthority: Object.freeze({ contract: 'HttpIngressPreparationAuthority/v1' }),
+    httpIngressIntent: {
+      contract: 'PublicHttpIntent/v1', route: '/api/voice', sender: 'Jaap',
+      rawText: text, conversationId: 'voice:http-authority-negative',
+      shouldSpeak: false, speaker: null, syntheticTest: true,
+      clientAckPublicKey: clientAckPublicKey(),
+    },
+  });
+
+  const validMessageId = 'http-voice-ambiguous-1';
+  const validIntent = {
+    contract: 'PublicHttpIntent/v1', route: '/api/voice', sender: 'Jaap',
+    rawText: text, conversationId: 'voice:http-authority-ambiguous',
+    shouldSpeak: false, speaker: null, syntheticTest: true,
+    clientAckPublicKey: clientAckPublicKey(),
+  };
+  const valid = beginHttpIngress({
+    channel: 'voice', conversationId: validIntent.conversationId,
+    requestId: validMessageId, intent: validIntent,
+  });
+  assert.equal(valid.kind, 'started');
+  attempt(validMessageId, {
+    httpIngressAuthority: valid.preparationAuthority, httpIngressIntent: validIntent,
+    voiceUnderstandingAuthority: Object.freeze({}),
+  }, validIntent.conversationId);
+  assert.equal(releaseHttpIngressAuthority(valid.preparationAuthority).released, true);
+
+  const staleMessageId = 'http-voice-stale-1';
+  const staleIntent = { ...validIntent, conversationId: 'voice:http-authority-stale' };
+  const stale = beginHttpIngress({
+    channel: 'voice', conversationId: staleIntent.conversationId,
+    requestId: staleMessageId, intent: staleIntent,
+  });
+  assert.equal(stale.kind, 'started');
+  assert.equal(releaseHttpIngressAuthority(stale.preparationAuthority).released, true);
+  attempt(staleMessageId, {
+    httpIngressAuthority: stale.preparationAuthority, httpIngressIntent: staleIntent,
+  }, staleIntent.conversationId);
+
+  const crossMessageId = 'http-voice-cross-route-1';
+  const crossIntent = {
+    contract: 'PublicHttpIntent/v1', route: '/api/chat', sender: 'Jaap',
+    rawText: text, conversationId: 'voice:http-authority-cross-route',
+    syntheticTest: true, clientAckPublicKey: clientAckPublicKey(),
+  };
+  const cross = beginHttpIngress({
+    channel: 'web', conversationId: crossIntent.conversationId,
+    requestId: crossMessageId, intent: crossIntent,
+  });
+  assert.equal(cross.kind, 'started');
+  attempt(crossMessageId, {
+    httpIngressAuthority: cross.preparationAuthority, httpIngressIntent: crossIntent,
+  }, crossIntent.conversationId);
+  assert.equal(releaseHttpIngressAuthority(cross.preparationAuthority).released, true);
+  assert.equal(Number(db.prepare(`SELECT count(*) AS value FROM main.turn_tool_executions
+    WHERE tool='@turn/understanding'`).get().value), before);
+});
+
 function modelResponse(output) {
   const bytes = Buffer.from(`data: ${JSON.stringify({
     type: 'response.completed', response: { output },
@@ -547,6 +895,116 @@ function understandingOutput(text, reply, callId) {
     }),
   }];
 }
+
+async function withFixedHttpUnderstanding(label, fixedNow, inspect) {
+  const conversationId = `web:fixed-http-authority:${label}`;
+  const requestId = `http-request:fixed-http-authority:${label}:1`;
+  const text = `Bewijs de vaste klok voor ${label}.`;
+  const reply = `De vaste klok voor ${label} is bewezen.`;
+  const intent = {
+    contract: 'PublicHttpIntent/v1', route: '/api/chat', sender: 'Jaap',
+    rawText: text, conversationId, syntheticTest: true,
+    clientAckPublicKey: clientAckPublicKey(),
+  };
+  const nowDescriptor = Object.getOwnPropertyDescriptor(Date, 'now');
+  const fetchDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'fetch');
+  let calls = 0;
+  Object.defineProperty(Date, 'now', { configurable: true, writable: true,
+    value: () => fixedNow });
+  Object.defineProperty(globalThis, 'fetch', { configurable: true, writable: true,
+    value: async () => {
+      calls += 1;
+      return calls === 1
+        ? modelResponse(understandingOutput(text, reply, `understand-${label}`))
+        : modelResponse([{
+          type: 'message', role: 'assistant',
+          content: [{ type: 'output_text', text: reply }],
+        }]);
+    } });
+  try {
+    const begun = beginHttpIngress({ channel: 'web', conversationId, requestId, intent });
+    assert.equal(begun.kind, 'started');
+    const result = await handleMessageDetailed({
+      channel: 'web', sender: 'Jaap', text,
+      messageContext: {
+        conversationId, messageId: requestId, identityTrusted: true,
+        syntheticTest: true, httpIngressAuthority: begun.preparationAuthority,
+        httpIngressIntent: intent,
+      },
+    });
+    assert.equal(result.reply, reply);
+    const row = db.prepare(`SELECT * FROM main.turn_tool_executions
+      WHERE tool='@turn/understanding' AND json_extract(args,'$.messageId')=?`).get(requestId);
+    assert.ok(row);
+    return await inspect({
+      begun, conversationId, requestId, intent, row, text, reply,
+      providerCalls: () => calls,
+    });
+  } finally {
+    restoreOwnProperty(Date, 'now', nowDescriptor);
+    restoreOwnProperty(globalThis, 'fetch', fetchDescriptor);
+  }
+}
+
+test('same-ms release en takeover bewaren de legitieme historische HTTP-sidecar', async () => {
+  const fixedNow = Date.now() + 60_000;
+  await withFixedHttpUnderstanding('same-ms', fixedNow, async ({
+    begun, conversationId, requestId, intent, row, text, reply, providerCalls,
+  }) => {
+    const beforeRelease = turnUnderstandingAuthorityRecord(db, row);
+    assert.equal(beforeRelease?.sourceGeneration, 1);
+    assert.equal(releaseHttpIngressAuthority(begun.preparationAuthority).released, true);
+    const afterRelease = turnUnderstandingAuthorityRecord(db, row);
+    const takeover = beginHttpIngress({
+      channel: 'web', conversationId, requestId, intent,
+    });
+    assert.equal(takeover.kind, 'resume');
+    assert.equal(takeover.claim.generation, 2);
+    const afterTakeover = turnUnderstandingAuthorityRecord(db, row);
+    assert.equal(afterRelease?.sourceGeneration, 1);
+    assert.equal(afterTakeover?.sourceGeneration, 1);
+    const durableBeforeReplay = db.prepare(`SELECT status,finished_ts,output,
+      output_sha256,material_sha256,completion_record_sha256
+      FROM main.turn_tool_executions WHERE execution_key=?`).get(row.execution_key);
+    const callsBeforeReplay = providerCalls();
+    const replay = await handleMessageDetailed({
+      channel: 'web', sender: 'Jaap', text,
+      messageContext: {
+        conversationId, messageId: requestId, identityTrusted: true,
+        syntheticTest: true, httpIngressAuthority: takeover.preparationAuthority,
+        httpIngressIntent: intent,
+      },
+    });
+    assert.equal(replay.replayed, true);
+    assert.equal(replay.reply, reply);
+    assert.equal(providerCalls(), callsBeforeReplay);
+    assert.deepEqual(db.prepare(`SELECT status,finished_ts,output,
+      output_sha256,material_sha256,completion_record_sha256
+      FROM main.turn_tool_executions WHERE execution_key=?`).get(row.execution_key),
+    durableBeforeReplay);
+  });
+});
+
+test('een toekomstige JS-klok bindt de HTTP-sidecar aan het exacte claimevent', async () => {
+  const fixedNow = Date.now() + 31_000;
+  await withFixedHttpUnderstanding('future-js-clock', fixedNow, async ({ row }) => {
+    const stored = db.prepare(`SELECT source_ref FROM
+      main.eva_turn_understanding_authorities_v1 WHERE execution_key=?`).get(
+      row.execution_key,
+    );
+    const claim = db.prepare(`SELECT claim_event_ref,created_ts FROM
+      main.eva_http_ingress_claim_events WHERE phase='execution'
+        AND request_ref=? AND action IN ('acquired','renewed')
+      ORDER BY generation DESC,sequence DESC LIMIT 1`).get(stored.source_ref);
+    const sqliteNow = db.prepare(
+      "SELECT strftime('%Y-%m-%dT%H:%M:%fZ','now') AS value",
+    ).get().value;
+    assert.ok(Date.parse(claim.created_ts) > Date.parse(sqliteNow));
+    const authority = turnUnderstandingAuthorityRecord(db, row);
+    assert.equal(authority?.issuedTs, claim.created_ts);
+    assert.equal(authority?.sourceClaimEventRef, claim.claim_event_ref);
+  });
+});
 
 test('oversized Prepared-uitvoer rolt de private CAS terug en blijft herstelbaar', async () => {
   const conversationId = 'web:oversized-private-completion';
@@ -794,11 +1252,12 @@ test('de echte HTTP preparation mint atomair één sidecar en typed Prepared-res
     WHERE execution_key=?`).get(row.execution_key);
   assert.equal(row.status, 'done');
   assert.equal(row.execution_contract, 'ExecutionRecord/v2');
-  assert.equal(sidecar.contract, 'TurnUnderstandingExecutionAuthority/v1');
+  assert.equal(sidecar.contract, TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2);
   assert.equal(sidecar.execution_seq, row.execution_seq);
   assert.equal(sidecar.intent_record_sha256, row.intent_record_sha256);
   assert.equal(sidecar.source_kind, 'http_ingress');
   assert.equal(sidecar.source_sha256, begun.request.intentSha256);
+  assert.match(sidecar.source_claim_event_ref, /^http-claim-event:[a-f0-9]{64}$/u);
   assert.equal(JSON.parse(row.output).contract, 'PreparedUnderstandingTurn/v1');
   assert.equal(preparedUnderstandingIngressReplay({
     channel: 'web', conversationId, messageId: requestId, sender: 'Jaap',
@@ -814,10 +1273,10 @@ test('de echte HTTP preparation mint atomair één sidecar en typed Prepared-res
     main.eva_turn_understanding_authorities_v1 (
       contract,execution_key,execution_seq,intent_record_sha256,channel,
       conversation_id,message_id,source_kind,source_ref,source_sha256,
-      source_body_json,source_generation,authority_sha256,issued_ts
+      source_body_json,source_generation,source_claim_event_ref,authority_sha256,issued_ts
     ) SELECT contract,execution_key,execution_seq,intent_record_sha256,channel,
       conversation_id,message_id,source_kind,source_ref,source_sha256,
-      source_body_json,source_generation,authority_sha256,issued_ts
+      source_body_json,source_generation,source_claim_event_ref,authority_sha256,issued_ts
       FROM main.eva_turn_understanding_authorities_v1 WHERE execution_key=?`).run(
     row.execution_key,
   ), /replacement is forbidden|append-only|requires exact started V2 execution/u);

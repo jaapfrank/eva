@@ -12,6 +12,7 @@ import {
   consumeHttpResponseAuthority,
   httpResponseAuthorityStoreStatus,
 } from './httpresponseauthority.js';
+import { verifiedDurableHttpIngressUnderstandingSource } from './httpingress.js';
 import { exactSqliteIndexSignatures } from './sqliteindexattestation.js';
 
 export { canonicalHttpClientAckPreimage, verifyHttpClientAck } from './httpack.js';
@@ -69,6 +70,7 @@ const TRANSMISSION_MODES = new Set(['pre_ack_retrieval', 'acknowledged_retrieval
 const LEASE_MS = 30_000;
 const CLAIMS = new WeakMap();
 const TRANSMISSION_CLAIMS = new WeakMap();
+const ACKNOWLEDGED_AGENT_DELIVERY_PROOFS = new WeakMap();
 let initializationFailure = '';
 
 const hash = (value) => createHash('sha256').update(value).digest('hex');
@@ -1508,11 +1510,12 @@ export function beginHttpDelivery(responseAuthority) {
       .get(normalized.body.requestRef);
   }
   const ack = validateAck(ackRow(row), row);
-  return freeze({
+  const state = freeze({
     contract: 'HttpDeliveryState/v3', kind: ack ? 'acknowledged' : 'prepared',
     state: ack ? 'acknowledged' : 'prepared', delivered: Boolean(ack),
     delivery: itemReceipt(row), ...(ack ? { ack, wire: wireFor(row) } : {}),
   });
+  return ack ? issueAcknowledgedAgentDeliveryProof(state) : state;
 }
 
 export function replayHttpDelivery(delivery) {
@@ -1761,6 +1764,95 @@ function acknowledgedState(row) {
   });
 }
 
+// Dit opaque bewijs is attempt-scoped: dezelfde duurzame ACK mag voor een
+// nieuwe herstelpoging een nieuw object opleveren. Exacte herverificatie tegen
+// ingress, wire en ACK plus de transactionele receipt/chat_out-projectie
+// leveren de veiligheid; lokale release is geen duurzame one-shot lock.
+function issueAcknowledgedAgentDeliveryProof(state) {
+  const row = deliveryDb.prepare(`SELECT * FROM ${mainTable(ITEM_TABLE)}
+    WHERE delivery_ref=?`).get(state?.delivery?.deliveryRef);
+  if (!row) throw new Error('acknowledged HTTP agentdelivery mist haar duurzame item');
+  validateItem(row);
+  const ack = validateAck(ackRow(row), row);
+  if (!ack || ack.ackReceiptRef !== state.ack.ackReceiptRef) {
+    throw new Error('acknowledged HTTP agentdelivery mist haar duurzame ACK');
+  }
+  const proof = Object.freeze({
+    contract: 'AcknowledgedHttpAgentDeliveryProof/v1',
+  });
+  ACKNOWLEDGED_AGENT_DELIVERY_PROOFS.set(proof, Object.freeze({
+    deliveryRowId: Number(row.id), deliveryRef: row.delivery_ref,
+    requestRef: row.request_ref, turnId: row.turn_id,
+    provenanceSha256: row.provenance_sha256, wireSha256: row.wire_sha256,
+    ackReceiptRef: ack.ackReceiptRef,
+  }));
+  return Object.freeze({ ...state, agentDeliveryProof: proof });
+}
+
+function exactAcknowledgedAgentDeliveryIngress(row, delivery) {
+  const expectedIngress = delivery?.transport === 'http-voice'
+    ? { channel: 'voice', route: '/api/voice', sourceKind: 'http_voice_ingress' }
+    : null;
+  if (!expectedIngress) return false;
+  const request = deliveryDb.prepare(`SELECT channel,conversation_id,request_id
+    FROM main.eva_http_ingress_requests WHERE request_ref=?`).get(row.request_ref);
+  const source = request ? verifiedDurableHttpIngressUnderstandingSource({
+    channel: request.channel,
+    conversationId: request.conversation_id,
+    requestId: request.request_id,
+  }) : null;
+  return Boolean(source
+    && source.channel === expectedIngress.channel
+    && source.route === expectedIngress.route
+    && source.sourceKind === expectedIngress.sourceKind
+    && source.sourceRef === row.request_ref);
+}
+
+function exactAcknowledgedAgentDeliveryProof(proof, expected = {}) {
+  const attestation = proof && typeof proof === 'object'
+    ? ACKNOWLEDGED_AGENT_DELIVERY_PROOFS.get(proof) : null;
+  if (!attestation
+    || proof.contract !== 'AcknowledgedHttpAgentDeliveryProof/v1') return false;
+  try {
+    requireStore();
+    const row = deliveryDb.prepare(`SELECT * FROM ${mainTable(ITEM_TABLE)}
+      WHERE id=? AND delivery_ref=?`).get(
+      attestation.deliveryRowId, attestation.deliveryRef,
+    );
+    validateItem(row);
+    const ack = validateAck(ackRow(row), row);
+    const delivery = expected?.delivery;
+    return Boolean(ack
+      && row.request_ref === attestation.requestRef
+      && row.turn_id === attestation.turnId
+      && row.provenance_sha256 === attestation.provenanceSha256
+      && row.wire_sha256 === attestation.wireSha256
+      && ack.ackReceiptRef === attestation.ackReceiptRef
+      && String(expected?.requestRef || '') === row.request_ref
+      && String(expected?.turnId || '') === row.turn_id
+      && String(expected?.preparedSha256 || '') === row.provenance_sha256
+      && delivery?.accepted === true && delivery.transport === 'http-voice'
+      && exactAcknowledgedAgentDeliveryIngress(row, delivery)
+      && delivery.durableHttpRequestRef === row.request_ref
+      && delivery.clientAckReceiptRef === ack.ackReceiptRef
+      && delivery.httpWireSha256 === row.wire_sha256);
+  } catch { return false; }
+}
+
+export function verifiedAcknowledgedHttpAgentDeliveryProof(
+  proof, expected = {},
+) {
+  return exactAcknowledgedAgentDeliveryProof(proof, expected);
+}
+
+export function releaseAcknowledgedHttpAgentDeliveryProof(
+  proof, expected = {},
+) {
+  if (!exactAcknowledgedAgentDeliveryProof(proof, expected)) return false;
+  ACKNOWLEDGED_AGENT_DELIVERY_PROOFS.delete(proof);
+  return true;
+}
+
 export function acknowledgeHttpDelivery(input) {
   requireStore();
   if (!input || typeof input !== 'object' || !DELIVERY_REF.test(input.deliveryRef)) {
@@ -1839,5 +1931,5 @@ export function acknowledgeHttpDelivery(input) {
     outcome = acknowledgedState(row);
     if (!outcome) throw error;
   }
-  return outcome;
+  return issueAcknowledgedAgentDeliveryProof(outcome);
 }

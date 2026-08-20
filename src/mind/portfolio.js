@@ -16,6 +16,8 @@ import {
   turnUnderstandingAuthorityStoreStatus,
 } from '../turnauthority.js';
 import { verifiedVoiceFinalDeliveryRecoveryProof } from '../voiceauthority.js';
+import { verifiedAcknowledgedHttpAgentDeliveryProof } from '../web/httpdelivery.js';
+import { verifiedDurableHttpIngressUnderstandingSource } from '../web/httpingress.js';
 import { redactSensitiveText } from '../security/redaction.js';
 import { canonicalJson, errMsg, verifiedCompleteReceipt } from '../util.js';
 import {
@@ -4602,6 +4604,89 @@ function exactFinalDeliveryCandidate({
   ].every(Boolean);
 }
 
+function verifyHttpVoiceFinalDeliveryRecovery({
+  binding, candidate, suppliedBinding, verifiedTransport,
+}) {
+  const suppliedKeys = Object.keys(suppliedBinding).sort();
+  const identity = {
+    channel: 'voice', conversationId: binding.conversationId,
+    messageId: binding.turnOriginMessageId,
+  };
+  const executionKey = `turn-understanding:${createHash('sha256')
+    .update(canonicalJson(identity)).digest('hex')}`;
+  const raw = db.prepare(`SELECT * FROM main.turn_tool_executions
+    WHERE execution_key=? AND turn_id=? AND tool='@turn/understanding'`).get(
+    executionKey,
+    `ingress:voice:${binding.conversationId}:${binding.turnOriginMessageId}`,
+  );
+  let row;
+  let args;
+  let output;
+  let authority;
+  try {
+    row = validateExecutionRecord(raw);
+    args = JSON.parse(String(row.args || 'null'));
+    output = verifyPreparedUnderstandingTurn(
+      JSON.parse(String(row.output || 'null')), identity,
+    );
+    authority = turnUnderstandingAuthorityRecord(db, row);
+  } catch { /* fail closed below */ }
+  const source = authority ? verifiedDurableHttpIngressUnderstandingSource({
+    channel: 'voice', conversationId: binding.conversationId,
+    requestId: binding.turnOriginMessageId,
+  }) : null;
+  const exactPrepared = Boolean(row?.status === 'done' && output && authority && source
+    && canonicalJson(output) === row.output
+    && args?.channel === 'voice'
+    && args?.conversationId === binding.conversationId
+    && String(args?.messageId || '') === String(binding.turnOriginMessageId || '')
+    && args?.requester === candidate.delivery_target
+    && args?.syntheticTest === false
+    && output.channel === 'voice'
+    && output.conversationId === binding.conversationId
+    && output.originMessageId === binding.turnOriginMessageId
+    && output.turnId === binding.turnId
+    && output.reply === candidate.result_text
+    && Number(output.workItemId) === Number(binding.workItemId)
+    && Number(output.goalEpisodeId) === Number(binding.episodeId)
+    && output.finalDeliveryBindingSha256 === binding.bindingSha256
+    && output.syntheticTest === false && output.error === null
+    && authority.executionKey === executionKey
+    && authority.channel === 'voice'
+    && authority.conversationId === binding.conversationId
+    && authority.messageId === binding.turnOriginMessageId
+    && authority.sourceKind === 'http_voice_ingress'
+    && !Object.hasOwn(authority, 'sourceBodyJson')
+    && source.contract === 'VerifiedDurableHttpIngressUnderstandingSource/v1'
+    && source.channel === 'voice' && source.route === '/api/voice'
+    && source.requestId === binding.turnOriginMessageId
+    && source.sourceKind === 'http_voice_ingress'
+    && source.sourceRef === authority.sourceRef
+    && source.sourceSha256 === authority.sourceSha256
+    && source.sourceBodyJson === null
+    && Number(source.sourceGeneration) >= Number(authority.sourceGeneration)
+    && verifiedTransport?.accepted === true
+    && verifiedTransport.transport === 'http-voice'
+    && verifiedTransport.durableHttpRequestRef === source.sourceRef);
+  if (canonicalJson(suppliedKeys) !== canonicalJson([
+    'bindingSha256', 'httpVoiceAckProof', 'recovery',
+  ])
+    || suppliedBinding.bindingSha256 !== binding.bindingSha256
+    || suppliedBinding.recovery !== 'http_voice_ack'
+    || !exactPrepared
+    || !verifiedAcknowledgedHttpAgentDeliveryProof(
+      suppliedBinding.httpVoiceAckProof,
+      {
+        requestRef: source?.sourceRef,
+        turnId: binding.turnId,
+        preparedSha256: output?.sha256,
+        delivery: verifiedTransport,
+      },
+    )) {
+    throw new Error('finale HTTP-voice aflevering mist exact duurzaam ACK-herstelbewijs');
+  }
+}
+
 function verifyVoiceFinalDeliveryRecovery({
   binding, candidate, suppliedBinding, verifiedTransport,
 }) {
@@ -4632,6 +4717,13 @@ function verifyVoiceFinalDeliveryRecovery({
 
 function verifyFinalDeliveryProof({ binding, candidate, suppliedBinding, verifiedTransport }) {
   if (String(candidate.delivered_channel || '').toLowerCase() !== 'telegram') {
+    if (candidate.delivered_channel === 'voice'
+      && suppliedBinding?.recovery === 'http_voice_ack') {
+      verifyHttpVoiceFinalDeliveryRecovery({
+        binding, candidate, suppliedBinding, verifiedTransport,
+      });
+      return;
+    }
     if (candidate.delivered_channel === 'voice' && suppliedBinding?.recovery === true) {
       verifyVoiceFinalDeliveryRecovery({
         binding, candidate, suppliedBinding, verifiedTransport,

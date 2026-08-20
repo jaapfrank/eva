@@ -107,8 +107,13 @@ import { createWorkItem, durableWorkStatus } from './work.js';
 import { householdContextText, recordRelationshipFeedback } from './household.js';
 import {
   httpIngressAuthorityCurrent,
+  verifiedDurableHttpIngressUnderstandingSource,
   verifiedHttpIngressExecutionAuthority,
 } from '../web/httpingress.js';
+import {
+  releaseAcknowledgedHttpAgentDeliveryProof,
+  verifiedAcknowledgedHttpAgentDeliveryProof,
+} from '../web/httpdelivery.js';
 import {
   behaviorCanaryLens,
   claimBehaviorCanaryForPerson,
@@ -206,6 +211,7 @@ import {
 } from './voicebridge.js';
 import {
   TURN_UNDERSTANDING_AUTHORITY_CONTRACT,
+  TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2,
   TURN_UNDERSTANDING_AUTHORITY_TABLE,
   requireTurnUnderstandingAuthorityStore,
   turnUnderstandingAuthorityBody,
@@ -527,14 +533,24 @@ function prepareIssuedInterpretationRetryDelivery(item, episode, candidate, sess
 }
 
 function registerInteractiveIngress(
-  channel, conversationId, messageContext = null, verifiedNativeSource = null,
+  channel, conversationId, messageContext = null, verifiedIngressSource = null,
 ) {
   let scope = '';
   let token = '';
-  if (['telegram', 'voice'].includes(channel)) {
-    if (!verifiedNativeSource) return { scope, token };
-    scope = String(verifiedNativeSource.ingressScope || '');
-    token = String(verifiedNativeSource.ingressToken || '');
+  if (channel === 'voice' && verifiedIngressSource?.kind === 'http_voice_ingress') {
+    const lane = String(conversationId || '').trim();
+    if (!lane) return { scope, token };
+    scope = `${channel}:${lane}`;
+    token = String(messageContext?.messageId || '').trim();
+    if (!token) {
+      throw Object.assign(new Error('voice-over-HTTP mist haar geverifieerde requestbinding'), {
+        code: 'EVA_TURN_AUTHORITY_INGRESS_MISMATCH',
+      });
+    }
+  } else if (['telegram', 'voice'].includes(channel)) {
+    if (!verifiedIngressSource) return { scope, token };
+    scope = String(verifiedIngressSource.ingressScope || '');
+    token = String(verifiedIngressSource.ingressToken || '');
     if (!scope || !token
       || String(messageContext?.ingressScope || '') !== scope
       || String(messageContext?.ingressToken || '') !== token) {
@@ -5612,6 +5628,49 @@ function turnUnderstandingCompletionSha256(row) {
   })).digest('hex');
 }
 
+function verifiedHttpVoiceUnderstandingSource(messageContext, expected) {
+  const hasHttpAuthority = Object.hasOwn(messageContext || {}, 'httpIngressAuthority');
+  const hasHttpIntent = Object.hasOwn(messageContext || {}, 'httpIngressIntent');
+  const hasNativeAuthority = Object.hasOwn(
+    messageContext || {}, 'voiceUnderstandingAuthority',
+  );
+  if (hasNativeAuthority || hasHttpAuthority !== hasHttpIntent
+    || !hasHttpAuthority) return null;
+  const intent = messageContext.httpIngressIntent;
+  if (!intent || intent.route !== '/api/voice'
+    || intent.sender !== expected.requester
+    || String(intent.rawText ?? '').trim() !== expected.originalText) return null;
+  const http = verifiedHttpIngressExecutionAuthority(
+    messageContext.httpIngressAuthority,
+    Object.freeze({
+      channel: 'voice', conversationId: expected.conversationId,
+      requestId: expected.messageId, intent,
+    }),
+  );
+  return http?.channel === 'voice'
+    && http.conversationId === expected.conversationId
+    && http.requestId === expected.messageId
+    ? Object.freeze({
+      kind: 'http_voice_ingress', ref: http.requestRef,
+      sha256: http.intentSha256, generation: Number(http.generation),
+      claimEventRef: http.claimEventRef,
+    }) : null;
+}
+
+function verifiedVoiceTurnUnderstandingSource(messageContext, expected) {
+  const hasHttpAuthority = Object.hasOwn(messageContext || {}, 'httpIngressAuthority');
+  const hasHttpIntent = Object.hasOwn(messageContext || {}, 'httpIngressIntent');
+  const hasNativeAuthority = Object.hasOwn(
+    messageContext || {}, 'voiceUnderstandingAuthority',
+  );
+  if (hasHttpAuthority || hasHttpIntent) {
+    if (hasNativeAuthority) return null;
+    return verifiedHttpVoiceUnderstandingSource(messageContext, expected);
+  }
+  return hasNativeAuthority
+    ? verifiedVoiceUnderstandingSource(messageContext, expected) : null;
+}
+
 /** @param {any} input */
 function exactTurnUnderstandingSource({
   channel, conversationId, messageId, requester, originalText, messageContext,
@@ -5631,11 +5690,12 @@ function exactTurnUnderstandingSource({
       if (http) verified = Object.freeze({
         kind: 'http_ingress', ref: http.requestRef,
         sha256: http.intentSha256, generation: Number(http.generation),
+        claimEventRef: http.claimEventRef,
       });
     } else if (channel === 'telegram') {
       verified = verifiedTelegramUnderstandingSource(messageContext, expected);
     } else if (channel === 'voice') {
-      verified = verifiedVoiceUnderstandingSource(messageContext, expected);
+      verified = verifiedVoiceTurnUnderstandingSource(messageContext, expected);
     }
     const generation = Number(verified?.generation);
     return verified && Number.isSafeInteger(generation) && generation >= 1
@@ -5643,6 +5703,8 @@ function exactTurnUnderstandingSource({
         kind: verified.kind, ref: verified.ref,
         sha256: verified.sha256,
         ...(typeof verified.bodyJson === 'string' ? { bodyJson: verified.bodyJson } : {}),
+        ...('claimEventRef' in verified && typeof verified.claimEventRef === 'string'
+          ? { claimEventRef: verified.claimEventRef } : {}),
         generation,
       }) : null;
   };
@@ -5656,9 +5718,26 @@ function exactTurnUnderstandingSource({
 
 /** @param {any} execution @param {any} source */
 function insertTurnUnderstandingAuthority(execution, source) {
-  const issuedTs = new Date().toISOString();
+  const httpSource = ['http_ingress', 'http_voice_ingress'].includes(source?.kind);
+  let issuedTs = new Date().toISOString();
+  if (httpSource) {
+    const currentClaim = /** @type {{generation:number,action:string,
+      claim_event_ref:string,created_ts:string}|undefined} */ (db.prepare(`SELECT
+      generation,action,claim_event_ref,created_ts
+      FROM main.eva_http_ingress_claim_events
+      WHERE request_ref=? AND phase='execution'
+      ORDER BY generation DESC,sequence DESC LIMIT 1`).get(source.ref));
+    if (!currentClaim || Number(currentClaim.generation) !== Number(source.generation)
+      || !['acquired', 'renewed'].includes(currentClaim.action)
+      || currentClaim.claim_event_ref !== source.claimEventRef) {
+      throw new Error('HTTP understanding-sidecar mist haar actuele claimevent');
+    }
+    issuedTs = String(currentClaim.created_ts || '');
+  }
   const draft = {
-    contract: TURN_UNDERSTANDING_AUTHORITY_CONTRACT,
+    contract: httpSource
+      ? TURN_UNDERSTANDING_AUTHORITY_CONTRACT_V2
+      : TURN_UNDERSTANDING_AUTHORITY_CONTRACT,
     execution_key: execution.execution_key,
     execution_seq: Number(execution.execution_seq),
     intent_record_sha256: execution.intent_record_sha256,
@@ -5670,6 +5749,7 @@ function insertTurnUnderstandingAuthority(execution, source) {
     source_sha256: source.sha256,
     source_body_json: source.bodyJson ?? null,
     source_generation: Number(source.generation),
+    source_claim_event_ref: httpSource ? source.claimEventRef : null,
     authority_sha256: '',
     issued_ts: issuedTs,
   };
@@ -5679,10 +5759,10 @@ function insertTurnUnderstandingAuthority(execution, source) {
   db.prepare(`INSERT INTO main.${TURN_UNDERSTANDING_AUTHORITY_TABLE} (
     contract,execution_key,execution_seq,intent_record_sha256,channel,
     conversation_id,message_id,source_kind,source_ref,source_sha256,source_body_json,
-    source_generation,authority_sha256,issued_ts
+    source_generation,source_claim_event_ref,authority_sha256,issued_ts
   ) VALUES (@contract,@execution_key,@execution_seq,@intent_record_sha256,@channel,
     @conversation_id,@message_id,@source_kind,@source_ref,@source_sha256,@source_body_json,
-    @source_generation,@authority_sha256,@issued_ts)`).run(draft);
+    @source_generation,@source_claim_event_ref,@authority_sha256,@issued_ts)`).run(draft);
 }
 
 /** @param {any} row @param {any} source */
@@ -5907,11 +5987,16 @@ function claimTurnUnderstandingExecution({
         if (!durable) {
           throw new Error('historische understanding zonder sidecar heeft geen authority');
         }
-        if (durable.sourceKind !== source.kind
-          || durable.sourceRef !== source.ref
-          || durable.sourceSha256 !== source.sha256
-          || (durable.sourceBodyJson ?? null) !== (source.bodyJson ?? null)
-          || durable.sourceGeneration !== Number(source.generation)) {
+        const sameSource = durable.sourceKind === source.kind
+          && durable.sourceRef === source.ref
+          && durable.sourceSha256 === source.sha256
+          && (durable.sourceBodyJson ?? null) === (source.bodyJson ?? null);
+        const sourceGeneration = Number(source.generation);
+        const historicalHttpReplay = ['http_ingress', 'http_voice_ingress'].includes(
+          durable.sourceKind,
+        ) && sourceGeneration >= durable.sourceGeneration;
+        if (!sameSource || (sourceGeneration !== durable.sourceGeneration
+          && !historicalHttpReplay)) {
           throw new Error('historische understanding hoort bij een andere authentieke bron');
         }
       } else {
@@ -6598,14 +6683,37 @@ export function verifiedPreparedUnderstandingTurnForResult(result, expected = {}
   if (!exact || (telegramPreparedProjection && exact.identity.channel !== 'telegram')) return null;
   if (['telegram', 'voice'].includes(exact.identity.channel)) {
     const authority = exact.receipt.authority;
-    if (!Object.hasOwn(expected, 'sourceRef')
+    const currentHttpVoiceSource = authority.sourceKind === 'http_voice_ingress'
+      ? verifiedDurableHttpIngressUnderstandingSource({
+        channel: exact.identity.channel,
+        conversationId: exact.identity.conversationId,
+        requestId: exact.identity.messageId,
+      }) : null;
+    const historicalHttpVoiceReplay = Boolean(currentHttpVoiceSource
+      && currentHttpVoiceSource.channel === 'voice'
+      && currentHttpVoiceSource.route === '/api/voice'
+      && currentHttpVoiceSource.sourceKind === 'http_voice_ingress'
+      && currentHttpVoiceSource.sourceRef === authority.sourceRef
+      && currentHttpVoiceSource.sourceSha256 === authority.sourceSha256
+      && currentHttpVoiceSource.sourceBodyJson === null
+      && Number(currentHttpVoiceSource.sourceGeneration) >= authority.sourceGeneration
+      && expected.sourceKind === currentHttpVoiceSource.sourceKind
+      && expected.sourceRef === currentHttpVoiceSource.sourceRef
+      && expected.sourceSha256 === currentHttpVoiceSource.sourceSha256
+      && (expected.sourceBodyJson ?? null) === currentHttpVoiceSource.sourceBodyJson
+      && Number(expected.sourceGeneration)
+        === Number(currentHttpVoiceSource.sourceGeneration));
+    if ((authority.sourceKind === 'http_voice_ingress'
+      && expected.sourceKind !== 'http_voice_ingress')
+      || !Object.hasOwn(expected, 'sourceRef')
       || !Object.hasOwn(expected, 'sourceSha256')
       || !Object.hasOwn(expected, 'sourceBodyJson')
       || !Object.hasOwn(expected, 'sourceGeneration')
       || String(expected.sourceRef || '') !== authority.sourceRef
       || String(expected.sourceSha256 || '') !== authority.sourceSha256
       || String(expected.sourceBodyJson || '') !== String(authority.sourceBodyJson || '')
-      || Number(expected.sourceGeneration) !== authority.sourceGeneration) return null;
+      || (Number(expected.sourceGeneration) !== authority.sourceGeneration
+        && !historicalHttpVoiceReplay)) return null;
   }
   if (!issueDeliverableResult(result, {
     kind: telegramPreparedProjection
@@ -10260,12 +10368,14 @@ export function handleMessageDetailed(input) {
     sender,
     messageContext: suppliedMessageContext,
   });
-  let verifiedNativeSource = null;
+  let verifiedIngressSource = null;
   if (['telegram', 'voice'].includes(channel)) {
-    const nativeAuthority = channel === 'telegram'
-      ? suppliedMessageContext?.telegramUnderstandingAuthority
-      : suppliedMessageContext?.voiceUnderstandingAuthority;
-    if (nativeAuthority == null) {
+    const declaredIngressAuthority = channel === 'telegram'
+      ? Object.hasOwn(suppliedMessageContext, 'telegramUnderstandingAuthority')
+      : Object.hasOwn(suppliedMessageContext, 'voiceUnderstandingAuthority')
+        || Object.hasOwn(suppliedMessageContext, 'httpIngressAuthority')
+        || Object.hasOwn(suppliedMessageContext, 'httpIngressIntent');
+    if (!declaredIngressAuthority) {
       throw Object.assign(new Error(`${channel}-ingress vereist een private authority`), {
         code: 'EVA_TURN_AUTHORITY_INGRESS_UNAVAILABLE',
       });
@@ -10277,17 +10387,17 @@ export function handleMessageDetailed(input) {
       requester: String(sender || '').trim(),
       originalText: String(input?.text ?? '').trim(),
     });
-    verifiedNativeSource = channel === 'telegram'
+    verifiedIngressSource = channel === 'telegram'
       ? verifiedTelegramUnderstandingSource(suppliedMessageContext, expected)
-      : verifiedVoiceUnderstandingSource(suppliedMessageContext, expected);
-    if (!verifiedNativeSource) {
+      : verifiedVoiceTurnUnderstandingSource(suppliedMessageContext, expected);
+    if (!verifiedIngressSource) {
       throw Object.assign(new Error(`${channel}-ingressauthority is niet exact aan deze beurt gebonden`), {
         code: 'EVA_TURN_AUTHORITY_INGRESS_MISMATCH',
       });
     }
   }
   const ingress = registerInteractiveIngress(
-    channel, conversationId, suppliedMessageContext, verifiedNativeSource,
+    channel, conversationId, suppliedMessageContext, verifiedIngressSource,
   );
   const messageContext = ingress.scope ? {
     ...suppliedMessageContext,
@@ -10331,6 +10441,36 @@ function exactFinalDeliveryCapability(result, capability, turnId, reply) {
     createHash('sha256').update(reply).digest('hex')
       === String(capability.resultObjectReplySha256 || ''),
   ].every(Boolean);
+}
+
+function httpVoiceAckFinalDeliveryRecoveryCapability(issuedResult, deliveryProof) {
+  const body = issuedResult?.body;
+  const source = issuedResult?.durableSource;
+  if (!body || body.originChannel !== 'voice' || body.replayed !== true
+    || body.syntheticTest === true || source?.sourceKind !== 'http_voice_ingress'
+    || source.sourceBodyJson !== null
+    || !Number.isSafeInteger(Number(source.sourceGeneration))
+    || Number(source.sourceGeneration) < 1 || Number(source.sourceGeneration) > 64
+    || !Number.isSafeInteger(Number(body.goalEpisodeId))
+    || Number(body.goalEpisodeId) < 1
+    || !Number.isSafeInteger(Number(body.workItemId))
+    || Number(body.workItemId) < 1
+    || !/^[a-f0-9]{64}$/u.test(String(body.finalDeliveryBindingSha256 || ''))
+    || !deliveryProof || typeof deliveryProof !== 'object') return null;
+  return Object.freeze({
+    bindingSha256: body.finalDeliveryBindingSha256,
+    episodeId: body.goalEpisodeId,
+    workItemId: body.workItemId,
+    turnId: body.turnId,
+    channel: body.originChannel,
+    conversationId: body.originConversationId,
+    originMessageId: body.originMessageId,
+    replySha256: body.replySha256,
+    resultObjectReplySha256: createHash('sha256')
+      .update(body.reply.trim()).digest('hex'),
+    recovery: 'http_voice_ack',
+    httpVoiceAckProof: deliveryProof,
+  });
 }
 
 function canonicalDeliveredTransport(delivery) {
@@ -10417,6 +10557,13 @@ function suppliedFinalDeliveryBinding(result, capability) {
       recovery: true,
     };
   }
+  if (result.channel === 'voice' && capability?.recovery === 'http_voice_ack') {
+    return {
+      bindingSha256: capability.bindingSha256,
+      recovery: 'http_voice_ack',
+      httpVoiceAckProof: capability.httpVoiceAckProof,
+    };
+  }
   if (result.channel === 'voice' && capability?.recovery === true) {
     return {
       bindingSha256: capability.bindingSha256,
@@ -10473,15 +10620,28 @@ export function recordDeliveredReply(result, delivery = null, deliveryAuthority 
   const turnId = issuedResult.body.turnId.trim();
   const reply = issuedResult.body.reply.trim();
   if (!turnId || !reply || delivery?.accepted !== true) return false;
-  // De oorspronkelijke issued-result provenance kiest de native verifier.
-  // Caller-controlled channel/transportlabels kunnen deze grens dus niet
-  // verlagen naar een webdelivery zonder private native one-shot authority.
+  const httpVoiceDelivery = issuedResult.body.originChannel === 'voice'
+    && issuedResult.durableSource?.sourceKind === 'http_voice_ingress';
+  const httpVoiceExpected = httpVoiceDelivery ? Object.freeze({
+    requestRef: issuedResult.durableSource.sourceRef,
+    turnId,
+    preparedSha256: issuedResult.durableSource.preparedSha256,
+    delivery,
+  }) : null;
+  // De issued duurzame bron kiest de verifier. Caller-controlled channel- of
+  // transportlabels kunnen native voice dus niet verlagen naar HTTP-delivery.
   if (issuedResult.body.originChannel === 'telegram'
     && !verifiedTelegramDeliveryAuthority(deliveryAuthority, result, delivery)) return false;
-  if (issuedResult.body.originChannel === 'voice'
+  if (issuedResult.body.originChannel === 'voice' && !httpVoiceDelivery
     && !verifiedVoiceDeliveryAuthority(deliveryAuthority, result, delivery)) return false;
+  if (httpVoiceDelivery && !verifiedAcknowledgedHttpAgentDeliveryProof(
+    deliveryAuthority, httpVoiceExpected,
+  )) return false;
   const committed = db.transaction(() => {
-    const finalDeliveryCapability = ISSUED_FINAL_DELIVERY_CAPABILITIES.get(result) || null;
+    const finalDeliveryCapability = ISSUED_FINAL_DELIVERY_CAPABILITIES.get(result)
+      || (httpVoiceDelivery
+        ? httpVoiceAckFinalDeliveryRecoveryCapability(issuedResult, deliveryAuthority)
+        : null);
     if (!exactFinalDeliveryCapability(result, finalDeliveryCapability, turnId, reply)) {
       return { accepted: false, finalDeliveryCapability, recordedDelivery: null };
     }
@@ -10495,7 +10655,8 @@ export function recordDeliveredReply(result, delivery = null, deliveryAuthority 
     const recordedDelivery = recordDeliveredTurnTimeline(
       result, delivery, turnId, reply, issuedResult,
     );
-    if (issuedResult.body.originChannel === 'voice' && !recordedDelivery.alreadyRecorded) {
+    if (issuedResult.body.originChannel === 'voice' && !httpVoiceDelivery
+      && !recordedDelivery.alreadyRecorded) {
       recordVoiceDeliveredProjection(db, {
         requestId: issuedResult.body.originMessageId,
         resultBodyJson: issuedResult.bodyJson,
@@ -10510,10 +10671,20 @@ export function recordDeliveredReply(result, delivery = null, deliveryAuthority 
       recordedDelivery,
     };
   }).immediate();
+  const exactIdempotentProjection = committed.accepted
+    || committed.recordedDelivery?.alreadyRecorded === true;
+  if (httpVoiceDelivery && exactIdempotentProjection
+    && !releaseAcknowledgedHttpAgentDeliveryProof(
+      deliveryAuthority, httpVoiceExpected,
+    )) {
+    throw new Error('gecommitteerde HTTP-delivery verloor haar lokale attempt-proofrelease');
+  }
   if (!committed.accepted) return false;
   const consumedNativeAuthority = issuedResult.body.originChannel === 'telegram'
     ? consumeTelegramDeliveryAuthority(deliveryAuthority, result, delivery)
-    : issuedResult.body.originChannel === 'voice'
+    : httpVoiceDelivery
+      ? true
+      : issuedResult.body.originChannel === 'voice'
       ? consumeVoiceDeliveryAuthority(deliveryAuthority, result, delivery)
       : true;
   if (!consumedNativeAuthority) {

@@ -62,7 +62,6 @@ function testDependencies() {
       handled += 1;
       if (input.channel === 'voice') {
         voiceIntents.push(input.messageContext.httpIngressIntent);
-        throw new Error('HTTP-voice source-policy is nog niet uitgegeven');
       }
       const result = {
         channel: input.channel,
@@ -398,15 +397,19 @@ test('ACK-gebonden historische body zonder huidige API-identiteit replayt fail-c
     FROM main.eva_http_delivery_items_v3 WHERE request_ref=?`).get(requestRef).count, 0);
 });
 
-test('voice bindt identiteit en clientsleutel vóór de nog ontbrekende source-policy', async () => {
+test('voice sluit de HTTP-source, bytegelijke response en client-ACK delivery', async () => {
   const beforeDelivered = delivered.length;
   const request = {
     text: 'luister verder', conversationId: 'voice:http-server-ack',
     requestId: 'http-server-ack:voice:0001',
   };
   const response = await postIntent('/api/voice', request);
-  assert.equal(response.response.status, 503, response.bytes.toString('utf8'));
-  assert.equal(Object.hasOwn(response.body, '_httpDelivery'), false);
+  assert.equal(response.response.status, 200, response.bytes.toString('utf8'));
+  assert.equal(response.bytes.toString('utf8'), canonicalJson(response.body));
+  assert.equal(response.body.reply, `antwoord:${request.text}`);
+  assert.equal(response.body.conversation_id, request.conversationId);
+  assert.equal(response.body.request_id, request.requestId);
+  assert.equal(response.body._httpDelivery.contract, 'HttpClientAckChallenge/v3');
   assert.equal(delivered.length, beforeDelivered);
   assert.deepEqual(voiceIntents.at(-1).clientAckPublicKey, keys.publicKey);
   const binding = db.prepare(`SELECT binding.intent_json
@@ -415,6 +418,18 @@ test('voice bindt identiteit en clientsleutel vóór de nog ontbrekende source-p
     WHERE request.channel='voice' AND request.conversation_id=? AND request.request_id=?`)
     .get(request.conversationId, request.requestId);
   assert.deepEqual(JSON.parse(binding.intent_json).clientAckPublicKey, keys.publicKey);
+  const authority = db.prepare(`SELECT source_kind,source_body_json
+    FROM main.eva_turn_understanding_authorities_v1
+    WHERE channel='voice' AND conversation_id=? AND message_id=?`).get(
+    request.conversationId, request.requestId,
+  );
+  assert.deepEqual(authority, {
+    source_kind: 'http_voice_ingress', source_body_json: null,
+  });
+  const accepted = await post('/api/http-delivery/ack', signedAck(response));
+  assert.equal(accepted.response.status, 200, accepted.bytes.toString('utf8'));
+  assert.equal(accepted.body.delivered, true);
+  assert.equal(delivered.length, beforeDelivered + 1);
 });
 
 test('restart migreert alleen exacte vorige publicBody-DDL naar huidige namespace', () => {

@@ -3,7 +3,12 @@ import { createHash, randomBytes } from 'node:crypto';
 import { db, validateExecutionRecord } from '../db.js';
 import { executionLedgerStatus } from '../executionledger.js';
 import { runtimeVersion } from '../runtimeversion.js';
-import { turnUnderstandingAuthorityStoreStatus } from '../turnauthority.js';
+import {
+  TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME,
+  TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL,
+  existingHttpTurnAuthorityBindingsExact,
+  turnUnderstandingAuthorityStoreStatus,
+} from '../turnauthority.js';
 import {
   retainedTurnResultMetadata,
   verifyPreparedUnderstandingTurn,
@@ -741,6 +746,36 @@ function migrateExactPublicBodyTrigger() {
   ingressDb.exec(`DROP TRIGGER main.${name};\n${expected}`);
 }
 
+function exactHttpTurnAuthorityInsertionBoundary() {
+  try {
+    const row = ingressDb.prepare(`SELECT tbl_name,sql FROM main.sqlite_master
+      WHERE type='trigger' AND name=?`).get(
+      TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME,
+    );
+    return row?.tbl_name === 'eva_turn_understanding_authorities_v1'
+      && normalizedDdl(row.sql)
+        === normalizedDdl(TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL);
+  } catch { return false; }
+}
+
+function installHttpTurnAuthorityInsertionBoundary() {
+  const existing = ingressDb.prepare(`SELECT tbl_name,sql FROM main.sqlite_master
+    WHERE type='trigger' AND name=?`).get(
+    TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_NAME,
+  );
+  if (!existing) {
+    ingressDb.exec(TURN_UNDERSTANDING_HTTP_AUTHORITY_TRIGGER_SQL);
+  }
+  if (!exactHttpTurnAuthorityInsertionBoundary()) {
+    throw new Error('HTTP turn-authority insertion boundary is inexact');
+  }
+  if (!existingHttpTurnAuthorityBindingsExact(ingressDb, {
+    reconstructLegacy: !existing,
+  })) {
+    throw new Error('existing_http_turn_authority_binding_invalid');
+  }
+}
+
 function exactSchemaObject(type, name) {
   try {
     const stored = ingressDb.prepare(
@@ -881,10 +916,12 @@ if (initialDependencyFailure) {
         initializationFailure = 'http_ingress_schema_namespace_or_temp_invalid';
       } else if (!present.length) {
         ingressDb.exec(HTTP_INGRESS_SCHEMA_SQL);
+        installHttpTurnAuthorityInsertionBoundary();
       } else if (present.length !== OWNED_TABLES.length) {
         initializationFailure = 'http_ingress_schema_incomplete';
       } else {
         migrateExactPublicBodyTrigger();
+        installHttpTurnAuthorityInsertionBoundary();
       }
     }).immediate();
   } catch (error) {
@@ -898,6 +935,9 @@ function schemaFailure() {
   const dependency = dependencyFailure();
   if (dependency) return `http_ingress_dependency_invalid:${dependency}`;
   if (initializationFailure) return 'http_ingress_schema_initialization_failed';
+  if (!exactHttpTurnAuthorityInsertionBoundary()) {
+    return 'http_ingress_schema_http_turn_authority_trigger_invalid';
+  }
   for (const [table, expected] of Object.entries(REQUIRED_COLUMNS)) {
     let actual;
     try {
@@ -2089,6 +2129,48 @@ export function verifiedHttpIngressExecutionAuthority(capability, expected = {})
       conversationId: row.conversation_id, requestId: row.request_id,
       intentSha256: row.intent_sha256, generation: current.generation,
       claimEventRef: current.claimEventRef,
+    });
+  } catch { return null; }
+}
+
+export function verifiedDurableHttpIngressUnderstandingSource(expected = {}) {
+  try {
+    requireStore();
+    const schemaVersion = mainSchemaVersion();
+    if (!exactKeys(expected, ['channel', 'conversationId', 'requestId'])) return null;
+    const channel = expected.channel;
+    const conversationId = typeof expected.conversationId === 'string'
+      ? expected.conversationId : '';
+    const requestId = typeof expected.requestId === 'string' ? expected.requestId : '';
+    if (!['web', 'voice'].includes(channel) || !conversationId
+      || conversationId !== conversationId.trim() || !REQUEST_ID.test(requestId)) return null;
+    const row = ingressDb.prepare(`SELECT * FROM ${mainTable(REQUEST_TABLE)}
+      WHERE channel=? AND conversation_id=? AND request_id=?`).get(
+      channel, conversationId, requestId,
+    );
+    if (!row) return null;
+    requestReceipt(row);
+    const bindingRow = ingressDb.prepare(`SELECT * FROM ${mainTable(ACK_BINDING_TABLE)}
+      WHERE request_row_id=? AND request_ref=?`).get(row.id, row.request_ref);
+    if (!bindingRow) return null;
+    validateAckBinding(bindingRow, row);
+    let intent;
+    try { intent = JSON.parse(bindingRow.intent_json); } catch { return null; }
+    const identity = normalizedIdentity({ channel, conversationId, requestId, intent });
+    const executionClaim = claimHistory(row, 'execution');
+    if (!executionClaim || identity.requestRef !== row.request_ref
+      || identity.intentSha256 !== row.intent_sha256
+      || identity.intentBytes !== Number(row.intent_bytes)) return null;
+    requireStore();
+    if (mainSchemaVersion() !== schemaVersion) {
+      throw new Error('HTTP ingress schema changed during durable source verification');
+    }
+    return Object.freeze({
+      contract: 'VerifiedDurableHttpIngressUnderstandingSource/v1',
+      channel, conversationId, requestId, route: intent.route,
+      sourceKind: channel === 'voice' ? 'http_voice_ingress' : 'http_ingress',
+      sourceRef: row.request_ref, sourceSha256: row.intent_sha256,
+      sourceBodyJson: null, sourceGeneration: Number(executionClaim.generation),
     });
   } catch { return null; }
 }
