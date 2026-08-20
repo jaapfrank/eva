@@ -8,6 +8,7 @@ import { GrammyError, HttpError } from 'grammy';
 
 const dataDir = fs.mkdtempSync(path.join('/tmp', 'eva-telegram-outbox-'));
 process.env.EVA_DATA_DIR = dataDir;
+process.env.EVA_RUNTIME_MODE = 'normal';
 process.env.OPENAI_API_KEY = 'telegram-outbox-sidecar-test-only';
 process.env.TELEGRAM_BOT_TOKEN = '';
 process.env.TELEGRAM_ALLOWED_IDS = '42,501';
@@ -434,6 +435,43 @@ test('8. prepared reply is immutable aan chat, bericht en echte Telegram-princip
   assert.throws(() => authenticatedTelegramMessageContext(ctx, {
     authenticatedPrincipal: 'telegram:999', chatId: 'vals', messageId: 'vals', identityTrusted: false,
   }), /private processing-lease/i);
+});
+
+test('8a. prepared foutcode blijft exact en immutable aan de reply gebonden', () => {
+  const ctx = context('108', '809', 42);
+  const error = 'interpreter_unavailable';
+  const prepared = persistPreparedTelegramReply(
+    ctx, 'Jaap', handled(ctx, 'Ik heb je opdracht bewaard.', { error }),
+  );
+  assert.equal(prepared.error, error);
+  const archived = telegramMessage('108', '809');
+  assert.equal(archived.meta.preparedReply.error, error);
+
+  archiveTelegramMessage({ chatId: '108', messageId: '809', meta: {
+    preparedReply: { ...archived.meta.preparedReply, error: 'interpreter_timeout' },
+  } });
+  assert.throws(() => preparedTelegramResult(ctx), /gebonden|gewijzigd|andere principal/i);
+
+  const boundedCtx = context('108', '810', 42);
+  const boundedError = 'e'.repeat(500);
+  persistPreparedTelegramReply(
+    boundedCtx, 'Jaap', handled(boundedCtx, 'Begrensd antwoord.', { error: boundedError }),
+  );
+  const boundedArchived = telegramMessage('108', '810');
+  archiveTelegramMessage({ chatId: '108', messageId: '810', meta: {
+    preparedReply: { ...boundedArchived.meta.preparedReply, error: `${boundedError}suffix` },
+  } });
+  assert.throws(() => preparedTelegramResult(boundedCtx), /gebonden|gewijzigd|andere principal/i);
+
+  for (const [messageId, invalidError] of [['811', null], ['812', '']]) {
+    const absentCtx = context('108', messageId, 42);
+    persistPreparedTelegramReply(absentCtx, 'Jaap', handled(absentCtx, 'Zonder foutcode.'));
+    const absentArchived = telegramMessage('108', messageId);
+    archiveTelegramMessage({ chatId: '108', messageId, meta: {
+      preparedReply: { ...absentArchived.meta.preparedReply, error: invalidError },
+    } });
+    assert.throws(() => preparedTelegramResult(absentCtx), /gebonden|gewijzigd|andere principal/i);
+  }
 });
 
 test('9. gewijzigde prepared metadata wordt niet heranalyseerd of verstuurd', () => {

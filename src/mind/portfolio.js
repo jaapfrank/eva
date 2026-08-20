@@ -4534,6 +4534,9 @@ function episodeEverArmedFinalDelivery(episodeId) {
 
 function validPreparedTelegramFinalDelivery(prepared, binding, candidate) {
   if (!prepared || typeof prepared !== 'object' || !prepared.payload) return false;
+  const hasError = Object.hasOwn(prepared, 'error');
+  if (hasError && (typeof prepared.error !== 'string'
+    || prepared.error.length === 0 || prepared.error.length > 500)) return false;
   const payloadSha256 = semanticHash(prepared.payload);
   const core = {
     contract: 'PreparedTelegramReply/v2',
@@ -4547,6 +4550,7 @@ function validPreparedTelegramFinalDelivery(prepared, binding, candidate) {
     goalEpisodeId: Number(prepared.goalEpisodeId) || null,
     workItemId: Number(prepared.workItemId) || null,
     finalDeliveryBindingSha256: String(prepared.finalDeliveryBindingSha256 || '') || null,
+    ...(hasError ? { error: prepared.error } : {}),
   };
   return prepared.contract === core.contract
     && prepared.payloadSha256 === payloadSha256

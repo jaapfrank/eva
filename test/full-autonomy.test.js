@@ -4611,6 +4611,11 @@ test('Telegram-429 hervat na procescrash exact, muteert eenmaal en levert eenmaa
   assert.deepEqual(first.tools, []);
   assert.match(first.reply, /hele opdracht bewaard.*niets uitgevoerd of gewijzigd/iu);
   assert.doesNotMatch(first.reply, /provider|model|component|interpreter|tool/iu);
+  assert.equal(db.prepare(`SELECT processing_status FROM telegram_messages
+    WHERE chat_id=? AND message_id=?`).get(chatId, messageId)?.processing_status, 'completed');
+  assert.equal(db.prepare(`SELECT COUNT(*) AS count FROM timeline
+    WHERE kind='chat_out' AND json_extract(meta,'$.turnId')=?`)
+    .get(`${conversationId}:${messageId}`).count, 1);
   const createdWork = db.prepare('SELECT * FROM eva_work_items WHERE id=?').get(first.workItemId);
   const createdEpisode = goalEpisodeById(first.goalEpisodeId);
   const createdOrigin = db.prepare('SELECT * FROM eva_episode_origins WHERE episode_id=?')

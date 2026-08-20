@@ -1587,6 +1587,14 @@ function preparedToolEvidence(tools) {
   })));
 }
 
+function preparedReplyError(value) {
+  if (value == null || value === '') return null;
+  if (typeof value !== 'string' || value.length > 500) {
+    throw new Error('Voorbereid Telegram-antwoord heeft een ongeldige of gewijzigde foutcode');
+  }
+  return value;
+}
+
 function preparedReplyBinding(ctx, handled) {
   const identity = directTurnIdentity(ctx);
   const auth = authenticatedTelegramPrincipal(ctx);
@@ -1606,6 +1614,7 @@ function preparedReplyBinding(ctx, handled) {
     || String(handled?.originMessageId || '') !== identity.messageId) {
     throw new Error('Telegram-antwoord is niet aan deze geauthenticeerde inbound beurt gebonden');
   }
+  const error = preparedReplyError(handled?.error);
   const core = {
     contract: 'PreparedTelegramReply/v2', turnId: expectedTurnId, conversationId,
     originMessageId: identity.messageId, fromTelegramId: auth.fromId,
@@ -1614,6 +1623,7 @@ function preparedReplyBinding(ctx, handled) {
     goalEpisodeId: Number(handled.goalEpisodeId) || null,
     workItemId: Number(handled.workItemId) || null,
     finalDeliveryBindingSha256: String(handled.finalDeliveryBindingSha256 || '') || null,
+    ...(error ? { error } : {}),
   };
   return { binding: { ...core, bindingSha256: sha256(canonicalJson(core)) }, payload };
 }
@@ -1687,6 +1697,12 @@ function preparedTelegramResult(ctx) {
     || String(archived?.meta?.fromTelegramId || '') !== auth.fromId) {
     throw new Error('Voorbereid Telegram-antwoord mist een geauthenticeerde inbound oorsprong');
   }
+  const hasError = Object.hasOwn(prepared, 'error');
+  if (hasError && (typeof prepared.error !== 'string'
+    || prepared.error.length === 0 || prepared.error.length > 500)) {
+    throw new Error('Voorbereid Telegram-antwoord heeft een ongeldige of gewijzigde foutcode');
+  }
+  const error = hasError ? prepared.error : null;
   const handled = {
     turnId: String(prepared.turnId), reply: String(prepared.payload.reply || ''), channel: 'telegram',
     sender: String(archived.sender || resolveName(ctx.from)),
@@ -1697,6 +1713,7 @@ function preparedTelegramResult(ctx) {
     finalDeliveryBindingSha256: String(prepared.finalDeliveryBindingSha256 || '') || null,
     originMessageId: String(prepared.originMessageId || ''),
     syntheticTest: prepared.syntheticTest === true, recovered: true,
+    ...(error ? { error } : {}),
   };
   const expected = preparedReplyBinding(ctx, handled);
   if (canonicalJson(prepared.payload) !== canonicalJson(expected.payload)
