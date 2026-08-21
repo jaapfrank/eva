@@ -1,0 +1,12 @@
+{
+  "contract": "Eva2TrustRootSlot/v1",
+  "status": "unresolved_4a_not_usable",
+  "schemaPath": "eva2/release/formats/eva-trust-root-v1.schema.json",
+  "rootVersion": null,
+  "publicKeys": [],
+  "privateKeyMaterialAllowed": false,
+  "minimumOfflineRootThreshold": 1,
+  "multisignaturePolicy": "optional_threshold_selected_by_root_ceremony",
+  "activationRequires": "content-addressed signed 4E trust-root ceremony receipt",
+  "usable": false
+}

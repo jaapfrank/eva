@@ -1,0 +1,159 @@
+{
+  "contract": "Eva2GateToolchainLicenseInventory/v1",
+  "status": "complete_metadata_inventory_not_legal_clearance",
+  "metadataAsOf": "2026-08-21",
+  "toolchainLock": "eva2/release/gate-toolchain.requirements.lock",
+  "packageCount": 18,
+  "packages": [
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/attrs/26.1.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "build",
+      "version": "1.5.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/build/1.5.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "click",
+      "version": "8.4.2",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/click/8.4.2/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/iniconfig/2.3.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.25.1",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/jsonschema/4.25.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "licenseExpression": "Apache-2.0 OR BSD-2-Clause",
+      "metadataSource": "https://pypi.org/pypi/packaging/26.3/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pip",
+      "version": "26.0.1",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pip/26.0.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pip-tools",
+      "version": "7.6.1",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/pip-tools/7.6.1/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pluggy/1.6.0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pygments",
+      "version": "2.17.2",
+      "licenseExpression": "BSD-2-Clause",
+      "metadataSource": "https://pypi.org/pypi/pygments/2.17.2/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pyproject-hooks",
+      "version": "1.2.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pyproject-hooks/1.2.0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.2",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pytest/8.4.2/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/referencing/0.37.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.6.3",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/rpds-py/2026.6.3/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/setuptools/84.0.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "licenseExpression": "PSF-2.0",
+      "metadataSource": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/wheel/0.48.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    }
+  ],
+  "claims": {
+    "everyLockedPackageInventoried": true,
+    "legalApprovalComplete": false,
+    "vulnerabilityReviewComplete": false,
+    "releaseApproved": false
+  }
+}

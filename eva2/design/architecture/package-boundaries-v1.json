@@ -1,0 +1,103 @@
+{
+  "contract": "Eva2PackageBoundaries/v1",
+  "trustedCore": "src/eva",
+  "legacyExecutableImportsAllowed": false,
+  "unexpectedPackagesAllowed": false,
+  "boundaryFiles": [
+    "src/eva/__init__.py",
+    "src/eva/adapters/__init__.py"
+  ],
+  "packages": {
+    "contracts": {
+      "path": "src/eva/contracts",
+      "allowedLocalImports": ["eva.contracts"],
+      "allowedExternalImports": ["pydantic", "typing_extensions"]
+    },
+    "domain": {
+      "path": "src/eva/domain",
+      "allowedLocalImports": ["eva.contracts", "eva.domain"],
+      "allowedExternalImports": []
+    },
+    "application": {
+      "path": "src/eva/application",
+      "allowedLocalImports": ["eva.application", "eva.contracts", "eva.domain"],
+      "allowedExternalImports": []
+    },
+    "adapters.postgres": {
+      "path": "src/eva/adapters/postgres",
+      "allowedLocalImports": ["eva.adapters.postgres", "eva.application", "eva.contracts", "eva.domain"],
+      "allowedExternalImports": ["sqlalchemy"]
+    },
+    "adapters.dbos": {
+      "path": "src/eva/adapters/dbos",
+      "allowedLocalImports": ["eva.adapters.dbos", "eva.application", "eva.contracts", "eva.domain"],
+      "allowedExternalImports": ["dbos"]
+    },
+    "adapters.model": {
+      "path": "src/eva/adapters/model",
+      "allowedLocalImports": ["eva.adapters.model", "eva.application", "eva.contracts"],
+      "allowedExternalImports": ["pydantic_ai"]
+    },
+    "adapters.connectors": {
+      "path": "src/eva/adapters/connectors",
+      "allowedLocalImports": ["eva.adapters.connectors", "eva.application", "eva.contracts"],
+      "allowedExternalImports": ["connector_sdk"]
+    },
+    "adapters.credentials": {
+      "path": "src/eva/adapters/credentials",
+      "allowedLocalImports": ["eva.adapters.credentials", "eva.application", "eva.contracts"],
+      "allowedExternalImports": []
+    },
+    "adapters.objects": {
+      "path": "src/eva/adapters/objects",
+      "allowedLocalImports": ["eva.adapters.objects", "eva.application", "eva.contracts"],
+      "allowedExternalImports": ["cryptography"]
+    },
+    "adapters.api": {
+      "path": "src/eva/adapters/api",
+      "allowedLocalImports": ["eva.adapters.api", "eva.application", "eva.contracts", "eva.domain"],
+      "allowedExternalImports": ["fastapi"]
+    },
+    "adapters.projection": {
+      "path": "src/eva/adapters/projection",
+      "allowedLocalImports": ["eva.adapters.projection", "eva.application", "eva.contracts"],
+      "allowedExternalImports": ["sqlalchemy"]
+    },
+    "adapters.telemetry": {
+      "path": "src/eva/adapters/telemetry",
+      "allowedLocalImports": ["eva.adapters.telemetry", "eva.application", "eva.contracts"],
+      "allowedExternalImports": ["opentelemetry"]
+    },
+    "bootstrap": {
+      "path": "src/eva/bootstrap",
+      "allowedLocalImports": ["eva"],
+      "allowedExternalImports": ["dbos", "fastapi", "pydantic_ai", "sqlalchemy"]
+    },
+    "operations": {
+      "path": "src/eva/operations",
+      "allowedLocalImports": ["eva.adapters", "eva.application", "eva.contracts", "eva.domain", "eva.operations"],
+      "allowedExternalImports": ["alembic", "sqlalchemy"]
+    }
+  },
+  "isolatedRoots": {
+    "connectorSdk": {
+      "path": "connector_sdk",
+      "forbiddenImports": ["eva"]
+    },
+    "connectors": {
+      "path": "connectors",
+      "forbiddenImports": ["eva"]
+    },
+    "forge": {
+      "path": "forge",
+      "forbiddenImports": ["eva"]
+    }
+  },
+  "forbiddenImportPrefixes": [
+    "<dynamic-import>",
+    "mind",
+    "src.mind",
+    "src.integrations",
+    "src.web"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:eva:release:Eva2SbomBinding:v1",
+  "title": "Eva2SbomBinding/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "artifact", "format", "documentSha256", "documentNamespace", "generator", "licenseInventorySha256", "vulnerabilityScanSha256"],
+  "properties": {
+    "contract": {"const": "Eva2SbomBinding/v1"},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id", "sha256"],
+      "properties": {
+        "type": {"enum": ["release", "image", "connector", "host_binary", "offline_bundle"]},
+        "id": {"type": "string", "minLength": 1, "maxLength": 256},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "format": {"const": "SPDX-2.3-json"},
+    "documentSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "documentNamespace": {"type": "string", "format": "uri", "maxLength": 512},
+    "generator": {"type": "string", "minLength": 1, "maxLength": 128},
+    "licenseInventorySha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "vulnerabilityScanSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

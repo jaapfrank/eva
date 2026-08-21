@@ -1,0 +1,31 @@
+{
+  "contract": "Eva2SignaturePolicy/v1",
+  "status": "format_selected_keys_and_signatures_absent",
+  "signatureEnvelopeSchema": "eva2/release/formats/eva-signature-envelope-v1.schema.json",
+  "algorithm": "Ed25519",
+  "digestAlgorithm": "sha256",
+  "domainSeparationPrefix": "Eva2ReleaseSignature/v1\\u0000",
+  "offlineVerificationRequiredBeforeExtractionOrStart": true,
+  "trustRootSlot": "eva2/release/trust-root-slot.json",
+  "scopePolicies": [
+    {"scope": "release", "minimumValidSignatures": 1, "keyRole": "release_signer"},
+    {"scope": "image", "minimumValidSignatures": 1, "keyRole": "release_signer"},
+    {"scope": "connector_artifact", "minimumValidSignatures": 1, "keyRole": "connector_artifact_signer"},
+    {"scope": "connector_promotion", "minimumValidSignatures": 1, "keyRole": "connector_promotion_signer"},
+    {"scope": "revocation_list", "minimumValidSignatures": 1, "keyRole": "offline_root"}
+  ],
+  "multisignaturePolicy": {
+    "minimumThreshold": 1,
+    "additionalValidSignaturesAllowed": true,
+    "thresholdAuthority": "signed_trust_root"
+  },
+  "keySeparationRequired": [
+    ["connector_artifact_signer", "connector_promotion_signer"],
+    ["release_signer", "offline_root"]
+  ],
+  "claims": {
+    "keysProvisioned": false,
+    "signaturesExist": false,
+    "offlineVerificationRun": false
+  }
+}

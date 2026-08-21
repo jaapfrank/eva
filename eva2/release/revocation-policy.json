@@ -1,0 +1,26 @@
+{
+  "contract": "Eva2RevocationPolicy/v1",
+  "status": "model_selected_lists_absent",
+  "schemaPath": "eva2/release/formats/eva-revocation-list-v1.schema.json",
+  "failClosed": true,
+  "failClosedFor": ["invalid_signature", "known_revoked_subject", "sequence_rollback"],
+  "maximumListAgeSeconds": 86400,
+  "clockSkewAllowanceSeconds": 300,
+  "minimumValidRootSignatures": 1,
+  "multisignaturePolicy": "optional_threshold_declared_by_signed_trust_root",
+  "revocableSubjects": ["key", "release", "image", "connector_artifact", "connector_promotion"],
+  "freshnessRequiredFor": ["new_install", "update", "activation"],
+  "staleListPolicy": {
+    "blocks": ["new_install", "update", "activation"],
+    "allowsLastKnownGood": ["installed_image_restart", "rollback_to_previously_verified_installed_image"],
+    "knownRevocationAlwaysBlocks": true,
+    "networkRefreshRequiredForAllowedOperation": false
+  },
+  "catalogCannotOverrideRevocation": true,
+  "minimumSupportedReleaseEnforcedFor": ["new_install", "update", "activation"],
+  "claims": {
+    "revocationListExists": false,
+    "revocationEnforcementImplemented": false,
+    "rollbackEnforcementProven": false
+  }
+}

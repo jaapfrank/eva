@@ -1,0 +1,59 @@
+{
+  "contract": "Eva2TrustBoundaries/v1",
+  "status": "design_only_unvalidated_until_platform_01",
+  "resourceValidationState": "every_resource_unproven_until_platform_01",
+  "consumerPolicy": "default_deny_every_process_not_listed_as_owner_or_consumer",
+  "processes": ["living_core", "model_adapter", "postgresql", "connector_supervisor", "credential_broker", "connector_worker", "egress_proxy", "object_store", "telemetry_collector", "eva_cli"],
+  "resources": [
+    {"id": "local_api_socket", "kind": "socket", "owner": "living_core", "consumers": ["eva_cli", "external:authenticated_channel"]},
+    {"id": "model_adapter_socket", "kind": "socket", "owner": "model_adapter", "consumers": ["living_core"]},
+    {"id": "eva_database_socket", "kind": "socket", "owner": "postgresql", "consumers": ["living_core", "eva_cli"], "consumerConditions": {"eva_cli": "only_with_cli_temporary_migrator_database_grant"}},
+    {"id": "eva_business_database_grant", "kind": "database_grant", "owner": "postgresql", "consumers": ["living_core"]},
+    {"id": "dbos_schema_database_grant", "kind": "database_grant", "owner": "postgresql", "consumers": ["living_core"]},
+    {"id": "connector_supervisor_socket", "kind": "socket", "owner": "connector_supervisor", "consumers": ["living_core"]},
+    {"id": "credential_broker_socket", "kind": "socket", "owner": "credential_broker", "consumers": ["connector_supervisor", "model_adapter"]},
+    {"id": "model_provider_credential_fd", "kind": "secret_fd", "owner": "credential_broker", "consumers": ["model_adapter"], "availability": "unimplemented_until_sec_01"},
+    {"id": "model_provider_egress_socket", "kind": "socket", "owner": "egress_proxy", "consumers": ["model_adapter"], "availability": "unimplemented_until_sec_01"},
+    {"id": "worker_stdio", "kind": "stdio", "owner": "connector_supervisor", "consumers": ["connector_worker"]},
+    {"id": "worker_secret_fd", "kind": "secret_fd", "owner": "credential_broker", "consumers": ["connector_worker"]},
+    {"id": "worker_egress_socket", "kind": "socket", "owner": "egress_proxy", "consumers": ["connector_worker"]},
+    {"id": "container_engine_lifecycle_socket", "kind": "socket", "owner": "external:container_engine", "consumers": ["connector_supervisor", "eva_cli"], "availability": "unimplemented_until_platform_01"},
+    {"id": "object_store_socket", "kind": "socket", "owner": "object_store", "consumers": ["living_core", "eva_cli"], "consumerConditions": {"eva_cli": "only_with_cli_temporary_object_store_grant"}},
+    {"id": "telemetry_ingest_socket", "kind": "socket", "owner": "telemetry_collector", "consumers": ["living_core", "model_adapter", "connector_supervisor", "credential_broker", "egress_proxy", "object_store"]},
+    {"id": "postgres_data_volume", "kind": "mount", "owner": "postgresql", "consumers": []},
+    {"id": "object_ciphertext_volume", "kind": "mount", "owner": "object_store", "consumers": []},
+    {"id": "installation_master_key_mount", "kind": "secret_mount", "owner": "credential_broker", "consumers": []},
+    {"id": "worker_temporary_mount", "kind": "mount", "owner": "connector_worker", "consumers": []},
+    {"id": "worker_runtime_readonly_mount", "kind": "mount", "owner": "connector_supervisor", "consumers": ["connector_worker"], "availability": "unimplemented_until_platform_01"},
+    {"id": "cli_temporary_migrator_database_grant", "kind": "database_grant", "owner": "postgresql", "consumers": ["eva_cli"], "availability": "issued_only_per_quiesced_migrate_backup_or_restore_command_in_4e"},
+    {"id": "cli_temporary_object_store_grant", "kind": "object_grant", "owner": "object_store", "consumers": ["eva_cli"], "availability": "issued_only_per_quiesced_backup_export_or_restore_command_in_4e"},
+    {"id": "cli_temporary_backup_keywrap_fd", "kind": "secret_fd", "owner": "credential_broker", "consumers": ["eva_cli"], "availability": "issued_only_per_authorized_backup_or_restore_command_in_4e"},
+    {"id": "release_metadata_readonly", "kind": "mount", "owner": "eva_cli", "consumers": ["living_core", "connector_supervisor", "credential_broker", "egress_proxy"]}
+  ],
+  "connectorWorkerAllowedResources": ["worker_stdio", "worker_secret_fd", "worker_egress_socket", "worker_temporary_mount", "worker_runtime_readonly_mount"],
+  "connectorWorkerForbiddenKinds": ["database_grant", "secret_mount"],
+  "connectorWorkerForbiddenResources": ["local_api_socket", "model_adapter_socket", "eva_database_socket", "eva_business_database_grant", "dbos_schema_database_grant", "postgres_data_volume", "object_ciphertext_volume", "installation_master_key_mount"],
+  "secretCustody": {
+    "persistentSecretOwner": "credential_broker",
+    "workerDelivery": "one_operation_scoped_file_descriptor_after_initialize",
+    "coreReceivesSecretBytes": false,
+    "modelReceivesConnectorSecretBytes": false,
+    "modelProviderCredentialDelivery": "one_model_attempt_scoped_file_descriptor_after_canonical_reservation",
+    "workerInheritsHostEnvironment": false
+  },
+  "cliAccess": {
+    "ordinaryRuntimeDatabaseAccess": false,
+    "ordinaryRuntimeObjectStoreAccess": false,
+    "ordinaryRuntimeContainerEngineAccess": false,
+    "temporaryResources": ["eva_database_socket", "cli_temporary_migrator_database_grant", "object_store_socket", "cli_temporary_object_store_grant", "cli_temporary_backup_keywrap_fd", "container_engine_lifecycle_socket"],
+    "quiesceRequiredForConsistentOfflineState": true,
+    "persistentRuntimeCredentialAllowed": false
+  },
+  "egress": {
+    "workerDirectNetworkAllowed": false,
+    "modelAdapterDirectNetworkAllowed": false,
+    "onlyProviderPaths": ["worker_egress_socket", "model_provider_egress_socket"],
+    "allowlistAuthority": "signed_connector_manifest_or_model_provider_policy_plus_attempt_scoped_grant",
+    "ssrfPrivateRangesAllowed": false
+  }
+}

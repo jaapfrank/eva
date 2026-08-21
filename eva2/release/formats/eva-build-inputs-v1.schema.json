@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:eva:release:Eva2BuildInputs:v1",
+  "title": "Eva2BuildInputs/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "source", "sourceDateEpoch", "runtime", "locks", "ociDigests", "schemaSetSha256", "migrationRevision", "builderImageDigest", "buildArguments", "network", "productionCredentialsPresent"],
+  "properties": {
+    "contract": {"const": "Eva2BuildInputs/v1"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "treeClean"],
+      "properties": {
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "treeClean": {"const": true}
+      }
+    },
+    "sourceDateEpoch": {"type": "integer", "minimum": 1},
+    "runtime": {"const": "CPython 3.12.14"},
+    "locks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platformSha256", "dependenciesSha256", "licensesSha256", "designBindingsSha256"],
+      "properties": {
+        "platformSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "dependenciesSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "licensesSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "designBindingsSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "ociDigests": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "schemaSetSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "migrationRevision": {"type": "string", "minLength": 1, "maxLength": 128},
+    "builderImageDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "buildArguments": {"type": "object", "maxProperties": 64, "additionalProperties": {"type": "string", "maxLength": 512}},
+    "network": {"enum": ["allowlisted_artifact_proxy", "none"]},
+    "productionCredentialsPresent": {"const": false}
+  }
+}

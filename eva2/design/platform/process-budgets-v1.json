@@ -1,0 +1,42 @@
+{
+  "contract": "Eva2ProcessBudgets/v1",
+  "status": "design_ceilings_unvalidated_until_4e",
+  "units": {
+    "memory": "MiB",
+    "cpu": "cores",
+    "pids": "count",
+    "temporaryStorage": "MiB",
+    "shutdownGrace": "milliseconds"
+  },
+  "processBudgets": {
+    "living_core": {"maximumMemoryMiB": 1024, "maximumCpuCores": 2, "maximumPids": 128, "maximumTemporaryStorageMiB": 256, "maximumShutdownGraceMs": 30000},
+    "model_adapter": {"maximumMemoryMiB": 512, "maximumCpuCores": 1, "maximumPids": 32, "maximumTemporaryStorageMiB": 64, "maximumShutdownGraceMs": 10000},
+    "postgresql": {"maximumMemoryMiB": 2048, "maximumCpuCores": 2, "maximumPids": 256, "maximumTemporaryStorageMiB": 2048, "maximumShutdownGraceMs": 60000},
+    "connector_supervisor": {"maximumMemoryMiB": 512, "maximumCpuCores": 1, "maximumPids": 128, "maximumTemporaryStorageMiB": 64, "maximumShutdownGraceMs": 10000},
+    "credential_broker": {"maximumMemoryMiB": 256, "maximumCpuCores": 1, "maximumPids": 32, "maximumTemporaryStorageMiB": 32, "maximumShutdownGraceMs": 10000},
+    "connector_worker": {"maximumMemoryMiB": 256, "maximumCpuCores": 1, "maximumPids": 32, "maximumTemporaryStorageMiB": 64, "maximumShutdownGraceMs": 5000},
+    "egress_proxy": {"maximumMemoryMiB": 256, "maximumCpuCores": 1, "maximumPids": 64, "maximumTemporaryStorageMiB": 64, "maximumShutdownGraceMs": 10000},
+    "object_store": {"maximumMemoryMiB": 512, "maximumCpuCores": 1, "maximumPids": 64, "maximumTemporaryStorageMiB": 256, "maximumShutdownGraceMs": 30000},
+    "telemetry_collector": {"maximumMemoryMiB": 512, "maximumCpuCores": 1, "maximumPids": 64, "maximumTemporaryStorageMiB": 256, "maximumShutdownGraceMs": 10000},
+    "eva_cli": {"maximumMemoryMiB": 256, "maximumCpuCores": 1, "maximumPids": 32, "maximumTemporaryStorageMiB": 64, "maximumShutdownGraceMs": 5000}
+  },
+  "connectorWorkerInvocation": {
+    "maximumWallClockMs": 35000,
+    "maximumProtocolFrameBytes": 1048576,
+    "maximumProtocolFramesPerInvocation": 2,
+    "maximumStdoutBytes": 2101248,
+    "maximumStderrBytes": 65536,
+    "maximumDocumentBytes": 65536,
+    "initializeCountsAsExternalCall": false,
+    "initializeMayPerformExternalIo": false,
+    "initializeCountsAgainstResourceAndFrameBudgets": true
+  },
+  "firstVertical": {
+    "maximumWallClockMsDeterministic": 120000,
+    "maximumWallClockMsLive": 300000,
+    "happyPathMaximumConnectorCalls": 14,
+    "recoveryScenarioMaximumConnectorCalls": 24,
+    "maximumModelAttemptsHappyPath": 3,
+    "maximumModelAttemptsRecoveryScenario": 4
+  }
+}

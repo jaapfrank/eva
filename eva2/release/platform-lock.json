@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "contract": "PlatformLock/v1",
+  "lock_id": "eva2.platform.selected.2026-08-21",
+  "claim_state": "selected_for_validation",
+  "python_version": "3.12.14",
+  "postgres_version": "16.13",
+  "dbos_version": "2.30.0",
+  "pydantic_version": "2.12.5",
+  "pydantic_ai_slim_version": "2.32.1",
+  "tier1_targets": [
+    {
+      "operating_system": "Ubuntu Server 24.04.4 LTS",
+      "architecture": "amd64",
+      "execution_mode": "containerized",
+      "container_engine": "Docker Engine 29.7.2",
+      "target_class": "tier1_release_gate",
+      "validation_state": "unvalidated",
+      "support_status": "unsupported",
+      "validation_receipt_sha256": null
+    },
+    {
+      "operating_system": "Ubuntu Server 24.04.4 LTS",
+      "architecture": "arm64",
+      "execution_mode": "containerized",
+      "container_engine": "Docker Engine 29.7.2",
+      "target_class": "tier1_release_gate",
+      "validation_state": "unvalidated",
+      "support_status": "unsupported",
+      "validation_receipt_sha256": null
+    }
+  ],
+  "compatibility_targets": [
+    {
+      "operating_system": "macOS 15",
+      "architecture": "arm64",
+      "execution_mode": "containerized",
+      "container_engine": "unselected_until_4e",
+      "target_class": "compatibility_target",
+      "validation_state": "unvalidated",
+      "support_status": "unsupported",
+      "validation_receipt_sha256": null
+    },
+    {
+      "operating_system": "Windows 11 24H2",
+      "architecture": "x86_64",
+      "execution_mode": "containerized_not_native",
+      "container_engine": "unselected_until_4e",
+      "target_class": "compatibility_target",
+      "validation_state": "unvalidated",
+      "support_status": "unsupported",
+      "validation_receipt_sha256": null
+    },
+    {
+      "operating_system": "Ubuntu Server 24.04.4 LTS",
+      "architecture": "amd64_or_arm64",
+      "execution_mode": "rootless_podman",
+      "container_engine": "unselected_until_4e",
+      "target_class": "compatibility_target",
+      "validation_state": "unvalidated",
+      "support_status": "unsupported",
+      "validation_receipt_sha256": null
+    }
+  ],
+  "oci_images": [
+    {"component": "living_core", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "living_core", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "model_adapter", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "model_adapter", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "connector_supervisor", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "connector_supervisor", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "credential_broker", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "credential_broker", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "connector_worker_base", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "connector_worker_base", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "postgresql", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "postgresql", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "egress_proxy", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "egress_proxy", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "object_store", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "object_store", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "telemetry_collector", "architecture": "amd64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false},
+    {"component": "telemetry_collector", "architecture": "arm64", "validation_state": "selected_for_validation", "image_repository": null, "image_digest": null, "sbom_sha256": null, "runnable": false}
+  ],
+  "mutable_image_tags_allowed": false,
+  "generated_at": "2026-08-21T00:00:00Z"
+}

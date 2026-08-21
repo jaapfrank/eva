@@ -1,0 +1,358 @@
+{
+  "contract": "Eva2PythonLicenseInventory/v1",
+  "status": "complete_metadata_inventory_not_legal_clearance",
+  "metadataAsOf": "2026-08-21",
+  "packageIndex": "https://pypi.org/",
+  "dependencyLock": "eva2/requirements.lock",
+  "packageCount": 38,
+  "packages": [
+    {
+      "name": "alembic",
+      "version": "1.19.1",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/alembic/1.19.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/annotated-doc/0.0.5/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/annotated-types/0.8.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "anyio",
+      "version": "4.14.2",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/anyio/4.14.2/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT-0",
+      "metadataSource": "https://pypi.org/pypi/cffi/2.1.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "click",
+      "version": "8.4.2",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/click/8.4.2/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "cryptography",
+      "version": "46.0.5",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "Apache-2.0 OR BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/cryptography/46.0.5/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "dbos",
+      "version": "2.30.0",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/dbos/2.30.0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.141.1",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/fastapi/0.141.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "genai-prices",
+      "version": "0.1.4",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/genai-prices/0.1.4/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "greenlet",
+      "version": "3.5.5",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT AND PSF-2.0",
+      "metadataSource": "https://pypi.org/pypi/greenlet/3.5.5/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "griffelib",
+      "version": "2.2.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "ISC",
+      "metadataSource": "https://pypi.org/pypi/griffelib/2.2.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/h11/0.16.0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "httpcore2",
+      "version": "2.12.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/httpcore2/2.12.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "httpx2",
+      "version": "2.12.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/httpx2/2.12.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "idna",
+      "version": "3.19",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/idna/3.19/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "logfire-api",
+      "version": "4.41.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/logfire-api/4.41.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "mako",
+      "version": "1.4.1",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/mako/1.4.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "markupsafe",
+      "version": "3.0.3",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/markupsafe/3.0.3/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.44.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "Apache-2.0",
+      "metadataSource": "https://pypi.org/pypi/opentelemetry-api/1.44.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "psycopg",
+      "version": "3.3.4",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "LGPL-3.0-only",
+      "metadataSource": "https://pypi.org/pypi/psycopg/3.3.4/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "psycopg-binary",
+      "version": "3.3.4",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "LGPL-3.0-only",
+      "metadataSource": "https://pypi.org/pypi/psycopg-binary/3.3.4/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pycparser",
+      "version": "3.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/pycparser/3.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.12.5",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pydantic/2.12.5/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pydantic-ai-slim",
+      "version": "2.32.1",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pydantic-ai-slim/2.32.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.41.5",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pydantic-core/2.41.5/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pydantic-graph",
+      "version": "2.32.1",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pydantic-graph/2.32.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "Apache-2.0 OR BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/python-dateutil/2.9.0.post0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pyyaml/6.0.3/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/six/1.17.0/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "sqlalchemy",
+      "version": "2.0.52",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/sqlalchemy/2.0.52/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "starlette",
+      "version": "1.6.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/starlette/1.6.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "truststore",
+      "version": "0.10.4",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/truststore/0.10.4/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "PSF-2.0",
+      "metadataSource": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/typing-inspection/0.4.4/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.41.0",
+      "dependencyClass": "runtime_direct",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/uvicorn/0.41.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "websockets",
+      "version": "17.0.1",
+      "dependencyClass": "runtime_transitive",
+      "licenseExpression": "BSD-3-Clause",
+      "metadataSource": "https://pypi.org/pypi/websockets/17.0.1/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "dependencyClass": "build_direct",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/setuptools/84.0.0/json",
+      "metadataLicenseSource": "pypi_license_expression",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    }
+  ],
+  "claims": {
+    "everyLockedPackageInventoried": true,
+    "legalApprovalComplete": false,
+    "vulnerabilityReviewComplete": false,
+    "releaseApproved": false
+  }
+}

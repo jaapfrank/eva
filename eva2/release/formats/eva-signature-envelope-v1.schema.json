@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:eva:release:Eva2SignatureEnvelope:v1",
+  "title": "Eva2SignatureEnvelope/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "scope", "subjectId", "subjectSha256", "algorithm", "keyId", "trustRootVersion", "signedAt", "signatureBase64"],
+  "properties": {
+    "contract": {"const": "Eva2SignatureEnvelope/v1"},
+    "scope": {"enum": ["release", "image", "connector_artifact", "connector_promotion", "revocation_list", "trust_root_rotation"]},
+    "subjectId": {"type": "string", "minLength": 1, "maxLength": 256},
+    "subjectSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "algorithm": {"const": "Ed25519"},
+    "domainSeparationPrefix": {"const": "Eva2ReleaseSignature/v1\\u0000"},
+    "keyId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "trustRootVersion": {"type": "integer", "minimum": 1},
+    "signedAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": ["string", "null"], "format": "date-time"},
+    "provenanceSha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "signatureBase64": {"type": "string", "pattern": "^[A-Za-z0-9+/]{86}==$"}
+  }
+}

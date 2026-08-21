@@ -1,0 +1,178 @@
+{
+  "contract": "Eva2GateToolchainLock/v1",
+  "status": "exact_design_gate_environment_target_runtime_unproven",
+  "scope": "tranche_4a_design_gates_only",
+  "interpreter": {
+    "implementation": "CPython",
+    "version": "3.12.3",
+    "cacheTag": "cpython-312",
+    "executableSha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+    "targetRuntimeVersion": "3.12.14",
+    "targetRuntimeExecutionClaim": false
+  },
+  "requirementLocks": [
+    {
+      "role": "application_and_contract_runtime",
+      "path": "eva2/requirements.lock",
+      "sha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+      "packageCount": 38
+    },
+    {
+      "role": "design_gate_build_frontend_and_independent_schema_consumer",
+      "path": "eva2/release/gate-toolchain.requirements.lock",
+      "sha256": "c49a78134f19175106d1f4e956583c47532293446454ceeeeed8cc512b83dd5f",
+      "packageCount": 18
+    }
+  ],
+  "requiredDistributionCount": 53,
+  "requiredDistributions": {
+    "alembic": "1.19.1",
+    "annotated-doc": "0.0.5",
+    "annotated-types": "0.8.0",
+    "anyio": "4.14.2",
+    "attrs": "26.1.0",
+    "cffi": "2.1.1",
+    "click": "8.4.2",
+    "cryptography": "46.0.5",
+    "dbos": "2.30.0",
+    "fastapi": "0.141.1",
+    "genai-prices": "0.1.4",
+    "greenlet": "3.5.5",
+    "griffelib": "2.2.0",
+    "h11": "0.16.0",
+    "httpcore2": "2.12.0",
+    "httpx2": "2.12.0",
+    "idna": "3.19",
+    "logfire-api": "4.41.0",
+    "mako": "1.4.1",
+    "markupsafe": "3.0.3",
+    "opentelemetry-api": "1.44.0",
+    "psycopg": "3.3.4",
+    "psycopg-binary": "3.3.4",
+    "pycparser": "3.0",
+    "pydantic": "2.12.5",
+    "pydantic-ai-slim": "2.32.1",
+    "pydantic-core": "2.41.5",
+    "pydantic-graph": "2.32.1",
+    "python-dateutil": "2.9.0.post0",
+    "pyyaml": "6.0.3",
+    "six": "1.17.0",
+    "sqlalchemy": "2.0.52",
+    "starlette": "1.6.0",
+    "truststore": "0.10.4",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "uvicorn": "0.41.0",
+    "websockets": "17.0.1",
+    "setuptools": "84.0.0",
+    "build": "1.5.0",
+    "iniconfig": "2.3.0",
+    "jsonschema": "4.25.1",
+    "jsonschema-specifications": "2025.9.1",
+    "packaging": "26.3",
+    "pip-tools": "7.6.1",
+    "pluggy": "1.6.0",
+    "pygments": "2.17.2",
+    "pyproject-hooks": "1.2.0",
+    "pytest": "8.4.2",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.6.3",
+    "wheel": "0.48.0",
+    "pip": "26.0.1"
+  },
+  "environmentPolicy": {
+    "freshEnvironmentOutsideRepositoryRequired": true,
+    "ambientUserSiteAllowed": false,
+    "systemSitePackagesAllowed": false,
+    "exactDistributionSetRequired": true,
+    "networkAllowedDuringGateExecution": false,
+    "dependenciesInstalledByGateRunner": false
+  },
+  "boundEntrypoints": [
+    {
+      "kind": "python_module",
+      "name": "pytest",
+      "distribution": "pytest",
+      "version": "8.4.2"
+    },
+    {
+      "kind": "python_module",
+      "name": "pip",
+      "distribution": "pip",
+      "version": "26.0.1"
+    },
+    {
+      "kind": "python_module",
+      "name": "piptools",
+      "distribution": "pip-tools",
+      "version": "7.6.1"
+    },
+    {
+      "kind": "python_stdlib",
+      "name": "unittest",
+      "distribution": null,
+      "version": "3.12.3"
+    },
+    {
+      "kind": "schema_reader",
+      "name": "pydantic",
+      "distribution": "pydantic",
+      "version": "2.12.5"
+    },
+    {
+      "kind": "independent_json_schema_consumer",
+      "name": "jsonschema.validators.validator_for",
+      "distribution": "jsonschema",
+      "version": "4.25.1",
+      "forbiddenImports": ["eva", "pydantic"]
+    }
+  ],
+  "generationRecord": {
+    "applicationLock": {
+      "frontend": "pip 24.0",
+      "resolver": "pip-tools 7.6.1",
+      "input": "eva2/release/dependency-roots.in",
+      "output": "eva2/requirements.lock",
+      "command": [
+        "pip-compile",
+        "--generate-hashes",
+        "--allow-unsafe",
+        "--strip-extras",
+        "--output-file",
+        "eva2/requirements.lock",
+        "eva2/release/dependency-roots.in"
+      ]
+    },
+    "gateToolchainLock": {
+      "frontend": "pip 26.0.1",
+      "resolver": "pip-tools 7.6.1",
+      "input": "eva2/release/gate-toolchain-roots.in",
+      "output": "eva2/release/gate-toolchain.requirements.lock",
+      "command": [
+        "pip-compile",
+        "--generate-hashes",
+        "--allow-unsafe",
+        "--strip-extras",
+        "--output-file",
+        "eva2/release/gate-toolchain.requirements.lock",
+        "eva2/release/gate-toolchain-roots.in"
+      ]
+    },
+    "wheelMetadataCoverage": {
+      "frontend": "pip 26.0.1",
+      "hashCheckingMode": true,
+      "onlyBinary": true,
+      "receipt": "eva2/release/python-wheel-coverage.json"
+    }
+  },
+  "unclaimedTools": [
+    "ruff",
+    "mypy"
+  ],
+  "claims": {
+    "pythonTargetRuntimeExecuted": false,
+    "installerExists": false,
+    "imagesExecuted": false,
+    "platformSupportProven": false
+  }
+}

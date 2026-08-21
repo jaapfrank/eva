@@ -1,0 +1,18 @@
+{
+  "contract": "Eva2SbomPolicy/v1",
+  "status": "format_selected_artifacts_absent",
+  "authoritativeFormat": "SPDX-2.3-json",
+  "schemaContract": "Eva2SbomBinding/v1",
+  "schemaPath": "eva2/release/formats/eva-sbom-binding-v1.schema.json",
+  "requiredPerArtifact": true,
+  "requiredHashes": ["SHA256"],
+  "requiredPackageFields": ["name", "versionInfo", "downloadLocation", "licenseDeclared", "licenseConcluded", "checksums"],
+  "requiredRelationships": ["DESCRIBES", "CONTAINS", "DEPENDS_ON"],
+  "licenseInventoryPath": "eva2/release/license-inventory.json",
+  "vulnerabilityScanBindingRequiredForRelease": true,
+  "claims": {
+    "sbomGenerated": false,
+    "vulnerabilityScanRun": false,
+    "artifactCoverageProven": false
+  }
+}

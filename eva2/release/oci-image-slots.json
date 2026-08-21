@@ -1,0 +1,116 @@
+{
+  "contract": "Eva2OciImageSlots/v1",
+  "status": "base_manifests_selected_final_images_unresolved",
+  "runnable": false,
+  "mutableTagsAllowedAsAuthority": false,
+  "authorityRequiresDigest": true,
+  "digestAlgorithm": "sha256",
+  "registryAuthority": "https://registry-1.docker.io/v2/",
+  "baseSlots": [
+    {
+      "id": "python_base",
+      "repository": "docker.io/library/python",
+      "discoveryTagNotAuthority": "3.12.14-slim-bookworm",
+      "authorityReference": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "indexDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "platformManifests": {
+        "linux/amd64": {"manifestDigest": "sha256:356b0d18f9385f4bdcc673af60e1e64c9d1504952e4ec36ee32044c722a6bc4e", "configDigest": "sha256:183e5ad42322fea6f731433ae7f6be7498812b31d2eaf05537ffed838dd1ba7c"},
+        "linux/arm64": {"manifestDigest": "sha256:fa161ca9d626b475d504c439b943e295fbca9e2560b1be14654ade60e7d8d45a", "configDigest": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"}
+      },
+      "officialImagesSource": {
+        "url": "https://raw.githubusercontent.com/docker-library/official-images/66486471b8d625310e680c0d725d3f1ec919fc97/library/python",
+        "libraryCommit": "66486471b8d625310e680c0d725d3f1ec919fc97",
+        "imageSourceCommit": "f2c5d1b8a6adecb5b00b3c9331d4f863beade6b3",
+        "directory": "3.12/slim-bookworm",
+        "entrySha256": "9320a8eb9e6358950d29146c9bdd24567f1434cab0032216a310db5ea16346c1",
+        "entry": "Tags: 3.12.14-slim-bookworm, 3.12-slim-bookworm\nArchitectures: amd64, arm32v7, arm64v8, i386, ppc64le\nGitCommit: f2c5d1b8a6adecb5b00b3c9331d4f863beade6b3\nDirectory: 3.12/slim-bookworm"
+      },
+      "license": {
+        "model": "component_licenses_must_be_materialized_in_final_spdx_sbom",
+        "primaryRuntimeLicense": "PSF-2.0",
+        "primarySource": "https://docs.python.org/3/license.html",
+        "legalClearanceComplete": false
+      }
+    },
+    {
+      "id": "postgresql_base",
+      "repository": "docker.io/library/postgres",
+      "discoveryTagNotAuthority": "16.13-bookworm",
+      "authorityReference": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+      "indexDigest": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+      "platformManifests": {
+        "linux/amd64": {"manifestDigest": "sha256:57c55aefb81a937d21171b7c2266264b5552cb1a4f90459bbdfc417a36883a4d", "configDigest": "sha256:c0a399de9424c2e689fa7c7e89620b83cc37b6c7a9e19eda8883df623ccb26be"},
+        "linux/arm64": {"manifestDigest": "sha256:494df59df434a3a83b698c01d0ae28d486d68e9675877d3341287f054a653be2", "configDigest": "sha256:477b63deb3e45f99ebf7a3970807e145173d026c55e16b4ef85f74ce5074460e"}
+      },
+      "officialImagesSource": {
+        "url": "https://raw.githubusercontent.com/docker-library/official-images/3a11ba846c60a91e62664e98bdf367b533232af9/library/postgres",
+        "libraryCommit": "3a11ba846c60a91e62664e98bdf367b533232af9",
+        "imageSourceCommit": "3b6b5fca9ca40c84b77540fc605ea8e8353b13b2",
+        "directory": "16/bookworm",
+        "entrySha256": "a02a2443b7fe37774b55517023f1522b06c0b248929aa9743ffece3be1e0b804",
+        "entry": "Tags: 16.13-bookworm, 16-bookworm\nArchitectures: amd64, arm32v5, arm32v7, arm64v8, i386, mips64le, ppc64le, s390x\nGitCommit: 3b6b5fca9ca40c84b77540fc605ea8e8353b13b2\nDirectory: 16/bookworm"
+      },
+      "license": {
+        "model": "component_licenses_must_be_materialized_in_final_spdx_sbom",
+        "primaryRuntimeLicense": "PostgreSQL",
+        "primarySource": "https://www.postgresql.org/about/licence/",
+        "legalClearanceComplete": false
+      }
+    },
+    {
+      "id": "debian_slim_base",
+      "repository": "docker.io/library/debian",
+      "discoveryTagNotAuthority": "bookworm-slim",
+      "authorityReference": "docker.io/library/debian@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241",
+      "indexDigest": "sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241",
+      "platformManifests": {
+        "linux/amd64": {"manifestDigest": "sha256:362e64223cc0da95422b3b13c045186fc0a81250e765d31c025fbddf257f6143", "configDigest": "sha256:9fff73c337b947e6e3120b8ce929c92a7c5820228fda7c163145954c31cd32ba"},
+        "linux/arm64": {"manifestDigest": "sha256:817e6cf99d6fc127ff4ffe8580049b60deba0adfbbb2bd65ddc3ef8fbb7aade0", "configDigest": "sha256:61c44d586ac3463e3f9160e3cf6190e96b0769c58707517c313bb451095495a4"}
+      },
+      "officialImagesSource": {
+        "url": "https://raw.githubusercontent.com/docker-library/official-images/66486471b8d625310e680c0d725d3f1ec919fc97/library/debian",
+        "libraryCommit": "66486471b8d625310e680c0d725d3f1ec919fc97",
+        "imageSourceCommit": null,
+        "directory": "bookworm/slim/oci",
+        "entrySha256": "217965dd376e92ad94ecd578508a1bca07a28e509fcd08dc482daef56c18dc79",
+        "entry": "Tags: bookworm-slim, bookworm-20260803-slim, 12.15-slim, 12-slim\nArchitectures: amd64, arm32v7, arm64v8, i386, ppc64le\nBuilder: oci-import\nDirectory: bookworm/slim/oci\nFile: index.json"
+      },
+      "license": {
+        "model": "heterogeneous_debian_package_licenses_must_be_materialized_in_final_spdx_sbom",
+        "primaryRuntimeLicense": null,
+        "primarySource": "https://www.debian.org/legal/licenses/",
+        "legalClearanceComplete": false
+      }
+    }
+  ],
+  "componentBaseAssignments": {
+    "living_core": "python_base",
+    "model_adapter": "python_base",
+    "connector_supervisor": "python_base",
+    "credential_broker": "python_base",
+    "connector_worker_base": "python_base",
+    "postgresql": "postgresql_base",
+    "egress_proxy": "debian_slim_base",
+    "object_store": "debian_slim_base",
+    "telemetry_collector": "debian_slim_base"
+  },
+  "finalImageSlots": [
+    {"id": "living_core", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "model_adapter", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "connector_supervisor", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "credential_broker", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "connector_worker_base", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "postgresql", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "egress_proxy", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "object_store", "digest": null, "status": "unresolved_4a_not_runnable"},
+    {"id": "telemetry_collector", "digest": null, "status": "unresolved_4a_not_runnable"}
+  ],
+  "claims": {
+    "baseManifestMetadataSelected": true,
+    "baseBytesPulledOrExecuted": false,
+    "finalImagesBuilt": false,
+    "imageSignaturesExist": false,
+    "installerExists": false,
+    "runtimeSupportProven": false
+  }
+}
