@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import shutil
 import struct
@@ -34,7 +35,15 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 freeze.PYPROJECT_PATH,
                 freeze.CHECKER_PATH,
                 freeze.TEST_PATH,
+                *freeze.ARTIFACT_PATHS,
             }
+        )
+        paths.add(freeze.CONTRACT_MANIFEST_PATH)
+        paths.update(
+            str(path.relative_to(REPOSITORY_ROOT))
+            for path in (REPOSITORY_ROOT / "eva2/schemas/contracts").glob(
+                "*.schema.json"
+            )
         )
         for relative in sorted(paths):
             source = REPOSITORY_ROOT / relative
@@ -75,7 +84,33 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             any(expected in error for error in receipt["errors"]), receipt["errors"]
         )
 
-    def test_repository_freeze_passes_and_reports_all_six_freeze_hashes(self) -> None:
+    def _assert_coordinated_artifact_mutation_fails(
+        self,
+        relative: str,
+        mutate: Callable[[dict[str, Any]], None],
+        expected: str,
+    ) -> None:
+        temporary, root = self._fixture()
+        self.addCleanup(temporary.cleanup)
+        artifact = self._load(root, relative)
+        mutate(artifact)
+        self._write(root, relative, artifact)
+        profile = self._load(root, freeze.PROFILE_PATH)
+        row = next(
+            item
+            for item in profile["preRuntimeRequiredArtifacts"]["artifacts"]
+            if item["path"] == relative
+        )
+        row["expectedSha256"] = freeze.sha256_file(root / relative)
+        self._write(root, freeze.PROFILE_PATH, profile)
+        receipt = freeze.verify(root)
+        self.assertEqual("failed", receipt["status"], receipt)
+        self.assertFalse(receipt["runtimeCodingAllowed"])
+        self.assertTrue(
+            any(expected in error for error in receipt["errors"]), receipt["errors"]
+        )
+
+    def test_repository_freeze_passes_and_reports_all_ten_freeze_hashes(self) -> None:
         receipt = freeze.verify(REPOSITORY_ROOT)
         self.assertEqual("passed", receipt["status"], receipt["errors"])
         self.assertEqual(
@@ -86,6 +121,7 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 freeze.PYPROJECT_PATH,
                 freeze.CHECKER_PATH,
                 freeze.TEST_PATH,
+                *freeze.ARTIFACT_PATHS,
             },
             set(receipt["verifiedHashes"]),
         )
@@ -94,16 +130,8 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
         self.assertFalse(receipt["serviceStarted"])
         self.assertFalse(receipt["dependenciesInstalled"])
         self.assertFalse(receipt["productRuntimeImported"])
-        self.assertFalse(receipt["runtimeCodingAllowed"])
-        self.assertEqual(
-            [
-                "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json",
-                "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
-                "eva2/design/vertical/noor-4d-model-vectors-v1.json",
-                "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
-            ],
-            receipt["missingPreRuntimeArtifacts"],
-        )
+        self.assertTrue(receipt["runtimeCodingAllowed"])
+        self.assertEqual([], receipt["missingPreRuntimeArtifacts"])
 
     def test_duplicate_profile_key_fails_before_semantic_checks(self) -> None:
         temporary, root = self._fixture()
@@ -120,18 +148,36 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             receipt["errors"],
         )
 
-    def test_runtime_coding_stays_false_while_required_artifacts_are_missing(
+    def test_runtime_coding_fails_closed_when_a_required_artifact_is_missing(
         self,
     ) -> None:
         temporary, root = self._fixture()
         self.addCleanup(temporary.cleanup)
-        profile = self._load(root, freeze.PROFILE_PATH)
-        profile["preRuntimeRequiredArtifacts"]["runtimeCodingAllowed"] = True
-        self._write(root, freeze.PROFILE_PATH, profile)
+        (root / freeze.SCHEMA_ARTIFACT_PATH).unlink()
         receipt = freeze.verify(root)
         self.assertEqual("failed", receipt["status"])
         self.assertFalse(receipt["runtimeCodingAllowed"])
-        self.assertEqual(4, len(receipt["missingPreRuntimeArtifacts"]))
+        self.assertEqual(
+            [freeze.SCHEMA_ARTIFACT_PATH], receipt["missingPreRuntimeArtifacts"]
+        )
+
+    def test_duplicate_artifact_key_fails_before_semantic_checks(self) -> None:
+        temporary, root = self._fixture()
+        self.addCleanup(temporary.cleanup)
+        path = root / freeze.MODEL_ARTIFACT_PATH
+        original = path.read_text(encoding="utf-8")
+        needle = '"contract":"Eva24DModelVectors/v1",'
+        self.assertEqual(1, original.count(needle))
+        duplicate = (
+            '"contract":"Eva24DModelVectors/v1","contract":"Eva24DModelVectors/v1",'
+        )
+        path.write_text(original.replace(needle, duplicate), encoding="utf-8")
+        receipt = freeze.verify(root)
+        self.assertEqual("failed", receipt["status"])
+        self.assertTrue(
+            any("duplicate JSON key: contract" in error for error in receipt["errors"]),
+            receipt["errors"],
+        )
 
     def test_authority_case_crash_and_document_mutations_fail_closed(self) -> None:
         mutations: list[tuple[str, Callable[[dict[str, Any]], None], str]] = [
@@ -180,7 +226,9 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             ] = 25
 
         def blocker(profile: dict[str, Any]) -> None:
-            profile["preRuntimeRequiredArtifacts"]["artifacts"][1]["status"] = "sealed"
+            profile["preRuntimeRequiredArtifacts"]["artifacts"][1]["status"] = (
+                "missing_blocking_dependency_not_implemented"
+            )
 
         def model_blocker(profile: dict[str, Any]) -> None:
             profile["preRuntimeRequiredArtifacts"]["artifacts"][2]["expectedSha256"] = (
@@ -193,16 +241,251 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             (
                 "blocking dependency",
                 blocker,
-                "pre-runtime artifact is not exact and missing: connector_provider_fixtures",
+                "pre-runtime artifact binding is not exact: connector_provider_fixtures",
             ),
             (
                 "model blocking dependency",
                 model_blocker,
-                "pre-runtime artifact is not exact and missing: deterministic_model_vectors",
+                "pre-runtime artifact binding is not exact: deterministic_model_vectors",
             ),
         ):
             with self.subTest(label=label):
                 self._assert_profile_mutation_fails(mutate, expected)
+
+    def test_schema_connector_and_model_semantic_mutations_fail_after_rehash(
+        self,
+    ) -> None:
+        def schema(artifact: dict[str, Any]) -> None:
+            artifact["schemaFamily"]["canonicalTableCount"] = 38
+
+        def schema_admission(artifact: dict[str, Any]) -> None:
+            artifact["migrationFreeze"]["initialAdmissionPrecondition"][
+                "admissionDecision"
+            ]["admitIffEveryCountEqualsZero"] = False
+
+        def schema_initial_generation_bound(artifact: dict[str, Any]) -> None:
+            row = next(
+                item
+                for item in artifact["portableExport"][
+                    "generatedPortableRecordSchemas"
+                ]["schemas"]
+                if item["table"] == "eva_core.episodes"
+            )
+            decoded = json.loads(base64.b64decode(row["canonicalBytesBase64"]))
+            decoded["properties"]["row"]["properties"]["current_generation"][
+                "minimum"
+            ] = 2
+            raw = freeze.canonical_json_bytes(decoded)
+            row["canonicalBytesBase64"] = base64.b64encode(raw).decode("ascii")
+            row["canonicalByteLength"] = len(raw)
+            row["record_schema_sha256"] = freeze.sha256_bytes(raw)
+
+        def connector(artifact: dict[str, Any]) -> None:
+            artifact["scenarios"]["c13ReofferEva"]["expected"][
+                "outcomeProviderMutations"
+            ] = 2
+
+        def connector_ingress(artifact: dict[str, Any]) -> None:
+            artifact["hostEvidence"]["outcomeAckVectors"]["evaSuccess"]["ingress"][
+                "payload"
+            ]["turn_envelope_sha256"] = "0" * 64
+
+        def connector_c10(artifact: dict[str, Any]) -> None:
+            artifact["hostEvidence"]["c10ReadbackRepeatAuthority"][
+                "preCrashAttemptReference"
+            ]["responseBytesDurablyAdoptable"] = True
+
+        def model(artifact: dict[str, Any]) -> None:
+            artifact["fixtureAdapterProfile"]["programSha256"] = "0" * 64
+
+        def model_connector_crosswalk(artifact: dict[str, Any]) -> None:
+            artifact["happyPathVectors"][1]["request"]["model_input"][
+                "presence_context"
+            ]["effect_receipts"][0]["receipt_id"] = "fixture:receipt:wrong"
+
+        for label, relative, mutate, expected in (
+            (
+                "schema",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema,
+                "does not freeze exactly 39 canonical tables",
+            ),
+            (
+                "schema empty-only admission",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_admission,
+                "schema 4d_0003 admission is not exact empty-only authority",
+            ),
+            (
+                "schema initial-generation primitive bounds",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_initial_generation_bound,
+                "portable episode primitive bounds reject an admitted initial generation",
+            ),
+            (
+                "connector",
+                freeze.CONNECTOR_ARTIFACT_PATH,
+                connector,
+                "connector C13 exact re-offer surface is not exact for Eva",
+            ),
+            (
+                "connector ingress",
+                freeze.CONNECTOR_ARTIFACT_PATH,
+                connector_ingress,
+                "connector ACK vector evaSuccess ingress-to-TurnEnvelope mapping is not exact",
+            ),
+            (
+                "connector C10 repeat read",
+                freeze.CONNECTOR_ARTIFACT_PATH,
+                connector_c10,
+                "connector C10 durable ordinal-2 read authority is not exact",
+            ),
+            (
+                "model",
+                freeze.MODEL_ARTIFACT_PATH,
+                model,
+                "model manifest/program/schema cross-binding is not exact",
+            ),
+            (
+                "model connector crosswalk",
+                freeze.MODEL_ARTIFACT_PATH,
+                model_connector_crosswalk,
+                "model document PresenceContext differs from connector durable authority",
+            ),
+        ):
+            with self.subTest(label=label):
+                self._assert_coordinated_artifact_mutation_fails(
+                    relative, mutate, expected
+                )
+
+    def test_schedule_semantic_mutations_fail_after_coordinated_rehash(self) -> None:
+        def runtime_inference(artifact: dict[str, Any]) -> None:
+            artifact["portableSnapshotAuthority"]["runtimeInferenceAllowed"] = True
+
+        def record_set(artifact: dict[str, Any]) -> None:
+            snapshot = next(
+                row
+                for row in artifact["portableSnapshotAuthority"]["precomputedSnapshots"]
+                if row["snapshot_id"] == "terminal"
+            )
+            record_set_row = next(
+                row
+                for row in snapshot["record_sets"]
+                if row["table"] == "eva_core.episodes"
+            )
+            record_set_row["record_fact_ids"] = []
+
+        def c13_reference(artifact: dict[str, Any]) -> None:
+            schedule = next(
+                row
+                for row in artifact["crashSchedules"]
+                if row["crashId"] == "C13-after-outcome-accept-before-receipt"
+            )
+            schedule["reofferAuthority"]["ordinal_2_effect_attempt_fact_id"] = (
+                "effect-attempt/outcome:missing"
+            )
+
+        def correction_object_manifest(artifact: dict[str, Any]) -> None:
+            snapshot = next(
+                row
+                for row in artifact["portableSnapshotAuthority"]["precomputedSnapshots"]
+                if row["snapshot_id"] == "terminal.correction"
+            )
+            snapshot["object_manifest_records"][0]["object_ref_row_sha256"] = "0" * 64
+
+        def harness_nonce_reuse(artifact: dict[str, Any]) -> None:
+            artifact["harnessEntropyInjectionAuthority"]["nonce_injection"][
+                "maximum_consumptions_per_isolated_scenario_run"
+            ] = 2
+
+        def harness_trace_not_durable(artifact: dict[str, Any]) -> None:
+            artifact["harnessEntropyInjectionAuthority"][
+                "durable_consumption_trace_gate"
+            ]["missing_duplicate_or_unflushed_trace_action"] = "continue"
+
+        def harness_production_import(artifact: dict[str, Any]) -> None:
+            artifact["harnessEntropyInjectionAuthority"][
+                "forbidden_activation_and_shortcuts"
+            ]["production_import_allowed"] = True
+
+        def harness_path_manifest(artifact: dict[str, Any]) -> None:
+            artifact["harnessEntropyInjectionAuthority"]["schedule_path_bindings"][
+                "selected_ciphertext_occurrence_paths"
+            ].pop()
+
+        for label, mutate, expected in (
+            (
+                "runtime inference",
+                runtime_inference,
+                "no-runtime-inference seal",
+            ),
+            (
+                "record set",
+                record_set,
+                "31 snapshot deltas",
+            ),
+            (
+                "C13 fact reference",
+                c13_reference,
+                "fact or snapshot references",
+            ),
+            (
+                "correction object manifest",
+                correction_object_manifest,
+                "31 snapshot deltas",
+            ),
+            (
+                "harness nonce reuse",
+                harness_nonce_reuse,
+                "one-use or harness-only",
+            ),
+            (
+                "harness trace not durable",
+                harness_trace_not_durable,
+                "durable trace, uniqueness or ordering gate",
+            ),
+            (
+                "harness production import",
+                harness_production_import,
+                "production boundary or no-shortcut rule",
+            ),
+            (
+                "harness path manifest",
+                harness_path_manifest,
+                "exhaustive path bindings",
+            ),
+        ):
+            with self.subTest(label=label):
+                self._assert_coordinated_artifact_mutation_fails(
+                    freeze.SCHEDULE_ARTIFACT_PATH, mutate, expected
+                )
+
+    def test_profile_harness_entropy_exception_mutations_fail_closed(self) -> None:
+        def authority(profile: dict[str, Any]) -> None:
+            profile["preRuntimeRequiredArtifacts"]["harnessEntropyInjectionException"][
+                "scheduleBinding"
+            ]["authoritySha256"] = "0" * 64
+
+        def more_than_one_use(profile: dict[str, Any]) -> None:
+            profile["preRuntimeRequiredArtifacts"]["harnessEntropyInjectionException"][
+                "testBootstrap"
+            ]["maximumConsumptionsPerIsolatedScenarioRun"] = 2
+
+        def production_import(profile: dict[str, Any]) -> None:
+            profile["preRuntimeRequiredArtifacts"]["harnessEntropyInjectionException"][
+                "normalAndProductionBoundary"
+            ]["productionBootstrapMayImportOrConfigureSource"] = True
+
+        for label, mutate in (
+            ("authority hash", authority),
+            ("second consumption", more_than_one_use),
+            ("production import", production_import),
+        ):
+            with self.subTest(label=label):
+                self._assert_profile_mutation_fails(
+                    mutate,
+                    "profile harness entropy exception is not the sole exact adoption authority",
+                )
 
     def test_sealed_pack_signatures_verify_with_maintained_ed25519(self) -> None:
         profile = self._load(REPOSITORY_ROOT, freeze.PROFILE_PATH)

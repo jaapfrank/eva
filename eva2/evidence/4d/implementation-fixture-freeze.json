@@ -1,0 +1,168 @@
+{
+  "contract": "Eva24DImplementationFixtureFreeze/v1",
+  "tranche": "4D-static-design-adoption",
+  "status": "passed_runtime_coding_authorized",
+  "createdAt": "2026-08-21T11:42:37+02:00",
+  "baseCommit": "aacf7e8fb367",
+  "branch": "recovery/v2-containment",
+  "claimBoundary": {
+    "fourExactDesignArtifactsAdopted": true,
+    "runtimeCodingAllowed": true,
+    "authorization": "authorizes implementation work against the four sealed 4D design artifacts only",
+    "runtimeBehaviorProven": false,
+    "databaseBehaviorProven": false,
+    "providerBehaviorProven": false,
+    "networkBehaviorProven": false,
+    "productionEntropyOrEncryptionProven": false,
+    "testsAloneCanAcceptRuntime": false
+  },
+  "artifactDag": [
+    {
+      "artifactId": "schema_export_mapping",
+      "path": "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json",
+      "contract": "Eva24DSchemaExportFreeze/v1",
+      "sha256": "3129bcca1e08f6d988c3ff6ccecf4671245ea3bd8179023e65ee16bf1ed96b11",
+      "status": "sealed_verified"
+    },
+    {
+      "artifactId": "connector_provider_fixtures",
+      "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
+      "contract": "Eva24DConnectorProviderFixtures/v1",
+      "sha256": "eeb3ec91c1801d1461273edad8562e26b1efdb5d772adc8a75b2ac92cd3662d1",
+      "status": "sealed_verified"
+    },
+    {
+      "artifactId": "deterministic_model_vectors",
+      "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
+      "contract": "Eva24DModelVectors/v1",
+      "sha256": "b755467be3ba77af6db5435a840cf7e069e0699837e49251748de1781f8171ad",
+      "status": "sealed_verified"
+    },
+    {
+      "artifactId": "concurrency_crash_schedules",
+      "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
+      "contract": "Eva24DConcurrencyCrashSchedules/v1",
+      "sha256": "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c",
+      "status": "sealed_verified"
+    }
+  ],
+  "sourceProfile": {
+    "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
+    "wholeFileSha256": "8651c4dc86fca7a7f5b2033609493739a072796b4c6f25280674852035360b31",
+    "semanticCoreSha256": "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b",
+    "semanticCoreRule": "SHA-256 over EvaCanonicalJSON/v1 after removing only preRuntimeRequiredArtifacts",
+    "semanticCoreUnchanged": true
+  },
+  "harnessEntropyException": {
+    "profileAuthority": "preRuntimeRequiredArtifacts.harnessEntropyInjectionException",
+    "profileAuthorityIsSoleIsolated4DException": true,
+    "schedulePath": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
+    "scheduleAuthoritySelector": "harnessEntropyInjectionAuthority",
+    "scheduleAuthoritySha256": "64603c12cb0e32e39f50ea4a3d38ebfece25d9477ac02b70a22c73bbb6c39d09",
+    "schedulePathBindingManifestSha256": "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3",
+    "scope": "exact public Eva fixture key, known-answer vector, object and either of two sealed document attempts in an isolated Noor 4D schedule run",
+    "nonceByteLength": 24,
+    "nonceSha256": "1d64add2a6388367c9bc2d1f1b384b069a6ef382cdaaa89771dd103e28613a25",
+    "maximumConsumptionsPerIsolatedScenarioRun": 1,
+    "durableConsumptionTraceRequiredBeforeCandidateAdoption": true,
+    "defaultBootstrapCanImportOrRegisterSource": false,
+    "productionBootstrapCanImportOrConfigureSource": false,
+    "environmentFileOrServiceActivationAllowed": false,
+    "preseedAllowed": false,
+    "copyKnownAnswerEnvelopeAllowed": false,
+    "foundSameWithoutSameRunDurableTraceAllowed": false,
+    "normalAndProductionNonceRule": "omit nonce in Aead.encrypt so PyNaCl/libsodium supplies fresh random bytes",
+    "deterministicProductionNonceAllowed": false,
+    "productionEntropyOrEncryptionClaim": false
+  },
+  "checkerReceiptCanonicalJsonSha256": "45f8459e5d15dae4e56e3aa78d09584d2fd5aa61a59b0851ece165dbf2875fa2",
+  "checkerCliOutputSha256": "95ad29096d4cc385d43f1e28c3ec0a1c5fafbb6b84220f0d5a59faa3068b4a34",
+  "checkerReceipt": {
+    "contract": "Eva24DPreCodeFreezeCheck/v1",
+    "status": "passed",
+    "networkUsed": false,
+    "databaseUsed": false,
+    "serviceStarted": false,
+    "dependenciesInstalled": false,
+    "productRuntimeImported": false,
+    "runtimeCodingAllowed": true,
+    "missingPreRuntimeArtifacts": [],
+    "verifiedHashes": {
+      "eva2/design/vertical/noor-4d-execution-profile-v1.json": "8651c4dc86fca7a7f5b2033609493739a072796b4c6f25280674852035360b31",
+      "eva2/release/4d-dependency-source-binding.json": "8bd1c160bd0a41ca0c39c257736316d293a4ff80f8b21e397480f48f1afb5da3",
+      "eva2/requirements-4d.lock": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+      "eva2/pyproject.toml": "bf552110352035faf1533c23c33915e5ab85445de7e156c044ee4f8356310789",
+      "eva2/tools/check_4d_freeze.py": "2175e822ddb70e4ef1ccfe546933bad9602f25383bb88326910d4a08b121164b",
+      "eva2/tests/design/test_4d_freeze.py": "88fa4832547a0913f3fc0fd15bb7e4f407c12b1921bcb696c139fbebc0f75950",
+      "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json": "3129bcca1e08f6d988c3ff6ccecf4671245ea3bd8179023e65ee16bf1ed96b11",
+      "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json": "eeb3ec91c1801d1461273edad8562e26b1efdb5d772adc8a75b2ac92cd3662d1",
+      "eva2/design/vertical/noor-4d-model-vectors-v1.json": "b755467be3ba77af6db5435a840cf7e069e0699837e49251748de1781f8171ad",
+      "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c"
+    },
+    "errors": []
+  },
+  "gates": [
+    {
+      "command": "python3 eva2/tools/check_4d_freeze.py --root .",
+      "environment": "system CPython 3.12, stdlib-only checker",
+      "status": "passed",
+      "runtimeCodingAllowed": true,
+      "verifiedHashCount": 10
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src python3 eva2/tools/generate_contract_schemas.py --check",
+      "environment": "system CPython 3.12",
+      "status": "passed",
+      "contracts": 64,
+      "generatedFiles": 67
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/contract eva2/tests/design/test_4d_freeze.py eva2/tests/architecture",
+      "environment": "system CPython 3.12 without PyNaCl",
+      "status": "passed_with_expected_dependency_skip",
+      "passed": 86,
+      "skipped": 1,
+      "skip": "maintained-library XChaCha KAT requires the sealed PyNaCl environment"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /home/administrator/.local/share/pipx/venvs/netexec/bin/python -I eva2/tests/design/test_4d_freeze.py FourDPreCodeFreezeTests.test_xchacha_known_answers_encrypt_and_decrypt_with_pynacl_1_6_2 -v",
+      "environment": "existing CPython 3.12 pipx environment with PyNaCl 1.6.2",
+      "status": "passed",
+      "passed": 1,
+      "xchachaEvidence": "Eva and Mira fixed-nonce vectors executed Aead.encrypt and decrypt with exact envelope bytes and plaintext roundtrip",
+      "dependenciesInstalled": false,
+      "productionEntropyOrEncryptionClaim": false
+    },
+    {
+      "command": "ruff check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py && ruff format --check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py && git diff --check",
+      "status": "passed"
+    }
+  ],
+  "mutationCoverage": [
+    "whole-file artifact changes remain rejected after coordinated profile rehash",
+    "schema table counts, migration admission and primitive generation bounds",
+    "connector ingress, C10 repeat read and C13 re-offer",
+    "model program manifest and connector durable crosswalk",
+    "schedule runtime inference, record sets, C13 references and correction ObjectRef manifest",
+    "harness authority self/path hashes, one-use nonce, durable trace and production/default prohibitions",
+    "profile authority hash, one-use limit and production bootstrap prohibition"
+  ],
+  "mutationsOutsideScope": {
+    "runtime": false,
+    "database": false,
+    "network": false,
+    "services": false,
+    "connectors": false,
+    "models": false,
+    "schemas": false,
+    "eva1": false
+  },
+  "nonClaims": [
+    "no 4D product runtime, database, provider, network, service or user-behavior execution",
+    "no production entropy-source, nonce-generation or encryption proof",
+    "the one-use fixed nonce is reachable only through the exact isolated 4D schedule harness and is not importable, registrable or configurable by default or production bootstrap",
+    "no deterministic nonce is authorized for normal or production encryption",
+    "no CAS, complete envelope or ObjectRef preseed and no found_same without the same-run durable consumption trace",
+    "no real OS crash, independent restore, update, rollback, deployment or external-product claim"
+  ]
+}

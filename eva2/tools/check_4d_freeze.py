@@ -28,6 +28,170 @@ LOCK_4D_PATH = "eva2/requirements-4d.lock"
 PYPROJECT_PATH = "eva2/pyproject.toml"
 CHECKER_PATH = "eva2/tools/check_4d_freeze.py"
 TEST_PATH = "eva2/tests/design/test_4d_freeze.py"
+CONTRACT_MANIFEST_PATH = "eva2/schemas/contracts/manifest.json"
+SCHEMA_ARTIFACT_PATH = "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json"
+CONNECTOR_ARTIFACT_PATH = (
+    "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json"
+)
+MODEL_ARTIFACT_PATH = "eva2/design/vertical/noor-4d-model-vectors-v1.json"
+SCHEDULE_ARTIFACT_PATH = (
+    "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json"
+)
+ARTIFACT_PATHS = (
+    SCHEMA_ARTIFACT_PATH,
+    CONNECTOR_ARTIFACT_PATH,
+    MODEL_ARTIFACT_PATH,
+    SCHEDULE_ARTIFACT_PATH,
+)
+EXPECTED_PROFILE_SEMANTIC_CORE_SHA256 = (
+    "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b"
+)
+EXPECTED_ARTIFACT_SHA256 = {
+    SCHEMA_ARTIFACT_PATH: (
+        "3129bcca1e08f6d988c3ff6ccecf4671245ea3bd8179023e65ee16bf1ed96b11"
+    ),
+    CONNECTOR_ARTIFACT_PATH: (
+        "eeb3ec91c1801d1461273edad8562e26b1efdb5d772adc8a75b2ac92cd3662d1"
+    ),
+    MODEL_ARTIFACT_PATH: (
+        "b755467be3ba77af6db5435a840cf7e069e0699837e49251748de1781f8171ad"
+    ),
+    SCHEDULE_ARTIFACT_PATH: (
+        "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c"
+    ),
+}
+EXPECTED_ARTIFACT_CONTRACTS = {
+    SCHEMA_ARTIFACT_PATH: "Eva24DSchemaExportFreeze/v1",
+    CONNECTOR_ARTIFACT_PATH: "Eva24DConnectorProviderFixtures/v1",
+    MODEL_ARTIFACT_PATH: "Eva24DModelVectors/v1",
+    SCHEDULE_ARTIFACT_PATH: "Eva24DConcurrencyCrashSchedules/v1",
+}
+PRE_RUNTIME_GATE_RULE = (
+    "runtimeCodingAllowed is true if and only if all four listed artifacts have "
+    "status sealed_verified, their exact non-null expectedSha256, an exact "
+    "contract and byte hash, the unchanged source-profile semantic core and "
+    "all fail-closed internal and cross-artifact validations passing, and the "
+    "current profile binds the sole exact isolated-4D harness entropy exception; "
+    "any failure resets it to false"
+)
+EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256 = (
+    "64603c12cb0e32e39f50ea4a3d38ebfece25d9477ac02b70a22c73bbb6c39d09"
+)
+EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256 = (
+    "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3"
+)
+EXPECTED_HARNESS_NONCE_HEX = "000102030405060708090a0b0c0d0e0f1011121314151617"
+EXPECTED_HARNESS_NONCE_SHA256 = (
+    "1d64add2a6388367c9bc2d1f1b384b069a6ef382cdaaa89771dd103e28613a25"
+)
+EXPECTED_EVA_FIXTURE_KEY_RECORD_SHA256 = (
+    "81179b3b4bfa235ad5d2f94d2b285a2f7cd39f37c30516e4e19a42f298d565d9"
+)
+EXPECTED_EVA_KAT_VECTOR_SHA256 = (
+    "cb0f3531275c241bd06d9e3b19d70e7e43a4a59e2bce0d8d0e509aa56ee9d5a3"
+)
+EXPECTED_SCHEMA_PORTABLE_MANIFEST_SHA256 = (
+    "de2e302c8d260707563a8c16af1a6dfc2a3932507013dddb79d7780a3e36dc68"
+)
+EXPECTED_SCHEMA_OBJECT_MANIFEST_RECORD_SHA256 = (
+    "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8"
+)
+EXPECTED_SCHEMA_READER_MANIFEST_SHA256 = (
+    "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876"
+)
+EXPECTED_SNAPSHOT_FAMILIES = [
+    "empty",
+    "admitted",
+    "planReserved",
+    "planCommitted",
+    "calendarPrepared",
+    "calendarReceipt",
+    "calendarReadInFlight",
+    "calendarProven",
+    "documentResponseInFlight",
+    "planAmbiguousWaiting",
+    "replyResponseInFlight",
+    "confirmationInFlight",
+    "confirmationProven",
+    "outcomeInFlight",
+    "outcomeAcknowledged",
+    "terminal",
+    "partialDocumentTerminal",
+    "fallbackTerminal",
+]
+EXPECTED_SNAPSHOT_INSTANCES = [
+    *EXPECTED_SNAPSHOT_FAMILIES,
+    "planReserved.provider429Open",
+    "terminal.provider429",
+    "calendarPrepared.connector429Open",
+    "terminal.connector429",
+    "calendarPrepared.c07AmbiguousBeforeCommit",
+    "terminal.c07",
+    "calendarPrepared.c08AmbiguousAfterCommit",
+    "terminal.c08",
+    "terminal.c10",
+    "terminal.c11",
+    "terminal.c13",
+    "planCommitted.correctionGen1",
+    "terminal.correction",
+]
+
+
+def _expected_profile_harness_entropy_exception() -> dict[str, Any]:
+    return {
+        "contract": "Eva4DProfileHarnessEntropyException/v1",
+        "status": "sealed_profile_authority",
+        "authorityPrecedence": (
+            "This current-profile adoption authority is the sole isolated-4D "
+            "exception to encryptedObjectFormat.encryptionProcedure and nonceRule; "
+            "the schedule artifact cannot grant, override or widen this exception."
+        ),
+        "scheduleBinding": {
+            "path": SCHEDULE_ARTIFACT_PATH,
+            "wholeFileSha256": EXPECTED_ARTIFACT_SHA256[SCHEDULE_ARTIFACT_PATH],
+            "authoritySelector": "harnessEntropyInjectionAuthority",
+            "authoritySha256": EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256,
+            "bindingManifestSha256": (EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256),
+        },
+        "testBootstrap": {
+            "onlyAllowedBootstrap": "isolated_noor_4d_schedule_harness",
+            "mayInjectExactOneUseNonce": True,
+            "injectionInterface": (
+                "one-shot in-memory callback passed explicitly to the object-"
+                "encryption fixture adapter nonce argument"
+            ),
+            "identity": "Eva",
+            "publicFixtureKeyRecordCanonicalSha256": (
+                EXPECTED_EVA_FIXTURE_KEY_RECORD_SHA256
+            ),
+            "knownAnswerVectorCanonicalSha256": EXPECTED_EVA_KAT_VECTOR_SHA256,
+            "objectId": "8fa3f97c-dc66-52f2-840c-d441b55f6a60",
+            "nonceHex": EXPECTED_HARNESS_NONCE_HEX,
+            "nonceByteLength": 24,
+            "nonceSha256": EXPECTED_HARNESS_NONCE_SHA256,
+            "maximumConsumptionsPerIsolatedScenarioRun": 1,
+            "consumptionOrdinal": 1,
+            "durableConsumptionTraceRequiredBeforeCandidateAdoption": True,
+        },
+        "normalAndProductionBoundary": {
+            "defaultBootstrapMayImportOrRegisterSource": False,
+            "productionBootstrapMayImportOrConfigureSource": False,
+            "environmentFileOrServiceActivationAllowed": False,
+            "normalEncryptCall": (
+                "nacl.secret.Aead(key).encrypt(plaintext, aad=header) without a "
+                "nonce so PyNaCl/libsodium supplies fresh random bytes"
+            ),
+            "deterministicProductionNonceAllowed": False,
+            "productionEntropyOrEncryptionProven": False,
+        },
+        "forbiddenShortcuts": {
+            "preseedCasEnvelopeOrObjectRefAllowed": False,
+            "copyKnownAnswerEnvelopeAllowed": False,
+            "foundSameWithoutThisRunDurableConsumptionTraceAllowed": False,
+        },
+    }
+
+
 VERTICAL_PATH = (
     "design/evidence/eva2-first-vertical-contract-"
     "2c9ffb7a2ae6fd9b34cc4c29f73e6b3b2212f6a96232090ddbdbcfb02ad5b9a1.json"
@@ -452,19 +616,24 @@ def _check_pre_runtime_required_artifacts(
     _exact_keys(
         errors,
         dependency_gate,
-        {"runtimeCodingAllowed", "gateRule", "artifacts"},
+        {
+            "runtimeCodingAllowed",
+            "gateRule",
+            "artifacts",
+            "harnessEntropyInjectionException",
+        },
         "pre-runtime required artifacts",
     )
     expected = [
         (
             "schema_export_mapping",
-            "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json",
+            SCHEMA_ARTIFACT_PATH,
             "Eva24DSchemaExportFreeze/v1",
             ("table/column", "JSONL", "DBOS-free generic-reader"),
         ),
         (
             "connector_provider_fixtures",
-            "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
+            CONNECTOR_ARTIFACT_PATH,
             "Eva24DConnectorProviderFixtures/v1",
             (
                 "five workers and six bindings",
@@ -474,25 +643,35 @@ def _check_pre_runtime_required_artifacts(
         ),
         (
             "deterministic_model_vectors",
-            "eva2/design/vertical/noor-4d-model-vectors-v1.json",
+            MODEL_ARTIFACT_PATH,
             "Eva24DModelVectors/v1",
             ("PlannerRequest/model_input", "provider-429", "zero-hidden-retry"),
         ),
         (
             "concurrency_crash_schedules",
-            "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
+            SCHEDULE_ARTIFACT_PATH,
             "Eva24DConcurrencyCrashSchedules/v1",
-            ("duplicate-overlap barrier", "fifteen crash", "terminal replay"),
+            (
+                "duplicate-overlap barrier",
+                "fifteen crash",
+                "terminal replay",
+                "harness-only entropy",
+            ),
         ),
     ]
     rows = dependency_gate.get("artifacts", [])
     _need(
         errors,
-        dependency_gate.get("runtimeCodingAllowed") is False
-        and "remains false while any listed artifact has expectedSha256 null"
-        in dependency_gate.get("gateRule", "")
+        dependency_gate.get("runtimeCodingAllowed") is True
+        and dependency_gate.get("gateRule") == PRE_RUNTIME_GATE_RULE
         and len(rows) == 4,
-        "runtime coding is not fail-closed on the four missing design artifacts",
+        "runtime coding gate is not exact for the four sealed design artifacts",
+    )
+    _need(
+        errors,
+        dependency_gate.get("harnessEntropyInjectionException")
+        == _expected_profile_harness_entropy_exception(),
+        "profile harness entropy exception is not the sole exact adoption authority",
     )
     for row, (artifact_id, path, contract, terms) in zip(rows, expected):
         if not isinstance(row, dict):
@@ -512,11 +691,3190 @@ def _check_pre_runtime_required_artifacts(
             and row.get("artifactId") == artifact_id
             and row.get("path") == path
             and row.get("contract") == contract
-            and row.get("expectedSha256") is None
-            and row.get("status") == "missing_blocking_dependency_not_implemented"
+            and row.get("expectedSha256") == EXPECTED_ARTIFACT_SHA256[path]
+            and row.get("status") == "sealed_verified"
             and all(term in row.get("requiredContents", "") for term in terms),
-            f"pre-runtime artifact is not exact and missing: {artifact_id}",
+            f"pre-runtime artifact binding is not exact: {artifact_id}",
         )
+
+
+def _walk_dicts(value: Any, path: str = "$") -> Iterable[tuple[str, dict[str, Any]]]:
+    if isinstance(value, dict):
+        yield path, value
+        for key, item in value.items():
+            yield from _walk_dicts(item, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            yield from _walk_dicts(item, f"{path}[{index}]")
+
+
+def _json_pointer_escape(value: str) -> str:
+    return value.replace("~", "~0").replace("/", "~1")
+
+
+def _scalar_json_pointers(value: Any, path: str = "") -> dict[str, Any]:
+    pointers: dict[str, Any] = {}
+    if isinstance(value, dict):
+        for key, item in value.items():
+            pointers.update(
+                _scalar_json_pointers(item, f"{path}/{_json_pointer_escape(key)}")
+            )
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            pointers.update(_scalar_json_pointers(item, f"{path}/{index}"))
+    else:
+        pointers[path] = value
+    return pointers
+
+
+def _resolve_json_pointer(value: Any, pointer: str) -> Any:
+    if pointer == "":
+        return value
+    if not isinstance(pointer, str) or not pointer.startswith("/"):
+        raise FreezeError("invalid RFC 6901 JSON Pointer")
+    current = value
+    for encoded in pointer[1:].split("/"):
+        if re.search(r"~(?![01])", encoded):
+            raise FreezeError("invalid RFC 6901 JSON Pointer escape")
+        token = encoded.replace("~1", "/").replace("~0", "~")
+        if isinstance(current, dict):
+            if token not in current:
+                raise FreezeError("unresolved RFC 6901 JSON Pointer")
+            current = current[token]
+        elif isinstance(current, list):
+            if not re.fullmatch(r"0|[1-9][0-9]*", token):
+                raise FreezeError("invalid RFC 6901 array index")
+            index = int(token)
+            if index >= len(current):
+                raise FreezeError("unresolved RFC 6901 array index")
+            current = current[index]
+        else:
+            raise FreezeError("RFC 6901 JSON Pointer traverses a scalar")
+    return current
+
+
+def _decode_standard_base64(value: Any) -> bytes | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        raw = base64.b64decode(value, validate=True)
+    except (ValueError, binascii.Error):
+        return None
+    return raw if base64.b64encode(raw).decode("ascii") == value else None
+
+
+def _load_embedded_canonical_json(
+    raw: bytes, errors: list[str], label: str
+) -> dict[str, Any] | None:
+    try:
+        text = raw.decode("utf-8")
+        value = json.loads(
+            text,
+            object_pairs_hook=_reject_pairs,
+            parse_float=_reject_float,
+            parse_constant=_reject_constant,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, FreezeError) as exc:
+        errors.append(f"{label} is not strict canonical JSON: {exc}")
+        return None
+    if not isinstance(value, dict):
+        errors.append(f"{label} canonical JSON root is not an object")
+        return None
+    _need(
+        errors,
+        canonical_json_bytes(value) == raw and _all_strings_nfc(value),
+        f"{label} bytes are not EvaCanonicalJSON/v1",
+    )
+    return value
+
+
+def _check_base64_metadata(
+    metadata: Any, errors: list[str], label: str
+) -> bytes | None:
+    if not isinstance(metadata, dict):
+        errors.append(f"{label} canonical-byte metadata is not an object")
+        return None
+    encoded = metadata.get("base64", metadata.get("canonicalBytesBase64"))
+    length = metadata.get("byteLength", metadata.get("canonicalByteLength"))
+    digest = metadata.get("sha256", metadata.get("record_schema_sha256"))
+    raw = _decode_standard_base64(encoded)
+    _need(
+        errors,
+        raw is not None
+        and isinstance(length, int)
+        and length == len(raw)
+        and digest == sha256_bytes(raw),
+        f"{label} base64 length or hash is not exact",
+    )
+    return raw
+
+
+def _check_content_addressed_payloads(
+    value: Any, errors: list[str], label: str
+) -> None:
+    for path, row in _walk_dicts(value, label):
+        if "payload" not in row or "canonicalSha256" not in row:
+            continue
+        payload = row.get("payload")
+        try:
+            raw = canonical_json_bytes(payload)
+        except (TypeError, ValueError):
+            errors.append(f"{path} payload cannot be canonicalized")
+            continue
+        _need(
+            errors,
+            row.get("canonicalSha256") == sha256_bytes(raw)
+            and (
+                "canonicalByteLength" not in row
+                or row.get("canonicalByteLength") == len(raw)
+            )
+            and _all_strings_nfc(payload),
+            f"{path} content address is not exact",
+        )
+
+
+def _check_schema_artifact(schema: dict[str, Any], errors: list[str]) -> None:
+    _need(
+        errors,
+        schema.get("contract") == EXPECTED_ARTIFACT_CONTRACTS[SCHEMA_ARTIFACT_PATH]
+        and schema.get("status") == "sealed_pre_runtime_design",
+        "schema/export artifact contract or status is not sealed",
+    )
+    semantic = (
+        schema.get("authorityBindings", {})
+        .get("executionProfile", {})
+        .get("semanticCore", {})
+    )
+    _need(
+        errors,
+        semantic.get("excludedTopLevelKey") == "preRuntimeRequiredArtifacts"
+        and semantic.get("sha256") == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
+        "schema/export artifact source-profile semantic core is not exact",
+    )
+
+    family = schema.get("schemaFamily", {})
+    tables = family.get("tables", [])
+    _need(
+        errors,
+        family.get("canonicalTableCount") == 39
+        and family.get("nonCanonicalTableCount") == 5
+        and family.get("totalTableCount") == 44
+        and isinstance(tables, list)
+        and len(tables) == 39
+        and [row.get("exportOrdinal") for row in tables if isinstance(row, dict)]
+        == list(range(1, 40))
+        and len({row.get("table") for row in tables if isinstance(row, dict)}) == 39,
+        "schema/export artifact does not freeze exactly 39 canonical tables",
+    )
+
+    portable = schema.get("portableExport", {}).get(
+        "generatedPortableRecordSchemas", {}
+    )
+    portable_schemas = portable.get("schemas", [])
+    _need(
+        errors,
+        portable.get("contract") == "EvaPortableRecordSchemaCollection/v1"
+        and portable.get("schemaCount") == 39
+        and isinstance(portable_schemas, list)
+        and len(portable_schemas) == 39,
+        "portable record-schema collection is not exactly 39 schemas",
+    )
+    portable_by_uri: dict[str, str] = {}
+    portable_by_table: dict[str, dict[str, Any]] = {}
+    for index, row in enumerate(portable_schemas):
+        if not isinstance(row, dict):
+            errors.append(f"portable record schema {index + 1} is not an object")
+            continue
+        raw = _check_base64_metadata(row, errors, f"portable record schema {index + 1}")
+        decoded = (
+            _load_embedded_canonical_json(
+                raw, errors, f"portable record schema {index + 1}"
+            )
+            if raw is not None
+            else None
+        )
+        table = tables[index] if index < len(tables) else {}
+        transform = row.get("transformSpec")
+        _need(
+            errors,
+            row.get("exportOrdinal") == index + 1
+            and isinstance(table, dict)
+            and row.get("table") == table.get("table")
+            and row.get("recordContract")
+            == table.get("export", {}).get("recordContract")
+            and row.get("recordJsonlRelativePath")
+            == table.get("export", {}).get("relativePath")
+            and row.get("transformSpecSha256")
+            == sha256_bytes(canonical_json_bytes(transform)),
+            f"portable record schema {index + 1} table/transform binding is not exact",
+        )
+        if decoded is not None and isinstance(decoded.get("$id"), str):
+            portable_by_uri[decoded["$id"]] = row.get("record_schema_sha256", "")
+        if decoded is not None and isinstance(row.get("table"), str):
+            portable_by_table[row["table"]] = decoded
+
+    episodes_properties = (
+        portable_by_table.get("eva_core.episodes", {})
+        .get("properties", {})
+        .get("row", {})
+        .get("properties", {})
+    )
+    generation_schema = portable_by_table.get("eva_core.episode_generations", {}).get(
+        "properties", {}
+    )
+    generation_row_properties = generation_schema.get("row", {}).get("properties", {})
+    generation_key_properties = generation_schema.get("primary_key", {}).get(
+        "properties", {}
+    )
+    event_properties = (
+        portable_by_table.get("eva_core.episode_events", {})
+        .get("properties", {})
+        .get("row", {})
+        .get("properties", {})
+    )
+    _need(
+        errors,
+        episodes_properties.get("current_generation", {}).get("minimum") == 1
+        and generation_row_properties.get("generation", {}).get("minimum") == 1
+        and generation_key_properties.get("generation", {}).get("minimum") == 1
+        and event_properties.get("before_revision", {}).get("minimum") == 0,
+        "portable episode primitive bounds reject an admitted initial generation",
+    )
+
+    portable_manifest_raw = _check_base64_metadata(
+        portable.get("manifest"), errors, "portable record-schema manifest"
+    )
+    portable_manifest = (
+        _load_embedded_canonical_json(
+            portable_manifest_raw, errors, "portable record-schema manifest"
+        )
+        if portable_manifest_raw is not None
+        else None
+    )
+    if portable_manifest is not None:
+        summaries = portable_manifest.get("schemas", [])
+        _need(
+            errors,
+            portable_manifest.get("contract") == "EvaPortableRecordSchemaManifest/v1"
+            and portable.get("manifest", {}).get("sha256")
+            == EXPECTED_SCHEMA_PORTABLE_MANIFEST_SHA256
+            and isinstance(summaries, list)
+            and len(summaries) == 39
+            and all(
+                isinstance(summary, dict)
+                and isinstance(row, dict)
+                and all(summary.get(key) == row.get(key) for key in summary)
+                for summary, row in zip(summaries, portable_schemas)
+            ),
+            "portable record-schema manifest does not bind all 39 schemas",
+        )
+
+    object_authority = (
+        schema.get("portableExport", {})
+        .get("objectManifest", {})
+        .get("recordSchemaAuthority", {})
+    )
+    object_raw = _check_base64_metadata(
+        object_authority, errors, "object-manifest record schema"
+    )
+    object_schema = (
+        _load_embedded_canonical_json(
+            object_raw, errors, "object-manifest record schema"
+        )
+        if object_raw is not None
+        else None
+    )
+    _need(
+        errors,
+        object_authority.get("record_schema_sha256")
+        == EXPECTED_SCHEMA_OBJECT_MANIFEST_RECORD_SHA256,
+        "object-manifest record schema hash is not exact",
+    )
+
+    reader_manifest = schema.get("genericReader", {}).get("outputSchemaManifest", {})
+    readers = reader_manifest.get("schemas", [])
+    _need(
+        errors,
+        reader_manifest.get("contract") == "EvaGenericReaderOutputSchemaCollection/v1"
+        and reader_manifest.get("schemaCount") == 8
+        and isinstance(readers, list)
+        and len(readers) == 8
+        and [row.get("outputOrdinal") for row in readers if isinstance(row, dict)]
+        == list(range(1, 9)),
+        "generic-reader output collection is not exactly eight schemas",
+    )
+    decoded_readers: dict[int, dict[str, Any]] = {}
+    for index, row in enumerate(readers):
+        raw = _check_base64_metadata(
+            row, errors, f"generic-reader output schema {index + 1}"
+        )
+        decoded = (
+            _load_embedded_canonical_json(
+                raw, errors, f"generic-reader output schema {index + 1}"
+            )
+            if raw is not None
+            else None
+        )
+        if decoded is None or not isinstance(row, dict):
+            continue
+        decoded_readers[index + 1] = decoded
+        refs = {
+            nested.get("$ref")
+            for _, nested in _walk_dicts(decoded)
+            if isinstance(nested.get("$ref"), str)
+        }
+        expected_refs = {
+            ref.get("schemaUri")
+            for ref in row.get("referencedPortableSchemas", [])
+            if isinstance(ref, dict)
+        }
+        _need(
+            errors,
+            expected_refs <= refs
+            and all(uri in portable_by_uri for uri in expected_refs)
+            and all(
+                portable_by_uri.get(ref.get("schemaUri"))
+                == ref.get("record_schema_sha256")
+                for ref in row.get("referencedPortableSchemas", [])
+                if isinstance(ref, dict)
+            ),
+            f"generic-reader output schema {index + 1} has an unbound portable ref",
+        )
+
+    summary_properties = decoded_readers.get(1, {}).get("properties", {})
+    summary_record_sets = summary_properties.get("record_sets", {}).get(
+        "prefixItems", []
+    )
+    summary_records_valid = (
+        isinstance(summary_record_sets, list) and len(summary_record_sets) == 39
+    )
+    if summary_records_valid:
+        for row, item in zip(portable_schemas, summary_record_sets):
+            properties = item.get("properties", {}) if isinstance(item, dict) else {}
+            if not (
+                isinstance(row, dict)
+                and properties.get("export_ordinal", {}).get("const")
+                == row.get("exportOrdinal")
+                and properties.get("table", {}).get("const") == row.get("table")
+                and properties.get("relative_path", {}).get("const")
+                == row.get("recordJsonlRelativePath")
+                and properties.get("record_schema_sha256", {}).get("const")
+                == row.get("record_schema_sha256")
+            ):
+                summary_records_valid = False
+                break
+    _need(
+        errors,
+        summary_records_valid,
+        "generic-reader summary does not bind all 39 record-schema hashes",
+    )
+
+    summary_receipts = summary_properties.get("output_receipts", {}).get(
+        "prefixItems", []
+    )
+    expected_receipts = [
+        (
+            row.get("outputRelativePath"),
+            row.get("contract"),
+            row.get("record_schema_sha256"),
+        )
+        for row in readers[1:]
+        if isinstance(row, dict)
+    ]
+    expected_receipts.append(
+        (
+            "readback/object-manifest.jsonl",
+            "EvaEncryptedObjectManifestRecord/v1",
+            object_authority.get("record_schema_sha256"),
+        )
+    )
+    actual_receipts = []
+    if isinstance(summary_receipts, list):
+        for item in summary_receipts:
+            properties = item.get("properties", {}) if isinstance(item, dict) else {}
+            actual_receipts.append(
+                (
+                    properties.get("relative_path", {}).get("const"),
+                    properties.get("contract", {}).get("const"),
+                    properties.get("record_schema_sha256", {}).get("const"),
+                )
+            )
+    _need(
+        errors,
+        actual_receipts == expected_receipts
+        and summary_properties.get("object_manifest_record_schema_sha256", {}).get(
+            "const"
+        )
+        == object_authority.get("record_schema_sha256"),
+        "generic-reader summary does not bind its seven outputs and object schema",
+    )
+
+    reader_manifest_raw = _check_base64_metadata(
+        reader_manifest.get("manifest"), errors, "generic-reader schema manifest"
+    )
+    decoded_reader_manifest = (
+        _load_embedded_canonical_json(
+            reader_manifest_raw, errors, "generic-reader schema manifest"
+        )
+        if reader_manifest_raw is not None
+        else None
+    )
+    if decoded_reader_manifest is not None:
+        summaries = decoded_reader_manifest.get("schemas", [])
+        _need(
+            errors,
+            decoded_reader_manifest.get("contract")
+            == "EvaGenericReaderOutputSchemaManifest/v1"
+            and reader_manifest.get("manifest", {}).get("sha256")
+            == EXPECTED_SCHEMA_READER_MANIFEST_SHA256
+            and decoded_reader_manifest.get("portableRecordSchemaManifestSha256")
+            == portable.get("manifest", {}).get("sha256")
+            and decoded_reader_manifest.get("objectManifestRecordSchemaSha256")
+            == object_authority.get("record_schema_sha256")
+            and isinstance(summaries, list)
+            and len(summaries) == 8
+            and all(
+                isinstance(summary, dict)
+                and isinstance(row, dict)
+                and all(summary.get(key) == row.get(key) for key in summary)
+                for summary, row in zip(summaries, readers)
+            ),
+            "generic-reader schema manifest does not bind its 39+1 inputs and eight outputs",
+        )
+
+    admission = schema.get("migrationFreeze", {}).get(
+        "initialAdmissionPrecondition", {}
+    )
+    statements = admission.get("orderedPreDdlStatements", [])
+    statement_names = [
+        "set_transaction_isolation",
+        "restore_external_session_authority",
+        "acquire_existing_migration_advisory_lock",
+        "attest_external_global_read_authority",
+        "attest_source_revision",
+        "lock_all_preserved_tables_against_writes",
+        "count_all_preserved_rows_without_rls_filtering",
+        "switch_to_ddl_owner_after_admission",
+        "attest_ddl_owner",
+    ]
+    statement_hashes_valid = isinstance(statements, list) and len(statements) == 9
+    if statement_hashes_valid:
+        for ordinal, (name, statement) in enumerate(
+            zip(statement_names, statements), start=1
+        ):
+            sql = statement.get("sqlUtf8") if isinstance(statement, dict) else None
+            if not (
+                isinstance(statement, dict)
+                and statement.get("ordinal") == ordinal
+                and statement.get("name") == name
+                and isinstance(sql, str)
+                and statement.get("sqlUtf8Sha256") == sha256_bytes(sql.encode("utf-8"))
+            ):
+                statement_hashes_valid = False
+                break
+    zero_counts = {
+        "tenants_row_count": 0,
+        "installations_row_count": 0,
+        "episodes_row_count": 0,
+        "episode_events_row_count": 0,
+    }
+    decision = admission.get("admissionDecision", {})
+    canonical_counts = decision.get("canonicalResultBytesUtf8")
+    on_admit = admission.get("onAdmit", {})
+    on_reject = admission.get("onReject", {})
+    _need(
+        errors,
+        admission.get("contract") == "Eva4DInitialCatalogAdmission/v1"
+        and admission.get("appliesOnlyToRevision") == "4d_0003_core_continuity"
+        and admission.get("sourceRevision") == "4b_0002_episode_atomicity"
+        and admission.get("admissionClass") == "pre_traffic_empty_only"
+        and admission.get("noDdlBeforeAdmissionDecision") is True
+        and statement_hashes_valid
+        and decision.get("requiredRowCounts") == zero_counts
+        and isinstance(canonical_counts, str)
+        and canonical_counts.encode("utf-8") == canonical_json_bytes(zero_counts)
+        and decision.get("canonicalResultSha256")
+        == sha256_bytes(canonical_counts.encode("utf-8"))
+        and decision.get("admitIffEveryCountEqualsZero") is True
+        and decision.get("oneOrMoreRowsDecision") == "rejected_nonempty"
+        and decision.get("noBackfillOrDefaultInferenceAllowed") is True
+        and on_admit.get("backfillAllowed") is False
+        and on_admit.get("columnDefaultAllowed") is False
+        and on_admit.get("syntheticSeedValueAllowed") is False
+        and on_admit.get("commitRequiresAlembicVersion") == "4d_0003_core_continuity"
+        and on_reject.get("raiseBeforeFirstDdl") is True
+        and on_reject.get("ddlStatementCount") == 0
+        and on_reject.get("rollbackWholeTransaction") is True
+        and on_reject.get("catalogChanged") is False
+        and on_reject.get("alembicVersionAfterRollback") == "4b_0002_episode_atomicity",
+        "schema 4d_0003 admission is not exact empty-only authority",
+    )
+
+    audit = schema.get("selfAudit", {})
+    _need(
+        errors,
+        object_schema is not None
+        and audit.get("expectedExportRecordSets") == 39
+        and audit.get("expectedObjectManifestRecordSchemas") == 1
+        and audit.get("expectedGenericReaderOutputSchemas") == 8
+        and audit.get("expectedScheduleSnapshotFamilies") == 18
+        and audit.get("expectedAuxiliarySchemaManifestSha256")
+        == reader_manifest.get("manifest", {}).get("sha256"),
+        "schema/export self-audit counts or auxiliary hash are not exact",
+    )
+
+
+def _check_connector_artifact(connector: dict[str, Any], errors: list[str]) -> None:
+    _need(
+        errors,
+        connector.get("contract")
+        == EXPECTED_ARTIFACT_CONTRACTS[CONNECTOR_ARTIFACT_PATH]
+        and connector.get("status") == "sealed_pre_runtime_fixture_not_implemented",
+        "connector/provider artifact contract or status is not sealed",
+    )
+    source = connector.get("authorityBindings", {}).get("sourceProfileAtBaseline", {})
+    _need(
+        errors,
+        source.get("semanticCoreCanonicalSha256")
+        == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
+        "connector/provider artifact source-profile semantic core is not exact",
+    )
+    expected_counts = {
+        "fixtureWorkerPrograms": 5,
+        "connectorManifests": 5,
+        "logicalBindings": 6,
+        "concreteBindings": 12,
+        "operationSpecifications": 17,
+        "operationSchemaDocuments": 34,
+        "capabilityManifests": 20,
+        "providerStates": 28,
+        "operationCallCases": 58,
+        "rpcConformanceCases": 58,
+        "errorConformanceCases": 4,
+        "protocolFailureCases": 4,
+        "ackVectors": 10,
+        "scenarioOracles": 19,
+    }
+    counts = connector.get("counts", {})
+    rpc = connector.get("languageNeutralRpcConformance", {})
+    host = connector.get("hostEvidence", {})
+    _need(
+        errors,
+        counts == expected_counts
+        and len(connector.get("fixtureWorkerPrograms", {})) == 5
+        and len(connector.get("connectorManifests", {})) == 5
+        and len(connector.get("logicalBindings", [])) == 6
+        and len(connector.get("concreteBindings", [])) == 12
+        and len(connector.get("operationSchemas", {})) == 34
+        and len(connector.get("capabilityManifests", [])) == 20
+        and len(connector.get("providerStateMachine", {}).get("states", {})) == 28
+        and len(connector.get("operationCallCases", {})) == 58
+        and len(rpc.get("conformanceCases", [])) == 58
+        and len(rpc.get("errorCases", [])) == 4
+        and len(rpc.get("protocolFailureCases", [])) == 4
+        and len(host.get("outcomeAckVectors", {})) == 10
+        and len(connector.get("scenarios", {})) == 19,
+        "connector/provider artifact counts are not exact",
+    )
+    _check_content_addressed_payloads(connector, errors, "connector")
+
+    sandbox_hash = connector.get("fixtureWorkerSandbox", {}).get("canonicalSha256")
+    programs = connector.get("fixtureWorkerPrograms", {})
+    manifests = connector.get("connectorManifests", {})
+    _need(
+        errors,
+        set(programs)
+        == set(manifests)
+        == {"mail", "erp", "calendar", "document", "channel"},
+        "connector fixture program/manifest set is not exact",
+    )
+    for worker in sorted(set(programs) | set(manifests)):
+        program = programs.get(worker, {})
+        manifest = manifests.get(worker, {}).get("payload", {})
+        _need(
+            errors,
+            manifest.get("contract") == "ConnectorManifest/v1"
+            and manifest.get("executable_sha256") == program.get("canonicalSha256")
+            and manifest.get("sandbox_profile_sha256") == sandbox_hash,
+            f"connector {worker} manifest does not bind its program and sandbox",
+        )
+
+    for case_id, row in connector.get("operationCallCases", {}).items():
+        if not isinstance(row, dict) or "protocolTrace" not in row:
+            continue
+        _need(
+            errors,
+            row.get("protocolTraceSha256")
+            == sha256_bytes(canonical_json_bytes(row.get("protocolTrace"))),
+            f"connector operation case {case_id} protocol trace hash is not exact",
+        )
+    scenarios = connector.get("scenarios", {})
+    for scenario_id, row in scenarios.items():
+        if not isinstance(row, dict) or "externalCallLedger" not in row:
+            continue
+        ledger = row.get("externalCallLedger", [])
+        _need(
+            errors,
+            row.get("ledgerSha256") == sha256_bytes(canonical_json_bytes(ledger))
+            and [entry.get("ordinal") for entry in ledger if isinstance(entry, dict)]
+            == list(range(1, len(ledger) + 1)),
+            f"connector scenario {scenario_id} ledger is not content-addressed and ordered",
+        )
+
+    turn_authority = host.get("ingressTurnEnvelopes", {})
+    envelopes = turn_authority.get("envelopes", {})
+    ack_vectors = host.get("outcomeAckVectors", {})
+    vector_map = turn_authority.get("outcomeAckVectorMap", {})
+    _need(
+        errors,
+        turn_authority.get("schemaContract") == "TurnEnvelope/v1"
+        and turn_authority.get("schemaPath")
+        == "eva2/schemas/contracts/TurnEnvelope-v1.schema.json"
+        and turn_authority.get("schemaSha256")
+        == "7a2f24945463b0b24ce57a591b939fa441e60060d4bedbe55bff440b2e18e242"
+        and set(envelopes)
+        == {
+            "noorEva",
+            "noorMira",
+            "noorDocumentRejectEva",
+            "noorConfirmationRejectEva",
+            "noorErpAmbiguityEva",
+            "noorCorrectionEva",
+        }
+        and len(vector_map) == len(ack_vectors) == 10
+        and set(vector_map) == set(ack_vectors),
+        "connector ingress authority does not bind five TurnEnvelopes to nine ACK vectors",
+    )
+    auth_bytes = turn_authority.get("authenticationEvidenceBytes", {})
+    for envelope_id, wrapper in envelopes.items():
+        if not isinstance(wrapper, dict):
+            errors.append(f"connector TurnEnvelope {envelope_id} is not an object")
+            continue
+        raw = _decode_standard_base64(wrapper.get("canonicalBytes", {}).get("base64"))
+        payload = wrapper.get("payload", {})
+        identity = (
+            "Mira"
+            if payload.get("installation_id") == "fixture:installation:mira:001"
+            else "Eva"
+        )
+        _need(
+            errors,
+            raw is not None
+            and raw == canonical_json_bytes(payload)
+            and wrapper.get("canonicalByteLength") == len(raw)
+            and wrapper.get("canonicalSha256") == sha256_bytes(raw)
+            and payload.get("contract") == "TurnEnvelope/v1"
+            and payload.get("authentication_evidence_sha256")
+            == auth_bytes.get(identity, {}).get("canonicalSha256"),
+            f"connector TurnEnvelope {envelope_id} literal bytes are not exact",
+        )
+    for vector_id, envelope_id in vector_map.items():
+        ingress = ack_vectors.get(vector_id, {}).get("ingress", {})
+        ingress_payload = ingress.get("payload", {})
+        envelope = envelopes.get(envelope_id, {})
+        turn = envelope.get("payload", {})
+        _need(
+            errors,
+            ingress_payload.get("contract") == "IngressRequest/v1"
+            and ingress_payload.get("turn_envelope_sha256")
+            == envelope.get("canonicalSha256")
+            and all(
+                ingress_payload.get(field) == turn.get(field)
+                for field in (
+                    "installation_id",
+                    "tenant_id",
+                    "channel_id",
+                    "request_id",
+                    "conversation_id",
+                )
+            ),
+            f"connector ACK vector {vector_id} ingress-to-TurnEnvelope mapping is not exact",
+        )
+
+    presence_replies = host.get("outcomeDeliveryContent", {}).get("presenceReplies", {})
+    c04_expected = {
+        "c04bDocumentFallbackEva": ("Eva", 7, 2),
+        "c04bDocumentFallbackMira": ("Mira", 7, 2),
+        "c04cReplyFallbackEva": ("Eva", 11, 4),
+        "c04cReplyFallbackMira": ("Mira", 11, 4),
+    }
+    for scenario_id, (identity, calls, receipts) in c04_expected.items():
+        scenario = scenarios.get(scenario_id, {})
+        expected = scenario.get("expected", {})
+        reply = presence_replies.get(scenario_id, {}).get("payload", {})
+        _need(
+            errors,
+            scenario.get("identityRun") == identity
+            and scenario.get("episodeId") == "fixture:episode:noor:001"
+            and len(scenario.get("externalCallLedger", [])) == calls
+            and expected.get("connectorCalls") == calls
+            and expected.get("postRecoveryModelCalls") == 0
+            and expected.get("replyCandidates") == 0
+            and expected.get("effectReceipts") == receipts
+            and expected.get("fallbackReason") == "candidate_absent"
+            and reply.get("contract") == "PresenceReply/v1"
+            and reply.get("reply_candidate_sha256") is None
+            and reply.get("fallback_reason") == "candidate_absent"
+            and reply.get("episode_id") == "fixture:episode:noor:001",
+            f"connector C04 fallback surface is not exact for {scenario_id}",
+        )
+
+    c07 = scenarios.get("c07AmbiguousBeforeCommit", {})
+    c07_expected = c07.get("expected", {})
+    c07_first = connector.get("operationCallCases", {}).get(
+        "calendar.create.ambiguous-before-commit", {}
+    )
+    _need(
+        errors,
+        c07.get("postRecoveryCalls", [])[:2]
+        == [
+            "calendar.reconcile.not-observed",
+            "calendar.create.ordinal2-after-not-observed",
+        ]
+        and c07_expected.get("connectorCalls") == 13
+        and c07_expected.get("calendarCreateInvocations") == 2
+        and c07_expected.get("calendarOrdinal1ProviderMutationDelta") == 0
+        and c07_expected.get("reconcileResult") == "not_observed"
+        and c07_expected.get("calendarOrdinal2ProviderMutationDelta") == 1
+        and c07_expected.get("ordinal3EffectAttempts") == 0
+        and c07_first.get("outcomeKind") == "ambiguous_transport"
+        and c07_first.get("providerMutationDelta") == 0
+        and c07_first.get("faultMarker", {}).get("payload", {}).get("trigger_phase")
+        == "after_request_consumed_before_provider_commit",
+        "connector C07 ambiguous-before-commit surface is not exact",
+    )
+
+    c10 = scenarios.get("c10ReadbackRepeat", {})
+    c10_expected = c10.get("expected", {})
+    c10_ledger = c10.get("externalCallLedger", [])
+    c10_first = connector.get("operationCallCases", {}).get(
+        "calendar.readback.matches", {}
+    )
+    c10_repeat = connector.get("operationCallCases", {}).get(
+        "calendar.readback.matches.c10-repeat", {}
+    )
+    c10_authority = host.get("c10ReadbackRepeatAuthority", {})
+    c10_intent = c10_authority.get("readIntent", {}).get("payload", {})
+    c10_pre_crash = c10_authority.get("preCrashAttemptReference", {})
+    c10_attempt = c10_authority.get("repeatReadAttempt", {}).get("payload", {})
+    c10_observation = c10_authority.get("repeatReadObservation", {}).get("payload", {})
+    c10_readback_wrapper = host.get("providerReadbacks", {}).get(
+        "calendarC10Repeat", {}
+    )
+    c10_readback = c10_readback_wrapper.get("payload", {})
+    c10_capability = c10_authority.get("capabilityGrant", {}).get("payload", {})
+    c10_credential = c10_authority.get("credentialGrant", {}).get("payload", {})
+    c10_request_binding = c10_authority.get("requestHashBinding", {})
+    c10_response_binding = c10_authority.get("responseHashBinding", {})
+    c10_provider_binding = c10_authority.get("providerStateBinding", {})
+    c10_first_wire = c10_first.get("providerExchange", {})
+    c10_repeat_wire = c10_repeat.get("providerExchange", {})
+    _need(
+        errors,
+        "calendar.readback.matches.c10-repeat" in rpc.get("conformanceCases", [])
+        and c10_repeat.get("caseId") == "calendar.readback.matches.c10-repeat"
+        and c10_repeat.get("operationKey") == "calendar.readback"
+        and c10_repeat.get("identityRun") == "Eva"
+        and c10_repeat.get("originalEffectCaseId") == "calendar.readback.matches"
+        and c10_repeat.get("attemptOrdinal") == 2
+        and c10_repeat.get("crashScheduleId")
+        == "C10-after-readback-response-before-commit"
+        and c10_repeat.get("durableReadAuthorityRef")
+        == "hostEvidence.c10ReadbackRepeatAuthority"
+        and c10_repeat.get("outcomeKind") == "readback"
+        and c10_repeat.get("externalCallDelta") == 1
+        and c10_repeat.get("providerMutationDelta") == 0
+        and c10_repeat.get("providerStateBefore")
+        == c10_repeat.get("providerStateAfter")
+        == "calendarEvent"
+        and c10_repeat.get("requestPayload", {}).get("canonicalSha256")
+        == c10_first.get("requestPayload", {}).get("canonicalSha256")
+        and c10_repeat_wire.get("request", {}).get("sha256")
+        == c10_first_wire.get("request", {}).get("sha256")
+        and c10_repeat_wire.get("response", {}).get("sha256")
+        == c10_first_wire.get("response", {}).get("sha256")
+        and c10_repeat.get("providerResponseBody")
+        == c10_first.get("providerResponseBody"),
+        "connector C10 ordinal-2 provider read is not an exact non-mutating repeat",
+    )
+    _need(
+        errors,
+        c10_authority.get("crashScheduleId")
+        == "C10-after-readback-response-before-commit"
+        and c10_authority.get("operationCaseId")
+        == "calendar.readback.matches.c10-repeat"
+        and c10_authority.get("rpcConformanceCaseId")
+        == "calendar.readback.matches.c10-repeat"
+        and c10_intent.get("contract") == "ReadIntent/v1"
+        and c10_intent.get("read_intent_id")
+        == "fixture:read-intent:calendar-readback:noor:001"
+        and c10_intent.get("maximum_attempts") == 2
+        and c10_pre_crash.get("read_intent_id") == c10_intent.get("read_intent_id")
+        and c10_pre_crash.get("ordinal") == 1
+        and c10_pre_crash.get("durableRecoveryState") == "ambiguous"
+        and c10_pre_crash.get("responseBytesDurablyAdoptable") is False
+        and c10_attempt.get("contract") == "ReadAttempt/v1"
+        and c10_attempt.get("read_attempt_id")
+        == "fixture:read-attempt:calendar-readback:noor:c10:002"
+        and c10_attempt.get("read_intent_id") == c10_intent.get("read_intent_id")
+        and c10_attempt.get("ordinal") == 2
+        and c10_attempt.get("state") == "observed"
+        and c10_observation.get("contract") == "ReadObservation/v1"
+        and c10_observation.get("observation_id")
+        == "fixture:observation:calendar-readback:noor:c10:002"
+        and c10_observation.get("read_intent_id") == c10_intent.get("read_intent_id")
+        and c10_observation.get("read_attempt_id") == c10_attempt.get("read_attempt_id")
+        and c10_readback.get("contract") == "EffectReadback/v1"
+        and c10_readback.get("readback_id") == "fixture:readback:calendar:noor:c10:002"
+        and c10_readback.get("read_intent_id") == c10_intent.get("read_intent_id")
+        and c10_readback.get("read_attempt_id") == c10_attempt.get("read_attempt_id")
+        and c10_authority.get("repeatEffectReadbackRef")
+        == "hostEvidence.providerReadbacks.calendarC10Repeat"
+        and c10_authority.get("repeatEffectReadbackSha256")
+        == c10_readback_wrapper.get("canonicalSha256"),
+        "connector C10 durable ordinal-2 read authority is not exact",
+    )
+    _need(
+        errors,
+        c10_capability.get("contract") == "CapabilityGrant/v1"
+        and c10_capability.get("grant_id")
+        == c10_attempt.get("capability_grant_id")
+        == "fixture:grant:calendar-readback-matches-c10-repeat:002"
+        and c10_capability.get("grant_id") != c10_pre_crash.get("capability_grant_id")
+        and c10_capability.get("nonce")
+        == "fixture:nonce:capability:calendar-readback-matches-c10-repeat:002"
+        and c10_credential.get("contract") == "CredentialGrant/v1"
+        and c10_credential.get("credential_grant_id")
+        == c10_attempt.get("credential_grant_id")
+        == "fixture:credential-grant:calendar-readback-matches-c10-repeat:002"
+        and c10_credential.get("credential_grant_id")
+        != c10_pre_crash.get("credential_grant_id")
+        and c10_credential.get("nonce")
+        == "fixture:nonce:credential:calendar-readback-matches-c10-repeat:002"
+        and c10_capability.get("authorized_payload_sha256")
+        == c10_repeat.get("requestPayload", {}).get("canonicalSha256")
+        and c10_request_binding.get("connectorInvokeRequestSha256")
+        == c10_attempt.get("request_sha256")
+        and c10_request_binding.get("phaseUniqueFromOrdinal1") is True
+        and c10_response_binding.get("connectorInvokeSuccessSha256")
+        == c10_attempt.get("response_sha256")
+        and c10_response_binding.get("providerRequestWireSha256")
+        == c10_repeat_wire.get("request", {}).get("sha256")
+        and c10_response_binding.get("providerResponseWireSha256")
+        == c10_repeat_wire.get("response", {}).get("sha256")
+        == c10_observation.get("response_sha256")
+        and c10_provider_binding.get("providerMutationDelta") == 0
+        and c10_provider_binding.get("externalCallDelta") == 1
+        and c10_provider_binding.get("beforeStateRef")
+        == c10_provider_binding.get("afterStateRef")
+        == "calendarEvent",
+        "connector C10 repeat grants or request/response bindings are not exact",
+    )
+    _need(
+        errors,
+        c10.get("caseId") == "c10-after-readback-response-before-commit"
+        and c10.get("identityRun") == "Eva"
+        and c10.get("crashScheduleId") == "C10-after-readback-response-before-commit"
+        and c10.get("durableReadAuthorityRef")
+        == "hostEvidence.c10ReadbackRepeatAuthority"
+        and c10.get("calls", [])[5:7]
+        == [
+            "calendar.readback.matches",
+            "calendar.readback.matches.c10-repeat",
+        ]
+        and len(c10_ledger) == 12
+        and [row.get("operationCaseId") for row in c10_ledger[5:7]]
+        == [
+            "calendar.readback.matches",
+            "calendar.readback.matches.c10-repeat",
+        ]
+        and c10_ledger[5].get("requestPayloadSha256")
+        == c10_ledger[6].get("requestPayloadSha256")
+        and c10_ledger[5].get("providerRequestWireSha256")
+        == c10_ledger[6].get("providerRequestWireSha256")
+        and c10_ledger[5].get("providerResponseWireSha256")
+        == c10_ledger[6].get("providerResponseWireSha256")
+        and c10_ledger[5].get("providerMutationDelta")
+        == c10_ledger[6].get("providerMutationDelta")
+        == 0
+        and c10_expected
+        == {
+            "connectorCalls": 12,
+            "businessReads": 4,
+            "effects": 4,
+            "readbacks": 4,
+            "reconciles": 0,
+            "probes": 0,
+            "providerMutations": 4,
+            "effectReceipts": 4,
+            "providerReadbacks": 3,
+            "outcomeAckReceipts": 1,
+            "durableEffectReadbacks": 3,
+            "calendarReadbackInvocations": 2,
+            "calendarCreateInvocations": 1,
+            "calendarProviderMutations": 1,
+        },
+        "connector C10 crash/recovery scenario is not exact",
+    )
+
+    for identity, scenario_id in (
+        ("Eva", "c13ReofferEva"),
+        ("Mira", "c13ReofferMira"),
+    ):
+        scenario = scenarios.get(scenario_id, {})
+        expected = scenario.get("expected", {})
+        ledger = scenario.get("externalCallLedger", [])
+        final_two = ledger[-2:] if isinstance(ledger, list) else []
+        _need(
+            errors,
+            scenario.get("identityRun") == identity
+            and len(ledger) == 12
+            and expected.get("connectorCalls") == 12
+            and expected.get("outcomeDeliveryInvocations") == 2
+            and expected.get("outcomeProviderMutations") == 1
+            and expected.get("newDeliveryIdentities") == 0
+            and expected.get("differentWireOrChallenge") == 0
+            and expected.get("fabricatedAcks") == 0
+            and len(final_two) == 2
+            and final_two[0].get("requestPayloadSha256")
+            == final_two[1].get("requestPayloadSha256")
+            and final_two[0].get("providerRequestWireSha256")
+            == final_two[1].get("providerRequestWireSha256")
+            and final_two[0].get("providerResponseWireSha256")
+            == final_two[1].get("providerResponseWireSha256")
+            and final_two[0].get("providerMutationDelta") == 1
+            and final_two[1].get("providerMutationDelta") == 0,
+            f"connector C13 exact re-offer surface is not exact for {identity}",
+        )
+
+
+def _check_model_artifact(model: dict[str, Any], errors: list[str]) -> None:
+    _need(
+        errors,
+        model.get("contract") == EXPECTED_ARTIFACT_CONTRACTS[MODEL_ARTIFACT_PATH]
+        and model.get("status")
+        == "sealed_pre_code_fixture_program_not_runtime_implemented",
+        "model-vector artifact contract or status is not sealed",
+    )
+    authority = model.get("authorityBindings", {})
+    _need(
+        errors,
+        authority.get("sourceProfileAtBaseline", {}).get(
+            "semanticCoreExcludingPreRuntimeRequiredArtifactsSha256"
+        )
+        == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256
+        and authority.get("schemaExportFreezeDependency", {}).get("sha256")
+        == EXPECTED_ARTIFACT_SHA256[SCHEMA_ARTIFACT_PATH],
+        "model-vector source-profile/schema binding is not exact",
+    )
+
+    for path, row in _walk_dicts(model, "model"):
+        metadata = None
+        payload = None
+        if isinstance(row.get("canonicalBytes"), dict):
+            metadata = row["canonicalBytes"]
+            payload = row.get("payload", row.get("program"))
+        elif {"base64", "byteLength", "sha256"} <= set(row):
+            metadata = row
+        if metadata is None:
+            continue
+        raw = _check_base64_metadata(metadata, errors, path)
+        if raw is not None and payload is not None:
+            _need(
+                errors,
+                raw == canonical_json_bytes(payload) and _all_strings_nfc(payload),
+                f"{path} bytes do not encode the attached canonical payload",
+            )
+    _check_content_addressed_payloads(model, errors, "model")
+
+    for vector in model.get("happyPathVectors", []):
+        if not isinstance(vector, dict):
+            errors.append("model happy-path vector is not an object")
+            continue
+        bindings = (
+            ("requestCanonicalBytes", vector.get("request")),
+            (
+                "modelInputCanonicalBytes",
+                vector.get("request", {}).get("model_input"),
+            ),
+            ("responseCanonicalBytes", vector.get("response")),
+        )
+        for field, payload in bindings:
+            raw = _check_base64_metadata(
+                vector.get(field), errors, f"model {vector.get('vectorId')} {field}"
+            )
+            _need(
+                errors,
+                raw is not None and raw == canonical_json_bytes(payload),
+                f"model {vector.get('vectorId')} {field} does not bind its payload",
+            )
+
+    adapter = model.get("fixtureAdapterProfile", {})
+    manifest = model.get("modelAdapterManifest", {})
+    program = model.get("modelFixtureProgram", {})
+    manifest_hash = manifest.get("canonicalBytes", {}).get("sha256")
+    program_hash = program.get("canonicalBytes", {}).get("sha256")
+    manifest_payload = manifest.get("payload", {})
+    schema_binding = model.get("schemaSnapshotBinding", {})
+    _need(
+        errors,
+        manifest_payload.get("contract") == "ModelAdapterManifest/v1"
+        and program.get("program", {}).get("contract") == "ModelFixtureProgram/v1"
+        and adapter.get("modelAdapterManifestSha256") == manifest_hash
+        and adapter.get("modelAdapterManifestAddress") == f"sha256:{manifest_hash}"
+        and adapter.get("programSha256") == program_hash
+        and adapter.get("programAddress") == f"sha256:{program_hash}"
+        and manifest_payload.get("modelProgramSha256") == program_hash
+        and manifest_payload.get("modelProgramByteLength")
+        == program.get("canonicalBytes", {}).get("byteLength")
+        and schema_binding.get("model_adapter_manifest_sha256") == manifest_hash
+        and schema_binding.get("model_program_sha256") == program_hash,
+        "model manifest/program/schema cross-binding is not exact",
+    )
+
+    dispatches = model.get("modelDispatchVectors", [])
+    _need(
+        errors,
+        isinstance(dispatches, list) and len(dispatches) == 20,
+        "model dispatch vector count is not exactly 20",
+    )
+    grant_ids: list[Any] = []
+    nonces: list[Any] = []
+    for dispatch in dispatches:
+        if not isinstance(dispatch, dict):
+            errors.append("model dispatch vector is not an object")
+            continue
+        grant_wrapper = dispatch.get("credentialGrant", {})
+        grant = grant_wrapper.get("payload", {})
+        attempt_wrapper = dispatch.get("modelAttempt", {})
+        attempt = attempt_wrapper.get("payload", {})
+        row = dispatch.get("eva_core.model_attempts", {})
+        grant_hash = grant_wrapper.get("canonicalBytes", {}).get("sha256")
+        attempt_hash = attempt_wrapper.get("canonicalBytes", {}).get("sha256")
+        grant_ids.append(grant.get("credential_grant_id"))
+        nonces.append(grant.get("nonce"))
+        _need(
+            errors,
+            dispatch.get("oneUseCredentialGrant") is True
+            and grant.get("contract") == "CredentialGrant/v1"
+            and grant.get("executable_sha256") == program_hash
+            and grant.get("credential_grant_id") == attempt.get("credential_grant_id")
+            and grant.get("issued_at") == dispatch.get("dispatchAt")
+            and attempt.get("contract") == "ModelAttempt/v1"
+            and attempt.get("episode_id") == "fixture:episode:noor:001"
+            and attempt.get("purpose") == dispatch.get("purpose")
+            and attempt.get("ordinal") == dispatch.get("attemptOrdinal")
+            and row.get("payload") == attempt
+            and row.get("payload_sha256") == attempt_hash
+            and row.get("credential_grant_payload") == grant
+            and row.get("credential_grant_sha256") == grant_hash
+            and row.get("credential_grant_id") == grant.get("credential_grant_id")
+            and row.get("credential_grant_nonce") == grant.get("nonce")
+            and row.get("credential_grant_deadline") == grant.get("deadline")
+            and row.get("model_adapter_manifest_sha256") == manifest_hash
+            and row.get("model_program_sha256") == program_hash,
+            f"model dispatch {dispatch.get('dispatchVectorId')} grant/attempt row is not exact",
+        )
+        if attempt.get("state") == "ambiguous":
+            _need(
+                errors,
+                attempt.get("response_sha256") is None,
+                f"model dispatch {dispatch.get('dispatchVectorId')} ambiguous response is fabricated",
+            )
+    _need(
+        errors,
+        len(set(grant_ids)) == len(grant_ids) == 20
+        and len(set(nonces)) == len(nonces) == 20
+        and None not in grant_ids
+        and None not in nonces,
+        "model dispatch grants and nonces are not 20 distinct one-use values",
+    )
+
+    rate_limit = [
+        row
+        for row in dispatches
+        if isinstance(row, dict) and row.get("fixtureCaseId") == "provider-rate-limit"
+    ]
+    _need(
+        errors,
+        [row.get("attemptOrdinal") for row in rate_limit] == [1, 2]
+        and len(
+            {
+                row.get("credentialGrant", {})
+                .get("payload", {})
+                .get("credential_grant_id")
+                for row in rate_limit
+            }
+        )
+        == 2
+        and model.get("provider429Recovery", {}).get("ordinal3Allowed") is False
+        and model.get("provider429Recovery", {}).get("hiddenRetries") == 0,
+        "model provider-429 recovery does not use two exact grants and no hidden retry",
+    )
+
+
+def _resolve_object_path(value: Any, path: Any) -> Any:
+    if not isinstance(path, str) or not path:
+        raise KeyError("empty object path")
+    current = value
+    for component in path.split("."):
+        if not isinstance(current, dict) or component not in current:
+            raise KeyError(path)
+        current = current[component]
+    return current
+
+
+def _check_model_connector_crosswalk(
+    model: dict[str, Any], connector: dict[str, Any], errors: list[str]
+) -> None:
+    crosswalk = model.get("connectorAuthorityCrosswalk", {})
+    _need(
+        errors,
+        crosswalk.get("authorityArtifactSha256")
+        == EXPECTED_ARTIFACT_SHA256[CONNECTOR_ARTIFACT_PATH],
+        "model connector-authority whole-file binding is not exact",
+    )
+
+    def target(binding: dict[str, Any], label: str) -> Any:
+        try:
+            payload = _resolve_object_path(connector, binding.get("sourcePath"))
+        except KeyError:
+            errors.append(f"model connector crosswalk source path is missing: {label}")
+            return None
+        _need(
+            errors,
+            binding.get("canonicalSha256")
+            == sha256_bytes(canonical_json_bytes(payload)),
+            f"model connector crosswalk hash is not exact: {label}",
+        )
+        return payload
+
+    happy = {
+        row.get("vectorId"): row
+        for row in model.get("happyPathVectors", [])
+        if isinstance(row, dict)
+    }
+    document_context = (
+        happy.get("happy-document-eva", {})
+        .get("request", {})
+        .get("model_input", {})
+        .get("presence_context", {})
+    )
+    document_bindings = crosswalk.get("documentPresenceContext", {})
+    document_receipt = target(
+        document_bindings.get("effect_receipts[0]", {}),
+        "document effect_receipts[0]",
+    )
+    document_readback = target(
+        document_bindings.get("effect_readbacks[0]", {}),
+        "document effect_readbacks[0]",
+    )
+    _need(
+        errors,
+        document_context.get("effect_receipts") == [document_receipt]
+        and document_context.get("effect_readbacks") == [document_readback],
+        "model document PresenceContext differs from connector durable authority",
+    )
+
+    reply_bindings = crosswalk.get("replyPresenceContexts", {})
+    receipt_binding = reply_bindings.get("effect_receipts", {})
+    readback_binding = reply_bindings.get("effect_readbacks", {})
+    try:
+        reply_receipts = [
+            _resolve_object_path(connector, path)
+            for path in receipt_binding.get("sourcePaths", [])
+        ]
+        reply_readbacks = [
+            _resolve_object_path(connector, path)
+            for path in readback_binding.get("sourcePaths", [])
+        ]
+    except KeyError as exc:
+        errors.append(f"model reply PresenceContext source path is missing: {exc}")
+        reply_receipts = []
+        reply_readbacks = []
+    _need(
+        errors,
+        receipt_binding.get("canonicalSha256s")
+        == [sha256_bytes(canonical_json_bytes(row)) for row in reply_receipts]
+        and readback_binding.get("canonicalSha256s")
+        == [sha256_bytes(canonical_json_bytes(row)) for row in reply_readbacks]
+        and len(reply_receipts) == len(reply_readbacks) == 3,
+        "model reply PresenceContext connector receipt/readback hashes are not exact",
+    )
+    delivery_receipt = target(
+        reply_bindings.get("delivery_receipts[0]", {}),
+        "reply delivery_receipts[0]",
+    )
+    target(
+        reply_bindings.get("outcome_view", {}),
+        "reply outcome_view",
+    )
+    shared_delivery = crosswalk.get("sharedConfirmationDeliveryIntent", {})
+    shared_payload = shared_delivery.get("payload")
+    _need(
+        errors,
+        shared_delivery.get("canonicalBytes", {}).get("sha256")
+        == sha256_bytes(canonical_json_bytes(shared_payload))
+        and shared_delivery.get("samePayloadForEvaAndMira") is True,
+        "model shared confirmation DeliveryIntent bytes are not exact",
+    )
+    for vector_id in ("happy-reply-eva", "happy-reply-mira"):
+        vector = happy.get(vector_id, {})
+        context = (
+            vector.get("request", {}).get("model_input", {}).get("presence_context", {})
+        )
+        _need(
+            errors,
+            context.get("effect_receipts") == reply_receipts
+            and context.get("effect_readbacks") == reply_readbacks
+            and context.get("delivery_receipts") == [delivery_receipt]
+            and context.get("delivery_intents") == [shared_payload],
+            f"model {vector_id} PresenceContext differs from connector durable authority",
+        )
+
+    candidates = crosswalk.get("replyCandidates", {})
+    for identity, vector_id in (
+        ("Eva", "happy-reply-eva"),
+        ("Mira", "happy-reply-mira"),
+    ):
+        candidate = target(candidates.get(identity, {}), f"{identity} ReplyCandidate")
+        _need(
+            errors,
+            happy.get(vector_id, {}).get("response") == candidate,
+            f"model {identity} ReplyCandidate differs from connector delivery authority",
+        )
+
+
+def _json_value_equal(left: Any, right: Any) -> bool:
+    try:
+        return canonical_json_bytes(left) == canonical_json_bytes(right)
+    except (TypeError, ValueError):
+        return False
+
+
+def _resolve_json_schema_ref(
+    ref: Any,
+    root_schema: dict[str, Any],
+    registry: dict[str, dict[str, Any]],
+) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    if not isinstance(ref, str):
+        return None
+    base, separator, fragment = ref.partition("#")
+    target_root = root_schema if not base else registry.get(base)
+    if not isinstance(target_root, dict):
+        return None
+    target: Any = target_root
+    if separator and fragment:
+        if not fragment.startswith("/"):
+            return None
+        for token in fragment[1:].split("/"):
+            token = token.replace("~1", "/").replace("~0", "~")
+            if not isinstance(target, dict) or token not in target:
+                return None
+            target = target[token]
+    return (target, target_root) if isinstance(target, dict) else None
+
+
+def _json_schema_matches(
+    instance: Any,
+    schema: Any,
+    root_schema: dict[str, Any],
+    registry: dict[str, dict[str, Any]],
+) -> bool:
+    """Validate the closed JSON-Schema subset used by the sealed contracts."""
+
+    if isinstance(schema, bool):
+        return schema
+    if not isinstance(schema, dict):
+        return False
+    ref = schema.get("$ref")
+    if ref is not None:
+        resolved = _resolve_json_schema_ref(ref, root_schema, registry)
+        if resolved is None or not _json_schema_matches(
+            instance, resolved[0], resolved[1], registry
+        ):
+            return False
+
+    if "const" in schema and not _json_value_equal(instance, schema["const"]):
+        return False
+    if "enum" in schema and not any(
+        _json_value_equal(instance, item) for item in schema["enum"]
+    ):
+        return False
+    if "allOf" in schema and not all(
+        _json_schema_matches(instance, item, root_schema, registry)
+        for item in schema["allOf"]
+    ):
+        return False
+    if "anyOf" in schema and not any(
+        _json_schema_matches(instance, item, root_schema, registry)
+        for item in schema["anyOf"]
+    ):
+        return False
+    if (
+        "oneOf" in schema
+        and sum(
+            _json_schema_matches(instance, item, root_schema, registry)
+            for item in schema["oneOf"]
+        )
+        != 1
+    ):
+        return False
+    if "not" in schema and _json_schema_matches(
+        instance, schema["not"], root_schema, registry
+    ):
+        return False
+    if "if" in schema:
+        branch = (
+            "then"
+            if _json_schema_matches(instance, schema["if"], root_schema, registry)
+            else "else"
+        )
+        if branch in schema and not _json_schema_matches(
+            instance, schema[branch], root_schema, registry
+        ):
+            return False
+
+    expected_types = schema.get("type")
+    if isinstance(expected_types, str):
+        expected_types = [expected_types]
+    if isinstance(expected_types, list):
+        type_matches = {
+            "null": instance is None,
+            "boolean": isinstance(instance, bool),
+            "integer": isinstance(instance, int) and not isinstance(instance, bool),
+            "number": isinstance(instance, (int, float))
+            and not isinstance(instance, bool),
+            "string": isinstance(instance, str),
+            "array": isinstance(instance, list),
+            "object": isinstance(instance, dict),
+        }
+        if not any(type_matches.get(item, False) for item in expected_types):
+            return False
+
+    if isinstance(instance, str):
+        if "minLength" in schema and len(instance) < schema["minLength"]:
+            return False
+        if "maxLength" in schema and len(instance) > schema["maxLength"]:
+            return False
+        try:
+            if "pattern" in schema and re.search(schema["pattern"], instance) is None:
+                return False
+        except (re.error, TypeError):
+            return False
+        if schema.get("format") == "uuid":
+            try:
+                if str(uuid.UUID(instance)) != instance:
+                    return False
+            except (ValueError, AttributeError):
+                return False
+
+    if isinstance(instance, int) and not isinstance(instance, bool):
+        if "minimum" in schema and instance < schema["minimum"]:
+            return False
+        if "maximum" in schema and instance > schema["maximum"]:
+            return False
+
+    if isinstance(instance, list):
+        if "minItems" in schema and len(instance) < schema["minItems"]:
+            return False
+        if "maxItems" in schema and len(instance) > schema["maxItems"]:
+            return False
+        if schema.get("uniqueItems") is True:
+            encoded = [canonical_json_bytes(item) for item in instance]
+            if len(encoded) != len(set(encoded)):
+                return False
+        if "items" in schema and not all(
+            _json_schema_matches(item, schema["items"], root_schema, registry)
+            for item in instance
+        ):
+            return False
+        if "contains" in schema:
+            matches = sum(
+                _json_schema_matches(item, schema["contains"], root_schema, registry)
+                for item in instance
+            )
+            if matches < schema.get("minContains", 1):
+                return False
+            if "maxContains" in schema and matches > schema["maxContains"]:
+                return False
+
+    if isinstance(instance, dict):
+        if "minProperties" in schema and len(instance) < schema["minProperties"]:
+            return False
+        if "maxProperties" in schema and len(instance) > schema["maxProperties"]:
+            return False
+        required = schema.get("required", [])
+        if not isinstance(required, list) or any(
+            key not in instance for key in required
+        ):
+            return False
+        properties = schema.get("properties", {})
+        patterns = schema.get("patternProperties", {})
+        if not isinstance(properties, dict) or not isinstance(patterns, dict):
+            return False
+        if "propertyNames" in schema and not all(
+            _json_schema_matches(key, schema["propertyNames"], root_schema, registry)
+            for key in instance
+        ):
+            return False
+        for key, value in instance.items():
+            matched = False
+            if key in properties:
+                matched = True
+                if not _json_schema_matches(
+                    value, properties[key], root_schema, registry
+                ):
+                    return False
+            try:
+                matching_patterns = [
+                    item
+                    for pattern, item in patterns.items()
+                    if re.search(pattern, key)
+                ]
+            except (re.error, TypeError):
+                return False
+            if matching_patterns:
+                matched = True
+                if not all(
+                    _json_schema_matches(value, item, root_schema, registry)
+                    for item in matching_patterns
+                ):
+                    return False
+            if not matched:
+                additional = schema.get("additionalProperties", {})
+                if additional is False:
+                    return False
+                if isinstance(additional, dict) and not _json_schema_matches(
+                    value, additional, root_schema, registry
+                ):
+                    return False
+    return True
+
+
+def _load_contract_schema_registry(
+    root: Path, schema_artifact: dict[str, Any], errors: list[str]
+) -> dict[str, dict[str, Any]]:
+    authority = schema_artifact.get("authorityBindings", {}).get("contracts", {})
+    try:
+        manifest_path = _path(root, CONTRACT_MANIFEST_PATH)
+        manifest = load_json_exact(manifest_path)
+    except (OSError, FreezeError) as exc:
+        errors.append(f"contract schema manifest: {exc}")
+        return {}
+    expected_manifest_hash = authority.get("manifestSha256")
+    schemas = manifest.get("schemas", {})
+    _need(
+        errors,
+        authority.get("manifestPath") == CONTRACT_MANIFEST_PATH
+        and expected_manifest_hash
+        == "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
+        and sha256_file(manifest_path) == expected_manifest_hash
+        and manifest.get("manifest") == "EvaContractSchemaManifest/v1"
+        and manifest.get("contractCount") == 64
+        and isinstance(schemas, dict)
+        and len(schemas) == 64,
+        "bound contract-schema manifest is not exact",
+    )
+    registry: dict[str, dict[str, Any]] = {}
+    if not isinstance(schemas, dict):
+        return registry
+    for contract, digest in schemas.items():
+        relative = f"eva2/schemas/contracts/{contract.replace('/', '-')}.schema.json"
+        try:
+            path = _path(root, relative)
+            document = load_json_exact(path)
+        except (OSError, FreezeError) as exc:
+            errors.append(f"bound contract schema {contract}: {exc}")
+            continue
+        schema_id = document.get("$id")
+        _need(
+            errors,
+            isinstance(schema_id, str)
+            and sha256_file(path) == digest
+            and document.get("properties", {}).get("contract", {}).get("const")
+            == contract,
+            f"bound contract schema bytes are not exact: {contract}",
+        )
+        if isinstance(schema_id, str):
+            registry[schema_id] = document
+    return registry
+
+
+def _partial_unique_applies(row: dict[str, Any], predicate: str | None) -> bool:
+    if predicate is None:
+        return True
+    match = re.fullmatch(r"([a-z0-9_]+)='([^']*)'", predicate)
+    if match:
+        return row.get(match.group(1)) == match.group(2)
+    match = re.fullmatch(r"([a-z0-9_]+) IS NOT NULL", predicate)
+    if match:
+        return row.get(match.group(1)) is not None
+    raise ValueError(f"unsupported frozen partial unique predicate: {predicate}")
+
+
+def _check_snapshot_relations(
+    rows_by_table: dict[str, list[dict[str, Any]]],
+    table_definitions: dict[str, dict[str, Any]],
+) -> bool:
+    for table, definition in table_definitions.items():
+        rows = rows_by_table.get(table, [])
+        primary_key = definition.get("primaryKey", [])
+        primary_values = [tuple(row.get(key) for key in primary_key) for row in rows]
+        if len(primary_values) != len(set(primary_values)):
+            return False
+        for spec in definition.get("uniques", []):
+            match = re.fullmatch(r"[^:]+: UNIQUE \(([^)]*)\)(?: WHERE (.*))?", spec)
+            if match is None:
+                return False
+            columns = [item.strip() for item in match.group(1).split(",")]
+            seen: set[tuple[Any, ...]] = set()
+            for row in rows:
+                if not _partial_unique_applies(row, match.group(2)):
+                    continue
+                key = tuple(row.get(column) for column in columns)
+                if any(value is None for value in key):
+                    continue
+                if key in seen:
+                    return False
+                seen.add(key)
+        for spec in definition.get("foreignKeys", []):
+            match = re.fullmatch(
+                r"[^:]+: \(([^)]*)\) -> ([a-z_]+\.[a-z_]+)\(([^)]*)\) .+",
+                spec,
+            )
+            if match is None:
+                return False
+            source = [item.strip() for item in match.group(1).split(",")]
+            target_table = match.group(2)
+            target = [item.strip() for item in match.group(3).split(",")]
+            target_values = {
+                tuple(row.get(column) for column in target)
+                for row in rows_by_table.get(target_table, [])
+            }
+            for row in rows:
+                key = tuple(row.get(column) for column in source)
+                if any(value is None for value in key):
+                    continue
+                if key not in target_values:
+                    return False
+    return True
+
+
+def _check_schedule_companions(
+    schedule: dict[str, Any],
+    schema: dict[str, Any],
+    connector: dict[str, Any],
+    model: dict[str, Any],
+    errors: list[str],
+) -> None:
+    authority = schedule.get("authorityBindings", {})
+    expected_artifacts = [
+        {
+            "artifactId": "schema_export_mapping",
+            "path": SCHEMA_ARTIFACT_PATH,
+            "requiredAtRuntimeCodingGate": True,
+            "sha256": EXPECTED_ARTIFACT_SHA256[SCHEMA_ARTIFACT_PATH],
+        },
+        {
+            "artifactId": "connector_provider_fixtures",
+            "path": CONNECTOR_ARTIFACT_PATH,
+            "requiredAtRuntimeCodingGate": True,
+            "sha256": EXPECTED_ARTIFACT_SHA256[CONNECTOR_ARTIFACT_PATH],
+        },
+        {
+            "artifactId": "deterministic_model_vectors",
+            "path": MODEL_ARTIFACT_PATH,
+            "requiredAtRuntimeCodingGate": True,
+            "sha256": EXPECTED_ARTIFACT_SHA256[MODEL_ARTIFACT_PATH],
+        },
+    ]
+    portable = schedule.get("portableSnapshotAuthority", {})
+    _need(
+        errors,
+        authority.get("companionArtifacts") == expected_artifacts
+        and portable.get("companionWholeFileSha256")
+        == {
+            "schema": EXPECTED_ARTIFACT_SHA256[SCHEMA_ARTIFACT_PATH],
+            "connector": EXPECTED_ARTIFACT_SHA256[CONNECTOR_ARTIFACT_PATH],
+            "model": EXPECTED_ARTIFACT_SHA256[MODEL_ARTIFACT_PATH],
+        },
+        "schedule companion whole-file hashes are not exact",
+    )
+
+    schema_portable = (
+        schema.get("portableExport", {})
+        .get("generatedPortableRecordSchemas", {})
+        .get("schemas", [])
+    )
+    summary_keys = {
+        "canonicalByteLength",
+        "exportOrdinal",
+        "recordContract",
+        "recordJsonlRelativePath",
+        "recordSchemaRelativePath",
+        "record_schema_sha256",
+        "sourceDefinitionSha256",
+        "table",
+        "transformSpecSha256",
+    }
+    expected_portable = [
+        {key: row.get(key) for key in summary_keys}
+        for row in schema_portable
+        if isinstance(row, dict)
+    ]
+    schema_readers = (
+        schema.get("genericReader", {})
+        .get("outputSchemaManifest", {})
+        .get("schemas", [])
+    )
+    reader_keys = {
+        "canonicalByteLength",
+        "contract",
+        "outputOrdinal",
+        "outputRelativePath",
+        "record_schema_sha256",
+        "schemaRelativePath",
+    }
+    expected_readers = [
+        {key: row.get(key) for key in reader_keys}
+        for row in schema_readers
+        if isinstance(row, dict)
+    ]
+    object_schema = (
+        schema.get("portableExport", {})
+        .get("objectManifest", {})
+        .get("recordSchemaAuthority", {})
+    )
+    expected_object_schema = {
+        key: object_schema.get(key)
+        for key in (
+            "canonicalByteLength",
+            "record_schema_sha256",
+            "schemaRelativePath",
+        )
+    }
+    _need(
+        errors,
+        portable.get("portableRecordSchemaManifestSha256")
+        == EXPECTED_SCHEMA_PORTABLE_MANIFEST_SHA256
+        and portable.get("genericReaderOutputSchemaManifestSha256")
+        == EXPECTED_SCHEMA_READER_MANIFEST_SHA256
+        and portable.get("portableRecordSchemas") == expected_portable
+        and portable.get("genericReaderOutputSchemas") == expected_readers
+        and portable.get("objectManifestRecordSchema") == expected_object_schema,
+        "schedule does not bind the exact 39+1+8 schema authority",
+    )
+
+    correction = portable.get("companionContentBindings", {}).get(
+        "correction_before_first_effect", {}
+    )
+    connector_correction = connector.get("hostEvidence", {}).get(
+        "correctionBeforeFirstEffectAuthority", {}
+    )
+    model_correction = model.get("correctionBeforeFirstEffect", {})
+    expected_correction = {
+        "connector_ingress_sha256": connector_correction.get(
+            "correctionIngress", {}
+        ).get("canonicalSha256"),
+        "connector_terminal_presence_reply_sha256": connector_correction.get(
+            "generation2", {}
+        ).get("terminalPresenceReplySha256"),
+        "connector_turn_envelope_sha256": connector_correction.get(
+            "correctionTurnEnvelopeSha256"
+        ),
+        "model_document_draft_sha256": model_correction.get("generation2", {})
+        .get("documentDraft", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "model_generation_1_decision_sha256": model_correction.get("generation1", {})
+        .get("modelDecision", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "model_generation_1_validated_plan_sha256": model_correction.get(
+            "generation1", {}
+        )
+        .get("validatedPlan", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "model_generation_2_decision_sha256": model_correction.get("generation2", {})
+        .get("modelDecision", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "model_generation_2_validated_plan_sha256": model_correction.get(
+            "generation2", {}
+        )
+        .get("validatedPlan", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "model_reply_candidate_sha256": model_correction.get("generation2", {})
+        .get("replyCandidate", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+    }
+    content = portable.get("companionContentBindings", {})
+    _need(
+        errors,
+        correction == expected_correction
+        and content.get("portable_record_schema_manifest_sha256")
+        == EXPECTED_SCHEMA_PORTABLE_MANIFEST_SHA256
+        and content.get("generic_reader_output_schema_manifest_sha256")
+        == EXPECTED_SCHEMA_READER_MANIFEST_SHA256
+        and content.get("object_manifest_record_schema_sha256")
+        == EXPECTED_SCHEMA_OBJECT_MANIFEST_RECORD_SHA256
+        and content.get("model_program_sha256")
+        == model.get("fixtureAdapterProfile", {}).get("programSha256")
+        and content.get("model_adapter_manifest_sha256")
+        == model.get("fixtureAdapterProfile", {}).get("modelAdapterManifestSha256")
+        and content.get("shared_delivery_intent_payload_sha256")
+        == model.get("connectorAuthorityCrosswalk", {})
+        .get("sharedConfirmationDeliveryIntent", {})
+        .get("canonicalBytes", {})
+        .get("sha256"),
+        "schedule companion content hashes are not exact",
+    )
+
+
+def _check_harness_entropy_authority(
+    schedule: dict[str, Any],
+    profile: dict[str, Any] | None,
+    fact_by_id: dict[Any, dict[str, Any]],
+    errors: list[str],
+) -> None:
+    authority = schedule.get("harnessEntropyInjectionAuthority", {})
+    top_keys = {
+        "authority_hash_rule",
+        "authority_sha256",
+        "canonicalization",
+        "contract",
+        "durable_consumption_trace_gate",
+        "exact_fixture_scope",
+        "forbidden_activation_and_shortcuts",
+        "nonce_injection",
+        "portable_snapshot_preservation",
+        "profile_semantic_binding",
+        "purpose",
+        "schedule_path_bindings",
+        "schema_version",
+        "status",
+    }
+    if not _exact_keys(
+        errors, authority, top_keys, "schedule harness entropy authority"
+    ):
+        return
+    authority_without_hash = {
+        key: value for key, value in authority.items() if key != "authority_sha256"
+    }
+    _need(
+        errors,
+        authority.get("contract") == "Eva4DHarnessEntropyInjectionAuthority/v1"
+        and authority.get("schema_version") == 1
+        and authority.get("status") == "sealed_harness_only_fail_closed"
+        and authority.get("canonicalization") == "EvaCanonicalJSON/v1"
+        and authority.get("authority_hash_rule")
+        == (
+            "SHA-256 over EvaCanonicalJSON/v1 bytes of this authority object "
+            "excluding only authority_sha256"
+        )
+        and authority.get("authority_sha256")
+        == sha256_bytes(canonical_json_bytes(authority_without_hash))
+        == EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256
+        and authority.get("purpose")
+        == (
+            "Permit the exact Eva fixed-nonce known-answer envelope only while "
+            "executing these isolated 4D deterministic schedules; this is not "
+            "runtime nonce authority."
+        ),
+        "schedule harness entropy authority content address or scope is not exact",
+    )
+
+    nonce = authority.get("nonce_injection", {})
+    nonce_raw = _decode_standard_base64(nonce.get("nonce_base64"))
+    try:
+        nonce_hex_raw = bytes.fromhex(str(nonce.get("nonce_hex", "")))
+    except ValueError:
+        nonce_hex_raw = b""
+    _need(
+        errors,
+        set(nonce)
+        == {
+            "consumption_ordinal",
+            "cross_scenario_state_reuse_allowed",
+            "general_rng_seed",
+            "injection_point",
+            "interface",
+            "maximum_consumptions_per_isolated_scenario_run",
+            "nonce_base64",
+            "nonce_byte_length",
+            "nonce_encoding",
+            "nonce_hex",
+            "nonce_sha256",
+            "ownership",
+            "production_random_nonce_rule_override_allowed",
+            "second_or_reentrant_consumption_action",
+        }
+        and nonce_raw == nonce_hex_raw
+        and len(nonce_hex_raw) == nonce.get("nonce_byte_length") == 24
+        and nonce.get("nonce_hex") == EXPECTED_HARNESS_NONCE_HEX
+        and nonce.get("nonce_sha256")
+        == sha256_bytes(nonce_hex_raw)
+        == EXPECTED_HARNESS_NONCE_SHA256
+        and nonce.get("nonce_encoding") == "lowercase_hex"
+        and nonce.get("ownership") == "noor_4d_schedule_harness_only"
+        and nonce.get("interface")
+        == (
+            "one-shot in-memory entropy callback passed explicitly by the isolated "
+            "schedule harness to the object-encryption fixture adapter"
+        )
+        and nonce.get("injection_point")
+        == (
+            "the nonce argument of nacl.secret.Aead(key).encrypt(plaintext, "
+            "aad=header, nonce=exact_nonce)"
+        )
+        and nonce.get("maximum_consumptions_per_isolated_scenario_run") == 1
+        and nonce.get("consumption_ordinal") == 1
+        and nonce.get("second_or_reentrant_consumption_action")
+        == "fail_closed_before_encryption"
+        and nonce.get("cross_scenario_state_reuse_allowed") is False
+        and nonce.get("general_rng_seed") is False
+        and nonce.get("production_random_nonce_rule_override_allowed") is False,
+        "schedule harness nonce injection is not exact, one-use or harness-only",
+    )
+
+    profile_binding = authority.get("profile_semantic_binding", {})
+    encrypted = (profile or {}).get("encryptedObjectFormat", {})
+    fixture_keys = encrypted.get("keyBinding", {}).get("fourDFixtureKeyRecords", [])
+    kat_vectors = encrypted.get("knownAnswerVectors", {}).get("vectors", [])
+    eva_key = next(
+        (
+            row
+            for row in fixture_keys
+            if isinstance(row, dict) and row.get("identity") == "Eva"
+        ),
+        {},
+    )
+    eva_kat = next(
+        (
+            row
+            for row in kat_vectors
+            if isinstance(row, dict) and row.get("identity") == "Eva"
+        ),
+        {},
+    )
+    _need(
+        errors,
+        profile_binding
+        == {
+            "fixture_key_record_canonical_sha256": (
+                EXPECTED_EVA_FIXTURE_KEY_RECORD_SHA256
+            ),
+            "fixture_key_selector": (
+                "encryptedObjectFormat.keyBinding.fourDFixtureKeyRecords[identity=Eva]"
+            ),
+            "known_answer_vector_canonical_sha256": EXPECTED_EVA_KAT_VECTOR_SHA256,
+            "known_answer_vector_selector": (
+                "encryptedObjectFormat.knownAnswerVectors.vectors[identity=Eva]"
+            ),
+            "path": PROFILE_PATH,
+            "runtime_nonce_rule_remains_authoritative": True,
+            "semantic_core_sha256": EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
+        }
+        and sha256_bytes(canonical_json_bytes(eva_key))
+        == EXPECTED_EVA_FIXTURE_KEY_RECORD_SHA256
+        and sha256_bytes(canonical_json_bytes(eva_kat))
+        == EXPECTED_EVA_KAT_VECTOR_SHA256,
+        "schedule harness entropy authority does not bind the exact profile fixture",
+    )
+
+    scope = authority.get("exact_fixture_scope", {})
+    expected_scope_values = {
+        "canonical_aad_sha256": EXPECTED_XCHACHA_KATS["Eva"]["aadSha256"],
+        "complete_envelope_byte_length": 553,
+        "complete_envelope_sha256": EXPECTED_XCHACHA_KATS["Eva"]["envelopeSha256"],
+        "identity": "Eva",
+        "installation_id": EXPECTED_XCHACHA_KATS["Eva"]["installationId"],
+        "key_ref": EXPECTED_XCHACHA_KATS["Eva"]["keyRef"],
+        "key_sha256": EXPECTED_XCHACHA_KATS["Eva"]["keySha256"],
+        "object_id": EXPECTED_XCHACHA_KATS["Eva"]["objectId"],
+        "object_store_id": "62e07e08-9793-5eee-a1f7-2ed9305211de",
+        "plaintext_byte_length": 122,
+        "plaintext_sha256": EXPECTED_DOCUMENT_SHA256,
+        "tenant_id": EXPECTED_XCHACHA_KATS["Eva"]["tenantId"],
+    }
+    allowed_attempts = scope.get("allowed_effect_attempts", [])
+    allowed_attempts_valid = (
+        isinstance(allowed_attempts, list) and len(allowed_attempts) == 2
+    )
+    expected_attempt_bindings = (
+        (
+            "effect-attempt/document/accepted",
+            1,
+            "baseline_generation_1",
+        ),
+        (
+            "correction/effect-attempt/document",
+            2,
+            "correction_generation_2",
+        ),
+    )
+    for binding, (fact_id, generation, scenario_scope) in zip(
+        allowed_attempts, expected_attempt_bindings
+    ):
+        fact = fact_by_id.get(fact_id, {})
+        row = fact.get("portable_record", {}).get("row", {})
+        payload = row.get("payload", {})
+        expected_binding = {
+            "catalog_fact_id": fact_id,
+            "catalog_fact_portable_record_sha256": fact.get("portable_record_sha256"),
+            "contract_effect_attempt_id": payload.get("effect_attempt_id"),
+            "generation": generation,
+            "object_candidate_ciphertext_sha256": expected_scope_values[
+                "complete_envelope_sha256"
+            ],
+            "object_candidate_envelope_byte_length": 553,
+            "object_candidate_id": expected_scope_values["object_id"],
+            "object_store_id": expected_scope_values["object_store_id"],
+            "ordinal": 1,
+            "portable_effect_attempt_id": row.get("effect_attempt_id"),
+            "scenario_scope": scenario_scope,
+        }
+        if not (
+            isinstance(binding, dict)
+            and binding == expected_binding
+            and row.get("capability_grant_payload", {}).get("generation") == generation
+            and row.get("object_candidate_ciphertext_sha256")
+            == expected_scope_values["complete_envelope_sha256"]
+            and row.get("object_candidate_envelope_byte_length") == 553
+            and row.get("object_candidate_id") == expected_scope_values["object_id"]
+            and row.get("object_store_id") == expected_scope_values["object_store_id"]
+            and row.get("ordinal") == 1
+        ):
+            allowed_attempts_valid = False
+    _need(
+        errors,
+        set(scope)
+        == {
+            "allowed_effect_attempts",
+            "canonical_aad_sha256",
+            "complete_envelope_byte_length",
+            "complete_envelope_sha256",
+            "identity",
+            "installation_id",
+            "key_ref",
+            "key_sha256",
+            "object_id",
+            "object_store_id",
+            "plaintext_byte_length",
+            "plaintext_sha256",
+            "scope_match_rule",
+            "tenant_id",
+        }
+        and all(scope.get(key) == value for key, value in expected_scope_values.items())
+        and scope.get("scope_match_rule")
+        == (
+            "Before consumption, identity, tenant_id, installation_id, object_id, "
+            "object_store_id, key_ref, key_sha256 and exactly one allowed effect-"
+            "attempt binding MUST all match byte-for-byte; any mismatch fails closed "
+            "before nonce release."
+        )
+        and allowed_attempts_valid,
+        "schedule harness entropy fixture scope or effect-attempt binding is not exact",
+    )
+
+    trace = authority.get("durable_consumption_trace_gate", {})
+    required_trace_fields = [
+        "contract",
+        "schema_version",
+        "authority_sha256",
+        "scenario_run_id",
+        "consumption_ordinal",
+        "identity",
+        "tenant_id",
+        "installation_id",
+        "object_id",
+        "object_store_id",
+        "key_ref",
+        "key_sha256",
+        "effect_attempt_id",
+        "nonce_sha256",
+        "complete_envelope_sha256",
+        "ledger_sequence",
+        "committed_at",
+        "ledger_commit_receipt_sha256",
+    ]
+    required_trace_values = {
+        "complete_envelope_sha256": expected_scope_values["complete_envelope_sha256"],
+        "consumption_ordinal": 1,
+        "contract": "Eva4DHarnessEntropyConsumptionTrace/v1",
+        "identity": "Eva",
+        "installation_id": expected_scope_values["installation_id"],
+        "key_ref": expected_scope_values["key_ref"],
+        "key_sha256": expected_scope_values["key_sha256"],
+        "nonce_sha256": EXPECTED_HARNESS_NONCE_SHA256,
+        "object_id": expected_scope_values["object_id"],
+        "object_store_id": expected_scope_values["object_store_id"],
+        "schema_version": 1,
+        "tenant_id": expected_scope_values["tenant_id"],
+    }
+    _need(
+        errors,
+        set(trace)
+        == {
+            "attempt_binding_rule",
+            "authority_hash_binding_rule",
+            "contract",
+            "ledger_owner",
+            "maximum_rows_per_uniqueness_key",
+            "missing_duplicate_or_unflushed_trace_action",
+            "portable_snapshot_row",
+            "required_exact_values",
+            "required_order",
+            "required_trace_fields",
+            "uniqueness_key",
+        }
+        and trace.get("contract") == "Eva4DHarnessEntropyConsumptionTrace/v1"
+        and trace.get("ledger_owner") == "isolated_4d_schedule_harness"
+        and trace.get("maximum_rows_per_uniqueness_key") == 1
+        and trace.get("uniqueness_key") == ["authority_sha256", "scenario_run_id"]
+        and trace.get("portable_snapshot_row") is False
+        and trace.get("missing_duplicate_or_unflushed_trace_action")
+        == "fail_closed_before_candidate_adoption"
+        and trace.get("authority_hash_binding_rule")
+        == ("trace.authority_sha256 MUST equal this object's authority_sha256 field")
+        and trace.get("attempt_binding_rule")
+        == (
+            "trace.effect_attempt_id MUST equal exactly one exact_fixture_scope."
+            "allowed_effect_attempts portable_effect_attempt_id for the current "
+            "isolated scenario"
+        )
+        and trace.get("required_exact_values") == required_trace_values
+        and trace.get("required_trace_fields") == required_trace_fields
+        and trace.get("required_order")
+        == [
+            "reserve exactly one allowed effect attempt and bind its immutable AAD fields",
+            "consume the one-shot exact nonce and produce the exact complete envelope",
+            (
+                "append and durably flush the consumption trace and obtain its ledger "
+                "commit receipt"
+            ),
+            (
+                "only after that durable receipt permit candidate adoption, selected-"
+                "object insertion or ObjectRef selection"
+            ),
+        ],
+        "schedule harness entropy durable trace, uniqueness or ordering gate is not exact",
+    )
+
+    forbidden = authority.get("forbidden_activation_and_shortcuts", {})
+    forbidden_boolean_keys = {
+        "candidate_adoption_before_durable_trace_allowed",
+        "copy_known_answer_envelope_as_candidate_allowed",
+        "default_bootstrap_import_allowed",
+        "default_bootstrap_registration_allowed",
+        "effect_attempt_state_reuse_across_isolated_runs_allowed",
+        "environment_variable_activation_allowed",
+        "file_or_service_configuration_activation_allowed",
+        "found_same_without_this_run_consumption_trace_allowed",
+        "non_fixture_installation_allowed",
+        "preseed_cas_path_allowed",
+        "preseed_complete_envelope_allowed",
+        "preseed_object_ref_allowed",
+        "production_dependency_graph_reachability_allowed",
+        "production_import_allowed",
+    }
+    _need(
+        errors,
+        set(forbidden) == forbidden_boolean_keys | {"required_initial_state"}
+        and all(forbidden.get(key) is False for key in forbidden_boolean_keys)
+        and forbidden.get("required_initial_state")
+        == (
+            "No selected ObjectRef and no CAS entry for the exact object_id/"
+            "ciphertext_sha256 may be preseeded; the isolated scenario must reach "
+            "the selected object only through its bound document attempt and the "
+            "traced one-shot encryption path."
+        ),
+        "schedule harness entropy production boundary or no-shortcut rule is not exact",
+    )
+
+    preservation = authority.get("portable_snapshot_preservation", {})
+    snapshot_bindings = [
+        {
+            "canonical_snapshot_sha256": row.get("canonical_snapshot_sha256"),
+            "snapshot_id": row.get("snapshot_id"),
+        }
+        for row in schedule.get("portableSnapshotAuthority", {}).get(
+            "precomputedSnapshots", []
+        )
+        if isinstance(row, dict)
+    ]
+    expected_preservation = {
+        "breaker_schedules_sha256": sha256_bytes(
+            canonical_json_bytes(schedule.get("breakerSchedules"))
+        ),
+        "canonical_snapshot_binding_vector_sha256": sha256_bytes(
+            canonical_json_bytes(snapshot_bindings)
+        ),
+        "concurrency_schedules_sha256": sha256_bytes(
+            canonical_json_bytes(schedule.get("concurrencySchedules"))
+        ),
+        "count_vectors_sha256": sha256_bytes(
+            canonical_json_bytes(schedule.get("countVectors"))
+        ),
+        "crash_schedules_sha256": sha256_bytes(
+            canonical_json_bytes(schedule.get("crashSchedules"))
+        ),
+        "portable_snapshot_authority_sha256": sha256_bytes(
+            canonical_json_bytes(schedule.get("portableSnapshotAuthority"))
+        ),
+        "snapshot_hash_mutation_allowed": False,
+        "snapshot_instance_count": 31,
+        "snapshot_record_or_count_mutation_allowed": False,
+    }
+    _need(
+        errors,
+        preservation == expected_preservation,
+        "schedule harness entropy authority does not preserve all 31 snapshots",
+    )
+
+    bindings = authority.get("schedule_path_bindings", {})
+    bindings_without_hash = {
+        key: value
+        for key, value in bindings.items()
+        if key != "binding_manifest_sha256"
+    }
+    schedule_without_authority = {
+        key: value
+        for key, value in schedule.items()
+        if key != "harnessEntropyInjectionAuthority"
+    }
+    scalar_pointers = _scalar_json_pointers(schedule_without_authority)
+    ciphertext = expected_scope_values["complete_envelope_sha256"]
+    ciphertext_paths = sorted(
+        path for path, value in scalar_pointers.items() if value == ciphertext
+    )
+    manifest_paths = [
+        path
+        for path in ciphertext_paths
+        if re.fullmatch(
+            r"/portableSnapshotAuthority/precomputedSnapshots/[0-9]+/"
+            r"object_manifest_records/[0-9]+/ciphertext_sha256",
+            path,
+        )
+    ]
+    delta_paths = [
+        path
+        for path in ciphertext_paths
+        if re.fullmatch(
+            r"/portableSnapshotAuthority/snapshotDefinitions/[0-9]+/delta/"
+            r"selected_object_inserts/[0-9]+/(?:ciphertext|envelope)_sha256",
+            path,
+        )
+    ]
+    reference_maps_valid = True
+    for key in (
+        "effect_attempt_fact_reference_paths",
+        "object_ref_fact_reference_paths",
+    ):
+        reference_map = bindings.get(key, {})
+        if not isinstance(reference_map, dict):
+            reference_maps_valid = False
+            continue
+        for fact_id, paths in reference_map.items():
+            actual = sorted(
+                path for path, value in scalar_pointers.items() if value == fact_id
+            )
+            if paths != actual:
+                reference_maps_valid = False
+    try:
+        selected_object = _resolve_json_pointer(
+            schedule_without_authority, bindings.get("selected_object_catalog_path")
+        )
+    except FreezeError:
+        selected_object = None
+    if isinstance(selected_object, dict):
+        selected_without_hash = {
+            key: value
+            for key, value in selected_object.items()
+            if key != "catalog_entry_sha256"
+        }
+    else:
+        selected_without_hash = None
+    baseline_object = fact_by_id.get("object/document-confirmation", {})
+    correction_object = fact_by_id.get("correction/object/document", {})
+    _need(
+        errors,
+        set(bindings)
+        == {
+            "baseline_object_ref_row_sha256",
+            "binding_manifest_hash_rule",
+            "binding_manifest_sha256",
+            "binding_validation_rule",
+            "correction_object_ref_row_sha256",
+            "effect_attempt_fact_reference_paths",
+            "object_ref_fact_reference_paths",
+            "path_syntax",
+            "precomputed_object_manifest_paths",
+            "selected_ciphertext_occurrence_count",
+            "selected_ciphertext_occurrence_paths",
+            "selected_object_catalog_entry_sha256",
+            "selected_object_catalog_path",
+            "selected_object_delta_insert_paths",
+        }
+        and bindings.get("binding_manifest_hash_rule")
+        == (
+            "SHA-256 over EvaCanonicalJSON/v1 bytes of schedule_path_bindings "
+            "excluding only binding_manifest_sha256"
+        )
+        and bindings.get("binding_manifest_sha256")
+        == sha256_bytes(canonical_json_bytes(bindings_without_hash))
+        == EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256
+        and bindings.get("path_syntax")
+        == (
+            "RFC 6901 JSON Pointer over the schedule artifact before adding "
+            "harnessEntropyInjectionAuthority"
+        )
+        and bindings.get("binding_validation_rule")
+        == (
+            "Every listed pointer MUST resolve to its exact bound hash or fact ID, "
+            "and every occurrence outside harnessEntropyInjectionAuthority of the "
+            "selected ciphertext or either allowed attempt/object fact ID MUST "
+            "appear exactly once in the corresponding exhaustive pointer set."
+        )
+        and bindings.get("selected_ciphertext_occurrence_count") == 29
+        and bindings.get("selected_ciphertext_occurrence_paths") == ciphertext_paths
+        and bindings.get("precomputed_object_manifest_paths") == manifest_paths
+        and bindings.get("selected_object_delta_insert_paths") == delta_paths
+        and reference_maps_valid
+        and bindings.get("effect_attempt_fact_reference_paths", {}).keys()
+        == {
+            "correction/effect-attempt/document",
+            "effect-attempt/document/accepted",
+        }
+        and bindings.get("object_ref_fact_reference_paths", {}).keys()
+        == {"correction/object/document", "object/document-confirmation"}
+        and isinstance(selected_without_hash, dict)
+        and bindings.get("selected_object_catalog_entry_sha256")
+        == selected_object.get("catalog_entry_sha256")
+        == sha256_bytes(canonical_json_bytes(selected_without_hash))
+        and bindings.get("baseline_object_ref_row_sha256")
+        == baseline_object.get("portable_record", {}).get("row_sha256")
+        and bindings.get("correction_object_ref_row_sha256")
+        == correction_object.get("portable_record", {}).get("row_sha256"),
+        "schedule harness entropy exhaustive path bindings are not exact",
+    )
+
+
+def _check_schedule_artifact(
+    root: Path,
+    schedule: dict[str, Any],
+    schema: dict[str, Any],
+    connector: dict[str, Any],
+    model: dict[str, Any],
+    profile: dict[str, Any] | None,
+    errors: list[str],
+) -> None:
+    _need(
+        errors,
+        schedule.get("contract") == EXPECTED_ARTIFACT_CONTRACTS[SCHEDULE_ARTIFACT_PATH]
+        and schedule.get("status")
+        == "sealed_pre_runtime_fixture_with_exact_precomputed_portable_snapshots"
+        and _all_strings_nfc(schedule),
+        "schedule artifact contract, status or NFC form is not sealed",
+    )
+    source = schedule.get("authorityBindings", {}).get("sourceProfileAtBaseline", {})
+    _need(
+        errors,
+        source.get("semanticCoreSha256") == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
+        "schedule source-profile semantic core is not exact",
+    )
+    _check_schedule_companions(schedule, schema, connector, model, errors)
+
+    portable = schedule.get("portableSnapshotAuthority", {})
+    seal = portable.get("validationSeal", {})
+    _need(
+        errors,
+        portable.get("contract") == "Eva24DPortableSnapshotAuthority/v1"
+        and portable.get("schemaVersion") == 1
+        and portable.get("runtimeInferenceAllowed") is False
+        and portable.get("postExecutionExpectedHashMutationAllowed") is False
+        and portable.get("snapshotFamilyOrder") == EXPECTED_SNAPSHOT_FAMILIES
+        and portable.get("snapshotInstanceOrder") == EXPECTED_SNAPSHOT_INSTANCES
+        and seal
+        == {
+            "alternate_snapshot_count": 13,
+            "base_snapshot_family_count": 18,
+            "count_vector_length": 40,
+            "duplicate_primary_key_errors": 0,
+            "foreign_key_errors": 0,
+            "portable_fact_count": 388,
+            "portable_schema_validation_errors": 0,
+            "record_set_vector_length": 39,
+            "runtime_inference_required": False,
+            "snapshot_instance_count": 31,
+            "unique_constraint_errors": 0,
+        },
+        "schedule snapshot counts or no-runtime-inference seal are not exact",
+    )
+
+    schema_rows = (
+        schema.get("portableExport", {})
+        .get("generatedPortableRecordSchemas", {})
+        .get("schemas", [])
+    )
+    table_rows = schema.get("schemaFamily", {}).get("tables", [])
+    table_definitions = {
+        row.get("table"): row for row in table_rows if isinstance(row, dict)
+    }
+    registry = _load_contract_schema_registry(root, schema, errors)
+    portable_schemas: dict[str, dict[str, Any]] = {}
+    for index, row in enumerate(schema_rows):
+        if not isinstance(row, dict):
+            continue
+        raw = _decode_standard_base64(row.get("canonicalBytesBase64"))
+        decoded = (
+            _load_embedded_canonical_json(
+                raw, errors, f"schedule portable schema {index + 1}"
+            )
+            if raw is not None
+            else None
+        )
+        if decoded is not None and isinstance(row.get("table"), str):
+            portable_schemas[row["table"]] = decoded
+            if isinstance(decoded.get("$id"), str):
+                registry[decoded["$id"]] = decoded
+
+    object_authority = (
+        schema.get("portableExport", {})
+        .get("objectManifest", {})
+        .get("recordSchemaAuthority", {})
+    )
+    object_raw = _decode_standard_base64(object_authority.get("canonicalBytesBase64"))
+    object_record_schema = (
+        _load_embedded_canonical_json(
+            object_raw, errors, "schedule object-manifest schema"
+        )
+        if object_raw is not None
+        else None
+    )
+
+    catalog = portable.get("fixtureFactCatalog", {})
+    facts = catalog.get("facts", [])
+    fact_by_id = {row.get("fact_id"): row for row in facts if isinstance(row, dict)}
+    catalog_valid = (
+        catalog.get("contract") == "Eva4DPortableFixtureFactCatalog/v1"
+        and catalog.get("schema_version") == 1
+        and catalog.get("fact_count") == 388
+        and isinstance(facts, list)
+        and len(facts) == 388
+        and len(fact_by_id) == 388
+    )
+    connector_bindings = {
+        row.get("logicalBindingKey"): row
+        for row in connector.get("concreteBindings", [])
+        if isinstance(row, dict) and row.get("identityRun") == "Eva"
+    }
+    redacted_binding_count = 0
+    for fact in facts if isinstance(facts, list) else []:
+        if not isinstance(fact, dict):
+            catalog_valid = False
+            continue
+        fact_id = fact.get("fact_id")
+        table = fact.get("table")
+        wrapper = fact.get("portable_record")
+        definition = table_definitions.get(table)
+        portable_schema = portable_schemas.get(table)
+        if not (
+            isinstance(fact_id, str)
+            and isinstance(table, str)
+            and isinstance(wrapper, dict)
+            and isinstance(definition, dict)
+            and isinstance(portable_schema, dict)
+        ):
+            catalog_valid = False
+            continue
+        row = wrapper.get("row")
+        primary_key = wrapper.get("primary_key")
+        entry_without_hash = {
+            key: value for key, value in fact.items() if key != "catalog_entry_sha256"
+        }
+        if not (
+            fact.get("export_ordinal") == definition.get("exportOrdinal")
+            and fact.get("primary_key") == primary_key
+            and wrapper.get("schema_version") == 1
+            and wrapper.get("source_table") == table
+            and wrapper.get("contract")
+            == definition.get("export", {}).get("recordContract")
+            and isinstance(row, dict)
+            and isinstance(primary_key, dict)
+            and primary_key
+            == {key: row.get(key) for key in definition.get("primaryKey", [])}
+            and wrapper.get("row_sha256") == sha256_bytes(canonical_json_bytes(row))
+            and fact.get("portable_record_sha256")
+            == sha256_bytes(canonical_json_bytes(wrapper))
+            and fact.get("catalog_entry_sha256")
+            == sha256_bytes(canonical_json_bytes(entry_without_hash))
+            and _json_schema_matches(
+                wrapper, portable_schema, portable_schema, registry
+            )
+        ):
+            catalog_valid = False
+        if table == "eva_core.connector_bindings" and isinstance(row, dict):
+            binding_key = fact_id.removeprefix("binding/")
+            source_binding = connector_bindings.get(binding_key, {})
+            source_payload = source_binding.get("payload", {})
+            redacted_payload = dict(source_payload)
+            credential_reference = redacted_payload.get("credential_reference")
+            redacted_payload.update(
+                {
+                    "contract": "EvaRedactedConnectorBinding/v1",
+                    "credential_reauthorization_required": True,
+                    "credential_reference": None,
+                    "credential_reference_sha256": sha256_bytes(
+                        credential_reference.encode("utf-8")
+                    )
+                    if isinstance(credential_reference, str)
+                    else None,
+                    "source_contract": "ConnectorBinding/v1",
+                }
+            )
+            if not (
+                source_binding.get("canonicalSha256")
+                == row.get("source_payload_sha256")
+                == sha256_bytes(canonical_json_bytes(source_payload))
+                and row.get("payload") == redacted_payload
+                and row.get("redacted_payload_sha256")
+                == sha256_bytes(canonical_json_bytes(redacted_payload))
+                and row.get("credential_reauthorization_required") is True
+            ):
+                catalog_valid = False
+            redacted_binding_count += 1
+    catalog_hashes = [
+        row.get("catalog_entry_sha256") for row in facts if isinstance(row, dict)
+    ]
+    crosswalk = catalog.get("logical_relational_id_crosswalk", [])
+    try:
+        namespace = uuid.UUID(catalog.get("uuid_namespace", ""))
+    except (ValueError, AttributeError):
+        namespace = None
+    crosswalk_valid = (
+        namespace is not None
+        and isinstance(crosswalk, list)
+        and len(crosswalk) == 405
+        and [row.get("logical_id") for row in crosswalk if isinstance(row, dict)]
+        == sorted(row.get("logical_id") for row in crosswalk if isinstance(row, dict))
+        and len({row.get("logical_id") for row in crosswalk if isinstance(row, dict)})
+        == 405
+        and len(
+            {row.get("portable_uuid") for row in crosswalk if isinstance(row, dict)}
+        )
+        == 405
+        and all(
+            isinstance(row, dict)
+            and str(uuid.uuid5(namespace, row.get("logical_id", "")))
+            == row.get("portable_uuid")
+            for row in crosswalk
+        )
+    )
+    _need(
+        errors,
+        catalog_valid
+        and redacted_binding_count == 6
+        and catalog.get("catalog_sha256")
+        == sha256_bytes(canonical_json_bytes(catalog_hashes))
+        and crosswalk_valid,
+        "schedule 388-fact catalog, wrappers or portable schema validation is not exact",
+    )
+    _check_harness_entropy_authority(schedule, profile, fact_by_id, errors)
+
+    selected = portable.get("selectedEncryptedObjects", {})
+    selected_rows = selected.get("objects", [])
+    selected_by_ciphertext: dict[str, dict[str, Any]] = {}
+    selected_valid = (
+        selected.get("contract") == "Eva4DSelectedEncryptedObjectCatalog/v1"
+        and selected.get("schema_version") == 1
+        and selected.get("object_count") == 1
+        and isinstance(selected_rows, list)
+        and len(selected_rows) == 1
+    )
+    for item in selected_rows if isinstance(selected_rows, list) else []:
+        if not isinstance(item, dict):
+            selected_valid = False
+            continue
+        raw = _decode_standard_base64(item.get("complete_envelope_base64"))
+        try:
+            encoded_hex = bytes.fromhex(item.get("complete_envelope_hex", ""))
+        except (TypeError, ValueError):
+            encoded_hex = b""
+        without_hash = {
+            key: value for key, value in item.items() if key != "catalog_entry_sha256"
+        }
+        manifest_record = item.get("manifest_record", {})
+        if not (
+            raw is not None
+            and raw == encoded_hex
+            and raw.startswith(b"EVA2XO01")
+            and item.get("complete_envelope_byte_length") == len(raw)
+            and item.get("ciphertext_sha256") == sha256_bytes(raw)
+            and item.get("catalog_entry_sha256")
+            == sha256_bytes(canonical_json_bytes(without_hash))
+            and isinstance(manifest_record, dict)
+            and manifest_record.get("ciphertext_sha256")
+            == item.get("ciphertext_sha256")
+        ):
+            selected_valid = False
+        if isinstance(item.get("ciphertext_sha256"), str):
+            selected_by_ciphertext[item["ciphertext_sha256"]] = item
+    _need(
+        errors,
+        selected_valid and len(selected_by_ciphertext) == 1,
+        "schedule selected encrypted-object catalog is not exact",
+    )
+
+    layout = portable.get("countVectorLayout", [])
+    layout_valid = (
+        isinstance(layout, list)
+        and len(layout) == 40
+        and [row.get("index") for row in layout if isinstance(row, dict)]
+        == list(range(40))
+        and [row.get("exportOrdinal") for row in layout if isinstance(row, dict)]
+        == list(range(1, 41))
+        and [row.get("table") for row in layout[:-1] if isinstance(row, dict)]
+        == [row.get("table") for row in table_rows if isinstance(row, dict)]
+        and layout[-1]
+        == {
+            "exportOrdinal": 40,
+            "index": 39,
+            "table": "encrypted_objects",
+        }
+    )
+    definitions = portable.get("snapshotDefinitions", [])
+    snapshots = portable.get("precomputedSnapshots", [])
+    definition_by_id = {
+        row.get("snapshot_id"): row for row in definitions if isinstance(row, dict)
+    }
+    snapshot_by_id = {
+        row.get("snapshot_id"): row for row in snapshots if isinstance(row, dict)
+    }
+    structure_valid = (
+        layout_valid
+        and isinstance(definitions, list)
+        and isinstance(snapshots, list)
+        and len(definitions) == len(snapshots) == 31
+        and list(definition_by_id) == EXPECTED_SNAPSHOT_INSTANCES
+        and list(snapshot_by_id) == EXPECTED_SNAPSHOT_INSTANCES
+    )
+    materialized_facts: dict[str, dict[tuple[str, bytes], str]] = {}
+    materialized_objects: dict[str, dict[str, dict[str, Any]]] = {}
+    snapshots_valid = structure_valid
+
+    def fact_key(fact: dict[str, Any]) -> tuple[str, bytes]:
+        return (
+            fact.get("table", ""),
+            canonical_json_bytes(fact.get("primary_key")),
+        )
+
+    def exact_fact_reference(reference: Any, fact_id: Any) -> bool:
+        fact = fact_by_id.get(fact_id)
+        return (
+            isinstance(reference, dict)
+            and isinstance(fact, dict)
+            and reference.get("table") == fact.get("table")
+            and reference.get("primary_key") == fact.get("primary_key")
+        )
+
+    for position, snapshot_id in enumerate(EXPECTED_SNAPSHOT_INSTANCES):
+        definition = definition_by_id.get(snapshot_id, {})
+        snapshot = snapshot_by_id.get(snapshot_id, {})
+        base_id = definition.get("base_snapshot_id")
+        if base_id is None:
+            state: dict[tuple[str, bytes], str] = {}
+            object_state: dict[str, dict[str, Any]] = {}
+        elif base_id in materialized_facts:
+            state = dict(materialized_facts[base_id])
+            object_state = dict(materialized_objects[base_id])
+        else:
+            snapshots_valid = False
+            state = {}
+            object_state = {}
+        delta = definition.get("delta", {})
+        if not (
+            set(definition)
+            == {
+                "base_snapshot_id",
+                "delta",
+                "expected_encrypted_object_count",
+                "expected_fact_count",
+                "snapshot_family",
+                "snapshot_id",
+            }
+            and definition.get("snapshot_id") == snapshot_id
+            and definition.get("snapshot_family") in EXPECTED_SNAPSHOT_FAMILIES
+            and set(delta)
+            == {
+                "deletes",
+                "full_cas_replacements",
+                "inserts",
+                "selected_object_deletes",
+                "selected_object_inserts",
+            }
+        ):
+            snapshots_valid = False
+        for reference in delta.get("deletes", []):
+            fact_id = reference.get("expected_base_fact_id")
+            fact = fact_by_id.get(fact_id, {})
+            key = fact_key(fact)
+            if (
+                not exact_fact_reference(reference, fact_id)
+                or state.get(key) != fact_id
+            ):
+                snapshots_valid = False
+            else:
+                del state[key]
+        for reference in delta.get("full_cas_replacements", []):
+            old_id = reference.get("expected_base_fact_id")
+            new_id = reference.get("replacement_fact_id")
+            old_fact = fact_by_id.get(old_id, {})
+            new_fact = fact_by_id.get(new_id, {})
+            old_key = fact_key(old_fact)
+            new_key = fact_key(new_fact)
+            if not (
+                exact_fact_reference(reference, old_id)
+                and exact_fact_reference(reference, new_id)
+                and old_key == new_key
+                and state.get(old_key) == old_id
+            ):
+                snapshots_valid = False
+            else:
+                state[old_key] = new_id
+        for reference in delta.get("inserts", []):
+            fact_id = reference.get("fact_id")
+            fact = fact_by_id.get(fact_id, {})
+            key = fact_key(fact)
+            if not exact_fact_reference(reference, fact_id) or key in state:
+                snapshots_valid = False
+            else:
+                state[key] = fact_id
+        for reference in delta.get("selected_object_deletes", []):
+            digest = reference.get("ciphertext_sha256")
+            if digest not in object_state:
+                snapshots_valid = False
+            else:
+                del object_state[digest]
+        for reference in delta.get("selected_object_inserts", []):
+            digest = reference.get("ciphertext_sha256")
+            selected_object = selected_by_ciphertext.get(digest)
+            if not (
+                isinstance(selected_object, dict)
+                and digest not in object_state
+                and reference.get("envelope_sha256") == digest
+                and reference.get("envelope_byte_length")
+                == selected_object.get("complete_envelope_byte_length")
+            ):
+                snapshots_valid = False
+            else:
+                object_state[digest] = selected_object
+        materialized_facts[snapshot_id] = state
+        materialized_objects[snapshot_id] = object_state
+
+        record_sets = snapshot.get("record_sets", [])
+        actual_record_sets: list[dict[str, Any]] = []
+        rows_by_table: dict[str, list[dict[str, Any]]] = {}
+        state_ids = set(state.values())
+        record_ids: list[str] = []
+        if not isinstance(record_sets, list) or len(record_sets) != 39:
+            snapshots_valid = False
+            record_sets = []
+        for ordinal, (table_definition, schema_summary) in enumerate(
+            zip(table_rows, schema_rows), start=1
+        ):
+            table = table_definition.get("table")
+            matching = [row for row in record_sets if row.get("table") == table]
+            if len(matching) != 1:
+                snapshots_valid = False
+                continue
+            record_set = matching[0]
+            ids = [
+                fact_id
+                for fact_id in state_ids
+                if fact_by_id.get(fact_id, {}).get("table") == table
+            ]
+            primary_key_order = table_definition.get("primaryKey", [])
+            ids.sort(
+                key=lambda fact_id: tuple(
+                    str(fact_by_id[fact_id]["primary_key"].get(key))
+                    for key in primary_key_order
+                )
+            )
+            record_ids.extend(ids)
+            jsonl = b"".join(
+                canonical_json_bytes(fact_by_id[fact_id]["portable_record"]) + b"\n"
+                for fact_id in ids
+            )
+            expected_record_set = {
+                "exportOrdinal": ordinal,
+                "jsonl_sha256": sha256_bytes(jsonl),
+                "record_count": len(ids),
+                "record_fact_ids": ids,
+                "record_schema_sha256": schema_summary.get("record_schema_sha256"),
+                "table": table,
+            }
+            if record_set != expected_record_set:
+                snapshots_valid = False
+            actual_record_sets.append(expected_record_set)
+            rows_by_table[table] = [
+                fact_by_id[fact_id]["portable_record"]["row"] for fact_id in ids
+            ]
+        if set(record_ids) != state_ids or len(record_ids) != len(state_ids):
+            snapshots_valid = False
+        record_vector = [
+            {key: value for key, value in row.items() if key != "record_fact_ids"}
+            for row in actual_record_sets
+        ]
+        count_vector = [row["record_count"] for row in actual_record_sets] + [
+            len(object_state)
+        ]
+
+        object_records: list[dict[str, Any]] = []
+        object_ref_rows = rows_by_table.get("eva_evidence.object_refs", [])
+        for digest in sorted(object_state):
+            item = object_state[digest]
+            candidates = [
+                row for row in object_ref_rows if row.get("ciphertext_sha256") == digest
+            ]
+            if len(candidates) != 1:
+                snapshots_valid = False
+                continue
+            object_ref = candidates[0]
+            manifest_record = dict(item.get("manifest_record", {}))
+            manifest_record["object_ref_row_sha256"] = sha256_bytes(
+                canonical_json_bytes(object_ref)
+            )
+            if not (
+                manifest_record.get("object_id") == object_ref.get("object_id")
+                and manifest_record.get("object_store_id")
+                == object_ref.get("object_store_id")
+                and manifest_record.get("tenant_id") == object_ref.get("tenant_id")
+                and manifest_record.get("plaintext_sha256")
+                == object_ref.get("plaintext_sha256")
+                and manifest_record.get("envelope_byte_length")
+                == object_ref.get("envelope_byte_length")
+                and manifest_record.get("wrapped_key_ref")
+                == object_ref.get("wrapped_key_ref")
+                and (
+                    object_record_schema is None
+                    or _json_schema_matches(
+                        manifest_record,
+                        object_record_schema,
+                        object_record_schema,
+                        registry,
+                    )
+                )
+            ):
+                snapshots_valid = False
+            object_records.append(manifest_record)
+        object_jsonl = b"".join(
+            canonical_json_bytes(row) + b"\n" for row in object_records
+        )
+        object_hash = sha256_bytes(object_jsonl)
+        snapshot_projection = {
+            "snapshot_family": snapshot.get("snapshot_family"),
+            "source_installation_id": snapshot.get("source_installation_id"),
+            "count_vector": count_vector,
+            "record_set_vector": record_vector,
+            "object_manifest_sha256": object_hash,
+            "encrypted_object_count": len(object_state),
+        }
+        if not (
+            snapshot.get("snapshot_id") == snapshot_id
+            and snapshot.get("snapshot_family") == definition.get("snapshot_family")
+            and snapshot.get("source_installation_id")
+            == "0a44a85c-4bbb-5330-8803-60fab86e5a94"
+            and snapshot.get("count_vector") == count_vector
+            and len(count_vector) == 40
+            and snapshot.get("record_sets") == actual_record_sets
+            and snapshot.get("record_set_vector") == record_vector
+            and len(record_vector) == 39
+            and snapshot.get("object_manifest_records") == object_records
+            and snapshot.get("object_manifest_jsonl_sha256") == object_hash
+            and snapshot.get("object_manifest_sha256") == object_hash
+            and snapshot.get("encrypted_object_count") == len(object_state)
+            and definition.get("expected_fact_count") == len(state)
+            and definition.get("expected_encrypted_object_count") == len(object_state)
+            and snapshot.get("canonical_snapshot_sha256")
+            == sha256_bytes(canonical_json_bytes(snapshot_projection))
+            and _check_snapshot_relations(rows_by_table, table_definitions)
+        ):
+            snapshots_valid = False
+    _need(
+        errors,
+        snapshots_valid,
+        "schedule 31 snapshot deltas, 39 record sets, count40, relations or object manifests are not exact",
+    )
+
+    count_vectors = schedule.get("countVectors", {})
+    count_vectors_valid = isinstance(count_vectors, dict) and set(count_vectors) == set(
+        EXPECTED_SNAPSHOT_INSTANCES
+    )
+    for snapshot_id in EXPECTED_SNAPSHOT_INSTANCES:
+        snapshot = snapshot_by_id.get(snapshot_id, {})
+        vector = count_vectors.get(snapshot_id, {})
+        if not (
+            vector.get("values") == snapshot.get("count_vector")
+            and vector.get("canonicalSha256")
+            == sha256_bytes(canonical_json_bytes(snapshot.get("count_vector")))
+            and vector.get("canonicalSnapshotSha256")
+            == snapshot.get("canonical_snapshot_sha256")
+        ):
+            count_vectors_valid = False
+    _need(
+        errors,
+        count_vectors_valid,
+        "schedule top-level count-vector bindings are not exact",
+    )
+
+    schedule_references_valid = True
+
+    def walk_snapshot_oracles(value: Any) -> None:
+        nonlocal schedule_references_valid
+        if isinstance(value, dict):
+            if "snapshot_id" in value:
+                snapshot = snapshot_by_id.get(value.get("snapshot_id"))
+                if not isinstance(snapshot, dict):
+                    schedule_references_valid = False
+                else:
+                    expected_fields = {
+                        "snapshot_family": snapshot.get("snapshot_family"),
+                        "canonical_snapshot_sha256": snapshot.get(
+                            "canonical_snapshot_sha256"
+                        ),
+                        "count_vector": snapshot.get("count_vector"),
+                        "count_vector_sha256": sha256_bytes(
+                            canonical_json_bytes(snapshot.get("count_vector"))
+                        ),
+                        "record_set_vector_sha256": sha256_bytes(
+                            canonical_json_bytes(snapshot.get("record_set_vector"))
+                        ),
+                        "object_manifest_sha256": snapshot.get(
+                            "object_manifest_sha256"
+                        ),
+                    }
+                    if any(
+                        key in value and value.get(key) != expected
+                        for key, expected in expected_fields.items()
+                    ):
+                        schedule_references_valid = False
+            for item in value.values():
+                walk_snapshot_oracles(item)
+        elif isinstance(value, list):
+            for item in value:
+                walk_snapshot_oracles(item)
+
+    schedule_surfaces = {
+        key: schedule.get(key)
+        for key in (
+            "concurrencySchedules",
+            "breakerSchedules",
+            "crashSchedules",
+            "commonTerminalOracle",
+        )
+    }
+    walk_snapshot_oracles(schedule_surfaces)
+    snapshot_reference_keys = {
+        "preCrashCountVector",
+        "postRecoveryCountVector",
+        "initialCountVector",
+        "countVector",
+        "portableTerminalSnapshot",
+    }
+
+    def walk_named_snapshot_references(value: Any) -> None:
+        nonlocal schedule_references_valid
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key in snapshot_reference_keys and isinstance(item, str):
+                    if item not in snapshot_by_id:
+                        schedule_references_valid = False
+                if key == "terminal" and isinstance(item, str) and "." in item:
+                    if item not in snapshot_by_id:
+                        schedule_references_valid = False
+                walk_named_snapshot_references(item)
+        elif isinstance(value, list):
+            for item in value:
+                walk_named_snapshot_references(item)
+
+    walk_named_snapshot_references(schedule_surfaces)
+    fact_reference_count = 0
+
+    def walk_fact_references(value: Any, path: str) -> None:
+        nonlocal fact_reference_count, schedule_references_valid
+        if isinstance(value, dict):
+            for key, item in value.items():
+                child_path = f"{path}.{key}"
+                if isinstance(item, str) and item in fact_by_id:
+                    fact_reference_count += 1
+                if isinstance(item, list):
+                    fact_reference_count += sum(
+                        isinstance(entry, str) and entry in fact_by_id for entry in item
+                    )
+                is_fact_reference = (
+                    "fact_id" in key.lower()
+                    or key in {"expected_base_fact_id", "replacement_fact_id"}
+                ) and ".primary_key" not in path
+                if is_fact_reference and isinstance(item, str):
+                    if item not in fact_by_id:
+                        schedule_references_valid = False
+                if is_fact_reference and isinstance(item, list):
+                    if any(entry not in fact_by_id for entry in item):
+                        schedule_references_valid = False
+                walk_fact_references(item, child_path)
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                walk_fact_references(item, f"{path}[{index}]")
+
+    for key, value in schedule.items():
+        if key not in {
+            "portableSnapshotAuthority",
+            "harnessEntropyInjectionAuthority",
+        }:
+            walk_fact_references(value, f"$.{key}")
+    for key, value in portable.items():
+        if key != "fixtureFactCatalog":
+            walk_fact_references(value, f"$.portableSnapshotAuthority.{key}")
+    _need(
+        errors,
+        schedule_references_valid and fact_reference_count == 4552,
+        "schedule fact or snapshot references do not all resolve exactly",
+    )
+
+    crash_schedules = schedule.get("crashSchedules", [])
+    profile_points = [
+        row.get("crashPoint")
+        for row in (profile or {}).get("crashOracles", [])
+        if isinstance(row, dict)
+    ]
+    schedule_points = [
+        row.get("profileCrashPoint") for row in crash_schedules if isinstance(row, dict)
+    ]
+    expected_points = {point: 1 for point in profile_points}
+    if "after model response and before response commit" in expected_points:
+        expected_points["after model response and before response commit"] = 3
+    actual_points = {
+        point: schedule_points.count(point) for point in set(schedule_points)
+    }
+    _need(
+        errors,
+        isinstance(crash_schedules, list)
+        and len(crash_schedules) == 17
+        and expected_points == actual_points,
+        "schedule crash coverage does not exactly cover the 15 profile points",
+    )
+
+    c13 = next(
+        (
+            row
+            for row in crash_schedules
+            if isinstance(row, dict)
+            and row.get("crashId") == "C13-after-outcome-accept-before-receipt"
+        ),
+        {},
+    )
+    c13_authority = c13.get("reofferAuthority", {})
+    c13_fact_id = c13_authority.get("ordinal_2_effect_attempt_fact_id")
+    c13_fact = fact_by_id.get(c13_fact_id, {}).get("portable_record", {}).get("row", {})
+    first_fact = (
+        fact_by_id.get("effect-attempt/outcome/accepted", {})
+        .get("portable_record", {})
+        .get("row", {})
+    )
+    c13_definition = definition_by_id.get("terminal.c13", {})
+    c13_delta = c13_definition.get("delta", {})
+    connector_c13 = connector.get("scenarios", {}).get("c13ReofferEva", {})
+    connector_c13_ledger = connector_c13.get("externalCallLedger", [])
+    c13_delivery = (
+        fact_by_id.get(c13_authority.get("delivery_fact_id"), {})
+        .get("portable_record", {})
+        .get("row", {})
+    )
+    _need(
+        errors,
+        c13.get("postRecoveryCallDelta")
+        == {
+            "businessConnector": 0,
+            "model": 0,
+            "newProviderMutation": 0,
+            "outcomeReoffer": 1,
+        }
+        and c13.get("preCrashCountVector") == "outcomeInFlight"
+        and c13.get("postRecoveryCountVector") == "terminal.c13"
+        and c13_fact_id == "effect-attempt/outcome/c13-reoffer-ordinal2"
+        and c13_definition.get("base_snapshot_id") == "terminal"
+        and c13_delta.get("inserts")
+        == [
+            {
+                "fact_id": c13_fact_id,
+                "primary_key": fact_by_id.get(c13_fact_id, {}).get("primary_key"),
+                "table": "eva_effects.effect_attempts",
+            }
+        ]
+        and all(
+            c13_delta.get(key) == []
+            for key in (
+                "deletes",
+                "full_cas_replacements",
+                "selected_object_deletes",
+                "selected_object_inserts",
+            )
+        )
+        and c13_fact.get("ordinal") == 2
+        and first_fact.get("ordinal") == 1
+        and c13_fact.get("effect_intent_id") == first_fact.get("effect_intent_id")
+        and c13_fact.get("capability_grant_id") != first_fact.get("capability_grant_id")
+        and c13_fact.get("credential_grant_id") != first_fact.get("credential_grant_id")
+        and c13_authority.get("delivery_id")
+        == c13_delivery.get("intent_payload", {}).get("delivery_id")
+        and c13_authority.get("offer_payload_sha256")
+        == c13_delivery.get("offer_payload_sha256")
+        and c13_authority.get("receipt_payload_sha256")
+        == c13_delivery.get("receipt_payload_sha256")
+        and c13_authority.get("ack_challenge_sha256")
+        == c13_delivery.get("ack_challenge_sha256")
+        and c13_authority.get("wire_sha256") == c13_delivery.get("offer_wire_sha256")
+        and len(connector_c13_ledger) == 12
+        and not any("reconcile" in call for call in connector_c13.get("calls", []))
+        and connector_c13_ledger[-1].get("providerMutationDelta") == 0
+        and connector_c13_ledger[-2].get("providerMutationDelta") == 1,
+        "schedule C13 exact ordinal-2 re-offer or no-reconcile authority is not exact",
+    )
+
+    correction_schedule = next(
+        (
+            row
+            for row in schedule.get("concurrencySchedules", [])
+            if isinstance(row, dict)
+            and row.get("scheduleId") == "correction-before-first-effect"
+        ),
+        {},
+    )
+    correction_oracle = correction_schedule.get("oracle", {})
+    correction_gen1 = correction_oracle.get("generation1", {})
+    correction_gen2 = correction_oracle.get("generation2", {})
+    correction_terminal_state = materialized_facts.get("terminal.correction", {})
+    correction_terminal_ids = set(correction_terminal_state.values())
+    correction_gen1_state = materialized_facts.get("planCommitted.correctionGen1", {})
+    correction_gen1_ids = set(correction_gen1_state.values())
+
+    def rows_for(fact_ids: set[str], table: str) -> list[dict[str, Any]]:
+        return [
+            fact_by_id[fact_id]["portable_record"]["row"]
+            for fact_id in fact_ids
+            if fact_by_id.get(fact_id, {}).get("table") == table
+        ]
+
+    generation_rows = rows_for(correction_terminal_ids, "eva_core.episode_generations")
+    episode_rows = rows_for(correction_terminal_ids, "eva_core.episodes")
+    plan_rows = rows_for(correction_terminal_ids, "eva_core.plans")
+    model_rows = rows_for(correction_terminal_ids, "eva_core.model_attempts")
+    generation_bound_tables = (
+        "eva_effects.read_intents",
+        "eva_effects.effect_intents",
+        "eva_effects.deliveries",
+    )
+    all_terminal_generation_bound_rows = [
+        row
+        for table in generation_bound_tables
+        for row in rows_for(correction_terminal_ids, table)
+    ]
+    connector_correction_scenario = connector.get("scenarios", {}).get(
+        "correctionBeforeFirstEffect", {}
+    )
+    correction_authority = correction_schedule.get("authority", {})
+    correction_object = fact_by_id.get(
+        correction_authority.get("object_ref_fact_id"), {}
+    )
+    correction_delivery = fact_by_id.get(
+        correction_authority.get("outcome_delivery_fact_id"), {}
+    )
+    _need(
+        errors,
+        correction_schedule.get("caseId") == "correction-before-first-effect"
+        and correction_schedule.get("snapshotOracle", {})
+        .get("generation_1_plan_committed_before_every_read_or_effect", {})
+        .get("snapshot_id")
+        == "planCommitted.correctionGen1"
+        and correction_schedule.get("snapshotOracle", {})
+        .get("generation_2_terminal", {})
+        .get("snapshot_id")
+        == "terminal.correction"
+        and correction_gen1
+        == {
+            "connectorOperationInvocations": 0,
+            "deliveries": 0,
+            "effectAttempts": 0,
+            "effectIntents": 0,
+            "effectReadbacks": 0,
+            "effectReceipts": 0,
+            "modelAttempts": 1,
+            "planSteps": 11,
+            "plannedSlot": "2026-08-26T14:00:00+02:00",
+            "plans": 1,
+            "providerMutations": 0,
+            "readAttempts": 0,
+            "readIntents": 0,
+            "readObservations": 0,
+            "state": "superseded",
+        }
+        and correction_gen2.get("selectedSlot") == "2026-08-26T15:00:00+02:00"
+        and correction_gen2.get("connectorOperationInvocations") == 11
+        and correction_gen2.get("providerMutations") == 4
+        and correction_gen2.get("modelAttempts") == 3
+        and correction_gen2.get("readIntents")
+        == correction_gen2.get("readAttempts")
+        == correction_gen2.get("readObservations")
+        == 7
+        and correction_gen2.get("effectIntents")
+        == correction_gen2.get("effectAttempts")
+        == correction_gen2.get("effectReceipts")
+        == 4
+        and correction_gen2.get("effectReadbacks") == 3
+        and correction_gen2.get("deliveries") == 2
+        and len(rows_for(correction_gen1_ids, "eva_effects.read_intents")) == 0
+        and len(rows_for(correction_gen1_ids, "eva_effects.effect_intents")) == 0
+        and len(rows_for(correction_gen1_ids, "eva_effects.deliveries")) == 0
+        and all(
+            row.get("generation") == 2 for row in all_terminal_generation_bound_rows
+        )
+        and sorted((row.get("generation"), row.get("state")) for row in generation_rows)
+        == [(1, "superseded"), (2, "sealed")]
+        and len(episode_rows) == 1
+        and episode_rows[0].get("current_generation") == 2
+        and episode_rows[0].get("supersedes_generation") == 1
+        and episode_rows[0].get("state") == "completed"
+        and sorted((row.get("generation"), row.get("state")) for row in plan_rows)
+        == [(1, "superseded"), (2, "completed")]
+        and sorted((row.get("generation"), row.get("purpose")) for row in model_rows)
+        == [
+            (1, "plan"),
+            (2, "document_draft"),
+            (2, "plan"),
+            (2, "reply"),
+        ]
+        and correction_authority.get("object_ref_portable_record_sha256")
+        == correction_object.get("portable_record_sha256")
+        and correction_authority.get("outcome_delivery_portable_record_sha256")
+        == correction_delivery.get("portable_record_sha256")
+        and correction_oracle.get("visiblePresenceReply", {}).get("contains") == "15.00"
+        and "14.00"
+        in correction_oracle.get("visiblePresenceReply", {}).get("forbidden", [])
+        and connector_correction_scenario.get("expected", {}).get(
+            "generation1ConnectorCalls"
+        )
+        == 0
+        and connector_correction_scenario.get("expected", {}).get(
+            "generation2ConnectorCalls"
+        )
+        == 11,
+        "schedule correction generation-1 supersession or generation-2 terminal authority is not exact",
+    )
 
 
 def _check_sealed_packs(
@@ -2195,30 +5553,109 @@ def verify(root: Path) -> dict[str, Any]:
         else:
             vertical = value
 
+    artifacts: dict[str, dict[str, Any]] = {}
+    for relative in ARTIFACT_PATHS:
+        try:
+            path = _path(root, relative)
+            actual = sha256_file(path)
+            artifact = load_json_exact(path)
+        except (OSError, FreezeError) as exc:
+            errors.append(f"pre-runtime artifact {relative}: {exc}")
+            continue
+        artifacts[relative] = artifact
+        if actual != EXPECTED_ARTIFACT_SHA256[relative]:
+            errors.append(f"pre-runtime artifact digest mismatch: {relative}")
+        if artifact.get("contract") != EXPECTED_ARTIFACT_CONTRACTS[relative]:
+            errors.append(f"pre-runtime artifact contract mismatch: {relative}")
+
     if profile is not None and vertical is not None:
         try:
             _check_profile(profile, vertical, errors)
-        except (KeyError, TypeError, ValueError, StopIteration) as exc:
+        except (IndexError, KeyError, TypeError, ValueError, StopIteration) as exc:
             errors.append(f"profile structure failed closed: {exc}")
+        semantic_core = dict(profile)
+        semantic_core.pop("preRuntimeRequiredArtifacts", None)
+        _need(
+            errors,
+            sha256_bytes(canonical_json_bytes(semantic_core))
+            == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
+            "execution profile semantic core changed outside the adoption gate",
+        )
     if binding is not None:
         try:
             _check_dependency_binding(root, binding, errors)
             _check_lock_and_pyproject(root, binding, errors)
-        except (OSError, FreezeError, KeyError, TypeError, ValueError) as exc:
+        except (
+            OSError,
+            FreezeError,
+            IndexError,
+            KeyError,
+            TypeError,
+            ValueError,
+        ) as exc:
             errors.append(f"dependency structure failed closed: {exc}")
+
+    artifact_checks = (
+        (SCHEMA_ARTIFACT_PATH, _check_schema_artifact),
+        (CONNECTOR_ARTIFACT_PATH, _check_connector_artifact),
+        (MODEL_ARTIFACT_PATH, _check_model_artifact),
+    )
+    for relative, check in artifact_checks:
+        artifact = artifacts.get(relative)
+        if artifact is None:
+            continue
+        try:
+            check(artifact, errors)
+        except (IndexError, KeyError, TypeError, ValueError, StopIteration) as exc:
+            errors.append(
+                f"pre-runtime artifact structure failed closed: {relative}: {exc}"
+            )
+    model = artifacts.get(MODEL_ARTIFACT_PATH)
+    connector = artifacts.get(CONNECTOR_ARTIFACT_PATH)
+    if model is not None and connector is not None:
+        try:
+            _check_model_connector_crosswalk(model, connector, errors)
+        except (IndexError, KeyError, TypeError, ValueError, StopIteration) as exc:
+            errors.append(f"model/connector crosswalk failed closed: {exc}")
+    schedule = artifacts.get(SCHEDULE_ARTIFACT_PATH)
+    schema = artifacts.get(SCHEMA_ARTIFACT_PATH)
+    if (
+        schedule is not None
+        and schema is not None
+        and connector is not None
+        and model is not None
+    ):
+        try:
+            _check_schedule_artifact(
+                root, schedule, schema, connector, model, profile, errors
+            )
+        except (
+            OSError,
+            FreezeError,
+            IndexError,
+            KeyError,
+            TypeError,
+            ValueError,
+            StopIteration,
+        ) as exc:
+            errors.append(f"schedule artifact structure failed closed: {exc}")
 
     missing_pre_runtime_artifacts: list[str] = []
     runtime_coding_allowed = False
     if profile is not None:
         pre_runtime = profile.get("preRuntimeRequiredArtifacts", {})
-        missing_pre_runtime_artifacts = [
-            row.get("path", "")
+        rows_by_path = {
+            row.get("path"): row
             for row in pre_runtime.get("artifacts", [])
             if isinstance(row, dict)
-            and (
-                row.get("expectedSha256") is None
-                or row.get("status") == "missing_blocking_dependency_not_implemented"
-            )
+        }
+        missing_pre_runtime_artifacts = [
+            relative
+            for relative in ARTIFACT_PATHS
+            if relative not in artifacts
+            or rows_by_path.get(relative, {}).get("status") != "sealed_verified"
+            or rows_by_path.get(relative, {}).get("expectedSha256")
+            != EXPECTED_ARTIFACT_SHA256[relative]
         ]
         runtime_coding_allowed = (
             pre_runtime.get("runtimeCodingAllowed") is True
@@ -2233,11 +5670,13 @@ def verify(root: Path) -> dict[str, Any]:
         PYPROJECT_PATH,
         CHECKER_PATH,
         TEST_PATH,
+        *ARTIFACT_PATHS,
     ):
         try:
             hashes[relative] = sha256_file(_path(root, relative))
         except (OSError, FreezeError) as exc:
             errors.append(f"freeze receipt hash missing for {relative}: {exc}")
+    runtime_coding_allowed = runtime_coding_allowed and not errors
     return {
         "contract": "Eva24DPreCodeFreezeCheck/v1",
         "status": "passed" if not errors else "failed",
