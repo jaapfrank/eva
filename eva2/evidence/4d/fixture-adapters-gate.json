@@ -1,0 +1,194 @@
+{
+  "contract": "Eva24DFixtureAdaptersGate/v1",
+  "tranche": "4D-fixture-adapters",
+  "status": "passed_fixture_adapters_only",
+  "createdAt": "2026-08-21T15:10:29+02:00",
+  "baseCommit": "4f3c84827ef1954c49e477ad83d46c632be68b8a",
+  "branch": "recovery/v2-containment",
+  "claimBoundary": {
+    "sealedConnectorFixtureRuntimeProven": true,
+    "sealedInProcessModelFixtureRuntimeProven": true,
+    "liveProviderOrExternalNetworkBehaviorProven": false,
+    "crossProcessProviderStateOrPersistentStoreProven": false,
+    "modelSubprocessOrWireProtocolProven": false,
+    "modelHostAcceptanceProven": false,
+    "durableOneUseGrantConsumptionProven": false,
+    "dbosWorkflowOrApiBehaviorProven": false,
+    "fullNoorFourDBehaviorProven": false,
+    "testsAloneAcceptFullFourD": false
+  },
+  "authorityBindings": {
+    "implementationFixtureFreeze": {
+      "path": "eva2/evidence/4d/implementation-fixture-freeze.json",
+      "sha256": "3e61cba4529cf76c3f4f9d7ccd90e2d90795cab74b06b5d5cabc4c29acadb86c"
+    },
+    "foundationRuntimeGate": {
+      "path": "eva2/evidence/4d/foundation-runtime-gate.json",
+      "sha256": "ec19c9aea73e345f55c0c59c1c5fb3a2ec392f87526fb5ca6cafbb32b8c9654b"
+    },
+    "executionProfile": {
+      "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
+      "sha256": "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a"
+    },
+    "connectorFixtures": {
+      "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
+      "sha256": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+    },
+    "modelVectors": {
+      "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
+      "sha256": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+    },
+    "packageBoundary": {
+      "path": "eva2/design/architecture/package-boundaries-v1.json",
+      "sha256": "5022b8fb1909c354fdb0c355eb11a908d0d5b6a964f24c9a5d6550de5e4505f6"
+    },
+    "freezeChecker": {
+      "path": "eva2/tools/check_4d_freeze.py",
+      "sha256": "2bae1feb72bc3e7a337a488824e742a7d0018102a661f38aa6ca19352c7f9e59"
+    }
+  },
+  "sourceManifestEncoding": "SHA-256 over UTF-8 lines '<sha256>  <path>\\n' sorted by path",
+  "sourceManifests": {
+    "connector": {
+      "sha256": "d59c27baf71884afa39416bf7c7487a482ec0909e39bc255ed271f179b03a4c9",
+      "files": [
+        ["eva2/connector_sdk/fixture_runner.py", "2cff3b56cc6ce2946a9a1c601d4d63a1a8da5a45ffab4fc4ae6c66839320b067"],
+        ["eva2/connectors/calendar/worker.py", "88d9519bb7fbd8cd91c3d931aa6198de92f1ff7cf4fc02bf877b8e8ec6368a07"],
+        ["eva2/connectors/channel/worker.py", "b367e147ec86c49f68ba6c7c78455414a712d0c0c233bf52e5afeadbc34848fd"],
+        ["eva2/connectors/document/worker.py", "1521ec4696f49fc46ddccedc79c0b7eb1870eb30fae7a49f238e407e4653c7b5"],
+        ["eva2/connectors/erp/worker.py", "46f08ca5296b9a1fbf4ed5d0068549b9957c509661654910568892b8ded12aec"],
+        ["eva2/connectors/mail/worker.py", "76923323664993da158f5210b134e9a3b9c9a25f24c839d9c3bb9465eac86453"],
+        ["eva2/src/eva/adapters/connectors/__init__.py", "358a10a0fcd804edcf0956fe8c5039f02498a4247e72d283eba1a61247768687"],
+        ["eva2/src/eva/adapters/connectors/process.py", "36cb3a9a29f8ea25da22984153738af1cdaa34350bb5df703fe14276459f5573"],
+        ["eva2/tests/connectors/test_fixture_runner.py", "40efe8532a25d5c313e07c7f622d17ad1f4716d93b2d36fef13a1881e9be4b03"],
+        ["eva2/tests/connectors/test_process.py", "17fccd79683397a9f29f413f45e2fe0413ee5a1b63285a06b92bb6affd6587f2"]
+      ]
+    },
+    "model": {
+      "sha256": "1f0d34e104ee434038a3d6057a81e6ae8dc93e363753c03a21923b4aa4e5b65f",
+      "files": [
+        ["eva2/src/eva/adapters/model/__init__.py", "3663f4621201d237545d999efbe1cfc64e07487a7a9bf61e883951d1c91f67c1"],
+        ["eva2/src/eva/adapters/model/fixture.py", "0a5088c5ec51209d6e1437cbb09504b897eeaddffe18980c3773c16ce80b0721"],
+        ["eva2/tests/model/test_fixture_adapter.py", "c1b49585bf9ea62eb2f0117509f2b156a211adb800666455ac08a272692acd16"],
+        ["eva2/tests/model/test_fixture_program.py", "b948e00ffd0aeff1abdaa0309485169364329075998d14c68566f93257e2d569"]
+      ]
+    }
+  },
+  "executionEnvironment": {
+    "python": "CPython 3.12.3",
+    "pytest": "8.4.2",
+    "ruff": "0.15.10",
+    "dependenciesInstalledByTheseGates": false,
+    "externalNetworkUsed": false,
+    "databaseUsed": false,
+    "serviceStarted": false
+  },
+  "gates": {
+    "independentCombinedAcceptance": {
+      "workdir": "eva2",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/connectors tests/model tests/architecture tests/contract/test_connector_rpc_ack_and_evidence_v2.py tests/contract/test_canonical_json.py",
+      "status": "passed",
+      "passed": 202,
+      "durationSeconds": 17.75
+    },
+    "freeze": {
+      "workdir": ".",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 eva2/tools/check_4d_freeze.py --root .",
+      "status": "passed",
+      "verifiedHashCount": 10,
+      "errors": []
+    },
+    "ruff": {
+      "workdir": "eva2",
+      "command": "ruff check connector_sdk connectors src/eva/adapters/connectors src/eva/adapters/model tests/connectors tests/model && ruff format --check connector_sdk connectors src/eva/adapters/connectors src/eva/adapters/model tests/connectors tests/model",
+      "status": "passed",
+      "checkedFormattedFileCount": 15
+    },
+    "diff": {
+      "workdir": ".",
+      "command": "git diff --check -- eva2/connector_sdk eva2/connectors eva2/src/eva/adapters/connectors eva2/src/eva/adapters/model eva2/tests/connectors eva2/tests/model eva2/evidence/4d/fixture-adapters-gate.json",
+      "status": "passed"
+    }
+  },
+  "corroboratingRuns": {
+    "connectorWriter": [
+      {
+        "workdir": "eva2",
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/connectors",
+        "status": "passed",
+        "passed": 138
+      },
+      {
+        "workdir": "eva2",
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/architecture/test_package_boundaries.py tests/contract/test_connector_rpc_ack_and_evidence_v2.py",
+        "status": "passed",
+        "passed": 27
+      }
+    ],
+    "modelWriter": [
+      {
+        "workdir": "eva2",
+        "command": "env TMPDIR=/tmp PYTHONPATH=src python3.12 -m pytest -q tests/model/test_fixture_program.py tests/model/test_fixture_adapter.py",
+        "status": "passed",
+        "passed": 24
+      },
+      {
+        "workdir": "eva2",
+        "command": "env TMPDIR=/tmp PYTHONPATH=src python3.12 -m pytest -q tests/model tests/architecture/test_package_boundaries.py tests/contract/test_canonical_json.py tests/contract/test_contract_invariants.py",
+        "status": "passed",
+        "passed": 66
+      }
+    ],
+    "overlappingRunCountsMustNotBeSummed": true
+  },
+  "connectorReceipt": {
+    "fixtureProgramCount": 5,
+    "workerEntrypointCount": 5,
+    "sealedOperationCaseCount": 58,
+    "realShortLivedSubprocessExchangeCount": 58,
+    "framesPerSuccessfulExchange": 2,
+    "exchangeOrder": ["connector.initialize", "connector.invoke"],
+    "initializeExternalCallDelta": 0,
+    "sealedInvokeExternalCallDelta": 1,
+    "exactProviderBeforeAfterMutationMetadataVerified": true,
+    "hostRevalidatedRepresentativeSuccessCount": 7,
+    "typedFatalProtocolPathCount": 4,
+    "automaticResendPermittedForFatalProtocolPaths": false,
+    "c07C10C13AreSeparateHashChainedTransitions": true,
+    "crossProcessStatePersistenceClaim": false,
+    "errorFrames": {
+      "exactEmissionCount": 4,
+      "requestPreimagesPresentInSealedArtifact": false,
+      "requestBoundEndToEndExchangeProven": false,
+      "hostResultForStoredValidRequests": "ConnectorProtocolFailure/v1 invalid_message",
+      "hostAutomaticResendPermitted": false
+    }
+  },
+  "modelReceipt": {
+    "modelManifestSha256": "6652e778e6b5668c63dc22457b50e490d7b6fe81829f33e8df4b9f4274f469d7",
+    "modelProgramSha256": "2874df00da8d78e23184c085b745f10e5449d2f8c605d21a647bed097de6aa62",
+    "dispatchRowCount": 20,
+    "canonicalBlobCount": 16,
+    "exactInProcessResultCount": 20,
+    "dispatchedLogicalProviderCallDelta": 1,
+    "actualNetworkCallDelta": 0,
+    "hiddenRetryDelta": 0,
+    "guardAndDefaultLogicalProviderCallDelta": 0,
+    "wrongOutputByteOracleCount": 6,
+    "wrongOutputBytesReturnedOnlyAsUntrustedFixtureResults": true,
+    "ambiguousDropCount": 3,
+    "ambiguousDropResponseBytes": null,
+    "subprocessOrWireProtocolClaim": false,
+    "hostAcceptanceClaim": false,
+    "durableGrantConsumptionClaim": false
+  },
+  "nonClaims": [
+    "no real provider, external network or external-product call; connector call deltas are sealed fixture oracles",
+    "no cross-process provider store or lifecycle; each child executes exactly one selected case",
+    "no request-bound end-to-end proof for the four connector RPC error rows because their request preimages are absent",
+    "no model subprocess, framing, SDK transport or other model wire protocol",
+    "no host validation or acceptance of the six intentionally wrong model output byte sequences",
+    "no durable one-use capability or credential grant consumption",
+    "no full Noor 4D, DBOS workflow, crash schedule, API, user outcome, production, deployment or secret-management claim"
+  ]
+}
