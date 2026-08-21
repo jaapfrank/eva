@@ -51,7 +51,7 @@
     "adapters.objects": {
       "path": "src/eva/adapters/objects",
       "allowedLocalImports": ["eva.adapters.objects", "eva.application", "eva.contracts"],
-      "allowedExternalImports": ["cryptography"]
+      "allowedExternalImports": ["cryptography", "nacl"]
     },
     "adapters.api": {
       "path": "src/eva/adapters/api",

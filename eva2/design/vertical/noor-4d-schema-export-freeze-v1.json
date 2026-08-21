@@ -12,8 +12,8 @@
       "semanticCore": {
         "excludedTopLevelKey": "preRuntimeRequiredArtifacts",
         "canonicalization": "parse with duplicate-key rejection, remove exactly the top-level preRuntimeRequiredArtifacts member, encode remaining object as UTF-8 JSON with lexicographically sorted keys, separators comma/colon, ensure_ascii=false and no trailing LF",
-        "canonicalByteLengthAtBaseline": 67623,
-        "sha256": "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b"
+        "canonicalByteLengthAtBaseline": 67629,
+        "sha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020"
       },
       "updateRule": "later profile edits may only fill the preRuntimeRequiredArtifacts gate paths/hashes/status and must retain this semantic-core hash; the baseline file hash is provenance, not a claim that the mutable gate wrapper keeps that hash"
     },
@@ -118,7 +118,2525 @@
       "publicPrivileges": "none",
       "bypassRls": "forbidden for every Eva role"
     },
-    "columnDeclarationGrammar": "each column string is exact PostgreSQL '<name> <type> <NOT NULL|NULL>'; absence of DEFAULT is normative and forbids defaults, identity, generated columns and server-side random/time values",
+    "roleTableColumnGrantManifest": {
+      "contract": "Eva24DPostgresqlRoleTableColumnGrantManifest/v1",
+      "derivation": {
+        "selectAndInsert": "grant table-level SELECT and INSERT on every sealed canonical and noncanonical table to both application roles",
+        "update": "grant column-level UPDATE only when cas starts with revisionCas, currentSwap or projectionUpsert, including any sealed profile variants, and then on every declared non-primary-key column only",
+        "delete": "grant table-level DELETE only when owner.delete is nonempty and the table has its sealed retention object/profile; for canonical tables retention.deleteOwner must equal owner.delete",
+        "noImplicitPrivileges": "REVOKE ALL from both application roles before applying each exact entry; no table-level UPDATE, TRUNCATE, REFERENCES or TRIGGER privilege"
+      },
+      "roleOrder": [
+        "eva_runtime",
+        "eva_dbos"
+      ],
+      "entryOrder": "schemaFamily canonical table order followed by noncanonical table order; updateColumns follow declared column order minus primaryKey",
+      "entryCount": 44,
+      "updateTableCount": 31,
+      "deleteTableCount": 44,
+      "orderedEntriesCanonicalization": "UTF-8 JSON of entries array with lexicographically sorted object keys, separators comma/colon, ensure_ascii=false and no trailing LF",
+      "orderedEntriesCanonicalSha256": "5bfff57653ccf0ff48915bc95cec367a02798a282ead7c35f6fbd6d7ab299cb6",
+      "failClosedRule": "reject any role, table, privilege, update column, order, count, source-profile or canonical-hash mismatch",
+      "entries": [
+        {
+          "table": "eva_core.tenants",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "status",
+            "authority_policy_version",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_and_installation_management",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.installations",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "status",
+            "active_release_sha256",
+            "support_tier",
+            "current_identity_id",
+            "current_identity_pack_version",
+            "current_policy_id",
+            "current_policy_pack_version",
+            "object_store_id",
+            "object_store_payload",
+            "object_store_payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "installation_management",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.identity_pack_versions",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "state",
+            "canonical_sha256",
+            "source_sha256",
+            "payload",
+            "payload_sha256",
+            "issued_at",
+            "activated_at",
+            "retired_at",
+            "retention_policy_id",
+            "retention_until",
+            "created_at"
+          ],
+          "sourceCasProfile": "currentSwap",
+          "sourceDeleteOwner": "installation_management",
+          "sourceRetentionProfile": "packLifecycle"
+        },
+        {
+          "table": "eva_core.policy_pack_versions",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "state",
+            "canonical_sha256",
+            "source_sha256",
+            "release_signature_sha256",
+            "payload",
+            "payload_sha256",
+            "effective_at",
+            "activated_at",
+            "retired_at",
+            "retention_policy_id",
+            "retention_until",
+            "created_at"
+          ],
+          "sourceCasProfile": "currentSwap",
+          "sourceDeleteOwner": "installation_management",
+          "sourceRetentionProfile": "packLifecycle"
+        },
+        {
+          "table": "eva_core.principals",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "principal_type",
+            "status",
+            "display_name",
+            "privacy_class",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.principal_bindings",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "principal_id",
+            "provider_id",
+            "channel_id",
+            "external_subject_sha256",
+            "verification_evidence_id",
+            "status",
+            "verified_at",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.relationships",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "identity_id",
+            "identity_pack_version",
+            "principal_id",
+            "related_principal_id",
+            "relationship_class",
+            "preferred_address",
+            "source_event_id",
+            "trust",
+            "confirmation_status",
+            "valid_from",
+            "valid_until",
+            "allowed_channel_ids",
+            "channel_binding_evidence_refs",
+            "privacy_class",
+            "context_scopes",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "delete_sla_at",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.conversations",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "owner_principal_id",
+            "participant_principal_ids",
+            "channel_class",
+            "status",
+            "current_episode_id",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.messages",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "channel_id",
+            "request_id",
+            "principal_id",
+            "principal_binding_id",
+            "conversation_id",
+            "message_id",
+            "turn_envelope_sha256",
+            "canonical_input_sha256",
+            "client_ack_key_sha256",
+            "admitted_deadline",
+            "status",
+            "claim_generation",
+            "claim_status",
+            "claimant_id",
+            "claim_nonce",
+            "claim_payload",
+            "claim_payload_sha256",
+            "claimed_at",
+            "claim_expires_at",
+            "episode_id",
+            "generation",
+            "pending_attention_id",
+            "rejection_code",
+            "request_payload",
+            "request_payload_sha256",
+            "outcome_payload",
+            "outcome_payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "admitted_at",
+            "decided_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.episodes",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "principal_id",
+            "conversation_id",
+            "ingress_request_id",
+            "state",
+            "current_generation",
+            "supersedes_generation",
+            "revision",
+            "last_event_id",
+            "state_contract",
+            "state_schema_version",
+            "state_payload_sha256",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "predecessor_generation",
+            "state",
+            "correction_message_id",
+            "workflow_contract",
+            "workflow_contract_version",
+            "identity_id",
+            "identity_pack_version",
+            "identity_pack_sha256",
+            "policy_id",
+            "policy_pack_version",
+            "policy_pack_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "currentSwap",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.episode_events",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.episode_outcomes",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.commitments",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "episode_id",
+            "generation",
+            "owner_principal_id",
+            "kind",
+            "state",
+            "description",
+            "continuation_ref",
+            "due_at",
+            "wake_policy",
+            "transferred_to_episode_id",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.consent_grants",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "principal_id",
+            "principal_binding_id",
+            "authentication_evidence_id",
+            "source_message_id",
+            "operation",
+            "resource_scope",
+            "resource_scope_sha256",
+            "scoped_payload_sha256",
+            "episode_id",
+            "generation",
+            "reuse_policy",
+            "state",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "granted_at",
+            "expires_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "episode_id",
+            "generation",
+            "purpose",
+            "ordinal",
+            "state",
+            "provider_profile_id",
+            "request_sha256",
+            "response_sha256",
+            "credential_grant_id",
+            "credential_grant_payload",
+            "credential_grant_sha256",
+            "credential_grant_nonce",
+            "credential_grant_deadline",
+            "model_adapter_manifest_sha256",
+            "model_program_sha256",
+            "maximum_input_tokens",
+            "maximum_output_tokens",
+            "timeout_ms",
+            "input_tokens_used",
+            "output_tokens_used",
+            "provider_cost_euro_micros",
+            "provider_reference",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_model_evidence_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.plans",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "episode_id",
+            "generation",
+            "model_attempt_id",
+            "state",
+            "model_decision_sha256",
+            "policy_pack_sha256",
+            "capability_set_sha256",
+            "validated_plan_payload",
+            "validated_plan_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "deadline",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "plan_id",
+            "episode_id",
+            "generation",
+            "logical_step_key",
+            "dependency_step_ids",
+            "operation",
+            "effect_class",
+            "state",
+            "read_intent_id",
+            "effect_intent_id",
+            "outcome_ref",
+            "step_definition",
+            "step_definition_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "episode_id",
+            "generation",
+            "commitment_id",
+            "kind",
+            "state",
+            "reason",
+            "not_before",
+            "deadline",
+            "lease_owner",
+            "lease_expires_at",
+            "ordinal",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "owner_principal_id",
+            "provider_id",
+            "provider_account_id",
+            "provider_resource_id",
+            "confirmed_operations",
+            "confirmed_scopes",
+            "credential_reference",
+            "verification_evidence_id",
+            "verified_at",
+            "status",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "installation_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "release_management",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "capability_manifest_id",
+            "connector_binding_id",
+            "capability_id",
+            "operation",
+            "scope",
+            "scope_sha256",
+            "policy_id",
+            "policy_pack_version",
+            "policy_pack_sha256",
+            "executable_sha256",
+            "sandbox_profile_sha256",
+            "state",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "activated_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "currentSwap",
+          "sourceDeleteOwner": "release_and_connector_management",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.read_attempts",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "read_intent_id",
+            "ordinal",
+            "state",
+            "capability_grant_id",
+            "capability_grant_payload",
+            "capability_grant_sha256",
+            "capability_grant_nonce",
+            "capability_grant_deadline",
+            "credential_grant_id",
+            "credential_grant_payload",
+            "credential_grant_sha256",
+            "credential_grant_nonce",
+            "credential_grant_deadline",
+            "connector_manifest_sha256",
+            "request_sha256",
+            "response_sha256",
+            "deadline",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.read_observations",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "episode_id",
+            "generation",
+            "logical_effect_key",
+            "plan_step_id",
+            "connector_binding_id",
+            "capability_id",
+            "capability_activation_id",
+            "operation",
+            "resource_scope",
+            "resource_scope_sha256",
+            "frozen_payload_sha256",
+            "idempotency_key",
+            "proof_floor",
+            "state",
+            "supersedes_effect_intent_id",
+            "consent_grant_id",
+            "policy_pack_sha256",
+            "deadline",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "effect_intent_id",
+            "ordinal",
+            "state",
+            "dispatch_permit_sha256",
+            "capability_grant_id",
+            "capability_grant_payload",
+            "capability_grant_sha256",
+            "capability_grant_nonce",
+            "capability_grant_deadline",
+            "credential_grant_id",
+            "credential_grant_payload",
+            "credential_grant_sha256",
+            "credential_grant_nonce",
+            "credential_grant_deadline",
+            "connector_manifest_sha256",
+            "request_sha256",
+            "response_sha256",
+            "error_class",
+            "transport_evidence_id",
+            "object_store_id",
+            "object_candidate_id",
+            "object_candidate_ciphertext_sha256",
+            "object_candidate_envelope_byte_length",
+            "object_candidate_temp_name_sha256",
+            "object_candidate_state",
+            "deadline",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "episode_effect_and_object_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.effect_receipts",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.effect_readbacks",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "episode_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "effect_intent_id",
+            "episode_id",
+            "generation",
+            "role",
+            "state",
+            "operation",
+            "recipient",
+            "channel",
+            "frozen_content_sha256",
+            "reply_to",
+            "proof_floor",
+            "intent_payload",
+            "intent_payload_sha256",
+            "offer_payload",
+            "offer_payload_sha256",
+            "offer_wire_sha256",
+            "ingress_request_id",
+            "ack_key_sha256",
+            "ack_challenge_sha256",
+            "ack_challenge_expires_at",
+            "ack_claim_id",
+            "ack_claim_state",
+            "ack_claim_revision",
+            "ack_claimed_at",
+            "delivery_receipt_id",
+            "receipt_effect_attempt_id",
+            "receipt_payload",
+            "receipt_payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas plus ack_claim_revision CAS",
+          "sourceDeleteOwner": "episode_and_delivery_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "connector_binding_id",
+            "model_provider_profile_id",
+            "model_adapter_manifest_sha256",
+            "target_type",
+            "target_id",
+            "scope",
+            "scope_sha256",
+            "state",
+            "retry_at",
+            "probe_lease_owner",
+            "probe_lease_expires_at",
+            "attention_id",
+            "consecutive_rate_limits",
+            "policy_pack_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "installation_and_effect_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "subject_id",
+            "predicate",
+            "scope",
+            "scope_sha256",
+            "value",
+            "value_sha256",
+            "source_event_ids",
+            "observed_at",
+            "valid_from",
+            "valid_until",
+            "trust",
+            "content_sha256",
+            "assertion_status",
+            "superseded_by_fact_id",
+            "retraction_source_event_id",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_memory.current_facts",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "subject_id",
+            "predicate",
+            "scope",
+            "scope_sha256",
+            "fact_id",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "updated_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_memory.erasure_tombstones",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "privacy_service",
+          "sourceRetentionProfile": "nonIdentifyingTombstone"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "evidence_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_evidence.evidence_links",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable",
+          "sourceDeleteOwner": "evidence_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "object_store_id",
+            "owner_principal_id",
+            "selected_effect_attempt_id",
+            "selected_candidate_id",
+            "ciphertext_sha256",
+            "plaintext_sha256",
+            "plaintext_byte_length",
+            "envelope_byte_length",
+            "mime_type",
+            "encryption_algorithm",
+            "wrapped_key_ref",
+            "physical_cas_key",
+            "state",
+            "payload",
+            "payload_sha256",
+            "revision",
+            "retention_policy_id",
+            "retention_until",
+            "created_at",
+            "erased_at"
+          ],
+          "sourceCasProfile": "revisionCas",
+          "sourceDeleteOwner": "object_and_privacy_services",
+          "sourceRetentionProfile": "policyBound"
+        },
+        {
+          "table": "eva_projection.message_search",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "source_content_sha256",
+            "search_document",
+            "projection_version",
+            "built_at",
+            "expires_at"
+          ],
+          "sourceCasProfile": "projectionUpsert",
+          "sourceDeleteOwner": "projection_rebuilder",
+          "sourceRetentionProfile": "projectionExpiry"
+        },
+        {
+          "table": "eva_projection.fact_search",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "source_content_sha256",
+            "search_document",
+            "projection_version",
+            "built_at",
+            "expires_at"
+          ],
+          "sourceCasProfile": "projectionUpsert",
+          "sourceDeleteOwner": "projection_rebuilder",
+          "sourceRetentionProfile": "projectionExpiry"
+        },
+        {
+          "table": "eva_projection.projection_checkpoints",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "source_table",
+            "last_primary_key",
+            "last_source_sha256",
+            "revision",
+            "updated_at",
+            "expires_at"
+          ],
+          "sourceCasProfile": "revisionCas but non-authoritative",
+          "sourceDeleteOwner": "projection_rebuilder",
+          "sourceRetentionProfile": "projectionExpiry"
+        },
+        {
+          "table": "eva_telemetry.diagnostic_events",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [],
+          "sourceCasProfile": "immutable discardable",
+          "sourceDeleteOwner": "telemetry_retention_worker",
+          "sourceRetentionProfile": "telemetryExpiry"
+        },
+        {
+          "table": "eva_telemetry.metric_rollups",
+          "roles": [
+            "eva_runtime",
+            "eva_dbos"
+          ],
+          "tablePrivileges": [
+            "SELECT",
+            "INSERT",
+            "DELETE"
+          ],
+          "updateColumns": [
+            "window_end",
+            "labels",
+            "sample_count",
+            "sum_microunits",
+            "minimum_microunits",
+            "maximum_microunits",
+            "revision",
+            "updated_at",
+            "expires_at"
+          ],
+          "sourceCasProfile": "projectionUpsert",
+          "sourceDeleteOwner": "telemetry_retention_worker",
+          "sourceRetentionProfile": "telemetryExpiry"
+        }
+      ]
+    },
+    "collationManifest": {
+      "contract": "Eva24DPostgresqlCollationManifest/v1",
+      "collation": "C",
+      "eligibleDeclaredTypes": [
+        "text",
+        "text[]",
+        "varchar(64)"
+      ],
+      "materialization": "every entry is physically declared with explicit PostgreSQL COLLATE \"C\"; the five alter_preserved_4b entries are changed inside the admitted empty-only 4d_0003 transaction without editing historical 4B files",
+      "downgradeOfPreserved4B": "restore the five historical columns to COLLATE \"default\" when 4d_0003 downgrades to 4b_0002",
+      "entryOrder": "schemaFamily canonical table order followed by noncanonical table order, then declared column order",
+      "entryCount": 201,
+      "preserved4BAlterCount": 5,
+      "orderedEntriesCanonicalization": "UTF-8 JSON of entries array with lexicographically sorted object keys, separators comma/colon, ensure_ascii=false and no trailing LF",
+      "orderedEntriesCanonicalSha256": "ac88723a502956223d2e14b42b35b0b709123586871118687784ff4b5ce43ac7",
+      "failClosedRule": "reject an eligible column missing from the manifest, an ineligible entry, a non-C physical attcollation, any order/count/hash mismatch or a preserved-4B action-set mismatch",
+      "entries": [
+        {
+          "table": "eva_core.tenants",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.tenants",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.installations",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.installations",
+          "column": "support_tier",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.installations",
+          "column": "current_identity_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.installations",
+          "column": "current_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.installations",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.identity_pack_versions",
+          "column": "identity_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.identity_pack_versions",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.identity_pack_versions",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.policy_pack_versions",
+          "column": "policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.policy_pack_versions",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.policy_pack_versions",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principals",
+          "column": "principal_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principals",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principals",
+          "column": "display_name",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principals",
+          "column": "privacy_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principals",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principal_bindings",
+          "column": "provider_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principal_bindings",
+          "column": "channel_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principal_bindings",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.principal_bindings",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "identity_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "relationship_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "preferred_address",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "trust",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "confirmation_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "allowed_channel_ids",
+          "declaredType": "text[]",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "privacy_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "context_scopes",
+          "declaredType": "text[]",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.relationships",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.conversations",
+          "column": "channel_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.conversations",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.conversations",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "identity_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "role",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "channel_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "content_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "text_content",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "content_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "payload_contract",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "privacy_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.messages",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "channel_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "request_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "claim_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "claimant_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "claim_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "rejection_code",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.ingress_requests",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episodes",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "alter_preserved_4b"
+        },
+        {
+          "table": "eva_core.episodes",
+          "column": "state_contract",
+          "declaredType": "varchar(64)",
+          "physicalAction": "alter_preserved_4b"
+        },
+        {
+          "table": "eva_core.episodes",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "column": "workflow_contract",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "column": "identity_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "column": "policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_generations",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_events",
+          "column": "event_kind",
+          "declaredType": "text",
+          "physicalAction": "alter_preserved_4b"
+        },
+        {
+          "table": "eva_core.episode_events",
+          "column": "before_state",
+          "declaredType": "text",
+          "physicalAction": "alter_preserved_4b"
+        },
+        {
+          "table": "eva_core.episode_events",
+          "column": "after_state",
+          "declaredType": "text",
+          "physicalAction": "alter_preserved_4b"
+        },
+        {
+          "table": "eva_core.episode_events",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_outcomes",
+          "column": "overall_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.episode_outcomes",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "kind",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "description",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "continuation_ref",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "wake_policy",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.commitments",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.consent_grants",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.consent_grants",
+          "column": "reuse_policy",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.consent_grants",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.consent_grants",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "purpose",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "provider_profile_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "credential_grant_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "provider_reference",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.model_attempts",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plans",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plans",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "logical_step_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "effect_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "outcome_ref",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.plan_steps",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "column": "kind",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "column": "reason",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "column": "lease_owner",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.attention_items",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "provider_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "provider_account_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "provider_resource_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "confirmed_operations",
+          "declaredType": "text[]",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "confirmed_scopes",
+          "declaredType": "text[]",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "credential_reference",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.connector_bindings",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "capability_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "connector_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "effect_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "required_provider_scopes",
+          "declaredType": "text[]",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "proof_floor",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_manifests",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "column": "capability_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "column": "policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_core.capability_activations",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "column": "logical_read_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "column": "purpose",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "column": "capability_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_intents",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_attempts",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_attempts",
+          "column": "capability_grant_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_attempts",
+          "column": "credential_grant_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_attempts",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_observations",
+          "column": "provider_resource_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_observations",
+          "column": "trust",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.read_observations",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "logical_effect_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "capability_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "idempotency_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "proof_floor",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_intents",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "capability_grant_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "credential_grant_nonce",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "error_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "object_candidate_state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_attempts",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_receipts",
+          "column": "decision",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_receipts",
+          "column": "provider_resource_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_receipts",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_readbacks",
+          "column": "provider_resource_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_readbacks",
+          "column": "idempotency_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_readbacks",
+          "column": "match_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.effect_readbacks",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "role",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "operation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "recipient",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "channel",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "reply_to",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "proof_floor",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "ack_claim_state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.deliveries",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "model_provider_profile_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "target_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "target_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "probe_lease_owner",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_effects.circuit_breakers",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "subject_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "event_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "source_kind",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "source_ref",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "trust",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "privacy_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "purpose",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.source_events",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "column": "subject_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "column": "predicate",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "column": "trust",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "column": "assertion_status",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.fact_assertions",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.current_facts",
+          "column": "subject_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.current_facts",
+          "column": "predicate",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.current_facts",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.erasure_tombstones",
+          "column": "policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_memory.erasure_tombstones",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "aggregate_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "aggregate_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "idempotency_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "producer",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "subject_contract",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "subject_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "privacy_class",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_envelopes",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_links",
+          "column": "relation",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.evidence_links",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "column": "mime_type",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "column": "encryption_algorithm",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "column": "physical_cas_key",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "column": "state",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_evidence.object_refs",
+          "column": "retention_policy_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_projection.projection_checkpoints",
+          "column": "projection_name",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_projection.projection_checkpoints",
+          "column": "source_table",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_telemetry.diagnostic_events",
+          "column": "category",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_telemetry.diagnostic_events",
+          "column": "severity",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_telemetry.diagnostic_events",
+          "column": "correlation_id",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        },
+        {
+          "table": "eva_telemetry.metric_rollups",
+          "column": "metric_name",
+          "declaredType": "text",
+          "physicalAction": "create_or_add"
+        }
+      ]
+    },
+    "columnDeclarationGrammar": "each column string is exact PostgreSQL '<name> <type> <NOT NULL|NULL>'; absence of DEFAULT is normative and forbids defaults, identity, generated columns and server-side random/time values; the five preserved 4B timestamp declarations use timestamptz without a precision modifier because their historical physical typmod is -1",
+    "preservedPhysical4BExceptions": {
+      "timestampTypmodMinusOne": [
+        "eva_core.tenants.created_at",
+        "eva_core.installations.created_at",
+        "eva_core.episodes.created_at",
+        "eva_core.episodes.updated_at",
+        "eva_core.episode_events.occurred_at"
+      ],
+      "wholeSecondAuthority": "the existing named 4B CHECK constraints remain byte-logically authoritative and reject fractional seconds",
+      "columnOrderAuthority": "columns for the four preserved tables are the named final logical/catalog set and explicit export order, not a PostgreSQL attnum-order claim; migrations append new columns and product/export code never uses SELECT *",
+      "catalogAttestation": "attest exact column names, PostgreSQL type including historical typmod, nullability and absence of defaults; do not require historical attnum to equal logical/export order"
+    },
     "constraintGrammar": {
       "foreignKey": "<name>: (<local columns>) -> <schema.table>(<remote columns>) ON DELETE <action> [DEFERRABLE INITIALLY DEFERRED]",
       "unique": "<name>: UNIQUE (<columns>) [WHERE <predicate>]",
@@ -168,7 +2686,914 @@
       "projectionExpiry": "expires_at timestamptz(0) NOT NULL; row may be deleted earlier and is never exported",
       "telemetryExpiry": "expires_at timestamptz(0) NOT NULL and expires_at <= captured/window end + interval '7 days'; row may be deleted earlier and is never exported"
     },
-    "automaticIndexRule": "every foreign-key local column tuple receives an exact left-prefix BTREE named ix_<unqualified_table>__fk__<local_columns_joined_by_double_underscore> unless the full tuple is already the left prefix of that table's PK or named UNIQUE; only additional query indexes are listed per table",
+    "automaticIndexRule": {
+      "method": "BTREE",
+      "maxUtf8Bytes": 63,
+      "naturalNameTemplate": "ix_<unqualified_table>__fk__<local_columns_joined_by_double_underscore>",
+      "leftPrefixException": "no automatic index when the full foreign-key local column tuple is already the left prefix of that table's PK or named UNIQUE",
+      "overLimitPrefixAsciiBytes": 45,
+      "hashSuffixHexChars": 16,
+      "overLimitSelectedName": "first 45 ASCII bytes of naturalName + '__' + first 16 lowercase hex characters of SHA-256(UTF-8 naturalName)",
+      "entryOrder": "schemaFamily canonical table order, then noncanonical table order, and within each table foreignKeys declaration order after the left-prefix exception",
+      "manifestEntryCount": 79,
+      "shortenedEntryCount": 50,
+      "orderedEntriesCanonicalSha256": "72c91fe2d7a1ebf24d193e5a1b5ddb2b1b90ad42f67b8198e3c87b6a876c4ad4",
+      "failClosedCollisionRule": "reject non-ASCII or natural-name grammar mismatch, any duplicate selectedName, any selectedName longer than 63 UTF-8 bytes, and any selectedName collision with every explicit PK, FK, UNIQUE, CHECK or index name"
+    },
+    "automaticForeignKeyIndexManifest":
+    {
+      "manifestCore": {
+        "contract": "Eva4DAutomaticForeignKeyIndexManifest/v1",
+        "schemaVersion": 1,
+        "naturalNameGrammar": "^ix_[a-z][a-z0-9_]*__fk__[a-z][a-z0-9_]*(?:__[a-z][a-z0-9_]*)*$",
+        "namingRule": {
+          "maximumIdentifierUtf8Bytes": 63,
+          "naturalNameAtMost63Bytes": "selectedName equals naturalName",
+          "naturalNameOver63Bytes": "selectedName is the first 45 ASCII bytes of naturalName, then two underscore bytes, then the first 16 lowercase hexadecimal characters of SHA-256(UTF-8 naturalName)",
+          "nonAsciiOrGrammarMismatch": "rejected",
+          "duplicateSelectedName": "rejected",
+          "collisionWithAnyExplicitPkFkUniqueCheckOrIndexName": "rejected"
+        },
+        "entryCount": 79,
+        "shortenedEntryCount": 50,
+        "entries": [
+          {
+            "table": "eva_core.installations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "current_identity_id",
+              "current_identity_pack_version"
+            ],
+            "naturalName": "ix_installations__fk__tenant_id__installation_id__current_identity_id__current_identity_pack_version",
+            "selectedName": "ix_installations__fk__tenant_id__installation__7e6c028af29fe44d",
+            "naturalNameSha256": "7e6c028af29fe44d1c3b41bf98ae70ad7d898eb1191fc626573b35d1009cc2e5"
+          },
+          {
+            "table": "eva_core.installations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "current_policy_id",
+              "current_policy_pack_version"
+            ],
+            "naturalName": "ix_installations__fk__tenant_id__installation_id__current_policy_id__current_policy_pack_version",
+            "selectedName": "ix_installations__fk__tenant_id__installation__e553c9700a8c34ad",
+            "naturalNameSha256": "e553c9700a8c34ad8f34a023b6bd554f39b7fb50f315d8dd291a279f8301b307"
+          },
+          {
+            "table": "eva_core.principal_bindings",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_principal_bindings__fk__tenant_id__principal_id",
+            "selectedName": "ix_principal_bindings__fk__tenant_id__principal_id",
+            "naturalNameSha256": "cc7137ca2d12a24313a9ec5cb6dde2b39ee40ede9aecb21c659c67e7d19cbf19"
+          },
+          {
+            "table": "eva_core.principal_bindings",
+            "localColumns": [
+              "tenant_id",
+              "verification_evidence_id"
+            ],
+            "naturalName": "ix_principal_bindings__fk__tenant_id__verification_evidence_id",
+            "selectedName": "ix_principal_bindings__fk__tenant_id__verification_evidence_id",
+            "naturalNameSha256": "21ed73b84683dc44f61f122bc0896aa3bcf525b88e2135ae2c3b793fb13fb108"
+          },
+          {
+            "table": "eva_core.relationships",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "identity_id",
+              "identity_pack_version"
+            ],
+            "naturalName": "ix_relationships__fk__tenant_id__installation_id__identity_id__identity_pack_version",
+            "selectedName": "ix_relationships__fk__tenant_id__installation__ab6b6a080f40715e",
+            "naturalNameSha256": "ab6b6a080f40715e39f427c645d74023086ee9c0fc4d8df1f97cd5df9f6ebc4a"
+          },
+          {
+            "table": "eva_core.relationships",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_relationships__fk__tenant_id__principal_id",
+            "selectedName": "ix_relationships__fk__tenant_id__principal_id",
+            "naturalNameSha256": "1c21fd4fa237fa52b27a1c0ad94cfc52d2add821c3c54d6c082ef2ae1aa0f900"
+          },
+          {
+            "table": "eva_core.relationships",
+            "localColumns": [
+              "tenant_id",
+              "related_principal_id"
+            ],
+            "naturalName": "ix_relationships__fk__tenant_id__related_principal_id",
+            "selectedName": "ix_relationships__fk__tenant_id__related_principal_id",
+            "naturalNameSha256": "d1c2a9e68ea0cfbad1787c9e61a32c81775b4ece7ded94ccd8764cd00003285e"
+          },
+          {
+            "table": "eva_core.relationships",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "source_event_id"
+            ],
+            "naturalName": "ix_relationships__fk__tenant_id__installation_id__source_event_id",
+            "selectedName": "ix_relationships__fk__tenant_id__installation__119e5c90f021c3ab",
+            "naturalNameSha256": "119e5c90f021c3abc25dacc0c34515520ae30575c5a4bd2cdb035229b95591ac"
+          },
+          {
+            "table": "eva_core.conversations",
+            "localColumns": [
+              "tenant_id",
+              "owner_principal_id"
+            ],
+            "naturalName": "ix_conversations__fk__tenant_id__owner_principal_id",
+            "selectedName": "ix_conversations__fk__tenant_id__owner_principal_id",
+            "naturalNameSha256": "ff72ea9ce6991a0bd04a8f71a22107058260daae4bc2f48f5b60fe3d825709e6"
+          },
+          {
+            "table": "eva_core.conversations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "current_episode_id"
+            ],
+            "naturalName": "ix_conversations__fk__tenant_id__installation_id__current_episode_id",
+            "selectedName": "ix_conversations__fk__tenant_id__installation__7dff3f608a1c925e",
+            "naturalNameSha256": "7dff3f608a1c925e57495849fe2eeb36e675679963a117ab970a6f1009a1035c"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "conversation_id"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__installation_id__conversation_id",
+            "selectedName": "ix_messages__fk__tenant_id__installation_id__conversation_id",
+            "naturalNameSha256": "f35c8041f6ed0443b207911aaf96e090c743f0f65d32f5c1e8c22156561f6188"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__installation_id__episode_id",
+            "selectedName": "ix_messages__fk__tenant_id__installation_id__episode_id",
+            "naturalNameSha256": "e949bf4f0442c455e49dfd4552bfe5b18b4deeab51ae89d8c704aaccbe16b5a1"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__principal_id",
+            "selectedName": "ix_messages__fk__tenant_id__principal_id",
+            "naturalNameSha256": "8fa01b09c60e638979f258da08559d2ac2f875ff450f70f89eb204a3d926ceab"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "identity_id",
+              "identity_pack_version"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__installation_id__identity_id__identity_pack_version",
+            "selectedName": "ix_messages__fk__tenant_id__installation_id____b30bf0378c187797",
+            "naturalNameSha256": "b30bf0378c187797858b7aa989934412a66d3152173c94f213a0b8c2ede751c4"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "provenance_evidence_id"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__installation_id__provenance_evidence_id",
+            "selectedName": "ix_messages__fk__tenant_id__installation_id____406f4081d813cd9a",
+            "naturalNameSha256": "406f4081d813cd9a0e54036c89b7d05cfc9bb044c812039fce0f6dd46b7d73b5"
+          },
+          {
+            "table": "eva_core.messages",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "object_ref_id"
+            ],
+            "naturalName": "ix_messages__fk__tenant_id__installation_id__object_ref_id",
+            "selectedName": "ix_messages__fk__tenant_id__installation_id__object_ref_id",
+            "naturalNameSha256": "4146d89ed5adbea66666382979616e183feab09c631b4e7e49005ade4521daaf"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__principal_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__principal_id",
+            "naturalNameSha256": "075c7ba129f5bafa4428f971de6fcc50aea39cb8d7404d47c76b3634d6ed2233"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "principal_binding_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__principal_binding_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__principal_binding_id",
+            "naturalNameSha256": "5e771dd6715d657895239bb9fc80dd53e4a039920f6af8544f39fe4afa5296ae"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "conversation_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__installation_id__conversation_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__installat__28c64b7598013750",
+            "naturalNameSha256": "28c64b7598013750b7f8001bad3ff63494d6d69b2631c37e6811b3204ec9854b"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "message_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__installation_id__message_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__installation_id__message_id",
+            "naturalNameSha256": "008c4ec11f8a5f7d5b67498e991ae90d3da28bb81b320515c4c3156d8a22a59a"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__installation_id__episode_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__installation_id__episode_id",
+            "naturalNameSha256": "06fe8b20c87a5c89078f17799cdad42f548470aa9541442d6241c52cdbf54b17"
+          },
+          {
+            "table": "eva_core.ingress_requests",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "pending_attention_id"
+            ],
+            "naturalName": "ix_ingress_requests__fk__tenant_id__installation_id__pending_attention_id",
+            "selectedName": "ix_ingress_requests__fk__tenant_id__installat__00c599b4185f6a02",
+            "naturalNameSha256": "00c599b4185f6a025dc618df7466e729b059328151da43e4c483482571778f3d"
+          },
+          {
+            "table": "eva_core.episodes",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_episodes__fk__tenant_id__principal_id",
+            "selectedName": "ix_episodes__fk__tenant_id__principal_id",
+            "naturalNameSha256": "bbfc0e66c6b039d2d68debbbad860aa01ed2e08fecb51fd47eec40ca35458372"
+          },
+          {
+            "table": "eva_core.episodes",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "conversation_id"
+            ],
+            "naturalName": "ix_episodes__fk__tenant_id__installation_id__conversation_id",
+            "selectedName": "ix_episodes__fk__tenant_id__installation_id__conversation_id",
+            "naturalNameSha256": "9f761e587ccdd6cadf03a3b7893362beafbc64545ba3cb514c4aca19345e821e"
+          },
+          {
+            "table": "eva_core.episodes",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "ingress_request_id"
+            ],
+            "naturalName": "ix_episodes__fk__tenant_id__installation_id__ingress_request_id",
+            "selectedName": "ix_episodes__fk__tenant_id__installation_id__ingress_request_id",
+            "naturalNameSha256": "8544d525f528b127032261361437b72361c5d7e0acba77119166d7594ce92331"
+          },
+          {
+            "table": "eva_core.episodes",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "current_generation"
+            ],
+            "naturalName": "ix_episodes__fk__tenant_id__installation_id__episode_id__current_generation",
+            "selectedName": "ix_episodes__fk__tenant_id__installation_id____271021d232ce1b22",
+            "naturalNameSha256": "271021d232ce1b22366016a94047167c62e98394d936126a2c96bcc71c2470d3"
+          },
+          {
+            "table": "eva_core.episodes",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "last_event_id"
+            ],
+            "naturalName": "ix_episodes__fk__tenant_id__installation_id__episode_id__last_event_id",
+            "selectedName": "ix_episodes__fk__tenant_id__installation_id____89b3a1bcd63c9b82",
+            "naturalNameSha256": "89b3a1bcd63c9b82bc91ef59ec3cfb9992a99f1ae9418ab2c95ba731cbf5d37f"
+          },
+          {
+            "table": "eva_core.episode_generations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "predecessor_generation"
+            ],
+            "naturalName": "ix_episode_generations__fk__tenant_id__installation_id__episode_id__predecessor_generation",
+            "selectedName": "ix_episode_generations__fk__tenant_id__instal__82025f7b476b0faa",
+            "naturalNameSha256": "82025f7b476b0faa06338184be16ce83f36cd90b089f42eda21f4f310f4e9132"
+          },
+          {
+            "table": "eva_core.episode_generations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "correction_message_id"
+            ],
+            "naturalName": "ix_episode_generations__fk__tenant_id__installation_id__correction_message_id",
+            "selectedName": "ix_episode_generations__fk__tenant_id__instal__2197e0de503af6ea",
+            "naturalNameSha256": "2197e0de503af6ea54cbd890de695f33ba6b834838688fc8c303dd21c5da49e0"
+          },
+          {
+            "table": "eva_core.episode_generations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "identity_id",
+              "identity_pack_version"
+            ],
+            "naturalName": "ix_episode_generations__fk__tenant_id__installation_id__identity_id__identity_pack_version",
+            "selectedName": "ix_episode_generations__fk__tenant_id__instal__116927f463d6f5b2",
+            "naturalNameSha256": "116927f463d6f5b21a8bff61f827655d31afe6e805df70969000030081be022f"
+          },
+          {
+            "table": "eva_core.episode_generations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "policy_id",
+              "policy_pack_version"
+            ],
+            "naturalName": "ix_episode_generations__fk__tenant_id__installation_id__policy_id__policy_pack_version",
+            "selectedName": "ix_episode_generations__fk__tenant_id__instal__1189e96b6f530f35",
+            "naturalNameSha256": "1189e96b6f530f357b9265566ee92111ed20484f818869ad53ad839088d291ee"
+          },
+          {
+            "table": "eva_core.commitments",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "generation"
+            ],
+            "naturalName": "ix_commitments__fk__tenant_id__installation_id__episode_id__generation",
+            "selectedName": "ix_commitments__fk__tenant_id__installation_i__730399d71d40ff9a",
+            "naturalNameSha256": "730399d71d40ff9a5e3663053ff7b6c60d0e820a8f263e985876135001ae9514"
+          },
+          {
+            "table": "eva_core.commitments",
+            "localColumns": [
+              "tenant_id",
+              "owner_principal_id"
+            ],
+            "naturalName": "ix_commitments__fk__tenant_id__owner_principal_id",
+            "selectedName": "ix_commitments__fk__tenant_id__owner_principal_id",
+            "naturalNameSha256": "8d7481de2612fcb158c834480cf315d7047d2b07399dec45504e7518ebf00dd9"
+          },
+          {
+            "table": "eva_core.commitments",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "transferred_to_episode_id"
+            ],
+            "naturalName": "ix_commitments__fk__tenant_id__installation_id__transferred_to_episode_id",
+            "selectedName": "ix_commitments__fk__tenant_id__installation_i__122b1f32cab204db",
+            "naturalNameSha256": "122b1f32cab204dbdfe726f7cffa2280bcb73fa382341ecd2d2bff57632d1d82"
+          },
+          {
+            "table": "eva_core.consent_grants",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_consent_grants__fk__tenant_id__principal_id",
+            "selectedName": "ix_consent_grants__fk__tenant_id__principal_id",
+            "naturalNameSha256": "8507329b2164712194beeab28df9097117c67a430d6d3b3541f79b26d1cf034c"
+          },
+          {
+            "table": "eva_core.consent_grants",
+            "localColumns": [
+              "tenant_id",
+              "principal_binding_id"
+            ],
+            "naturalName": "ix_consent_grants__fk__tenant_id__principal_binding_id",
+            "selectedName": "ix_consent_grants__fk__tenant_id__principal_binding_id",
+            "naturalNameSha256": "74d0b45f81b9519e23ae4866f4d0c8c6f4a0f6a515ffb825801786594e81ae95"
+          },
+          {
+            "table": "eva_core.consent_grants",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "authentication_evidence_id"
+            ],
+            "naturalName": "ix_consent_grants__fk__tenant_id__installation_id__authentication_evidence_id",
+            "selectedName": "ix_consent_grants__fk__tenant_id__installatio__b1b35a0cf6b866a0",
+            "naturalNameSha256": "b1b35a0cf6b866a04c67e2ec3776bc3946edf382962cd0c55dd1812b86d93bde"
+          },
+          {
+            "table": "eva_core.consent_grants",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "source_message_id"
+            ],
+            "naturalName": "ix_consent_grants__fk__tenant_id__installation_id__source_message_id",
+            "selectedName": "ix_consent_grants__fk__tenant_id__installatio__888bb8aaa50dc7b6",
+            "naturalNameSha256": "888bb8aaa50dc7b637849754f7d352e4a40f8ec08df6bd38c094c6fa2978122e"
+          },
+          {
+            "table": "eva_core.consent_grants",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "generation"
+            ],
+            "naturalName": "ix_consent_grants__fk__tenant_id__installation_id__episode_id__generation",
+            "selectedName": "ix_consent_grants__fk__tenant_id__installatio__902cd6a3f9c536b8",
+            "naturalNameSha256": "902cd6a3f9c536b8181b3031a9fe6eb87e45d0703337769ef918257388ad6006"
+          },
+          {
+            "table": "eva_core.plans",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "model_attempt_id"
+            ],
+            "naturalName": "ix_plans__fk__tenant_id__installation_id__model_attempt_id",
+            "selectedName": "ix_plans__fk__tenant_id__installation_id__model_attempt_id",
+            "naturalNameSha256": "e6240c3e63e3b7fd2200b46e3fa64d05591ed38da1671622a0553a50d31215ab"
+          },
+          {
+            "table": "eva_core.plan_steps",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "episode_id",
+              "generation"
+            ],
+            "naturalName": "ix_plan_steps__fk__tenant_id__installation_id__episode_id__generation",
+            "selectedName": "ix_plan_steps__fk__tenant_id__installation_id__a88cd9fc339e4b4d",
+            "naturalNameSha256": "a88cd9fc339e4b4dea2ec8f59b4687dc0a0ee567df4581e5cea23912312fa39a"
+          },
+          {
+            "table": "eva_core.plan_steps",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "read_intent_id"
+            ],
+            "naturalName": "ix_plan_steps__fk__tenant_id__installation_id__read_intent_id",
+            "selectedName": "ix_plan_steps__fk__tenant_id__installation_id__read_intent_id",
+            "naturalNameSha256": "47322495a2917a39b71fc16d455e0715217d02004380408670a07f17fcce7d72"
+          },
+          {
+            "table": "eva_core.plan_steps",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "effect_intent_id"
+            ],
+            "naturalName": "ix_plan_steps__fk__tenant_id__installation_id__effect_intent_id",
+            "selectedName": "ix_plan_steps__fk__tenant_id__installation_id__effect_intent_id",
+            "naturalNameSha256": "2c28b984fab4fff2b66e9210053f235da7c3b36ab67365a4bc750daa896e1303"
+          },
+          {
+            "table": "eva_core.attention_items",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "commitment_id"
+            ],
+            "naturalName": "ix_attention_items__fk__tenant_id__installation_id__commitment_id",
+            "selectedName": "ix_attention_items__fk__tenant_id__installati__534979440836af52",
+            "naturalNameSha256": "534979440836af52b0c0408d0604e2785ab208c70e0bcf4fb7892cd14ad148f8"
+          },
+          {
+            "table": "eva_core.connector_bindings",
+            "localColumns": [
+              "tenant_id",
+              "owner_principal_id"
+            ],
+            "naturalName": "ix_connector_bindings__fk__tenant_id__owner_principal_id",
+            "selectedName": "ix_connector_bindings__fk__tenant_id__owner_principal_id",
+            "naturalNameSha256": "2382e796e5fafc3bb9a25c40855ca9c646860c08e6c8cebd011bd87ad216ec6c"
+          },
+          {
+            "table": "eva_core.connector_bindings",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "verification_evidence_id"
+            ],
+            "naturalName": "ix_connector_bindings__fk__tenant_id__installation_id__verification_evidence_id",
+            "selectedName": "ix_connector_bindings__fk__tenant_id__install__0de496ee1c8caeab",
+            "naturalNameSha256": "0de496ee1c8caeab87aeb9501d15bdf794a9ae13bd51800d8d7b538057f422a7"
+          },
+          {
+            "table": "eva_core.capability_activations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "capability_manifest_id"
+            ],
+            "naturalName": "ix_capability_activations__fk__tenant_id__installation_id__capability_manifest_id",
+            "selectedName": "ix_capability_activations__fk__tenant_id__ins__8dd0fc04ae6cb71f",
+            "naturalNameSha256": "8dd0fc04ae6cb71f4461942bc5fa5686d7c94670fb18dfb15d041dcf7e900de1"
+          },
+          {
+            "table": "eva_core.capability_activations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "policy_id",
+              "policy_pack_version"
+            ],
+            "naturalName": "ix_capability_activations__fk__tenant_id__installation_id__policy_id__policy_pack_version",
+            "selectedName": "ix_capability_activations__fk__tenant_id__ins__94eb33f839cb9157",
+            "naturalNameSha256": "94eb33f839cb9157952031b633b5f0bb59195cc1f2e53a5c598b8e4ffa179e37"
+          },
+          {
+            "table": "eva_effects.read_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "plan_step_id"
+            ],
+            "naturalName": "ix_read_intents__fk__tenant_id__installation_id__plan_step_id",
+            "selectedName": "ix_read_intents__fk__tenant_id__installation_id__plan_step_id",
+            "naturalNameSha256": "e011fe71621767dba7f219d39e72f1a433e2402715766c3cd88753c327b2cc53"
+          },
+          {
+            "table": "eva_effects.read_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "circuit_breaker_id"
+            ],
+            "naturalName": "ix_read_intents__fk__tenant_id__installation_id__circuit_breaker_id",
+            "selectedName": "ix_read_intents__fk__tenant_id__installation___23ccceb8d47a6d6e",
+            "naturalNameSha256": "23ccceb8d47a6d6e21e032abaa18cfa0eb5b81e893dcbeb9d5ce406c23e78dd7"
+          },
+          {
+            "table": "eva_effects.read_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "capability_activation_id"
+            ],
+            "naturalName": "ix_read_intents__fk__tenant_id__installation_id__capability_activation_id",
+            "selectedName": "ix_read_intents__fk__tenant_id__installation___05c747d41bea5123",
+            "naturalNameSha256": "05c747d41bea5123a118992c323968f2861370e6a02755eb237e3adee0845186"
+          },
+          {
+            "table": "eva_effects.read_observations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "read_intent_id",
+              "read_attempt_id"
+            ],
+            "naturalName": "ix_read_observations__fk__tenant_id__installation_id__read_intent_id__read_attempt_id",
+            "selectedName": "ix_read_observations__fk__tenant_id__installa__25420923e2b04975",
+            "naturalNameSha256": "25420923e2b04975dcfad4f0509ebb5d0ec0ff996b4db00508454a25a50e9fc6"
+          },
+          {
+            "table": "eva_effects.read_observations",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "evidence_id"
+            ],
+            "naturalName": "ix_read_observations__fk__tenant_id__installation_id__evidence_id",
+            "selectedName": "ix_read_observations__fk__tenant_id__installa__0ef8e2790ad23c74",
+            "naturalNameSha256": "0ef8e2790ad23c746d5ed2bea63b53249c369163593fb6dd36927b30029ab6e5"
+          },
+          {
+            "table": "eva_effects.effect_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "plan_step_id"
+            ],
+            "naturalName": "ix_effect_intents__fk__tenant_id__installation_id__plan_step_id",
+            "selectedName": "ix_effect_intents__fk__tenant_id__installation_id__plan_step_id",
+            "naturalNameSha256": "5e2b5992e9096c0bd7e507a9adfe643192ee2bb40e46bfb7b200584519e4ed46"
+          },
+          {
+            "table": "eva_effects.effect_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "capability_activation_id"
+            ],
+            "naturalName": "ix_effect_intents__fk__tenant_id__installation_id__capability_activation_id",
+            "selectedName": "ix_effect_intents__fk__tenant_id__installatio__6e074200b2a2b05a",
+            "naturalNameSha256": "6e074200b2a2b05a1c11891dae029608c459c1e156f8e9ac46122f77d6a3d946"
+          },
+          {
+            "table": "eva_effects.effect_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "supersedes_effect_intent_id"
+            ],
+            "naturalName": "ix_effect_intents__fk__tenant_id__installation_id__supersedes_effect_intent_id",
+            "selectedName": "ix_effect_intents__fk__tenant_id__installatio__e7badf8c25084678",
+            "naturalNameSha256": "e7badf8c25084678959abf6e4a96b435416f181122edd51241a79f0a5b5c39c1"
+          },
+          {
+            "table": "eva_effects.effect_intents",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "consent_grant_id"
+            ],
+            "naturalName": "ix_effect_intents__fk__tenant_id__installation_id__consent_grant_id",
+            "selectedName": "ix_effect_intents__fk__tenant_id__installatio__e0c8b75d738f3c39",
+            "naturalNameSha256": "e0c8b75d738f3c390d6bc9216790daa19dd3d8e61ee501ac4f2df00ceca1ddf4"
+          },
+          {
+            "table": "eva_effects.effect_attempts",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "transport_evidence_id"
+            ],
+            "naturalName": "ix_effect_attempts__fk__tenant_id__installation_id__transport_evidence_id",
+            "selectedName": "ix_effect_attempts__fk__tenant_id__installati__d7ea52d45dad602b",
+            "naturalNameSha256": "d7ea52d45dad602be80814994259ac128ffa8d1cca13a264dd37c39a91eb5522"
+          },
+          {
+            "table": "eva_effects.effect_attempts",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "object_store_id"
+            ],
+            "naturalName": "ix_effect_attempts__fk__tenant_id__installation_id__object_store_id",
+            "selectedName": "ix_effect_attempts__fk__tenant_id__installati__0ed03903e44c7ad3",
+            "naturalNameSha256": "0ed03903e44c7ad39980dba16d47b18bc26605a6673c26da4856a79ecacb6994"
+          },
+          {
+            "table": "eva_effects.effect_receipts",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "effect_intent_id",
+              "effect_attempt_id"
+            ],
+            "naturalName": "ix_effect_receipts__fk__tenant_id__installation_id__effect_intent_id__effect_attempt_id",
+            "selectedName": "ix_effect_receipts__fk__tenant_id__installati__6bf50f8877828acb",
+            "naturalNameSha256": "6bf50f8877828acb1e262bbdacab9554ecd30bf70eadb3546458954cd0369f59"
+          },
+          {
+            "table": "eva_effects.effect_receipts",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "evidence_id"
+            ],
+            "naturalName": "ix_effect_receipts__fk__tenant_id__installation_id__evidence_id",
+            "selectedName": "ix_effect_receipts__fk__tenant_id__installation_id__evidence_id",
+            "naturalNameSha256": "2b45762b4a0d475a89fdc2f956a9cc2ba55f022bb7dce06180366d50bc1a268a"
+          },
+          {
+            "table": "eva_effects.effect_readbacks",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "effect_intent_id",
+              "read_intent_id"
+            ],
+            "naturalName": "ix_effect_readbacks__fk__tenant_id__installation_id__effect_intent_id__read_intent_id",
+            "selectedName": "ix_effect_readbacks__fk__tenant_id__installat__467ed9c70b70bcbc",
+            "naturalNameSha256": "467ed9c70b70bcbc21ff3f628371f08f85f46230addab9c976ccba7b3ed8847e"
+          },
+          {
+            "table": "eva_effects.effect_readbacks",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "read_intent_id",
+              "read_attempt_id"
+            ],
+            "naturalName": "ix_effect_readbacks__fk__tenant_id__installation_id__read_intent_id__read_attempt_id",
+            "selectedName": "ix_effect_readbacks__fk__tenant_id__installat__bbaaab5370ebb8c9",
+            "naturalNameSha256": "bbaaab5370ebb8c9b7a75505077959b1e79186133d8cc0649a8f973f381aaacc"
+          },
+          {
+            "table": "eva_effects.effect_readbacks",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "evidence_id"
+            ],
+            "naturalName": "ix_effect_readbacks__fk__tenant_id__installation_id__evidence_id",
+            "selectedName": "ix_effect_readbacks__fk__tenant_id__installat__562088163b9ec20f",
+            "naturalNameSha256": "562088163b9ec20f1274dcd579a33881151a59d38e45a912cc5f5c9eac170497"
+          },
+          {
+            "table": "eva_effects.deliveries",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "ingress_request_id"
+            ],
+            "naturalName": "ix_deliveries__fk__tenant_id__installation_id__ingress_request_id",
+            "selectedName": "ix_deliveries__fk__tenant_id__installation_id__8c54776894a3e75f",
+            "naturalNameSha256": "8c54776894a3e75f73a439e85c02c7a4e917027a778f1520cf37284ea9431634"
+          },
+          {
+            "table": "eva_effects.deliveries",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "effect_intent_id",
+              "receipt_effect_attempt_id"
+            ],
+            "naturalName": "ix_deliveries__fk__tenant_id__installation_id__effect_intent_id__receipt_effect_attempt_id",
+            "selectedName": "ix_deliveries__fk__tenant_id__installation_id__37f43ca904d0f71c",
+            "naturalNameSha256": "37f43ca904d0f71ccd07eae7fcd77302e988e16f139196cf749561bc9fa2ac2e"
+          },
+          {
+            "table": "eva_effects.circuit_breakers",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "connector_binding_id"
+            ],
+            "naturalName": "ix_circuit_breakers__fk__tenant_id__installation_id__connector_binding_id",
+            "selectedName": "ix_circuit_breakers__fk__tenant_id__installat__c3854b365581408c",
+            "naturalNameSha256": "c3854b365581408c8bf84307c06033d9d111f772c4c0e75f62aa158f8b364d24"
+          },
+          {
+            "table": "eva_effects.circuit_breakers",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "attention_id"
+            ],
+            "naturalName": "ix_circuit_breakers__fk__tenant_id__installation_id__attention_id",
+            "selectedName": "ix_circuit_breakers__fk__tenant_id__installat__71883ed53874f88a",
+            "naturalNameSha256": "71883ed53874f88a8de99db2ba3db95cecd69487060f174f8b5f0f0d4d070ef5"
+          },
+          {
+            "table": "eva_memory.source_events",
+            "localColumns": [
+              "tenant_id",
+              "principal_id"
+            ],
+            "naturalName": "ix_source_events__fk__tenant_id__principal_id",
+            "selectedName": "ix_source_events__fk__tenant_id__principal_id",
+            "naturalNameSha256": "086c52f89c0bf3f141cd22aac8b82e32c9d90ac1b33fa118799b1e8a7b1e7b17"
+          },
+          {
+            "table": "eva_memory.source_events",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "corrects_source_event_id"
+            ],
+            "naturalName": "ix_source_events__fk__tenant_id__installation_id__corrects_source_event_id",
+            "selectedName": "ix_source_events__fk__tenant_id__installation__770ed40fcd7fb1eb",
+            "naturalNameSha256": "770ed40fcd7fb1ebca25374c0170f2d084f2d89c7d7a9e8e7ff8ea8834263d17"
+          },
+          {
+            "table": "eva_memory.source_events",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "supersedes_source_event_id"
+            ],
+            "naturalName": "ix_source_events__fk__tenant_id__installation_id__supersedes_source_event_id",
+            "selectedName": "ix_source_events__fk__tenant_id__installation__4816ef482fe5cb64",
+            "naturalNameSha256": "4816ef482fe5cb64a93ecd9fd2cb5beb1bf236e04aa4380b779e7fe3ece8fbd3"
+          },
+          {
+            "table": "eva_memory.source_events",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "retracts_source_event_id"
+            ],
+            "naturalName": "ix_source_events__fk__tenant_id__installation_id__retracts_source_event_id",
+            "selectedName": "ix_source_events__fk__tenant_id__installation__602dd4bad0dafbe1",
+            "naturalNameSha256": "602dd4bad0dafbe1a712c25df9b398098fb3d2a6101759aec75e33a374b35871"
+          },
+          {
+            "table": "eva_memory.fact_assertions",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "superseded_by_fact_id"
+            ],
+            "naturalName": "ix_fact_assertions__fk__tenant_id__installation_id__superseded_by_fact_id",
+            "selectedName": "ix_fact_assertions__fk__tenant_id__installati__a9dcaf21e54f6c77",
+            "naturalNameSha256": "a9dcaf21e54f6c779b8c50c3fe787803454b3b67ca3e42eba4a8f12555847f31"
+          },
+          {
+            "table": "eva_memory.fact_assertions",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "retraction_source_event_id"
+            ],
+            "naturalName": "ix_fact_assertions__fk__tenant_id__installation_id__retraction_source_event_id",
+            "selectedName": "ix_fact_assertions__fk__tenant_id__installati__9089d9aeeea4aa7f",
+            "naturalNameSha256": "9089d9aeeea4aa7f74199c2451d4cc2f8689151c1cbb091b77265fa3a2f7baa8"
+          },
+          {
+            "table": "eva_evidence.evidence_envelopes",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "object_ref_id"
+            ],
+            "naturalName": "ix_evidence_envelopes__fk__tenant_id__installation_id__object_ref_id",
+            "selectedName": "ix_evidence_envelopes__fk__tenant_id__install__cf3f5e4b2b79d104",
+            "naturalNameSha256": "cf3f5e4b2b79d104314f78c8deba076c325a1d90c963d0c5d69cb0e967b4852f"
+          },
+          {
+            "table": "eva_evidence.evidence_links",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "to_evidence_id"
+            ],
+            "naturalName": "ix_evidence_links__fk__tenant_id__installation_id__to_evidence_id",
+            "selectedName": "ix_evidence_links__fk__tenant_id__installatio__df772ac9386717ed",
+            "naturalNameSha256": "df772ac9386717ed67eb2679e1c4504202cdd7b6c317143a2bc8445c297381a3"
+          },
+          {
+            "table": "eva_evidence.object_refs",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "object_store_id"
+            ],
+            "naturalName": "ix_object_refs__fk__tenant_id__installation_id__object_store_id",
+            "selectedName": "ix_object_refs__fk__tenant_id__installation_id__object_store_id",
+            "naturalNameSha256": "473d4dc535bf6a0bb4e6d7eb495194912f9b8d71e31a837201c7c4268342bd08"
+          },
+          {
+            "table": "eva_evidence.object_refs",
+            "localColumns": [
+              "tenant_id",
+              "owner_principal_id"
+            ],
+            "naturalName": "ix_object_refs__fk__tenant_id__owner_principal_id",
+            "selectedName": "ix_object_refs__fk__tenant_id__owner_principal_id",
+            "naturalNameSha256": "b9fd18408079e622f131ac4f2eeb86762f8ae126396d86ddf51853a1084c3cb7"
+          },
+          {
+            "table": "eva_evidence.object_refs",
+            "localColumns": [
+              "tenant_id",
+              "installation_id",
+              "selected_effect_attempt_id"
+            ],
+            "naturalName": "ix_object_refs__fk__tenant_id__installation_id__selected_effect_attempt_id",
+            "selectedName": "ix_object_refs__fk__tenant_id__installation_i__a19d207136bc545f",
+            "naturalNameSha256": "a19d207136bc545ff7aacb45bfdfa0c9953882153d98c607e7437c8b47fa9bff"
+          }
+        ]
+      },
+      "orderedEntriesCanonicalization": "EvaCanonicalJSON/v1 UTF-8 with no trailing LF; hash covers only manifestCore.entries in sealed order",
+      "orderedEntriesCanonicalSha256": "72c91fe2d7a1ebf24d193e5a1b5ddb2b1b90ad42f67b8198e3c87b6a876c4ad4"
+    },
     "payloadBindingRule": "for every source database table with payloadColumn, payload_contract and payload_schema_version equal the JSON contract/schema_version, payload_sha256 equals SHA-256 of EvaCanonicalJSON/v1 bytes, and every duplicated authority column equals the corresponding payload value after UUID/hash/timestamp conversion; this source rule binds the unredacted eva_core.connector_bindings ConnectorBinding/v1 payload and database payload_sha256; its portable redacted row instead exposes source_payload_sha256 solely as that non-recomputable source attestation and redacted_payload_sha256 as the reader-recomputable SHA-256 of the exact exported redacted payload; source repository mismatch or portable redacted-hash mismatch is rejected"
   },
   "schemaFamily": {
@@ -189,7 +3614,7 @@
         "scope": "tenant",
         "baseline4BColumnsPreserved": [
           "tenant_id uuid NOT NULL",
-          "created_at timestamptz(0) NOT NULL"
+          "created_at timestamptz NOT NULL"
         ],
         "columns": [
           "tenant_id uuid NOT NULL",
@@ -198,7 +3623,7 @@
           "revision bigint NOT NULL",
           "retention_policy_id text NOT NULL",
           "retention_until timestamptz(0) NOT NULL",
-          "created_at timestamptz(0) NOT NULL",
+          "created_at timestamptz NOT NULL",
           "updated_at timestamptz(0) NOT NULL"
         ],
         "primaryKey": [
@@ -245,7 +3670,7 @@
         "baseline4BColumnsPreserved": [
           "tenant_id uuid NOT NULL",
           "installation_id uuid NOT NULL",
-          "created_at timestamptz(0) NOT NULL"
+          "created_at timestamptz NOT NULL"
         ],
         "columns": [
           "tenant_id uuid NOT NULL",
@@ -263,7 +3688,7 @@
           "revision bigint NOT NULL",
           "retention_policy_id text NOT NULL",
           "retention_until timestamptz(0) NOT NULL",
-          "created_at timestamptz(0) NOT NULL",
+          "created_at timestamptz NOT NULL",
           "updated_at timestamptz(0) NOT NULL"
         ],
         "primaryKey": [
@@ -302,7 +3727,27 @@
               "ObjectStore/v1"
             ],
             "requiredWhen": "object_store_id IS NOT NULL",
-            "authorityEquality": "object_store_id and installation_id equal payload; absolute_host_path_in_contract=false"
+            "authorityEquality": "installation_id is byte-equal to payload.installation_id; scalar object_store_id is UUIDv5(namespace 276dbeb6-d012-5519-9ba9-4cb279c94dd4, UTF-8 payload.object_store_id); payload.absolute_host_path_in_contract=false",
+            "projectionAuthority": {
+              "installationId": {
+                "scalarColumn": "installation_id",
+                "payloadField": "installation_id",
+                "rule": "byte_equal"
+              },
+              "objectStoreId": {
+                "scalarColumn": "object_store_id",
+                "payloadField": "object_store_id",
+                "algorithm": "UUIDv5_SHA1_namespace_name",
+                "namespaceUuid": "276dbeb6-d012-5519-9ba9-4cb279c94dd4",
+                "nameEncoding": "UTF-8",
+                "sealedEvaLogicalId": "object-store:noor-4d:eva",
+                "sealedEvaUuid": "62e07e08-9793-5eee-a1f7-2ed9305211de"
+              },
+              "absoluteHostPath": {
+                "payloadField": "absolute_host_path_in_contract",
+                "requiredValue": false
+              }
+            }
           }
         ],
         "export": {
@@ -586,7 +4031,40 @@
             "tenant_id",
             "principal_binding_id"
           ],
-          "mapping": "only bindings referenced by exported ingress/messages/consent are included; all columns one-to-one"
+          "mapping": "selected binding IDs are the set union of the existing direct exported ingress/message/consent binding-reference closure and every same-tenant binding whose verification_evidence_id appears in an exported relationship.channel_binding_evidence_refs; all columns one-to-one; reject when selected binding verification evidence does not belong to the target installation rather than widening export scope",
+          "selectionAuthority": {
+            "operator": "set_union_distinct",
+            "directReferenceClosure": {
+              "sourceFamilies": [
+                "eva_core.ingress_requests",
+                "eva_core.messages",
+                "eva_core.consent_grants"
+              ],
+              "rule": "existing exported direct principal-binding-reference closure scoped to the target tenant and installation"
+            },
+            "relationshipChannelBindingEvidenceClosure": {
+              "relationshipTable": "eva_core.relationships",
+              "relationshipScopeColumns": [
+                "tenant_id",
+                "installation_id"
+              ],
+              "relationshipEvidenceArrayColumn": "channel_binding_evidence_refs",
+              "bindingTable": "eva_core.principal_bindings",
+              "bindingTenantColumn": "tenant_id",
+              "bindingVerificationEvidenceColumn": "verification_evidence_id",
+              "matchRule": "binding.tenant_id=relationship.tenant_id AND binding.verification_evidence_id=ANY(relationship.channel_binding_evidence_refs)"
+            },
+            "selectedBindingEvidenceInstallationValidation": {
+              "evidenceTable": "eva_evidence.evidence_envelopes",
+              "bindingEvidenceColumn": "verification_evidence_id",
+              "requiredEvidenceScopeColumns": [
+                "tenant_id",
+                "installation_id"
+              ],
+              "requiredScope": "target tenant and installation",
+              "onMismatch": "reject_export_without_widening"
+            }
+          }
         }
       },
       {
@@ -636,11 +4114,11 @@
           "fk_relationships_installation: (tenant_id,installation_id) -> eva_core.installations(tenant_id,installation_id) ON DELETE RESTRICT",
           "fk_relationships_identity: (tenant_id,installation_id,identity_id,identity_pack_version) -> eva_core.identity_pack_versions(tenant_id,installation_id,identity_id,pack_version) ON DELETE RESTRICT",
           "fk_relationships_principal: (tenant_id,principal_id) -> eva_core.principals(tenant_id,principal_id) ON DELETE RESTRICT",
-          "fk_relationships_related_principal: (tenant_id,related_principal_id) -> eva_core.principals(tenant_id,principal_id) ON DELETE RESTRICT"
+          "fk_relationships_related_principal: (tenant_id,related_principal_id) -> eva_core.principals(tenant_id,principal_id) ON DELETE RESTRICT",
+          "fk_relationships_source_event: (tenant_id,installation_id,source_event_id) -> eva_memory.source_events(tenant_id,installation_id,source_event_id) ON DELETE RESTRICT"
         ],
         "referenceValidations": [
-          "source_event_id must resolve to eva_memory.source_events in the same tenant and installation before commit",
-          "every channel_binding_evidence_refs element must resolve to eva_evidence.evidence_envelopes in the same tenant and installation before commit"
+          "every channel_binding_evidence_refs element must resolve to eva_evidence.evidence_envelopes in the same tenant and installation before commit; each element may select every same-tenant eva_core.principal_bindings row whose verification_evidence_id matches, subject to the selected binding evidence belonging to this relationship's target installation"
         ],
         "uniques": [
           "uq_relationships_live_pair: UNIQUE (tenant_id,installation_id,identity_id,principal_id,related_principal_id,relationship_class) WHERE confirmation_status='confirmed'"
@@ -995,8 +4473,8 @@
           "state_contract varchar(64) NOT NULL",
           "state_schema_version smallint NOT NULL",
           "state_payload_sha256 bytea NOT NULL",
-          "created_at timestamptz(0) NOT NULL",
-          "updated_at timestamptz(0) NOT NULL"
+          "created_at timestamptz NOT NULL",
+          "updated_at timestamptz NOT NULL"
         ],
         "columns": [
           "tenant_id uuid NOT NULL",
@@ -1015,8 +4493,8 @@
           "state_payload_sha256 bytea NOT NULL",
           "retention_policy_id text NOT NULL",
           "retention_until timestamptz(0) NOT NULL",
-          "created_at timestamptz(0) NOT NULL",
-          "updated_at timestamptz(0) NOT NULL"
+          "created_at timestamptz NOT NULL",
+          "updated_at timestamptz NOT NULL"
         ],
         "primaryKey": [
           "tenant_id",
@@ -1180,7 +4658,7 @@
           "after_episode_state jsonb NOT NULL",
           "before_state_sha256 bytea NULL",
           "after_state_sha256 bytea NOT NULL",
-          "occurred_at timestamptz(0) NOT NULL"
+          "occurred_at timestamptz NOT NULL"
         ],
         "columns": [
           "tenant_id uuid NOT NULL",
@@ -1202,7 +4680,7 @@
           "after_state_sha256 bytea NOT NULL",
           "retention_policy_id text NOT NULL",
           "retention_until timestamptz(0) NOT NULL",
-          "occurred_at timestamptz(0) NOT NULL"
+          "occurred_at timestamptz NOT NULL"
         ],
         "primaryKey": [
           "tenant_id",
@@ -15795,6 +19273,29 @@
         "columnDefaultAllowed": false,
         "syntheticSeedValueAllowed": false,
         "commitRequiresAlembicVersion": "4d_0003_core_continuity"
+      },
+      "postAdmissionNamespaceBootstrapException": {
+        "reason": "historical 4B creates only eva_core and eva_migrator has no database-level CREATE privilege; after empty admission only, the already-attested external deployment authority creates the five missing namespaces with eva_migrator as exact owner",
+        "sameTransactionAsAdmissionAndFirstTableDdl": true,
+        "schemaOrder": [
+          "eva_effects",
+          "eva_evidence",
+          "eva_memory",
+          "eva_projection",
+          "eva_telemetry"
+        ],
+        "orderedSteps": [
+          "RESET ROLE",
+          "repeat statement 4 external global-read/set-role authority attestation",
+          "for each schema in schemaOrder: CREATE SCHEMA <schema> AUTHORIZATION eva_migrator then REVOKE ALL ON SCHEMA <schema> FROM PUBLIC",
+          "SET LOCAL ROLE eva_migrator",
+          "repeat statement 9 current_user eva_migrator attestation",
+          "begin 4d_0003 table/column/constraint/index DDL"
+        ],
+        "preexistingSchemaDecision": "failed_precondition; fresh exact source catalog is required and idempotent namespace creation is not claimed",
+        "databaseCreatePrivilegeGrantedToEvaMigrator": false,
+        "finalSchemaOwner": "eva_migrator",
+        "anyFailure": "rollback the whole admission/bootstrap/DDL transaction; final revision remains 4b_0002_episode_atomicity"
       },
       "onReject": {
         "raiseTypedError": "eva4d_initial_admission_nonempty",

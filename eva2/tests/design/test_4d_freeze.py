@@ -280,6 +280,58 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             row["canonicalByteLength"] = len(raw)
             row["record_schema_sha256"] = freeze.sha256_bytes(raw)
 
+        def schema_automatic_index_manifest(artifact: dict[str, Any]) -> None:
+            artifact["databaseConventions"]["automaticForeignKeyIndexManifest"][
+                "manifestCore"
+            ]["entries"][0]["selectedName"] = "ix_wrong"
+
+        def schema_role_grant_manifest(artifact: dict[str, Any]) -> None:
+            artifact["databaseConventions"]["roleTableColumnGrantManifest"]["entries"][
+                0
+            ]["updateColumns"].pop()
+
+        def schema_collation_manifest(artifact: dict[str, Any]) -> None:
+            artifact["databaseConventions"]["collationManifest"]["entries"][0][
+                "physicalAction"
+            ] = "alter_preserved_4b"
+
+        def schema_object_store_projection(artifact: dict[str, Any]) -> None:
+            installations = next(
+                row
+                for row in artifact["schemaFamily"]["tables"]
+                if row["table"] == "eva_core.installations"
+            )
+            object_store = next(
+                row
+                for row in installations["payloadContracts"]
+                if row["column"] == "object_store_payload"
+            )
+            object_store["projectionAuthority"]["objectStoreId"]["sealedEvaUuid"] = (
+                "00000000-0000-0000-0000-000000000000"
+            )
+
+        def schema_principal_binding_selection(artifact: dict[str, Any]) -> None:
+            principal_bindings = next(
+                row
+                for row in artifact["schemaFamily"]["tables"]
+                if row["table"] == "eva_core.principal_bindings"
+            )
+            principal_bindings["export"]["selectionAuthority"]["operator"] = (
+                "direct_reference_only"
+            )
+
+        def schema_relationship_reference_validation(
+            artifact: dict[str, Any],
+        ) -> None:
+            relationships = next(
+                row
+                for row in artifact["schemaFamily"]["tables"]
+                if row["table"] == "eva_core.relationships"
+            )
+            relationships["referenceValidations"][0] = (
+                "resolve channel binding evidence without installation validation"
+            )
+
         def connector(artifact: dict[str, Any]) -> None:
             artifact["scenarios"]["c13ReofferEva"]["expected"][
                 "outcomeProviderMutations"
@@ -321,6 +373,42 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 freeze.SCHEMA_ARTIFACT_PATH,
                 schema_initial_generation_bound,
                 "portable episode primitive bounds reject an admitted initial generation",
+            ),
+            (
+                "schema automatic FK index manifest",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_automatic_index_manifest,
+                "automatic foreign-key index authority is not exact or PostgreSQL-safe",
+            ),
+            (
+                "schema role grant manifest",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_role_grant_manifest,
+                "schema role/table/column grant authority is not exact",
+            ),
+            (
+                "schema collation manifest",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_collation_manifest,
+                "schema explicit-C collation authority is not exact",
+            ),
+            (
+                "schema ObjectStore projection",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_object_store_projection,
+                "schema ObjectStore scalar/payload projection authority is not exact",
+            ),
+            (
+                "schema principal-binding selection",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_principal_binding_selection,
+                "schema principal-binding export selection authority is not exact",
+            ),
+            (
+                "schema relationship reference validation",
+                freeze.SCHEMA_ARTIFACT_PATH,
+                schema_relationship_reference_validation,
+                "schema relationship reference-validation authority is not exact",
             ),
             (
                 "connector",
@@ -413,6 +501,11 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 "selected_ciphertext_occurrence_paths"
             ].pop()
 
+        def logical_relational_uuid_crosswalk(artifact: dict[str, Any]) -> None:
+            artifact["portableSnapshotAuthority"]["fixtureFactCatalog"][
+                "logical_relational_id_crosswalk"
+            ][0]["portable_uuid"] = "00000000-0000-0000-0000-000000000000"
+
         for label, mutate, expected in (
             (
                 "runtime inference",
@@ -453,6 +546,11 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 "harness path manifest",
                 harness_path_manifest,
                 "exhaustive path bindings",
+            ),
+            (
+                "logical-relational UUID crosswalk",
+                logical_relational_uuid_crosswalk,
+                "388-fact catalog, wrappers or portable schema validation",
             ),
         ):
             with self.subTest(label=label):
@@ -571,6 +669,16 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                     "physicalContentAddressing"
                 ].update({"physicalCasKey": "logical object_id"}),
                 "physical object storage is not exact envelope-content-addressed CAS",
+            ),
+            (
+                "CAS ordered install step",
+                lambda profile: profile["encryptedObjectFormat"][
+                    "atomicCreateAndReadback"
+                ]["orderedSteps"].__setitem__(
+                    3,
+                    "derive a truncated path and overwrite it",
+                ),
+                "object create/readback ordered CAS steps are not exact",
             ),
             (
                 "fixture key algorithm",

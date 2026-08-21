@@ -9,7 +9,7 @@
       "fileSha256": "561a1839735dd49ddd18b07a814e197f566be19eb4a49d54bc12da61b42692a2",
       "contract": "Eva2Noor4DExecutionProfile/v1",
       "repositoryCommit": "aacf7e8",
-      "semanticCoreCanonicalSha256": "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b",
+      "semanticCoreCanonicalSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020",
       "semanticCoreDerivation": "remove only top-level preRuntimeRequiredArtifacts, then serialize with EvaCanonicalJSON/v1"
     },
     "verticalContract": {

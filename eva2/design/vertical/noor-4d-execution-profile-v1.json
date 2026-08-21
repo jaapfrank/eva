@@ -79,7 +79,7 @@
         "artifactId": "schema_export_mapping",
         "path": "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json",
         "contract": "Eva24DSchemaExportFreeze/v1",
-        "expectedSha256": "3129bcca1e08f6d988c3ff6ccecf4671245ea3bd8179023e65ee16bf1ed96b11",
+        "expectedSha256": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
         "status": "sealed_verified",
         "requiredContents": "exact canonical table/column to contract/JSONL mappings, stable ordering/count/hash/reference rules, explicit DBOS exclusions, encrypted-object manifest mapping and a DBOS-free generic-reader before/after oracle; no 4E restore claim"
       },
@@ -87,7 +87,7 @@
         "artifactId": "connector_provider_fixtures",
         "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
         "contract": "Eva24DConnectorProviderFixtures/v1",
-        "expectedSha256": "eeb3ec91c1801d1461273edad8562e26b1efdb5d772adc8a75b2ac92cd3662d1",
+        "expectedSha256": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
         "status": "sealed_verified",
         "requiredContents": "content-addressed manifests/executables/sandboxes and exact request/result/error/ACK/before/after/429/reconcile/readback vectors for five workers and six bindings, including exact poisoned-mail and ambiguous-provider bytes, untrusted ExperienceSourceEvent/PresenceContext representation, unchanged identity/policy/scope/recipient authority and zero/one call deltas"
       },
@@ -95,7 +95,7 @@
         "artifactId": "deterministic_model_vectors",
         "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
         "contract": "Eva24DModelVectors/v1",
-        "expectedSha256": "b755467be3ba77af6db5435a840cf7e069e0699837e49251748de1781f8171ad",
+        "expectedSha256": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
         "status": "sealed_verified",
         "requiredContents": "content-addressed zero-network adapter/profile plus exact PlannerRequest/model_input to ModelDecision/v1, DocumentDraft/v1 and Eva/Mira ReplyCandidate/v1 bytes and hashes, provider-429 ordinal-one/ordinal-two recovery, malformed/rejected/ambiguous responses and zero-hidden-retry call deltas"
       },
@@ -103,7 +103,7 @@
         "artifactId": "concurrency_crash_schedules",
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
         "contract": "Eva24DConcurrencyCrashSchedules/v1",
-        "expectedSha256": "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c",
+        "expectedSha256": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9",
         "status": "sealed_verified",
         "requiredContents": "one deterministic duplicate-overlap barrier schedule with two exact caller outcomes and all fifteen crash schedules with canonical pre-crash/post-recovery state, row/count/hash deltas, exact model/connector invocation deltas, byte-identical terminal replay and exact profile-authoritative harness-only entropy authority"
       }
@@ -114,9 +114,9 @@
       "authorityPrecedence": "This current-profile adoption authority is the sole isolated-4D exception to encryptedObjectFormat.encryptionProcedure and nonceRule; the schedule artifact cannot grant, override or widen this exception.",
       "scheduleBinding": {
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
-        "wholeFileSha256": "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c",
+        "wholeFileSha256": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9",
         "authoritySelector": "harnessEntropyInjectionAuthority",
-        "authoritySha256": "64603c12cb0e32e39f50ea4a3d38ebfece25d9477ac02b70a22c73bbb6c39d09",
+        "authoritySha256": "166810437a3f7daa5a627b46236b887379fe112cbbbcc5df16a03f5c758ffdec",
         "bindingManifestSha256": "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3"
       },
       "testBootstrap": {
@@ -1178,7 +1178,7 @@
     "physicalContentAddressing": {
       "logicalIdentity": "AAD object_id and ObjectRef.object_id are the immutable logical object UUID",
       "physicalCasKey": "lowercase hex ObjectRef.ciphertext_sha256 over the complete stored envelope",
-      "repositoryRelativeCasPath": "sha256/{ciphertext_sha256[0:2]}/{ciphertext_sha256[2:64]}",
+      "repositoryRelativeCasPath": "sha256/{ciphertext_sha256[0:2]}/{ciphertext_sha256}.eva2xo",
       "absoluteHostPathStoredInContract": false,
       "canonicalMapping": "the canonical object record maps one logical object_id to the one DB-selected ObjectRef.ciphertext_sha256 and its exact CAS path; a filesystem name derived from object_id is forbidden",
       "readRule": "resolve the DB-selected ciphertext_sha256 for the full logical object_id, derive the exact CAS path, read only that immutable path, match full-envelope hash and length, then authenticate and decrypt",
@@ -1365,7 +1365,7 @@
         "commit the canonical object intent and immutable AAD fields",
         "reserve the unique object create attempt, generate one random-nonce envelope, compute its ciphertextSha256, write it under an attempt-scoped non-final temporary name and durably flush its bytes",
         "commit the candidate ciphertextSha256 and temporary-object binding before any final CAS installation",
-        "derive sha256/{first two digest hex}/{remaining digest hex}, install that final CAS path with an atomic no-replace operation and durably flush the parent namespace",
+        "derive sha256/{first two digest hex}/{full 64 digest hex}.eva2xo, install that final CAS path with an atomic no-replace operation and durably flush the parent namespace",
         "open the exact CAS path independently, recompute ciphertextSha256 and stored envelope length, authenticate and decrypt it, and match every AAD field plus plaintext hash and length",
         "atomically select that verified digest in the canonical object record if no digest is selected; if the same logical object already selected another digest, read and authenticate the selected digest and adopt it only when the full reserved binding and plaintext are equal",
         "only the DB-selected digest and its exact independent readback may populate ObjectRef and satisfy the document proof floor; an unselected candidate or cleanup is never proof"

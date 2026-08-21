@@ -44,20 +44,20 @@ ARTIFACT_PATHS = (
     SCHEDULE_ARTIFACT_PATH,
 )
 EXPECTED_PROFILE_SEMANTIC_CORE_SHA256 = (
-    "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b"
+    "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020"
 )
 EXPECTED_ARTIFACT_SHA256 = {
     SCHEMA_ARTIFACT_PATH: (
-        "3129bcca1e08f6d988c3ff6ccecf4671245ea3bd8179023e65ee16bf1ed96b11"
+        "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38"
     ),
     CONNECTOR_ARTIFACT_PATH: (
-        "eeb3ec91c1801d1461273edad8562e26b1efdb5d772adc8a75b2ac92cd3662d1"
+        "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
     ),
     MODEL_ARTIFACT_PATH: (
-        "b755467be3ba77af6db5435a840cf7e069e0699837e49251748de1781f8171ad"
+        "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
     ),
     SCHEDULE_ARTIFACT_PATH: (
-        "d92ac5d922004be3bceec684043f4f33aaf465ee1c2835a37db4e65c4227f67c"
+        "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9"
     ),
 }
 EXPECTED_ARTIFACT_CONTRACTS = {
@@ -75,7 +75,7 @@ PRE_RUNTIME_GATE_RULE = (
     "any failure resets it to false"
 )
 EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256 = (
-    "64603c12cb0e32e39f50ea4a3d38ebfece25d9477ac02b70a22c73bbb6c39d09"
+    "166810437a3f7daa5a627b46236b887379fe112cbbbcc5df16a03f5c758ffdec"
 )
 EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256 = (
     "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3"
@@ -99,6 +99,16 @@ EXPECTED_SCHEMA_OBJECT_MANIFEST_RECORD_SHA256 = (
 EXPECTED_SCHEMA_READER_MANIFEST_SHA256 = (
     "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876"
 )
+EXPECTED_AUTOMATIC_FK_INDEX_MANIFEST_SHA256 = (
+    "72c91fe2d7a1ebf24d193e5a1b5ddb2b1b90ad42f67b8198e3c87b6a876c4ad4"
+)
+EXPECTED_ROLE_GRANT_MANIFEST_SHA256 = (
+    "5bfff57653ccf0ff48915bc95cec367a02798a282ead7c35f6fbd6d7ab299cb6"
+)
+EXPECTED_COLLATION_MANIFEST_SHA256 = (
+    "ac88723a502956223d2e14b42b35b0b709123586871118687784ff4b5ce43ac7"
+)
+EXPECTED_OBJECT_STORE_NAMESPACE_UUID = "276dbeb6-d012-5519-9ba9-4cb279c94dd4"
 EXPECTED_SNAPSHOT_FAMILIES = [
     "empty",
     "admitted",
@@ -848,12 +858,14 @@ def _check_schema_artifact(schema: dict[str, Any], errors: list[str]) -> None:
     _need(
         errors,
         semantic.get("excludedTopLevelKey") == "preRuntimeRequiredArtifacts"
+        and semantic.get("canonicalByteLengthAtBaseline") == 67629
         and semantic.get("sha256") == EXPECTED_PROFILE_SEMANTIC_CORE_SHA256,
         "schema/export artifact source-profile semantic core is not exact",
     )
 
     family = schema.get("schemaFamily", {})
     tables = family.get("tables", [])
+    noncanonical_tables = family.get("nonCanonicalTables", [])
     _need(
         errors,
         family.get("canonicalTableCount") == 39
@@ -865,6 +877,508 @@ def _check_schema_artifact(schema: dict[str, Any], errors: list[str]) -> None:
         == list(range(1, 40))
         and len({row.get("table") for row in tables if isinstance(row, dict)}) == 39,
         "schema/export artifact does not freeze exactly 39 canonical tables",
+    )
+
+    conventions = schema.get("databaseConventions", {})
+    automatic_rule = conventions.get("automaticIndexRule", {})
+    automatic_manifest = conventions.get("automaticForeignKeyIndexManifest", {})
+    manifest_core = automatic_manifest.get("manifestCore", {})
+    manifest_entries = manifest_core.get("entries", [])
+    fk_pattern = re.compile(r"^(?P<name>[a-z][a-z0-9_]*): \((?P<local>[^)]+)\) -> ")
+    unique_pattern = re.compile(r"^[a-z][a-z0-9_]*: UNIQUE \((?P<columns>[^)]+)\)")
+    natural_name_pattern = re.compile(
+        r"^ix_[a-z][a-z0-9_]*__fk__[a-z][a-z0-9_]*"
+        r"(?:__[a-z][a-z0-9_]*)*$"
+    )
+    expected_entries: list[dict[str, Any]] = []
+    explicit_names: set[str] = set()
+    all_tables = [
+        row
+        for row in (*tables, *noncanonical_tables)
+        if isinstance(row, dict) and isinstance(row.get("table"), str)
+    ]
+    for table in all_tables:
+        unqualified_name = table["table"].split(".", 1)[-1]
+        explicit_names.add(f"pk_{unqualified_name}")
+        for field in (
+            "foreignKeys",
+            "uniques",
+            "checks",
+            "additionalIndexes",
+            "indexes",
+        ):
+            for declaration in table.get(field, []):
+                if isinstance(declaration, str) and ":" in declaration:
+                    explicit_names.add(declaration.split(":", 1)[0])
+
+        key_prefixes = [list(table.get("primaryKey", []))]
+        for declaration in table.get("uniques", []):
+            match = unique_pattern.match(declaration)
+            if match is not None:
+                key_prefixes.append(
+                    [column.strip() for column in match["columns"].split(",")]
+                )
+        for declaration in table.get("foreignKeys", []):
+            match = fk_pattern.match(declaration)
+            if match is None:
+                continue
+            local_columns = [column.strip() for column in match["local"].split(",")]
+            if any(
+                prefix[: len(local_columns)] == local_columns for prefix in key_prefixes
+            ):
+                continue
+            natural_name = f"ix_{unqualified_name}__fk__{'__'.join(local_columns)}"
+            natural_name_sha256 = sha256_bytes(natural_name.encode("ascii"))
+            selected_name = (
+                natural_name
+                if len(natural_name.encode("utf-8")) <= 63
+                else f"{natural_name[:45]}__{natural_name_sha256[:16]}"
+            )
+            expected_entries.append(
+                {
+                    "table": table["table"],
+                    "localColumns": local_columns,
+                    "naturalName": natural_name,
+                    "selectedName": selected_name,
+                    "naturalNameSha256": natural_name_sha256,
+                }
+            )
+
+    selected_names = [row["selectedName"] for row in expected_entries]
+    shortened_count = sum(
+        row["selectedName"] != row["naturalName"] for row in expected_entries
+    )
+    entries_sha256 = sha256_bytes(canonical_json_bytes(expected_entries))
+    _need(
+        errors,
+        automatic_rule.get("method") == "BTREE"
+        and automatic_rule.get("maxUtf8Bytes") == 63
+        and automatic_rule.get("overLimitPrefixAsciiBytes") == 45
+        and automatic_rule.get("hashSuffixHexChars") == 16
+        and automatic_rule.get("manifestEntryCount") == 79
+        and automatic_rule.get("shortenedEntryCount") == 50
+        and automatic_rule.get("orderedEntriesCanonicalSha256")
+        == EXPECTED_AUTOMATIC_FK_INDEX_MANIFEST_SHA256
+        and manifest_core.get("contract") == "Eva4DAutomaticForeignKeyIndexManifest/v1"
+        and manifest_core.get("schemaVersion") == 1
+        and manifest_core.get("entryCount") == 79
+        and manifest_core.get("shortenedEntryCount") == 50
+        and manifest_core.get("naturalNameGrammar") == natural_name_pattern.pattern
+        and manifest_entries == expected_entries
+        and len(expected_entries) == 79
+        and shortened_count == 50
+        and entries_sha256 == EXPECTED_AUTOMATIC_FK_INDEX_MANIFEST_SHA256
+        and automatic_manifest.get("orderedEntriesCanonicalSha256") == entries_sha256
+        and len(selected_names) == len(set(selected_names))
+        and not (set(selected_names) & explicit_names)
+        and all(
+            natural_name_pattern.fullmatch(row["naturalName"])
+            and row["naturalName"].isascii()
+            and row["selectedName"].isascii()
+            and len(row["selectedName"].encode("utf-8")) <= 63
+            for row in expected_entries
+        ),
+        "automatic foreign-key index authority is not exact or PostgreSQL-safe",
+    )
+
+    column_pattern = re.compile(
+        r"^(?P<name>[a-z][a-z0-9_]*) (?P<type>.+?) (?P<nullability>NOT NULL|NULL)$"
+    )
+
+    def declared_columns(table: dict[str, Any]) -> list[tuple[str, str]] | None:
+        parsed: list[tuple[str, str]] = []
+        for declaration in table.get("columns", []):
+            match = column_pattern.fullmatch(declaration)
+            if match is None:
+                return None
+            parsed.append((match["name"], match["type"]))
+        return parsed
+
+    role_manifest = conventions.get("roleTableColumnGrantManifest", {})
+    role_entries = role_manifest.get("entries", [])
+    expected_role_entries: list[dict[str, Any]] = []
+    role_source_valid = True
+    for table in all_tables:
+        columns = declared_columns(table)
+        if columns is None:
+            role_source_valid = False
+            continue
+        primary_key = set(table.get("primaryKey", []))
+        cas_profile = table.get("cas")
+        update_columns = (
+            [name for name, _ in columns if name not in primary_key]
+            if isinstance(cas_profile, str)
+            and cas_profile.startswith(
+                ("revisionCas", "currentSwap", "projectionUpsert")
+            )
+            else []
+        )
+        owner = table.get("owner", {})
+        delete_owner = owner.get("delete") if isinstance(owner, dict) else None
+        retention = table.get("retention")
+        retention_profile = (
+            retention.get("profile") if isinstance(retention, dict) else retention
+        )
+        if isinstance(retention, dict) and retention.get("deleteOwner") != delete_owner:
+            role_source_valid = False
+        table_privileges = ["SELECT", "INSERT"]
+        if delete_owner and retention_profile:
+            table_privileges.append("DELETE")
+        expected_role_entries.append(
+            {
+                "table": table["table"],
+                "roles": ["eva_runtime", "eva_dbos"],
+                "tablePrivileges": table_privileges,
+                "updateColumns": update_columns,
+                "sourceCasProfile": cas_profile,
+                "sourceDeleteOwner": delete_owner,
+                "sourceRetentionProfile": retention_profile,
+            }
+        )
+    role_entries_sha256 = sha256_bytes(canonical_json_bytes(expected_role_entries))
+    _need(
+        errors,
+        set(role_manifest)
+        == {
+            "contract",
+            "derivation",
+            "roleOrder",
+            "entryOrder",
+            "entryCount",
+            "updateTableCount",
+            "deleteTableCount",
+            "orderedEntriesCanonicalization",
+            "orderedEntriesCanonicalSha256",
+            "failClosedRule",
+            "entries",
+        }
+        and role_manifest.get("contract")
+        == "Eva24DPostgresqlRoleTableColumnGrantManifest/v1"
+        and role_manifest.get("derivation")
+        == {
+            "selectAndInsert": (
+                "grant table-level SELECT and INSERT on every sealed canonical "
+                "and noncanonical table to both application roles"
+            ),
+            "update": (
+                "grant column-level UPDATE only when cas starts with revisionCas, "
+                "currentSwap or projectionUpsert, including any sealed profile "
+                "variants, and then on every declared non-primary-key column only"
+            ),
+            "delete": (
+                "grant table-level DELETE only when owner.delete is nonempty and "
+                "the table has its sealed retention object/profile; for canonical "
+                "tables retention.deleteOwner must equal owner.delete"
+            ),
+            "noImplicitPrivileges": (
+                "REVOKE ALL from both application roles before applying each exact "
+                "entry; no table-level UPDATE, TRUNCATE, REFERENCES or TRIGGER "
+                "privilege"
+            ),
+        }
+        and role_manifest.get("roleOrder") == ["eva_runtime", "eva_dbos"]
+        and role_manifest.get("entryOrder")
+        == (
+            "schemaFamily canonical table order followed by noncanonical table "
+            "order; updateColumns follow declared column order minus primaryKey"
+        )
+        and role_manifest.get("entryCount") == len(role_entries) == 44
+        and role_manifest.get("updateTableCount")
+        == sum(bool(row["updateColumns"]) for row in expected_role_entries)
+        == 31
+        and role_manifest.get("deleteTableCount")
+        == sum("DELETE" in row["tablePrivileges"] for row in expected_role_entries)
+        == 44
+        and role_entries == expected_role_entries
+        and role_entries_sha256
+        == role_manifest.get("orderedEntriesCanonicalSha256")
+        == EXPECTED_ROLE_GRANT_MANIFEST_SHA256
+        and role_manifest.get("orderedEntriesCanonicalization")
+        == (
+            "UTF-8 JSON of entries array with lexicographically sorted object keys, "
+            "separators comma/colon, ensure_ascii=false and no trailing LF"
+        )
+        and role_manifest.get("failClosedRule")
+        == (
+            "reject any role, table, privilege, update column, order, count, "
+            "source-profile or canonical-hash mismatch"
+        )
+        and role_source_valid
+        and all(
+            "UPDATE" not in row["tablePrivileges"]
+            and not (set(row["updateColumns"]) & set(table.get("primaryKey", [])))
+            for row, table in zip(role_entries, all_tables)
+        ),
+        "schema role/table/column grant authority is not exact",
+    )
+
+    collation_manifest = conventions.get("collationManifest", {})
+    eligible_types = ["text", "text[]", "varchar(64)"]
+    expected_collation_entries: list[dict[str, Any]] = []
+    collation_source_valid = True
+    for table in all_tables:
+        parsed = declared_columns(table)
+        if parsed is None:
+            collation_source_valid = False
+            continue
+        baseline = set(table.get("baseline4BColumnsPreserved", []))
+        for declaration, (name, declared_type) in zip(table.get("columns", []), parsed):
+            if declared_type not in eligible_types:
+                continue
+            expected_collation_entries.append(
+                {
+                    "table": table["table"],
+                    "column": name,
+                    "declaredType": declared_type,
+                    "physicalAction": (
+                        "alter_preserved_4b"
+                        if declaration in baseline
+                        else "create_or_add"
+                    ),
+                }
+            )
+    collation_entries = collation_manifest.get("entries", [])
+    collation_entries_sha256 = sha256_bytes(
+        canonical_json_bytes(expected_collation_entries)
+    )
+    _need(
+        errors,
+        set(collation_manifest)
+        == {
+            "contract",
+            "collation",
+            "eligibleDeclaredTypes",
+            "materialization",
+            "downgradeOfPreserved4B",
+            "entryOrder",
+            "entryCount",
+            "preserved4BAlterCount",
+            "orderedEntriesCanonicalization",
+            "orderedEntriesCanonicalSha256",
+            "failClosedRule",
+            "entries",
+        }
+        and collation_manifest.get("contract") == "Eva24DPostgresqlCollationManifest/v1"
+        and collation_manifest.get("collation") == "C"
+        and collation_manifest.get("eligibleDeclaredTypes") == eligible_types
+        and collation_manifest.get("materialization")
+        == (
+            'every entry is physically declared with explicit PostgreSQL COLLATE "C"; '
+            "the five alter_preserved_4b entries are changed inside the admitted "
+            "empty-only 4d_0003 transaction without editing historical 4B files"
+        )
+        and collation_manifest.get("downgradeOfPreserved4B")
+        == (
+            'restore the five historical columns to COLLATE "default" when 4d_0003 '
+            "downgrades to 4b_0002"
+        )
+        and collation_manifest.get("entryOrder")
+        == (
+            "schemaFamily canonical table order followed by noncanonical table "
+            "order, then declared column order"
+        )
+        and collation_manifest.get("entryCount")
+        == len(collation_entries)
+        == len(expected_collation_entries)
+        == 201
+        and collation_manifest.get("preserved4BAlterCount")
+        == sum(
+            row["physicalAction"] == "alter_preserved_4b"
+            for row in expected_collation_entries
+        )
+        == 5
+        and collation_entries == expected_collation_entries
+        and collation_entries_sha256
+        == collation_manifest.get("orderedEntriesCanonicalSha256")
+        == EXPECTED_COLLATION_MANIFEST_SHA256
+        and collation_manifest.get("orderedEntriesCanonicalization")
+        == (
+            "UTF-8 JSON of entries array with lexicographically sorted object keys, "
+            "separators comma/colon, ensure_ascii=false and no trailing LF"
+        )
+        and collation_manifest.get("failClosedRule")
+        == (
+            "reject an eligible column missing from the manifest, an ineligible "
+            "entry, a non-C physical attcollation, any order/count/hash mismatch or "
+            "a preserved-4B action-set mismatch"
+        )
+        and collation_source_valid,
+        "schema explicit-C collation authority is not exact",
+    )
+
+    installations = next(
+        (
+            table
+            for table in tables
+            if isinstance(table, dict)
+            and table.get("table") == "eva_core.installations"
+        ),
+        {},
+    )
+    object_store_contracts = [
+        row
+        for row in installations.get("payloadContracts", [])
+        if isinstance(row, dict) and row.get("column") == "object_store_payload"
+    ]
+    object_store_contract = (
+        object_store_contracts[0] if len(object_store_contracts) == 1 else {}
+    )
+    expected_projection_authority = {
+        "installationId": {
+            "scalarColumn": "installation_id",
+            "payloadField": "installation_id",
+            "rule": "byte_equal",
+        },
+        "objectStoreId": {
+            "scalarColumn": "object_store_id",
+            "payloadField": "object_store_id",
+            "algorithm": "UUIDv5_SHA1_namespace_name",
+            "namespaceUuid": EXPECTED_OBJECT_STORE_NAMESPACE_UUID,
+            "nameEncoding": "UTF-8",
+            "sealedEvaLogicalId": "object-store:noor-4d:eva",
+            "sealedEvaUuid": "62e07e08-9793-5eee-a1f7-2ed9305211de",
+        },
+        "absoluteHostPath": {
+            "payloadField": "absolute_host_path_in_contract",
+            "requiredValue": False,
+        },
+    }
+    projected_store_id = str(
+        uuid.uuid5(
+            uuid.UUID(EXPECTED_OBJECT_STORE_NAMESPACE_UUID),
+            expected_projection_authority["objectStoreId"]["sealedEvaLogicalId"],
+        )
+    )
+    _need(
+        errors,
+        set(object_store_contract)
+        == {
+            "column",
+            "allowed",
+            "requiredWhen",
+            "authorityEquality",
+            "projectionAuthority",
+        }
+        and object_store_contract.get("allowed") == ["ObjectStore/v1"]
+        and object_store_contract.get("requiredWhen") == "object_store_id IS NOT NULL"
+        and object_store_contract.get("authorityEquality")
+        == (
+            "installation_id is byte-equal to payload.installation_id; scalar "
+            "object_store_id is UUIDv5(namespace "
+            f"{EXPECTED_OBJECT_STORE_NAMESPACE_UUID}, UTF-8 payload.object_store_id); "
+            "payload.absolute_host_path_in_contract=false"
+        )
+        and object_store_contract.get("projectionAuthority")
+        == expected_projection_authority
+        and projected_store_id
+        == expected_projection_authority["objectStoreId"]["sealedEvaUuid"],
+        "schema ObjectStore scalar/payload projection authority is not exact",
+    )
+
+    principal_bindings = next(
+        (
+            table
+            for table in tables
+            if isinstance(table, dict)
+            and table.get("table") == "eva_core.principal_bindings"
+        ),
+        {},
+    )
+    principal_binding_export = principal_bindings.get("export", {})
+    expected_principal_binding_selection = {
+        "operator": "set_union_distinct",
+        "directReferenceClosure": {
+            "sourceFamilies": [
+                "eva_core.ingress_requests",
+                "eva_core.messages",
+                "eva_core.consent_grants",
+            ],
+            "rule": (
+                "existing exported direct principal-binding-reference closure "
+                "scoped to the target tenant and installation"
+            ),
+        },
+        "relationshipChannelBindingEvidenceClosure": {
+            "relationshipTable": "eva_core.relationships",
+            "relationshipScopeColumns": ["tenant_id", "installation_id"],
+            "relationshipEvidenceArrayColumn": "channel_binding_evidence_refs",
+            "bindingTable": "eva_core.principal_bindings",
+            "bindingTenantColumn": "tenant_id",
+            "bindingVerificationEvidenceColumn": "verification_evidence_id",
+            "matchRule": (
+                "binding.tenant_id=relationship.tenant_id AND "
+                "binding.verification_evidence_id="
+                "ANY(relationship.channel_binding_evidence_refs)"
+            ),
+        },
+        "selectedBindingEvidenceInstallationValidation": {
+            "evidenceTable": "eva_evidence.evidence_envelopes",
+            "bindingEvidenceColumn": "verification_evidence_id",
+            "requiredEvidenceScopeColumns": ["tenant_id", "installation_id"],
+            "requiredScope": "target tenant and installation",
+            "onMismatch": "reject_export_without_widening",
+        },
+    }
+    _need(
+        errors,
+        set(principal_binding_export)
+        == {
+            "recordContract",
+            "relativePath",
+            "primaryKeyOrder",
+            "mapping",
+            "selectionAuthority",
+        }
+        and principal_binding_export.get("recordContract")
+        == "EvaCanonicalRecord/eva_core.principal_bindings/v1"
+        and principal_binding_export.get("relativePath")
+        == "records/006-eva_core-principal-bindings-v1.jsonl"
+        and principal_binding_export.get("primaryKeyOrder")
+        == ["tenant_id", "principal_binding_id"]
+        and principal_binding_export.get("mapping")
+        == (
+            "selected binding IDs are the set union of the existing direct exported "
+            "ingress/message/consent binding-reference closure and every same-tenant "
+            "binding whose verification_evidence_id appears in an exported "
+            "relationship.channel_binding_evidence_refs; all columns one-to-one; "
+            "reject when selected binding verification evidence does not belong to "
+            "the target installation rather than widening export scope"
+        )
+        and principal_binding_export.get("selectionAuthority")
+        == expected_principal_binding_selection,
+        "schema principal-binding export selection authority is not exact",
+    )
+
+    relationships = next(
+        (
+            table
+            for table in tables
+            if isinstance(table, dict)
+            and table.get("table") == "eva_core.relationships"
+        ),
+        {},
+    )
+    expected_relationship_validation = [
+        (
+            "every channel_binding_evidence_refs element must resolve to "
+            "eva_evidence.evidence_envelopes in the same tenant and installation "
+            "before commit; each element may select every same-tenant "
+            "eva_core.principal_bindings row whose verification_evidence_id matches, "
+            "subject to the selected binding evidence belonging to this "
+            "relationship's target installation"
+        )
+    ]
+    _need(
+        errors,
+        relationships.get("referenceValidations") == expected_relationship_validation
+        and relationships.get("foreignKeys", []).count(
+            "fk_relationships_source_event: "
+            "(tenant_id,installation_id,source_event_id) -> "
+            "eva_memory.source_events(tenant_id,installation_id,source_event_id) "
+            "ON DELETE RESTRICT"
+        )
+        == 1,
+        "schema relationship reference-validation authority is not exact",
     )
 
     portable = schema.get("portableExport", {}).get(
@@ -3159,15 +3673,15 @@ def _check_schedule_artifact(
     crosswalk_valid = (
         namespace is not None
         and isinstance(crosswalk, list)
-        and len(crosswalk) == 405
+        and len(crosswalk) == 406
         and [row.get("logical_id") for row in crosswalk if isinstance(row, dict)]
         == sorted(row.get("logical_id") for row in crosswalk if isinstance(row, dict))
         and len({row.get("logical_id") for row in crosswalk if isinstance(row, dict)})
-        == 405
+        == 406
         and len(
             {row.get("portable_uuid") for row in crosswalk if isinstance(row, dict)}
         )
-        == 405
+        == 406
         and all(
             isinstance(row, dict)
             and str(uuid.uuid5(namespace, row.get("logical_id", "")))
@@ -5136,7 +5650,7 @@ def _check_object_format(fmt: dict[str, Any], errors: list[str]) -> None:
         physical.get("physicalCasKey")
         == "lowercase hex ObjectRef.ciphertext_sha256 over the complete stored envelope"
         and physical.get("repositoryRelativeCasPath")
-        == "sha256/{ciphertext_sha256[0:2]}/{ciphertext_sha256[2:64]}"
+        == "sha256/{ciphertext_sha256[0:2]}/{ciphertext_sha256}.eva2xo"
         and physical.get("absoluteHostPathStoredInContract") is False
         and "filesystem name derived from object_id is forbidden"
         in physical.get("canonicalMapping", "")
@@ -5160,6 +5674,45 @@ def _check_object_format(fmt: dict[str, Any], errors: list[str]) -> None:
         and atomic.get("temporaryObjectIsProof") is False
         and atomic.get("createReceiptWithoutReadbackIsProof") is False,
         "object create/readback/reconcile procedure is not fail closed",
+    )
+    _need(
+        errors,
+        atomic.get("orderedSteps")
+        == [
+            "commit the canonical object intent and immutable AAD fields",
+            (
+                "reserve the unique object create attempt, generate one random-"
+                "nonce envelope, compute its ciphertextSha256, write it under an "
+                "attempt-scoped non-final temporary name and durably flush its bytes"
+            ),
+            (
+                "commit the candidate ciphertextSha256 and temporary-object binding "
+                "before any final CAS installation"
+            ),
+            (
+                "derive sha256/{first two digest hex}/{full 64 digest hex}.eva2xo, "
+                "install that final CAS path with an atomic no-replace operation and "
+                "durably flush the parent namespace"
+            ),
+            (
+                "open the exact CAS path independently, recompute ciphertextSha256 "
+                "and stored envelope length, authenticate and decrypt it, and match "
+                "every AAD field plus plaintext hash and length"
+            ),
+            (
+                "atomically select that verified digest in the canonical object "
+                "record if no digest is selected; if the same logical object already "
+                "selected another digest, read and authenticate the selected digest "
+                "and adopt it only when the full reserved binding and plaintext are "
+                "equal"
+            ),
+            (
+                "only the DB-selected digest and its exact independent readback may "
+                "populate ObjectRef and satisfy the document proof floor; an "
+                "unselected candidate or cleanup is never proof"
+            ),
+        ],
+        "object create/readback ordered CAS steps are not exact",
     )
 
 
