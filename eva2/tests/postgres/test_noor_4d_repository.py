@@ -35,7 +35,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 SCHEDULE_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-concurrency-crash-schedules-v1.json"
 )
-SCHEDULE_SHA256 = "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9"
+SCHEDULE_SHA256 = "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
 
 _TABLE_SPECS = {spec["table"]: spec for spec in CATALOG_SPEC["canonical_tables"]}
 
@@ -227,22 +227,12 @@ def noor_postgres_engine() -> Iterator[Engine]:
             engine.dispose()
 
 
-def test_schedule_non_incrementing_revision_cas_rows_remain_rejected() -> None:
+def test_schedule_full_cas_rows_match_repository_profiles_and_revision_rules() -> None:
     schedule = _schedule()
     facts = _facts()
     cas = {spec["table"]: spec["cas"] for spec in CATALOG_SPEC["canonical_tables"]}
-    actual: set[tuple[str, str, str, str]] = set()
-    all_revision_profile_conflicts: set[tuple[str, str]] = set()
-    happy_same_revision_occurrences: list[tuple[str, str, str]] = []
-    happy_snapshots = {
-        "planCommitted",
-        "calendarProven",
-        "replyResponseInFlight",
-        "confirmationInFlight",
-        "confirmationProven",
-        "outcomeInFlight",
-        "outcomeAcknowledged",
-    }
+    profile_counts: dict[str, int] = {}
+    unique_edges: set[tuple[str, str, str]] = set()
 
     for snapshot in schedule["portableSnapshotAuthority"]["snapshotDefinitions"]:
         for replacement in snapshot["delta"]["full_cas_replacements"]:
@@ -250,73 +240,22 @@ def test_schedule_non_incrementing_revision_cas_rows_remain_rejected() -> None:
             after_id = replacement["replacement_fact_id"]
             before = facts[before_id]["portable_record"]["row"]
             after = facts[after_id]["portable_record"]["row"]
-            if not cas[replacement["table"]].startswith("revisionCas"):
-                continue
-            if after.get("revision") != before.get("revision") + 1:
-                all_revision_profile_conflicts.add((before_id, after_id))
-            if snapshot["snapshot_id"] in happy_snapshots and before.get(
-                "revision"
-            ) == after.get("revision"):
-                happy_same_revision_occurrences.append(
-                    (replacement["table"], before_id, after_id)
-                )
-            if before.get("revision") == after.get("revision") == 1:
-                actual.add(
-                    (
-                        snapshot["snapshot_id"],
-                        replacement["table"],
-                        before_id,
-                        after_id,
-                    )
-                )
+            profile = cas[replacement["table"]]
+            profile_counts[profile] = profile_counts.get(profile, 0) + 1
+            unique_edges.add((replacement["table"], before_id, after_id))
+            if profile.startswith("revisionCas"):
+                assert type(before.get("revision")) is int
+                assert type(after.get("revision")) is int
+                assert after["revision"] == before["revision"] + 1
+            else:
+                assert profile == "currentSwap"
 
-    assert len(all_revision_profile_conflicts) == 14
-    assert len(happy_same_revision_occurrences) == 8
-    assert len(set(happy_same_revision_occurrences)) == 7
-    assert actual == {
-        (
-            "planCommitted",
-            "eva_core.model_attempts",
-            "model-attempt/plan-reserved",
-            "model-attempt/plan-responded",
-        ),
-        (
-            "calendarProven",
-            "eva_effects.read_attempts",
-            "read-attempt/calendar-verify-dispatch",
-            "read-attempt/calendar-verify",
-        ),
-        (
-            "replyResponseInFlight",
-            "eva_core.model_attempts",
-            "model-attempt/document-dispatch-authorized",
-            "model-attempt/document-responded",
-        ),
-        (
-            "confirmationInFlight",
-            "eva_core.model_attempts",
-            "model-attempt/document-dispatch-authorized",
-            "model-attempt/document-responded",
-        ),
-        (
-            "outcomeInFlight",
-            "eva_core.model_attempts",
-            "model-attempt/reply-dispatch-authorized",
-            "model-attempt/reply-responded",
-        ),
-        (
-            "planCommitted.correctionGen1",
-            "eva_core.commitments",
-            "commitment/open",
-            "correction/commitment/gen1-prepared",
-        ),
-        (
-            "planCommitted.correctionGen1",
-            "eva_core.attention_items",
-            "attention/pending",
-            "correction/attention/gen1-pending",
-        ),
+    assert profile_counts == {
+        "currentSwap": 5,
+        "revisionCas": 95,
+        "revisionCas plus ack_claim_revision CAS": 2,
     }
+    assert len(unique_edges) == 72
 
 
 def test_repository_requires_and_remains_in_original_caller_transaction(

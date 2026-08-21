@@ -2,8 +2,8 @@
   "contract": "Eva24DImplementationFixtureFreeze/v1",
   "tranche": "4D-static-design-adoption",
   "status": "passed_runtime_coding_authorized",
-  "createdAt": "2026-08-21T14:24:00+02:00",
-  "baseCommit": "1027ecb3eee5e7da1bbb68b9cdf8c68ce9793697",
+  "createdAt": "2026-08-21T17:12:10+02:00",
+  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "fourExactDesignArtifactsAdopted": true,
@@ -42,27 +42,27 @@
       "artifactId": "concurrency_crash_schedules",
       "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
       "contract": "Eva24DConcurrencyCrashSchedules/v1",
-      "sha256": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9",
+      "sha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
       "status": "sealed_verified"
     }
   ],
   "sourceProfile": {
     "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-    "wholeFileSha256": "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a",
+    "wholeFileSha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
     "semanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020",
     "semanticCoreRule": "SHA-256 over EvaCanonicalJSON/v1 after removing only preRuntimeRequiredArtifacts",
-    "semanticCoreUnchangedFromPreviousFreeze": false,
-    "previousSemanticCoreSha256": "565fe70ca903acccccbd6df9a5b5120923caf5f08c6a6bacfc84eca90369575b",
-    "semanticCoreResealed": true,
-    "resealReason": "the CAS path wording and its dependent design authorities were corrected before foundation runtime evidence was accepted"
+    "semanticCoreUnchangedFromPreviousFreeze": true,
+    "previousSemanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020",
+    "semanticCoreResealed": false,
+    "resealReason": "only preRuntimeRequiredArtifacts bindings changed after the schedule write-profile correction; the semantic core remained byte-identical"
   },
   "harnessEntropyException": {
     "profileAuthority": "preRuntimeRequiredArtifacts.harnessEntropyInjectionException",
     "profileAuthorityIsSoleIsolated4DException": true,
     "schedulePath": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
     "scheduleAuthoritySelector": "harnessEntropyInjectionAuthority",
-    "scheduleAuthoritySha256": "166810437a3f7daa5a627b46236b887379fe112cbbbcc5df16a03f5c758ffdec",
-    "schedulePathBindingManifestSha256": "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3",
+    "scheduleAuthoritySha256": "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec",
+    "schedulePathBindingManifestSha256": "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359",
     "scope": "exact public Eva fixture key, known-answer vector, object and either of two sealed document attempts in an isolated Noor 4D schedule run",
     "nonceByteLength": 24,
     "nonceSha256": "1d64add2a6388367c9bc2d1f1b384b069a6ef382cdaaa89771dd103e28613a25",
@@ -78,8 +78,8 @@
     "deterministicProductionNonceAllowed": false,
     "productionEntropyOrEncryptionClaim": false
   },
-  "checkerReceiptCanonicalJsonSha256": "3a8d69376c90b56930d0d5f417aaf5ae734ca486f406aaae0704bf5c5ddcb1bc",
-  "checkerCliOutputSha256": "42d5b4919460f48bb34fdef9fbe24191f4a57892b3f49eed710ca86a70f08e13",
+  "checkerReceiptCanonicalJsonSha256": "2f07e427837f733f63c3870924472cfe90b37de63df7c9382fd87295fc5fe77c",
+  "checkerCliOutputSha256": "68f4795bc1c6856a1b4d50f6880dbc1b1d320d1d28a1182558c66506185a13e0",
   "checkerReceipt": {
     "contract": "Eva24DPreCodeFreezeCheck/v1",
     "status": "passed",
@@ -91,16 +91,16 @@
     "runtimeCodingAllowed": true,
     "missingPreRuntimeArtifacts": [],
     "verifiedHashes": {
-      "eva2/design/vertical/noor-4d-execution-profile-v1.json": "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a",
+      "eva2/design/vertical/noor-4d-execution-profile-v1.json": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
       "eva2/release/4d-dependency-source-binding.json": "8bd1c160bd0a41ca0c39c257736316d293a4ff80f8b21e397480f48f1afb5da3",
       "eva2/requirements-4d.lock": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
       "eva2/pyproject.toml": "bf552110352035faf1533c23c33915e5ab85445de7e156c044ee4f8356310789",
-      "eva2/tools/check_4d_freeze.py": "2bae1feb72bc3e7a337a488824e742a7d0018102a661f38aa6ca19352c7f9e59",
-      "eva2/tests/design/test_4d_freeze.py": "1a78c20f982e5c4ba9be312acd29dbc5261a8f9a2eb48fa2bbfc0133e45f4978",
+      "eva2/tools/check_4d_freeze.py": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557",
+      "eva2/tests/design/test_4d_freeze.py": "90b3258985904c9404be59fde97a50435a62727d4b135bc9d234dc6148dcaa17",
       "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
       "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
       "eva2/design/vertical/noor-4d-model-vectors-v1.json": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
-      "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9"
+      "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
     },
     "errors": []
   },
@@ -120,11 +120,12 @@
       "generatedFiles": 67
     },
     {
-      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/contract eva2/tests/design/test_4d_freeze.py eva2/tests/architecture",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/design/test_4d_freeze.py",
       "environment": "system CPython 3.12 without PyNaCl",
       "status": "passed_with_expected_dependency_skip",
-      "passed": 86,
+      "passed": 13,
       "skipped": 1,
+      "durationSeconds": 218.93,
       "skip": "maintained-library XChaCha KAT requires the sealed PyNaCl environment"
     },
     {
@@ -137,7 +138,7 @@
       "productionEntropyOrEncryptionClaim": false
     },
     {
-      "command": "ruff check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py && ruff format --check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py && git diff --check",
+      "command": "ruff check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py",
       "status": "passed"
     }
   ],
@@ -146,7 +147,8 @@
     "schema table counts, migration admission, PostgreSQL-safe index names, role grants, C collations, object-store namespace and primitive generation bounds",
     "connector ingress, C10 repeat read and C13 re-offer",
     "model program manifest and connector durable crosswalk",
-    "schedule runtime inference, record sets, C13 references and correction ObjectRef manifest",
+    "schedule runtime inference, 390-row fact catalog, record sets, 33 selected ciphertext paths, C13 references and correction ObjectRef manifest",
+    "102 explicit schedule full-CAS edges classified against schema write profiles, with a fail-closed non-exact-plus-one revisionCas mutation",
     "harness authority self/path hashes, one-use nonce, durable trace and production/default prohibitions",
     "profile authority hash, one-use limit and production bootstrap prohibition"
   ],

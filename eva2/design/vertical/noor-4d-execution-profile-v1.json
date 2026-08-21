@@ -103,7 +103,7 @@
         "artifactId": "concurrency_crash_schedules",
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
         "contract": "Eva24DConcurrencyCrashSchedules/v1",
-        "expectedSha256": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9",
+        "expectedSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
         "status": "sealed_verified",
         "requiredContents": "one deterministic duplicate-overlap barrier schedule with two exact caller outcomes and all fifteen crash schedules with canonical pre-crash/post-recovery state, row/count/hash deltas, exact model/connector invocation deltas, byte-identical terminal replay and exact profile-authoritative harness-only entropy authority"
       }
@@ -114,10 +114,10 @@
       "authorityPrecedence": "This current-profile adoption authority is the sole isolated-4D exception to encryptedObjectFormat.encryptionProcedure and nonceRule; the schedule artifact cannot grant, override or widen this exception.",
       "scheduleBinding": {
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
-        "wholeFileSha256": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9",
+        "wholeFileSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
         "authoritySelector": "harnessEntropyInjectionAuthority",
-        "authoritySha256": "166810437a3f7daa5a627b46236b887379fe112cbbbcc5df16a03f5c758ffdec",
-        "bindingManifestSha256": "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3"
+        "authoritySha256": "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec",
+        "bindingManifestSha256": "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359"
       },
       "testBootstrap": {
         "onlyAllowedBootstrap": "isolated_noor_4d_schedule_harness",

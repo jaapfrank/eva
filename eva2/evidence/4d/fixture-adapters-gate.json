@@ -2,8 +2,8 @@
   "contract": "Eva24DFixtureAdaptersGate/v1",
   "tranche": "4D-fixture-adapters",
   "status": "passed_fixture_adapters_only",
-  "createdAt": "2026-08-21T15:10:29+02:00",
-  "baseCommit": "4f3c84827ef1954c49e477ad83d46c632be68b8a",
+  "createdAt": "2026-08-21T17:12:10+02:00",
+  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "sealedConnectorFixtureRuntimeProven": true,
@@ -20,15 +20,15 @@
   "authorityBindings": {
     "implementationFixtureFreeze": {
       "path": "eva2/evidence/4d/implementation-fixture-freeze.json",
-      "sha256": "3e61cba4529cf76c3f4f9d7ccd90e2d90795cab74b06b5d5cabc4c29acadb86c"
+      "sha256": "db65bcf048f2fed5a80de9abf1bd3c62b54a71c4c7ee877570a5a26ddea25aca"
     },
     "foundationRuntimeGate": {
       "path": "eva2/evidence/4d/foundation-runtime-gate.json",
-      "sha256": "ec19c9aea73e345f55c0c59c1c5fb3a2ec392f87526fb5ca6cafbb32b8c9654b"
+      "sha256": "81f47d32548f378adc1ac74417478fe3309b6513f19cc3a50fc5ca7659050ec0"
     },
     "executionProfile": {
       "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-      "sha256": "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a"
+      "sha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
     },
     "connectorFixtures": {
       "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
@@ -44,7 +44,7 @@
     },
     "freezeChecker": {
       "path": "eva2/tools/check_4d_freeze.py",
-      "sha256": "2bae1feb72bc3e7a337a488824e742a7d0018102a661f38aa6ca19352c7f9e59"
+      "sha256": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557"
     }
   },
   "sourceManifestEncoding": "SHA-256 over UTF-8 lines '<sha256>  <path>\\n' sorted by path",
@@ -89,7 +89,7 @@
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/connectors tests/model tests/architecture tests/contract/test_connector_rpc_ack_and_evidence_v2.py tests/contract/test_canonical_json.py",
       "status": "passed",
       "passed": 202,
-      "durationSeconds": 17.75
+      "durationSeconds": 16.82
     },
     "freeze": {
       "workdir": ".",

@@ -57,7 +57,7 @@ EXPECTED_ARTIFACT_SHA256 = {
         "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
     ),
     SCHEDULE_ARTIFACT_PATH: (
-        "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9"
+        "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
     ),
 }
 EXPECTED_ARTIFACT_CONTRACTS = {
@@ -75,10 +75,10 @@ PRE_RUNTIME_GATE_RULE = (
     "any failure resets it to false"
 )
 EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256 = (
-    "166810437a3f7daa5a627b46236b887379fe112cbbbcc5df16a03f5c758ffdec"
+    "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec"
 )
 EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256 = (
-    "1c70894d39eb5a9e6b4e40ad763669ea955a4f9e16990f8125b8bf95389e35d3"
+    "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359"
 )
 EXPECTED_HARNESS_NONCE_HEX = "000102030405060708090a0b0c0d0e0f1011121314151617"
 EXPECTED_HARNESS_NONCE_SHA256 = (
@@ -3454,7 +3454,7 @@ def _check_harness_entropy_authority(
             "selected ciphertext or either allowed attempt/object fact ID MUST "
             "appear exactly once in the corresponding exhaustive pointer set."
         )
-        and bindings.get("selected_ciphertext_occurrence_count") == 29
+        and bindings.get("selected_ciphertext_occurrence_count") == 33
         and bindings.get("selected_ciphertext_occurrence_paths") == ciphertext_paths
         and bindings.get("precomputed_object_manifest_paths") == manifest_paths
         and bindings.get("selected_object_delta_insert_paths") == delta_paths
@@ -3520,7 +3520,7 @@ def _check_schedule_artifact(
             "count_vector_length": 40,
             "duplicate_primary_key_errors": 0,
             "foreign_key_errors": 0,
-            "portable_fact_count": 388,
+            "portable_fact_count": 390,
             "portable_schema_validation_errors": 0,
             "record_set_vector_length": 39,
             "runtime_inference_required": False,
@@ -3577,10 +3577,10 @@ def _check_schedule_artifact(
     catalog_valid = (
         catalog.get("contract") == "Eva4DPortableFixtureFactCatalog/v1"
         and catalog.get("schema_version") == 1
-        and catalog.get("fact_count") == 388
+        and catalog.get("fact_count") == 390
         and isinstance(facts, list)
-        and len(facts) == 388
-        and len(fact_by_id) == 388
+        and len(facts) == 390
+        and len(fact_by_id) == 390
     )
     connector_bindings = {
         row.get("logicalBindingKey"): row
@@ -3696,7 +3696,7 @@ def _check_schedule_artifact(
         and catalog.get("catalog_sha256")
         == sha256_bytes(canonical_json_bytes(catalog_hashes))
         and crosswalk_valid,
-        "schedule 388-fact catalog, wrappers or portable schema validation is not exact",
+        "schedule 390-fact catalog, wrappers or portable schema validation is not exact",
     )
     _check_harness_entropy_authority(schedule, profile, fact_by_id, errors)
 
@@ -3780,6 +3780,9 @@ def _check_schedule_artifact(
     materialized_facts: dict[str, dict[tuple[str, bytes], str]] = {}
     materialized_objects: dict[str, dict[str, dict[str, Any]]] = {}
     snapshots_valid = structure_valid
+    full_cas_profile_counts: dict[str, int] = {}
+    full_cas_edges: set[tuple[str, str, str]] = set()
+    full_cas_replacements_valid = True
 
     def fact_key(fact: dict[str, Any]) -> tuple[str, bytes]:
         return (
@@ -3845,19 +3848,50 @@ def _check_schedule_artifact(
             else:
                 del state[key]
         for reference in delta.get("full_cas_replacements", []):
+            if not isinstance(reference, dict):
+                snapshots_valid = False
+                full_cas_replacements_valid = False
+                continue
             old_id = reference.get("expected_base_fact_id")
             new_id = reference.get("replacement_fact_id")
             old_fact = fact_by_id.get(old_id, {})
             new_fact = fact_by_id.get(new_id, {})
             old_key = fact_key(old_fact)
             new_key = fact_key(new_fact)
-            if not (
+            exact_replacement = (
                 exact_fact_reference(reference, old_id)
                 and exact_fact_reference(reference, new_id)
                 and old_key == new_key
                 and state.get(old_key) == old_id
+            )
+            table = reference.get("table")
+            cas_profile = table_definitions.get(table, {}).get("cas")
+            if isinstance(cas_profile, str):
+                full_cas_profile_counts[cas_profile] = (
+                    full_cas_profile_counts.get(cas_profile, 0) + 1
+                )
+            if (
+                isinstance(table, str)
+                and isinstance(old_id, str)
+                and isinstance(new_id, str)
             ):
+                full_cas_edges.add((table, old_id, new_id))
+            old_row = old_fact.get("portable_record", {}).get("row", {})
+            new_row = new_fact.get("portable_record", {}).get("row", {})
+            if isinstance(cas_profile, str) and cas_profile.startswith("revisionCas"):
+                old_revision = old_row.get("revision")
+                new_revision = new_row.get("revision")
+                exact_replacement = (
+                    exact_replacement
+                    and type(old_revision) is int
+                    and type(new_revision) is int
+                    and new_revision == old_revision + 1
+                )
+            elif cas_profile != "currentSwap":
+                exact_replacement = False
+            if not exact_replacement:
                 snapshots_valid = False
+                full_cas_replacements_valid = False
             else:
                 state[old_key] = new_id
         for reference in delta.get("inserts", []):
@@ -4021,6 +4055,18 @@ def _check_schedule_artifact(
             snapshots_valid = False
     _need(
         errors,
+        full_cas_replacements_valid
+        and full_cas_profile_counts
+        == {
+            "currentSwap": 5,
+            "revisionCas": 95,
+            "revisionCas plus ack_claim_revision CAS": 2,
+        }
+        and len(full_cas_edges) == 72,
+        "schedule full CAS replacements are not the exact ordered +1 revisionCas chains or sealed currentSwap set",
+    )
+    _need(
+        errors,
         snapshots_valid,
         "schedule 31 snapshot deltas, 39 record sets, count40, relations or object manifests are not exact",
     )
@@ -4156,7 +4202,7 @@ def _check_schedule_artifact(
             walk_fact_references(value, f"$.portableSnapshotAuthority.{key}")
     _need(
         errors,
-        schedule_references_valid and fact_reference_count == 4552,
+        schedule_references_valid and fact_reference_count == 4690,
         "schedule fact or snapshot references do not all resolve exactly",
     )
 

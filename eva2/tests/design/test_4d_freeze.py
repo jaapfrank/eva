@@ -506,6 +506,17 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 "logical_relational_id_crosswalk"
             ][0]["portable_uuid"] = "00000000-0000-0000-0000-000000000000"
 
+        def revision_cas_not_incremented(artifact: dict[str, Any]) -> None:
+            fact = next(
+                row
+                for row in artifact["portableSnapshotAuthority"]["fixtureFactCatalog"][
+                    "facts"
+                ]
+                if row["fact_id"] == "model-attempt/plan-responded"
+            )
+            self.assertEqual(3, fact["portable_record"]["row"]["revision"])
+            fact["portable_record"]["row"]["revision"] = 2
+
         for label, mutate, expected in (
             (
                 "runtime inference",
@@ -550,7 +561,12 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             (
                 "logical-relational UUID crosswalk",
                 logical_relational_uuid_crosswalk,
-                "388-fact catalog, wrappers or portable schema validation",
+                "390-fact catalog, wrappers or portable schema validation",
+            ),
+            (
+                "non-incrementing revision CAS",
+                revision_cas_not_incremented,
+                "exact ordered +1 revisionCas chains",
             ),
         ):
             with self.subTest(label=label):

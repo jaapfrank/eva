@@ -337,7 +337,7 @@ def test_bundle_is_content_addressed_and_rejects_one_changed_byte() -> None:
         connector_artifact_bytes=connector,
     )
     assert loaded.profile_sha256 == (
-        "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a"
+        "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
     )
     assert loaded.model_sha256 == (
         "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"

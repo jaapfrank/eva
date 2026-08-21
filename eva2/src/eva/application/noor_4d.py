@@ -52,7 +52,7 @@ from eva.contracts.canonical_json import require_canonical_bytes
 
 
 PROFILE_ARTIFACT_SHA256 = (
-    "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a"
+    "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
 )
 MODEL_ARTIFACT_SHA256 = (
     "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"

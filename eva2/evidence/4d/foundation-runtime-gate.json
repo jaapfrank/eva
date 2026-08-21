@@ -2,17 +2,25 @@
   "contract": "Eva2Tranche4DFoundationRuntimeEvidence/v1",
   "tranche": "4D-foundation-runtime",
   "status": "passed_foundation_runtime_only",
-  "createdAt": "2026-08-21T14:30:00+02:00",
-  "baseCommit": "1027ecb3eee5e7da1bbb68b9cdf8c68ce9793697",
+  "createdAt": "2026-08-21T17:12:10+02:00",
+  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "implementedSlices": [
       "empty-only PostgreSQL 16.13 catalog expansion and reversible migration admission",
       "one-snapshot canonical portable producer plus DBOS-free standalone local reader",
-      "encrypted object envelope, immutable filesystem CAS, isolated fixture nonce harness and P-256 P1363 ACK verification"
+      "encrypted object envelope, immutable filesystem CAS, isolated fixture nonce harness and P-256 P1363 ACK verification",
+      "caller-owned scoped exact-row PostgreSQL repository primitives, statically checked in this reseal",
+      "framework-neutral in-process Noor fixture flow with sealed model and connector adapters"
     ],
+    "repositorySourceAndStaticCasOracleBound": true,
+    "repositoryLivePostgresBehaviorProven": false,
+    "frameworkNeutralFixtureFlowProven": true,
+    "applicationDatabaseDurabilityOrTransactionalityProven": false,
+    "sealedFixtureAdaptersExercisedByApplicationGate": true,
     "fullFourDVerticalBehaviorProven": false,
-    "connectorOrModelRuntimeProven": false,
+    "sealedFixtureVisibleOutputsProven": true,
+    "liveConnectorOrModelProviderRuntimeProven": false,
     "providerOrExternalNetworkBehaviorProven": false,
     "dbosWorkflowOrApiBehaviorProven": false,
     "fourERestoreUpdateOrRollbackProven": false,
@@ -22,26 +30,26 @@
   "authorityBindings": {
     "implementationFixtureFreeze": {
       "path": "eva2/evidence/4d/implementation-fixture-freeze.json",
-      "sha256": "3e61cba4529cf76c3f4f9d7ccd90e2d90795cab74b06b5d5cabc4c29acadb86c"
+      "sha256": "db65bcf048f2fed5a80de9abf1bd3c62b54a71c4c7ee877570a5a26ddea25aca"
     },
     "executionProfile": {
       "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-      "wholeFileSha256": "7de5645bbcf61706f7babe16088a97825401512baec3eba949232cf76d06453a",
+      "wholeFileSha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
       "semanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020"
     },
     "artifactDag": {
       "schemaExport": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
       "connectorFixtures": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
       "modelVectors": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
-      "concurrencySchedules": "3ef6f42f5e543fe651582fea3ccf752859f82ab75faf683bfa78077aaf11f9e9"
+      "concurrencySchedules": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
     },
     "checker": {
       "path": "eva2/tools/check_4d_freeze.py",
-      "sha256": "2bae1feb72bc3e7a337a488824e742a7d0018102a661f38aa6ca19352c7f9e59",
+      "sha256": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557",
       "testPath": "eva2/tests/design/test_4d_freeze.py",
-      "testSha256": "1a78c20f982e5c4ba9be312acd29dbc5261a8f9a2eb48fa2bbfc0133e45f4978",
-      "canonicalReceiptSha256": "3a8d69376c90b56930d0d5f417aaf5ae734ca486f406aaae0704bf5c5ddcb1bc",
-      "cliStdoutSha256": "42d5b4919460f48bb34fdef9fbe24191f4a57892b3f49eed710ca86a70f08e13"
+      "testSha256": "90b3258985904c9404be59fde97a50435a62727d4b135bc9d234dc6148dcaa17",
+      "canonicalReceiptSha256": "2f07e427837f733f63c3870924472cfe90b37de63df7c9382fd87295fc5fe77c",
+      "cliStdoutSha256": "68f4795bc1c6856a1b4d50f6880dbc1b1d320d1d28a1182558c66506185a13e0"
     },
     "contractSchemas": {
       "manifestPath": "eva2/schemas/contracts/manifest.json",
@@ -116,6 +124,20 @@
         ["eva2/tools/read_eva_portable_archive.py", "cc582f0d9a1075b639fbbcc48536c5f8a12b47467ddd262e5f2421a0be0cacd3"]
       ]
     },
+    "noor4dRepository": {
+      "sha256": "362f333c16f3b47ceff695257c64a7e450bd069fe8f5c697869276b00a98aafe",
+      "files": [
+        ["eva2/src/eva/adapters/postgres/noor_4d_repository.py", "3936d6641c01d0cf07d21cb4064bf4ad8a714cfaf7c8eb8db080ab1a40aed7a8"],
+        ["eva2/tests/postgres/test_noor_4d_repository.py", "f66cdfdc1d5f1804d90be6aad8de0864574ccab492a11fc6fdd0362d08db4f64"]
+      ]
+    },
+    "noor4dApplication": {
+      "sha256": "613a63926f083e601c02c4f3a7a803e451eb2a23c24becec7dbe6e0f7c79f1a6",
+      "files": [
+        ["eva2/src/eva/application/noor_4d.py", "1e262f700f60dff19a80d0267a2c727aaaf1847a183041f7677f56cf03f7b920"],
+        ["eva2/tests/application/test_noor_4d.py", "d89b86232a497bf77eacb30e4741da60e8a550446e9512d53a31fb069e0ddf0a"]
+      ]
+    },
     "packageBoundary": {
       "path": "eva2/design/architecture/package-boundaries-v1.json",
       "sha256": "5022b8fb1909c354fdb0c355eb11a908d0d5b6a964f24c9a5d6550de5e4505f6"
@@ -179,15 +201,17 @@
       "finalBytesCoveredByStaticCatalogMaterializerAndTests": true
     },
     {
-      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:/home/administrator/.local/share/pipx/venvs/netexec/lib/python3.12/site-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/objects",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2:/home/administrator/.local/share/pipx/venvs/netexec/lib/python3.12/site-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/objects",
       "status": "passed",
-      "passed": 41
+      "passed": 41,
+      "durationSeconds": 4.27
     },
     {
-      "command": "env -u EVA2_TEST_POSTGRES_DSN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/portable",
+      "command": "env -u EVA2_TEST_POSTGRES_DSN PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/portable",
       "status": "passed_with_expected_live_postgres_skip",
       "passed": 73,
-      "skipped": 1
+      "skipped": 1,
+      "durationSeconds": 153.28
     },
     {
       "commandTemplate": "EVA2_TEST_POSTGRES_DSN=<explicit disposable PostgreSQL 16.13 DSN> PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/portable/test_postgres_portable_export_pg.py",
@@ -199,6 +223,30 @@
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/postgres/test_4d_migrations.py::test_frozen_4b_schema_and_migrations_are_byte_identical",
       "status": "passed",
       "passed": 1
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/postgres/test_noor_4d_repository.py::test_schedule_full_cas_rows_match_repository_profiles_and_revision_rules eva2/tests/postgres/test_noor_4d_repository.py::test_expected_row_is_immutable_value_object",
+      "status": "passed",
+      "passed": 2,
+      "durationSeconds": 0.22,
+      "databaseUsed": false
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/application/test_noor_4d.py eva2/tests/architecture",
+      "status": "passed",
+      "passed": 24,
+      "durationSeconds": 18.91,
+      "databaseUsed": false
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src python3 eva2/tools/generate_contract_schemas.py --check",
+      "status": "passed",
+      "contracts": 64,
+      "generatedFiles": 67
+    },
+    {
+      "command": "ruff check eva2/tools/check_4d_freeze.py eva2/tests/design/test_4d_freeze.py eva2/tests/postgres/test_noor_4d_repository.py eva2/src/eva/application/noor_4d.py eva2/tests/application/test_noor_4d.py",
+      "status": "passed"
     }
   ],
   "postgresqlReceipt": {
@@ -270,20 +318,29 @@
       "readerDoesNotProve": "the reader cannot prove that the producer omitted no source-database row, including an absent relationship-reverse principal binding; that remains a producer selection claim"
     },
     "sealedSnapshotArchiveCount": 31,
+    "scheduleArtifactSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+    "terminalScheduleSnapshotSha256": "be46c913fa7e7867ed74dadfdf83cff0917a6520cac64f2232b54ef582011c70",
+    "reproduction": {
+      "workdir": "eva2",
+      "producerExecutionProtocol": "a non-persisted Python heredoc imported tests.portable.test_portable_export_end_to_end._fixture_record_sets('terminal'), selected the sealed encrypted object, and called publish_portable_archive with export_sequence 2 and created_at 2026-08-20T12:00:00Z inside a temporary directory",
+      "standaloneReaderCommand": "python3.12 -I tools/read_eva_portable_archive.py <archive> --output <readback>",
+      "sourceFilesEdited": false
+    },
     "terminalProducerReceipt": {
-      "archive_id": "c4d75f2b-dd2f-50b3-80e3-c857439bb7df",
-      "archive_json_sha256": "870d99b18025173ffb21435b106582368757bbc42b564683c9428927f49d3007",
-      "checksums_sha256": "b64d1065ac92a53eeb805ed14a3754777e3a24ccff3924d18a4364a2ac5a1378"
+      "archive_id": "eeed9df2-71a8-5245-8b44-c73183469c63",
+      "archive_json_sha256": "21b5418d76d397dfa6b934cd64891289c2132b4c751fd658af42a6c037ab69ab",
+      "checksums_sha256": "623be15f218c440e1036d6a3d448eeaddf4f8012437b36304f2b0af4c220d654",
+      "canonicalReceiptSha256": "244e47b8fef2708dff2f6937daa057a862584a83435232afedf53fad48445fb1"
     },
     "terminalStandaloneReaderReceipt": {
       "receipt": {
-        "archive_json_sha256": "870d99b18025173ffb21435b106582368757bbc42b564683c9428927f49d3007",
-        "checksums_sha256": "b64d1065ac92a53eeb805ed14a3754777e3a24ccff3924d18a4364a2ac5a1378",
-        "readback_summary_sha256": "85f61bb0649f346f22297e8c61daad9e3fb9d42797baf36f0fe22b7ef454e74a",
+        "archive_json_sha256": "21b5418d76d397dfa6b934cd64891289c2132b4c751fd658af42a6c037ab69ab",
+        "checksums_sha256": "623be15f218c440e1036d6a3d448eeaddf4f8012437b36304f2b0af4c220d654",
+        "readback_summary_sha256": "daad682f89b0f9808e0ebab11231c1b650c49827daa8e3d1559caa127f67c8e1",
         "validation_status": "valid"
       },
-      "canonicalReceiptSha256": "221b5cd2fb8480873e29b19f24d27a1678dd328277ea54ba286778debff23c67",
-      "cliStdoutSha256": "321c09eb026ed24593483611cbe505a966c869939f858b7429b2084b2478513f",
+      "canonicalReceiptSha256": "e03a967ae63ba700c9efc56b4865f4568db5fc144058e5060ee34ca953ec49ae",
+      "cliStdoutSha256": "0bc30bc39a991020a4a73acfc68130a086c676fa267c76e5d713383495d41160",
       "canonicalRecordCount": 153,
       "encryptedObjectCount": 1,
       "objectManifestJsonlSha256": "3845c1ced22fb76f3f7aacc9c4da5c38b253ec01201105edd5e531efe0fd78ab"
@@ -300,15 +357,67 @@
     },
     "independentReview": "passed"
   },
+  "repositoryReceipt": {
+    "canonicalTableScopeCount": 39,
+    "callerOwnsOriginalRootTransaction": true,
+    "repositoryStartsCommitsOrRollsBackTransactions": false,
+    "scopeRule": "tenant and installation scope plus exact canonical primary key are revalidated for every operation",
+    "rowRule": "exact native database columns and the sealed portable-row SHA-256 are required before write and recomputed after readback",
+    "implementedPrimitives": [
+      "insert with typed duplicate conflict",
+      "insert-or-verify exact replay",
+      "revisioned compare-and-swap with expected portable-row hash",
+      "scoped selected readback"
+    ],
+    "revisionlessCurrentSwapBoundary": "identity and policy pack currentSwap rows permit exact insert or replay; the generic revision CAS rejects them",
+    "scheduleCasOracle": {
+      "scheduleArtifactSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+      "explicitFullCasEdgeCount": 102,
+      "revisionCasEdgeCount": 95,
+      "currentSwapEdgeCount": 5,
+      "revisionAndAckClaimDualCasEdgeCount": 2,
+      "immutableEdgeCount": 0,
+      "revisionCasExactExpectedPlusOne": true
+    },
+    "staticTestsPassed": 2,
+    "livePostgresRunForThisRepositoryReseal": false,
+    "fullNoorTraceMaterializationClaim": false,
+    "currentSwapOrStateTransitionOrchestrationClaim": false,
+    "independentSourceReview": "passed"
+  },
+  "applicationReceipt": {
+    "scenarioCount": 7,
+    "happyIdentityCount": 2,
+    "frameworkNeutralInProcessFlow": true,
+    "modelAdapter": "sealed deterministic in-process fixture",
+    "connectorAdapter": "sealed real short-lived subprocess fixture workers",
+    "externalCallLifecycleOrder": [
+      "reserve",
+      "authorize",
+      "invoke outside lifecycle storage",
+      "record only a bound result"
+    ],
+    "outcomeClosureRequiresBoundP256Ack": true,
+    "unearnedOrUnboundModelConnectorAndReadbackResultsRejected": true,
+    "testsAndArchitecturePassed": 24,
+    "databaseUsed": false,
+    "persistentStoreOrTransactionClaim": false,
+    "durableRevisionCasOrScheduleMaterializationClaim": false,
+    "dbosOrApiClaim": false,
+    "externalProviderOrNetworkClaim": false,
+    "independentSourceReview": "passed"
+  },
   "nonClaims": [
-    "no full Noor 4D happy-path, correction, duplicate-overlap or fifteen-crash runtime claim",
-    "no connector worker, deterministic model adapter, DBOS workflow, API or user-visible outcome claim",
+    "no full durable Noor 4D happy-path, correction, duplicate-overlap or fifteen-crash runtime claim; the application gate proves only framework-neutral in-memory ordering and proof adoption",
+    "no independently deployed connector or model runtime, DBOS workflow, API or production user-visible outcome claim; application tests use only sealed fixture adapters",
     "no provider, internet, external-product or production deployment behavior",
     "no nonempty 4B-to-4D data migration; the only admitted expansion is provably empty and nonempty input is rejected",
     "no production entropy-source, key-vault, credential, backup or secret-lifecycle proof",
     "no standalone persisted real-PostgreSQL gate script and no real-PostgreSQL rerun after the final selector-only f70 reseal; the recorded one-off protocol ran on the immediately preceding DDL-identical freeze while the final bytes were checked statically",
     "no claim that the standalone reader can detect source-database rows omitted by a producer",
     "the live portable PostgreSQL gate proves the export role and exact tenant/installation selection primitive, not a production-sized nonempty export of all 39 canonical tables",
+    "no live PostgreSQL rerun of the Noor repository slice after the schedule reseal; its current evidence is source review plus the static 102-edge schedule-CAS oracle",
+    "the repository does not own currentSwap orchestration, state-transition validation or full Noor schedule materialization, and the application lifecycle port does not prove durability or transactionality",
     "no framework-independent second-system restore, A/B update, rollback, uninstall or other 4E claim"
   ]
 }
