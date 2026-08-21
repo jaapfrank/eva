@@ -1,4 +1,4 @@
-"""Closed registry for Eva v1 durable and wire contracts."""
+"""Closed registry for Eva durable and wire contract versions."""
 
 from __future__ import annotations
 
@@ -7,10 +7,19 @@ from typing import Final
 
 from .base import ContractModel
 from .connector import ConnectorEnvelope, ConnectorManifest, ConnectorResult
+from .connector_rpc import (
+    ConnectorErrorResponse,
+    ConnectorInitializeRequest,
+    ConnectorInitializeSuccess,
+    ConnectorInvokeRequest,
+    ConnectorInvokeSuccess,
+    ConnectorProtocolFailure,
+)
 from .evidence import (
     ClaimEvidenceBinding,
     EvaAcceptanceEvidenceBundle,
     EvidenceEnvelope,
+    EvidenceEnvelopeV2,
     ObjectRef,
     ObjectStore,
 )
@@ -22,6 +31,7 @@ from .execution import (
     CredentialGrant,
     DeliveryIntent,
     DeliveryReceipt,
+    DeliveryReceiptV2,
     EffectAttempt,
     EffectIntent,
     EffectReadback,
@@ -33,6 +43,7 @@ from .execution import (
 from .identity import IdentityPack, PolicyPack
 from .ingress import (
     DeliveryOffer,
+    DeliveryOfferV2,
     IngressClaim,
     IngressOutcome,
     IngressRequest,
@@ -78,14 +89,22 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "ConnectorBinding/v1": ConnectorBinding,
     "ConnectorCandidate/v1": ConnectorCandidate,
     "ConnectorEnvelope/v1": ConnectorEnvelope,
+    "ConnectorErrorResponse/v1": ConnectorErrorResponse,
+    "ConnectorInitializeRequest/v1": ConnectorInitializeRequest,
+    "ConnectorInitializeSuccess/v1": ConnectorInitializeSuccess,
+    "ConnectorInvokeRequest/v1": ConnectorInvokeRequest,
+    "ConnectorInvokeSuccess/v1": ConnectorInvokeSuccess,
     "ConnectorManifest/v1": ConnectorManifest,
+    "ConnectorProtocolFailure/v1": ConnectorProtocolFailure,
     "ConnectorResult/v1": ConnectorResult,
     "ConsentGrant/v1": ConsentGrant,
     "ContextSelection/v1": ContextSelection,
     "CredentialGrant/v1": CredentialGrant,
     "DeliveryIntent/v1": DeliveryIntent,
     "DeliveryOffer/v1": DeliveryOffer,
+    "DeliveryOffer/v2": DeliveryOfferV2,
     "DeliveryReceipt/v1": DeliveryReceipt,
+    "DeliveryReceipt/v2": DeliveryReceiptV2,
     "DocumentDraft/v1": DocumentDraft,
     "DocumentationSnapshot/v1": DocumentationSnapshot,
     "EffectAttempt/v1": EffectAttempt,
@@ -96,6 +115,7 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "EvaAcceptanceEvidenceBundle/v1": EvaAcceptanceEvidenceBundle,
     "EvaPortableArchive/v1": EvaPortableArchive,
     "EvidenceEnvelope/v1": EvidenceEnvelope,
+    "EvidenceEnvelope/v2": EvidenceEnvelopeV2,
     "ExperienceSourceEvent/v1": ExperienceSourceEvent,
     "IdentityPack/v1": IdentityPack,
     "ImprovementCandidate/v1": ImprovementCandidate,

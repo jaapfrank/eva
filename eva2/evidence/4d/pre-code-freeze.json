@@ -1,0 +1,103 @@
+{
+  "contract": "Eva24DPreCodeFreezeEvidence/v1",
+  "tranche": "4D-pre-code",
+  "status": "passed_with_runtime_blocked",
+  "createdAt": "2026-08-21T06:36:59+02:00",
+  "baseCommit": "e170dd1",
+  "branch": "recovery/v2-containment",
+  "decision": {
+    "stackReopened": false,
+    "dbos": "2.30.0+eva.1 synchronous datasource only",
+    "objectCrypto": "PyNaCl 1.6.2 nacl.secret.Aead using XChaCha20-Poly1305",
+    "connectorProtocol": "EvaConnectorProtocol/v1 over closed JSON-RPC 2.0 Content-Length frames",
+    "deliveryProof": "DeliveryOffer/v2 and DeliveryReceipt/v2 with P-256 ES256 SHA-256 P1363 client acknowledgement",
+    "evidenceEnvelope": "EvidenceEnvelope/v2",
+    "runtimeCodingAllowed": false
+  },
+  "missingPreRuntimeArtifacts": [
+    "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json",
+    "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
+    "eva2/design/vertical/noor-4d-model-vectors-v1.json",
+    "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json"
+  ],
+  "gates": [
+    {
+      "command": "python3 eva2/tools/check_4d_freeze.py --root .",
+      "environment": "system CPython 3.12.3, stdlib only",
+      "status": "passed",
+      "runtimeCodingAllowed": false
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src python3 eva2/tools/generate_contract_schemas.py --check",
+      "environment": "system CPython 3.12.3",
+      "status": "passed",
+      "contracts": 64,
+      "generatedFiles": 67
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/contract eva2/tests/design/test_4d_freeze.py eva2/tests/architecture",
+      "environment": "system CPython 3.12.3 without PyNaCl",
+      "status": "passed_with_expected_dependency_skip",
+      "passed": 82,
+      "skipped": 1,
+      "skip": "XChaCha maintained-library KAT requires the sealed tranche-4d PyNaCl environment"
+    },
+    {
+      "command": "/home/administrator/.local/share/pipx/venvs/netexec/bin/python -I -m unittest discover -s eva2/tests/design -p 'test_4d_freeze.py' -v",
+      "environment": "existing CPython 3.12.3 pipx environment with PyNaCl 1.6.2 and cffi 2.0.0",
+      "status": "passed",
+      "passed": 10,
+      "xchachaEvidence": "Eva and Mira fixed-nonce vectors executed nacl.secret.Aead.encrypt and decrypt with exact envelope bytes and plaintext roundtrip",
+      "installabilityClaim": false,
+      "exactBundledLibsodiumRuntimeVersionAttested": false
+    }
+  ],
+  "sourceManifestEncoding": "SHA-256 over UTF-8 lines '<sha256>  <path>\\n' sorted by path",
+  "sourceManifestSha256": "6b0c2858b205de2d8b49c3d650b81b30d98808d87fd18c7771243ec1433fde6f",
+  "sourceManifest": [
+    ["eva2/design/vertical/noor-4d-execution-profile-v1.json", "561a1839735dd49ddd18b07a814e197f566be19eb4a49d54bc12da61b42692a2"],
+    ["eva2/pyproject.toml", "bf552110352035faf1533c23c33915e5ab85445de7e156c044ee4f8356310789"],
+    ["eva2/release/4d-dependency-source-binding.json", "8bd1c160bd0a41ca0c39c257736316d293a4ff80f8b21e397480f48f1afb5da3"],
+    ["eva2/requirements-4d.lock", "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708"],
+    ["eva2/schemas/contracts/ConnectorErrorResponse-v1.schema.json", "c92d3ae2f080051acd27d917c436aa3be988559e8c68b9f9da83c39cbcdcc32f"],
+    ["eva2/schemas/contracts/ConnectorInitializeRequest-v1.schema.json", "3829ce8f057b9bd2126f250be98c370ed6f5d3ea59f27b3f34ddcc69fc1cddf8"],
+    ["eva2/schemas/contracts/ConnectorInitializeSuccess-v1.schema.json", "9c407882c411dc9bbbc7a09beaa8e58e2032c3c95425d4e0852ea35248b5bd41"],
+    ["eva2/schemas/contracts/ConnectorInvokeRequest-v1.schema.json", "a4c8dbbe301ea2a04952dfa2c3f14872454b045a5c0751f2911bb4375eff8c4c"],
+    ["eva2/schemas/contracts/ConnectorInvokeSuccess-v1.schema.json", "4547a1a62af3ec74c9678b76df725a3256820f459d66712c8e485ecb1bb662f7"],
+    ["eva2/schemas/contracts/ConnectorProtocolFailure-v1.schema.json", "e5d29f14af2f94defab97b9c00102b1636a73eaeacc0e60d74fc1fde7861b532"],
+    ["eva2/schemas/contracts/DeliveryOffer-v2.schema.json", "6a6a3f3e8fd8989a1d288f1dbcc56faf974e3facb3f8821f1d5d6b0479cf80de"],
+    ["eva2/schemas/contracts/DeliveryReceipt-v2.schema.json", "ec66a9e190645e576e18601ecf2a3e8b4a9f46e464010aa3a3ff1c0b52a5a983"],
+    ["eva2/schemas/contracts/EvidenceEnvelope-v2.schema.json", "cb27dd6623e654cd5a8e55d40affdbedb1dc303ed0fe1ce4bb16d2240054cd03"],
+    ["eva2/schemas/contracts/contract-corpus-v1.json", "ddf3c84602a1762feec114eaa269c37f11e8726cad9514a90ff642a5e4a488b3"],
+    ["eva2/schemas/contracts/manifest.json", "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"],
+    ["eva2/src/eva/contracts/__init__.py", "fbffa662bb8b2248b2ecc688234cda403fb8bf89695f18214d3559703b5f4f9d"],
+    ["eva2/src/eva/contracts/base.py", "a0cf1b2a38b84f04635d017093e4597604a146d9c9a63060b91d77fd4aec290e"],
+    ["eva2/src/eva/contracts/connector_rpc.py", "1cc9548526e76858462f0cf6dca21d7c89cc5d3cd7841d83dee5d825cf39338f"],
+    ["eva2/src/eva/contracts/evidence.py", "e16a43dd77cdb422d2b25515dabd5280f03e26586b4ca4a261932bd5975241a8"],
+    ["eva2/src/eva/contracts/execution.py", "c821f5aa8324ffeb981497b6fbcf59c2e2ccce560e621500b05df59efa4f5d56"],
+    ["eva2/src/eva/contracts/ingress.py", "55273ad13533754ab4a87690f8737b3340871832ad7d1e7b7c4bd5a09773c7ef"],
+    ["eva2/src/eva/contracts/registry.py", "ea6d34d8e80bf32f639b2dbe610137abfcdb8a6d0af1269a3e721f46d51a6337"],
+    ["eva2/tests/contract/test_connector_rpc_ack_and_evidence_v2.py", "9b335393e9568aeb9d955d8a76fb23f785f80220f510d4a659ca0b8a69332bc0"],
+    ["eva2/tests/contract/test_schema_generation.py", "7c6c4b7b0a44c9084871065053795bec5f105b75ae96f31d902c08577160beb7"],
+    ["eva2/tests/design/test_4d_freeze.py", "679c24eb894fd4c2d8df7965babc49a4f1b1bfcc4975aaf1e2423e9ac0b6f893"],
+    ["eva2/tools/check_4d_freeze.py", "942e717a5e0b523e4b409696a7e960930563e8848c04fce47ff2ddc6ac761991"],
+    ["eva2/tools/generate_contract_schemas.py", "ae0556cd810962bb55a84f400412e13b0fbe07a14caa5e8d82942bfd6d5ad3b5"]
+  ],
+  "mutationsOutsideScope": {
+    "database": false,
+    "network": false,
+    "services": false,
+    "connectors": false,
+    "models": false,
+    "eva1": false,
+    "productRuntime": false
+  },
+  "nonClaims": [
+    "no 4D runtime, schema, connector, model or user-behavior implementation",
+    "no clean-install or Tier-1 platform receipt for the 4D dependency set",
+    "no exact local libsodium runtime-version attestation",
+    "no live provider, connector, database, service or deployment claim",
+    "no framework-independent export or restore claim",
+    "no winner claim against another agent framework"
+  ]
+}

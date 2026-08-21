@@ -9,11 +9,13 @@ from pydantic import Field, model_validator
 from .base import (
     ContractModel,
     Identifier,
+    JSON_SAFE_INTEGER_MAX,
     MimeType,
     Sha256,
     ShortText,
     Timestamp,
     Version1Contract,
+    Version2Contract,
 )
 
 
@@ -77,6 +79,41 @@ class EvidenceEnvelope(Version1Contract):
         if (self.object_ref_id is None) != (self.object_sha256 is None):
             raise ValueError(
                 "object reference and object hash must be present together"
+            )
+        return self
+
+
+class EvidenceEnvelopeV2(Version2Contract):
+    """Sequenced evidence authority without changing the sealed v1 wire shape."""
+
+    contract: Literal["EvidenceEnvelope/v2"]
+    evidence_id: Identifier
+    tenant_id: Identifier
+    aggregate_type: Identifier
+    aggregate_id: Identifier
+    sequence: int = Field(ge=1, le=JSON_SAFE_INTEGER_MAX)
+    idempotency_key: Identifier
+    producer: Identifier
+    subject_contract: Identifier
+    subject_id: Identifier
+    subject_payload_sha256: Sha256
+    object_ref_id: Identifier | None
+    object_sha256: Sha256 | None
+    predecessor_sha256: Sha256 | None
+    provenance_refs: list[Identifier] = Field(max_length=128)
+    captured_at: Timestamp
+    privacy_class: Literal["public", "internal", "confidential", "restricted"]
+    retention_until: Timestamp
+
+    @model_validator(mode="after")
+    def _object_reference_is_complete(self) -> "EvidenceEnvelopeV2":
+        if (self.object_ref_id is None) != (self.object_sha256 is None):
+            raise ValueError(
+                "object reference and object hash must be present together"
+            )
+        if (self.sequence == 1) != (self.predecessor_sha256 is None):
+            raise ValueError(
+                "evidence sequence one starts a chain; later sequences require predecessor"
             )
         return self
 

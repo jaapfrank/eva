@@ -10,6 +10,7 @@ from .base import (
     MAX_CONTRACT_BYTES,
     ContractModel,
     Version1Contract,
+    Version2Contract,
 )
 from .canonical_json import (
     DuplicateKeyError,
@@ -32,6 +33,7 @@ __all__ = [
     "ContractModel",
     "DuplicateKeyError",
     "Version1Contract",
+    "Version2Contract",
     "canonical_json_bytes",
     "canonical_sha256",
     "decode_json_bytes",

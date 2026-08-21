@@ -20,7 +20,8 @@ def test_every_registered_contract_has_a_closed_deterministic_schema() -> None:
         schema = model.model_json_schema(mode="validation")
         assert schema["additionalProperties"] is False, contract_name
         assert schema["properties"]["contract"]["const"] == contract_name
-        assert schema["properties"]["schema_version"]["const"] == 1
+        expected_version = int(contract_name.rsplit("/v", 1)[1])
+        assert schema["properties"]["schema_version"]["const"] == expected_version
         assert {"contract", "schema_version"}.issubset(schema["required"])
         assert (SCHEMA_ROOT / schema_filename(contract_name)).is_file()
 
@@ -35,14 +36,22 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "ConnectorBinding/v1",
         "ConnectorCandidate/v1",
         "ConnectorEnvelope/v1",
+        "ConnectorErrorResponse/v1",
+        "ConnectorInitializeRequest/v1",
+        "ConnectorInitializeSuccess/v1",
+        "ConnectorInvokeRequest/v1",
+        "ConnectorInvokeSuccess/v1",
         "ConnectorManifest/v1",
+        "ConnectorProtocolFailure/v1",
         "ConnectorResult/v1",
         "ConsentGrant/v1",
         "ContextSelection/v1",
         "CredentialGrant/v1",
         "DeliveryIntent/v1",
         "DeliveryOffer/v1",
+        "DeliveryOffer/v2",
         "DeliveryReceipt/v1",
+        "DeliveryReceipt/v2",
         "DocumentDraft/v1",
         "DocumentationSnapshot/v1",
         "EffectAttempt/v1",
@@ -53,6 +62,7 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "EvaAcceptanceEvidenceBundle/v1",
         "EvaPortableArchive/v1",
         "EvidenceEnvelope/v1",
+        "EvidenceEnvelope/v2",
         "ExperienceSourceEvent/v1",
         "IdentityPack/v1",
         "ImprovementCandidate/v1",

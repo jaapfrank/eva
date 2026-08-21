@@ -34,7 +34,11 @@ SIGNATURE = "A" * 86
 
 
 def _meta(contract: str) -> dict[str, Any]:
-    return {"contract": contract, "schema_version": 1}
+    try:
+        schema_version = int(contract.rsplit("/v", 1)[1])
+    except (IndexError, ValueError) as exc:
+        raise ValueError(f"contract lacks a numeric major version: {contract}") from exc
+    return {"contract": contract, "schema_version": schema_version}
 
 
 def _resource(resource_type: str = "calendar") -> dict[str, Any]:
@@ -314,6 +318,50 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         "role": "outcome_delivery",
         "accepted_at": NOW,
         "proof": {"mode": "client", "client_ack": client_ack},
+    }
+    delivery_offer_v2 = {
+        **_meta("DeliveryOffer/v2"),
+        "delivery_id": delivery_intent["delivery_id"],
+        "installation_id": installation_id,
+        "channel_id": "authenticated_http",
+        "request_id": request_id,
+        "conversation_id": conversation_id,
+        "content_sha256": H,
+        "wire_sha256": H1,
+        "proof": {
+            "mode": "client",
+            "challenge": "challenge:001",
+            "ack_algorithm": "P-256 ES256",
+            "ack_key_sha256": H1,
+            "signature_format": "P1363",
+        },
+        "offered_at": NOW,
+        "expires_at": LATER,
+    }
+    client_ack_v2 = {
+        "algorithm": "P-256 ES256",
+        "signature_format": "P1363",
+        "request_ref": request_id,
+        "delivery_id": delivery_intent["delivery_id"],
+        "presence_reply_sha256": delivery_offer_v2["content_sha256"],
+        "wire_sha256": delivery_offer_v2["wire_sha256"],
+        "challenge": delivery_offer_v2["proof"]["challenge"],
+        "signature": SIGNATURE,
+        "public_key_sha256": H1,
+    }
+    delivery_receipt_v2 = {
+        **_meta("DeliveryReceipt/v2"),
+        "delivery_receipt_id": "delivery-receipt:outcome:v2:001",
+        "delivery_id": delivery_intent["delivery_id"],
+        "delivery_offer_sha256": hashlib.sha256(
+            canonical_json_bytes(delivery_offer_v2)
+        ).hexdigest(),
+        "content_sha256": delivery_offer_v2["content_sha256"],
+        "wire_sha256": delivery_offer_v2["wire_sha256"],
+        "effect_attempt_id": "effect-attempt:outcome:001",
+        "role": "outcome_delivery",
+        "accepted_at": NOW,
+        "proof": {"mode": "client", "client_ack": client_ack_v2},
     }
     connector_result = {
         **_meta("ConnectorResult/v1"),
@@ -669,7 +717,7 @@ def valid_examples() -> dict[str, dict[str, Any]]:
             ],
             "maximum_protocol_frame_bytes": 1_048_576,
             "maximum_protocol_frames_per_invocation": 2,
-            "maximum_stdout_bytes": 2_097_152,
+            "maximum_stdout_bytes": 2_101_248,
             "maximum_stderr_bytes": 65_536,
             "issued_at": NOW,
         },
@@ -693,12 +741,151 @@ def valid_examples() -> dict[str, dict[str, Any]]:
             "deadline": LATER,
         },
     )
+    rpc_manifest = deepcopy(examples["valid-connector-manifest"])
+    rpc_manifest_sha256 = hashlib.sha256(canonical_json_bytes(rpc_manifest)).hexdigest()
+    rpc_connector_binding = deepcopy(examples["valid-connector-binding"])
+    rpc_capability_manifest = deepcopy(examples["valid-capability-manifest"])
+    rpc_capability_grant = deepcopy(examples["valid-capability-grant"])
+    rpc_credential_grant = deepcopy(examples["valid-credential-grant"])
+    rpc_envelope = deepcopy(examples["valid-connector-envelope"])
+    rpc_envelope["request_id"] = "connector-request:invoke:001"
+    rpc_envelope["correlation_id"] = "correlation:connector-rpc:001"
+    rpc_envelope["connector_manifest_sha256"] = rpc_manifest_sha256
+    rpc_capability_grant["authorized_payload_sha256"] = rpc_envelope[
+        "request_payload_sha256"
+    ]
+    initialize_request = {
+        **_meta("ConnectorInitializeRequest/v1"),
+        "jsonrpc": "2.0",
+        "id": "connector-request:initialize:001",
+        "method": "connector.initialize",
+        "params": {
+            "protocol_version": "EvaConnectorProtocol/v1",
+            "request_id": "connector-request:initialize:001",
+            "correlation_id": rpc_envelope["correlation_id"],
+            "connector_id": rpc_manifest["connector_id"],
+            "connector_manifest_sha256": rpc_manifest_sha256,
+            "worker_id": rpc_credential_grant["worker_id"],
+            "worker_executable_sha256": rpc_manifest["executable_sha256"],
+            "connector_binding": rpc_connector_binding,
+            "capability_manifest": rpc_capability_manifest,
+            "capability_grant": rpc_capability_grant,
+            "credential_grant": rpc_credential_grant,
+            "deadline": LATER,
+        },
+    }
+    add("valid-connector-initialize-request", initialize_request)
+    add(
+        "valid-connector-initialize-success",
+        {
+            **_meta("ConnectorInitializeSuccess/v1"),
+            "jsonrpc": "2.0",
+            "id": initialize_request["id"],
+            "result": {
+                "protocol_version": "EvaConnectorProtocol/v1",
+                "request_id": initialize_request["id"],
+                "correlation_id": rpc_envelope["correlation_id"],
+                "connector_id": rpc_manifest["connector_id"],
+                "connector_manifest_sha256": rpc_manifest_sha256,
+                "worker_id": rpc_credential_grant["worker_id"],
+                "worker_executable_sha256": rpc_manifest["executable_sha256"],
+                "connector_binding_sha256": hashlib.sha256(
+                    canonical_json_bytes(rpc_connector_binding)
+                ).hexdigest(),
+                "capability_manifest_sha256": hashlib.sha256(
+                    canonical_json_bytes(rpc_capability_manifest)
+                ).hexdigest(),
+                "capability_grant_sha256": hashlib.sha256(
+                    canonical_json_bytes(rpc_capability_grant)
+                ).hexdigest(),
+                "credential_grant_sha256": hashlib.sha256(
+                    canonical_json_bytes(rpc_credential_grant)
+                ).hexdigest(),
+                "initialized_at": NOW,
+                "external_io_performed": False,
+                "secret_bytes_received": False,
+            },
+        },
+    )
+    invoke_request = {
+        **_meta("ConnectorInvokeRequest/v1"),
+        "jsonrpc": "2.0",
+        "id": rpc_envelope["request_id"],
+        "method": "effect.execute",
+        "params": rpc_envelope,
+    }
+    add("valid-connector-invoke-request", invoke_request)
+    add(
+        "valid-connector-invoke-success",
+        {
+            **_meta("ConnectorInvokeSuccess/v1"),
+            "jsonrpc": "2.0",
+            "id": rpc_envelope["request_id"],
+            "result": {
+                **_meta("ConnectorResult/v1"),
+                "connector_id": rpc_envelope["connector_id"],
+                "request_id": rpc_envelope["request_id"],
+                "correlation_id": rpc_envelope["correlation_id"],
+                "operation": rpc_envelope["operation"],
+                "request_sha256": hashlib.sha256(
+                    canonical_json_bytes(rpc_envelope)
+                ).hexdigest(),
+                "connector_manifest_sha256": rpc_manifest_sha256,
+                "outcome": {
+                    "kind": "effect_response",
+                    "provider_resource_id": "calendar:event:001",
+                    "provider_receipt_sha256": H,
+                    "provider_time": NOW,
+                },
+                "completed_at": NOW,
+            },
+        },
+    )
+    add(
+        "valid-connector-error-response",
+        {
+            **_meta("ConnectorErrorResponse/v1"),
+            "jsonrpc": "2.0",
+            "id": rpc_envelope["request_id"],
+            "request_contract": "ConnectorInvokeRequest/v1",
+            "request_method": "effect.execute",
+            "request_sha256": hashlib.sha256(
+                canonical_json_bytes(invoke_request)
+            ).hexdigest(),
+            "error": {
+                "code": -32602,
+                "kind": "invalid_params",
+                "message": "Invalid params",
+                "failure_code": "connector_params_invalid",
+                "external_io_possible": False,
+                "failure_class": "internal_failure",
+            },
+        },
+    )
+    add(
+        "valid-connector-protocol-failure",
+        {
+            **_meta("ConnectorProtocolFailure/v1"),
+            "request_id": rpc_envelope["request_id"],
+            "request_sha256": hashlib.sha256(
+                canonical_json_bytes(invoke_request)
+            ).hexdigest(),
+            "phase": "invoke_external_io_possible",
+            "violation": "unexpected_eof",
+            "failure_class": "ambiguous_transport",
+            "automatic_resend_permitted": False,
+            "evidence_sha256": H,
+            "observed_at": NOW,
+        },
+    )
     add("valid-delivery-intent", delivery_intent)
     add(
         "valid-delivery-offer-client",
         delivery_offer_client,
     )
+    add("valid-delivery-offer-v2-client", delivery_offer_v2)
     add("valid-delivery-receipt-client", delivery_receipt)
+    add("valid-delivery-receipt-v2-client", delivery_receipt_v2)
     add(
         "valid-document-draft",
         {
@@ -826,6 +1013,29 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         {
             **_meta("EvidenceEnvelope/v1"),
             "evidence_id": "evidence:calendar:001",
+            "producer": "connector:calendar:fixture",
+            "subject_contract": "EffectReadback/v1",
+            "subject_id": effect_readback["readback_id"],
+            "subject_payload_sha256": H1,
+            "object_ref_id": None,
+            "object_sha256": None,
+            "predecessor_sha256": None,
+            "provenance_refs": [effect_intent["effect_intent_id"]],
+            "captured_at": NOW,
+            "privacy_class": "confidential",
+            "retention_until": retention,
+        },
+    )
+    add(
+        "valid-evidence-envelope-v2",
+        {
+            **_meta("EvidenceEnvelope/v2"),
+            "evidence_id": "evidence:calendar:v2:001",
+            "tenant_id": tenant_id,
+            "aggregate_type": "effect_intent",
+            "aggregate_id": effect_intent["effect_intent_id"],
+            "sequence": 1,
+            "idempotency_key": "evidence-idempotency:calendar:001",
             "producer": "connector:calendar:fixture",
             "subject_contract": "EffectReadback/v1",
             "subject_id": effect_readback["readback_id"],
@@ -1588,6 +1798,48 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
     invalid_object_store["state"] = "active"
     invalid_evidence = deepcopy(example("EvidenceEnvelope/v1"))
     invalid_evidence["object_ref_id"] = "object:orphan:001"
+    invalid_evidence_v2 = deepcopy(example("EvidenceEnvelope/v2"))
+    invalid_evidence_v2["object_ref_id"] = "object:orphan:v2:001"
+    evidence_v1_smuggles_authority = deepcopy(example("EvidenceEnvelope/v1"))
+    evidence_v1_smuggles_authority["tenant_id"] = "tenant:smuggled:001"
+    evidence_v2_missing_tenant = deepcopy(example("EvidenceEnvelope/v2"))
+    del evidence_v2_missing_tenant["tenant_id"]
+    evidence_v2_zero_sequence = deepcopy(example("EvidenceEnvelope/v2"))
+    evidence_v2_zero_sequence["sequence"] = 0
+    evidence_v2_genesis_with_predecessor = deepcopy(example("EvidenceEnvelope/v2"))
+    evidence_v2_genesis_with_predecessor["predecessor_sha256"] = H
+    evidence_v2_later_without_predecessor = deepcopy(example("EvidenceEnvelope/v2"))
+    evidence_v2_later_without_predecessor["sequence"] = 2
+    ack_v2_padded = deepcopy(example("DeliveryReceipt/v2"))
+    ack_v2_padded["proof"]["client_ack"]["signature"] = SIGNATURE + "="
+    ack_v2_wrong_algorithm = deepcopy(example("DeliveryReceipt/v2"))
+    ack_v2_wrong_algorithm["proof"]["client_ack"]["algorithm"] = "p256-es256"
+    ack_v2_wrong_content = deepcopy(example("DeliveryReceipt/v2"))
+    ack_v2_wrong_content["proof"]["client_ack"]["presence_reply_sha256"] = H1
+    ack_v2_downgraded_offer = deepcopy(example("DeliveryOffer/v2"))
+    ack_v2_downgraded_offer["proof"] = {"mode": "provider"}
+    ack_v1_smuggles_v2_format = deepcopy(example("DeliveryReceipt/v1"))
+    ack_v1_smuggles_v2_format["proof"]["client_ack"]["signature_format"] = "P1363"
+    initialize_wrong_id = deepcopy(example("ConnectorInitializeRequest/v1"))
+    initialize_wrong_id["id"] = "connector-request:other:001"
+    initialize_wrong_provider_scope = deepcopy(example("ConnectorInitializeRequest/v1"))
+    initialize_wrong_provider_scope["params"]["credential_grant"]["provider_scopes"] = [
+        "calendar.read"
+    ]
+    invoke_missing_id = deepcopy(example("ConnectorInvokeRequest/v1"))
+    del invoke_missing_id["id"]
+    invoke_null_id = deepcopy(example("ConnectorInvokeRequest/v1"))
+    invoke_null_id["id"] = None
+    rpc_error_wrong_code = deepcopy(example("ConnectorErrorResponse/v1"))
+    rpc_error_wrong_code["error"]["code"] = -32603
+    rpc_error_untyped_message = deepcopy(example("ConnectorErrorResponse/v1"))
+    rpc_error_untyped_message["error"]["message"] = "provider secret detail"
+    rpc_error_understates_io = deepcopy(example("ConnectorErrorResponse/v1"))
+    rpc_error_understates_io["error"]["external_io_possible"] = True
+    protocol_failure_understates_io = deepcopy(example("ConnectorProtocolFailure/v1"))
+    protocol_failure_understates_io["failure_class"] = "internal_failure"
+    invoke_success_wrong_id = deepcopy(example("ConnectorInvokeSuccess/v1"))
+    invoke_success_wrong_id["id"] = "connector-request:other:001"
     invalid_installation = deepcopy(example("InstallationManifest/v1"))
     invalid_installation["support_status"] = "tier1"
     invalid_promotion = deepcopy(example("PromotionDecision/v1"))
@@ -1862,6 +2114,126 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
             payload=invalid_evidence,
         ),
         invalid(
+            "invalid-one-sided-evidence-v2-object-reference",
+            "evidence_v2_object_pair",
+            "json_schema",
+            payload=invalid_evidence_v2,
+        ),
+        invalid(
+            "invalid-evidence-v1-smuggles-v2-authority",
+            "evidence_v1_closed_shape",
+            "json_schema",
+            payload=evidence_v1_smuggles_authority,
+        ),
+        invalid(
+            "invalid-evidence-v2-missing-tenant",
+            "evidence_v2_tenant_required",
+            "json_schema",
+            payload=evidence_v2_missing_tenant,
+        ),
+        invalid(
+            "invalid-evidence-v2-zero-sequence",
+            "evidence_v2_sequence_positive",
+            "json_schema",
+            payload=evidence_v2_zero_sequence,
+        ),
+        invalid(
+            "invalid-evidence-v2-genesis-with-predecessor",
+            "evidence_v2_genesis_chain",
+            "json_schema",
+            payload=evidence_v2_genesis_with_predecessor,
+        ),
+        invalid(
+            "invalid-evidence-v2-later-without-predecessor",
+            "evidence_v2_predecessor_required",
+            "json_schema",
+            payload=evidence_v2_later_without_predecessor,
+        ),
+        invalid(
+            "invalid-client-ack-v2-padded-signature",
+            "client_ack_v2_unpadded_base64url",
+            "json_schema",
+            payload=ack_v2_padded,
+        ),
+        invalid(
+            "invalid-client-ack-v2-wrong-algorithm",
+            "client_ack_v2_algorithm_profile",
+            "json_schema",
+            payload=ack_v2_wrong_algorithm,
+        ),
+        invalid(
+            "invalid-client-ack-v2-other-presence-reply",
+            "client_ack_v2_presence_reply_binding",
+            "host_conformance",
+            payload=ack_v2_wrong_content,
+        ),
+        invalid(
+            "invalid-client-ack-v2-provider-downgrade",
+            "client_ack_v2_client_mode_required",
+            "json_schema",
+            payload=ack_v2_downgraded_offer,
+        ),
+        invalid(
+            "invalid-client-ack-v1-smuggles-v2-format",
+            "delivery_receipt_v1_closed_shape",
+            "json_schema",
+            payload=ack_v1_smuggles_v2_format,
+        ),
+        invalid(
+            "invalid-connector-initialize-id-binding",
+            "connector_rpc_initialize_id_binding",
+            "host_conformance",
+            payload=initialize_wrong_id,
+        ),
+        invalid(
+            "invalid-connector-initialize-provider-scope",
+            "connector_rpc_provider_scope_binding",
+            "host_conformance",
+            payload=initialize_wrong_provider_scope,
+        ),
+        invalid(
+            "invalid-connector-invoke-notification",
+            "connector_rpc_id_required",
+            "json_schema",
+            payload=invoke_missing_id,
+        ),
+        invalid(
+            "invalid-connector-invoke-null-id",
+            "connector_rpc_string_id_required",
+            "json_schema",
+            payload=invoke_null_id,
+        ),
+        invalid(
+            "invalid-connector-error-code-kind",
+            "connector_rpc_error_taxonomy",
+            "json_schema",
+            payload=rpc_error_wrong_code,
+        ),
+        invalid(
+            "invalid-connector-error-untyped-message",
+            "connector_rpc_error_safe_message",
+            "json_schema",
+            payload=rpc_error_untyped_message,
+        ),
+        invalid(
+            "invalid-connector-error-understates-io",
+            "connector_rpc_error_ambiguity",
+            "json_schema",
+            payload=rpc_error_understates_io,
+        ),
+        invalid(
+            "invalid-connector-protocol-failure-understates-io",
+            "connector_protocol_failure_ambiguity",
+            "json_schema",
+            payload=protocol_failure_understates_io,
+        ),
+        invalid(
+            "invalid-connector-invoke-success-id-binding",
+            "connector_rpc_success_id_binding",
+            "host_conformance",
+            payload=invoke_success_wrong_id,
+        ),
+        invalid(
             "invalid-installation-inflates-support",
             "installation_support",
             "json_schema",
@@ -1931,6 +2303,174 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
             },
         },
     ]
+
+    def rpc_frame(payload: dict[str, Any]) -> bytes:
+        body = canonical_json_bytes(payload)
+        return f"Content-Length: {len(body)}\r\n\r\n".encode("ascii") + body
+
+    initialize_request_frame = rpc_frame(example("ConnectorInitializeRequest/v1"))
+    invoke_request_frame = rpc_frame(example("ConnectorInvokeRequest/v1"))
+    initialize_success_frame = rpc_frame(example("ConnectorInitializeSuccess/v1"))
+    invoke_success_frame = rpc_frame(example("ConnectorInvokeSuccess/v1"))
+    invoke_error = example("ConnectorErrorResponse/v1")
+    invoke_error_frame = rpc_frame(invoke_error)
+    initialize_error = deepcopy(invoke_error)
+    initialize_request = example("ConnectorInitializeRequest/v1")
+    initialize_error.update(
+        id=initialize_request["id"],
+        request_contract="ConnectorInitializeRequest/v1",
+        request_method="connector.initialize",
+        request_sha256=hashlib.sha256(
+            canonical_json_bytes(initialize_request)
+        ).hexdigest(),
+    )
+    initialize_error_frame = rpc_frame(initialize_error)
+    valid_body = canonical_json_bytes(example("ConnectorInvokeRequest/v1"))
+    duplicate_id_body = (
+        b'{"contract":"ConnectorInvokeRequest/v1","id":"request:001",'
+        b'"id":"request:002","jsonrpc":"2.0","method":"resource.read",'
+        b'"schema_version":1}'
+    )
+    connector_frame_cases = [
+        {
+            "caseId": "valid-connector-initialize-request-frame",
+            "expect": "accept",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": initialize_request_frame.hex(),
+        },
+        {
+            "caseId": "valid-connector-invoke-request-frame",
+            "expect": "accept",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": invoke_request_frame.hex(),
+        },
+        {
+            "caseId": "valid-connector-success-stdout-exchange",
+            "expect": "accept",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": (initialize_success_frame + invoke_success_frame).hex(),
+        },
+        {
+            "caseId": "valid-connector-init-error-stdout-exchange",
+            "expect": "accept",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": initialize_error_frame.hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-lowercase-header",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"content-length: {len(valid_body)}\r\n\r\n".encode("ascii")
+                + valid_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-leading-zero",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"Content-Length: 0{len(valid_body)}\r\n\r\n".encode("ascii")
+                + valid_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-lf-only",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"Content-Length: {len(valid_body)}\n\n".encode("ascii") + valid_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-extra-header",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"Content-Length: {len(valid_body)}\r\nX-Eva: 1\r\n\r\n".encode("ascii")
+                + valid_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-truncated-body",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"Content-Length: {len(valid_body) + 1}\r\n\r\n".encode("ascii")
+                + valid_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-oversize-declaration",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": b"Content-Length: 1048577\r\n\r\n".hex(),
+        },
+        {
+            "caseId": "invalid-connector-frame-duplicate-json-rpc-id",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (
+                f"Content-Length: {len(duplicate_id_body)}\r\n\r\n".encode("ascii")
+                + duplicate_id_body
+            ).hex(),
+        },
+        {
+            "caseId": "invalid-connector-single-frame-trailing-log",
+            "expect": "reject",
+            "profile": "single_frame",
+            "encoding": "hex",
+            "wireHex": (invoke_request_frame + b"worker log").hex(),
+        },
+        {
+            "caseId": "invalid-connector-stdout-starts-with-request",
+            "expect": "reject",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": (initialize_request_frame + invoke_success_frame).hex(),
+        },
+        {
+            "caseId": "invalid-connector-stdout-two-init-responses",
+            "expect": "reject",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": (initialize_success_frame + initialize_success_frame).hex(),
+        },
+        {
+            "caseId": "invalid-connector-stdout-missing-operation-response",
+            "expect": "reject",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": initialize_success_frame.hex(),
+        },
+        {
+            "caseId": "invalid-connector-stdout-invoke-error-first",
+            "expect": "reject",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": invoke_error_frame.hex(),
+        },
+        {
+            "caseId": "invalid-connector-stdout-third-frame",
+            "expect": "reject",
+            "profile": "stdout_exchange",
+            "encoding": "hex",
+            "wireHex": (
+                initialize_success_frame + invoke_success_frame + invoke_error_frame
+            ).hex(),
+        },
+    ]
     return {
         "corpus": "EvaContractCorpus/v1",
         "authority": "language_neutral_validation_fixture_only",
@@ -1962,6 +2502,18 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
             },
         ],
         "wireRecipeSemantics": "UTF-8 encode prefix + repeatText repeated repeatCount times + suffix",
+        "connectorRpcFramingProfile": {
+            "protocol": "JSON-RPC 2.0",
+            "encoding": "UTF-8 EvaCanonicalJSON/v1",
+            "header": "Content-Length: <canonical decimal>\\r\\n\\r\\n",
+            "maximumFrameBodyBytes": 1_048_576,
+            "maximumShortWorkerStdoutBytes": 2_101_248,
+            "stdoutSequences": [
+                "initialize-success then invoke-success-or-error",
+                "initialize-error only",
+            ],
+        },
+        "connectorFrameCases": connector_frame_cases,
         "cases": valid_cases + invalid_cases,
     }
 
@@ -2368,7 +2920,7 @@ def _apply_schema_cross_field_rules(
                 fields(integrity_root_sha256=nonnull, verified_at=nonnull),
             ),
         )
-    elif contract_name == "EvidenceEnvelope/v1":
+    elif contract_name in {"EvidenceEnvelope/v1", "EvidenceEnvelope/v2"}:
         add_rules(
             schema,
             {
@@ -2377,6 +2929,91 @@ def _apply_schema_cross_field_rules(
                     fields(object_ref_id=nonnull, object_sha256=nonnull),
                 ]
             },
+        )
+        if contract_name == "EvidenceEnvelope/v2":
+            add_rules(
+                schema,
+                when(
+                    "sequence",
+                    1,
+                    fields(predecessor_sha256=null),
+                    fields(predecessor_sha256=nonnull),
+                ),
+            )
+    elif contract_name == "ConnectorErrorResponse/v1":
+        error = definitions.get("ConnectorRpcError")
+        if isinstance(error, dict):
+            for kind, (code, message) in {
+                "method_not_found": (-32601, "Method not found"),
+                "invalid_params": (-32602, "Invalid params"),
+                "internal_error": (-32603, "Internal error"),
+                "worker_failure": (-32000, "Worker failure"),
+            }.items():
+                add_rules(
+                    error,
+                    when(
+                        "kind",
+                        kind,
+                        fields(code={"const": code}, message={"const": message}),
+                    ),
+                )
+                if kind in {"method_not_found", "invalid_params"}:
+                    add_rules(
+                        error,
+                        when(
+                            "kind",
+                            kind,
+                            fields(
+                                external_io_possible={"const": False},
+                                failure_class={"const": "internal_failure"},
+                            ),
+                        ),
+                    )
+            add_rules(
+                error,
+                when(
+                    "external_io_possible",
+                    True,
+                    fields(failure_class={"const": "ambiguous_transport"}),
+                    fields(failure_class={"const": "internal_failure"}),
+                ),
+            )
+        add_rules(
+            schema,
+            when(
+                "request_contract",
+                "ConnectorInitializeRequest/v1",
+                fields(
+                    request_method={"const": "connector.initialize"},
+                    error={
+                        "properties": {
+                            "external_io_possible": {"const": False},
+                            "failure_class": {"const": "internal_failure"},
+                        }
+                    },
+                ),
+                fields(
+                    request_method={
+                        "enum": [
+                            "resource.read",
+                            "effect.execute",
+                            "effect.reconcile",
+                            "effect.readback",
+                            "connector.probe",
+                        ]
+                    }
+                ),
+            ),
+        )
+    elif contract_name == "ConnectorProtocolFailure/v1":
+        add_rules(
+            schema,
+            when(
+                "phase",
+                "invoke_external_io_possible",
+                fields(failure_class={"const": "ambiguous_transport"}),
+                fields(failure_class={"const": "internal_failure"}),
+            ),
         )
 
     if contract_name not in {
@@ -2500,8 +3137,26 @@ HOST_CONFORMANCE_RULES = {
     "AttentionWake/v1": ["deadline ordering and lease-time validity"],
     "CapabilityGrant/v1": ["deadline follows issuance"],
     "ConnectorEnvelope/v1": ["request hash equals canonical request payload bytes"],
+    "ConnectorErrorResponse/v1": [
+        "ID, request contract, method and canonical request hash bind one phase; failure class matches the supervisor external-I/O phase"
+    ],
+    "ConnectorInitializeRequest/v1": [
+        "ID, connector binding, capability manifest, manifest, worker executable, CapabilityGrant, exact operation provider scopes, CredentialGrant and deadline bind exactly"
+    ],
+    "ConnectorInitializeSuccess/v1": [
+        "ID and every connector-binding, capability-manifest, grant and executable authority hash bind the selected request"
+    ],
+    "ConnectorInvokeRequest/v1": [
+        "phase-unique ID, verified connector binding, manifest operation effect class, exact provider scopes and both grants bind the exact ConnectorEnvelope"
+    ],
+    "ConnectorInvokeSuccess/v1": [
+        "ID and ConnectorResult.request_sha256 bind canonical ConnectorEnvelope bytes; result deadline, outcome kind and payload output schema match the selected manifest operation"
+    ],
     "ConnectorManifest/v1": [
-        "operation IDs are unique and stdout carries all maximum frames"
+        "operation IDs are unique and stdout carries all maximum frames; the short-worker handshake requires the exact sealed frame/count/stdout budgets"
+    ],
+    "ConnectorProtocolFailure/v1": [
+        "supervisor phase maps every fatal protocol violation to internal_failure before possible external I/O or ambiguous_transport after it, with no automatic resend"
     ],
     "ConsentGrant/v1": ["expiry follows grant time"],
     "CredentialGrant/v1": ["deadline follows issuance"],
@@ -2509,9 +3164,18 @@ HOST_CONFORMANCE_RULES = {
     "DeliveryReceipt/v1": [
         "selected DeliveryOffer hash, delivery/content/wire, proof mode and client ACK request/challenge/algorithm/key match exactly"
     ],
+    "DeliveryOffer/v2": [
+        "expiry follows offer time; installation, channel, request, conversation and ACK key equal the authenticated IngressRequest/v1"
+    ],
+    "DeliveryReceipt/v2": [
+        "authenticated ingress, v2 offer, delivery, PresenceReply, wire, P-256 profile, signature, pre-bound key and transaction-bound one-time challenge claim match exactly; v1 is never a fallback"
+    ],
     "DocumentDraft/v1": ["content is at most 65536 UTF-8 bytes"],
     "EpisodeState/v1": ["generation supersedes exactly its arithmetic predecessor"],
     "EvaPortableArchive/v1": ["encrypted object count equals the sum of chunk counts"],
+    "EvidenceEnvelope/v2": [
+        "object reference pair is complete; tenant, aggregate, positive sequence and idempotency key are required"
+    ],
     "MemoryRecall/v1": ["selected ranks are unique"],
     "PlannerRequest/v1": [
         "context selection hash equals the complete embedded PresenceContext"
