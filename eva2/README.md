@@ -4,7 +4,8 @@ Dit is de nieuwe, connectorneutrale Eva-runtime. Deze map deelt geen uitvoerbare
 schema-eigenaarschap, secrets of processtate met Eva 1.
 
 Tranche 4A blijft de immutable contract-, platform- en supply-chainbasis. De
-huidige bronboom bevat daarnaast de minimale tranche 4B-atomiciteitsslice:
+huidige bronboom bevat daarnaast de minimale tranches 4B en 4C voor
+PostgreSQL-atomiciteit:
 
 - strikte, versiegebonden contracten en gegenereerde JSON Schema's;
 - vaste Python-packagegrenzen;
@@ -13,12 +14,18 @@ huidige bronboom bevat daarnaast de minimale tranche 4B-atomiciteitsslice:
 - drie lineaire Alembic-revisions voor uitsluitend `eva_core.tenants`,
   `installations`, `episodes` en `episode_events`;
 - een pure `accepted -> planning`-transition en een connection-injected
-  SQLAlchemy Core-repository zonder eigen transactiebeheer.
+  SQLAlchemy Core-repository zonder eigen transactiebeheer;
+- een hash-gebonden DBOS 2.30.0+eva.1 sync-datasource-overlay, een
+  pre-migrated/no-DDL opener en één gesloten workflow-composition;
+- echte PostgreSQL 16.13-proeven voor één fysieke head/event/result-commit,
+  begrensde `40001`/`40P01`-pogingen, COMMIT-ambiguïteit, route-uitval en
+  fresh-process recovery.
 
-De map bevat nog geen werkende agent, installer, connector, DBOS-adapter of
-productieservice. Tranche 4B bewijst ook geen DBOS-atomiciteit. DBOS blijft een
-voorwaardelijke keuze totdat tranche 4C de datasource-invariant met echte
-crashproeven bewijst.
+Tranche 4C bewijst uitsluitend deze synchrone datasource- en
+database-atomiciteitsslice. De async DBOS-datasource is niet ondersteund. De map
+bevat nog geen werkende agent, algemene installer, connector, modelintegratie,
+gebruikersgedrag of productieservice; die 4D- en latere claims volgen niet uit
+dit bewijs.
 
 Veiligheid blijft een dunne grens rond echte risico's, geen tweede bestuurssysteem. Lezen,
 redeneren, plannen en uitleggen krijgen geen onnodige toestemmingslagen. Alleen externe of
@@ -69,3 +76,16 @@ Het bevroren 4B-bewijs staat in
 38 PostgreSQL-proeven en 139 gecombineerde pinned-environmentproeven zijn groen.
 Het receipt claimt uitdrukkelijk nog geen DBOS-, model-, connector- of
 gebruikersgedrag.
+
+## Tranche 4C PostgreSQL/DBOS-gate
+
+De 4C-gate draait in de exact bevroren Python 3.12.14-omgeving met de 4A/4B
+requirements-locks en vervangt daarin uitsluitend de stock DBOS-wheel door de
+hash-gebonden `2.30.0+eva.1` sync-datasource-overlay. De 41 proeven gebruiken
+een lege disposable PostgreSQL 16.13-database en bewijzen alleen de hierboven
+afgebakende database-atomiciteit, begrensde retry en crashrecovery.
+
+Het bevroren resultaat staat in
+[`postgresql-durability-gate.json`](evidence/4c/postgresql-durability-gate.json).
+Het claimt geen async datasource, connector-, model-, effect-,
+gebruikers- of productiegedrag.

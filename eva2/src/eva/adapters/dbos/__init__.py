@@ -1,1 +1,1 @@
-"""Conditional DBOS durable-execution adapter placeholder for tranche 4C."""
+"""DBOS adapter package; tranche 4C exposes synchronous PostgreSQL only."""

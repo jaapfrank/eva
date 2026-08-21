@@ -1,0 +1,187 @@
+--- a/dbos/_datasource.py
++++ b/dbos/_datasource.py
+@@ -33 +33 @@
+-from dbos._error import DBOSException
++from dbos._error import DBOSBaseException, DBOSException
+@@ -50,0 +51 @@
++_DEFAULT_MAX_TRANSACTION_ATTEMPTS = 3
+@@ -63,0 +65,15 @@
++class _TransactionRecoveryRequired(DBOSBaseException):
++    """Leave an ambiguous datasource step pending for supervised recovery.
++
++    ``BaseException`` control flow is intentional: DBOS must not checkpoint a
++    guessed error in either datasource or system storage while commit outcome is
++    unknown.  A recovered workflow starts with the datasource output pre-check.
++    """
++
++
++def _validate_max_transaction_attempts(value: int) -> int:
++    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
++        raise DBOSException("max_transaction_attempts must be an integer >= 1")
++    return value
++
++
+@@ -509,0 +526 @@
++        self._max_transaction_attempts = _DEFAULT_MAX_TRANSACTION_ATTEMPTS
+@@ -517,0 +535,2 @@
++        run_migrations: bool = True,
++        max_transaction_attempts: int = _DEFAULT_MAX_TRANSACTION_ATTEMPTS,
+@@ -543 +562,7 @@
+-        instance.run_migrations()
++        instance._max_transaction_attempts = _validate_max_transaction_attempts(
++            max_transaction_attempts
++        )
++        if run_migrations:
++            instance.run_migrations()
++        else:
++            instance._verify_schema()
+@@ -567,0 +593,14 @@
++    def _verify_schema(self) -> None:
++        """Verify the pre-migrated datasource table using a read-only statement."""
++        with self.engine.connect() as conn:
++            conn.execute(
++                sa.select(
++                    DatasourceSchema.datasource_outputs.c.workflow_id,
++                    DatasourceSchema.datasource_outputs.c.step_id,
++                    DatasourceSchema.datasource_outputs.c.output,
++                    DatasourceSchema.datasource_outputs.c.error,
++                    DatasourceSchema.datasource_outputs.c.serialization,
++                    DatasourceSchema.datasource_outputs.c.created_at,
++                ).limit(0)
++            )
++
+@@ -589 +628 @@
+-        while True:
++        for attempt in range(self._max_transaction_attempts):
+@@ -596,0 +636,6 @@
++                if attempt + 1 >= self._max_transaction_attempts:
++                    raise _TransactionRecoveryRequired(
++                        f"Datasource result pre-check exhausted "
++                        f"{self._max_transaction_attempts} attempts for workflow "
++                        f"{workflow_id}, step {step_id}"
++                    ) from dbapi_error
+@@ -601,0 +647 @@
++        raise AssertionError("unreachable datasource pre-check retry state")
+@@ -691,14 +737,10 @@
+-                    while True:
+-                        with self.sessionmaker() as session:
+-                            exec_ctx.start_sync_ds_transaction(session)
+-                            try:
+-                                with session.begin():
+-                                    session.connection(
+-                                        execution_options={
+-                                            "isolation_level": isolation_level
+-                                        }
+-                                    )
+-                                    output = func(*args, **kwargs)
+-                                    if in_wf:
+-                                        serialized, serialization = serialize_value(
+-                                            output, None, self.serializer
++                    for attempt in range(self._max_transaction_attempts):
++                        try:
++                            with self.sessionmaker() as session:
++                                exec_ctx.start_sync_ds_transaction(session)
++                                try:
++                                    with session.begin():
++                                        session.connection(
++                                            execution_options={
++                                                "isolation_level": isolation_level
++                                            }
+@@ -706,15 +748,21 @@
+-                                        self._record_result(
+-                                            session,
+-                                            workflow_id,
+-                                            step_id,
+-                                            serialized,
+-                                            None,
+-                                            serialization,
+-                                        )
+-                                break
+-                            except _StepAlreadyRecorded:
+-                                raise  # the recorded result wins; don't record an error over it
+-                            except Exception as e:
+-                                if _is_retriable_db_error(
+-                                    e, self._is_serialization_error
+-                                ):
++                                        output = func(*args, **kwargs)
++                                        if in_wf:
++                                            serialized, serialization = serialize_value(
++                                                output, None, self.serializer
++                                            )
++                                            self._record_result(
++                                                session,
++                                                workflow_id,
++                                                step_id,
++                                                serialized,
++                                                None,
++                                                serialization,
++                                            )
++                                finally:
++                                    exec_ctx.end_sync_ds_transaction()
++                            break
++                        except _StepAlreadyRecorded:
++                            raise  # the recorded result wins; don't record an error over it
++                        except Exception as e:
++                            if self._is_serialization_error(e):
++                                if attempt + 1 < self._max_transaction_attempts:
+@@ -730 +778,5 @@
+-                                            {"retry_wait_seconds": retry_wait_seconds},
++                                            {
++                                                "retry_wait_seconds": retry_wait_seconds,
++                                                "attempt": attempt + 1,
++                                                "max_attempts": self._max_transaction_attempts,
++                                            },
+@@ -737,0 +790,9 @@
++                            elif isinstance(e, DBAPIError) and retriable_postgres_exception(
++                                e
++                            ):
++                                # A connection error can be raised after PostgreSQL committed
++                                # but before the client observed the acknowledgement. Never run
++                                # the body again in this invocation. Reconcile on a fresh
++                                # connection; if no durable result can be adopted, leave the
++                                # workflow pending so supervised recovery performs the normal
++                                # pre-check before any later execution.
+@@ -739,9 +800,20 @@
+-                                    serialized_e, serialization = serialize_exception(
+-                                        e, None, self.serializer
+-                                    )
+-                                    self._record_error(
+-                                        workflow_id,
+-                                        step_id,
+-                                        serialized_e,
+-                                        serialization,
+-                                    )
++                                    try:
++                                        recorded = self._check_execution_with_retry(
++                                            workflow_id, step_id
++                                        )
++                                    except DBOSBaseException:
++                                        raise
++                                    except Exception as reconcile_error:
++                                        raise _TransactionRecoveryRequired(
++                                            f"Could not reconcile ambiguous datasource "
++                                            f"commit for workflow {workflow_id}, step {step_id}"
++                                        ) from reconcile_error
++                                    if recorded is not None:
++                                        return cast(
++                                            R,
++                                            _replay_recorded(recorded, self.serializer),
++                                        )
++                                    raise _TransactionRecoveryRequired(
++                                        f"Datasource commit outcome requires supervised "
++                                        f"recovery for workflow {workflow_id}, step {step_id}"
++                                    ) from e
+@@ -749,2 +821,11 @@
+-                            finally:
+-                                exec_ctx.end_sync_ds_transaction()
++                            if in_wf:
++                                serialized_e, serialization = serialize_exception(
++                                    e, None, self.serializer
++                                )
++                                self._record_error(
++                                    workflow_id,
++                                    step_id,
++                                    serialized_e,
++                                    serialization,
++                                )
++                            raise
