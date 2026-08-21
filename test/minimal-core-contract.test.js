@@ -324,6 +324,11 @@ test('een geldige interpretatie en de latere planningsfout krijgen aparte tijdli
   assert.equal(timeline.planning.kind, 'turn_planning');
   assert.equal(timeline.planning.meta.failureStage, 'authority');
   assert.equal(timeline.planning.meta.error, 'capability_authority_denied');
+  assert.equal(timeline.contract.kind, 'turn_contract');
+  assert.equal(timeline.contract.meta.turnId, 'semantic-timeline-test');
+  assert.equal(timeline.contract.meta.kind, semanticTurn.turnContract.kind);
+  assert.deepEqual(timeline.contract.meta.requiredTools, semanticTurn.requiredTools);
+  assert.deepEqual(timeline.contract.meta.offeredTools, semanticTurn.requiredTools);
 });
 
 test('finishTurn bewaart de semantische foutmetadata in plaats van die stil weg te gooien', () => {
