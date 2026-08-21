@@ -4473,7 +4473,28 @@ function recordSemanticTurnTimeline({ semanticTurn, semanticResult, turnId, conv
       },
     );
   }
-  return { understanding, planning };
+  const turnContract = semanticTurn?.turnContract || {};
+  const requiredTools = Array.isArray(semanticTurn?.requiredTools)
+    ? semanticTurn.requiredTools : [];
+  const allowedToolNames = semanticTurn?.turnPlan?.allowedToolNames;
+  const offeredTools = allowedToolNames instanceof Set
+    ? [...allowedToolNames] : requiredTools;
+  const contract = logTimeline(
+    'turn_contract',
+    `${turnContract.kind || 'conversation'}: ${turnContract.outcome || 'Beantwoord de huidige beurt.'}`,
+    {
+      internalOnly: true,
+      turnId,
+      conversationId,
+      kind: turnContract.kind || 'conversation',
+      requiredTools,
+      offeredTools,
+      actionIntent: semanticTurn?.turnPlan?.actionIntent || 'explain',
+      effectPolicy: semanticTurn?.turnPlan?.effectPolicy || { mode: 'deny_all', deniedEffects: [] },
+      effort: turnContract.effort || null,
+    },
+  );
+  return { understanding, planning, contract };
 }
 
 function buildSemanticPlans({
