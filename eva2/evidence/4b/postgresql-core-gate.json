@@ -1,0 +1,101 @@
+{
+  "baseCommit": "a140389550c3eff70779f85341eb99346865a5c7",
+  "branch": "recovery/v2-containment",
+  "contract": "Eva2Tranche4BEvidence/v1",
+  "createdAt": "2026-08-21T02:55:25+02:00",
+  "disposableResourcesRemoved": true,
+  "environment": {
+    "alembic": "1.19.1",
+    "postgresImage": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "postgresVersion": "16.13",
+    "psycopg": "3.3.4",
+    "pydantic": "2.12.5",
+    "pytest": "8.4.2",
+    "python": "3.12.14",
+    "pythonImage": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "sqlalchemy": "2.0.52"
+  },
+  "gates": [
+    {
+      "claim": "database-free domain, contract, architecture, design and platform regression",
+      "passed": 108,
+      "status": "passed"
+    },
+    {
+      "claim": "fresh create, stepped upgrade, pre-traffic downgrade, re-upgrade, schema, RLS, repository, concurrency and exportability on disposable PostgreSQL 16.13",
+      "passed": 38,
+      "status": "passed"
+    },
+    {
+      "claim": "combined pinned Python 3.12.14 and PostgreSQL 16.13 matrix",
+      "passed": 139,
+      "status": "passed"
+    },
+    {
+      "claim": "package ownership and import-boundary scan",
+      "pythonFilesChecked": 63,
+      "status": "passed",
+      "violations": 0
+    },
+    {
+      "claim": "Ruff check, Ruff format check and git diff check",
+      "status": "passed"
+    }
+  ],
+  "invariantsProven": [
+    "exactly four eva_core tables and one linear Alembic history",
+    "caller-owned transaction commits or rolls back episode head and event together",
+    "same command returns the same durable result without another event",
+    "competing commands have one compare-and-swap winner",
+    "tenant and installation scope cannot change inside a transaction",
+    "canonical EpisodeState snapshots reject missing, extra and wrongly typed fields",
+    "framework-independent state remains readable without a DBOS schema",
+    "schema migration runs separately from runtime imports and startup"
+  ],
+  "lockInputs": {
+    "eva2/release/gate-toolchain.lock.json": "a6288e22066250f443fb802e5944d836fbfc2415c3c85c785670d604bbf6a03e",
+    "eva2/release/gate-toolchain.requirements.lock": "c49a78134f19175106d1f4e956583c47532293446454ceeeeed8cc512b83dd5f",
+    "eva2/requirements.lock": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc"
+  },
+  "mutationsOutsideDisposableGate": {
+    "connectors": false,
+    "eva1": false,
+    "liveDatabase": false,
+    "networkProvisioning": false,
+    "productDatabase": false,
+    "services": false
+  },
+  "nonClaims": [
+    "no DBOS atomicity claim",
+    "no model or agent behavior claim",
+    "no connector or user-visible behavior claim",
+    "no live migration or production deployment claim",
+    "no post-traffic database downgrade claim"
+  ],
+  "sourceManifest": [
+    ["eva2/README.md", "6583503f6a65405d00fb0085abbf96d1e1dbbc7f0d84eca7bc6a5fff8e075d6f"],
+    ["eva2/alembic.ini", "903cd858477079bc90d47bd2520c34f01b3921f0ed8565d442ec62c2d1ec5b0d"],
+    ["eva2/migrations/README.md", "1cbf70412cc7e03f84119100a8858bbcf8fd26d7eeb0e867da1cce1e195165ab"],
+    ["eva2/migrations/env.py", "48b73adfc1778708d458e09936b51abae8d4f65f7921c9f047c8f0957fd6466c"],
+    ["eva2/migrations/script.py.mako", "3692e71f3ed37880b5679ee9814d5bf797a3472a377cf973d8e15d31ed46bcbc"],
+    ["eva2/migrations/versions/4b_0000_core_namespace.py", "59fc8da9f1e152b69d953746187e413fe0602dff7df7de0b01160e3d3867cb6c"],
+    ["eva2/migrations/versions/4b_0001_tenant_scope.py", "4a65a74790aec595c8643a991e64b10a7e0533f14ff1afe277fef57c6000e3a4"],
+    ["eva2/migrations/versions/4b_0002_episode_atomicity.py", "8e725d5696dad6104a25e1580bd28cc6c018427938c3d8dd42748afd4e4dd2e7"],
+    ["eva2/src/eva/adapters/postgres/episode_repository.py", "39b75b0180896fc9ab5f859a15735444c23ad7d351d682527de2973ca31205f4"],
+    ["eva2/src/eva/adapters/postgres/schema.py", "23c16da5fb5b72d1b7b3ec543e838b23bb8cd84a079207a848d1b82d1e0d80ef"],
+    ["eva2/src/eva/adapters/postgres/scope.py", "1f20d65bad0893ad7ea53ee312b3030ff4e1c38ab01157e77ee6d9bf36fe463f"],
+    ["eva2/src/eva/application/episode_repository.py", "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb"],
+    ["eva2/src/eva/domain/episode.py", "006c5a083426ec16860e401a53bda7277d1648418dcd5b167c22155b0c1c98c6"],
+    ["eva2/tests/domain/test_episode_transition.py", "646c85e2f0e842f24e51d4b80944f8ca92c4d7124558b3473f71232b6119dea9"],
+    ["eva2/tests/postgres/conftest.py", "27b7a300d606f6b5641288b956eaf7e5efe5176b9689ca04540957dc15153de6"],
+    ["eva2/tests/postgres/test_4b_static_boundaries.py", "54d597e814647b56042db33c87bda719d810d3bb74418556de2dca8227742ac8"],
+    ["eva2/tests/postgres/test_postgres_exportability.py", "c68d8a3b978767cdd9bae9c0266849664fd8bb1d5bfb18e76a90ae38843ba908"],
+    ["eva2/tests/postgres/test_postgres_isolation.py", "8576e628c338b6445a1abffcae7b7e88b8bdbe208f46181ae219f2ab25bb30e1"],
+    ["eva2/tests/postgres/test_postgres_migrations.py", "4528f25f8e08b63463a66b0cda2a7e3cf6caf684be876d11717b4e6033a2bff7"],
+    ["eva2/tests/postgres/test_postgres_repository.py", "08f7f703877735de5b5026414aab12c6489f51c0da5ececae76665f17fbff9c8"],
+    ["eva2/tests/postgres/test_postgres_schema.py", "6531acbc15a73be8621120ae4ee97b44e6307e8435f59cebf485f270e86d2153"]
+  ],
+  "sourceManifestSha256": "75d6179e2925f0c56558a3cb1a41fd33b1090b8a25eb53e1cfe79bf7bedf2569",
+  "status": "passed",
+  "tranche": "4B"
+}
