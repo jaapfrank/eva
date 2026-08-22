@@ -53,6 +53,7 @@ import {
   whoIsHome,
 } from '../integrations/homeassistant.js';
 import { searchWeb } from '../brain/llm.js';
+import { currentCryptoMarketFact, currentCryptoMarketFactText } from '../integrations/marketdata.js';
 import { householdMembers } from './household.js';
 import { createTelegramDeliveryRegistry } from './telegramdelivery.js';
 import { listWorkItems } from './work.js';
@@ -3303,26 +3304,53 @@ async function handleZoekInternet(args, context, mode) {
         const researchTimeoutMs = mode === 'chat' ? Math.min(timeoutMs, 30_000) : timeoutMs;
         const boundedSelfAttentionProvider = mode === 'autonomy'
           && context.selfAttentionProviderRequestBudget === 1;
-        const result = await searchWeb(args.vraag, {
-          cacheKey: mode === 'autonomy' ? 'eva-autonomous-research' : 'eva-interactive-research',
-          budgetClass: mode === 'autonomy' ? 'autonomous' : 'interactive',
-          timeoutMs: researchTimeoutMs,
-          ...(mode === 'chat' ? { maxOutputTokens: 900 } : {}),
-          ...(boundedSelfAttentionProvider ? {
-            maxOutputTokens: 8_000,
-            rateLimitRetries: 0,
-            transientRetries: 0,
-            authenticationRetries: 0,
-          } : {}),
-        });
-        const message = commercialResearchEvidenceBoundary(args.vraag, result.text);
+        let marketFact = null;
+        try {
+          marketFact = await currentCryptoMarketFact(args.vraag, {
+            timeoutMs: Math.min(5_000, researchTimeoutMs),
+          });
+        } catch {
+          // Marktdata is aanvullend bewijs. Een niet-beschikbare adapter mag
+          // regulier onderzoek niet verhinderen, maar levert dan geen quote.
+        }
+        const researchQuestion = marketFact
+          ? `${args.vraag}\n\nDe directe marktdata-adapter gaf deze actuele quote: ${currentCryptoMarketFactText(marketFact)} Onderzoek alleen context, nieuws en risico's. Noem geen aanvullende actuele prijs, koersverandering, range, volume of marktkapitalisatie; als bronnen botsen, benoem het conflict in plaats van een prijs te kiezen.`
+          : args.vraag;
+        let result;
+        try {
+          result = await searchWeb(researchQuestion, {
+            cacheKey: mode === 'autonomy' ? 'eva-autonomous-research' : 'eva-interactive-research',
+            budgetClass: mode === 'autonomy' ? 'autonomous' : 'interactive',
+            timeoutMs: researchTimeoutMs,
+            ...(mode === 'chat' ? { maxOutputTokens: 1_400 } : {}),
+            ...(boundedSelfAttentionProvider ? {
+              maxOutputTokens: 8_000,
+              rateLimitRetries: 0,
+              transientRetries: 0,
+              authenticationRetries: 0,
+            } : {}),
+          });
+        } catch (error) {
+          if (!marketFact) throw error;
+          return JSON.stringify({
+            ok: true, verified: true, searched: false, searchCalls: 0,
+            message: `${currentCryptoMarketFactText(marketFact)} De aanvullende achtergrondbronnen kwamen niet op tijd terug. Ik trek daarom geen koop- of verkoopconclusie uit alleen deze koersmeting.`,
+            sources: marketFact.sourceUrls,
+            market_fact: marketFact,
+          });
+        }
+        const research = commercialResearchEvidenceBoundary(args.vraag, result.text);
+        const message = marketFact
+          ? [currentCryptoMarketFactText(marketFact), research].filter(Boolean).join('\n\n')
+          : research;
         return JSON.stringify({
           ok: true,
           verified: true,
           message: clean(message, 20_000),
           searched: result.searched,
           searchCalls: result.searchCalls,
-          sources: result.sources,
+          sources: [...new Set([...(marketFact?.sourceUrls || []), ...result.sources])].slice(0, 4),
+          ...(marketFact ? { market_fact: marketFact } : {}),
         });
 }
 async function handleBeheerAgentmail(args, context) {
