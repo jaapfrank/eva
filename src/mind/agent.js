@@ -10287,12 +10287,26 @@ async function executeTurn({
       const readFailure = failed && ['read', 'discovery'].includes(failed.plan.effect);
       const readBlocker = readFailure && failed?.investigationRequired === true
         ? naturalReadInvestigationBlocker(failed, failureText) : failureText;
-      const groundedFailure = modelFailureText || [
-        progressText ? `Dit kon ik wel vaststellen: ${progressText}` : '',
-        readFailure
-          ? readBlocker || 'Ik kon de relevante gegevens niet betrouwbaar uitlezen.'
-          : `Nog open: ${failureText || 'de laatste benodigde controle is niet betrouwbaar afgerond.'}`,
-      ].filter(Boolean).join(' ');
+      // Een inspectielus kan haar vaste leesbudget opgebruiken nadat zij al
+      // uitsluitend geverifieerde waarnemingen heeft verzameld. Die feiten
+      // blijven een bruikbaar, eerlijk antwoord; plak er dan geen
+      // tegengestelde "niet vast te stellen"-slotzin achter.
+      const substantiveProgress = Boolean(progressText)
+        && !/^Geen actuele (?:Home Assistant-)?kandidaat\b/iu.test(progressText.trim());
+      const groundedReadBudgetAnswer = !modelFailureText
+        && readFailure
+        && failed?.investigationFailure === 'round_limit'
+        && substantiveProgress
+        && toolResults.length > 0
+        && toolResults.every(verifiedCompleteReceipt);
+      const groundedFailure = modelFailureText || (groundedReadBudgetAnswer
+        ? `Dit is wat ik nu betrouwbaar kon vaststellen: ${progressText}`
+        : [
+          progressText ? `Dit kon ik wel vaststellen: ${progressText}` : '',
+          readFailure
+            ? readBlocker || 'Ik kon de relevante gegevens niet betrouwbaar uitlezen.'
+            : `Nog open: ${failureText || 'de laatste benodigde controle is niet betrouwbaar afgerond.'}`,
+        ].filter(Boolean).join(' '));
       const failureReply = mode === 'autonomy' ? ''
         : readFailure
           ? groundedFailure
