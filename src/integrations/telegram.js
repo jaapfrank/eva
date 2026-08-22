@@ -2528,7 +2528,7 @@ export async function startTelegram() {
     upsertPerson(resolveName(ctx.from), { telegram_id: ctx.from.id });
     await sendTelegramText(
       ctx.chat.id,
-      'Hoi! Ik ben Eva, ik woon hier in huis 💚 Zeg maar gewoon wat je wilt. Vertel me vooral hoe je heet, dan onthoud ik dat.',
+      `Hoi! Ik ben ${config.assistantName}, ik woon hier in huis 💚 Zeg maar gewoon wat je wilt. Vertel me vooral hoe je heet, dan onthoud ik dat.`,
       { replyToMessageId: ctx.message.message_id, dedupeKey: inboundReplyDedupeKey(ctx, 'start') },
     );
   });

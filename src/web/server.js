@@ -1138,7 +1138,7 @@ export async function startWeb() {
     res.json({
       drives: {},
       working: status.current_focus ? [status.current_focus] : [],
-      zelfbeeld: 'Ik ben Eva, een digitale huisgenoot. Wie ik word blijkt uit wat ik onthoud, doe en afmaak.',
+      zelfbeeld: `Ik ben ${config.assistantName}, ${config.assistantIdentity}. Wie ik word blijkt uit wat ik onthoud, doe en afmaak.`,
       gedachtegang: status.current_focus || '',
       verwonderingen: [],
       voornemens: [],
