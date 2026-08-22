@@ -816,7 +816,7 @@ export async function startWeb() {
     try {
       const status = agentStatus({ audience: 'family' });
       res.json({
-        name: 'Eva',
+        name: config.assistantName,
         awake: true,
         activity: status.activity,
         mood: getMood(),

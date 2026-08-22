@@ -157,8 +157,19 @@ function setMood(mood = {}, summary = '') {
   $('#mood-word').textContent = words;
 }
 
+function setAssistantName(value) {
+  const name = String(value || 'Eva').trim() || 'Eva';
+  document.querySelectorAll('[data-assistant-name]').forEach((element) => {
+    element.textContent = name;
+  });
+  document.title = name;
+  $('#presence').setAttribute('aria-label', `Aanwezigheid van ${name}`);
+  $('#eva-canvas').setAttribute('aria-label', `${name} in 3D`);
+}
+
 async function loadOverview() {
   const overview = await json('/api/overview');
+  setAssistantName(overview.name);
   const activity = overview.activity || 'luistert';
   $('#activity').textContent = activity;
   $('#mobile-activity').textContent = activity;
