@@ -550,7 +550,9 @@ test('failed rij wordt pas completed na exact geaccepteerd transportreceipt', as
     originConversationId: `telegram:${row.chat_id}`, originMessageId: row.message_id,
     deliveredConversationId: `telegram:${row.chat_id}`, resultText: reply,
     proofSummary: 'Resultaat is gecontroleerd.',
-    idempotencyKey: `failed-handoff-receipt:${created.episode_id}`, transport: delivery,
+    // The receipt must reuse the immutable key already bound to the accepted
+    // Telegram operation; a new receipt-only key is not proof of that send.
+    idempotencyKey: `failed-handoff-delivery:${created.episode_id}`, transport: delivery,
   });
   assert.ok(receipt);
   assert.equal(telegramMessage(row.chat_id, row.message_id).processing_status, 'completed');
