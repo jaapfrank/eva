@@ -122,6 +122,12 @@ const MUTATION_NEGATION = /\b(?:niet|geen|nooit|niemand|niets|niks|not|never|nob
 const NON_ACTION_NEGATION = /\b(?:niet\s+te|not\s+too)\b/giu;
 const READ_NON_ACTION_NEGATION = /\bnot\s+too\b/giu;
 const PRESENCE_STATE_NEGATION = /\b(?:(?:ben|bent|is|zijn|am|are)\s+(?:er\s+(?:niet|nooit|not|never)\b|(?:niet|nooit|not|never)\s+(?:thuis|aanwezig|hier|daar|weg|home|present|here|there|away)\b)|(?:niet|nooit|not|never)\s+(?:thuis|aanwezig|hier|daar|weg|home|present|here|there|away)\s+(?:ben|bent|is|zijn|am|are)\b|(?:niemand|nobody|no\s+one)\s+(?:(?:is|zijn|are)\s+(?:er\s+)?(?:thuis|aanwezig|hier|daar|home|present|here|there)\b|(?:thuis|aanwezig|hier|daar|home|present|here|there)\s+(?:is|zijn|are)\b))/giu;
+// "Wil je uitzoeken waarom de lamp het niet deed?" beschrijft een storing;
+// het is geen verbod om te lezen. Houd dit bewust beperkt tot een oorzaakvraag
+// over een concrete negatieve toestand, zodat "zoek niet uit waarom ..." dicht
+// blijft.
+const READ_FAILURE_DESCRIPTION = /\b(?:waarom|hoe)\b[^.!?;]{0,180}\b(?:niet|geen)\b[^.!?;]{0,96}\b(?:werk(?:t|te|en)|doet|deed|brand(?:t|de)|reageer(?:t|de)|aangaat|aanging|uitvalt?|uitviel|kapot)\b/iu;
+const NEGATED_READ_REQUEST = /\b(?:zoek|kijk|lees|onderzoek|probeer|ga)\s+(?:dit|dat|het|er|niet)\b/iu;
 // Bij de letterlijke voice-fastlane ligt de uitgesproken payload al buiten
 // deze scope. Een losse `niet` in de opdrachtprefix is daar dus wél eenduidig:
 // "zeg niet ..." mag nooit als omroepopdracht doorgaan.
@@ -1289,7 +1295,10 @@ function actionBoundary(text, spans, temporal, operation, classifyBoundary = eff
     if (scopedEffects.denied.includes(operation.effect)) return true;
     const exception = ['read', 'discovery'].includes(operation.effect)
       ? READ_NON_ACTION_NEGATION : NON_ACTION_NEGATION;
-    const rawNegation = MUTATION_NEGATION.test(clause.replace(exception, '').replace(PRESENCE_STATE_NEGATION, ''));
+    const readFailureDescription = ['read', 'discovery'].includes(operation.effect)
+      && READ_FAILURE_DESCRIPTION.test(clause) && !NEGATED_READ_REQUEST.test(clause);
+    const rawNegation = !readFailureDescription
+      && MUTATION_NEGATION.test(clause.replace(exception, '').replace(PRESENCE_STATE_NEGATION, ''));
     if (!rawNegation) return false;
     return scopedEffects.requestedEffects.length === 0;
   });

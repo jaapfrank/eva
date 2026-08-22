@@ -5022,6 +5022,25 @@ test('een expliciete historische huisvraag blijft historie wanneer het model de 
   assert.deepEqual(current.understanding.actions[0].semanticInput, { query: currentText });
 });
 
+test('een storing met “het deed het niet” autoriseert onderzoek in plaats van het te verbieden', async () => {
+  const text = 'Wil je uitzoeken waarom de lamp op de wc het niet deed?';
+  const action = {
+    capabilityId: 'home.context.read', operationId: 'read', polarity: 'request',
+    semanticInput: { query: text }, sourceSpans: [{ start: 0, end: text.length }],
+  };
+  const result = await understandTurn({ text, channel: 'telegram', sender: 'Jaap' }, deps(async () => response(baseRaw({
+    dialogueAct: 'question', requestedEffects: ['read'],
+    goal: { statement: text, outcome: 'De waarschijnlijke oorzaak van de storing toelichten.', beneficiary: 'requester' },
+    provenance: { sourceSpans: [{ start: 0, end: text.length }], contextHashes: [] },
+    actions: [action], firstDecision: { kind: 'inspect', requirementIds: ['r1'], replyDraft: null },
+  })), { capabilityCatalog: capabilityCatalog(), maxAttempts: 1 }));
+
+  assert.equal(result.ok, true, JSON.stringify(result));
+  assert.equal(result.firstDecision.kind, 'inspect');
+  assert.equal(result.understanding.actions[0].authorization, 'allowed');
+  assert.ok(!result.understanding.actions[0].boundaryReasons.includes('negated'));
+});
+
 test('een historisch doorgeefverzoek blijft logboekinspectie en wordt geen monitoring', async () => {
   const text = 'Kun je doorgeven wanneer dit gisteren gebeurde?';
   const action = {
