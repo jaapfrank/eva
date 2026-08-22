@@ -1436,12 +1436,20 @@ function normalizeDecision(value, actions, {
     ? proposed.requirementIds : []).map((item) => String(item || '').trim()).filter(Boolean))];
   const actionById = new Map(actions.map((action) => [action.requirementId, action]));
   const unknownRequirementIds = proposedRequirementIds.filter((id) => !actionById.has(id));
-  if (decisionSelectsDeniedAction(proposed, actions) && !allowSelfAttentionProjection) {
-    throw new TypeError('selected_denied_action');
-  }
   const executableActions = actions.filter((action) => (
     action.authorization === 'allowed' && action.polarity === 'request'
   ));
+  // De host voert uitsluitend deze canonieke allowed/request-actions uit. In
+  // een pure inspectie kan een afgewezen actie in de modelboekhouding dus
+  // nooit worden uitgevoerd. Laat zo'n gewone onderzoeksvraag met wél een
+  // geldige leesstap niet volledig stranden op die administratieve vergissing;
+  // houd de afgewezen actie zichtbaar in de projectie. Elke uitvoerende of
+  // gemengde beurt blijft daarentegen gesloten.
+  if (decisionSelectsDeniedAction(proposed, actions) && !allowSelfAttentionProjection
+    && !(proposedKind === 'inspect' && executableActions.length
+      && executableActions.every((action) => ['read', 'discovery'].includes(action.effect)))) {
+    throw new TypeError('selected_denied_action');
+  }
   const projectableIds = monitoringRequested || continuityRequested ? actions.filter((action) => (
     action.authorization === 'allowed' && action.polarity === 'request'
     && (((monitoringRequested ? monitoringReadRequirementIds : continuityReadRequirementIds)
@@ -2297,8 +2305,9 @@ function turnActionInvariantFailure(actions, durability, decision, {
   if (trustedSelfAttention && EXECUTING_DECISIONS.has(decision?.kind) && !allowed.length) {
     return 'self_attention_no_allowed_action';
   }
-  const selectedDenied = !allowSelfAttentionProjection
-    && decisionSelectsDeniedAction(decision, actions);
+  const selectedDenied = !allowSelfAttentionProjection && decisionSelectsDeniedAction(decision, actions)
+    && !(decision?.kind === 'inspect' && allowed.length
+      && allowed.every((action) => ['read', 'discovery'].includes(action.effect)));
   const redundantStart = hasRedundantWorkStart(actions, durability);
   if (selectedDenied && redundantStart) {
     return 'selected_denied_action_and_redundant_work_start';

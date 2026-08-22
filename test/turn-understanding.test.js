@@ -6132,7 +6132,7 @@ test('slang en parafrases worden semantisch gebruikt zonder een tweede tekstpars
   }
 });
 
-test('vrije Tuya-inspectie houdt een voorgestelde omzetting zichtbaar maar onuitvoerbaar', async () => {
+test('pure inspectie houdt een voorgestelde omzetting zichtbaar maar voert alleen de leesstap uit', async () => {
   const text = 'Kun jij alles van Tuya omzetten? Niet meteen doen; kijk eerst of je dat kunt en vertel per apparaat wat nodig is.';
   const catalog = [{
     id: 'home.integration.inventory', operations: [{
@@ -6160,24 +6160,23 @@ test('vrije Tuya-inspectie houdt een voorgestelde omzetting zichtbaar maar onuit
     sourceSpans: sourceSpans(text, 'alles van Tuya omzetten'),
   }];
   let calls = 0;
-  const result = await understandTurn({ text }, deps(async (request) => {
+  const result = await understandTurn({ text }, deps(async () => {
     calls += 1;
-    if (calls === 2) assert.match(request.instructions, /validatiecode selected_denied_action/u);
     return response(baseRaw({
     dialogueAct: 'request',
     goal: { statement: text, outcome: 'Een onderbouwd migratieoverzicht per apparaat.', beneficiary: 'household' },
     provenance: { sourceSpans: [{ start: 0, end: text.length }], contextHashes: [] },
     actions, requestedEffects: ['read', 'home'], deniedEffects: [],
-    firstDecision: { kind: 'inspect', requirementIds: calls === 1 ? ['r1', 'r2'] : ['r1'], replyDraft: null },
+    firstDecision: { kind: 'inspect', requirementIds: ['r1', 'r2'], replyDraft: null },
     }));
   }, { capabilityCatalog: catalog }));
 
-  assert.equal(calls, 2);
+  assert.equal(calls, 1);
   assert.equal(result.ok, true);
   assert.deepEqual(result.firstDecision.requirementIds, ['r1']);
   assert.deepEqual(result.understanding.actions.map((action) => action.authorization), ['allowed', 'denied']);
   assert.ok(result.understanding.actions[1].boundaryReasons.includes('inspection_only'));
-  assert.deepEqual(result.understanding.decisionProjection.rejectedRequirementIds, []);
+  assert.deepEqual(result.understanding.decisionProjection.rejectedRequirementIds, ['r2']);
   assert.deepEqual(result.understanding.deniedEffects, [
     'external', 'home', 'persistent', 'runtime', 'voice', 'workspace',
   ]);
