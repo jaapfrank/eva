@@ -3296,12 +3296,18 @@ async function handleZoekInternet(args, context, mode) {
         const timeoutMs = Number.isFinite(requestedTimeout) && requestedTimeout > 0
           ? requestedTimeout
           : config.autonomousLlmTimeoutMs;
+        // Een interactief onderzoek is pas nuttig als Eva daarna nog tijd
+        // heeft om de vondsten zelf te wegen en menselijk terug te koppelen.
+        // De provider krijgt daarom een eigen, begrensd stuk van de beurt in
+        // plaats van de volledige antwoorddeadline op te eten.
+        const researchTimeoutMs = mode === 'chat' ? Math.min(timeoutMs, 30_000) : timeoutMs;
         const boundedSelfAttentionProvider = mode === 'autonomy'
           && context.selfAttentionProviderRequestBudget === 1;
         const result = await searchWeb(args.vraag, {
           cacheKey: mode === 'autonomy' ? 'eva-autonomous-research' : 'eva-interactive-research',
           budgetClass: mode === 'autonomy' ? 'autonomous' : 'interactive',
-          timeoutMs,
+          timeoutMs: researchTimeoutMs,
+          ...(mode === 'chat' ? { maxOutputTokens: 900 } : {}),
           ...(boundedSelfAttentionProvider ? {
             maxOutputTokens: 8_000,
             rateLimitRetries: 0,

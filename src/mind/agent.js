@@ -5183,6 +5183,10 @@ function turnStepEvidence(toolResults, understandingSha256) {
 
 function partialTurnProgress(toolResults) {
   const facts = toolResults.filter(verifiedCompleteReceipt).slice(-6).flatMap((tool) => {
+    // Een onderzoeksnotitie is bronmateriaal voor Eva, geen tussenantwoord
+    // voor het gezin. Als de beurt daarna niet afgemaakt kan worden, mag die
+    // nooit rauw of dubbel uit een foutpad ontsnappen.
+    if (tool.name === 'zoek_internet') return [];
     let typed = null;
     try { typed = JSON.parse(String(tool.output || '')); } catch { /* gewone uitvoer */ }
     const references = turnStepCandidates(typed?.data).slice(0, 2).map((item) => item.value);
@@ -5209,7 +5213,10 @@ function naturalReadInvestigationBlocker(entry, detail = '') {
     blocked: 'De beschikbare informatiebronnen leveren het ontbrekende gegeven nu niet.',
   })[reason] || 'De beschikbare informatiebronnen leveren het ontbrekende gegeven nu niet.';
   const naturalDetail = String(detail || '').replace(/\s+/gu, ' ').trim().slice(0, 320);
+  const researchNarrative = /\b(?:onderzoeksnotitie|gevonden feiten|koersdrivers|directe bronnen)\b/iu
+    .test(naturalDetail);
   const usableDetail = naturalDetail
+    && !researchNarrative
     && !looksLikeInternalOutput(naturalDetail)
     && !/[{}]|\b(?:actionresult|capability|deadline|no_progress|receipt|requirement|round_limit|tool)\b/iu
       .test(naturalDetail)
