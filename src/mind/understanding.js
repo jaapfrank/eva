@@ -3565,7 +3565,8 @@ export async function understandTurn(envelopeValue, dependencies = /** @type {an
       const nextDecisionRetryGuide = TURN_DECISION_RETRY_GUIDES.get(error);
       decisionRetryGuide = nextDecisionRetryGuide || null;
       attemptFailures.push({ attempt, code: lastCode, validation: lastValidation,
-        ...(actionAudit ? { actionAudit } : {}) });
+        ...(actionAudit ? { actionAudit } : {}),
+        ...(nextDecisionRetryGuide ? { decisionRequirements: nextDecisionRetryGuide.requirements } : {}) });
       if (lastValidation === 'self_attention_no_allowed_action') break;
     }
   }

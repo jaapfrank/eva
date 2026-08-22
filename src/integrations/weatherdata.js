@@ -1,16 +1,20 @@
 const PLACE_STOP_WORDS = new Set([
   'Ik', 'Mijn', 'Je', 'Jij', 'Wij', 'We', 'Morgen', 'Vandaag', 'Vanavond',
-  'Het', 'De', 'Een', 'Maar', 'En', 'Als', 'Dan', 'Wat', 'Welke', 'Kijk',
+  'Het', 'De', 'Een', 'Maar', 'En', 'Als', 'Dan', 'Wat', 'Welke', 'Kijk', 'Weer',
 ]);
 
 function weatherQuestion(question = '') {
-  return /\b(?:weer|weersverwachting|regen|neerslag|temperatuur|wind|forecast|weather)\b/iu.test(
+  return /\b(?:weer\w*|regen\w*|neerslag\w*|temperatuur\w*|wind\w*|forecast|weather)\b/iu.test(
     String(question || ''),
   );
 }
 
 function placeCandidates(question = '') {
-  return [...new Set((String(question || '').normalize('NFKC').match(/\b[A-Z][\p{L}-]{2,48}\b/gu) || [])
+  const text = String(question || '').normalize('NFKC');
+  const nearby = [...text.matchAll(/\b(?:in|naar|rond|bij)\s+([A-Z][\p{L}-]{2,48})\b/giu)]
+    .map((match) => match[1]);
+  const capitals = text.match(/\b[A-Z][\p{L}-]{2,48}\b/gu) || [];
+  return [...new Set([...nearby, ...capitals]
     .filter((word) => !PLACE_STOP_WORDS.has(word)))].slice(0, 4);
 }
 
