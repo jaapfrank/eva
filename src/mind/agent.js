@@ -99,8 +99,7 @@ import {
 } from './turnplan.js';
 import { createWorkItem, durableWorkStatus } from './work.js';
 import { householdContextText, recordRelationshipFeedback } from './household.js';
-import { currentCryptoMarketFact, currentCryptoMarketFactText } from '../integrations/marketdata.js';
-import { currentWeatherForecastFact, currentWeatherForecastFactText } from '../integrations/weatherdata.js';
+import { readCurrentFact } from '../integrations/currentfacts.js';
 import {
   httpIngressAuthorityCurrent,
   verifiedHttpIngressExecutionAuthority,
@@ -5603,23 +5602,16 @@ async function finishSemanticFailureTurn(options) {
     let recoveryEvidence = toolResults;
     let recoveryFactText = '';
     if (safeConversationFallback && semanticTurn.error === 'interpreter_malformed') {
-      let marketFact = null;
-      let weatherFact = null;
-      try { marketFact = await currentCryptoMarketFact(userText, { timeoutMs: 5_000 }); } catch { /* no fact */ }
-      if (!marketFact) {
-        try { weatherFact = await currentWeatherForecastFact(userText, { timeoutMs: 5_000 }); } catch { /* no fact */ }
-      }
-      recoveryFactText = marketFact
-        ? currentCryptoMarketFactText(marketFact)
-        : weatherFact ? currentWeatherForecastFactText(weatherFact) : '';
-      if (recoveryFactText) {
+      const currentFact = await readCurrentFact(userText, { timeoutMs: 5_000 });
+      recoveryFactText = currentFact?.text || '';
+      if (currentFact) {
         recoveryEvidence = [{
           name: 'directe_bronmeting', args: { vraag: userText }, ok: true, verified: true,
           changed: false, partial: false, needsFollowup: false, effect_uncertain: false,
           output: JSON.stringify({
             contract: 'ActionResult/v1', tool: 'directe_bronmeting', ok: true,
             changed: false, verified: true, partial: false, needs_followup: false,
-            data: { ...(marketFact ? { market_fact: marketFact } : {}), ...(weatherFact ? { weather_fact: weatherFact } : {}) },
+            data: currentFact.data,
           }),
         }];
       }

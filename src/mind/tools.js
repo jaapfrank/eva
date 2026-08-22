@@ -53,8 +53,7 @@ import {
   whoIsHome,
 } from '../integrations/homeassistant.js';
 import { searchWeb } from '../brain/llm.js';
-import { currentCryptoMarketFact, currentCryptoMarketFactText } from '../integrations/marketdata.js';
-import { currentWeatherForecastFact, currentWeatherForecastFactText } from '../integrations/weatherdata.js';
+import { readCurrentFact } from '../integrations/currentfacts.js';
 import { householdMembers } from './household.js';
 import { createTelegramDeliveryRegistry } from './telegramdelivery.js';
 import { listWorkItems } from './work.js';
@@ -3305,29 +3304,12 @@ async function handleZoekInternet(args, context, mode) {
         const researchTimeoutMs = mode === 'chat' ? Math.min(timeoutMs, 15_000) : timeoutMs;
         const boundedSelfAttentionProvider = mode === 'autonomy'
           && context.selfAttentionProviderRequestBudget === 1;
-        let marketFact = null;
-        try {
-          marketFact = await currentCryptoMarketFact(args.vraag, {
-            timeoutMs: Math.min(5_000, researchTimeoutMs),
-          });
-        } catch {
-          // Marktdata is aanvullend bewijs. Een niet-beschikbare adapter mag
-          // regulier onderzoek niet verhinderen, maar levert dan geen quote.
-        }
-        let weatherFact = null;
-        if (!marketFact) {
-          try {
-            weatherFact = await currentWeatherForecastFact(args.vraag, {
-              timeoutMs: Math.min(5_000, researchTimeoutMs),
-            });
-          } catch {
-            // Een directe weersbron is aanvullend bewijs; regulier onderzoek
-            // blijft beschikbaar wanneer de provider tijdelijk niet reageert.
-          }
-        }
-        const directFactText = marketFact
-          ? currentCryptoMarketFactText(marketFact)
-          : weatherFact ? currentWeatherForecastFactText(weatherFact) : '';
+        const currentFact = await readCurrentFact(args.vraag, {
+          timeoutMs: Math.min(5_000, researchTimeoutMs),
+        });
+        const marketFact = currentFact?.data.market_fact || null;
+        const weatherFact = currentFact?.data.weather_fact || null;
+        const directFactText = currentFact?.text || '';
         // Een directe providerwaarneming is al bruikbaar antwoordmateriaal.
         // Achtergrondonderzoek mag die niet wegdrukken door de volledige
         // tooldeadline op te maken; bij vertraging vallen we terug op het
@@ -3335,7 +3317,7 @@ async function handleZoekInternet(args, context, mode) {
         const supplementalResearchTimeoutMs = directFactText
           ? Math.min(researchTimeoutMs, 6_000) : researchTimeoutMs;
         const researchQuestion = marketFact
-          ? `${args.vraag}\n\nDe directe marktdata-adapter gaf deze actuele quote: ${currentCryptoMarketFactText(marketFact)} Onderzoek alleen context, nieuws en risico's. Noem geen aanvullende actuele prijs, koersverandering, range, volume of marktkapitalisatie; als bronnen botsen, benoem het conflict in plaats van een prijs te kiezen.`
+          ? `${args.vraag}\n\nDe directe marktdata-adapter gaf deze actuele quote: ${directFactText} Onderzoek alleen context, nieuws en risico's. Noem geen aanvullende actuele prijs, koersverandering, range, volume of marktkapitalisatie; als bronnen botsen, benoem het conflict in plaats van een prijs te kiezen.`
           : weatherFact
             ? `${args.vraag}\n\nDe directe weeradapter gaf deze actuele verwachting: ${directFactText} Onderzoek alleen praktische context en alternatieven. Verzin geen afwijkende temperatuur of neerslagwaarde; benoem bronconflict expliciet.`
           : args.vraag;
