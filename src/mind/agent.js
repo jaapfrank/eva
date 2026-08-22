@@ -5259,7 +5259,9 @@ async function composeEvaReply({
       role: item.role === 'assistant' ? 'Eva' : item.sender || person,
       evidenceClass: item.conversation_id === conversationId
         ? 'conversation' : 'historical_unconfirmed',
-      text: `${episodicIds.has(conversationRowKey(item))
+      text: `${item.role === 'assistant'
+        ? '[eerder antwoord van Eva; gesprekscontext, geen zelfstandig bewijs] '
+        : ''}${episodicIds.has(conversationRowKey(item))
         ? `[eerdere relevante ${item.channel}-gespreksherinnering; niet actueel] `
         : item.conversation_id === conversationId
           ? '' : `[recente ${item.channel}-gespreksherinnering; niet actueel] `}${String(item.content || '').slice(0, 1_200)}`,
@@ -5300,7 +5302,7 @@ async function composeEvaReply({
         behaviorLensContext,
         semanticFailure
           ? 'Dit is alleen een korte antwoordfase nadat Eva de opdracht deze keer niet betrouwbaar genoeg kon verwerken. Roep niets aan, voer niets uit en verzin geen begrip. Het oorspronkelijke bericht is bewaard en er is niets uitgevoerd of gewijzigd. Vraag niet om herhalen, herformuleren of inkorten en stel nu geen andere vraag. Beloof geen latere uitvoering of terugmelding. Laat interne componentnamen en systeemtaal weg.'
-          : 'Dit is alleen de antwoordfase na het begrijpen en eventuele handelen. Roep niets aan en bedenk geen nieuwe uitvoering. Antwoord vanuit het bewijs; een mislukte of onzekere stap blijft mislukt of onzeker. Laat interne componentnamen, contracten en werkverslagtaal weg.',
+          : 'Dit is alleen de antwoordfase na het begrijpen en eventuele handelen. Roep niets aan en bedenk geen nieuwe uitvoering. Antwoord vanuit het bewijs; een mislukte of onzekere stap blijft mislukt of onzeker. Eerdere antwoorden van Eva zijn alleen context, nooit zelfstandig bewijs. Als zo’n antwoord afwijkt van het huidige bewijs, los je dat verschil rechtstreeks op in plaats van een nieuw los oordeel ernaast te zetten. Laat interne componentnamen, contracten en werkverslagtaal weg.',
       ].filter(Boolean).join('\n'),
     });
     const baseInput = [
