@@ -3334,7 +3334,7 @@ async function handleZoekInternet(args, context, mode) {
           if (!marketFact) throw error;
           return JSON.stringify({
             ok: true, verified: true, searched: false, searchCalls: 0,
-            message: `${currentCryptoMarketFactText(marketFact)} De aanvullende achtergrondbronnen kwamen niet op tijd terug. Ik trek daarom geen koop- of verkoopconclusie uit alleen deze koersmeting.`,
+            message: `${currentCryptoMarketFactText(marketFact)} De aanvullende achtergrondbronnen kwamen niet op tijd terug. Dit is een actuele marktmeting, geen volledig beleggingsonderzoek.`,
             sources: marketFact.sourceUrls,
             market_fact: marketFact,
           });

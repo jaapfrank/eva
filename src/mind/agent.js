@@ -1288,9 +1288,24 @@ function materialObservationData(data) {
   const sources = verifiedHttpSources(data.sources);
   const message = String(data.message || '').replace(/\s+/gu, ' ').trim();
   const materialWords = message.match(/[\p{L}\p{N}]{3,}/gu) || [];
-  if (data.ok !== true || data.verified !== true || data.searched !== true
-    || !Number.isSafeInteger(data.searchCalls) || data.searchCalls < 1
-    || data.searchCalls > 20 || !sources || message.length < 40
+  const marketFact = data.market_fact;
+  const directMarketFact = marketFact?.contract === 'CurrentCryptoMarketFact/v1'
+    && typeof marketFact.provider === 'string' && marketFact.provider.trim().length > 0
+    && typeof marketFact.assetId === 'string' && marketFact.assetId.trim().length > 0
+    && typeof marketFact.assetName === 'string' && marketFact.assetName.trim().length > 0
+    && typeof marketFact.symbol === 'string' && marketFact.symbol.trim().length > 0
+    && Number.isFinite(Date.parse(String(marketFact.updatedAt || '')))
+    && (Number.isFinite(Number(marketFact.eur)) && Number(marketFact.eur) > 0
+      || Number.isFinite(Number(marketFact.usd)) && Number(marketFact.usd) > 0)
+    && Array.isArray(marketFact.sourceUrls)
+    && marketFact.sourceUrls.length >= 2
+    && verifiedHttpSources(marketFact.sourceUrls);
+  const webResearch = data.searched === true
+    && Number.isSafeInteger(data.searchCalls)
+    && data.searchCalls >= 1
+    && data.searchCalls <= 20;
+  if (data.ok !== true || data.verified !== true || (!webResearch && !directMarketFact)
+    || !sources || message.length < 40
     || new Set(materialWords.map((word) => word.toLowerCase())).size < 6
     || /geen bruikbare resultaten gevonden/iu.test(message)) return null;
   const summary = redactSensitiveText(message).slice(0, 1_200).trim();
@@ -1308,6 +1323,11 @@ function materialObservationReceipt(precommit, toolResults) {
     receipt, parsed: actionResult.parsed,
     sources: material.sources, summary: material.summary,
   }) : null;
+}
+
+function materialObservationFromReceipt(receipt) {
+  const actionResult = exactObservationActionResult(receipt);
+  return actionResult ? materialObservationData(actionResult.data) : null;
 }
 
 function settleObservationContribution({
@@ -9484,6 +9504,13 @@ async function executeTurn({
       const recoverReadEntry = async (entry, pendingSnapshot) => {
         entry.investigationRequired = semanticReadInvestigation;
         if (entry.investigationComplete === true) return true;
+        // A verified, typed direct fact is already an observation Eva can reason
+        // from. Do not turn a temporary timeout of supplementary background
+        // research into a fabricated "missing information" failure.
+        if (semanticReadInvestigation && materialObservationFromReceipt(entry.recorded)) {
+          entry.investigationComplete = true;
+          return true;
+        }
         if (!semanticReadInvestigation && verifiedCompleteReceipt(entry.adaptiveRecorded)) return true;
         if (BOUNDED_SELF_ATTENTION_TURNS.has(semanticTurn)) return false;
         if (semanticReadInvestigation
