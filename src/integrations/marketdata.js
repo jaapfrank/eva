@@ -3,6 +3,7 @@ const STOP_WORDS = new Set([
   'en', 'the', 'een', 'voor', 'van', 'met', 'over', 'risico', 'risicos', 'belangrijkste',
   'moet', 'ik', 'jij', 'kun', 'kan', 'koop', 'kopen', 'buy', 'should', 'mij', 'mijn',
 ]);
+const MAX_CURRENT_QUOTE_AGE_MS = 20 * 60_000;
 
 function explicitlyAsksForCryptoMarketData(question = '') {
   const text = String(question || '').normalize('NFKC');
@@ -103,6 +104,15 @@ export async function currentCryptoMarketFact(question, {
       const quote = (await providerJson(fetchImpl, priceUrl, controller.signal))?.[match.id];
       const usd = finiteQuote(quote?.usd), eur = finiteQuote(quote?.eur);
       if (!usd && !eur) continue;
+      const updatedSeconds = Number(quote?.last_updated_at);
+      const updatedAtMs = Number.isFinite(updatedSeconds) && updatedSeconds > 0
+        ? updatedSeconds * 1_000 : null;
+      // Een prijs zonder recente provider-tijd is geen actuele koers. Laat
+      // regulier onderzoek dan zelf zijn bronstatus bepalen, maar presenteer
+      // deze meting nooit als een antwoord op "nu".
+      if (updatedAtMs == null || Math.abs(Number(now()) - updatedAtMs) > MAX_CURRENT_QUOTE_AGE_MS) {
+        continue;
+      }
       let recentMovement = null;
       let chartUrl = null;
       if (eur) {
@@ -120,9 +130,7 @@ export async function currentCryptoMarketFact(question, {
           chartUrl = null;
         }
       }
-      const updatedSeconds = Number(quote?.last_updated_at);
-      const updatedAt = Number.isFinite(updatedSeconds) && updatedSeconds > 0
-        ? new Date(updatedSeconds * 1_000).toISOString() : new Date(now()).toISOString();
+      const updatedAt = new Date(updatedAtMs).toISOString();
       const change = Number(quote?.eur_24h_change);
       return Object.freeze({
         contract: 'CurrentCryptoMarketFact/v1', provider: 'CoinGecko',

@@ -6,6 +6,7 @@ const { currentCryptoMarketFact, currentCryptoMarketFactText } = await import('.
 test('marktdata resolveert een genoemd crypto-asset via de provider zelf', async () => {
   const urls = [];
   const fact = await currentCryptoMarketFact('Kun je de actuele crypto-koers van Xrp onderzoeken?', {
+    now: () => Date.parse('2026-08-22T10:15:00.000Z'),
     fetchImpl: async (input) => {
       const url = new URL(input); urls.push(url);
       if (url.pathname.endsWith('/search')) return { ok: true, json: async () => ({
@@ -28,6 +29,22 @@ test('marktdata resolveert een genoemd crypto-asset via de provider zelf', async
   });
   assert.match(currentCryptoMarketFactText(fact), /XRP €\s?1,25 \/ US\$\s?1,46/u);
   assert.match(currentCryptoMarketFactText(fact), /In 7 dagen \+13\.64%/u);
+});
+
+test('marktdata presenteert geen verouderde quote als actuele koers', async () => {
+  const fact = await currentCryptoMarketFact('Wat is de actuele koers van XRP?', {
+    now: () => Date.parse('2026-08-22T10:40:01.000Z'),
+    fetchImpl: async (input) => {
+      const url = new URL(input);
+      if (url.pathname.endsWith('/search')) return { ok: true, json: async () => ({
+        coins: [{ id: 'ripple', name: 'XRP', symbol: 'xrp' }],
+      }) };
+      return { ok: true, json: async () => ({ ripple: {
+        eur: 1.25, last_updated_at: 1_787_393_410,
+      } }) };
+    },
+  });
+  assert.equal(fact, null);
 });
 
 test('marktdata verzint geen asset wanneer de vraag er geen benoemt', async () => {
