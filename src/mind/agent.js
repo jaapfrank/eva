@@ -5269,6 +5269,14 @@ async function composeEvaReply({
     const selectedActions = (understanding?.actions || []).filter((action) => (
       understanding?.firstDecision?.requirementIds?.includes(action.requirementId)
     ));
+    const currentFacts = toolResults.flatMap((item) => {
+      try {
+        const fact = JSON.parse(String(item.output || ''))?.data?.market_fact;
+        return fact?.contract === 'CurrentCryptoMarketFact/v1' ? [fact] : [];
+      } catch {
+        return [];
+      }
+    });
     const evidence = toolResults.slice(-12).map((item, index) => ({
       step: index + 1,
       capability: item.semanticBinding?.capabilityId
@@ -5302,7 +5310,7 @@ async function composeEvaReply({
         behaviorLensContext,
         semanticFailure
           ? 'Dit is alleen een korte antwoordfase nadat Eva de opdracht deze keer niet betrouwbaar genoeg kon verwerken. Roep niets aan, voer niets uit en verzin geen begrip. Het oorspronkelijke bericht is bewaard en er is niets uitgevoerd of gewijzigd. Vraag niet om herhalen, herformuleren of inkorten en stel nu geen andere vraag. Beloof geen latere uitvoering of terugmelding. Laat interne componentnamen en systeemtaal weg.'
-          : 'Dit is alleen de antwoordfase na het begrijpen en eventuele handelen. Roep niets aan en bedenk geen nieuwe uitvoering. Antwoord vanuit het bewijs; een mislukte of onzekere stap blijft mislukt of onzeker. Eerdere antwoorden van Eva zijn alleen context, nooit zelfstandig bewijs. Als zo’n antwoord afwijkt van het huidige bewijs, los je dat verschil rechtstreeks op in plaats van een nieuw los oordeel ernaast te zetten. Laat interne componentnamen, contracten en werkverslagtaal weg.',
+          : `Dit is alleen de antwoordfase na het begrijpen en eventuele handelen. Roep niets aan en bedenk geen nieuwe uitvoering. Antwoord vanuit het bewijs; een mislukte of onzekere stap blijft mislukt of onzeker. Eerdere antwoorden van Eva zijn alleen context, nooit zelfstandig bewijs. Als zo’n antwoord afwijkt van het huidige bewijs, los je dat verschil rechtstreeks op in plaats van een nieuw los oordeel ernaast te zetten.${currentFacts.length ? ' Een getypt actueel bronfeit is leidend voor de daarin genoemde actuele waarden. Herhaal die waarden alleen exact of laat ze weg; vul nooit een andere actuele waarde uit herinnering of vrije tekst in.' : ''} Laat interne componentnamen, contracten en werkverslagtaal weg.`,
       ].filter(Boolean).join('\n'),
     });
     const baseInput = [
@@ -5311,6 +5319,7 @@ async function composeEvaReply({
       semanticFailure
         ? `Vaststaande feiten: ${semanticFailure}. Het oorspronkelijke bericht staat nog volledig in de gespreksdraad. Er is niets uitgevoerd of gewijzigd.`
         : `Begrepen uitkomst: ${String(understanding?.goal?.outcome || understanding?.goal?.statement || '').slice(0, 1_200)}`,
+      currentFacts.length ? `Actuele getypte bronfeiten: ${JSON.stringify(currentFacts)}` : '',
       `Gecontroleerde uitkomsten: ${JSON.stringify(evidence)}`,
       grounded ? `Veilige korte terugvaltekst: ${grounded.slice(0, 1_200)}` : '',
       channel === 'voice'
