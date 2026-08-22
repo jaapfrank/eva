@@ -18,6 +18,7 @@ const {
   relationshipAppreciationFromText,
   relationshipCharacterPreferenceFromText,
   relationshipFeedbackFromText,
+  relationshipCorrectionFromUnderstanding,
   relationshipOutcomeFeedbackKind,
   selfMemoryFacets,
   selfContinuityContextText,
@@ -130,6 +131,27 @@ test('relationele feedback kiest hoogstens één conservatieve les', () => {
   );
   assert.equal(mixed.kind, 'correction');
   assert.match(mixed.topic, /aanwezigheid/);
+});
+
+test('een modelbegrepen correctie wordt een semantische les en geen antwoordscript', () => {
+  const lesson = relationshipCorrectionFromUnderstanding({
+    dialogueAct: 'correct',
+    goal: {
+      statement: 'Begrijpen hoe Eva inhoudelijk slimmer wordt in plaats van één symptoom afvangen',
+    },
+    conditions: [{
+      role: 'action',
+      statement: 'Herstel het onderliggende probleem en laat de correctie ook in vergelijkbare situaties doorwerken',
+    }],
+  });
+  assert.equal(lesson.kind, 'correction');
+  assert.equal(lesson.topic, 'begrip en herstel');
+  assert.match(lesson.summary, /onderliggende probleem/);
+  assert.match(lesson.summary, /vergelijkbare situaties/);
+  assert.match(lesson.summary, /geen losse antwoordregel/);
+  assert.equal(relationshipCorrectionFromUnderstanding({
+    dialogueAct: 'inform', goal: { statement: 'Het is koud' }, conditions: [],
+  }), null);
 });
 
 test('alleen expliciete evaluatie van het huidige antwoord telt als causale uitkomst', () => {

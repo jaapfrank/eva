@@ -37,6 +37,10 @@ function canonicalHomeTarget(value = '') {
   const ignored = new Set([
     'de', 'het', 'een', 'in', 'op', 'onder', 'bij', 'van',
     'media', 'player', 'light', 'switch', 'cover', 'climate',
+    // Een planner kan de gewenste toestand nog in het doel laten staan
+    // ("heater aan in de overkapping"). Die woorden identificeren het
+    // apparaat niet en mogen de geverifieerde teruglezing niet ontkoppelen.
+    'aan', 'uit', 'open', 'dicht', 'gesloten', 'zetten', 'doen', 'schakelen',
   ]);
   return String(value || '').toLowerCase().replace(/^[a-z_]+\./u, '')
     .replace(/_/gu, ' ').replace(/[^\p{L}\p{N} ]/gu, ' ').split(/\s+/u)
@@ -52,6 +56,22 @@ function resolvedTargetMatches(target, data, requester = null, targetBinding = d
   // De opgeloste entity-id is de harde identiteit; een friendly name kan bij
   // duplicate apparaten generiek zijn en mag een strijdige entity nooit witwassen.
   if (entity ? entity === expected : name === expected) return true;
+  // Friendly names bevatten geregeld uitsluitend generieke adapterdetails,
+  // bijvoorbeeld "Heater overkapping Socket 1". Accepteer zo'n bewezen
+  // unieke resolveruitkomst alleen wanneer alle gevraagde identiteitstokens
+  // aanwezig zijn en ieder extra token betekenisloos hardwaredecor is. Een
+  // onderscheidend extra woord zoals links/rechts blijft dus fail-closed.
+  const expectedTokens = expected.split(' ').filter(Boolean);
+  const nameTokens = name.split(' ').filter(Boolean);
+  const harmlessNameSuffixes = new Set([
+    'apparaat', 'device', 'outlet', 'plug', 'socket', 'stekker',
+    'smart', 'slim', 'light', 'lamp', 'switch',
+  ]);
+  const nameContainsExactTarget = expectedTokens.length >= 2
+    && expectedTokens.every((token) => nameTokens.includes(token))
+    && nameTokens.filter((token) => !expectedTokens.includes(token))
+      .every((token) => /^\d+$/u.test(token) || harmlessNameSuffixes.has(token));
+  if (nameContainsExactTarget) return true;
   return validHomeRequesterTargetBinding(targetBinding, {
     requestedTarget: target,
     requester,

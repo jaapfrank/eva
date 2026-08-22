@@ -183,6 +183,31 @@ export function relationshipFeedbackFromText(text = '') {
 }
 
 /**
+ * Laat de semantische interpretatie van een correctie zelf de herbruikbare les
+ * dragen. Dit is bewust geen trefwoordenlijst of antwoordtemplate: het model
+ * heeft de bedoeling en de vereiste herstelrichting al in het verzegelde
+ * TurnUnderstanding-object vastgelegd. We bewaren daarvan alleen de compacte,
+ * niet-operationele strekking voor latere vergelijkbare gesprekken.
+ */
+export function relationshipCorrectionFromUnderstanding(understanding) {
+  if (!understanding || understanding.dialogueAct !== 'correct') return null;
+  const goal = compact(understanding.goal?.statement, 220);
+  const condition = (Array.isArray(understanding.conditions) ? understanding.conditions : [])
+    .filter((item) => item?.role === 'action' || item?.role === 'completion')
+    .map((item) => compact(item?.statement, 180))
+    .find(Boolean);
+  if (!goal && !condition) return null;
+  const direction = [goal, condition && condition !== goal ? condition : '']
+    .filter(Boolean).join('. ');
+  return {
+    kind: 'correction',
+    topic: 'begrip en herstel',
+    summary: `Begrijp en herstel het onderliggende punt; maak er geen losse antwoordregel of toekomstbelofte van. Neem deze bedoeling mee naar vergelijkbare situaties: ${direction}.`
+      .slice(0, 320),
+  };
+}
+
+/**
  * Een causale canary-uitkomst vereist meer dan algemene waardering: de tekst
  * moet het zojuist gegeven antwoord zelf aanwijzen. Historische anekdotes,
  * karakterwensen en vragen blijven wel relationele context, maar nooit bewijs

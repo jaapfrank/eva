@@ -219,3 +219,34 @@ test('replycontrole accepteert alleen de intacte hostbinding voor het possessiev
     recordedHomeResult(args, JSON.stringify(noHostBinding)),
   ]), /niet voor precies/iu);
 });
+
+test('replycontrole koppelt toestandstaal en generieke adapterdetails aan hetzelfde unieke doel', () => {
+  const args = { doel: 'heater aan in de overkapping', actie: 'aan' };
+  const output = JSON.stringify({
+    ok: true, changed: true, verified: true, partial: false, needs_followup: false,
+    data: {
+      entity_id: 'switch.antela_smart_plug_eu_matter_2_socket_1',
+      name: 'Heater overkapping Socket 1', before: 'off', after: 'on',
+    },
+  });
+  const receipt = recordedHomeResult(args, output);
+
+  assert.equal(homeEffectClaimFeedback(
+    'De heater in de overkapping staat aan.', { ...args, requester: 'Jaap' }, [receipt],
+  ), '');
+
+  const distinct = recordedHomeResult(
+    { doel: 'lamp woonkamer', actie: 'aan' },
+    JSON.stringify({
+      ok: true, changed: true, verified: true, partial: false, needs_followup: false,
+      data: {
+        entity_id: 'light.woonkamer_links', name: 'Lamp woonkamer links',
+        before: 'off', after: 'on',
+      },
+    }),
+  );
+  assert.match(homeEffectClaimFeedback(
+    'De lamp in de woonkamer staat aan.',
+    { doel: 'lamp woonkamer', actie: 'aan', requester: 'Jaap' }, [distinct],
+  ), /niet voor precies/iu);
+});

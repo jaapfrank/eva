@@ -33,7 +33,7 @@ import {
 } from '../db.js';
 import { config } from '../config.js';
 import { chatComplete, executionModelFailureText, msg, runExecutionDriver } from '../brain/llm.js';
-import { applyInteractionFeedback, moodActionGuidance } from './emotions.js';
+import { applyInteractionFeedback, interactionFeedback, moodActionGuidance } from './emotions.js';
 import { buildRedactedInstructions, renderHouseActionResult, semanticFailurePresentation, semanticFailureReplyFeedback } from './persona.js';
 import {
   executeTool, bindContinuityContextPlan, bindExecutionHandle,
@@ -118,6 +118,7 @@ import {
 } from './learning.js';
 import {
   relationshipFeedbackFromText,
+  relationshipCorrectionFromUnderstanding,
   relationshipOutcomeFeedbackKind,
   RELATIONSHIP_STYLE_OUTCOME_CONTRACT,
   selfContinuityContextText,
@@ -7008,6 +7009,19 @@ async function executeTurn({
     continuationRequest, turnPlan, turnContract, requiredTools,
     explicitTool, recapOnly, durableInteraction, liveInspection,
   } = semanticTurn;
+  if (!syntheticTest && messageContext?.identityTrusted === true
+    && !relationshipFeedbackFromText(userText) && !interactionFeedback(userText)) {
+    const semanticCorrection = relationshipCorrectionFromUnderstanding(
+      semanticTurn.understanding,
+    );
+    if (semanticCorrection) {
+      try {
+        recordRelationshipFeedback({ person, ...semanticCorrection });
+      } catch {
+        // Relationeel leren is ondersteunend en mag de huidige beurt nooit blokkeren.
+      }
+    }
+  }
   if (ingressExecutionKey && semanticTurn.ok && semanticTurn.plans.length) {
     const parent = validateExecutionRecord(db.prepare(`SELECT *
       FROM main.turn_tool_executions WHERE execution_key=?`).get(ingressExecutionKey));
