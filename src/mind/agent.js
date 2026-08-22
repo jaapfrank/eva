@@ -1300,11 +1300,25 @@ function materialObservationData(data) {
     && Array.isArray(marketFact.sourceUrls)
     && marketFact.sourceUrls.length >= 2
     && verifiedHttpSources(marketFact.sourceUrls);
+  const weatherFact = data.weather_fact;
+  const directWeatherFact = weatherFact?.contract === 'CurrentWeatherForecastFact/v1'
+    && typeof weatherFact.provider === 'string' && weatherFact.provider.trim().length > 0
+    && typeof weatherFact.location === 'string' && weatherFact.location.trim().length > 0
+    && /^\d{4}-\d{2}-\d{2}$/u.test(String(weatherFact.date || ''))
+    && typeof weatherFact.description === 'string' && weatherFact.description.trim().length > 0
+    && Number.isFinite(Number(weatherFact.temperatureMinC))
+    && Number.isFinite(Number(weatherFact.temperatureMaxC))
+    && Number.isFinite(Number(weatherFact.precipitationProbabilityMax))
+    && Number(weatherFact.precipitationProbabilityMax) >= 0
+    && Number(weatherFact.precipitationProbabilityMax) <= 100
+    && Array.isArray(weatherFact.sourceUrls)
+    && weatherFact.sourceUrls.length >= 2
+    && verifiedHttpSources(weatherFact.sourceUrls);
   const webResearch = data.searched === true
     && Number.isSafeInteger(data.searchCalls)
     && data.searchCalls >= 1
     && data.searchCalls <= 20;
-  if (data.ok !== true || data.verified !== true || (!webResearch && !directMarketFact)
+  if (data.ok !== true || data.verified !== true || (!webResearch && !directMarketFact && !directWeatherFact)
     || !sources || message.length < 40
     || new Set(materialWords.map((word) => word.toLowerCase())).size < 6
     || /geen bruikbare resultaten gevonden/iu.test(message)) return null;
@@ -5292,7 +5306,11 @@ async function composeEvaReply({
     const currentFacts = toolResults.flatMap((item) => {
       try {
         const fact = JSON.parse(String(item.output || ''))?.data?.market_fact;
-        return fact?.contract === 'CurrentCryptoMarketFact/v1' ? [fact] : [];
+        const weather = JSON.parse(String(item.output || ''))?.data?.weather_fact;
+        return [fact, weather].filter((value) => (
+          value?.contract === 'CurrentCryptoMarketFact/v1'
+          || value?.contract === 'CurrentWeatherForecastFact/v1'
+        ));
       } catch {
         return [];
       }
@@ -5559,6 +5577,14 @@ async function finishSemanticFailureTurn(options) {
   const durableHandoff = mode === 'chat' && !syntheticTest
     && messageContext?.identityTrusted === true
     && (temporaryTransportFailure || repairableDecisionFailure);
+  // A malformed planner must not turn an otherwise ordinary conversation into
+  // a transport failure. No tool has run on this path; Eva can still give the
+  // carefully bounded conversational fallback that the composer produces.
+  // Commands, material work and every handoff remain fail-closed.
+  const safeConversationFallback = mode === 'chat' && !syntheticTest
+    && turnContract?.kind === 'conversation'
+    && Array.isArray(requiredTools) && requiredTools.length === 0
+    && toolResults.length === 0 && !durableHandoff;
   if (durableHandoff) {
     persistDurableHandoff({
       reinterpret: true,
@@ -5586,7 +5612,7 @@ async function finishSemanticFailureTurn(options) {
     assertTurnCurrent();
   }
   return finishTurn(reply, {
-    error: semanticTurn.error,
+    ...(safeConversationFallback ? {} : { error: semanticTurn.error }),
     durableHandoff: durableHandoff || undefined,
     ...failureMetadata,
   });

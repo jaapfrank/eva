@@ -54,6 +54,7 @@ import {
 } from '../integrations/homeassistant.js';
 import { searchWeb } from '../brain/llm.js';
 import { currentCryptoMarketFact, currentCryptoMarketFactText } from '../integrations/marketdata.js';
+import { currentWeatherForecastFact, currentWeatherForecastFactText } from '../integrations/weatherdata.js';
 import { householdMembers } from './household.js';
 import { createTelegramDeliveryRegistry } from './telegramdelivery.js';
 import { listWorkItems } from './work.js';
@@ -3313,8 +3314,24 @@ async function handleZoekInternet(args, context, mode) {
           // Marktdata is aanvullend bewijs. Een niet-beschikbare adapter mag
           // regulier onderzoek niet verhinderen, maar levert dan geen quote.
         }
+        let weatherFact = null;
+        if (!marketFact) {
+          try {
+            weatherFact = await currentWeatherForecastFact(args.vraag, {
+              timeoutMs: Math.min(5_000, researchTimeoutMs),
+            });
+          } catch {
+            // Een directe weersbron is aanvullend bewijs; regulier onderzoek
+            // blijft beschikbaar wanneer de provider tijdelijk niet reageert.
+          }
+        }
+        const directFactText = marketFact
+          ? currentCryptoMarketFactText(marketFact)
+          : weatherFact ? currentWeatherForecastFactText(weatherFact) : '';
         const researchQuestion = marketFact
           ? `${args.vraag}\n\nDe directe marktdata-adapter gaf deze actuele quote: ${currentCryptoMarketFactText(marketFact)} Onderzoek alleen context, nieuws en risico's. Noem geen aanvullende actuele prijs, koersverandering, range, volume of marktkapitalisatie; als bronnen botsen, benoem het conflict in plaats van een prijs te kiezen.`
+          : weatherFact
+            ? `${args.vraag}\n\nDe directe weeradapter gaf deze actuele verwachting: ${directFactText} Onderzoek alleen praktische context en alternatieven. Verzin geen afwijkende temperatuur of neerslagwaarde; benoem bronconflict expliciet.`
           : args.vraag;
         let result;
         try {
@@ -3331,17 +3348,18 @@ async function handleZoekInternet(args, context, mode) {
             } : {}),
           });
         } catch (error) {
-          if (!marketFact) throw error;
+          if (!marketFact && !weatherFact) throw error;
           return JSON.stringify({
             ok: true, verified: true, searched: false, searchCalls: 0,
-            message: `${currentCryptoMarketFactText(marketFact)} De aanvullende achtergrondbronnen kwamen niet op tijd terug. Dit is een actuele marktmeting, geen volledig beleggingsonderzoek.`,
-            sources: marketFact.sourceUrls,
-            market_fact: marketFact,
+            message: `${directFactText} De aanvullende achtergrondbronnen kwamen niet op tijd terug. Dit is een actuele bronmeting, geen volledig reis- of beleggingsonderzoek.`,
+            sources: [...(marketFact?.sourceUrls || []), ...(weatherFact?.sourceUrls || [])],
+            ...(marketFact ? { market_fact: marketFact } : {}),
+            ...(weatherFact ? { weather_fact: weatherFact } : {}),
           });
         }
         const research = commercialResearchEvidenceBoundary(args.vraag, result.text);
-        const message = marketFact
-          ? [currentCryptoMarketFactText(marketFact), research].filter(Boolean).join('\n\n')
+        const message = directFactText
+          ? [directFactText, research].filter(Boolean).join('\n\n')
           : research;
         return JSON.stringify({
           ok: true,
@@ -3349,8 +3367,11 @@ async function handleZoekInternet(args, context, mode) {
           message: clean(message, 20_000),
           searched: result.searched,
           searchCalls: result.searchCalls,
-          sources: [...new Set([...(marketFact?.sourceUrls || []), ...result.sources])].slice(0, 4),
+          sources: [...new Set([
+            ...(marketFact?.sourceUrls || []), ...(weatherFact?.sourceUrls || []), ...result.sources,
+          ])].slice(0, 4),
           ...(marketFact ? { market_fact: marketFact } : {}),
+          ...(weatherFact ? { weather_fact: weatherFact } : {}),
         });
 }
 async function handleBeheerAgentmail(args, context) {
