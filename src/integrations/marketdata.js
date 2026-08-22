@@ -4,6 +4,17 @@ const STOP_WORDS = new Set([
   'moet', 'ik', 'jij', 'kun', 'kan', 'koop', 'kopen', 'buy', 'should', 'mij', 'mijn',
 ]);
 
+function explicitlyAsksForCryptoMarketData(question = '') {
+  const text = String(question || '').normalize('NFKC');
+  // A ticker is unambiguous enough on its own. A title-cased word (such as a
+  // city, person, or tomorrow's date) is not: never turn ordinary planning
+  // into a speculative coin lookup just because a provider happens to have a
+  // matching token.
+  const hasTicker = /(?<![\p{L}\p{N}])(?=[A-Z0-9]*[A-Z])[A-Z0-9]{3,12}(?![\p{L}\p{N}])/u.test(text);
+  const hasCryptoContext = /\b(?:crypto(?:munt)?|cryptocurrency|blockchain|coin|koers|beleg(?:gen|ging)|investeer|aandeel|stock|market\s*cap)\b/iu.test(text);
+  return hasTicker || hasCryptoContext;
+}
+
 function candidateSymbols(question = '') {
   const original = String(question || '').normalize('NFKC');
   const words = original.match(/[\p{L}\p{N}]{2,32}/gu) || [];
@@ -72,6 +83,7 @@ export async function currentCryptoMarketFact(question, {
   now = () => Date.now(),
 } = {}) {
   if (typeof fetchImpl !== 'function') throw new Error('marktdata-fetch is niet beschikbaar');
+  if (!explicitlyAsksForCryptoMarketData(question)) return null;
   const candidates = candidateSymbols(question);
   if (!candidates.length) return null;
 

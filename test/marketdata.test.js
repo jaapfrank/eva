@@ -5,7 +5,7 @@ const { currentCryptoMarketFact, currentCryptoMarketFactText } = await import('.
 
 test('marktdata resolveert een genoemd crypto-asset via de provider zelf', async () => {
   const urls = [];
-  const fact = await currentCryptoMarketFact('Kun je Xrp voor mij onderzoeken?', {
+  const fact = await currentCryptoMarketFact('Kun je de actuele crypto-koers van Xrp onderzoeken?', {
     fetchImpl: async (input) => {
       const url = new URL(input); urls.push(url);
       if (url.pathname.endsWith('/search')) return { ok: true, json: async () => ({
@@ -32,6 +32,12 @@ test('marktdata resolveert een genoemd crypto-asset via de provider zelf', async
 
 test('marktdata verzint geen asset wanneer de vraag er geen benoemt', async () => {
   assert.equal(await currentCryptoMarketFact('Kun je de planten water geven?', {
+    fetchImpl: async () => { throw new Error('mag niet worden aangeroepen'); },
+  }), null);
+});
+
+test('marktdata gebruikt geen toevallig gelijknamige token voor een gewone planning', async () => {
+  assert.equal(await currentCryptoMarketFact('Ik wil op 2026-08-23 met mijn zus iets buiten doen in Utrecht.', {
     fetchImpl: async () => { throw new Error('mag niet worden aangeroepen'); },
   }), null);
 });
