@@ -10451,7 +10451,13 @@ function recordPendingFinalDelivery(result, delivery, turnId, reply, episode, ca
       deliveredConversationId: result.conversationId || null,
       resultText: reply,
       proofSummary: episode.proof_summary,
-      idempotencyKey: `turn:${turnId}:episode:${episode.id}`,
+      // Native Telegram transport already commits its exact fanout key before
+      // this receipt is recorded.  Reusing that key is what lets the durable
+      // receipt prove the accepted chunks after a restart; a synthetic
+      // episode key cannot be matched to the immutable transport ledger.
+      idempotencyKey: result.channel === 'telegram'
+        ? String(delivery?.dedupeKey || '')
+        : `turn:${turnId}:episode:${episode.id}`,
       transport: delivery || {},
       deliveryTurnId: turnId,
       finalDeliveryBinding: suppliedFinalDeliveryBinding(result, capability),

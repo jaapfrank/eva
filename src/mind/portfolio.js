@@ -3506,14 +3506,19 @@ function requiredTelegramTransportProof({
   messageThreadId, originPrincipal,
 }) {
   const expectedChatId = String(pinnedConversation || '').replace(/^telegram:/iu, '');
+  // Direct native replies are a single, independently durably recorded
+  // Telegram operation.  Broadcasts carry an additional fanout ledger; do
+  // not require that separate record when the transport never claimed one.
+  const hasFanoutManifest = typeof transport?.fanoutOperationKey === 'string'
+    && transport.fanoutOperationKey.trim() !== '';
   const validated = validateTelegramDeliveryProof({
     delivery: transport,
     kind: 'text',
     value: resultText,
     deliveryKey: idempotencyKey,
     expectedChatId,
-    broadcast: false,
-    directReply: true,
+    broadcast: hasFanoutManifest ? false : null,
+    directReply: hasFanoutManifest ? true : null,
     messageThreadId,
     replyToMessageId: originMessageId,
     originPrincipal,
