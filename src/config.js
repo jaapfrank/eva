@@ -419,6 +419,19 @@ function numberSetting(name, fallback) {
   return Number.isFinite(value) ? value : fallback;
 }
 
+function textSetting(name, fallback, { maxLength = 240 } = {}) {
+  const printable = [...String(env[name] || '')]
+    .map((character) => {
+      const code = character.codePointAt(0) || 0;
+      return code < 0x20 || code === 0x7f ? ' ' : character;
+    }).join('');
+  const value = printable
+    .replace(/\s+/gu, ' ')
+    .trim()
+    .slice(0, maxLength);
+  return value || fallback;
+}
+
 const ASSIST_SATELLITE_ENTITY = /^assist_satellite\.[a-z0-9_]+$/;
 
 /**
@@ -481,6 +494,12 @@ export const config = deepFreeze({
   webHost: env.WEB_HOST || '127.0.0.1',
   webToken: env.EVA_WEB_TOKEN || '',
   webSender: env.EVA_WEB_SENDER || 'Jaap',
+  // Zichtbare identiteit is installatieconfiguratie. Historische interne
+  // sleutels blijven compatibel met bestaande Eva-data.
+  assistantName: textSetting('EVA_NAME', 'Eva', { maxLength: 64 }),
+  assistantIdentity: textSetting(
+    'EVA_IDENTITY', 'de vaste digitale huisgenoot van Jaap en zijn gezin', { maxLength: 360 },
+  ),
   householdMembers: (env.EVA_HOUSEHOLD_MEMBERS || '')
     .split(',')
     .map((value) => value.trim())

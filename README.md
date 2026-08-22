@@ -84,6 +84,7 @@ voelt wie thuiskomt, en kan lampen/muziek bedienen als `ALLOW_HOME_CONTROL=true`
 | `EVA_AUTONOMY_CONVERSATION_PAUSE_MINUTES` | korte voorrang voor een gesprek voordat zelfstandig werk wordt hervat |
 | `EVA_MODEL` | standaard `gpt-5.6-sol` (de OAuth-route accepteert alleen modellen die jouw ChatGPT-abonnement aanbiedt) |
 | `EVA_MODEL_VOICE` | standaard `gpt-5.6-terra`, met `EVA_MODEL` als expliciete fallback |
+| `EVA_NAME` / `EVA_IDENTITY` | zichtbare naam en korte identiteit van deze installatie; standaard Eva als digitale huisgenoot |
 | `EVA_HOUSEHOLD_MEMBERS` | komma-gescheiden namen van expliciet erkende bewoners |
 | `EVA_TRUST_HA_PERSON_MEMBERSHIP` | neem HA-personen als bewoners over; standaard `false` |
 | `EVA_AUTONOMY_OPEN_EXPLORATION` | losse schakel voor open onderzoek wanneer `EVA_AUTONOMY_LEVEL` niet `full` is |

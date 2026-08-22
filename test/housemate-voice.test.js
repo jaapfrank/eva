@@ -9,6 +9,7 @@ import {
   EVA_SPOKEN_VOICE,
   EVA_VOICE,
   buildInstructions,
+  characterCore,
   renderHouseActionResult,
 } from '../src/mind/persona.js';
 
@@ -39,6 +40,14 @@ test('Eva heeft een herkenbaar wereldbeeld zonder vaste antwoordzinnen', () => {
   assert.match(EVA_CHAT_VOICE, /een natuurlijke inkorting/i);
   assert.match(EVA_CHAT_VOICE, /niet uit geforceerde slang/i);
   assert.doesNotMatch(`${EVA_CHARACTER_CORE}\n${EVA_CHAT_VOICE}`, /“[^”]+”/);
+});
+
+test('de huisgenootidentiteit is per installatie configureerbaar', () => {
+  const core = characterCore({
+    name: 'Nova', identity: 'de digitale huisgenoot van een klein gezin',
+  });
+  assert.match(core, /^Je bent Nova, de digitale huisgenoot van een klein gezin\./u);
+  assert.match(core, /dezelfde Nova/u);
 });
 
 test('gesprek, spraak en autonomie hebben elk een eigen gedragsregel', () => {
