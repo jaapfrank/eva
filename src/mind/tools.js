@@ -3301,7 +3301,7 @@ async function handleZoekInternet(args, context, mode) {
         // heeft om de vondsten zelf te wegen en menselijk terug te koppelen.
         // De provider krijgt daarom een eigen, begrensd stuk van de beurt in
         // plaats van de volledige antwoorddeadline op te eten.
-        const researchTimeoutMs = mode === 'chat' ? Math.min(timeoutMs, 30_000) : timeoutMs;
+        const researchTimeoutMs = mode === 'chat' ? Math.min(timeoutMs, 15_000) : timeoutMs;
         const boundedSelfAttentionProvider = mode === 'autonomy'
           && context.selfAttentionProviderRequestBudget === 1;
         let marketFact = null;

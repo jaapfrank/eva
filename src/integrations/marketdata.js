@@ -30,6 +30,23 @@ function rounded(value) {
   return Number(Number(value).toPrecision(8));
 }
 
+function recentEurMovement(payload, currentEur) {
+  const points = (Array.isArray(payload?.prices) ? payload.prices : [])
+    .map(([timestamp, price]) => [Number(timestamp), finiteQuote(price)])
+    .filter(([timestamp, price]) => Number.isFinite(timestamp) && price != null)
+    .sort(([left], [right]) => left - right);
+  if (points.length < 2 || !Number.isFinite(currentEur)) return null;
+  const startEur = points[0][1];
+  const values = [...points.map(([, price]) => price), currentEur];
+  return Object.freeze({
+    days: 7,
+    startEur: rounded(startEur),
+    highEur: rounded(Math.max(...values)),
+    lowEur: rounded(Math.min(...values)),
+    changePercent: rounded(((currentEur - startEur) / startEur) * 100),
+  });
+}
+
 async function providerJson(fetchImpl, url, signal) {
   const response = await fetchImpl(url, { headers: { accept: 'application/json' }, signal });
   if (!response?.ok) throw new Error(`marktdata gaf HTTP ${response?.status || 'onbekend'}`);
@@ -74,6 +91,23 @@ export async function currentCryptoMarketFact(question, {
       const quote = (await providerJson(fetchImpl, priceUrl, controller.signal))?.[match.id];
       const usd = finiteQuote(quote?.usd), eur = finiteQuote(quote?.eur);
       if (!usd && !eur) continue;
+      let recentMovement = null;
+      let chartUrl = null;
+      if (eur) {
+        try {
+          chartUrl = new URL(`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(match.id)}/market_chart`);
+          chartUrl.searchParams.set('vs_currency', 'eur');
+          chartUrl.searchParams.set('days', '7');
+          chartUrl.searchParams.set('interval', 'daily');
+          recentMovement = recentEurMovement(
+            await providerJson(fetchImpl, chartUrl, controller.signal), eur,
+          );
+        } catch {
+          // De directe quote blijft bruikbaar wanneer de historische reeks
+          // tijdelijk niet beschikbaar is.
+          chartUrl = null;
+        }
+      }
       const updatedSeconds = Number(quote?.last_updated_at);
       const updatedAt = Number.isFinite(updatedSeconds) && updatedSeconds > 0
         ? new Date(updatedSeconds * 1_000).toISOString() : new Date(now()).toISOString();
@@ -85,7 +119,10 @@ export async function currentCryptoMarketFact(question, {
         ...(usd ? { usd: rounded(usd) } : {}),
         ...(eur ? { eur: rounded(eur) } : {}),
         ...(Number.isFinite(change) ? { eur24hChange: rounded(change) } : {}),
-        sourceUrls: Object.freeze([searchUrl.toString(), priceUrl.toString()]),
+        ...(recentMovement ? { recentMovement } : {}),
+        sourceUrls: Object.freeze([
+          searchUrl.toString(), priceUrl.toString(), ...(chartUrl ? [chartUrl.toString()] : []),
+        ]),
       });
     }
     return null;
@@ -110,5 +147,8 @@ export function currentCryptoMarketFactText(fact) {
   const change = Number.isFinite(fact.eur24hChange)
     ? `; 24 uur ${fact.eur24hChange >= 0 ? '+' : ''}${fact.eur24hChange.toFixed(2)}%`
     : '';
-  return `Directe marktquote: ${fact.symbol} ${prices}${change}; bijgewerkt ${fact.updatedAt} via ${fact.provider}.`;
+  const movement = fact.recentMovement && Number.isFinite(fact.recentMovement.changePercent)
+    ? ` In 7 dagen ${fact.recentMovement.changePercent >= 0 ? '+' : ''}${fact.recentMovement.changePercent.toFixed(2)}% (range ${currency(fact.recentMovement.lowEur, 'EUR')}–${currency(fact.recentMovement.highEur, 'EUR')}).`
+    : '';
+  return `Directe marktquote: ${fact.symbol} ${prices}${change}; bijgewerkt ${fact.updatedAt} via ${fact.provider}.${movement}`;
 }
