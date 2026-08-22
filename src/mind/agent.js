@@ -5317,6 +5317,7 @@ async function composeEvaReply({
         return [];
       }
     });
+    const semanticRecoveryHasCurrentFact = Boolean(semanticFailure && currentFacts.length);
     const evidence = toolResults.slice(-12).map((item, index) => ({
       step: index + 1,
       capability: item.semanticBinding?.capabilityId
@@ -5349,7 +5350,9 @@ async function composeEvaReply({
         moodActionGuidance(),
         behaviorLensContext,
         semanticFailure
-          ? 'Dit is alleen een korte antwoordfase nadat Eva de opdracht deze keer niet betrouwbaar genoeg kon verwerken. Roep niets aan, voer niets uit en verzin geen begrip. Het oorspronkelijke bericht is bewaard en er is niets uitgevoerd of gewijzigd. Vraag niet om herhalen, herformuleren of inkorten en stel nu geen andere vraag. Beloof geen latere uitvoering of terugmelding. Laat interne componentnamen en systeemtaal weg.'
+          ? semanticRecoveryHasCurrentFact
+            ? 'De opdrachtinterpretatie viel uit, maar er is wel een actuele, geverifieerde bronmeting. Gebruik die om het oorspronkelijke bericht direct en menselijk te beantwoorden. Praktische suggesties en een klein plan zijn toegestaan, maar verzin geen extra bron, reservering, openingstijd of uitgevoerde handeling. Zeg niet dat er iets uitgevoerd of gewijzigd is. Laat interne componentnamen en systeemtaal weg.'
+            : 'Dit is alleen een korte antwoordfase nadat Eva de opdracht deze keer niet betrouwbaar genoeg kon verwerken. Roep niets aan, voer niets uit en verzin geen begrip. Het oorspronkelijke bericht is bewaard en er is niets uitgevoerd of gewijzigd. Vraag niet om herhalen, herformuleren of inkorten en stel nu geen andere vraag. Beloof geen latere uitvoering of terugmelding. Laat interne componentnamen en systeemtaal weg.'
           : `Dit is alleen de antwoordfase na het begrijpen en eventuele handelen. Roep niets aan en bedenk geen nieuwe uitvoering. Antwoord vanuit het bewijs; een mislukte of onzekere stap blijft mislukt of onzeker. Eerdere antwoorden van Eva zijn alleen context, nooit zelfstandig bewijs. Als zo’n antwoord afwijkt van het huidige bewijs, los je dat verschil rechtstreeks op in plaats van een nieuw los oordeel ernaast te zetten.${currentFacts.length ? ' Een getypt actueel bronfeit is leidend voor de daarin genoemde actuele waarden. Herhaal die waarden alleen exact of laat ze weg; vul nooit een andere actuele waarde uit herinnering of vrije tekst in.' : ''} Laat interne componentnamen, contracten en werkverslagtaal weg.`,
       ].filter(Boolean).join('\n'),
     });
@@ -5357,7 +5360,9 @@ async function composeEvaReply({
       `Wat ${person} vroeg: ${userText.slice(0, 2_000)}`,
       dialogue.length ? `Lopende gespreksdraad: ${JSON.stringify(dialogue)}` : '',
       semanticFailure
-        ? `Vaststaande feiten: ${semanticFailure}. Het oorspronkelijke bericht staat nog volledig in de gespreksdraad. Er is niets uitgevoerd of gewijzigd.`
+        ? semanticRecoveryHasCurrentFact
+          ? `Vaststaande feiten: ${semanticFailure}. Beantwoord de oorspronkelijke vraag nu nuttig vanuit dit bronfeit; er is niets uitgevoerd of gewijzigd.`
+          : `Vaststaande feiten: ${semanticFailure}. Het oorspronkelijke bericht staat nog volledig in de gespreksdraad. Er is niets uitgevoerd of gewijzigd.`
         : `Begrepen uitkomst: ${String(understanding?.goal?.outcome || understanding?.goal?.statement || '').slice(0, 1_200)}`,
       currentFacts.length ? `Actuele getypte bronfeiten: ${JSON.stringify(currentFacts)}` : '',
       `Gecontroleerde uitkomsten: ${JSON.stringify(evidence)}`,
@@ -5386,7 +5391,7 @@ async function composeEvaReply({
       if (typeof assertCurrent === 'function') assertCurrent();
       const proposed = normalizeUserFacingText(result.text).trim();
       if (!proposed) return grounded;
-      const feedback = semanticFailure
+      const feedback = semanticFailure && !semanticRecoveryHasCurrentFact
         ? semanticFailureReplyFeedback(proposed, { internal: looksLikeInternalOutput(proposed) })
         : finalReplyFeedback({
           reply: proposed,

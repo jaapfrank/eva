@@ -3328,6 +3328,12 @@ async function handleZoekInternet(args, context, mode) {
         const directFactText = marketFact
           ? currentCryptoMarketFactText(marketFact)
           : weatherFact ? currentWeatherForecastFactText(weatherFact) : '';
+        // Een directe providerwaarneming is al bruikbaar antwoordmateriaal.
+        // Achtergrondonderzoek mag die niet wegdrukken door de volledige
+        // tooldeadline op te maken; bij vertraging vallen we terug op het
+        // geverifieerde feit en laat Eva daar zelf een menselijk plan van maken.
+        const supplementalResearchTimeoutMs = directFactText
+          ? Math.min(researchTimeoutMs, 6_000) : researchTimeoutMs;
         const researchQuestion = marketFact
           ? `${args.vraag}\n\nDe directe marktdata-adapter gaf deze actuele quote: ${currentCryptoMarketFactText(marketFact)} Onderzoek alleen context, nieuws en risico's. Noem geen aanvullende actuele prijs, koersverandering, range, volume of marktkapitalisatie; als bronnen botsen, benoem het conflict in plaats van een prijs te kiezen.`
           : weatherFact
@@ -3338,7 +3344,7 @@ async function handleZoekInternet(args, context, mode) {
           result = await searchWeb(researchQuestion, {
             cacheKey: mode === 'autonomy' ? 'eva-autonomous-research' : 'eva-interactive-research',
             budgetClass: mode === 'autonomy' ? 'autonomous' : 'interactive',
-            timeoutMs: researchTimeoutMs,
+            timeoutMs: supplementalResearchTimeoutMs,
             ...(mode === 'chat' ? { maxOutputTokens: 1_400 } : {}),
             ...(boundedSelfAttentionProvider ? {
               maxOutputTokens: 8_000,
