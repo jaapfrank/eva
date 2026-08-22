@@ -99,6 +99,8 @@ import {
 } from './turnplan.js';
 import { createWorkItem, durableWorkStatus } from './work.js';
 import { householdContextText, recordRelationshipFeedback } from './household.js';
+import { currentCryptoMarketFact, currentCryptoMarketFactText } from '../integrations/marketdata.js';
+import { currentWeatherForecastFact, currentWeatherForecastFactText } from '../integrations/weatherdata.js';
 import {
   httpIngressAuthorityCurrent,
   verifiedHttpIngressExecutionAuthority,
@@ -5593,19 +5595,45 @@ async function finishSemanticFailureTurn(options) {
   }
   let reply = '';
   if (mode !== 'autonomy') {
+    let recoveryEvidence = toolResults;
+    let recoveryFactText = '';
+    if (safeConversationFallback && semanticTurn.error === 'interpreter_malformed') {
+      let marketFact = null;
+      let weatherFact = null;
+      try { marketFact = await currentCryptoMarketFact(userText, { timeoutMs: 5_000 }); } catch { /* no fact */ }
+      if (!marketFact) {
+        try { weatherFact = await currentWeatherForecastFact(userText, { timeoutMs: 5_000 }); } catch { /* no fact */ }
+      }
+      recoveryFactText = marketFact
+        ? currentCryptoMarketFactText(marketFact)
+        : weatherFact ? currentWeatherForecastFactText(weatherFact) : '';
+      if (recoveryFactText) {
+        recoveryEvidence = [{
+          name: 'directe_bronmeting', args: { vraag: userText }, ok: true, verified: true,
+          changed: false, partial: false, needsFollowup: false, effect_uncertain: false,
+          output: JSON.stringify({
+            contract: 'ActionResult/v1', tool: 'directe_bronmeting', ok: true,
+            changed: false, verified: true, partial: false, needs_followup: false,
+            data: { ...(marketFact ? { market_fact: marketFact } : {}), ...(weatherFact ? { weather_fact: weatherFact } : {}) },
+          }),
+        }];
+      }
+    }
     const presentation = semanticFailurePresentation(semanticTurn.error);
     assertTurnCurrent();
     reply = await composeEvaReply({
       person, channel, conversationId, userText, understanding: semanticTurn.understanding,
-      toolResults,
+      toolResults: recoveryEvidence,
       fallback: durableHandoff
         ? 'Ik heb je hele opdracht bewaard. Er is nog niets uitgevoerd of gewijzigd.'
-        : presentation.reply,
+        : recoveryFactText || presentation.reply,
       buildWork: false, buildNeedsExecution: false, monitoringProofOptions: {}, syntheticTest,
       messageContext, executionComplete: false,
       semanticFailure: durableHandoff
         ? `${presentation.grounding}; de volledige opdracht is voor een nieuwe poging bewaard`
-        : presentation.grounding,
+        : recoveryFactText
+          ? `De beurtinterpretatie viel uit vóór een handeling. Deze directe, read-only bronmeting is wel geverifieerd: ${recoveryFactText}`
+          : presentation.grounding,
       turnContract, turnPlan, requiredTools,
       assertCurrent: assertTurnCurrent,
     });

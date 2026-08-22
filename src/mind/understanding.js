@@ -1307,7 +1307,11 @@ function actionBoundary(text, spans, temporal, operation, classifyBoundary = eff
   if (CANCEL.test(scope) && !CANCELLATION_OPERATION_IDS.has(operation.operationId)) {
     reasons.push('cancelled');
   }
-  const deferred = temporal.mode === 'later' || temporal.mode === 'condition' || DEFERRED.test(scope);
+  // A current read can legitimately concern a future date: "kijk nu naar het
+  // weer van morgen". The model's explicit temporal mode governs when the
+  // read runs; a date inside the subject is not itself a deferred execution.
+  const deferred = temporal.mode === 'later' || temporal.mode === 'condition'
+    || (!['read', 'discovery'].includes(operation.effect) && DEFERRED.test(scope));
   if (deferred && !operation.supportsDeferred) reasons.push('deferred');
   return [...new Set(reasons)].sort();
 }
