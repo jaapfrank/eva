@@ -23,11 +23,19 @@ from eva.adapters.postgres.noor_4d_repository import (
 from eva.application.memory import (
     ExpectedCurrentFact,
     MemoryAuthority,
+    PresenceMemory,
     RecallCurrentFacts,
     RememberFact,
 )
+from eva.application.presence import PresenceTurn, build_presence_context
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
+from eva.contracts.planning import (
+    CurrentIdentityPack,
+    CurrentUtterance,
+    EpisodeGoal,
+    PresenceContext,
+)
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -241,6 +249,78 @@ def _recall_query(
     )
 
 
+def _identity() -> CurrentIdentityPack:
+    return CurrentIdentityPack.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "IdentityPack/v1",
+            "identity_id": "identity:eva:memory-test",
+            "pack_version": 1,
+            "state": "current",
+            "display_name": "Eva",
+            "pronouns": ["zij", "haar"],
+            "language": "nl-NL",
+            "voice_style": {
+                "name": "warm",
+                "qualities": ["menselijk"],
+                "preferred_wording": [],
+                "forbidden_wording": [],
+                "maximum_paragraphs": 3,
+            },
+            "values": ["eerlijk"],
+            "temperament": ["nieuwsgierig"],
+            "humour": "licht",
+            "conversation_boundaries": ["geen verzonnen zekerheden"],
+            "channel_presentations": [
+                {
+                    "channel_class": "telegram",
+                    "greeting": None,
+                    "signoff": None,
+                    "concise_by_default": True,
+                }
+            ],
+            "privacy_preferences": [],
+            "consent_preferences": [],
+            "initiative_preferences": ["gebruik actuele herinneringen"],
+            "unknown_relation_preferences": [],
+            "issuer": "eva:host",
+            "source_sha256": "1" * 64,
+            "signature_algorithm": "Ed25519",
+            "signature": "A" * 86,
+            "issued_at": NOW,
+        }
+    )
+
+
+def _presence(
+    memory: PresenceMemory, tenant_id: str, principal_id: str
+) -> PresenceContext:
+    return build_presence_context(
+        PresenceTurn(
+            tenant_id=tenant_id,
+            principal_id=principal_id,
+            conversation_id="conversation:telegram:jaap",
+            episode_id="episode:telegram:memory-test",
+            generation=1,
+            identity_pack=_identity(),
+            relationships=(),
+            current_utterance=CurrentUtterance(
+                turn_ref="telegram:update:memory-test",
+                message_id="telegram:message:memory-test",
+                text="Wat weet je nog over de overkapping?",
+                received_at=LATER,
+            ),
+            episode_goal=EpisodeGoal(
+                goal_id="goal:telegram:memory-test",
+                source_message_ref="telegram:message:memory-test",
+                description="Gebruik alleen actuele toegelaten herinneringen.",
+            ),
+            memory=memory,
+        ),
+        purpose="reply",
+    )
+
+
 def test_real_postgres_remember_correct_recall_and_restart(
     memory_engine: Engine,
 ) -> None:
@@ -299,6 +379,8 @@ def test_real_postgres_remember_correct_recall_and_restart(
             _recall_query(tenant_id, installation_id, principal_id, text="koel")
         )
         assert restarted.confirmed_facts[0].fact_id == FACT_1
+        before_correction = _presence(restarted, tenant_id, principal_id)
+        assert before_correction.confirmed_facts[0].value["preference"] == "koel"
 
         corrected_source = _source(
             source_id=SOURCE_2,
@@ -338,6 +420,9 @@ def test_real_postgres_remember_correct_recall_and_restart(
         )
         assert [fact.fact_id for fact in recalled.confirmed_facts] == [FACT_2]
         assert recalled.confirmed_facts[0].value["preference"] == "warm"
+        next_turn = _presence(recalled, tenant_id, principal_id)
+        assert [fact.fact_id for fact in next_turn.confirmed_facts] == [FACT_2]
+        assert next_turn.confirmed_facts[0].value["preference"] == "warm"
         statuses = connection.execute(
             sa.text(
                 "SELECT fact_id::text, assertion_status, revision "
