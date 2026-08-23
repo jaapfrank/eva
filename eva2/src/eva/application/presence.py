@@ -25,10 +25,16 @@ from eva.contracts.planning import (
     ConversationExcerpt,
     CurrentIdentityPack,
     CurrentUtterance,
+    DocumentDraftContextSelection,
     EpisodeGoal,
     MissingHumanChoice,
     ModelPurpose,
+    OutcomeView,
+    PlanContextSelection,
+    PlannerRequest,
     PresenceContext,
+    ReplyContextSelection,
+    ReplyModelInput,
 )
 
 
@@ -59,6 +65,14 @@ class PresenceTurn:
     unresolved_evidence_refs: tuple[str, ...] = ()
     missing_human_choice: MissingHumanChoice | None = None
     token_budget: int = 8_000
+
+
+@dataclass(frozen=True, slots=True)
+class SelectedPresence:
+    context: PresenceContext
+    selection: (
+        PlanContextSelection | DocumentDraftContextSelection | ReplyContextSelection
+    )
 
 
 def _wire(values: tuple[object, ...]) -> list[object]:
@@ -121,8 +135,116 @@ def build_presence_context(
     )
 
 
+def select_presence_context(
+    turn: PresenceTurn,
+    *,
+    purpose: ModelPurpose,
+    selected_at: str,
+    additional_source_refs: tuple[str, ...] = (),
+) -> SelectedPresence:
+    """Bind the complete context and its auditable source selection."""
+
+    context = build_presence_context(turn, purpose=purpose)
+    source_refs = {
+        turn.current_utterance.turn_ref,
+        turn.current_utterance.message_id,
+        turn.episode_goal.source_message_ref,
+        turn.memory.recall.recall_id,
+        *additional_source_refs,
+    }
+    for fact in turn.memory.confirmed_facts:
+        source_refs.update((fact.fact_id, fact.source_ref, fact.evidence_ref))
+    for relationship in turn.relationships:
+        source_refs.update(
+            (
+                relationship.relationship_binding_id,
+                relationship.source_event_id,
+                *relationship.channel_binding_evidence_refs,
+            )
+        )
+    source_refs.update(item.message_id for item in turn.conversation)
+    selection_type = {
+        "plan": PlanContextSelection,
+        "document_draft": DocumentDraftContextSelection,
+        "reply": ReplyContextSelection,
+    }[purpose]
+    selection = selection_type.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ContextSelection/v1",
+            "tenant_id": turn.tenant_id,
+            "principal_id": turn.principal_id,
+            "conversation_id": turn.conversation_id,
+            "purpose": purpose,
+            "selected_source_refs": sorted(source_refs),
+            "excluded_source_reasons": {},
+            "context_sha256": canonical_sha256(context),
+            "selected_at": selected_at,
+        }
+    )
+    return SelectedPresence(context, selection)
+
+
+def build_reply_model_input(
+    selected: SelectedPresence,
+    *,
+    policy_pack_sha256: str,
+    outcome_view: OutcomeView,
+    allowed_claim_refs: tuple[str, ...],
+) -> ReplyModelInput:
+    """Create the exact reply input that may cross the model boundary."""
+
+    if not isinstance(selected.selection, ReplyContextSelection):
+        raise PresenceContextError("reply input requires a reply context selection")
+    return ReplyModelInput.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ReplyModelInput/v1",
+            "purpose": "reply",
+            "output_contract": "ReplyCandidate/v1",
+            "presence_context": selected.context.model_dump(mode="json"),
+            "context_selection": selected.selection.model_dump(mode="json"),
+            "policy_pack_sha256": policy_pack_sha256,
+            "outcome_view": outcome_view.model_dump(mode="json"),
+            "allowed_claim_refs": list(allowed_claim_refs),
+        }
+    )
+
+
+def build_reply_planner_request(
+    selected: SelectedPresence,
+    *,
+    request_id: str,
+    deadline: str,
+    policy_pack_sha256: str,
+    outcome_view: OutcomeView,
+    allowed_claim_refs: tuple[str, ...],
+) -> PlannerRequest:
+    """Produce canonical, self-contained input for a replaceable model adapter."""
+
+    model_input = build_reply_model_input(
+        selected,
+        policy_pack_sha256=policy_pack_sha256,
+        outcome_view=outcome_view,
+        allowed_claim_refs=allowed_claim_refs,
+    )
+    return PlannerRequest.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "PlannerRequest/v1",
+            "request_id": request_id,
+            "model_input": model_input.model_dump(mode="json"),
+            "deadline": deadline,
+        }
+    )
+
+
 __all__ = [
     "PresenceContextError",
     "PresenceTurn",
+    "SelectedPresence",
+    "build_reply_model_input",
+    "build_reply_planner_request",
     "build_presence_context",
+    "select_presence_context",
 ]
