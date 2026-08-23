@@ -5,6 +5,12 @@
   "algorithm": "Ed25519",
   "digestAlgorithm": "sha256",
   "domainSeparationPrefix": "Eva2ReleaseSignature/v1\\u0000",
+  "signedMessageRecipe": {
+    "subjectBytes": "EvaCanonicalJSON/v1 of the complete subject with its signatures field omitted",
+    "subjectSha256": "sha256(subjectBytes)",
+    "messageBytes": "ASCII Eva2ReleaseSignature/v1 followed by one 0x00 byte, then EvaCanonicalJSON/v1 of the complete signature envelope with signatureBase64 omitted; the envelope field spells the separator as printable \\u0000",
+    "envelopeBinds": ["scope", "subjectId", "subjectSha256", "algorithm", "domainSeparationPrefix", "keyId", "trustRootVersion", "signedAt", "expiresAt", "provenanceSha256"]
+  },
   "offlineVerificationRequiredBeforeExtractionOrStart": true,
   "trustRootSlot": "eva2/release/trust-root-slot.json",
   "scopePolicies": [

@@ -4,7 +4,7 @@
   "title": "Eva2SignatureEnvelope/v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["contract", "scope", "subjectId", "subjectSha256", "algorithm", "keyId", "trustRootVersion", "signedAt", "signatureBase64"],
+  "required": ["contract", "scope", "subjectId", "subjectSha256", "algorithm", "domainSeparationPrefix", "keyId", "trustRootVersion", "signedAt", "expiresAt", "provenanceSha256", "signatureBase64"],
   "properties": {
     "contract": {"const": "Eva2SignatureEnvelope/v1"},
     "scope": {"enum": ["release", "image", "connector_artifact", "connector_promotion", "revocation_list", "trust_root_rotation"]},

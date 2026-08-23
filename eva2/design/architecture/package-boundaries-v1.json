@@ -76,7 +76,7 @@
     "operations": {
       "path": "src/eva/operations",
       "allowedLocalImports": ["eva.adapters", "eva.application", "eva.contracts", "eva.domain", "eva.operations"],
-      "allowedExternalImports": ["alembic", "sqlalchemy"]
+      "allowedExternalImports": ["alembic", "cryptography", "sqlalchemy"]
     }
   },
   "isolatedRoots": {

@@ -4,9 +4,10 @@
   "title": "Eva2ReleaseManifest/v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["contract", "releaseVersion", "minimumSupportedRelease", "sourceCommit", "platformLockSha256", "imageDigests", "sbomBindings", "licenseInventorySha256", "provenanceSha256", "schemaSetSha256", "migrationRevision", "revocationSequence", "signatures"],
+  "required": ["contract", "releaseId", "releaseVersion", "minimumSupportedRelease", "sourceCommit", "platformLockSha256", "imageDigests", "sbomBindings", "licenseInventorySha256", "provenanceSha256", "schemaSetSha256", "migrationRevision", "compatibleSchemaRevisions", "revocationSequence", "signatures"],
   "properties": {
     "contract": {"const": "Eva2ReleaseManifest/v1"},
+    "releaseId": {"type": "string", "minLength": 1, "maxLength": 256},
     "releaseVersion": {"type": "string", "minLength": 1, "maxLength": 64},
     "minimumSupportedRelease": {"type": "string", "minLength": 1, "maxLength": 64},
     "sourceCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
@@ -17,6 +18,7 @@
     "provenanceSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "schemaSetSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "migrationRevision": {"type": "string", "minLength": 1, "maxLength": 128},
+    "compatibleSchemaRevisions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 128}},
     "revocationSequence": {"type": "integer", "minimum": 1},
     "signatures": {"type": "array", "minItems": 1, "items": {"$ref": "eva-signature-envelope-v1.schema.json"}}
   }
