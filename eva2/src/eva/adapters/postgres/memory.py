@@ -418,7 +418,16 @@ class PostgresMemoryRepository(MemoryRepository):
             ),
             fact_assertions.c.retention_until >= valid_at,
         ]
-        if query.query_text.strip():
+        candidate_order: dict[UUID, int] | None = None
+        if query.candidate_fact_ids is not None:
+            if not query.candidate_fact_ids:
+                return ()
+            candidate_order = {
+                _uuid(fact_id): index
+                for index, fact_id in enumerate(query.candidate_fact_ids)
+            }
+            predicates.append(fact_assertions.c.fact_id.in_(candidate_order))
+        elif query.query_text.strip():
             vector = sa.func.to_tsvector(
                 sa.literal_column("'simple'::regconfig"), document
             )
@@ -452,6 +461,8 @@ class PostgresMemoryRepository(MemoryRepository):
             .mappings()
             .all()
         )
+        if candidate_order is not None:
+            rows.sort(key=lambda row: candidate_order[row["fact_id"]])
 
         recalled: list[RecalledMemoryFact] = []
         for row in rows:
@@ -490,9 +501,13 @@ class PostgresMemoryRepository(MemoryRepository):
                     fact=MemoryFact.model_validate(row["payload"]),
                     source_events=source_contracts,
                     ranking_reason=(
-                        "postgres_full_text_match"
-                        if query.query_text.strip()
-                        else "current_fact_recency"
+                        "hindsight_temporal_semantic_match"
+                        if candidate_order is not None
+                        else (
+                            "postgres_full_text_match"
+                            if query.query_text.strip()
+                            else "current_fact_recency"
+                        )
                     ),
                 )
             )

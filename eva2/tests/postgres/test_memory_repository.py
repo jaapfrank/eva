@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
@@ -14,6 +15,10 @@ from alembic import command as alembic_command
 from alembic.config import Config
 from sqlalchemy.engine import Engine, make_url
 
+from eva.adapters.projection.hindsight import (
+    HindsightMemoryProjection,
+    HindsightProjectionConfig,
+)
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.adapters.postgres.memory import PostgresMemoryRepository
 from eva.adapters.postgres.noor_4d_repository import (
@@ -415,10 +420,34 @@ def test_real_postgres_remember_correct_recall_and_restart(
         memory = MemoryAuthority(
             PostgresMemoryRepository(connection, tenant_id, installation_id)
         )
-        recalled = memory.recall_for_presence(
-            _recall_query(tenant_id, installation_id, principal_id, text="warm")
+        recall_query = _recall_query(
+            tenant_id, installation_id, principal_id, text="temperatuur"
         )
+        hindsight_url = os.environ.get("EVA2_TEST_HINDSIGHT_URL", "").strip()
+        if hindsight_url:
+            recall_query = (
+                HindsightMemoryProjection(
+                    HindsightProjectionConfig(
+                        hindsight_url,
+                        bank_namespace="eva-live-proof",
+                        timeout_seconds=180,
+                    )
+                )
+                .recall_candidates(recall_query)
+                .query
+            )
+        else:
+            recall_query = replace(
+                recall_query,
+                candidate_fact_ids=(FACT_1, FACT_2),
+                projection_version="hindsight-0.9.1-v1",
+            )
+        recalled = memory.recall_for_presence(recall_query)
         assert [fact.fact_id for fact in recalled.confirmed_facts] == [FACT_2]
+        assert recalled.recall.projection_version == "hindsight-0.9.1-v1"
+        assert recalled.recall.selected[0].ranking_reason == (
+            "hindsight_temporal_semantic_match"
+        )
         assert recalled.confirmed_facts[0].value["preference"] == "warm"
         next_turn = _presence(recalled, tenant_id, principal_id)
         assert [fact.fact_id for fact in next_turn.confirmed_facts] == [FACT_2]

@@ -84,6 +84,7 @@ class RecallCurrentFacts:
     subject_ids: tuple[str, ...]
     query_text: str
     projection_version: str = "postgres-simple-v1"
+    candidate_fact_ids: tuple[str, ...] | None = None
     maximum_facts: int = 32
     allowed_privacy_classes: tuple[str, ...] = (
         "public",
@@ -171,6 +172,11 @@ def _validate_recall(query: RecallCurrentFacts) -> None:
         raise InvalidMemoryAssertion("Presence recall is limited to 64 facts")
     if not query.allowed_privacy_classes:
         raise InvalidMemoryAssertion("recall requires an admitted privacy set")
+    if query.candidate_fact_ids is not None:
+        if len(query.candidate_fact_ids) > 256:
+            raise InvalidMemoryAssertion("projection returned too many candidate facts")
+        if len(set(query.candidate_fact_ids)) != len(query.candidate_fact_ids):
+            raise InvalidMemoryAssertion("projection candidate fact IDs must be unique")
 
 
 class MemoryAuthority:
