@@ -168,6 +168,10 @@ class RuntimeSettings:
 
     @classmethod
     def from_environment(cls) -> "RuntimeSettings":
+        if "EVA_DATABASE_DSN" in os.environ:
+            raise RuntimeError(
+                "EVA_DATABASE_DSN is forbidden; use EVA_DATABASE_DSN_FILE"
+            )
         database_dsn = environment_secret(
             "EVA_DATABASE_DSN", "EVA_DATABASE_DSN_FILE"
         )

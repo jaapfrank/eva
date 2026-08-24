@@ -10,7 +10,7 @@ from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
 from eva.adapters.model.conversation import ConversationCredentialStatus
 
 
-def _minimum(monkeypatch: pytest.MonkeyPatch) -> None:
+def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
     monkeypatch.setenv("EVA_HINDSIGHT_URL", "http://hindsight:8888")
     monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "installation:test")
     monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "tenant:test")
@@ -36,12 +36,16 @@ def _minimum(monkeypatch: pytest.MonkeyPatch) -> None:
         "EVA_DURABLE_GOAL_RECIPIENTS",
     ):
         monkeypatch.delenv(name, raising=False)
+    database = private_tmp_path / "database-dsn"
+    database.write_text("postgresql://runtime\n")
+    database.chmod(0o600)
+    monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(database))
 
 
 def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path
 ) -> None:
-    _minimum(monkeypatch)
+    _minimum(monkeypatch, private_tmp_path)
     database = private_tmp_path / "database-dsn"
     database.write_text("postgresql+psycopg://eva:test@postgres/eva\n")
     database.chmod(0o600)
@@ -60,9 +64,9 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
 
 def test_runtime_reads_and_bounds_conversation_reasoning_effort(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_CONVERSATION_REASONING_EFFORT", "high")
     assert RuntimeSettings.from_environment().conversation_reasoning_effort == "high"
 
@@ -73,9 +77,9 @@ def test_runtime_reads_and_bounds_conversation_reasoning_effort(
 
 def test_runtime_reads_and_bounds_hindsight_recall_limits(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_BUDGET", "mid")
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "3000")
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "25")
@@ -104,11 +108,10 @@ def test_runtime_rejects_insecure_home_assistant_file_before_connector_setup(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
+    _minimum(monkeypatch, private_tmp_path)
     token = private_tmp_path / "home-assistant-token"
     token.write_text("not-a-real-token\n")
     token.chmod(0o640)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
     monkeypatch.setenv("EVA_HOME_ASSISTANT_URL", "http://home-assistant:8123")
     monkeypatch.setenv("EVA_HOME_ASSISTANT_TOKEN_FILE", str(token))
 
@@ -119,10 +122,10 @@ def test_runtime_rejects_insecure_home_assistant_file_before_connector_setup(
 @pytest.mark.parametrize("inline_value", ("", "not-a-real-token"))
 def test_runtime_forbids_inline_home_assistant_token_even_when_empty(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
     inline_value: str,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_HOME_ASSISTANT_URL", "http://home-assistant:8123")
     monkeypatch.setenv("EVA_HOME_ASSISTANT_TOKEN", inline_value)
 
@@ -133,10 +136,10 @@ def test_runtime_forbids_inline_home_assistant_token_even_when_empty(
 @pytest.mark.parametrize("inline_value", ("", "telegram-test-value"))
 def test_runtime_forbids_inline_telegram_token_even_when_empty(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
     inline_value: str,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "approved-chat")
     monkeypatch.setenv("EVA_TELEGRAM_BOT_TOKEN", inline_value)
 
@@ -148,8 +151,7 @@ def test_runtime_reads_telegram_token_from_file(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "approved-chat")
     telegram = private_tmp_path / "telegram-token"
     telegram.write_text("telegram-test-value\n")
@@ -180,12 +182,12 @@ def test_runtime_reads_telegram_token_from_file(
 )
 def test_runtime_forbids_inline_stripe_secrets_even_when_empty(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
     name: str,
     value: str,
     expected: str,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_STRIPE_ACCOUNT_ID", "acct_12345678")
     monkeypatch.setenv(name, value)
     monkeypatch.setenv("EVA_COMMERCE_PUBLIC_BASE_URL", "https://eva.example")
@@ -196,9 +198,9 @@ def test_runtime_forbids_inline_stripe_secrets_even_when_empty(
 
 def test_runtime_reads_bounded_fanout_sink_configuration(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv(
         "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON",
         '{"sink-a":"http://fanout-sink:8090","sink-b":"http://fanout-sink:8090"}',
@@ -215,9 +217,9 @@ def test_runtime_reads_bounded_fanout_sink_configuration(
 
 def test_runtime_binds_durable_goal_provider_and_recipients_together(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_DURABLE_GOAL_PROVIDER", "goal-test")
     monkeypatch.setenv("EVA_DURABLE_GOAL_RECIPIENTS", "sink-a,sink-b")
     settings = RuntimeSettings.from_environment()
@@ -229,24 +231,22 @@ def test_runtime_binds_durable_goal_provider_and_recipients_together(
         RuntimeSettings.from_environment()
 
 
-def test_runtime_rejects_ambiguous_secret_sources(
-    monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path
+@pytest.mark.parametrize("inline_value", ("", "postgresql://from-environment"))
+def test_runtime_forbids_inline_database_dsn_even_when_empty(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+    inline_value: str,
 ) -> None:
-    _minimum(monkeypatch)
-    database = private_tmp_path / "database-dsn"
-    database.write_text("postgresql://from-file")
-    database.chmod(0o600)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://from-environment")
-    monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(database))
-    with pytest.raises(RuntimeError, match="only one"):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_DATABASE_DSN", inline_value)
+    with pytest.raises(RuntimeError, match="EVA_DATABASE_DSN is forbidden"):
         RuntimeSettings.from_environment()
 
 
 def test_runtime_reads_stripe_secret_from_file_and_binds_mode(
     monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     secret = private_tmp_path / "stripe-secret"
     secret.write_text("sk_test_private\n")
     secret.chmod(0o600)
@@ -273,8 +273,7 @@ def test_runtime_rejects_partial_or_invalid_stripe_configuration(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
 ) -> None:
-    _minimum(monkeypatch)
-    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_STRIPE_ACCOUNT_ID", "acct_12345678")
     with pytest.raises(RuntimeError, match="Stripe commerce configuration"):
         RuntimeSettings.from_environment()
