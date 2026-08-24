@@ -2,7 +2,11 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from eva.application.telegram_pairing import TelegramPairingChallenge, pairing_expiry
+from eva.application.telegram_pairing import (
+    TelegramPairingChallenge,
+    derive_pairing_code,
+    pairing_expiry,
+)
 
 
 NOW = datetime(2026, 8, 24, 12, 0, tzinfo=UTC)
@@ -22,6 +26,13 @@ def test_pairing_never_persists_plain_code_as_its_identifier() -> None:
 
     assert challenge.code_sha256 != challenge.code
     assert len(challenge.code_sha256) == 64
+
+
+def test_pairing_code_is_reproducible_after_restart_without_ledger_storage() -> None:
+    secret = b"p" * 32
+    first = derive_pairing_code(secret, telegram_user_id=404, update_id=81001)
+    assert first == derive_pairing_code(secret, telegram_user_id=404, update_id=81001)
+    assert first != derive_pairing_code(secret, telegram_user_id=404, update_id=81002)
 
 
 def test_pairing_rejects_non_private_or_invalid_challenges() -> None:

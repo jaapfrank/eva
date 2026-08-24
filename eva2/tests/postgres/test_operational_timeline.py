@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 import hashlib
 import os
@@ -26,6 +27,7 @@ from eva.adapters.postgres.memory_outbox import (
     PostgresMemoryOutbox,
 )
 from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
+from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
 from eva.adapters.postgres.home_assistant_reads import (
     PostgresHomeAssistantConversationReads,
 )
@@ -38,11 +40,31 @@ from eva.application.conversation import (
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.research import ResearchArtifact, ResearchSource
-from eva.application.telegram_ingress import TelegramCoreReply, TelegramInboundMessage
+from eva.application.telegram_ingress import (
+    TelegramCoreReply,
+    TelegramInboundMessage,
+    TelegramPrincipalBinding,
+    TelegramPrincipalBindings,
+)
+from eva.application.telegram_pairing import (
+    TelegramDynamicBinding,
+    TelegramPairingChallenge,
+    derive_pairing_code,
+    pairing_expiry,
+)
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
 NOW = datetime(2026, 8, 23, 12, 0, tzinfo=UTC)
+
+
+def _pairing_bindings() -> TelegramPrincipalBindings:
+    return TelegramPrincipalBindings(
+        (
+            TelegramPrincipalBinding(101, "person:jaap", ("101",)),
+            TelegramPrincipalBinding(202, "person:frank", ("202",)),
+        )
+    )
 
 
 def _upgrade(engine: Engine, config: Config) -> None:
@@ -304,6 +326,158 @@ def test_telegram_restart_after_delivery_claim_never_blindly_resends(
     assert state.status == "needs_help"
     assert state.phase == "delivery_ambiguous"
     assert restarted.next_offset() == 72002
+
+
+def test_telegram_pairing_is_private_two_sided_and_survives_restart(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-pairing",
+        installation_id="home",
+        trusted_bindings=_pairing_bindings(),
+    )
+    secret = b"p" * 32
+    first = TelegramPairingChallenge(
+        derive_pairing_code(secret, telegram_user_id=404, update_id=81001),
+        404,
+        "404",
+        pairing_expiry(NOW),
+    )
+    accepted = store.start(first, update_id=81001, now=NOW)
+    assert accepted == first
+    payload = store._timeline.events("telegram-pairing-request:81001")[0].payload  # noqa: SLF001
+    assert first.code not in str(payload)
+
+    # A retry after a crash gets the original code, never a second valid code.
+    restarted = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-pairing",
+        installation_id="home",
+        trusted_bindings=_pairing_bindings(),
+    )
+    recovered = TelegramPairingChallenge(
+        derive_pairing_code(secret, telegram_user_id=404, update_id=81001),
+        404,
+        "404",
+        pairing_expiry(NOW + timedelta(minutes=1)),
+    )
+    assert recovered is not first
+    assert restarted.start(recovered, update_id=81001, now=NOW + timedelta(minutes=1)) == first
+    assert restarted.confirm(
+        first.code,
+        confirmer_user_id=101,
+        confirmer_chat_id="101",
+        now=NOW + timedelta(seconds=1),
+    ).principal_id == "person:jaap"
+    assert restarted.resolve(telegram_user_id=404, chat_id="404") == "person:jaap"
+    assert restarted.resolve(telegram_user_id=404, chat_id="-20") is None
+    assert restarted.confirm(
+        first.code,
+        confirmer_user_id=101,
+        confirmer_chat_id="101",
+        now=NOW + timedelta(seconds=2),
+    ).telegram_user_id == 404
+
+
+def test_telegram_pairing_rejects_self_confirmation_and_expired_codes(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-pairing-reject",
+        installation_id="home",
+        trusted_bindings=_pairing_bindings(),
+    )
+    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 505, "505", pairing_expiry(NOW))
+    store.start(challenge, update_id=81002, now=NOW)
+
+    assert store.confirm(
+        challenge.code,
+        confirmer_user_id=505,
+        confirmer_chat_id="505",
+        now=NOW + timedelta(seconds=1),
+    ) is None
+    assert store.confirm(
+        challenge.code,
+        confirmer_user_id=101,
+        confirmer_chat_id="101",
+        now=pairing_expiry(NOW) + timedelta(seconds=1),
+    ) is None
+    assert store.resolve(telegram_user_id=505, chat_id="505") is None
+
+
+def test_telegram_pairing_resumes_the_crash_between_request_and_waiting_state(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-pairing-resume",
+        installation_id="home",
+        trusted_bindings=_pairing_bindings(),
+    )
+    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 606, "606", pairing_expiry(NOW))
+    thread_id = "telegram-pairing-request:81003"
+    store._timeline.create_thread(  # noqa: SLF001
+        thread_id=thread_id,
+        checkpoint_id=f"{thread_id}:requested",
+        operation_id="telegram-pairing-request:81003",
+        occurred_at=NOW,
+        data=store._challenge_data(challenge, update_id=81003),  # noqa: SLF001
+        event_type="TELEGRAM_PAIRING_REQUESTED",
+        phase="pairing_requested",
+        status="active",
+    )
+
+    assert store.start(challenge, update_id=81003, now=NOW) == challenge
+    assert store._timeline.load(thread_id).status == "waiting_for_proof"  # noqa: SLF001
+
+
+def test_telegram_pairing_never_overwrites_an_account_bound_by_another_code(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-pairing-collision",
+        installation_id="home",
+        trusted_bindings=_pairing_bindings(),
+    )
+    first = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 707, "707", pairing_expiry(NOW))
+    second = TelegramPairingChallenge("EVA-NPQRSTVWXYZ2", 707, "707", pairing_expiry(NOW))
+    store.start(first, update_id=81004, now=NOW)
+    store.start(second, update_id=81005, now=NOW)
+    assert store.confirm(
+        first.code,
+        confirmer_user_id=101,
+        confirmer_chat_id="101",
+        now=NOW + timedelta(seconds=1),
+    ) == TelegramDynamicBinding(707, "person:jaap")
+    with pytest.raises(RuntimeError, match="already bound"):
+        store.confirm(
+            second.code,
+            confirmer_user_id=202,
+            confirmer_chat_id="202",
+            now=NOW + timedelta(seconds=2),
+        )
+    assert store.resolve(telegram_user_id=707, chat_id="707") == "person:jaap"
+
+
+def test_telegram_pairing_concurrent_restarts_share_one_waiting_challenge(
+    timeline_engine: Engine,
+) -> None:
+    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 808, "808", pairing_expiry(NOW))
+
+    def resume() -> TelegramPairingChallenge:
+        return PostgresTelegramPairingStore(
+            timeline_engine,
+            tenant_id="telegram-pairing-concurrent",
+            installation_id="home",
+            trusted_bindings=_pairing_bindings(),
+        ).start(challenge, update_id=81006, now=NOW)
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = tuple(pool.map(lambda _value: resume(), range(2)))
+    assert results == (challenge, challenge)
 
 
 def test_telegram_poison_turn_stops_after_three_identical_processing_failures(
