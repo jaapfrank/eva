@@ -7,10 +7,24 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import secrets
 import stat
 import sys
-import tempfile
 import time
+
+from eva.bootstrap.secrets import (
+    read_private_runtime_file_bytes,
+    read_shared_runtime_file_bytes,
+)
+
+
+MODEL_LEASE_OWNER_UID = 1000
+EVA_CORE_LEASE_READER_GID = 65532
+EVA_CORE_LEASE_DIRECTORY_MODE = 0o2750
+EVA_CORE_LEASE_FILE_MODE = 0o640
+CODEX_LEASE_READER_GID = 1000
+CODEX_LEASE_DIRECTORY_MODE = 0o700
+CODEX_LEASE_FILE_MODE = 0o600
 
 
 class ModelCredentialLeaseError(RuntimeError):
@@ -27,26 +41,53 @@ def _canonical(value: object) -> bytes:
     ).encode()
 
 
-def _read_regular(path: Path) -> bytes:
-    before = path.lstat()
-    if not stat.S_ISREG(before.st_mode) or before.st_size > 65_536:
-        raise ModelCredentialLeaseError("model credential source is not a small file")
-    raw = path.read_bytes()
-    after = path.lstat()
-    if (before.st_dev, before.st_ino, before.st_size) != (
-        after.st_dev,
-        after.st_ino,
-        after.st_size,
+def _read_authority_source(path: Path) -> bytes:
+    try:
+        return read_private_runtime_file_bytes(
+            str(path),
+            setting_name="model credential source",
+            effective_uid=MODEL_LEASE_OWNER_UID,
+        )
+    except RuntimeError as error:
+        raise ModelCredentialLeaseError("model credential source is unavailable") from error
+
+
+def _open_lease_directory(
+    directory: Path, *, reader_gid: int, required_mode: int
+) -> int:
+    try:
+        named = os.lstat(directory)
+    except OSError as error:
+        raise ModelCredentialLeaseError("model lease directory is unavailable") from error
+    if (
+        stat.S_ISLNK(named.st_mode)
+        or not stat.S_ISDIR(named.st_mode)
+        or named.st_uid != MODEL_LEASE_OWNER_UID
+        or named.st_gid != reader_gid
+        or stat.S_IMODE(named.st_mode) != required_mode
     ):
-        raise ModelCredentialLeaseError("model credential source changed while reading")
-    return raw
+        raise ModelCredentialLeaseError("model lease directory differs from its contract")
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(directory, flags)
+    except OSError as error:
+        raise ModelCredentialLeaseError("model lease directory is unavailable") from error
+    opened = os.fstat(descriptor)
+    if (
+        (opened.st_dev, opened.st_ino, opened.st_uid, opened.st_gid, opened.st_mode)
+        != (named.st_dev, named.st_ino, named.st_uid, named.st_gid, named.st_mode)
+    ):
+        os.close(descriptor)
+        raise ModelCredentialLeaseError("model lease directory changed during preflight")
+    return descriptor
 
 
 def build_access_lease(source: Path) -> bytes:
     """Strip refresh authority and return one canonical access-only lease."""
 
     try:
-        raw = _read_regular(source)
+        raw = _read_authority_source(source)
         value = json.loads(raw)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ModelCredentialLeaseError(
@@ -86,46 +127,92 @@ def build_codex_consumer_auth(source: Path) -> bytes:
     )
 
 
-def _publish_bytes(lease: bytes, target: Path, *, mode: int = 0o600) -> bool:
-    try:
-        current = _read_regular(target)
-    except (OSError, ModelCredentialLeaseError):
-        current = None
-    if current == lease:
-        return False
-    target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    descriptor, temporary_name = tempfile.mkstemp(
-        dir=target.parent, prefix=".model-lease-", suffix=".tmp"
+def _publish_bytes(
+    lease: bytes,
+    target: Path,
+    *,
+    reader_gid: int,
+    directory_mode: int,
+    file_mode: int,
+) -> bool:
+    directory = _open_lease_directory(
+        target.parent, reader_gid=reader_gid, required_mode=directory_mode
     )
-    temporary = Path(temporary_name)
+    temporary_name = f".model-lease-{secrets.token_hex(16)}.tmp"
+    descriptor: int | None = None
     try:
-        os.fchmod(descriptor, mode)
-        with os.fdopen(descriptor, "wb") as handle:
-            handle.write(lease)
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.replace(temporary, target)
-        directory = os.open(target.parent, os.O_RDONLY | os.O_DIRECTORY)
         try:
-            os.fsync(directory)
+            current = read_shared_runtime_file_bytes(
+                str(target),
+                setting_name="model access lease",
+                owner_uid=MODEL_LEASE_OWNER_UID,
+                reader_gid=reader_gid,
+                required_mode=file_mode,
+            )
+        except RuntimeError:
+            current = None
+        if current == lease:
+            return False
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(temporary_name, flags, file_mode, dir_fd=directory)
+        os.fchmod(descriptor, file_mode)
+        metadata = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(metadata.st_mode)
+            or metadata.st_nlink != 1
+            or metadata.st_uid != MODEL_LEASE_OWNER_UID
+            or metadata.st_gid != reader_gid
+            or stat.S_IMODE(metadata.st_mode) != file_mode
+        ):
+            raise ModelCredentialLeaseError("model lease temp file differs from its contract")
+        offset = 0
+        while offset < len(lease):
+            offset += os.write(descriptor, lease[offset:])
+        os.fsync(descriptor)
+        os.close(descriptor)
+        descriptor = None
+        os.replace(
+            temporary_name,
+            target.name,
+            src_dir_fd=directory,
+            dst_dir_fd=directory,
+        )
+        os.fsync(directory)
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+        try:
+            os.unlink(temporary_name, dir_fd=directory)
+        except FileNotFoundError:
+            pass
         finally:
             os.close(directory)
-    finally:
-        if temporary.exists():
-            temporary.unlink()
     return True
 
 
 def publish_access_lease(source: Path, target: Path) -> bool:
     """Atomically publish changed lease bytes; return whether bytes changed."""
 
-    return _publish_bytes(build_access_lease(source), target, mode=0o640)
+    return _publish_bytes(
+        build_access_lease(source),
+        target,
+        reader_gid=EVA_CORE_LEASE_READER_GID,
+        directory_mode=EVA_CORE_LEASE_DIRECTORY_MODE,
+        file_mode=EVA_CORE_LEASE_FILE_MODE,
+    )
 
 
 def publish_codex_consumer_auth(source: Path, target: Path) -> bool:
     """Publish an auto-rotating Codex file with no refresh authority."""
 
-    return _publish_bytes(build_codex_consumer_auth(source), target, mode=0o600)
+    return _publish_bytes(
+        build_codex_consumer_auth(source),
+        target,
+        reader_gid=CODEX_LEASE_READER_GID,
+        directory_mode=CODEX_LEASE_DIRECTORY_MODE,
+        file_mode=CODEX_LEASE_FILE_MODE,
+    )
 
 
 def publish_unavailable_lease(target: Path) -> bool:
@@ -139,7 +226,9 @@ def publish_unavailable_lease(target: Path) -> bool:
             }
         ),
         target,
-        mode=0o640,
+        reader_gid=EVA_CORE_LEASE_READER_GID,
+        directory_mode=EVA_CORE_LEASE_DIRECTORY_MODE,
+        file_mode=EVA_CORE_LEASE_FILE_MODE,
     )
 
 
@@ -148,9 +237,15 @@ def install_auth_owner(source: Path, target: Path) -> bool:
 
     if source.resolve() == target.resolve():
         raise ModelCredentialLeaseError("staged and live model auth paths must differ")
-    raw = _read_regular(source)
+    raw = _read_authority_source(source)
     build_access_lease(source)
-    return _publish_bytes(raw, target)
+    return _publish_bytes(
+        raw,
+        target,
+        reader_gid=CODEX_LEASE_READER_GID,
+        directory_mode=CODEX_LEASE_DIRECTORY_MODE,
+        file_mode=CODEX_LEASE_FILE_MODE,
+    )
 
 
 def _parser() -> argparse.ArgumentParser:

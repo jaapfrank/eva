@@ -29,6 +29,12 @@ secret-hardening wordt gepresenteerd.
   `EVA_DATABASE_DSN_FILE` via dezelfde harde loader; het aparte
   schema-installatieprofiel bindt de runtime-owned DSN read-only met
   `create_host_path: false`.
+- `operations/model_credentials.py`: leest de private credentialauthority via
+  de harde loader en publiceert alleen atomair naar vooraf-geprovisioneerde
+  directories met een vast owner/group/modecontract.
+- `adapters/model/conversation.py`: accepteert uitsluitend de gedeelde
+  access-lease met contract `1000:65532`/`0640`; refreshauthority wordt niet
+  gelezen door de gesprekservice.
 
 ## Niet door deze vertical gedekt en dus deploymentblocker
 
@@ -36,11 +42,6 @@ secret-hardening wordt gepresenteerd.
   `secrets:file` en volgt dus niet het file-owner/modecontract van de geharde
   installer. Alleen het aparte schema-installatieprofiel volgt dat contract;
   de stack is geen beheerd B-releasepad.
-- `operations/model_credentials.py`: afzonderlijke credentialauthority-reader
-  en leasepublisher; deze heeft eigen begrenzing maar nog niet hetzelfde
-  fd-/permissioncontract.
-- `adapters/model/conversation.py`: afzonderlijke roterende modellease en
-  JSON-validatie; deze reader is niet door deze vertical gemigreerd.
 - PostgreSQLs `POSTGRES_PASSWORD_FILE` wordt door de upstream Postgres-image
   gelezen en niet door Eva-code.
 
