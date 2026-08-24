@@ -87,7 +87,7 @@
         "artifactId": "connector_provider_fixtures",
         "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
         "contract": "Eva24DConnectorProviderFixtures/v1",
-        "expectedSha256": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
+        "expectedSha256": "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6",
         "status": "sealed_verified",
         "requiredContents": "content-addressed manifests/executables/sandboxes and exact request/result/error/ACK/before/after/429/reconcile/readback vectors for five workers and six bindings, including exact poisoned-mail and ambiguous-provider bytes, untrusted ExperienceSourceEvent/PresenceContext representation, unchanged identity/policy/scope/recipient authority and zero/one call deltas"
       },
@@ -95,7 +95,7 @@
         "artifactId": "deterministic_model_vectors",
         "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
         "contract": "Eva24DModelVectors/v1",
-        "expectedSha256": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
+        "expectedSha256": "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593",
         "status": "sealed_verified",
         "requiredContents": "content-addressed zero-network adapter/profile plus exact PlannerRequest/model_input to ModelDecision/v1, DocumentDraft/v1 and Eva/Mira ReplyCandidate/v1 bytes and hashes, provider-429 ordinal-one/ordinal-two recovery, malformed/rejected/ambiguous responses and zero-hidden-retry call deltas"
       },
@@ -103,7 +103,7 @@
         "artifactId": "concurrency_crash_schedules",
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
         "contract": "Eva24DConcurrencyCrashSchedules/v1",
-        "expectedSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+        "expectedSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
         "status": "sealed_verified",
         "requiredContents": "one deterministic duplicate-overlap barrier schedule with two exact caller outcomes and all fifteen crash schedules with canonical pre-crash/post-recovery state, row/count/hash deltas, exact model/connector invocation deltas, byte-identical terminal replay and exact profile-authoritative harness-only entropy authority"
       }
@@ -114,9 +114,9 @@
       "authorityPrecedence": "This current-profile adoption authority is the sole isolated-4D exception to encryptedObjectFormat.encryptionProcedure and nonceRule; the schedule artifact cannot grant, override or widen this exception.",
       "scheduleBinding": {
         "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
-        "wholeFileSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+        "wholeFileSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
         "authoritySelector": "harnessEntropyInjectionAuthority",
-        "authoritySha256": "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec",
+        "authoritySha256": "38c4bb987abe5652cc223e4dacb4fe0b440495127bec62174cca7978d844f310",
         "bindingManifestSha256": "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359"
       },
       "testBootstrap": {

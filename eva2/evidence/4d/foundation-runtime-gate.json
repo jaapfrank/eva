@@ -2,8 +2,8 @@
   "contract": "Eva2Tranche4DFoundationRuntimeEvidence/v1",
   "tranche": "4D-foundation-runtime",
   "status": "passed_foundation_runtime_only",
-  "createdAt": "2026-08-21T17:12:10+02:00",
-  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
+  "createdAt": "2026-08-21T18:02:13+02:00",
+  "baseCommit": "7889b280a2d8cf4aa3ed5717cbb65a9f9161e1ef",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "implementedSlices": [
@@ -16,6 +16,10 @@
     "repositorySourceAndStaticCasOracleBound": true,
     "repositoryLivePostgresBehaviorProven": false,
     "frameworkNeutralFixtureFlowProven": true,
+    "evaExactHostBuiltProofProven": true,
+    "miraIdentitySurfaceOnlyProven": true,
+    "miraInstallationExactProofProven": false,
+    "applicationDatabaseSelectedObjectRefProven": false,
     "applicationDatabaseDurabilityOrTransactionalityProven": false,
     "sealedFixtureAdaptersExercisedByApplicationGate": true,
     "fullFourDVerticalBehaviorProven": false,
@@ -30,26 +34,26 @@
   "authorityBindings": {
     "implementationFixtureFreeze": {
       "path": "eva2/evidence/4d/implementation-fixture-freeze.json",
-      "sha256": "db65bcf048f2fed5a80de9abf1bd3c62b54a71c4c7ee877570a5a26ddea25aca"
+      "sha256": "01cf03e305bc28ba6f9457c1f8749054f5fde33c3d43e0c507f7d9e674fb1040"
     },
     "executionProfile": {
       "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-      "wholeFileSha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
+      "wholeFileSha256": "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe",
       "semanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020"
     },
     "artifactDag": {
       "schemaExport": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
-      "connectorFixtures": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
-      "modelVectors": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
-      "concurrencySchedules": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
+      "connectorFixtures": "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6",
+      "modelVectors": "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593",
+      "concurrencySchedules": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d"
     },
     "checker": {
       "path": "eva2/tools/check_4d_freeze.py",
-      "sha256": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557",
+      "sha256": "7925eef5828b1127ebbd40b40818a04478c637b5a588ca88dda140f35d1a2bfd",
       "testPath": "eva2/tests/design/test_4d_freeze.py",
-      "testSha256": "90b3258985904c9404be59fde97a50435a62727d4b135bc9d234dc6148dcaa17",
-      "canonicalReceiptSha256": "2f07e427837f733f63c3870924472cfe90b37de63df7c9382fd87295fc5fe77c",
-      "cliStdoutSha256": "68f4795bc1c6856a1b4d50f6880dbc1b1d320d1d28a1182558c66506185a13e0"
+      "testSha256": "a8192fc45edfab06b363f5920e2812ccf4c89821b0a71ed659cbb91df50cbcf1",
+      "canonicalReceiptSha256": "2c3184f0d41fd6d7aabe21d125f592d93c64d141ce22b968b136bf44ec5d4dd7",
+      "cliStdoutSha256": "88ac25e1d127305c67ae4719d891cdbcbe1b95ba994488557b690b3ff329768d"
     },
     "contractSchemas": {
       "manifestPath": "eva2/schemas/contracts/manifest.json",
@@ -79,63 +83,174 @@
     "postgresqlSchema": {
       "sha256": "fcd38e0283f7e0254517eb7b2054d7ffebf950335c14ee39e7340c1ebd25fd38",
       "files": [
-        ["eva2/migrations/env.py", "b159b552012c2dd2add95f1953503c24ef79daf4131aa6f94f5425224f913183"],
-        ["eva2/migrations/versions/4d_0003_core_continuity.py", "7c3785e5a41597e8c649de9d888e2fa155bc65d120f4b234e3012dff4b149d67"],
-        ["eva2/migrations/versions/4d_0004_effect_authority.py", "db41c37744d4ab949b054a6bf495a6bce9c3e02efc59587f15f19b11f15854b4"],
-        ["eva2/migrations/versions/4d_0005_evidence_objects.py", "c9f72933704adabc4eed01bceea02921bab0bebb790c46f7595436d8f85b9fb1"],
-        ["eva2/migrations/versions/4d_0006_memory.py", "65c45f0e3c1024ec99720ae663b90c7c308ebdb3d4537ce39916caae47e1e537"],
-        ["eva2/migrations/versions/4d_0007_projection_telemetry.py", "734234ad103cbffa3cd933bb8426e1dee20abf96a43634048142c2b76733bd22"],
-        ["eva2/src/eva/adapters/postgres/catalog.py", "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339"],
-        ["eva2/src/eva/adapters/postgres/catalog_generated.py", "1ea951fb3c01c06ba7816554d55ee25d00e196a3f9d2f852e89ba78091560042"],
-        ["eva2/src/eva/operations/migration_admission.py", "4cc505a9d17125c0debd341ea3f23c5c290b41625cb28c700256d601575ccaa9"],
-        ["eva2/tests/postgres/test_4d_catalog.py", "c1602d20b6746a5c48e98b622c387aba21175a97e0f79cfe6b19a6c481901359"],
-        ["eva2/tests/postgres/test_4d_migration_admission.py", "6a4fe1c9c7f3d65d837344fc42411901b2755833ba004c436a06392511b7cc30"],
-        ["eva2/tests/postgres/test_4d_migrations.py", "f5907cdb2cc0ead04284fca3bbaa0c602d44541af34c0ae489932ebb5239fed5"],
-        ["eva2/tools/materialize_4d_schema_artifacts.py", "0e5632c2276170c398e252095cfb44a0ab92fb161955ec119e6a78be641aaf5a"]
+        [
+          "eva2/migrations/env.py",
+          "b159b552012c2dd2add95f1953503c24ef79daf4131aa6f94f5425224f913183"
+        ],
+        [
+          "eva2/migrations/versions/4d_0003_core_continuity.py",
+          "7c3785e5a41597e8c649de9d888e2fa155bc65d120f4b234e3012dff4b149d67"
+        ],
+        [
+          "eva2/migrations/versions/4d_0004_effect_authority.py",
+          "db41c37744d4ab949b054a6bf495a6bce9c3e02efc59587f15f19b11f15854b4"
+        ],
+        [
+          "eva2/migrations/versions/4d_0005_evidence_objects.py",
+          "c9f72933704adabc4eed01bceea02921bab0bebb790c46f7595436d8f85b9fb1"
+        ],
+        [
+          "eva2/migrations/versions/4d_0006_memory.py",
+          "65c45f0e3c1024ec99720ae663b90c7c308ebdb3d4537ce39916caae47e1e537"
+        ],
+        [
+          "eva2/migrations/versions/4d_0007_projection_telemetry.py",
+          "734234ad103cbffa3cd933bb8426e1dee20abf96a43634048142c2b76733bd22"
+        ],
+        [
+          "eva2/src/eva/adapters/postgres/catalog.py",
+          "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339"
+        ],
+        [
+          "eva2/src/eva/adapters/postgres/catalog_generated.py",
+          "1ea951fb3c01c06ba7816554d55ee25d00e196a3f9d2f852e89ba78091560042"
+        ],
+        [
+          "eva2/src/eva/operations/migration_admission.py",
+          "4cc505a9d17125c0debd341ea3f23c5c290b41625cb28c700256d601575ccaa9"
+        ],
+        [
+          "eva2/tests/postgres/test_4d_catalog.py",
+          "c1602d20b6746a5c48e98b622c387aba21175a97e0f79cfe6b19a6c481901359"
+        ],
+        [
+          "eva2/tests/postgres/test_4d_migration_admission.py",
+          "6a4fe1c9c7f3d65d837344fc42411901b2755833ba004c436a06392511b7cc30"
+        ],
+        [
+          "eva2/tests/postgres/test_4d_migrations.py",
+          "f5907cdb2cc0ead04284fca3bbaa0c602d44541af34c0ae489932ebb5239fed5"
+        ],
+        [
+          "eva2/tools/materialize_4d_schema_artifacts.py",
+          "0e5632c2276170c398e252095cfb44a0ab92fb161955ec119e6a78be641aaf5a"
+        ]
       ]
     },
     "objects": {
       "sha256": "71a8c8d40092357eb443e6d88ae2c7cef808de0c46eff80fe9364ad3c555b30e",
       "files": [
-        ["eva2/src/eva/adapters/objects/cas.py", "937ad47e71ec7e597034042a6a4c27a15253b1c4a667d9ea91a262f54139c50c"],
-        ["eva2/src/eva/adapters/objects/envelope.py", "9cb1e71a54c4c4f5af793baba929a3f3b6cf20c31c6b9dc5cc1a73f4b5dfc7f5"],
-        ["eva2/src/eva/adapters/objects/fixture_keys.py", "57482fd3f186a1ef5febfb10f6ac77a1bc99efedf4687a1e91d11aa3263b6274"],
-        ["eva2/src/eva/adapters/objects/p256.py", "e82cd209dc5312abcbef526846509b75ffbf949bc71af0fb23b055057a608db0"],
-        ["eva2/src/eva/application/objects.py", "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c"],
-        ["eva2/tests/objects/test_cas.py", "74626f1756ef73541c1a28177c98fb7f3e43e23cbe651b7dbc5d1626bcfa55e3"],
-        ["eva2/tests/objects/test_envelope.py", "87fbb05d812b2611c45e94b390027179676a166529acff433fb45566f2e52714"],
-        ["eva2/tests/objects/test_fixture_harness.py", "4da88d2bfb54d1105376955cad639fddad27bcb5d1b56b6759aa15397fb537a9"],
-        ["eva2/tests/objects/test_p256.py", "f0f9a9ee3286eb84276aaca3c0a69876f9897935eb227db0daf97fd88d0acd6b"]
+        [
+          "eva2/src/eva/adapters/objects/cas.py",
+          "937ad47e71ec7e597034042a6a4c27a15253b1c4a667d9ea91a262f54139c50c"
+        ],
+        [
+          "eva2/src/eva/adapters/objects/envelope.py",
+          "9cb1e71a54c4c4f5af793baba929a3f3b6cf20c31c6b9dc5cc1a73f4b5dfc7f5"
+        ],
+        [
+          "eva2/src/eva/adapters/objects/fixture_keys.py",
+          "57482fd3f186a1ef5febfb10f6ac77a1bc99efedf4687a1e91d11aa3263b6274"
+        ],
+        [
+          "eva2/src/eva/adapters/objects/p256.py",
+          "e82cd209dc5312abcbef526846509b75ffbf949bc71af0fb23b055057a608db0"
+        ],
+        [
+          "eva2/src/eva/application/objects.py",
+          "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c"
+        ],
+        [
+          "eva2/tests/objects/test_cas.py",
+          "74626f1756ef73541c1a28177c98fb7f3e43e23cbe651b7dbc5d1626bcfa55e3"
+        ],
+        [
+          "eva2/tests/objects/test_envelope.py",
+          "87fbb05d812b2611c45e94b390027179676a166529acff433fb45566f2e52714"
+        ],
+        [
+          "eva2/tests/objects/test_fixture_harness.py",
+          "4da88d2bfb54d1105376955cad639fddad27bcb5d1b56b6759aa15397fb537a9"
+        ],
+        [
+          "eva2/tests/objects/test_p256.py",
+          "f0f9a9ee3286eb84276aaca3c0a69876f9897935eb227db0daf97fd88d0acd6b"
+        ]
       ]
     },
     "portable": {
       "sha256": "f673f560b9f2998f35ff045af481c98c1d047642c7e8ddd6eb6013af8656c584",
       "files": [
-        ["eva2/src/eva/adapters/postgres/portable_export.py", "c826086bc5c7b1a8332f9f5d1c40baac7afb9a3236aaa8e1d260bcc0ce59dc35"],
-        ["eva2/src/eva/application/portable_archive.py", "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61"],
-        ["eva2/src/eva/operations/portable_export.py", "e1b05e809b8adcc2a356ca7da1042582c2cdff72b6a03d5ce779b98e3a796e4f"],
-        ["eva2/tests/portable/test_portable_archive.py", "fb7bada0e8105495020ebbad61dccd47c978e67a20afcbacc23a308ef561d269"],
-        ["eva2/tests/portable/test_portable_export_end_to_end.py", "99c654bae7a6889e9bf748daedf2963a4e3f693f9031fda37390a93860203348"],
-        ["eva2/tests/portable/test_portable_p1_regressions.py", "23ee4d81b2e81023acb4b09b20d1dcf64107dac3eb748dbe1d6426d2c25c0342"],
-        ["eva2/tests/portable/test_portable_schema_resources.py", "6693b6094e0efee8346589e555537533b07a67b36d12bd0bad2ae58b0cdc06fe"],
-        ["eva2/tests/portable/test_postgres_portable_export.py", "16ef7e9ed1df76befee4a85bf5d3fc1bae2c52e87bfb4a8cb075debaba2cd069"],
-        ["eva2/tests/portable/test_postgres_portable_export_pg.py", "0b7c374bd0161b5424ce83aa7f15a96e081a8ef8401ff394ef47cb23eed68d34"],
-        ["eva2/tests/portable/test_standalone_reader_boundary.py", "15ad6fbd71b97a28392a6b6ab99289b7f556d16aab36629ea993b495d17ab93b"],
-        ["eva2/tools/read_eva_portable_archive.py", "cc582f0d9a1075b639fbbcc48536c5f8a12b47467ddd262e5f2421a0be0cacd3"]
+        [
+          "eva2/src/eva/adapters/postgres/portable_export.py",
+          "c826086bc5c7b1a8332f9f5d1c40baac7afb9a3236aaa8e1d260bcc0ce59dc35"
+        ],
+        [
+          "eva2/src/eva/application/portable_archive.py",
+          "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61"
+        ],
+        [
+          "eva2/src/eva/operations/portable_export.py",
+          "e1b05e809b8adcc2a356ca7da1042582c2cdff72b6a03d5ce779b98e3a796e4f"
+        ],
+        [
+          "eva2/tests/portable/test_portable_archive.py",
+          "fb7bada0e8105495020ebbad61dccd47c978e67a20afcbacc23a308ef561d269"
+        ],
+        [
+          "eva2/tests/portable/test_portable_export_end_to_end.py",
+          "99c654bae7a6889e9bf748daedf2963a4e3f693f9031fda37390a93860203348"
+        ],
+        [
+          "eva2/tests/portable/test_portable_p1_regressions.py",
+          "23ee4d81b2e81023acb4b09b20d1dcf64107dac3eb748dbe1d6426d2c25c0342"
+        ],
+        [
+          "eva2/tests/portable/test_portable_schema_resources.py",
+          "6693b6094e0efee8346589e555537533b07a67b36d12bd0bad2ae58b0cdc06fe"
+        ],
+        [
+          "eva2/tests/portable/test_postgres_portable_export.py",
+          "16ef7e9ed1df76befee4a85bf5d3fc1bae2c52e87bfb4a8cb075debaba2cd069"
+        ],
+        [
+          "eva2/tests/portable/test_postgres_portable_export_pg.py",
+          "0b7c374bd0161b5424ce83aa7f15a96e081a8ef8401ff394ef47cb23eed68d34"
+        ],
+        [
+          "eva2/tests/portable/test_standalone_reader_boundary.py",
+          "15ad6fbd71b97a28392a6b6ab99289b7f556d16aab36629ea993b495d17ab93b"
+        ],
+        [
+          "eva2/tools/read_eva_portable_archive.py",
+          "cc582f0d9a1075b639fbbcc48536c5f8a12b47467ddd262e5f2421a0be0cacd3"
+        ]
       ]
     },
     "noor4dRepository": {
-      "sha256": "362f333c16f3b47ceff695257c64a7e450bd069fe8f5c697869276b00a98aafe",
+      "sha256": "21b5b5b9e19c126af3f3dcfbe6d8af766534652be6ebbd4aa8758ca72cfe14af",
       "files": [
-        ["eva2/src/eva/adapters/postgres/noor_4d_repository.py", "3936d6641c01d0cf07d21cb4064bf4ad8a714cfaf7c8eb8db080ab1a40aed7a8"],
-        ["eva2/tests/postgres/test_noor_4d_repository.py", "f66cdfdc1d5f1804d90be6aad8de0864574ccab492a11fc6fdd0362d08db4f64"]
+        [
+          "eva2/src/eva/adapters/postgres/noor_4d_repository.py",
+          "3936d6641c01d0cf07d21cb4064bf4ad8a714cfaf7c8eb8db080ab1a40aed7a8"
+        ],
+        [
+          "eva2/tests/postgres/test_noor_4d_repository.py",
+          "50362bf58fcd8bc2ece487bcecd47dab1adb9f70eb8c8c5aafd2f1b1756b7b22"
+        ]
       ]
     },
     "noor4dApplication": {
-      "sha256": "613a63926f083e601c02c4f3a7a803e451eb2a23c24becec7dbe6e0f7c79f1a6",
+      "sha256": "0c344faba8113732acc61860d9a9c904bb6c755cac793f94c39ed10e70de4206",
       "files": [
-        ["eva2/src/eva/application/noor_4d.py", "1e262f700f60dff19a80d0267a2c727aaaf1847a183041f7677f56cf03f7b920"],
-        ["eva2/tests/application/test_noor_4d.py", "d89b86232a497bf77eacb30e4741da60e8a550446e9512d53a31fb069e0ddf0a"]
+        [
+          "eva2/src/eva/application/noor_4d.py",
+          "e63166533a54fc830e6de8f72cc8ef7fc747ef8ba6c3fe2189e3eb24c3a413e5"
+        ],
+        [
+          "eva2/tests/application/test_noor_4d.py",
+          "d938df13687afa6658ab950bfd4eb4ba8f0bf4820afd829bbfcfe016789d2de1"
+        ]
       ]
     },
     "packageBoundary": {
@@ -211,7 +326,7 @@
       "status": "passed_with_expected_live_postgres_skip",
       "passed": 73,
       "skipped": 1,
-      "durationSeconds": 153.28
+      "durationSeconds": 161.24
     },
     {
       "commandTemplate": "EVA2_TEST_POSTGRES_DSN=<explicit disposable PostgreSQL 16.13 DSN> PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/portable/test_postgres_portable_export_pg.py",
@@ -228,15 +343,16 @@
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/postgres/test_noor_4d_repository.py::test_schedule_full_cas_rows_match_repository_profiles_and_revision_rules eva2/tests/postgres/test_noor_4d_repository.py::test_expected_row_is_immutable_value_object",
       "status": "passed",
       "passed": 2,
-      "durationSeconds": 0.22,
+      "durationSeconds": 0.14,
       "databaseUsed": false
     },
     {
-      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/application/test_noor_4d.py eva2/tests/architecture",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2:/home/administrator/.local/share/pipx/venvs/netexec/lib/python3.12/site-packages PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/application/test_noor_4d.py eva2/tests/architecture",
       "status": "passed",
-      "passed": 24,
-      "durationSeconds": 18.91,
-      "databaseUsed": false
+      "passed": 27,
+      "durationSeconds": 25.92,
+      "databaseUsed": false,
+      "environment": "CPython 3.12 with the existing bound PyNaCl 1.6.2 site-packages overlay; no install"
     },
     {
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src python3 eva2/tools/generate_contract_schemas.py --check",
@@ -317,9 +433,12 @@
       "standaloneReaderLocalClosure": "the stdlib-only reader proves only the bytes present in the archive: pinned schemas, checksums, record counts, direct references, declared episode heads, local scope closure, object-store/ObjectRef binding and encrypted-object manifest/envelope mapping",
       "readerDoesNotProve": "the reader cannot prove that the producer omitted no source-database row, including an absent relationship-reverse principal binding; that remains a producer selection claim"
     },
+    "terminalFixtureReproductionSource": "the terminal receipt is produced from the sealed schedule record sets and selected encrypted fixture object, not from a live database",
+    "terminalFixtureReproductionProvesDatabaseSelection": false,
+    "terminalFixtureReproductionProvesDurability": false,
     "sealedSnapshotArchiveCount": 31,
-    "scheduleArtifactSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
-    "terminalScheduleSnapshotSha256": "be46c913fa7e7867ed74dadfdf83cff0917a6520cac64f2232b54ef582011c70",
+    "scheduleArtifactSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
+    "terminalScheduleSnapshotSha256": "5d3cc513e8ae235afc3894d2111a43c533efb0e3b5ac48d27574efa4fead542e",
     "reproduction": {
       "workdir": "eva2",
       "producerExecutionProtocol": "a non-persisted Python heredoc imported tests.portable.test_portable_export_end_to_end._fixture_record_sets('terminal'), selected the sealed encrypted object, and called publish_portable_archive with export_sequence 2 and created_at 2026-08-20T12:00:00Z inside a temporary directory",
@@ -327,20 +446,22 @@
       "sourceFilesEdited": false
     },
     "terminalProducerReceipt": {
-      "archive_id": "eeed9df2-71a8-5245-8b44-c73183469c63",
-      "archive_json_sha256": "21b5418d76d397dfa6b934cd64891289c2132b4c751fd658af42a6c037ab69ab",
-      "checksums_sha256": "623be15f218c440e1036d6a3d448eeaddf4f8012437b36304f2b0af4c220d654",
-      "canonicalReceiptSha256": "244e47b8fef2708dff2f6937daa057a862584a83435232afedf53fad48445fb1"
+      "archive_id": "ed4d85ad-0957-5b25-9485-81a8ee8a4574",
+      "archive_json_sha256": "26706ae2fc65537f6197c2f51b1178afde081213e2c3d5c494452821a783ad2a",
+      "checksums_sha256": "063b05974882204bb2d7e8d37ac3b1db9fc0623db0ae626d7e1fb57aeb9b926a",
+      "canonicalReceiptSha256": "d38d593100b9f4c2f1f8835914f5c17d7de4301be7bb2d80d051b6f614988057"
     },
     "terminalStandaloneReaderReceipt": {
       "receipt": {
-        "archive_json_sha256": "21b5418d76d397dfa6b934cd64891289c2132b4c751fd658af42a6c037ab69ab",
-        "checksums_sha256": "623be15f218c440e1036d6a3d448eeaddf4f8012437b36304f2b0af4c220d654",
-        "readback_summary_sha256": "daad682f89b0f9808e0ebab11231c1b650c49827daa8e3d1559caa127f67c8e1",
+        "archive_json_sha256": "26706ae2fc65537f6197c2f51b1178afde081213e2c3d5c494452821a783ad2a",
+        "checksums_sha256": "063b05974882204bb2d7e8d37ac3b1db9fc0623db0ae626d7e1fb57aeb9b926a",
+        "readback_summary_sha256": "c86795b8130c3634f13e5d083be2176fcfac946c43a7fc5468eee821de84169b",
         "validation_status": "valid"
       },
-      "canonicalReceiptSha256": "e03a967ae63ba700c9efc56b4865f4568db5fc144058e5060ee34ca953ec49ae",
-      "cliStdoutSha256": "0bc30bc39a991020a4a73acfc68130a086c676fa267c76e5d713383495d41160",
+      "canonicalReceiptSha256": "9570b61044c617db26f9b0ef4cac9e69693aa6705181c0f85b207aa445025c2d",
+      "cliStdoutSha256": "72c1ff1b4cf20131bc2d0324a8aecd291ac0b903551a66936370d7ea4c90f973",
+      "returnCode": 0,
+      "stderrByteLength": 0,
       "canonicalRecordCount": 153,
       "encryptedObjectCount": 1,
       "objectManifestJsonlSha256": "3845c1ced22fb76f3f7aacc9c4da5c38b253ec01201105edd5e531efe0fd78ab"
@@ -371,7 +492,7 @@
     ],
     "revisionlessCurrentSwapBoundary": "identity and policy pack currentSwap rows permit exact insert or replay; the generic revision CAS rejects them",
     "scheduleCasOracle": {
-      "scheduleArtifactSha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+      "scheduleArtifactSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
       "explicitFullCasEdgeCount": 102,
       "revisionCasEdgeCount": 95,
       "currentSwapEdgeCount": 5,
@@ -389,6 +510,12 @@
     "scenarioCount": 7,
     "happyIdentityCount": 2,
     "frameworkNeutralInProcessFlow": true,
+    "evaProofScope": "eva_installation_exact",
+    "evaExactHostBuiltProof": "the test-process host builds an authenticated document candidate readback, validates the exact sealed effect receipts/readbacks and accepts the bound OutcomeView before ACK closure",
+    "evaDatabaseSelectedObjectRefProven": false,
+    "miraProofScope": "identity_surface_only",
+    "miraIdentitySurfaceOnly": true,
+    "miraDocumentCandidateReadbackOrHostValidationProven": false,
     "modelAdapter": "sealed deterministic in-process fixture",
     "connectorAdapter": "sealed real short-lived subprocess fixture workers",
     "externalCallLifecycleOrder": [
@@ -399,7 +526,7 @@
     ],
     "outcomeClosureRequiresBoundP256Ack": true,
     "unearnedOrUnboundModelConnectorAndReadbackResultsRejected": true,
-    "testsAndArchitecturePassed": 24,
+    "testsAndArchitecturePassed": 27,
     "databaseUsed": false,
     "persistentStoreOrTransactionClaim": false,
     "durableRevisionCasOrScheduleMaterializationClaim": false,
@@ -408,7 +535,7 @@
     "independentSourceReview": "passed"
   },
   "nonClaims": [
-    "no full durable Noor 4D happy-path, correction, duplicate-overlap or fifteen-crash runtime claim; the application gate proves only framework-neutral in-memory ordering and proof adoption",
+    "no full durable Noor 4D happy-path, correction, duplicate-overlap or fifteen-crash runtime claim; the application gate proves framework-neutral in-memory ordering plus Eva's exact host-built fixture proof, while Mira remains identity-surface-only",
     "no independently deployed connector or model runtime, DBOS workflow, API or production user-visible outcome claim; application tests use only sealed fixture adapters",
     "no provider, internet, external-product or production deployment behavior",
     "no nonempty 4B-to-4D data migration; the only admitted expansion is provably empty and nonempty input is rejected",
@@ -418,6 +545,7 @@
     "the live portable PostgreSQL gate proves the export role and exact tenant/installation selection primitive, not a production-sized nonempty export of all 39 canonical tables",
     "no live PostgreSQL rerun of the Noor repository slice after the schedule reseal; its current evidence is source review plus the static 102-edge schedule-CAS oracle",
     "the repository does not own currentSwap orchestration, state-transition validation or full Noor schedule materialization, and the application lifecycle port does not prove durability or transactionality",
+    "the application proof uses a test-process authenticated object candidate and never proves durable candidate storage, database selection or a DB-selected ObjectRef",
     "no framework-independent second-system restore, A/B update, rollback, uninstall or other 4E claim"
   ]
 }

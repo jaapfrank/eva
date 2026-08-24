@@ -2,11 +2,12 @@
   "contract": "Eva24DFixtureAdaptersGate/v1",
   "tranche": "4D-fixture-adapters",
   "status": "passed_fixture_adapters_only",
-  "createdAt": "2026-08-21T17:12:10+02:00",
-  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
+  "createdAt": "2026-08-21T18:02:13+02:00",
+  "baseCommit": "7889b280a2d8cf4aa3ed5717cbb65a9f9161e1ef",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "sealedConnectorFixtureRuntimeProven": true,
+    "canonicalConnectorBindingSetArraysAndInitializeMirrorsProven": true,
     "sealedInProcessModelFixtureRuntimeProven": true,
     "liveProviderOrExternalNetworkBehaviorProven": false,
     "crossProcessProviderStateOrPersistentStoreProven": false,
@@ -20,23 +21,23 @@
   "authorityBindings": {
     "implementationFixtureFreeze": {
       "path": "eva2/evidence/4d/implementation-fixture-freeze.json",
-      "sha256": "db65bcf048f2fed5a80de9abf1bd3c62b54a71c4c7ee877570a5a26ddea25aca"
+      "sha256": "01cf03e305bc28ba6f9457c1f8749054f5fde33c3d43e0c507f7d9e674fb1040"
     },
     "foundationRuntimeGate": {
       "path": "eva2/evidence/4d/foundation-runtime-gate.json",
-      "sha256": "81f47d32548f378adc1ac74417478fe3309b6513f19cc3a50fc5ca7659050ec0"
+      "sha256": "8c471c65d2faf8ba04c5b4413a897896eb20437c9e0c2d425a50416ab8a6e5a4"
     },
     "executionProfile": {
       "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-      "sha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
+      "sha256": "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe"
     },
     "connectorFixtures": {
       "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
-      "sha256": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+      "sha256": "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
     },
     "modelVectors": {
       "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
-      "sha256": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+      "sha256": "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593"
     },
     "packageBoundary": {
       "path": "eva2/design/architecture/package-boundaries-v1.json",
@@ -44,33 +45,75 @@
     },
     "freezeChecker": {
       "path": "eva2/tools/check_4d_freeze.py",
-      "sha256": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557"
+      "sha256": "7925eef5828b1127ebbd40b40818a04478c637b5a588ca88dda140f35d1a2bfd"
     }
   },
   "sourceManifestEncoding": "SHA-256 over UTF-8 lines '<sha256>  <path>\\n' sorted by path",
   "sourceManifests": {
     "connector": {
-      "sha256": "d59c27baf71884afa39416bf7c7487a482ec0909e39bc255ed271f179b03a4c9",
+      "sha256": "c880a0459592d00b7a9b69075c088889781596cfc99ec81f0b1b5333763b5e52",
       "files": [
-        ["eva2/connector_sdk/fixture_runner.py", "2cff3b56cc6ce2946a9a1c601d4d63a1a8da5a45ffab4fc4ae6c66839320b067"],
-        ["eva2/connectors/calendar/worker.py", "88d9519bb7fbd8cd91c3d931aa6198de92f1ff7cf4fc02bf877b8e8ec6368a07"],
-        ["eva2/connectors/channel/worker.py", "b367e147ec86c49f68ba6c7c78455414a712d0c0c233bf52e5afeadbc34848fd"],
-        ["eva2/connectors/document/worker.py", "1521ec4696f49fc46ddccedc79c0b7eb1870eb30fae7a49f238e407e4653c7b5"],
-        ["eva2/connectors/erp/worker.py", "46f08ca5296b9a1fbf4ed5d0068549b9957c509661654910568892b8ded12aec"],
-        ["eva2/connectors/mail/worker.py", "76923323664993da158f5210b134e9a3b9c9a25f24c839d9c3bb9465eac86453"],
-        ["eva2/src/eva/adapters/connectors/__init__.py", "358a10a0fcd804edcf0956fe8c5039f02498a4247e72d283eba1a61247768687"],
-        ["eva2/src/eva/adapters/connectors/process.py", "36cb3a9a29f8ea25da22984153738af1cdaa34350bb5df703fe14276459f5573"],
-        ["eva2/tests/connectors/test_fixture_runner.py", "40efe8532a25d5c313e07c7f622d17ad1f4716d93b2d36fef13a1881e9be4b03"],
-        ["eva2/tests/connectors/test_process.py", "17fccd79683397a9f29f413f45e2fe0413ee5a1b63285a06b92bb6affd6587f2"]
+        [
+          "eva2/connector_sdk/fixture_runner.py",
+          "2cff3b56cc6ce2946a9a1c601d4d63a1a8da5a45ffab4fc4ae6c66839320b067"
+        ],
+        [
+          "eva2/connectors/calendar/worker.py",
+          "88d9519bb7fbd8cd91c3d931aa6198de92f1ff7cf4fc02bf877b8e8ec6368a07"
+        ],
+        [
+          "eva2/connectors/channel/worker.py",
+          "b367e147ec86c49f68ba6c7c78455414a712d0c0c233bf52e5afeadbc34848fd"
+        ],
+        [
+          "eva2/connectors/document/worker.py",
+          "1521ec4696f49fc46ddccedc79c0b7eb1870eb30fae7a49f238e407e4653c7b5"
+        ],
+        [
+          "eva2/connectors/erp/worker.py",
+          "46f08ca5296b9a1fbf4ed5d0068549b9957c509661654910568892b8ded12aec"
+        ],
+        [
+          "eva2/connectors/mail/worker.py",
+          "76923323664993da158f5210b134e9a3b9c9a25f24c839d9c3bb9465eac86453"
+        ],
+        [
+          "eva2/src/eva/adapters/connectors/__init__.py",
+          "358a10a0fcd804edcf0956fe8c5039f02498a4247e72d283eba1a61247768687"
+        ],
+        [
+          "eva2/src/eva/adapters/connectors/process.py",
+          "36cb3a9a29f8ea25da22984153738af1cdaa34350bb5df703fe14276459f5573"
+        ],
+        [
+          "eva2/tests/connectors/test_fixture_runner.py",
+          "597eaecab50f615f1f029a3286bf724b3ff93c51d82a4094db56c8a187aaae65"
+        ],
+        [
+          "eva2/tests/connectors/test_process.py",
+          "b8f02b07fda6a7e3975aa9a368b6109c447591338287b637ee0fbe3df4f6f4a9"
+        ]
       ]
     },
     "model": {
-      "sha256": "1f0d34e104ee434038a3d6057a81e6ae8dc93e363753c03a21923b4aa4e5b65f",
+      "sha256": "2205414165877d26d06b0ea86240364cfb10d26f2dcc4f328febb604b3aa2dc6",
       "files": [
-        ["eva2/src/eva/adapters/model/__init__.py", "3663f4621201d237545d999efbe1cfc64e07487a7a9bf61e883951d1c91f67c1"],
-        ["eva2/src/eva/adapters/model/fixture.py", "0a5088c5ec51209d6e1437cbb09504b897eeaddffe18980c3773c16ce80b0721"],
-        ["eva2/tests/model/test_fixture_adapter.py", "c1b49585bf9ea62eb2f0117509f2b156a211adb800666455ac08a272692acd16"],
-        ["eva2/tests/model/test_fixture_program.py", "b948e00ffd0aeff1abdaa0309485169364329075998d14c68566f93257e2d569"]
+        [
+          "eva2/src/eva/adapters/model/__init__.py",
+          "3663f4621201d237545d999efbe1cfc64e07487a7a9bf61e883951d1c91f67c1"
+        ],
+        [
+          "eva2/src/eva/adapters/model/fixture.py",
+          "d6f12fea148bd5fd4d9f292bd7dc116d4ba1709ba7da99807ad87c19dcc4c20d"
+        ],
+        [
+          "eva2/tests/model/test_fixture_adapter.py",
+          "c1b49585bf9ea62eb2f0117509f2b156a211adb800666455ac08a272692acd16"
+        ],
+        [
+          "eva2/tests/model/test_fixture_program.py",
+          "9cb0e89dce0393121fe650c801154d18e48f7de31a267742426b672c01ca11bb"
+        ]
       ]
     }
   },
@@ -89,7 +132,7 @@
       "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/connectors tests/model tests/architecture tests/contract/test_connector_rpc_ack_and_evidence_v2.py tests/contract/test_canonical_json.py",
       "status": "passed",
       "passed": 202,
-      "durationSeconds": 16.82
+      "durationSeconds": 18.69
     },
     "freeze": {
       "workdir": ".",
@@ -116,13 +159,15 @@
         "workdir": "eva2",
         "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/connectors",
         "status": "passed",
-        "passed": 138
+        "passed": 138,
+        "durationSeconds": 9.04
       },
       {
         "workdir": "eva2",
         "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider tests/architecture/test_package_boundaries.py tests/contract/test_connector_rpc_ack_and_evidence_v2.py",
         "status": "passed",
-        "passed": 27
+        "passed": 27,
+        "durationSeconds": 8.14
       }
     ],
     "modelWriter": [
@@ -130,13 +175,15 @@
         "workdir": "eva2",
         "command": "env TMPDIR=/tmp PYTHONPATH=src python3.12 -m pytest -q tests/model/test_fixture_program.py tests/model/test_fixture_adapter.py",
         "status": "passed",
-        "passed": 24
+        "passed": 24,
+        "durationSeconds": 1.42
       },
       {
         "workdir": "eva2",
         "command": "env TMPDIR=/tmp PYTHONPATH=src python3.12 -m pytest -q tests/model tests/architecture/test_package_boundaries.py tests/contract/test_canonical_json.py tests/contract/test_contract_invariants.py",
         "status": "passed",
-        "passed": 66
+        "passed": 66,
+        "durationSeconds": 2.1
       }
     ],
     "overlappingRunCountsMustNotBeSummed": true
@@ -145,9 +192,13 @@
     "fixtureProgramCount": 5,
     "workerEntrypointCount": 5,
     "sealedOperationCaseCount": 58,
+    "allConcreteVerificationAndInitializeBindingSetArraysUtf8Canonical": true,
     "realShortLivedSubprocessExchangeCount": 58,
     "framesPerSuccessfulExchange": 2,
-    "exchangeOrder": ["connector.initialize", "connector.invoke"],
+    "exchangeOrder": [
+      "connector.initialize",
+      "connector.invoke"
+    ],
     "initializeExternalCallDelta": 0,
     "sealedInvokeExternalCallDelta": 1,
     "exactProviderBeforeAfterMutationMetadataVerified": true,

@@ -2764,14 +2764,14 @@
         {
           "identityRun": "Eva",
           "installationId": "fixture:installation:001",
-          "canonicalSha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
-          "verificationEvidenceSha256": "5a5b6cb82d912eb35f8aa0733610dd7bbd42f3004770d9cd4f1855f7c371cdf5"
+          "canonicalSha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
+          "verificationEvidenceSha256": "1e59a7ad025ec1f88844ba0680ede6a0aaf6f6c6fb416430226914d6d33e817b"
         },
         {
           "identityRun": "Mira",
           "installationId": "fixture:installation:mira:001",
-          "canonicalSha256": "5f9f3a950e7308cd0087abf38d9ecc5ffe74c484bee5de87dbd4c0e2fa79056c",
-          "verificationEvidenceSha256": "b1eab1fdea21ff3a420eb0c7eca5741a32a24ee9bf3f22fdded162fdd7e7241e"
+          "canonicalSha256": "0e7e709e86fa7686826c034d6016a9eb006b6853b87a53b3b7b387b5949f4a8e",
+          "verificationEvidenceSha256": "e304094aea6831fb9eee3b4d027916a0f4f485cb61a4bf05a7f5cfd60c605d4c"
         }
       ]
     },
@@ -2832,14 +2832,14 @@
         {
           "identityRun": "Eva",
           "installationId": "fixture:installation:001",
-          "canonicalSha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
-          "verificationEvidenceSha256": "5cc752121c1c8ae893e6eff4d12c3babb45fe0e956dafda1026dc91bdc08549c"
+          "canonicalSha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
+          "verificationEvidenceSha256": "a96e85feb8a2f0b4e53182a9f9e9d6e9eb7074b104e6de42c4a67c507ff9c583"
         },
         {
           "identityRun": "Mira",
           "installationId": "fixture:installation:mira:001",
-          "canonicalSha256": "ab933a1201834c9833ed1d016f7d0ff1d1c436c5280d1bd1e4a29afd6c6e938c",
-          "verificationEvidenceSha256": "46cde5236ec5f02f8af20bfb5a287ab641d73a71e3899368bdedba3e8509a55f"
+          "canonicalSha256": "edfeab46dbe2eb2904e4e2c00e2dd468fac33019bf5afd03cd6f41d873e4de92",
+          "verificationEvidenceSha256": "4b59b42f4298a9de2ac322e578560b03d33b8f00d365f75364df11d3325bbda5"
         }
       ]
     },
@@ -2868,14 +2868,14 @@
         {
           "identityRun": "Eva",
           "installationId": "fixture:installation:001",
-          "canonicalSha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
-          "verificationEvidenceSha256": "1460451607110a663100095ec80513757a8bce13c3d7b42be8710e383ce525e5"
+          "canonicalSha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
+          "verificationEvidenceSha256": "b9491dda910b292eb00bbc964b9d6a70fdd4cbf5642d851ee392ad9bde8dafed"
         },
         {
           "identityRun": "Mira",
           "installationId": "fixture:installation:mira:001",
-          "canonicalSha256": "5592144690669b0de0abe034fb16b5a401fa3b535f286e6cf2a36c230047ae2d",
-          "verificationEvidenceSha256": "87dcfb9ff594e4e1b1457aac22e01ee3854f026a736a01015b48ad6436727d66"
+          "canonicalSha256": "cf94e8ba2cab4297cc5bde59f8aa3af2cef1a4e4f42ffbc280c128e5bd43257a",
+          "verificationEvidenceSha256": "2fba8fa3d2462c1f05d268b2163ec66930ce376a8f43fec656ba24bd5f658ee7"
         }
       ]
     },
@@ -2904,14 +2904,14 @@
         {
           "identityRun": "Eva",
           "installationId": "fixture:installation:001",
-          "canonicalSha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
-          "verificationEvidenceSha256": "cf20a502d0331fb55258f4aac6dbd8e4c90bed7f54a4bdf838e83272a9ae04f9"
+          "canonicalSha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
+          "verificationEvidenceSha256": "bc1433ead17735f4d0c7fc0d9e4d43266f9b972819489a4b9d0420fc0816a3bd"
         },
         {
           "identityRun": "Mira",
           "installationId": "fixture:installation:mira:001",
-          "canonicalSha256": "821e20a341657d2a61dee91cd88a8326c8f687904686ce103c7ee0edccabe35c",
-          "verificationEvidenceSha256": "3eeae9469d5a3933edd8cb529a745703fe901027d24eb1636171546a36894c43"
+          "canonicalSha256": "b25e33d680ac750d2a4b6a9da53f0455e149e5c05b2c558d53ebc3bea58afec6",
+          "verificationEvidenceSha256": "d5d580218a1a66263cf0d930dcbf4baf56998f5f14d755d99bd0edacbb66f568"
         }
       ]
     },
@@ -2940,14 +2940,14 @@
         {
           "identityRun": "Eva",
           "installationId": "fixture:installation:001",
-          "canonicalSha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
-          "verificationEvidenceSha256": "729bccebe5d9602ddaf28a1afe110a7cf9b68c15287a8996ba4684cf2e2bb19a"
+          "canonicalSha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
+          "verificationEvidenceSha256": "feea42a0a0cdb90b607e0231e282bc0881f77e81230dc08c5ba6b8031eb6c4b5"
         },
         {
           "identityRun": "Mira",
           "installationId": "fixture:installation:mira:001",
-          "canonicalSha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
-          "verificationEvidenceSha256": "6768cad70ce23ed2fba89192c37d064f49b8603a6ab87b77048b5c162ded764b"
+          "canonicalSha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
+          "verificationEvidenceSha256": "581034bde3ceb9f40b17e04a08a39671abe3c0f89f719fb7a1ebb90c0cae254d"
         }
       ]
     }
@@ -2958,7 +2958,7 @@
       "identityRun": "Eva",
       "verificationEvidence": {
         "canonicalByteLength": 409,
-        "canonicalSha256": "5a5b6cb82d912eb35f8aa0733610dd7bbd42f3004770d9cd4f1855f7c371cdf5",
+        "canonicalSha256": "1e59a7ad025ec1f88844ba0680ede6a0aaf6f6c6fb416430226914d6d33e817b",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -2967,8 +2967,8 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:mail:001",
           "verified_operations": [
-            "mail.message.search",
-            "mail.message.read"
+            "mail.message.read",
+            "mail.message.search"
           ],
           "verified_scopes": [
             "fixture.mail.read"
@@ -2979,7 +2979,7 @@
         "ref": "fixture:evidence:binding:mail:eva:001"
       },
       "canonicalByteLength": 666,
-      "canonicalSha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+      "canonicalSha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -2991,8 +2991,8 @@
         "provider_account_id": "fixture:mail-account:owner:001",
         "provider_resource_id": "fixture:mailbox:owner:001",
         "confirmed_operations": [
-          "mail.message.search",
-          "mail.message.read"
+          "mail.message.read",
+          "mail.message.search"
         ],
         "confirmed_scopes": [
           "fixture.mail.read"
@@ -3008,7 +3008,7 @@
       "identityRun": "Mira",
       "verificationEvidence": {
         "canonicalByteLength": 414,
-        "canonicalSha256": "b1eab1fdea21ff3a420eb0c7eca5741a32a24ee9bf3f22fdded162fdd7e7241e",
+        "canonicalSha256": "e304094aea6831fb9eee3b4d027916a0f4f485cb61a4bf05a7f5cfd60c605d4c",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3017,8 +3017,8 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:mail:001",
           "verified_operations": [
-            "mail.message.search",
-            "mail.message.read"
+            "mail.message.read",
+            "mail.message.search"
           ],
           "verified_scopes": [
             "fixture.mail.read"
@@ -3029,7 +3029,7 @@
         "ref": "fixture:evidence:binding:mail:mira:001"
       },
       "canonicalByteLength": 672,
-      "canonicalSha256": "5f9f3a950e7308cd0087abf38d9ecc5ffe74c484bee5de87dbd4c0e2fa79056c",
+      "canonicalSha256": "0e7e709e86fa7686826c034d6016a9eb006b6853b87a53b3b7b387b5949f4a8e",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3041,8 +3041,8 @@
         "provider_account_id": "fixture:mail-account:owner:001",
         "provider_resource_id": "fixture:mailbox:owner:001",
         "confirmed_operations": [
-          "mail.message.search",
-          "mail.message.read"
+          "mail.message.read",
+          "mail.message.search"
         ],
         "confirmed_scopes": [
           "fixture.mail.read"
@@ -3154,7 +3154,7 @@
       "identityRun": "Eva",
       "verificationEvidence": {
         "canonicalByteLength": 638,
-        "canonicalSha256": "5cc752121c1c8ae893e6eff4d12c3babb45fe0e956dafda1026dc91bdc08549c",
+        "canonicalSha256": "a96e85feb8a2f0b4e53182a9f9e9d6e9eb7074b104e6de42c4a67c507ff9c583",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3165,16 +3165,16 @@
           "verified_operations": [
             "calendar.availability.read",
             "calendar.event.create",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
             "fixture.calendar.availability.read",
-            "fixture.calendar.event.create",
-            "fixture.calendar.effect.reconcile",
+            "fixture.calendar.connector.probe",
             "fixture.calendar.effect.readback",
-            "fixture.calendar.connector.probe"
+            "fixture.calendar.effect.reconcile",
+            "fixture.calendar.event.create"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3182,7 +3182,7 @@
         "ref": "fixture:evidence:binding:calendar:eva:001"
       },
       "canonicalByteLength": 908,
-      "canonicalSha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+      "canonicalSha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3196,16 +3196,16 @@
         "confirmed_operations": [
           "calendar.availability.read",
           "calendar.event.create",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
           "fixture.calendar.availability.read",
-          "fixture.calendar.event.create",
-          "fixture.calendar.effect.reconcile",
+          "fixture.calendar.connector.probe",
           "fixture.calendar.effect.readback",
-          "fixture.calendar.connector.probe"
+          "fixture.calendar.effect.reconcile",
+          "fixture.calendar.event.create"
         ],
         "credential_reference": "fixture:credential-ref:calendar:001",
         "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -3218,7 +3218,7 @@
       "identityRun": "Mira",
       "verificationEvidence": {
         "canonicalByteLength": 643,
-        "canonicalSha256": "46cde5236ec5f02f8af20bfb5a287ab641d73a71e3899368bdedba3e8509a55f",
+        "canonicalSha256": "4b59b42f4298a9de2ac322e578560b03d33b8f00d365f75364df11d3325bbda5",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3229,16 +3229,16 @@
           "verified_operations": [
             "calendar.availability.read",
             "calendar.event.create",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
             "fixture.calendar.availability.read",
-            "fixture.calendar.event.create",
-            "fixture.calendar.effect.reconcile",
+            "fixture.calendar.connector.probe",
             "fixture.calendar.effect.readback",
-            "fixture.calendar.connector.probe"
+            "fixture.calendar.effect.reconcile",
+            "fixture.calendar.event.create"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3246,7 +3246,7 @@
         "ref": "fixture:evidence:binding:calendar:mira:001"
       },
       "canonicalByteLength": 914,
-      "canonicalSha256": "ab933a1201834c9833ed1d016f7d0ff1d1c436c5280d1bd1e4a29afd6c6e938c",
+      "canonicalSha256": "edfeab46dbe2eb2904e4e2c00e2dd468fac33019bf5afd03cd6f41d873e4de92",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3260,16 +3260,16 @@
         "confirmed_operations": [
           "calendar.availability.read",
           "calendar.event.create",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
           "fixture.calendar.availability.read",
-          "fixture.calendar.event.create",
-          "fixture.calendar.effect.reconcile",
+          "fixture.calendar.connector.probe",
           "fixture.calendar.effect.readback",
-          "fixture.calendar.connector.probe"
+          "fixture.calendar.effect.reconcile",
+          "fixture.calendar.event.create"
         ],
         "credential_reference": "fixture:credential-ref:calendar:001",
         "verification_evidence_ref": "fixture:evidence:binding:calendar:mira:001",
@@ -3282,7 +3282,7 @@
       "identityRun": "Eva",
       "verificationEvidence": {
         "canonicalByteLength": 560,
-        "canonicalSha256": "1460451607110a663100095ec80513757a8bce13c3d7b42be8710e383ce525e5",
+        "canonicalSha256": "b9491dda910b292eb00bbc964b9d6a70fdd4cbf5642d851ee392ad9bde8dafed",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3291,16 +3291,16 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:document:001",
           "verified_operations": [
+            "connector.probe",
             "document.create",
-            "effect.reconcile",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
+            "fixture.document.connector.probe",
             "fixture.document.create",
-            "fixture.document.effect.reconcile",
             "fixture.document.effect.readback",
-            "fixture.document.connector.probe"
+            "fixture.document.effect.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3308,7 +3308,7 @@
         "ref": "fixture:evidence:binding:document:eva:001"
       },
       "canonicalByteLength": 841,
-      "canonicalSha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+      "canonicalSha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3320,16 +3320,16 @@
         "provider_account_id": "fixture:document-account:owner:001",
         "provider_resource_id": "fixture:document-destination:noor:001",
         "confirmed_operations": [
+          "connector.probe",
           "document.create",
-          "effect.reconcile",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
+          "fixture.document.connector.probe",
           "fixture.document.create",
-          "fixture.document.effect.reconcile",
           "fixture.document.effect.readback",
-          "fixture.document.connector.probe"
+          "fixture.document.effect.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:document:001",
         "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -3342,7 +3342,7 @@
       "identityRun": "Mira",
       "verificationEvidence": {
         "canonicalByteLength": 565,
-        "canonicalSha256": "87dcfb9ff594e4e1b1457aac22e01ee3854f026a736a01015b48ad6436727d66",
+        "canonicalSha256": "2fba8fa3d2462c1f05d268b2163ec66930ce376a8f43fec656ba24bd5f658ee7",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3351,16 +3351,16 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:document:001",
           "verified_operations": [
+            "connector.probe",
             "document.create",
-            "effect.reconcile",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
+            "fixture.document.connector.probe",
             "fixture.document.create",
-            "fixture.document.effect.reconcile",
             "fixture.document.effect.readback",
-            "fixture.document.connector.probe"
+            "fixture.document.effect.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3368,7 +3368,7 @@
         "ref": "fixture:evidence:binding:document:mira:001"
       },
       "canonicalByteLength": 847,
-      "canonicalSha256": "5592144690669b0de0abe034fb16b5a401fa3b535f286e6cf2a36c230047ae2d",
+      "canonicalSha256": "cf94e8ba2cab4297cc5bde59f8aa3af2cef1a4e4f42ffbc280c128e5bd43257a",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3380,16 +3380,16 @@
         "provider_account_id": "fixture:document-account:owner:001",
         "provider_resource_id": "fixture:document-destination:noor:001",
         "confirmed_operations": [
+          "connector.probe",
           "document.create",
-          "effect.reconcile",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
+          "fixture.document.connector.probe",
           "fixture.document.create",
-          "fixture.document.effect.reconcile",
           "fixture.document.effect.readback",
-          "fixture.document.connector.probe"
+          "fixture.document.effect.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:document:001",
         "verification_evidence_ref": "fixture:evidence:binding:document:mira:001",
@@ -3402,7 +3402,7 @@
       "identityRun": "Eva",
       "verificationEvidence": {
         "canonicalByteLength": 597,
-        "canonicalSha256": "cf20a502d0331fb55258f4aac6dbd8e4c90bed7f54a4bdf838e83272a9ae04f9",
+        "canonicalSha256": "bc1433ead17735f4d0c7fc0d9e4d43266f9b972819489a4b9d0420fc0816a3bd",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3411,16 +3411,16 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:channel:001",
           "verified_operations": [
-            "message.deliver",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile",
+            "message.deliver"
           ],
           "verified_scopes": [
             "fixture.channel.confirmation.deliver",
-            "fixture.channel.confirmation.reconcile",
+            "fixture.channel.confirmation.probe",
             "fixture.channel.confirmation.readback",
-            "fixture.channel.confirmation.probe"
+            "fixture.channel.confirmation.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3428,7 +3428,7 @@
         "ref": "fixture:evidence:binding:confirmation:eva:001"
       },
       "canonicalByteLength": 878,
-      "canonicalSha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+      "canonicalSha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3440,16 +3440,16 @@
         "provider_account_id": "fixture:channel-account:http:001",
         "provider_resource_id": "planning@noorbv.example",
         "confirmed_operations": [
-          "message.deliver",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile",
+          "message.deliver"
         ],
         "confirmed_scopes": [
           "fixture.channel.confirmation.deliver",
-          "fixture.channel.confirmation.reconcile",
+          "fixture.channel.confirmation.probe",
           "fixture.channel.confirmation.readback",
-          "fixture.channel.confirmation.probe"
+          "fixture.channel.confirmation.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:channel-confirmation:001",
         "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -3462,7 +3462,7 @@
       "identityRun": "Mira",
       "verificationEvidence": {
         "canonicalByteLength": 602,
-        "canonicalSha256": "3eeae9469d5a3933edd8cb529a745703fe901027d24eb1636171546a36894c43",
+        "canonicalSha256": "d5d580218a1a66263cf0d930dcbf4baf56998f5f14d755d99bd0edacbb66f568",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3471,16 +3471,16 @@
           "tenant_id": "fixture:tenant:owner:001",
           "provider_id": "fixture-provider:channel:001",
           "verified_operations": [
-            "message.deliver",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile",
+            "message.deliver"
           ],
           "verified_scopes": [
             "fixture.channel.confirmation.deliver",
-            "fixture.channel.confirmation.reconcile",
+            "fixture.channel.confirmation.probe",
             "fixture.channel.confirmation.readback",
-            "fixture.channel.confirmation.probe"
+            "fixture.channel.confirmation.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3488,7 +3488,7 @@
         "ref": "fixture:evidence:binding:confirmation:mira:001"
       },
       "canonicalByteLength": 884,
-      "canonicalSha256": "821e20a341657d2a61dee91cd88a8326c8f687904686ce103c7ee0edccabe35c",
+      "canonicalSha256": "b25e33d680ac750d2a4b6a9da53f0455e149e5c05b2c558d53ebc3bea58afec6",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3500,16 +3500,16 @@
         "provider_account_id": "fixture:channel-account:http:001",
         "provider_resource_id": "planning@noorbv.example",
         "confirmed_operations": [
-          "message.deliver",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile",
+          "message.deliver"
         ],
         "confirmed_scopes": [
           "fixture.channel.confirmation.deliver",
-          "fixture.channel.confirmation.reconcile",
+          "fixture.channel.confirmation.probe",
           "fixture.channel.confirmation.readback",
-          "fixture.channel.confirmation.probe"
+          "fixture.channel.confirmation.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:channel-confirmation:001",
         "verification_evidence_ref": "fixture:evidence:binding:confirmation:mira:001",
@@ -3522,7 +3522,7 @@
       "identityRun": "Eva",
       "verificationEvidence": {
         "canonicalByteLength": 579,
-        "canonicalSha256": "729bccebe5d9602ddaf28a1afe110a7cf9b68c15287a8996ba4684cf2e2bb19a",
+        "canonicalSha256": "feea42a0a0cdb90b607e0231e282bc0881f77e81230dc08c5ba6b8031eb6c4b5",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3532,15 +3532,15 @@
           "provider_id": "fixture-provider:channel:001",
           "verified_operations": [
             "channel.result.deliver",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
             "fixture.channel.outcome.deliver",
-            "fixture.channel.outcome.reconcile",
+            "fixture.channel.outcome.probe",
             "fixture.channel.outcome.readback",
-            "fixture.channel.outcome.probe"
+            "fixture.channel.outcome.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3548,7 +3548,7 @@
         "ref": "fixture:evidence:binding:outcome:eva:001"
       },
       "canonicalByteLength": 856,
-      "canonicalSha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+      "canonicalSha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3561,15 +3561,15 @@
         "provider_resource_id": "fixture:conversation:noor:001",
         "confirmed_operations": [
           "channel.result.deliver",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
           "fixture.channel.outcome.deliver",
-          "fixture.channel.outcome.reconcile",
+          "fixture.channel.outcome.probe",
           "fixture.channel.outcome.readback",
-          "fixture.channel.outcome.probe"
+          "fixture.channel.outcome.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:channel-outcome:001",
         "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -3582,7 +3582,7 @@
       "identityRun": "Mira",
       "verificationEvidence": {
         "canonicalByteLength": 584,
-        "canonicalSha256": "6768cad70ce23ed2fba89192c37d064f49b8603a6ab87b77048b5c162ded764b",
+        "canonicalSha256": "581034bde3ceb9f40b17e04a08a39671abe3c0f89f719fb7a1ebb90c0cae254d",
         "payload": {
           "contract": "FixtureConnectorBindingVerification/v1",
           "schema_version": 1,
@@ -3592,15 +3592,15 @@
           "provider_id": "fixture-provider:channel:001",
           "verified_operations": [
             "channel.result.deliver",
-            "effect.reconcile",
+            "connector.probe",
             "effect.readback",
-            "connector.probe"
+            "effect.reconcile"
           ],
           "verified_scopes": [
             "fixture.channel.outcome.deliver",
-            "fixture.channel.outcome.reconcile",
+            "fixture.channel.outcome.probe",
             "fixture.channel.outcome.readback",
-            "fixture.channel.outcome.probe"
+            "fixture.channel.outcome.reconcile"
           ],
           "verified_at": "2026-08-20T12:00:00Z",
           "result": "verified"
@@ -3608,7 +3608,7 @@
         "ref": "fixture:evidence:binding:outcome:mira:001"
       },
       "canonicalByteLength": 862,
-      "canonicalSha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+      "canonicalSha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
       "payload": {
         "schema_version": 1,
         "contract": "ConnectorBinding/v1",
@@ -3621,15 +3621,15 @@
         "provider_resource_id": "fixture:conversation:noor:001",
         "confirmed_operations": [
           "channel.result.deliver",
-          "effect.reconcile",
+          "connector.probe",
           "effect.readback",
-          "connector.probe"
+          "effect.reconcile"
         ],
         "confirmed_scopes": [
           "fixture.channel.outcome.deliver",
-          "fixture.channel.outcome.reconcile",
+          "fixture.channel.outcome.probe",
           "fixture.channel.outcome.readback",
-          "fixture.channel.outcome.probe"
+          "fixture.channel.outcome.reconcile"
         ],
         "credential_reference": "fixture:credential-ref:channel-outcome:001",
         "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -7841,8 +7841,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -7912,7 +7912,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3464\r\n\r\n",
           "canonicalBodyByteLength": 3464,
-          "canonicalBodySha256": "95187f76d7b74880732222a2ea6ef47f1b9fd55f516f7aa24c7e602e8de48671",
+          "canonicalBodySha256": "112a516632258eb83be05e1fc8b29639c78aa868c1291ef22813c83061211733",
           "completeFrameByteLength": 3488
         },
         "initializeSuccess": {
@@ -7928,7 +7928,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "eb647a1ef7ffc2c4611089a02c48027625e847109810c4667d37534ca8c2e20b",
             "capability_grant_sha256": "cf7a5336c0ec8073dab71a56970883cc110bf197738b36fae9032c5344c6d9e2",
             "credential_grant_sha256": "cf5ccec7fb18f0b07dd795476071b8c8890f5889615a55a695ece9e1aa86e8ee",
@@ -7940,7 +7940,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1033\r\n\r\n",
           "canonicalBodyByteLength": 1033,
-          "canonicalBodySha256": "75cd680bd44237eb7aeeba2d7bc07a8d85e943a91d814165e4c79928089931ef",
+          "canonicalBodySha256": "7be1bb0f9f4db983b54b3301f58e93d5ad746a008bd75d0a3a922f4e688c22ad",
           "completeFrameByteLength": 1057
         },
         "invokeRequest": {
@@ -8062,8 +8062,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -8133,7 +8133,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3461\r\n\r\n",
           "canonicalBodyByteLength": 3461,
-          "canonicalBodySha256": "8cb88be1d26a8d7589ff54119b8d990a064702d293c93f6af5764c3c1e6f9414",
+          "canonicalBodySha256": "e8e54f0dee38d6b3bd12cfa312f3dd9312564ee52ebca570138253ef2e13a359",
           "completeFrameByteLength": 3485
         },
         "initializeSuccess": {
@@ -8149,7 +8149,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "09425681a2632d2d5ff7595eadf18b4bf4f2499a1bd65829e9d2494b52bf31cb",
             "capability_grant_sha256": "e68a922d57f3ea52b5f386aa0e26c8fc756dc9cf3ee76d24030d015a20e53ab8",
             "credential_grant_sha256": "31df120f30b23e3a5982a6743838c43e02885b2482a549cfac301ccfc14c4977",
@@ -8161,7 +8161,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1027\r\n\r\n",
           "canonicalBodyByteLength": 1027,
-          "canonicalBodySha256": "dede2bc83f6caa76e84d7ad79af44583cdd8fe4a10a89577c8c9344f10daeef1",
+          "canonicalBodySha256": "1cd046836638476d22e63bbd3e0c579925ab6f53a0e41d3343b19d3aedef0ce2",
           "completeFrameByteLength": 1051
         },
         "invokeRequest": {
@@ -8281,8 +8281,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -8352,7 +8352,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3485\r\n\r\n",
           "canonicalBodyByteLength": 3485,
-          "canonicalBodySha256": "b0fd22aaa185c39ca91298049880a72919c8a576e4fc7b72fc92e0578c2fe391",
+          "canonicalBodySha256": "a6a7a5d7ca4e529b29ea19450e1d57acf62e249e885fe1ac2d2ea04f17e5cf0b",
           "completeFrameByteLength": 3509
         },
         "initializeSuccess": {
@@ -8368,7 +8368,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "eb647a1ef7ffc2c4611089a02c48027625e847109810c4667d37534ca8c2e20b",
             "capability_grant_sha256": "147f5d2db7512fff0f1f12c6abd86d736a09f9c0cc1705c88f4359998d5ddf5e",
             "credential_grant_sha256": "f4dee787da1c190c6fb5ca5e971c456a2a177b5977bee7798054832cdce032f5",
@@ -8380,7 +8380,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1042\r\n\r\n",
           "canonicalBodyByteLength": 1042,
-          "canonicalBodySha256": "61de087ad2b186dcf79e70535090cf7a00d550d7f9d3f96e0847de6edc1e41cb",
+          "canonicalBodySha256": "c44310e81142b0347c427eaf53e275a326bd5e5237f4597dd07d6bb7f81679e3",
           "completeFrameByteLength": 1066
         },
         "invokeRequest": {
@@ -8502,8 +8502,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -8573,7 +8573,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3482\r\n\r\n",
           "canonicalBodyByteLength": 3482,
-          "canonicalBodySha256": "30806b1078944ff096f9d59f949913fe062c60c09b55c035371b1ff8888b7656",
+          "canonicalBodySha256": "147a10a929c9b698e63c29f562493d115eb6174751e52570b56700770ec0539a",
           "completeFrameByteLength": 3506
         },
         "initializeSuccess": {
@@ -8589,7 +8589,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "09425681a2632d2d5ff7595eadf18b4bf4f2499a1bd65829e9d2494b52bf31cb",
             "capability_grant_sha256": "2f07c907614130e85ab272c9745f3fe162497ad6f2af91d1b857f04a6c82e38b",
             "credential_grant_sha256": "25a824a3621feca36d8e78e5e0ccbff0dd8b557aef1df5750db6b0bcf1760c42",
@@ -8601,7 +8601,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1036\r\n\r\n",
           "canonicalBodyByteLength": 1036,
-          "canonicalBodySha256": "5e74ad4a0b3a5a31d35eb84da7a399645611f9c812820a9d22b8fa2e3115ddf2",
+          "canonicalBodySha256": "a52ea3ae39de4ed663e81c9bb2bef0fd3fce170de1bde51a46fdc30775d4ac9a",
           "completeFrameByteLength": 1060
         },
         "invokeRequest": {
@@ -9169,16 +9169,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -9245,7 +9245,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3899\r\n\r\n",
           "canonicalBodyByteLength": 3899,
-          "canonicalBodySha256": "2c27c5a2cf0bbba6410d1fbf0010db78df5c9fd6f6888e962f371f272c502099",
+          "canonicalBodySha256": "e55bc1e9b85f8f755b24b2586c66124d23216684505d5199a79220ceb153c8ba",
           "completeFrameByteLength": 3923
         },
         "initializeSuccess": {
@@ -9261,7 +9261,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "e6d09e281ef1d2ac752a99d0793d66e69730bc1fb1bd4734b195380c15c954c4",
             "capability_grant_sha256": "f337c835099f37c69359bb1b442a8a92e809a8bb067782ea04d5a873017eefb1",
             "credential_grant_sha256": "f3063104d2a05170015cc295111575b1260d8704ab195012ccf2bb873ba538af",
@@ -9273,7 +9273,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1071\r\n\r\n",
           "canonicalBodyByteLength": 1071,
-          "canonicalBodySha256": "4b23a035196d0fe9862b1f731cf05dfa594e511e4740341934587ea8a52cfe17",
+          "canonicalBodySha256": "2ff35ebf5456d4ad4194140c981c8b3c3ff0b0fe4a6f099afa3f1c894b768237",
           "completeFrameByteLength": 1095
         },
         "invokeRequest": {
@@ -9397,16 +9397,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -9473,7 +9473,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3844\r\n\r\n",
           "canonicalBodyByteLength": 3844,
-          "canonicalBodySha256": "5167d4ff0428bf35599669945b5048eefd448acbc727aa57f18740a4609b1caf",
+          "canonicalBodySha256": "56252bb67a6d00807eb05fcea6bdc548e59397d488e940e4677fbc088603beb7",
           "completeFrameByteLength": 3868
         },
         "initializeSuccess": {
@@ -9489,7 +9489,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "a1f383507eaba74e0f5bff736767762f3bbd1eb770240f8475ee21802cdbbf93",
             "credential_grant_sha256": "4b7cd2442b8a0b57a1dbd05e13b7b4f8fb2171b550f16fa6aab2d710b115b266",
@@ -9501,7 +9501,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1053\r\n\r\n",
           "canonicalBodyByteLength": 1053,
-          "canonicalBodySha256": "cfd058740524a1cb65b578c464f09e55d2f9cfef94bda00d944cb2dd2797121b",
+          "canonicalBodySha256": "408d0b7798fbce62ca0519e37a9b10ab281bca9c26413cbb055d4814d61f047c",
           "completeFrameByteLength": 1077
         },
         "invokeRequest": {
@@ -9616,16 +9616,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -9692,7 +9692,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3893\r\n\r\n",
           "canonicalBodyByteLength": 3893,
-          "canonicalBodySha256": "c4bb98f80793b2b10102ebf3645837f49120827ba6449c1a7b373a4240267d3f",
+          "canonicalBodySha256": "344e04cf8ca5c1a6cad98960e39931f9b5584005ffbf43151bfd67fd44f18211",
           "completeFrameByteLength": 3917
         },
         "initializeSuccess": {
@@ -9708,7 +9708,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "2c1036652a3742e7103067e18124e344be3761f671144aa92264f0856b5628a1",
             "credential_grant_sha256": "5c27ae97eb195a0b18809f66697e5079a189740a15f8ff9a9964f5514d5580c1",
@@ -9720,7 +9720,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1074\r\n\r\n",
           "canonicalBodyByteLength": 1074,
-          "canonicalBodySha256": "0bd38ef68212a3d796712dffc8e2a63538ec8dea9c0e93f66c1b70384d93c3a4",
+          "canonicalBodySha256": "1f64e0f6e2b7703d03ba64cfceed55019aaff996b8fca5b474673b2f5b81b750",
           "completeFrameByteLength": 1098
         },
         "invokeRequest": {
@@ -9835,16 +9835,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -9911,7 +9911,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3963\r\n\r\n",
           "canonicalBodyByteLength": 3963,
-          "canonicalBodySha256": "31ec10bd8167f587b09c57b0b4798a5cee4629b3df94c4a1ddb4c40b2fcce7af",
+          "canonicalBodySha256": "67ad2a4179027db6e6b8636d7047d3b14b841777799b31866a9701a2b3e0d385",
           "completeFrameByteLength": 3987
         },
         "initializeSuccess": {
@@ -9927,7 +9927,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "b5e8f57e229edde1be196993ef447393c459a21f196c2a7b2afed4fd94383d8e",
             "credential_grant_sha256": "52c35a8d9fc69325a3768bda00a6acabe975ccdbcc321a1d71af7ebd2a03c7a9",
@@ -9939,7 +9939,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1104\r\n\r\n",
           "canonicalBodyByteLength": 1104,
-          "canonicalBodySha256": "a6dd0b154f7755bdd928c150e96b3efa80ecd3fcecb998cd0dc5f186c212ec54",
+          "canonicalBodySha256": "46a3dc8a776a18805bf98df1b81c79cb962bfb7b4b769921dea02de4b16a8c70",
           "completeFrameByteLength": 1128
         },
         "invokeRequest": {
@@ -10054,16 +10054,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -10130,7 +10130,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3852\r\n\r\n",
           "canonicalBodyByteLength": 3852,
-          "canonicalBodySha256": "f0de22494d26e80f4c4904f6739a3e68135a2de80e467a7173d07a11b3cb2c27",
+          "canonicalBodySha256": "bb2ce020d947ad1935d8820340464cac0363bd335c26de0c77feca52637c0592",
           "completeFrameByteLength": 3876
         },
         "initializeSuccess": {
@@ -10146,7 +10146,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "183fcd353486d04fd9bc2c5e81ee6df535135496a68710c5d77ab8834b205ae4",
             "capability_grant_sha256": "78d70ab755b1ce24110de03ca34966a6735a502082d13c9062c8d474ebf78ffb",
             "credential_grant_sha256": "7deb168487590bc0ad7373fed14d6a55b7fa33d9c35884d1e14e36236e70f8ff",
@@ -10158,7 +10158,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1077\r\n\r\n",
           "canonicalBodyByteLength": 1077,
-          "canonicalBodySha256": "7a725d95edf448a396c54133706c6429b3eaae76c39cbd57c678b7e7d358713e",
+          "canonicalBodySha256": "80383035f3c320ba0a3d24d34babbdb0ca2c8bc442e74957f6246f7b5bd72492",
           "completeFrameByteLength": 1101
         },
         "invokeRequest": {
@@ -10274,16 +10274,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -10350,7 +10350,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3866\r\n\r\n",
           "canonicalBodyByteLength": 3866,
-          "canonicalBodySha256": "9c38f7e2c820875f16b192fc312fd994b50fbed606e21bfb775714213e9ebe13",
+          "canonicalBodySha256": "82c5c3c41f05eba131b7f9317b291c6884b5d53158f844ac3227edfa50bc1101",
           "completeFrameByteLength": 3890
         },
         "initializeSuccess": {
@@ -10366,7 +10366,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "183fcd353486d04fd9bc2c5e81ee6df535135496a68710c5d77ab8834b205ae4",
             "capability_grant_sha256": "836faa6421f4e22c583d545c069c8b4cd5e25839ded32d8782a497a1f7973de0",
             "credential_grant_sha256": "ebf9b171c8c3c25be2aa194669a84eac8d0d62adf38d743bb0de2b6fdfc5c506",
@@ -10378,7 +10378,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1083\r\n\r\n",
           "canonicalBodyByteLength": 1083,
-          "canonicalBodySha256": "174dbb5ac14dc758e6f5cd84f81b8a1d9da95f7b47b0273874d8f0feb6a36952",
+          "canonicalBodySha256": "4d6559c101da03f260e088bea3ff3b7051478d78466074d27054d74ee9fff82a",
           "completeFrameByteLength": 1107
         },
         "invokeRequest": {
@@ -10494,16 +10494,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -10570,7 +10570,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3838\r\n\r\n",
           "canonicalBodyByteLength": 3838,
-          "canonicalBodySha256": "7784033ac632d15a4320ba4dbb13c7f819cf29d0fa6ceb0302fc8d0ad965695c",
+          "canonicalBodySha256": "ce17ebc9435edc69a9ba5f6c280bfd560aa65f189f97886809a669a5e94cb688",
           "completeFrameByteLength": 3862
         },
         "initializeSuccess": {
@@ -10586,7 +10586,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "183fcd353486d04fd9bc2c5e81ee6df535135496a68710c5d77ab8834b205ae4",
             "capability_grant_sha256": "031e17ce104aadcb543af278b341cb854b8ebb91d2050bc33bf425958e29c59a",
             "credential_grant_sha256": "fb6af8208fdebf08bb1e8ad3d045ef5339293681096ea59dc3ca5a69d0a2a41d",
@@ -10598,7 +10598,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1071\r\n\r\n",
           "canonicalBodyByteLength": 1071,
-          "canonicalBodySha256": "7810519249dc68cf98f3fdd7ba4f454a90ec10c87072151fd89526aa25fe923e",
+          "canonicalBodySha256": "914b79f3e7ee251eaea44e871d607791ece7cc3adde4d125eb7a67ca6a760583",
           "completeFrameByteLength": 1095
         },
         "invokeRequest": {
@@ -10714,16 +10714,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -10790,7 +10790,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3866\r\n\r\n",
           "canonicalBodyByteLength": 3866,
-          "canonicalBodySha256": "fbf9ecb1a4c09cd31d71ec19d49f72e32b3db07fe91fc2ee79bb8064f2613e0c",
+          "canonicalBodySha256": "bc578dbe81ddaf0357ff579e63630d15c288a73e625bf8ff463d22f982f904ff",
           "completeFrameByteLength": 3890
         },
         "initializeSuccess": {
@@ -10806,7 +10806,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "183fcd353486d04fd9bc2c5e81ee6df535135496a68710c5d77ab8834b205ae4",
             "capability_grant_sha256": "a1559c0b5cf79e23e1a5ec67ec6e7bebdb1361cb8a58073e0c893b1c834dffae",
             "credential_grant_sha256": "144407a6a78a9ce892e8ac26f8efaf39e34632e7ca2f4153503b99f1dc77c549",
@@ -10818,7 +10818,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1083\r\n\r\n",
           "canonicalBodyByteLength": 1083,
-          "canonicalBodySha256": "18d4edf880928f05ea85bcc514b6b9ac78be78a30c743b0e8c5d79ad13dc7157",
+          "canonicalBodySha256": "b348b0bf904c59d4bae57b3529acf11a01d88b9f287a61e88833311106292580",
           "completeFrameByteLength": 1107
         },
         "invokeRequest": {
@@ -10934,16 +10934,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -11010,7 +11010,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3817\r\n\r\n",
           "canonicalBodyByteLength": 3817,
-          "canonicalBodySha256": "22a44df74c6cdba494529c249aedfeb2eec55fe4ef5483341420590ebab3726f",
+          "canonicalBodySha256": "2f331e9c51708761c6ad6876b507f18c2ce0bf769831b4ea1bcc8930e94a53a8",
           "completeFrameByteLength": 3841
         },
         "initializeSuccess": {
@@ -11026,7 +11026,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "1e7d7220e529dc211267bc377cba72c8ece86072da742ad5416a1f63aee0176b",
             "capability_grant_sha256": "65b2e20c9c9bbdb29c164bd8778f0a01c9b4b53ffa082072e0dd831a227ef44e",
             "credential_grant_sha256": "5ee2137774bead196fb69a41a4f4c8b9cb92c505a73e1ae95ed583d36c29e44d",
@@ -11038,7 +11038,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1065\r\n\r\n",
           "canonicalBodyByteLength": 1065,
-          "canonicalBodySha256": "842fd60b47ecd3db79462489f64b3280364e0740aa7b28b54b83ec569d15d4e5",
+          "canonicalBodySha256": "eb8c3914e6dc4448ea551907826bb9242135026b2748be508ca7be616a93aac9",
           "completeFrameByteLength": 1089
         },
         "invokeRequest": {
@@ -11166,16 +11166,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -11242,7 +11242,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3894\r\n\r\n",
           "canonicalBodyByteLength": 3894,
-          "canonicalBodySha256": "b85d15b5d9ff3e64ac3a8eaef8fb4d4742dd27db6971a0d2e2f8d4cbea5de782",
+          "canonicalBodySha256": "9e7c74a1dd73f0e2f2e9e5931822d235a1c1003a5f8ad49ee3df240de5a414bd",
           "completeFrameByteLength": 3918
         },
         "initializeSuccess": {
@@ -11258,7 +11258,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "1e7d7220e529dc211267bc377cba72c8ece86072da742ad5416a1f63aee0176b",
             "capability_grant_sha256": "4b550fd69a8e8065572f8dfe5628f51a37c2bb33a7a382c689ef0e0a8cda5ab5",
             "credential_grant_sha256": "9c2535648bfb6e216501118922ccacac1269b2abd736edbbd6d9ef44df43a8d2",
@@ -11270,7 +11270,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1098\r\n\r\n",
           "canonicalBodyByteLength": 1098,
-          "canonicalBodySha256": "e2d2b560682d53f1d49d9427ecdf6cba4f2246261ddd738a425a04d4135171f6",
+          "canonicalBodySha256": "54f79a8ffc1aa41c943f08dd20a62d7f8fad0fdcded855ab6dd28923efe7634c",
           "completeFrameByteLength": 1122
         },
         "invokeRequest": {
@@ -11400,16 +11400,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -11476,7 +11476,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3779\r\n\r\n",
           "canonicalBodyByteLength": 3779,
-          "canonicalBodySha256": "e9364f6b26e3f58d901c6920f1043d82139c9d4fb89bb827037a88d1deea5b9b",
+          "canonicalBodySha256": "a62fd6375b9161334405747a178f0ac39ba67601675c3415e32d4e8c2b7908dc",
           "completeFrameByteLength": 3803
         },
         "initializeSuccess": {
@@ -11492,7 +11492,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "0a6689e9b51dd5b83f3220fa4324391aea8eb4c91bfa227feb912486dd42caf0",
             "capability_grant_sha256": "86e7da99c374751bfaee0110f107d8b2bc3c20156b76a07a36ccd120d9f84831",
             "credential_grant_sha256": "4e95db12ccf887c891305084331c29355c9f26fad5d7fa3298d626662d8c5646",
@@ -11504,7 +11504,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1050\r\n\r\n",
           "canonicalBodyByteLength": 1050,
-          "canonicalBodySha256": "536b557222b3202a0e2316e8f6a7dee04c11c394c43a391ba1e475e96cf3095d",
+          "canonicalBodySha256": "09f865844322cd4c53459ff61ed446f26cc7efe441d3c4e2d464dd4b70348aef",
           "completeFrameByteLength": 1074
         },
         "invokeRequest": {
@@ -11610,16 +11610,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -11686,7 +11686,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3749\r\n\r\n",
           "canonicalBodyByteLength": 3749,
-          "canonicalBodySha256": "4f5653f902bbaae5ddd30c782dedd1dd07cadbd96e6b50c7b6c745020aa3c368",
+          "canonicalBodySha256": "00790e0cd629e4be6ce9e0a227f1ce42c574f9be55975daf823f6617aa3d1c26",
           "completeFrameByteLength": 3773
         },
         "initializeSuccess": {
@@ -11702,7 +11702,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "75a038ab211fdc0196441b542dc0cfc9a2c9c830ccfa957b62dff657b38ca760",
             "capability_grant_sha256": "68aa87ad7509ab5408de2cb7955812d3cb9e28dfbcc77c6d3cbe41d2af09ec11",
             "credential_grant_sha256": "fda5add714ca2f26dad1b9dcbf219c7ba0aeb77efd616e90f05856e7197c0362",
@@ -11714,7 +11714,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1053\r\n\r\n",
           "canonicalBodyByteLength": 1053,
-          "canonicalBodySha256": "c00c8ee6e874e20d29fcdc56b7ea4948af8717c377d664b6debf881d614ce9c5",
+          "canonicalBodySha256": "28796c8813ff2733a7e8f1f88ee2898442123f44a0a9d618077624db6bedc73d",
           "completeFrameByteLength": 1077
         },
         "invokeRequest": {
@@ -11826,16 +11826,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -11902,7 +11902,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3833\r\n\r\n",
           "canonicalBodyByteLength": 3833,
-          "canonicalBodySha256": "19054e9bc7a2be4ab1c8e231ad562d89cb789d51e8e19c4acd9e71d997e2dc25",
+          "canonicalBodySha256": "e863ff18c5ef79758758ca6bf25ba8e6cb03fd23e22c823debed364978ac42a0",
           "completeFrameByteLength": 3857
         },
         "initializeSuccess": {
@@ -11918,7 +11918,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "75a038ab211fdc0196441b542dc0cfc9a2c9c830ccfa957b62dff657b38ca760",
             "capability_grant_sha256": "0b485e3f98352c0fb77f072360ab40764dba225cc16e86e3f9f2678c916593f0",
             "credential_grant_sha256": "abc0137e650451134d0640f1ebf86ee10fa8d3c3a1ba4c09b364d62e9a8d8a75",
@@ -11930,7 +11930,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1089\r\n\r\n",
           "canonicalBodyByteLength": 1089,
-          "canonicalBodySha256": "27259e15c267a7d7a92a68ee08bbed275678a035358cd6e577bbff2bb5ae4585",
+          "canonicalBodySha256": "94e5cd885d2cbfda8a43883645ce9b241c8224931ba772476bf64905f94678c7",
           "completeFrameByteLength": 1113
         },
         "invokeRequest": {
@@ -12042,16 +12042,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -12118,7 +12118,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3767\r\n\r\n",
           "canonicalBodyByteLength": 3767,
-          "canonicalBodySha256": "11c5eb94dd1c40dd07c75afae1657bc54cc245010297c775896908174460862c",
+          "canonicalBodySha256": "d6785010ea5b2e1da4e485807995c8fd47af5a91ca9eb950a4ed95552a754dee",
           "completeFrameByteLength": 3791
         },
         "initializeSuccess": {
@@ -12134,7 +12134,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "803277a1c3a862d77a8d4d134163516e6eab84033bd29df8642c186a6219848e",
             "capability_grant_sha256": "d81a522f4a17c6d64e11f3f51b616333e637ee61ffd698ad4f37bd06bbb76f7c",
             "credential_grant_sha256": "cc06b8ef83a9e1021aa0a59fad69b0ad44ebc472124e1e26429af06a88e4d04b",
@@ -12146,7 +12146,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1065\r\n\r\n",
           "canonicalBodyByteLength": 1065,
-          "canonicalBodySha256": "1a327479c81fddaaaa9dfc5864112578861ef5f3f354490a0ad3f1ec3ec7228e",
+          "canonicalBodySha256": "00f12ea08f77ece8f701ba7ce68af4fc5b8fad51d62bdc7e41a598f555e94cfa",
           "completeFrameByteLength": 1089
         },
         "invokeRequest": {
@@ -12269,16 +12269,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -12345,7 +12345,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3800\r\n\r\n",
           "canonicalBodyByteLength": 3800,
-          "canonicalBodySha256": "45c3ae2b1496d3e22f1fb4934130ed4e02c039c11cebcb4b6f68a43573aec8dc",
+          "canonicalBodySha256": "3a0713f49088f4d306c9b9579c60e0c975340402df38a82a64c020fb27f59967",
           "completeFrameByteLength": 3824
         },
         "initializeSuccess": {
@@ -12361,7 +12361,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "7cfd544fc2fa2d1bc3b607ebd504e54c004f53adeb6272f8c374ed108b7f4368",
             "capability_grant_sha256": "d30ea991cbfa3ad9a969f4f36da0ac9e43a6faccbcd7401f401729742c8c412b",
             "credential_grant_sha256": "981d683b22e7e1b6bb622194ab8b1bbe8c8b506816a3d33015b9052ad43edd86",
@@ -12373,7 +12373,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1077\r\n\r\n",
           "canonicalBodyByteLength": 1077,
-          "canonicalBodySha256": "df2a033f68fde70742661b3e2061aa51ae65230fe1343e963d24a4079c3f6893",
+          "canonicalBodySha256": "e3f03a7ccd935cc1d0b3f339eb11e154a74ffe1193c3c712ab292a41531d3f77",
           "completeFrameByteLength": 1101
         },
         "invokeRequest": {
@@ -12487,16 +12487,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -12563,7 +12563,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3727\r\n\r\n",
           "canonicalBodyByteLength": 3727,
-          "canonicalBodySha256": "ba89ce2d1083f8c52d4f9509ec2b53e7e822d2f092dee9df3dc3089645213513",
+          "canonicalBodySha256": "14f74d0eed22ac28e6ba562a374eaecc79731e9e89afa3d41549009b4a336472",
           "completeFrameByteLength": 3751
         },
         "initializeSuccess": {
@@ -12579,7 +12579,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "1f43f70fd59da8015fdb6c333fef11559bdbb87d13bd5ad81a30c53dc460e3e6",
             "capability_grant_sha256": "64ed2b2fc52d73d3f5f20d4e2692571100ba13a9ca9faf0b169797e49529c307",
             "credential_grant_sha256": "32619598b697768e13e1ab1125b4b205b3bcba978deda6539293930ac043ef7a",
@@ -12591,7 +12591,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1050\r\n\r\n",
           "canonicalBodyByteLength": 1050,
-          "canonicalBodySha256": "3c31e97f945fce73eeea8c5527af85ac0267bf27cea5e93b58f726af97a42760",
+          "canonicalBodySha256": "3f8bf987398decec06a5855dec654696e33123e242442dd86f652ecbc9790ae9",
           "completeFrameByteLength": 1074
         },
         "invokeRequest": {
@@ -12697,16 +12697,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -12773,7 +12773,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3893\r\n\r\n",
           "canonicalBodyByteLength": 3893,
-          "canonicalBodySha256": "893ec847d56a0af63aa45cd9895000c79c18c446e4e4016c9466d0ee98137cb4",
+          "canonicalBodySha256": "4bd2a6dee0b8004db2d551be5f0188c34ca93fcd6e3687b95466caeda61ffe6e",
           "completeFrameByteLength": 3917
         },
         "initializeSuccess": {
@@ -12789,7 +12789,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "2046487440d2416a484851dda9560fdcf49474158d402d8369e952a406043a89",
             "capability_grant_sha256": "f749cd4b1831e9087932993c1fa340e9193b2a05d80e15083146af45be8c96b6",
             "credential_grant_sha256": "16a6d2203a87c2652e4e0e9bee2879fefd76d23b8dca4a67366f00a4e954fce7",
@@ -12801,7 +12801,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1066\r\n\r\n",
           "canonicalBodyByteLength": 1066,
-          "canonicalBodySha256": "da6c2ffe36584a6b604054e0d46713cbd609e4996c7d7b3138c6a1b06bbb34ac",
+          "canonicalBodySha256": "ad90aee0f209a3036dcdd566041d1f8c52236c2091dffa09fdef0da07b833120",
           "completeFrameByteLength": 1090
         },
         "invokeRequest": {
@@ -12913,16 +12913,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -12989,7 +12989,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3977\r\n\r\n",
           "canonicalBodyByteLength": 3977,
-          "canonicalBodySha256": "62821b37e769f3f917e8fb539ccdc778c3226918c7480b2f9c392532f22f3a1b",
+          "canonicalBodySha256": "a7b91708a570d91a0775e75e6f1491569a3c090cddc3c793af804e80738aae3f",
           "completeFrameByteLength": 4001
         },
         "initializeSuccess": {
@@ -13005,7 +13005,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "2046487440d2416a484851dda9560fdcf49474158d402d8369e952a406043a89",
             "capability_grant_sha256": "987fc9e1072f2f38b9812749944d84a274c55a7d4cbaf2dfbb5d80128e2f5a55",
             "credential_grant_sha256": "1c81ca0398392ffd03607b4db0ab0cc25bc68dd6b999fc5e0ad8bf81cababcb6",
@@ -13017,7 +13017,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1102\r\n\r\n",
           "canonicalBodyByteLength": 1102,
-          "canonicalBodySha256": "81bc7e77cb6e5677fdecd3b43c2f0fdca360aa9e7b0bc53f967b3a000de2e5ca",
+          "canonicalBodySha256": "11e8dea963b36ab7d512135af19cd7c334974836871e203dd833e09452f5fba7",
           "completeFrameByteLength": 1126
         },
         "invokeRequest": {
@@ -13129,16 +13129,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -13205,7 +13205,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3876\r\n\r\n",
           "canonicalBodyByteLength": 3876,
-          "canonicalBodySha256": "e38820d3ca26bfe514752b800be33de1657043899bfd9499c44b89c2cb938d9d",
+          "canonicalBodySha256": "efc42b542786e485e4b7f0ebe9fb1b39e856b68de589ca44fa530b84b2271e79",
           "completeFrameByteLength": 3900
         },
         "initializeSuccess": {
@@ -13221,7 +13221,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "936efc713f9c746c37e8cf57dc3b2cbb853bc06b4825eb7a00cea0a91923adbe",
             "capability_grant_sha256": "67a3e6f3478466f7f1ee9d240e67d5e1bcc70f6e0709e88561ece8e522a1c931",
             "credential_grant_sha256": "a542ec1e9cd9ed4423bf3b169733bd0ffbaaa6abd24b695d6ae794b549ef928c",
@@ -13233,7 +13233,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1075\r\n\r\n",
           "canonicalBodyByteLength": 1075,
-          "canonicalBodySha256": "35771902e6fcf460ccce4ee9060c1207adc688f7da7900e602273564e978ddc3",
+          "canonicalBodySha256": "c4cae21fdc2f7a08c57feb93cd36512ec640c39c889c47b38b01c8d504cdfb7a",
           "completeFrameByteLength": 1099
         },
         "invokeRequest": {
@@ -13356,16 +13356,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -13432,7 +13432,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3903\r\n\r\n",
           "canonicalBodyByteLength": 3903,
-          "canonicalBodySha256": "800e5fcadedeff0064580ce40f4d4de9a4fed4d9964ab12b5a077ae021a99728",
+          "canonicalBodySha256": "5187e745eaf2077bfb2fe37bfbf0691de6ef55df732f5520bbf62e86d73a9a02",
           "completeFrameByteLength": 3927
         },
         "initializeSuccess": {
@@ -13448,7 +13448,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "e5022ff80214ad7178ea77ac347b1c9b8a66d0048dc85e8bdaf35072ae1c90bb",
             "capability_grant_sha256": "fdf42e689db98616926e23e1cf824a30af6e452e918070d3dcd54cc1363b4ed2",
             "credential_grant_sha256": "fe00d88abc5e581b0c951a81e114f70d22f042e8056c1b4a137342066c78b54d",
@@ -13460,7 +13460,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1087\r\n\r\n",
           "canonicalBodyByteLength": 1087,
-          "canonicalBodySha256": "a025d7e3fd98e33162661ddde09d860f1550041e749ab09b874cdc06042263d2",
+          "canonicalBodySha256": "c0bcc6afce68f33c78ab3304a42bca8c24977657d872c7cbc76bb5771b77ff30",
           "completeFrameByteLength": 1111
         },
         "invokeRequest": {
@@ -13575,16 +13575,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -13651,7 +13651,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3815\r\n\r\n",
           "canonicalBodyByteLength": 3815,
-          "canonicalBodySha256": "a3481bf03a1c07c4a392dea6433341467748f968d4f6ee6b1c6d4537c62c6ce4",
+          "canonicalBodySha256": "824486a721678df5672eb022abdcfb7589d4dff4e715402fd2c52eaa65aaca51",
           "completeFrameByteLength": 3839
         },
         "initializeSuccess": {
@@ -13667,7 +13667,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "6f7587a92daac6ba00004ae99e9756037216306f28334077723724302004fd1f",
             "capability_grant_sha256": "559c6020d59a9bec1ea6e6c2b88f72f97753358fe33d867e3eadf2ca29bfddaa",
             "credential_grant_sha256": "7f54caa4c8b354d1a10a7ae28536aef417983c494bbb8fea4607155ac68d86c3",
@@ -13679,7 +13679,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1060\r\n\r\n",
           "canonicalBodyByteLength": 1060,
-          "canonicalBodySha256": "bdcb683f60c55fe2029de51de806509e7adc5d210fa056f25395c0548f5b2f01",
+          "canonicalBodySha256": "dfbe0de15e7a00df313e95820cd25df9e19cb1f96033f9decdb35e545c880cdd",
           "completeFrameByteLength": 1084
         },
         "invokeRequest": {
@@ -13787,15 +13787,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -13862,7 +13862,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3859\r\n\r\n",
           "canonicalBodyByteLength": 3859,
-          "canonicalBodySha256": "17afabd6bb0cb2d7e7ede4f542ab517d4e55d57715f7f352b563ba33d4dd8afb",
+          "canonicalBodySha256": "7521a0ba5a5490b21c3852e875fed2c7c63c8d7065b62a4cc51ebdb6fbb1ea73",
           "completeFrameByteLength": 3883
         },
         "initializeSuccess": {
@@ -13878,7 +13878,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "b524b881943de9d5544e63c9c48f7612d725d5378d05bae982f14e99fffa0f52",
             "credential_grant_sha256": "28639f705e934f9a0a21eff0b94a4eb8db5a35ada2fbdd2c59477c6ade74599d",
@@ -13890,7 +13890,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1066\r\n\r\n",
           "canonicalBodyByteLength": 1066,
-          "canonicalBodySha256": "ef760cc13258c705eefc644a17828101f43b598e975abbba35d1da261e5b2f7f",
+          "canonicalBodySha256": "8bf2fda11941417f4b5c934add56d9b6c4f4389c114ffaa16947fdc342992a8c",
           "completeFrameByteLength": 1090
         },
         "invokeRequest": {
@@ -14003,15 +14003,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -14078,7 +14078,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3872\r\n\r\n",
           "canonicalBodyByteLength": 3872,
-          "canonicalBodySha256": "ec5bffe45c3e860bcb7fad8b68b9bb45e75587cae3ef15fc9848b5fc558219df",
+          "canonicalBodySha256": "049d2cce1ecaff04879ad124461119c1165d4bf85c49d7b488602752f0e46a9c",
           "completeFrameByteLength": 3896
         },
         "initializeSuccess": {
@@ -14094,7 +14094,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "90ab2c4a2b6572c7240d09872d70a804e9f63079e7eebdc0ae2868ddb5e9d98b",
             "credential_grant_sha256": "0de13b46ff31a654f09b1403b4f89c7dd343ecb3090be05752ca8b6d7ad86e01",
@@ -14106,7 +14106,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1069\r\n\r\n",
           "canonicalBodyByteLength": 1069,
-          "canonicalBodySha256": "1df265087c8cda05d33d15541490285cfd39e334f9ac3374293ea1c33b7989b7",
+          "canonicalBodySha256": "141f5529641275f1b6dabd95933b790bd6f87ef1b3158e9dc5db604e72d3ec29",
           "completeFrameByteLength": 1093
         },
         "invokeRequest": {
@@ -14219,15 +14219,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -14294,7 +14294,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3901\r\n\r\n",
           "canonicalBodyByteLength": 3901,
-          "canonicalBodySha256": "015e28bafd9cf0e18f5c4b8a9a2290d0e65fda52360a05e8785c89771be06b08",
+          "canonicalBodySha256": "41e98a7a2f168ac50bd2bed83687ab4f485fc18344e85ca7a00bb8073244b9ad",
           "completeFrameByteLength": 3925
         },
         "initializeSuccess": {
@@ -14310,7 +14310,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "90324a5acf2741fe6c55a6dadaff4e01c57d3e68cbe606c07286ee76a2194936",
             "credential_grant_sha256": "f59c60a5e5658db2b1a6196ba967fa9b91f101a0b724531a3fdc8ab6558d33bf",
@@ -14322,7 +14322,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1084\r\n\r\n",
           "canonicalBodyByteLength": 1084,
-          "canonicalBodySha256": "c5736e2051ae35df4c7197aa18ae6165208dc235e2d087d6ba490d8f3eeb1a34",
+          "canonicalBodySha256": "0d5decbcc0bb23c551f833b7de31e5dc22ea540a33fa99b938484a6313c7a68b",
           "completeFrameByteLength": 1108
         },
         "invokeRequest": {
@@ -14435,15 +14435,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -14510,7 +14510,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3929\r\n\r\n",
           "canonicalBodyByteLength": 3929,
-          "canonicalBodySha256": "36ad387683b2c924bb72f6655a0b4b96175ea87c8517496b1ddbcaccff90d2a2",
+          "canonicalBodySha256": "2914c17741f555edcd077f31ec9aad77cee5dd4211a103abf6594c57d12ea4d7",
           "completeFrameByteLength": 3953
         },
         "initializeSuccess": {
@@ -14526,7 +14526,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "35f158087997cf2dab573517c2ed85bc7b7e67629ce5c08b33e71543af8b6d62",
             "credential_grant_sha256": "15162832f829c5ed61fefd1e352e8bc2910480b08e2362378b5af941faa2ce0e",
@@ -14538,7 +14538,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1096\r\n\r\n",
           "canonicalBodyByteLength": 1096,
-          "canonicalBodySha256": "24361538c2d3d9f898bc37a29e6ca091ba1ed587095a3a36466c52925f088436",
+          "canonicalBodySha256": "cdc9169eaf6e8f9a0058704a51a04c884a715a8a60994a2d750eefb9dfb3bad5",
           "completeFrameByteLength": 1120
         },
         "invokeRequest": {
@@ -14651,15 +14651,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -14726,7 +14726,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3866\r\n\r\n",
           "canonicalBodyByteLength": 3866,
-          "canonicalBodySha256": "28fff3bba60cd63d5b4044f2112278a19e77e9e2fc44d0c251144d0ad5015d11",
+          "canonicalBodySha256": "c1dfc11d8fa00ee2c982d4c529c1940e8b08ee90516dfad3d61b1af84606c6cb",
           "completeFrameByteLength": 3890
         },
         "initializeSuccess": {
@@ -14742,7 +14742,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "4162951af9aa954eb4181fcb9839e5e2e9a9e6bde783df61884541cabc49deda",
             "credential_grant_sha256": "ac7358549334cfdb3196f20430eb5daf64bc24e0787b96c1f0a0893cf7dd0b93",
@@ -14754,7 +14754,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1069\r\n\r\n",
           "canonicalBodyByteLength": 1069,
-          "canonicalBodySha256": "511c865b6393a2c1e8be6bad05d74bcd3590bf6f816c47b9fc276093f4746a2e",
+          "canonicalBodySha256": "00df7e6f34cb62907c1c2c273f85f0e30b6bc38ab730d1eb4fb79da057e0fcc5",
           "completeFrameByteLength": 1093
         },
         "invokeRequest": {
@@ -14867,15 +14867,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -14942,7 +14942,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3908\r\n\r\n",
           "canonicalBodyByteLength": 3908,
-          "canonicalBodySha256": "c8c276be429aa5507c5b9dcd07caf7c01ea71052978e93d3832629b148401bb2",
+          "canonicalBodySha256": "b8f5badb6d33fe12b760b63cc32cbb94d555b6f45cffb1d97c0b6ddc8ac36494",
           "completeFrameByteLength": 3932
         },
         "initializeSuccess": {
@@ -14958,7 +14958,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "0488baf23c3196cd9c9f263a2c1d5855cd2a1911018d4cc101a391975d7f638c",
             "credential_grant_sha256": "c6974e9ce781b1ddf3e16eca52d4b48ab164b6b92d641e43208cb3297048ea51",
@@ -14970,7 +14970,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1087\r\n\r\n",
           "canonicalBodyByteLength": 1087,
-          "canonicalBodySha256": "8569accbf9e82c3519427f3fb927a9f40c58d7b8538edd9d2c44c3363a45b7b2",
+          "canonicalBodySha256": "adf20fd13e6c2fc685a942ea282746ebf19797eba7b1bee51bd9d69f448d0f3f",
           "completeFrameByteLength": 1111
         },
         "invokeRequest": {
@@ -15083,15 +15083,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -15158,7 +15158,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3824\r\n\r\n",
           "canonicalBodyByteLength": 3824,
-          "canonicalBodySha256": "465fb9c067bcc6f27a770e8e115d9f8c57c9085f5b1db1c9244bd687c32637b1",
+          "canonicalBodySha256": "8a78f200ea77796ec7523682ad822db63d7a737e382a9338c11e41842041dcbc",
           "completeFrameByteLength": 3848
         },
         "initializeSuccess": {
@@ -15174,7 +15174,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "3767731dd167e9c7aac8a1dcf471568df7c4ab9993752c22ad5a7fe85c32254a",
             "capability_grant_sha256": "14d933c744566073a7587d7964dff209c876a36a6b632353f1e694622013fc8f",
             "credential_grant_sha256": "62b97cae6b7b3a28bbfe7f3e4c5da61a6e403fef7a643c33f280a64129d5965f",
@@ -15186,7 +15186,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1072\r\n\r\n",
           "canonicalBodyByteLength": 1072,
-          "canonicalBodySha256": "93b7bfa0aea538014f2e9a248e67db69b3f9ef9378eda50e4c9814f79a313492",
+          "canonicalBodySha256": "0b17a8e0e93b445a4f739628a15cc0de71e946cdc11cb3aca8c5c67d36f646fc",
           "completeFrameByteLength": 1096
         },
         "invokeRequest": {
@@ -15302,15 +15302,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -15377,7 +15377,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3736\r\n\r\n",
           "canonicalBodyByteLength": 3736,
-          "canonicalBodySha256": "10146105ca97306fff40be1274b64015adae6e706b62f5e9f954c6ee28006dcf",
+          "canonicalBodySha256": "22cb7652102d42c68e5b0f069bacbe84493b1f452897bda32b1a0114e29c38b6",
           "completeFrameByteLength": 3760
         },
         "initializeSuccess": {
@@ -15393,7 +15393,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "a58dacbfbe93adcd2aa5177da2a6e2a1eaa152de2cab25207d0027c35b314090",
             "capability_grant_sha256": "27dbd60c19bc78c52aed0847141daa1da3d655497543c89533ba519cc6f31e35",
             "credential_grant_sha256": "80e8edfd19c4c91b43c2ffccd09b9a22504adb1599c5b3191a0c94bf9839b932",
@@ -15405,7 +15405,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1045\r\n\r\n",
           "canonicalBodyByteLength": 1045,
-          "canonicalBodySha256": "f6f3e9fd01909d9342b9889d96612c01b5f0cd936b56f0c96cfe3ee6e080c466",
+          "canonicalBodySha256": "3722ff3eeb5087eed5136475e012f30a8c75b4147231d2ab6efe316c66be0249",
           "completeFrameByteLength": 1069
         },
         "invokeRequest": {
@@ -15513,15 +15513,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -15588,7 +15588,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3950\r\n\r\n",
           "canonicalBodyByteLength": 3950,
-          "canonicalBodySha256": "e4587d336164649011f36c850168cf5c5802daed34d30b11c8e14c7fa873a331",
+          "canonicalBodySha256": "fcf2d896010a963bab5f59222a72205ccada92936bad88b511665fb0f3c665e5",
           "completeFrameByteLength": 3974
         },
         "initializeSuccess": {
@@ -15604,7 +15604,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "ffa2ba36718c99c0cb86f27c68e20dabb9ee5a3e6eeb846ac9ef381fbbdb4f78",
             "credential_grant_sha256": "ca4b6de8b471b9398d543f837eabbb790adecc2c522b42c1c9e1241070462833",
@@ -15616,7 +15616,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1105\r\n\r\n",
           "canonicalBodyByteLength": 1105,
-          "canonicalBodySha256": "a077a83c734465e59d12190124fc508a1565466f823e50b16c3aaca465d39144",
+          "canonicalBodySha256": "38fbc3c05ba3fe2c650506b1143111a00e670e61b3255e4a337081ca0ad1d126",
           "completeFrameByteLength": 1129
         },
         "invokeRequest": {
@@ -15729,15 +15729,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -15804,7 +15804,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3963\r\n\r\n",
           "canonicalBodyByteLength": 3963,
-          "canonicalBodySha256": "746ae1dee5ad2b730e2c18c03bb0711fb633dcc0b651e9009d5a8f464e4bedc4",
+          "canonicalBodySha256": "135725a35a591e1e38558544a045e7afe9986f2f514d5dcd5bd10ad83f0cf698",
           "completeFrameByteLength": 3987
         },
         "initializeSuccess": {
@@ -15820,7 +15820,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "acf65e3fac12d5316b0e79decd10d77569ba05755a0137c749a263dee721c29e",
             "credential_grant_sha256": "dfc5bd0bc0a2950607194f0e4b0a0cd7a2f2d2a334cee8353aaf353a0d369763",
@@ -15832,7 +15832,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1108\r\n\r\n",
           "canonicalBodyByteLength": 1108,
-          "canonicalBodySha256": "2ceeea7e594a1e95600ec34f2845a852fccfc9c69722bb0195683d5d17953f5e",
+          "canonicalBodySha256": "f44dee912957ade44f3a81346815ac555dd43974f1bcd9ef5b8673dffe921e25",
           "completeFrameByteLength": 1132
         },
         "invokeRequest": {
@@ -15945,15 +15945,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -16020,7 +16020,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3929\r\n\r\n",
           "canonicalBodyByteLength": 3929,
-          "canonicalBodySha256": "d57d739affa2edf7cd4af65b985feeed3ae12d56a49de59c6838350cf22e3c85",
+          "canonicalBodySha256": "89477320e9b05fcb89b49fdac7c22f8a68f44f77dd455ae33620a8e1a73ba6b4",
           "completeFrameByteLength": 3953
         },
         "initializeSuccess": {
@@ -16036,7 +16036,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "0bfe5fd5a7898dd55e8528ebfdf26d0cfab85c2076188b49bfdc91b1ecfe3997",
             "credential_grant_sha256": "fd3e44f4c0dee4581b26c6b26c12b6ae435bea423d03032bad4368d3412948a2",
@@ -16048,7 +16048,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1096\r\n\r\n",
           "canonicalBodyByteLength": 1096,
-          "canonicalBodySha256": "de783b2cf16268d0c57fdc14f3b083b5f9fa36c1a334cb96a5b97344e417f4a2",
+          "canonicalBodySha256": "f4673f0ea11f29bf1df5ac2c98ff97a51137bcafe89789bc06a1c95283512183",
           "completeFrameByteLength": 1120
         },
         "invokeRequest": {
@@ -16161,15 +16161,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -16236,7 +16236,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3942\r\n\r\n",
           "canonicalBodyByteLength": 3942,
-          "canonicalBodySha256": "5fb8ddddac87e67db45956a093f6927effaaecda0906f9cee102fc023a3a5702",
+          "canonicalBodySha256": "cc6005450b087350a28fa43187e9add716730b84a8886392fdab576253ce6944",
           "completeFrameByteLength": 3966
         },
         "initializeSuccess": {
@@ -16252,7 +16252,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "505b3047be3f23a67925ea9140d5f01b8bf77db5cd8de9acf18e3ab4f977e95c",
             "credential_grant_sha256": "3a07725f3cb73b47a41757f7022285ac8efff12a4a9a0ecaba56aedc20d84340",
@@ -16264,7 +16264,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1099\r\n\r\n",
           "canonicalBodyByteLength": 1099,
-          "canonicalBodySha256": "ffdff634ab314d9d13f04fd989a0acdf3be084586a6758f283dd41400cc03181",
+          "canonicalBodySha256": "e47f2cd99ed4bbccbf142b011a932901d5015a437e8a5af6a6f7c12e176430e9",
           "completeFrameByteLength": 1123
         },
         "invokeRequest": {
@@ -16378,16 +16378,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -16454,7 +16454,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3970\r\n\r\n",
           "canonicalBodyByteLength": 3970,
-          "canonicalBodySha256": "95fc3c517547d1eda439909585ee1476f38082ec92bad3bb2e9e125521e4a834",
+          "canonicalBodySha256": "2843f693a716e0a6911d79ae67a20fa69dc171c20020b6b9a8cfa23a5fd4a8d0",
           "completeFrameByteLength": 3994
         },
         "initializeSuccess": {
@@ -16470,7 +16470,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "eeee82166ab5536b92bd8dd1bd78c53f730cd4eda9aef5fb0bdc14324f19109e",
             "credential_grant_sha256": "f38ecc49bf94cbccbcf9fa5e2d53b9ff8b2b0a201e189bc3a6222f4d1848c4f5",
@@ -16482,7 +16482,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1107\r\n\r\n",
           "canonicalBodyByteLength": 1107,
-          "canonicalBodySha256": "fd6ffade84737c942bf9de75eb627bbca4cebe8a2befb5ec459a28b24ea28039",
+          "canonicalBodySha256": "7293485e08b37ac7fa7d639f0787f6026590a9827c5bc04120db28719bf8717a",
           "completeFrameByteLength": 1131
         },
         "invokeRequest": {
@@ -16642,16 +16642,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -16718,7 +16718,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3998\r\n\r\n",
           "canonicalBodyByteLength": 3998,
-          "canonicalBodySha256": "54db280bd78f06c77d5146b5237188780073e00abf9ee5a76ac0e1ea06777f00",
+          "canonicalBodySha256": "2cb8fe61c140871b72134f84e0c1d09349787b7edfbbace64ebb2acf9c027b7c",
           "completeFrameByteLength": 4022
         },
         "initializeSuccess": {
@@ -16734,7 +16734,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "72b13162eab4c7445adc9314954a3f1401f3daeb2ba89d3f94eb4e6d979c0b2d",
             "credential_grant_sha256": "7bb0bacff06a7881d32e99754bcadf2560369db3b87bef504e9ed97c1b1c2764",
@@ -16746,7 +16746,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1119\r\n\r\n",
           "canonicalBodyByteLength": 1119,
-          "canonicalBodySha256": "f96cc7f7f1d7d50aa88bf34a69c65cffe94f6328644ea44cb8059ad2ab7e93d9",
+          "canonicalBodySha256": "495676a41fe9b6ce51c91ae2c86e2283c35e1ee796bf70aba194139fd69d05be",
           "completeFrameByteLength": 1143
         },
         "invokeRequest": {
@@ -16860,15 +16860,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -16935,7 +16935,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4020\r\n\r\n",
           "canonicalBodyByteLength": 4020,
-          "canonicalBodySha256": "6648c7651dbd2baee7e34259d534690d289f801f10a236e68db2b5260159be90",
+          "canonicalBodySha256": "8f66f087e2c5bd6bcafe3aa093e2ad5d7baebf75cff0ca206abc22e8b6da462f",
           "completeFrameByteLength": 4044
         },
         "initializeSuccess": {
@@ -16951,7 +16951,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "32bffda94881cb1e5255b3909ad179d048dae414f2a4c521c59efb4034d821de",
             "credential_grant_sha256": "e9ebd2d17dec132d15c61c3c1f731f28707d9435d0dda83735038bd91aa8813a",
@@ -16963,7 +16963,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1135\r\n\r\n",
           "canonicalBodyByteLength": 1135,
-          "canonicalBodySha256": "2fb82af15516531c3dda6e2b0bd68b290214d39f5bebaf6dd9304b37432a5995",
+          "canonicalBodySha256": "a40d5c39857d63e32853d6593b42fce4fc2db4b9c754053364733ec1b4a80ddb",
           "completeFrameByteLength": 1159
         },
         "invokeRequest": {
@@ -17087,15 +17087,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -17162,7 +17162,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4033\r\n\r\n",
           "canonicalBodyByteLength": 4033,
-          "canonicalBodySha256": "8fcfe824945e3214668a3e2b8b836ed5b70e64c00393ee4e1a5d2c49932946ba",
+          "canonicalBodySha256": "9904041fb9fdda5bad290eef24b198436dd6000ff661972b1d9b93c3075faa51",
           "completeFrameByteLength": 4057
         },
         "initializeSuccess": {
@@ -17178,7 +17178,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "2c59ed8faff7d10fe86f3e381c9044b42216e91fa3bc5ad9b48aa724bdf3430b",
             "credential_grant_sha256": "e420bc823839b69ca8ecf22f50a0417a3f91fc97a89668b6f256e49da9547217",
@@ -17190,7 +17190,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1138\r\n\r\n",
           "canonicalBodyByteLength": 1138,
-          "canonicalBodySha256": "7337d55cd1ba70d34ff4224fb44bc4782eff2ee9c8eb3b4773fd5737b67b3c53",
+          "canonicalBodySha256": "a406e6712316256d72018217017dda0a14b6fb96409271cd318755d9597e5ce4",
           "completeFrameByteLength": 1162
         },
         "invokeRequest": {
@@ -17314,15 +17314,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -17389,7 +17389,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4111\r\n\r\n",
           "canonicalBodyByteLength": 4111,
-          "canonicalBodySha256": "e2a68b31c3b8af694639b27846642309485c6d92dec1d05a6845d956fdccaafe",
+          "canonicalBodySha256": "aaa533ad0f71b9a25fa61ea8ba42243acba75807a1a484fc6c0c5052b82a8d23",
           "completeFrameByteLength": 4135
         },
         "initializeSuccess": {
@@ -17405,7 +17405,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "0cff4a8efb76b9202a2fbb1c3fbb86d6d258d43540fbe6300c10822580fa9ebc",
             "credential_grant_sha256": "f8091439391637f1edfa31e16aca54fcc8de066bcdc6bd2ab84e1057bae2d95a",
@@ -17417,7 +17417,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1174\r\n\r\n",
           "canonicalBodyByteLength": 1174,
-          "canonicalBodySha256": "7b67edb4d7aea6e7abbe7f104c63837f65f83731db8ada5133fb6907aeac5fd9",
+          "canonicalBodySha256": "0363ea9c7ae1812b042c9aab7946c5d33cf3535e44403c8419c9d0bab61f0338",
           "completeFrameByteLength": 1198
         },
         "invokeRequest": {
@@ -17541,15 +17541,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -17616,7 +17616,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4124\r\n\r\n",
           "canonicalBodyByteLength": 4124,
-          "canonicalBodySha256": "a28c2529559e6471344a7cd172b6e6dea684cadab939c006381b4e65ecf43320",
+          "canonicalBodySha256": "11b03b89f62eacaf48137e2c14bb462b29daaa5f8c3d3308178214ffaa238c4c",
           "completeFrameByteLength": 4148
         },
         "initializeSuccess": {
@@ -17632,7 +17632,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "e38a21a4a83a13b7d09321b41fab87ec2c6a65fb0fecc4fc082373fa6c162750",
             "credential_grant_sha256": "a7068db65cba21a5ed10079507cb71ccdf4b877f628ce6bd12a42fcee1232337",
@@ -17644,7 +17644,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1177\r\n\r\n",
           "canonicalBodyByteLength": 1177,
-          "canonicalBodySha256": "6c0ecc7134a054819f9bf2c99c064b8738903369368cf7406c846a2fb2f066c2",
+          "canonicalBodySha256": "5c7c82a27089a7be5f7c3126c8e2e37a8b8bd91d2b6e79213a0efebfed9d7230",
           "completeFrameByteLength": 1201
         },
         "invokeRequest": {
@@ -17768,15 +17768,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -17843,7 +17843,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4090\r\n\r\n",
           "canonicalBodyByteLength": 4090,
-          "canonicalBodySha256": "34673b4a4bd6db58d8d814c8febf401af614b8128663604eb75f5116782820f1",
+          "canonicalBodySha256": "aee03147227f60a9e9dfcb1faf6327ac757662661191af9a07415da332e3f4cb",
           "completeFrameByteLength": 4114
         },
         "initializeSuccess": {
@@ -17859,7 +17859,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "9793b4d21635f980f550c436dc9e9417d94f67489b9caaf334d9e2b93a9e0dce",
             "credential_grant_sha256": "ced72b6292f2b7aea86ae0dedbd610d8c05f088770fabfffefcefa3f3dfcc0e0",
@@ -17871,7 +17871,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1165\r\n\r\n",
           "canonicalBodyByteLength": 1165,
-          "canonicalBodySha256": "8e1d3739e246c426d1c8d0cf1d25fa5e98287b740080d129c6c64fe03b4c9920",
+          "canonicalBodySha256": "c7db676591442c62e22d84cde1e9512d2d0131f9c608bf5db5fb14fe7b072b7f",
           "completeFrameByteLength": 1189
         },
         "invokeRequest": {
@@ -17995,15 +17995,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:mira:001",
@@ -18070,7 +18070,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 4103\r\n\r\n",
           "canonicalBodyByteLength": 4103,
-          "canonicalBodySha256": "94d946e814c63418bd1b8cf1486f727e4935a2d0309ccc3a64e71e7dccaaf279",
+          "canonicalBodySha256": "f274fedd77a55170b79122f3401341844226595bf913e3644a3f174df878ed36",
           "completeFrameByteLength": 4127
         },
         "initializeSuccess": {
@@ -18086,7 +18086,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "356639c4ae7a49117c752721ff50056f5489c8792388c4b4ef3a8db38958cd9b",
+            "connector_binding_sha256": "727ac8c8c8760248591368d873984715d11d15a14d787c9cb7f9ebbbf6f71970",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "a274197a21b028ce0e619fca5132fe5476f636fa73c69df8692282d75bad2539",
             "credential_grant_sha256": "252de2abfe03f500ea4ee03a160fe20c9790293af22e7d7dcf8a2f95feab2123",
@@ -18098,7 +18098,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1168\r\n\r\n",
           "canonicalBodyByteLength": 1168,
-          "canonicalBodySha256": "22c1d69dc4657247696310bf89e3ceb5ba78d5b34f1a02b8e437d7252636cd01",
+          "canonicalBodySha256": "6890156b727f4cd8b156662188cc396b4e48906494339f7d3913341ef67c0e6f",
           "completeFrameByteLength": 1192
         },
         "invokeRequest": {
@@ -18221,8 +18221,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -18292,7 +18292,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3534\r\n\r\n",
           "canonicalBodyByteLength": 3534,
-          "canonicalBodySha256": "7fc180354165ffd3a1f242464d1a759b1a5ca7d8276c521349516bc345ae4e20",
+          "canonicalBodySha256": "7b898ff34cd5b081f51b06a0e322f6ce08e554d6fe27094b7ee87633cac779a4",
           "completeFrameByteLength": 3558
         },
         "initializeSuccess": {
@@ -18308,7 +18308,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "eb647a1ef7ffc2c4611089a02c48027625e847109810c4667d37534ca8c2e20b",
             "capability_grant_sha256": "0b9d4e5056aa3c0f58427b84232082ad7bf52ad2274a807db61c1a46242b8983",
             "credential_grant_sha256": "09a17f6e7025820b62696915ce1bb8ae6eb5e18c3f1825c11fe49b1364a4c982",
@@ -18320,7 +18320,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1063\r\n\r\n",
           "canonicalBodyByteLength": 1063,
-          "canonicalBodySha256": "83295be2fcdb00288082720ea8836c0ad16550d4f51ad29bbb2b7a9aba9f28c4",
+          "canonicalBodySha256": "012596040371e09e32b2bcd22cabf3b0994de36610bfeaeeca1efc5b88529337",
           "completeFrameByteLength": 1087
         },
         "invokeRequest": {
@@ -18442,8 +18442,8 @@
               "provider_account_id": "fixture:mail-account:owner:001",
               "provider_resource_id": "fixture:mailbox:owner:001",
               "confirmed_operations": [
-                "mail.message.search",
-                "mail.message.read"
+                "mail.message.read",
+                "mail.message.search"
               ],
               "confirmed_scopes": [
                 "fixture.mail.read"
@@ -18513,7 +18513,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3531\r\n\r\n",
           "canonicalBodyByteLength": 3531,
-          "canonicalBodySha256": "d29d5b09572f4e6cb5629e8958ea4007703407d7798f1a84ac56a122ae8d194c",
+          "canonicalBodySha256": "bbd882d7cbe51a622f3940a5bfb79790b5bd4e5177a1157e28e40ba4badd566a",
           "completeFrameByteLength": 3555
         },
         "initializeSuccess": {
@@ -18529,7 +18529,7 @@
             "connector_manifest_sha256": "2dcefde8642a7757083c95da97f5d113b7a270e0100e947086ba4e105492235c",
             "worker_id": "fixture:worker:mail:001",
             "worker_executable_sha256": "4aa072bbcea46b9d795830f6d76adfefc1ab14b196e9213106843f831c1f934f",
-            "connector_binding_sha256": "3bc0133ad3faab211f393edf6bce0aab897852a7cc30f61e3928a7cfff250804",
+            "connector_binding_sha256": "001ac5caed89427cfb72295d8b63679683e0b95056019e4dbf010f95635ca6db",
             "capability_manifest_sha256": "09425681a2632d2d5ff7595eadf18b4bf4f2499a1bd65829e9d2494b52bf31cb",
             "capability_grant_sha256": "d93bac355f7238c8239df2b31422f8a1415dd531431ab9c6475c68fbedb9c025",
             "credential_grant_sha256": "10b8d2093c82b8339a0268c610c0b1dc472a4c40b4c6912538315568e8a0b403",
@@ -18541,7 +18541,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1057\r\n\r\n",
           "canonicalBodyByteLength": 1057,
-          "canonicalBodySha256": "f8a20428242ebfe7df69af6595524f1d34a1e929a9a2272f16f9bda8c4e80310",
+          "canonicalBodySha256": "c0d5a3e3b926d42da06637668f6ebd4054885ac39764875c7964cf5fc10eb2a6",
           "completeFrameByteLength": 1081
         },
         "invokeRequest": {
@@ -18883,16 +18883,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -18959,7 +18959,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3969\r\n\r\n",
           "canonicalBodyByteLength": 3969,
-          "canonicalBodySha256": "a8900f86a3fb110d1544201291e60fd73b4f518b72dc8cb23bdaab7b61166f4a",
+          "canonicalBodySha256": "8f1cfecafb808e5c0c0819ecf2ab9f9f6f5370628d1eb5278466177a7dacd4f2",
           "completeFrameByteLength": 3993
         },
         "initializeSuccess": {
@@ -18975,7 +18975,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "e6d09e281ef1d2ac752a99d0793d66e69730bc1fb1bd4734b195380c15c954c4",
             "capability_grant_sha256": "cf53a92b80666e8e621c8fea4ef43ed987aa15428435315c01feb72de8361b2f",
             "credential_grant_sha256": "2962779b8ca06709e342440e8a3dd181d8cf0d08fd3eb0e9831b0f9c27698b3a",
@@ -18987,7 +18987,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1101\r\n\r\n",
           "canonicalBodyByteLength": 1101,
-          "canonicalBodySha256": "5902aca15f25020bdcbeb311bb40796c326dcdc063acd848d7a893d0a8612f79",
+          "canonicalBodySha256": "5f43c549beb5003fb15111a3363ddccfe561d192b5a5bd062e4695c01ff15a97",
           "completeFrameByteLength": 1125
         },
         "invokeRequest": {
@@ -19111,16 +19111,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -19187,7 +19187,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3914\r\n\r\n",
           "canonicalBodyByteLength": 3914,
-          "canonicalBodySha256": "67b872c0f6179c782295352c09ef86447cf2b62bf603cbbe2c7d80ecba9f5f9d",
+          "canonicalBodySha256": "15b572c14eabf02c41ff1502ed3baa83614c78748af2010794f69d5ce46beb57",
           "completeFrameByteLength": 3938
         },
         "initializeSuccess": {
@@ -19203,7 +19203,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "ccceca8e24c398fa7ff9f8e5931e86807d7cd03ccfe357b1b71b0ef490522935",
             "capability_grant_sha256": "75e22e56d5eb196089f8a0e49472ca5dc6616611498d1cd87c878f4187c3c902",
             "credential_grant_sha256": "e594247a009b4b5a7efddd5b4e158246485a9ebfc5b94536571d9377969606a4",
@@ -19215,7 +19215,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1083\r\n\r\n",
           "canonicalBodyByteLength": 1083,
-          "canonicalBodySha256": "65ea1b60dec2f000fc65537e0ab1b092d612251801180cbd5ffe3199c402f7c6",
+          "canonicalBodySha256": "f8a4b3f72071ef18f3e40db96acf6f638afb722b1112cdca7eb7b238864e3d7d",
           "completeFrameByteLength": 1107
         },
         "invokeRequest": {
@@ -19330,16 +19330,16 @@
               "confirmed_operations": [
                 "calendar.availability.read",
                 "calendar.event.create",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.calendar.availability.read",
-                "fixture.calendar.event.create",
-                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.connector.probe",
                 "fixture.calendar.effect.readback",
-                "fixture.calendar.connector.probe"
+                "fixture.calendar.effect.reconcile",
+                "fixture.calendar.event.create"
               ],
               "credential_reference": "fixture:credential-ref:calendar:001",
               "verification_evidence_ref": "fixture:evidence:binding:calendar:eva:001",
@@ -19406,7 +19406,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3873\r\n\r\n",
           "canonicalBodyByteLength": 3873,
-          "canonicalBodySha256": "9700d122bee8a9d3e2101b76463333ba2aeabecebc7c9583063ddec749520bfc",
+          "canonicalBodySha256": "657692891c9b582cd0ba2546f1d22fdf76b0d87fc293a22aeb691f9577845f89",
           "completeFrameByteLength": 3897
         },
         "initializeSuccess": {
@@ -19422,7 +19422,7 @@
             "connector_manifest_sha256": "96b6ff954e907d1c18d1d91226864d9822de4cb2f0f22182f302d885cc5564b7",
             "worker_id": "fixture:worker:calendar:001",
             "worker_executable_sha256": "b5d6d1c715160a60c9fbb0b0d92a3b074bd9a2ec2cda37ec003e657d27219eb2",
-            "connector_binding_sha256": "f380e9e85cf37586907d88a9f2807f7d59dafc8b78ddeb9e125b02f3ab7fbb8c",
+            "connector_binding_sha256": "0809bfc7d819e56e26e97d3212106983ddb2bddd3a6d8167239f6482d08dc138",
             "capability_manifest_sha256": "1e7d7220e529dc211267bc377cba72c8ece86072da742ad5416a1f63aee0176b",
             "capability_grant_sha256": "954528ca4ffef46fca3d94f7bba974e9e753fea5e1821a7ecf2b412b2613939b",
             "credential_grant_sha256": "e9647ac5eba29cf481111f1127d98374d8f72315c36fe1a162f5027229e57993",
@@ -19434,7 +19434,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1089\r\n\r\n",
           "canonicalBodyByteLength": 1089,
-          "canonicalBodySha256": "4b4493f6de70ada5b892bf9d4d709e16771e320ad2ea97137f85857175dd0464",
+          "canonicalBodySha256": "d7254b83e71dd30c45250c92e9efc9109eb18715685c63d469cab48592701c96",
           "completeFrameByteLength": 1113
         },
         "invokeRequest": {
@@ -19560,16 +19560,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -19636,7 +19636,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3819\r\n\r\n",
           "canonicalBodyByteLength": 3819,
-          "canonicalBodySha256": "f1e2272e95d0d8c25ab1fa2637335710f18f4e24a2a1c29fe6a62bf89033559d",
+          "canonicalBodySha256": "b8053d6112878fcef5d10fac285e943cda396ce6e2a417ff84b22858c517c76c",
           "completeFrameByteLength": 3843
         },
         "initializeSuccess": {
@@ -19652,7 +19652,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "75a038ab211fdc0196441b542dc0cfc9a2c9c830ccfa957b62dff657b38ca760",
             "capability_grant_sha256": "6663d4b35532c3af70ea1ea69e8ffc0a2576ca9bcdad4755f726c934deeba819",
             "credential_grant_sha256": "b1fa1a5c582e8d8bce1c1031dbe34dd610d6eeb2eef74c817ba260ca73b880f6",
@@ -19664,7 +19664,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1083\r\n\r\n",
           "canonicalBodyByteLength": 1083,
-          "canonicalBodySha256": "ade6aaf9cb20d5513e82fcf1279b653d5e8f9f4a30b8f3cb5db47b326b95a4b1",
+          "canonicalBodySha256": "02ef08ee30d33966c01c1ad5208b793ba7014599f9556342ec9bbe49a3f3dc82",
           "completeFrameByteLength": 1107
         },
         "invokeRequest": {
@@ -19776,16 +19776,16 @@
               "provider_account_id": "fixture:document-account:owner:001",
               "provider_resource_id": "fixture:document-destination:noor:001",
               "confirmed_operations": [
+                "connector.probe",
                 "document.create",
-                "effect.reconcile",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
+                "fixture.document.connector.probe",
                 "fixture.document.create",
-                "fixture.document.effect.reconcile",
                 "fixture.document.effect.readback",
-                "fixture.document.connector.probe"
+                "fixture.document.effect.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:document:001",
               "verification_evidence_ref": "fixture:evidence:binding:document:eva:001",
@@ -19852,7 +19852,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3823\r\n\r\n",
           "canonicalBodyByteLength": 3823,
-          "canonicalBodySha256": "330aea0178a76c7a8fc545d5535246de175289da015b32f159e08ce43522e477",
+          "canonicalBodySha256": "78bc79de7f356ee16af626aea42d271abffe988da17f333d0f3c979844be6775",
           "completeFrameByteLength": 3847
         },
         "initializeSuccess": {
@@ -19868,7 +19868,7 @@
             "connector_manifest_sha256": "79e00b246c0bdc878dea6419e2e0ea006809ea78be53e1617b7e4a67ffa17dae",
             "worker_id": "fixture:worker:document:001",
             "worker_executable_sha256": "4e68afbe8d23063b286e2e7294fa1927df8ee0fc41eb1001a8a7dd6e34fd66e1",
-            "connector_binding_sha256": "ab1da97ac6ca96cea38480bf6e7ecf3cb9ff554ccf352a0377d23a269e497849",
+            "connector_binding_sha256": "1924edc3bba73518d1e8227096315a938d56008932c270b14c5850bf4c889b93",
             "capability_manifest_sha256": "803277a1c3a862d77a8d4d134163516e6eab84033bd29df8642c186a6219848e",
             "capability_grant_sha256": "6c6178cec84f991597b71d09a76d5377abaa06e3ddacce48a2ed909962875658",
             "credential_grant_sha256": "846f6e7e34bbf70dc6257f32fbf348b51b09ded83790c4e82ed59bf1361deda6",
@@ -19880,7 +19880,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1089\r\n\r\n",
           "canonicalBodyByteLength": 1089,
-          "canonicalBodySha256": "d436df05fa47cc4573eba49444fe59ed76871f9ccb7edd3aca6e8120ab91767f",
+          "canonicalBodySha256": "f91b5b37b962f7801090fb609d7025385626ecf9313dac5b14327ca5110e326b",
           "completeFrameByteLength": 1113
         },
         "invokeRequest": {
@@ -20003,16 +20003,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -20079,7 +20079,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3963\r\n\r\n",
           "canonicalBodyByteLength": 3963,
-          "canonicalBodySha256": "5fb457875853d8ed56812b34f54c432192d17ca91e0cc7c5dce33d24793de4bf",
+          "canonicalBodySha256": "0d160e5fa4746f69e8544dccefd92a350b4e5379b7a4b559f05a2ff2de71577a",
           "completeFrameByteLength": 3987
         },
         "initializeSuccess": {
@@ -20095,7 +20095,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "2046487440d2416a484851dda9560fdcf49474158d402d8369e952a406043a89",
             "capability_grant_sha256": "f3e1cf14ba6eed5b2f43ccaae8a49603c07538287a44e1f0cc89420c7c7e1013",
             "credential_grant_sha256": "0859bea01700c7839427006bad6f6c3c477ba563e719d63bf3d0f1d457b16bc7",
@@ -20107,7 +20107,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1096\r\n\r\n",
           "canonicalBodyByteLength": 1096,
-          "canonicalBodySha256": "4731e217d700eb36b5892fac7b5ed0c2c4385b7cc5c702608cd283c3aecf4f7f",
+          "canonicalBodySha256": "b4113e724d69d5484a4cf93dfcc32566a71b3c278daf5d75947967b4fcc9ba92",
           "completeFrameByteLength": 1120
         },
         "invokeRequest": {
@@ -20219,16 +20219,16 @@
               "provider_account_id": "fixture:channel-account:http:001",
               "provider_resource_id": "planning@noorbv.example",
               "confirmed_operations": [
-                "message.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile",
+                "message.deliver"
               ],
               "confirmed_scopes": [
                 "fixture.channel.confirmation.deliver",
-                "fixture.channel.confirmation.reconcile",
+                "fixture.channel.confirmation.probe",
                 "fixture.channel.confirmation.readback",
-                "fixture.channel.confirmation.probe"
+                "fixture.channel.confirmation.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-confirmation:001",
               "verification_evidence_ref": "fixture:evidence:binding:confirmation:eva:001",
@@ -20295,7 +20295,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3932\r\n\r\n",
           "canonicalBodyByteLength": 3932,
-          "canonicalBodySha256": "8b7add8e46497d8e4a5724c5153e80ff545bcbac756280257604ad1ccdcba69d",
+          "canonicalBodySha256": "a6260a04d4b603aa1a7be4663eb3abb90398a8c38880cea022dd99ce3a032d86",
           "completeFrameByteLength": 3956
         },
         "initializeSuccess": {
@@ -20311,7 +20311,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "495f88659923e596836fbd6e6426b224c5f42ef5c955d2b587885617f1f7725b",
+            "connector_binding_sha256": "8ebff5b11478bb1c8fb5f104a155bc59749dbad3c844d8187aeb68e5096b5c25",
             "capability_manifest_sha256": "936efc713f9c746c37e8cf57dc3b2cbb853bc06b4825eb7a00cea0a91923adbe",
             "capability_grant_sha256": "83187ed7e4f1038235b68755f6782572b0b3bf1fff4652429b358290210527a4",
             "credential_grant_sha256": "4ccc7c55a8245218345dfb02a9de3eb19daf62f74cfd2f99912411aad75a0c77",
@@ -20323,7 +20323,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1099\r\n\r\n",
           "canonicalBodyByteLength": 1099,
-          "canonicalBodySha256": "4c50536b173752ed135b40d7d53b8164309ce84f80b0e7095b358e2d6a20fdfc",
+          "canonicalBodySha256": "a0fc0a81e2363c8793e18debf2fcdf6a94263c91f14646025c2f02007093a528",
           "completeFrameByteLength": 1123
         },
         "invokeRequest": {
@@ -20447,15 +20447,15 @@
               "provider_resource_id": "fixture:conversation:noor:001",
               "confirmed_operations": [
                 "channel.result.deliver",
-                "effect.reconcile",
+                "connector.probe",
                 "effect.readback",
-                "connector.probe"
+                "effect.reconcile"
               ],
               "confirmed_scopes": [
                 "fixture.channel.outcome.deliver",
-                "fixture.channel.outcome.reconcile",
+                "fixture.channel.outcome.probe",
                 "fixture.channel.outcome.readback",
-                "fixture.channel.outcome.probe"
+                "fixture.channel.outcome.reconcile"
               ],
               "credential_reference": "fixture:credential-ref:channel-outcome:001",
               "verification_evidence_ref": "fixture:evidence:binding:outcome:eva:001",
@@ -20522,7 +20522,7 @@
         "initializeRequestFrame": {
           "headerAscii": "Content-Length: 3978\r\n\r\n",
           "canonicalBodyByteLength": 3978,
-          "canonicalBodySha256": "d84eed5cb988fceca5762734d4ed52779d64bc01eda6ec1244b771761907c063",
+          "canonicalBodySha256": "a552fd94c242bf5a1367eb50c298498607a7c00b5ece090e8676f299387ff9b7",
           "completeFrameByteLength": 4002
         },
         "initializeSuccess": {
@@ -20538,7 +20538,7 @@
             "connector_manifest_sha256": "0ef3a701f5338c59853676d192fe5be4a659f90968f0e703ca8c671b54093787",
             "worker_id": "fixture:worker:channel:001",
             "worker_executable_sha256": "af2f38e1eb01028d1531a4d1037e7ca2d46c2ce75c2dd6a6241b7d5b21f24364",
-            "connector_binding_sha256": "1e824a0b12d6ed654e15dac32150bcc996c1e4e46152e3c0a8d3059363698bba",
+            "connector_binding_sha256": "ab6ecffe12c49b3d36481bc0abe7e43c0b4f93ad94e64ac04f525c6af419b129",
             "capability_manifest_sha256": "78d5bd5db92a20ac8d7ebaa9cb08dee7f75416aa3ababcc9d36f1f0714dc21de",
             "capability_grant_sha256": "ba2e8914750c98dc49a71b1eb3b8078fec279bca2c193a78f906ac2727816b56",
             "credential_grant_sha256": "9e2ae448d7cd650243dc6e7ad2878c36f7596416220f98231ec7e3d893d43aab",
@@ -20550,7 +20550,7 @@
         "initializeSuccessFrame": {
           "headerAscii": "Content-Length: 1117\r\n\r\n",
           "canonicalBodyByteLength": 1117,
-          "canonicalBodySha256": "e610a9925011c99ef4fe2a60697c58127f133855652304123fef0825325eb87c",
+          "canonicalBodySha256": "c7e867c600cca90a9a86fccda767afbe0c8728749f07a2c3c8bd768fafae2150",
           "completeFrameByteLength": 1141
         },
         "invokeRequest": {

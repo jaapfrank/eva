@@ -347,6 +347,13 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 "preCrashAttemptReference"
             ]["responseBytesDurablyAdoptable"] = True
 
+        def connector_binding_set_order(artifact: dict[str, Any]) -> None:
+            operations = artifact["concreteBindings"][0]["payload"][
+                "confirmed_operations"
+            ]
+            self.assertEqual(2, len(operations))
+            operations.reverse()
+
         def model(artifact: dict[str, Any]) -> None:
             artifact["fixtureAdapterProfile"]["programSha256"] = "0" * 64
 
@@ -427,6 +434,13 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 freeze.CONNECTOR_ARTIFACT_PATH,
                 connector_c10,
                 "connector C10 durable ordinal-2 read authority is not exact",
+            ),
+            (
+                "connector binding set order",
+                freeze.CONNECTOR_ARTIFACT_PATH,
+                connector_binding_set_order,
+                "connector concrete binding and verification set arrays are not exact "
+                "UTF-8-canonical mirrors",
             ),
             (
                 "model",
@@ -517,6 +531,19 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
             self.assertEqual(3, fact["portable_record"]["row"]["revision"])
             fact["portable_record"]["row"]["revision"] = 2
 
+        def successful_observed_read_not_revision_two(
+            artifact: dict[str, Any],
+        ) -> None:
+            fact = next(
+                row
+                for row in artifact["portableSnapshotAuthority"]["fixtureFactCatalog"][
+                    "facts"
+                ]
+                if row["fact_id"] == "read-attempt/mail-search"
+            )
+            self.assertEqual(2, fact["portable_record"]["row"]["revision"])
+            fact["portable_record"]["row"]["revision"] = 1
+
         for label, mutate, expected in (
             (
                 "runtime inference",
@@ -567,6 +594,12 @@ class FourDPreCodeFreezeTests(unittest.TestCase):
                 "non-incrementing revision CAS",
                 revision_cas_not_incremented,
                 "exact ordered +1 revisionCas chains",
+            ),
+            (
+                "successful observed read without dispatch fence",
+                successful_observed_read_not_revision_two,
+                "seven happy successful read attempts are not exact revision-2 "
+                "observed fences",
             ),
         ):
             with self.subTest(label=label):

@@ -51,13 +51,13 @@ EXPECTED_ARTIFACT_SHA256 = {
         "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38"
     ),
     CONNECTOR_ARTIFACT_PATH: (
-        "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+        "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
     ),
     MODEL_ARTIFACT_PATH: (
-        "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+        "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593"
     ),
     SCHEDULE_ARTIFACT_PATH: (
-        "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
+        "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d"
     ),
 }
 EXPECTED_ARTIFACT_CONTRACTS = {
@@ -75,7 +75,7 @@ PRE_RUNTIME_GATE_RULE = (
     "any failure resets it to false"
 )
 EXPECTED_HARNESS_ENTROPY_AUTHORITY_SHA256 = (
-    "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec"
+    "38c4bb987abe5652cc223e4dacb4fe0b440495127bec62174cca7978d844f310"
 )
 EXPECTED_HARNESS_ENTROPY_BINDING_MANIFEST_SHA256 = (
     "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359"
@@ -1791,6 +1791,84 @@ def _check_connector_artifact(connector: dict[str, Any], errors: list[str]) -> N
         "connector/provider artifact counts are not exact",
     )
     _check_content_addressed_payloads(connector, errors, "connector")
+
+    def is_utf8_canonical_text_set(value: Any) -> bool:
+        return (
+            isinstance(value, list)
+            and all(isinstance(item, str) for item in value)
+            and len(value) == len(set(value))
+            and value == sorted(value, key=lambda item: item.encode("utf-8"))
+        )
+
+    concrete_binding_payloads: dict[tuple[Any, Any], dict[str, Any]] = {}
+    binding_sets_valid = True
+    for binding in connector.get("concreteBindings", []):
+        if not isinstance(binding, dict):
+            binding_sets_valid = False
+            continue
+        payload = binding.get("payload", {})
+        verification = binding.get("verificationEvidence", {}).get("payload", {})
+        operations = payload.get("confirmed_operations")
+        scopes = payload.get("confirmed_scopes")
+        if not (
+            isinstance(payload, dict)
+            and isinstance(verification, dict)
+            and is_utf8_canonical_text_set(operations)
+            and is_utf8_canonical_text_set(scopes)
+            and verification.get("verified_operations") == operations
+            and verification.get("verified_scopes") == scopes
+        ):
+            binding_sets_valid = False
+        concrete_binding_payloads[
+            (binding.get("logicalBindingKey"), binding.get("identityRun"))
+        ] = payload
+    _need(
+        errors,
+        binding_sets_valid and len(concrete_binding_payloads) == 12,
+        "connector concrete binding and verification set arrays are not exact "
+        "UTF-8-canonical mirrors",
+    )
+
+    operation_cases = connector.get("operationCallCases", {})
+    conformance_cases = rpc.get("conformanceCases", {})
+    rpc_binding_roundtrips_valid = (
+        isinstance(operation_cases, dict)
+        and isinstance(conformance_cases, dict)
+        and len(conformance_cases) == 58
+    )
+    for case_id, conformance_case in (
+        conformance_cases.items() if isinstance(conformance_cases, dict) else []
+    ):
+        operation_case = operation_cases.get(case_id, {})
+        expected_binding = concrete_binding_payloads.get(
+            (
+                operation_case.get("logicalBindingKey"),
+                operation_case.get("identityRun"),
+            )
+        )
+        initialize_binding = (
+            conformance_case.get("initializeRequest", {})
+            .get("params", {})
+            .get("connector_binding")
+            if isinstance(conformance_case, dict)
+            else None
+        )
+        if not (
+            isinstance(operation_case, dict)
+            and isinstance(expected_binding, dict)
+            and initialize_binding == expected_binding
+            and is_utf8_canonical_text_set(
+                initialize_binding.get("confirmed_operations")
+            )
+            and is_utf8_canonical_text_set(initialize_binding.get("confirmed_scopes"))
+        ):
+            rpc_binding_roundtrips_valid = False
+    _need(
+        errors,
+        rpc_binding_roundtrips_valid,
+        "connector RPC initialize bindings are not exact UTF-8-canonical "
+        "concrete-binding roundtrips",
+    )
 
     sandbox_hash = connector.get("fixtureWorkerSandbox", {}).get("canonicalSha256")
     programs = connector.get("fixtureWorkerPrograms", {})
@@ -3656,12 +3734,52 @@ def _check_schedule_artifact(
                 == row.get("source_payload_sha256")
                 == sha256_bytes(canonical_json_bytes(source_payload))
                 and row.get("payload") == redacted_payload
+                and row.get("confirmed_operations")
+                == source_payload.get("confirmed_operations")
+                and row.get("confirmed_scopes")
+                == source_payload.get("confirmed_scopes")
                 and row.get("redacted_payload_sha256")
                 == sha256_bytes(canonical_json_bytes(redacted_payload))
                 and row.get("credential_reauthorization_required") is True
             ):
                 catalog_valid = False
             redacted_binding_count += 1
+
+    happy_observed_read_fact_ids = (
+        "read-attempt/mail-search",
+        "read-attempt/mail-read",
+        "read-attempt/erp",
+        "read-attempt/availability",
+        "read-attempt/calendar-verify",
+        "read-attempt/document-verify",
+        "read-attempt/confirmation-verify",
+    )
+    _need(
+        errors,
+        all(
+            fact_by_id.get(fact_id, {}).get("table") == "eva_effects.read_attempts"
+            and fact_by_id[fact_id]
+            .get("portable_record", {})
+            .get("row", {})
+            .get("state")
+            == "observed"
+            and fact_by_id[fact_id]
+            .get("portable_record", {})
+            .get("row", {})
+            .get("revision")
+            == 2
+            and isinstance(
+                fact_by_id[fact_id]
+                .get("portable_record", {})
+                .get("row", {})
+                .get("response_sha256"),
+                str,
+            )
+            for fact_id in happy_observed_read_fact_ids
+        ),
+        "schedule seven happy successful read attempts are not exact revision-2 "
+        "observed fences",
+    )
     catalog_hashes = [
         row.get("catalog_entry_sha256") for row in facts if isinstance(row, dict)
     ]

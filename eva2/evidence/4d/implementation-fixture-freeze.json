@@ -2,8 +2,8 @@
   "contract": "Eva24DImplementationFixtureFreeze/v1",
   "tranche": "4D-static-design-adoption",
   "status": "passed_runtime_coding_authorized",
-  "createdAt": "2026-08-21T17:12:10+02:00",
-  "baseCommit": "e2728c53a99941b63909a2e214c87dd27a8c5fac",
+  "createdAt": "2026-08-21T18:02:13+02:00",
+  "baseCommit": "7889b280a2d8cf4aa3ed5717cbb65a9f9161e1ef",
   "branch": "recovery/v2-containment",
   "claimBoundary": {
     "fourExactDesignArtifactsAdopted": true,
@@ -28,40 +28,40 @@
       "artifactId": "connector_provider_fixtures",
       "path": "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
       "contract": "Eva24DConnectorProviderFixtures/v1",
-      "sha256": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
+      "sha256": "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6",
       "status": "sealed_verified"
     },
     {
       "artifactId": "deterministic_model_vectors",
       "path": "eva2/design/vertical/noor-4d-model-vectors-v1.json",
       "contract": "Eva24DModelVectors/v1",
-      "sha256": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
+      "sha256": "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593",
       "status": "sealed_verified"
     },
     {
       "artifactId": "concurrency_crash_schedules",
       "path": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
       "contract": "Eva24DConcurrencyCrashSchedules/v1",
-      "sha256": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10",
+      "sha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
       "status": "sealed_verified"
     }
   ],
   "sourceProfile": {
     "path": "eva2/design/vertical/noor-4d-execution-profile-v1.json",
-    "wholeFileSha256": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
+    "wholeFileSha256": "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe",
     "semanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020",
     "semanticCoreRule": "SHA-256 over EvaCanonicalJSON/v1 after removing only preRuntimeRequiredArtifacts",
     "semanticCoreUnchangedFromPreviousFreeze": true,
     "previousSemanticCoreSha256": "a2d83cc5846a667834081b667b17a50fa7c1552dd367649d6d03b30d2fdcd020",
     "semanticCoreResealed": false,
-    "resealReason": "only preRuntimeRequiredArtifacts bindings changed after the schedule write-profile correction; the semantic core remained byte-identical"
+    "resealReason": "only preRuntimeRequiredArtifacts bindings changed for the canonical connector binding arrays, model dependency rebind and schedule read-attempt fences; the semantic core remained byte-identical"
   },
   "harnessEntropyException": {
     "profileAuthority": "preRuntimeRequiredArtifacts.harnessEntropyInjectionException",
     "profileAuthorityIsSoleIsolated4DException": true,
     "schedulePath": "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
     "scheduleAuthoritySelector": "harnessEntropyInjectionAuthority",
-    "scheduleAuthoritySha256": "a90bb72724dccf8a083c964d4632d0d9308f59300bbd7faed028757a1ceac1ec",
+    "scheduleAuthoritySha256": "38c4bb987abe5652cc223e4dacb4fe0b440495127bec62174cca7978d844f310",
     "schedulePathBindingManifestSha256": "2302e0400910a2888de9417742dd08c72398b0b65db1cd96f4abaf49e7e93359",
     "scope": "exact public Eva fixture key, known-answer vector, object and either of two sealed document attempts in an isolated Noor 4D schedule run",
     "nonceByteLength": 24,
@@ -78,31 +78,31 @@
     "deterministicProductionNonceAllowed": false,
     "productionEntropyOrEncryptionClaim": false
   },
-  "checkerReceiptCanonicalJsonSha256": "2f07e427837f733f63c3870924472cfe90b37de63df7c9382fd87295fc5fe77c",
-  "checkerCliOutputSha256": "68f4795bc1c6856a1b4d50f6880dbc1b1d320d1d28a1182558c66506185a13e0",
+  "checkerReceiptCanonicalJsonSha256": "2c3184f0d41fd6d7aabe21d125f592d93c64d141ce22b968b136bf44ec5d4dd7",
+  "checkerCliOutputSha256": "88ac25e1d127305c67ae4719d891cdbcbe1b95ba994488557b690b3ff329768d",
   "checkerReceipt": {
     "contract": "Eva24DPreCodeFreezeCheck/v1",
-    "status": "passed",
-    "networkUsed": false,
     "databaseUsed": false,
-    "serviceStarted": false,
     "dependenciesInstalled": false,
+    "errors": [],
+    "missingPreRuntimeArtifacts": [],
+    "networkUsed": false,
     "productRuntimeImported": false,
     "runtimeCodingAllowed": true,
-    "missingPreRuntimeArtifacts": [],
+    "serviceStarted": false,
+    "status": "passed",
     "verifiedHashes": {
-      "eva2/design/vertical/noor-4d-execution-profile-v1.json": "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6",
+      "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
+      "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json": "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6",
+      "eva2/design/vertical/noor-4d-execution-profile-v1.json": "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe",
+      "eva2/design/vertical/noor-4d-model-vectors-v1.json": "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593",
+      "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
+      "eva2/pyproject.toml": "bf552110352035faf1533c23c33915e5ab85445de7e156c044ee4f8356310789",
       "eva2/release/4d-dependency-source-binding.json": "8bd1c160bd0a41ca0c39c257736316d293a4ff80f8b21e397480f48f1afb5da3",
       "eva2/requirements-4d.lock": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
-      "eva2/pyproject.toml": "bf552110352035faf1533c23c33915e5ab85445de7e156c044ee4f8356310789",
-      "eva2/tools/check_4d_freeze.py": "a5f5db4fd0200b106d6837c0d433343f38101963bd67f824ce030a3a38e45557",
-      "eva2/tests/design/test_4d_freeze.py": "90b3258985904c9404be59fde97a50435a62727d4b135bc9d234dc6148dcaa17",
-      "eva2/design/vertical/noor-4d-schema-export-freeze-v1.json": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
-      "eva2/design/vertical/noor-4d-connector-provider-fixtures-v1.json": "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5",
-      "eva2/design/vertical/noor-4d-model-vectors-v1.json": "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c",
-      "eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json": "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
-    },
-    "errors": []
+      "eva2/tests/design/test_4d_freeze.py": "a8192fc45edfab06b363f5920e2812ccf4c89821b0a71ed659cbb91df50cbcf1",
+      "eva2/tools/check_4d_freeze.py": "7925eef5828b1127ebbd40b40818a04478c637b5a588ca88dda140f35d1a2bfd"
+    }
   },
   "gates": [
     {
@@ -125,7 +125,7 @@
       "status": "passed_with_expected_dependency_skip",
       "passed": 13,
       "skipped": 1,
-      "durationSeconds": 218.93,
+      "durationSeconds": 239.84,
       "skip": "maintained-library XChaCha KAT requires the sealed PyNaCl environment"
     },
     {
@@ -145,9 +145,9 @@
   "mutationCoverage": [
     "whole-file artifact changes remain rejected after coordinated profile rehash",
     "schema table counts, migration admission, PostgreSQL-safe index names, role grants, C collations, object-store namespace and primitive generation bounds",
-    "connector ingress, C10 repeat read and C13 re-offer",
+    "connector concrete/verification binding set arrays, all 58 RPC initialize binding mirrors, ingress, C10 repeat read and C13 re-offer",
     "model program manifest and connector durable crosswalk",
-    "schedule runtime inference, 390-row fact catalog, record sets, 33 selected ciphertext paths, C13 references and correction ObjectRef manifest",
+    "schedule runtime inference, 390-row fact catalog, record sets, seven successful observed read-attempt revision-2 fences, 33 selected ciphertext paths, C13 references and correction ObjectRef manifest",
     "102 explicit schedule full-CAS edges classified against schema write profiles, with a fail-closed non-exact-plus-one revisionCas mutation",
     "harness authority self/path hashes, one-use nonce, durable trace and production/default prohibitions",
     "profile authority hash, one-use limit and production bootstrap prohibition"
