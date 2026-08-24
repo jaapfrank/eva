@@ -1,0 +1,4567 @@
+{
+  "captured_at": "2026-08-24T10:37:13Z",
+  "counts": {
+    "container_only": 0,
+    "different": 8,
+    "identical": 363,
+    "total": 377,
+    "worktree_only": 6
+  },
+  "files": [
+    {
+      "container": {
+        "sha256": "903cd858477079bc90d47bd2520c34f01b3921f0ed8565d442ec62c2d1ec5b0d",
+        "size": 595
+      },
+      "path": "alembic.ini",
+      "state": "identical",
+      "worktree": {
+        "sha256": "903cd858477079bc90d47bd2520c34f01b3921f0ed8565d442ec62c2d1ec5b0d",
+        "size": 595
+      }
+    },
+    {
+      "container": {
+        "sha256": "53c62d2b4a965cef8a6e0295a87920f98cda89c2d294fec18dce586ebeac54c5",
+        "size": 83
+      },
+      "path": "connector_sdk/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "53c62d2b4a965cef8a6e0295a87920f98cda89c2d294fec18dce586ebeac54c5",
+        "size": 83
+      }
+    },
+    {
+      "container": {
+        "sha256": "db5869b900715d8999ea2463345d024c18da6ce4cd37c187814f5c4c33f0b2f9",
+        "size": 267
+      },
+      "path": "connector_sdk/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "db5869b900715d8999ea2463345d024c18da6ce4cd37c187814f5c4c33f0b2f9",
+        "size": 267
+      }
+    },
+    {
+      "container": {
+        "sha256": "3447e73fa166aa41ac9d890f7e081a44541f9395ab05e3f11b02e2c55dfebaea",
+        "size": 25305
+      },
+      "path": "connector_sdk/__pycache__/fixture_runner.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3447e73fa166aa41ac9d890f7e081a44541f9395ab05e3f11b02e2c55dfebaea",
+        "size": 25305
+      }
+    },
+    {
+      "container": {
+        "sha256": "30d88ad7055705a84e9ec143f98836c94722113052bdc09bc0aae5e1ab263bc0",
+        "size": 217
+      },
+      "path": "connector_sdk/conformance/README.md",
+      "state": "identical",
+      "worktree": {
+        "sha256": "30d88ad7055705a84e9ec143f98836c94722113052bdc09bc0aae5e1ab263bc0",
+        "size": 217
+      }
+    },
+    {
+      "container": {
+        "sha256": "e0d35054a7d9c4b5904e8c1580ac7a3c2aca9544f79f9e399c43f6cd523bceee",
+        "size": 218
+      },
+      "path": "connector_sdk/contracts/README.md",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e0d35054a7d9c4b5904e8c1580ac7a3c2aca9544f79f9e399c43f6cd523bceee",
+        "size": 218
+      }
+    },
+    {
+      "container": {
+        "sha256": "2cff3b56cc6ce2946a9a1c601d4d63a1a8da5a45ffab4fc4ae6c66839320b067",
+        "size": 21772
+      },
+      "path": "connector_sdk/fixture_runner.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2cff3b56cc6ce2946a9a1c601d4d63a1a8da5a45ffab4fc4ae6c66839320b067",
+        "size": 21772
+      }
+    },
+    {
+      "container": {
+        "sha256": "1cbf70412cc7e03f84119100a8858bbcf8fd26d7eeb0e867da1cce1e195165ab",
+        "size": 971
+      },
+      "path": "migrations/README.md",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1cbf70412cc7e03f84119100a8858bbcf8fd26d7eeb0e867da1cce1e195165ab",
+        "size": 971
+      }
+    },
+    {
+      "container": {
+        "sha256": "6b2098f62f4e53be503be1252a56851faf4cc35ec49f7be57dbe577892559788",
+        "size": 9384
+      },
+      "path": "migrations/__pycache__/env.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6b2098f62f4e53be503be1252a56851faf4cc35ec49f7be57dbe577892559788",
+        "size": 9384
+      }
+    },
+    {
+      "container": {
+        "sha256": "8e12215fb3c2a1a27f91a83292e7f213aeae900a04c60a1cf549bb7f42e1c90a",
+        "size": 6884
+      },
+      "path": "migrations/env.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8e12215fb3c2a1a27f91a83292e7f213aeae900a04c60a1cf549bb7f42e1c90a",
+        "size": 6884
+      }
+    },
+    {
+      "container": {
+        "sha256": "3692e71f3ed37880b5679ee9814d5bf797a3472a377cf973d8e15d31ed46bcbc",
+        "size": 505
+      },
+      "path": "migrations/script.py.mako",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3692e71f3ed37880b5679ee9814d5bf797a3472a377cf973d8e15d31ed46bcbc",
+        "size": 505
+      }
+    },
+    {
+      "container": {
+        "sha256": "59fc8da9f1e152b69d953746187e413fe0602dff7df7de0b01160e3d3867cb6c",
+        "size": 2043
+      },
+      "path": "migrations/versions/4b_0000_core_namespace.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "59fc8da9f1e152b69d953746187e413fe0602dff7df7de0b01160e3d3867cb6c",
+        "size": 2043
+      }
+    },
+    {
+      "container": {
+        "sha256": "4a65a74790aec595c8643a991e64b10a7e0533f14ff1afe277fef57c6000e3a4",
+        "size": 2871
+      },
+      "path": "migrations/versions/4b_0001_tenant_scope.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4a65a74790aec595c8643a991e64b10a7e0533f14ff1afe277fef57c6000e3a4",
+        "size": 2871
+      }
+    },
+    {
+      "container": {
+        "sha256": "8e725d5696dad6104a25e1580bd28cc6c018427938c3d8dd42748afd4e4dd2e7",
+        "size": 13151
+      },
+      "path": "migrations/versions/4b_0002_episode_atomicity.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8e725d5696dad6104a25e1580bd28cc6c018427938c3d8dd42748afd4e4dd2e7",
+        "size": 13151
+      }
+    },
+    {
+      "container": {
+        "sha256": "7c3785e5a41597e8c649de9d888e2fa155bc65d120f4b234e3012dff4b149d67",
+        "size": 10020
+      },
+      "path": "migrations/versions/4d_0003_core_continuity.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7c3785e5a41597e8c649de9d888e2fa155bc65d120f4b234e3012dff4b149d67",
+        "size": 10020
+      }
+    },
+    {
+      "container": {
+        "sha256": "db41c37744d4ab949b054a6bf495a6bce9c3e02efc59587f15f19b11f15854b4",
+        "size": 3701
+      },
+      "path": "migrations/versions/4d_0004_effect_authority.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "db41c37744d4ab949b054a6bf495a6bce9c3e02efc59587f15f19b11f15854b4",
+        "size": 3701
+      }
+    },
+    {
+      "container": {
+        "sha256": "c9f72933704adabc4eed01bceea02921bab0bebb790c46f7595436d8f85b9fb1",
+        "size": 3484
+      },
+      "path": "migrations/versions/4d_0005_evidence_objects.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c9f72933704adabc4eed01bceea02921bab0bebb790c46f7595436d8f85b9fb1",
+        "size": 3484
+      }
+    },
+    {
+      "container": {
+        "sha256": "65c45f0e3c1024ec99720ae663b90c7c308ebdb3d4537ce39916caae47e1e537",
+        "size": 3519
+      },
+      "path": "migrations/versions/4d_0006_memory.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "65c45f0e3c1024ec99720ae663b90c7c308ebdb3d4537ce39916caae47e1e537",
+        "size": 3519
+      }
+    },
+    {
+      "container": {
+        "sha256": "734234ad103cbffa3cd933bb8426e1dee20abf96a43634048142c2b76733bd22",
+        "size": 3480
+      },
+      "path": "migrations/versions/4d_0007_projection_telemetry.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "734234ad103cbffa3cd933bb8426e1dee20abf96a43634048142c2b76733bd22",
+        "size": 3480
+      }
+    },
+    {
+      "container": {
+        "sha256": "0dea4ec0f97d5a29feeea2a35525e215a4010d994b0e7d20a5e35ede872a24ad",
+        "size": 2838
+      },
+      "path": "migrations/versions/4e_0001_operational_timeline.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0dea4ec0f97d5a29feeea2a35525e215a4010d994b0e7d20a5e35ede872a24ad",
+        "size": 2838
+      }
+    },
+    {
+      "container": {
+        "sha256": "51d9a4f17245cb2735388d84f1117f1bb52566e20e49275e7e33dad26be6ade7",
+        "size": 2367
+      },
+      "path": "migrations/versions/__pycache__/4b_0000_core_namespace.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "51d9a4f17245cb2735388d84f1117f1bb52566e20e49275e7e33dad26be6ade7",
+        "size": 2367
+      }
+    },
+    {
+      "container": {
+        "sha256": "ed53f9329fc4332524d9c9b25ed381e857ca24f1f569de35987a024cfa460166",
+        "size": 3928
+      },
+      "path": "migrations/versions/__pycache__/4b_0001_tenant_scope.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ed53f9329fc4332524d9c9b25ed381e857ca24f1f569de35987a024cfa460166",
+        "size": 3928
+      }
+    },
+    {
+      "container": {
+        "sha256": "1af0e2dbc3f6679612ffe2007a9b79d8e3450b660523c0fe65a99b4a1ef2eff1",
+        "size": 15127
+      },
+      "path": "migrations/versions/__pycache__/4b_0002_episode_atomicity.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1af0e2dbc3f6679612ffe2007a9b79d8e3450b660523c0fe65a99b4a1ef2eff1",
+        "size": 15127
+      }
+    },
+    {
+      "container": {
+        "sha256": "67f5f1affa4d2de7b709b443fabfc05d03e6fe66f60551d21dbbc440e3c59051",
+        "size": 15456
+      },
+      "path": "migrations/versions/__pycache__/4d_0003_core_continuity.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "67f5f1affa4d2de7b709b443fabfc05d03e6fe66f60551d21dbbc440e3c59051",
+        "size": 15456
+      }
+    },
+    {
+      "container": {
+        "sha256": "890ab56291d2d43dd87cf0ad66fdb189ef47260d4b03db36f04c05ef4ed70f15",
+        "size": 6452
+      },
+      "path": "migrations/versions/__pycache__/4d_0004_effect_authority.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "890ab56291d2d43dd87cf0ad66fdb189ef47260d4b03db36f04c05ef4ed70f15",
+        "size": 6452
+      }
+    },
+    {
+      "container": {
+        "sha256": "b49509b0be737aa3bc37f9d16c84f6fb5293bcf9f61c918505e684835c92cbe9",
+        "size": 6214
+      },
+      "path": "migrations/versions/__pycache__/4d_0005_evidence_objects.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b49509b0be737aa3bc37f9d16c84f6fb5293bcf9f61c918505e684835c92cbe9",
+        "size": 6214
+      }
+    },
+    {
+      "container": {
+        "sha256": "99e9689a1e9a0a4f4990a461a20b3773bb6d4c3ee4ba9486daec58395822184c",
+        "size": 6331
+      },
+      "path": "migrations/versions/__pycache__/4d_0006_memory.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "99e9689a1e9a0a4f4990a461a20b3773bb6d4c3ee4ba9486daec58395822184c",
+        "size": 6331
+      }
+    },
+    {
+      "container": {
+        "sha256": "3e903c81b7ae82bf5a3c904204afe54e8db744fb8f6d8358e8afa95fea3ef96e",
+        "size": 6264
+      },
+      "path": "migrations/versions/__pycache__/4d_0007_projection_telemetry.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3e903c81b7ae82bf5a3c904204afe54e8db744fb8f6d8358e8afa95fea3ef96e",
+        "size": 6264
+      }
+    },
+    {
+      "container": {
+        "sha256": "0693fbcecca61f1f2cdba6561b811b1e0b9f6e954cd397407bf01b604c3c3882",
+        "size": 4381
+      },
+      "path": "migrations/versions/__pycache__/4e_0001_operational_timeline.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0693fbcecca61f1f2cdba6561b811b1e0b9f6e954cd397407bf01b604c3c3882",
+        "size": 4381
+      }
+    },
+    {
+      "container": {
+        "sha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+        "size": 69271
+      },
+      "path": "requirements.lock",
+      "state": "identical",
+      "worktree": {
+        "sha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+        "size": 69271
+      }
+    },
+    {
+      "container": {
+        "sha256": "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc",
+        "size": 2189
+      },
+      "path": "schemas/contracts/AttentionWake-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc",
+        "size": 2189
+      }
+    },
+    {
+      "container": {
+        "sha256": "095105cd438b334a00fa437a4d6bc6d29b4daef8c297bfa295e600888f5aff52",
+        "size": 2618
+      },
+      "path": "schemas/contracts/CapabilityGrant-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "095105cd438b334a00fa437a4d6bc6d29b4daef8c297bfa295e600888f5aff52",
+        "size": 2618
+      }
+    },
+    {
+      "container": {
+        "sha256": "03f3f3271a396d7177a35cb2372bc512f6fef8e96f5d6623bc5386e5a5aafd65",
+        "size": 1980
+      },
+      "path": "schemas/contracts/CapabilityManifest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "03f3f3271a396d7177a35cb2372bc512f6fef8e96f5d6623bc5386e5a5aafd65",
+        "size": 1980
+      }
+    },
+    {
+      "container": {
+        "sha256": "c79ca8055eaa0d02b0efec6de69e5d8ee895485db86513dcf0c5a778b2791356",
+        "size": 1440
+      },
+      "path": "schemas/contracts/ClaimEvidenceBinding-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c79ca8055eaa0d02b0efec6de69e5d8ee895485db86513dcf0c5a778b2791356",
+        "size": 1440
+      }
+    },
+    {
+      "container": {
+        "sha256": "99a9df25ba1a4c8f9bf465d8bbdfb890d9e5a179d04d31a9650a1ba8723608aa",
+        "size": 1657
+      },
+      "path": "schemas/contracts/Commitment-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "99a9df25ba1a4c8f9bf465d8bbdfb890d9e5a179d04d31a9650a1ba8723608aa",
+        "size": 1657
+      }
+    },
+    {
+      "container": {
+        "sha256": "2ccfa720e8b6d7001405616918111c3d8287ff099fa016fc849644100e3ab546",
+        "size": 2500
+      },
+      "path": "schemas/contracts/ConnectorBinding-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2ccfa720e8b6d7001405616918111c3d8287ff099fa016fc849644100e3ab546",
+        "size": 2500
+      }
+    },
+    {
+      "container": {
+        "sha256": "f9c229b530c33e678da0bc6ba9735f16fd2731f0f3f611b9b6a6a7e436625117",
+        "size": 1693
+      },
+      "path": "schemas/contracts/ConnectorCandidate-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f9c229b530c33e678da0bc6ba9735f16fd2731f0f3f611b9b6a6a7e436625117",
+        "size": 1693
+      }
+    },
+    {
+      "container": {
+        "sha256": "85c1a1605dc0e389189316426490657cf951fef0037b48c6fa282531d731e5e1",
+        "size": 3565
+      },
+      "path": "schemas/contracts/ConnectorEnvelope-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "85c1a1605dc0e389189316426490657cf951fef0037b48c6fa282531d731e5e1",
+        "size": 3565
+      }
+    },
+    {
+      "container": {
+        "sha256": "c92d3ae2f080051acd27d917c436aa3be988559e8c68b9f9da83c39cbcdcc32f",
+        "size": 3653
+      },
+      "path": "schemas/contracts/ConnectorErrorResponse-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c92d3ae2f080051acd27d917c436aa3be988559e8c68b9f9da83c39cbcdcc32f",
+        "size": 3653
+      }
+    },
+    {
+      "container": {
+        "sha256": "3829ce8f057b9bd2126f250be98c370ed6f5d3ea59f27b3f34ddcc69fc1cddf8",
+        "size": 11252
+      },
+      "path": "schemas/contracts/ConnectorInitializeRequest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3829ce8f057b9bd2126f250be98c370ed6f5d3ea59f27b3f34ddcc69fc1cddf8",
+        "size": 11252
+      }
+    },
+    {
+      "container": {
+        "sha256": "9c407882c411dc9bbbc7a09beaa8e58e2032c3c95425d4e0852ea35248b5bd41",
+        "size": 2756
+      },
+      "path": "schemas/contracts/ConnectorInitializeSuccess-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9c407882c411dc9bbbc7a09beaa8e58e2032c3c95425d4e0852ea35248b5bd41",
+        "size": 2756
+      }
+    },
+    {
+      "container": {
+        "sha256": "a4c8dbbe301ea2a04952dfa2c3f14872454b045a5c0751f2911bb4375eff8c4c",
+        "size": 4275
+      },
+      "path": "schemas/contracts/ConnectorInvokeRequest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a4c8dbbe301ea2a04952dfa2c3f14872454b045a5c0751f2911bb4375eff8c4c",
+        "size": 4275
+      }
+    },
+    {
+      "container": {
+        "sha256": "4547a1a62af3ec74c9678b76df725a3256820f459d66712c8e485ecb1bb662f7",
+        "size": 14254
+      },
+      "path": "schemas/contracts/ConnectorInvokeSuccess-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4547a1a62af3ec74c9678b76df725a3256820f459d66712c8e485ecb1bb662f7",
+        "size": 14254
+      }
+    },
+    {
+      "container": {
+        "sha256": "351c9975aa94443cbc56770c12d273f5124c333be34c386e7b001da14c747a69",
+        "size": 2722
+      },
+      "path": "schemas/contracts/ConnectorManifest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "351c9975aa94443cbc56770c12d273f5124c333be34c386e7b001da14c747a69",
+        "size": 2722
+      }
+    },
+    {
+      "container": {
+        "sha256": "e5d29f14af2f94defab97b9c00102b1636a73eaeacc0e60d74fc1fde7861b532",
+        "size": 1916
+      },
+      "path": "schemas/contracts/ConnectorProtocolFailure-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e5d29f14af2f94defab97b9c00102b1636a73eaeacc0e60d74fc1fde7861b532",
+        "size": 1916
+      }
+    },
+    {
+      "container": {
+        "sha256": "c70be9f0b0eace86078f3e567987d7e9c725f76997f17becc973c5c87a728cf6",
+        "size": 13696
+      },
+      "path": "schemas/contracts/ConnectorResult-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c70be9f0b0eace86078f3e567987d7e9c725f76997f17becc973c5c87a728cf6",
+        "size": 13696
+      }
+    },
+    {
+      "container": {
+        "sha256": "2d84c6fcd3b4b83c45c8c330c272f69eaefe680cc992e661e11886abf8716450",
+        "size": 3007
+      },
+      "path": "schemas/contracts/ConsentGrant-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2d84c6fcd3b4b83c45c8c330c272f69eaefe680cc992e661e11886abf8716450",
+        "size": 3007
+      }
+    },
+    {
+      "container": {
+        "sha256": "f007875310950a2a06bf6599172b2020ef1914cd994415aff4568c356ca31762",
+        "size": 1720
+      },
+      "path": "schemas/contracts/ContextSelection-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f007875310950a2a06bf6599172b2020ef1914cd994415aff4568c356ca31762",
+        "size": 1720
+      }
+    },
+    {
+      "container": {
+        "sha256": "a213efc4d855927f376969cf310341001586d2f350df050c7caf9f435952a751",
+        "size": 2256
+      },
+      "path": "schemas/contracts/CredentialGrant-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a213efc4d855927f376969cf310341001586d2f350df050c7caf9f435952a751",
+        "size": 2256
+      }
+    },
+    {
+      "container": {
+        "sha256": "80a711781f59606b2bcf1d41929630cb0f7f1cdd3445cfe40d039c66af2769a5",
+        "size": 1942
+      },
+      "path": "schemas/contracts/DeliveryIntent-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "80a711781f59606b2bcf1d41929630cb0f7f1cdd3445cfe40d039c66af2769a5",
+        "size": 1942
+      }
+    },
+    {
+      "container": {
+        "sha256": "7463c031304ac3230c498007a35f5fd3b00a00916dd68b1fcb6e47ba895d6a64",
+        "size": 2963
+      },
+      "path": "schemas/contracts/DeliveryOffer-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7463c031304ac3230c498007a35f5fd3b00a00916dd68b1fcb6e47ba895d6a64",
+        "size": 2963
+      }
+    },
+    {
+      "container": {
+        "sha256": "6a6a3f3e8fd8989a1d288f1dbcc56faf974e3facb3f8821f1d5d6b0479cf80de",
+        "size": 2539
+      },
+      "path": "schemas/contracts/DeliveryOffer-v2.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6a6a3f3e8fd8989a1d288f1dbcc56faf974e3facb3f8821f1d5d6b0479cf80de",
+        "size": 2539
+      }
+    },
+    {
+      "container": {
+        "sha256": "035a300bd35fec29c85b8c1edc9a039491c8a2e2ca8b1d1fe89e68ff29368a0f",
+        "size": 4281
+      },
+      "path": "schemas/contracts/DeliveryReceipt-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "035a300bd35fec29c85b8c1edc9a039491c8a2e2ca8b1d1fe89e68ff29368a0f",
+        "size": 4281
+      }
+    },
+    {
+      "container": {
+        "sha256": "ec66a9e190645e576e18601ecf2a3e8b4a9f46e464010aa3a3ff1c0b52a5a983",
+        "size": 3177
+      },
+      "path": "schemas/contracts/DeliveryReceipt-v2.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ec66a9e190645e576e18601ecf2a3e8b4a9f46e464010aa3a3ff1c0b52a5a983",
+        "size": 3177
+      }
+    },
+    {
+      "container": {
+        "sha256": "3e10c39219e0adea23f3368a25147f22c67ea51d613a2aab48eecf10ec48a5d5",
+        "size": 1718
+      },
+      "path": "schemas/contracts/DocumentDraft-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3e10c39219e0adea23f3368a25147f22c67ea51d613a2aab48eecf10ec48a5d5",
+        "size": 1718
+      }
+    },
+    {
+      "container": {
+        "sha256": "45423e23d2cacfe453704ed46b6303a0a6a39744348b0e05c462731f390db4cc",
+        "size": 2085
+      },
+      "path": "schemas/contracts/DocumentationSnapshot-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "45423e23d2cacfe453704ed46b6303a0a6a39744348b0e05c462731f390db4cc",
+        "size": 2085
+      }
+    },
+    {
+      "container": {
+        "sha256": "a5568a92d3325533d9e2b1f47683eb4732d69a38bb67ddbcd30e1811655e6906",
+        "size": 4258
+      },
+      "path": "schemas/contracts/EffectAttempt-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a5568a92d3325533d9e2b1f47683eb4732d69a38bb67ddbcd30e1811655e6906",
+        "size": 4258
+      }
+    },
+    {
+      "container": {
+        "sha256": "ccc8abcd0f6d9b4c9fab9aa0dcbdfc7096c45478361253c593a6170eaae512ff",
+        "size": 2987
+      },
+      "path": "schemas/contracts/EffectIntent-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ccc8abcd0f6d9b4c9fab9aa0dcbdfc7096c45478361253c593a6170eaae512ff",
+        "size": 2987
+      }
+    },
+    {
+      "container": {
+        "sha256": "4a3482084db7a03a593337a3f46cabf564356c6d7a3e37125087263cf3c03b5e",
+        "size": 1958
+      },
+      "path": "schemas/contracts/EffectReadback-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4a3482084db7a03a593337a3f46cabf564356c6d7a3e37125087263cf3c03b5e",
+        "size": 1958
+      }
+    },
+    {
+      "container": {
+        "sha256": "586420704c94099e173f9b26f37b26ad8db5d05b8ff30078838e5a82edbfbe43",
+        "size": 1919
+      },
+      "path": "schemas/contracts/EffectReceipt-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "586420704c94099e173f9b26f37b26ad8db5d05b8ff30078838e5a82edbfbe43",
+        "size": 1919
+      }
+    },
+    {
+      "container": {
+        "sha256": "f23a9eafdd1ee35d5f3d6cee67e6fe4779b943201ccc6f9f3df3377a55dd2832",
+        "size": 1951
+      },
+      "path": "schemas/contracts/EpisodeState-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f23a9eafdd1ee35d5f3d6cee67e6fe4779b943201ccc6f9f3df3377a55dd2832",
+        "size": 1951
+      }
+    },
+    {
+      "container": {
+        "sha256": "5ffb1427e276ad1a5e73bf56d20b2e668294c996322112a0005c40f84fd77fe7",
+        "size": 3275
+      },
+      "path": "schemas/contracts/EvaAcceptanceEvidenceBundle-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5ffb1427e276ad1a5e73bf56d20b2e668294c996322112a0005c40f84fd77fe7",
+        "size": 3275
+      }
+    },
+    {
+      "container": {
+        "sha256": "c0af93e3e83a83b7a1d9dddcb280f5a02516924546efbdc30fd9cce28534561c",
+        "size": 5288
+      },
+      "path": "schemas/contracts/EvaPortableArchive-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c0af93e3e83a83b7a1d9dddcb280f5a02516924546efbdc30fd9cce28534561c",
+        "size": 5288
+      }
+    },
+    {
+      "container": {
+        "sha256": "992377cfb7a0e8c71cf001dd839bb79f784f374ccc296b03737372c64fd6cf72",
+        "size": 2455
+      },
+      "path": "schemas/contracts/EvidenceEnvelope-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "992377cfb7a0e8c71cf001dd839bb79f784f374ccc296b03737372c64fd6cf72",
+        "size": 2455
+      }
+    },
+    {
+      "container": {
+        "sha256": "cb27dd6623e654cd5a8e55d40affdbedb1dc303ed0fe1ce4bb16d2240054cd03",
+        "size": 3447
+      },
+      "path": "schemas/contracts/EvidenceEnvelope-v2.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cb27dd6623e654cd5a8e55d40affdbedb1dc303ed0fe1ce4bb16d2240054cd03",
+        "size": 3447
+      }
+    },
+    {
+      "container": {
+        "sha256": "0fd68c48cacd174b5ad01c3d066547e0c0ea17748007316d8ea731a54b456d46",
+        "size": 4192
+      },
+      "path": "schemas/contracts/ExperienceSourceEvent-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0fd68c48cacd174b5ad01c3d066547e0c0ea17748007316d8ea731a54b456d46",
+        "size": 4192
+      }
+    },
+    {
+      "container": {
+        "sha256": "17c6b835b6f4a68bf02ccffe718fd74bf036acf1211d76e35e7de994e59c390b",
+        "size": 4588
+      },
+      "path": "schemas/contracts/IdentityPack-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "17c6b835b6f4a68bf02ccffe718fd74bf036acf1211d76e35e7de994e59c390b",
+        "size": 4588
+      }
+    },
+    {
+      "container": {
+        "sha256": "99387c38be6a6075f454a26b7417f1243623ff5aa1fe45e724647e9cedebdbb9",
+        "size": 4368
+      },
+      "path": "schemas/contracts/ImprovementCandidate-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "99387c38be6a6075f454a26b7417f1243623ff5aa1fe45e724647e9cedebdbb9",
+        "size": 4368
+      }
+    },
+    {
+      "container": {
+        "sha256": "d6b692d1ea585fb8f1bac2d8d5c364d9b55068f2cc9719c276c2f2a64b3dc1b8",
+        "size": 1464
+      },
+      "path": "schemas/contracts/IngressClaim-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d6b692d1ea585fb8f1bac2d8d5c364d9b55068f2cc9719c276c2f2a64b3dc1b8",
+        "size": 1464
+      }
+    },
+    {
+      "container": {
+        "sha256": "cb1fdb59fd08c822e6114db333152776a506ce7b5d724b097ca842fa29a76426",
+        "size": 2779
+      },
+      "path": "schemas/contracts/IngressOutcome-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cb1fdb59fd08c822e6114db333152776a506ce7b5d724b097ca842fa29a76426",
+        "size": 2779
+      }
+    },
+    {
+      "container": {
+        "sha256": "b39f56e6884ab6a53f77271a9636e10af54a4af657f9f1bffe15fa7aa17bd603",
+        "size": 1736
+      },
+      "path": "schemas/contracts/IngressRequest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b39f56e6884ab6a53f77271a9636e10af54a4af657f9f1bffe15fa7aa17bd603",
+        "size": 1736
+      }
+    },
+    {
+      "container": {
+        "sha256": "9eab8ca61858edb642562cc9d6a4abd8cc09865f1ac7c7fb9f30013cf8697d38",
+        "size": 3577
+      },
+      "path": "schemas/contracts/InstallationManifest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9eab8ca61858edb642562cc9d6a4abd8cc09865f1ac7c7fb9f30013cf8697d38",
+        "size": 3577
+      }
+    },
+    {
+      "container": {
+        "sha256": "ebf1cf1d2bac3d58cd3a3f071ecd293cc7b3893cc9563a1f355a1185b1c647a8",
+        "size": 2529
+      },
+      "path": "schemas/contracts/InstallationRemap-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ebf1cf1d2bac3d58cd3a3f071ecd293cc7b3893cc9563a1f355a1185b1c647a8",
+        "size": 2529
+      }
+    },
+    {
+      "container": {
+        "sha256": "a3eeb6b53d6895577d9321e77f2c4a4eed19d72998f152a6fecc01bca8a8aeba",
+        "size": 3369
+      },
+      "path": "schemas/contracts/MemoryFact-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a3eeb6b53d6895577d9321e77f2c4a4eed19d72998f152a6fecc01bca8a8aeba",
+        "size": 3369
+      }
+    },
+    {
+      "container": {
+        "sha256": "823a766e5fbda0ed25ddd29142041455b5a09b5564f74d1de2d500ec85b71c3c",
+        "size": 3403
+      },
+      "path": "schemas/contracts/MemoryRecall-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "823a766e5fbda0ed25ddd29142041455b5a09b5564f74d1de2d500ec85b71c3c",
+        "size": 3403
+      }
+    },
+    {
+      "container": {
+        "sha256": "be5cd7c230f85e19e5df5f04ff1cd08328b801e50c51ba5099b64bb1845a4b8f",
+        "size": 3565
+      },
+      "path": "schemas/contracts/ModelAttempt-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "be5cd7c230f85e19e5df5f04ff1cd08328b801e50c51ba5099b64bb1845a4b8f",
+        "size": 3565
+      }
+    },
+    {
+      "container": {
+        "sha256": "168e27ac9fc5661844ba895c99717a6bedb457b61b0100275980a7998893c59e",
+        "size": 3677
+      },
+      "path": "schemas/contracts/ModelDecision-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "168e27ac9fc5661844ba895c99717a6bedb457b61b0100275980a7998893c59e",
+        "size": 3677
+      }
+    },
+    {
+      "container": {
+        "sha256": "7ffede58e8f81108283d74408cb4d740e9e7cd18f1c5a2868dd0e7a5bfb0b065",
+        "size": 1465
+      },
+      "path": "schemas/contracts/ObjectRef-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7ffede58e8f81108283d74408cb4d740e9e7cd18f1c5a2868dd0e7a5bfb0b065",
+        "size": 1465
+      }
+    },
+    {
+      "container": {
+        "sha256": "85f0a37087ae7349bfa98d4fb4c4889bec744753b99ea6de1932a61289729fb0",
+        "size": 2231
+      },
+      "path": "schemas/contracts/ObjectStore-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "85f0a37087ae7349bfa98d4fb4c4889bec744753b99ea6de1932a61289729fb0",
+        "size": 2231
+      }
+    },
+    {
+      "container": {
+        "sha256": "731dd386be6d7bdffa60656e5beb18725a2a659377ec17b58ce0d235f185c526",
+        "size": 2842
+      },
+      "path": "schemas/contracts/OutcomeView-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "731dd386be6d7bdffa60656e5beb18725a2a659377ec17b58ce0d235f185c526",
+        "size": 2842
+      }
+    },
+    {
+      "container": {
+        "sha256": "1b41a09d6dd8551c526f04e66060732a8528168d4ad2d8f23c936961a4a6ecef",
+        "size": 54250
+      },
+      "path": "schemas/contracts/PlannerRequest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1b41a09d6dd8551c526f04e66060732a8528168d4ad2d8f23c936961a4a6ecef",
+        "size": 54250
+      }
+    },
+    {
+      "container": {
+        "sha256": "e1ee7267ade22c7ee0b7d5ab7248f554fd8e5d905d48260ced4a02054f8f195e",
+        "size": 6121
+      },
+      "path": "schemas/contracts/PlatformLock-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e1ee7267ade22c7ee0b7d5ab7248f554fd8e5d905d48260ced4a02054f8f195e",
+        "size": 6121
+      }
+    },
+    {
+      "container": {
+        "sha256": "e3e08c1b666e1351adf292655008f7c5be6fef8241df5cf4f23a16aa3ab4d292",
+        "size": 3561
+      },
+      "path": "schemas/contracts/PolicyPack-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e3e08c1b666e1351adf292655008f7c5be6fef8241df5cf4f23a16aa3ab4d292",
+        "size": 3561
+      }
+    },
+    {
+      "container": {
+        "sha256": "b9cc131a9f40ea51f30ed6b08d8c725ea71dc9a82ca21a377b6844c5428d2188",
+        "size": 41903
+      },
+      "path": "schemas/contracts/PresenceContext-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b9cc131a9f40ea51f30ed6b08d8c725ea71dc9a82ca21a377b6844c5428d2188",
+        "size": 41903
+      }
+    },
+    {
+      "container": {
+        "sha256": "b758c291a6f6489b77ed3073fc0ab31656d38aed3589f007b498ea441befc756",
+        "size": 2852
+      },
+      "path": "schemas/contracts/PresenceReply-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b758c291a6f6489b77ed3073fc0ab31656d38aed3589f007b498ea441befc756",
+        "size": 2852
+      }
+    },
+    {
+      "container": {
+        "sha256": "6e48ee7122840ba428b8599beef3a0f2b743aaf6bacf5b87a6afffb39e4e170a",
+        "size": 1959
+      },
+      "path": "schemas/contracts/PromotionDecision-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6e48ee7122840ba428b8599beef3a0f2b743aaf6bacf5b87a6afffb39e4e170a",
+        "size": 1959
+      }
+    },
+    {
+      "container": {
+        "sha256": "48def3deebc0fcb5aea0073940075104af09917de7bf9cede38cfd1c071c4a68",
+        "size": 2205
+      },
+      "path": "schemas/contracts/ReadAttempt-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "48def3deebc0fcb5aea0073940075104af09917de7bf9cede38cfd1c071c4a68",
+        "size": 2205
+      }
+    },
+    {
+      "container": {
+        "sha256": "12a366b1851ec5c5ab91ad3701c16a0805ae8b3e8860107476b63385ea51ffba",
+        "size": 3119
+      },
+      "path": "schemas/contracts/ReadIntent-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "12a366b1851ec5c5ab91ad3701c16a0805ae8b3e8860107476b63385ea51ffba",
+        "size": 3119
+      }
+    },
+    {
+      "container": {
+        "sha256": "ea8930c94171baabda39f904c27d0ab3800e008a3c71afd81b9d30785c9e8805",
+        "size": 2102
+      },
+      "path": "schemas/contracts/ReadObservation-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ea8930c94171baabda39f904c27d0ab3800e008a3c71afd81b9d30785c9e8805",
+        "size": 2102
+      }
+    },
+    {
+      "container": {
+        "sha256": "4f8132f7da4752c846251e1727032d30e98cb8c72c16fddd6d649b013d50be3c",
+        "size": 3551
+      },
+      "path": "schemas/contracts/RelationshipBinding-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4f8132f7da4752c846251e1727032d30e98cb8c72c16fddd6d649b013d50be3c",
+        "size": 3551
+      }
+    },
+    {
+      "container": {
+        "sha256": "b449f2e7301497d9767b14bb0e9dea3f5b87339705ef67d160841f5765f733c2",
+        "size": 3293
+      },
+      "path": "schemas/contracts/ReleaseManifest-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b449f2e7301497d9767b14bb0e9dea3f5b87339705ef67d160841f5765f733c2",
+        "size": 3293
+      }
+    },
+    {
+      "container": {
+        "sha256": "028ed5bbde13ac99508f3809df64937b32497db9576750138ea6cdf93c7ed3d3",
+        "size": 1553
+      },
+      "path": "schemas/contracts/ReplyCandidate-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "028ed5bbde13ac99508f3809df64937b32497db9576750138ea6cdf93c7ed3d3",
+        "size": 1553
+      }
+    },
+    {
+      "container": {
+        "sha256": "7a2f24945463b0b24ce57a591b939fa441e60060d4bedbe55bff440b2e18e242",
+        "size": 2227
+      },
+      "path": "schemas/contracts/TurnEnvelope-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7a2f24945463b0b24ce57a591b939fa441e60060d4bedbe55bff440b2e18e242",
+        "size": 2227
+      }
+    },
+    {
+      "container": {
+        "sha256": "4dedc3ed26ca7361ab38ab7c84607f848382db083c65ad30b26300bf63b6e684",
+        "size": 2848
+      },
+      "path": "schemas/contracts/ValidatedPlan-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4dedc3ed26ca7361ab38ab7c84607f848382db083c65ad30b26300bf63b6e684",
+        "size": 2848
+      }
+    },
+    {
+      "container": {
+        "sha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+        "size": 482
+      },
+      "path": "schemas/contracts/canonical-json-profile-v1.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+        "size": 482
+      }
+    },
+    {
+      "container": {
+        "sha256": "ddf3c84602a1762feec114eaa269c37f11e8726cad9514a90ff642a5e4a488b3",
+        "size": 347303
+      },
+      "path": "schemas/contracts/contract-corpus-v1.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ddf3c84602a1762feec114eaa269c37f11e8726cad9514a90ff642a5e4a488b3",
+        "size": 347303
+      }
+    },
+    {
+      "container": {
+        "sha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+        "size": 9064
+      },
+      "path": "schemas/contracts/manifest.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+        "size": 9064
+      }
+    },
+    {
+      "container": {
+        "sha256": "10b7fa37bb887c87766b5b86301cb8018c30c291faab87a992ac9d0463a3cbc9",
+        "size": 148
+      },
+      "path": "schemas/portable/README.md",
+      "state": "identical",
+      "worktree": {
+        "sha256": "10b7fa37bb887c87766b5b86301cb8018c30c291faab87a992ac9d0463a3cbc9",
+        "size": 148
+      }
+    },
+    {
+      "container": {
+        "sha256": "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876",
+        "size": 2770
+      },
+      "path": "schemas/portable/generic-reader-output-schema-manifest-v1.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876",
+        "size": 2770
+      }
+    },
+    {
+      "container": {
+        "sha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+        "size": 2306
+      },
+      "path": "schemas/portable/object-manifest-record-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+        "size": 2306
+      }
+    },
+    {
+      "container": {
+        "sha256": "91e6dfe949dbf6598125b37de9d4ede51dcd48e0b639e4256a3defbf24018679",
+        "size": 938
+      },
+      "path": "schemas/portable/readback/generic-reader-conversation-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "91e6dfe949dbf6598125b37de9d4ede51dcd48e0b639e4256a3defbf24018679",
+        "size": 938
+      }
+    },
+    {
+      "container": {
+        "sha256": "a482d2531b9cc73797ccdcfda8f1d65b7c1bc1e2fb2a7b87de567c3362d8b055",
+        "size": 2698
+      },
+      "path": "schemas/portable/readback/generic-reader-effect-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a482d2531b9cc73797ccdcfda8f1d65b7c1bc1e2fb2a7b87de567c3362d8b055",
+        "size": 2698
+      }
+    },
+    {
+      "container": {
+        "sha256": "3841c0ca031256bd768fe8fe09cc2c0108118522a290b67f6ce460fb66e86bad",
+        "size": 2746
+      },
+      "path": "schemas/portable/readback/generic-reader-episode-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3841c0ca031256bd768fe8fe09cc2c0108118522a290b67f6ce460fb66e86bad",
+        "size": 2746
+      }
+    },
+    {
+      "container": {
+        "sha256": "2fc7c5211d6def22e455928cbc4643d4fd77c97790906fcc6b8f68afa63e34eb",
+        "size": 1158
+      },
+      "path": "schemas/portable/readback/generic-reader-evidence-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2fc7c5211d6def22e455928cbc4643d4fd77c97790906fcc6b8f68afa63e34eb",
+        "size": 1158
+      }
+    },
+    {
+      "container": {
+        "sha256": "7eeb1d245e8ee799075be537e0dbd517802daa614d757f88b19a7d37bb6cd378",
+        "size": 792
+      },
+      "path": "schemas/portable/readback/generic-reader-identity-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7eeb1d245e8ee799075be537e0dbd517802daa614d757f88b19a7d37bb6cd378",
+        "size": 792
+      }
+    },
+    {
+      "container": {
+        "sha256": "b8450d4ce82dfd2835b6587600b11c1c3cd4b90dbacc40b2b3a96d892abfb242",
+        "size": 1753
+      },
+      "path": "schemas/portable/readback/generic-reader-memory-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b8450d4ce82dfd2835b6587600b11c1c3cd4b90dbacc40b2b3a96d892abfb242",
+        "size": 1753
+      }
+    },
+    {
+      "container": {
+        "sha256": "2055587b753ac1e771f4502cb9e4073da171bd02d5a8afa5c9d70b4248ac5e26",
+        "size": 5825
+      },
+      "path": "schemas/portable/readback/generic-reader-pending-work-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2055587b753ac1e771f4502cb9e4073da171bd02d5a8afa5c9d70b4248ac5e26",
+        "size": 5825
+      }
+    },
+    {
+      "container": {
+        "sha256": "a9e1902e2b5bd55ed56834c057c123b47196365afca5ada19535d8e634bbc2f4",
+        "size": 32158
+      },
+      "path": "schemas/portable/readback/generic-reader-summary-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a9e1902e2b5bd55ed56834c057c123b47196365afca5ada19535d8e634bbc2f4",
+        "size": 32158
+      }
+    },
+    {
+      "container": {
+        "sha256": "de2e302c8d260707563a8c16af1a6dfc2a3932507013dddb79d7780a3e36dc68",
+        "size": 20211
+      },
+      "path": "schemas/portable/record-schema-manifest-v1.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "de2e302c8d260707563a8c16af1a6dfc2a3932507013dddb79d7780a3e36dc68",
+        "size": 20211
+      }
+    },
+    {
+      "container": {
+        "sha256": "19d23fa1ee6c798b97ef16b13f00e0a85d1e064f04b2343e22f7d532d6f0f87b",
+        "size": 1911
+      },
+      "path": "schemas/portable/records/001-core-tenants-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "19d23fa1ee6c798b97ef16b13f00e0a85d1e064f04b2343e22f7d532d6f0f87b",
+        "size": 1911
+      }
+    },
+    {
+      "container": {
+        "sha256": "a69ae2db2cdff021b604f75bae30d2ee3f6cbf6e4dfe7f65df8fe8f214c11253",
+        "size": 3462
+      },
+      "path": "schemas/portable/records/002-core-installations-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a69ae2db2cdff021b604f75bae30d2ee3f6cbf6e4dfe7f65df8fe8f214c11253",
+        "size": 3462
+      }
+    },
+    {
+      "container": {
+        "sha256": "e4ea419251b2239a281a2e0955d02de8437bc2012a07b33ca3d346ef5f5c7dbc",
+        "size": 3187
+      },
+      "path": "schemas/portable/records/003-core-identity-pack-versions-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e4ea419251b2239a281a2e0955d02de8437bc2012a07b33ca3d346ef5f5c7dbc",
+        "size": 3187
+      }
+    },
+    {
+      "container": {
+        "sha256": "2a303782e8aa5f1cfecc8ed69ac305728722b64ae99517f8ddbe3639454bebdc",
+        "size": 3312
+      },
+      "path": "schemas/portable/records/004-core-policy-pack-versions-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2a303782e8aa5f1cfecc8ed69ac305728722b64ae99517f8ddbe3639454bebdc",
+        "size": 3312
+      }
+    },
+    {
+      "container": {
+        "sha256": "9e04f446c9270a78b0e818876549f0234e30c701dc4c3832e2e142a4f6fd1613",
+        "size": 2440
+      },
+      "path": "schemas/portable/records/005-core-principals-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9e04f446c9270a78b0e818876549f0234e30c701dc4c3832e2e142a4f6fd1613",
+        "size": 2440
+      }
+    },
+    {
+      "container": {
+        "sha256": "53d26620e975b45d56b0a37f974901ea9db793b7abfd7d87902dd21428c2c53c",
+        "size": 2965
+      },
+      "path": "schemas/portable/records/006-core-principal-bindings-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "53d26620e975b45d56b0a37f974901ea9db793b7abfd7d87902dd21428c2c53c",
+        "size": 2965
+      }
+    },
+    {
+      "container": {
+        "sha256": "eef30c97ebcedd2012fac016238dd623a0bd9503af1d1af9cec09ab8caa398c8",
+        "size": 4839
+      },
+      "path": "schemas/portable/records/007-core-relationships-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "eef30c97ebcedd2012fac016238dd623a0bd9503af1d1af9cec09ab8caa398c8",
+        "size": 4839
+      }
+    },
+    {
+      "container": {
+        "sha256": "dbc79eb3a8cd921fcb71d4a55393b9606cc0c97a33b7ee7fd067a4c14610da29",
+        "size": 3229
+      },
+      "path": "schemas/portable/records/008-core-conversations-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dbc79eb3a8cd921fcb71d4a55393b9606cc0c97a33b7ee7fd067a4c14610da29",
+        "size": 3229
+      }
+    },
+    {
+      "container": {
+        "sha256": "448e474946dcf92b71c1695dd9ca3c09a3bfa34e2360763126e28bf6306eaa3c",
+        "size": 4720
+      },
+      "path": "schemas/portable/records/009-core-messages-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "448e474946dcf92b71c1695dd9ca3c09a3bfa34e2360763126e28bf6306eaa3c",
+        "size": 4720
+      }
+    },
+    {
+      "container": {
+        "sha256": "4de287e437d206bc4924bf9845c8bc089b304c74940ddfb46e8b20be3a1ee59c",
+        "size": 6007
+      },
+      "path": "schemas/portable/records/010-core-ingress-requests-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4de287e437d206bc4924bf9845c8bc089b304c74940ddfb46e8b20be3a1ee59c",
+        "size": 6007
+      }
+    },
+    {
+      "container": {
+        "sha256": "0633869e943f79dc94b7a729c1206e8ccc674bc36fd5d9ff006df48d1f620431",
+        "size": 3847
+      },
+      "path": "schemas/portable/records/011-core-episodes-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0633869e943f79dc94b7a729c1206e8ccc674bc36fd5d9ff006df48d1f620431",
+        "size": 3847
+      }
+    },
+    {
+      "container": {
+        "sha256": "052d117dae70cd3932d3ab9353bf50d5f6307d76e33542543ab0d0e7cd9e35f2",
+        "size": 3835
+      },
+      "path": "schemas/portable/records/012-core-episode-generations-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "052d117dae70cd3932d3ab9353bf50d5f6307d76e33542543ab0d0e7cd9e35f2",
+        "size": 3835
+      }
+    },
+    {
+      "container": {
+        "sha256": "3cddafbe7ddc6b4e5378115b762f7837bc18060e58c28b1772e51889b9ef039d",
+        "size": 4257
+      },
+      "path": "schemas/portable/records/013-core-episode-events-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3cddafbe7ddc6b4e5378115b762f7837bc18060e58c28b1772e51889b9ef039d",
+        "size": 4257
+      }
+    },
+    {
+      "container": {
+        "sha256": "27fd16c29daee579c0352e7d3a8a5046fe1249f9150592f6fbb0855abcac0d1a",
+        "size": 3072
+      },
+      "path": "schemas/portable/records/014-core-episode-outcomes-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "27fd16c29daee579c0352e7d3a8a5046fe1249f9150592f6fbb0855abcac0d1a",
+        "size": 3072
+      }
+    },
+    {
+      "container": {
+        "sha256": "254229ce3e898673334ceea4cf947f8359c28eec6ed01419d7da4a60485dbb07",
+        "size": 3879
+      },
+      "path": "schemas/portable/records/015-core-commitments-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "254229ce3e898673334ceea4cf947f8359c28eec6ed01419d7da4a60485dbb07",
+        "size": 3879
+      }
+    },
+    {
+      "container": {
+        "sha256": "6c02bec7db2bb170f5d7f4dcdb52c05d9cbdc3982058214168ff181984ff7756",
+        "size": 4427
+      },
+      "path": "schemas/portable/records/016-core-consent-grants-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6c02bec7db2bb170f5d7f4dcdb52c05d9cbdc3982058214168ff181984ff7756",
+        "size": 4427
+      }
+    },
+    {
+      "container": {
+        "sha256": "24648c9d55946e958e69b5c437ee7e39bb4d1fe1ec37e3e2aedfba7b17555fac",
+        "size": 7901
+      },
+      "path": "schemas/portable/records/017-core-model-attempts-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "24648c9d55946e958e69b5c437ee7e39bb4d1fe1ec37e3e2aedfba7b17555fac",
+        "size": 7901
+      }
+    },
+    {
+      "container": {
+        "sha256": "4749dbdb7b8359979a0ad10e9a5a0df213bf069fdb3354ac15b009d2c371d3b7",
+        "size": 3663
+      },
+      "path": "schemas/portable/records/018-core-plans-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4749dbdb7b8359979a0ad10e9a5a0df213bf069fdb3354ac15b009d2c371d3b7",
+        "size": 3663
+      }
+    },
+    {
+      "container": {
+        "sha256": "17bb159d1c0946d89dee17fdcb80acc5af858b4590ece02c41422fc9686b1f93",
+        "size": 4315
+      },
+      "path": "schemas/portable/records/019-core-plan-steps-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "17bb159d1c0946d89dee17fdcb80acc5af858b4590ece02c41422fc9686b1f93",
+        "size": 4315
+      }
+    },
+    {
+      "container": {
+        "sha256": "97266ae6213ab47fb0a9bcc456f54ee7595abba859de4904a35d7dbddf3e04ca",
+        "size": 3990
+      },
+      "path": "schemas/portable/records/020-core-attention-items-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "97266ae6213ab47fb0a9bcc456f54ee7595abba859de4904a35d7dbddf3e04ca",
+        "size": 3990
+      }
+    },
+    {
+      "container": {
+        "sha256": "c84bd71f5dfc2b4fbd9e6e5c2256a9fab9d15b9d4988085a34238f29c65786eb",
+        "size": 6896
+      },
+      "path": "schemas/portable/records/021-core-connector-bindings-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c84bd71f5dfc2b4fbd9e6e5c2256a9fab9d15b9d4988085a34238f29c65786eb",
+        "size": 6896
+      }
+    },
+    {
+      "container": {
+        "sha256": "ba1631d5f253ebb68dd2fd04c0a11ab561683d4b977a98794f304639e8543360",
+        "size": 3905
+      },
+      "path": "schemas/portable/records/022-core-capability-manifests-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ba1631d5f253ebb68dd2fd04c0a11ab561683d4b977a98794f304639e8543360",
+        "size": 3905
+      }
+    },
+    {
+      "container": {
+        "sha256": "3b875717811e3ac8b37461f66651c7acf0905f3f84189ec7e8340e59ac53ef55",
+        "size": 4250
+      },
+      "path": "schemas/portable/records/023-core-capability-activations-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3b875717811e3ac8b37461f66651c7acf0905f3f84189ec7e8340e59ac53ef55",
+        "size": 4250
+      }
+    },
+    {
+      "container": {
+        "sha256": "a2b62b1c6506a236cd9e1c62d33ff86cc10746d164606c43d826ef11a0d55810",
+        "size": 4424
+      },
+      "path": "schemas/portable/records/024-effects-read-intents-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a2b62b1c6506a236cd9e1c62d33ff86cc10746d164606c43d826ef11a0d55810",
+        "size": 4424
+      }
+    },
+    {
+      "container": {
+        "sha256": "ec99e1556b920f5db44a7e9da16b8f400f0134a1cd663aece5b04d2cc96e1bdd",
+        "size": 7125
+      },
+      "path": "schemas/portable/records/025-effects-read-attempts-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ec99e1556b920f5db44a7e9da16b8f400f0134a1cd663aece5b04d2cc96e1bdd",
+        "size": 7125
+      }
+    },
+    {
+      "container": {
+        "sha256": "9a7252edd34ef97e4451a9800d4f947fffcb4e045d372ba1be46bc8b94928f88",
+        "size": 3649
+      },
+      "path": "schemas/portable/records/026-effects-read-observations-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9a7252edd34ef97e4451a9800d4f947fffcb4e045d372ba1be46bc8b94928f88",
+        "size": 3649
+      }
+    },
+    {
+      "container": {
+        "sha256": "0bce3ee6ac1e6a2df9410fc8593e90f326b42f4e9a4ed8f4f77dd244f7c66349",
+        "size": 5097
+      },
+      "path": "schemas/portable/records/027-effects-effect-intents-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0bce3ee6ac1e6a2df9410fc8593e90f326b42f4e9a4ed8f4f77dd244f7c66349",
+        "size": 5097
+      }
+    },
+    {
+      "container": {
+        "sha256": "ae5b62a1aedbc08b242592699037145382369181bfb8cb27d47ef01f167d35e5",
+        "size": 8883
+      },
+      "path": "schemas/portable/records/028-effects-effect-attempts-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ae5b62a1aedbc08b242592699037145382369181bfb8cb27d47ef01f167d35e5",
+        "size": 8883
+      }
+    },
+    {
+      "container": {
+        "sha256": "9827a9cb5816c92ea4d2a5d530709b1cc688bf052f3467b4ec3c00f48e19b137",
+        "size": 3527
+      },
+      "path": "schemas/portable/records/029-effects-effect-receipts-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9827a9cb5816c92ea4d2a5d530709b1cc688bf052f3467b4ec3c00f48e19b137",
+        "size": 3527
+      }
+    },
+    {
+      "container": {
+        "sha256": "eeb471cfea8b8506d404f6980b0815b9877a91e75a0c4ed7450321b7eaaeb221",
+        "size": 3597
+      },
+      "path": "schemas/portable/records/030-effects-effect-readbacks-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "eeb471cfea8b8506d404f6980b0815b9877a91e75a0c4ed7450321b7eaaeb221",
+        "size": 3597
+      }
+    },
+    {
+      "container": {
+        "sha256": "d98cdd9eb877acefb24985f9365b4385cc7d7bf2d899a9d531339989a12b4e54",
+        "size": 6347
+      },
+      "path": "schemas/portable/records/031-effects-deliveries-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d98cdd9eb877acefb24985f9365b4385cc7d7bf2d899a9d531339989a12b4e54",
+        "size": 6347
+      }
+    },
+    {
+      "container": {
+        "sha256": "aaeb609ac7bccb5e8985271a39921d9883fe1dc5254db7ec763e4c22de53fa4c",
+        "size": 4688
+      },
+      "path": "schemas/portable/records/032-effects-circuit-breakers-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "aaeb609ac7bccb5e8985271a39921d9883fe1dc5254db7ec763e4c22de53fa4c",
+        "size": 4688
+      }
+    },
+    {
+      "container": {
+        "sha256": "a63509500d9757b795bd0d67b84c19ce462734c9f487766f8e5a27c9da265e30",
+        "size": 5203
+      },
+      "path": "schemas/portable/records/033-memory-source-events-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a63509500d9757b795bd0d67b84c19ce462734c9f487766f8e5a27c9da265e30",
+        "size": 5203
+      }
+    },
+    {
+      "container": {
+        "sha256": "b0d4953e73ca07c735ace206d511b97978c9224bcf8953d8adc18479c6250a0b",
+        "size": 5110
+      },
+      "path": "schemas/portable/records/034-memory-fact-assertions-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b0d4953e73ca07c735ace206d511b97978c9224bcf8953d8adc18479c6250a0b",
+        "size": 5110
+      }
+    },
+    {
+      "container": {
+        "sha256": "43799039c8110b08d83cb0531c30055e4c3bf7b7597ca67ad830683147221386",
+        "size": 3356
+      },
+      "path": "schemas/portable/records/035-memory-current-facts-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "43799039c8110b08d83cb0531c30055e4c3bf7b7597ca67ad830683147221386",
+        "size": 3356
+      }
+    },
+    {
+      "container": {
+        "sha256": "7b8a01b589ef8f62f1247e1c3ef98404f1b3813b208e979fee100fe7c0e35cc5",
+        "size": 7614
+      },
+      "path": "schemas/portable/records/036-memory-erasure-tombstones-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7b8a01b589ef8f62f1247e1c3ef98404f1b3813b208e979fee100fe7c0e35cc5",
+        "size": 7614
+      }
+    },
+    {
+      "container": {
+        "sha256": "b73c03b660e1872b8f7442f59ca4983f613f7cfc4383e6a024514bd0d34aa228",
+        "size": 3868
+      },
+      "path": "schemas/portable/records/037-evidence-evidence-envelopes-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b73c03b660e1872b8f7442f59ca4983f613f7cfc4383e6a024514bd0d34aa228",
+        "size": 3868
+      }
+    },
+    {
+      "container": {
+        "sha256": "9fcb7f1c7ce8e44559b5aeb710032f88b283fd0c10ed2628f092e1b22a8618a8",
+        "size": 2790
+      },
+      "path": "schemas/portable/records/038-evidence-evidence-links-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9fcb7f1c7ce8e44559b5aeb710032f88b283fd0c10ed2628f092e1b22a8618a8",
+        "size": 2790
+      }
+    },
+    {
+      "container": {
+        "sha256": "512b8fbd6663381a7b348a13453776491817d7a14981f34063cc24a47a202728",
+        "size": 4423
+      },
+      "path": "schemas/portable/records/039-evidence-object-refs-v1.schema.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "512b8fbd6663381a7b348a13453776491817d7a14981f34063cc24a47a202728",
+        "size": 4423
+      }
+    },
+    {
+      "container": {
+        "sha256": "63cf510d417042028e225b6fc431355071320b7b2f49aad9f6bc09d6a2001d41",
+        "size": 157
+      },
+      "path": "src/eva/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "63cf510d417042028e225b6fc431355071320b7b2f49aad9f6bc09d6a2001d41",
+        "size": 157
+      }
+    },
+    {
+      "container": {
+        "sha256": "b2c8d064e78d25aedce86c2d8fd542d1984061beaf4e21cb9808f54ca64c394d",
+        "size": 401
+      },
+      "path": "src/eva/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b2c8d064e78d25aedce86c2d8fd542d1984061beaf4e21cb9808f54ca64c394d",
+        "size": 401
+      }
+    },
+    {
+      "container": {
+        "sha256": "6ae0ae23199095324aa1341ddb54c5d3bc569813e774907427eda5e74a499331",
+        "size": 51
+      },
+      "path": "src/eva/adapters/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6ae0ae23199095324aa1341ddb54c5d3bc569813e774907427eda5e74a499331",
+        "size": 51
+      }
+    },
+    {
+      "container": {
+        "sha256": "24c5bffde7d865c33e55f05d4a98c5433a04050940faa2645b3d2ad9097b4ef4",
+        "size": 238
+      },
+      "path": "src/eva/adapters/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "24c5bffde7d865c33e55f05d4a98c5433a04050940faa2645b3d2ad9097b4ef4",
+        "size": 238
+      }
+    },
+    {
+      "container": {
+        "sha256": "ce9961e221c123e0189f43e273db1baff06b627012e40309b46c6fa9e8e63430",
+        "size": 187
+      },
+      "path": "src/eva/adapters/api/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ce9961e221c123e0189f43e273db1baff06b627012e40309b46c6fa9e8e63430",
+        "size": 187
+      }
+    },
+    {
+      "container": {
+        "sha256": "309a5c5337cdbe568c97e7a2be20685f044eb0b506dc01bd3be4ddf4e62b904a",
+        "size": 370
+      },
+      "path": "src/eva/adapters/api/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "309a5c5337cdbe568c97e7a2be20685f044eb0b506dc01bd3be4ddf4e62b904a",
+        "size": 370
+      }
+    },
+    {
+      "container": {
+        "sha256": "2af7034d56731059bccd0b8e00abf2c12ae9377d6fcac4080bb1001b571a8c85",
+        "size": 63220
+      },
+      "path": "src/eva/adapters/api/__pycache__/app.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2af7034d56731059bccd0b8e00abf2c12ae9377d6fcac4080bb1001b571a8c85",
+        "size": 63220
+      }
+    },
+    {
+      "container": {
+        "sha256": "6850a972cf13d5ee5e42c785bd8ee49fac6097489dfd8911ceb604e9c353f9f0",
+        "size": 56596
+      },
+      "path": "src/eva/adapters/api/app.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6850a972cf13d5ee5e42c785bd8ee49fac6097489dfd8911ceb604e9c353f9f0",
+        "size": 56596
+      }
+    },
+    {
+      "container": {
+        "sha256": "358a10a0fcd804edcf0956fe8c5039f02498a4247e72d283eba1a61247768687",
+        "size": 333
+      },
+      "path": "src/eva/adapters/connectors/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "358a10a0fcd804edcf0956fe8c5039f02498a4247e72d283eba1a61247768687",
+        "size": 333
+      }
+    },
+    {
+      "container": {
+        "sha256": "6e5ce556cb7e33721d2fb0737221f1d2ef18c0bf4b145c38663d7f7fb10b1ad0",
+        "size": 448
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6e5ce556cb7e33721d2fb0737221f1d2ef18c0bf4b145c38663d7f7fb10b1ad0",
+        "size": 448
+      }
+    },
+    {
+      "container": {
+        "sha256": "e4cc072e6441199e7674f62f830f61cd1188644c187da4676e7bac093ca7af12",
+        "size": 10654
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/agentmail.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e4cc072e6441199e7674f62f830f61cd1188644c187da4676e7bac093ca7af12",
+        "size": 10654
+      }
+    },
+    {
+      "container": {
+        "sha256": "b92e956c46d5d010f6fe986201ad568322d17fc1ae7730305d09e7d4c0d1a2b2",
+        "size": 9405
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/durable_goal_http.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b92e956c46d5d010f6fe986201ad568322d17fc1ae7730305d09e7d4c0d1a2b2",
+        "size": 9405
+      }
+    },
+    {
+      "container": {
+        "sha256": "71d7c6f403d621bac8a40c9ef225b8f8f60833dac27462be932c01b695f2e228",
+        "size": 7022
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/fanout_http.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "71d7c6f403d621bac8a40c9ef225b8f8f60833dac27462be932c01b695f2e228",
+        "size": 7022
+      }
+    },
+    {
+      "container": {
+        "sha256": "6619190451f2c4dea60852c89a40f02f5144d3f9d7f4e5d2760640903049f33a",
+        "size": 37733
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6619190451f2c4dea60852c89a40f02f5144d3f9d7f4e5d2760640903049f33a",
+        "size": 37733
+      }
+    },
+    {
+      "container": {
+        "sha256": "6fd1639dcdf738f034558644d22b3f153ac83c56d9c7551cff8a1c937e0d5bba",
+        "size": 12259
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant_admin.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6fd1639dcdf738f034558644d22b3f153ac83c56d9c7551cff8a1c937e0d5bba",
+        "size": 12259
+      }
+    },
+    {
+      "container": {
+        "sha256": "fe7065375f51c5c331475a3212b14b40aa7cbabce7695eda39cb2262c4fe0916",
+        "size": 12064
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant_automations.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fe7065375f51c5c331475a3212b14b40aa7cbabce7695eda39cb2262c4fe0916",
+        "size": 12064
+      }
+    },
+    {
+      "container": {
+        "sha256": "eaf5ee4177b093517756589a71598b60b3ea605a88aee919f381c1bbc032b966",
+        "size": 8826
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant_events.cpython-312.pyc",
+      "state": "different",
+      "worktree": {
+        "sha256": "406b434b829e05001a932faa212480ddb3de7c38b13b509d577e430a6233de3e",
+        "size": 9034
+      }
+    },
+    {
+      "container": {
+        "sha256": "a9484b4f498456e638c46b80699068695fe825ca0623e42a4652718e22e7ec75",
+        "size": 14721
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant_hacs.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a9484b4f498456e638c46b80699068695fe825ca0623e42a4652718e22e7ec75",
+        "size": 14721
+      }
+    },
+    {
+      "container": {
+        "sha256": "aac88783fc5906dabdef4bbb431d6f204bf9048d8a5b13ff2d2e498548d37b0c",
+        "size": 16140
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/home_assistant_localtuya.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "aac88783fc5906dabdef4bbb431d6f204bf9048d8a5b13ff2d2e498548d37b0c",
+        "size": 16140
+      }
+    },
+    {
+      "container": {
+        "sha256": "b1d9db3a9836c77f0df1a039de3a1898173e6747f8bcafc2b8508e31dbeb4f1a",
+        "size": 10863
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/local_files.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b1d9db3a9836c77f0df1a039de3a1898173e6747f8bcafc2b8508e31dbeb4f1a",
+        "size": 10863
+      }
+    },
+    {
+      "container": {
+        "sha256": "cfe4875997b28970c4bee11e4ac07b2ec5e0919f98a94edde41006dee2ce44c9",
+        "size": 14700
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/process.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cfe4875997b28970c4bee11e4ac07b2ec5e0919f98a94edde41006dee2ce44c9",
+        "size": 14700
+      }
+    },
+    {
+      "container": {
+        "sha256": "d9165b946961aca911e78bff17a2dfd15ffbe1cbeb81b9df540251465bb1046a",
+        "size": 17811
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/repository_improvements.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d9165b946961aca911e78bff17a2dfd15ffbe1cbeb81b9df540251465bb1046a",
+        "size": 17811
+      }
+    },
+    {
+      "container": {
+        "sha256": "536e3f818b4bf19dc3ec6045ca235f381f04a96b86ba6796c5a6e9e02179fe4d",
+        "size": 14936
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/stripe.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "536e3f818b4bf19dc3ec6045ca235f381f04a96b86ba6796c5a6e9e02179fe4d",
+        "size": 14936
+      }
+    },
+    {
+      "container": {
+        "sha256": "edad5b648b90951d49455b80498bc547c8ebe2aaaf970e649ed2400ed4710db4",
+        "size": 9342
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/stripe_webhook.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "edad5b648b90951d49455b80498bc547c8ebe2aaaf970e649ed2400ed4710db4",
+        "size": 9342
+      }
+    },
+    {
+      "container": {
+        "sha256": "a252500c884a219f3aac1efc90ece8a4d7549313ba49aef46ec9d6b0b16f7695",
+        "size": 14396
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/telegram.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a252500c884a219f3aac1efc90ece8a4d7549313ba49aef46ec9d6b0b16f7695",
+        "size": 14396
+      }
+    },
+    {
+      "container": {
+        "sha256": "07d21e3cc0eb58727edb130bf81a5b7106d159e28c5e19a60766f79b80cb8c4b",
+        "size": 15845
+      },
+      "path": "src/eva/adapters/connectors/__pycache__/validated_edits.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "07d21e3cc0eb58727edb130bf81a5b7106d159e28c5e19a60766f79b80cb8c4b",
+        "size": 15845
+      }
+    },
+    {
+      "container": {
+        "sha256": "d10303bededa16547bba34f6a6c2a6bfd075de6d86dd446eac69191af7fd4a7d",
+        "size": 6607
+      },
+      "path": "src/eva/adapters/connectors/agentmail.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d10303bededa16547bba34f6a6c2a6bfd075de6d86dd446eac69191af7fd4a7d",
+        "size": 6607
+      }
+    },
+    {
+      "container": {
+        "sha256": "2571987559c9a6d3469b9bafdf32d6570b5b87764b1b3656134b57b1a261b3fb",
+        "size": 6902
+      },
+      "path": "src/eva/adapters/connectors/durable_goal_http.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2571987559c9a6d3469b9bafdf32d6570b5b87764b1b3656134b57b1a261b3fb",
+        "size": 6902
+      }
+    },
+    {
+      "container": {
+        "sha256": "57a18bcac0394df97d5f84ea37567e62704c018e6546d59dac5ce03f802b3f1e",
+        "size": 5012
+      },
+      "path": "src/eva/adapters/connectors/fanout_http.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "57a18bcac0394df97d5f84ea37567e62704c018e6546d59dac5ce03f802b3f1e",
+        "size": 5012
+      }
+    },
+    {
+      "container": {
+        "sha256": "be368877bf6b65a1930a1ab77504f52a6e4ebdab501c92dbfe583017c3856cb6",
+        "size": 29268
+      },
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "be368877bf6b65a1930a1ab77504f52a6e4ebdab501c92dbfe583017c3856cb6",
+        "size": 29268
+      }
+    },
+    {
+      "container": {
+        "sha256": "d16290174505d68cb39f059d13dbf97be5ed198e53f89943f0913e7cb0b9e736",
+        "size": 9598
+      },
+      "path": "src/eva/adapters/connectors/home_assistant_admin.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d16290174505d68cb39f059d13dbf97be5ed198e53f89943f0913e7cb0b9e736",
+        "size": 9598
+      }
+    },
+    {
+      "container": {
+        "sha256": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7",
+        "size": 9139
+      },
+      "path": "src/eva/adapters/connectors/home_assistant_automations.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7",
+        "size": 9139
+      }
+    },
+    {
+      "container": {
+        "sha256": "adbe05c6ec13b1984f61d1f4dc4533602a1bf6c380f4cf0ee4678e8c0e4af967",
+        "size": 6291
+      },
+      "path": "src/eva/adapters/connectors/home_assistant_events.py",
+      "state": "different",
+      "worktree": {
+        "sha256": "8a563df5ecbe5ae7d38be6a870a262c6234f1488ee979a287aa4e7d2e3ffa5f7",
+        "size": 6546
+      }
+    },
+    {
+      "container": {
+        "sha256": "c6ea839b175f017e3875520302739df84b93bb8258eeee81f7eab551341c61cd",
+        "size": 11073
+      },
+      "path": "src/eva/adapters/connectors/home_assistant_hacs.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c6ea839b175f017e3875520302739df84b93bb8258eeee81f7eab551341c61cd",
+        "size": 11073
+      }
+    },
+    {
+      "container": {
+        "sha256": "01882b2e43a66774a836297d90233232521871e3c234ccb051e97545d5d919d7",
+        "size": 13515
+      },
+      "path": "src/eva/adapters/connectors/home_assistant_localtuya.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "01882b2e43a66774a836297d90233232521871e3c234ccb051e97545d5d919d7",
+        "size": 13515
+      }
+    },
+    {
+      "container": {
+        "sha256": "286254903c698b8ed3acc3571ff6616556fcb8c72eac4c9d66f863c52386d4a4",
+        "size": 7847
+      },
+      "path": "src/eva/adapters/connectors/local_files.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "286254903c698b8ed3acc3571ff6616556fcb8c72eac4c9d66f863c52386d4a4",
+        "size": 7847
+      }
+    },
+    {
+      "container": {
+        "sha256": "36cb3a9a29f8ea25da22984153738af1cdaa34350bb5df703fe14276459f5573",
+        "size": 18128
+      },
+      "path": "src/eva/adapters/connectors/process.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "36cb3a9a29f8ea25da22984153738af1cdaa34350bb5df703fe14276459f5573",
+        "size": 18128
+      }
+    },
+    {
+      "container": {
+        "sha256": "6651db464929f109a8029e2cb034fc0f43008a08d52d4eb931c9d81591f71d01",
+        "size": 12305
+      },
+      "path": "src/eva/adapters/connectors/repository_improvements.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6651db464929f109a8029e2cb034fc0f43008a08d52d4eb931c9d81591f71d01",
+        "size": 12305
+      }
+    },
+    {
+      "container": {
+        "sha256": "e7bf3fe9cc13f33b1d14a22c9aa90b5fe837ee9d8e443003adaa795a3a073bbe",
+        "size": 11254
+      },
+      "path": "src/eva/adapters/connectors/stripe.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e7bf3fe9cc13f33b1d14a22c9aa90b5fe837ee9d8e443003adaa795a3a073bbe",
+        "size": 11254
+      }
+    },
+    {
+      "container": {
+        "sha256": "17e9c3be2959fd6fdb2b4b18958e69238075ef5985e3191d9665c157aac64dab",
+        "size": 6319
+      },
+      "path": "src/eva/adapters/connectors/stripe_webhook.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "17e9c3be2959fd6fdb2b4b18958e69238075ef5985e3191d9665c157aac64dab",
+        "size": 6319
+      }
+    },
+    {
+      "container": {
+        "sha256": "013f9d1e47ca5428f13cb685954474a743ed6cf6c31331eb247a219c6802a38f",
+        "size": 10841
+      },
+      "path": "src/eva/adapters/connectors/telegram.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "013f9d1e47ca5428f13cb685954474a743ed6cf6c31331eb247a219c6802a38f",
+        "size": 10841
+      }
+    },
+    {
+      "container": {
+        "sha256": "93c470c5a1e5a9efc5cc1dd8468fdf24dfc6662c2f0eea47f99a8265e03fdf90",
+        "size": 11672
+      },
+      "path": "src/eva/adapters/connectors/validated_edits.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "93c470c5a1e5a9efc5cc1dd8468fdf24dfc6662c2f0eea47f99a8265e03fdf90",
+        "size": 11672
+      }
+    },
+    {
+      "container": {
+        "sha256": "2a0d3712f8e3f7f51d45b940f90e67a413bb281e8fe04178f793cefb6d1aec13",
+        "size": 66
+      },
+      "path": "src/eva/adapters/credentials/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2a0d3712f8e3f7f51d45b940f90e67a413bb281e8fe04178f793cefb6d1aec13",
+        "size": 66
+      }
+    },
+    {
+      "container": {
+        "sha256": "d22d2e446d5d27916e470d8437551a58ba6a73163c6cdb110e68d891d7a04307",
+        "size": 216
+      },
+      "path": "src/eva/adapters/credentials/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d22d2e446d5d27916e470d8437551a58ba6a73163c6cdb110e68d891d7a04307",
+        "size": 216
+      }
+    },
+    {
+      "container": {
+        "sha256": "24324300be44df8bc76af83a06cbf56638bb458c92ec879d2028dc24e2bfe34e",
+        "size": 76
+      },
+      "path": "src/eva/adapters/dbos/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "24324300be44df8bc76af83a06cbf56638bb458c92ec879d2028dc24e2bfe34e",
+        "size": 76
+      }
+    },
+    {
+      "container": {
+        "sha256": "8f050dd2a744d5b06e7e594711d781c2eabd43533fa06ab0403727cfee758030",
+        "size": 219
+      },
+      "path": "src/eva/adapters/dbos/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8f050dd2a744d5b06e7e594711d781c2eabd43533fa06ab0403727cfee758030",
+        "size": 219
+      }
+    },
+    {
+      "container": {
+        "sha256": "10a8a1c5a645bde0723fc28916287a586c76085e27cb12817b3edb79fab5ca93",
+        "size": 18277
+      },
+      "path": "src/eva/adapters/dbos/__pycache__/datasource.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "10a8a1c5a645bde0723fc28916287a586c76085e27cb12817b3edb79fab5ca93",
+        "size": 18277
+      }
+    },
+    {
+      "container": {
+        "sha256": "800f761007f30c7040a5796a856692327568f3913460c6413ebb382564b4b232",
+        "size": 15965
+      },
+      "path": "src/eva/adapters/dbos/datasource.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "800f761007f30c7040a5796a856692327568f3913460c6413ebb382564b4b232",
+        "size": 15965
+      }
+    },
+    {
+      "container": {
+        "sha256": "cdccbb710ba58d7112d951a3237a97a0808ca9581c580e2d24f89347ce870c43",
+        "size": 713
+      },
+      "path": "src/eva/adapters/model/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cdccbb710ba58d7112d951a3237a97a0808ca9581c580e2d24f89347ce870c43",
+        "size": 713
+      }
+    },
+    {
+      "container": {
+        "sha256": "6cbf27a68e999fda0b29de8e57d38f06c60032957ac80c5d4eeb70057d5c9714",
+        "size": 738
+      },
+      "path": "src/eva/adapters/model/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6cbf27a68e999fda0b29de8e57d38f06c60032957ac80c5d4eeb70057d5c9714",
+        "size": 738
+      }
+    },
+    {
+      "container": {
+        "sha256": "754c78fc143363a7e12b934c8b6837821dc6eb9d455c27929115fbf92cd45f3a",
+        "size": 94307
+      },
+      "path": "src/eva/adapters/model/__pycache__/conversation.cpython-312.pyc",
+      "state": "different",
+      "worktree": {
+        "sha256": "8db7f3458089a2b478db07b934a69420a37b4d6d4309a724704fe377cd58eac2",
+        "size": 95152
+      }
+    },
+    {
+      "container": {
+        "sha256": "978407d94137d6e49b420049ddc379e4573c01a5c8e65980ebe38cd869c0dae4",
+        "size": 42333
+      },
+      "path": "src/eva/adapters/model/__pycache__/fixture.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "978407d94137d6e49b420049ddc379e4573c01a5c8e65980ebe38cd869c0dae4",
+        "size": 42333
+      }
+    },
+    {
+      "container": {
+        "sha256": "55c44ddbaf517ffb74d31cd2b470c7faed1e21616fa621e34ec1ff2f613b2b01",
+        "size": 111662
+      },
+      "path": "src/eva/adapters/model/conversation.py",
+      "state": "different",
+      "worktree": {
+        "sha256": "68ff9f5d30ec2c6125b9a6e9a3c302cde2010b98af65be28730808f40448d7ee",
+        "size": 112837
+      }
+    },
+    {
+      "container": {
+        "sha256": "d6f12fea148bd5fd4d9f292bd7dc116d4ba1709ba7da99807ad87c19dcc4c20d",
+        "size": 40087
+      },
+      "path": "src/eva/adapters/model/fixture.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d6f12fea148bd5fd4d9f292bd7dc116d4ba1709ba7da99807ad87c19dcc4c20d",
+        "size": 40087
+      }
+    },
+    {
+      "container": {
+        "sha256": "631324725d5748fcbc659c23e3849adf5e7752d1222881ffb5e074117e8374c8",
+        "size": 77
+      },
+      "path": "src/eva/adapters/objects/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "631324725d5748fcbc659c23e3849adf5e7752d1222881ffb5e074117e8374c8",
+        "size": 77
+      }
+    },
+    {
+      "container": {
+        "sha256": "0f636e0b05ea95e455b6b503dd21e38420096db68abc085bc6255b2c9674fecf",
+        "size": 272
+      },
+      "path": "src/eva/adapters/objects/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0f636e0b05ea95e455b6b503dd21e38420096db68abc085bc6255b2c9674fecf",
+        "size": 272
+      }
+    },
+    {
+      "container": {
+        "sha256": "ff51a937aef9bba7b2530dd747706d47176812350784a2f6fcfc8b5f6680584b",
+        "size": 29105
+      },
+      "path": "src/eva/adapters/objects/__pycache__/cas.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ff51a937aef9bba7b2530dd747706d47176812350784a2f6fcfc8b5f6680584b",
+        "size": 29105
+      }
+    },
+    {
+      "container": {
+        "sha256": "ae8e7ae710c81c8cb8a5f08921238b542193a906616142c207da5993f5673b96",
+        "size": 12903
+      },
+      "path": "src/eva/adapters/objects/__pycache__/envelope.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ae8e7ae710c81c8cb8a5f08921238b542193a906616142c207da5993f5673b96",
+        "size": 12903
+      }
+    },
+    {
+      "container": {
+        "sha256": "da22d435ee8faa9908be201f8dfd207dbab96322a7e6c1c71470dbafea0cbc2e",
+        "size": 23538
+      },
+      "path": "src/eva/adapters/objects/__pycache__/fixture_keys.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "da22d435ee8faa9908be201f8dfd207dbab96322a7e6c1c71470dbafea0cbc2e",
+        "size": 23538
+      }
+    },
+    {
+      "container": {
+        "sha256": "7bf26b4c0d947cbd6bde328ae2fd3b2ae6f5131a333bca8759f6d07d05296b96",
+        "size": 6041
+      },
+      "path": "src/eva/adapters/objects/__pycache__/p256.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7bf26b4c0d947cbd6bde328ae2fd3b2ae6f5131a333bca8759f6d07d05296b96",
+        "size": 6041
+      }
+    },
+    {
+      "container": {
+        "sha256": "937ad47e71ec7e597034042a6a4c27a15253b1c4a667d9ea91a262f54139c50c",
+        "size": 25615
+      },
+      "path": "src/eva/adapters/objects/cas.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "937ad47e71ec7e597034042a6a4c27a15253b1c4a667d9ea91a262f54139c50c",
+        "size": 25615
+      }
+    },
+    {
+      "container": {
+        "sha256": "9cb1e71a54c4c4f5af793baba929a3f3b6cf20c31c6b9dc5cc1a73f4b5dfc7f5",
+        "size": 11121
+      },
+      "path": "src/eva/adapters/objects/envelope.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9cb1e71a54c4c4f5af793baba929a3f3b6cf20c31c6b9dc5cc1a73f4b5dfc7f5",
+        "size": 11121
+      }
+    },
+    {
+      "container": {
+        "sha256": "57482fd3f186a1ef5febfb10f6ac77a1bc99efedf4687a1e91d11aa3263b6274",
+        "size": 19475
+      },
+      "path": "src/eva/adapters/objects/fixture_keys.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "57482fd3f186a1ef5febfb10f6ac77a1bc99efedf4687a1e91d11aa3263b6274",
+        "size": 19475
+      }
+    },
+    {
+      "container": {
+        "sha256": "e82cd209dc5312abcbef526846509b75ffbf949bc71af0fb23b055057a608db0",
+        "size": 4118
+      },
+      "path": "src/eva/adapters/objects/p256.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e82cd209dc5312abcbef526846509b75ffbf949bc71af0fb23b055057a608db0",
+        "size": 4118
+      }
+    },
+    {
+      "container": {
+        "sha256": "07b08b570ee3acc0ce9cf5b87d28ba459c841c8126910f619adf3ff8e2b22d8a",
+        "size": 74
+      },
+      "path": "src/eva/adapters/postgres/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "07b08b570ee3acc0ce9cf5b87d28ba459c841c8126910f619adf3ff8e2b22d8a",
+        "size": 74
+      }
+    },
+    {
+      "container": {
+        "sha256": "ae7110bb704cbe4f09e99be2d0e13a449421902f61be2432a56a8a688c50115d",
+        "size": 270
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ae7110bb704cbe4f09e99be2d0e13a449421902f61be2432a56a8a688c50115d",
+        "size": 270
+      }
+    },
+    {
+      "container": {
+        "sha256": "fcbdd8409408261508a78f99979ec3989eeb1aa4723c99afcb93a7a79527ebcb",
+        "size": 43830
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/advanced_tasks.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fcbdd8409408261508a78f99979ec3989eeb1aa4723c99afcb93a7a79527ebcb",
+        "size": 43830
+      }
+    },
+    {
+      "container": {
+        "sha256": "e15b16d1534b8f8104dd05a2121aa6982701f03dd361af87eb36adc3b28f13a6",
+        "size": 24933
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/catalog.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e15b16d1534b8f8104dd05a2121aa6982701f03dd361af87eb36adc3b28f13a6",
+        "size": 24933
+      }
+    },
+    {
+      "container": {
+        "sha256": "c689d749f7d9162d7efb22204bf7a3ed55bb93701c6d546703e159370d72b74d",
+        "size": 385152
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/catalog_generated.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c689d749f7d9162d7efb22204bf7a3ed55bb93701c6d546703e159370d72b74d",
+        "size": 385152
+      }
+    },
+    {
+      "container": {
+        "sha256": "9338884d2c5a543bdbc6760f328d392f08cd4df942356f4c4d249ac737a3ae06",
+        "size": 29234
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/commerce.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "9338884d2c5a543bdbc6760f328d392f08cd4df942356f4c4d249ac737a3ae06",
+        "size": 29234
+      }
+    },
+    {
+      "container": {
+        "sha256": "167ae967a7231d574a8017e51ec60d7aac7a43c7c80d248b169782f7b3f09585",
+        "size": 224708
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/conversation_actions.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "167ae967a7231d574a8017e51ec60d7aac7a43c7c80d248b169782f7b3f09585",
+        "size": 224708
+      }
+    },
+    {
+      "container": {
+        "sha256": "54f46f9137a9adfea13d8d1fc40251a529e5386dec7c5d3fc9f7c969037f33b7",
+        "size": 16237
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/conversation_journal.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "54f46f9137a9adfea13d8d1fc40251a529e5386dec7c5d3fc9f7c969037f33b7",
+        "size": 16237
+      }
+    },
+    {
+      "container": {
+        "sha256": "c5e51d83147c40a3ea7eb4326a1d1f2fe5816ad0f4c39ad87d2e033f28d61b38",
+        "size": 13093
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/delivery.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c5e51d83147c40a3ea7eb4326a1d1f2fe5816ad0f4c39ad87d2e033f28d61b38",
+        "size": 13093
+      }
+    },
+    {
+      "container": {
+        "sha256": "5df76d281dc23c6872765fd837c1f551bb30c795fb429c3e86e11b2df980f2fb",
+        "size": 26518
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/durable_goals.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5df76d281dc23c6872765fd837c1f551bb30c795fb429c3e86e11b2df980f2fb",
+        "size": 26518
+      }
+    },
+    {
+      "container": {
+        "sha256": "e5f55b8a19d678bcb356b755e853829a13549dfffb6cbef98d050305fb5e5a13",
+        "size": 16205
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/episode_repository.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e5f55b8a19d678bcb356b755e853829a13549dfffb6cbef98d050305fb5e5a13",
+        "size": 16205
+      }
+    },
+    {
+      "container": {
+        "sha256": "1aa176b602f7b05882168ef1cc9b5775b1ab88aeeb16f7db646c1f61ac097864",
+        "size": 20911
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/home_assistant_reads.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1aa176b602f7b05882168ef1cc9b5775b1ab88aeeb16f7db646c1f61ac097864",
+        "size": 20911
+      }
+    },
+    {
+      "container": {
+        "sha256": "12c2626c90c450986176b3a0645443e147c6305bf9051303b891f54244511760",
+        "size": 30164
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/memory.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "12c2626c90c450986176b3a0645443e147c6305bf9051303b891f54244511760",
+        "size": 30164
+      }
+    },
+    {
+      "container": {
+        "sha256": "a594e3cb89ebcb018073a0161658d61c4734c5bb23811f8baeca8f5005d29d67",
+        "size": 13263
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/memory_outbox.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a594e3cb89ebcb018073a0161658d61c4734c5bb23811f8baeca8f5005d29d67",
+        "size": 13263
+      }
+    },
+    {
+      "container": {
+        "sha256": "622d32b31b20ec269d846e3873fe03eee64b2c077f2d0b3686bb9eb3a08adca0",
+        "size": 22506
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/noor_4d_repository.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "622d32b31b20ec269d846e3873fe03eee64b2c077f2d0b3686bb9eb3a08adca0",
+        "size": 22506
+      }
+    },
+    {
+      "container": {
+        "sha256": "f42657a5f50469a85334ae3ed36a5c6fd435cfb71e924a5ffcdd5d0bb9bfa5ab",
+        "size": 35121
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/operational_timeline.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f42657a5f50469a85334ae3ed36a5c6fd435cfb71e924a5ffcdd5d0bb9bfa5ab",
+        "size": 35121
+      }
+    },
+    {
+      "container": {
+        "sha256": "505fc7e7943ffb298c7bc34b50007e4655ca58ecb458c925075755ba99dde98e",
+        "size": 21593
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/portable_export.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "505fc7e7943ffb298c7bc34b50007e4655ca58ecb458c925075755ba99dde98e",
+        "size": 21593
+      }
+    },
+    {
+      "container": {
+        "sha256": "34e48fba0d2d5540d996c8c3f3d9fe35357203385a216248cd03d26d06937d47",
+        "size": 13803
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/schema.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "34e48fba0d2d5540d996c8c3f3d9fe35357203385a216248cd03d26d06937d47",
+        "size": 13803
+      }
+    },
+    {
+      "container": {
+        "sha256": "82c5407935582102bb86f7f61cd9cc977bf8429da7d497636d21893811dffdfe",
+        "size": 2148
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/scope.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "82c5407935582102bb86f7f61cd9cc977bf8429da7d497636d21893811dffdfe",
+        "size": 2148
+      }
+    },
+    {
+      "container": {
+        "sha256": "d7b02da7315482ddc22a962e843ac9aae774d470d3366ce0350cb8f386f488bf",
+        "size": 17550
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/sensory_events.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d7b02da7315482ddc22a962e843ac9aae774d470d3366ce0350cb8f386f488bf",
+        "size": 17550
+      }
+    },
+    {
+      "container": {
+        "sha256": "090a4233b367a8f1778495787a58afd7da265fdd77bb6ff5f52bbbb5ff21fbe3",
+        "size": 15796
+      },
+      "path": "src/eva/adapters/postgres/__pycache__/telegram_ingress.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "090a4233b367a8f1778495787a58afd7da265fdd77bb6ff5f52bbbb5ff21fbe3",
+        "size": 15796
+      }
+    },
+    {
+      "container": {
+        "sha256": "4cb7e5fe64aae44eb69b14cf0790ec179f828e3f49cf0b61e7fba569ba2c55f7",
+        "size": 36611
+      },
+      "path": "src/eva/adapters/postgres/advanced_tasks.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4cb7e5fe64aae44eb69b14cf0790ec179f828e3f49cf0b61e7fba569ba2c55f7",
+        "size": 36611
+      }
+    },
+    {
+      "container": {
+        "sha256": "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339",
+        "size": 18304
+      },
+      "path": "src/eva/adapters/postgres/catalog.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339",
+        "size": 18304
+      }
+    },
+    {
+      "container": {
+        "sha256": "1ea951fb3c01c06ba7816554d55ee25d00e196a3f9d2f852e89ba78091560042",
+        "size": 385818
+      },
+      "path": "src/eva/adapters/postgres/catalog_generated.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1ea951fb3c01c06ba7816554d55ee25d00e196a3f9d2f852e89ba78091560042",
+        "size": 385818
+      }
+    },
+    {
+      "container": {
+        "sha256": "18902bc7a77078044dda8748b3aaa8a8e509ac0c20f9bc07a569395edd46d4b4",
+        "size": 24357
+      },
+      "path": "src/eva/adapters/postgres/commerce.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "18902bc7a77078044dda8748b3aaa8a8e509ac0c20f9bc07a569395edd46d4b4",
+        "size": 24357
+      }
+    },
+    {
+      "container": {
+        "sha256": "dc62c5dee19995065f4cbcbe81c239a52ee8c4810eca92e062285ae91404f9ec",
+        "size": 210604
+      },
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dc62c5dee19995065f4cbcbe81c239a52ee8c4810eca92e062285ae91404f9ec",
+        "size": 210604
+      }
+    },
+    {
+      "container": {
+        "sha256": "255be476482fbd04f479f8b621221573fdeaacffae3698217faaea01fb596fa6",
+        "size": 12861
+      },
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "255be476482fbd04f479f8b621221573fdeaacffae3698217faaea01fb596fa6",
+        "size": 12861
+      }
+    },
+    {
+      "container": {
+        "sha256": "4e4d95f61145ed72cf29d74dac7cd5c0aed18fe440c46559be1e140f215007f8",
+        "size": 9715
+      },
+      "path": "src/eva/adapters/postgres/delivery.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4e4d95f61145ed72cf29d74dac7cd5c0aed18fe440c46559be1e140f215007f8",
+        "size": 9715
+      }
+    },
+    {
+      "container": {
+        "sha256": "25ab84a172aab2e8e60a0cf84cbd915242424821a22b3e7562ce834c06c9c0fc",
+        "size": 22384
+      },
+      "path": "src/eva/adapters/postgres/durable_goals.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "25ab84a172aab2e8e60a0cf84cbd915242424821a22b3e7562ce834c06c9c0fc",
+        "size": 22384
+      }
+    },
+    {
+      "container": {
+        "sha256": "39b75b0180896fc9ab5f859a15735444c23ad7d351d682527de2973ca31205f4",
+        "size": 11402
+      },
+      "path": "src/eva/adapters/postgres/episode_repository.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "39b75b0180896fc9ab5f859a15735444c23ad7d351d682527de2973ca31205f4",
+        "size": 11402
+      }
+    },
+    {
+      "container": {
+        "sha256": "45b8ed28b35a1cf96ca174398ae5541fb1e83f3658745ff3aee2b73f28918dde",
+        "size": 17381
+      },
+      "path": "src/eva/adapters/postgres/home_assistant_reads.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "45b8ed28b35a1cf96ca174398ae5541fb1e83f3658745ff3aee2b73f28918dde",
+        "size": 17381
+      }
+    },
+    {
+      "container": {
+        "sha256": "dea0bd0b88ec2e88b090ca87c3f658ce157d013040aa6838721c10a7fdeb8bf3",
+        "size": 22149
+      },
+      "path": "src/eva/adapters/postgres/memory.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dea0bd0b88ec2e88b090ca87c3f658ce157d013040aa6838721c10a7fdeb8bf3",
+        "size": 22149
+      }
+    },
+    {
+      "container": {
+        "sha256": "f49053147aa2b2b85031f841cbb814e9a7154d4fd7318893e70324ec3b5c9e32",
+        "size": 11167
+      },
+      "path": "src/eva/adapters/postgres/memory_outbox.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f49053147aa2b2b85031f841cbb814e9a7154d4fd7318893e70324ec3b5c9e32",
+        "size": 11167
+      }
+    },
+    {
+      "container": {
+        "sha256": "3936d6641c01d0cf07d21cb4064bf4ad8a714cfaf7c8eb8db080ab1a40aed7a8",
+        "size": 15877
+      },
+      "path": "src/eva/adapters/postgres/noor_4d_repository.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3936d6641c01d0cf07d21cb4064bf4ad8a714cfaf7c8eb8db080ab1a40aed7a8",
+        "size": 15877
+      }
+    },
+    {
+      "container": {
+        "sha256": "73238f211b681bfafe057072f53fc35449a5314e58588abac30f52d050f52e54",
+        "size": 29357
+      },
+      "path": "src/eva/adapters/postgres/operational_timeline.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "73238f211b681bfafe057072f53fc35449a5314e58588abac30f52d050f52e54",
+        "size": 29357
+      }
+    },
+    {
+      "container": {
+        "sha256": "c826086bc5c7b1a8332f9f5d1c40baac7afb9a3236aaa8e1d260bcc0ce59dc35",
+        "size": 17680
+      },
+      "path": "src/eva/adapters/postgres/portable_export.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c826086bc5c7b1a8332f9f5d1c40baac7afb9a3236aaa8e1d260bcc0ce59dc35",
+        "size": 17680
+      }
+    },
+    {
+      "container": {
+        "sha256": "23c16da5fb5b72d1b7b3ec543e838b23bb8cd84a079207a848d1b82d1e0d80ef",
+        "size": 12258
+      },
+      "path": "src/eva/adapters/postgres/schema.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "23c16da5fb5b72d1b7b3ec543e838b23bb8cd84a079207a848d1b82d1e0d80ef",
+        "size": 12258
+      }
+    },
+    {
+      "container": {
+        "sha256": "1f20d65bad0893ad7ea53ee312b3030ff4e1c38ab01157e77ee6d9bf36fe463f",
+        "size": 1664
+      },
+      "path": "src/eva/adapters/postgres/scope.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1f20d65bad0893ad7ea53ee312b3030ff4e1c38ab01157e77ee6d9bf36fe463f",
+        "size": 1664
+      }
+    },
+    {
+      "container": {
+        "sha256": "3bc042ff9318fe068d4c4bea889eb7f655740bd2b22a4de836e67e8dea9e03c6",
+        "size": 16991
+      },
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3bc042ff9318fe068d4c4bea889eb7f655740bd2b22a4de836e67e8dea9e03c6",
+        "size": 16991
+      }
+    },
+    {
+      "container": {
+        "sha256": "4c8b395c29177d44ca4e9ffc80d179b3cfeb21c96d90dea60e109631d4a71d2e",
+        "size": 12899
+      },
+      "path": "src/eva/adapters/postgres/telegram_ingress.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4c8b395c29177d44ca4e9ffc80d179b3cfeb21c96d90dea60e109631d4a71d2e",
+        "size": 12899
+      }
+    },
+    {
+      "container": {
+        "sha256": "301224c86e1602034bc7a5f4e6601c7ea6ccb7aa83c2fa7a7021e21e9300e419",
+        "size": 656
+      },
+      "path": "src/eva/adapters/projection/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "301224c86e1602034bc7a5f4e6601c7ea6ccb7aa83c2fa7a7021e21e9300e419",
+        "size": 656
+      }
+    },
+    {
+      "container": {
+        "sha256": "b96ae70f1168c81b8b263e5482180cdfa87acba87f5364260daa38ce210cb27e",
+        "size": 626
+      },
+      "path": "src/eva/adapters/projection/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b96ae70f1168c81b8b263e5482180cdfa87acba87f5364260daa38ce210cb27e",
+        "size": 626
+      }
+    },
+    {
+      "container": {
+        "sha256": "5e5c55f6679924f96b3cc4b6e28018793da956dcb41900a52d3012bd248825c2",
+        "size": 48861
+      },
+      "path": "src/eva/adapters/projection/__pycache__/hindsight.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5e5c55f6679924f96b3cc4b6e28018793da956dcb41900a52d3012bd248825c2",
+        "size": 48861
+      }
+    },
+    {
+      "container": {
+        "sha256": "5099e8726c1630606f9475d44e95bf799a2e28c24619344ac409ae1c9c59d0ff",
+        "size": 46664
+      },
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5099e8726c1630606f9475d44e95bf799a2e28c24619344ac409ae1c9c59d0ff",
+        "size": 46664
+      }
+    },
+    {
+      "container": {
+        "sha256": "07d8b671c7f79054a8bddf806ab4fddff2f747a37a18d8e0a912b9764f57d580",
+        "size": 70
+      },
+      "path": "src/eva/adapters/telemetry/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "07d8b671c7f79054a8bddf806ab4fddff2f747a37a18d8e0a912b9764f57d580",
+        "size": 70
+      }
+    },
+    {
+      "container": {
+        "sha256": "e885b549fa49a815ab0fa09cf6dbb4313c67d10d40ca19c4c6d562d2b0064ac6",
+        "size": 218
+      },
+      "path": "src/eva/adapters/telemetry/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e885b549fa49a815ab0fa09cf6dbb4313c67d10d40ca19c4c6d562d2b0064ac6",
+        "size": 218
+      }
+    },
+    {
+      "container": {
+        "sha256": "1c038ae45e088c112125188e4b0188adb05ba1858af69c76f37b74e6ca675a52",
+        "size": 42
+      },
+      "path": "src/eva/application/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1c038ae45e088c112125188e4b0188adb05ba1858af69c76f37b74e6ca675a52",
+        "size": 42
+      }
+    },
+    {
+      "container": {
+        "sha256": "97f3c9ef5b6b60f77d3b732efe1200a5ece3551621a45f8123cfbf6c58e731cb",
+        "size": 232
+      },
+      "path": "src/eva/application/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "97f3c9ef5b6b60f77d3b732efe1200a5ece3551621a45f8123cfbf6c58e731cb",
+        "size": 232
+      }
+    },
+    {
+      "container": {
+        "sha256": "d10cb6f75d9eeb7af1c34a996d300444b18761f812b1aeea4bea008138dd20f2",
+        "size": 73833
+      },
+      "path": "src/eva/application/__pycache__/advanced_tasks.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d10cb6f75d9eeb7af1c34a996d300444b18761f812b1aeea4bea008138dd20f2",
+        "size": 73833
+      }
+    },
+    {
+      "container": {
+        "sha256": "ebcb7730c7f9366c4f01426e7b7b98412e3798cad6682dd23ea034191e7f2d7d",
+        "size": 18348
+      },
+      "path": "src/eva/application/__pycache__/commerce.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ebcb7730c7f9366c4f01426e7b7b98412e3798cad6682dd23ea034191e7f2d7d",
+        "size": 18348
+      }
+    },
+    {
+      "container": {
+        "sha256": "49b2612c08607956ac787b7181289a29da646dd33295bdbe5a6af249f246fd3b",
+        "size": 25693
+      },
+      "path": "src/eva/application/__pycache__/conversation.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "49b2612c08607956ac787b7181289a29da646dd33295bdbe5a6af249f246fd3b",
+        "size": 25693
+      }
+    },
+    {
+      "container": {
+        "sha256": "f7154f145a352b7379183c11dc140f91718decec2d3000abad3225b7f0640b26",
+        "size": 16393
+      },
+      "path": "src/eva/application/__pycache__/delivery.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f7154f145a352b7379183c11dc140f91718decec2d3000abad3225b7f0640b26",
+        "size": 16393
+      }
+    },
+    {
+      "container": {
+        "sha256": "aa0a43fa4b1eac185ec7a42fbf30daf6ca507081ca8891aee35da572995b0fff",
+        "size": 26588
+      },
+      "path": "src/eva/application/__pycache__/durable_goals.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "aa0a43fa4b1eac185ec7a42fbf30daf6ca507081ca8891aee35da572995b0fff",
+        "size": 26588
+      }
+    },
+    {
+      "container": {
+        "sha256": "e0d17f186738b8aadf3af579a1739853f2b965c564d392f92947b3c8fcf0ae0f",
+        "size": 4430
+      },
+      "path": "src/eva/application/__pycache__/episode_repository.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e0d17f186738b8aadf3af579a1739853f2b965c564d392f92947b3c8fcf0ae0f",
+        "size": 4430
+      }
+    },
+    {
+      "container": {
+        "sha256": "790ab75f823656a35fbb3cd3c5b3bc3d7c61b6086084e735ec85a3efd6332db7",
+        "size": 6082
+      },
+      "path": "src/eva/application/__pycache__/file_batches.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "790ab75f823656a35fbb3cd3c5b3bc3d7c61b6086084e735ec85a3efd6332db7",
+        "size": 6082
+      }
+    },
+    {
+      "container": {
+        "sha256": "172e338ea8bc6221e1a7b4aafbb0bf33755e1fd32f135f80d4f845395dc6042c",
+        "size": 11586
+      },
+      "path": "src/eva/application/__pycache__/free_will.cpython-312.pyc",
+      "state": "different",
+      "worktree": {
+        "sha256": "b31affa5caea2e346154cb936877db1e4c1c2e50edc25c2da36ddc4cc5b6560f",
+        "size": 13030
+      }
+    },
+    {
+      "container": {
+        "sha256": "527e84a5b8259e6897486401f8717553fa2d2c7edd6a039979ca44a0dd7b5af2",
+        "size": 8769
+      },
+      "path": "src/eva/application/__pycache__/home_automation.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "527e84a5b8259e6897486401f8717553fa2d2c7edd6a039979ca44a0dd7b5af2",
+        "size": 8769
+      }
+    },
+    {
+      "container": {
+        "sha256": "51af1bfa35877043e5767a349f9d2582934774fd1ba5415b13eb0bd8674cc68d",
+        "size": 3840
+      },
+      "path": "src/eva/application/__pycache__/mail.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "51af1bfa35877043e5767a349f9d2582934774fd1ba5415b13eb0bd8674cc68d",
+        "size": 3840
+      }
+    },
+    {
+      "container": {
+        "sha256": "0b67b6c1fc5e835f4c8c5c6834dee0457879ccacbea8b009e34d39fa4a3629b1",
+        "size": 16869
+      },
+      "path": "src/eva/application/__pycache__/memory.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0b67b6c1fc5e835f4c8c5c6834dee0457879ccacbea8b009e34d39fa4a3629b1",
+        "size": 16869
+      }
+    },
+    {
+      "container": {
+        "sha256": "1c65e2a2d5a4d85ab594fb54cdefe1ea8c68fae34d54649c7b6f6b971a00cff6",
+        "size": 14690
+      },
+      "path": "src/eva/application/__pycache__/memory_background.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1c65e2a2d5a4d85ab594fb54cdefe1ea8c68fae34d54649c7b6f6b971a00cff6",
+        "size": 14690
+      }
+    },
+    {
+      "container": {
+        "sha256": "7b2c9897185a29e2b30857f992a5575498139efec0132061ff5ba88aaf17063a",
+        "size": 93246
+      },
+      "path": "src/eva/application/__pycache__/noor_4d.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7b2c9897185a29e2b30857f992a5575498139efec0132061ff5ba88aaf17063a",
+        "size": 93246
+      }
+    },
+    {
+      "container": {
+        "sha256": "4058336a6df6c9d956a5c5c4f5f537a501cac7b443665ad20ebaf32a84c5299a",
+        "size": 27777
+      },
+      "path": "src/eva/application/__pycache__/objects.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4058336a6df6c9d956a5c5c4f5f537a501cac7b443665ad20ebaf32a84c5299a",
+        "size": 27777
+      }
+    },
+    {
+      "container": {
+        "sha256": "0c5242646e237294c16aaec0f5385515ca8f6220722bcca8876ea99938848dbc",
+        "size": 21482
+      },
+      "path": "src/eva/application/__pycache__/orchestration.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0c5242646e237294c16aaec0f5385515ca8f6220722bcca8876ea99938848dbc",
+        "size": 21482
+      }
+    },
+    {
+      "container": {
+        "sha256": "4f2ba5078606b4193bdd35f590b3c1e90175621dd1f88683ff67743462d1fce1",
+        "size": 26380
+      },
+      "path": "src/eva/application/__pycache__/personal_interests.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4f2ba5078606b4193bdd35f590b3c1e90175621dd1f88683ff67743462d1fce1",
+        "size": 26380
+      }
+    },
+    {
+      "container": {
+        "sha256": "4177a9f5e269819d8ae9632bf93e2e64787ca52501aa1577cfad31c4add60e18",
+        "size": 27336
+      },
+      "path": "src/eva/application/__pycache__/portable_archive.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4177a9f5e269819d8ae9632bf93e2e64787ca52501aa1577cfad31c4add60e18",
+        "size": 27336
+      }
+    },
+    {
+      "container": {
+        "sha256": "1098acd341ff537335401ffa6d527bcc063effe699a82482e9ae6504a4244bcf",
+        "size": 10841
+      },
+      "path": "src/eva/application/__pycache__/presence.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1098acd341ff537335401ffa6d527bcc063effe699a82482e9ae6504a4244bcf",
+        "size": 10841
+      }
+    },
+    {
+      "container": {
+        "sha256": "c5042a11dab6860a2e077b0a862f264e0d250b8955c8185aa9b53332380d56c3",
+        "size": 11132
+      },
+      "path": "src/eva/application/__pycache__/repository_improvements.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c5042a11dab6860a2e077b0a862f264e0d250b8955c8185aa9b53332380d56c3",
+        "size": 11132
+      }
+    },
+    {
+      "container": {
+        "sha256": "4a4a31f781489573428cfa9daba05e7b46b90f1733d5755f4df34f2c2efe99be",
+        "size": 4572
+      },
+      "path": "src/eva/application/__pycache__/research.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4a4a31f781489573428cfa9daba05e7b46b90f1733d5755f4df34f2c2efe99be",
+        "size": 4572
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/application/__pycache__/resident_attention.cpython-312.pyc",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "f371cf7e4cc80846cc6cd0f9f60787a6979f0d9e337edca5818bade5201381b6",
+        "size": 15470
+      }
+    },
+    {
+      "container": {
+        "sha256": "f446ee00e974ebe9f77cc609c34d30faee338313652025c98a4dcd09359ecca3",
+        "size": 4174
+      },
+      "path": "src/eva/application/__pycache__/sensory.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f446ee00e974ebe9f77cc609c34d30faee338313652025c98a4dcd09359ecca3",
+        "size": 4174
+      }
+    },
+    {
+      "container": {
+        "sha256": "ce7b6d708bee9cfeea2c41131fb758b7655539b848d8203d5627e3302edc9ef0",
+        "size": 12436
+      },
+      "path": "src/eva/application/__pycache__/telegram_ingress.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ce7b6d708bee9cfeea2c41131fb758b7655539b848d8203d5627e3302edc9ef0",
+        "size": 12436
+      }
+    },
+    {
+      "container": {
+        "sha256": "60019317ccabbcc7199ba2b8733a67eebc8d9f672fbf99df3287a4f40dbaf323",
+        "size": 8287
+      },
+      "path": "src/eva/application/__pycache__/validated_edits.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "60019317ccabbcc7199ba2b8733a67eebc8d9f672fbf99df3287a4f40dbaf323",
+        "size": 8287
+      }
+    },
+    {
+      "container": {
+        "sha256": "cbfd3374d4e1eae972d7a104b7409417403159885d77bfcfdeddad71bb304381",
+        "size": 62295
+      },
+      "path": "src/eva/application/advanced_tasks.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cbfd3374d4e1eae972d7a104b7409417403159885d77bfcfdeddad71bb304381",
+        "size": 62295
+      }
+    },
+    {
+      "container": {
+        "sha256": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+        "size": 13477
+      },
+      "path": "src/eva/application/commerce.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+        "size": 13477
+      }
+    },
+    {
+      "container": {
+        "sha256": "35e2d97850823e34898f8b075979f9ad5b3af0b02e32a1ecc412ecec6466990a",
+        "size": 18829
+      },
+      "path": "src/eva/application/conversation.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "35e2d97850823e34898f8b075979f9ad5b3af0b02e32a1ecc412ecec6466990a",
+        "size": 18829
+      }
+    },
+    {
+      "container": {
+        "sha256": "f850b73441b82d512fbe4b5f554efa1c96513a124dc44fd3b75feb4cfd6603f3",
+        "size": 1892
+      },
+      "path": "src/eva/application/default_identity_pack.json",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f850b73441b82d512fbe4b5f554efa1c96513a124dc44fd3b75feb4cfd6603f3",
+        "size": 1892
+      }
+    },
+    {
+      "container": {
+        "sha256": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+        "size": 10516
+      },
+      "path": "src/eva/application/delivery.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+        "size": 10516
+      }
+    },
+    {
+      "container": {
+        "sha256": "aadc98164c54935308752755fb20e6dbed91672669d9ddcd1fd49e606fa69163",
+        "size": 17824
+      },
+      "path": "src/eva/application/durable_goals.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "aadc98164c54935308752755fb20e6dbed91672669d9ddcd1fd49e606fa69163",
+        "size": 17824
+      }
+    },
+    {
+      "container": {
+        "sha256": "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb",
+        "size": 1936
+      },
+      "path": "src/eva/application/episode_repository.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "37aec644c2cef670b9603fc6d08cf4a7510af972b6d85649e3e8b3e88dc377cb",
+        "size": 1936
+      }
+    },
+    {
+      "container": {
+        "sha256": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+        "size": 2904
+      },
+      "path": "src/eva/application/file_batches.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+        "size": 2904
+      }
+    },
+    {
+      "container": {
+        "sha256": "a215b928e52e8999332fbcc24be82dfe856747a07050f3268e48cf02ac2c1e1b",
+        "size": 7864
+      },
+      "path": "src/eva/application/free_will.py",
+      "state": "different",
+      "worktree": {
+        "sha256": "b6a26bac40570a79b3cfb3bed72f47d9bdf5f9e15d63f844f0c2cafd4c2a6fff",
+        "size": 9289
+      }
+    },
+    {
+      "container": {
+        "sha256": "0230cfee3206f5a26cbcea3f36e738b1588bc28d98a634d2dd0b6d70469b4a3e",
+        "size": 8786
+      },
+      "path": "src/eva/application/home_automation.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0230cfee3206f5a26cbcea3f36e738b1588bc28d98a634d2dd0b6d70469b4a3e",
+        "size": 8786
+      }
+    },
+    {
+      "container": {
+        "sha256": "6b3236ce6afb593bdf784c9e6e1f68a77fcb4058cde844dbf6f8ed69ec9e8189",
+        "size": 2206
+      },
+      "path": "src/eva/application/mail.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6b3236ce6afb593bdf784c9e6e1f68a77fcb4058cde844dbf6f8ed69ec9e8189",
+        "size": 2206
+      }
+    },
+    {
+      "container": {
+        "sha256": "116967c0769c113fa254f7e7143e531cb2e4f3b6393d6736367dd018b2ef42c1",
+        "size": 12850
+      },
+      "path": "src/eva/application/memory.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "116967c0769c113fa254f7e7143e531cb2e4f3b6393d6736367dd018b2ef42c1",
+        "size": 12850
+      }
+    },
+    {
+      "container": {
+        "sha256": "57872269fd111160a28cbb5cc2f1f7c627611d91dc654bd6d40dc0761fd73618",
+        "size": 10016
+      },
+      "path": "src/eva/application/memory_background.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "57872269fd111160a28cbb5cc2f1f7c627611d91dc654bd6d40dc0761fd73618",
+        "size": 10016
+      }
+    },
+    {
+      "container": {
+        "sha256": "e63166533a54fc830e6de8f72cc8ef7fc747ef8ba6c3fe2189e3eb24c3a413e5",
+        "size": 85063
+      },
+      "path": "src/eva/application/noor_4d.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e63166533a54fc830e6de8f72cc8ef7fc747ef8ba6c3fe2189e3eb24c3a413e5",
+        "size": 85063
+      }
+    },
+    {
+      "container": {
+        "sha256": "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c",
+        "size": 23158
+      },
+      "path": "src/eva/application/objects.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "63274614c68516f3a69b18c015419ec15cce7a0c31d34415f2af0ce8f4311d6c",
+        "size": 23158
+      }
+    },
+    {
+      "container": {
+        "sha256": "43d4d0b4b83f13268c0a5720cd1a377ce336de33364657749abeaebb8895d4c5",
+        "size": 16728
+      },
+      "path": "src/eva/application/orchestration.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "43d4d0b4b83f13268c0a5720cd1a377ce336de33364657749abeaebb8895d4c5",
+        "size": 16728
+      }
+    },
+    {
+      "container": {
+        "sha256": "8fceb5bdacad7b7d55017305bcf61cce15013f9fa0a185500d4ae5513870d0b6",
+        "size": 18232
+      },
+      "path": "src/eva/application/personal_interests.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8fceb5bdacad7b7d55017305bcf61cce15013f9fa0a185500d4ae5513870d0b6",
+        "size": 18232
+      }
+    },
+    {
+      "container": {
+        "sha256": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+        "size": 20234
+      },
+      "path": "src/eva/application/portable_archive.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+        "size": 20234
+      }
+    },
+    {
+      "container": {
+        "sha256": "5bae5ab4e7d8022525954837b09b78f14e08093513dd71038afbde93b8e82c9d",
+        "size": 8674
+      },
+      "path": "src/eva/application/presence.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "5bae5ab4e7d8022525954837b09b78f14e08093513dd71038afbde93b8e82c9d",
+        "size": 8674
+      }
+    },
+    {
+      "container": {
+        "sha256": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+        "size": 6216
+      },
+      "path": "src/eva/application/repository_improvements.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+        "size": 6216
+      }
+    },
+    {
+      "container": {
+        "sha256": "70bbd9275beaf9e3c89a52cbf87144c68589e6e8005d2480488b39bd7133c0c4",
+        "size": 2429
+      },
+      "path": "src/eva/application/research.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "70bbd9275beaf9e3c89a52cbf87144c68589e6e8005d2480488b39bd7133c0c4",
+        "size": 2429
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/application/resident_attention.py",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "eb46e904c6f6abf35ca9ecad4ddcce7a37ffa1d076cedb8d1e9fd8f08b38a960",
+        "size": 12686
+      }
+    },
+    {
+      "container": {
+        "sha256": "0aa707739ca256603acd758a340215436e8a56bf2e75266616ce820336d9d6ad",
+        "size": 2097
+      },
+      "path": "src/eva/application/sensory.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0aa707739ca256603acd758a340215436e8a56bf2e75266616ce820336d9d6ad",
+        "size": 2097
+      }
+    },
+    {
+      "container": {
+        "sha256": "da17506f08bc2f011c37a1559e80665dbe1c68b675989e759ac4fe34d7200d35",
+        "size": 7074
+      },
+      "path": "src/eva/application/telegram_ingress.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "da17506f08bc2f011c37a1559e80665dbe1c68b675989e759ac4fe34d7200d35",
+        "size": 7074
+      }
+    },
+    {
+      "container": {
+        "sha256": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+        "size": 5074
+      },
+      "path": "src/eva/application/validated_edits.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+        "size": 5074
+      }
+    },
+    {
+      "container": {
+        "sha256": "583d5e50dc5fed9857c757ca75abb86bb64c8a3379744e1fee5b3102cd584385",
+        "size": 229
+      },
+      "path": "src/eva/bootstrap/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "583d5e50dc5fed9857c757ca75abb86bb64c8a3379744e1fee5b3102cd584385",
+        "size": 229
+      }
+    },
+    {
+      "container": {
+        "sha256": "944210127ae0457c74c386a2be946b5d3633b3242dd8a85b02b905d950e6af79",
+        "size": 375
+      },
+      "path": "src/eva/bootstrap/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "944210127ae0457c74c386a2be946b5d3633b3242dd8a85b02b905d950e6af79",
+        "size": 375
+      }
+    },
+    {
+      "container": {
+        "sha256": "6f1c31b413c6e76175ce2f8a18978ac95a811c7de14d4124004e43ee3534cafc",
+        "size": 11849
+      },
+      "path": "src/eva/bootstrap/__pycache__/episode_transition_4c.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6f1c31b413c6e76175ce2f8a18978ac95a811c7de14d4124004e43ee3534cafc",
+        "size": 11849
+      }
+    },
+    {
+      "container": {
+        "sha256": "20c045069d71808419e785e5283fb668c21d997de4c600c537a14a7047512a1b",
+        "size": 74110
+      },
+      "path": "src/eva/bootstrap/__pycache__/runtime.cpython-312.pyc",
+      "state": "different",
+      "worktree": {
+        "sha256": "26e3eace102e42465b07fe59057ed1ba8a0a98b39c572afdec0f2b4219a2e50c",
+        "size": 73225
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/bootstrap/__pycache__/secrets.cpython-312.pyc",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "81c748c41e7fd164a4849ba6a203c0479703ea516c8163f5277fa1476c654c74",
+        "size": 6454
+      }
+    },
+    {
+      "container": {
+        "sha256": "6e240d795b7262c5a31a7fe76dbb670cf9fe920201e62207d9bd9d2df51c58d6",
+        "size": 9242
+      },
+      "path": "src/eva/bootstrap/episode_transition_4c.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6e240d795b7262c5a31a7fe76dbb670cf9fe920201e62207d9bd9d2df51c58d6",
+        "size": 9242
+      }
+    },
+    {
+      "container": {
+        "sha256": "20a2984bd723774556b6bade8cdac1a251eec76b78f2c80e89bb6c5d552d954a",
+        "size": 68623
+      },
+      "path": "src/eva/bootstrap/runtime.py",
+      "state": "different",
+      "worktree": {
+        "sha256": "423720b4e13430fe88ff705edc1d7b7b83b3bf172b823c558a6e7fe97e4d3f25",
+        "size": 68325
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/bootstrap/secrets.py",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "55b329d7d737bbbfcdd9598bdbef56edc0f671651c68a14637f14162c45fee53",
+        "size": 5016
+      }
+    },
+    {
+      "container": {
+        "sha256": "fbffa662bb8b2248b2ecc688234cda403fb8bf89695f18214d3559703b5f4f9d",
+        "size": 1089
+      },
+      "path": "src/eva/contracts/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fbffa662bb8b2248b2ecc688234cda403fb8bf89695f18214d3559703b5f4f9d",
+        "size": 1089
+      }
+    },
+    {
+      "container": {
+        "sha256": "dc61b0009602446abefe120f144b91f7578dfab94119847ea0990e62e20c8c0e",
+        "size": 1070
+      },
+      "path": "src/eva/contracts/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dc61b0009602446abefe120f144b91f7578dfab94119847ea0990e62e20c8c0e",
+        "size": 1070
+      }
+    },
+    {
+      "container": {
+        "sha256": "3766df10b5ffce76096dc1ec14a8de611e7ac2c37dda036bbffe5fc52735e98b",
+        "size": 8925
+      },
+      "path": "src/eva/contracts/__pycache__/base.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3766df10b5ffce76096dc1ec14a8de611e7ac2c37dda036bbffe5fc52735e98b",
+        "size": 8925
+      }
+    },
+    {
+      "container": {
+        "sha256": "2d20cb4ca45aec9d0c3d8b81e997e7dc4e862c62aed59f83b891a0a76bda4502",
+        "size": 6016
+      },
+      "path": "src/eva/contracts/__pycache__/canonical_json.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2d20cb4ca45aec9d0c3d8b81e997e7dc4e862c62aed59f83b891a0a76bda4502",
+        "size": 6016
+      }
+    },
+    {
+      "container": {
+        "sha256": "cd40eb70dd9a71ad26e38b5b5754c04064bae50d965b7c8fc2d84e59b93d0f33",
+        "size": 13082
+      },
+      "path": "src/eva/contracts/__pycache__/connector.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "cd40eb70dd9a71ad26e38b5b5754c04064bae50d965b7c8fc2d84e59b93d0f33",
+        "size": 13082
+      }
+    },
+    {
+      "container": {
+        "sha256": "7bae023b04f3d5ae4a615cedf21b9e06f405481803482e976dfeb3757d1e8c82",
+        "size": 35219
+      },
+      "path": "src/eva/contracts/__pycache__/connector_rpc.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7bae023b04f3d5ae4a615cedf21b9e06f405481803482e976dfeb3757d1e8c82",
+        "size": 35219
+      }
+    },
+    {
+      "container": {
+        "sha256": "edae7dcab15f788f3cc5bc0ecde058d27e8afd1e8e1673deed7c55f1c54711ea",
+        "size": 7546
+      },
+      "path": "src/eva/contracts/__pycache__/evidence.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "edae7dcab15f788f3cc5bc0ecde058d27e8afd1e8e1673deed7c55f1c54711ea",
+        "size": 7546
+      }
+    },
+    {
+      "container": {
+        "sha256": "fa3859ffd13633df0fa4b3d1ca6113a9e2e81f519ca6d56417de9cd29bebadbe",
+        "size": 30966
+      },
+      "path": "src/eva/contracts/__pycache__/execution.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fa3859ffd13633df0fa4b3d1ca6113a9e2e81f519ca6d56417de9cd29bebadbe",
+        "size": 30966
+      }
+    },
+    {
+      "container": {
+        "sha256": "918f9b3d5a12437c60abfb27081253e470d6c9188795b9ed1c3ef34712944e6e",
+        "size": 5143
+      },
+      "path": "src/eva/contracts/__pycache__/identity.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "918f9b3d5a12437c60abfb27081253e470d6c9188795b9ed1c3ef34712944e6e",
+        "size": 5143
+      }
+    },
+    {
+      "container": {
+        "sha256": "38f266ca5c9452e346f4d22d92f5c4d4809d4da0a22d10ecfa163773d06f02b5",
+        "size": 8485
+      },
+      "path": "src/eva/contracts/__pycache__/ingress.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "38f266ca5c9452e346f4d22d92f5c4d4809d4da0a22d10ecfa163773d06f02b5",
+        "size": 8485
+      }
+    },
+    {
+      "container": {
+        "sha256": "e1b7c9e384dcc97f37f28ae052e01897d46e7bb4335e42626230f3fee8f7fbef",
+        "size": 4287
+      },
+      "path": "src/eva/contracts/__pycache__/lifecycle.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e1b7c9e384dcc97f37f28ae052e01897d46e7bb4335e42626230f3fee8f7fbef",
+        "size": 4287
+      }
+    },
+    {
+      "container": {
+        "sha256": "d949d64ddd83ebbeab254b1e2e36f033e017ab96671fdb07477bc10cb1dc6639",
+        "size": 8613
+      },
+      "path": "src/eva/contracts/__pycache__/memory.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "d949d64ddd83ebbeab254b1e2e36f033e017ab96671fdb07477bc10cb1dc6639",
+        "size": 8613
+      }
+    },
+    {
+      "container": {
+        "sha256": "6748aab8cb28dd4aaca49fdf5ea607bdc95c8dec2ff69206d049a694323fd01d",
+        "size": 26064
+      },
+      "path": "src/eva/contracts/__pycache__/planning.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6748aab8cb28dd4aaca49fdf5ea607bdc95c8dec2ff69206d049a694323fd01d",
+        "size": 26064
+      }
+    },
+    {
+      "container": {
+        "sha256": "200a05c05e14fcff9eb0a7282878922cb940116156e9b00312227b734ed689d3",
+        "size": 18760
+      },
+      "path": "src/eva/contracts/__pycache__/platform.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "200a05c05e14fcff9eb0a7282878922cb940116156e9b00312227b734ed689d3",
+        "size": 18760
+      }
+    },
+    {
+      "container": {
+        "sha256": "67323511349cb56f5bfbec48f6b9f1d249f60a0f40579d07bcf258457e957551",
+        "size": 5517
+      },
+      "path": "src/eva/contracts/__pycache__/registry.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "67323511349cb56f5bfbec48f6b9f1d249f60a0f40579d07bcf258457e957551",
+        "size": 5517
+      }
+    },
+    {
+      "container": {
+        "sha256": "a0cf1b2a38b84f04635d017093e4597604a146d9c9a63060b91d77fd4aec290e",
+        "size": 6883
+      },
+      "path": "src/eva/contracts/base.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a0cf1b2a38b84f04635d017093e4597604a146d9c9a63060b91d77fd4aec290e",
+        "size": 6883
+      }
+    },
+    {
+      "container": {
+        "sha256": "8ee9c286a9ac8a46642c24a62efe0c6859bcbe7754d1a434600e6d09194e1def",
+        "size": 4062
+      },
+      "path": "src/eva/contracts/canonical_json.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8ee9c286a9ac8a46642c24a62efe0c6859bcbe7754d1a434600e6d09194e1def",
+        "size": 4062
+      }
+    },
+    {
+      "container": {
+        "sha256": "85759b27725f34b7255e4bbabf67b7754253827a1f3bf1fe28ebad1133413c5b",
+        "size": 8712
+      },
+      "path": "src/eva/contracts/connector.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "85759b27725f34b7255e4bbabf67b7754253827a1f3bf1fe28ebad1133413c5b",
+        "size": 8712
+      }
+    },
+    {
+      "container": {
+        "sha256": "1cc9548526e76858462f0cf6dca21d7c89cc5d3cd7841d83dee5d825cf39338f",
+        "size": 31597
+      },
+      "path": "src/eva/contracts/connector_rpc.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "1cc9548526e76858462f0cf6dca21d7c89cc5d3cd7841d83dee5d825cf39338f",
+        "size": 31597
+      }
+    },
+    {
+      "container": {
+        "sha256": "e16a43dd77cdb422d2b25515dabd5280f03e26586b4ca4a261932bd5975241a8",
+        "size": 5655
+      },
+      "path": "src/eva/contracts/evidence.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e16a43dd77cdb422d2b25515dabd5280f03e26586b4ca4a261932bd5975241a8",
+        "size": 5655
+      }
+    },
+    {
+      "container": {
+        "sha256": "c821f5aa8324ffeb981497b6fbcf59c2e2ccce560e621500b05df59efa4f5d56",
+        "size": 24814
+      },
+      "path": "src/eva/contracts/execution.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c821f5aa8324ffeb981497b6fbcf59c2e2ccce560e621500b05df59efa4f5d56",
+        "size": 24814
+      }
+    },
+    {
+      "container": {
+        "sha256": "f190d5dd7a1d5a54b2acab67813d2a26c33c3f483760f9f7daf12b5e6368a07b",
+        "size": 3431
+      },
+      "path": "src/eva/contracts/identity.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f190d5dd7a1d5a54b2acab67813d2a26c33c3f483760f9f7daf12b5e6368a07b",
+        "size": 3431
+      }
+    },
+    {
+      "container": {
+        "sha256": "55273ad13533754ab4a87690f8737b3340871832ad7d1e7b7c4bd5a09773c7ef",
+        "size": 6432
+      },
+      "path": "src/eva/contracts/ingress.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "55273ad13533754ab4a87690f8737b3340871832ad7d1e7b7c4bd5a09773c7ef",
+        "size": 6432
+      }
+    },
+    {
+      "container": {
+        "sha256": "2fa73961dac620570e0a7d72bf76603a9899c991411d8c226e1bd633028d8a3e",
+        "size": 3030
+      },
+      "path": "src/eva/contracts/lifecycle.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "2fa73961dac620570e0a7d72bf76603a9899c991411d8c226e1bd633028d8a3e",
+        "size": 3030
+      }
+    },
+    {
+      "container": {
+        "sha256": "ffcec8ae52874cea85622d81f4eec010759d4f476acf8a1734cbe9e8138ec51f",
+        "size": 6707
+      },
+      "path": "src/eva/contracts/memory.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ffcec8ae52874cea85622d81f4eec010759d4f476acf8a1734cbe9e8138ec51f",
+        "size": 6707
+      }
+    },
+    {
+      "container": {
+        "sha256": "157d0ec201873092ca88ee10db6cb71f7ec27a5e9d14d8692bad71127d5cdeab",
+        "size": 18066
+      },
+      "path": "src/eva/contracts/planning.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "157d0ec201873092ca88ee10db6cb71f7ec27a5e9d14d8692bad71127d5cdeab",
+        "size": 18066
+      }
+    },
+    {
+      "container": {
+        "sha256": "dd6015f26b93d84e6b3e0a0512b1fa0b271de3effe2d51e0cffbab57de949810",
+        "size": 12971
+      },
+      "path": "src/eva/contracts/platform.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "dd6015f26b93d84e6b3e0a0512b1fa0b271de3effe2d51e0cffbab57de949810",
+        "size": 12971
+      }
+    },
+    {
+      "container": {
+        "sha256": "ea6d34d8e80bf32f639b2dbe610137abfcdb8a6d0af1269a3e721f46d51a6337",
+        "size": 5033
+      },
+      "path": "src/eva/contracts/registry.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ea6d34d8e80bf32f639b2dbe610137abfcdb8a6d0af1269a3e721f46d51a6337",
+        "size": 5033
+      }
+    },
+    {
+      "container": {
+        "sha256": "eb7f7a09cc5025f147d362b3d4786859d368e3adc5570847e4c472882cf65f63",
+        "size": 65
+      },
+      "path": "src/eva/domain/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "eb7f7a09cc5025f147d362b3d4786859d368e3adc5570847e4c472882cf65f63",
+        "size": 65
+      }
+    },
+    {
+      "container": {
+        "sha256": "a9e9126fb5f08ae450c0711f3636e1bca3d8972320a276658811f9b9c7b0bb25",
+        "size": 250
+      },
+      "path": "src/eva/domain/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "a9e9126fb5f08ae450c0711f3636e1bca3d8972320a276658811f9b9c7b0bb25",
+        "size": 250
+      }
+    },
+    {
+      "container": {
+        "sha256": "7f5f5fe5e0c51eebb2931042d0a99d9426bba77293b0018fad4883c99c25eadb",
+        "size": 8673
+      },
+      "path": "src/eva/domain/__pycache__/episode.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7f5f5fe5e0c51eebb2931042d0a99d9426bba77293b0018fad4883c99c25eadb",
+        "size": 8673
+      }
+    },
+    {
+      "container": {
+        "sha256": "006c5a083426ec16860e401a53bda7277d1648418dcd5b167c22155b0c1c98c6",
+        "size": 6191
+      },
+      "path": "src/eva/domain/episode.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "006c5a083426ec16860e401a53bda7277d1648418dcd5b167c22155b0c1c98c6",
+        "size": 6191
+      }
+    },
+    {
+      "container": {
+        "sha256": "7384006d1ff93760c1fd757406c09741b0e78ae127429f52f7019d2482bda3e2",
+        "size": 81
+      },
+      "path": "src/eva/operations/__init__.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7384006d1ff93760c1fd757406c09741b0e78ae127429f52f7019d2482bda3e2",
+        "size": 81
+      }
+    },
+    {
+      "container": {
+        "sha256": "973550847ffe7001ef33248947b474dc66dc56ee50d774ae12c28362277b7065",
+        "size": 270
+      },
+      "path": "src/eva/operations/__pycache__/__init__.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "973550847ffe7001ef33248947b474dc66dc56ee50d774ae12c28362277b7065",
+        "size": 270
+      }
+    },
+    {
+      "container": {
+        "sha256": "3644e225978243edf174c5ec4d52ad1b7127ef58c898f3e2c990fe9c7245b177",
+        "size": 29267
+      },
+      "path": "src/eva/operations/__pycache__/ab_slots.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3644e225978243edf174c5ec4d52ad1b7127ef58c898f3e2c990fe9c7245b177",
+        "size": 29267
+      }
+    },
+    {
+      "container": {
+        "sha256": "7278a5e5ad8795fffdc1291edd51c7cc45318f8e98eaffadf1043a9e74f141b9",
+        "size": 9462
+      },
+      "path": "src/eva/operations/__pycache__/cli.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "7278a5e5ad8795fffdc1291edd51c7cc45318f8e98eaffadf1043a9e74f141b9",
+        "size": 9462
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/operations/__pycache__/core_b_preflight.cpython-312.pyc",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "7dd72426f852dd4f4a1c400bc7037a3c8e7adf454b76330ea7c465a6e705b206",
+        "size": 19809
+      }
+    },
+    {
+      "container": {
+        "sha256": "024c8c8ed032d4ac29f914c7d05c50d500e158c24a6ee2df25e7a476e3e8ef92",
+        "size": 12703
+      },
+      "path": "src/eva/operations/__pycache__/durable_goal_test_provider.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "024c8c8ed032d4ac29f914c7d05c50d500e158c24a6ee2df25e7a476e3e8ef92",
+        "size": 12703
+      }
+    },
+    {
+      "container": {
+        "sha256": "3f1dda176e81887872812a5c7135b7f0a4dd8dc93aadd2bc828b3ae39728c27a",
+        "size": 5261
+      },
+      "path": "src/eva/operations/__pycache__/durable_goal_worker.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3f1dda176e81887872812a5c7135b7f0a4dd8dc93aadd2bc828b3ae39728c27a",
+        "size": 5261
+      }
+    },
+    {
+      "container": {
+        "sha256": "ec10deab6bdc13aaf6b216e3d95a7dbf9d8f3d830bf4c08a6ef1c791cd54912b",
+        "size": 8506
+      },
+      "path": "src/eva/operations/__pycache__/fanout_test_sink.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ec10deab6bdc13aaf6b216e3d95a7dbf9d8f3d830bf4c08a6ef1c791cd54912b",
+        "size": 8506
+      }
+    },
+    {
+      "container": {
+        "sha256": "359deaa6eb6e2c945be103753906c730ff50063a518e1ad4cbd33e5d24ff1cc5",
+        "size": 8235
+      },
+      "path": "src/eva/operations/__pycache__/install_schema.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "359deaa6eb6e2c945be103753906c730ff50063a518e1ad4cbd33e5d24ff1cc5",
+        "size": 8235
+      }
+    },
+    {
+      "container": {
+        "sha256": "3eb52c259280e1cf5e12cb08b65e107d9c1f9d45e166bba4fe3e48614bd6b6f5",
+        "size": 7206
+      },
+      "path": "src/eva/operations/__pycache__/migration_admission.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "3eb52c259280e1cf5e12cb08b65e107d9c1f9d45e166bba4fe3e48614bd6b6f5",
+        "size": 7206
+      }
+    },
+    {
+      "container": {
+        "sha256": "14876adb76ef04df5bfad159b8326d15e71da53e4072ecf049a4770ee369815e",
+        "size": 9726
+      },
+      "path": "src/eva/operations/__pycache__/model_credentials.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "14876adb76ef04df5bfad159b8326d15e71da53e4072ecf049a4770ee369815e",
+        "size": 9726
+      }
+    },
+    {
+      "container": {
+        "sha256": "ed2830115e9bb5028b885ed0cc9f61be811e32127ecca82ce9f130952e6ce0eb",
+        "size": 29512
+      },
+      "path": "src/eva/operations/__pycache__/portable_export.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "ed2830115e9bb5028b885ed0cc9f61be811e32127ecca82ce9f130952e6ce0eb",
+        "size": 29512
+      }
+    },
+    {
+      "container": {
+        "sha256": "160b4af5e95d4ead25d8044300108e98fa56c5246a6737b3bdbfe537481e0b62",
+        "size": 13583
+      },
+      "path": "src/eva/operations/__pycache__/release_verifier.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "160b4af5e95d4ead25d8044300108e98fa56c5246a6737b3bdbfe537481e0b62",
+        "size": 13583
+      }
+    },
+    {
+      "container": {
+        "sha256": "8dcaf3a89bb51f928e52c31ae9a8458f0f8a7cfdd3ad5a79cab9c919ae2d6238",
+        "size": 6508
+      },
+      "path": "src/eva/operations/__pycache__/telegram_ingress.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "8dcaf3a89bb51f928e52c31ae9a8458f0f8a7cfdd3ad5a79cab9c919ae2d6238",
+        "size": 6508
+      }
+    },
+    {
+      "container": {
+        "sha256": "6dff62112898c0690cacb26ae4caf0be7a4646d29e141ab3aa7deeea133347e5",
+        "size": 6332
+      },
+      "path": "src/eva/operations/__pycache__/telegram_test_provider.cpython-312.pyc",
+      "state": "identical",
+      "worktree": {
+        "sha256": "6dff62112898c0690cacb26ae4caf0be7a4646d29e141ab3aa7deeea133347e5",
+        "size": 6332
+      }
+    },
+    {
+      "container": {
+        "sha256": "0db52fa0e07672455d50cad9206900f006a95fc9342008281ab3d0a3ded207a1",
+        "size": 22207
+      },
+      "path": "src/eva/operations/ab_slots.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0db52fa0e07672455d50cad9206900f006a95fc9342008281ab3d0a3ded207a1",
+        "size": 22207
+      }
+    },
+    {
+      "container": {
+        "sha256": "f2873486f8e75a2197fb8d4e2f317fa7c76c9276959cd8ee21df5fa95511b620",
+        "size": 7930
+      },
+      "path": "src/eva/operations/cli.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "f2873486f8e75a2197fb8d4e2f317fa7c76c9276959cd8ee21df5fa95511b620",
+        "size": 7930
+      }
+    },
+    {
+      "container": null,
+      "path": "src/eva/operations/core_b_preflight.py",
+      "state": "worktree_only",
+      "worktree": {
+        "sha256": "002b74962bc2ec03075ee7c56f6dbb0cbf9396c1028dc5f35cc6816bf9430f8b",
+        "size": 15303
+      }
+    },
+    {
+      "container": {
+        "sha256": "c43b8a147d93064edb39696766c768eb2f46a7ddba60514ffe74b53f099f08fb",
+        "size": 8311
+      },
+      "path": "src/eva/operations/durable_goal_test_provider.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "c43b8a147d93064edb39696766c768eb2f46a7ddba60514ffe74b53f099f08fb",
+        "size": 8311
+      }
+    },
+    {
+      "container": {
+        "sha256": "db150d1a630f732c10188664a9817badd9e1100109c884a4a5acbafc87935c40",
+        "size": 3677
+      },
+      "path": "src/eva/operations/durable_goal_worker.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "db150d1a630f732c10188664a9817badd9e1100109c884a4a5acbafc87935c40",
+        "size": 3677
+      }
+    },
+    {
+      "container": {
+        "sha256": "49ca77d7c0d837aea823b145cde0aedafc49e6a05c73b62cf8bf6413131f40e2",
+        "size": 6519
+      },
+      "path": "src/eva/operations/fanout_test_sink.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "49ca77d7c0d837aea823b145cde0aedafc49e6a05c73b62cf8bf6413131f40e2",
+        "size": 6519
+      }
+    },
+    {
+      "container": {
+        "sha256": "b70bdf288f75b6328595f46850cd5aeeed9124ec92518ef1cd3e948c196e495a",
+        "size": 5949
+      },
+      "path": "src/eva/operations/install_schema.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b70bdf288f75b6328595f46850cd5aeeed9124ec92518ef1cd3e948c196e495a",
+        "size": 5949
+      }
+    },
+    {
+      "container": {
+        "sha256": "4cc505a9d17125c0debd341ea3f23c5c290b41625cb28c700256d601575ccaa9",
+        "size": 6200
+      },
+      "path": "src/eva/operations/migration_admission.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "4cc505a9d17125c0debd341ea3f23c5c290b41625cb28c700256d601575ccaa9",
+        "size": 6200
+      }
+    },
+    {
+      "container": {
+        "sha256": "b1f0957c68b527c401ef5b3fd50256d5dc427b952b74806ffa7e0dda6496bcbe",
+        "size": 6680
+      },
+      "path": "src/eva/operations/model_credentials.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "b1f0957c68b527c401ef5b3fd50256d5dc427b952b74806ffa7e0dda6496bcbe",
+        "size": 6680
+      }
+    },
+    {
+      "container": {
+        "sha256": "e1b05e809b8adcc2a356ca7da1042582c2cdff72b6a03d5ce779b98e3a796e4f",
+        "size": 24568
+      },
+      "path": "src/eva/operations/portable_export.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "e1b05e809b8adcc2a356ca7da1042582c2cdff72b6a03d5ce779b98e3a796e4f",
+        "size": 24568
+      }
+    },
+    {
+      "container": {
+        "sha256": "0b500a713e4c551f5dc12079c65c36f8451338ec44415116d112c930c72b3d8b",
+        "size": 12710
+      },
+      "path": "src/eva/operations/release_verifier.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "0b500a713e4c551f5dc12079c65c36f8451338ec44415116d112c930c72b3d8b",
+        "size": 12710
+      }
+    },
+    {
+      "container": {
+        "sha256": "47f68cd14a79056f10a3c69326f789eccb1d374a9e0c7fc5d06c0acbe26c45c5",
+        "size": 4548
+      },
+      "path": "src/eva/operations/telegram_ingress.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "47f68cd14a79056f10a3c69326f789eccb1d374a9e0c7fc5d06c0acbe26c45c5",
+        "size": 4548
+      }
+    },
+    {
+      "container": {
+        "sha256": "fe5fcede0a3658363ecd2362019b6c8e00273a920e8c8e5a47219df7b865296f",
+        "size": 3773
+      },
+      "path": "src/eva/operations/telegram_test_provider.py",
+      "state": "identical",
+      "worktree": {
+        "sha256": "fe5fcede0a3658363ecd2362019b6c8e00273a920e8c8e5a47219df7b865296f",
+        "size": 3773
+      }
+    }
+  ],
+  "git_head": "ecab33eb64352deda2644f327540b0efa123f5d1",
+  "nonclaims": [
+    "This receipt does not prove that the image can be rebuilt reproducibly.",
+    "This receipt does not prove runtime behavior, test coverage, or release acceptance.",
+    "This receipt does not inspect or attest environment variables, secrets, or volume metadata.",
+    "This receipt does not attest installed Python packages or base-image operating-system files.",
+    "Worktree-only files are differences, not evidence that they were intended for this image."
+  ],
+  "receipt_sha256": "ec20f8188d184358bc225c87cab91a6d744e394ab8c9bc58e28ba4b644185721",
+  "roots": [
+    {
+      "container": "/opt/eva/src",
+      "worktree": "eva2/src"
+    },
+    {
+      "container": "/opt/eva/connector_sdk",
+      "worktree": "eva2/connector_sdk"
+    },
+    {
+      "container": "/opt/eva/migrations",
+      "worktree": "eva2/migrations"
+    },
+    {
+      "container": "/opt/eva/schemas",
+      "worktree": "eva2/schemas"
+    },
+    {
+      "container": "/opt/eva/requirements.lock",
+      "worktree": "eva2/requirements.lock"
+    },
+    {
+      "container": "/opt/eva/alembic.ini",
+      "worktree": "eva2/alembic.ini"
+    }
+  ],
+  "schema_version": 1,
+  "subject": {
+    "container_id": "92ee61cc10e5dc9dea55eff784b445baaafa8cc9f148db861d9af5412d611125",
+    "image_id": "sha256:56af05cbb6bc959301f52408c971bddc054952786dfe2528a751187e0c0c4b39",
+    "image_ref": "eva2-living-core:cross-channel-v53-20260824",
+    "name": "eva2-living-core-b",
+    "restart_count": 0,
+    "status": "running"
+  },
+  "tool": {
+    "path": "eva2/tools/living_core_source_provenance.py",
+    "sha256": "d506944350727f84a2d234d7d75a480eb8388ccb011a8deff0afe4aa6a779ada",
+    "version": "1.0.0"
+  }
+}
