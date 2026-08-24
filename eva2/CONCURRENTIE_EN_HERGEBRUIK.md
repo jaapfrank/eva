@@ -105,9 +105,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   moeten byte-voor-byte dezelfde lock delen; archive, Dockerfile, basisdigest,
   materialization-receipt en beide tree-hashes worden opnieuw gecontroleerd.
   De proef gebruikte tijdelijke lokale bytes, zonder Docker of B.
-- [ ] OCI-basisinput B03c: leg de fysieke, lokale Python-basisimage als
-  verzegelde OCI-input vast en controleer platform en manifestdigest. Een
-  bestaande Docker-cache is geen geldige verborgen buildinput.
+- [x] OCI-basisinput B03c: een lokale, read-only OCI-export is nu exact aan de
+  gepinde bronindex en `linux/amd64` gebonden; hash, manifest, config en lagen
+  worden gecontroleerd. Een geldige maar andere OCI-keten wordt geweigerd.
+  Dit blijft een lokale export, geen registry-provenance of releaseclaim.
 - [ ] Offline buildcontext B03d: maak uit B01 + B02b + B03c één nieuwe private
   Docker-context en voer pas daarna een kandidaatimagebuild met netwerk uit.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
