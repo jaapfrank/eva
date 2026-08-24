@@ -12,6 +12,8 @@ data/
 *.pid
 __pycache__/
 *.py[cod]
+.ruff_cache/
+.pytest_cache/
 .venv/
 venv/
 
@@ -22,6 +24,12 @@ venv/
 *.env.*
 !.env.example
 !**/.env.example
+!eva2/deploy/living-core/runtime.env.example
+!eva2/deploy/living-core/hindsight.env.example
+
+# Runtime secrets must remain local; only the templates above are traceable.
+eva2/deploy/living-core/secrets/
+eva2/deploy/living-core/secrets/**
 
 # Private keys, certificates and exported credential bundles
 *.key
