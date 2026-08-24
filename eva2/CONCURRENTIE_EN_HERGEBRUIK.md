@@ -61,6 +61,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   zijn groen.
 - [x] V53-kandidaatimage is schoon gebouwd uit de herstelde branch en importeert
   de runtime in een nieuwe container. Hij is niet gedeployd en vervangt B niet.
+- [x] Git-only runtime-importclosure: de Docker-build uit een schone Git-archive
+  (dus zonder de 117 dirty worktreepaden) importeert `runtime` en de Telegram-
+  ingress in een niet-root, read-only kandidaatcontainer (`68c66ed`). Dit is
+  geen startup-, Hindsight-, PostgreSQL- of B-adoptieproof.
 - [x] V53-bronintegratiekandidaat is op een schone branch hersteld met behoud
   van de bestaande secret- en Telegram-hardening: 22 gerichte tests, compile
   en een niet-root image-smoke zijn onafhankelijk groen. De kandidaat is nog
