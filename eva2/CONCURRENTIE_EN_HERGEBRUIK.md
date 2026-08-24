@@ -89,8 +89,8 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
   multi-accountproef blijven open.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
-  secret-nonleaktest en onafhankelijke review. UI, authenticatie en B-deploy
-  blijven open.
+  secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
+  Authenticatie en B-deploy blijven open.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
