@@ -59,6 +59,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] V53-Hindsight-fixture gesloten: de ontbrekende `PATCH`-mock is als
   vijf-regelig testcheckpoint hersteld; drie tests en onafhankelijke review
   zijn groen.
+- [x] Hindsight hot/cold-budget: de kandidaat-runtime configureert het
+  recallniveau, 2.000–4.000 contexttokens en 20–100 retrieval-nodes
+  fail-closed voor Hindsight. Dezelfde nodegrens geldt voor low/mid/high en de
+  geconfigureerde nachtelijke reflectietrigger gebruikt dezelfde tokenlimiet;
+  onafhankelijke review, 27 gerichte checks en een schone non-root
+  image-import zijn groen (`d6bc705`). B is niet gedeployd.
 - [x] V53-kandidaatimage is schoon gebouwd uit de herstelde branch en importeert
   de runtime in een nieuwe container. Hij is niet gedeployd en vervangt B niet.
 - [x] Git-only runtime-importclosure: de Docker-build uit een schone Git-archive
