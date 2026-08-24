@@ -22,8 +22,8 @@ MANAGEMENT_LABEL = "io.eva2.managed-by"
 MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
 SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
 ENVIRONMENT_NAME = "explicit B deployment environment"
-MANAGED_WORK_VOLUME = "eva2-living-work"
-MANAGED_POSTGRES_VOLUME = "eva2-postgres"
+MANAGED_WORK_VOLUME = "eva2-living-work-b"
+MANAGED_POSTGRES_VOLUME = "eva2-postgres-b-live"
 MODEL_AUTHORITY_UID = 1000
 MODEL_AUTHORITY_GID = 1000
 

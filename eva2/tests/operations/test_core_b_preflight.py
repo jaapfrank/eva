@@ -75,8 +75,8 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         ),
         "EVA_FANOUT_ALLOW_INSECURE_HTTP": "false",
         "EVA_FILE_BATCH_ROOT": "/var/lib/eva/work",
-        "EVA_STACK_WORK_VOLUME": "eva2-living-work",
-        "EVA_STACK_POSTGRES_VOLUME": "eva2-postgres",
+        "EVA_STACK_WORK_VOLUME": "eva2-living-work-b",
+        "EVA_STACK_POSTGRES_VOLUME": "eva2-postgres-b-live",
         "EVA_STACK_HINDSIGHT_VOLUME": "eva2-hindsight-memory",
         "EVA_CODEX_AUTH_DIR": str(codex_authority),
         "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
@@ -293,7 +293,7 @@ def test_plan_rejects_unpinned_volume_and_unsafe_contract_directories(
 ) -> None:
     values = _configuration(private_tmp_path)
     values["EVA_STACK_WORK_VOLUME"] = "another-volume"
-    with pytest.raises(RuntimeError, match="must be exactly eva2-living-work"):
+    with pytest.raises(RuntimeError, match="must be exactly eva2-living-work-b"):
         load_core_b_plan(
             _environment_file(private_tmp_path, values).as_posix(),
             runtime_uid=os.geteuid(),
@@ -301,7 +301,7 @@ def test_plan_rejects_unpinned_volume_and_unsafe_contract_directories(
 
     values = _configuration(private_tmp_path)
     values["EVA_STACK_POSTGRES_VOLUME"] = "another-postgres-volume"
-    with pytest.raises(RuntimeError, match="must be exactly eva2-postgres"):
+    with pytest.raises(RuntimeError, match="must be exactly eva2-postgres-b-live"):
         load_core_b_plan(
             _environment_file(private_tmp_path, values).as_posix(),
             runtime_uid=os.geteuid(),
