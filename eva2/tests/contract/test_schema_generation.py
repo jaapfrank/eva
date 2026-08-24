@@ -65,6 +65,7 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "EvidenceEnvelope/v2",
         "ExperienceSourceEvent/v1",
         "IdentityPack/v1",
+        "IdentityPackDraft/v1",
         "ImprovementCandidate/v1",
         "IngressClaim/v1",
         "IngressOutcome/v1",

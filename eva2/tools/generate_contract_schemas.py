@@ -1079,6 +1079,27 @@ def valid_examples() -> dict[str, dict[str, Any]]:
     )
     add("valid-identity-pack", identity)
     add(
+        "valid-identity-pack-draft",
+        {
+            **_meta("IdentityPackDraft/v1"),
+            "draft_id": "identity-draft:eva:001",
+            "base_identity_id": identity["identity_id"],
+            "base_pack_version": identity["pack_version"],
+            "base_pack_sha256": identity_pack_sha256,
+            "parent_draft_sha256": None,
+            "state": "staged",
+            "presentation": {
+                "display_name": "Evi",
+                "pronouns": None,
+                "language": None,
+                "voice_style": None,
+                "temperament": None,
+                "humour": "droog wanneer het helpt",
+                "channel_presentations": None,
+            },
+        },
+    )
+    add(
         "valid-improvement-candidate",
         {
             **_meta("ImprovementCandidate/v1"),

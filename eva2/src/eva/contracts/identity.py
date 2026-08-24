@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Annotated, Literal
 
-from pydantic import Field, StringConstraints
+from pydantic import Field, StringConstraints, model_validator
 
 from .base import (
     ContractModel,
@@ -32,6 +32,58 @@ class ChannelPresentation(ContractModel):
     greeting: ShortText | None
     signoff: ShortText | None
     concise_by_default: bool
+
+
+class IdentityPresentationPatch(ContractModel):
+    """Closed, human-facing edits that may later form a signed IdentityPack."""
+
+    display_name: ShortText | None
+    pronouns: list[Pronoun] | None = Field(min_length=1, max_length=8)
+    language: LanguageTag | None
+    voice_style: VoiceStyle | None
+    temperament: list[ShortText] | None = Field(min_length=1, max_length=16)
+    humour: ShortText | None
+    channel_presentations: list[ChannelPresentation] | None = Field(
+        min_length=1, max_length=16
+    )
+
+    @model_validator(mode="after")
+    def _requires_one_closed_change(self) -> "IdentityPresentationPatch":
+        if all(
+            value is None
+            for value in (
+                self.display_name,
+                self.pronouns,
+                self.language,
+                self.voice_style,
+                self.temperament,
+                self.humour,
+                self.channel_presentations,
+            )
+        ):
+            raise ValueError(
+                "identity presentation patch must change at least one field"
+            )
+        if self.channel_presentations is not None:
+            channel_classes = [
+                item.channel_class for item in self.channel_presentations
+            ]
+            if len(channel_classes) != len(set(channel_classes)):
+                raise ValueError("identity channel presentations must be unique")
+        return self
+
+
+class IdentityPackDraft(Version1Contract):
+    """Unsigned, staged-only presentation candidate bound to one current pack."""
+
+    contract: Literal["IdentityPackDraft/v1"]
+    draft_id: Identifier
+    base_identity_id: Identifier
+    base_pack_version: int = Field(ge=1, le=2_147_483_647)
+    base_pack_sha256: Sha256
+    parent_draft_sha256: Sha256 | None
+    state: Literal["staged"]
+    presentation: IdentityPresentationPatch
 
 
 class IdentityPack(Version1Contract):

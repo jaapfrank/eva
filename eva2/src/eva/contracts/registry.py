@@ -41,7 +41,7 @@ from .execution import (
     ReadIntent,
     ReadObservation,
 )
-from .identity import IdentityPack, PolicyPack
+from .identity import IdentityPack, IdentityPackDraft, PolicyPack
 from .ingress import (
     DeliveryOffer,
     DeliveryOfferV2,
@@ -119,6 +119,7 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "EvidenceEnvelope/v2": EvidenceEnvelopeV2,
     "ExperienceSourceEvent/v1": ExperienceSourceEvent,
     "IdentityPack/v1": IdentityPack,
+    "IdentityPackDraft/v1": IdentityPackDraft,
     "ImprovementCandidate/v1": ImprovementCandidate,
     "IngressClaim/v1": IngressClaim,
     "IngressOutcome/v1": IngressOutcome,
