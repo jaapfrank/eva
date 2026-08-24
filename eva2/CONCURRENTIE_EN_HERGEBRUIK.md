@@ -261,6 +261,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   pack-hash). Een staged/revoked pack of verificatiefout geeft een gesaneerde
   503; 17 gerichte tests en onafhankelijke review zijn groen. Geen draft-write,
   publicatie, runtime-switch of B-wijziging.
+- [x] Dashboard D02b: een dashboardclient kan een gesloten staged
+  IdentityPack-draft tegen precies de geverifieerde actuele pack-previewen.
+  Alleen de deterministische presentatiediff komt terug; de draft wordt niet
+  opgeslagen, gepubliceerd of als runtime-identiteit gebruikt. 19 gerichte
+  tests en onafhankelijke review zijn groen. Een echte editor, signer,
+  audit-event en rollback blijven afzonderlijke slices.
 - [x] IdentityPack-verificatie: de runtime laadt alleen canonieke bytes van
   de gebonden huidige identiteit, met gecontroleerde bronhash en Ed25519-
   handtekening tegen een expliciete publieke trustbinding. Geen signer,

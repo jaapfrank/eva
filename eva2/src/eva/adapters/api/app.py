@@ -18,7 +18,9 @@ from eva.application.conversation import (
     RecentConversationMessage,
     load_current_identity_pack,
 )
+from eva.application.identity_drafts import identity_presentation_diff
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.identity import IdentityPackDraft
 from eva.application.memory import (
     ConversationMemoryDocument,
     MemoryRetentionReceipt,
@@ -564,6 +566,15 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
     def health() -> dict[str, str]:
         return {"status": "alive"}
 
+    def current_dashboard_identity():
+        try:
+            identity = load_current_identity_pack()
+        except ValueError:
+            raise HTTPException(status_code=503, detail="active identity unavailable")
+        if identity.state != "current":
+            raise HTTPException(status_code=503, detail="active identity unavailable")
+        return identity
+
     @app.get("/readyz")
     def ready() -> dict[str, str | bool | None]:
         result = runtime.health()
@@ -599,12 +610,7 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
     def dashboard_identity() -> JSONResponse:
         """Expose the verified active identity without a mutation surface."""
 
-        try:
-            identity = load_current_identity_pack()
-        except ValueError:
-            raise HTTPException(status_code=503, detail="active identity unavailable")
-        if identity.state != "current":
-            raise HTTPException(status_code=503, detail="active identity unavailable")
+        identity = current_dashboard_identity()
         return JSONResponse(
             {
                 "contract": "EvaDashboardIdentity/v1",
@@ -623,6 +629,30 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
                         "qualities": identity.voice_style.qualities,
                     },
                 },
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/dashboard/identity/diff")
+    def dashboard_identity_diff(payload: dict[str, Any]) -> JSONResponse:
+        """Preview a staged IdentityPack presentation change without storing it."""
+
+        identity = current_dashboard_identity()
+        try:
+            draft = IdentityPackDraft.model_validate(payload)
+            differences = identity_presentation_diff(draft, identity)
+        except ValueError:
+            raise HTTPException(status_code=422, detail="identity draft is invalid")
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardIdentityDiff/v1",
+                "draft_id": draft.draft_id,
+                "read_only": True,
+                "base_pack_sha256": canonical_sha256(identity),
+                "changes": [
+                    {"field": item.field, "before": item.before, "after": item.after}
+                    for item in differences
+                ],
             },
             headers={"Cache-Control": "no-store"},
         )
