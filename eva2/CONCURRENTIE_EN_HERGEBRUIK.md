@@ -265,6 +265,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   groep gebonden consentreferentie; er bestaat geen groeps-naar-privéfallback.
   13 contractgevallen, bestaande ingress/consenttests en onafhankelijke review
   zijn groen. Retention/recall, Hindsight-tags en runtimewiring volgen apart.
+- [x] Groepsgeheugen A02: alleen de actieve, duurzame PostgreSQL-consentstore
+  levert nu een persoon- en groepgebonden consentreferentie uit haar laatste
+  timeline-event. Ontbrekende, verlopen, ingetrokken of kruisende consent
+  levert fail-closed geen referentie. Een echte PostgreSQL-16-proef op een
+  tijdelijk `tmpfs`-volume, gerichte tests en onafhankelijke review zijn groen;
+  retention/recall of B-runtime is nog niet gewijzigd.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -294,10 +300,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   open. AgentMail en Stripe zijn latere, eigen capabilitygates.
 - [ ] Telegram-groepsgeheugen sluiten: de geverifieerde multi-accountbindings,
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
-  getest; de verplichte geheugenadmission is eveneens klaar. Wat nog ontbreekt
-  is de expliciete privé/gedeeld Hindsight-retention- en recallscope met
-  non-leakagebewijs; de echte multi-account- en Telegram-groepproef blijft
-  daarna afzonderlijk open.
+  getest; de verplichte admission en duurzame consentreferentie zijn eveneens
+  klaar. Wat nog ontbreekt is de expliciete privé/gedeeld
+  Hindsight-retention- en recallscope met non-leakagebewijs; de echte
+  multi-account- en Telegram-groepproef blijft daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde

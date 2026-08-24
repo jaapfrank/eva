@@ -6,6 +6,7 @@ from eva.application.telegram_group_consent import (
     TelegramGroupConsent,
     TelegramGroupConsentResponder,
 )
+from eva.application.memory_audience import TelegramGroupConsentReference
 
 
 NOW = datetime(2026, 8, 24, 12, 0, tzinfo=UTC)
@@ -69,6 +70,19 @@ def test_private_commands_grant_and_revoke_only_an_allowed_group() -> None:
                 principal_id=principal_id, group_chat_id=group_chat_id, now=now
             )
 
+        def active_reference(
+            self, *, principal_id: str, group_chat_id: str, now: datetime
+        ) -> TelegramGroupConsentReference | None:
+            if not self.permits(
+                principal_id=principal_id, group_chat_id=group_chat_id, now=now
+            ):
+                return None
+            return TelegramGroupConsentReference(
+                principal_id=principal_id,
+                group_chat_id=group_chat_id,
+                operation_id="telegram-group-consent:1",
+            )
+
     responder = TelegramGroupConsentResponder(Store())
     assert responder.handle(
         text="/share -100123 3d",
@@ -79,6 +93,13 @@ def test_private_commands_grant_and_revoke_only_an_allowed_group() -> None:
     ).startswith("Ik gebruik jouw bijdragen")
     assert responder.permits(
         principal_id="person:jaap", group_chat_id="-100123", now=NOW
+    )
+    assert responder.active_reference(
+        principal_id="person:jaap", group_chat_id="-100123", now=NOW
+    ) == TelegramGroupConsentReference(
+        principal_id="person:jaap",
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:1",
     )
     assert (
         responder.handle(
@@ -99,4 +120,10 @@ def test_private_commands_grant_and_revoke_only_an_allowed_group() -> None:
             now=NOW,
         )
         == "Delen met die groep is gestopt."
+    )
+    assert (
+        responder.active_reference(
+            principal_id="person:jaap", group_chat_id="-100123", now=NOW
+        )
+        is None
     )

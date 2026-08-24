@@ -56,6 +56,7 @@ from eva.application.telegram_pairing import (
     pairing_expiry,
 )
 from eva.application.telegram_group_consent import TelegramGroupConsent
+from eva.application.memory_audience import TelegramGroupConsentReference
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -1041,8 +1042,21 @@ def test_telegram_group_consent_is_durable_person_scoped_and_revocable(
     assert restarted.permits(
         principal_id="person:jaap", group_chat_id="-100123", now=NOW
     )
+    assert restarted.active_reference(
+        principal_id="person:jaap", group_chat_id="-100123", now=NOW
+    ) == TelegramGroupConsentReference(
+        principal_id="person:jaap",
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:901",
+    )
     assert not restarted.permits(
         principal_id="person:frank", group_chat_id="-100123", now=NOW
+    )
+    assert (
+        restarted.active_reference(
+            principal_id="person:frank", group_chat_id="-100123", now=NOW
+        )
+        is None
     )
     assert restarted.revoke(
         principal_id="person:jaap",
@@ -1054,6 +1068,14 @@ def test_telegram_group_consent_is_durable_person_scoped_and_revocable(
         principal_id="person:jaap",
         group_chat_id="-100123",
         now=NOW + timedelta(seconds=2),
+    )
+    assert (
+        restarted.active_reference(
+            principal_id="person:jaap",
+            group_chat_id="-100123",
+            now=NOW + timedelta(seconds=2),
+        )
+        is None
     )
     assert [
         event.event_type

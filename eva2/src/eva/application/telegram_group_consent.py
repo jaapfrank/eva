@@ -7,6 +7,8 @@ from datetime import UTC, datetime, timedelta
 import re
 from typing import Protocol
 
+from eva.application.memory_audience import TelegramGroupConsentReference
+
 
 _PRINCIPAL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
 _MAXIMUM_DURATION_SECONDS = 31 * 24 * 60 * 60
@@ -71,6 +73,10 @@ class TelegramGroupConsentStorePort(Protocol):
         self, *, principal_id: str, group_chat_id: str, now: datetime
     ) -> bool: ...
 
+    def active_reference(
+        self, *, principal_id: str, group_chat_id: str, now: datetime
+    ) -> TelegramGroupConsentReference | None: ...
+
 
 class TelegramGroupConsentResponder:
     """Private-chat command parser. The worker supplies the trusted identity check."""
@@ -124,6 +130,15 @@ class TelegramGroupConsentResponder:
 
     def permits(self, *, principal_id: str, group_chat_id: str, now: datetime) -> bool:
         return self._store.permits(
+            principal_id=principal_id, group_chat_id=group_chat_id, now=now
+        )
+
+    def active_reference(
+        self, *, principal_id: str, group_chat_id: str, now: datetime
+    ) -> TelegramGroupConsentReference | None:
+        """Return the live durable grant, never a caller-supplied reference."""
+
+        return self._store.active_reference(
             principal_id=principal_id, group_chat_id=group_chat_id, now=now
         )
 

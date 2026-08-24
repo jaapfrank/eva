@@ -14,6 +14,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
 )
 from eva.application.telegram_group_consent import TelegramGroupConsent
+from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.contracts.base import JsonValue
 
 
@@ -129,24 +130,38 @@ class PostgresTelegramGroupConsentStore:
             return False
 
     def permits(self, *, principal_id: str, group_chat_id: str, now: datetime) -> bool:
+        return self.active_reference(
+            principal_id=principal_id, group_chat_id=group_chat_id, now=now
+        ) is not None
+
+    def active_reference(
+        self, *, principal_id: str, group_chat_id: str, now: datetime
+    ) -> TelegramGroupConsentReference | None:
         thread_id = self._thread_id(
             principal_id=principal_id, group_chat_id=group_chat_id
         )
         try:
             state = self._timeline.load(thread_id)
         except OperationalTimelineError:
-            return False
+            return None
         if state.status != "active":
-            return False
+            return None
         events = self._timeline.events(thread_id)
         if not events:
             raise RuntimeError("Telegram group consent timeline is empty")
-        data = events[-1].payload.get("data")
+        event = events[-1]
+        data = event.payload.get("data")
         if not isinstance(data, dict):
             raise RuntimeError("Telegram group consent payload is invalid")
         consent = self._consent_from_data(data)
-        return consent.permits(
+        if not consent.permits(
             principal_id=principal_id, group_chat_id=group_chat_id, now=now
+        ):
+            return None
+        return TelegramGroupConsentReference(
+            principal_id=principal_id,
+            group_chat_id=group_chat_id,
+            operation_id=event.operation_id,
         )
 
     def _operation_data(
