@@ -39,6 +39,8 @@ REQUIRED_CONFIGURATION = (
     "EVA_DATABASE_DSN_FILE_HOST",
     "EVA_HOME_ASSISTANT_URL",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+    "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
+    "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
     "EVA_RUNTIME_TENANT_ID",
     "EVA_RUNTIME_INSTALLATION_ID",
     "EVA_RUNTIME_PRINCIPAL_ID",
@@ -111,29 +113,28 @@ def _require_absolute(value: str, name: str) -> Path:
     return path
 
 
-def _preflight_host_secret(path_value: str, *, runtime_uid: int) -> None:
-    path = _require_absolute(path_value, "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST")
+def _preflight_host_secret(
+    path_value: str,
+    *,
+    setting_name: str,
+    runtime_uid: int,
+) -> None:
+    path = _require_absolute(path_value, setting_name)
     try:
         named = os.lstat(path)
     except OSError as error:
-        raise RuntimeError("Home Assistant host secret is inaccessible") from error
+        raise RuntimeError(f"{setting_name} is inaccessible") from error
     if stat.S_ISLNK(named.st_mode) or not stat.S_ISREG(named.st_mode):
-        raise RuntimeError(
-            "Home Assistant host secret must be a regular non-symlink file"
-        )
+        raise RuntimeError(f"{setting_name} must be a regular non-symlink file")
     permissions = stat.S_IMODE(named.st_mode)
     if named.st_uid != runtime_uid:
-        raise RuntimeError(
-            f"Home Assistant host secret must be owned by runtime UID {runtime_uid}"
-        )
+        raise RuntimeError(f"{setting_name} must be owned by runtime UID {runtime_uid}")
     if not permissions & stat.S_IRUSR:
-        raise RuntimeError("Home Assistant host secret owner must have read access")
+        raise RuntimeError(f"{setting_name} owner must have read access")
     if permissions & (stat.S_IRWXG | stat.S_IRWXO):
-        raise RuntimeError(
-            "Home Assistant host secret must have no group/other permissions"
-        )
+        raise RuntimeError(f"{setting_name} must have no group/other permissions")
     if not 0 < named.st_size <= MAX_RUNTIME_SECRET_BYTES:
-        raise RuntimeError("Home Assistant host secret size must be within 1..65536")
+        raise RuntimeError(f"{setting_name} size must be within 1..65536")
 
     if not hasattr(os, "O_PATH"):
         raise RuntimeError("safe metadata-only secret preflight is unavailable")
@@ -142,7 +143,7 @@ def _preflight_host_secret(path_value: str, *, runtime_uid: int) -> None:
     try:
         descriptor = os.open(path, flags)
     except OSError as error:
-        raise RuntimeError("Home Assistant host secret cannot be opened safely") from error
+        raise RuntimeError(f"{setting_name} cannot be opened safely") from error
     try:
         opened = os.fstat(descriptor)
         if (
@@ -160,7 +161,7 @@ def _preflight_host_secret(path_value: str, *, runtime_uid: int) -> None:
             named.st_size,
             named.st_ctime_ns,
         ):
-            raise RuntimeError("Home Assistant host secret changed during preflight")
+            raise RuntimeError(f"{setting_name} changed during preflight")
     finally:
         os.close(descriptor)
 
@@ -321,6 +322,22 @@ def load_core_b_plan(
     _validate_configuration(values)
     _preflight_host_secret(
         values["EVA_HOME_ASSISTANT_TOKEN_FILE_HOST"],
+        setting_name="EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+        runtime_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_DATABASE_DSN_FILE_HOST"],
+        setting_name="EVA_DATABASE_DSN_FILE_HOST",
+        runtime_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_TELEGRAM_BOT_TOKEN_FILE_HOST"],
+        setting_name="EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
+        runtime_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST"],
+        setting_name="EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
         runtime_uid=runtime_uid,
     )
     _preflight_host_directory(

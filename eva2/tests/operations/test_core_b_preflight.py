@@ -18,9 +18,18 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     docker_config = private_tmp_path / "docker-config"
     docker_config.mkdir(mode=0o700, exist_ok=True)
     docker_config.chmod(0o700)
-    secret = private_tmp_path / "home-assistant-token"
-    secret.write_text("not-a-real-token\n", encoding="utf-8")
-    secret.chmod(0o600)
+    home_assistant_token = _private_secret(
+        private_tmp_path / "home-assistant-token", "not-a-real-token\n"
+    )
+    database_dsn = _private_secret(
+        private_tmp_path / "database-dsn", "postgresql://not-a-real-dsn\n"
+    )
+    telegram_token = _private_secret(
+        private_tmp_path / "telegram-token", "not-a-real-telegram-token\n"
+    )
+    telegram_bindings = _private_secret(
+        private_tmp_path / "telegram-bindings", "{}\n"
+    )
     codex_authority = private_tmp_path / "codex-auth"
     codex_authority.mkdir(mode=0o700, exist_ok=True)
     codex_authority.chmod(0o700)
@@ -39,9 +48,11 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_STACK_CORE_CONTAINER": "eva2-living-core-b",
         "EVA_STACK_BIND_ADDRESS": "127.0.0.1",
         "EVA_LIVING_CORE_IMAGE": "eva2-living-core@sha256:" + ("a" * 64),
-        "EVA_DATABASE_DSN_FILE_HOST": "/run/eva2/secrets/database-dsn",
+        "EVA_DATABASE_DSN_FILE_HOST": str(database_dsn),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
-        "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(secret),
+        "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
+        "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(telegram_token),
+        "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": str(telegram_bindings),
         "EVA_RUNTIME_TENANT_ID": "tenant:test",
         "EVA_RUNTIME_INSTALLATION_ID": "installation:test",
         "EVA_RUNTIME_PRINCIPAL_ID": "principal:test",
@@ -59,6 +70,12 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
         "EVA_HINDSIGHT_ACCESS_DIR": str(hindsight_lease),
     }
+
+
+def _private_secret(path: Path, contents: str) -> Path:
+    path.write_text(contents, encoding="utf-8")
+    path.chmod(0o600)
+    return path
 
 
 def _environment_file(private_tmp_path: Path, values: dict[str, str]) -> Path:
@@ -154,6 +171,26 @@ def test_plan_rejects_execute_only_home_assistant_host_secret(
     environment = _environment_file(private_tmp_path, values)
 
     with pytest.raises(RuntimeError, match="owner must have read access"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+@pytest.mark.parametrize(
+    "setting_name",
+    (
+        "EVA_DATABASE_DSN_FILE_HOST",
+        "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
+        "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
+    ),
+)
+def test_plan_rejects_insecure_mounted_runtime_secret(
+    setting_name: str,
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    Path(values[setting_name]).chmod(0o640)
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(RuntimeError, match=setting_name):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 
