@@ -39,7 +39,9 @@ def test_binding_file_is_strict_and_person_isolated(private_tmp_path: Path) -> N
     assert bindings.resolve(101, "202") is None
 
 
-def test_principal_binding_file_rejects_ambiguous_people(private_tmp_path: Path) -> None:
+def test_principal_binding_file_allows_multiple_accounts_for_one_person(
+    private_tmp_path: Path,
+) -> None:
     path = private_tmp_path / "bindings.json"
     path.write_text(
         json.dumps(
@@ -55,6 +57,38 @@ def test_principal_binding_file_rejects_ambiguous_people(private_tmp_path: Path)
                         "allowed_chat_ids": ["202"],
                         "principal_id": "person:shared",
                         "telegram_user_id": 202,
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    path.chmod(0o600)
+
+    bindings = load_principal_bindings(str(path))
+
+    assert bindings.resolve(101, "101") == "person:shared"
+    assert bindings.resolve(202, "202") == "person:shared"
+
+
+def test_principal_binding_file_rejects_one_account_bound_to_two_people(
+    private_tmp_path: Path,
+) -> None:
+    path = private_tmp_path / "bindings.json"
+    path.write_text(
+        json.dumps(
+            {
+                "contract": "EvaTelegramPrincipalBindings/v1",
+                "bindings": [
+                    {
+                        "allowed_chat_ids": ["101"],
+                        "principal_id": "person:jaap",
+                        "telegram_user_id": 101,
+                    },
+                    {
+                        "allowed_chat_ids": ["101"],
+                        "principal_id": "person:frank",
+                        "telegram_user_id": 101,
                     },
                 ],
             }

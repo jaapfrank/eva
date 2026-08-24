@@ -96,3 +96,18 @@ def test_binding_requires_both_trusted_sender_and_allowed_chat() -> None:
     assert bindings.resolve(101, "-42") == "person:jaap"
     assert bindings.resolve(101, "999") is None
     assert bindings.resolve(202, "101") is None
+
+
+def test_one_person_can_bind_multiple_distinct_telegram_accounts() -> None:
+    bindings = TelegramPrincipalBindings(
+        (
+            TelegramPrincipalBinding(101, "person:jaap", ("101",)),
+            TelegramPrincipalBinding(404, "person:jaap", ("404",)),
+            TelegramPrincipalBinding(202, "person:frank", ("202",)),
+        )
+    )
+
+    assert bindings.resolve(101, "101") == "person:jaap"
+    assert bindings.resolve(404, "404") == "person:jaap"
+    assert bindings.resolve(202, "202") == "person:frank"
+    assert bindings.resolve(404, "101") is None

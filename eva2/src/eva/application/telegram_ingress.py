@@ -59,8 +59,7 @@ class TelegramPrincipalBindings:
         if not bindings:
             raise ValueError("Telegram principal bindings are empty")
         users = [item.telegram_user_id for item in bindings]
-        principals = [item.principal_id for item in bindings]
-        if len(set(users)) != len(users) or len(set(principals)) != len(principals):
+        if len(set(users)) != len(users):
             raise ValueError("Telegram principal bindings are ambiguous")
         self._by_user = {item.telegram_user_id: item for item in bindings}
 
