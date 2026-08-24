@@ -1,0 +1,22 @@
+services:
+  schema-installer:
+    profiles: ["schema-install"]
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=16m
+    command: ["python", "-m", "eva.operations.install_schema"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false

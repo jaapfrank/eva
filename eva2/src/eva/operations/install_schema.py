@@ -19,6 +19,8 @@ from alembic import command
 from alembic.config import Config
 import sqlalchemy as sa
 
+from eva.bootstrap.secrets import read_runtime_secret_file
+
 
 _REVISION_4B0 = "4b_0000_core_namespace"
 _REVISION_4B1 = "4b_0001_tenant_scope"
@@ -56,22 +58,12 @@ def _canonical(value: object) -> str:
 
 def _secret(*, value_name: str, file_name: str) -> str:
     value = os.environ.get(value_name, "").strip()
-    raw_path = os.environ.get(file_name, "").strip()
-    if value and raw_path:
-        raise RuntimeError(f"set only one of {value_name} and {file_name}")
     if value:
-        return value
+        raise RuntimeError(f"{value_name} is forbidden; use {file_name}")
+    raw_path = os.environ.get(file_name, "").strip()
     if not raw_path:
-        raise RuntimeError(f"{value_name} or {file_name} is required")
-    path = Path(raw_path)
-    if path.is_symlink() or not path.is_file():
-        raise RuntimeError(f"{file_name} must name a regular non-symlink file")
-    if path.stat().st_size > 65_536:
-        raise RuntimeError(f"{file_name} is too large")
-    decoded = path.read_text(encoding="utf-8").strip()
-    if not decoded:
-        raise RuntimeError(f"{file_name} is empty")
-    return decoded
+        raise RuntimeError(f"{file_name} is required")
+    return read_runtime_secret_file(raw_path, setting_name=file_name)
 
 
 def _current_revision(engine: sa.Engine) -> str | None:

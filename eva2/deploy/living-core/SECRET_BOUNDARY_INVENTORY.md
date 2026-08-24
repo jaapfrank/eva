@@ -22,11 +22,20 @@ secret-hardening wordt gepresenteerd.
   telegram-native Compose-profiel bindt alleen expliciete, read-only hostfiles
   met `create_host_path: false`; Docker Compose `secrets:file` wordt daar niet
   gebruikt omdat de effectieve owner/mode niet betrouwbaar kan worden gezet.
+- `operations/durable_goal_worker.py`: gebruikt uitsluitend
+  `EVA_DATABASE_DSN_FILE` via dezelfde harde loader; het aparte profiel bindt
+  de runtime-owned DSN read-only met `create_host_path: false`.
+- `operations/install_schema.py`: gebruikt uitsluitend
+  `EVA_DATABASE_DSN_FILE` via dezelfde harde loader; het aparte
+  schema-installatieprofiel bindt de runtime-owned DSN read-only met
+  `create_host_path: false`.
 
 ## Niet door deze vertical gedekt en dus deploymentblocker
 
-- `operations/install_schema.py`: eigen DSN-reader.
-- `operations/durable_goal_worker.py`: eigen DSN-reader.
+- De legacy `stack.compose.yml`-migratieservice gebruikt nog Docker
+  `secrets:file` en volgt dus niet het file-owner/modecontract van de geharde
+  installer. Alleen het aparte schema-installatieprofiel volgt dat contract;
+  de stack is geen beheerd B-releasepad.
 - `operations/model_credentials.py`: afzonderlijke credentialauthority-reader
   en leasepublisher; deze heeft eigen begrenzing maar nog niet hetzelfde
   fd-/permissioncontract.
