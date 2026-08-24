@@ -88,6 +88,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
   multi-accountproef blijven open.
+- [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
+  secret-nonleaktest en onafhankelijke review. UI, authenticatie en B-deploy
+  blijven open.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
