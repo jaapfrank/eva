@@ -1,6 +1,6 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-24 12:46 CEST
+Laatst bijgewerkt: 2026-08-24 20:33 CEST
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
@@ -15,10 +15,9 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: P0-herstel gaat verder met secretgrens, Git-provenance, losse
-  sensory/deliveryworkers en een duurzame residentpolicy. De v53-broninhoud
-  is nu hashgebonden vastgelegd; het terugbrengen naar kleine Git-checkpoints
-  begint hierna.
+- Bezig: buildclosure voor een reproduceerbare B-kandidaat. De v53-broninhoud
+  is hashgebonden vastgelegd en de herstelstappen worden nu als kleine,
+  onafhankelijk gecontroleerde Git-checkpoints toegevoegd.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
 - Eerstvolgend: het gezamenlijke architectuurbesluit uitvoeren; daarna laat een
@@ -64,9 +63,9 @@ de controleerbare live receipts staan in
 
 - Core-live: 15/15 opnieuw op dezelfde bevroren eindimage.
 - Native: 9/9 opnieuw op één bevroren eindimage.
-- Multi-persoonidentiteit: de huidige Telegram-runtime ondersteunt nog geen
-  meerdere bindings per persoon, groepscontext met toestemming of WhatsApp.
-  Dit is een pre-freeze bouw- en livegate, geen gedekte bestaande testcase.
+- Multi-persoonidentiteit: broncode ondersteunt meerdere accounts per persoon,
+  tweezijdig koppelen en replayveilige groepsconsent. De beheerde B-deploy en
+  echte multi-persoon/groepstest ontbreken nog; WhatsApp is niet v1.
 - Eindaddendum: MX01-MX06 moet na de 15/15 en 9/9 op dezelfde image slagen:
   parallelle personen, groepsprivacy, meerbeurts redeneren, toolketen met
   readback, crash midden in een keten en begrensde self-improvement.
