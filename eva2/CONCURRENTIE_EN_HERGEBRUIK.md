@@ -68,6 +68,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   en settings; zie `design/product/dashboard-v1.md`.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
+- [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
+  gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
+  gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
