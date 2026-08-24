@@ -123,6 +123,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   directories zijn exact gepind en fail-closed gevalideerd; 20 tests +
   onafhankelijke review zijn groen; zie
   `reviews/managed-b-host-contract-ce23545.md`.
+- [x] Managed-B-configuratievoorbeeld: alle verplichte preflightwaarden staan
+  nu in één secretvrij template, inclusief het Telegram-koppelsecret; een test
+  bindt het template rechtstreeks aan de actuele vereiste sleutelset
+  (`16f1519`). Dit is geen configuratie van of wijziging aan B.
 - [x] PostgreSQL-bootstrap: gepinde upstream-image leest een direct gebonden
   wachtwoordbestand; een echte disposable proef bewijst verse init én behoud
   van bestaande data bij herstart; 24 gerichte tests + onafhankelijke review
