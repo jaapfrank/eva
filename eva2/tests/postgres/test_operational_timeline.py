@@ -1,0 +1,817 @@
+from __future__ import annotations
+
+from datetime import UTC, datetime, timedelta
+import hashlib
+import os
+from pathlib import Path
+from typing import Iterator
+from uuid import NAMESPACE_URL, uuid5
+
+from alembic import command
+from alembic.config import Config
+import pytest
+import sqlalchemy as sa
+from sqlalchemy.engine import Engine, make_url
+
+from eva.adapters.postgres.operational_timeline import (
+    CheckpointConflict,
+    PostgresOperationalTimeline,
+    TimelineScope,
+    operational_checkpoints,
+    operational_events,
+)
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+from eva.adapters.postgres.memory_outbox import (
+    DurableMemoryRetentionJob,
+    PostgresMemoryOutbox,
+)
+from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
+from eva.adapters.postgres.home_assistant_reads import (
+    PostgresHomeAssistantConversationReads,
+)
+from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+from eva.application.conversation import (
+    ConversationActionCall,
+    ConversationConflict,
+    ConversationTurn,
+    GroundedReply,
+)
+from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.research import ResearchArtifact, ResearchSource
+from eva.application.telegram_ingress import TelegramCoreReply, TelegramInboundMessage
+
+
+EVA2_ROOT = Path(__file__).resolve().parents[2]
+NOW = datetime(2026, 8, 23, 12, 0, tzinfo=UTC)
+
+
+def _upgrade(engine: Engine, config: Config) -> None:
+    command.upgrade(config, "4b_0000_core_namespace")
+    with engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        config.attributes["connection"] = connection
+        try:
+            command.upgrade(config, "4b_0002_episode_atomicity")
+        finally:
+            config.attributes.pop("connection", None)
+    command.upgrade(config, "head")
+
+
+@pytest.fixture(scope="module")
+def timeline_engine() -> Iterator[Engine]:
+    dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+    if not dsn:
+        pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+    url = make_url(dsn)
+    if (
+        url.get_backend_name() != "postgresql"
+        or not url.database
+        or not url.database.startswith("eva2_living_disposable_")
+    ):
+        pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+    engine = sa.create_engine(url, pool_pre_ping=False)
+    config = Config(str(EVA2_ROOT / "alembic.ini"))
+    config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
+    try:
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            ledger = connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version')")
+            )
+            if ledger is not None:
+                assert (
+                    connection.scalar(
+                        sa.text("SELECT count(*) FROM public.eva_alembic_version")
+                    )
+                    == 0
+                )
+            assert (
+                connection.scalar(
+                    sa.text(
+                        "SELECT count(*) FROM pg_namespace WHERE nspname LIKE 'eva_%'"
+                    )
+                )
+                == 0
+            )
+        _upgrade(engine, config)
+        yield engine
+    finally:
+        try:
+            command.downgrade(config, "base")
+        finally:
+            engine.dispose()
+
+
+def _scope(label: str) -> TimelineScope:
+    return TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva-living-{label}-tenant"),
+        installation_id=uuid5(NAMESPACE_URL, f"eva-living-{label}-installation"),
+    )
+
+
+def test_timeline_survives_restart_and_escalates_third_identical_failure(
+    timeline_engine: Engine,
+) -> None:
+    scope = _scope("recovery")
+    first_process = PostgresOperationalTimeline(timeline_engine, scope)
+    admitted = first_process.create_thread(
+        thread_id="telegram:thread:42",
+        checkpoint_id="checkpoint:ingress:1",
+        occurred_at=NOW,
+        data={"message": "zet de verwarming op 21"},
+    )
+    waiting = first_process.transition(
+        thread_id=admitted.thread_id,
+        expected_revision=admitted.revision,
+        checkpoint_id="checkpoint:thermostat:prepared",
+        operation_id="operation:thermostat:42",
+        phase="tool_prepared",
+        status="waiting_for_proof",
+        event_type="TOOL_PREPARED",
+        occurred_at=NOW + timedelta(seconds=1),
+        deadline=NOW + timedelta(seconds=11),
+        data={"entity_id": "climate.woonkamer", "target_temperature": 21},
+    )
+
+    timeline_engine.dispose()
+    restarted_engine = sa.create_engine(timeline_engine.url, pool_pre_ping=False)
+    restarted = PostgresOperationalTimeline(restarted_engine, scope)
+    assert restarted.load(admitted.thread_id) == waiting
+
+    state = waiting
+    for ordinal in range(1, 4):
+        state = restarted.record_recovery_failure(
+            thread_id=state.thread_id,
+            expected_revision=state.revision,
+            checkpoint_id=f"checkpoint:recovery:{ordinal}",
+            operation_id=state.operation_id,
+            error_text="thermostaat antwoord kon niet worden geïnterpreteerd",
+            occurred_at=NOW + timedelta(seconds=ordinal + 1),
+        )
+    assert state.retry_count == 3
+    assert state.status == "needs_help"
+    assert [event.event_type for event in restarted.events(state.thread_id)] == [
+        "INGRESS_COMMITTED",
+        "TOOL_PREPARED",
+        "RECOVERY_FAILED",
+        "RECOVERY_FAILED",
+        "RECOVERY_NEEDS_HELP",
+    ]
+    with pytest.raises(CheckpointConflict, match="revision changed"):
+        restarted.transition(
+            thread_id=state.thread_id,
+            expected_revision=1,
+            checkpoint_id="checkpoint:stale",
+            phase="completed",
+            status="completed",
+            event_type="SHOULD_NOT_EXIST",
+            occurred_at=NOW + timedelta(seconds=9),
+            data={},
+        )
+    restarted_engine.dispose()
+
+
+def test_event_history_is_immutable_and_projection_is_rebuildable(
+    timeline_engine: Engine,
+) -> None:
+    scope = _scope("rebuild")
+    timeline = PostgresOperationalTimeline(timeline_engine, scope)
+    expected = timeline.create_thread(
+        thread_id="telegram:thread:rebuild",
+        checkpoint_id="checkpoint:admitted",
+        occurred_at=NOW,
+        data={"message": "hoi eva"},
+    )
+
+    with pytest.raises(sa.exc.DBAPIError, match="append_only"):
+        with timeline_engine.begin() as connection:
+            connection.execute(
+                sa.update(operational_events)
+                .where(operational_events.c.thread_id == expected.thread_id)
+                .values(event_type="MUTATED")
+            )
+
+    with timeline_engine.begin() as connection:
+        connection.execute(
+            sa.delete(operational_checkpoints).where(
+                operational_checkpoints.c.tenant_id == scope.tenant_id,
+                operational_checkpoints.c.installation_id == scope.installation_id,
+                operational_checkpoints.c.thread_id == expected.thread_id,
+            )
+        )
+    rebuilt = timeline.rebuild_projection(expected.thread_id)
+    assert rebuilt == expected
+    assert timeline.load(expected.thread_id) == expected
+
+
+def test_row_scope_hides_another_installation(timeline_engine: Engine) -> None:
+    visible_scope = _scope("visible")
+    hidden_scope = TimelineScope(
+        tenant_id=visible_scope.tenant_id,
+        installation_id=uuid5(NAMESPACE_URL, "eva-living-hidden-installation"),
+    )
+    visible = PostgresOperationalTimeline(timeline_engine, visible_scope)
+    visible.create_thread(
+        thread_id="telegram:thread:scoped",
+        checkpoint_id="checkpoint:scoped",
+        occurred_at=NOW,
+        data={"message": "alleen voor deze installatie"},
+    )
+    hidden = PostgresOperationalTimeline(timeline_engine, hidden_scope)
+    assert hidden.events("telegram:thread:scoped") == ()
+
+
+def test_telegram_ingress_is_person_bound_delivered_and_restart_idempotent(
+    timeline_engine: Engine,
+) -> None:
+    message = TelegramInboundMessage(71001, "101", 501, 101, NOW, "Hoi Eva")
+    store = PostgresTelegramIngressStore(
+        timeline_engine, tenant_id="telegram-tenant", installation_id="telegram-home"
+    )
+    admitted = store.admit(message, principal_id="person:jaap")
+    assert admitted is not None
+    text = "Hoi Jaap"
+    reply = GroundedReply(
+        "telegram:101",
+        "telegram:101:501",
+        text,
+        (),
+        "2026-08-23T12:00:01Z",
+        "test",
+    )
+    prepared = store.prepare_reply(
+        admitted,
+        TelegramCoreReply(
+            reply.conversation_id, reply.message_id, reply.text, reply.text_sha256
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+    claimed = store.claim_delivery(prepared, now=NOW + timedelta(seconds=2))
+    assert claimed is not None
+    store.acknowledge_delivery(
+        claimed, "telegram:101:9001", now=NOW + timedelta(seconds=3)
+    )
+
+    restarted = PostgresTelegramIngressStore(
+        timeline_engine, tenant_id="telegram-tenant", installation_id="telegram-home"
+    )
+    assert restarted.admit(message, principal_id="person:jaap") is None
+    assert restarted.next_offset() == 71002
+    timeline = restarted._timeline  # noqa: SLF001
+    assert [event.event_type for event in timeline.events("telegram-inbound:71001")] == [
+        "TELEGRAM_INGRESS_ADMITTED",
+        "TELEGRAM_REPLY_PREPARED",
+        "TELEGRAM_DELIVERY_CLAIMED",
+        "TELEGRAM_REPLY_DELIVERED",
+    ]
+
+
+def test_telegram_restart_after_delivery_claim_never_blindly_resends(
+    timeline_engine: Engine,
+) -> None:
+    message = TelegramInboundMessage(72001, "202", 601, 202, NOW, "Ben je er?")
+    store = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-crash-tenant",
+        installation_id="telegram-crash-home",
+        delivery_lease_seconds=10,
+    )
+    admitted = store.admit(message, principal_id="person:frank")
+    assert admitted is not None
+    text = "Ik ben er."
+    prepared = store.prepare_reply(
+        admitted,
+        TelegramCoreReply(
+            "telegram:202",
+            "telegram:202:601",
+            text,
+            hashlib.sha256(text.encode()).hexdigest(),
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+    assert store.claim_delivery(prepared, now=NOW + timedelta(seconds=2)) is not None
+
+    restarted = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-crash-tenant",
+        installation_id="telegram-crash-home",
+        delivery_lease_seconds=10,
+    )
+    recovered = restarted.admit(message, principal_id="person:frank")
+    assert recovered is not None
+    assert restarted.claim_delivery(recovered, now=NOW + timedelta(seconds=13)) is None
+    state = restarted._timeline.load("telegram-inbound:72001")  # noqa: SLF001
+    assert state.status == "needs_help"
+    assert state.phase == "delivery_ambiguous"
+    assert restarted.next_offset() == 72002
+
+
+def test_telegram_poison_turn_stops_after_three_identical_processing_failures(
+    timeline_engine: Engine,
+) -> None:
+    message = TelegramInboundMessage(73001, "303", 701, 303, NOW, "Kapotte beurt")
+    store = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-poison-tenant",
+        installation_id="telegram-poison-home",
+    )
+
+    for ordinal in range(1, 4):
+        job = store.admit(message, principal_id="person:mark")
+        assert job is not None
+        store.fail_processing(
+            job,
+            ValueError("dezelfde parsefout"),
+            now=NOW + timedelta(seconds=ordinal),
+        )
+
+    assert store.admit(message, principal_id="person:mark") is None
+    state = store._timeline.load("telegram-inbound:73001")  # noqa: SLF001
+    assert state.status == "needs_help"
+    assert state.retry_count == 3
+    assert store.next_offset() == 73002
+
+
+def test_conversation_replay_returns_one_durable_reply_and_one_memory_queue(
+    timeline_engine: Engine,
+) -> None:
+    scope = _scope("conversation-replay")
+    journal = PostgresConversationJournal(timeline_engine, scope)
+    timeline = PostgresOperationalTimeline(timeline_engine, scope)
+    turn = ConversationTurn(
+        tenant_id="tenant",
+        installation_id="installation",
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:restart:4463",
+        text="Kies zelf een hobby.",
+        occurred_at="2026-08-23T12:45:58Z",
+    )
+
+    admitted = journal.admit(turn)
+    assert journal.admit(turn) == admitted
+    assert [event.event_type for event in timeline.events(admitted.thread_id)] == [
+        "INGRESS_COMMITTED"
+    ]
+
+    changed = ConversationTurn(
+        tenant_id=turn.tenant_id,
+        installation_id=turn.installation_id,
+        principal_id=turn.principal_id,
+        conversation_id=turn.conversation_id,
+        message_id=turn.message_id,
+        text="Een andere inhoud onder hetzelfde bericht-ID.",
+        occurred_at=turn.occurred_at,
+    )
+    with pytest.raises(ConversationConflict, match="different ingress"):
+        journal.admit(changed)
+
+    reply = GroundedReply(
+        conversation_id=turn.conversation_id,
+        message_id=turn.message_id,
+        text="Ik kies koken slimmer maken voor thuis.",
+        evidence_memory_ids=("memory:1",),
+        generated_at=turn.occurred_at,
+        provider="live-model",
+    )
+    assert journal.commit_reply(turn, reply) == reply
+    assert journal.commit_reply(turn, reply) == reply
+    assert journal.committed_reply(turn) == reply
+
+    changed_reply = GroundedReply(
+        conversation_id=reply.conversation_id,
+        message_id=reply.message_id,
+        text="Een afwijkend tweede antwoord.",
+        evidence_memory_ids=reply.evidence_memory_ids,
+        generated_at=reply.generated_at,
+        provider=reply.provider,
+    )
+    with pytest.raises(ConversationConflict, match="different reply"):
+        journal.commit_reply(turn, changed_reply)
+
+    completed = journal.load(turn)
+    queued = journal.memory_queued(
+        turn,
+        completed,
+        operation_document_id="telegram:jaap:exchange:4463",
+    )
+    assert (
+        journal.memory_queued(
+            turn,
+            queued,
+            operation_document_id="telegram:jaap:exchange:4463",
+        )
+        == queued
+    )
+    events = timeline.events(admitted.thread_id)
+    assert [event.event_type for event in events] == [
+        "INGRESS_COMMITTED",
+        "REPLY_COMMITTED",
+        "MEMORY_RETAIN_QUEUED",
+    ]
+
+
+def test_hindsight_outbox_rehydrates_and_stops_after_three_attempts(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "living-memory-outbox"
+    installation_id = "home"
+    scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
+        installation_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"),
+    )
+    first_process = PostgresMemoryOutbox(
+        timeline_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    document = ConversationMemoryDocument(
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        document_id="telegram:jaap:exchange:memory-outbox-1",
+        content="Gebruiker (directe bron): Ik wil het daar warm hebben.",
+        occurred_at="2026-08-23T12:55:00Z",
+        source_ref="telegram:memory-outbox-1",
+        evidence_ref="conversation-reply:telegram:memory-outbox-1",
+        privacy_class="internal",
+        trust="direct_user",
+    )
+
+    queued = first_process.enqueue(document)
+    assert first_process.enqueue(document) == queued
+    first_attempt = first_process.begin(queued, now=NOW)
+    assert first_attempt is not None
+    assert first_attempt.state.retry_count == 1
+    assert first_attempt.state.status == "waiting_for_proof"
+
+    timeline_engine.dispose()
+    restarted_engine = sa.create_engine(timeline_engine.url, pool_pre_ping=False)
+    restarted = PostgresMemoryOutbox(
+        restarted_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    recovered = restarted.pending()
+    assert len(recovered) == 1
+    assert recovered[0].document == document
+    second_attempt = restarted.begin(recovered[0], now=NOW + timedelta(seconds=1))
+    assert second_attempt is not None
+    second_failure = restarted.fail(
+        second_attempt,
+        RuntimeError("Hindsight document parsing failed"),
+        now=NOW + timedelta(seconds=2),
+    )
+    assert second_failure.status == "failed"
+    assert second_failure.retry_count == 2
+    third_attempt = restarted.begin(
+        DurableMemoryRetentionJob(document, second_failure),
+        now=NOW + timedelta(seconds=3),
+    )
+    assert third_attempt is not None
+    terminal = restarted.fail(
+        third_attempt,
+        RuntimeError("Hindsight document parsing failed"),
+        now=NOW + timedelta(seconds=4),
+    )
+    assert terminal.status == "needs_help"
+    assert terminal.retry_count == 3
+    assert restarted.pending() == ()
+
+    timeline = PostgresOperationalTimeline(restarted_engine, scope)
+    assert [event.event_type for event in timeline.events(queued.state.thread_id)] == [
+        "MEMORY_RETAIN_QUEUED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_RETRY_SCHEDULED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_NEEDS_HELP",
+    ]
+    restarted_engine.dispose()
+
+
+def test_hindsight_outbox_commits_hash_bound_success(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "living-memory-success"
+    installation_id = "home"
+    outbox = PostgresMemoryOutbox(
+        timeline_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    document = ConversationMemoryDocument(
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        document_id="telegram:jaap:exchange:memory-success-1",
+        content="Gebruiker (directe bron): Bram koos het blauwe speeltje.",
+        occurred_at="2026-08-23T12:56:00Z",
+        source_ref="telegram:memory-success-1",
+        evidence_ref="conversation-reply:telegram:memory-success-1",
+        privacy_class="internal",
+        trust="direct_user",
+    )
+    queued = outbox.enqueue(document)
+    attempted = outbox.begin(queued, now=NOW)
+    assert attempted is not None
+    receipt = MemoryRetentionReceipt(
+        bank_id="hindsight-bank",
+        document_id=document.document_id,
+        content_sha256=hashlib.sha256(document.content.encode()).hexdigest(),
+    )
+
+    completed = outbox.succeed(attempted, receipt, now=NOW + timedelta(seconds=1))
+
+    assert completed.status == "completed"
+    assert completed.retry_count == 1
+    assert outbox.pending() == ()
+
+
+def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
+    timeline_engine: Engine,
+) -> None:
+    actions = PostgresConversationActions(timeline_engine)
+    turn = ConversationTurn(
+        tenant_id="living-personal-interest",
+        installation_id="home",
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:interest:restart",
+        text="Kies zelf een hobby die ook thuis helpt.",
+        occurred_at="2026-08-23T13:00:00Z",
+    )
+    # PostgresConversationActions derives its UUID scope from the wire IDs.
+    derived_scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{turn.tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{turn.tenant_id}:{turn.installation_id}"
+        ),
+    )
+    journal = PostgresConversationJournal(timeline_engine, derived_scope)
+    journal.admit(turn)
+    call = ConversationActionCall(
+        "call:interest:first",
+        "adopt_personal_interest",
+        {
+            "motivation": "Ik vind patronen en praktische verbeteringen interessant.",
+            "next_exploration": "Welke restjes leveren een goede nieuwe maaltijd op?",
+            "title": "Slim koken met wat er al is",
+        },
+    )
+
+    adopted = actions.execute(turn, call)
+    assert adopted.output["disposition"] == "adopted"
+    assert adopted.output["state"] == "active"
+
+    timeline_engine.dispose()
+    restarted_engine = sa.create_engine(timeline_engine.url, pool_pre_ping=False)
+    restarted = PostgresConversationActions(restarted_engine)
+    restarted_timeline = PostgresOperationalTimeline(restarted_engine, derived_scope)
+    pending = restarted.pending(turn)
+    assert pending is not None
+    assert pending.output["disposition"] == "already_adopted"
+    assert pending.output["title"] == call.arguments["title"]
+
+    different_retry = ConversationActionCall(
+        "call:interest:retry",
+        "adopt_personal_interest",
+        {
+            "motivation": "Een later model koos iets anders.",
+            "next_exploration": "Een ander onderzoek.",
+            "title": "Een andere hobby",
+        },
+    )
+    replayed = restarted.execute(turn, different_retry)
+    assert replayed.output["title"] == call.arguments["title"]
+    intent_thread = f"intent:{adopted.output['intent_id']}"
+    assert [event.event_type for event in restarted_timeline.events(intent_thread)] == [
+        "PERSONAL_INTENT_ADOPTED"
+    ]
+    assert [
+        event.event_type
+        for event in restarted_timeline.events(f"conversation:{turn.message_id}")
+    ] == ["INGRESS_COMMITTED", "PERSONAL_INTENT_LINKED"]
+    restarted_engine.dispose()
+
+
+def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[tuple[tuple[str, ...], str, str, datetime]] = []
+
+    class HomeAssistant:
+        async def resolve_history_targets(  # type: ignore[no-untyped-def]
+            self, target, entity_kind
+        ):
+            assert target == "licht in de overkapping"
+            assert entity_kind == "light"
+            return (
+                {
+                    "entity_id": "light.overkapping_wand",
+                    "friendly_name": "Overkapping wand",
+                    "state": "off",
+                },
+                {
+                    "entity_id": "light.overkapping_spotjes",
+                    "friendly_name": "Spotjes overkapping",
+                    "state": "off",
+                },
+            )
+
+        async def history_group(  # type: ignore[no-untyped-def]
+            self, *, entity_ids, period, transition_to, observed_at
+        ):
+            calls.append((entity_ids, period, transition_to, observed_at))
+            return {
+                "aggregation": "any_member_on_all_members_off",
+                "contract": "EvaHomeAssistantGroupHistory/v1",
+                "entity_ids": list(entity_ids),
+                "matches": [
+                    {
+                        "changed_at": "2026-08-23T22:15:00+02:00",
+                        "from": "on",
+                        "stable_for_seconds": 6300,
+                        "to": "off",
+                    }
+                ],
+                "minimum_stable_seconds": 30,
+                "period": period,
+                "source": "home_assistant_recorder",
+                "time_zone": "Europe/Amsterdam",
+                "transition_to": transition_to,
+                "window_end": "2026-08-24T00:00:00+02:00",
+                "window_start": "2026-08-23T00:00:00+02:00",
+            }
+
+    turn = ConversationTurn(
+        tenant_id="living-history-read",
+        installation_id="home",
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:history:restart",
+        text="Hoe laat ging gisteren het licht in de overkapping uit?",
+        occurred_at="2026-08-24T10:00:00Z",
+    )
+    call = ConversationActionCall(
+        "call:history:first",
+        "read_home_assistant_history",
+        {
+            "entity_kind": "light",
+            "period": "yesterday",
+            "target": "licht in de overkapping",
+            "transition_to": "off",
+        },
+    )
+    actions = PostgresConversationActions(
+        timeline_engine,
+        HomeAssistant(),  # type: ignore[arg-type]
+    )
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "observed"
+    assert receipt.output["history"]["matches"][0]["changed_at"] == (
+        "2026-08-23T22:15:00+02:00"
+    )
+    assert len(calls) == 1
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        HomeAssistant(),  # type: ignore[arg-type]
+    )
+    assert restarted.pending(turn) == receipt
+    assert len(calls) == 1
+    scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{turn.tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{turn.tenant_id}:{turn.installation_id}"
+        ),
+    )
+    timeline = PostgresOperationalTimeline(timeline_engine, scope)
+    thread_id = PostgresHomeAssistantConversationReads.thread_id(
+        turn, "read_home_assistant_history"
+    )
+    assert [event.event_type for event in timeline.events(thread_id)] == [
+        "READ_REQUEST_ADMITTED",
+        "READ_OBSERVED",
+    ]
+
+
+def test_home_assistant_current_state_read_is_durable_and_not_repeated(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[str] = []
+
+    class HomeAssistant:
+        async def resolve_switch(self, target):  # type: ignore[no-untyped-def]
+            assert target == "verwarming in de overkapping"
+            return {
+                "entity_id": "switch.heater_overkapping",
+                "friendly_name": "Heater overkapping",
+                "state": "on",
+            }
+
+        async def state(self, *, entity_id):  # type: ignore[no-untyped-def]
+            calls.append(entity_id)
+            return {
+                "contract": "EvaHomeAssistantCurrentState/v1",
+                "entity_id": entity_id,
+                "last_changed": "2026-08-24T01:55:00+00:00",
+                "last_updated": "2026-08-24T01:55:01+00:00",
+                "source": "home_assistant_state",
+                "state": "on",
+            }
+
+    turn = ConversationTurn(
+        tenant_id="living-state-read",
+        installation_id="home",
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:state:restart",
+        text="Staat de verwarming in de overkapping nu aan?",
+        occurred_at="2026-08-24T10:00:00Z",
+    )
+    call = ConversationActionCall(
+        "call:state:first",
+        "read_home_assistant_state",
+        {"entity_kind": "switch", "target": "verwarming in de overkapping"},
+    )
+    actions = PostgresConversationActions(
+        timeline_engine,
+        HomeAssistant(),  # type: ignore[arg-type]
+    )
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "observed"
+    assert receipt.output["state"]["state"] == "on"
+    assert calls == ["switch.heater_overkapping"]
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        HomeAssistant(),  # type: ignore[arg-type]
+    )
+    assert restarted.pending(turn) == receipt
+    assert calls == ["switch.heater_overkapping"]
+
+
+def test_current_research_artifact_is_durable_and_reopens_without_repeat(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[str] = []
+
+    class Research:
+        def research_current_options(  # type: ignore[no-untyped-def]
+            self, *, question, title, options, researched_at
+        ):
+            calls.append(question)
+            return ResearchArtifact(
+                title,
+                question,
+                "# Vergelijking\n\nDrie actuele opties met bronfeiten en conclusie.",
+                (
+                    ResearchSource("A", "https://a.example/docs"),
+                    ResearchSource("B", "https://b.example/docs"),
+                    ResearchSource("C", "https://c.example/docs"),
+                ),
+                researched_at,
+                "live-search-model",
+            )
+
+    turn = ConversationTurn(
+        tenant_id="living-current-research",
+        installation_id="home",
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:research:restart",
+        text="Vergelijk drie actuele opties en bewaar een beslisdocument.",
+        occurred_at="2026-08-24T10:00:00Z",
+    )
+    call = ConversationActionCall(
+        "call:research:first",
+        "research_current_options",
+        {
+            "options": ["A", "B", "C"],
+            "question": "Vergelijk drie actuele opties op prijs en privacy.",
+            "title": "Actuele opties",
+        },
+    )
+    actions = PostgresConversationActions(timeline_engine, research=Research())
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "completed"
+    artifact = receipt.output["artifact"]
+    assert artifact["content_sha256"]
+    assert len(artifact["sources"]) == 3
+    restarted = PostgresConversationActions(timeline_engine, research=Research())
+    assert restarted.pending(turn) == receipt
+    assert calls == ["Vergelijk drie actuele opties op prijs en privacy."]
+    timeline = PostgresOperationalTimeline(
+        timeline_engine,
+        TimelineScope(
+            tenant_id=uuid5(NAMESPACE_URL, f"eva2:{turn.tenant_id}"),
+            installation_id=uuid5(
+                NAMESPACE_URL, f"eva2:{turn.tenant_id}:{turn.installation_id}"
+            ),
+        ),
+    )
+    assert [
+        event.event_type
+        for event in timeline.events(actions._research_thread_id(turn))
+    ] == ["CURRENT_RESEARCH_ADMITTED", "CURRENT_RESEARCH_COMPLETED"]

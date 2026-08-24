@@ -1,0 +1,15 @@
+services:
+  core:
+    environment:
+      EVA_HOME_ASSISTANT_EVENT_DOMAINS: ${EVA_HOME_ASSISTANT_EVENT_DOMAINS:-binary_sensor,light,person}
+      EVA_HOME_ASSISTANT_TOKEN_FILE: /run/secrets/home_assistant_token
+      EVA_HOME_ASSISTANT_URL: ${EVA_HOME_ASSISTANT_URL:?set the internal Home Assistant URL}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the household principal identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    secrets:
+      - home_assistant_token
+
+secrets:
+  home_assistant_token:
+    file: ${EVA_HOME_ASSISTANT_TOKEN_FILE_HOST:?set an absolute, non-symlink, owner-65532 Home Assistant token file with no group/other permissions}

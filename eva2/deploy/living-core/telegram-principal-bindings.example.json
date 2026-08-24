@@ -1,0 +1,12 @@
+{
+  "contract": "EvaTelegramPrincipalBindings/v1",
+  "bindings": [
+    {
+      "telegram_user_id": 123456789,
+      "principal_id": "person:example-owner",
+      "allowed_chat_ids": [
+        "123456789"
+      ]
+    }
+  ]
+}

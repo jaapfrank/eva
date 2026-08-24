@@ -1,0 +1,19 @@
+# Optional commercial publication boundary. Merge this file only after the
+# owner has selected the exact Stripe account and mounted its separate secret.
+services:
+  core:
+    environment:
+      EVA_STRIPE_ACCOUNT_ID: ${EVA_STRIPE_ACCOUNT_ID:?set exact Stripe account ID}
+      EVA_COMMERCE_PUBLIC_BASE_URL: ${EVA_COMMERCE_PUBLIC_BASE_URL:?set public HTTPS Eva base URL}
+      EVA_STRIPE_LIVE_MODE: ${EVA_STRIPE_LIVE_MODE:-false}
+      EVA_STRIPE_SECRET_KEY_FILE: /run/secrets/stripe_secret_key
+      EVA_STRIPE_WEBHOOK_SECRET_FILE: /run/secrets/stripe_webhook_secret
+    secrets:
+      - stripe_secret_key
+      - stripe_webhook_secret
+
+secrets:
+  stripe_secret_key:
+    file: ${EVA_STRIPE_SECRET_KEY_FILE_HOST:?set a mode-0600 Stripe key file}
+  stripe_webhook_secret:
+    file: ${EVA_STRIPE_WEBHOOK_SECRET_FILE_HOST:?set a mode-0600 Stripe webhook secret file}
