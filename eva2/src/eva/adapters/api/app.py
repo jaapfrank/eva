@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Any, Protocol
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from eva.application.conversation import (
     ConversationConflict,
@@ -574,6 +575,42 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         if not result.ready:
             raise HTTPException(status_code=503, detail=payload)
         return payload
+
+    @app.get("/internal/v1/dashboard/status")
+    def dashboard_status() -> JSONResponse:
+        """Expose non-secret, read-only runtime status for the operator UI."""
+
+        result = runtime.health()
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardStatus/v1",
+                "read_only": True,
+                "runtime": {
+                    "ready": result.ready,
+                    "state": "ready" if result.ready else "not_ready",
+                },
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
+    def dashboard() -> HTMLResponse:
+        """Serve the first local, read-only operator surface."""
+
+        return HTMLResponse(
+            """<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eva — status</title><style>
+body{background:#10151c;color:#e8edf2;font:16px system-ui,sans-serif;margin:0;padding:2rem}main{max-width:680px;margin:auto}.card{background:#19212b;border:1px solid #304050;border-radius:12px;padding:1.25rem}h1{margin-top:0}.state{font-weight:700}.ok{color:#82d19a}.bad{color:#f0a0a0}small{color:#aebdca}
+</style></head><body><main><h1>Eva</h1><section class="card"><p>Living Core</p><p id="state" class="state">Status ophalen…</p><small>Alleen-lezen operatoroverzicht. Deze pagina bevat geen instellingen of geheimen.</small></section></main><script>
+fetch('/internal/v1/dashboard/status').then(r=>r.json()).then(data=>{const node=document.getElementById('state');node.textContent=data.runtime.state;node.className='state '+(data.runtime.ready?'ok':'bad')}).catch(()=>{const node=document.getElementById('state');node.textContent='onbereikbaar';node.className='state bad'});
+</script></body></html>""",
+            headers={
+                "Cache-Control": "no-store",
+                "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
 
     @app.post("/public/v1/commerce/stripe/webhook")
     async def stripe_paid_order_webhook(request: Request) -> dict[str, object]:
