@@ -16,6 +16,7 @@ from eva.operations.core_b_preflight import (
     MANAGEMENT_VALUE,
     SNAPSHOT_LABEL,
     CoreBPlan,
+    load_core_b_plan,
 )
 
 
@@ -211,3 +212,34 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
         rendered_sha256=_sha256(_canonical_json(graph)),
         service_names=tuple(sorted(graph["services"])),
     )
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Run the non-mutating sealed render and print only its receipt."""
+
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Render the sealed managed B Compose graph without changing Docker state."
+    )
+    parser.add_argument("environment_file")
+    arguments = parser.parse_args(argv)
+    try:
+        receipt = render_managed_b(load_core_b_plan(arguments.environment_file)).receipt()
+    except RuntimeError as error:
+        print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
+        return 2
+    except OSError:
+        print(
+            json.dumps(
+                {"error": "managed B render refused", "status": "failed"},
+                sort_keys=True,
+            )
+        )
+        return 2
+    print(json.dumps(receipt, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

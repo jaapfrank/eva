@@ -13,6 +13,7 @@ from eva.operations.managed_b_render import (
     EXPECTED_SERVICES,
     MANAGED_B_MANIFEST,
     _write_all,
+    main,
     render_managed_b,
 )
 
@@ -185,3 +186,67 @@ def test_renderer_refuses_service_with_wrong_configuration_label(
 
     with pytest.raises(RuntimeError, match="core has the wrong configuration label"):
         render_managed_b(plan)
+
+
+def test_renderer_cli_prints_only_a_non_secret_receipt(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    plan = _plan()
+    rendered = SimpleNamespace(
+        receipt=lambda: {
+            "configuration_sha256": plan.snapshot_sha256,
+            "contract": "EvaManagedBRenderReceipt/v1",
+            "status": "passed",
+        }
+    )
+    monkeypatch.setattr(
+        "eva.operations.managed_b_render.load_core_b_plan",
+        lambda environment_file: plan,
+    )
+    monkeypatch.setattr(
+        "eva.operations.managed_b_render.render_managed_b",
+        lambda rendered_plan: rendered,
+    )
+
+    assert main(["/private/eva2-b-runtime.env"]) == 0
+
+    assert json.loads(capsys.readouterr().out) == rendered.receipt()
+
+
+def test_renderer_cli_returns_failure_without_a_traceback(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        "eva.operations.managed_b_render.load_core_b_plan",
+        lambda environment_file: (_ for _ in ()).throw(RuntimeError("refused")),
+    )
+
+    assert main(["/private/eva2-b-runtime.env"]) == 2
+
+    assert json.loads(capsys.readouterr().out) == {
+        "error": "refused",
+        "status": "failed",
+    }
+
+
+def test_renderer_cli_sanitizes_operating_system_failures(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        "eva.operations.managed_b_render.load_core_b_plan",
+        lambda environment_file: _plan(),
+    )
+    monkeypatch.setattr(
+        "eva.operations.managed_b_render.render_managed_b",
+        lambda rendered_plan: (_ for _ in ()).throw(OSError("private path")),
+    )
+
+    assert main(["/private/eva2-b-runtime.env"]) == 2
+
+    assert json.loads(capsys.readouterr().out) == {
+        "error": "managed B render refused",
+        "status": "failed",
+    }
