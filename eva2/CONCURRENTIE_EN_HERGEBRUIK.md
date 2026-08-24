@@ -61,6 +61,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   zijn groen.
 - [x] V53-kandidaatimage is schoon gebouwd uit de herstelde branch en importeert
   de runtime in een nieuwe container. Hij is niet gedeployd en vervangt B niet.
+- [x] V53-bronintegratiekandidaat is op een schone branch hersteld met behoud
+  van de bestaande secret- en Telegram-hardening: 22 gerichte tests, compile
+  en een niet-root image-smoke zijn onafhankelijk groen. De kandidaat is nog
+  niet geforceerd in de huidige dirty worktree gemerged.
 - [ ] V53-buildclosure: versiepassende resterende testset en beheerde
   startupconfiguratie vastleggen vóór een reproduceerbare B-kandidaat.
 - [ ] Dashboard D01: alleen-lezen overzicht voor B-image, gates, receipts en
