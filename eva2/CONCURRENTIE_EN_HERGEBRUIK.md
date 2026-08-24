@@ -88,6 +88,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   vaste Git-commit, niet uit de vuile werkmap. Dockerfile, lockfile,
   COPY-inputs, archiefhash en commit-tijd worden secretvrij gebonden; een
   imagebuild, netwerk, B-adoptie en releaseclaim zijn bewust nog uitgesloten.
+- [x] Wheelhouse B02a: de toekomstige offline amd64/CPython-3.12-wheelhouse
+  is nu exact gebonden aan de 38 hash-gecontroleerde metadatarecords en de
+  lockfile. De validator weigert ontbrekende, extra, source-, symlink- en
+  gewijzigde bestanden zonder iets te installeren of te downloaden. De
+  fysieke wheel-bytes en de offline imagebuild blijven bewust afzonderlijk.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare
