@@ -525,6 +525,11 @@ def _request() -> dict[str, object]:
         "installation_id": INSTALLATION,
         "maximum_facts": 8,
         "principal_id": PRINCIPAL,
+        "audience": {
+            "audience_id": f"person:{PRINCIPAL}",
+            "kind": "private_person",
+            "principal_id": PRINCIPAL,
+        },
         "project_id": None,
         "query_purpose": "reply",
         "query_text": "Hoe wil ik het onder de overkapping?",
@@ -1018,6 +1023,12 @@ def test_readiness_and_recall_input_fail_closed() -> None:
 
     request = _request()
     request["unsealed_extra"] = True
+    response = client.post("/internal/v1/memory/recall", json=request)
+    assert response.status_code == 422
+    assert "unknown or missing" in response.json()["detail"]
+
+    request = _request()
+    del request["audience"]
     response = client.post("/internal/v1/memory/recall", json=request)
     assert response.status_code == 422
     assert "unknown or missing" in response.json()["detail"]

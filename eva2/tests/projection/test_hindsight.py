@@ -383,6 +383,7 @@ def _query() -> RecallCurrentFacts:
         installation_id=INSTALLATION,
         tenant_id=TENANT,
         principal_id=PRINCIPAL,
+        audience=MemoryAudience.private_person(principal_id=PRINCIPAL),
         conversation_id="conversation:telegram:jaap",
         project_id=None,
         query_purpose="reply",
@@ -469,6 +470,30 @@ def test_hindsight_rejects_a_group_document_until_group_tagging_is_wired(
 
     with pytest.raises(HindsightMemoryScopeError, match="not wired"):
         engine.retain_conversation(group_document)
+    assert state.requests == []
+
+
+def test_hindsight_rejects_group_recall_without_private_or_sql_fallback(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    audience = MemoryAudience.telegram_group(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        consent_ref=TelegramGroupConsentReference(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            operation_id="telegram-group-consent:31",
+        ),
+    )
+    query = replace(_query(), audience=audience, conversation_id="telegram:-100123")
+
+    with pytest.raises(HindsightMemoryScopeError, match="not wired"):
+        engine.recall_for_presence(query)
+    with pytest.raises(HindsightMemoryScopeError, match="not wired"):
+        engine.recall_or_sql_fallback(query)
+
     assert state.requests == []
 
 

@@ -12,6 +12,7 @@ from eva.application.memory import (
     RecalledMemoryFact,
     RememberFact,
 )
+from eva.application.memory_audience import MemoryAudience
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 
 
@@ -179,6 +180,7 @@ def test_presence_recall_is_built_from_current_fact_and_complete_provenance() ->
         installation_id=INSTALLATION_ID,
         tenant_id=TENANT_ID,
         principal_id=PRINCIPAL_ID,
+        audience=MemoryAudience.private_person(principal_id=PRINCIPAL_ID),
         conversation_id="conversation:telegram:jaap",
         project_id=None,
         query_purpose="reply",
@@ -209,6 +211,7 @@ def test_repository_cannot_widen_recall_subject_scope() -> None:
         installation_id=INSTALLATION_ID,
         tenant_id=TENANT_ID,
         principal_id=PRINCIPAL_ID,
+        audience=MemoryAudience.private_person(principal_id=PRINCIPAL_ID),
         conversation_id="conversation:telegram:jaap",
         project_id=None,
         query_purpose="reply",

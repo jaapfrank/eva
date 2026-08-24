@@ -12,6 +12,7 @@ import re
 from typing import Protocol
 
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
+from eva.application.memory_audience import MemoryAudience
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
 from eva.application.identity_verifier import (
@@ -351,6 +352,9 @@ class LivingConversation:
                     installation_id=turn.installation_id,
                     tenant_id=turn.tenant_id,
                     principal_id=turn.principal_id,
+                    audience=MemoryAudience.private_person(
+                        principal_id=turn.principal_id
+                    ),
                     conversation_id=turn.conversation_id,
                     query_purpose="conversation_reply",
                     requested_valid_at=turn.occurred_at,

@@ -79,6 +79,7 @@ class RecallCurrentFacts:
     installation_id: str
     tenant_id: str
     principal_id: str
+    audience: MemoryAudience
     conversation_id: str | None
     project_id: str | None
     query_purpose: str
@@ -94,6 +95,10 @@ class RecallCurrentFacts:
         "internal",
         "confidential",
     )
+
+    def __post_init__(self) -> None:
+        if self.audience.principal_id != self.principal_id:
+            raise ValueError("memory recall audience principal differs")
 
 
 @dataclass(frozen=True, slots=True)

@@ -60,6 +60,7 @@ from eva.application.durable_goals import (
 
 _RECALL_KEYS = {
     "allowed_privacy_classes",
+    "audience",
     "conversation_id",
     "installation_id",
     "maximum_facts",
@@ -372,6 +373,7 @@ def _query_from_wire(payload: dict[str, Any]) -> RecallCurrentFacts:
             installation_id=payload["installation_id"],
             tenant_id=payload["tenant_id"],
             principal_id=payload["principal_id"],
+            audience=memory_audience_from_wire(payload["audience"]),
             conversation_id=payload["conversation_id"],
             project_id=payload["project_id"],
             query_purpose=payload["query_purpose"],

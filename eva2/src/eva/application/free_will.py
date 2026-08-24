@@ -8,6 +8,7 @@ from typing import Literal, Protocol
 
 from eva.application.conversation import IdentityProfile
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
+from eva.application.memory_audience import MemoryAudience
 from eva.application.sensory import SensoryEvent
 from eva.application.resident_attention import ResidentAttentionDecision
 
@@ -210,6 +211,9 @@ class SensoryDecisionWorker:
                     installation_id=self._installation_id,
                     tenant_id=self._tenant_id,
                     principal_id=self._principal_id,
+                    audience=MemoryAudience.private_person(
+                        principal_id=self._principal_id
+                    ),
                     conversation_id="sensory:home-assistant",
                     project_id=None,
                     query_purpose="passive_event_decision",

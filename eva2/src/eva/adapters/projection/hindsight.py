@@ -697,6 +697,7 @@ class HindsightMemoryEngine:
     def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory:
         """Recall semantic memories directly from Hindsight for model Presence."""
 
+        self._require_private_recall_audience(query)
         if not query.subject_ids or query.principal_id not in query.subject_ids:
             raise HindsightMemoryScopeError(
                 "memory recall must include the admitted principal"
@@ -983,6 +984,15 @@ class HindsightMemoryEngine:
         )
 
     @staticmethod
+    def _require_private_recall_audience(query: RecallCurrentFacts) -> None:
+        """Block group reads until their own tag and consent resolver exist."""
+
+        if query.audience.kind != "private_person":
+            raise HindsightMemoryScopeError(
+                "Telegram group memory recall is not wired yet"
+            )
+
+    @staticmethod
     def _content(command: RememberFact) -> str:
         fact = command.fact
         value = canonical_json_bytes(fact.value).decode("utf-8")
@@ -1061,6 +1071,7 @@ class HindsightMemoryEngine:
             )
 
     def recall_candidates(self, query: RecallCurrentFacts) -> ProjectedRecall:
+        self._require_private_recall_audience(query)
         bank_id = self._bank_id(query.tenant_id, query.installation_id)
         _, response = self._request(
             "POST",

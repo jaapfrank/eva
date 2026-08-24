@@ -32,6 +32,7 @@ from eva.application.memory import (
     RecallCurrentFacts,
     RememberFact,
 )
+from eva.application.memory_audience import MemoryAudience
 from eva.application.presence import PresenceTurn, build_presence_context
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
@@ -244,6 +245,7 @@ def _recall_query(
         installation_id=installation_id,
         tenant_id=tenant_id,
         principal_id=principal_id,
+        audience=MemoryAudience.private_person(principal_id=principal_id),
         conversation_id="conversation:telegram:jaap",
         project_id=None,
         query_purpose="reply",
