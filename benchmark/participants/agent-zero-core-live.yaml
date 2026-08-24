@@ -1,0 +1,12 @@
+participant: agent-zero
+version: "2.10"
+source_commit: b22a144bf59f15b1516084c9e7b88133ba92c8a9
+source_archive_sha256: 88550f08eac23c927f68eea83f508f9dd53021316fe160f7325583d003092c62
+base_image: agent0ai/agent-zero-base:latest@sha256:342ffbf59b5d2771c01f348cb9ee3e05121ad7a639aa5bff5c48c2912685eda8
+image: eva2-lab-agent-zero:b22a144
+api_path: /api/api_message
+log_path: /api/api_log_get
+model: gpt-5.4-mini
+provider: codex_oauth
+reasoning_effort: medium
+workspace: isolated_container

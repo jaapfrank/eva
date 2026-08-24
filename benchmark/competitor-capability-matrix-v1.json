@@ -1,0 +1,51 @@
+{
+  "contract": "EvaCompetitorCapabilityMatrix/v1",
+  "updated_at": "2026-08-24",
+  "claim_rule": {
+    "enforced_by": "scripts/lab/check-competitor-capability-matrix.mjs",
+    "general_superiority_requires": "every required category is won against every hard-coded competitor, has evidence refs and has no critical failure",
+    "aggregate_scores_may_hide_category_loss": false
+  },
+  "pinned_participants": {
+    "eva2": "living-core B candidate; final image not frozen",
+    "openclaw": "2026.8.1@bca206d794bd7c1edb608820ff8612fa5ce45638",
+    "hermes": "0.20.5@f293e7206b4ddd66042329442c6afebc19a8808d",
+    "agent_zero": "2.10@b22a144bf59f15b1516084c9e7b88133ba92c8a9"
+  },
+  "categories": [
+    {"id": "install_update_recovery", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "conversation_persona", "partial_evidence": ["C01", "T02", "C04"], "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "channels_cross_channel_identity", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "models_media_local_inference", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "skills_marketplaces", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "plugins_mcp_a2a", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "gateway_pairing_trustdomains", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "companion_nodes_hostbridges", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "browser_desktop_documents", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "code_files_projects_worktrees", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "memory_persona_learning", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "cron_durable_goals_background_work", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "multi_agent_delegation", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "permissions_secrets_sandboxing", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "idempotency_readback_rollback", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "observability_costs_receipts", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "home_assistant_resident_silence", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "api_ide_programmatic_access", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "voice_speech_media", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "web_extraction_ui_canvas_artifacts_notifications", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "rl_batch_evaluation", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "commerce_external_accounts", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}}
+  ],
+  "evidence_catalog": [
+    {
+      "id": "four-framework-visible-c01-t02",
+      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json",
+      "sha256": "d4424895c56a2ae2834bc73630317fa3258c8b6fdf0d5c245efacb763ab8b870"
+    },
+    {
+      "id": "four-framework-blind-c04",
+      "path": "eva2/evidence/living-core/lab36-c04-blind-2026-08-24.json",
+      "sha256": "8551a92ba175435a780ca3c87c471486dfa0ace0683a1b6a75f54d1df989150a"
+    }
+  ]
+}
