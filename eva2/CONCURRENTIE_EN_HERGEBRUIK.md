@@ -115,9 +115,15 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke review reproduceerde en sloot de extra-wheel-race. 23 gerichte
   tests en een tijdelijke fysieke materialisatie van 544 bestanden zijn groen,
   zonder netwerk of B.
-- [ ] Offline kandidaatimage B03e: bouw deze exact verzegelde context met de
-  gebonden lokale OCI-basisimage en volledig uitgeschakeld netwerk; valideer
-  daarna alleen de kandidaatimage, zonder B te starten of te vervangen.
+- [x] Offline kandidaatimage B03e: de verzegelde context bouwt nu expliciet
+  als `linux/amd64`, met uitgeschakeld netwerk, zonder pull/cache/tag/push. De
+  actuele lokale basisimage moet vooraf exact bij B03c passen; de ongetagde
+  kandidaat wordt daarna teruggecontroleerd. 27 gerichte tests, fysieke build
+  en onafhankelijke review zijn groen; B is niet gestart of vervangen.
+- [ ] Kandidaat-runtime-smoke B03f: start de ongetagde kandidaat één keer in
+  een tijdelijke, netwerkloze container zonder B-secrets; bewijs dat het
+  verpakte runtimepad als niet-root kan importeren en ruim de tijdelijke
+  container daarna op.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare
