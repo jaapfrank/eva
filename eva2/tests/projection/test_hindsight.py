@@ -2,17 +2,24 @@ from __future__ import annotations
 
 import json
 import threading
+from dataclasses import replace
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any, Iterator
 
 import pytest
 
 from eva.adapters.projection.hindsight import (
+    HindsightMemoryEngine,
+    HindsightMemoryScopeError,
     HindsightMemoryProjection,
     HindsightProjectionConfig,
     HindsightProjectionProtocolError,
 )
-from eva.application.memory import RecallCurrentFacts, RememberFact
+from eva.application.memory import (
+    ConversationMemoryDocument,
+    RecallCurrentFacts,
+    RememberFact,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 
@@ -31,6 +38,11 @@ class _State:
     def __init__(self) -> None:
         self.requests: list[tuple[str, str, dict[str, Any] | None]] = []
         self.bad_recall = False
+        self.anchor_recall = False
+        self.bound_low_score_recall = False
+        self.bound_bank_id: str | None = None
+        self.source_fact_recall = False
+        self.mental_models: set[str] = set()
 
 
 @pytest.fixture
@@ -58,10 +70,146 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
             state.requests.append(("PUT", self.path, body))
             self._send(200, {})
 
+        def do_GET(self) -> None:  # noqa: N802
+            state.requests.append(("GET", self.path, None))
+            if "/operations/" in self.path:
+                operation_id = self.path.rsplit("/", 1)[-1]
+                self._send(
+                    200,
+                    {"operation_id": operation_id, "status": "completed"},
+                )
+            elif "/mental-models/" in self.path:
+                mental_model_id = self.path.split("/mental-models/", 1)[1].split(
+                    "?", 1
+                )[0]
+                if mental_model_id not in state.mental_models:
+                    self._send(404, {"detail": "not found"})
+                else:
+                    self._send(
+                        200,
+                        {
+                            "content": (
+                                "Jaap wil korte, directe en warme antwoorden zonder "
+                                "onnodige kopjes; zijn latere correctie is leidend."
+                            ),
+                            "id": mental_model_id,
+                            "reflect_response": {
+                                "based_on": {"world": [FACT], "observation": []}
+                            },
+                        },
+                    )
+            else:
+                self._send(200, {"status": "healthy"})
+
         def do_POST(self) -> None:  # noqa: N802
             body = self._body()
             state.requests.append(("POST", self.path, body))
             if self.path.endswith("/memories/recall"):
+                if state.bound_low_score_recall and body is not None:
+                    if (
+                        body["query"] == "Mark"
+                        and state.bound_bank_id is not None
+                        and f"/banks/{state.bound_bank_id}/" in self.path
+                    ):
+                        self._send(
+                            200,
+                            {
+                                "results": [
+                                    {
+                                        "id": "bound-mark",
+                                        "scores": {"final": 0.025},
+                                        "text": "De persoon in deze regio is Mark.",
+                                        "type": "world",
+                                        "mentioned_at": NOW,
+                                        "document_id": "bound-mark",
+                                        "metadata": {
+                                            "principal_id": PRINCIPAL,
+                                            "privacy_class": "confidential",
+                                            "source_ref": "telegram:photo-correction",
+                                            "evidence_ref": "observation-binding:" + "a" * 64,
+                                            "trust": "direct_user",
+                                            "observation_binding_sha256": "a" * 64,
+                                        },
+                                    }
+                                ]
+                            },
+                        )
+                    else:
+                        self._send(200, {"results": []})
+                    return
+                if state.source_fact_recall:
+                    self._send(
+                        200,
+                        {
+                            "results": [
+                                {
+                                    "id": "new-observation",
+                                    "scores": {"final": 1.09},
+                                    "text": "Het actuele codewoord is basalt.",
+                                    "type": "observation",
+                                    "mentioned_at": "2026-08-23T10:01:00Z",
+                                    "metadata": {},
+                                    "source_fact_ids": ["new-source-fact"],
+                                },
+                                {
+                                    "id": "old-world",
+                                    "scores": {"final": 1.08},
+                                    "text": "Het actuele codewoord is graniet.",
+                                    "type": "world",
+                                    "mentioned_at": NOW,
+                                    "document_id": "old-document",
+                                    "metadata": {
+                                        "principal_id": PRINCIPAL,
+                                        "privacy_class": "internal",
+                                        "source_ref": "telegram:old",
+                                        "evidence_ref": "evidence:old",
+                                        "trust": "direct_user",
+                                    },
+                                },
+                            ],
+                            "source_facts": {
+                                "new-source-fact": {
+                                    "id": "new-source-fact",
+                                    "text": "Het actuele codewoord is basalt.",
+                                    "type": "world",
+                                    "mentioned_at": "2026-08-23T10:01:00Z",
+                                    "document_id": "new-document",
+                                    "metadata": {
+                                        "principal_id": PRINCIPAL,
+                                        "privacy_class": "internal",
+                                        "source_ref": "telegram:new",
+                                        "evidence_ref": "evidence:new",
+                                        "trust": "direct_user",
+                                    },
+                                }
+                            },
+                            "source_facts_truncated": False,
+                        },
+                    )
+                    return
+                if state.anchor_recall and body is not None:
+                    if body["query"] == "werkkamer":
+                        self._send(
+                            200,
+                            {
+                                "results": [
+                                    {
+                                        "id": "latest-workroom-preference",
+                                        "scores": {"final": 1.08},
+                                        "text": (
+                                            "Jaap wil in de werkkamer alleen stille "
+                                            "meldingen, zonder geluid."
+                                        ),
+                                        "type": "observation",
+                                        "mentioned_at": NOW,
+                                        "metadata": {},
+                                    }
+                                ]
+                            },
+                        )
+                    else:
+                        self._send(200, {"results": []})
+                    return
                 self._send(
                     200,
                     {"not_results": []}
@@ -69,18 +217,84 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                     else {
                         "results": [
                             {
+                                "id": FACT,
+                                "scores": {"final": 0.91},
+                                "text": "Jaap houdt van een warme overkapping.",
+                                "type": "world",
+                                "mentioned_at": NOW,
                                 "document_id": FACT,
-                                "metadata": {"fact_id": FACT},
+                                "metadata": {
+                                    "fact_id": FACT,
+                                    "principal_id": PRINCIPAL,
+                                    "privacy_class": "internal",
+                                    "source_ref": "telegram:message:5001",
+                                    "evidence_ref": "evidence:message:5001",
+                                    "trust": "direct_user",
+                                },
                             },
                             {
+                                "id": OLD_FACT,
+                                "scores": {"final": 0.88},
+                                "text": "Jaap wil korte, directe antwoorden.",
+                                "type": "observation",
+                                "occurred_start": NOW,
                                 "document_id": OLD_FACT,
-                                "metadata": {"fact_id": OLD_FACT},
+                                "metadata": {
+                                    "fact_id": OLD_FACT,
+                                    "principal_id": PRINCIPAL,
+                                    "privacy_class": "internal",
+                                    "source_ref": "telegram:conversation:jaap",
+                                    "evidence_ref": "evidence:style:jaap",
+                                    "trust": "host_policy",
+                                },
                             },
+                            *(
+                                [
+                                    {
+                                        "id": "irrelevant-low-score",
+                                        "scores": {"final": 0.01},
+                                        "text": "Een ongerelateerd project.",
+                                        "type": "world",
+                                        "mentioned_at": NOW,
+                                        "document_id": "irrelevant-low-score",
+                                        "metadata": {
+                                            "principal_id": PRINCIPAL,
+                                            "privacy_class": "internal",
+                                            "trust": "direct_user",
+                                        },
+                                    }
+                                ]
+                                if body is not None and "types" in body
+                                else []
+                            ),
                         ]
                     },
                 )
+            elif self.path.endswith("/mental-models"):
+                assert body is not None
+                state.mental_models.add(body["id"])
+                self._send(
+                    200,
+                    {
+                        "mental_model_id": body["id"],
+                        "operation_id": "763f8954-51f2-4d61-84b3-d11f858b7db8",
+                    },
+                )
             else:
-                self._send(200, {"success": True, "items_count": 1})
+                self._send(
+                    200,
+                    {
+                        "success": True,
+                        "items_count": 1,
+                        "async": True,
+                        "operation_id": "60c962ab-e659-47a0-aa44-70bc60ff7f66",
+                    },
+                )
+
+        def do_PATCH(self) -> None:  # noqa: N802
+            body = self._body()
+            state.requests.append(("PATCH", self.path, body))
+            self._send(200, {"bank_id": self.path.split("/")[-2], "config": {}})
 
         def do_DELETE(self) -> None:  # noqa: N802
             state.requests.append(("DELETE", self.path, None))
@@ -173,6 +387,326 @@ def _query() -> RecallCurrentFacts:
         subject_ids=(PRINCIPAL,),
         query_text="Hoe wil Jaap de temperatuur onder de overkapping?",
     )
+
+
+def _conversation_document() -> ConversationMemoryDocument:
+    return ConversationMemoryDocument(
+        tenant_id=TENANT,
+        installation_id=INSTALLATION,
+        principal_id=PRINCIPAL,
+        conversation_id="conversation:telegram:jaap",
+        document_id="conversation:telegram:jaap:history",
+        content="Jaap: Antwoord kort en direct.\nEva: Begrepen.",
+        occurred_at=NOW,
+        source_ref="telegram:conversation:jaap",
+        evidence_ref="evidence:conversation:jaap",
+        privacy_class="internal",
+        trust="direct_user",
+    )
+
+
+def test_hindsight_owns_conversation_memory_and_style_observations(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+
+    receipt = engine.retain_conversation(_conversation_document())
+    memory = engine.recall_for_presence(_query())
+
+    assert receipt.document_id == "conversation:telegram:jaap:history"
+    assert [fact.predicate for fact in memory.confirmed_facts] == [
+        "memory.world",
+        "memory.observation",
+    ]
+    assert memory.confirmed_facts[0].value["text"] == (
+        "Jaap houdt van een warme overkapping."
+    )
+    assert memory.confirmed_facts[1].trust == "host_policy"
+    assert memory.recall.projection_version == "hindsight-0.9.1-v1"
+
+    bank = next(body for method, _path, body in state.requests if method == "PUT")
+    assert bank is not None
+    assert "brevity" in bank["observations_mission"]
+    assert "question, hypothetical" in bank["retain_mission"]
+    retained = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories")
+    )
+    assert retained is not None
+    item = retained["items"][0]
+    assert item["content"] == _conversation_document().content
+    assert item["document_id"] == _conversation_document().document_id
+    assert item["update_mode"] == "replace"
+    assert item["observation_scopes"][0][0].startswith("eva-person-")
+    assert retained["async"] is True
+
+
+def test_project_memory_uses_a_separate_bank_while_recall_keeps_person_context(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    global_document = _conversation_document()
+    project_document = replace(
+        global_document,
+        document_id="conversation:project-red:history",
+        project_id="project-red",
+    )
+
+    engine.retain_conversation(global_document)
+    engine.retain_conversation(project_document)
+
+    retain_paths = [
+        path
+        for method, path, _body in state.requests
+        if method == "POST" and path.endswith("/memories")
+    ]
+    assert len(retain_paths) == 2
+    assert len(set(retain_paths)) == 2
+    project_body = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path == retain_paths[1]
+    )
+    assert project_body["items"][0]["metadata"]["project_id"] == "project-red"
+
+    state.requests.clear()
+    engine.recall_for_presence(
+        replace(
+            _query(),
+            project_id="project-red",
+            scope={
+                "kind": "person_project",
+                "principal_id": PRINCIPAL,
+                "project_id": "project-red",
+            },
+        )
+    )
+    recall_banks = {
+        path.split("/banks/", 1)[1].split("/memories/recall", 1)[0]
+        for method, path, _body in state.requests
+        if method == "POST" and path.endswith("/memories/recall")
+    }
+    assert len(recall_banks) == 2
+
+
+def test_bound_photo_identity_uses_an_exact_observation_bank(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    binding_sha256 = "a" * 64
+    state.bound_bank_id = engine._bank_id(  # noqa: SLF001
+        TENANT,
+        engine._observation_partition(INSTALLATION, binding_sha256),  # noqa: SLF001
+    )
+    document = replace(
+        _conversation_document(),
+        document_id="conversation:photo:identity-correction",
+        evidence_ref=f"observation-binding:{binding_sha256}",
+        privacy_class="confidential",
+    )
+
+    receipt = engine.retain_conversation(document)
+
+    retained = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories")
+    )
+    assert retained["items"][0]["metadata"][
+        "observation_binding_sha256"
+    ] == binding_sha256
+    assert receipt.bank_id != engine._bank_id(TENANT, INSTALLATION)  # noqa: SLF001
+
+    state.requests.clear()
+    engine.recall_for_presence(
+        replace(
+            _query(),
+            scope={
+                "kind": "person",
+                "observation_binding_sha256": binding_sha256,
+                "principal_id": PRINCIPAL,
+            },
+        )
+    )
+    recall_banks = {
+        path.split("/banks/", 1)[1].split("/memories/recall", 1)[0]
+        for method, path, _body in state.requests
+        if method == "POST" and path.endswith("/memories/recall")
+    }
+    assert receipt.bank_id in recall_banks
+    assert len(recall_banks) == 2
+
+
+def test_bound_photo_bank_admits_low_proper_name_score_without_widening_scope(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    state.bound_low_score_recall = True
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    binding_sha256 = "a" * 64
+    state.bound_bank_id = engine._bank_id(  # noqa: SLF001
+        TENANT,
+        engine._observation_partition(INSTALLATION, binding_sha256),  # noqa: SLF001
+    )
+
+    recalled = engine.recall_for_presence(
+        replace(
+            _query(),
+            query_text="Wie staat hier?\nGebonden retrieval-ankers: Mark",
+            scope={
+                "kind": "person",
+                "observation_binding_sha256": binding_sha256,
+                "principal_id": PRINCIPAL,
+            },
+        )
+    )
+
+    assert [fact.fact_id for fact in recalled.confirmed_facts] == [
+        "hindsight:bound-mark"
+    ]
+
+
+def test_direct_recall_rejects_scope_widening(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, _state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    query = _query()
+    query = replace(query, subject_ids=("someone-else",))
+
+    with pytest.raises(HindsightMemoryScopeError, match="admitted principal"):
+        engine.recall_for_presence(query)
+
+
+def test_hot_path_recall_is_low_budget_and_never_calls_reflect(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+
+    engine.recall_for_presence(_query())
+
+    request = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories/recall")
+    )
+    assert request is not None
+    assert request["budget"] == "low"
+    assert request["max_tokens"] == 2048
+    assert request["include"]["source_facts"] == {
+        "max_tokens": 512,
+        "max_tokens_per_observation": 256,
+    }
+    bank_budget = next(
+        body
+        for method, path, body in state.requests
+        if method == "PATCH" and path.endswith("/config")
+    )
+    assert bank_budget == {
+        "updates": {"recall_budget_fixed_low": 40, "recall_budget_function": "fixed"}
+    }
+    assert not any(path.endswith("/reflect") for _method, path, _body in state.requests)
+
+
+def test_hot_path_recovers_a_hidden_preference_through_a_neutral_word_anchor(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    state.anchor_recall = True
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    query = replace(
+        _query(),
+        query_text=(
+            "Ik ben bezig en wil er niet uit gehaald worden. Hoe pak je dat vanuit "
+            "de werkkamer aan?"
+        ),
+    )
+
+    memory = engine.recall_for_presence(query)
+
+    assert memory.confirmed_facts[0].value["text"] == (
+        "Jaap wil in de werkkamer alleen stille meldingen, zonder geluid."
+    )
+    requests = [
+        body["query"]
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories/recall") and body is not None
+    ]
+    assert query.query_text in requests
+    assert "werkkamer" in requests
+
+
+def test_observation_inherits_authority_from_complete_bounded_source_facts(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    state.source_fact_recall = True
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+
+    memory = engine.recall_for_presence(_query())
+
+    newest, older = memory.confirmed_facts
+    assert newest.value["text"] == "Het actuele codewoord is basalt."
+    assert newest.observed_at == "2026-08-23T10:01:00Z"
+    assert newest.trust == "direct_user"
+    assert newest.source_ref == "telegram:new"
+    assert older.value["text"] == "Het actuele codewoord is graniet."
+    assert older.observed_at == NOW
+
+
+def test_model_planned_synonyms_become_independent_recall_queries() -> None:
+    variants = HindsightMemoryEngine._recall_query_variants(
+        "Welke temperatuur wil ik onder de overkapping?\n"
+        "Semantische zoekconcepten: temperatuur, buitenterras, veranda, overkapping"
+    )
+
+    assert variants[0].startswith("Welke temperatuur")
+    assert "buitenterras" in variants
+    assert "veranda" in variants
+    assert "overkapping" in variants
+
+    bound = HindsightMemoryEngine._recall_query_variants(
+        "Wie staat hier?\nGebonden retrieval-ankers: Mark"
+    )
+    assert bound == (
+        "Wie staat hier?\nGebonden retrieval-ankers: Mark",
+        "Mark",
+    )
+
+
+def test_reflection_is_a_stale_only_nightly_background_mental_model(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+
+    receipt = engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
+    repeated = engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
+
+    assert receipt.disposition == "created"
+    assert repeated.disposition == "already_present"
+    request = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/mental-models")
+    )
+    assert request is not None
+    assert request["trigger"]["mode"] == "delta"
+    assert request["trigger"]["refresh_cron"] == "0 3 * * *"
+    assert request["trigger"]["recall_max_tokens"] == 2048
+    assert request["trigger"]["refresh_after_consolidation"] is False
+    assert request["max_tokens"] == 320
+    assert "maximaal 100" in request["source_query"]
+    assert engine.recall_for_presence(_query()).style_mirror == (
+        "Jaap wil korte, directe en warme antwoorden zonder onnodige kopjes; "
+        "zijn latere correctie is leidend."
+    )
+    assert not any(path.endswith("/reflect") for _method, path, _body in state.requests)
 
 
 def test_projects_current_fact_and_uses_hindsight_to_rank_candidates(
