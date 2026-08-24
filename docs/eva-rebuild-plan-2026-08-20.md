@@ -302,11 +302,19 @@ Primaire bronnen voor de bakeoff:
 - Letta: <https://docs.letta.com/>
 - LangGraph JS memory: <https://docs.langchain.com/oss/javascript/langgraph/add-memory>
 
-## Taalbakeoff
+## Taalbakeoff (historisch voorstel; keuze gesloten)
 
-De bestaande recovery-runtime blijft tijdelijk Node omdat een taalconversie niet met incidentherstel wordt gecombineerd. De nieuwe Living Core heeft nog geen gekozen taal.
+Dit hoofdstuk was het oorspronkelijke voorstel vóór de architectuurkeuze.
+De actuele keuze staat in `adr-0001-eva2-living-core.md`: Python 3.12 is de
+enige vertrouwde Living Core. De bestaande recovery-runtime blijft tijdelijk
+Node omdat een taalconversie niet met incidentherstel wordt gecombineerd.
 
-Dezelfde verticale flow wordt gebouwd in:
+Rust is dus geen actieve Eva-kern en er wordt geen parallelle Rust-kern
+gebouwd. Het mag later alleen als afgebakende worker terugkomen wanneer een
+gemeten bottleneck dat rechtvaardigt; identiteit, effecten, receipts en de
+orchestrator blijven dan bij de Python-kern.
+
+Het oorspronkelijke voorstel vergeleek dezelfde verticale flow in:
 
 - Rust;
 - strikt TypeScript;
@@ -326,7 +334,10 @@ Meetpunten:
 - testbaarheid en hoeveelheid eigen gluecode;
 - upgrade, rollback en datamigratie.
 
-Rust is een serieuze kandidaat voor de kleine control plane. Python en TypeScript blijven sterke connector- en memoryworkers. C++ wordt alleen voor gemeten native hotspots getest, zoals audio, vision of lokale inference.
+De oude hypothese was dat Rust een kandidaat voor een kleine control plane kon
+zijn. Die hypothese is niet de actuele stackkeuze. Python en TypeScript kunnen
+wel connector- en memoryworkers uitvoeren; C++ blijft beperkt tot eventueel
+gemeten native werk zoals audio, vision of lokale inference.
 
 ## Agent-frameworkbakeoff
 
