@@ -90,6 +90,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke herreview zijn groen; zie
   `reviews/model-lease-publisher-3af02bb.md`. Hostprovisioning/B-deploy blijft
   open.
+- [x] Managed-B-hostcontract: workspacevolume en Codex-, Eva- en Hindsight-
+  directories zijn exact gepind en fail-closed gevalideerd; 20 tests +
+  onafhankelijke review zijn groen; zie
+  `reviews/managed-b-host-contract-ce23545.md`. PostgreSQL-bootstrap en de
+  zelfstandige manifest/adoptie blijven open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
