@@ -342,8 +342,78 @@ def materialize_pinned_base_image(
     return MaterializedBaseImage(archive_path, receipt)
 
 
+def validate_materialized_base_image(
+    materialized: MaterializedBaseImage,
+) -> dict[str, object]:
+    """Revalidate a prior local export before a later builder consumes it."""
+
+    if not isinstance(materialized, MaterializedBaseImage):
+        raise RuntimeError("managed B base image must be materialized")
+    receipt = materialized.receipt
+    required = {
+        "archive_sha256",
+        "archive_size",
+        "base_image_digest",
+        "contract",
+        "local_image_id",
+        "local_repo_digest",
+        "network_used",
+        "oci_config_digest",
+        "oci_root_index_digest",
+        "oci_selected_manifest_digest",
+        "platform",
+        "status",
+    }
+    if (
+        not required.issubset(receipt)
+        or receipt.get("contract") != "EvaPinnedBaseImageExport/v1"
+        or receipt.get("status") != "local_export_validated"
+        or receipt.get("network_used") is not False
+        or receipt.get("platform") != "linux/amd64"
+    ):
+        raise RuntimeError("managed B base image receipt differs")
+    try:
+        archive_metadata = materialized.path.lstat()
+        parent_metadata = materialized.path.parent.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B base image is inaccessible") from error
+    if (
+        stat.S_ISLNK(archive_metadata.st_mode)
+        or not stat.S_ISREG(archive_metadata.st_mode)
+        or archive_metadata.st_mode & 0o222
+        or stat.S_ISLNK(parent_metadata.st_mode)
+        or not stat.S_ISDIR(parent_metadata.st_mode)
+        or parent_metadata.st_mode & 0o222
+    ):
+        raise RuntimeError("managed B base image must remain read-only")
+    inspection = {
+        "Architecture": "amd64",
+        "Id": receipt["local_image_id"],
+        "Os": "linux",
+        "RepoDigests": [receipt["local_repo_digest"]],
+    }
+    validated = validate_pinned_base_image_archive(
+        materialized.path, str(receipt["base_image_digest"]), inspection
+    )
+    for key in (
+        "archive_sha256",
+        "archive_size",
+        "base_image_digest",
+        "local_image_id",
+        "local_repo_digest",
+        "oci_config_digest",
+        "oci_root_index_digest",
+        "oci_selected_manifest_digest",
+        "platform",
+    ):
+        if receipt[key] != validated[key]:
+            raise RuntimeError("managed B base image receipt no longer matches its archive")
+    return validated
+
+
 __all__ = [
     "MaterializedBaseImage",
     "materialize_pinned_base_image",
+    "validate_materialized_base_image",
     "validate_pinned_base_image_archive",
 ]

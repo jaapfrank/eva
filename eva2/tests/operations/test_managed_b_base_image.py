@@ -12,6 +12,7 @@ import pytest
 from eva.operations.managed_b_base_image import (
     _docker_export,
     materialize_pinned_base_image,
+    validate_materialized_base_image,
     validate_pinned_base_image_archive,
 )
 
@@ -126,6 +127,7 @@ def test_validates_and_materializes_a_local_pinned_oci_export(tmp_path: Path) ->
         assert result.receipt["platform"] == "linux/amd64"
         assert result.path.stat().st_mode & 0o222 == 0
         assert result.path.parent.stat().st_mode & 0o222 == 0
+        assert validate_materialized_base_image(result)["status"] == "local_export_validated"
 
 
 def test_refuses_missing_repo_digest_or_wrong_config_platform(tmp_path: Path) -> None:
@@ -164,6 +166,24 @@ def test_refuses_a_valid_but_foreign_oci_export(tmp_path: Path) -> None:
 
     with pytest.raises(RuntimeError, match="root digest differs"):
         validate_pinned_base_image_archive(foreign_archive, expected_digest, inspection)
+
+
+def test_revalidator_refuses_a_materialized_export_that_becomes_writable(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.tar"
+    digest, inspection = _archive(source)
+    with tempfile.TemporaryDirectory(prefix="eva2-base-test-", dir="/tmp") as path:
+        result = materialize_pinned_base_image(
+            digest,
+            Path(path),
+            inspector=lambda _reference: inspection,
+            exporter=lambda _reference, destination: destination.write_bytes(source.read_bytes()),
+        )
+        result.path.chmod(0o644)
+
+        with pytest.raises(RuntimeError, match="must remain read-only"):
+            validate_materialized_base_image(result)
 
 
 def test_default_exporter_preserves_the_pinned_source_index(
