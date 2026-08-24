@@ -52,6 +52,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_FILE_BATCH_ROOT",
     "EVA_STACK_WORK_VOLUME",
     "EVA_STACK_POSTGRES_VOLUME",
+    "EVA_STACK_HINDSIGHT_VOLUME",
     "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
     "EVA_HINDSIGHT_ACCESS_DIR",
@@ -244,6 +245,11 @@ def _validate_configuration(values: dict[str, str]) -> None:
             "EVA_STACK_POSTGRES_VOLUME must be exactly "
             f"{MANAGED_POSTGRES_VOLUME}"
         )
+    if not re.fullmatch(
+        r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}",
+        values["EVA_STACK_HINDSIGHT_VOLUME"],
+    ):
+        raise RuntimeError("EVA_STACK_HINDSIGHT_VOLUME is invalid")
     docker_binary = _require_absolute(
         values["EVA_B_DOCKER_BINARY"], "EVA_B_DOCKER_BINARY"
     )
