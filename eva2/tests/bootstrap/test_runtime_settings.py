@@ -130,13 +130,31 @@ def test_runtime_forbids_inline_home_assistant_token_even_when_empty(
         RuntimeSettings.from_environment()
 
 
-def test_non_home_assistant_secret_routes_keep_existing_inline_support(
+@pytest.mark.parametrize("inline_value", ("", "telegram-test-value"))
+def test_runtime_forbids_inline_telegram_token_even_when_empty(
     monkeypatch: pytest.MonkeyPatch,
+    inline_value: str,
 ) -> None:
     _minimum(monkeypatch)
     monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
     monkeypatch.setenv("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "approved-chat")
-    monkeypatch.setenv("EVA_TELEGRAM_BOT_TOKEN", "telegram-test-value")
+    monkeypatch.setenv("EVA_TELEGRAM_BOT_TOKEN", inline_value)
+
+    with pytest.raises(RuntimeError, match="TELEGRAM_BOT_TOKEN is forbidden"):
+        RuntimeSettings.from_environment()
+
+
+def test_runtime_reads_telegram_token_from_file_and_keeps_stripe_compatibility(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch)
+    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    monkeypatch.setenv("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "approved-chat")
+    telegram = private_tmp_path / "telegram-token"
+    telegram.write_text("telegram-test-value\n")
+    telegram.chmod(0o600)
+    monkeypatch.setenv("EVA_TELEGRAM_BOT_TOKEN_FILE", str(telegram))
     monkeypatch.setenv("EVA_STRIPE_ACCOUNT_ID", "acct_12345678")
     monkeypatch.setenv("EVA_STRIPE_SECRET_KEY", "sk_test_private")
     monkeypatch.setenv(

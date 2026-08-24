@@ -257,6 +257,11 @@ class RuntimeSettings:
         telegram_proactive_chat_id = (
             os.environ.get("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "").strip() or None
         )
+        if "EVA_TELEGRAM_BOT_TOKEN" in os.environ:
+            raise RuntimeError(
+                "EVA_TELEGRAM_BOT_TOKEN is forbidden; use "
+                "EVA_TELEGRAM_BOT_TOKEN_FILE"
+            )
         telegram_bot_token = (
             environment_secret(
                 "EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE"
