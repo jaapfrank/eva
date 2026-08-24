@@ -54,8 +54,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   adapterlaag zijn onafhankelijk gecontroleerde baseline-checkpoints.
 - [x] V53-applicationlaag als eigen baseline-checkpoint hersteld: 20
   containerhashes, compile en 11 gerichte tests onafhankelijk groen.
-- [ ] V53-runtime- en operationslagen als afzonderlijke baseline-checkpoints
-  herstellen en daarna de volledige closure-test draaien.
+- [x] V53-runtime- en operationslaag als eigen baseline-checkpoint hersteld:
+  16 containerbronnen, compile en vier Telegram-tests onafhankelijk groen.
+- [ ] V53-build/Hindsight-closure op versiepassende testinfrastructuur. De
+  huidige bredere Hindsight-fixture mist v53's `PATCH`-configuratiecontract;
+  dit is vastgelegd en wordt niet als geslaagde closure geteld.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
