@@ -23,7 +23,7 @@ incompatibele Hindsight-definities.
 | Onderdeel | Contract |
 |---|---|
 | B-envbestand | Absolute reguliere niet-symlink, maximaal 64 KiB, operator-eigendom en zonder group/other-rechten. |
-| DSN, Home Assistant-token, Telegram-token en Telegram-bindings | Afzonderlijke reguliere niet-symlink files, UID `65532`, owner-readable, geen group/other-rechten, read-only bind met `create_host_path: false`. |
+| DSN, Home Assistant-token, Telegram-token en Telegram-bindings | Afzonderlijke reguliere niet-symlink files, UID `65532`, owner-readable, geen group/other-rechten, read-only bind met `create_host_path: false`; de preflight controleert alleen deze metadata, nooit bytes. |
 | Codex-authority | Directory `1000:1000`/`0700`; `auth.json` privé en read-only gemount. Eva leest deze bron nooit rechtstreeks. |
 | Eva-modellease | Directory `1000:65532`/`02750`; lease één link, `1000:65532`/`0640`. |
 | Hindsight-lease | Directory `1000:1000`/`0700`; lease één link, `1000:1000`/`0600`. |

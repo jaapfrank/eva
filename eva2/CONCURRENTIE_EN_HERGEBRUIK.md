@@ -104,6 +104,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   capabilitybehoud; onafhankelijke review is groen; zie
   `reviews/managed-b-manifest-skeleton-505caf8.md`. Hostbestands- en
   Hindsight-volumeverzegeling, adoptie en B-liveproef blijven open.
+- [x] Managed-B-runtimebestanden: HA, database-DSN en beide Telegrambestanden
+  worden metadata-only en fail-closed gecontroleerd vóór een adoptierun; 24
+  tests + onafhankelijke review zijn groen; zie
+  `reviews/managed-b-runtime-secret-preflight-6ead73f.md`. PostgreSQL-
+  wachtwoordbestand, Hindsight-volume en B-adoptie blijven apart open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
