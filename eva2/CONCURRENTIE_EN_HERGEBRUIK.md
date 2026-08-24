@@ -122,6 +122,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   exact gepind zonder data te lezen; onafhankelijke review is groen; zie
   `reviews/managed-b-observed-volume-pins-4ef9ae3.md`. De Hindsight-keuze
   wordt pas na routing- en back-upreadback in de adoptierun vastgezet.
+- [x] B-herstelset: PostgreSQL-, workspace- en Hindsight-volumes zijn
+  read-only naar privé, hash-gecontroleerde archieven gekopieerd; onafhankelijke
+  live review is groen; zie `reviews/managed-b-readonly-backup-2026-08-24.md`.
+  Dit is geen adoptie of B-release.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
