@@ -75,6 +75,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
+- [x] Schema-installer: DSN alleen via private file-secret; apart non-root
+  profiel + 15 gerichte tests + onafhankelijke review zijn groen. De oude
+  stackmigratie blijft bewust geen beheerd B-releasepad.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
