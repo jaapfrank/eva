@@ -61,6 +61,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   zijn groen.
 - [ ] V53-buildclosure: Docker-buildinput en de resterende versiepassende
   testset vastleggen vóór een reproduceerbare kandidaatbuild.
+- [ ] Dashboard D01: alleen-lezen overzicht voor B-image, gates, receipts en
+  open blokkades. Daarna volgen apart IdentityPack, personen/Telegram, skills
+  en settings; zie `design/product/dashboard-v1.md`.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
