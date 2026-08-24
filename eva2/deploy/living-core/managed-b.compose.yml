@@ -1,0 +1,342 @@
+# Future explicit Telegram-first B manifest.  This is a rendered-manifest
+# contract only: it does not authorize adoption, recreate, or traffic cutover.
+services:
+  postgres:
+    image: docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60
+    pull_policy: missing
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2/postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_POSTGRES_PASSWORD_FILE_HOST:?set a root-owned mode-0600 PostgreSQL password file}
+        target: /run/eva2/postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -U postgres -d "$${POSTGRES_DB}" &&
+          psql -U postgres -d "$${POSTGRES_DB}" -Atc 'SELECT 1' | grep -qx 1
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  schema-installer:
+    profiles: ["schema-install"]
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=16m
+    command: ["python", "-m", "eva.operations.install_schema"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      postgres:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  model-access-lease:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    user: "1000:65532"
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    command:
+      - python
+      - -m
+      - eva.operations.model_credentials
+      - --source
+      - /run/eva/codex-owner/auth.json
+      - --target
+      - /run/eva/model-lease/auth.json
+    volumes:
+      - type: bind
+        source: ${EVA_CODEX_AUTH_DIR:?set the sole Codex authority directory}
+        target: /run/eva/codex-owner
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=4m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  hindsight-access-lease:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    user: "1000:1000"
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    command:
+      - python
+      - -m
+      - eva.operations.model_credentials
+      - --format
+      - codex-consumer
+      - --source
+      - /run/eva/codex-owner/auth.json
+      - --target
+      - /run/eva/hindsight-access/auth.json
+    volumes:
+      - type: bind
+        source: ${EVA_CODEX_AUTH_DIR:?set the sole Codex authority directory}
+        target: /run/eva/codex-owner
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}
+        target: /run/eva/hindsight-access
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=4m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b
+    pull_policy: missing
+    restart: unless-stopped
+    init: true
+    environment:
+      HINDSIGHT_ENABLE_CP: "false"
+      HINDSIGHT_API_LLM_PROVIDER: openai-codex
+      HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
+      HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      HINDSIGHT_API_EMBEDDINGS_PROVIDER: openai-codex
+      HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW: "32"
+      HINDSIGHT_API_WORKER_ID: eva2-hindsight-memory
+    volumes:
+      - type: bind
+        source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}
+        target: /home/hindsight/.codex
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: hindsight-data
+        target: /home/hindsight/.pg0
+    depends_on:
+      hindsight-access-lease:
+        condition: service_started
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import json,urllib.request;
+          assert json.load(urllib.request.urlopen('http://127.0.0.1:8888/health',timeout=2))['status']=='healthy'
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 20s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  core:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    container_name: eva2-living-core-b
+    user: "65532:65532"
+    restart: unless-stopped
+    environment:
+      EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
+      EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
+      EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}
+      EVA_CONVERSATION_REASONING_EFFORT: ${EVA_CONVERSATION_REASONING_EFFORT:-medium}
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
+      EVA_DURABLE_GOAL_RECIPIENTS: ${EVA_DURABLE_GOAL_RECIPIENTS:?set the durable-goal recipients}
+      EVA_FILE_BATCH_ROOT: /var/lib/eva/work
+      EVA_FANOUT_ALLOW_INSECURE_HTTP: ${EVA_FANOUT_ALLOW_INSECURE_HTTP:?set the sealed fanout transport policy}
+      EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON: ${EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON:?set the sealed fanout endpoint map}
+      EVA_HINDSIGHT_BANK_NAMESPACE: ${EVA_HINDSIGHT_BANK_NAMESPACE:?set the sealed Hindsight bank namespace}
+      EVA_HINDSIGHT_URL: http://hindsight:8888
+      EVA_HOME_ASSISTANT_TOKEN_FILE: /run/secrets/home_assistant_token
+      EVA_HOME_ASSISTANT_URL: ${EVA_HOME_ASSISTANT_URL:?set the Home Assistant URL}
+      EVA_IDENTITY_DESCRIPTION: ${EVA_IDENTITY_DESCRIPTION:-Je bent een warme, nuchtere en capabele digitale huisgenoot.}
+      EVA_IDENTITY_NAME: ${EVA_IDENTITY_NAME:-Eva}
+      EVA_PERSONAL_INTEREST_LEASE_SECONDS: ${EVA_PERSONAL_INTEREST_LEASE_SECONDS:-90}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_HOME_ASSISTANT_TOKEN_FILE_HOST:?set a runtime-owned Home Assistant token file}
+        target: /run/secrets/home_assistant_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: work-data
+        target: /var/lib/eva/work
+    depends_on:
+      postgres:
+        condition: service_healthy
+      hindsight:
+        condition: service_healthy
+      model-access-lease:
+        condition: service_started
+    ports:
+      - ${EVA_STACK_BIND_ADDRESS:-127.0.0.1}:${EVA_STACK_CORE_PORT:-44674}:8080
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  durable-goal-worker:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    command: ["python", "-m", "eva.operations.durable_goal_worker"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP: ${EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP:-false}
+      EVA_DURABLE_GOAL_POLL_SECONDS: ${EVA_DURABLE_GOAL_POLL_SECONDS:-2}
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
+      EVA_DURABLE_GOAL_PROVIDER_URL: ${EVA_DURABLE_GOAL_PROVIDER_URL:?set the evidence/work/delivery provider URL}
+      EVA_DURABLE_GOAL_TIMEOUT_SECONDS: ${EVA_DURABLE_GOAL_TIMEOUT_SECONDS:-5}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+  telegram-ingress:
+    image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
+    pull_policy: never
+    restart: unless-stopped
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    command: ["python", "-m", "eva.operations.telegram_ingress"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_LIVING_CORE_URL: http://core:8080
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+      EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
+      EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_BOT_TOKEN_FILE_HOST:?set a runtime-owned Telegram token file}
+        target: /run/secrets/telegram_bot_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}
+        target: /run/secrets/telegram_principal_bindings
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
+volumes:
+  postgres-data:
+    name: ${EVA_STACK_POSTGRES_VOLUME:?set the sealed PostgreSQL volume name}
+    labels:
+      eva2.component: operational-truth
+  hindsight-data:
+    name: ${EVA_STACK_HINDSIGHT_VOLUME:?set the sealed Hindsight volume name}
+    labels:
+      eva2.component: semantic-memory
+  work-data:
+    name: ${EVA_STACK_WORK_VOLUME:?set the sealed workspace volume name}
+    labels:
+      eva2.component: bounded-workspace
