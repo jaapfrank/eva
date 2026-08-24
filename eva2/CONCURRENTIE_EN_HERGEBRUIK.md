@@ -17,6 +17,26 @@ Bijgewerkt: 24 augustus 2026.
 - De bestaande cijfers blijven geldig voor die drie gevallen, maar bewijzen
   niet dat Eva 2 als compleet product beter is.
 
+## Productstrategie v1: beter waar het telt, hergebruiken waar dat slimmer is
+
+Eva hoeft niet ieder oppervlak zelf te evenaren. V1 is bewust **Telegram-first**:
+één betrouwbare gezinsroute is waardevoller dan tien half-afgemaakte kanalen.
+De documentatie van de concurrenten is voldoende voor deze
+capability-inventaris; zij is geen bewijs dat hun functie in onze opstelling
+werkt. Daarom testen we niet hun hele product opnieuw, maar uitsluitend Eva's
+eigen beloften die de gebruiker werkelijk merkt of die een effect in huis kunnen
+hebben.
+
+| Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
+|---|---|---|---|
+| **Zelf beter maken** | Menselijk, consequent gesprek met meerbeurts begrip; afzonderlijk en gedeeld geheugen voor gezinsleden; geen verzonnen actie; toolketens met readback; hervatten zonder dubbel effect; begrensde self-improvement. | Eén echte Telegram-B-proef per eindcase met bericht-, event-, tool- en readbackreceipt. Jij ziet antwoord en gedrag; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: multi-persoonidentiteit, eindimage en MX01-MX06. |
+| **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel browser/desktop blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | Ontwerp gereed; eerste read-only sidecar nog open. |
+| **Bewust niet v1** | Veel kanalen, eigen gateway, companion-nodevloot, voice/media, Canvas/desktop en brede providerroutering. | Geen vergelijking nodig voordat Telegram + kern betrouwbaar zijn. Een later kanaal moet dezelfde identity-, receipt- en consentcontracten volgen. | Niet blokkend voor v1. WhatsApp is alleen een toekomstige connectorinterface. |
+
+De vier-framework gate blijft alleen een bescherming tegen een algemene claim
+als “Eva is overal beter”. Zolang hij rood is, doen we die claim niet. Hij is
+geen voorwaarde om Eva v1 op Telegram af te maken.
+
 ## Volledige productmatrix
 
 `Bewezen` betekent live getest. `Aanwezig` betekent gedocumenteerde
@@ -24,7 +44,7 @@ productfunctie die nog niet in onze live vergelijking is getest.
 
 | Onderdeel | Eva 2 nu | OpenClaw | Hermes | Agent Zero | Besluit |
 |---|---|---|---|---|---|
-| Natuurlijk gesprek en eigen karakter | C01, T02 en C04 live; gebruiker accepteert de ervaring nog niet | Dezelfde drie live | Dezelfde drie live | Dezelfde drie live | Alle 36 gedragsgevallen op alle vier uitvoeren, plus echte menselijke Telegrambeoordeling |
+| Natuurlijk gesprek en eigen karakter | C01, T02 en C04 live; gebruiker accepteert de ervaring nog niet | Dezelfde drie live | Dezelfde drie live | Dezelfde drie live | Eva's eigen meerbeurts Telegram-eindproef uitvoeren; geen algemene vergelijking claimen |
 | Persoons- en projectisolatie | C02 live via geïsoleerde contractprovider; M01 gebruikte een lokale Telegram Bot API-contractprovider, geen Telegramnetwerk; echte Telegrambinding nog open | Aanwezig via gateway-routing en geïsoleerde sessies; niet door ons getest | Aanwezig via profielen/gateway; niet door ons getest | Aanwezig via projecten/profielen; niet door ons getest | Dezelfde private canaries en een echte cross-channelproef op alle vier |
 | Langetermijngeheugen en stijl | PostgreSQL + Hindsight live; hot/cold-path gescheiden | Geheugenadapters aanwezig; niet vergeleken | Geheugen en sessiezoeking aanwezig; niet vergeleken | Doorzoekbaar en bewerkbaar geheugen aanwezig; niet vergeleken | Zelfde correctie-, verouderings-, privacy- en herstartproeven |
 | Duurzame doelen en crashherstel | A01-A03, X01-X04 en F03-F04 deels/live bewezen; eindimage moet regressie nog krijgen | Gateway- en deliveryherstel aanwezig; niet gelijkwaardig getest | Cron, taken en deliveryledger aanwezig; niet gelijkwaardig getest | Taken/scheduling en workspacegeschiedenis aanwezig; niet gelijkwaardig getest | Fault injection op alle vier: crash vóór/na effect, geen duplicaat en eerlijke eindstatus |
@@ -82,22 +102,22 @@ productfunctie die nog niet in onze live vergelijking is getest.
   is dan een directe standaardadapter.
 - Geen framework wordt in Eva's hot-path een tweede orchestrator.
 
-## Nieuwe acceptatievolgorde
+## V1-acceptatievolgorde
 
-1. Per concurrent een actuele, gepinde feature-inventaris uit officiële bron
-   vastleggen.
-2. Alle 36 LAB-gevallen op alle vier uitvoeren: controlled én native waar het
-   geval daarvoor geschikt is.
-3. Een producttrack toevoegen voor ecosystemen: skillinstallatie, MCP,
-   gateway/channel, node, browser/desktop, scheduler, multi-agent en providerfailover.
-4. Iedere sterkere concurrentfunctie markeren als `reuse`, `build` of
-   `bewust niet nodig`, met reden en eigenaar.
-5. Eerst één read-only ClawHub-skill en één read-only Gatewaytool in B.
-6. Daarna één node-read en één automationprojectie, met crash/replaytest.
-7. Pas daarna muterende plugins, extra kanalen, camera, locatie of economische
-   acties toelaten.
-8. Een onafhankelijke agent controleert bron, configuratie, live uitvoering en
-   nonclaims; alleen synthetische tests zijn onvoldoende.
+1. Houd de officiële, gepinde documentatie-inventaris bij en markeer iedere
+   concurrentfunctie als `zelf beter`, `hergebruik` of `niet v1`.
+2. Bouw eerst Eva's Telegram-kern af: meerdere geverifieerde personen,
+   privé/gedeeld groepsgeheugen met toestemming, Hindsight-recall en een menselijk
+   meerbeurts gesprek.
+3. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
+   self-improvement af.
+4. Bevries één image en voer core 15/15, native 9/9 en MX01-MX06 live uit via
+   echt Telegram en afgeschermde echte providers.
+5. Hergebruik pas daarna één read-only capability-pad (MCP of Gateway/ClawHub)
+   achter Eva's bestaande ledger. Extra kanalen, camera, locatie, voice en
+   economische acties zijn aparte latere besluiten.
+6. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+   nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
 
