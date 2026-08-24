@@ -201,6 +201,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
+- [x] Dashboard D02-basis: een IdentityPack wordt niet direct gewijzigd; een
+  gesloten staged draft is exact aan pack-id, versie en hash gebonden en geeft
+  uitsluitend een reproduceerbare presentatiediff. Geen dashboard-write,
+  publicatie, runtime-switch of B-wijziging (`91b2760`).
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
