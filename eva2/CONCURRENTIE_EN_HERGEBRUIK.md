@@ -99,6 +99,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   van bestaande data bij herstart; 24 gerichte tests + onafhankelijke review
   zijn groen; zie `reviews/postgres-password-file-contract-0c31872.md`. De
   zelfstandige manifest/adoptie blijft open.
+- [x] Managed-B-manifestskelet: één gecontroleerde acht-service Telegram-route
+  zonder Docker-secrets, met dezelfde labels, geheime file-binds en
+  capabilitybehoud; onafhankelijke review is groen; zie
+  `reviews/managed-b-manifest-skeleton-505caf8.md`. Hostbestands- en
+  Hindsight-volumeverzegeling, adoptie en B-liveproef blijven open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
