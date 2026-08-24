@@ -108,6 +108,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   fail-closed aan één alleen-lezen Compose-render gebonden; 39 gerichte tests
   en onafhankelijke review zijn groen; zie
   `reviews/managed-b-sealed-render-80f722c.md`. Dit start of vervangt B niet.
+- [x] Managed-B-rendercommando: een operator kan de verzegelde render nu via
+  één fail-closed, secretvrije receipt uitvoeren; 42 gerichte checks en
+  onafhankelijke review zijn groen; zie
+  `reviews/managed-b-render-command-80eb350.md`. Een echte B-configuratie en
+  adoptierun blijven afzonderlijk open.
 - [x] Managed-B-runtimebestanden: HA, database-DSN en beide Telegrambestanden
   worden metadata-only en fail-closed gecontroleerd vóór een adoptierun; 24
   tests + onafhankelijke review zijn groen; zie
