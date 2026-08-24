@@ -259,6 +259,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   niets. 55 gerichte tests, drie wegwerp-PostgreSQL-proeven en onafhankelijke
   review zijn groen (`c026a2c`). Dit is nog niet op B gedeployd en bewijst nog
   geen echte groepstest.
+- [x] Groepsgeheugen A01: de pure admissionlaag maakt privé- en
+  Telegram-groepspubliek verplicht verschillend. Een groepsbijdrage vereist
+  een echte booleaanse toestemming én een structureel aan dezelfde persoon en
+  groep gebonden consentreferentie; er bestaat geen groeps-naar-privéfallback.
+  13 contractgevallen, bestaande ingress/consenttests en onafhankelijke review
+  zijn groen. Retention/recall, Hindsight-tags en runtimewiring volgen apart.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -288,9 +294,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   open. AgentMail en Stripe zijn latere, eigen capabilitygates.
 - [ ] Telegram-groepsgeheugen sluiten: de geverifieerde multi-accountbindings,
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
-  getest. Wat nog ontbreekt is de expliciete privé/gedeeld
-  Hindsight-geheugenscope met non-leakagebewijs; de echte multi-account- en
-  Telegram-groepproef blijft daarna afzonderlijk open.
+  getest; de verplichte geheugenadmission is eveneens klaar. Wat nog ontbreekt
+  is de expliciete privé/gedeeld Hindsight-retention- en recallscope met
+  non-leakagebewijs; de echte multi-account- en Telegram-groepproef blijft
+  daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde
