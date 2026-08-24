@@ -65,6 +65,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   geconfigureerde nachtelijke reflectietrigger gebruikt dezelfde tokenlimiet;
   onafhankelijke review, 27 gerichte checks en een schone non-root
   image-import zijn groen (`d6bc705`). B is niet gedeployd.
+- [x] Managed-B Hindsight-preflight: optionele hot/cold-limieten worden al
+  vóór een Compose-render met precies dezelfde grenzen geweigerd; ontbrekende
+  waarden houden de verzegelde manifestdefaults. 37 gerichte checks en
+  onafhankelijke review zijn groen (`cf3df2a`). Dit is geen B-adoptie.
 - [x] V53-kandidaatimage is schoon gebouwd uit de herstelde branch en importeert
   de runtime in een nieuwe container. Hij is niet gedeployd en vervangt B niet.
 - [x] Git-only runtime-importclosure: de Docker-build uit een schone Git-archive
