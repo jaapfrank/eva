@@ -608,9 +608,59 @@ def test_hot_path_recall_is_low_budget_and_never_calls_reflect(
         if method == "PATCH" and path.endswith("/config")
     )
     assert bank_budget == {
-        "updates": {"recall_budget_fixed_low": 40, "recall_budget_function": "fixed"}
+        "updates": {
+            "recall_budget_fixed_low": 40,
+            "recall_budget_fixed_mid": 40,
+            "recall_budget_fixed_high": 40,
+            "recall_budget_function": "fixed",
+        }
     }
     assert not any(path.endswith("/reflect") for _method, path, _body in state.requests)
+
+
+def test_hindsight_config_applies_bounded_recall_settings_to_both_paths(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(
+            base_url,
+            recall_budget="mid",
+            recall_max_tokens=3000,
+            recall_node_budget=25,
+        )
+    )
+
+    engine.recall_for_presence(_query())
+    engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
+
+    recall = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories/recall")
+    )
+    bank_budget = next(
+        body
+        for method, path, body in state.requests
+        if method == "PATCH" and path.endswith("/config")
+    )
+    reflection = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/mental-models")
+    )
+
+    assert recall["budget"] == "mid"
+    assert recall["max_tokens"] == 3000
+    assert bank_budget == {
+        "updates": {
+            "recall_budget_fixed_low": 25,
+            "recall_budget_fixed_mid": 25,
+            "recall_budget_fixed_high": 25,
+            "recall_budget_function": "fixed",
+        }
+    }
+    assert reflection["trigger"]["recall_max_tokens"] == 3000
 
 
 def test_hot_path_recovers_a_hidden_preference_through_a_neutral_word_anchor(

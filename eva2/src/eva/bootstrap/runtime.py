@@ -133,6 +133,9 @@ class RuntimeSettings:
     database_dsn: str
     hindsight_url: str
     hindsight_bank_namespace: str = "eva2"
+    hindsight_recall_budget: str = "low"
+    hindsight_recall_max_tokens: int = 2048
+    hindsight_recall_node_budget: int = 40
     identity_name: str = "Eva"
     identity_description: str = (
         "Je bent een warme, nuchtere en capabele digitale huisgenoot."
@@ -170,6 +173,18 @@ class RuntimeSettings:
         )
         hindsight_url = os.environ.get("EVA_HINDSIGHT_URL", "").strip()
         namespace = os.environ.get("EVA_HINDSIGHT_BANK_NAMESPACE", "eva2").strip()
+        hindsight_recall_budget = os.environ.get(
+            "EVA_HINDSIGHT_RECALL_BUDGET", "low"
+        ).strip().casefold()
+        try:
+            hindsight_recall_max_tokens = int(
+                os.environ.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048")
+            )
+            hindsight_recall_node_budget = int(
+                os.environ.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40")
+            )
+        except ValueError as error:
+            raise RuntimeError("Eva Hindsight recall configuration is invalid") from error
         identity_name = os.environ.get("EVA_IDENTITY_NAME", "Eva").strip()
         identity_description = os.environ.get(
             "EVA_IDENTITY_DESCRIPTION",
@@ -321,6 +336,16 @@ class RuntimeSettings:
             raise RuntimeError("EVA_DATABASE_DSN is required")
         if not hindsight_url:
             raise RuntimeError("EVA_HINDSIGHT_URL is required")
+        if hindsight_recall_budget not in {"low", "mid", "high"}:
+            raise RuntimeError("EVA_HINDSIGHT_RECALL_BUDGET is invalid")
+        if not 2_000 <= hindsight_recall_max_tokens <= 4_000:
+            raise RuntimeError(
+                "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
+            )
+        if not 20 <= hindsight_recall_node_budget <= 100:
+            raise RuntimeError(
+                "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
+            )
         if (
             not identity_name
             or not identity_description
@@ -358,36 +383,39 @@ class RuntimeSettings:
         if not 10 <= personal_interest_lease_seconds <= 600:
             raise RuntimeError("Eva personal-interest lease is outside 10..600 seconds")
         return cls(
-            database_dsn,
-            hindsight_url,
-            namespace,
-            identity_name,
-            identity_description,
-            conversation_auth_file,
-            conversation_model,
-            conversation_reasoning_effort,
-            background_tenant_id,
-            background_installation_id,
-            background_principal_id,
-            cold_path_idle_seconds,
-            personal_interest_lease_seconds,
-            home_assistant_url,
-            home_assistant_token,
-            home_assistant_event_domains,
-            agentmail_inbox_id,
-            agentmail_api_key_file,
-            telegram_proactive_chat_id,
-            telegram_bot_token,
-            stripe_account_id,
-            stripe_secret_key,
-            stripe_webhook_secret,
-            commerce_public_base_url,
-            stripe_live_mode,
-            file_batch_root,
-            fanout_recipient_endpoints,
-            fanout_allow_insecure_http,
-            durable_goal_provider,
-            durable_goal_recipients,
+            database_dsn=database_dsn,
+            hindsight_url=hindsight_url,
+            hindsight_bank_namespace=namespace,
+            hindsight_recall_budget=hindsight_recall_budget,
+            hindsight_recall_max_tokens=hindsight_recall_max_tokens,
+            hindsight_recall_node_budget=hindsight_recall_node_budget,
+            identity_name=identity_name,
+            identity_description=identity_description,
+            conversation_auth_file=conversation_auth_file,
+            conversation_model=conversation_model,
+            conversation_reasoning_effort=conversation_reasoning_effort,
+            background_tenant_id=background_tenant_id,
+            background_installation_id=background_installation_id,
+            background_principal_id=background_principal_id,
+            cold_path_idle_seconds=cold_path_idle_seconds,
+            personal_interest_lease_seconds=personal_interest_lease_seconds,
+            home_assistant_url=home_assistant_url,
+            home_assistant_token=home_assistant_token,
+            home_assistant_event_domains=home_assistant_event_domains,
+            agentmail_inbox_id=agentmail_inbox_id,
+            agentmail_api_key_file=agentmail_api_key_file,
+            telegram_proactive_chat_id=telegram_proactive_chat_id,
+            telegram_bot_token=telegram_bot_token,
+            stripe_account_id=stripe_account_id,
+            stripe_secret_key=stripe_secret_key,
+            stripe_webhook_secret=stripe_webhook_secret,
+            commerce_public_base_url=commerce_public_base_url,
+            stripe_live_mode=stripe_live_mode,
+            file_batch_root=file_batch_root,
+            fanout_recipient_endpoints=fanout_recipient_endpoints,
+            fanout_allow_insecure_http=fanout_allow_insecure_http,
+            durable_goal_provider=durable_goal_provider,
+            durable_goal_recipients=durable_goal_recipients,
         )
 
 
@@ -1454,6 +1482,9 @@ def create_runtime_app() -> FastAPI:
         HindsightProjectionConfig(
             settings.hindsight_url,
             bank_namespace=settings.hindsight_bank_namespace,
+            recall_budget=settings.hindsight_recall_budget,  # type: ignore[arg-type]
+            recall_max_tokens=settings.hindsight_recall_max_tokens,
+            recall_node_budget=settings.hindsight_recall_node_budget,
         )
     )
     identity_pack_path = os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip()

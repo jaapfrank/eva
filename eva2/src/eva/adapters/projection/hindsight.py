@@ -464,6 +464,8 @@ class HindsightMemoryEngine:
             {
                 "updates": {
                     "recall_budget_fixed_low": self._config.recall_node_budget,
+                    "recall_budget_fixed_mid": self._config.recall_node_budget,
+                    "recall_budget_fixed_high": self._config.recall_node_budget,
                     "recall_budget_function": "fixed",
                 }
             },
@@ -518,7 +520,7 @@ class HindsightMemoryEngine:
                         "keep_trace": True,
                         "mode": "delta",
                         "recall_chunks_max_tokens": 512,
-                        "recall_max_tokens": 2048,
+                        "recall_max_tokens": self._config.recall_max_tokens,
                         "refresh_after_consolidation": False,
                         "refresh_cron": "0 3 * * *",
                         "tags_match": "all_strict",

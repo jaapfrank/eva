@@ -71,6 +71,35 @@ def test_runtime_reads_and_bounds_conversation_reasoning_effort(
         RuntimeSettings.from_environment()
 
 
+def test_runtime_reads_and_bounds_hindsight_recall_limits(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _minimum(monkeypatch)
+    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_BUDGET", "mid")
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "3000")
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "25")
+
+    settings = RuntimeSettings.from_environment()
+
+    assert settings.hindsight_recall_budget == "mid"
+    assert settings.hindsight_recall_max_tokens == 3000
+    assert settings.hindsight_recall_node_budget == 25
+
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "4001")
+    with pytest.raises(RuntimeError, match="RECALL_MAX_TOKENS"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "not-an-int")
+    with pytest.raises(RuntimeError, match="Hindsight recall configuration"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "3000")
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "19")
+    with pytest.raises(RuntimeError, match="RECALL_NODE_BUDGET"):
+        RuntimeSettings.from_environment()
+
+
 def test_runtime_rejects_insecure_home_assistant_file_before_connector_setup(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
