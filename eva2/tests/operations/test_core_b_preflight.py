@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import json
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -9,9 +10,11 @@ import pytest
 from eva.operations.core_b_preflight import (
     load_core_b_plan as _load_core_b_plan,
     observe_current_b,
+    observe_managed_b_services,
     verify_current_management,
     verify_docker_endpoint,
     verify_managed_service_labels,
+    verify_steady_managed_service_labels,
 )
 
 
@@ -192,6 +195,37 @@ def test_managed_service_labels_reject_a_service_from_another_snapshot(
 
     with pytest.raises(RuntimeError, match="exact configuration snapshot"):
         verify_managed_service_labels(plan, services)
+
+
+def test_steady_managed_service_labels_exclude_profiled_schema_installer(
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    labels = {
+        "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
+        "io.eva2.configuration-sha256": plan.snapshot_sha256,
+    }
+    services = {
+        name: dict(labels)
+        for name in (
+            "postgres",
+            "model-access-lease",
+            "hindsight-access-lease",
+            "hindsight",
+            "core",
+            "durable-goal-worker",
+            "telegram-ingress",
+        )
+    }
+
+    verify_steady_managed_service_labels(plan, services)
+
+    services["schema-installer"] = dict(labels)
+    with pytest.raises(RuntimeError, match="exact seven-service steady graph"):
+        verify_steady_managed_service_labels(plan, services)
 
 
 def test_plan_rejects_environment_metadata_change_while_snapshotting(
@@ -491,3 +525,119 @@ def test_container_read_uses_verified_host_after_context_config_swap(
         "{{json .Config.Labels}}",
         "eva2-living-core-b",
     ]
+
+
+def test_managed_service_observation_reads_seven_steady_labeled_containers(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    commands: list[list[str]] = []
+    names = (
+        "postgres",
+        "model-access-lease",
+        "hindsight-access-lease",
+        "hindsight",
+        "core",
+        "durable-goal-worker",
+        "telegram-ingress",
+    )
+
+    def fake_run(command: list[str], **_kwargs: object) -> SimpleNamespace:
+        commands.append(command)
+        if len(commands) == 1:
+            return SimpleNamespace(
+                stdout=(
+                    '[{"Name":"eva2-b-local","Endpoints":{"docker":'
+                    '{"Host":"unix:///var/run/docker.sock"}}}]'
+                )
+            )
+        if len(commands) == 2:
+            return SimpleNamespace(stdout="\n".join(f"container-{index}" for index in range(7)))
+        return SimpleNamespace(
+            stdout="\n".join(
+                json.dumps(
+                    {
+                        "com.docker.compose.project": "eva2-b-live",
+                        "com.docker.compose.service": name,
+                        "io.eva2.configuration-sha256": plan.snapshot_sha256,
+                        "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
+                    }
+                )
+                for name in names
+            )
+        )
+
+    monkeypatch.setattr("eva.operations.core_b_preflight.subprocess.run", fake_run)
+
+    observe_managed_b_services(plan)
+
+    assert commands[1][-8:] == [
+        "ps",
+        "--all",
+        "--filter",
+        "label=io.eva2.managed-by=eva2-explicit-b-manifest-v1",
+        "--filter",
+        f"label=io.eva2.configuration-sha256={plan.snapshot_sha256}",
+        "--format",
+        "{{.ID}}",
+    ]
+    assert commands[2][-12:] == [
+        "inspect",
+        "--type",
+        "container",
+        "--format",
+        "{{json .Config.Labels}}",
+        "container-0",
+        "container-1",
+        "container-2",
+        "container-3",
+        "container-4",
+        "container-5",
+        "container-6",
+    ]
+
+
+def test_managed_service_observation_rejects_another_compose_project(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    calls = 0
+
+    def fake_run(_command: list[str], **_kwargs: object) -> SimpleNamespace:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return SimpleNamespace(
+                stdout=(
+                    '[{"Name":"eva2-b-local","Endpoints":{"docker":'
+                    '{"Host":"unix:///var/run/docker.sock"}}}]'
+                )
+            )
+        if calls == 2:
+            return SimpleNamespace(stdout="\n".join(f"container-{index}" for index in range(7)))
+        return SimpleNamespace(
+            stdout="\n".join(
+                json.dumps(
+                    {
+                        "com.docker.compose.project": "wrong-project",
+                        "com.docker.compose.service": f"service-{index}",
+                        "io.eva2.configuration-sha256": plan.snapshot_sha256,
+                        "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
+                    }
+                )
+                for index in range(7)
+            )
+        )
+
+    monkeypatch.setattr("eva.operations.core_b_preflight.subprocess.run", fake_run)
+
+    with pytest.raises(RuntimeError, match="different Compose project"):
+        observe_managed_b_services(plan)

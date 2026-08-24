@@ -21,6 +21,8 @@ from eva.bootstrap.secrets import (
 MANAGEMENT_LABEL = "io.eva2.managed-by"
 MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
 SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
+COMPOSE_PROJECT_LABEL = "com.docker.compose.project"
+COMPOSE_SERVICE_LABEL = "com.docker.compose.service"
 MANAGED_SERVICE_NAMES = frozenset(
     {
         "postgres",
@@ -33,6 +35,7 @@ MANAGED_SERVICE_NAMES = frozenset(
         "telegram-ingress",
     }
 )
+STEADY_MANAGED_SERVICE_NAMES = MANAGED_SERVICE_NAMES - {"schema-installer"}
 ENVIRONMENT_NAME = "explicit B deployment environment"
 MANAGED_WORK_VOLUME = "eva2-living-work-b"
 MANAGED_POSTGRES_VOLUME = "eva2-postgres-b-live"
@@ -442,8 +445,37 @@ def verify_managed_service_labels(
 ) -> None:
     """Require every future managed-B service to prove the same sealed origin."""
 
-    if not isinstance(labels_by_service, dict) or set(labels_by_service) != MANAGED_SERVICE_NAMES:
-        raise RuntimeError("managed B does not contain its exact eight-service graph")
+    _verify_service_labels(
+        plan,
+        labels_by_service,
+        expected_services=MANAGED_SERVICE_NAMES,
+        graph_name="exact eight-service graph",
+    )
+
+
+def verify_steady_managed_service_labels(
+    plan: CoreBPlan,
+    labels_by_service: object,
+) -> None:
+    """Require the seven continuously running services after schema setup."""
+
+    _verify_service_labels(
+        plan,
+        labels_by_service,
+        expected_services=STEADY_MANAGED_SERVICE_NAMES,
+        graph_name="exact seven-service steady graph",
+    )
+
+
+def _verify_service_labels(
+    plan: CoreBPlan,
+    labels_by_service: object,
+    *,
+    expected_services: frozenset[str],
+    graph_name: str,
+) -> None:
+    if not isinstance(labels_by_service, dict) or set(labels_by_service) != expected_services:
+        raise RuntimeError(f"managed B does not contain its {graph_name}")
     for service_name, labels in labels_by_service.items():
         if not isinstance(labels, dict):
             raise RuntimeError(f"managed B service {service_name} has no verifiable labels")
@@ -498,6 +530,27 @@ def _docker_host_output(
 
 
 def observe_current_b(plan: CoreBPlan) -> None:
+    observed_daemon = _verified_docker_daemon(plan)
+    labels_raw = _docker_host_output(
+        plan,
+        observed_daemon,
+        [
+            "inspect",
+            "--type",
+            "container",
+            "--format",
+            "{{json .Config.Labels}}",
+            plan.value("EVA_STACK_CORE_CONTAINER"),
+        ],
+    )
+    try:
+        labels = json.loads(labels_raw)
+    except json.JSONDecodeError as error:
+        raise RuntimeError("current B container returned invalid labels") from error
+    verify_current_management(plan, labels)
+
+
+def _verified_docker_daemon(plan: CoreBPlan) -> str:
     context_raw = _docker_context_output(
         plan,
         [
@@ -526,7 +579,30 @@ def observe_current_b(plan: CoreBPlan) -> None:
     if not isinstance(observed_context, str) or not isinstance(observed_daemon, str):
         raise RuntimeError("Docker context returned no pinned daemon endpoint")
     verify_docker_endpoint(plan, observed_context, observed_daemon)
+    return observed_daemon
 
+
+def observe_managed_b_services(plan: CoreBPlan) -> None:
+    """Read all future B containers and prove the complete sealed service graph."""
+
+    observed_daemon = _verified_docker_daemon(plan)
+    container_ids = _docker_host_output(
+        plan,
+        observed_daemon,
+        [
+            "ps",
+            "--all",
+            "--filter",
+            f"label={MANAGEMENT_LABEL}={MANAGEMENT_VALUE}",
+            "--filter",
+            f"label={SNAPSHOT_LABEL}={plan.snapshot_sha256}",
+            "--format",
+            "{{.ID}}",
+        ],
+    )
+    identifiers = tuple(value for value in container_ids.splitlines() if value)
+    if len(identifiers) != len(STEADY_MANAGED_SERVICE_NAMES):
+        raise RuntimeError("managed B does not expose exactly seven labeled containers")
     labels_raw = _docker_host_output(
         plan,
         observed_daemon,
@@ -536,14 +612,26 @@ def observe_current_b(plan: CoreBPlan) -> None:
             "container",
             "--format",
             "{{json .Config.Labels}}",
-            plan.value("EVA_STACK_CORE_CONTAINER"),
+            *identifiers,
         ],
     )
-    try:
-        labels = json.loads(labels_raw)
-    except json.JSONDecodeError as error:
-        raise RuntimeError("current B container returned invalid labels") from error
-    verify_current_management(plan, labels)
+    labels_by_service: dict[str, object] = {}
+    for line in labels_raw.splitlines():
+        try:
+            labels = json.loads(line)
+        except json.JSONDecodeError as error:
+            raise RuntimeError("managed B container returned invalid labels") from error
+        if not isinstance(labels, dict):
+            raise RuntimeError("managed B container has no verifiable labels")
+        if labels.get(COMPOSE_PROJECT_LABEL) != plan.value("EVA_B_COMPOSE_PROJECT"):
+            raise RuntimeError("managed B container belongs to a different Compose project")
+        service = labels.get(COMPOSE_SERVICE_LABEL)
+        if not isinstance(service, str):
+            raise RuntimeError("managed B container has no Compose service label")
+        if service in labels_by_service:
+            raise RuntimeError("managed B has duplicate Compose service labels")
+        labels_by_service[service] = labels
+    verify_steady_managed_service_labels(plan, labels_by_service)
 
 
 def _refuse(message: str) -> NoReturn:
