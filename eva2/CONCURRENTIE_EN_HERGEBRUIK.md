@@ -179,8 +179,8 @@ langdurige verzamelaanpassing telt niet als voortgang.
   review zijn groen (`c026a2c`). Dit is nog niet op B gedeployd en bewijst nog
   geen echte groepstest.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
-  secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
-  Authenticatie en B-deploy blijven open.
+  secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
+  pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
