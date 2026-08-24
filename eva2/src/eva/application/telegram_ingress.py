@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 import re
 from typing import Protocol
 
+from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
 
 
@@ -26,10 +27,15 @@ class TelegramInboundMessage:
     def __post_init__(self) -> None:
         if self.update_id < 0 or self.message_id < 1 or self.sender_id < 1:
             raise ValueError("Telegram ingress identity is invalid")
-        if not self.chat_id or len(self.chat_id) > 32 or not self.chat_id.lstrip("-").isdigit():
+        if (
+            not self.chat_id
+            or len(self.chat_id) > 32
+            or not self.chat_id.lstrip("-").isdigit()
+        ):
             raise ValueError("Telegram ingress chat is invalid")
-        if self.occurred_at.tzinfo is None or self.occurred_at.utcoffset() != UTC.utcoffset(
-            self.occurred_at
+        if (
+            self.occurred_at.tzinfo is None
+            or self.occurred_at.utcoffset() != UTC.utcoffset(self.occurred_at)
         ):
             raise ValueError("Telegram ingress timestamp must be UTC")
         if self.occurred_at.microsecond:
@@ -71,6 +77,10 @@ class TelegramPrincipalBindings:
         if binding is None or chat_id not in binding.allowed_chat_ids:
             return None
         return binding.principal_id
+
+    def allowed_chat_ids(self, sender_id: int) -> tuple[str, ...]:
+        binding = self._by_user.get(sender_id)
+        return () if binding is None else binding.allowed_chat_ids
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,12 +152,14 @@ class TelegramIngressWorker:
         store: TelegramIngressStorePort,
         bindings: TelegramPrincipalBindings,
         pairing: TelegramPairingResponder | None = None,
+        group_consent: TelegramGroupConsentResponder | None = None,
     ) -> None:
         self._provider = provider
         self._core = core
         self._store = store
         self._bindings = bindings
         self._pairing = pairing
+        self._group_consent = group_consent
 
     @staticmethod
     def _now() -> datetime:
@@ -192,11 +204,30 @@ class TelegramIngressWorker:
                         ),
                     )
                 )
+                if (
+                    reply is None
+                    and message.chat_id.startswith("-")
+                    and (
+                        self._group_consent is None
+                        or not self._group_consent_permits(
+                            principal_id=principal_id, group_chat_id=message.chat_id
+                        )
+                    )
+                ):
+                    self._store.reject(message, reason="group_consent_required")
+                    continue
             job = self._store.admit(message, principal_id=principal_id)
             if job is None:
                 continue
             if job.reply is None:
                 try:
+                    reply = (
+                        reply
+                        if reply is not None
+                        else self._private_group_consent_reply(
+                            message, principal_id=principal_id
+                        )
+                    )
                     reply = (
                         reply
                         if reply is not None
@@ -230,6 +261,26 @@ class TelegramIngressWorker:
             f"telegram:{message.chat_id}:{message.message_id}",
             text,
             hashlib.sha256(text.encode()).hexdigest(),
+        )
+
+    def _private_group_consent_reply(
+        self, message: TelegramInboundMessage, *, principal_id: str
+    ) -> TelegramCoreReply | None:
+        if self._group_consent is None or message.chat_id != str(message.sender_id):
+            return None
+        text = self._group_consent.handle(
+            text=message.text or "",
+            principal_id=principal_id,
+            allowed_group_chat_ids=self._bindings.allowed_chat_ids(message.sender_id),
+            operation_id=f"telegram-group-consent:{message.update_id}",
+            now=self._now(),
+        )
+        return None if text is None else self._local_reply(message, text)
+
+    def _group_consent_permits(self, *, principal_id: str, group_chat_id: str) -> bool:
+        assert self._group_consent is not None
+        return self._group_consent.permits(
+            principal_id=principal_id, group_chat_id=group_chat_id, now=self._now()
         )
 
 

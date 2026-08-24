@@ -89,6 +89,7 @@ class PostgresTelegramIngressStore:
 
     def reject(self, message: TelegramInboundMessage, *, reason: str) -> str:
         if reason not in {
+            "group_consent_required",
             "sender_or_chat_not_authorized",
             "unsupported_non_text_message",
         }:
@@ -116,7 +117,9 @@ class PostgresTelegramIngressStore:
                 or events[0].event_type != "TELEGRAM_INGRESS_REJECTED"
                 or durable != data
             ):
-                raise RuntimeError("Telegram rejected update identity collision") from None
+                raise RuntimeError(
+                    "Telegram rejected update identity collision"
+                ) from None
             return "already_rejected"
 
     def admit(

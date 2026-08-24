@@ -15,8 +15,12 @@ from eva.application.telegram_ingress import (
 NOW = datetime(2026, 8, 24, 12, 0, tzinfo=UTC)
 
 
-def _message(update_id: int, sender_id: int, text: str | None = "Hoi") -> TelegramInboundMessage:
-    return TelegramInboundMessage(update_id, str(sender_id), update_id + 100, sender_id, NOW, text)
+def _message(
+    update_id: int, sender_id: int, text: str | None = "Hoi"
+) -> TelegramInboundMessage:
+    return TelegramInboundMessage(
+        update_id, str(sender_id), update_id + 100, sender_id, NOW, text
+    )
 
 
 def test_worker_binds_each_sender_to_its_own_principal_and_rejects_unknown() -> None:
@@ -59,13 +63,17 @@ def test_worker_binds_each_sender_to_its_own_principal_and_rejects_unknown() -> 
             return TelegramIngressJob(message, principal_id, "ingress_admitted", 1)
 
         def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
-            return TelegramIngressJob(job.message, job.principal_id, "reply_prepared", 2, reply)
+            return TelegramIngressJob(
+                job.message, job.principal_id, "reply_prepared", 2, reply
+            )
 
         def fail_processing(self, job, error, *, now):  # type: ignore[no-untyped-def]
             raise AssertionError((job, error, now))
 
         def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
-            return TelegramIngressJob(job.message, job.principal_id, "delivery_claimed", 3, job.reply)
+            return TelegramIngressJob(
+                job.message, job.principal_id, "delivery_claimed", 3, job.reply
+            )
 
         def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
             assert receipt.endswith(f"900{job.message.update_id}")
@@ -155,14 +163,18 @@ def test_pairing_commands_bypass_core_but_use_the_normal_delivery_ledger() -> No
 
         def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
             calls.append(("prepare", job.message.update_id))
-            return TelegramIngressJob(job.message, job.principal_id, "prepared", 2, reply)
+            return TelegramIngressJob(
+                job.message, job.principal_id, "prepared", 2, reply
+            )
 
         def fail_processing(self, *args, **kwargs):  # type: ignore[no-untyped-def]
             raise AssertionError((args, kwargs))
 
         def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
             calls.append(("claim", job.message.update_id))
-            return TelegramIngressJob(job.message, job.principal_id, "claimed", 3, job.reply)
+            return TelegramIngressJob(
+                job.message, job.principal_id, "claimed", 3, job.reply
+            )
 
         def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
             calls.append(("ack", job.message.update_id))
@@ -188,6 +200,143 @@ def test_pairing_commands_bypass_core_but_use_the_normal_delivery_ledger() -> No
     assert ("core", 11) not in calls and ("core", 12) not in calls
     assert calls.count(("core", 13)) == 1
     for update_id in (11, 12, 13):
-        assert [(name, event) for name, event in calls if event == update_id and name in {"admit", "prepare", "claim", "send", "ack"}] == [
-            ("admit", update_id), ("prepare", update_id), ("claim", update_id), ("send", update_id), ("ack", update_id)
+        assert [
+            (name, event)
+            for name, event in calls
+            if event == update_id
+            and name in {"admit", "prepare", "claim", "send", "ack"}
+        ] == [
+            ("admit", update_id),
+            ("prepare", update_id),
+            ("claim", update_id),
+            ("send", update_id),
+            ("ack", update_id),
         ]
+
+
+def test_group_message_requires_private_person_consent_before_core_or_memory() -> None:
+    private = _message(21, 101, "/share -100123")
+    group = TelegramInboundMessage(
+        22, "-100123", 122, 101, NOW, "Onthoud dit voor de groep"
+    )
+    calls: list[tuple[str, int | str]] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (private, group)
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            calls.append(("send", message.update_id))
+            return f"telegram:{message.chat_id}:{message.message_id}"
+
+    class Core:
+        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            calls.append(("core", message.update_id))
+            import hashlib
+
+            return TelegramCoreReply(
+                f"telegram:{message.chat_id}",
+                f"telegram:{message.chat_id}:{message.message_id}",
+                "Groepsantwoord",
+                hashlib.sha256(b"Groepsantwoord").hexdigest(),
+            )
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, message, *, reason):  # type: ignore[no-untyped-def]
+            calls.append((reason, message.update_id))
+            return "rejected"
+
+        def admit(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(message, principal_id, "admitted", 1)
+
+        def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "prepared", 2, reply
+            )
+
+        def fail_processing(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "claimed", 3, job.reply
+            )
+
+        def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
+            calls.append(("ack", job.message.update_id))
+
+        def mark_delivery_ambiguous(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class ConsentStore:
+        def __init__(self):
+            self.active: tuple[str, str] | None = None
+
+        def grant(self, consent, *, operation_id):  # type: ignore[no-untyped-def]
+            self.active = (consent.principal_id, consent.group_chat_id)
+            return consent
+
+        def revoke(  # type: ignore[no-untyped-def]
+            self, *, principal_id, group_chat_id, operation_id, now
+        ):
+            if self.active != (principal_id, group_chat_id):
+                return False
+            self.active = None
+            return True
+
+        def permits(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
+            return self.active == (principal_id, group_chat_id)
+
+    from eva.application.telegram_group_consent import TelegramGroupConsentResponder
+
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        TelegramPrincipalBindings(
+            (TelegramPrincipalBinding(101, "person:jaap", ("-100123", "101")),)
+        ),
+        group_consent=TelegramGroupConsentResponder(ConsentStore()),
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    assert ("core", 21) not in calls
+    assert ("core", 22) in calls
+
+
+def test_group_message_without_consent_never_reaches_core() -> None:
+    message = TelegramInboundMessage(23, "-100123", 123, 101, NOW, "Hallo groep")
+    rejected: list[str] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (message,)
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, text))
+
+    class Core:
+        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, principal_id))
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, message, *, reason):  # type: ignore[no-untyped-def]
+            rejected.append(reason)
+            return "rejected"
+
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        TelegramPrincipalBindings(
+            (TelegramPrincipalBinding(101, "person:jaap", ("-100123", "101")),)
+        ),
+    )  # type: ignore[arg-type]
+    assert worker.run_once() == "processed"
+    assert rejected == ["group_consent_required"]

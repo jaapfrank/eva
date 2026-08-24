@@ -14,12 +14,16 @@ from eva.adapters.connectors.telegram import (
     TelegramBotApiAdapter,
 )
 from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
+from eva.adapters.postgres.telegram_group_consent import (
+    PostgresTelegramGroupConsentStore,
+)
 from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
 from eva.application.telegram_ingress import (
     TelegramIngressWorker,
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
 )
+from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
 from eva.bootstrap.secrets import read_runtime_secret_file
 
@@ -43,8 +47,7 @@ def load_principal_bindings(path_value: str) -> TelegramPrincipalBindings:
     for item in decoded["bindings"]:
         if (
             not isinstance(item, dict)
-            or set(item)
-            != {"allowed_chat_ids", "principal_id", "telegram_user_id"}
+            or set(item) != {"allowed_chat_ids", "principal_id", "telegram_user_id"}
             or not isinstance(item.get("telegram_user_id"), int)
             or not isinstance(item.get("principal_id"), str)
             or not isinstance(item.get("allowed_chat_ids"), list)
@@ -115,6 +118,11 @@ def main() -> int:
                 trusted_bindings=bindings,
             ),
             derivation_secret=pairing_secret,
+        ),
+        TelegramGroupConsentResponder(
+            PostgresTelegramGroupConsentStore(
+                engine, tenant_id=tenant_id, installation_id=installation_id
+            )
         ),
     )
     stop = Event()

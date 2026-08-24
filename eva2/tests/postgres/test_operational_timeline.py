@@ -28,6 +28,9 @@ from eva.adapters.postgres.memory_outbox import (
 )
 from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
 from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
+from eva.adapters.postgres.telegram_group_consent import (
+    PostgresTelegramGroupConsentStore,
+)
 from eva.adapters.postgres.home_assistant_reads import (
     PostgresHomeAssistantConversationReads,
 )
@@ -52,6 +55,7 @@ from eva.application.telegram_pairing import (
     derive_pairing_code,
     pairing_expiry,
 )
+from eva.application.telegram_group_consent import TelegramGroupConsent
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -280,7 +284,9 @@ def test_telegram_ingress_is_person_bound_delivered_and_restart_idempotent(
     assert restarted.admit(message, principal_id="person:jaap") is None
     assert restarted.next_offset() == 71002
     timeline = restarted._timeline  # noqa: SLF001
-    assert [event.event_type for event in timeline.events("telegram-inbound:71001")] == [
+    assert [
+        event.event_type for event in timeline.events("telegram-inbound:71001")
+    ] == [
         "TELEGRAM_INGRESS_ADMITTED",
         "TELEGRAM_REPLY_PREPARED",
         "TELEGRAM_DELIVERY_CLAIMED",
@@ -363,21 +369,30 @@ def test_telegram_pairing_is_private_two_sided_and_survives_restart(
         pairing_expiry(NOW + timedelta(minutes=1)),
     )
     assert recovered is not first
-    assert restarted.start(recovered, update_id=81001, now=NOW + timedelta(minutes=1)) == first
-    assert restarted.confirm(
-        first.code,
-        confirmer_user_id=101,
-        confirmer_chat_id="101",
-        now=NOW + timedelta(seconds=1),
-    ).principal_id == "person:jaap"
+    assert (
+        restarted.start(recovered, update_id=81001, now=NOW + timedelta(minutes=1))
+        == first
+    )
+    assert (
+        restarted.confirm(
+            first.code,
+            confirmer_user_id=101,
+            confirmer_chat_id="101",
+            now=NOW + timedelta(seconds=1),
+        ).principal_id
+        == "person:jaap"
+    )
     assert restarted.resolve(telegram_user_id=404, chat_id="404") == "person:jaap"
     assert restarted.resolve(telegram_user_id=404, chat_id="-20") is None
-    assert restarted.confirm(
-        first.code,
-        confirmer_user_id=101,
-        confirmer_chat_id="101",
-        now=NOW + timedelta(seconds=2),
-    ).telegram_user_id == 404
+    assert (
+        restarted.confirm(
+            first.code,
+            confirmer_user_id=101,
+            confirmer_chat_id="101",
+            now=NOW + timedelta(seconds=2),
+        ).telegram_user_id
+        == 404
+    )
 
 
 def test_telegram_pairing_rejects_self_confirmation_and_expired_codes(
@@ -389,21 +404,29 @@ def test_telegram_pairing_rejects_self_confirmation_and_expired_codes(
         installation_id="home",
         trusted_bindings=_pairing_bindings(),
     )
-    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 505, "505", pairing_expiry(NOW))
+    challenge = TelegramPairingChallenge(
+        "EVA-ABCDEFGHJKLM", 505, "505", pairing_expiry(NOW)
+    )
     store.start(challenge, update_id=81002, now=NOW)
 
-    assert store.confirm(
-        challenge.code,
-        confirmer_user_id=505,
-        confirmer_chat_id="505",
-        now=NOW + timedelta(seconds=1),
-    ) is None
-    assert store.confirm(
-        challenge.code,
-        confirmer_user_id=101,
-        confirmer_chat_id="101",
-        now=pairing_expiry(NOW) + timedelta(seconds=1),
-    ) is None
+    assert (
+        store.confirm(
+            challenge.code,
+            confirmer_user_id=505,
+            confirmer_chat_id="505",
+            now=NOW + timedelta(seconds=1),
+        )
+        is None
+    )
+    assert (
+        store.confirm(
+            challenge.code,
+            confirmer_user_id=101,
+            confirmer_chat_id="101",
+            now=pairing_expiry(NOW) + timedelta(seconds=1),
+        )
+        is None
+    )
     assert store.resolve(telegram_user_id=505, chat_id="505") is None
 
 
@@ -416,7 +439,9 @@ def test_telegram_pairing_resumes_the_crash_between_request_and_waiting_state(
         installation_id="home",
         trusted_bindings=_pairing_bindings(),
     )
-    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 606, "606", pairing_expiry(NOW))
+    challenge = TelegramPairingChallenge(
+        "EVA-ABCDEFGHJKLM", 606, "606", pairing_expiry(NOW)
+    )
     thread_id = "telegram-pairing-request:81003"
     store._timeline.create_thread(  # noqa: SLF001
         thread_id=thread_id,
@@ -442,8 +467,12 @@ def test_telegram_pairing_never_overwrites_an_account_bound_by_another_code(
         installation_id="home",
         trusted_bindings=_pairing_bindings(),
     )
-    first = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 707, "707", pairing_expiry(NOW))
-    second = TelegramPairingChallenge("EVA-NPQRSTVWXYZ2", 707, "707", pairing_expiry(NOW))
+    first = TelegramPairingChallenge(
+        "EVA-ABCDEFGHJKLM", 707, "707", pairing_expiry(NOW)
+    )
+    second = TelegramPairingChallenge(
+        "EVA-NPQRSTVWXYZ2", 707, "707", pairing_expiry(NOW)
+    )
     store.start(first, update_id=81004, now=NOW)
     store.start(second, update_id=81005, now=NOW)
     assert store.confirm(
@@ -465,7 +494,9 @@ def test_telegram_pairing_never_overwrites_an_account_bound_by_another_code(
 def test_telegram_pairing_concurrent_restarts_share_one_waiting_challenge(
     timeline_engine: Engine,
 ) -> None:
-    challenge = TelegramPairingChallenge("EVA-ABCDEFGHJKLM", 808, "808", pairing_expiry(NOW))
+    challenge = TelegramPairingChallenge(
+        "EVA-ABCDEFGHJKLM", 808, "808", pairing_expiry(NOW)
+    )
 
     def resume() -> TelegramPairingChallenge:
         return PostgresTelegramPairingStore(
@@ -986,6 +1017,89 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
         ),
     )
     assert [
-        event.event_type
-        for event in timeline.events(actions._research_thread_id(turn))
+        event.event_type for event in timeline.events(actions._research_thread_id(turn))
     ] == ["CURRENT_RESEARCH_ADMITTED", "CURRENT_RESEARCH_COMPLETED"]
+
+
+def test_telegram_group_consent_is_durable_person_scoped_and_revocable(
+    timeline_engine: Engine,
+) -> None:
+    consent = TelegramGroupConsent(
+        "-100123", "person:jaap", NOW, NOW + timedelta(days=7)
+    )
+    store = PostgresTelegramGroupConsentStore(
+        timeline_engine,
+        tenant_id="telegram-consent-tenant",
+        installation_id="telegram-consent-home",
+    )
+    assert store.grant(consent, operation_id="telegram-group-consent:901") == consent
+    restarted = PostgresTelegramGroupConsentStore(
+        timeline_engine,
+        tenant_id="telegram-consent-tenant",
+        installation_id="telegram-consent-home",
+    )
+    assert restarted.permits(
+        principal_id="person:jaap", group_chat_id="-100123", now=NOW
+    )
+    assert not restarted.permits(
+        principal_id="person:frank", group_chat_id="-100123", now=NOW
+    )
+    assert restarted.revoke(
+        principal_id="person:jaap",
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:902",
+        now=NOW + timedelta(seconds=1),
+    )
+    assert not restarted.permits(
+        principal_id="person:jaap",
+        group_chat_id="-100123",
+        now=NOW + timedelta(seconds=2),
+    )
+    assert [
+        event.event_type
+        for event in restarted._timeline.events(  # noqa: SLF001
+            "telegram-group-consent:person:jaap:-100123"
+        )
+    ] == ["TELEGRAM_GROUP_CONSENT_GRANTED", "TELEGRAM_GROUP_CONSENT_REVOKED"]
+
+
+def test_telegram_group_consent_replay_never_renews_a_private_decision(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramGroupConsentStore(
+        timeline_engine,
+        tenant_id="telegram-consent-replay-tenant",
+        installation_id="telegram-consent-replay-home",
+    )
+    first = TelegramGroupConsent("-100124", "person:jaap", NOW, NOW + timedelta(days=7))
+    assert store.grant(first, operation_id="telegram-group-consent:903") == first
+    replay = TelegramGroupConsent(
+        "-100124",
+        "person:jaap",
+        NOW + timedelta(minutes=3),
+        NOW + timedelta(days=10),
+    )
+    assert store.grant(replay, operation_id="telegram-group-consent:903") == first
+    assert [
+        event.event_type
+        for event in store._timeline.events(  # noqa: SLF001
+            "telegram-group-consent:person:jaap:-100124"
+        )
+    ] == ["TELEGRAM_GROUP_CONSENT_GRANTED"]
+
+
+def test_telegram_group_without_consent_is_durably_rejected(
+    timeline_engine: Engine,
+) -> None:
+    message = TelegramInboundMessage(99001, "-100125", 71, 101, NOW, "Privé houden")
+    store = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-group-reject-tenant",
+        installation_id="telegram-group-reject-home",
+    )
+    assert store.reject(message, reason="group_consent_required") == "rejected"
+    assert store.reject(message, reason="group_consent_required") == "already_rejected"
+    assert store.next_offset() == 99002
+    event = store._timeline.events("telegram-inbound:99001")[0]  # noqa: SLF001
+    assert event.event_type == "TELEGRAM_INGRESS_REJECTED"
+    assert event.payload["data"]["reason"] == "group_consent_required"
