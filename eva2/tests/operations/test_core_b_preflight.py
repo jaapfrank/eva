@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import os
 import json
 from pathlib import Path
@@ -21,6 +22,7 @@ from eva.operations.core_b_preflight import (
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_ENVIRONMENT_TEMPLATE = ROOT / "deploy" / "living-core" / "runtime.env.example"
+MANAGED_B_MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
 
 
 def load_core_b_plan(*args: object, **kwargs: object):
@@ -67,9 +69,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_B_DOCKER_CONTEXT": "eva2-b-local",
         "EVA_B_DOCKER_DAEMON": "unix:///var/run/docker.sock",
         "EVA_B_COMPOSE_PROJECT": "eva2-b-live",
-        "EVA_B_MANAGED_MANIFEST_SHA256": (
-            "4de64fd5a218db4c185f76d8394b5c810304f77055feeb38d711f812aa3871c5"
-        ),
+        "EVA_B_MANAGED_MANIFEST_SHA256": hashlib.sha256(
+            MANAGED_B_MANIFEST.read_bytes()
+        ).hexdigest(),
         "EVA_STACK_CORE_CONTAINER": "eva2-living-core-b",
         "EVA_STACK_BIND_ADDRESS": "127.0.0.1",
         "EVA_LIVING_CORE_IMAGE": "eva2-living-core@sha256:" + ("a" * 64),
@@ -118,13 +120,18 @@ def _environment_file(private_tmp_path: Path, values: dict[str, str]) -> Path:
 
 def test_runtime_environment_template_names_every_required_preflight_value() -> None:
     values = {
-        line.split("=", 1)[0]
+        line.split("=", 1)[0]: line.split("=", 1)[1]
         for raw_line in RUNTIME_ENVIRONMENT_TEMPLATE.read_text(encoding="utf-8").splitlines()
         if (line := raw_line.strip()) and not line.startswith("#") and "=" in line
     }
 
-    assert set(REQUIRED_CONFIGURATION) <= values
-    assert {"EVA_DATABASE_DSN", "EVA_HOME_ASSISTANT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN"}.isdisjoint(values)
+    assert set(REQUIRED_CONFIGURATION) <= set(values)
+    assert {"EVA_DATABASE_DSN", "EVA_HOME_ASSISTANT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN"}.isdisjoint(
+        values
+    )
+    assert values["EVA_B_MANAGED_MANIFEST_SHA256"] == hashlib.sha256(
+        MANAGED_B_MANIFEST.read_bytes()
+    ).hexdigest()
 
 
 def test_plan_uses_one_immutable_environment_snapshot(
