@@ -92,6 +92,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   inclusief een lege waarde, en leest uitsluitend een private tokenfile;
   15 gerichte checks en onafhankelijke review zijn groen (`a68e868`). Stripe
   blijft een afzonderlijke open secretconsumer.
+- [x] Stripe-coresecrets: de runtime weigert inline API- en webhooksecrets,
+  inclusief lege waarden, en behoudt uitsluitend private file-routes; 19
+  gerichte checks en onafhankelijke review zijn groen (`d825a79`). Dit is geen
+  Stripe-provider- of financiële liveproef.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
