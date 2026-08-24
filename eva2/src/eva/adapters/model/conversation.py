@@ -44,10 +44,14 @@ from eva.application.repository_improvements import (
     RepositoryImprovementProposal,
     RepositorySnapshot,
 )
+from eva.bootstrap.secrets import read_shared_runtime_file_bytes
 from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
+_MODEL_LEASE_OWNER_UID = 1000
+_MODEL_LEASE_READER_GID = 65532
+_MODEL_LEASE_FILE_MODE = 0o640
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _HOME_ASSISTANT_LIGHT_ACTION = "set_home_assistant_light"
 _HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
@@ -1566,8 +1570,15 @@ class CodexConversationModel:
 
     def _load_auth(self) -> tuple[str, str]:
         try:
-            value = json.loads(self._auth_file.read_text(encoding="utf-8"))
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+            raw = read_shared_runtime_file_bytes(
+                str(self._auth_file),
+                setting_name="conversation auth lease",
+                owner_uid=_MODEL_LEASE_OWNER_UID,
+                reader_gid=_MODEL_LEASE_READER_GID,
+                required_mode=_MODEL_LEASE_FILE_MODE,
+            )
+            value = json.loads(raw.decode("utf-8"))
+        except (OSError, RuntimeError, UnicodeDecodeError, json.JSONDecodeError) as error:
             raise ConversationModelError(
                 "conversation auth file is unavailable"
             ) from error

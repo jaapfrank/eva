@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 from io import BytesIO
 import json
+import os
 import threading
 from datetime import UTC, datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -11,6 +12,7 @@ from typing import Any, Iterator
 
 import pytest
 
+import eva.adapters.model.conversation as conversation_module
 from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
@@ -47,6 +49,19 @@ from eva.contracts.planning import ConfirmedFact
 
 
 NOW = "2026-08-23T14:00:00Z"
+
+
+@pytest.fixture(autouse=True)
+def local_model_lease_contract(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep unit leases local while production uses the fixed container contract."""
+
+    monkeypatch.setattr(conversation_module, "_MODEL_LEASE_OWNER_UID", os.geteuid())
+    monkeypatch.setattr(conversation_module, "_MODEL_LEASE_READER_GID", os.getegid())
+    monkeypatch.setattr(
+        conversation_module,
+        "read_shared_runtime_file_bytes",
+        lambda path, **_kwargs: Path(path).read_bytes(),
+    )
 
 
 def test_bound_photo_correction_uses_closed_action_without_face_inference(
@@ -207,6 +222,7 @@ def _write_access_lease(path: Path, access_token: str = "access") -> None:
             }
         )
     )
+    path.chmod(0o640)
 
 
 @pytest.fixture
@@ -485,6 +501,7 @@ def test_model_reports_an_expired_access_lease_without_provider_call(
             }
         )
     )
+    auth_file.chmod(0o640)
 
     model = CodexConversationModel(auth_file=auth_file)
 
@@ -506,6 +523,7 @@ def test_model_rejects_a_full_refresh_authority_file(tmp_path: Path) -> None:
             }
         )
     )
+    auth_file.chmod(0o640)
 
     status = CodexConversationModel(auth_file=auth_file).credential_status()
 
@@ -540,6 +558,7 @@ def test_provider_rejection_latches_until_the_access_lease_rotates(
                 }
             )
         )
+        auth_file.chmod(0o640)
         host, port = server.server_address
         model = CodexConversationModel(
             auth_file=auth_file, endpoint=f"http://{host}:{port}/responses"
@@ -560,6 +579,7 @@ def test_provider_rejection_latches_until_the_access_lease_rotates(
                 }
             )
         )
+        replacement.chmod(0o640)
         replacement.replace(auth_file)
         assert model.credential_status().state == "ready"
     finally:

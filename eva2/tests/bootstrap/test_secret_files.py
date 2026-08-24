@@ -9,6 +9,7 @@ from eva.bootstrap.secrets import (
     MAX_RUNTIME_SECRET_BYTES,
     environment_secret,
     read_runtime_secret_file,
+    read_shared_runtime_file_bytes,
 )
 
 
@@ -210,3 +211,29 @@ def test_file_secret_rejects_metadata_change_during_read(
 
     with pytest.raises(RuntimeError, match="changed while it was read"):
         read_runtime_secret_file(str(secret), setting_name=FILE_NAME)
+
+
+def test_shared_lease_requires_exact_owner_group_mode_and_single_link(
+    private_tmp_path: Path,
+) -> None:
+    lease = private_tmp_path / "lease"
+    lease.write_bytes(b'{"contract":"EvaModelAccessLease/v1"}')
+    lease.chmod(0o640)
+    kwargs = {
+        "setting_name": "model lease",
+        "owner_uid": os.geteuid(),
+        "reader_gid": os.getegid(),
+        "required_mode": 0o640,
+    }
+
+    assert read_shared_runtime_file_bytes(str(lease), **kwargs).startswith(b"{")
+
+    lease.chmod(0o600)
+    with pytest.raises(RuntimeError, match="permissions differ"):
+        read_shared_runtime_file_bytes(str(lease), **kwargs)
+
+    lease.chmod(0o640)
+    hardlink = private_tmp_path / "lease-hardlink"
+    os.link(lease, hardlink)
+    with pytest.raises(RuntimeError, match="exactly one hard link"):
+        read_shared_runtime_file_bytes(str(lease), **kwargs)
