@@ -16,10 +16,20 @@ from eva.operations.core_b_preflight import (
 
 def _configuration(private_tmp_path: Path) -> dict[str, str]:
     docker_config = private_tmp_path / "docker-config"
-    docker_config.mkdir(mode=0o700)
+    docker_config.mkdir(mode=0o700, exist_ok=True)
+    docker_config.chmod(0o700)
     secret = private_tmp_path / "home-assistant-token"
     secret.write_text("not-a-real-token\n", encoding="utf-8")
     secret.chmod(0o600)
+    codex_authority = private_tmp_path / "codex-auth"
+    codex_authority.mkdir(mode=0o700, exist_ok=True)
+    codex_authority.chmod(0o700)
+    model_lease = private_tmp_path / "model-access-lease"
+    model_lease.mkdir(mode=0o2750, exist_ok=True)
+    model_lease.chmod(0o2750)
+    hindsight_lease = private_tmp_path / "hindsight-access"
+    hindsight_lease.mkdir(mode=0o700, exist_ok=True)
+    hindsight_lease.chmod(0o700)
     return {
         "EVA_B_DOCKER_BINARY": "/usr/bin/docker",
         "EVA_B_DOCKER_CONFIG_DIR": str(docker_config),
@@ -43,7 +53,10 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         ),
         "EVA_FANOUT_ALLOW_INSECURE_HTTP": "false",
         "EVA_FILE_BATCH_ROOT": "/var/lib/eva/work",
-        "EVA_MODEL_ACCESS_LEASE_DIR": "/run/eva2/model-access-lease",
+        "EVA_STACK_WORK_VOLUME": "eva2-living-work",
+        "EVA_CODEX_AUTH_DIR": str(codex_authority),
+        "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
+        "EVA_HINDSIGHT_ACCESS_DIR": str(hindsight_lease),
     }
 
 
@@ -69,9 +82,9 @@ def test_plan_uses_one_immutable_environment_snapshot(
     assert plan.value("EVA_FILE_BATCH_ROOT") == "/var/lib/eva/work"
     assert plan.value("EVA_DURABLE_GOAL_PROVIDER") == "provider:test"
     assert "owner" in plan.value("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON")
-    assert plan.value("EVA_MODEL_ACCESS_LEASE_DIR") == (
-        "/run/eva2/model-access-lease"
-    )
+    assert plan.value("EVA_MODEL_ACCESS_LEASE_DIR") == values[
+        "EVA_MODEL_ACCESS_LEASE_DIR"
+    ]
 
 
 def test_plan_rejects_environment_metadata_change_while_snapshotting(
@@ -151,7 +164,10 @@ def test_plan_rejects_execute_only_home_assistant_host_secret(
         "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON",
         "EVA_FANOUT_ALLOW_INSECURE_HTTP",
         "EVA_FILE_BATCH_ROOT",
+        "EVA_STACK_WORK_VOLUME",
+        "EVA_CODEX_AUTH_DIR",
         "EVA_MODEL_ACCESS_LEASE_DIR",
+        "EVA_HINDSIGHT_ACCESS_DIR",
     ),
 )
 def test_plan_refuses_capability_loss(
@@ -183,6 +199,35 @@ def test_plan_rejects_wrong_docker_context_or_daemon(private_tmp_path: Path) -> 
             plan,
             "eva2-b-local",
             "ssh://production.example",
+        )
+
+
+def test_plan_rejects_unpinned_volume_and_unsafe_contract_directories(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    values["EVA_STACK_WORK_VOLUME"] = "another-volume"
+    with pytest.raises(RuntimeError, match="must be exactly eva2-living-work"):
+        load_core_b_plan(
+            _environment_file(private_tmp_path, values).as_posix(),
+            runtime_uid=os.geteuid(),
+        )
+
+    values = _configuration(private_tmp_path)
+    values["EVA_MODEL_ACCESS_LEASE_DIR"] = "/"
+    with pytest.raises(RuntimeError, match="ownership differs"):
+        load_core_b_plan(
+            _environment_file(private_tmp_path, values).as_posix(),
+            runtime_uid=os.geteuid(),
+        )
+
+    values = _configuration(private_tmp_path)
+    path = Path(values["EVA_HINDSIGHT_ACCESS_DIR"])
+    path.chmod(0o755)
+    with pytest.raises(RuntimeError, match="permissions differ"):
+        load_core_b_plan(
+            _environment_file(private_tmp_path, values).as_posix(),
+            runtime_uid=os.geteuid(),
         )
 
 

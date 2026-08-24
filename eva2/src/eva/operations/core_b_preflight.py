@@ -22,6 +22,9 @@ MANAGEMENT_LABEL = "io.eva2.managed-by"
 MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
 SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
 ENVIRONMENT_NAME = "explicit B deployment environment"
+MANAGED_WORK_VOLUME = "eva2-living-work"
+MODEL_AUTHORITY_UID = 1000
+MODEL_AUTHORITY_GID = 1000
 
 REQUIRED_CONFIGURATION = (
     "EVA_B_DOCKER_BINARY",
@@ -44,7 +47,10 @@ REQUIRED_CONFIGURATION = (
     "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON",
     "EVA_FANOUT_ALLOW_INSECURE_HTTP",
     "EVA_FILE_BATCH_ROOT",
+    "EVA_STACK_WORK_VOLUME",
+    "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
+    "EVA_HINDSIGHT_ACCESS_DIR",
 )
 
 FORBIDDEN_INLINE_SECRETS = (
@@ -157,6 +163,55 @@ def _preflight_host_secret(path_value: str, *, runtime_uid: int) -> None:
         os.close(descriptor)
 
 
+def _preflight_host_directory(
+    path_value: str,
+    *,
+    setting_name: str,
+    owner_uid: int,
+    group_gid: int,
+    required_mode: int,
+) -> None:
+    path = _require_absolute(path_value, setting_name)
+    try:
+        named = os.lstat(path)
+    except OSError as error:
+        raise RuntimeError(f"{setting_name} is inaccessible") from error
+    if stat.S_ISLNK(named.st_mode) or not stat.S_ISDIR(named.st_mode):
+        raise RuntimeError(f"{setting_name} must be a regular non-symlink directory")
+    if named.st_uid != owner_uid or named.st_gid != group_gid:
+        raise RuntimeError(f"{setting_name} ownership differs from its contract")
+    if stat.S_IMODE(named.st_mode) != required_mode:
+        raise RuntimeError(f"{setting_name} permissions differ from its contract")
+    if not hasattr(os, "O_PATH"):
+        raise RuntimeError("safe metadata-only directory preflight is unavailable")
+    flags = os.O_PATH | getattr(os, "O_CLOEXEC", 0)
+    flags |= getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as error:
+        raise RuntimeError(f"{setting_name} cannot be opened safely") from error
+    try:
+        opened = os.fstat(descriptor)
+        if (
+            opened.st_dev,
+            opened.st_ino,
+            opened.st_uid,
+            opened.st_gid,
+            opened.st_mode,
+            opened.st_ctime_ns,
+        ) != (
+            named.st_dev,
+            named.st_ino,
+            named.st_uid,
+            named.st_gid,
+            named.st_mode,
+            named.st_ctime_ns,
+        ):
+            raise RuntimeError(f"{setting_name} changed during preflight")
+    finally:
+        os.close(descriptor)
+
+
 def _validate_configuration(values: dict[str, str]) -> None:
     for forbidden in FORBIDDEN_INLINE_SECRETS:
         if forbidden in values:
@@ -179,7 +234,8 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_LIVING_CORE_IMAGE must use an exact sha256 digest")
     if values["EVA_FILE_BATCH_ROOT"] != "/var/lib/eva/work":
         raise RuntimeError("EVA_FILE_BATCH_ROOT must preserve /var/lib/eva/work")
-    _require_absolute(values["EVA_MODEL_ACCESS_LEASE_DIR"], "EVA_MODEL_ACCESS_LEASE_DIR")
+    if values["EVA_STACK_WORK_VOLUME"] != MANAGED_WORK_VOLUME:
+        raise RuntimeError(f"EVA_STACK_WORK_VOLUME must be exactly {MANAGED_WORK_VOLUME}")
     docker_binary = _require_absolute(
         values["EVA_B_DOCKER_BINARY"], "EVA_B_DOCKER_BINARY"
     )
@@ -259,6 +315,27 @@ def load_core_b_plan(
     _preflight_host_secret(
         values["EVA_HOME_ASSISTANT_TOKEN_FILE_HOST"],
         runtime_uid=runtime_uid,
+    )
+    _preflight_host_directory(
+        values["EVA_CODEX_AUTH_DIR"],
+        setting_name="EVA_CODEX_AUTH_DIR",
+        owner_uid=MODEL_AUTHORITY_UID,
+        group_gid=MODEL_AUTHORITY_GID,
+        required_mode=0o700,
+    )
+    _preflight_host_directory(
+        values["EVA_MODEL_ACCESS_LEASE_DIR"],
+        setting_name="EVA_MODEL_ACCESS_LEASE_DIR",
+        owner_uid=MODEL_AUTHORITY_UID,
+        group_gid=runtime_uid,
+        required_mode=0o2750,
+    )
+    _preflight_host_directory(
+        values["EVA_HINDSIGHT_ACCESS_DIR"],
+        setting_name="EVA_HINDSIGHT_ACCESS_DIR",
+        owner_uid=MODEL_AUTHORITY_UID,
+        group_gid=MODEL_AUTHORITY_GID,
+        required_mode=0o700,
     )
     return CoreBPlan(
         tuple(sorted(values.items())),
