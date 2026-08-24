@@ -1,0 +1,425 @@
+"""Read-only preflight for a future explicitly managed Living Core B."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import stat
+import subprocess
+from typing import NoReturn
+
+from eva.bootstrap.secrets import (
+    MAX_RUNTIME_SECRET_BYTES,
+    read_private_runtime_file_bytes,
+)
+
+
+MANAGEMENT_LABEL = "io.eva2.managed-by"
+MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
+SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
+ENVIRONMENT_NAME = "explicit B deployment environment"
+
+REQUIRED_CONFIGURATION = (
+    "EVA_B_DOCKER_BINARY",
+    "EVA_B_DOCKER_CONFIG_DIR",
+    "EVA_B_DOCKER_CONTEXT",
+    "EVA_B_DOCKER_DAEMON",
+    "EVA_B_COMPOSE_PROJECT",
+    "EVA_STACK_CORE_CONTAINER",
+    "EVA_STACK_BIND_ADDRESS",
+    "EVA_LIVING_CORE_IMAGE",
+    "EVA_DATABASE_DSN_FILE_HOST",
+    "EVA_HOME_ASSISTANT_URL",
+    "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+    "EVA_RUNTIME_TENANT_ID",
+    "EVA_RUNTIME_INSTALLATION_ID",
+    "EVA_RUNTIME_PRINCIPAL_ID",
+    "EVA_DURABLE_GOAL_PROVIDER",
+    "EVA_DURABLE_GOAL_PROVIDER_URL",
+    "EVA_DURABLE_GOAL_RECIPIENTS",
+    "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON",
+    "EVA_FANOUT_ALLOW_INSECURE_HTTP",
+    "EVA_FILE_BATCH_ROOT",
+    "EVA_MODEL_ACCESS_LEASE_DIR",
+)
+
+FORBIDDEN_INLINE_SECRETS = (
+    "EVA_DATABASE_DSN",
+    "EVA_HOME_ASSISTANT_TOKEN",
+    "EVA_TELEGRAM_BOT_TOKEN",
+    "EVA_STRIPE_SECRET_KEY",
+    "EVA_STRIPE_WEBHOOK_SECRET",
+)
+
+
+@dataclass(frozen=True, slots=True)
+class CoreBPlan:
+    configuration: tuple[tuple[str, str], ...]
+    snapshot_sha256: str
+
+    def value(self, name: str) -> str:
+        for key, value in self.configuration:
+            if key == name:
+                return value
+        raise RuntimeError(f"{name} is missing from the explicit B configuration")
+
+
+def _parse_environment(snapshot: bytes) -> dict[str, str]:
+    try:
+        decoded = snapshot.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise RuntimeError(f"{ENVIRONMENT_NAME} must contain UTF-8 text") from error
+    values: dict[str, str] = {}
+    for line_number, raw_line in enumerate(decoded.splitlines(), start=1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" not in raw_line:
+            raise RuntimeError(
+                f"{ENVIRONMENT_NAME} line {line_number} is not KEY=value"
+            )
+        raw_key, raw_value = raw_line.split("=", 1)
+        key = raw_key.strip()
+        if not re.fullmatch(r"[A-Z][A-Z0-9_]*", key):
+            raise RuntimeError(
+                f"{ENVIRONMENT_NAME} line {line_number} has an invalid key"
+            )
+        if key in values:
+            raise RuntimeError(f"{ENVIRONMENT_NAME} repeats {key}")
+        if "\x00" in raw_value:
+            raise RuntimeError(f"{ENVIRONMENT_NAME} contains a NUL byte")
+        values[key] = raw_value.strip()
+    return values
+
+
+def _require_absolute(value: str, name: str) -> Path:
+    path = Path(value)
+    if not path.is_absolute():
+        raise RuntimeError(f"{name} must be an absolute path")
+    return path
+
+
+def _preflight_host_secret(path_value: str, *, runtime_uid: int) -> None:
+    path = _require_absolute(path_value, "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST")
+    try:
+        named = os.lstat(path)
+    except OSError as error:
+        raise RuntimeError("Home Assistant host secret is inaccessible") from error
+    if stat.S_ISLNK(named.st_mode) or not stat.S_ISREG(named.st_mode):
+        raise RuntimeError(
+            "Home Assistant host secret must be a regular non-symlink file"
+        )
+    permissions = stat.S_IMODE(named.st_mode)
+    if named.st_uid != runtime_uid:
+        raise RuntimeError(
+            f"Home Assistant host secret must be owned by runtime UID {runtime_uid}"
+        )
+    if not permissions & stat.S_IRUSR:
+        raise RuntimeError("Home Assistant host secret owner must have read access")
+    if permissions & (stat.S_IRWXG | stat.S_IRWXO):
+        raise RuntimeError(
+            "Home Assistant host secret must have no group/other permissions"
+        )
+    if not 0 < named.st_size <= MAX_RUNTIME_SECRET_BYTES:
+        raise RuntimeError("Home Assistant host secret size must be within 1..65536")
+
+    if not hasattr(os, "O_PATH"):
+        raise RuntimeError("safe metadata-only secret preflight is unavailable")
+    flags = os.O_PATH | getattr(os, "O_CLOEXEC", 0)
+    flags |= getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as error:
+        raise RuntimeError("Home Assistant host secret cannot be opened safely") from error
+    try:
+        opened = os.fstat(descriptor)
+        if (
+            opened.st_dev,
+            opened.st_ino,
+            opened.st_uid,
+            opened.st_mode,
+            opened.st_size,
+            opened.st_ctime_ns,
+        ) != (
+            named.st_dev,
+            named.st_ino,
+            named.st_uid,
+            named.st_mode,
+            named.st_size,
+            named.st_ctime_ns,
+        ):
+            raise RuntimeError("Home Assistant host secret changed during preflight")
+    finally:
+        os.close(descriptor)
+
+
+def _validate_configuration(values: dict[str, str]) -> None:
+    for forbidden in FORBIDDEN_INLINE_SECRETS:
+        if forbidden in values:
+            raise RuntimeError(
+                f"{forbidden} is forbidden in the explicit B environment"
+            )
+    for required in REQUIRED_CONFIGURATION:
+        if not values.get(required):
+            raise RuntimeError(f"{required} is required for capability preservation")
+
+    if values["EVA_B_COMPOSE_PROJECT"] != "eva2-b-live":
+        raise RuntimeError("EVA_B_COMPOSE_PROJECT must be exactly eva2-b-live")
+    if values["EVA_STACK_CORE_CONTAINER"] != "eva2-living-core-b":
+        raise RuntimeError(
+            "EVA_STACK_CORE_CONTAINER must be exactly eva2-living-core-b"
+        )
+    if values["EVA_STACK_BIND_ADDRESS"] != "127.0.0.1":
+        raise RuntimeError("EVA_STACK_BIND_ADDRESS must be exactly 127.0.0.1")
+    if not re.fullmatch(r".+@sha256:[0-9a-f]{64}", values["EVA_LIVING_CORE_IMAGE"]):
+        raise RuntimeError("EVA_LIVING_CORE_IMAGE must use an exact sha256 digest")
+    if values["EVA_FILE_BATCH_ROOT"] != "/var/lib/eva/work":
+        raise RuntimeError("EVA_FILE_BATCH_ROOT must preserve /var/lib/eva/work")
+    _require_absolute(values["EVA_MODEL_ACCESS_LEASE_DIR"], "EVA_MODEL_ACCESS_LEASE_DIR")
+    docker_binary = _require_absolute(
+        values["EVA_B_DOCKER_BINARY"], "EVA_B_DOCKER_BINARY"
+    )
+    if docker_binary != Path("/usr/bin/docker"):
+        raise RuntimeError("EVA_B_DOCKER_BINARY must be exactly /usr/bin/docker")
+    try:
+        docker_metadata = os.lstat(docker_binary)
+    except OSError as error:
+        raise RuntimeError("/usr/bin/docker is inaccessible") from error
+    docker_permissions = stat.S_IMODE(docker_metadata.st_mode)
+    if stat.S_ISLNK(docker_metadata.st_mode) or not stat.S_ISREG(
+        docker_metadata.st_mode
+    ):
+        raise RuntimeError("/usr/bin/docker must be a regular non-symlink file")
+    if docker_metadata.st_uid != 0:
+        raise RuntimeError("/usr/bin/docker must be root-owned")
+    if not docker_permissions & stat.S_IXUSR:
+        raise RuntimeError("/usr/bin/docker must be owner-executable")
+    if docker_permissions & (stat.S_IWGRP | stat.S_IWOTH):
+        raise RuntimeError("/usr/bin/docker must not be group/other-writable")
+    docker_config = _require_absolute(
+        values["EVA_B_DOCKER_CONFIG_DIR"], "EVA_B_DOCKER_CONFIG_DIR"
+    )
+    try:
+        config_metadata = os.lstat(docker_config)
+    except OSError as error:
+        raise RuntimeError("EVA_B_DOCKER_CONFIG_DIR is inaccessible") from error
+    if stat.S_ISLNK(config_metadata.st_mode) or not stat.S_ISDIR(
+        config_metadata.st_mode
+    ):
+        raise RuntimeError(
+            "EVA_B_DOCKER_CONFIG_DIR must be a regular non-symlink directory"
+        )
+    config_permissions = stat.S_IMODE(config_metadata.st_mode)
+    if config_metadata.st_uid != os.geteuid():
+        raise RuntimeError("EVA_B_DOCKER_CONFIG_DIR must be operator-owned")
+    if not config_permissions & stat.S_IRUSR or not config_permissions & stat.S_IXUSR:
+        raise RuntimeError("EVA_B_DOCKER_CONFIG_DIR must be owner-readable/searchable")
+    if config_permissions & (stat.S_IRWXG | stat.S_IRWXO):
+        raise RuntimeError("EVA_B_DOCKER_CONFIG_DIR must be private")
+    if not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]*", values["EVA_B_DOCKER_CONTEXT"]):
+        raise RuntimeError("EVA_B_DOCKER_CONTEXT is invalid")
+    if not values["EVA_B_DOCKER_DAEMON"].startswith(("unix://", "ssh://")):
+        raise RuntimeError("EVA_B_DOCKER_DAEMON must pin a unix:// or ssh:// endpoint")
+
+    try:
+        fanout = json.loads(values["EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON"])
+    except json.JSONDecodeError as error:
+        raise RuntimeError("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON is invalid") from error
+    if not isinstance(fanout, dict) or not fanout or len(fanout) > 8:
+        raise RuntimeError("Eva fan-out capability must preserve 1..8 recipients")
+    if values["EVA_FANOUT_ALLOW_INSECURE_HTTP"] not in {"true", "false"}:
+        raise RuntimeError("EVA_FANOUT_ALLOW_INSECURE_HTTP must be true or false")
+    if not any(
+        recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
+    ):
+        raise RuntimeError("Eva durable-goal recipients must be preserved")
+
+
+def load_core_b_plan(
+    environment_file: str,
+    *,
+    runtime_uid: int = 65532,
+    operator_uid: int | None = None,
+) -> CoreBPlan:
+    """Create one immutable in-memory plan from one hardened file snapshot."""
+
+    snapshot = read_private_runtime_file_bytes(
+        environment_file,
+        setting_name=ENVIRONMENT_NAME,
+        effective_uid=operator_uid,
+    )
+    if not snapshot.strip():
+        raise RuntimeError(f"{ENVIRONMENT_NAME} is empty")
+    values = _parse_environment(snapshot)
+    _validate_configuration(values)
+    _preflight_host_secret(
+        values["EVA_HOME_ASSISTANT_TOKEN_FILE_HOST"],
+        runtime_uid=runtime_uid,
+    )
+    return CoreBPlan(
+        tuple(sorted(values.items())),
+        hashlib.sha256(snapshot).hexdigest(),
+    )
+
+
+def verify_docker_endpoint(
+    plan: CoreBPlan,
+    observed_context: str,
+    observed_daemon: str,
+) -> None:
+    expected_context = plan.value("EVA_B_DOCKER_CONTEXT")
+    if observed_context != expected_context:
+        raise RuntimeError("Docker returned a different context than the explicit B plan")
+    expected = plan.value("EVA_B_DOCKER_DAEMON")
+    if observed_daemon != expected:
+        raise RuntimeError(
+            "Docker context resolves to a different daemon than the explicit B plan"
+        )
+
+
+def verify_current_management(plan: CoreBPlan, labels: object) -> None:
+    if not isinstance(labels, dict):
+        raise RuntimeError("current B container has no verifiable management labels")
+    if labels.get(MANAGEMENT_LABEL) != MANAGEMENT_VALUE:
+        raise RuntimeError(
+            "current B container is unmanaged; controlled adoption requires a separate review"
+        )
+    if labels.get(SNAPSHOT_LABEL) != plan.snapshot_sha256:
+        raise RuntimeError(
+            "current B container was not created from this exact configuration snapshot"
+        )
+
+
+def _run_docker(command: list[str]) -> str:
+    try:
+        completed = subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+            env={"LC_ALL": "C"},
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise RuntimeError("read-only Docker B preflight failed") from error
+    return completed.stdout.strip()
+
+
+def _docker_context_output(plan: CoreBPlan, arguments: list[str]) -> str:
+    command = [
+        plan.value("EVA_B_DOCKER_BINARY"),
+        "--config",
+        plan.value("EVA_B_DOCKER_CONFIG_DIR"),
+        "--context",
+        plan.value("EVA_B_DOCKER_CONTEXT"),
+        *arguments,
+    ]
+    return _run_docker(command)
+
+
+def _docker_host_output(
+    plan: CoreBPlan,
+    verified_daemon: str,
+    arguments: list[str],
+) -> str:
+    """Read container state only through the already verified daemon endpoint."""
+
+    if verified_daemon != plan.value("EVA_B_DOCKER_DAEMON"):
+        raise RuntimeError("container read attempted with an unverified Docker daemon")
+    command = [
+        plan.value("EVA_B_DOCKER_BINARY"),
+        "--config",
+        plan.value("EVA_B_DOCKER_CONFIG_DIR"),
+        "--host",
+        verified_daemon,
+        *arguments,
+    ]
+    return _run_docker(command)
+
+
+def observe_current_b(plan: CoreBPlan) -> None:
+    context_raw = _docker_context_output(
+        plan,
+        [
+            "context",
+            "inspect",
+            plan.value("EVA_B_DOCKER_CONTEXT"),
+        ],
+    )
+    try:
+        contexts = json.loads(context_raw)
+    except json.JSONDecodeError as error:
+        raise RuntimeError("Docker context returned invalid endpoint metadata") from error
+    if not isinstance(contexts, list) or len(contexts) != 1:
+        raise RuntimeError("Docker context read did not return exactly one context")
+    context = contexts[0]
+    if not isinstance(context, dict):
+        raise RuntimeError("Docker context returned no pinned daemon endpoint")
+    observed_context = context.get("Name")
+    endpoints = context.get("Endpoints")
+    observed_daemon = (
+        endpoints.get("docker", {}).get("Host")
+        if isinstance(endpoints, dict)
+        and isinstance(endpoints.get("docker"), dict)
+        else None
+    )
+    if not isinstance(observed_context, str) or not isinstance(observed_daemon, str):
+        raise RuntimeError("Docker context returned no pinned daemon endpoint")
+    verify_docker_endpoint(plan, observed_context, observed_daemon)
+
+    labels_raw = _docker_host_output(
+        plan,
+        observed_daemon,
+        [
+            "inspect",
+            "--type",
+            "container",
+            "--format",
+            "{{json .Config.Labels}}",
+            plan.value("EVA_STACK_CORE_CONTAINER"),
+        ],
+    )
+    try:
+        labels = json.loads(labels_raw)
+    except json.JSONDecodeError as error:
+        raise RuntimeError("current B container returned invalid labels") from error
+    verify_current_management(plan, labels)
+
+
+def _refuse(message: str) -> NoReturn:
+    raise SystemExit(f"core-B plan refused: {message}")
+
+
+def main() -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Read-only preflight; this command cannot recreate containers."
+    )
+    parser.add_argument("environment_file")
+    arguments = parser.parse_args()
+    try:
+        plan = load_core_b_plan(arguments.environment_file)
+        observe_current_b(plan)
+    except RuntimeError as error:
+        _refuse(str(error))
+    print(
+        json.dumps(
+            {
+                "apply_supported": False,
+                "configuration_sha256": plan.snapshot_sha256,
+                "current_b_managed": True,
+                "next_step": "independent manifest/adoption review",
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
