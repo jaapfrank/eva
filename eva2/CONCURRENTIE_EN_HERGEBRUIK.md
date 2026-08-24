@@ -205,6 +205,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   gesloten staged draft is exact aan pack-id, versie en hash gebonden en geeft
   uitsluitend een reproduceerbare presentatiediff. Geen dashboard-write,
   publicatie, runtime-switch of B-wijziging (`91b2760`).
+- [x] IdentityPack-verificatie: de runtime laadt alleen canonieke bytes van
+  de gebonden huidige identiteit, met gecontroleerde bronhash en Ed25519-
+  handtekening tegen een expliciete publieke trustbinding. Geen signer,
+  publicatie, API-route of B-wijziging (`f586298`).
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
