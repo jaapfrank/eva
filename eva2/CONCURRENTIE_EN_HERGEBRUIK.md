@@ -52,8 +52,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   lezen of B te wijzigen.
 - [x] V53-bronherstel opgesplitst in Git: migratie-input, tijdlijnmodule en
   adapterlaag zijn onafhankelijk gecontroleerde baseline-checkpoints.
-- [ ] V53-application-, runtime- en operationslagen als afzonderlijke
-  baseline-checkpoints herstellen en daarna de volledige closure-test draaien.
+- [x] V53-applicationlaag als eigen baseline-checkpoint hersteld: 20
+  containerhashes, compile en 11 gerichte tests onafhankelijk groen.
+- [ ] V53-runtime- en operationslagen als afzonderlijke baseline-checkpoints
+  herstellen en daarna de volledige closure-test draaien.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
