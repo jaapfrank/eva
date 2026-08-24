@@ -16,7 +16,9 @@ from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
     RecentConversationMessage,
+    load_current_identity_pack,
 )
+from eva.contracts.canonical_json import canonical_sha256
 from eva.application.memory import (
     ConversationMemoryDocument,
     MemoryRetentionReceipt,
@@ -593,6 +595,38 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
             headers={"Cache-Control": "no-store"},
         )
 
+    @app.get("/internal/v1/dashboard/identity")
+    def dashboard_identity() -> JSONResponse:
+        """Expose the verified active identity without a mutation surface."""
+
+        try:
+            identity = load_current_identity_pack()
+        except ValueError:
+            raise HTTPException(status_code=503, detail="active identity unavailable")
+        if identity.state != "current":
+            raise HTTPException(status_code=503, detail="active identity unavailable")
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardIdentity/v1",
+                "read_only": True,
+                "identity": {
+                    "display_name": identity.display_name,
+                    "identity_id": identity.identity_id,
+                    "language": identity.language,
+                    "pack_sha256": canonical_sha256(identity),
+                    "pack_version": identity.pack_version,
+                    "state": identity.state,
+                    "temperament": identity.temperament,
+                    "voice_style": {
+                        "maximum_paragraphs": identity.voice_style.maximum_paragraphs,
+                        "name": identity.voice_style.name,
+                        "qualities": identity.voice_style.qualities,
+                    },
+                },
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
     @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
     def dashboard() -> HTMLResponse:
         """Serve the first local, read-only operator surface."""
@@ -602,8 +636,9 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
 <html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Eva — status</title><style>
 body{background:#10151c;color:#e8edf2;font:16px system-ui,sans-serif;margin:0;padding:2rem}main{max-width:680px;margin:auto}.card{background:#19212b;border:1px solid #304050;border-radius:12px;padding:1.25rem}h1{margin-top:0}.state{font-weight:700}.ok{color:#82d19a}.bad{color:#f0a0a0}small{color:#aebdca}
-</style></head><body><main><h1>Eva</h1><section class="card"><p>Living Core</p><p id="state" class="state">Status ophalen…</p><small>Alleen-lezen operatoroverzicht. Deze pagina bevat geen instellingen of geheimen.</small></section></main><script>
+</style></head><body><main><h1>Eva</h1><section class="card"><p>Living Core</p><p id="state" class="state">Status ophalen…</p><p id="identity"><small>Identiteit ophalen…</small></p><small>Alleen-lezen operatoroverzicht. Deze pagina bevat geen instellingen of geheimen.</small></section></main><script>
 fetch('/internal/v1/dashboard/status').then(r=>r.json()).then(data=>{const node=document.getElementById('state');node.textContent=data.runtime.state;node.className='state '+(data.runtime.ready?'ok':'bad')}).catch(()=>{const node=document.getElementById('state');node.textContent='onbereikbaar';node.className='state bad'});
+fetch('/internal/v1/dashboard/identity').then(r=>r.json()).then(data=>{const i=data.identity;document.getElementById('identity').textContent=i.display_name+' · '+i.voice_style.qualities.join(', ')}).catch(()=>{document.getElementById('identity').textContent='Identiteit onbereikbaar'});
 </script></body></html>""",
             headers={
                 "Cache-Control": "no-store",

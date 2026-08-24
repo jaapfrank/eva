@@ -124,10 +124,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   local-only (`--pull=never`), netwerkloos, read-only en als niet-root zonder
   mounts of secrets; het verpakte runtimepad importeert en de container wordt
   automatisch opgeruimd. Gerichte tests en onafhankelijke review zijn groen.
-- [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
-  bouwen met netwerk uit; daarna de versiepassende resterende testset en
-  beheerde startupconfiguratie vastleggen vóór een reproduceerbare
-  B-kandidaat.
+- [ ] V53-buildclosure: de offline kandidaatimage is gebouwd, maar de
+  versiepassende eindtestscope en beheerde startupconfiguratie ontbreken nog.
+  De losse 4D-recoveryfixtures mogen hiervoor niet worden gebruikt: hun eigen
+  pre-code-gate is rood op de gebonden schema-manifesthash en de historische
+  kandidaat heeft een afwijkende schedule-hash. Eerst die recoveryset als
+  afzonderlijk, consistent checkpoint herstellen; pas daarna de kandidaatset
+  vastzetten en de resterende tests draaien.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
 - [x] Core-database-DSN: de runtime weigert een inline DSN, inclusief een lege
@@ -253,6 +256,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   gesloten staged draft is exact aan pack-id, versie en hash gebonden en geeft
   uitsluitend een reproduceerbare presentatiediff. Geen dashboard-write,
   publicatie, runtime-switch of B-wijziging (`91b2760`).
+- [x] Dashboard D02a: de lokale alleen-lezen pagina toont nu uitsluitend de
+  ondertekende én werkelijk `current` IdentityPack (naam, stijl, versie en
+  pack-hash). Een staged/revoked pack of verificatiefout geeft een gesaneerde
+  503; 17 gerichte tests en onafhankelijke review zijn groen. Geen draft-write,
+  publicatie, runtime-switch of B-wijziging.
 - [x] IdentityPack-verificatie: de runtime laadt alleen canonieke bytes van
   de gebonden huidige identiteit, met gecontroleerde bronhash en Ed25519-
   handtekening tegen een expliciete publieke trustbinding. Geen signer,

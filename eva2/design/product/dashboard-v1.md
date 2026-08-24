@@ -19,8 +19,9 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 
 1. **D01 — alleen-lezen overzicht:** API + eenvoudige webpagina met B-image,
    gates, receipts en open blokkades; geen mutaties.
-2. **D02 — identiteit als versie:** draft/diff/publish voor IdentityPack met
-   hash, audit-event en rollback naar een eerder pack.
+2. **D02 — identiteit als versie:** D02a toont nu de geverifieerde actieve
+   IdentityPack alleen-lezen. Daarna volgen apart draft/diff/publish met hash,
+   audit-event en rollback naar een eerder pack.
 3. **D03 — personen en Telegram:** pas na de connectorneutrale identiteitslaag;
    bindings, groepsroutes, consent en koppelchallenge.
 4. **D04 — skillcatalogus:** gepinde, read-only catalogus en
