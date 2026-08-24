@@ -11,11 +11,20 @@ import json
 import os
 from pathlib import Path
 import stat
+import tempfile
 from typing import Any
 
 
 MAX_WHEEL_BYTES = 64 * 1024 * 1024
 MANIFEST_CONTRACT = "EvaManagedBWheelhouseManifest/v1"
+
+
+class MaterializedWheelhouse:
+    """A private exact wheelhouse whose caller owns its temporary parent."""
+
+    def __init__(self, path: Path, receipt: dict[str, object]) -> None:
+        self.path = path
+        self.receipt = receipt
 
 
 def _sha256(value: bytes) -> str:
@@ -196,6 +205,155 @@ def _wheel_bytes(path: Path, *, expected_size: int) -> str:
     return digest.hexdigest()
 
 
+def _sealed_source_entries(
+    root: Path, expected: dict[str, tuple[str, int]]
+) -> dict[str, Path]:
+    try:
+        metadata = root.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B wheel artifact root is inaccessible") from error
+    if not stat.S_ISDIR(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode):
+        raise RuntimeError("managed B wheel artifact root must be a regular directory")
+    entries = list(os.scandir(root))
+    if {entry.name for entry in entries} != set(expected):
+        raise RuntimeError("managed B wheel artifact root file set differs from its manifest")
+    result: dict[str, Path] = {}
+    for entry in entries:
+        source = Path(entry.path)
+        metadata = source.lstat()
+        if (
+            stat.S_ISLNK(metadata.st_mode)
+            or not stat.S_ISREG(metadata.st_mode)
+            or metadata.st_nlink != 1
+        ):
+            raise RuntimeError("managed B wheel artifact root contains an unsafe entry")
+        digest, length = expected[entry.name]
+        if _wheel_bytes(source, expected_size=length) != digest:
+            raise RuntimeError("managed B wheel artifact digest differs")
+        result[entry.name] = source
+    return result
+
+
+def _copy_wheel(source: Path, destination: Path, *, expected_digest: str, expected_size: int) -> None:
+    source_before = source.lstat()
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        source_fd = os.open(source, flags)
+    except OSError as error:
+        raise RuntimeError("managed B wheel artifact cannot be opened safely") from error
+    try:
+        opened = os.fstat(source_fd)
+        if (
+            not stat.S_ISREG(opened.st_mode)
+            or opened.st_nlink != 1
+            or opened.st_dev != source_before.st_dev
+            or opened.st_ino != source_before.st_ino
+            or opened.st_size != expected_size
+        ):
+            raise RuntimeError("managed B wheel artifact changed before copying")
+        destination_fd = os.open(
+            destination,
+            os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_CLOEXEC", 0),
+            0o600,
+        )
+        try:
+            digest = hashlib.sha256()
+            length = 0
+            while block := os.read(source_fd, 1024 * 1024):
+                digest.update(block)
+                length += len(block)
+                view = memoryview(block)
+                while view:
+                    written = os.write(destination_fd, view)
+                    if written <= 0:
+                        raise RuntimeError("managed B wheel copy could not make progress")
+                    view = view[written:]
+            os.fsync(destination_fd)
+        finally:
+            os.close(destination_fd)
+    finally:
+        os.close(source_fd)
+    source_after = source.lstat()
+    if (
+        source_before.st_dev,
+        source_before.st_ino,
+        source_before.st_mode,
+        source_before.st_size,
+        source_before.st_ctime_ns,
+    ) != (
+        source_after.st_dev,
+        source_after.st_ino,
+        source_after.st_mode,
+        source_after.st_size,
+        source_after.st_ctime_ns,
+    ):
+        raise RuntimeError("managed B wheel artifact changed while copying")
+    if length != expected_size or digest.hexdigest() != expected_digest:
+        raise RuntimeError("managed B wheel copy digest differs")
+    destination.chmod(0o444)
+
+
+def materialize_wheelhouse(
+    manifest_raw: bytes,
+    coverage_raw: bytes,
+    artifact_root: Path,
+    output_parent: Path,
+    requirements_lock_raw: bytes,
+) -> MaterializedWheelhouse:
+    """Copy an exact local artifact set into a fresh private wheelhouse.
+
+    ``artifact_root`` is deliberately caller-supplied.  This function makes no
+    claim about how those bytes were acquired; it only makes their later
+    offline use reproducible when they exactly match the sealed manifest.
+    """
+
+    manifest = _manifest(manifest_raw)
+    expected, tree_sha256 = _expected_wheels(
+        coverage_raw, manifest, requirements_lock_raw
+    )
+    sources = _sealed_source_entries(artifact_root, expected)
+    try:
+        parent_metadata = output_parent.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B wheelhouse output parent is inaccessible") from error
+    if not stat.S_ISDIR(parent_metadata.st_mode) or stat.S_ISLNK(parent_metadata.st_mode):
+        raise RuntimeError("managed B wheelhouse output parent must be a regular directory")
+    destination_root = Path(tempfile.mkdtemp(prefix="eva2-wheelhouse-", dir=output_parent))
+    destination_root.chmod(0o700)
+    try:
+        for filename in sorted(expected):
+            digest, length = expected[filename]
+            _copy_wheel(
+                sources[filename],
+                destination_root / filename,
+                expected_digest=digest,
+                expected_size=length,
+            )
+        validated = validate_wheelhouse(
+            manifest_raw, coverage_raw, destination_root, requirements_lock_raw
+        )
+        destination_root.chmod(0o500)
+        if destination_root.lstat().st_mode & 0o222:
+            raise RuntimeError("managed B wheelhouse cannot be made read-only")
+    except Exception:
+        destination_root.chmod(0o700)
+        for entry in destination_root.iterdir():
+            entry.unlink()
+        destination_root.rmdir()
+        raise
+    receipt = {
+        **validated,
+        "contract": "EvaManagedBWheelhouseMaterializationReceipt/v1",
+        "input_tree_sha256": tree_sha256,
+        "nonclaims": [
+            "The local artifact root is not proof of proxy-authenticated acquisition.",
+            "No package was installed, imported, executed, or built into a Docker image.",
+            "No B configuration, container, volume, secret, or live service was opened.",
+        ],
+    }
+    return MaterializedWheelhouse(destination_root, receipt)
+
+
 def validate_wheelhouse(
     manifest_raw: bytes,
     coverage_raw: bytes,
@@ -258,6 +416,8 @@ def inspect_wheelhouse_manifest(
 
 __all__ = [
     "MANIFEST_CONTRACT",
+    "MaterializedWheelhouse",
     "inspect_wheelhouse_manifest",
+    "materialize_wheelhouse",
     "validate_wheelhouse",
 ]

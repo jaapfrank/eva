@@ -3,11 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import tempfile
 
 import pytest
 
 from eva.operations.managed_b_wheelhouse import (
     inspect_wheelhouse_manifest,
+    materialize_wheelhouse,
     validate_wheelhouse,
 )
 
@@ -69,6 +71,12 @@ def _inputs(tmp_path: Path) -> tuple[bytes, bytes, bytes, Path]:
     return manifest, coverage, lock, wheelhouse
 
 
+@pytest.fixture
+def native_tmp_path() -> Path:
+    with tempfile.TemporaryDirectory(prefix="eva2-wheelhouse-test-", dir="/tmp") as path:
+        yield Path(path)
+
+
 def test_wheelhouse_requires_the_exact_sealed_files(tmp_path: Path) -> None:
     manifest, coverage, lock, wheelhouse = _inputs(tmp_path)
 
@@ -77,6 +85,56 @@ def test_wheelhouse_requires_the_exact_sealed_files(tmp_path: Path) -> None:
     assert receipt["status"] == "passed"
     assert receipt["network_used"] is False
     assert receipt["expected_wheel_count"] == 2
+
+
+def test_materializes_exact_local_bytes_into_a_new_read_only_wheelhouse(
+    tmp_path: Path, native_tmp_path: Path
+) -> None:
+    manifest, coverage, lock, artifacts = _inputs(tmp_path / "source")
+    output_parent = native_tmp_path / "output"
+    output_parent.mkdir()
+
+    materialized = materialize_wheelhouse(
+        manifest, coverage, artifacts, output_parent, lock
+    )
+
+    assert materialized.receipt["status"] == "passed"
+    assert materialized.receipt["network_used"] is False
+    assert materialized.receipt["input_tree_sha256"] == materialized.receipt[
+        "wheelhouse_tree_sha256"
+    ]
+    assert {path.name for path in materialized.path.iterdir()} == {
+        "alpha-1.0-py3-none-any.whl",
+        "beta-2.0-py3-none-any.whl",
+    }
+    assert materialized.path.stat().st_mode & 0o222 == 0
+    assert all(path.stat().st_mode & 0o222 == 0 for path in materialized.path.iterdir())
+
+
+def test_materializer_refuses_hardlinks_extra_and_changed_sources(tmp_path: Path) -> None:
+    manifest, coverage, lock, artifacts = _inputs(tmp_path / "source")
+    output_parent = tmp_path / "output"
+    output_parent.mkdir()
+    (artifacts / "extra-1.0-py3-none-any.whl").write_bytes(b"extra")
+    with pytest.raises(RuntimeError, match="file set"):
+        materialize_wheelhouse(manifest, coverage, artifacts, output_parent, lock)
+
+    manifest, coverage, lock, artifacts = _inputs(tmp_path / "linked")
+    output_parent = tmp_path / "output-linked"
+    output_parent.mkdir()
+    (artifacts / "alpha-1.0-py3-none-any.whl").unlink()
+    (artifacts / "alpha-1.0-py3-none-any.whl").hardlink_to(
+        artifacts / "beta-2.0-py3-none-any.whl"
+    )
+    with pytest.raises(RuntimeError, match="unsafe entry"):
+        materialize_wheelhouse(manifest, coverage, artifacts, output_parent, lock)
+
+    manifest, coverage, lock, artifacts = _inputs(tmp_path / "changed")
+    output_parent = tmp_path / "output-changed"
+    output_parent.mkdir()
+    (artifacts / "alpha-1.0-py3-none-any.whl").write_bytes(b"changed")
+    with pytest.raises(RuntimeError, match="(size|digest) differs"):
+        materialize_wheelhouse(manifest, coverage, artifacts, output_parent, lock)
 
 
 @pytest.mark.parametrize("mutation", ("missing", "extra", "sdist", "tampered"))

@@ -93,6 +93,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   lockfile. De validator weigert ontbrekende, extra, source-, symlink- en
   gewijzigde bestanden zonder iets te installeren of te downloaden. De
   fysieke wheel-bytes en de offline imagebuild blijven bewust afzonderlijk.
+- [x] Wheelhouse B02b: een exact gesloten lokale artifactmap kan nu naar een
+  nieuwe private, read-only wheelhouse worden gekopieerd met hashcontrole vóór,
+  tijdens en na de kopie. Herkomst uit een goedgekeurde artifactproxy is nog
+  niet bewezen; er is niets geïnstalleerd, gebouwd of aan B gekoppeld.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare
