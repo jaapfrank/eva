@@ -109,6 +109,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   tests + onafhankelijke review zijn groen; zie
   `reviews/managed-b-runtime-secret-preflight-6ead73f.md`. PostgreSQL-
   wachtwoordbestand, Hindsight-volume en B-adoptie blijven apart open.
+- [x] Hindsight-volume: de gekozen naam is verplichte, geldige en verzegelde
+  B-configuratie; 25 tests + onafhankelijke review zijn groen; zie
+  `reviews/managed-b-hindsight-volume-preflight-128e187.md`. Bestaande data,
+  back-up en adoptie zijn bewust nog niet geclaimd.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live

@@ -27,7 +27,7 @@ incompatibele Hindsight-definities.
 | Codex-authority | Directory `1000:1000`/`0700`; `auth.json` privé en read-only gemount. Eva leest deze bron nooit rechtstreeks. |
 | Eva-modellease | Directory `1000:65532`/`02750`; lease één link, `1000:65532`/`0640`. |
 | Hindsight-lease | Directory `1000:1000`/`0700`; lease één link, `1000:1000`/`0600`. |
-| Volumes | Exact gepinde namen voor operationele waarheid, Hindsight en workspace; nooit `down -v`. |
+| Volumes | PostgreSQL en workspace hebben exact gepinde namen; de Hindsight-naam is een verplichte, verzegelde B-configuratiewaarde en wordt pas bij adoptie read-only tegen de bestaande data/back-up gecontroleerd. Nooit `down -v`. |
 
 De preflight vereist nu ook de gepinde `EVA_STACK_WORK_VOLUME`,
 `EVA_CODEX_AUTH_DIR` en `EVA_HINDSIGHT_ACCESS_DIR`.
