@@ -136,9 +136,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   live review is groen; zie `reviews/managed-b-readonly-backup-2026-08-24.md`.
   Dit is geen adoptie of B-release.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
-  accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
-  onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
-  multi-accountproef blijven open.
+  accounts koppelen zonder dat één account naar twee personen wijst; 7 tests +
+  onafhankelijke review zijn groen; zie
+  `reviews/telegram-multi-account-identity-38f4f6c.md`. Koppelchallenge,
+  groepsconsent en live multi-accountproef blijven open.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
   Authenticatie en B-deploy blijven open.
