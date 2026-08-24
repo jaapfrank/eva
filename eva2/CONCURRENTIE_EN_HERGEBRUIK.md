@@ -118,6 +118,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke review zijn groen; zie
   `reviews/managed-b-postgres-secret-preflight-6157aa8.md`. B is niet
   benaderd; de uiteindelijke hostprovisioning/adoptie blijft open.
+- [x] B-volumepins: PostgreSQL en workspace zijn read-only aangetroffen en nu
+  exact gepind zonder data te lezen; onafhankelijke review is groen; zie
+  `reviews/managed-b-observed-volume-pins-4ef9ae3.md`. De Hindsight-keuze
+  wordt pas na routing- en back-upreadback in de adoptierun vastgezet.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
