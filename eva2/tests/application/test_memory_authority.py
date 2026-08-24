@@ -5,7 +5,9 @@ import pytest
 from eva.application.memory import (
     InvalidMemoryAssertion,
     MemoryAuthority,
+    MemoryRetentionReceipt,
     MemoryWriteReceipt,
+    PresenceMemory,
     RecallCurrentFacts,
     RecalledMemoryFact,
     RememberFact,
@@ -23,6 +25,34 @@ EVIDENCE_ID = "52752881-f9e4-58e7-a398-8c4a982d6794"
 NOW = "2026-08-23T10:00:00Z"
 RETENTION = "2027-08-23T10:00:00Z"
 HASH = "1" * 64
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    (
+        {"bank_id": "", "document_id": "doc", "content_sha256": HASH},
+        {"bank_id": "bank", "document_id": "", "content_sha256": HASH},
+        {"bank_id": "bank", "document_id": "doc", "content_sha256": "NOT-A-HASH"},
+        {
+            "bank_id": "bank",
+            "document_id": "doc",
+            "content_sha256": HASH,
+            "disposition": "dropped",
+        },
+    ),
+)
+def test_memory_retention_receipt_rejects_invalid_wire_values(
+    kwargs: dict[str, str],
+) -> None:
+    with pytest.raises(ValueError):
+        MemoryRetentionReceipt(**kwargs)  # type: ignore[arg-type]
+
+
+def test_presence_rejects_invalid_style_mirror() -> None:
+    with pytest.raises(ValueError, match="style mirror"):
+        PresenceMemory(None, (), 17)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="style mirror"):
+        PresenceMemory(None, (), "   ")  # type: ignore[arg-type]
 
 
 def _source(**changes: object) -> ExperienceSourceEvent:

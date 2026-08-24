@@ -8,7 +8,9 @@ write authority through this module.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol
+from datetime import datetime
+import re
+from typing import Literal, Protocol
 
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
@@ -104,6 +106,98 @@ class RecalledMemoryFact:
 class PresenceMemory:
     recall: MemoryRecall
     confirmed_facts: tuple[ConfirmedFact, ...]
+    style_mirror: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.style_mirror is not None and (
+            not isinstance(self.style_mirror, str)
+            or not self.style_mirror.strip()
+            or len(self.style_mirror) > 4096
+        ):
+            raise ValueError("memory style mirror is invalid")
+
+
+@dataclass(frozen=True, slots=True)
+class ConversationMemoryDocument:
+    """Stable conversation source retained by the selected memory engine."""
+
+    tenant_id: str
+    installation_id: str
+    principal_id: str
+    conversation_id: str
+    document_id: str
+    content: str
+    occurred_at: str
+    source_ref: str
+    evidence_ref: str
+    privacy_class: Literal["public", "internal", "confidential", "restricted"]
+    trust: Literal[
+        "direct_user",
+        "verified_external",
+        "host_policy",
+        "model_inference_unconfirmed",
+    ]
+    project_id: str | None = None
+
+    def __post_init__(self) -> None:
+        required = (
+            self.tenant_id,
+            self.installation_id,
+            self.principal_id,
+            self.conversation_id,
+            self.document_id,
+            self.source_ref,
+            self.evidence_ref,
+        )
+        if not all(required):
+            raise ValueError("memory document identifiers are required")
+        if not self.content.strip():
+            raise ValueError("memory document content is required")
+        if self.project_id is not None and (
+            not self.project_id.strip() or len(self.project_id) > 200
+        ):
+            raise ValueError("memory document project ID is invalid")
+        if len(self.content.encode("utf-8")) > 1_048_576:
+            raise ValueError("memory document exceeds one MiB")
+        if self.privacy_class not in {
+            "public",
+            "internal",
+            "confidential",
+            "restricted",
+        }:
+            raise ValueError("memory document privacy class is invalid")
+        if self.trust not in {
+            "direct_user",
+            "verified_external",
+            "host_policy",
+            "model_inference_unconfirmed",
+        }:
+            raise ValueError("memory document trust is invalid")
+        try:
+            datetime.strptime(self.occurred_at, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError as error:
+            raise ValueError(
+                "memory document timestamp must be canonical UTC"
+            ) from error
+
+
+@dataclass(frozen=True, slots=True)
+class MemoryRetentionReceipt:
+    bank_id: str
+    document_id: str
+    content_sha256: str
+    disposition: Literal["retained"] = "retained"
+
+    def __post_init__(self) -> None:
+        if any(
+            not isinstance(value, str) or not value.strip() or len(value) > 512
+            for value in (self.bank_id, self.document_id)
+        ):
+            raise ValueError("memory retention receipt identifiers are invalid")
+        if not re.fullmatch(r"[0-9a-f]{64}", self.content_sha256):
+            raise ValueError("memory retention receipt content hash is invalid")
+        if self.disposition != "retained":
+            raise ValueError("memory retention receipt disposition is invalid")
 
 
 class MemoryRepository(Protocol):
@@ -270,12 +364,14 @@ class MemoryAuthority:
 
 
 __all__ = [
+    "ConversationMemoryDocument",
     "CurrentMemoryConflict",
     "ExpectedCurrentFact",
     "InvalidMemoryAssertion",
     "MemoryAuthority",
     "MemoryAuthorityError",
     "MemoryRepository",
+    "MemoryRetentionReceipt",
     "MemoryWriteReceipt",
     "PresenceMemory",
     "RecallCurrentFacts",
