@@ -120,10 +120,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   actuele lokale basisimage moet vooraf exact bij B03c passen; de ongetagde
   kandidaat wordt daarna teruggecontroleerd. 27 gerichte tests, fysieke build
   en onafhankelijke review zijn groen; B is niet gestart of vervangen.
-- [ ] Kandidaat-runtime-smoke B03f: start de ongetagde kandidaat één keer in
-  een tijdelijke, netwerkloze container zonder B-secrets; bewijs dat het
-  verpakte runtimepad als niet-root kan importeren en ruim de tijdelijke
-  container daarna op.
+- [x] Kandidaat-runtime-smoke B03f: de ongetagde kandidaat start tijdelijk
+  local-only (`--pull=never`), netwerkloos, read-only en als niet-root zonder
+  mounts of secrets; het verpakte runtimepad importeert en de container wordt
+  automatisch opgeruimd. Gerichte tests en onafhankelijke review zijn groen.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare
