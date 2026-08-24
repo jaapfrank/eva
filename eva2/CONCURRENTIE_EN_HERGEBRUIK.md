@@ -81,6 +81,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Modellease-consumer: core leest alleen een atomair gedeelde lease met
   vast `1000:65532`/`0640`-contract; 13 gerichte tests + onafhankelijke review
   zijn groen. De leasepublisher en host-directorycontract blijven open.
+- [x] Modellease-publisher: private authoritybron, vooraf-geprovisioneerde
+  lease-directory en atomische publicatie zijn afgedwongen; 17 tests +
+  onafhankelijke herreview zijn groen. Hostprovisioning/B-deploy blijft open.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
