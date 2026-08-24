@@ -78,6 +78,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Schema-installer: DSN alleen via private file-secret; apart non-root
   profiel + 15 gerichte tests + onafhankelijke review zijn groen. De oude
   stackmigratie blijft bewust geen beheerd B-releasepad.
+- [x] Modellease-consumer: core leest alleen een atomair gedeelde lease met
+  vast `1000:65532`/`0640`-contract; 13 gerichte tests + onafhankelijke review
+  zijn groen. De leasepublisher en host-directorycontract blijven open.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
