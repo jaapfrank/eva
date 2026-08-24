@@ -59,8 +59,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] V53-Hindsight-fixture gesloten: de ontbrekende `PATCH`-mock is als
   vijf-regelig testcheckpoint hersteld; drie tests en onafhankelijke review
   zijn groen.
-- [ ] V53-buildclosure: Docker-buildinput en de resterende versiepassende
-  testset vastleggen vóór een reproduceerbare kandidaatbuild.
+- [x] V53-kandidaatimage is schoon gebouwd uit de herstelde branch en importeert
+  de runtime in een nieuwe container. Hij is niet gedeployd en vervangt B niet.
+- [ ] V53-buildclosure: versiepassende resterende testset en beheerde
+  startupconfiguratie vastleggen vóór een reproduceerbare B-kandidaat.
 - [ ] Dashboard D01: alleen-lezen overzicht voor B-image, gates, receipts en
   open blokkades. Daarna volgen apart IdentityPack, personen/Telegram, skills
   en settings; zie `design/product/dashboard-v1.md`.
