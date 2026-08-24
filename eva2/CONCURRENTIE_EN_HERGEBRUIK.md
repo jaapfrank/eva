@@ -37,6 +37,36 @@ De vier-framework gate blijft alleen een bescherming tegen een algemene claim
 als “Eva is overal beter”. Zolang hij rood is, doen we die claim niet. Hij is
 geen voorwaarde om Eva v1 op Telegram af te maken.
 
+## V1-afvinkbord — kleine opleverstukken
+
+Elk open vak is één klein stuk werk met eigen Git-checkpoint, gerichte test en
+onafhankelijke review. Een vak wordt pas afgevinkt als die drie er zijn; een
+langdurige verzamelaanpassing telt niet als voortgang.
+
+- [x] Concurrentiedocumentatie vertaald naar `zelf beter`, `hergebruik` en
+  `niet v1`; Telegram is de enige verplichte v1-route.
+- [x] Eindnorm vastgelegd: bestaande core 15/15 en native 9/9 blijven intact;
+  MX01-MX06 dekken multi-persoon, meerbeurts gesprek, toolketen, crashherstel
+  en begrensde self-improvement.
+- [x] Draaiende B-v53 broninhoud hashgebonden vastgelegd zonder secrets te
+  lezen of B te wijzigen.
+- [x] V53-bronherstel opgesplitst in Git: migratie-input, tijdlijnmodule en
+  adapterlaag zijn onafhankelijk gecontroleerde baseline-checkpoints.
+- [ ] V53-application-, runtime- en operationslagen als afzonderlijke
+  baseline-checkpoints herstellen en daarna de volledige closure-test draaien.
+- [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
+  file-secrets opleveren.
+- [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
+  groepsroute, wederzijdse koppelchallenge en privé/gedeeld geheugen met
+  toestemming.
+- [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
+  vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
+- [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde
+  Telegram-B-pad bewijzen.
+- [ ] Eén eindimage bevriezen; core 15/15, native 9/9 en MX01-MX06 daarop
+  werkelijk uitvoeren.
+- [ ] Zevendaagse resident-run en onafhankelijke promotiebeslissing.
+
 ## Volledige productmatrix
 
 `Bewezen` betekent live getest. `Aanwezig` betekent gedocumenteerde
