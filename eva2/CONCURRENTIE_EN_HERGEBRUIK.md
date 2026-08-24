@@ -113,6 +113,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke review zijn groen; zie
   `reviews/managed-b-render-command-80eb350.md`. Een echte B-configuratie en
   adoptierun blijven afzonderlijk open.
+- [x] Managed-B-servicelabels: de toekomstige startcontrole vereist exact alle
+  acht manifestservices met dezelfde configuratiesnapshothash; 41 checks en
+  onafhankelijke review zijn groen; zie
+  `reviews/managed-b-all-service-labels-6e8cae5.md`. De Dockerobservatie na
+  start is nog een aparte, open integratiestap.
 - [x] Managed-B-runtimebestanden: HA, database-DSN en beide Telegrambestanden
   worden metadata-only en fail-closed gecontroleerd vóór een adoptierun; 24
   tests + onafhankelijke review zijn groen; zie
