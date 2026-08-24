@@ -84,8 +84,14 @@ langdurige verzamelaanpassing telt niet als voortgang.
   met onafhankelijke review, compile en 23 gerichte tests; zie
   `reviews/recovery-source-baseline-2fc19f3.md`. De kandidaatpatches blijven
   afzonderlijk totdat ze gericht met deze baseline zijn verzoend.
-- [ ] V53-buildclosure: versiepassende resterende testset en beheerde
-  startupconfiguratie vastleggen vóór een reproduceerbare B-kandidaat.
+- [x] Buildinput B01: kandidaatcontext komt uitsluitend uit een expliciete
+  vaste Git-commit, niet uit de vuile werkmap. Dockerfile, lockfile,
+  COPY-inputs, archiefhash en commit-tijd worden secretvrij gebonden; een
+  imagebuild, netwerk, B-adoptie en releaseclaim zijn bewust nog uitgesloten.
+- [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
+  bouwen met netwerk uit; daarna de versiepassende resterende testset en
+  beheerde startupconfiguratie vastleggen vóór een reproduceerbare
+  B-kandidaat.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
 - [x] Core-database-DSN: de runtime weigert een inline DSN, inclusief een lege
