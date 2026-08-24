@@ -84,6 +84,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   met onafhankelijke review, compile en 23 gerichte tests; zie
   `reviews/recovery-source-baseline-2fc19f3.md`. De kandidaatpatches blijven
   afzonderlijk totdat ze gericht met deze baseline zijn verzoend.
+- [x] 4D-authoritybron is als één exact recoverycheckpoint vastgelegd
+  (`84153b0`): schedule, connector-, profiel- en model-fixtures, drie gates,
+  checker en freeze-test wijzen weer naar schedule `f492…`. Onafhankelijke
+  review bevestigt dat dit geen schema-reseal claimt. De checker stopt op de
+  huidige 66-schema-registry (`3369…`) versus de historische 64-schema-
+  authority (`fcf…`); een aparte 4D-kandidaat is daarvoor nog open.
 - [x] Buildinput B01: kandidaatcontext komt uitsluitend uit een expliciete
   vaste Git-commit, niet uit de vuile werkmap. Dockerfile, lockfile,
   COPY-inputs, archiefhash en commit-tijd worden secretvrij gebonden; een
@@ -126,10 +132,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   automatisch opgeruimd. Gerichte tests en onafhankelijke review zijn groen.
 - [ ] V53-buildclosure: de offline kandidaatimage is gebouwd, maar de
   versiepassende eindtestscope en beheerde startupconfiguratie ontbreken nog.
-  De losse 4D-recoveryfixtures mogen hiervoor niet worden gebruikt: hun eigen
-  pre-code-gate is rood op de gebonden schema-manifesthash en de historische
-  kandidaat heeft een afwijkende schedule-hash. Eerst die recoveryset als
-  afzonderlijk, consistent checkpoint herstellen; pas daarna de kandidaatset
+  De 4D-authoritybron is hersteld, maar vereist nog een afzonderlijke
+  64-schema-kandidaat: de huidige hoofdregistry heeft 66 schema's en mag niet
+  stilzwijgend als nieuwe 4D-freeze gelden. Pas daarna de kandidaatset
   vastzetten en de resterende tests draaien.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
