@@ -43,7 +43,10 @@ secret-hardening wordt gepresenteerd.
   installer. Alleen het aparte schema-installatieprofiel volgt dat contract;
   de stack is geen beheerd B-releasepad.
 - PostgreSQLs `POSTGRES_PASSWORD_FILE` wordt door de upstream Postgres-image
-  gelezen en niet door Eva-code.
+  gelezen en niet door Eva-code. De losse bootstrapcomponent gebruikt daarom
+  een expliciete read-only bind van een root-owned `0600`-bestand; de
+  disposable upstreamcontractproef dekt verse én bestaande data. De volledige
+  managed B-manifest/adoptie blijft afzonderlijk open.
 
 De overige `read_text()`/`read_bytes()`-locaties zijn identitypacks,
 fixture-public-keys, repository/workspacebestanden, CAS-objecten of

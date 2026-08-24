@@ -93,8 +93,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Managed-B-hostcontract: workspacevolume en Codex-, Eva- en Hindsight-
   directories zijn exact gepind en fail-closed gevalideerd; 20 tests +
   onafhankelijke review zijn groen; zie
-  `reviews/managed-b-host-contract-ce23545.md`. PostgreSQL-bootstrap en de
-  zelfstandige manifest/adoptie blijven open.
+  `reviews/managed-b-host-contract-ce23545.md`.
+- [x] PostgreSQL-bootstrap: gepinde upstream-image leest een direct gebonden
+  wachtwoordbestand; een echte disposable proef bewijst verse init én behoud
+  van bestaande data bij herstart. Zie
+  `deploy/living-core/postgres-bootstrap.compose.yml`; de zelfstandige
+  manifest/adoptie blijft open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live

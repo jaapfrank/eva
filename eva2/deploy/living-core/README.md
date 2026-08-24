@@ -60,3 +60,12 @@ niet dat deployment of recreate is toegestaan.
 
 De losse secretreaders en de precieze nonclaims van deze vertical staan in
 [`SECRET_BOUNDARY_INVENTORY.md`](SECRET_BOUNDARY_INVENTORY.md).
+
+## PostgreSQL-bootstrapcomponent
+
+`postgres-bootstrap.compose.yml` is de afzonderlijk getoetste PostgreSQL-basis
+voor de latere managed manifestset. Hij bindt alleen een vooraf bestaand,
+root-owned `0600` wachtwoordbestand op
+`/run/eva2/postgres-password`, zet hostauthenticatie bij een nieuwe database op
+SCRAM en gebruikt een gepind volume. Hij is geen toestemming om de huidige B
+te vervangen of te herstarten.

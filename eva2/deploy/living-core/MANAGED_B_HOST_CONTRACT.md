@@ -32,8 +32,15 @@ incompatibele Hindsight-definities.
 De preflight vereist nu ook de gepinde `EVA_STACK_WORK_VOLUME`,
 `EVA_CODEX_AUTH_DIR` en `EVA_HINDSIGHT_ACCESS_DIR`.
 
-## Open blocker
+## PostgreSQL-bootstrapbasis
 
 PostgreSQL leest `POSTGRES_PASSWORD_FILE` zelf. Dat valt niet onder Eva's
-fileloader. Een aparte PostgreSQL-bootstrapcontracttest voor zowel een verse als
-een al geïnitialiseerde volume is vereist vóór een volledige managed-stackclaim.
+fileloader. `postgres-bootstrap.compose.yml` bindt daarom een vooraf
+geprovisioneerd root-owned `0600`-bestand direct en read-only; Docker
+`secrets:file` wordt niet gebruikt. De afzonderlijke contractproef voert de
+gepinde upstream-image uit met een verse én herstartte tijdelijke volume en
+bewijst dat de initiële waarde werkt en een bestaande database niet reset.
+
+Dit is alleen de PostgreSQL-component. Een volledige managed-stackclaim blijft
+geblokkeerd totdat de zelfstandige manifestset en een adoptierun zijn
+gereviewd en echt uitgevoerd.

@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60
+    pull_policy: missing
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2/postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_POSTGRES_PASSWORD_FILE_HOST:?set a root-owned mode-0600 PostgreSQL password file}
+        target: /run/eva2/postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -U postgres -d "$${POSTGRES_DB}" &&
+          psql -U postgres -d "$${POSTGRES_DB}" -Atc 'SELECT 1' | grep -qx 1
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  postgres-data:
+    name: ${EVA_STACK_POSTGRES_VOLUME:-eva2-postgres}
+    labels:
+      eva2.component: operational-truth

@@ -23,6 +23,7 @@ MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
 SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
 ENVIRONMENT_NAME = "explicit B deployment environment"
 MANAGED_WORK_VOLUME = "eva2-living-work"
+MANAGED_POSTGRES_VOLUME = "eva2-postgres"
 MODEL_AUTHORITY_UID = 1000
 MODEL_AUTHORITY_GID = 1000
 
@@ -48,6 +49,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_FANOUT_ALLOW_INSECURE_HTTP",
     "EVA_FILE_BATCH_ROOT",
     "EVA_STACK_WORK_VOLUME",
+    "EVA_STACK_POSTGRES_VOLUME",
     "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
     "EVA_HINDSIGHT_ACCESS_DIR",
@@ -236,6 +238,11 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_FILE_BATCH_ROOT must preserve /var/lib/eva/work")
     if values["EVA_STACK_WORK_VOLUME"] != MANAGED_WORK_VOLUME:
         raise RuntimeError(f"EVA_STACK_WORK_VOLUME must be exactly {MANAGED_WORK_VOLUME}")
+    if values["EVA_STACK_POSTGRES_VOLUME"] != MANAGED_POSTGRES_VOLUME:
+        raise RuntimeError(
+            "EVA_STACK_POSTGRES_VOLUME must be exactly "
+            f"{MANAGED_POSTGRES_VOLUME}"
+        )
     docker_binary = _require_absolute(
         values["EVA_B_DOCKER_BINARY"], "EVA_B_DOCKER_BINARY"
     )
