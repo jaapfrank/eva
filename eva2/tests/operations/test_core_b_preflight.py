@@ -7,11 +7,18 @@ from types import SimpleNamespace
 import pytest
 
 from eva.operations.core_b_preflight import (
-    load_core_b_plan,
+    load_core_b_plan as _load_core_b_plan,
     observe_current_b,
     verify_current_management,
     verify_docker_endpoint,
 )
+
+
+def load_core_b_plan(*args: object, **kwargs: object):
+    """Run the root-owned production contract against private test files."""
+
+    kwargs.setdefault("postgres_password_owner_uid", os.geteuid())
+    return _load_core_b_plan(*args, **kwargs)
 
 
 def _configuration(private_tmp_path: Path) -> dict[str, str]:
@@ -29,6 +36,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     )
     telegram_bindings = _private_secret(
         private_tmp_path / "telegram-bindings", "{}\n"
+    )
+    postgres_password = _private_secret(
+        private_tmp_path / "postgres-password", "not-a-real-postgres-password\n"
     )
     codex_authority = private_tmp_path / "codex-auth"
     codex_authority.mkdir(mode=0o700, exist_ok=True)
@@ -49,6 +59,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_STACK_BIND_ADDRESS": "127.0.0.1",
         "EVA_LIVING_CORE_IMAGE": "eva2-living-core@sha256:" + ("a" * 64),
         "EVA_DATABASE_DSN_FILE_HOST": str(database_dsn),
+        "EVA_POSTGRES_PASSWORD_FILE_HOST": str(postgres_password),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(telegram_token),
@@ -195,6 +206,39 @@ def test_plan_rejects_insecure_mounted_runtime_secret(
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 
+def test_production_default_rejects_non_root_postgres_password_file(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(RuntimeError, match="EVA_POSTGRES_PASSWORD_FILE_HOST.*UID 0"):
+        _load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+@pytest.mark.parametrize(
+    ("mode", "expected"),
+    (
+        (0o400, "permissions differ"),
+        (0o640, "no group/other permissions"),
+    ),
+)
+def test_plan_rejects_postgres_password_outside_exact_root_contract(
+    mode: int,
+    expected: str,
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    Path(values["EVA_POSTGRES_PASSWORD_FILE_HOST"]).chmod(mode)
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(
+        RuntimeError,
+        match=f"EVA_POSTGRES_PASSWORD_FILE_HOST.*{expected}",
+    ):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
 @pytest.mark.parametrize(
     "capability",
     (
@@ -206,6 +250,7 @@ def test_plan_rejects_insecure_mounted_runtime_secret(
         "EVA_STACK_WORK_VOLUME",
         "EVA_STACK_POSTGRES_VOLUME",
         "EVA_STACK_HINDSIGHT_VOLUME",
+        "EVA_POSTGRES_PASSWORD_FILE_HOST",
         "EVA_CODEX_AUTH_DIR",
         "EVA_MODEL_ACCESS_LEASE_DIR",
         "EVA_HINDSIGHT_ACCESS_DIR",

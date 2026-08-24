@@ -37,6 +37,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_STACK_BIND_ADDRESS",
     "EVA_LIVING_CORE_IMAGE",
     "EVA_DATABASE_DSN_FILE_HOST",
+    "EVA_POSTGRES_PASSWORD_FILE_HOST",
     "EVA_HOME_ASSISTANT_URL",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
@@ -118,7 +119,8 @@ def _preflight_host_secret(
     path_value: str,
     *,
     setting_name: str,
-    runtime_uid: int,
+    owner_uid: int,
+    required_mode: int | None = None,
 ) -> None:
     path = _require_absolute(path_value, setting_name)
     try:
@@ -128,12 +130,14 @@ def _preflight_host_secret(
     if stat.S_ISLNK(named.st_mode) or not stat.S_ISREG(named.st_mode):
         raise RuntimeError(f"{setting_name} must be a regular non-symlink file")
     permissions = stat.S_IMODE(named.st_mode)
-    if named.st_uid != runtime_uid:
-        raise RuntimeError(f"{setting_name} must be owned by runtime UID {runtime_uid}")
+    if named.st_uid != owner_uid:
+        raise RuntimeError(f"{setting_name} must be owned by UID {owner_uid}")
     if not permissions & stat.S_IRUSR:
         raise RuntimeError(f"{setting_name} owner must have read access")
     if permissions & (stat.S_IRWXG | stat.S_IRWXO):
         raise RuntimeError(f"{setting_name} must have no group/other permissions")
+    if required_mode is not None and permissions != required_mode:
+        raise RuntimeError(f"{setting_name} permissions differ from its contract")
     if not 0 < named.st_size <= MAX_RUNTIME_SECRET_BYTES:
         raise RuntimeError(f"{setting_name} size must be within 1..65536")
 
@@ -314,6 +318,7 @@ def load_core_b_plan(
     *,
     runtime_uid: int = 65532,
     operator_uid: int | None = None,
+    postgres_password_owner_uid: int = 0,
 ) -> CoreBPlan:
     """Create one immutable in-memory plan from one hardened file snapshot."""
 
@@ -329,22 +334,28 @@ def load_core_b_plan(
     _preflight_host_secret(
         values["EVA_HOME_ASSISTANT_TOKEN_FILE_HOST"],
         setting_name="EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
-        runtime_uid=runtime_uid,
+        owner_uid=runtime_uid,
     )
     _preflight_host_secret(
         values["EVA_DATABASE_DSN_FILE_HOST"],
         setting_name="EVA_DATABASE_DSN_FILE_HOST",
-        runtime_uid=runtime_uid,
+        owner_uid=runtime_uid,
     )
     _preflight_host_secret(
         values["EVA_TELEGRAM_BOT_TOKEN_FILE_HOST"],
         setting_name="EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
-        runtime_uid=runtime_uid,
+        owner_uid=runtime_uid,
     )
     _preflight_host_secret(
         values["EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST"],
         setting_name="EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
-        runtime_uid=runtime_uid,
+        owner_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_POSTGRES_PASSWORD_FILE_HOST"],
+        setting_name="EVA_POSTGRES_PASSWORD_FILE_HOST",
+        owner_uid=postgres_password_owner_uid,
+        required_mode=0o600,
     )
     _preflight_host_directory(
         values["EVA_CODEX_AUTH_DIR"],
