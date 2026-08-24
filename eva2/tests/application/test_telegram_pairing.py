@@ -4,6 +4,7 @@ import pytest
 
 from eva.application.telegram_pairing import (
     TelegramPairingChallenge,
+    TelegramPairingResponder,
     derive_pairing_code,
     pairing_expiry,
 )
@@ -33,6 +34,28 @@ def test_pairing_code_is_reproducible_after_restart_without_ledger_storage() -> 
     first = derive_pairing_code(secret, telegram_user_id=404, update_id=81001)
     assert first == derive_pairing_code(secret, telegram_user_id=404, update_id=81001)
     assert first != derive_pairing_code(secret, telegram_user_id=404, update_id=81002)
+
+
+def test_pairing_responder_never_starts_from_a_group_and_confirms_through_store() -> None:
+    calls: list[tuple[str, object]] = []
+
+    class Store:
+        def start(self, challenge, *, update_id, now):  # type: ignore[no-untyped-def]
+            calls.append(("start", (challenge, update_id, now)))
+            return challenge
+
+        def confirm(self, code, *, confirmer_user_id, confirmer_chat_id, now):  # type: ignore[no-untyped-def]
+            calls.append(("confirm", (code, confirmer_user_id, confirmer_chat_id, now)))
+            return None
+
+        def resolve(self, *, telegram_user_id, chat_id):  # type: ignore[no-untyped-def]
+            return None
+
+    responder = TelegramPairingResponder(Store(), derivation_secret=b"p" * 32)  # type: ignore[arg-type]
+    assert responder.begin(update_id=1, sender_id=101, chat_id="-42", now=NOW) is None
+    assert responder.begin(update_id=1, sender_id=101, chat_id="101", now=NOW).startswith("Stuur deze")
+    assert responder.confirm(code="EVA-ABCDEFGHJKLM", sender_id=101, chat_id="101", now=NOW).startswith("Deze")
+    assert [name for name, _value in calls] == ["start", "confirm"]
 
 
 def test_pairing_rejects_non_private_or_invalid_challenges() -> None:

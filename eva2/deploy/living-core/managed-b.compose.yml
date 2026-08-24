@@ -301,6 +301,7 @@ services:
       EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
       EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
       EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
+      EVA_TELEGRAM_PAIRING_SECRET_FILE: /run/secrets/telegram_pairing_secret
     volumes:
       - type: bind
         source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
@@ -317,6 +318,12 @@ services:
       - type: bind
         source: ${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}
         target: /run/secrets/telegram_principal_bindings
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST:?set a runtime-owned Telegram pairing secret file}
+        target: /run/secrets/telegram_pairing_secret
         read_only: true
         bind:
           create_host_path: false

@@ -58,6 +58,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
+    "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
     "EVA_RUNTIME_TENANT_ID",
     "EVA_RUNTIME_INSTALLATION_ID",
     "EVA_RUNTIME_PRINCIPAL_ID",
@@ -376,6 +377,11 @@ def load_core_b_plan(
     _preflight_host_secret(
         values["EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST"],
         setting_name="EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
+        owner_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST"],
+        setting_name="EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
         owner_uid=runtime_uid,
     )
     _preflight_host_secret(

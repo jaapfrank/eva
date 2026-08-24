@@ -41,6 +41,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     telegram_bindings = _private_secret(
         private_tmp_path / "telegram-bindings", "{}\n"
     )
+    telegram_pairing_secret = _private_secret(
+        private_tmp_path / "telegram-pairing-secret", "p" * 32
+    )
     postgres_password = _private_secret(
         private_tmp_path / "postgres-password", "not-a-real-postgres-password\n"
     )
@@ -71,6 +74,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(telegram_token),
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": str(telegram_bindings),
+        "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": str(telegram_pairing_secret),
         "EVA_RUNTIME_TENANT_ID": "tenant:test",
         "EVA_RUNTIME_INSTALLATION_ID": "installation:test",
         "EVA_RUNTIME_PRINCIPAL_ID": "principal:test",
@@ -303,6 +307,7 @@ def test_plan_rejects_execute_only_home_assistant_host_secret(
         "EVA_DATABASE_DSN_FILE_HOST",
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
+        "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
     ),
 )
 def test_plan_rejects_insecure_mounted_runtime_secret(

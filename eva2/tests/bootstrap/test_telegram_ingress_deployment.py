@@ -17,11 +17,12 @@ def test_telegram_ingress_binds_each_hardened_file_secret_read_only() -> None:
 
     assert "secrets" not in service
     mounts = service["volumes"]
-    assert len(mounts) == 3
+    assert len(mounts) == 4
     assert {mount["target"] for mount in mounts} == {
         "/run/secrets/database_dsn",
         "/run/secrets/telegram_bot_token",
         "/run/secrets/telegram_principal_bindings",
+        "/run/secrets/telegram_pairing_secret",
     }
     for mount in mounts:
         assert mount["type"] == "bind"

@@ -7,8 +7,11 @@ from datetime import UTC, datetime
 import re
 from typing import Protocol
 
+from eva.application.telegram_pairing import TelegramPairingResponder
+
 
 _PRINCIPAL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
+_LINK_CONFIRM = re.compile(r"^/link\s+(EVA-[A-Z2-9]{12})$")
 
 
 @dataclass(frozen=True, slots=True)
@@ -138,11 +141,13 @@ class TelegramIngressWorker:
         core: TelegramCorePort,
         store: TelegramIngressStorePort,
         bindings: TelegramPrincipalBindings,
+        pairing: TelegramPairingResponder | None = None,
     ) -> None:
         self._provider = provider
         self._core = core
         self._store = store
         self._bindings = bindings
+        self._pairing = pairing
 
     @staticmethod
     def _now() -> datetime:
@@ -158,14 +163,45 @@ class TelegramIngressWorker:
                 continue
             principal_id = self._bindings.resolve(message.sender_id, message.chat_id)
             if principal_id is None:
-                self._store.reject(message, reason="sender_or_chat_not_authorized")
-                continue
+                if self._pairing is None or message.text.strip() != "/link":
+                    self._store.reject(message, reason="sender_or_chat_not_authorized")
+                    continue
+                text = self._pairing.begin(
+                    update_id=message.update_id,
+                    sender_id=message.sender_id,
+                    chat_id=message.chat_id,
+                    now=self._now(),
+                )
+                if text is None:
+                    self._store.reject(message, reason="sender_or_chat_not_authorized")
+                    continue
+                principal_id = f"pairing:{message.sender_id}"
+                reply = self._local_reply(message, text)
+            else:
+                match = _LINK_CONFIRM.fullmatch(message.text.strip())
+                reply = (
+                    None
+                    if self._pairing is None or match is None
+                    else self._local_reply(
+                        message,
+                        self._pairing.confirm(
+                            code=match.group(1),
+                            sender_id=message.sender_id,
+                            chat_id=message.chat_id,
+                            now=self._now(),
+                        ),
+                    )
+                )
             job = self._store.admit(message, principal_id=principal_id)
             if job is None:
                 continue
             if job.reply is None:
                 try:
-                    reply = self._core.respond(message, principal_id=principal_id)
+                    reply = (
+                        reply
+                        if reply is not None
+                        else self._core.respond(message, principal_id=principal_id)
+                    )
                 except Exception as error:
                     self._store.fail_processing(job, error, now=self._now())
                     return "processing_failed"
@@ -184,6 +220,17 @@ class TelegramIngressWorker:
                 claimed, provider_message_id, now=self._now()
             )
         return "processed"
+
+    @staticmethod
+    def _local_reply(message: TelegramInboundMessage, text: str) -> TelegramCoreReply:
+        import hashlib
+
+        return TelegramCoreReply(
+            f"telegram:{message.chat_id}",
+            f"telegram:{message.chat_id}:{message.message_id}",
+            text,
+            hashlib.sha256(text.encode()).hexdigest(),
+        )
 
 
 __all__ = [

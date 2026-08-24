@@ -14,11 +14,13 @@ from eva.adapters.connectors.telegram import (
     TelegramBotApiAdapter,
 )
 from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
+from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
 from eva.application.telegram_ingress import (
     TelegramIngressWorker,
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
 )
+from eva.application.telegram_pairing import TelegramPairingResponder
 from eva.bootstrap.secrets import read_runtime_secret_file
 
 
@@ -75,6 +77,10 @@ def main() -> int:
         _required_environment("EVA_TELEGRAM_BOT_TOKEN_FILE"),
         setting_name="EVA_TELEGRAM_BOT_TOKEN_FILE",
     )
+    pairing_secret = read_runtime_secret_file(
+        _required_environment("EVA_TELEGRAM_PAIRING_SECRET_FILE"),
+        setting_name="EVA_TELEGRAM_PAIRING_SECRET_FILE",
+    ).encode("utf-8")
     tenant_id = _required_environment("EVA_RUNTIME_TENANT_ID")
     installation_id = _required_environment("EVA_RUNTIME_INSTALLATION_ID")
     bindings = load_principal_bindings(
@@ -101,6 +107,15 @@ def main() -> int:
             installation_id=installation_id,
         ),
         bindings,
+        TelegramPairingResponder(
+            PostgresTelegramPairingStore(
+                engine,
+                tenant_id=tenant_id,
+                installation_id=installation_id,
+                trusted_bindings=bindings,
+            ),
+            derivation_secret=pairing_secret,
+        ),
     )
     stop = Event()
 

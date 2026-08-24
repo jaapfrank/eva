@@ -67,6 +67,51 @@ class TelegramPairingStorePort(Protocol):
     def resolve(self, *, telegram_user_id: int, chat_id: str) -> str | None: ...
 
 
+class TelegramPairingResponder:
+    """Deterministic `/link` dialogue; never calls the conversational core."""
+
+    def __init__(self, store: TelegramPairingStorePort, *, derivation_secret: bytes) -> None:
+        if len(derivation_secret) < 32:
+            raise ValueError("Telegram pairing secret is too short")
+        self._store = store
+        self._secret = derivation_secret
+
+    def begin(
+        self, *, update_id: int, sender_id: int, chat_id: str, now: datetime
+    ) -> str | None:
+        if chat_id != str(sender_id):
+            return None
+        challenge = self._store.start(
+            TelegramPairingChallenge(
+                derive_pairing_code(
+                    self._secret, telegram_user_id=sender_id, update_id=update_id
+                ),
+                sender_id,
+                chat_id,
+                pairing_expiry(now),
+            ),
+            update_id=update_id,
+            now=now,
+        )
+        return (
+            "Stuur deze koppelcode vanuit een al gekoppeld privéaccount: "
+            f"{challenge.code}"
+        )
+
+    def confirm(
+        self, *, code: str, sender_id: int, chat_id: str, now: datetime
+    ) -> str:
+        binding = self._store.confirm(
+            code,
+            confirmer_user_id=sender_id,
+            confirmer_chat_id=chat_id,
+            now=now,
+        )
+        if binding is None:
+            return "Deze koppelcode kan ik niet bevestigen."
+        return "Gekoppeld."
+
+
 def pairing_expiry(now: datetime) -> datetime:
     if now.tzinfo is None or now.utcoffset() != UTC.utcoffset(now) or now.microsecond:
         raise ValueError("Telegram pairing time must be whole-second UTC")
@@ -94,6 +139,7 @@ __all__ = [
     "TelegramDynamicBinding",
     "TelegramPairingChallenge",
     "TelegramPairingStorePort",
+    "TelegramPairingResponder",
     "derive_pairing_code",
     "pairing_expiry",
 ]
