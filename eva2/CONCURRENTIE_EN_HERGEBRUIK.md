@@ -109,8 +109,15 @@ langdurige verzamelaanpassing telt niet als voortgang.
   gepinde bronindex en `linux/amd64` gebonden; hash, manifest, config en lagen
   worden gecontroleerd. Een geldige maar andere OCI-keten wordt geweigerd.
   Dit blijft een lokale export, geen registry-provenance of releaseclaim.
-- [ ] Offline buildcontext B03d: maak uit B01 + B02b + B03c één nieuwe private
-  Docker-context en voer pas daarna een kandidaatimagebuild met netwerk uit.
+- [x] Offline buildcontext B03d: B01-bron en uitsluitend de exact verzegelde
+  B02b-wheels worden in één nieuwe private, alleen-lezen Docker-context gezet;
+  B03c blijft buiten de context en is alleen via de receipt gebonden. Een
+  onafhankelijke review reproduceerde en sloot de extra-wheel-race. 23 gerichte
+  tests en een tijdelijke fysieke materialisatie van 544 bestanden zijn groen,
+  zonder netwerk of B.
+- [ ] Offline kandidaatimage B03e: bouw deze exact verzegelde context met de
+  gebonden lokale OCI-basisimage en volledig uitgeschakeld netwerk; valideer
+  daarna alleen de kandidaatimage, zonder B te starten of te vervangen.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare

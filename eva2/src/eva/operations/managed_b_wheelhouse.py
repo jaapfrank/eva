@@ -414,9 +414,22 @@ def inspect_wheelhouse_manifest(
     }
 
 
+def expected_wheel_artifacts(
+    manifest_raw: bytes, coverage_raw: bytes, requirements_lock_raw: bytes
+) -> dict[str, tuple[str, int]]:
+    """Return the sealed wheel name, digest and size map without reading wheel bytes."""
+
+    manifest = _manifest(manifest_raw)
+    expected, _tree_sha256 = _expected_wheels(
+        coverage_raw, manifest, requirements_lock_raw
+    )
+    return dict(expected)
+
+
 __all__ = [
     "MANIFEST_CONTRACT",
     "MaterializedWheelhouse",
+    "expected_wheel_artifacts",
     "inspect_wheelhouse_manifest",
     "materialize_wheelhouse",
     "validate_wheelhouse",
