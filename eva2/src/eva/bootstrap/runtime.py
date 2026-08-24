@@ -271,6 +271,16 @@ class RuntimeSettings:
         stripe_account_id = (
             os.environ.get("EVA_STRIPE_ACCOUNT_ID", "").strip() or None
         )
+        if "EVA_STRIPE_SECRET_KEY" in os.environ:
+            raise RuntimeError(
+                "EVA_STRIPE_SECRET_KEY is forbidden; use "
+                "EVA_STRIPE_SECRET_KEY_FILE"
+            )
+        if "EVA_STRIPE_WEBHOOK_SECRET" in os.environ:
+            raise RuntimeError(
+                "EVA_STRIPE_WEBHOOK_SECRET is forbidden; use "
+                "EVA_STRIPE_WEBHOOK_SECRET_FILE"
+            )
         stripe_secret_key = (
             environment_secret(
                 "EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE"

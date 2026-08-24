@@ -144,7 +144,7 @@ def test_runtime_forbids_inline_telegram_token_even_when_empty(
         RuntimeSettings.from_environment()
 
 
-def test_runtime_reads_telegram_token_from_file_and_keeps_stripe_compatibility(
+def test_runtime_reads_telegram_token_from_file(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
 ) -> None:
@@ -155,19 +155,43 @@ def test_runtime_reads_telegram_token_from_file_and_keeps_stripe_compatibility(
     telegram.write_text("telegram-test-value\n")
     telegram.chmod(0o600)
     monkeypatch.setenv("EVA_TELEGRAM_BOT_TOKEN_FILE", str(telegram))
-    monkeypatch.setenv("EVA_STRIPE_ACCOUNT_ID", "acct_12345678")
-    monkeypatch.setenv("EVA_STRIPE_SECRET_KEY", "sk_test_private")
-    monkeypatch.setenv(
-        "EVA_STRIPE_WEBHOOK_SECRET",
-        "whsec_test_signing_secret_12345678",
-    )
-    monkeypatch.setenv("EVA_COMMERCE_PUBLIC_BASE_URL", "https://eva.example")
-
     settings = RuntimeSettings.from_environment()
 
     assert settings.database_dsn == "postgresql://runtime"
     assert settings.telegram_bot_token == "telegram-test-value"
-    assert settings.stripe_secret_key == "sk_test_private"
+
+
+@pytest.mark.parametrize(
+    ("name", "value", "expected"),
+    (
+        ("EVA_STRIPE_SECRET_KEY", "", "STRIPE_SECRET_KEY is forbidden"),
+        (
+            "EVA_STRIPE_SECRET_KEY",
+            "sk_test_private",
+            "STRIPE_SECRET_KEY is forbidden",
+        ),
+        ("EVA_STRIPE_WEBHOOK_SECRET", "", "STRIPE_WEBHOOK_SECRET is forbidden"),
+        (
+            "EVA_STRIPE_WEBHOOK_SECRET",
+            "whsec_test_signing_secret",
+            "STRIPE_WEBHOOK_SECRET is forbidden",
+        ),
+    ),
+)
+def test_runtime_forbids_inline_stripe_secrets_even_when_empty(
+    monkeypatch: pytest.MonkeyPatch,
+    name: str,
+    value: str,
+    expected: str,
+) -> None:
+    _minimum(monkeypatch)
+    monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
+    monkeypatch.setenv("EVA_STRIPE_ACCOUNT_ID", "acct_12345678")
+    monkeypatch.setenv(name, value)
+    monkeypatch.setenv("EVA_COMMERCE_PUBLIC_BASE_URL", "https://eva.example")
+
+    with pytest.raises(RuntimeError, match=expected):
+        RuntimeSettings.from_environment()
 
 
 def test_runtime_reads_bounded_fanout_sink_configuration(
@@ -247,6 +271,7 @@ def test_runtime_reads_stripe_secret_from_file_and_binds_mode(
 
 def test_runtime_rejects_partial_or_invalid_stripe_configuration(
     monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
 ) -> None:
     _minimum(monkeypatch)
     monkeypatch.setenv("EVA_DATABASE_DSN", "postgresql://runtime")
@@ -254,8 +279,14 @@ def test_runtime_rejects_partial_or_invalid_stripe_configuration(
     with pytest.raises(RuntimeError, match="Stripe commerce configuration"):
         RuntimeSettings.from_environment()
 
-    monkeypatch.setenv("EVA_STRIPE_SECRET_KEY", "sk_test_private")
-    monkeypatch.setenv("EVA_STRIPE_WEBHOOK_SECRET", "whsec_test_signing_secret")
+    secret = private_tmp_path / "stripe-secret"
+    secret.write_text("sk_test_private\n")
+    secret.chmod(0o600)
+    webhook = private_tmp_path / "stripe-webhook-secret"
+    webhook.write_text("whsec_test_signing_secret\n")
+    webhook.chmod(0o600)
+    monkeypatch.setenv("EVA_STRIPE_SECRET_KEY_FILE", str(secret))
+    monkeypatch.setenv("EVA_STRIPE_WEBHOOK_SECRET_FILE", str(webhook))
     monkeypatch.setenv("EVA_COMMERCE_PUBLIC_BASE_URL", "https://eva.example")
     monkeypatch.setenv("EVA_STRIPE_LIVE_MODE", "sometimes")
     with pytest.raises(RuntimeError, match="STRIPE_LIVE_MODE"):
