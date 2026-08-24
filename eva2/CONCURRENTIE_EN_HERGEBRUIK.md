@@ -82,8 +82,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   `reviews/schema-installer-file-secret-9e129a4.md`. De oude stackmigratie
   blijft bewust geen beheerd B-releasepad.
 - [x] Modellease-consumer: core leest alleen een atomair gedeelde lease met
-  vast `1000:65532`/`0640`-contract; 13 gerichte tests + onafhankelijke review
-  zijn groen. De leasepublisher en host-directorycontract blijven open.
+  vast `1000:65532`/`0640`-contract; 45 gerichte tests + onafhankelijke review
+  zijn groen; zie `reviews/model-lease-consumer-5303622.md`. De leasepublisher
+  en host-directorycontract blijven open.
 - [x] Modellease-publisher: private authoritybron, vooraf-geprovisioneerde
   lease-directory en atomische publicatie zijn afgedwongen; 17 tests +
   onafhankelijke herreview zijn groen. Hostprovisioning/B-deploy blijft open.
