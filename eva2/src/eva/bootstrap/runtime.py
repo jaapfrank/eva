@@ -99,6 +99,7 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
+from eva.application.memory_audience import MemoryAudience
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.mail import MailInboxPage, MailMessage
@@ -691,6 +692,7 @@ class PostgresHindsightMemoryRuntime:
             evidence_ref=evidence_ref,
             privacy_class=privacy_class,
             trust="direct_user",
+            audience=MemoryAudience.private_person(principal_id=turn.principal_id),
             project_id=turn.project_id,
         )
         # ``submit`` commits the separate outbox thread before returning. The

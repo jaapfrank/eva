@@ -16,6 +16,11 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory_audience import (
+    MemoryAudience,
+    memory_audience_from_wire,
+    memory_audience_to_wire,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -52,7 +57,7 @@ class PostgresMemoryOutbox:
         return datetime.now(tz=UTC).replace(microsecond=0)
 
     @staticmethod
-    def _document_data(document: ConversationMemoryDocument) -> dict[str, str]:
+    def _document_data(document: ConversationMemoryDocument) -> dict[str, object]:
         data = {
             "content": document.content,
             "conversation_id": document.conversation_id,
@@ -66,6 +71,7 @@ class PostgresMemoryOutbox:
             "source_ref": document.source_ref,
             "tenant_id": document.tenant_id,
             "trust": document.trust,
+            "audience": memory_audience_to_wire(document.audience),
         }
         if document.project_id is not None:
             data["project_id"] = document.project_id
@@ -75,7 +81,7 @@ class PostgresMemoryOutbox:
     def _document_from_data(data: object) -> ConversationMemoryDocument:
         if not isinstance(data, dict) or data.get("kind") != "hindsight_memory_document":
             raise RuntimeError("durable memory outbox document is malformed")
-        keys = {
+        legacy_keys = {
             "content",
             "conversation_id",
             "document_id",
@@ -89,10 +95,31 @@ class PostgresMemoryOutbox:
             "tenant_id",
             "trust",
         }
-        if set(data) not in {frozenset(keys), frozenset((*keys, "project_id"))} or not all(
-            isinstance(value, str) for value in data.values()
-        ):
+        audience_keys = {*legacy_keys, "audience"}
+        if set(data) not in {
+            frozenset(legacy_keys),
+            frozenset((*legacy_keys, "project_id")),
+            frozenset(audience_keys),
+            frozenset((*audience_keys, "project_id")),
+        }:
             raise RuntimeError("durable memory outbox document fields are malformed")
+        scalar_keys = set(data) - {"audience"}
+        if not all(isinstance(data[key], str) for key in scalar_keys):
+            raise RuntimeError("durable memory outbox document fields are malformed")
+        raw_audience = data.get("audience")
+        if raw_audience is None:
+            conversation_id = data["conversation_id"]
+            principal_id = data["principal_id"]
+            if not isinstance(conversation_id, str) or not isinstance(principal_id, str):
+                raise RuntimeError("durable memory outbox document fields are malformed")
+            if conversation_id.startswith("telegram:-"):
+                raise RuntimeError("legacy Telegram group memory lacks an audience")
+            audience = MemoryAudience.private_person(principal_id=principal_id)
+        else:
+            try:
+                audience = memory_audience_from_wire(raw_audience)
+            except ValueError as error:
+                raise RuntimeError("durable memory outbox audience is invalid") from error
         return ConversationMemoryDocument(
             tenant_id=data["tenant_id"],
             installation_id=data["installation_id"],
@@ -105,6 +132,7 @@ class PostgresMemoryOutbox:
             evidence_ref=data["evidence_ref"],
             privacy_class=data["privacy_class"],  # type: ignore[arg-type]
             trust=data["trust"],  # type: ignore[arg-type]
+            audience=audience,
             project_id=data.get("project_id"),
         )
 

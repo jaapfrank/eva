@@ -115,6 +115,64 @@ class TelegramMemoryAdmission:
             raise ValueError("Telegram group memory audience differs from chat")
 
 
+def memory_audience_to_wire(audience: MemoryAudience) -> dict[str, str]:
+    """Return the complete, canonical audience payload for a durable boundary."""
+
+    data = {
+        "audience_id": audience.audience_id,
+        "kind": audience.kind,
+        "principal_id": audience.principal_id,
+    }
+    if audience.kind == "telegram_group":
+        assert audience.group_chat_id is not None
+        assert audience.consent_ref is not None
+        data.update(
+            {
+                "consent_group_chat_id": audience.consent_ref.group_chat_id,
+                "consent_operation_id": audience.consent_ref.operation_id,
+                "consent_principal_id": audience.consent_ref.principal_id,
+                "group_chat_id": audience.group_chat_id,
+            }
+        )
+    return data
+
+
+def memory_audience_from_wire(value: object) -> MemoryAudience:
+    """Reject partial or cross-bound audience data at a durable boundary."""
+
+    if not isinstance(value, dict) or not all(
+        isinstance(key, str) and isinstance(item, str) for key, item in value.items()
+    ):
+        raise ValueError("memory audience payload is invalid")
+    private_keys = {"audience_id", "kind", "principal_id"}
+    group_keys = {
+        *private_keys,
+        "consent_group_chat_id",
+        "consent_operation_id",
+        "consent_principal_id",
+        "group_chat_id",
+    }
+    if set(value) == private_keys:
+        return MemoryAudience(
+            kind=value["kind"],  # type: ignore[arg-type]
+            audience_id=value["audience_id"],
+            principal_id=value["principal_id"],
+        )
+    if set(value) != group_keys:
+        raise ValueError("memory audience payload is incomplete")
+    return MemoryAudience(
+        kind=value["kind"],  # type: ignore[arg-type]
+        audience_id=value["audience_id"],
+        principal_id=value["principal_id"],
+        group_chat_id=value["group_chat_id"],
+        consent_ref=TelegramGroupConsentReference(
+            principal_id=value["consent_principal_id"],
+            group_chat_id=value["consent_group_chat_id"],
+            operation_id=value["consent_operation_id"],
+        ),
+    )
+
+
 def admit_telegram_memory(
     *,
     principal_id: str,
@@ -157,4 +215,6 @@ __all__ = [
     "TelegramGroupConsentReference",
     "TelegramMemoryAdmission",
     "admit_telegram_memory",
+    "memory_audience_from_wire",
+    "memory_audience_to_wire",
 ]

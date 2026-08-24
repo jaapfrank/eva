@@ -27,6 +27,7 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
+from eva.application.memory_audience import memory_audience_from_wire
 from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.advanced_tasks import (
     AdvancedTaskApproval,
@@ -74,6 +75,7 @@ _RECALL_KEYS = {
 }
 
 _RETAIN_KEYS = {
+    "audience",
     "content",
     "conversation_id",
     "document_id",
@@ -400,6 +402,7 @@ def _document_from_wire(payload: dict[str, Any]) -> ConversationMemoryDocument:
             evidence_ref=payload["evidence_ref"],
             privacy_class=payload["privacy_class"],
             trust=payload["trust"],
+            audience=memory_audience_from_wire(payload["audience"]),
             project_id=payload.get("project_id"),
         )
     except (KeyError, TypeError, ValueError) as error:

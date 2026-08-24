@@ -12,6 +12,7 @@ from typing import Protocol
 import zipfile
 
 from eva.application.memory import ConversationMemoryDocument
+from eva.application.memory_audience import MemoryAudience
 
 
 @dataclass(frozen=True, slots=True)
@@ -273,6 +274,7 @@ class PersonalInterestWorker:
                 evidence_ref=f"personal-exploration:{exploration.text_sha256}",
                 privacy_class="internal",
                 trust="model_inference_unconfirmed",
+                audience=MemoryAudience.private_person(principal_id=claim.principal_id),
             )
         )
         self._store.mark_projected(completed, now=now)
@@ -363,6 +365,9 @@ class PersonalPrototypeWorker:
                 evidence_ref=f"personal-prototype:{prototype.content_sha256}",
                 privacy_class="internal",
                 trust="host_policy",
+                audience=MemoryAudience.private_person(
+                    principal_id=interest.principal_id
+                ),
             )
         )
         self._store.mark_projected(completed, now=now)
@@ -458,6 +463,9 @@ class PersonalProductReleaseWorker:
                 evidence_ref=f"personal-release:{release.content_sha256}",
                 privacy_class="internal",
                 trust="host_policy",
+                audience=MemoryAudience.private_person(
+                    principal_id=interest.principal_id
+                ),
             )
         )
         self._store.mark_projected(completed, now=now)

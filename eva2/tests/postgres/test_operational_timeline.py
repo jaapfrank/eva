@@ -42,6 +42,10 @@ from eva.application.conversation import (
     GroundedReply,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.application.research import ResearchArtifact, ResearchSource
 from eva.application.telegram_ingress import (
     TelegramCoreReply,
@@ -56,7 +60,6 @@ from eva.application.telegram_pairing import (
     pairing_expiry,
 )
 from eva.application.telegram_group_consent import TelegramGroupConsent
-from eva.application.memory_audience import TelegramGroupConsentReference
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -641,6 +644,7 @@ def test_hindsight_outbox_rehydrates_and_stops_after_three_attempts(
         evidence_ref="conversation-reply:telegram:memory-outbox-1",
         privacy_class="internal",
         trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id="jaap"),
     )
 
     queued = first_process.enqueue(document)
@@ -713,6 +717,7 @@ def test_hindsight_outbox_commits_hash_bound_success(
         evidence_ref="conversation-reply:telegram:memory-success-1",
         privacy_class="internal",
         trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id="jaap"),
     )
     queued = outbox.enqueue(document)
     attempted = outbox.begin(queued, now=NOW)
@@ -728,6 +733,70 @@ def test_hindsight_outbox_commits_hash_bound_success(
     assert completed.status == "completed"
     assert completed.retry_count == 1
     assert outbox.pending() == ()
+
+
+def test_hindsight_outbox_preserves_group_audience_across_restart(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "living-memory-group-audience"
+    installation_id = "home"
+    document = ConversationMemoryDocument(
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        principal_id="jaap",
+        conversation_id="telegram:-100123",
+        document_id="telegram:-100123:exchange:memory-group-1",
+        content="Gebruiker (gedeeld): morgen graag om acht uur vertrekken.",
+        occurred_at="2026-08-23T12:57:00Z",
+        source_ref="telegram:memory-group-1",
+        evidence_ref="conversation-reply:telegram:memory-group-1",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.telegram_group(
+            principal_id="jaap",
+            group_chat_id="-100123",
+            consent_ref=TelegramGroupConsentReference(
+                principal_id="jaap",
+                group_chat_id="-100123",
+                operation_id="telegram-group-consent:904",
+            ),
+        ),
+    )
+    outbox = PostgresMemoryOutbox(
+        timeline_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    outbox.enqueue(document)
+
+    timeline_engine.dispose()
+    restarted_engine = sa.create_engine(timeline_engine.url, pool_pre_ping=False)
+    restarted = PostgresMemoryOutbox(
+        restarted_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    recovered = restarted.pending()
+    restarted_engine.dispose()
+
+    assert len(recovered) == 1
+    assert recovered[0].document == document
+
+
+def test_hindsight_outbox_rejects_legacy_group_payload_without_audience() -> None:
+    legacy_group_data = {
+        "content": "Dit mag niet terugvallen naar persoonlijk geheugen.",
+        "conversation_id": "telegram:-100123",
+        "document_id": "telegram:-100123:exchange:legacy",
+        "evidence_ref": "conversation-reply:legacy",
+        "installation_id": "home",
+        "kind": "hindsight_memory_document",
+        "occurred_at": "2026-08-23T12:58:00Z",
+        "principal_id": "jaap",
+        "privacy_class": "internal",
+        "source_ref": "telegram:legacy",
+        "tenant_id": "legacy-group-audience",
+        "trust": "direct_user",
+    }
+
+    with pytest.raises(RuntimeError, match="legacy Telegram group memory lacks an audience"):
+        PostgresMemoryOutbox._document_from_data(legacy_group_data)  # noqa: SLF001
 
 
 def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(

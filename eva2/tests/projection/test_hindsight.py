@@ -20,6 +20,10 @@ from eva.application.memory import (
     RecallCurrentFacts,
     RememberFact,
 )
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 
@@ -402,6 +406,7 @@ def _conversation_document() -> ConversationMemoryDocument:
         evidence_ref="evidence:conversation:jaap",
         privacy_class="internal",
         trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id=PRINCIPAL),
     )
 
 
@@ -441,6 +446,30 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     assert item["update_mode"] == "replace"
     assert item["observation_scopes"][0][0].startswith("eva-person-")
     assert retained["async"] is True
+
+
+def test_hindsight_rejects_a_group_document_until_group_tagging_is_wired(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    group_document = replace(
+        _conversation_document(),
+        conversation_id="telegram:-100123",
+        audience=MemoryAudience.telegram_group(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            consent_ref=TelegramGroupConsentReference(
+                principal_id=PRINCIPAL,
+                group_chat_id="-100123",
+                operation_id="telegram-group-consent:41",
+            ),
+        ),
+    )
+
+    with pytest.raises(HindsightMemoryScopeError, match="not wired"):
+        engine.retain_conversation(group_document)
+    assert state.requests == []
 
 
 def test_project_memory_uses_a_separate_bank_while_recall_keeps_person_context(

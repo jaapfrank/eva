@@ -2,9 +2,14 @@ from __future__ import annotations
 
 from threading import Event
 import time
+from dataclasses import replace
 
 from eva.application.memory import ConversationMemoryDocument
 from eva.application.memory import MemoryRetentionReceipt
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.application.memory_background import HindsightColdPathWorker
 
 
@@ -21,6 +26,7 @@ def _document() -> ConversationMemoryDocument:
         evidence_ref="conversation-reply:1",
         privacy_class="internal",
         trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id="jaap"),
     )
 
 
@@ -51,6 +57,45 @@ def test_retain_is_fire_and_forget_and_reflect_waits_for_idle() -> None:
     worker.stop()
 
     assert reflections == [("tenant", "installation", "jaap")]
+
+
+def test_group_memory_never_schedules_a_person_style_reflection() -> None:
+    retained = Event()
+    reflections: list[tuple[str, str, str]] = []
+
+    class Memory:
+        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+            retained.set()
+            return MemoryRetentionReceipt(
+                bank_id="test-bank",
+                document_id=document.document_id,
+                content_sha256="a" * 64,
+            )
+
+        def ensure_background_reflection(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
+            reflections.append((tenant, installation, principal))
+
+    document = replace(
+        _document(),
+        conversation_id="telegram:-100123",
+        audience=MemoryAudience.telegram_group(
+            principal_id="jaap",
+            group_chat_id="-100123",
+            consent_ref=TelegramGroupConsentReference(
+                principal_id="jaap",
+                group_chat_id="-100123",
+                operation_id="telegram-group-consent:22",
+            ),
+        ),
+    )
+    worker = HindsightColdPathWorker(Memory(), idle_seconds=0.03, retry_delay_seconds=0)
+    worker.start()
+    worker.submit(document)
+    assert retained.wait(0.5)
+    time.sleep(0.08)
+    worker.stop()
+
+    assert reflections == []
 
 
 def test_poison_retain_stops_after_three_attempts() -> None:

@@ -4,6 +4,8 @@ from eva.application.memory_audience import (
     MemoryAudience,
     TelegramGroupConsentReference,
     admit_telegram_memory,
+    memory_audience_from_wire,
+    memory_audience_to_wire,
 )
 
 
@@ -113,3 +115,37 @@ def test_telegram_group_memory_rejects_cross_person_or_cross_group_consent(
             group_consent_permitted=True,
             consent_ref=consent_ref,
         )
+
+
+def test_memory_audience_wire_round_trip_preserves_the_complete_group_grant() -> None:
+    audience = MemoryAudience.telegram_group(
+        principal_id="person:jaap",
+        group_chat_id="-100123",
+        consent_ref=CONSENT,
+    )
+
+    assert memory_audience_from_wire(memory_audience_to_wire(audience)) == audience
+
+
+def test_memory_audience_wire_rejects_a_partial_or_cross_bound_group_grant() -> None:
+    payload = memory_audience_to_wire(
+        MemoryAudience.telegram_group(
+            principal_id="person:jaap",
+            group_chat_id="-100123",
+            consent_ref=CONSENT,
+        )
+    )
+    del payload["consent_operation_id"]
+    with pytest.raises(ValueError, match="incomplete"):
+        memory_audience_from_wire(payload)
+
+    payload = memory_audience_to_wire(
+        MemoryAudience.telegram_group(
+            principal_id="person:jaap",
+            group_chat_id="-100123",
+            consent_ref=CONSENT,
+        )
+    )
+    payload["consent_principal_id"] = "person:frank"
+    with pytest.raises(ValueError, match="audience is invalid"):
+        memory_audience_from_wire(payload)

@@ -581,6 +581,10 @@ class HindsightMemoryEngine:
         This adapter does not pre-extract or persist a parallel Eva fact graph.
         """
 
+        if document.audience.kind != "private_person":
+            raise HindsightMemoryScopeError(
+                "Telegram group memory retention is not wired yet"
+            )
         observation_binding_sha256: str | None = None
         if document.evidence_ref.startswith(_OBSERVATION_EVIDENCE_PREFIX):
             observation_binding_sha256 = document.evidence_ref.removeprefix(

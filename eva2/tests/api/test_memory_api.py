@@ -1027,6 +1027,11 @@ def test_retains_complete_conversation_document() -> None:
     runtime = _Runtime()
     client = TestClient(create_app(runtime))
     payload = {
+        "audience": {
+            "audience_id": f"person:{PRINCIPAL}",
+            "kind": "private_person",
+            "principal_id": PRINCIPAL,
+        },
         "content": "Jaap: Hou antwoorden kort.\nEva: Begrepen.",
         "conversation_id": "conversation:telegram:jaap",
         "document_id": "conversation:telegram:jaap:history",
@@ -1057,6 +1062,11 @@ def test_retain_rejects_invalid_style_document_metadata() -> None:
     runtime = _Runtime()
     client = TestClient(create_app(runtime))
     payload = {
+        "audience": {
+            "audience_id": f"person:{PRINCIPAL}",
+            "kind": "private_person",
+            "principal_id": PRINCIPAL,
+        },
         "content": "Hou het kort.",
         "conversation_id": "conversation:telegram:jaap",
         "document_id": "conversation:telegram:jaap:history",

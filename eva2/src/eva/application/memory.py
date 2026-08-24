@@ -21,6 +21,7 @@ from eva.contracts.memory import (
     RecalledFact,
 )
 from eva.contracts.planning import ConfirmedFact
+from eva.application.memory_audience import MemoryAudience
 
 
 class MemoryAuthorityError(RuntimeError):
@@ -137,6 +138,7 @@ class ConversationMemoryDocument:
         "host_policy",
         "model_inference_unconfirmed",
     ]
+    audience: MemoryAudience
     project_id: str | None = None
 
     def __post_init__(self) -> None:
@@ -151,6 +153,8 @@ class ConversationMemoryDocument:
         )
         if not all(required):
             raise ValueError("memory document identifiers are required")
+        if self.audience.principal_id != self.principal_id:
+            raise ValueError("memory document audience author differs")
         if not self.content.strip():
             raise ValueError("memory document content is required")
         if self.project_id is not None and (

@@ -271,6 +271,14 @@ langdurige verzamelaanpassing telt niet als voortgang.
   levert fail-closed geen referentie. Een echte PostgreSQL-16-proef op een
   tijdelijk `tmpfs`-volume, gerichte tests en onafhankelijke review zijn groen;
   retention/recall of B-runtime is nog niet gewijzigd.
+- [x] Groepsgeheugen A03a: audience is nu verplicht en duurzaam van de
+  interne API via het geheugendocument naar de PostgreSQL-outbox. Een oud
+  Telegram-groepsrecord zonder audience faalt; een groepspubliek met auteur,
+  groep en consentreferentie herstelt exact na een echte PostgreSQL-16-herstart.
+  Groepsretentie wordt vóór Hindsight en vóór persoonlijke stijlreflectie
+  gestopt. 63 gerichte checks, vier PostgreSQL-outboxproeven en onafhankelijke
+  review zijn groen. Hindsight-groepstags en consentgebonden recall volgen in
+  A03b.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -300,9 +308,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   open. AgentMail en Stripe zijn latere, eigen capabilitygates.
 - [ ] Telegram-groepsgeheugen sluiten: de geverifieerde multi-accountbindings,
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
-  getest; de verplichte admission en duurzame consentreferentie zijn eveneens
-  klaar. Wat nog ontbreekt is de expliciete privé/gedeeld
-  Hindsight-retention- en recallscope met non-leakagebewijs; de echte
+  getest; admission, duurzame consentreferentie en veilige outbox-propagatie
+  zijn eveneens klaar. Wat nog ontbreekt is A03b: een expliciete gedeelde
+  Hindsight-tag en consentgebonden recall met non-leakagebewijs; de echte
   multi-account- en Telegram-groepproef blijft daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.

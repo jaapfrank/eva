@@ -178,13 +178,14 @@ class HindsightColdPathWorker:
                     )
                 with self._lock:
                     self._last_error = None
-                    self._reflection_scopes.add(
-                        (
-                            active_job.document.tenant_id,
-                            active_job.document.installation_id,
-                            active_job.document.principal_id,
+                    if active_job.document.audience.kind == "private_person":
+                        self._reflection_scopes.add(
+                            (
+                                active_job.document.tenant_id,
+                                active_job.document.installation_id,
+                                active_job.document.principal_id,
+                            )
                         )
-                    )
             except Exception as error:  # worker boundary: never kill the chat server
                 with self._lock:
                     self._last_error = f"{type(error).__name__}: {error}"
