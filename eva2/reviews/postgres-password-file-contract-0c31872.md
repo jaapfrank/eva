@@ -1,7 +1,7 @@
 # Onafhankelijke review — PostgreSQL password-file-contract
 
-Commit: `0c31872`  
-Reviewer: onafhankelijke managed-B-hostcontractreview  
+Commit: `0c31872`
+Reviewer: onafhankelijke managed-B-hostcontractreview
 Uitkomst: **groen**
 
 ## Gecontroleerd
