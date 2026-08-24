@@ -104,6 +104,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   capabilitybehoud; onafhankelijke review is groen; zie
   `reviews/managed-b-manifest-skeleton-505caf8.md`. Hostbestands- en
   Hindsight-volumeverzegeling, adoptie en B-liveproef blijven open.
+- [x] Managed-B-render: exact B-configuratie- en manifesthash worden
+  fail-closed aan één alleen-lezen Compose-render gebonden; 39 gerichte tests
+  en onafhankelijke review zijn groen; zie
+  `reviews/managed-b-sealed-render-80f722c.md`. Dit start of vervangt B niet.
 - [x] Managed-B-runtimebestanden: HA, database-DSN en beide Telegrambestanden
   worden metadata-only en fail-closed gecontroleerd vóór een adoptierun; 24
   tests + onafhankelijke review zijn groen; zie
