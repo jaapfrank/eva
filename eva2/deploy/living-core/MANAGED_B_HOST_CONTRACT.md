@@ -32,6 +32,25 @@ incompatibele Hindsight-definities.
 De preflight vereist nu ook de gepinde `EVA_STACK_WORK_VOLUME`,
 `EVA_CODEX_AUTH_DIR` en `EVA_HINDSIGHT_ACCESS_DIR`.
 
+## Verzegenen vóór renderen
+
+`EVA_B_MANAGED_MANIFEST_SHA256` is de exacte SHA-256 van
+`managed-b.compose.yml`. De renderer weigert een template die daarvan afwijkt.
+De private B-configuratie bevat **niet** zijn eigen hash: die zou
+self-referential zijn. De renderer berekent één hash van de exacte
+configuratie-snapshot en geeft die alleen aan het Compose-proces mee als
+`EVA_B_CONFIGURATION_SHA256`.
+
+Een render gebruikt uitsluitend de gepinde Docker-binary, configdirectory,
+context, projectnaam, een nieuw private `--env-file` uit de al gevalideerde
+in-memory snapshot en dit vaste manifest. Hij opent het oorspronkelijke
+B-envbestand dus niet opnieuw. Hij voert
+alleen `docker compose ... config --format json` uit, start of vervangt niets,
+en weigert onder andere een afwijkende servicegraph, ontbrekende labels,
+onopgeloste interpolatie, `env_file` en Docker-secrets. De receipt bevat alleen
+de drie hashes, Compose-versie, project en servicenamen — nooit configuratie- of
+secretwaarden.
+
 ## PostgreSQL-bootstrapbasis
 
 PostgreSQL leest `POSTGRES_PASSWORD_FILE` zelf. Dat valt niet onder Eva's

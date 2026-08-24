@@ -33,6 +33,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_B_DOCKER_CONTEXT",
     "EVA_B_DOCKER_DAEMON",
     "EVA_B_COMPOSE_PROJECT",
+    "EVA_B_MANAGED_MANIFEST_SHA256",
     "EVA_STACK_CORE_CONTAINER",
     "EVA_STACK_BIND_ADDRESS",
     "EVA_LIVING_CORE_IMAGE",
@@ -58,6 +59,10 @@ REQUIRED_CONFIGURATION = (
     "EVA_MODEL_ACCESS_LEASE_DIR",
     "EVA_HINDSIGHT_ACCESS_DIR",
 )
+
+# This value is derived from the exact private environment snapshot.  Keeping it
+# in that snapshot would make its own hash self-referential and unverifiable.
+DERIVED_CONFIGURATION = ("EVA_B_CONFIGURATION_SHA256",)
 
 FORBIDDEN_INLINE_SECRETS = (
     "EVA_DATABASE_DSN",
@@ -221,6 +226,11 @@ def _preflight_host_directory(
 
 
 def _validate_configuration(values: dict[str, str]) -> None:
+    for derived in DERIVED_CONFIGURATION:
+        if derived in values:
+            raise RuntimeError(
+                f"{derived} is derived and forbidden in the explicit B environment"
+            )
     for forbidden in FORBIDDEN_INLINE_SECRETS:
         if forbidden in values:
             raise RuntimeError(
@@ -232,6 +242,8 @@ def _validate_configuration(values: dict[str, str]) -> None:
 
     if values["EVA_B_COMPOSE_PROJECT"] != "eva2-b-live":
         raise RuntimeError("EVA_B_COMPOSE_PROJECT must be exactly eva2-b-live")
+    if not re.fullmatch(r"[0-9a-f]{64}", values["EVA_B_MANAGED_MANIFEST_SHA256"]):
+        raise RuntimeError("EVA_B_MANAGED_MANIFEST_SHA256 must be a lowercase sha256")
     if values["EVA_STACK_CORE_CONTAINER"] != "eva2-living-core-b":
         raise RuntimeError(
             "EVA_STACK_CORE_CONTAINER must be exactly eva2-living-core-b"

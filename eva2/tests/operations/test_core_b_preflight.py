@@ -55,6 +55,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_B_DOCKER_CONTEXT": "eva2-b-local",
         "EVA_B_DOCKER_DAEMON": "unix:///var/run/docker.sock",
         "EVA_B_COMPOSE_PROJECT": "eva2-b-live",
+        "EVA_B_MANAGED_MANIFEST_SHA256": (
+            "4de64fd5a218db4c185f76d8394b5c810304f77055feeb38d711f812aa3871c5"
+        ),
         "EVA_STACK_CORE_CONTAINER": "eva2-living-core-b",
         "EVA_STACK_BIND_ADDRESS": "127.0.0.1",
         "EVA_LIVING_CORE_IMAGE": "eva2-living-core@sha256:" + ("a" * 64),
@@ -115,6 +118,17 @@ def test_plan_uses_one_immutable_environment_snapshot(
     assert plan.value("EVA_MODEL_ACCESS_LEASE_DIR") == values[
         "EVA_MODEL_ACCESS_LEASE_DIR"
     ]
+
+
+def test_plan_refuses_its_derived_configuration_hash_in_the_snapshot(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    values["EVA_B_CONFIGURATION_SHA256"] = "a" * 64
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(RuntimeError, match="derived and forbidden"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 
 def test_plan_rejects_environment_metadata_change_while_snapshotting(
