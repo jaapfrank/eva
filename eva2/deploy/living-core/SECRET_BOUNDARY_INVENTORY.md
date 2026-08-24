@@ -17,8 +17,8 @@ secret-hardening wordt gepresenteerd.
 - AgentMail in de Living Core leest zijn API-key nu via dezelfde harde
   fileloader. De huidige Compose-set bevat echter nog geen complete
   AgentMail-secretmount; dat deploymentdeel blijft dus open.
-- `operations/telegram_ingress.py`: database-DSN, bot-token en
-  principal-bindings gaan nu elk door dezelfde harde fileloader. Het
+- `operations/telegram_ingress.py`: database-DSN, bot-token,
+  principal-bindings en koppelsecret gaan nu elk door dezelfde harde fileloader. Het
   telegram-native Compose-profiel bindt alleen expliciete, read-only hostfiles
   met `create_host_path: false`; Docker Compose `secrets:file` wordt daar niet
   gebruikt omdat de effectieve owner/mode niet betrouwbaar kan worden gezet.

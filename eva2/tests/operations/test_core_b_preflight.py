@@ -8,6 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 from eva.operations.core_b_preflight import (
+    REQUIRED_CONFIGURATION,
     load_core_b_plan as _load_core_b_plan,
     observe_current_b,
     observe_managed_b_services,
@@ -16,6 +17,10 @@ from eva.operations.core_b_preflight import (
     verify_managed_service_labels,
     verify_steady_managed_service_labels,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+RUNTIME_ENVIRONMENT_TEMPLATE = ROOT / "deploy" / "living-core" / "runtime.env.example"
 
 
 def load_core_b_plan(*args: object, **kwargs: object):
@@ -109,6 +114,17 @@ def _environment_file(private_tmp_path: Path, values: dict[str, str]) -> Path:
     )
     path.chmod(0o600)
     return path
+
+
+def test_runtime_environment_template_names_every_required_preflight_value() -> None:
+    values = {
+        line.split("=", 1)[0]
+        for raw_line in RUNTIME_ENVIRONMENT_TEMPLATE.read_text(encoding="utf-8").splitlines()
+        if (line := raw_line.strip()) and not line.startswith("#") and "=" in line
+    }
+
+    assert set(REQUIRED_CONFIGURATION) <= values
+    assert {"EVA_DATABASE_DSN", "EVA_HOME_ASSISTANT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN"}.isdisjoint(values)
 
 
 def test_plan_uses_one_immutable_environment_snapshot(
