@@ -286,9 +286,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   modellease; broninventaris en onafhankelijke review vonden geen resterende
   inline-secretconsumer. De feitelijke B-adoptie/start blijft afzonderlijk
   open. AgentMail en Stripe zijn latere, eigen capabilitygates.
-- [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
-  groepsroute, wederzijdse koppelchallenge en privé/gedeeld geheugen met
-  toestemming.
+- [ ] Telegram-groepsgeheugen sluiten: de geverifieerde multi-accountbindings,
+  wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
+  getest. Wat nog ontbreekt is de expliciete privé/gedeeld
+  Hindsight-geheugenscope met non-leakagebewijs; de echte multi-account- en
+  Telegram-groepproef blijft daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde
