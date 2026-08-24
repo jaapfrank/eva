@@ -150,13 +150,16 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Managed-B-servicelabels: de toekomstige startcontrole vereist exact alle
   acht manifestservices met dezelfde configuratiesnapshothash; 41 checks en
   onafhankelijke review zijn groen; zie
-  `reviews/managed-b-all-service-labels-6e8cae5.md`. De profile-only
-  schema-run blijft een aparte, open receipt.
+  `reviews/managed-b-all-service-labels-6e8cae5.md`.
+- [x] Managed-B-schema-profiel: een verse, geïsoleerde PostgreSQL doorloopt
+  de echte schema-installer tot `4e_0001_operational_timeline`; de
+  driftcontrole is groen en de onafhankelijke reviewer heeft alle tijdelijke
+  Docker-resources verwijderd gezien. B is niet benaderd; zie
+  `reviews/schema-installer-disposable-live-03ec03a.md`.
 - [x] Managed-B-steady-observatie: zeven permanente containers worden na start
   alleen-lezen op project, labels en dezelfde configuratiesnapshot gecontroleerd;
   47 checks en onafhankelijke review zijn groen; zie
-  `reviews/managed-b-steady-observation-0351852.md`. De profile-only
-  schema-installer vereist nog een afzonderlijke succesvolle-run receipt.
+  `reviews/managed-b-steady-observation-0351852.md`.
 - [x] Managed-B-runtimebestanden: HA, database-DSN en beide Telegrambestanden
   worden metadata-only en fail-closed gecontroleerd vóór een adoptierun; 24
   tests + onafhankelijke review zijn groen; zie
