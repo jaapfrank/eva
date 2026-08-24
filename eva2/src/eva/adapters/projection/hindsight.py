@@ -26,7 +26,7 @@ import urllib.request
 from uuid import NAMESPACE_URL, uuid5
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
-from typing import Any, Literal
+from typing import Any, Literal, Protocol
 
 from eva.application.memory import (
     ConversationMemoryDocument,
@@ -34,6 +34,10 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
     RememberFact,
+)
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
 )
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.memory import MemoryRecall, RecalledFact
@@ -63,6 +67,14 @@ class HindsightProjectionProtocolError(HindsightProjectionError):
 
 class HindsightMemoryScopeError(HindsightProjectionError):
     """A retain or recall crossed its admitted person/install scope."""
+
+
+class ActiveGroupConsentResolver(Protocol):
+    """The durable, current source of group-memory permission."""
+
+    def active_reference(
+        self, *, principal_id: str, group_chat_id: str, now: datetime
+    ) -> TelegramGroupConsentReference | None: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -148,12 +160,18 @@ def _canonical_timestamp(value: str) -> str:
 class HindsightMemoryEngine:
     """Small HTTP adapter around a self-hosted Hindsight memory bank."""
 
-    def __init__(self, config: HindsightProjectionConfig) -> None:
+    def __init__(
+        self,
+        config: HindsightProjectionConfig,
+        *,
+        active_group_consent_resolver: ActiveGroupConsentResolver | None = None,
+    ) -> None:
         self._config = config
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
         self._known_reflections: set[tuple[str, str]] = set()
         self._cache_lock = threading.Lock()
+        self._active_group_consent_resolver = active_group_consent_resolver
 
     def _bank_id(self, tenant_id: str, installation_id: str) -> str:
         raw = canonical_json_bytes(
@@ -166,6 +184,41 @@ class HindsightMemoryEngine:
     def _person_tag(principal_id: str) -> str:
         digest = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
         return f"eva-person-{digest[:32]}"
+
+    @staticmethod
+    def _group_tag(group_chat_id: str) -> str:
+        digest = hashlib.sha256(group_chat_id.encode("utf-8")).hexdigest()
+        return f"eva-telegram-group-{digest[:32]}"
+
+    def _require_active_group_audience(
+        self, audience: MemoryAudience
+    ) -> TelegramGroupConsentReference:
+        """Resolve the live grant and bind it to the durable document audience."""
+
+        if audience.kind != "telegram_group":
+            raise HindsightMemoryScopeError("memory audience is not a Telegram group")
+        if self._active_group_consent_resolver is None:
+            raise HindsightMemoryScopeError(
+                "Telegram group memory has no active consent resolver"
+            )
+        assert audience.group_chat_id is not None
+        assert audience.consent_ref is not None
+        now = datetime.now(tz=timezone.utc).replace(microsecond=0)
+        try:
+            active = self._active_group_consent_resolver.active_reference(
+                principal_id=audience.principal_id,
+                group_chat_id=audience.group_chat_id,
+                now=now,
+            )
+        except Exception as error:
+            raise HindsightMemoryScopeError(
+                "Telegram group memory consent could not be resolved"
+            ) from error
+        if active != audience.consent_ref:
+            raise HindsightMemoryScopeError(
+                "Telegram group memory consent is not active and exact"
+            )
+        return active
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -581,10 +634,30 @@ class HindsightMemoryEngine:
         This adapter does not pre-extract or persist a parallel Eva fact graph.
         """
 
-        if document.audience.kind != "private_person":
-            raise HindsightMemoryScopeError(
-                "Telegram group memory retention is not wired yet"
-            )
+        if document.audience.kind == "private_person":
+            audience_tag = self._person_tag(document.principal_id)
+            audience_metadata: dict[str, str] = {}
+        else:
+            consent_ref = self._require_active_group_audience(document.audience)
+            assert document.audience.group_chat_id is not None
+            group_prefix = f"telegram:{document.audience.group_chat_id}:"
+            if (
+                document.conversation_id
+                != f"telegram:{document.audience.group_chat_id}"
+                or not document.document_id.startswith(group_prefix)
+                or not document.source_ref.startswith(group_prefix)
+                or not document.evidence_ref.startswith(group_prefix)
+            ):
+                raise HindsightMemoryScopeError(
+                    "Telegram group memory document is not bound to its group"
+                )
+            audience_tag = self._group_tag(document.audience.group_chat_id)
+            audience_metadata = {
+                "audience_id": document.audience.audience_id,
+                "audience_kind": document.audience.kind,
+                "consent_operation_id": consent_ref.operation_id,
+                "group_chat_id": document.audience.group_chat_id,
+            }
         observation_binding_sha256: str | None = None
         if document.evidence_ref.startswith(_OBSERVATION_EVIDENCE_PREFIX):
             observation_binding_sha256 = document.evidence_ref.removeprefix(
@@ -608,7 +681,6 @@ class HindsightMemoryEngine:
             )
         )
         bank_id = self.ensure_bank(document.tenant_id, partition)
-        person_tag = self._person_tag(document.principal_id)
         item = {
             "content": document.content,
             "timestamp": document.occurred_at,
@@ -617,6 +689,7 @@ class HindsightMemoryEngine:
             "update_mode": "replace",
             "metadata": {
                 "conversation_id": document.conversation_id,
+                **audience_metadata,
                 "evidence_ref": document.evidence_ref,
                 "installation_id": document.installation_id,
                 "principal_id": document.principal_id,
@@ -636,8 +709,8 @@ class HindsightMemoryEngine:
                 "source_ref": document.source_ref,
                 "trust": document.trust,
             },
-            "tags": ["eva-memory", person_tag],
-            "observation_scopes": [[person_tag]],
+            "tags": ["eva-memory", audience_tag],
+            "observation_scopes": [[audience_tag]],
         }
         _, response = self._request(
             "POST",

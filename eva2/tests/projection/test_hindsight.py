@@ -411,6 +411,23 @@ def _conversation_document() -> ConversationMemoryDocument:
     )
 
 
+def _group_document(
+    *, consent_ref: TelegramGroupConsentReference
+) -> ConversationMemoryDocument:
+    return replace(
+        _conversation_document(),
+        conversation_id="telegram:-100123",
+        document_id="telegram:-100123:history:1",
+        source_ref="telegram:-100123:message:1",
+        evidence_ref="telegram:-100123:evidence:1",
+        audience=MemoryAudience.telegram_group(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            consent_ref=consent_ref,
+        ),
+    )
+
+
 def test_hindsight_owns_conversation_memory_and_style_observations(
     hindsight_server: tuple[str, _State],
 ) -> None:
@@ -449,27 +466,148 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     assert retained["async"] is True
 
 
+def test_private_hindsight_memory_never_calls_the_group_consent_resolver(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, _state = hindsight_server
+    calls = 0
+
+    class Resolver:
+        def active_reference(self, **_kwargs):  # type: ignore[no-untyped-def]
+            nonlocal calls
+            calls += 1
+            raise AssertionError("private memory must not resolve group consent")
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+
+    engine.retain_conversation(_conversation_document())
+    engine.recall_for_presence(_query())
+
+    assert calls == 0
+
+
 def test_hindsight_rejects_a_group_document_until_group_tagging_is_wired(
     hindsight_server: tuple[str, _State],
 ) -> None:
     base_url, state = hindsight_server
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
-    group_document = replace(
-        _conversation_document(),
-        conversation_id="telegram:-100123",
-        audience=MemoryAudience.telegram_group(
+    group_document = _group_document(
+        consent_ref=TelegramGroupConsentReference(
             principal_id=PRINCIPAL,
             group_chat_id="-100123",
-            consent_ref=TelegramGroupConsentReference(
-                principal_id=PRINCIPAL,
-                group_chat_id="-100123",
-                operation_id="telegram-group-consent:41",
-            ),
-        ),
+            operation_id="telegram-group-consent:41",
+        )
     )
 
-    with pytest.raises(HindsightMemoryScopeError, match="not wired"):
+    with pytest.raises(HindsightMemoryScopeError, match="no active consent resolver"):
         engine.retain_conversation(group_document)
+    assert state.requests == []
+
+
+def test_hindsight_retain_uses_only_current_group_tag_and_metadata(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:42",
+    )
+    calls: list[tuple[str, str]] = []
+
+    class Resolver:
+        def active_reference(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
+            calls.append((principal_id, group_chat_id))
+            return consent_ref
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    group_document = _group_document(consent_ref=consent_ref)
+
+    engine.retain_conversation(group_document)
+
+    retained = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories")
+    )
+    assert retained is not None
+    item = retained["items"][0]
+    group_tag = HindsightMemoryEngine._group_tag("-100123")
+    assert item["tags"] == ["eva-memory", group_tag]
+    assert item["observation_scopes"] == [[group_tag]]
+    assert HindsightMemoryEngine._person_tag(PRINCIPAL) not in item["tags"]
+    assert item["metadata"] == {
+        "audience_id": "telegram-group:-100123",
+        "audience_kind": "telegram_group",
+        "consent_operation_id": "telegram-group-consent:42",
+        "conversation_id": "telegram:-100123",
+        "evidence_ref": "telegram:-100123:evidence:1",
+        "group_chat_id": "-100123",
+        "installation_id": INSTALLATION,
+        "principal_id": PRINCIPAL,
+        "privacy_class": "internal",
+        "source_ref": "telegram:-100123:message:1",
+        "trust": "direct_user",
+    }
+    assert calls == [(PRINCIPAL, "-100123")]
+
+
+@pytest.mark.parametrize("active", [None, "other-operation"])
+def test_hindsight_retain_rejects_revoked_or_replaced_group_consent_before_http(
+    hindsight_server: tuple[str, _State], active: str | None
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:43",
+    )
+
+    class Resolver:
+        def active_reference(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
+            if active is None:
+                return None
+            return TelegramGroupConsentReference(
+                principal_id=principal_id,
+                group_chat_id=group_chat_id,
+                operation_id=f"telegram-group-consent:{active}",
+            )
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    group_document = _group_document(consent_ref=consent_ref)
+
+    with pytest.raises(HindsightMemoryScopeError, match="not active and exact"):
+        engine.retain_conversation(group_document)
+    assert state.requests == []
+
+
+def test_hindsight_retain_rejects_a_group_document_with_private_evidence_binding(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:44",
+    )
+
+    class Resolver:
+        def active_reference(self, **_kwargs):  # type: ignore[no-untyped-def]
+            return consent_ref
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    document = replace(_group_document(consent_ref=consent_ref), evidence_ref="observation-binding:" + "a" * 64)
+
+    with pytest.raises(HindsightMemoryScopeError, match="not bound to its group"):
+        engine.retain_conversation(document)
     assert state.requests == []
 
 

@@ -284,6 +284,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   groepsaudience vóór bankkeuze, Hindsight-request, stijlspiegeling en
   SQL-fallback. 65 gerichte checks en onafhankelijke review zijn groen;
   A03b maakt hierna de afzonderlijke consentgebonden groepstags en recall.
+- [x] Groepsgeheugen A03b1: Hindsight-retentie voor een groep gebruikt alleen
+  een aparte groepstag, nooit een persoonstag of stijlreflectie. Vóór partitie,
+  bank en HTTP-call moeten actuele consent, groep, conversatie-, document-,
+  bron- en bewijsreferentie exact samenvallen; zo kan een foto-observatie nooit
+  in groepsretentie komen. Private retentie/recall raakt de consentresolver
+  niet. 21 Hindsight-tests en onafhankelijke review zijn groen; A03b2 voegt
+  de bijpassende groepstag-recall en directe uitsluiting na intrekking toe.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -315,8 +322,8 @@ langdurige verzamelaanpassing telt niet als voortgang.
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
   getest; admission, duurzame consentreferentie en veilige outbox-propagatie
   zijn eveneens klaar; generieke recall weigert een groep nu fail-closed. Wat
-  nog ontbreekt is A03b: een expliciete gedeelde Hindsight-tag en
-  consentgebonden recall met non-leakagebewijs; de echte
+  nog ontbreekt is A03b2: een consentgebonden gedeelde Hindsight-recall met
+  non-leakagebewijs; de echte
   multi-account- en Telegram-groepproef blijft daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
