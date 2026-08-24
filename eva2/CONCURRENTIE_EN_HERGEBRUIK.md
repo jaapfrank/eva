@@ -89,7 +89,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   checker en freeze-test wijzen weer naar schedule `f492…`. Onafhankelijke
   review bevestigt dat dit geen schema-reseal claimt. De checker stopt op de
   huidige 66-schema-registry (`3369…`) versus de historische 64-schema-
-  authority (`fcf…`); een aparte 4D-kandidaat is daarvoor nog open.
+  authority (`fcf…`).
+- [x] Afzonderlijke 4D-64-schema-kandidaat (`5fafab8` op historische basis
+  `5f72d59`) is statisch, positief/fail-closed en met één disposable
+  PostgreSQL-geheugen/herstarttest gecontroleerd. Dit is geen volledige
+  4D-gate, B-adoptie of product-liveclaim; zie
+  `reviews/4d-64-schema-candidate-5fafab8.md`.
 - [x] Buildinput B01: kandidaatcontext komt uitsluitend uit een expliciete
   vaste Git-commit, niet uit de vuile werkmap. Dockerfile, lockfile,
   COPY-inputs, archiefhash en commit-tijd worden secretvrij gebonden; een
@@ -132,10 +137,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   automatisch opgeruimd. Gerichte tests en onafhankelijke review zijn groen.
 - [ ] V53-buildclosure: de offline kandidaatimage is gebouwd, maar de
   versiepassende eindtestscope en beheerde startupconfiguratie ontbreken nog.
-  De 4D-authoritybron is hersteld, maar vereist nog een afzonderlijke
-  64-schema-kandidaat: de huidige hoofdregistry heeft 66 schema's en mag niet
-  stilzwijgend als nieuwe 4D-freeze gelden. Pas daarna de kandidaatset
-  vastzetten en de resterende tests draaien.
+  De 4D-64-schema-kandidaat is afzonderlijk bewezen; de huidige hoofdregistry
+  met 66 schema's mag echter niet stilzwijgend als een nieuwe 4D-freeze gelden.
+  De versiepassende kandidaatset en resterende tests moeten nog worden
+  vastgezet.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
 - [x] Core-database-DSN: de runtime weigert een inline DSN, inclusief een lege
