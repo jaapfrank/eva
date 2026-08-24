@@ -81,6 +81,34 @@ class CandidateBuildInputs:
         }
 
 
+def validate_candidate_build_inputs(
+    inputs: CandidateBuildInputs,
+) -> dict[str, tuple[bytes, int]]:
+    """Revalidate the immutable source archive before a later builder uses it."""
+
+    if _sha256(inputs.archive_bytes) != inputs.source_archive_sha256:
+        raise RuntimeError("candidate source archive digest differs")
+    if inputs.source_date_epoch <= 0:
+        raise RuntimeError("candidate source archive epoch is invalid")
+    files = _archive_files(inputs.archive_bytes, require_context_root=False)
+    if _canonical_archive(files, source_date_epoch=inputs.source_date_epoch) != inputs.archive_bytes:
+        raise RuntimeError("candidate source archive is not canonical")
+    dockerfile_entry = files.get("deploy/living-core/Dockerfile")
+    requirements_lock_entry = files.get("requirements.lock")
+    if dockerfile_entry is None or requirements_lock_entry is None:
+        raise RuntimeError("candidate archive omits its Dockerfile or requirements lock")
+    dockerfile, requirements_lock = dockerfile_entry[0], requirements_lock_entry[0]
+    if _sha256(dockerfile) != inputs.dockerfile_sha256:
+        raise RuntimeError("candidate Dockerfile digest differs")
+    if _sha256(requirements_lock) != inputs.requirements_lock_sha256:
+        raise RuntimeError("candidate requirements lock digest differs")
+    if _base_image_digest(dockerfile) != inputs.base_image_digest:
+        raise RuntimeError("candidate base image digest differs")
+    _require_copy_inputs(files, _copy_sources(dockerfile))
+    _require_offline_pip_install(dockerfile)
+    return files
+
+
 Runner = Callable[[Sequence[str]], bytes]
 
 
@@ -114,7 +142,9 @@ def _member_name(member: tarfile.TarInfo) -> str:
     return path.as_posix()
 
 
-def _archive_files(archive: bytes) -> dict[str, tuple[bytes, int]]:
+def _archive_files(
+    archive: bytes, *, require_context_root: bool = True
+) -> dict[str, tuple[bytes, int]]:
     if not archive or len(archive) > MAX_ARCHIVE_BYTES:
         raise RuntimeError("candidate archive is empty or exceeds its size limit")
     files: dict[str, tuple[bytes, int]] = {}
@@ -122,15 +152,18 @@ def _archive_files(archive: bytes) -> dict[str, tuple[bytes, int]]:
         with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as bundle:
             for member in bundle:
                 name = _member_name(member)
-                if name == CONTEXT_TREE:
-                    if not member.isdir():
-                        raise RuntimeError("candidate archive has an invalid context root")
-                    continue
-                prefix = f"{CONTEXT_TREE}/"
-                if not name.startswith(prefix):
-                    raise RuntimeError("candidate archive escapes its sealed context root")
-                name = name.removeprefix(prefix)
+                if require_context_root:
+                    if name == CONTEXT_TREE:
+                        if not member.isdir():
+                            raise RuntimeError("candidate archive has an invalid context root")
+                        continue
+                    prefix = f"{CONTEXT_TREE}/"
+                    if not name.startswith(prefix):
+                        raise RuntimeError("candidate archive escapes its sealed context root")
+                    name = name.removeprefix(prefix)
                 if member.isdir():
+                    if not require_context_root:
+                        raise RuntimeError("canonical candidate archive has an unexpected directory")
                     continue
                 if not member.isfile() or member.issym() or member.islnk():
                     raise RuntimeError("candidate archive contains a non-regular input")
@@ -268,15 +301,17 @@ def prepare_candidate_build_inputs(
     _require_copy_inputs(files, _copy_sources(dockerfile))
     _require_offline_pip_install(dockerfile)
     archive = _canonical_archive(files, source_date_epoch=source_date_epoch)
-    return CandidateBuildInputs(
+    prepared = CandidateBuildInputs(
         archive_bytes=archive,
         base_image_digest=_base_image_digest(dockerfile),
         dockerfile_sha256=_sha256(dockerfile),
         requirements_lock_sha256=_sha256(requirements_lock),
         source_archive_sha256=_sha256(archive),
         source_commit=commit,
-            source_date_epoch=source_date_epoch,
+        source_date_epoch=source_date_epoch,
     )
+    validate_candidate_build_inputs(prepared)
+    return prepared
 
 
 def main(argv: list[str] | None = None) -> int:

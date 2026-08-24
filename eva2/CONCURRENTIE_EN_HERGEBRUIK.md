@@ -101,9 +101,15 @@ langdurige verzamelaanpassing telt niet als voortgang.
   externe `wheelhouse` en installeert uitsluitend met `--no-index`, hashes en
   binary-only. De Git-bronarchive mag die map juist niet bevatten; B03a bouwt
   nog geen image en bindt nog geen fysieke wheelhouse aan een buildcontext.
-- [ ] Offline buildcontext B03b: bind B01-bron en de B02b-wheelhouse aan één
-  nieuwe private Docker-context; valideer ook de fysieke OCI-basisimage vóór
-  een kandidaatbuild met netwerk uit.
+- [x] Offline preflight B03b: B01-bronarchive en B02b-read-only wheelhouse
+  moeten byte-voor-byte dezelfde lock delen; archive, Dockerfile, basisdigest,
+  materialization-receipt en beide tree-hashes worden opnieuw gecontroleerd.
+  De proef gebruikte tijdelijke lokale bytes, zonder Docker of B.
+- [ ] OCI-basisinput B03c: leg de fysieke, lokale Python-basisimage als
+  verzegelde OCI-input vast en controleer platform en manifestdigest. Een
+  bestaande Docker-cache is geen geldige verborgen buildinput.
+- [ ] Offline buildcontext B03d: maak uit B01 + B02b + B03c één nieuwe private
+  Docker-context en voer pas daarna een kandidaatimagebuild met netwerk uit.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare
