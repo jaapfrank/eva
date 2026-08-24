@@ -14,6 +14,7 @@ from typing import Any
 from eva.operations.core_b_preflight import (
     MANAGEMENT_LABEL,
     MANAGEMENT_VALUE,
+    MANAGED_SERVICE_NAMES,
     SNAPSHOT_LABEL,
     CoreBPlan,
     load_core_b_plan,
@@ -22,18 +23,7 @@ from eva.operations.core_b_preflight import (
 
 ROOT = Path(__file__).resolve().parents[3]
 MANAGED_B_MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
-EXPECTED_SERVICES = frozenset(
-    {
-        "postgres",
-        "schema-installer",
-        "model-access-lease",
-        "hindsight-access-lease",
-        "hindsight",
-        "core",
-        "durable-goal-worker",
-        "telegram-ingress",
-    }
-)
+EXPECTED_SERVICES = MANAGED_SERVICE_NAMES
 
 
 @dataclass(frozen=True, slots=True)

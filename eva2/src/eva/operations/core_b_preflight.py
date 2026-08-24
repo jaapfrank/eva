@@ -21,6 +21,18 @@ from eva.bootstrap.secrets import (
 MANAGEMENT_LABEL = "io.eva2.managed-by"
 MANAGEMENT_VALUE = "eva2-explicit-b-manifest-v1"
 SNAPSHOT_LABEL = "io.eva2.configuration-sha256"
+MANAGED_SERVICE_NAMES = frozenset(
+    {
+        "postgres",
+        "schema-installer",
+        "model-access-lease",
+        "hindsight-access-lease",
+        "hindsight",
+        "core",
+        "durable-goal-worker",
+        "telegram-ingress",
+    }
+)
 ENVIRONMENT_NAME = "explicit B deployment environment"
 MANAGED_WORK_VOLUME = "eva2-living-work-b"
 MANAGED_POSTGRES_VOLUME = "eva2-postgres-b-live"
@@ -422,6 +434,20 @@ def verify_current_management(plan: CoreBPlan, labels: object) -> None:
         raise RuntimeError(
             "current B container was not created from this exact configuration snapshot"
         )
+
+
+def verify_managed_service_labels(
+    plan: CoreBPlan,
+    labels_by_service: object,
+) -> None:
+    """Require every future managed-B service to prove the same sealed origin."""
+
+    if not isinstance(labels_by_service, dict) or set(labels_by_service) != MANAGED_SERVICE_NAMES:
+        raise RuntimeError("managed B does not contain its exact eight-service graph")
+    for service_name, labels in labels_by_service.items():
+        if not isinstance(labels, dict):
+            raise RuntimeError(f"managed B service {service_name} has no verifiable labels")
+        verify_current_management(plan, labels)
 
 
 def _run_docker(command: list[str]) -> str:

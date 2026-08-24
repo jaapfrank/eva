@@ -11,6 +11,7 @@ from eva.operations.core_b_preflight import (
     observe_current_b,
     verify_current_management,
     verify_docker_endpoint,
+    verify_managed_service_labels,
 )
 
 
@@ -129,6 +130,68 @@ def test_plan_refuses_its_derived_configuration_hash_in_the_snapshot(
 
     with pytest.raises(RuntimeError, match="derived and forbidden"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+def test_managed_service_labels_require_the_entire_sealed_graph(
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    labels = {
+        "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
+        "io.eva2.configuration-sha256": plan.snapshot_sha256,
+    }
+    services = {
+        name: dict(labels)
+        for name in (
+            "postgres",
+            "schema-installer",
+            "model-access-lease",
+            "hindsight-access-lease",
+            "hindsight",
+            "core",
+            "durable-goal-worker",
+            "telegram-ingress",
+        )
+    }
+
+    verify_managed_service_labels(plan, services)
+
+    services.pop("telegram-ingress")
+    with pytest.raises(RuntimeError, match="exact eight-service graph"):
+        verify_managed_service_labels(plan, services)
+
+
+def test_managed_service_labels_reject_a_service_from_another_snapshot(
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    labels = {
+        "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
+        "io.eva2.configuration-sha256": plan.snapshot_sha256,
+    }
+    services = {
+        name: dict(labels)
+        for name in (
+            "postgres",
+            "schema-installer",
+            "model-access-lease",
+            "hindsight-access-lease",
+            "hindsight",
+            "core",
+            "durable-goal-worker",
+            "telegram-ingress",
+        )
+    }
+    services["hindsight"]["io.eva2.configuration-sha256"] = "a" * 64
+
+    with pytest.raises(RuntimeError, match="exact configuration snapshot"):
+        verify_managed_service_labels(plan, services)
 
 
 def test_plan_rejects_environment_metadata_change_while_snapshotting(
