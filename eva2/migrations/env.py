@@ -12,6 +12,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.pool import NullPool
 
 from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.operational_timeline import living_metadata
 from eva.operations.migration_admission import (
     InitialCatalogAdmissionError,
     run_initial_catalog_admission,
@@ -22,7 +23,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-target_metadata = metadata
+target_metadata = (metadata, living_metadata)
 VERSION_TABLE = "eva_alembic_version"
 MIGRATION_LOCK_NAMESPACE = 1_164_409_906
 MIGRATION_LOCK_KEY = 4
