@@ -71,6 +71,7 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "IngressRequest/v1",
         "InstallationManifest/v1",
         "InstallationRemap/v1",
+        "McpReadOnlyToolImport/v1",
         "MemoryFact/v1",
         "MemoryRecall/v1",
         "ModelAttempt/v1",

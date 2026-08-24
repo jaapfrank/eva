@@ -6,6 +6,7 @@ from types import MappingProxyType
 from typing import Final
 
 from .base import ContractModel
+from .capability import McpReadOnlyToolImport
 from .connector import ConnectorEnvelope, ConnectorManifest, ConnectorResult
 from .connector_rpc import (
     ConnectorErrorResponse,
@@ -124,6 +125,7 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "IngressRequest/v1": IngressRequest,
     "InstallationManifest/v1": InstallationManifest,
     "InstallationRemap/v1": InstallationRemap,
+    "McpReadOnlyToolImport/v1": McpReadOnlyToolImport,
     "MemoryFact/v1": MemoryFact,
     "MemoryRecall/v1": MemoryRecall,
     "ModelAttempt/v1": ModelAttempt,

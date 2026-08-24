@@ -1206,6 +1206,44 @@ def valid_examples() -> dict[str, dict[str, Any]]:
             "created_at": NOW,
         },
     )
+    mcp_input_schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {"topic": {"type": "string"}},
+        "required": ["topic"],
+    }
+    mcp_output_schema = {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {"summary": {"type": "string"}},
+        "required": ["summary"],
+    }
+    add(
+        "valid-mcp-read-only-tool-import",
+        {
+            **_meta("McpReadOnlyToolImport/v1"),
+            "server_id": "mcp-server:documentation:fixture",
+            "transport": "streamable_http",
+            "server_image_sha256": H,
+            "sandbox_profile_sha256": H1,
+            "endpoint": "https://mcp.example.invalid/v1",
+            "tool_name": "documentation-read",
+            "effect_class": "read",
+            "resource_id": "documentation:public:fixture",
+            "timeout_milliseconds": 3_000,
+            "maximum_request_bytes": 4_096,
+            "maximum_response_bytes": 65_536,
+            "input_schema": mcp_input_schema,
+            "input_schema_sha256": hashlib.sha256(
+                canonical_json_bytes(mcp_input_schema)
+            ).hexdigest(),
+            "output_schema": mcp_output_schema,
+            "output_schema_sha256": hashlib.sha256(
+                canonical_json_bytes(mcp_output_schema)
+            ).hexdigest(),
+            "provider_scopes": [],
+        },
+    )
     add(
         "valid-memory-fact",
         {
