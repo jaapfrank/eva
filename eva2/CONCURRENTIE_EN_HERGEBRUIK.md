@@ -150,6 +150,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke review zijn groen; zie
   `reviews/telegram-multi-account-identity-38f4f6c.md`. Koppelchallenge,
   groepsconsent en live multi-accountproef blijven open.
+- [x] Telegram-koppelprimitief: een nieuw privéaccount krijgt een kortlevende,
+  na herstart reproduceerbare code; alleen een bestaand gekoppeld privéaccount
+  kan die bevestigen. De code staat niet plaintext in de tijdlijn en een
+  bestaande accountbinding kan niet worden overschreven; zie
+  `reviews/telegram-pairing-primitive-47a799d.md`. Workerwiring en de echte
+  Telegramproef blijven open.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
   Authenticatie en B-deploy blijven open.
