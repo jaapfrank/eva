@@ -96,6 +96,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   inclusief lege waarden, en behoudt uitsluitend private file-routes; 19
   gerichte checks en onafhankelijke review zijn groen (`d825a79`). Dit is geen
   Stripe-provider- of financiële liveproef.
+- [x] MCP-contractbasis: één getypeerde, no-secret `streamable_http`-tool is
+  strikt beperkt tot `read`, één vaste resource, 1–5 seconden en
+  hashgebonden JSON-schema's; mutaties, scopes en remote `$ref` worden lokaal
+  geweigerd (`8f1e006`). Adapter, sidecar en B-proef blijven open.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
