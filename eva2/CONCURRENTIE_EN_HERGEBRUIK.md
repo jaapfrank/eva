@@ -97,6 +97,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   nieuwe private, read-only wheelhouse worden gekopieerd met hashcontrole vóór,
   tijdens en na de kopie. Herkomst uit een goedgekeurde artifactproxy is nog
   niet bewezen; er is niets geïnstalleerd, gebouwd of aan B gekoppeld.
+- [x] Offline buildregel B03a: de kandidaat-Dockerfile accepteert alleen een
+  externe `wheelhouse` en installeert uitsluitend met `--no-index`, hashes en
+  binary-only. De Git-bronarchive mag die map juist niet bevatten; B03a bouwt
+  nog geen image en bindt nog geen fysieke wheelhouse aan een buildcontext.
+- [ ] Offline buildcontext B03b: bind B01-bron en de B02b-wheelhouse aan één
+  nieuwe private Docker-context; valideer ook de fysieke OCI-basisimage vóór
+  een kandidaatbuild met netwerk uit.
 - [ ] V53-buildclosure: verzegelde offline wheelhouse-input en kandidaatimage
   bouwen met netwerk uit; daarna de versiepassende resterende testset en
   beheerde startupconfiguratie vastleggen vóór een reproduceerbare

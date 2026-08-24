@@ -21,6 +21,7 @@ def _archive(
     *,
     omit: str | None = None,
     dockerfile: bytes | None = None,
+    include_external_wheelhouse: bool = False,
     mtime: int = 0,
 ) -> bytes:
     entries = {
@@ -29,6 +30,8 @@ def _archive(
             (
                 b"FROM docker.io/library/python@sha256:" + b"1" * 64,
                 b"COPY requirements.lock ./requirements.lock",
+                b"COPY wheelhouse ./wheelhouse",
+                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
                 b"COPY src ./src",
                 b"COPY connector_sdk ./connector_sdk",
                 b"COPY alembic.ini ./alembic.ini",
@@ -45,6 +48,8 @@ def _archive(
     }
     if omit is not None:
         entries.pop(f"eva2/{omit}")
+    if include_external_wheelhouse:
+        entries["eva2/wheelhouse/unsealed.whl"] = b"not-a-sealed-wheel"
     output = io.BytesIO()
     with tarfile.open(fileobj=output, mode="w") as bundle:
         for name, content in sorted(entries.items()):
@@ -99,6 +104,7 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
     receipt = prepared.receipt()
     assert receipt["network"] == "not_used"
     assert receipt["image_build"] == "not_started"
+    assert receipt["external_inputs_required"] == ["wheelhouse"]
     assert "secret" not in json.dumps(receipt).casefold()
 
 
@@ -133,12 +139,41 @@ def test_preparation_refuses_changed_copy_contract() -> None:
         prepare_candidate_build_inputs(COMMIT, runner=run)
 
 
+def test_preparation_refuses_online_or_unsealed_package_install() -> None:
+    dockerfile = b"\n".join(
+        (
+            b"FROM docker.io/library/python@sha256:" + b"1" * 64,
+            b"COPY requirements.lock ./requirements.lock",
+            b"COPY wheelhouse ./wheelhouse",
+            b"RUN python -m pip install --require-hashes -r requirements.lock",
+            b"COPY src ./src",
+            b"COPY connector_sdk ./connector_sdk",
+            b"COPY alembic.ini ./alembic.ini",
+            b"COPY migrations ./migrations",
+            b"COPY schemas ./schemas",
+        )
+    )
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="exact offline pip install"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_a_wheelhouse_from_the_source_archive() -> None:
+    run, _ = _runner(_archive(include_external_wheelhouse=True))
+
+    with pytest.raises(RuntimeError, match="must not contain external input"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
 def test_preparation_refuses_an_unpinned_or_ambiguous_base_image() -> None:
     dockerfile = b"\n".join(
         (
-            b"FROM python:3.12",
-            b"COPY requirements.lock ./requirements.lock",
-            b"COPY src ./src",
+                b"FROM python:3.12",
+                b"COPY requirements.lock ./requirements.lock",
+                b"COPY wheelhouse ./wheelhouse",
+                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
+                b"COPY src ./src",
             b"COPY connector_sdk ./connector_sdk",
             b"COPY alembic.ini ./alembic.ini",
             b"COPY migrations ./migrations",

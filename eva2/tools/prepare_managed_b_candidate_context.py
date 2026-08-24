@@ -39,6 +39,11 @@ EXPECTED_COPY_SOURCES = frozenset(
         "schemas",
     }
 )
+EXTERNAL_COPY_SOURCES = frozenset({"wheelhouse"})
+EXPECTED_OFFLINE_PIP_INSTALL = (
+    "RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: "
+    "--find-links=./wheelhouse --require-hashes -r requirements.lock"
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,11 +64,13 @@ class CandidateBuildInputs:
             "base_image_digest": self.base_image_digest,
             "dockerfile_path": "deploy/living-core/Dockerfile",
             "dockerfile_sha256": self.dockerfile_sha256,
+            "external_inputs_required": ["wheelhouse"],
             "image_build": "not_started",
             "network": "not_used",
             "nonclaims": [
                 "No Docker image was built, inspected, tagged, pushed, signed, or released.",
                 "No Compose graph, B configuration, container, volume, or live service was opened.",
+                "The required wheelhouse must be separately sealed before a later offline build.",
                 "This receipt does not prove hermetic or reproducible image construction.",
             ],
             "requirements_lock_sha256": self.requirements_lock_sha256,
@@ -185,9 +192,19 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
         if source.startswith("/") or ".." in PurePosixPath(source).parts:
             raise RuntimeError("candidate Dockerfile COPY source is unsafe")
         sources.add(source)
-    if sources != EXPECTED_COPY_SOURCES:
+    if sources != EXPECTED_COPY_SOURCES | EXTERNAL_COPY_SOURCES:
         raise RuntimeError("candidate Dockerfile COPY inputs differ from the sealed set")
     return frozenset(sources)
+
+
+def _require_offline_pip_install(dockerfile: bytes) -> None:
+    try:
+        lines = dockerfile.decode("utf-8").splitlines()
+    except UnicodeDecodeError as error:
+        raise RuntimeError("candidate Dockerfile must be UTF-8") from error
+    commands = [line.strip() for line in lines if line.strip().startswith("RUN ")]
+    if commands != [EXPECTED_OFFLINE_PIP_INSTALL]:
+        raise RuntimeError("candidate Dockerfile must have the exact offline pip install")
 
 
 def _base_image_digest(dockerfile: bytes) -> str:
@@ -205,12 +222,15 @@ def _base_image_digest(dockerfile: bytes) -> str:
 def _require_copy_inputs(
     files: dict[str, tuple[bytes, int]], sources: frozenset[str]
 ) -> None:
-    for source in sources:
+    for source in sources - EXTERNAL_COPY_SOURCES:
         if source in files:
             continue
         prefix = f"{source}/"
         if not any(path.startswith(prefix) for path in files):
             raise RuntimeError(f"candidate archive omits Dockerfile COPY input: {source}")
+    for source in EXTERNAL_COPY_SOURCES:
+        if source in files or any(path.startswith(f"{source}/") for path in files):
+            raise RuntimeError(f"candidate archive must not contain external input: {source}")
 
 
 def prepare_candidate_build_inputs(
@@ -246,6 +266,7 @@ def prepare_candidate_build_inputs(
     if dockerfile is None or requirements_lock is None:
         raise RuntimeError("candidate archive omits its Dockerfile or requirements lock")
     _require_copy_inputs(files, _copy_sources(dockerfile))
+    _require_offline_pip_install(dockerfile)
     archive = _canonical_archive(files, source_date_epoch=source_date_epoch)
     return CandidateBuildInputs(
         archive_bytes=archive,
@@ -254,7 +275,7 @@ def prepare_candidate_build_inputs(
         requirements_lock_sha256=_sha256(requirements_lock),
         source_archive_sha256=_sha256(archive),
         source_commit=commit,
-        source_date_epoch=source_date_epoch,
+            source_date_epoch=source_date_epoch,
     )
 
 
