@@ -271,6 +271,37 @@ def test_plan_rejects_environment_owned_by_another_operator(
         )
 
 
+def test_plan_validates_optional_hindsight_recall_limits_before_render(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    values.update(
+        {
+            "EVA_HINDSIGHT_RECALL_BUDGET": "mid",
+            "EVA_HINDSIGHT_RECALL_MAX_TOKENS": "3000",
+            "EVA_HINDSIGHT_RECALL_NODE_BUDGET": "25",
+        }
+    )
+    environment = _environment_file(private_tmp_path, values)
+
+    plan = load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+    assert plan.value("EVA_HINDSIGHT_RECALL_BUDGET") == "mid"
+    assert plan.value("EVA_HINDSIGHT_RECALL_MAX_TOKENS") == "3000"
+    assert plan.value("EVA_HINDSIGHT_RECALL_NODE_BUDGET") == "25"
+
+    values["EVA_HINDSIGHT_RECALL_MAX_TOKENS"] = "4001"
+    environment = _environment_file(private_tmp_path, values)
+    with pytest.raises(RuntimeError, match="RECALL_MAX_TOKENS"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+    values["EVA_HINDSIGHT_RECALL_MAX_TOKENS"] = "3000"
+    values["EVA_HINDSIGHT_RECALL_NODE_BUDGET"] = "invalid"
+    environment = _environment_file(private_tmp_path, values)
+    with pytest.raises(RuntimeError, match="Hindsight recall configuration"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
 @pytest.mark.parametrize(
     ("mode", "expected"),
     ((0o100, "owner read permission"), (0o640, "group or other permissions")),

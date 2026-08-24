@@ -340,6 +340,27 @@ def _validate_configuration(values: dict[str, str]) -> None:
     ):
         raise RuntimeError("Eva durable-goal recipients must be preserved")
 
+    recall_budget = values.get("EVA_HINDSIGHT_RECALL_BUDGET", "low").casefold()
+    if recall_budget not in {"low", "mid", "high"}:
+        raise RuntimeError("EVA_HINDSIGHT_RECALL_BUDGET is invalid")
+    try:
+        recall_max_tokens = int(
+            values.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048")
+        )
+        recall_node_budget = int(
+            values.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40")
+        )
+    except ValueError as error:
+        raise RuntimeError("Eva Hindsight recall configuration is invalid") from error
+    if not 2_000 <= recall_max_tokens <= 4_000:
+        raise RuntimeError(
+            "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
+        )
+    if not 20 <= recall_node_budget <= 100:
+        raise RuntimeError(
+            "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
+        )
+
 
 def load_core_b_plan(
     environment_file: str,
