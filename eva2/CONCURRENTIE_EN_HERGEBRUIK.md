@@ -154,8 +154,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   na herstart reproduceerbare code; alleen een bestaand gekoppeld privéaccount
   kan die bevestigen. De code staat niet plaintext in de tijdlijn en een
   bestaande accountbinding kan niet worden overschreven; zie
-  `reviews/telegram-pairing-primitive-47a799d.md`. Workerwiring en de echte
-  Telegramproef blijven open.
+  `reviews/telegram-pairing-primitive-47a799d.md`. De worker gebruikt die
+  route nu lokaal, via haar normale delivery-ledger en een beheerd file-secret
+  (`07ed428`); alleen de echte Telegramproef blijft open.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
   Authenticatie en B-deploy blijven open.
