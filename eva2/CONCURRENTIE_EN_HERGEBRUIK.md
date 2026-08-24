@@ -113,6 +113,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   B-configuratie; 25 tests + onafhankelijke review zijn groen; zie
   `reviews/managed-b-hindsight-volume-preflight-128e187.md`. Bestaande data,
   back-up en adoptie zijn bewust nog niet geclaimd.
+- [x] PostgreSQL-hostsecret: de toekomstige root-owned `0600`
+  wachtwoordfile wordt metadata-only en fail-closed gecontroleerd; 29 tests +
+  onafhankelijke review zijn groen; zie
+  `reviews/managed-b-postgres-secret-preflight-6157aa8.md`. B is niet
+  benaderd; de uiteindelijke hostprovisioning/adoptie blijft open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
