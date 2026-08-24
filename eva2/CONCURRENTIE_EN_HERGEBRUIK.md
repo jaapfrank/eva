@@ -148,8 +148,8 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 7 tests +
   onafhankelijke review zijn groen; zie
-  `reviews/telegram-multi-account-identity-38f4f6c.md`. Koppelchallenge,
-  groepsconsent en live multi-accountproef blijven open.
+  `reviews/telegram-multi-account-identity-38f4f6c.md`. De live
+  multi-accountproef blijft open.
 - [x] Telegram-koppelprimitief: een nieuw privéaccount krijgt een kortlevende,
   na herstart reproduceerbare code; alleen een bestaand gekoppeld privéaccount
   kan die bevestigen. De code staat niet plaintext in de tijdlijn en een
@@ -157,6 +157,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   `reviews/telegram-pairing-primitive-47a799d.md`. De worker gebruikt die
   route nu lokaal, via haar normale delivery-ledger en een beheerd file-secret
   (`07ed428`); alleen de echte Telegramproef blijft open.
+- [x] Telegram-groepsconsent: alleen een eigen gekoppeld privéaccount kan voor
+  een vooraf gebonden groep delen starten of stoppen. Zonder actieve toestemming
+  bereikt een groepsbericht Eva's kern niet. Grant, stop en reject staan
+  append-only in PostgreSQL; herhaling van hetzelfde Telegram-update-id verlengt
+  niets. 55 gerichte tests, drie wegwerp-PostgreSQL-proeven en onafhankelijke
+  review zijn groen (`c026a2c`). Dit is nog niet op B gedeployd en bewijst nog
+  geen echte groepstest.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest en onafhankelijke review, plus lokale read-only pagina.
   Authenticatie en B-deploy blijven open.
