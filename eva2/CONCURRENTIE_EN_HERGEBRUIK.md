@@ -65,11 +65,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   van de bestaande secret- en Telegram-hardening: 22 gerichte tests, compile
   en een niet-root image-smoke zijn onafhankelijk groen. De kandidaat is nog
   niet geforceerd in de huidige dirty worktree gemerged.
+- [x] De bestaande ongetrackte recoverybron is ongewijzigd als Git-baseline
+  vastgelegd (`2fc19f3`): 107 bron-, migratie-, test- en deploymentbestanden,
+  met onafhankelijke review, compile en 23 gerichte tests; zie
+  `reviews/recovery-source-baseline-2fc19f3.md`. De kandidaatpatches blijven
+  afzonderlijk totdat ze gericht met deze baseline zijn verzoend.
 - [ ] V53-buildclosure: versiepassende resterende testset en beheerde
   startupconfiguratie vastleggen vóór een reproduceerbare B-kandidaat.
-- [ ] Dashboard D01: alleen-lezen overzicht voor B-image, gates, receipts en
-  open blokkades. Daarna volgen apart IdentityPack, personen/Telegram, skills
-  en settings; zie `design/product/dashboard-v1.md`.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
@@ -100,6 +102,20 @@ langdurige verzamelaanpassing telt niet als voortgang.
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde
   Telegram-B-pad bewijzen.
+- [ ] Gateway/browser B01: Eva kan een site in een geïsoleerde browser zien,
+  documentatie volgen en een onboarding of formulier voorbereiden. Een account
+  maken, voorwaarden accepteren, betalen, KYC afronden of een financiële actie
+  uitvoeren kan zelfstandig binnen een vooraf in de Eva-chat vastgelegd
+  mandaat; Eva waarschuwt, vat de gevolgen samen en bewaart het mandaat,
+  bewijs en een directe stopknop in haar tijdlijn. Buiten dat mandaat vraagt
+  zij opnieuw om toestemming.
+- [ ] Externe-accounttool E01: Eva kan na toestemming een dienstadapter
+  opleveren, credentials als beheerd file-secret installeren en de verbinding
+  read-only bewijzen. Het mandaat (budget, looptijd, markt, order- en
+  verlieslimiet, stilzetten) wordt als vraag-en-antwoordgesprek in Eva
+  vastgelegd; alleen de geheime sleutel gaat via een eenmalige veilige invoer.
+  Bitvavo krijgt eerst alleen view/trade, IP-whitelist, geen opnamebevoegdheid
+  en paper-/limiettests vóór echte orders.
 - [ ] Eén eindimage bevriezen; core 15/15, native 9/9 en MX01-MX06 daarop
   werkelijk uitvoeren.
 - [ ] Zevendaagse resident-run en onafhankelijke promotiebeslissing.
@@ -121,7 +137,7 @@ productfunctie die nog niet in onze live vergelijking is getest.
 | Plugins en connectorbereik | Enkele eigen connectoren; geen volwassen marktplaats | Breed plugin- en kanaalecosysteem aanwezig | Skills, toolsets en MCP-integraties aanwezig | Gedocumenteerde community-Plugin Hub, custom tools, MCP en A2A; omvang niet door ons vastgepind of getest | Concurrentintegraties hergebruiken; alleen Eva's policy, geheugen en waarheid blijven leidend |
 | Gateway en chatkanalen | Connectorneutrale kern, Telegram/Web/AgentMail deels; geen brede gateway | Sterkste huidige surface: Gateway plus veel kanalen | Gateway voor 15+ platforms aanwezig | Web/API/CLI-connectors aanwezig; kanaalbreedte nader vaststellen | OpenClaw/Hermes als transportprovider onderzoeken; nooit twee breinen of twee eigenaren van één kanaal |
 | Companion nodes en apparaten | Niet aanwezig | Camera, scherm, locatie, voice, notificaties en hostcommands aanwezig | Geen gelijkwaardige nodeclaim door ons bewezen | A0 CLI geeft hostterminal, bestanden en hostbrowser; desktop/browser ingebouwd | OpenClaw-nodes via officiële Gateway-sidecar hergebruiken; A0 CLI alleen vergelijken, niet in Eva opnemen zonder voordeel |
-| Browser en computergebruik | Websearch en begrensde bestanden; geen volwaardige interactieve browser/desktop | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Minimaal één veilig providerpad hergebruiken; dezelfde echte browse-, formulier- en GUI-taken benchmarken |
+| Browser en computergebruik | Websearch en begrensde bestanden; interactieve gateway/browser B01 staat gepland | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Eén geïsoleerde provider achter Eva's ledger; accounts, contracten, betalingen en financiële stappen kunnen binnen een vastgelegd mandaat zelfstandig verlopen |
 | MCP en standaard toolservers | Nog geen MCP-adapter | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | Eén connectorneutrale MCP-client bouwen vóór losse nieuwe API-connectoren |
 | Multi-agentwerk | Ontwikkelproces gebruikt onafhankelijke agents; Eva-runtime heeft nog geen bewezen algemene delegatie | Multi-agent routing aanwezig | Delegatie/multi-agent aanwezig | Subagents en A2A aanwezig | Dezelfde onderzoek-, bouw-, review- en hervattingsopdracht op alle vier testen |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
@@ -131,7 +147,7 @@ productfunctie die nog niet in onze live vergelijking is getest.
 | RL, batch en evaluatie | LAB-36 en receipts; geen algemene RL-toolset | Evaluatieoppervlak nader inventariseren | RL-toolset en overige batch/evalfuncties aanwezig; niet getest | Evaluatie- en workflowplugins nader inventariseren | Als aparte productcategorie testen of expliciet motiveren waarom niet nodig |
 | Controleerbaarheid en bewijs | PostgreSQL-eventtijdlijn en readback zijn Eva's ontwerpsterkte | Gateway-events/logs aanwezig | Sessies, taken en deliverydata aanwezig | Live UI/logs, projecten en workspace time travel aanwezig | Eén gedeeld receipt-schema gebruiken; product-UI telt niet als bewijs van echt extern effect |
 | Beveiliging en permissies | Fail-closed ontwerp, maar B-secretmigratie nog open | Scopes, pairing, sandbox en approvals aanwezig | Toolsets, sandboxbackends en approvals aanwezig | Projectsecrets, connectorpermissions en Dockerisolatie aanwezig | Gezamenlijke aanvalstests; communitycode altijd pinnen, scannen, isoleren en afzonderlijk toelaten |
-| Geld verdienen / externe accounts | Alleen lokale commerce-simulatie; geen echte opbrengst | Via plugins/tools mogelijk, niet door ons getest | Via tools/MCP mogelijk, niet door ons getest | Via browser/plugins/MCP mogelijk, niet door ons getest | Alleen testaccounts en expliciete economische limieten; omzetclaim pas na echte testmodusreceipt |
+| Geld verdienen / externe accounts | Alleen lokale commerce-simulatie; E01 definieert veilige account-onboarding, nog geen opbrengst | Via plugins/tools mogelijk, niet door ons getest | Via tools/MCP mogelijk, niet door ons getest | Via browser/plugins/MCP mogelijk, niet door ons getest | Eerst testaccount en least-privilege credentials; live financieel effect kan daarna zelfstandig binnen een chatvastgelegd budget-, tijd-, markt- en verliesmandaat met readback en stopknop |
 
 ## Wat Eva mag hergebruiken
 
