@@ -99,10 +99,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   inclusief lege waarden, en behoudt uitsluitend private file-routes; 19
   gerichte checks en onafhankelijke review zijn groen (`d825a79`). Dit is geen
   Stripe-provider- of financiële liveproef.
-- [x] MCP-contractbasis: één getypeerde, no-secret `streamable_http`-tool is
-  strikt beperkt tot `read`, één vaste resource, 1–5 seconden en
-  hashgebonden JSON-schema's; mutaties, scopes en remote `$ref` worden lokaal
-  geweigerd (`8f1e006`). Adapter, sidecar en B-proef blijven open.
+- [x] MCP C01: één getypeerde, no-secret `streamable_http`-tool is strikt
+  beperkt tot `read`, één vaste resource, 1–5 seconden en hashgebonden
+  JSON-schema's. De vaste adapter doorloopt `initialize`, `initialized`,
+  `tools/list` en precies één `tools/call`; JSON en SSE, schema-afwijking,
+  ongeldige output en een langzaam druppelende respons worden lokaal echt
+  beproefd en fail-closed geweigerd. Twee onafhankelijke reviews zijn groen.
+  Sidecar, Eva-ledger en B-proef blijven afzonderlijk open.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
@@ -257,7 +260,7 @@ productfunctie die nog niet in onze live vergelijking is getest.
 | Gateway en chatkanalen | Connectorneutrale kern, Telegram/Web/AgentMail deels; geen brede gateway | Sterkste huidige surface: Gateway plus veel kanalen | Gateway voor 15+ platforms aanwezig | Web/API/CLI-connectors aanwezig; kanaalbreedte nader vaststellen | OpenClaw/Hermes als transportprovider onderzoeken; nooit twee breinen of twee eigenaren van één kanaal |
 | Companion nodes en apparaten | Niet aanwezig | Camera, scherm, locatie, voice, notificaties en hostcommands aanwezig | Geen gelijkwaardige nodeclaim door ons bewezen | A0 CLI geeft hostterminal, bestanden en hostbrowser; desktop/browser ingebouwd | OpenClaw-nodes via officiële Gateway-sidecar hergebruiken; A0 CLI alleen vergelijken, niet in Eva opnemen zonder voordeel |
 | Browser en computergebruik | Websearch en begrensde bestanden; interactieve gateway/browser B01 staat gepland | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Eén geïsoleerde provider achter Eva's ledger; accounts, contracten, betalingen en financiële stappen kunnen binnen een vastgelegd mandaat zelfstandig verlopen |
-| MCP en standaard toolservers | Nog geen MCP-adapter | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | Eén connectorneutrale MCP-client bouwen vóór losse nieuwe API-connectoren |
+| MCP en standaard toolservers | Eén vaste, no-secret read-only Streamable-HTTP-tool werkt tegen een echte lokale JSON/SSE-provider; geen sidecar, ledger of B-route | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | De volgende kleine stap is één gepinde sidecar achter Eva's ledger; geen losse nieuwe API-connectoren |
 | Multi-agentwerk | Ontwikkelproces gebruikt onafhankelijke agents; Eva-runtime heeft nog geen bewezen algemene delegatie | Multi-agent routing aanwezig | Delegatie/multi-agent aanwezig | Subagents en A2A aanwezig | Dezelfde onderzoek-, bouw-, review- en hervattingsopdracht op alle vier testen |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
 | API, IDE en programmatische bediening | Interne HTTP-API; geen volledige externe SDK/IDE-gate | Gateway-RPC aanwezig | HTTP/API- en ACP/IDE-integraties aanwezig | HTTP/WebSocket en A0 CLI aanwezig | Dezelfde externe clienttaak, reconnect en permissiontest uitvoeren |
