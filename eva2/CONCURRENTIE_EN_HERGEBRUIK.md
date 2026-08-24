@@ -66,6 +66,8 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [ ] Dashboard D01: alleen-lezen overzicht voor B-image, gates, receipts en
   open blokkades. Daarna volgen apart IdentityPack, personen/Telegram, skills
   en settings; zie `design/product/dashboard-v1.md`.
+- [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
+  harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
