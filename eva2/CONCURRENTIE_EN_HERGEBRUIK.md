@@ -78,8 +78,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
 - [x] Schema-installer: DSN alleen via private file-secret; apart non-root
-  profiel + 15 gerichte tests + onafhankelijke review zijn groen. De oude
-  stackmigratie blijft bewust geen beheerd B-releasepad.
+  profiel + 14 gerichte tests + onafhankelijke review zijn groen; zie
+  `reviews/schema-installer-file-secret-9e129a4.md`. De oude stackmigratie
+  blijft bewust geen beheerd B-releasepad.
 - [x] Modellease-consumer: core leest alleen een atomair gedeelde lease met
   vast `1000:65532`/`0640`-contract; 13 gerichte tests + onafhankelijke review
   zijn groen. De leasepublisher en host-directorycontract blijven open.
