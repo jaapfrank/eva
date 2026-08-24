@@ -14,6 +14,11 @@ from typing import Protocol
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
+from eva.application.identity_verifier import (
+    IdentityPackTrustBinding,
+    load_default_identity_pack_trust_binding,
+    verify_identity_pack_bytes,
+)
 
 
 class ConversationConflict(RuntimeError):
@@ -106,7 +111,9 @@ class IdentityProfile:
             raise ValueError("current IdentityPack does not match the active identity")
 
 
-def load_current_identity_pack(path: Path | None = None) -> IdentityPack:
+def load_current_identity_pack(
+    path: Path | None = None, *, trust: IdentityPackTrustBinding | None = None
+) -> IdentityPack:
     """Load the versioned procedural identity used by the Living Core."""
 
     selected = path or Path(__file__).with_name("default_identity_pack.json")
@@ -115,12 +122,12 @@ def load_current_identity_pack(path: Path | None = None) -> IdentityPack:
     if selected.stat().st_size > 65_536:
         raise ValueError("IdentityPack is too large")
     try:
-        payload = json.loads(selected.read_text(encoding="utf-8"))
-        pack = IdentityPack.model_validate(payload)
-    except (OSError, json.JSONDecodeError, ValueError) as error:
+        raw = selected.read_bytes()
+        pack = verify_identity_pack_bytes(
+            raw, trust=trust or load_default_identity_pack_trust_binding()
+        )
+    except (OSError, ValueError) as error:
         raise ValueError("IdentityPack is invalid") from error
-    if pack.state != "current":
-        raise ValueError("IdentityPack is not current")
     return pack
 
 
