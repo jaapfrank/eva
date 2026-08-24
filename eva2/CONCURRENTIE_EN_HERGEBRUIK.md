@@ -230,8 +230,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   de gebonden huidige identiteit, met gecontroleerde bronhash en Ed25519-
   handtekening tegen een expliciete publieke trustbinding. Geen signer,
   publicatie, API-route of B-wijziging (`f586298`).
-- [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
-  file-secrets opleveren.
+- [x] Managed-B-secretgrens: alle acht Telegram-v1-services lezen hun
+  runtimegevoelige gegevens uitsluitend via private file-secrets of de vaste
+  modellease; broninventaris en onafhankelijke review vonden geen resterende
+  inline-secretconsumer. De feitelijke B-adoptie/start blijft afzonderlijk
+  open. AgentMail en Stripe zijn latere, eigen capabilitygates.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
   groepsroute, wederzijdse koppelchallenge en privé/gedeeld geheugen met
   toestemming.
