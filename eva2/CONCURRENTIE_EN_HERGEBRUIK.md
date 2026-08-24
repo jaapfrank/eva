@@ -88,6 +88,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   startupconfiguratie vastleggen vóór een reproduceerbare B-kandidaat.
 - [x] Telegram-ingress: DSN, token en principal-bindings gebruiken nu dezelfde
   harde fileloader; manifest + 15 tests + onafhankelijke review zijn groen.
+- [x] Telegram-coresecret: ook de runtime weigert een inline bot-token,
+  inclusief een lege waarde, en leest uitsluitend een private tokenfile;
+  15 gerichte checks en onafhankelijke review zijn groen (`a68e868`). Stripe
+  blijft een afzonderlijke open secretconsumer.
 - [x] Duurzame-takenworker: DSN alleen via private file-secret; manifest + 18
   gerichte tests + onafhankelijke review zijn groen. Nog niet als live B-worker
   gestart; dat blijft onderdeel van het beheerde manifest en de eindproef.
