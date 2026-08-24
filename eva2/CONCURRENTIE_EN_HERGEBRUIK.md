@@ -86,8 +86,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   zijn groen; zie `reviews/model-lease-consumer-5303622.md`. De leasepublisher
   en host-directorycontract blijven open.
 - [x] Modellease-publisher: private authoritybron, vooraf-geprovisioneerde
-  lease-directory en atomische publicatie zijn afgedwongen; 17 tests +
-  onafhankelijke herreview zijn groen. Hostprovisioning/B-deploy blijft open.
+  lease-directory en atomische publicatie zijn afgedwongen; 21 tests +
+  onafhankelijke herreview zijn groen; zie
+  `reviews/model-lease-publisher-3af02bb.md`. Hostprovisioning/B-deploy blijft
+  open.
 - [x] Telegram-identiteitsbasis: één persoon mag meerdere unieke Telegram-
   accounts koppelen zonder dat één account naar twee personen wijst; 5 tests +
   onafhankelijke review zijn groen. Koppelchallenge, groepsconsent en live
