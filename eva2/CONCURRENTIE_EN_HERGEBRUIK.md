@@ -56,9 +56,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
   containerhashes, compile en 11 gerichte tests onafhankelijk groen.
 - [x] V53-runtime- en operationslaag als eigen baseline-checkpoint hersteld:
   16 containerbronnen, compile en vier Telegram-tests onafhankelijk groen.
-- [ ] V53-build/Hindsight-closure op versiepassende testinfrastructuur. De
-  huidige bredere Hindsight-fixture mist v53's `PATCH`-configuratiecontract;
-  dit is vastgelegd en wordt niet als geslaagde closure geteld.
+- [x] V53-Hindsight-fixture gesloten: de ontbrekende `PATCH`-mock is als
+  vijf-regelig testcheckpoint hersteld; drie tests en onafhankelijke review
+  zijn groen.
+- [ ] V53-buildclosure: Docker-buildinput en de resterende versiepassende
+  testset vastleggen vóór een reproduceerbare kandidaatbuild.
 - [ ] Elke secretconsumer fail-closed maken en een beheerd B-manifest met
   file-secrets opleveren.
 - [ ] Telegram-identiteit: meerdere geverifieerde bindings per persoon,
