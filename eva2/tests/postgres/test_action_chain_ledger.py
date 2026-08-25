@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
-from datetime import UTC, datetime
+from dataclasses import replace
+from datetime import UTC, datetime, timedelta
 import hashlib
 import json
 import os
@@ -25,6 +26,10 @@ from eva.adapters.postgres.action_chain_ledger import (
     plan_steps,
     plans,
 )
+from eva.adapters.postgres.action_chain_leases import (
+    ActionChainLeaseConflict,
+    PostgresActionChainLeases,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.adapters.postgres.operational_timeline import (
@@ -36,6 +41,7 @@ from eva.adapters.postgres.scope import set_local_scope
 from eva.application.action_chain import (
     ActionToolCatalog,
     ActionToolDescriptor,
+    action_chain_step_operation_id,
     action_chain_thread_id,
 )
 from eva.contracts.base import JsonValue
@@ -517,6 +523,172 @@ def test_action_chain_admission_is_atomic_restartable_scoped_and_effect_free(
             assert connection.scalar(sa.select(sa.func.count()).select_from(effects)) == 0
             assert connection.scalar(sa.select(sa.func.count()).select_from(reads)) == 0
 
+        with restarted_engine.connect() as connection:
+            plan_before = connection.execute(
+                sa.select(plans.c.state, plans.c.revision, plans.c.updated_at).where(
+                    plans.c.plan_id == loaded.plan_id
+                )
+            ).one()
+            steps_before = tuple(
+                connection.execute(
+                    sa.select(
+                        plan_steps.c.plan_step_id,
+                        plan_steps.c.state,
+                        plan_steps.c.revision,
+                        plan_steps.c.updated_at,
+                    )
+                    .where(plan_steps.c.plan_id == loaded.plan_id)
+                    .order_by(plan_steps.c.logical_step_key)
+                ).all()
+            )
+
+        leases = PostgresActionChainLeases(restarted_engine, scope)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            claims = tuple(
+                pool.map(
+                    lambda worker: leases.claim_next(
+                        worker_id=worker,
+                        now=NOW + timedelta(seconds=1),
+                        lease_seconds=10,
+                    ),
+                    ("worker:mc02b:a", "worker:mc02b:b"),
+                )
+            )
+        assert sum(claim is not None for claim in claims) == 1
+        first_claim = next(claim for claim in claims if claim is not None)
+        assert first_claim.logical_step_key == "step:state"
+        assert first_claim.plan_step_id == loaded.steps[0].plan_step_id
+
+        with pytest.raises(ActionChainLeaseConflict, match="stale or expired"):
+            leases.release(
+                replace(first_claim, worker_id="worker:mc02b:intruder"),
+                disposition="pending",
+                now=NOW + timedelta(seconds=2),
+            )
+        with pytest.raises(ActionChainLeaseConflict, match="does not exist"):
+            PostgresActionChainLeases(restarted_engine, other_scope).release(
+                first_claim,
+                disposition="pending",
+                now=NOW + timedelta(seconds=2),
+            )
+
+        leases.release(
+            first_claim,
+            disposition="pending",
+            now=NOW + timedelta(seconds=2),
+            not_before=NOW + timedelta(seconds=20),
+        )
+        with pytest.raises(ActionChainLeaseConflict, match="stale or expired"):
+            leases.release(
+                first_claim,
+                disposition="pending",
+                now=NOW + timedelta(seconds=3),
+            )
+        assert (
+            leases.claim_next(
+                worker_id="worker:mc02b:future",
+                now=NOW + timedelta(seconds=10),
+                lease_seconds=10,
+            )
+            is None
+        )
+
+        expiring_claim = leases.claim_next(
+            worker_id="worker:mc02b:expiring",
+            now=NOW + timedelta(seconds=20),
+            lease_seconds=10,
+        )
+        assert expiring_claim is not None
+        restarted_engine.dispose()
+        leases = PostgresActionChainLeases(restarted_engine, scope)
+        reclaimed = leases.claim_next(
+            worker_id="worker:mc02b:reclaimer",
+            now=NOW + timedelta(seconds=31),
+            lease_seconds=10,
+        )
+        assert reclaimed is not None
+        assert reclaimed.attention_revision > expiring_claim.attention_revision
+        with pytest.raises(ActionChainLeaseConflict, match="stale or expired"):
+            leases.release(
+                expiring_claim,
+                disposition="pending",
+                now=NOW + timedelta(seconds=32),
+            )
+
+        leases.release(
+            reclaimed,
+            disposition="pending",
+            error_text="same bounded worker failure",
+            now=NOW + timedelta(seconds=32),
+        )
+        retry_two = leases.claim_next(
+            worker_id="worker:mc02b:retry:2",
+            now=NOW + timedelta(seconds=33),
+            lease_seconds=10,
+        )
+        assert retry_two is not None
+        leases.release(
+            retry_two,
+            disposition="pending",
+            error_text="same bounded worker failure",
+            now=NOW + timedelta(seconds=34),
+        )
+        retry_three = leases.claim_next(
+            worker_id="worker:mc02b:retry:3",
+            now=NOW + timedelta(seconds=35),
+            lease_seconds=10,
+        )
+        assert retry_three is not None
+        leases.release(
+            retry_three,
+            disposition="pending",
+            error_text="same bounded worker failure",
+            now=NOW + timedelta(seconds=36),
+        )
+        assert (
+            leases.claim_next(
+                worker_id="worker:mc02b:after-help",
+                now=NOW + timedelta(seconds=37),
+            )
+            is None
+        )
+
+        leased_chain = restarted.load(loaded.plan_id)
+        assert leased_chain.attention.state == "waiting"
+        child_operation_id = action_chain_step_operation_id(
+            leased_chain.plan, "step:state"
+        )
+        with restarted_engine.connect() as connection:
+            child_checkpoint = connection.execute(
+                sa.select(operational_checkpoints).where(
+                    operational_checkpoints.c.thread_id == child_operation_id
+                )
+            ).one()
+            assert child_checkpoint.retry_count == 3
+            assert child_checkpoint.status == "needs_help"
+            assert (
+                connection.execute(
+                    sa.select(plans.c.state, plans.c.revision, plans.c.updated_at).where(
+                        plans.c.plan_id == loaded.plan_id
+                    )
+                ).one()
+                == plan_before
+            )
+            assert tuple(
+                connection.execute(
+                    sa.select(
+                        plan_steps.c.plan_step_id,
+                        plan_steps.c.state,
+                        plan_steps.c.revision,
+                        plan_steps.c.updated_at,
+                    )
+                    .where(plan_steps.c.plan_id == loaded.plan_id)
+                    .order_by(plan_steps.c.logical_step_key)
+                ).all()
+            ) == steps_before
+            assert connection.scalar(sa.select(sa.func.count()).select_from(effects)) == 0
+            assert connection.scalar(sa.select(sa.func.count()).select_from(reads)) == 0
+
         with restarted_engine.begin() as connection:
             connection.execute(
                 sa.update(plans)
@@ -553,7 +725,7 @@ def test_action_chain_admission_is_atomic_restartable_scoped_and_effect_free(
             connection.execute(
                 sa.update(attention_items)
                 .where(attention_items.c.attention_id == attention_id)
-                .values(state="waiting")
+                .values(reason="tampered without payload or timeline")
             )
         with pytest.raises(ActionChainCorrupt, match="attention binding"):
             restarted.load(loaded.plan_id)
@@ -561,7 +733,7 @@ def test_action_chain_admission_is_atomic_restartable_scoped_and_effect_free(
             connection.execute(
                 sa.update(attention_items)
                 .where(attention_items.c.attention_id == attention_id)
-                .values(state="pending")
+                .values(reason=leased_chain.attention.reason)
             )
 
         root_thread_id = action_chain_thread_id(loaded.plan)
@@ -571,7 +743,7 @@ def test_action_chain_admission_is_atomic_restartable_scoped_and_effect_free(
                 .where(operational_checkpoints.c.thread_id == root_thread_id)
                 .values(status="failed")
             )
-        with pytest.raises(ActionChainCorrupt, match="timeline origin"):
+        with pytest.raises(ActionChainCorrupt, match="timeline"):
             restarted.load(loaded.plan_id)
     finally:
         restarted_engine.dispose()

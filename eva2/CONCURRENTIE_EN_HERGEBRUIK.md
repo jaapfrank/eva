@@ -363,10 +363,15 @@ langdurige verzamelaanpassing telt niet als voortgang.
   scope en corrupte plan-, stap-, attention- en checkpointprojecties. 27
   planningtests, 24 tijdlijntests, één echte PostgreSQL 16.13-gate en twee
   onafhankelijke reviews zijn groen; er is geen tool uitgevoerd.
-- [ ] Meerstapsplanning MC02b: de bestaande `attention_items`-vervolgtaak met
-  een lease claimen, na leaseverloop veilig herpakken, stale releases weigeren
-  en `retry_count` duurzaam begrenzen; twee workers mogen nooit dezelfde stap
-  tegelijk bezitten.
+- [x] Meerstapsplanning MC02b: de bestaande `attention_items`-vervolgtaak wordt
+  met `FOR UPDATE SKIP LOCKED` en een exact revision/owner/expiry-token aan één
+  worker gegeven. Een nieuwe engine pakte een verlopen lease veilig over; oude
+  en verkeerde workers werden geweigerd en dezelfde fout eindigde na poging
+  drie in `needs_help`/`waiting`. Twee afzonderlijke echte PostgreSQL
+  16.13-proeven, 24 tijdlijntests, 51 planning/contracttests en twee
+  onafhankelijke reviews zijn groen. Plannen en stappen bleven bytegelijk en
+  er zijn nul read/effect-intents of providercalls gemaakt; zie
+  `reviews/action-chain-leases-mc02b.md`.
 - [ ] Meerstapsplanning MC03: één algemene runner uitsluitend
   `ValidatedPlan/v1` laten uitvoeren en per effect de bestaande
   `TOOL_PREPARED`→providercall→readback-orchestrator hergebruiken; Home Assistant

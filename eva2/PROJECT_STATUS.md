@@ -15,14 +15,16 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: MC02b, één opgeslagen meerstappenketen via een PostgreSQL-lease aan
-  precies één worker geven en na leaseverloop veilig hervatten.
-- Laatste afgeronde kleine checkpoint: MC02a bewaart een gevalideerd plan,
-  stappen, exacte model-/catalogusautoriteit, herstelcursors en één vervolgtaak
-  atomair. De echte PostgreSQL 16.13-proef bewees rollback zonder resten,
-  concurrerende idempotente admission, herladen via een nieuwe engine, RLS en
-  fail-closed corruptiedetectie. Twee onafhankelijke reviews zijn groen; er is
-  nog geen tool of Home Assistant-actie uitgevoerd.
+- Bezig: MC03, de eerste algemene runnerstap die uitsluitend een geleasede,
+  gevalideerde read-stap mag voorbereiden; provideruitvoering en effectstappen
+  blijven daarna afzonderlijke opleverstukken.
+- Laatste afgeronde kleine checkpoint: MC02b geeft een opgeslagen keten via een
+  revisiongebonden PostgreSQL-lease aan precies één worker. Een nieuwe worker
+  kan haar na harde expiry en procesherstart herpakken; een oude worker kan
+  niet meer releasen. Drie gelijke fouten zetten alleen die stap op
+  `needs_help` en de continuation op `waiting`. Twee onafhankelijke reviews en
+  twee afzonderlijke PostgreSQL 16.13-proeven zijn groen; plan/stappen bleven
+  ongewijzigd en er ontstonden nul read- of effect-intents.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
 - Eerstvolgend: het gezamenlijke architectuurbesluit uitvoeren; daarna laat een

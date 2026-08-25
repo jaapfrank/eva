@@ -57,9 +57,10 @@ Bijgewerkt: 25 augustus 2026.
 - De menselijke gesprekservaring is nog niet door jou geaccepteerd; vooral
   natuurlijkheid, initiatief en bondigheid moeten in echte Telegramgesprekken
   stabiel blijken.
-- De opgeslagen meerstappenketen kan nog niet door een geleasede worker stap
-  voor stap worden uitgevoerd. Claim/release, leaseherstel en daarna de algemene
-  runner met echte Home Assistant-readback zijn de volgende losse bouwstukken.
+- De opgeslagen meerstappenketen kan nu door precies één geleasede worker
+  worden opgepakt en na leaseverloop zonder stale release worden hervat. Wat
+  nog ontbreekt is de algemene runner die een gevalideerde stap voorbereidt,
+  uitvoert, terugleest en pas daarna de afhankelijke volgende stap vrijgeeft.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,
   geen officiële zevendaagse praktijktest. Na het bevriezen van de echte
   kandidaat begint een nieuwe klok van zeven dagen.

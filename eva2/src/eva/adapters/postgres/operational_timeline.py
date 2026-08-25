@@ -270,88 +270,24 @@ class PostgresOperationalTimeline:
         retry_count: int | None = None,
         last_error_fingerprint: str | None = None,
     ) -> CheckpointState:
-        _require_identifier(thread_id, "thread_id")
-        _require_identifier(checkpoint_id, "checkpoint_id")
-        _require_identifier(phase, "phase")
-        _require_identifier(event_type, "event_type")
-        if operation_id is not None:
-            _require_identifier(operation_id, "operation_id")
-        _require_utc_second(occurred_at, "occurred_at")
-        if deadline is not None:
-            _require_utc_second(deadline, "deadline")
         with self._engine.begin() as connection:
             self._scope(connection)
-            row = self._locked_checkpoint(connection, thread_id)
-            if int(row.revision) != expected_revision:
-                raise CheckpointConflict("checkpoint revision changed")
-            next_retry = int(row.retry_count) if retry_count is None else retry_count
-            if not 0 <= next_retry <= 3:
-                raise ValueError("checkpoint retry count is outside 0..3")
-            if last_error_fingerprint is not None:
-                _require_sha256(last_error_fingerprint)
-            state = CheckpointState(
+            return transition_timeline_thread(
+                connection,
+                self._scope_value,
                 thread_id=thread_id,
+                expected_revision=expected_revision,
                 checkpoint_id=checkpoint_id,
-                operation_id=operation_id,
                 phase=phase,
                 status=status,
-                retry_count=next_retry,
-                last_error_fingerprint=last_error_fingerprint,
-                deadline=deadline,
-                revision=expected_revision + 1,
-                updated_at=occurred_at,
-            )
-            payload = _checkpoint_payload(state, data)
-            sequence = (
-                int(
-                    connection.scalar(
-                        sa.select(sa.func.max(operational_events.c.sequence)).where(
-                            operational_events.c.tenant_id
-                            == self._scope_value.tenant_id,
-                            operational_events.c.installation_id
-                            == self._scope_value.installation_id,
-                            operational_events.c.thread_id == thread_id,
-                        )
-                    )
-                )
-                + 1
-            )
-            self._insert_event(
-                connection,
-                state=state,
-                sequence=sequence,
                 event_type=event_type,
-                payload=payload,
                 occurred_at=occurred_at,
+                data=data,
+                operation_id=operation_id,
+                deadline=deadline,
+                retry_count=retry_count,
+                last_error_fingerprint=last_error_fingerprint,
             )
-            result = connection.execute(
-                sa.update(operational_checkpoints)
-                .where(
-                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
-                    operational_checkpoints.c.installation_id
-                    == self._scope_value.installation_id,
-                    operational_checkpoints.c.thread_id == thread_id,
-                    operational_checkpoints.c.revision == expected_revision,
-                )
-                .values(
-                    checkpoint_id=checkpoint_id,
-                    operation_id=operation_id,
-                    phase=phase,
-                    status=status,
-                    retry_count=next_retry,
-                    last_error_fingerprint=(
-                        None
-                        if last_error_fingerprint is None
-                        else bytes.fromhex(last_error_fingerprint)
-                    ),
-                    deadline=deadline,
-                    revision=expected_revision + 1,
-                    updated_at=occurred_at,
-                )
-            )
-            if result.rowcount != 1:
-                raise CheckpointConflict("checkpoint revision changed")
-        return state
 
     def record_recovery_failure(
         self,
@@ -577,42 +513,6 @@ class PostgresOperationalTimeline:
                 )
         return state
 
-    def _locked_checkpoint(self, connection: sa.Connection, thread_id: str) -> Any:
-        row = connection.execute(
-            sa.select(operational_checkpoints)
-            .where(
-                operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
-                operational_checkpoints.c.installation_id
-                == self._scope_value.installation_id,
-                operational_checkpoints.c.thread_id == thread_id,
-            )
-            .with_for_update()
-        ).one_or_none()
-        if row is None:
-            raise OperationalTimelineError("thread does not exist")
-        return row
-
-    def _insert_event(
-        self,
-        connection: sa.Connection,
-        *,
-        state: CheckpointState,
-        sequence: int,
-        event_type: str,
-        payload: dict[str, JsonValue],
-        occurred_at: datetime,
-    ) -> None:
-        _insert_event_in_transaction(
-            connection,
-            self._scope_value,
-            state=state,
-            sequence=sequence,
-            event_type=event_type,
-            payload=payload,
-            occurred_at=occurred_at,
-        )
-
-
 def insert_initial_timeline_thread(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -680,6 +580,115 @@ def insert_initial_timeline_thread(
         payload=payload,
         occurred_at=occurred_at,
     )
+    return state
+
+
+def transition_timeline_thread(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    thread_id: str,
+    expected_revision: int,
+    checkpoint_id: str,
+    phase: str,
+    status: CheckpointStatus,
+    event_type: str,
+    occurred_at: datetime,
+    data: dict[str, JsonValue],
+    operation_id: str | None = None,
+    deadline: datetime | None = None,
+    retry_count: int | None = None,
+    last_error_fingerprint: str | None = None,
+) -> CheckpointState:
+    """Append one transition inside the caller's root transaction."""
+
+    if not connection.in_transaction() or connection.in_nested_transaction():
+        raise TransactionRequired()
+    _require_identifier(thread_id, "thread_id")
+    _require_identifier(checkpoint_id, "checkpoint_id")
+    _require_identifier(phase, "phase")
+    _require_identifier(event_type, "event_type")
+    if operation_id is not None:
+        _require_identifier(operation_id, "operation_id")
+    _require_utc_second(occurred_at, "occurred_at")
+    if deadline is not None:
+        _require_utc_second(deadline, "deadline")
+    if last_error_fingerprint is not None:
+        _require_sha256(last_error_fingerprint)
+
+    row = connection.execute(
+        sa.select(operational_checkpoints)
+        .where(
+            operational_checkpoints.c.tenant_id == scope.tenant_id,
+            operational_checkpoints.c.installation_id == scope.installation_id,
+            operational_checkpoints.c.thread_id == thread_id,
+        )
+        .with_for_update()
+    ).one_or_none()
+    if row is None:
+        raise OperationalTimelineError("thread does not exist")
+    if int(row.revision) != expected_revision:
+        raise CheckpointConflict("checkpoint revision changed")
+    next_retry = int(row.retry_count) if retry_count is None else retry_count
+    if not 0 <= next_retry <= 3:
+        raise ValueError("checkpoint retry count is outside 0..3")
+    state = CheckpointState(
+        thread_id=thread_id,
+        checkpoint_id=checkpoint_id,
+        operation_id=operation_id,
+        phase=phase,
+        status=status,
+        retry_count=next_retry,
+        last_error_fingerprint=last_error_fingerprint,
+        deadline=deadline,
+        revision=expected_revision + 1,
+        updated_at=occurred_at,
+    )
+    payload = _checkpoint_payload(state, data)
+    sequence = int(
+        connection.scalar(
+            sa.select(sa.func.max(operational_events.c.sequence)).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.thread_id == thread_id,
+            )
+        )
+    ) + 1
+    _insert_event_in_transaction(
+        connection,
+        scope,
+        state=state,
+        sequence=sequence,
+        event_type=event_type,
+        payload=payload,
+        occurred_at=occurred_at,
+    )
+    result = connection.execute(
+        sa.update(operational_checkpoints)
+        .where(
+            operational_checkpoints.c.tenant_id == scope.tenant_id,
+            operational_checkpoints.c.installation_id == scope.installation_id,
+            operational_checkpoints.c.thread_id == thread_id,
+            operational_checkpoints.c.revision == expected_revision,
+        )
+        .values(
+            checkpoint_id=checkpoint_id,
+            operation_id=operation_id,
+            phase=phase,
+            status=status,
+            retry_count=next_retry,
+            last_error_fingerprint=(
+                None
+                if last_error_fingerprint is None
+                else bytes.fromhex(last_error_fingerprint)
+            ),
+            deadline=deadline,
+            revision=expected_revision + 1,
+            updated_at=occurred_at,
+        )
+    )
+    if result.rowcount != 1:
+        raise CheckpointConflict("checkpoint revision changed")
     return state
 
 
@@ -830,6 +839,7 @@ __all__ = [
     "TimelineEvent",
     "TimelineScope",
     "insert_initial_timeline_thread",
+    "transition_timeline_thread",
     "living_metadata",
     "operational_checkpoints",
     "operational_events",

@@ -345,6 +345,15 @@ class PostgresActionChainLedger:
             finally:
                 transaction.rollback()
 
+    def load_in_transaction(
+        self, connection: sa.Connection, plan_id: UUID
+    ) -> StoredActionChain:
+        """Reload authority while a caller owns the root transaction and locks."""
+
+        if not connection.in_transaction() or connection.in_nested_transaction():
+            raise ActionChainConflict("action-chain reload requires a root transaction")
+        return self._load(connection, plan_id)
+
     def _scope(self, connection: sa.Connection) -> None:
         connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
         set_local_scope(
@@ -434,7 +443,7 @@ class PostgresActionChainLedger:
             raise ActionChainCorrupt("stored plan columns differ from its payload")
 
         root_thread_id = action_chain_thread_id(plan)
-        admission = _origin_data(
+        admission, root_current = _origin_data(
             connection,
             self._scope_value,
             thread_id=root_thread_id,
@@ -540,7 +549,7 @@ class PostgresActionChainLedger:
             ):
                 raise ActionChainCorrupt("stored plan-step binding differs")
             operation_id = action_chain_step_operation_id(plan, step.step_id)
-            step_admission = _origin_data(
+            step_admission, _ = _origin_data(
                 connection,
                 self._scope_value,
                 thread_id=operation_id,
@@ -598,9 +607,7 @@ class PostgresActionChainLedger:
             or attention.episode_id != plan.episode_id
             or attention.generation != plan.generation
             or attention.kind != "continuation"
-            or attention.state != "pending"
-            or attention.lease_owner is not None
-            or attention.lease_expires_at is not None
+            or attention.state not in {"pending", "claimed", "waiting"}
             or attention_row.episode_id != row.episode_id
             or attention_row.generation != plan.generation
             or attention_row.kind != attention.kind
@@ -620,10 +627,29 @@ class PostgresActionChainLedger:
             or attention_row.retention_policy_id != row.retention_policy_id
             or attention_row.retention_until != row.retention_until
             or attention_row.created_at != row.created_at
-            or attention_row.updated_at != attention_row.created_at
-            or attention_row.revision != 1
+            or attention_row.updated_at < attention_row.created_at
+            or attention_row.revision < 1
         ):
             raise ActionChainCorrupt("continuation attention binding differs")
+        if attention_row.revision == 1:
+            if (
+                attention.state != "pending"
+                or attention.lease_owner is not None
+                or attention.lease_expires_at is not None
+                or attention_row.updated_at != attention_row.created_at
+            ):
+                raise ActionChainCorrupt("initial continuation attention differs")
+        else:
+            expected_attention_projection = {
+                "attention": attention.model_dump(mode="json"),
+                "attention_payload_sha256": canonical_sha256(attention),
+                "attention_revision": int(attention_row.revision),
+                "plan_id": str(plan_id),
+            }
+            if root_current != expected_attention_projection:
+                raise ActionChainCorrupt(
+                    "continuation attention differs from its timeline event"
+                )
 
         return StoredActionChain(
             plan_id=plan_id,
@@ -650,7 +676,7 @@ def _origin_data(
     phase: str,
     deadline: str,
     occurred_at: datetime,
-) -> dict[str, Any]:
+) -> tuple[dict[str, Any], dict[str, Any]]:
     event = connection.execute(
         sa.select(operational_events).where(
             operational_events.c.tenant_id == scope.tenant_id,
@@ -659,27 +685,10 @@ def _origin_data(
             operational_events.c.sequence == 1,
         )
     ).one_or_none()
-    checkpoint = connection.execute(
-        sa.select(operational_checkpoints).where(
-            operational_checkpoints.c.tenant_id == scope.tenant_id,
-            operational_checkpoints.c.installation_id == scope.installation_id,
-            operational_checkpoints.c.thread_id == thread_id,
-        )
-    ).one_or_none()
     if (
         event is None
-        or checkpoint is None
         or event.event_type != event_type
         or event.operation_id != operation_id
-        or checkpoint.operation_id != operation_id
-        or checkpoint.checkpoint_id != f"checkpoint:{thread_id}:admitted"
-        or checkpoint.phase != phase
-        or checkpoint.status != "active"
-        or checkpoint.retry_count != 0
-        or checkpoint.last_error_fingerprint is not None
-        or checkpoint.deadline != _parse_timestamp(deadline)
-        or checkpoint.revision != 1
-        or checkpoint.updated_at != occurred_at
         or event.occurred_at != occurred_at
         or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
     ):
@@ -704,6 +713,97 @@ def _origin_data(
     data = event.payload.get("data")
     if not isinstance(data, dict):
         raise ActionChainCorrupt("action-chain timeline origin lacks data")
+    current = _current_timeline_data(
+        connection,
+        scope,
+        thread_id=thread_id,
+        operation_id=operation_id,
+        deadline=deadline,
+        root=event_type == "ACTION_CHAIN_ADMITTED",
+    )
+    return data, current
+
+
+def _current_timeline_data(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    thread_id: str,
+    operation_id: str,
+    deadline: str,
+    root: bool,
+) -> dict[str, Any]:
+    checkpoint = connection.execute(
+        sa.select(operational_checkpoints).where(
+            operational_checkpoints.c.tenant_id == scope.tenant_id,
+            operational_checkpoints.c.installation_id == scope.installation_id,
+            operational_checkpoints.c.thread_id == thread_id,
+        )
+    ).one_or_none()
+    latest = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == thread_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(1)
+    ).one_or_none()
+    if checkpoint is None or latest is None:
+        raise ActionChainCorrupt("action-chain current timeline is absent")
+    allowed_event_types = (
+        {
+            "ACTION_CHAIN_ADMITTED",
+            "ACTION_CHAIN_CONTINUATION_CLAIMED",
+            "ACTION_CHAIN_CONTINUATION_RELEASED",
+            "ACTION_CHAIN_CONTINUATION_NEEDS_HELP",
+        }
+        if root
+        else {
+            "ACTION_CHAIN_STEP_ADMITTED",
+            "ACTION_CHAIN_STEP_RETRY_FAILED",
+            "ACTION_CHAIN_STEP_NEEDS_HELP",
+        }
+    )
+    allowed_statuses = {"active", "needs_help"} if root else {
+        "active",
+        "failed",
+        "needs_help",
+    }
+    expected_checkpoint = {
+        "checkpoint_id": str(checkpoint.checkpoint_id),
+        "deadline": deadline,
+        "last_error_fingerprint": (
+            None
+            if checkpoint.last_error_fingerprint is None
+            else bytes(checkpoint.last_error_fingerprint).hex()
+        ),
+        "operation_id": operation_id,
+        "phase": str(checkpoint.phase),
+        "retry_count": int(checkpoint.retry_count),
+        "revision": int(checkpoint.revision),
+        "status": str(checkpoint.status),
+        "updated_at": _format_timestamp(checkpoint.updated_at),
+    }
+    if (
+        latest.event_type not in allowed_event_types
+        or latest.operation_id != operation_id
+        or latest.sequence != checkpoint.revision
+        or latest.checkpoint_id != checkpoint.checkpoint_id
+        or latest.occurred_at != checkpoint.updated_at
+        or checkpoint.operation_id != operation_id
+        or checkpoint.deadline != _parse_timestamp(deadline)
+        or checkpoint.status not in allowed_statuses
+        or (root and int(checkpoint.retry_count) != 0)
+        or canonical_sha256(latest.payload) != bytes(latest.payload_sha256).hex()
+        or set(latest.payload) != {"checkpoint", "data"}
+        or latest.payload.get("checkpoint") != expected_checkpoint
+    ):
+        raise ActionChainCorrupt("action-chain current timeline differs")
+    data = latest.payload.get("data")
+    if not isinstance(data, dict):
+        raise ActionChainCorrupt("action-chain current timeline lacks data")
     return data
 
 
