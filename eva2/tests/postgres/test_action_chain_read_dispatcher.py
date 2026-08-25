@@ -22,11 +22,18 @@ from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.connector_rpc import (
+    ConnectorInvokeSuccess,
+    classify_connector_protocol_failure,
+)
 from eva.operations.action_chain_read_authorizer import (
     PostgresActionChainReadAuthorizer,
 )
 from eva.operations.action_chain_read_dispatcher import (
     PostgresActionChainReadDispatcher,
+)
+from eva.operations.action_chain_read_results import (
+    project_action_chain_read_result,
 )
 
 from test_action_chain_ledger import (
@@ -221,3 +228,120 @@ def test_deadline_is_rechecked_after_authorization_without_call_start(
             )
         )
     assert call_count == 0
+
+
+def test_provider_result_projection_binds_success_failure_and_evidence(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _, prepared, catalog, registry = _prepared_read(action_chain_engine)
+    claimed = PostgresActionChainReadDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.read_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=3),
+    )
+    assert claimed.disposition == "claimed"
+    assert claimed.initialize is not None
+    assert claimed.invoke is not None
+    assert claimed.connector_manifest is not None
+    response_sha256 = canonical_sha256({"state": "on"})
+    success = ConnectorInvokeSuccess.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ConnectorInvokeSuccess/v1",
+            "jsonrpc": "2.0",
+            "id": claimed.invoke.id,
+            "result": {
+                "schema_version": 1,
+                "contract": "ConnectorResult/v1",
+                "connector_id": claimed.invoke.params.connector_id,
+                "request_id": claimed.invoke.id,
+                "correlation_id": claimed.invoke.params.correlation_id,
+                "operation": claimed.invoke.params.operation,
+                "request_sha256": canonical_sha256(claimed.invoke.params),
+                "connector_manifest_sha256": canonical_sha256(
+                    claimed.connector_manifest
+                ),
+                "outcome": {
+                    "kind": "read_ok",
+                    "provider_resource_id": "ha:entity:light.test_target",
+                    "retrieved_at": "2026-08-20T12:00:04Z",
+                    "response_sha256": response_sha256,
+                    "payload": {
+                        "representation": "inline",
+                        "output_schema_sha256": (
+                            claimed.connector_manifest.operations[0].output_schema_sha256
+                        ),
+                        "normalized_payload": {"state": "on"},
+                    },
+                },
+                "completed_at": "2026-08-20T12:00:04Z",
+            },
+        }
+    )
+    projected = project_action_chain_read_result(
+        tenant_id=scope.tenant_id,
+        attempt=claimed.attempt,
+        initialize=claimed.initialize,
+        invoke=claimed.invoke,
+        manifest=claimed.connector_manifest,
+        result=success,
+        observed_at=NOW + timedelta(seconds=3),
+        recorded_at=NOW + timedelta(seconds=4),
+        retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+    )
+    assert projected.attempt.state == "observed"
+    assert projected.attempt.response_sha256 == canonical_sha256(success)
+    assert projected.observation is not None
+    assert projected.observation.normalized_value == {"state": "on"}
+    assert projected.observation.response_sha256 == response_sha256
+    assert projected.observation.evidence_ref == projected.evidence.evidence_id
+    assert projected.evidence.subject_contract == "ConnectorInvokeSuccess/v1"
+    assert projected.evidence.subject_payload_sha256 == canonical_sha256(success)
+
+    rate_limited = success.model_dump(mode="json")
+    rate_limited["result"]["outcome"] = {
+        "kind": "rate_limited",
+        "retry_after_ms": 1000,
+        "provider_code": "test_429",
+        "evidence_sha256": "1" * 64,
+    }
+    rate_projection = project_action_chain_read_result(
+        tenant_id=scope.tenant_id,
+        attempt=claimed.attempt,
+        initialize=claimed.initialize,
+        invoke=claimed.invoke,
+        manifest=claimed.connector_manifest,
+        result=ConnectorInvokeSuccess.model_validate(rate_limited),
+        observed_at=NOW + timedelta(seconds=3),
+        recorded_at=NOW + timedelta(seconds=4),
+        retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+    )
+    assert rate_projection.attempt.state == "rate_limited"
+    assert rate_projection.observation is None
+
+    protocol_failure = classify_connector_protocol_failure(
+        request_id=claimed.invoke.id,
+        request_sha256=canonical_sha256(claimed.invoke),
+        phase="invoke_external_io_possible",
+        violation="timeout",
+        evidence_sha256="2" * 64,
+        observed_at="2026-08-20T12:00:04Z",
+    )
+    ambiguous = project_action_chain_read_result(
+        tenant_id=scope.tenant_id,
+        attempt=claimed.attempt,
+        initialize=claimed.initialize,
+        invoke=claimed.invoke,
+        manifest=claimed.connector_manifest,
+        result=protocol_failure,
+        observed_at=NOW + timedelta(seconds=3),
+        recorded_at=NOW + timedelta(seconds=4),
+        retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+    )
+    assert ambiguous.attempt.state == "ambiguous"
+    assert ambiguous.attempt.response_sha256 is None
+    assert ambiguous.observation is None
