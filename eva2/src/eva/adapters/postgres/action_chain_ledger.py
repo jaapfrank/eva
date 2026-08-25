@@ -13,6 +13,9 @@ from sqlalchemy.engine import Engine
 from eva.adapters.postgres.action_chain_read_validation import (
     validate_action_chain_read,
 )
+from eva.adapters.postgres.action_chain_read_advance_validation import (
+    validate_action_chain_read_advances,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
@@ -535,13 +538,35 @@ class PostgresActionChainLedger:
                 resolved_ids[item] for item in step.depends_on
             )
             initial_state = "ready" if not step.depends_on else "pending"
+            ready_revision = 1 if not expected_dependencies else 2
+            running_revision = ready_revision + 1
+            succeeded_revision = running_revision + 1
+            released_ready = (
+                bool(expected_dependencies)
+                and stored.state == "ready"
+                and stored.read_intent_id is None
+                and stored.effect_intent_id is None
+                and stored.outcome_ref is None
+                and stored.revision == ready_revision
+                and stored.updated_at >= stored.created_at
+            )
             prepared_read = (
                 step.kind == "read"
                 and stored.state == "running"
                 and stored.read_intent_id is not None
                 and stored.effect_intent_id is None
                 and stored.outcome_ref is None
-                and stored.revision == 2
+                and stored.revision == running_revision
+                and stored.updated_at >= stored.created_at
+            )
+            completed_read = (
+                step.kind == "read"
+                and stored.state == "succeeded"
+                and stored.read_intent_id is not None
+                and stored.effect_intent_id is None
+                and isinstance(stored.outcome_ref, str)
+                and stored.outcome_ref.startswith("read-observation:")
+                and stored.revision == succeeded_revision
                 and stored.updated_at >= stored.created_at
             )
             initial_step = (
@@ -558,7 +583,7 @@ class PostgresActionChainLedger:
                 or stored.operation != step.operation
                 or stored.effect_class != step.kind
                 or stored.plan_step_id != uuid5(plan_id, f"step:{step.step_id}")
-                or not (initial_step or prepared_read)
+                or not (initial_step or released_ready or prepared_read or completed_read)
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
                 != canonical_sha256(step_payload)
@@ -588,7 +613,7 @@ class PostgresActionChainLedger:
             }
             if step_admission != expected_step_admission:
                 raise ActionChainCorrupt("step admission event differs")
-            if prepared_read:
+            if prepared_read or completed_read:
                 validate_action_chain_read(
                     connection,
                     self._scope_value,
@@ -617,6 +642,26 @@ class PostgresActionChainLedger:
                     read_intent_id=stored.read_intent_id,
                 )
             )
+        current_transition_context = validate_action_chain_read_advances(
+            connection,
+            self._scope_value,
+            plan_id=plan_id,
+            plan=plan,
+            step_rows=step_rows,
+            root_current=root_current,
+            corrupt=ActionChainCorrupt,
+        )
+        current_states = {row.plan_step_id: row.state for row in step_rows}
+        if any(
+            row.state == "pending"
+            and row.dependency_step_ids
+            and all(
+                current_states.get(dependency) == "succeeded"
+                for dependency in row.dependency_step_ids
+            )
+            for row in step_rows
+        ):
+            raise ActionChainCorrupt("eligible dependent step was not released")
         if admission.get("step_ids") != expected_admission_ids:
             raise ActionChainCorrupt("admission step IDs differ")
 
@@ -681,6 +726,10 @@ class PostgresActionChainLedger:
                 "attention_revision": int(attention_row.revision),
                 "plan_id": str(plan_id),
             }
+            if current_transition_context is not None:
+                expected_attention_projection["transition_context"] = (
+                    current_transition_context
+                )
             if root_current != expected_attention_projection:
                 raise ActionChainCorrupt(
                     "continuation attention differs from its timeline event"
@@ -793,6 +842,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_CONTINUATION_RELEASED",
             "ACTION_CHAIN_CONTINUATION_NEEDS_HELP",
             "ACTION_CHAIN_READ_INTENT_PREPARED",
+            "ACTION_CHAIN_READ_DEPENDENCIES_RELEASED",
         }
         if root
         else {

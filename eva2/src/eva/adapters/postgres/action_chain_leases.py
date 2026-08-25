@@ -358,6 +358,7 @@ def write_action_chain_attention(
     root_event_type: str,
     root_status: Literal["active", "needs_help"],
     reason: str | None = None,
+    transition_context: dict[str, object] | None = None,
 ) -> int:
     """CAS continuation state and append its matching root timeline event."""
 
@@ -416,6 +417,14 @@ def write_action_chain_attention(
         )
         .with_for_update()
     ).one()
+    event_data: dict[str, object] = {
+        "attention": payload,
+        "attention_payload_sha256": canonical_sha256(attention),
+        "attention_revision": revision,
+        "plan_id": str(chain.plan_id),
+    }
+    if transition_context is not None:
+        event_data["transition_context"] = transition_context
     transition_timeline_thread(
         connection,
         scope,
@@ -430,12 +439,7 @@ def write_action_chain_attention(
         status=root_status,
         event_type=root_event_type,
         occurred_at=now,
-        data={
-            "attention": payload,
-            "attention_payload_sha256": canonical_sha256(attention),
-            "attention_revision": revision,
-            "plan_id": str(chain.plan_id),
-        },
+        data=event_data,
         operation_id=root_thread_id,
         deadline=_parse_timestamp(chain.plan.deadline),
         retry_count=0,

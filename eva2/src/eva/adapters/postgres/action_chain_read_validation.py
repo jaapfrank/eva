@@ -61,7 +61,7 @@ def validate_action_chain_read(
     stored: sa.Row,
     current_event_data: dict[str, Any],
     corrupt: type[RuntimeError],
-) -> None:
+) -> ReadAttempt | None:
     """Validate the prepared intent and its optional authorization fence."""
 
     intent_row = connection.execute(
@@ -96,6 +96,15 @@ def validate_action_chain_read(
         "resource_type": intent.resource_scope.resource_type,
         "resource_id": intent.resource_scope.resource_id,
     }
+    claim_sha256, prepared_at = _prepared_claim(
+        connection,
+        scope,
+        plan=plan,
+        plan_id=plan_id,
+        plan_step_id=stored.plan_step_id,
+        logical_step_key=step.step_id,
+        corrupt=corrupt,
+    )
     if (
         stored.read_intent_id != expected_intent_id
         or intent.read_intent_id != str(expected_intent_id)
@@ -129,7 +138,7 @@ def validate_action_chain_read(
         or intent_row.deadline != _parse_timestamp(intent.deadline)
         or intent_row.retention_policy_id != plan_row.retention_policy_id
         or intent_row.retention_until != plan_row.retention_until
-        or intent_row.created_at != stored.updated_at
+        or intent_row.created_at != prepared_at
     ):
         raise corrupt("prepared read intent binding differs")
 
@@ -221,15 +230,6 @@ def validate_action_chain_read(
     ):
         raise corrupt("prepared read capability binding differs")
 
-    claim_sha256 = _prepared_claim_sha256(
-        connection,
-        scope,
-        plan=plan,
-        plan_id=plan_id,
-        plan_step_id=stored.plan_step_id,
-        logical_step_key=step.step_id,
-        corrupt=corrupt,
-    )
     prepared_event_data = {
         "capability_activation_id": str(intent_row.capability_activation_id),
         "capability_manifest_id": str(activation.capability_manifest_id),
@@ -255,10 +255,10 @@ def validate_action_chain_read(
     if not attempt_rows:
         if current_event_data != prepared_event_data:
             raise corrupt("prepared read timeline binding differs")
-        return
+        return None
     if len(attempt_rows) != 1:
         raise corrupt("authorized read attempt cardinality differs")
-    _validate_authorized_read(
+    return _validate_authorized_read(
         connection,
         scope,
         plan=plan,
@@ -292,7 +292,7 @@ def _validate_authorized_read(
     attempt_row: sa.Row,
     current_event_data: dict[str, Any],
     corrupt: type[RuntimeError],
-) -> None:
+) -> ReadAttempt:
     try:
         attempt = ReadAttempt.model_validate(attempt_row.payload)
         capability_grant = CapabilityGrant.model_validate(
@@ -569,7 +569,7 @@ def _validate_authorized_read(
             retention_until=plan_row.retention_until,
             corrupt=corrupt,
         )
-        return
+        return attempt
     else:
         raise corrupt("authorized read timeline event differs")
     if (
@@ -579,9 +579,10 @@ def _validate_authorized_read(
         or checkpoint.updated_at != expected_updated_at
     ):
         raise corrupt("authorized read timeline binding differs")
+    return attempt
 
 
-def _prepared_claim_sha256(
+def _prepared_claim(
     connection: sa.Connection,
     scope: TimelineScope,
     *,
@@ -590,23 +591,46 @@ def _prepared_claim_sha256(
     plan_step_id: UUID,
     logical_step_key: str,
     corrupt: type[RuntimeError],
-) -> str:
+) -> tuple[str, datetime]:
     root_thread_id = action_chain_thread_id(plan)
-    rows = connection.execute(
+    child_thread_id = action_chain_step_operation_id(plan, logical_step_key)
+    child_prepared = connection.execute(
         sa.select(operational_events)
         .where(
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.thread_id == root_thread_id,
+            operational_events.c.thread_id == child_thread_id,
+            operational_events.c.event_type == "ACTION_CHAIN_READ_INTENT_PREPARED",
         )
-        .order_by(operational_events.c.sequence.desc())
-        .limit(2)
-    ).all()
+    ).one_or_none()
+    if child_prepared is None:
+        raise corrupt("prepared read child event is absent")
+    prepared = connection.execute(
+        sa.select(operational_events).where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == root_thread_id,
+            operational_events.c.event_type == "ACTION_CHAIN_READ_INTENT_PREPARED",
+            operational_events.c.occurred_at == child_prepared.occurred_at,
+        )
+    ).one_or_none()
+    if prepared is None:
+        raise corrupt("prepared read root event is absent")
+    claimed = connection.execute(
+        sa.select(operational_events).where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == root_thread_id,
+            operational_events.c.sequence == int(prepared.sequence) - 1,
+        )
+    ).one_or_none()
+    rows = (prepared, claimed)
     if (
-        len(rows) != 2
-        or rows[0].event_type != "ACTION_CHAIN_READ_INTENT_PREPARED"
-        or rows[1].event_type != "ACTION_CHAIN_CONTINUATION_CLAIMED"
-        or int(rows[0].sequence) != int(rows[1].sequence) + 1
+        claimed is None
+        or prepared.event_type != "ACTION_CHAIN_READ_INTENT_PREPARED"
+        or claimed.event_type != "ACTION_CHAIN_CONTINUATION_CLAIMED"
+        or int(prepared.sequence) != int(claimed.sequence) + 1
+        or prepared.occurred_at != child_prepared.occurred_at
     ):
         raise corrupt("prepared read lease timeline differs")
     for event in rows:
@@ -616,7 +640,7 @@ def _prepared_claim_sha256(
             or set(event.payload) != {"checkpoint", "data"}
         ):
             raise corrupt("prepared read lease event differs")
-    claimed_data = rows[1].payload.get("data")
+    claimed_data = claimed.payload.get("data")
     if not isinstance(claimed_data, dict):
         raise corrupt("prepared read claim data is absent")
     attention_payload = claimed_data.get("attention")
@@ -641,20 +665,23 @@ def _prepared_claim_sha256(
         or attention.lease_expires_at is None
         or claimed_data.get("attention_payload_sha256")
         != canonical_sha256(attention)
-        or claimed_data.get("attention_revision") != rows[1].sequence
+        or claimed_data.get("attention_revision") != claimed.sequence
         or claimed_data.get("plan_id") != str(plan_id)
     ):
         raise corrupt("prepared read claim binding differs")
-    return canonical_sha256(
-        {
-            "attention_id": str(expected_attention_id),
-            "attention_revision": claimed_data["attention_revision"],
-            "lease_expires_at": attention.lease_expires_at,
-            "logical_step_key": logical_step_key,
-            "plan_id": str(plan_id),
-            "plan_step_id": str(plan_step_id),
-            "worker_id": attention.lease_owner,
-        }
+    return (
+        canonical_sha256(
+            {
+                "attention_id": str(expected_attention_id),
+                "attention_revision": claimed_data["attention_revision"],
+                "lease_expires_at": attention.lease_expires_at,
+                "logical_step_key": logical_step_key,
+                "plan_id": str(plan_id),
+                "plan_step_id": str(plan_step_id),
+                "worker_id": attention.lease_owner,
+            }
+        ),
+        prepared.occurred_at,
     )
 
 

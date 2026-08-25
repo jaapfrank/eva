@@ -209,6 +209,9 @@ class PostgresActionChainReadPreparer:
             ):
                 raise ActionChainReadConflict("read lease is stale or expired")
 
+            ready_revision = 1 if not stored_step.dependency_step_ids else 2
+            running_revision = ready_revision + 1
+
             query_sha256 = canonical_sha256(action.arguments)
             intent = ReadIntent(
                 schema_version=1,
@@ -269,12 +272,12 @@ class PostgresActionChainReadPreparer:
                     plan_steps.c.read_intent_id.is_(None),
                     plan_steps.c.effect_intent_id.is_(None),
                     plan_steps.c.outcome_ref.is_(None),
-                    plan_steps.c.revision == 1,
+                    plan_steps.c.revision == ready_revision,
                 )
                 .values(
                     state="running",
                     read_intent_id=expected_intent_id,
-                    revision=2,
+                    revision=running_revision,
                     updated_at=now,
                 )
             )
