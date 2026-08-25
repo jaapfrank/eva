@@ -285,7 +285,9 @@ def _seed_read_authority(
         required_provider_scopes=["home_read"],
         proof_floor="fresh provider observation",
         maximum_freshness_ms=300_000,
-        executable_sha256="6" * 64,
+        executable_sha256=hashlib.sha256(
+            b"# fixture-action-chain-read-worker-v1"
+        ).hexdigest(),
         sandbox_profile_sha256="7" * 64,
     )
     manifests = metadata.tables["eva_core.capability_manifests"]
