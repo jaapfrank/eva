@@ -6,12 +6,14 @@ Bijgewerkt: 26 augustus 2026.
 
 Eva heeft niet één monolithische Home Assistant-adapter van 763 regels, maar
 twee direct gekoppelde productie-adapters van samen **1.023 regels** voor
-zoeken, toestand, historie, services en automatiseringsbeheer. HA-MCP heeft op
-zijn exact gepinde `v8.3.0`-image alle zeven tools om dat oppervlak te dragen.
+zoeken, toestand, historie, services en automatiseringsbeheer. De exact gepinde
+`v8.3.0`-image heeft zeven kandidaattools voor dat technische oppervlak.
 
-Deze gate bindt iedere bestaande Eva-uitkomst aan die zeven exacte
-toolcontracten en stopt op schema- of versiedrift. Hij maakt nog geen echte
-Home Assistant-call en verwijdert nog geen productcode.
+Deze gate bindt de exacte Eva-bronbaseline, vervangingsmapping en relevante
+toolbeschrijvingen. Hij stopt op input-, output-, annotatie-, versie- en
+baseline-drift. De upstream outputschema's zijn echter open objecten; deze gate
+bewijst daarom nog geen semantische resultaatpariteit. Hij maakt geen echte
+Home Assistant-call en verwijdert geen productcode.
 
 ## Wat mag worden vervangen
 
@@ -25,6 +27,8 @@ Home Assistant-call en verwijdert nog geen productcode.
 
 Eva houdt doelbinding, persoonsmandaat, veilige automationbuilders, één
 duurzame poging, idempotency, selectie van minimaal bewijs en het eindantwoord.
+De bestaande `health()`-uitkomst heeft nog geen toegelaten toolmapping en blijft
+expliciet buiten deze vervangingsproef.
 
 ## Wat niet wordt meegerekend
 
@@ -34,8 +38,11 @@ ook door HA-MCP worden gedragen, maar alleen na een eigen pariteitsproef.
 
 ## Harde vervolggrens
 
-De productkandidaat mag hoogstens 180 regels dunne integratie toevoegen en moet
-minimaal 300 regels bestaande productiecode verwijderen. Daarna volgen dezelfde
+De eerste audit schat dat alleen het vervangen van HTTP-transport ongeveer
+174–192 regels verwijdert. Dat is minder dan de toelatingsgrens. Een
+productkandidaat mag hoogstens 180 regels dunne integratie toevoegen en moet
+minimaal 300 regels bestaande productiecode verwijderen. Daarvoor moet eerst
+ook zoek- en historiesemantiek werkelijk gelijk blijken. Daarna volgen dezelfde
 state-, historie-, service-, automation-, crash- en readbacktests met een apart
 least-privilege Home Assistant-testtoken. Zonder echte nettokrimp blijft de
 directe adapter staan.

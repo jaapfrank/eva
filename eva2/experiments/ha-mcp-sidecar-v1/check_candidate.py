@@ -26,6 +26,8 @@ def main() -> None:
     require(value["project"]["version"] == "8.3.0", "wrong release")
     require(value["project"]["releaseImmutable"] is True, "release is mutable")
     require(value["project"]["license"] == "MIT", "wrong license")
+    require(value["project"]["pythonFilesUnderTests"] == 621, "test tree count drifted")
+    require(value["project"]["testModules"] == 483, "test module count drifted")
     require(value["community"]["fixedMaintainers"] >= 4, "too few maintainers")
     require(value["community"]["githubListedContributors"] >= 60, "too few contributors")
     require(value["source"]["tag"] == "v8.3.0", "wrong source tag")

@@ -2,11 +2,21 @@
   "candidateId": "DF02e-ha-mcp-parity-v1",
   "contract": "EvaHomeAssistantMcpParity/v1",
   "currentDirectProduction": {
+    "baselineGitCommit": "1e780ca4ecd433d230ea18c3d58213fc6baebe26",
     "files": {
-      "eva2/src/eva/adapters/connectors/home_assistant.py": 763,
-      "eva2/src/eva/adapters/connectors/home_assistant_automations.py": 260
+      "eva2/src/eva/adapters/connectors/home_assistant.py": {
+        "lines": 763,
+        "sha256": "be368877bf6b65a1930a1ab77504f52a6e4ebdab501c92dbfe583017c3856cb6"
+      },
+      "eva2/src/eva/adapters/connectors/home_assistant_automations.py": {
+        "lines": 260,
+        "sha256": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7"
+      }
     },
     "lines": 1023
+  },
+  "excludedMethods": {
+    "health": "Separate sidecar and Home Assistant readiness check has no admitted tool mapping yet."
   },
   "excludedFromReplacement": [
     "eva2/src/eva/adapters/connectors/home_assistant_admin.py",
@@ -60,6 +70,15 @@
     "ha_get_history": "bb8276887ba10132e7d59fd99b41f564c18ead1f42fd9bb466c1b56c22416d36",
     "ha_get_state": "bd1f2d5a94013f975b8aa5f0328cdcbe076dde11d99837876c03594580c5b78e",
     "ha_search": "9e75d75b39f277391dd3e2d70719268c8d0be0ae8fcab9e60eb29a5594aa7375"
+  },
+  "toolDescriptorSha256": {
+    "ha_call_service": "82c1e34423c22989493b7e3d5c0b00a20854f9b5de29bb5853a9c5c388e9e213",
+    "ha_config_get_automation": "d8b9e6397e1962b666bfe56c2d7d00b17897abe7776e625e79eca55f70af156f",
+    "ha_config_remove_automation": "7ccae0fef719e4246729330324fbcb807f09867a056fdcf009c05b6ac64bdd5a",
+    "ha_config_set_automation": "268cc55ca6914212531ea77e62be81a3407594e510390eb0511d97751cc96b3b",
+    "ha_get_history": "a2e5abbdf4db6437c5f8e43d22438410969cd095817a11935d41ed516f8087ca",
+    "ha_get_state": "77c25a48cc8f10c2e1851b9d8b2ccd8bc54861cea5dc82c02eaa309de02220fc",
+    "ha_search": "d08832740a09c6846f8d6c12bc5cda8553bbbe943699a2876bbe836bb4cb6b1d"
   },
   "version": "8.3.0"
 }
