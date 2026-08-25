@@ -855,14 +855,14 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_REJECTED",
             "ACTION_CHAIN_READ_RATE_LIMITED",
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
+            "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
         }
     )
-    allowed_statuses = {"active", "needs_help"} if root else {
-        "active",
-        "failed",
-        "needs_help",
-        "waiting_for_proof",
-    }
+    allowed_statuses = (
+        {"active", "needs_help"}
+        if root
+        else {"active", "failed", "needs_help", "waiting_for_proof"}
+    )
     expected_checkpoint = {
         "checkpoint_id": str(checkpoint.checkpoint_id),
         "deadline": deadline,
