@@ -88,10 +88,16 @@ def bounded_subagents(
         raise ValueError("at least one sub-agent is required")
     limit.validate(len(workers))
     names = [worker.name for worker in workers]
-    if any(NAME.fullmatch(name) is None for name in names):
+    if any(not isinstance(name, str) or NAME.fullmatch(name) is None for name in names):
         raise ValueError("every sub-agent needs a canonical explicit name")
     if len(set(names)) != len(names):
         raise ValueError("sub-agent names must be unique")
+    if any(
+        not isinstance(worker.instructions, str)
+        or not 1 <= len(worker.instructions) <= 4_000
+        for worker in workers
+    ):
+        raise ValueError("sub-agent instructions must be 1 to 4000 characters")
 
     delegates: list[SubAgent[Any]] = []
     for worker in workers:

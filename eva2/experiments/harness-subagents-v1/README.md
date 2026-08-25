@@ -7,7 +7,9 @@ vastgezette Pydantic AI `2.34.0` en Harness `0.24.0` voeren de child-run uit.
 Eva voegt in deze proef slechts een klein grantprofiel toe. Zij bouwt de child
 zelf uit naam, model en instructie, zodat een caller geen vooraf verborgen
 tools, capabilities of recursieve subagents kan meegeven. Automatische
-agentbestanden, parenttools en shared capabilities staan uit. De providerloze
+agentbestanden, parenttools en shared capabilities staan uit. Naam en
+instructies zijn gesloten tekstvelden; callables of buitensporige instructies
+worden vóór de childconstructie geweigerd. De providerloze
 tests bewijzen echte delegatie, een aparte childcontext, nul childtools, stoppen
 na het callbudget, vooraf weigeren van een te grote input en een coöperatieve
 async time-out. NaN, oneindige waarden,

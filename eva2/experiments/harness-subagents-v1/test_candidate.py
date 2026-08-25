@@ -191,6 +191,15 @@ def test_invalid_worker_rosters_fail_closed() -> None:
         bounded_subagents([])
     with pytest.raises(ValueError, match="canonical explicit name"):
         bounded_subagents([WorkerSpec("Bad Name", CountedTestModel())])
+    with pytest.raises(ValueError, match="canonical explicit name"):
+        bounded_subagents(
+            [
+                WorkerSpec(
+                    True,  # type: ignore[arg-type]
+                    CountedTestModel(),
+                )
+            ]
+        )
     with pytest.raises(ValueError, match="unique"):
         bounded_subagents(
             [
@@ -201,6 +210,20 @@ def test_invalid_worker_rosters_fail_closed() -> None:
     with pytest.raises(ValueError, match="worker count"):
         bounded_subagents(
             [WorkerSpec(f"worker-{index}", CountedTestModel()) for index in range(5)]
+        )
+
+
+@pytest.mark.parametrize("instructions", ["", "x" * 4_001, True, lambda: None])
+def test_invalid_worker_instructions_fail_closed(instructions: object) -> None:
+    with pytest.raises(ValueError, match="instructions"):
+        bounded_subagents(
+            [
+                WorkerSpec(
+                    "worker",
+                    CountedTestModel(),
+                    instructions=instructions,  # type: ignore[arg-type]
+                )
+            ]
         )
 
 
