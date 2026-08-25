@@ -11,7 +11,13 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
-from eva.adapters.postgres.action_chain_ledger import PostgresActionChainLedger
+from eva.adapters.postgres.action_chain_effect_results import (
+    PostgresActionChainEffectResultStore,
+)
+from eva.adapters.postgres.action_chain_ledger import (
+    ActionChainCorrupt,
+    PostgresActionChainLedger,
+)
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
 from eva.contracts.canonical_json import canonical_sha256
@@ -363,3 +369,227 @@ def test_effect_result_projection_separates_ack_reject_and_ambiguity(
     assert ambiguous.attempt.response_sha256 is None
     assert ambiguous.intent.state == "ambiguous"
     assert ambiguous.receipt is None
+
+
+def test_effect_result_store_commits_provider_ack_without_readback(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    result = _effect_result(
+        claimed,
+        {
+            "kind": "effect_response",
+            "provider_resource_id": "ha:entity:light.test_target",
+            "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+            "provider_time": "2026-08-20T12:00:10Z",
+        },
+    )
+    store = PostgresActionChainEffectResultStore(action_chain_engine, scope)
+    stored = store.record(
+        claimed,
+        result=result,
+        observed_at=NOW + timedelta(seconds=9),
+        recorded_at=NOW + timedelta(seconds=11),
+    )
+    assert stored.disposition == "recorded"
+    assert stored.attempt.state == "provider_accepted"
+    assert stored.intent.state == "provider_accepted"
+    assert stored.receipt is not None
+    assert stored.receipt.decision == "accepted"
+    exact_replay = store.record(
+        claimed,
+        result=result,
+        observed_at=NOW + timedelta(seconds=9),
+        recorded_at=NOW + timedelta(seconds=11),
+    )
+    assert exact_replay.disposition == "already_recorded"
+    restarted = sa.create_engine(action_chain_engine.url, pool_pre_ping=False)
+    try:
+        reloaded = PostgresActionChainEffectResultStore(
+            restarted, scope
+        ).load_terminal(UUID(prepared.intent.effect_intent_id))
+    finally:
+        restarted.dispose()
+    assert reloaded is not None
+    assert reloaded.disposition == "already_recorded"
+    assert reloaded.attempt == stored.attempt
+    assert reloaded.intent == stored.intent
+    assert reloaded.receipt == stored.receipt
+
+    intents = sa.table(
+        "effect_intents",
+        sa.column("state"),
+        schema="eva_effects",
+    )
+    attempts = sa.table(
+        "effect_attempts",
+        sa.column("state"),
+        sa.column("transport_evidence_id"),
+        schema="eva_effects",
+    )
+    evidence = sa.table(
+        "evidence_envelopes",
+        sa.column("aggregate_type"),
+        schema="eva_evidence",
+    )
+    with action_chain_engine.connect() as connection:
+        assert connection.scalar(sa.select(intents.c.state)) == "provider_accepted"
+        attempt_row = connection.execute(sa.select(attempts)).one()
+        assert attempt_row.state == "provider_accepted"
+        assert attempt_row.transport_evidence_id is not None
+        assert connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(evidence)
+            .where(
+                evidence.c.aggregate_type == "action_chain_effect_attempt"
+            )
+        ) == 1
+    counts = _effect_counts(action_chain_engine, scope, chain.plan_id)
+    assert counts["receipts"] == 1
+    assert counts["readbacks"] == 0
+    assert PostgresActionChainLedger(action_chain_engine, scope).load(
+        chain.plan_id
+    ).steps[1].state == "running"
+
+
+def test_effect_result_store_rolls_back_all_provider_evidence(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    result = _effect_result(
+        claimed,
+        {
+            "kind": "effect_response",
+            "provider_resource_id": "ha:entity:light.test_target",
+            "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+            "provider_time": "2026-08-20T12:00:10Z",
+        },
+    )
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        connection.exec_driver_sql(
+            """
+            CREATE FUNCTION eva_effects.reject_mc03c2_receipt()
+            RETURNS trigger LANGUAGE plpgsql AS $function$
+            BEGIN
+                RAISE EXCEPTION 'forced_mc03c2_receipt_failure'
+                    USING ERRCODE = '55000';
+            END
+            $function$
+            """
+        )
+        connection.exec_driver_sql(
+            """
+            CREATE TRIGGER reject_mc03c2_receipt
+            BEFORE INSERT ON eva_effects.effect_receipts
+            FOR EACH ROW EXECUTE FUNCTION eva_effects.reject_mc03c2_receipt()
+            """
+        )
+    store = PostgresActionChainEffectResultStore(action_chain_engine, scope)
+    try:
+        with pytest.raises(sa.exc.DBAPIError, match="forced_mc03c2"):
+            store.record(
+                claimed,
+                result=result,
+                observed_at=NOW + timedelta(seconds=9),
+                recorded_at=NOW + timedelta(seconds=11),
+            )
+    finally:
+        with action_chain_engine.begin() as connection:
+            connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+            connection.exec_driver_sql(
+                "DROP TRIGGER reject_mc03c2_receipt "
+                "ON eva_effects.effect_receipts"
+            )
+            connection.exec_driver_sql(
+                "DROP FUNCTION eva_effects.reject_mc03c2_receipt()"
+            )
+    counts = _effect_counts(action_chain_engine, scope, chain.plan_id)
+    assert counts["receipts"] == counts["readbacks"] == 0
+    retry = store.record(
+        claimed,
+        result=result,
+        observed_at=NOW + timedelta(seconds=9),
+        recorded_at=NOW + timedelta(seconds=11),
+    )
+    assert retry.disposition == "recorded"
+
+
+def test_effect_result_reload_rejects_corrupt_provider_evidence(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    result = _effect_result(
+        claimed,
+        {
+            "kind": "effect_response",
+            "provider_resource_id": "ha:entity:light.test_target",
+            "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+            "provider_time": "2026-08-20T12:00:10Z",
+        },
+    )
+    stored = PostgresActionChainEffectResultStore(
+        action_chain_engine, scope
+    ).record(
+        claimed,
+        result=result,
+        observed_at=NOW + timedelta(seconds=9),
+        recorded_at=NOW + timedelta(seconds=11),
+    )
+    evidence = sa.table(
+        "evidence_envelopes",
+        sa.column("evidence_id"),
+        sa.column("payload_sha256"),
+        schema="eva_evidence",
+    )
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        updated = connection.execute(
+            sa.update(evidence)
+            .where(evidence.c.evidence_id == UUID(stored.evidence.evidence_id))
+            .values(payload_sha256=bytes.fromhex("0" * 64))
+        )
+        assert updated.rowcount == 1
+    with pytest.raises(ActionChainCorrupt, match="evidence differs"):
+        PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)

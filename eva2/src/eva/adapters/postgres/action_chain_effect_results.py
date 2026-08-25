@@ -86,13 +86,13 @@ class PostgresActionChainEffectResultStore:
             attempt = _attempt(attempt_row)
             if attempt.state == "dispatch_authorized":
                 return None
-            self._ledger.load_in_transaction(connection, step_row.plan_id)
+            chain = self._ledger.load_in_transaction(connection, step_row.plan_id)
             return self._load_stored(
                 connection,
                 intent=_intent(intent_row),
                 attempt=attempt,
                 operation_id=action_chain_step_operation_id(
-                    self._ledger.load_in_transaction(connection, step_row.plan_id).plan,
+                    chain.plan,
                     step_row.logical_step_key,
                 ),
             )

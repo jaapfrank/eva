@@ -8,10 +8,15 @@ from uuid import UUID, uuid5
 
 import sqlalchemy as sa
 
+from eva.adapters.postgres.action_chain_effect_result_validation import (
+    validate_action_chain_effect_history,
+)
+from eva.adapters.postgres.action_chain_effect_state_validation import (
+    reconstruct_action_chain_effect_state,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
-    operational_checkpoints,
     operational_events,
 )
 from eva.application.action_chain import (
@@ -100,7 +105,9 @@ def validate_action_chain_effect(
         logical_step_key=step.step_id,
         corrupt=corrupt,
     )
-    prepared_intent = intent.model_copy(update={"state": "prepared"})
+    prepared_intent = EffectIntent.model_validate(
+        {**intent.model_dump(mode="json"), "state": "prepared"}
+    )
     if (
         stored.effect_intent_id != expected_intent_id
         or intent.effect_intent_id != str(expected_intent_id)
@@ -114,7 +121,16 @@ def validate_action_chain_effect(
         or intent.frozen_payload_sha256 != expected_payload_sha256
         or intent.idempotency_key != expected_idempotency_key
         or intent.proof_floor != step.proof_floor
-        or intent.state not in {"prepared", "dispatch_authorized"}
+        or intent.state
+        not in {
+            "prepared",
+            "dispatch_authorized",
+            "provider_accepted",
+            "provider_rejected",
+            "ambiguous",
+            "waiting_breaker",
+            "blocked",
+        }
         or intent.supersedes_effect_intent_id is not None
         or intent.deadline != plan.deadline
         or canonical_sha256(intent) != bytes(intent_row.payload_sha256).hex()
@@ -266,14 +282,13 @@ def validate_action_chain_effect(
         )
         for table in (effect_receipts, effect_readbacks)
     )
-    if any(external_counts):
-        raise corrupt("authorized undispatched effect has external evidence")
     if not attempts:
         if (
             intent.state != "prepared"
             or int(intent_row.revision) != 1
             or intent_row.updated_at != prepared_at
             or current_event_data != expected_event_data
+            or any(external_counts)
         ):
             raise corrupt("prepared effect timeline binding differs")
         return
@@ -292,6 +307,7 @@ def validate_action_chain_effect(
         binding=binding,
         capability_manifest_id=activation.capability_manifest_id,
         attempt_row=attempts[0],
+        external_counts=external_counts,
         current_event_data=current_event_data,
         corrupt=corrupt,
     )
@@ -311,11 +327,12 @@ def _validate_authorized_effect(
     binding: ConnectorBinding,
     capability_manifest_id: UUID,
     attempt_row: sa.Row,
+    external_counts: tuple[int, int],
     current_event_data: dict[str, Any],
     corrupt: type[RuntimeError],
 ) -> None:
     try:
-        attempt = EffectAttempt.model_validate(attempt_row.payload)
+        stored_attempt = EffectAttempt.model_validate(attempt_row.payload)
         capability_grant = CapabilityGrant.model_validate(
             attempt_row.capability_grant_payload
         )
@@ -348,7 +365,9 @@ def _validate_authorized_effect(
                 "resource_scope": intent.resource_scope.model_dump(mode="json"),
                 "deadline": intent.deadline,
                 "request_payload_sha256": intent.frozen_payload_sha256,
-                "connector_manifest_sha256": attempt.connector_manifest_sha256,
+                "connector_manifest_sha256": (
+                    stored_attempt.connector_manifest_sha256
+                ),
                 "capability_grant_id": capability_grant.grant_id,
                 "credential_grant_id": credential_grant.credential_grant_id,
                 "request_payload": action_arguments,
@@ -382,7 +401,7 @@ def _validate_authorized_effect(
             "contract": "ReadProviderProfile/v1",
             "capability_manifest_id": str(capability_manifest_id),
             "revision": profile_revision,
-            "connector_manifest_sha256": attempt.connector_manifest_sha256,
+            "connector_manifest_sha256": stored_attempt.connector_manifest_sha256,
             "process_spec_sha256": process_spec_sha256,
         }
     )
@@ -395,22 +414,29 @@ def _validate_authorized_effect(
         "request_sha256": canonical_sha256(envelope),
         "capability_grant_sha256": canonical_sha256(capability_grant),
         "credential_grant_sha256": canonical_sha256(credential_grant),
-        "connector_manifest_sha256": attempt.connector_manifest_sha256,
+        "connector_manifest_sha256": stored_attempt.connector_manifest_sha256,
         "process_spec_sha256": process_spec_sha256,
         "provider_profile_sha256": profile_sha256,
         "provider_registry_sha256": registry_sha256,
         "release_manifest_sha256": release_manifest_sha256,
         "release_provenance_sha256": provenance_sha256,
         "release_verification_receipt_sha256": verification_sha256,
-        "issued_at": attempt.created_at,
+        "issued_at": stored_attempt.created_at,
         "deadline": intent.deadline,
     }
+    state = reconstruct_action_chain_effect_state(
+        intent=intent,
+        intent_row=intent_row,
+        stored_attempt=stored_attempt,
+        attempt_row=attempt_row,
+        dispatch_permit_sha256=canonical_sha256(permit),
+        external_counts=external_counts,
+        corrupt=corrupt,
+    )
+    authorized_intent = state.intent
+    attempt = state.attempt
     if (
-        intent.state != "dispatch_authorized"
-        or intent_row.state != "dispatch_authorized"
-        or int(intent_row.revision) != 2
-        or intent_row.updated_at != attempt_row.created_at
-        or attempt.effect_attempt_id != str(expected_attempt_id)
+        attempt.effect_attempt_id != str(expected_attempt_id)
         or attempt.effect_intent_id != intent.effect_intent_id
         or attempt.ordinal != 1
         or attempt.state != "dispatch_authorized"
@@ -450,9 +476,6 @@ def _validate_authorized_effect(
         or attempt_row.effect_attempt_id != expected_attempt_id
         or attempt_row.effect_intent_id != intent_row.effect_intent_id
         or int(attempt_row.ordinal) != 1
-        or attempt_row.state != "dispatch_authorized"
-        or bytes(attempt_row.dispatch_permit_sha256).hex()
-        != attempt.dispatch_permit_sha256
         or attempt_row.capability_grant_id != capability_grant_id
         or attempt_row.credential_grant_id != credential_grant_id
         or bytes(attempt_row.capability_grant_sha256).hex()
@@ -472,9 +495,6 @@ def _validate_authorized_effect(
         or bytes(attempt_row.connector_manifest_sha256).hex()
         != attempt.connector_manifest_sha256
         or bytes(attempt_row.request_sha256).hex() != attempt.request_sha256
-        or attempt_row.response_sha256 is not None
-        or attempt_row.error_class != "none"
-        or attempt_row.transport_evidence_id is not None
         or attempt_row.object_store_id is not None
         or attempt_row.object_candidate_id is not None
         or attempt_row.object_candidate_ciphertext_sha256 is not None
@@ -482,11 +502,8 @@ def _validate_authorized_effect(
         or attempt_row.object_candidate_temp_name_sha256 is not None
         or attempt_row.object_candidate_state is not None
         or attempt_row.deadline != _parse_timestamp(intent.deadline)
-        or bytes(attempt_row.payload_sha256).hex() != canonical_sha256(attempt)
-        or int(attempt_row.revision) != 1
         or attempt_row.retention_policy_id != plan_row.retention_policy_id
         or attempt_row.retention_until != plan_row.retention_until
-        or attempt_row.created_at != attempt_row.updated_at
     ):
         raise corrupt("authorized effect binding differs")
     expected_event_data = {
@@ -497,8 +514,8 @@ def _validate_authorized_effect(
         "effect_attempt_id": attempt.effect_attempt_id,
         "effect_attempt_payload_sha256": canonical_sha256(attempt),
         "effect_intent_id": attempt.effect_intent_id,
-        "effect_intent_payload_sha256": canonical_sha256(intent),
-        "idempotency_key": intent.idempotency_key,
+        "effect_intent_payload_sha256": canonical_sha256(authorized_intent),
+        "idempotency_key": authorized_intent.idempotency_key,
         "process_spec_sha256": process_spec_sha256,
         "provider_profile_revision": profile_revision,
         "provider_profile_sha256": profile_sha256,
@@ -508,64 +525,24 @@ def _validate_authorized_effect(
         "release_verification_receipt_sha256": verification_sha256,
         "request_sha256": attempt.request_sha256,
     }
-    operation_id = action_chain_step_operation_id(plan, step.step_id)
-    latest = connection.execute(
-        sa.select(operational_events)
-        .where(
-            operational_events.c.tenant_id == scope.tenant_id,
-            operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.thread_id == operation_id,
-        )
-        .order_by(operational_events.c.sequence.desc())
-        .limit(1)
-    ).one()
-    checkpoint = connection.execute(
-        sa.select(operational_checkpoints).where(
-            operational_checkpoints.c.tenant_id == scope.tenant_id,
-            operational_checkpoints.c.installation_id == scope.installation_id,
-            operational_checkpoints.c.thread_id == operation_id,
-        )
-    ).one()
-    if latest.event_type == "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED":
-        valid_timeline = (
-            current_event_data == expected_event_data
-            and checkpoint.phase == "action_chain_effect_dispatch_authorized"
-            and checkpoint.status == "waiting_for_proof"
-            and checkpoint.updated_at == attempt_row.created_at
-        )
-    elif latest.event_type == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED":
-        call_data = dict(current_event_data)
-        started_at = call_data.pop("provider_call_started_at", None)
-        previous = connection.execute(
-            sa.select(operational_events).where(
-                operational_events.c.tenant_id == scope.tenant_id,
-                operational_events.c.installation_id == scope.installation_id,
-                operational_events.c.thread_id == operation_id,
-                operational_events.c.sequence == int(latest.sequence) - 1,
-            )
-        ).one_or_none()
-        try:
-            started = _parse_timestamp(started_at)
-        except (TypeError, ValueError):
-            started = None
-        valid_timeline = (
-            call_data == expected_event_data
-            and started is not None
-            and started == latest.occurred_at
-            and attempt_row.created_at <= started < _parse_timestamp(intent.deadline)
-            and checkpoint.phase == "action_chain_effect_provider_call_started"
-            and checkpoint.status == "waiting_for_proof"
-            and checkpoint.updated_at == started
-            and previous is not None
-            and previous.event_type
-            == "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
-            and previous.occurred_at == attempt_row.created_at
-            and previous.payload.get("data") == expected_event_data
-        )
-    else:
-        valid_timeline = False
-    if not valid_timeline:
-        raise corrupt("authorized effect timeline binding differs")
+    validate_action_chain_effect_history(
+        connection,
+        scope,
+        operation_id=action_chain_step_operation_id(plan, step.step_id),
+        state=state,
+        plan=plan,
+        action_arguments=action_arguments,
+        capability_manifest=manifest,
+        binding=binding,
+        capability_grant=capability_grant,
+        credential_grant=credential_grant,
+        intent_row=intent_row,
+        attempt_row=attempt_row,
+        expected_authorization_data=expected_event_data,
+        retention_policy_id=plan_row.retention_policy_id,
+        retention_until=plan_row.retention_until,
+        corrupt=corrupt,
+    )
 
 
 def is_prepared_action_chain_effect(
