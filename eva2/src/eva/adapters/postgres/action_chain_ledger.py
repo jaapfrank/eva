@@ -801,6 +801,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_STEP_NEEDS_HELP",
             "ACTION_CHAIN_READ_INTENT_PREPARED",
             "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED",
+            "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED",
         }
     )
     allowed_statuses = {"active", "needs_help"} if root else {

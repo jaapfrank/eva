@@ -41,11 +41,6 @@ from eva.application.action_chain import (
     validate_action_chain_requests,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.connector import ConnectorEnvelope
-from eva.contracts.connector_rpc import (
-    ConnectorInitializeRequest,
-    ConnectorInvokeRequest,
-)
 from eva.contracts.execution import (
     CapabilityGrant,
     CapabilityManifest,
@@ -102,8 +97,7 @@ class PostgresActionChainReadAuthorizer:
             intent_row = connection.execute(
                 sa.select(read_intents).where(
                     read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id
-                    == self._scope_value.installation_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
                     read_intents.c.read_intent_id == read_intent_id,
                 )
             ).one_or_none()
@@ -140,7 +134,9 @@ class PostgresActionChainReadAuthorizer:
             except (ValueError, ActionChainValidationError) as error:
                 raise ActionChainReadConflict(str(error)) from error
             if live_catalog.authority_snapshot() != chain.authority_snapshot:
-                raise ActionChainReadConflict("live action catalog differs from admission")
+                raise ActionChainReadConflict(
+                    "live action catalog differs from admission"
+                )
 
             action = next(
                 (
@@ -163,8 +159,7 @@ class PostgresActionChainReadAuthorizer:
             activation_hint = connection.execute(
                 sa.select(capability_activations)
                 .where(
-                    capability_activations.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    capability_activations.c.tenant_id == self._scope_value.tenant_id,
                     capability_activations.c.installation_id
                     == self._scope_value.installation_id,
                     capability_activations.c.activation_id
@@ -190,8 +185,7 @@ class PostgresActionChainReadAuthorizer:
             binding = ConnectorBinding.model_validate(
                 connection.execute(
                     sa.select(connector_bindings.c.payload).where(
-                        connector_bindings.c.tenant_id
-                        == self._scope_value.tenant_id,
+                        connector_bindings.c.tenant_id == self._scope_value.tenant_id,
                         connector_bindings.c.installation_id
                         == self._scope_value.installation_id,
                         connector_bindings.c.binding_id
@@ -205,7 +199,7 @@ class PostgresActionChainReadAuthorizer:
                 )
             except LookupError as error:
                 raise ActionChainReadConflict(str(error)) from error
-            _validate_profile(
+            validate_action_chain_read_profile(
                 profile,
                 capability_manifest=capability_manifest,
                 binding=binding,
@@ -223,20 +217,23 @@ class PostgresActionChainReadAuthorizer:
                 )
                 .with_for_update()
             ).one_or_none()
+            if existing is None and now >= _parse_timestamp(intent.deadline):
+                raise ActionChainReadConflict("read dispatch deadline has passed")
             created_at = now if existing is None else existing.created_at
-            attempt, capability_grant, credential_grant = _build_exchange(
-                scope=self._scope_value,
-                chain=chain,
-                action_arguments=action.arguments,
-                intent=intent,
-                profile=profile,
-                capability_manifest=capability_manifest,
-                binding=binding,
-                created_at=created_at,
-                now=now,
+            attempt, capability_grant, credential_grant = (
+                build_action_chain_read_authority(
+                    scope=self._scope_value,
+                    chain=chain,
+                    action_arguments=action.arguments,
+                    intent=intent,
+                    profile=profile,
+                    capability_manifest=capability_manifest,
+                    binding=binding,
+                    created_at=created_at,
+                )
             )
             if existing is not None:
-                _require_existing_attempt(
+                require_existing_action_chain_read_attempt(
                     existing,
                     attempt=attempt,
                     capability_grant=capability_grant,
@@ -261,9 +258,7 @@ class PostgresActionChainReadAuthorizer:
                     capability_grant_deadline=_parse_timestamp(
                         capability_grant.deadline
                     ),
-                    credential_grant_id=UUID(
-                        credential_grant.credential_grant_id
-                    ),
+                    credential_grant_id=UUID(credential_grant.credential_grant_id),
                     credential_grant_payload=credential_grant.model_dump(mode="json"),
                     credential_grant_sha256=bytes.fromhex(
                         canonical_sha256(credential_grant)
@@ -293,8 +288,7 @@ class PostgresActionChainReadAuthorizer:
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
@@ -346,7 +340,7 @@ class PostgresActionChainReadAuthorizer:
         )
 
 
-def _validate_profile(
+def validate_action_chain_read_profile(
     profile: ReadProviderProfile,
     *,
     capability_manifest: CapabilityManifest,
@@ -355,27 +349,28 @@ def _validate_profile(
 ) -> None:
     connector_manifest = profile.connector_manifest
     operation = next(
-        (item for item in connector_manifest.operations if item.operation == intent.operation),
+        (
+            item
+            for item in connector_manifest.operations
+            if item.operation == intent.operation
+        ),
         None,
     )
     if (
         connector_manifest.connector_id != binding.provider_id
-        or connector_manifest.executable_sha256
-        != capability_manifest.executable_sha256
+        or connector_manifest.executable_sha256 != capability_manifest.executable_sha256
         or connector_manifest.sandbox_profile_sha256
         != capability_manifest.sandbox_profile_sha256
         or operation is None
-        or operation.input_schema_sha256
-        != capability_manifest.input_schema_sha256
-        or operation.output_schema_sha256
-        != capability_manifest.output_schema_sha256
+        or operation.input_schema_sha256 != capability_manifest.input_schema_sha256
+        or operation.output_schema_sha256 != capability_manifest.output_schema_sha256
         or operation.writes_provider_state
         or operation.external_calls_per_invocation != 1
     ):
         raise ActionChainReadConflict("sealed read provider profile differs")
 
 
-def _build_exchange(
+def build_action_chain_read_authority(
     *,
     scope: TimelineScope,
     chain: StoredActionChain,
@@ -385,11 +380,7 @@ def _build_exchange(
     capability_manifest: CapabilityManifest,
     binding: ConnectorBinding,
     created_at: datetime,
-    now: datetime,
 ) -> tuple[ReadAttempt, CapabilityGrant, CredentialGrant]:
-    deadline = _parse_timestamp(intent.deadline)
-    if now >= deadline:
-        raise ActionChainReadConflict("read dispatch deadline has passed")
     if _parse_timestamp(profile.connector_manifest.issued_at) > created_at:
         raise ActionChainReadConflict("connector manifest was issued in the future")
     attempt_id = uuid5(UUID(intent.read_intent_id), "read-attempt:1")
@@ -429,69 +420,28 @@ def _build_exchange(
         }
     )
     correlation_id = str(uuid5(attempt_id, "correlation:v1"))
-    initialize_id = str(uuid5(attempt_id, "connector-initialize:v1"))
     connector_manifest_sha256 = canonical_sha256(profile.connector_manifest)
-    initialize = ConnectorInitializeRequest.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "ConnectorInitializeRequest/v1",
-            "jsonrpc": "2.0",
-            "id": initialize_id,
-            "method": "connector.initialize",
-            "params": {
-                "protocol_version": "EvaConnectorProtocol/v1",
-                "request_id": initialize_id,
-                "correlation_id": correlation_id,
-                "connector_id": binding.provider_id,
-                "connector_manifest_sha256": connector_manifest_sha256,
-                "worker_id": profile.worker_id,
-                "worker_executable_sha256": capability_manifest.executable_sha256,
-                "connector_binding": binding.model_dump(mode="json"),
-                "capability_manifest": capability_manifest.model_dump(mode="json"),
-                "capability_grant": capability_grant.model_dump(mode="json"),
-                "credential_grant": credential_grant.model_dump(mode="json"),
-                "deadline": intent.deadline,
-            },
-        }
-    )
-    envelope = ConnectorEnvelope.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "ConnectorEnvelope/v1",
-            "installation_id": str(scope.installation_id),
-            "tenant_id": str(scope.tenant_id),
-            "request_id": str(uuid5(attempt_id, "connector-invoke:v1")),
-            "correlation_id": correlation_id,
-            "episode_id": chain.plan.episode_id,
-            "generation": chain.plan.generation,
-            "connector_id": binding.provider_id,
-            "connector_binding_id": binding.binding_id,
-            "capability_id": intent.capability_id,
-            "operation": intent.operation,
-            "resource_scope": intent.resource_scope.model_dump(mode="json"),
-            "deadline": intent.deadline,
-            "request_payload_sha256": intent.query_sha256,
-            "connector_manifest_sha256": connector_manifest_sha256,
-            "capability_grant_id": capability_grant.grant_id,
-            "credential_grant_id": credential_grant.credential_grant_id,
-            "request_payload": action_arguments,
-        }
-    )
-    invoke = ConnectorInvokeRequest.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "ConnectorInvokeRequest/v1",
-            "jsonrpc": "2.0",
-            "id": envelope.request_id,
-            "method": "resource.read",
-            "params": envelope.model_dump(mode="json"),
-        }
-    )
-    try:
-        initialize.validate_against_manifest(profile.connector_manifest)
-        invoke.validate_against_initialize(initialize, profile.connector_manifest)
-    except ValueError as error:
-        raise ActionChainReadConflict(str(error)) from error
+    request_payload = {
+        "schema_version": 1,
+        "contract": "ConnectorEnvelope/v1",
+        "installation_id": str(scope.installation_id),
+        "tenant_id": str(scope.tenant_id),
+        "request_id": str(uuid5(attempt_id, "connector-invoke:v1")),
+        "correlation_id": correlation_id,
+        "episode_id": chain.plan.episode_id,
+        "generation": chain.plan.generation,
+        "connector_id": binding.provider_id,
+        "connector_binding_id": binding.binding_id,
+        "capability_id": intent.capability_id,
+        "operation": intent.operation,
+        "resource_scope": intent.resource_scope.model_dump(mode="json"),
+        "deadline": intent.deadline,
+        "request_payload_sha256": intent.query_sha256,
+        "connector_manifest_sha256": connector_manifest_sha256,
+        "capability_grant_id": capability_grant.grant_id,
+        "credential_grant_id": credential_grant.credential_grant_id,
+        "request_payload": action_arguments,
+    }
     attempt = ReadAttempt(
         schema_version=1,
         contract="ReadAttempt/v1",
@@ -502,7 +452,7 @@ def _build_exchange(
         capability_grant_id=capability_grant.grant_id,
         credential_grant_id=credential_grant.credential_grant_id,
         connector_manifest_sha256=connector_manifest_sha256,
-        request_sha256=canonical_sha256(envelope),
+        request_sha256=canonical_sha256(request_payload),
         response_sha256=None,
         deadline=intent.deadline,
         created_at=_format_timestamp(created_at),
@@ -510,7 +460,7 @@ def _build_exchange(
     return attempt, capability_grant, credential_grant
 
 
-def _require_existing_attempt(
+def require_existing_action_chain_read_attempt(
     row: sa.Row,
     *,
     attempt: ReadAttempt,
@@ -559,9 +509,7 @@ def _dispatch_event_data(
         "provider_registry_sha256": registry_sha256,
         "release_manifest_sha256": release_manifest_sha256,
         "release_provenance_sha256": provenance_sha256,
-        "release_verification_receipt_sha256": (
-            release_verification_receipt_sha256
-        ),
+        "release_verification_receipt_sha256": (release_verification_receipt_sha256),
         "read_attempt_id": attempt.read_attempt_id,
         "read_attempt_payload_sha256": canonical_sha256(attempt),
         "read_intent_id": attempt.read_intent_id,
@@ -588,4 +536,7 @@ def _format_timestamp(value: datetime) -> str:
 __all__ = [
     "AuthorizedActionChainRead",
     "PostgresActionChainReadAuthorizer",
+    "build_action_chain_read_authority",
+    "require_existing_action_chain_read_attempt",
+    "validate_action_chain_read_profile",
 ]

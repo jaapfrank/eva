@@ -460,12 +460,27 @@ def _validate_authorized_read(
             operational_checkpoints.c.thread_id == operation_id,
         )
     ).one()
+    if latest.event_type == "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED":
+        expected_phase = "action_chain_read_dispatch_authorized"
+        expected_updated_at = attempt_row.created_at
+    elif latest.event_type == "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED":
+        expected_phase = "action_chain_read_provider_call_started"
+        expected_updated_at = checkpoint.updated_at
+        started_at = current_event_data.get("provider_call_started_at")
+        if (
+            started_at != _format_timestamp(checkpoint.updated_at)
+            or checkpoint.updated_at < attempt_row.created_at
+            or checkpoint.updated_at >= attempt_row.deadline
+        ):
+            raise corrupt("authorized read provider-call time differs")
+        expected_event_data["provider_call_started_at"] = started_at
+    else:
+        raise corrupt("authorized read timeline event differs")
     if (
         current_event_data != expected_event_data
-        or latest.event_type != "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED"
-        or checkpoint.phase != "action_chain_read_dispatch_authorized"
+        or checkpoint.phase != expected_phase
         or checkpoint.status != "waiting_for_proof"
-        or checkpoint.updated_at != attempt_row.created_at
+        or checkpoint.updated_at != expected_updated_at
     ):
         raise corrupt("authorized read timeline binding differs")
 
