@@ -130,6 +130,8 @@ class PostgresActionChainReadResultStore:
                     stored_attempt=stored_attempt,
                     result=result,
                     operation_id=operation_id,
+                    observed_at=observed_at,
+                    recorded_at=recorded_at,
                 )
             if stored_attempt != claim.attempt:
                 raise ActionChainReadConflict("read result claim differs from storage")
@@ -147,6 +149,13 @@ class PostgresActionChainReadResultStore:
             ).one()
             if latest.event_type != "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED":
                 raise ActionChainReadConflict("read result has no call-start marker")
+            call_started_at = _parse_timestamp(
+                str(_event_data(latest.payload).get("provider_call_started_at"))
+            )
+            if not call_started_at <= observed_at <= recorded_at:
+                raise ActionChainReadConflict(
+                    "read result times are outside the provider-call window"
+                )
             projected = project_action_chain_read_result(
                 tenant_id=self._scope_value.tenant_id,
                 attempt=stored_attempt,
@@ -204,6 +213,7 @@ class PostgresActionChainReadResultStore:
                 _terminal_event_data(
                     projected,
                     connector_manifest=claim.connector_manifest,
+                    observed_at=observed_at,
                     recorded_at=recorded_at,
                 )
             )
@@ -309,6 +319,8 @@ class PostgresActionChainReadResultStore:
         stored_attempt: ReadAttempt,
         result: ProviderReadResult,
         operation_id: str,
+        observed_at: datetime,
+        recorded_at: datetime,
     ) -> StoredActionChainReadResult:
         event = connection.execute(
             sa.select(operational_events)
@@ -324,7 +336,13 @@ class PostgresActionChainReadResultStore:
             .limit(1)
         ).one()
         data = _event_data(event.payload)
-        if data.get("provider_result_sha256") != canonical_sha256(result):
+        if (
+            data.get("provider_result_sha256") != canonical_sha256(result)
+            or data.get("provider_result_observed_at")
+            != _format_timestamp(observed_at)
+            or data.get("provider_result_recorded_at")
+            != _format_timestamp(recorded_at)
+        ):
             raise ActionChainReadConflict("read result replay differs")
         evidence = EvidenceEnvelopeV2.model_validate(
             connection.scalar(
@@ -391,6 +409,7 @@ def _terminal_event_data(
     projected: ProjectedActionChainReadResult,
     *,
     connector_manifest: ConnectorManifest,
+    observed_at: datetime,
     recorded_at: datetime,
 ) -> dict[str, object]:
     observation = projected.observation
@@ -399,6 +418,7 @@ def _terminal_event_data(
         "provider_evidence_id": projected.evidence.evidence_id,
         "provider_evidence_payload_sha256": canonical_sha256(projected.evidence),
         "provider_result": projected.provider_result.model_dump(mode="json"),
+        "provider_result_observed_at": _format_timestamp(observed_at),
         "provider_result_recorded_at": _format_timestamp(recorded_at),
         "provider_result_sha256": projected.provider_result_sha256,
         "read_attempt_terminal_payload_sha256": canonical_sha256(projected.attempt),

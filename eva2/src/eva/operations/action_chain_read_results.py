@@ -179,6 +179,11 @@ def _classify_result(
         if isinstance(outcome, ReadOk):
             if outcome.payload.output_schema_sha256 != output_schema_sha256:
                 raise ValueError("provider result uses another output schema")
+            retrieved_at = _parse_timestamp(outcome.retrieved_at)
+            if retrieved_at < observed_at or retrieved_at > completed_at:
+                raise ValueError(
+                    "provider retrieval is outside the host/completion window"
+                )
             return "observed", result_sha256, outcome
         if outcome.kind == "rate_limited":
             return "rate_limited", result_sha256, None
@@ -207,7 +212,7 @@ def _classify_result(
     if (
         result.request_id != request.id
         or result.request_sha256 != canonical_sha256(request)
-        or _parse_timestamp(result.observed_at) != recorded_at
+        or _parse_timestamp(result.observed_at) != observed_at
     ):
         raise ValueError("provider protocol failure binds another exchange")
     if result.failure_class == "ambiguous_transport":

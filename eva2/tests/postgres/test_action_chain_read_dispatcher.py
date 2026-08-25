@@ -394,7 +394,7 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
         phase="invoke_external_io_possible",
         violation="timeout",
         evidence_sha256="2" * 64,
-        observed_at="2026-08-20T12:00:04Z",
+        observed_at="2026-08-20T12:00:03Z",
     )
     ambiguous = project_action_chain_read_result(
         tenant_id=scope.tenant_id,
@@ -423,7 +423,7 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
         phase="invoke_external_io_possible",
         violation="timeout",
         evidence_sha256="3" * 64,
-        observed_at="2026-08-20T12:00:04Z",
+        observed_at="2026-08-20T12:00:03Z",
     )
     with pytest.raises(ValueError, match="another read attempt"):
         project_action_chain_read_result(
@@ -457,8 +457,8 @@ def test_provider_result_is_atomic_replayable_and_reload_valid(
     recorded = store.record(
         claimed,
         result=success,
-        observed_at=NOW + timedelta(seconds=3),
-        recorded_at=NOW + timedelta(seconds=4),
+        observed_at=NOW + timedelta(seconds=4),
+        recorded_at=NOW + timedelta(seconds=5),
     )
     assert recorded.disposition == "recorded"
     assert recorded.attempt.state == "observed"
@@ -468,8 +468,8 @@ def test_provider_result_is_atomic_replayable_and_reload_valid(
     replay = store.record(
         claimed,
         result=success,
-        observed_at=NOW + timedelta(seconds=3),
-        recorded_at=NOW + timedelta(seconds=4),
+        observed_at=NOW + timedelta(seconds=4),
+        recorded_at=NOW + timedelta(seconds=5),
     )
     assert replay.disposition == "already_recorded"
     assert replay == recorded.__class__(
@@ -478,6 +478,13 @@ def test_provider_result_is_atomic_replayable_and_reload_valid(
         recorded.evidence,
         recorded.observation,
     )
+    with pytest.raises(ActionChainReadConflict, match="replay differs"):
+        store.record(
+            claimed,
+            result=success,
+            observed_at=NOW + timedelta(seconds=3),
+            recorded_at=NOW + timedelta(seconds=5),
+        )
 
     attempts = metadata.tables["eva_effects.read_attempts"]
     observations = metadata.tables["eva_effects.read_observations"]
@@ -487,6 +494,22 @@ def test_provider_result_is_atomic_replayable_and_reload_valid(
         assert (
             connection.scalar(sa.select(sa.func.count()).select_from(observations))
             == 1
+        )
+        terminal_data = connection.scalar(
+            sa.select(operational_events.c.payload)
+            .where(
+                operational_events.c.event_type == "ACTION_CHAIN_READ_OBSERVED"
+            )
+            .limit(1)
+        )["data"]
+        assert terminal_data["provider_call_started_at"] == (
+            "2026-08-20T12:00:03Z"
+        )
+        assert terminal_data["provider_result_observed_at"] == (
+            "2026-08-20T12:00:04Z"
+        )
+        assert terminal_data["provider_result_recorded_at"] == (
+            "2026-08-20T12:00:05Z"
         )
         assert (
             connection.scalar(

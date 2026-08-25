@@ -68,12 +68,17 @@ def validate_action_chain_read_terminal(
             current_event_data.get("connector_manifest")
         )
         result = _provider_result(current_event_data.get("provider_result"))
-        observed_at = _parse_timestamp(
+        call_started_at = _parse_timestamp(
             str(current_event_data.get("provider_call_started_at"))
+        )
+        observed_at = _parse_timestamp(
+            str(current_event_data.get("provider_result_observed_at"))
         )
         recorded_at = _parse_timestamp(
             str(current_event_data.get("provider_result_recorded_at"))
         )
+        if not call_started_at <= observed_at <= recorded_at:
+            raise ValueError("provider result times are outside the call window")
         projected = project_action_chain_read_result(
             tenant_id=scope.tenant_id,
             attempt=authorized_attempt,
@@ -98,6 +103,7 @@ def validate_action_chain_read_terminal(
                 projected.evidence
             ),
             "provider_result": result.model_dump(mode="json"),
+            "provider_result_observed_at": _format_timestamp(observed_at),
             "provider_result_recorded_at": _format_timestamp(recorded_at),
             "provider_result_sha256": projected.provider_result_sha256,
             "read_attempt_terminal_payload_sha256": canonical_sha256(
