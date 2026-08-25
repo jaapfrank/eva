@@ -41,6 +41,12 @@ belangrijk actief doel stil te verliezen.
 - Eva traint haar modelgewichten niet zelf. Een beter extern basismodel is een
   providerupgrade; dat mag niet als Eva's eigen geleerde ervaring worden
   geclaimd.
+- Honcho 3.0.12 is voor LG01 een optionele self-hosted persoonsmodelkandidaat,
+  naast en niet in plaats van Hindsight. Alleen de afgeleide, corrigeerbare
+  representation/peer-cardfunctie is relevant; Honcho krijgt geen identiteit,
+  consent of geheugenautoriteit en mag zonder latencybewijs niet iedere beurt
+  een extra reasoningcall doen. Zie
+  `design/product/tiered-memory-and-person-model-v1.md`.
 
 ## Drie soorten groei
 

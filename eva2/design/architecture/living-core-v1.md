@@ -67,11 +67,18 @@ flowchart TD
    `retry_count` en revision voor snelle en concurrerende rehydratie. Ze zijn
    opnieuw op te bouwen uit de tijdlijn en zijn niet de historische waarheid.
 
-2. **Semantisch geheugen — Hindsight 0.9.1**
+2. **Semantisch geheugen — providerpoort met Hindsight 0.9.1 als incumbent**
    
-   Hindsight is de enige autoriteit voor wereldfeiten, ervaringen, relaties,
-   correcties, patronen en communicatievoorkeuren. Eva onderhoudt daarnaast
-   geen eigen semantische fact graph. De volledige ruwe gebruiker/assistent-
+   `SemanticMemoryProviderPort` is de kleine vervangbare grens voor recall,
+   retain, onderhoud en health. Binnen de huidige deployment is Hindsight de
+   enige semantische projectie voor wereldfeiten, ervaringen, relaties,
+   correcties, patronen en communicatievoorkeuren; Eva onderhoudt daarnaast
+   geen eigen semantische fact graph. PostgreSQL blijft de operationele
+   authority en een projectie moet daaruit herbouwbaar blijven. Hindsight is
+   de vaste L2 voor V1. MA02-MA06 in
+   `design/product/tiered-memory-and-person-model-v1.md` mogen hoogstens een
+   herbouwbare Mnemosyne-L1 en een afgeleid Honcho-persoonsmodel toevoegen;
+   geen van beide vervangt Hindsight. De volledige ruwe gebruiker/assistent-
    uitwisseling blijft in de PostgreSQL-gesprekstijdlijn. Hindsight krijgt als
    `direct_user` uitsluitend de letterlijke gebruikersuiting; Eva's eigen
    antwoord mag nooit dezelfde trust erven of via consolidatie een
@@ -442,8 +449,8 @@ flowchart TD
 | Begrensde bestandsbatch | `src/eva/application/file_batches.py`, `src/eva/adapters/connectors/local_files.py`, gesprekmodel en `conversation_actions.py` | Rootgebonden UTF-8-tekst→Markdown, inputmanifest vóór effecten, atomische writes, onafhankelijke hashreadback, per-bestand gedeeltelijk succes en maximaal drie duurzame retries voor alleen tijdelijke foutklassen | LAB-36/P02 en X03 live groen: scoped partial success, transient herstel op poging twee zonder rewrites en correcte terminale blocker na poging drie |
 | Gevalideerde tekstedit | `src/eva/application/validated_edits.py`, `src/eva/adapters/connectors/validated_edits.py`, gesprekmodel en `conversation_actions.py` | Eén unieke rootgebonden tekstvervanging; groen declaratief focused-testmanifest vóór de edit, atomische write/readback, test na edit en bij falen rollback van alleen de eigen wijziging plus herhaalde validatie; hashes van volledige en ongerelateerde worktree | LAB-36/X04 live groen: MODE=safe→turbo liet de echte focused test falen, Eva zette alleen die edit terug, de test werd weer groen en het ongerelateerde bestand bleef bytegelijk |
 | Zelfgekozen repositoryverbetering | `src/eva/application/repository_improvements.py`, `src/eva/adapters/connectors/repository_improvements.py`, gesprekmodel en `conversation_actions.py` | Volledige begrensde fixture-snapshot, meerdere feitelijke kwaliteitskansen, modelgekozen probleem plus evidence, één atomische patch, gerichte readback en behoud van groene checks, ongerelateerde bytes en targetmodus | Native I02 live groen op v52: Eva koos zonder voorgeschreven fix zelf de uitgeschakelde transient retry, wijzigde alleen `settings.toml`, maakte de gekozen check groen en meldde de twee resterende rode checks eerlijk |
-| Semantisch geheugen | `src/eva/adapters/projection/hindsight.py` | Meertalige low/2048-recall, parallelle neutrale ankerfusie, modelbegrepen zoekintentie zonder leestekenregel, maximaal 512 tokens bronbewijs achter observations, temporele trustprojectie, afzonderlijke project- en exacte observatiebanken met verplichte persoonsbinding, compacte stijlspiegel en nachtelijke stale-only reflect | LAB-36/M04, C03 en R03 live groen: persoon/projectgrenzen lekten niets; twee expliciet gecorrigeerde fotoregio's bleven met verschillende Hindsight-ID's Mark en Marieke, terwijl een onbekende binding geen naam kreeg |
-| Hindsight cold-path | `src/eva/application/memory_background.py` en `src/eva/adapters/postgres/memory_outbox.py` | PostgreSQL-outbox vóór fire-and-forget retain, herladen na processtart, providerpoging vóór HTTP vastleggen, maximaal drie pogingen, hashgebonden succes en idle-reflect alleen na succes | Werkend in live B; harde corecrash tussen poging en bewijs hervatte exact dezelfde idempotente Hindsight-retain en eindigde completed op poging twee |
+| Semantisch geheugen | `src/eva/application/memory.py`, `src/eva/adapters/projection/hindsight.py`, `design/product/tiered-memory-and-person-model-v1.md` | Kleine providerneutrale recall/retain/maintenance/health-poort; Hindsight blijft V1-L2 voor meertalige recall, provenance, project-/persoonsbinding, stijlspiegel en nachtelijk onderhoud; PostgreSQL blijft operationele authority. Mnemosyne/Honcho mogen alleen afgeleide augmentaties worden | Providerpoort getest op `79bc376`; LAB-36/M04, C03 en R03 blijven Hindsight-livebewijs. MA02-MA06 voor L1/persoonsmodel zijn open |
+| Semantische cold-path | `src/eva/application/memory_background.py` en `src/eva/adapters/postgres/memory_outbox.py` | PostgreSQL-outbox vóór provider-retain, herladen na processtart, providerpoging vóór I/O vastleggen, maximaal drie pogingen, hashgebonden succes en idle-maintenance alleen na succes | Providerneutraal getest; live Hindsight-crashproef hervatte dezelfde idempotente retain en eindigde completed op poging twee. Optionele augmentaties hebben nog geen artifact of receipt |
 | Hindsight-provenantiemigratie | `tools/migrate_hindsight_provenance.py` | Leest een transferarchive in memory, verwijdert assistenttekst uit `direct_user`, importeert geen oude feiten/observations en laat Hindsight alles opnieuw extraheren | 96 documenten in geïsoleerde meertalige bank opnieuw opgebouwd; nul assistentteksten als directe gebruiker |
 | Gesprekstijdlijn | `src/eva/adapters/postgres/conversation_journal.py` | Ingress/reply vóór geheugenprojectie, recente context en optionele projectscope append-only vastleggen en bij replay valideren | Werkend in echte B-PostgreSQL; persoons- en projectscope na harde herstart bewezen |
 | Persoonlijke intent | `src/eva/adapters/postgres/conversation_actions.py` | Modelgekozen interesse duurzaam adopteren, linken en na crash hervatten | Werkend in echte B-PostgreSQL en Telegram-beurt |

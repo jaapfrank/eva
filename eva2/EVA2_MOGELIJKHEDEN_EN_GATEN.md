@@ -21,6 +21,10 @@ Bijgewerkt: 25 augustus 2026.
 - Recente gesprekken uit PostgreSQL meenemen zonder na een herstart opnieuw te
   beginnen.
 - Persoonlijke feiten, voorkeuren en correcties via Hindsight onthouden.
+- Hindsight via een kleine providerneutrale geheugenpoort gebruiken: recall,
+  retain, onderhoud en health zijn niet langer als Hindsight-type in de kern
+  vastgezet. Hindsight blijft wel de gekozen langetermijnprovider; dit is geen
+  providerselectie of datamigratie (`79bc376`).
 - Geheugen per persoon en per project gescheiden houden.
 - Een Telegramvoorkeur later via een webgesprek van dezelfde persoon herinneren.
 - Persoonscontext begrensd ophalen: de kandidaatconfiguratie kent 2.000–4.000
@@ -94,6 +98,12 @@ Bijgewerkt: 25 augustus 2026.
 - Er is geen runtime-`MEMORY.md`: PostgreSQL en Hindsight bewaren gescopeerd
   geheugen met herkomst, consent en crashherstel. Een toekomstige `MEMORY.md`
   is alleen een persoonsgebonden import/export, nooit de geheugenautoriteit.
+- Hindsight blijft Eva's langetermijngeheugen. Een snelle lokale Mnemosyne-L1
+  en een Honcho-persoonsmodel zijn alleen optionele aanvullingen en vervangen
+  Hindsight niet. MA02-MA06 meten iedere laag afzonderlijk op echte winst,
+  privacy, correctie, uitval, tokens, latency, beheer, upgrade en rollback;
+  Mem0 heeft nu geen V1-runtimefunctie. Zie
+  `design/product/tiered-memory-and-person-model-v1.md`.
 - Het huidige Home Assistant-token van B moet worden ingetrokken en vervangen;
   het staat nog inspecteerbaar in containerconfig in plaats van als file-secret.
 - De recente Living Core-bron, architectuur en receipts hebben nog geen reeks

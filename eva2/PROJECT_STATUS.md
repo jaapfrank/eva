@@ -32,6 +32,9 @@ staat in
 [`design/product/comparable-agent-benchmarks-v1.md`](design/product/comparable-agent-benchmarks-v1.md);
 Eva's vergaande maar begrensde Eigenaarmodus staat in
 [`design/product/owner-autonomy-mode-v1.md`](design/product/owner-autonomy-mode-v1.md);
+het gelaagde geheugen met vaste Hindsight-L2 en optionele Mnemosyne-/Honcho-
+aanvullingen staat in
+[`design/product/tiered-memory-and-person-model-v1.md`](design/product/tiered-memory-and-person-model-v1.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
@@ -39,6 +42,14 @@ de controleerbare live receipts staan in
 
 ## Nu
 
+- Geheugenlagen MA00/MA01: PostgreSQL levert huidige beurt plus maximaal twaalf
+  recente berichten; Hindsight blijft L2-langetermijngeheugen. Mnemosyne
+  3.15.1 is alleen een optionele lokale L1-kandidaat en Honcho 3.0.12 alleen een
+  optioneel achtergrond-persoonsmodel; geen van beide vervangt Hindsight en
+  Mem0 heeft geen V1-rol. Acht fail-closed checkertests zijn groen; de echte
+  gate blokkeert terecht op beide niet-gematerialiseerde sidecars en een open
+  beslissing. Dit is `tested`, nog niet onafhankelijk `reviewed`; A/B en
+  bestaande geheugendata zijn niet gewijzigd.
 - Vergelijkbare benchmarks CB00: AgentBench, GAIA en de actuele OSWorld 2.0-
   release `v2026.08.08` zijn als drie verschillende openbare scorelagen
   vastgelegd. Iedere toekomstige score moet de upstream release, split,

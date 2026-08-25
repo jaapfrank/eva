@@ -39,7 +39,7 @@ hebben.
 | Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
 |---|---|---|---|
 | **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; mensen merkbaar leren kennen; chatmandaat; autonome plan-act-observeer-herplan-ketens; begrensde subagents en duurzaam werkbord; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser-, multi-worker- en huisproeven met bericht-, beurt-, latency-, token-, intent-, attempt-, tool-, handoff- en readbackreceipt. Jij ziet gedrag, werkbord en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, WB01-WB07, P01-P05, V01-V07, PC01-PC06, LG01-LG07 en eindimage. |
-| **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis gereed; eerste ledgergebonden sidecar/browsercomputer nog open. |
+| **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Hindsight blijft V1-langetermijngeheugen; Mnemosyne-L1 en Honcho-persoonsmodel zijn alleen mogelijke augmentaties. Eva houdt identiteit, PostgreSQL-authority, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis en providerneutrale Hindsight-poort gereed; ledgergebonden sidecars/browsercomputer en MA02-MA06 nog open. |
 | **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een onbegrensde of multi-host coworkervloot, algemene video/media, Canvas en brede providerroutering. Begrensde parentgestuurde subagents en één duurzaam werkbord vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, voice, minimale presence, één autonome computerroute en controleerbare delegatie betrouwbaar zijn. | WhatsApp en algemene multimedia blokkeren V1 niet; AU01-AU08, P01-P05, V01-V07 en WB01-WB07 wel. |
 
 De bestaande vier-frameworkgate blijft alleen een bescherming tegen een
@@ -107,6 +107,22 @@ die live gate. Zolang beide bewijsgrenzen open zijn, doen we geen claim als
 - Het volledige contract en de concrete context-, token- en kostengrenzen staan
   in `design/product/learning-and-person-model-v1.md`.
 
+## Gelaagd geheugen: Hindsight blijft, Mnemosyne/Honcho zijn optioneel
+
+- PostgreSQL levert de huidige beurt plus maximaal twaalf recente berichten en
+  bewaart identiteit, consent, events, outbox, effecten, receipts en
+  crashherstel. Hindsight 0.9.1 blijft Eva's L2-langetermijngeheugen.
+- Mnemosyne 3.15.1 mag alleen als lokale, herbouwbare L1-hotprojectie worden
+  onderzocht. Een bestaand Hermes-composiet bewijst het patroon gedeeltelijk,
+  maar zijn live SIGKILL-herstel bleef open en Eva heeft al directe L0-context.
+- Honcho 3.0.12 mag alleen als asynchroon persoons-/relatiemodel worden
+  onderzocht. De lage-latency representation kan Eva helpen iemand dieper te
+  kennen; Honcho vervangt Hindsight niet en mag niet elke beurt een extra
+  reasoningcall afdwingen.
+- Mem0 heeft nu geen unieke V1-runtimefunctie. MA02-MA06 meten iedere optionele
+  laag apart; pas na twee afzonderlijke winsten mag de combinatie worden getest.
+  Volledig contract: `design/product/tiered-memory-and-person-model-v1.md`.
+
 ## V1-afvinkbord — kleine opleverstukken
 
 Elk open vak is één klein stuk werk met eigen Git-checkpoint, gerichte test en
@@ -121,6 +137,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Leren `LG00`: Hermes' officiële groeiclaim, Eva's bestaande
   geheugen/I02-bewijs en de ontbrekende procedurele cyclus eerlijk begrensd;
   persoons-, geheugen-, token- en kostengates zijn vastgelegd.
+- [ ] Geheugenaugmentatie `MA00/MA01`: Hindsight blijft L2; Mnemosyne is alleen
+  L1-kandidaat, Honcho alleen persoonsmodelkandidaat en Mem0 heeft geen V1-rol.
+  Vaste pins, authoritygrenzen, hard cases, metrics en updatecontract zijn
+  getest; de verplichte onafhankelijke review staat nog open.
+- [ ] `MA02-MA06` — gesloten Mnemosyne-/Honcho-sidecars, afzonderlijke
+  correctness/privacy/latency/token/kostenproeven, combinatietest alleen na
+  twee losse winsten, en echte upgrade/rollback plus onafhankelijke beslissing.
 - [x] Vergelijkbare benchmarks `CB00`: AgentBench, GAIA en OSWorld zijn op
   primaire bronnen en actuele releases afgebakend; officiële versus
   gecontroleerde scores, publicatievelden en nonclaims zijn vastgelegd. Er is
@@ -604,7 +627,7 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 |---|---|---|---|---|---|
 | Natuurlijk gesprek en eigen karakter | C01, T02 en C04 live; gebruiker accepteert de ervaring nog niet | Dezelfde drie live | Dezelfde drie live | Dezelfde drie live | Eva's eigen meerbeurts Telegram-eindproef uitvoeren; geen algemene vergelijking claimen |
 | Persoons- en projectisolatie | C02 live via geïsoleerde contractprovider; M01 gebruikte een lokale Telegram Bot API-contractprovider, geen Telegramnetwerk; echte Telegrambinding nog open | Aanwezig via gateway-routing en geïsoleerde sessies; niet door ons getest | Aanwezig via profielen/gateway; niet door ons getest | Aanwezig via projecten/profielen; niet door ons getest | Dezelfde private canaries en een echte cross-channelproef op alle vier |
-| Langetermijngeheugen en stijl | PostgreSQL + Hindsight live; hot/cold-path gescheiden | Geheugenadapters aanwezig; niet vergeleken | Geheugen en sessiezoeking aanwezig; niet vergeleken | Doorzoekbaar en bewerkbaar geheugen aanwezig; niet vergeleken | Zelfde correctie-, verouderings-, privacy- en herstartproeven |
+| Langetermijngeheugen en stijl | PostgreSQL-L0 + Hindsight-L2 live; Mnemosyne-L1 en Honcho-persoonsmodel zijn MA02-MA06 en nog niet gebouwd | Geheugenadapters aanwezig; niet vergeleken | Geheugen en sessiezoeking aanwezig; niet vergeleken | Doorzoekbaar en bewerkbaar geheugen aanwezig; niet vergeleken | Hindsight blijft. Meet Mnemosyne alleen als snelle herbouwbare L1 en Honcho alleen als afgeleid persoonsmodel; iedere laag moet afzonderlijk correctness/privacy/latency/token/kosten/upgradewinst bewijzen |
 | Persoonsmodel en leren met gebruik | Persoonsgebonden feiten/correcties, reflectie en I02 bewezen; LG01-LG07 voor een corrigeerbaar profiel, procedurele skillcyclus en geheugen-/tokenbudget | Gedocumenteerde memory/skills; niet gelijk uitgevoerd | Gesloten leercyclus met memory, user model en autonome skillcreatie/-verbetering gedocumenteerd; niet door ons gelijk uitgevoerd | Bewerkbaar geheugen en skills aanwezig; geen gelijkwaardige groeicyclus door ons bewezen | Hermes loopt nu voor in procedureel zelfleren. Eva moet op herhaaltaken aantoonbaar verbeteren zonder persoonslek, drift, latency-, token-, kosten- of codegroei |
 | Duurzame doelen en crashherstel | A01-A03, X01-X04 en F03-F04 deels/live bewezen; eindimage moet regressie nog krijgen | Gateway- en deliveryherstel aanwezig; niet gelijkwaardig getest | Cron, taken en deliveryledger aanwezig; niet gelijkwaardig getest | Taken/scheduling en workspacegeschiedenis aanwezig; niet gelijkwaardig getest | Fault injection op alle vier: crash vóór/na effect, geen duplicaat en eerlijke eindstatus |
 | Home Assistant en fysieke verificatie | Beste bewijs in onze huidige configuratie: actuele staat, historie, acties en automatiseringen met readback | Integratie/skills aanwezig; vorige vergelijking had geen HA-configuratie | Eigen Home Assistant-toolset aanwezig; vorige vergelijking had geen HA-configuratie | Via MCP/API/plugin mogelijk; vorige vergelijking had geen HA-configuratie | Alle vier dezelfde afgeschermde HA-doelen geven; succes telt alleen na echte readback |
@@ -674,42 +697,45 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
    meet geheugen/tokens/kosten, maakt waar nodig zelf on the fly een procedure
    en promoveert alleen geëvalueerde procedurele kennis met rollback. Een
    skillstore is geen voorwaarde.
-4. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
+4. Sluit MA02-MA05: meet een lokale Mnemosyne-L1 en een Honcho-persoonsmodel
+   afzonderlijk boven vaste Hindsight-L2; alleen bewezen winst zonder privacy-,
+   latency-, token-, uitval- of beheerregressie mag worden toegelaten.
+5. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
    self-improvement af.
-5. Sluit P01-P04 voor behoud van de bestaande minimale spontane
+6. Sluit P01-P04 voor behoud van de bestaande minimale spontane
    deurbel-/speakerpresence.
-6. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
+7. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
    streaming teksthot-path en afzonderlijk gebudgetteerde sidecars.
-7. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
+8. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
    privacy/crashherstel en dezelfde Eva-context; algemene video/media blijft
    een latere producttrack.
-8. Kies en pin eerst één computerprovider; bewijs een restrictive,
+9. Kies en pin eerst één computerprovider; bewijs een restrictive,
    credentialvrije read-only sidecar zonder tweede agent/orchestrator.
-9. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
+10. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
    runner, geïsoleerde browsercomputer, Eva-ledger/readback, live stop/overname,
    echte testwebtaak en crashherstel zonder blinde herhaling.
-10. Sluit WB01-WB06: korte parentgestuurde subagents, duurzaam werkbord,
+11. Sluit WB01-WB06: korte parentgestuurde subagents, duurzaam werkbord,
    crash/reclaim en dezelfde gecontroleerde bediening via Eva-chat en dashboard.
-11. Sluit OM01-OM05 boven AU/MC/WB/LG: één gewaarschuwd eigenaarsmandaat geeft
+12. Sluit OM01-OM05 boven AU/MC/WB/LG: één gewaarschuwd eigenaarsmandaat geeft
    zelfstandige uitvoering binnen scope, zonder bevestiging per tussenstap,
    met stop, expiry, audit en crashreadback.
-12. Sluit CB01-CB03 vóór de eindfreeze; benchmarkadapters en runners mogen geen
+13. Sluit CB01-CB03 vóór de eindfreeze; benchmarkadapters en runners mogen geen
    taakantwoorden of evaluatieregels in Eva's productcontext brengen.
-13. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
+14. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
    PC05, LG07, WB07 en nieuwe AU01-AU07-receipts live uit via echt Telegram/voice,
    het echte huis, de afgeschermde browser en afgeschermde providers. Start
    daarna AU08 zeven dagen op diezelfde image.
-14. Voer CB04-CB07 op deze exacte image uit en publiceer officiële ruwe scores,
+15. Voer CB04-CB07 op deze exacte image uit en publiceer officiële ruwe scores,
    manifests en trajecten; scoreboardvergelijking vervangt de productgates niet.
-15. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+16. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
    aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
    mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
-16. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
+17. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
    coworkervloot zijn aparte latere besluiten.
-17. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
+18. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
    snelheid en kosten mogen niet degraderen door queue-, context-, profiel- of
    geheugenlek/groei.
-18. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+19. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
@@ -737,6 +763,10 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 - Agent Zero browser: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/browser.md>
 - OpenBot gepinde bron: <https://github.com/CopilotKit/OpenBot/tree/d293f2331bd5ff9ba4ad17af6ac94570a157d26d>
 - OpenBot architectuur: <https://github.com/CopilotKit/OpenBot/blob/d293f2331bd5ff9ba4ad17af6ac94570a157d26d/docs/architecture.md>
+- Mnemosyne 3.15.1: <https://github.com/AxDSan/mnemosyne/tree/v3.15.1>
+- Hermes tiered-memory 1.0.2: <https://github.com/jtstothard/hermes-tiered-memory/tree/v1.0.2>
+- Honcho 3.0.12: <https://github.com/plastic-labs/honcho/tree/v3.0.12>
+- Hindsight 0.9.1: <https://hindsight.vectorize.io/blog/2026/08/14/version-0-9-1>
 
 ## Lokale bewijsgrens
 
@@ -750,4 +780,8 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 - Fail-closed validator en regressietest:
   `../scripts/lab/check-competitor-capability-matrix.mjs` en
   `../test/competitor-capability-matrix.test.js`
+- Geheugenaugmentatie, validator en regressietest:
+  `../benchmark/memory-augmentation-gate-v1.json`,
+  `../scripts/lab/check-memory-augmentation-gate.mjs` en
+  `../test/memory-augmentation-gate.test.js`
 - Technisch brugontwerp: `design/architecture/ecosystem-bridge-v1.md`

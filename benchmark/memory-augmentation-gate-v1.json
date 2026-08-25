@@ -1,0 +1,99 @@
+{
+  "contract": "EvaMemoryAugmentationGate/v1",
+  "updated_at": "2026-08-25",
+  "status": "open",
+  "architecture": {
+    "operational_authority": "eva_postgresql",
+    "long_term_memory": "hindsight_oss_0.9.1",
+    "recent_context": "eva_postgresql_last_12_messages",
+    "optional_hot_projection": "mnemosyne_oss_3.15.1",
+    "optional_person_model": "honcho_oss_3.0.12",
+    "mnemosyne_replaces_hindsight": false,
+    "honcho_replaces_hindsight": false,
+    "optional_layers_may_become_canonical_authority": false,
+    "honcho_may_own_identity_consent_effects_or_receipts": false,
+    "honcho_output_is_derived_and_rebuildable": true,
+    "honcho_may_enter_every_reply_hot_path_without_latency_proof": false,
+    "mem0_is_in_v1_runtime_plan": false
+  },
+  "pins": {
+    "hindsight": {
+      "version": "0.9.1",
+      "source_commit": "e5b49eb6729512bd9b103058daa93f701da25644",
+      "artifact_digest": "sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b"
+    },
+    "honcho": {
+      "edition": "self_hosted_oss",
+      "license": "AGPL-3.0",
+      "version": "3.0.12",
+      "source_commit": "93dcf59c4a4225bb020b20c628799737fefae318",
+      "artifact_digest": null
+    },
+    "mnemosyne": {
+      "edition": "self_hosted_oss",
+      "license": "MIT",
+      "version": "3.15.1",
+      "source_commit": "78506708aae344635e01a24f67a7319efc36fce9",
+      "artifact_digest": null
+    }
+  },
+  "augmentations": {
+    "mnemosyne_hot_projection": {
+      "status": "not_materialized",
+      "decision": null,
+      "evidence_ref": null,
+      "allowed_input": "scoped_canonical_eva_events_and_verified_hindsight_recall",
+      "fallback": "direct_postgresql_recent_context_and_hindsight_recall"
+    },
+    "honcho_person_model": {
+      "status": "not_materialized",
+      "decision": null,
+      "evidence_ref": null,
+      "allowed_input": "consented_scoped_messages_and_provenance_bound_hindsight_evidence",
+      "fallback": "hindsight_recall_without_honcho_representation"
+    }
+  },
+  "combination": {
+    "status": "pending_single_layer_decisions",
+    "decision": null,
+    "evidence_ref": null,
+    "rule": "only required when both augmentations are individually accepted"
+  },
+  "required_hard_cases": [
+    "base_core_and_hindsight_survive_optional_layer_outage",
+    "hot_projection_never_overrides_newer_correction",
+    "person_correction_supersedes_derived_trait",
+    "cross_person_and_cross_tenant_canary_isolation",
+    "private_group_project_audience_isolation",
+    "group_consent_revoke_removes_person_model_context",
+    "assistant_inference_never_becomes_direct_user_fact",
+    "same_person_cross_channel_continuity",
+    "no_duplicate_retain_or_unbounded_feedback_loop",
+    "erase_export_rebuild_upgrade_and_rollback"
+  ],
+  "required_metrics": [
+    "augmentation_correctness_delta_percent",
+    "person_model_correction_latency_seconds",
+    "representation_read_latency_p50_ms",
+    "representation_read_latency_p95_ms",
+    "first_answer_added_latency_p95_ms",
+    "input_output_tokens_total",
+    "estimated_model_cost_eur",
+    "resident_memory_peak_mib",
+    "persistent_storage_mib",
+    "background_queue_oldest_age_seconds",
+    "duplicate_or_conflicting_memory_count",
+    "backup_restore_seconds",
+    "upgrade_downtime_seconds",
+    "operator_steps"
+  ],
+  "dependency_and_upgrade_contract": {
+    "requires_closed_lock_and_digest_images": true,
+    "requires_sbom_license_and_vulnerability_receipt": true,
+    "requires_agpl_distribution_review_for_honcho": true,
+    "requires_export_before_mutation": true,
+    "requires_previous_artifact_and_data_rollback": true,
+    "requires_post_upgrade_correction_consent_and_erasure_readback": true
+  },
+  "evidence_catalog": []
+}

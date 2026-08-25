@@ -32,6 +32,7 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 | Is iets snel, klein of geoptimaliseerd? | `design/product/performance-and-complexity-v1.md` plus commitgebonden meting | Alleen een genoemde metric en baseline rechtvaardigt zo'n claim |
 | Is een agentscore extern vergelijkbaar? | `design/product/comparable-agent-benchmarks-v1.md` | Alleen officiële benchmarkmetrics op exact dezelfde release/split/scorer; native en gecontroleerd blijven aparte scoreborden |
 | Wat betekent vergaande autonomie? | `design/product/owner-autonomy-mode-v1.md` | Eigenaarmodus is een ruim maar begrensd mandaat, niet Hermes' jailbreakskill of een tweede orchestrator |
+| Hoe werken korte context, Hindsight, Mnemosyne en Honcho samen? | `design/product/tiered-memory-and-person-model-v1.md` plus `../benchmark/memory-augmentation-gate-v1.json` | Hindsight blijft L2; optionele L1-/persoonsmodellen tellen alleen bij hashgebonden winst zonder authority-, privacy- of latencyregressie |
 
 ## Statuswoorden
 
@@ -92,6 +93,11 @@ verdwenen autoriteit blijft wijzen.
   GAIA en OSWorld-resultaten tellen alleen met upstream scorer, vastgezette
   release/split/configuratie en heropenbare trajecten; LAB-36 blijft een eigen
   productsuite en wordt niet tot een openbare leaderboardscore omgedoopt.
+- De semantische geheugenprovider is nu een expliciete, kleine runtimepoort en
+  Hindsight blijft de L2. De machineleesbare augmentatiegate voorkomt dat een
+  Mnemosyne-L1 of Honcho-persoonsmodel Hindsight/SQL vervangt of zonder
+  privacy-, correctie-, latency-, token-, beheer-, upgrade- en rollbackbewijs
+  in Eva's antwoordroute komt.
 - Er bestaat nog geen volledig, commitgebonden semantisch componentregister dat
   ieder productie-, deployment-, migration- en testpad dekt. Ook is
   optimalisatiestatus nog niet voor iedere component gemeten.
