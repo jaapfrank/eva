@@ -24,7 +24,11 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 - De generieke subagentmotor hoeft niet meer zelf gebouwd te worden: een exact
   gepinde Pydantic AI `2.34.0` + Harness `0.24.0`-kandidaat voert echte
   toolvrije child-runs uit. De 22 tests en onafhankelijke review zijn groen.
-  Deze proef is nog niet aan Eva's PostgreSQL-taken of productieprovider
+  Een tweede providerloze proef gebruikt voor reeds toegelaten duurzame taken
+  rechtstreeks de publieke Pydantic AI-runner. Getypeerde output, usage,
+  cancellation en gesaneerde foutcategorieën zijn daarmee na een eerste
+  `NO-GO` in 23 extra tests lokaal groen. Die correctie wacht nog op
+  onafhankelijke herreview; PostgreSQL en een productieprovider zijn niet
   gekoppeld.
 - `plans`, `plan_steps`, `attention_items` en de operationele tijdlijn vormen
   al een duurzame taakgraaf met leases en crashherstel. Zij bewijzen nog geen
@@ -35,17 +39,27 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 ## Dependency-first uitvoerkeuze
 
 Eva bouwt geen eigen subagentproces, modelrunner, budgetmeter of algemene
-workerqueue. De eerste echte proef gebruikt Pydantic AI `2.34.0` met Harness
-`0.24.0` in een aparte hashgebonden 42-package-omgeving. Harness levert de
-child-run, aparte context, request-/tokenlimieten, callbudget en coöperatieve
-async-time-out. De proef staat in `experiments/harness-subagents-v1/`; de
+workerqueue. Pydantic AI `2.34.0` met Harness `0.24.0` draait in een aparte
+hashgebonden 42-package-omgeving. Harness levert korte parentgestuurde
+fork/join; Pydantic AI `Agent.run()` levert de reeds duurzaam gekozen worker
+met getypeerde output, usage, cancellation, request-/tokenlimieten en
+coöperatieve async-time-out. Eva voegt alleen de absolute deadline,
+verzegelde model-/worker-/prijsrelease, private telemetrygrens en duurzame
+contracthash toe. De proef staat in
+`experiments/harness-subagents-v1/`; de
 onafhankelijke `GO` voor exact `55cf7cc` staat in
 `reviews/harness-subagent-engine-55cf7cc.md`.
 
-Dat is nog geen processandbox of harde kill. Harness telt childgebruik ook niet
-automatisch op in Eva's duurzame parentreceipt. De eerste productkoppeling
-blijft daarom toolvrij en effectvrij. Eva bewaart de handoff en usage zelf; een
-procescrash wordt door haar lease-/herstelroute afgehandeld.
+Harness' publieke `delegate_task` retourneert alleen tekst en is daarom niet de
+duurzame workerinterface. Eva bewaart uitsluitend haar Pydantic-contract,
+resultaat en genormaliseerde usage; Pydantic AI voert de modelrun uit. Dit is
+nog geen processandbox of harde kill. De eerste productkoppeling blijft daarom
+privé, contextvrij, toolvrij, workspacevrij en effectvrij. Een procescrash na
+`call_started` wordt ambigu en mag geen blinde tweede modelcall veroorzaken.
+`Child_network_access=false` sluit tools en vrije child-egress; de vastgepinde
+modeladapter mag uiteraard alleen naar zijn vooraf toegelaten provider. Ook
+telt Pydantic AI voltooide antwoorden en niet betrouwbaar ieder transport-
+attempt, zodat Eva's ledger de callstart vóór I/O zelf moet vastleggen.
 
 DBOS blijft alleen kandidaat voor start, wake-up en scheduling. Stock `2.31.0`
 mist Eva's begrensde retry/no-DDL/commit-ambiguïteitsgaranties; de volgende proef
@@ -116,7 +130,9 @@ vereisen een herstelbare bevestiging en verwijdering wordt standaard archiveren.
 
 - [ ] WB01 — Eén connectorneutraal `DelegatedWork/v1`-contract en duurzame
   PostgreSQL-projectie boven de bestaande plan-, attention- en eventtabellen;
-  geen tweede taakdatabase.
+  geen tweede taakdatabase. Het gesloten Pydantic-contract is als technische
+  kandidaat getest; registry, attentiontype, migratie en PostgreSQL-projectie
+  staan nog open.
 - [ ] WB02 — Parentgestuurde subagentspawn met afgeleid capability-, context-,
   token-, kosten-, tijd- en workspacegrant; harde paralleliteits- en dieptelimiet.
 - [ ] WB03 — Workerprotocol voor show/heartbeat/comment/artifact/complete/block/

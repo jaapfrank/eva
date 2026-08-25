@@ -108,6 +108,19 @@ Eva's unieke hoofdfeature.
   child-usage-receipt, harde processkill, crashherstel en Kanban blijven open;
   zie `experiments/harness-subagents-v1/` en
   `reviews/harness-subagent-engine-55cf7cc.md`.
+- Duurzame-childkandidaat: Harness blijft de korte parentgestuurde fork/join-
+  motor, maar wordt niet geforceerd als databaseworker omdat zijn publieke
+  route alleen tekst teruggeeft. Een dunne adapter rond de publieke Pydantic AI
+  `Agent.run()` levert nu gesloten `DelegatedWork/v1`-output, usage,
+  cancellation en gesaneerde foutcategorieën. De eerste onafhankelijke review
+  gaf terecht `NO-GO` op schijnkosten, deadlineoverschrijding, onbekende usage
+  als nul en verkeerde pakketplaatsing. De lokale correctie bindt nu een
+  verzegeld model-/worker-/prijsprofiel, absolute deadline, provider-outputlimiet,
+  contracthash en uitgezette telemetry. 23 nieuwe tests plus de bestaande
+  22 Harnesschecks zijn **45/45 groen**. Dit wacht op herreview en is nog geen
+  WB01/WB02: attentiontype, version-matched migratie/releaseauthority,
+  eenmalige PostgreSQL-callfence, echte provider en crashbewijs staan open; B
+  is niet gewijzigd.
 
 - Browser-/workflowbesluit DF03/DF04: Microsoft Playwright MCP `0.0.79` krijgt
   de eerste productgerichte browsersidecarproef; Harness PlaywrightBrowser
@@ -197,8 +210,11 @@ Eva's unieke hoofdfeature.
   staan nog open; er is geen productie-safety-bypass toegevoegd.
 - Subagents/werkbord WB00: Hermes' korte delegatie en duurzame multi-profile
   Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Harness
-  neemt inmiddels de generieke child-run over, maar de Eva-runtime heeft nog
-  geen duurzame handoff en het dashboard nog geen Kanban. WB01-WB07 koppelen
+  neemt inmiddels interactieve fork/join over en Pydantic AI de reeds gekozen
+  child-run, maar de Eva-runtime heeft nog geen duurzame PostgreSQL-handoff en
+  het dashboard nog geen Kanban.
+  Het gesloten taakcontract en de dependency-runner zijn inmiddels als
+  providerloze kandidaat getest. WB01-WB07 koppelen
   de gereviewde engine aan Eva's grants, usage, leases en crash/reclaim;
   React-Admin OSS plus `dnd-kit` projecteert daarna hetzelfde PostgreSQL-bord.
   Er komt geen eigen subagentmotor, tweede taakdatabase of tweede Eva-brein.
