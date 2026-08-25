@@ -217,10 +217,23 @@ class ModelDecision(Version1Contract):
             action.kind != "request_read" for action in self.actions
         ):
             raise ValueError("request_read may contain only read actions")
-        elif self.decision == "propose_effect" and any(
-            action.kind != "propose_effect" for action in self.actions
+        elif self.decision == "propose_effect" and not any(
+            action.kind == "propose_effect" for action in self.actions
         ):
-            raise ValueError("propose_effect may contain only proposed effects")
+            raise ValueError("propose_effect requires at least one proposed effect")
+        identifiers = [action.action_id for action in self.actions]
+        if len(identifiers) != len(set(identifiers)):
+            raise ValueError("model action IDs must be unique")
+        known: set[str] = set()
+        for action in self.actions:
+            if len(action.depends_on) != len(set(action.depends_on)):
+                raise ValueError("model action dependencies must be unique")
+            if not set(action.depends_on).issubset(known):
+                raise ValueError(
+                    "model actions must be topologically ordered and reference "
+                    "earlier actions"
+                )
+            known.add(action.action_id)
         return self
 
 

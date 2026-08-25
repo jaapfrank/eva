@@ -1,6 +1,6 @@
 # Eva 2 tegenover OpenClaw, Hermes en Agent Zero
 
-Bijgewerkt: 24 augustus 2026.
+Bijgewerkt: 25 augustus 2026.
 
 ## Eerlijke conclusie
 
@@ -346,10 +346,26 @@ langdurige verzamelaanpassing telt niet als voortgang.
   dezelfde actuele PostgreSQL-grant en stoppen bij intrekking zonder private
   fallback. De echte multi-account- en Telegram-groepproef blijft hieronder
   bewust afzonderlijk open.
+- [x] Meerstapsplanning MC01: het bestaande `ModelDecision/v1` kan nu
+  voorbereidende reads en effecten in één topologische keten voorstellen; de
+  host maakt daar alleen na exacte episode/generation-, policy-, budget-,
+  resource-, schema-, proof- en volledige cataloguscontrole een bestaand
+  `ValidatedPlan/v1` van. Maximaal zes stappen, stabiele IDs en fail-closed
+  weigering van secrets, URI's en commands zijn met 51 gerichte tests en een
+  onafhankelijke review groen. Dit voert nog niets uit en schrijft nog niets
+  naar PostgreSQL.
+- [ ] Meerstapsplanning MC02: het gevalideerde plan en iedere stap duurzaam in
+  de bestaande PostgreSQL-`plans`/`plan_steps`-tijdlijn vastleggen, met cursor,
+  retry_count en hervatting zonder een stap dubbel te claimen.
+- [ ] Meerstapsplanning MC03: één algemene runner uitsluitend
+  `ValidatedPlan/v1` laten uitvoeren en per effect de bestaande
+  `TOOL_PREPARED`→providercall→readback-orchestrator hergebruiken; Home Assistant
+  wordt de eerste provider, geen aparte scripts per opdracht.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
-- [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde
-  Telegram-B-pad bewijzen.
+- [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,
+  fysieke Home Assistant-readback bewijzen en midden in de keten crashen;
+  hervatting mag geen provideractie dupliceren.
 - [ ] Gateway/browser B01: Eva kan een site in een geïsoleerde browser zien,
   documentatie volgen en een onboarding of formulier voorbereiden. Een account
   maken, voorwaarden accepteren, betalen, KYC afronden of een financiële actie
