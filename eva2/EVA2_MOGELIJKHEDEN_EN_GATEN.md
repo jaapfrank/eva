@@ -60,8 +60,8 @@ Eva 2 vervangt de oude Eva nog niet, vooral omdat dit nog ontbreekt:
 
 - jij hebt het echte Telegramgesprek nog niet als natuurlijk genoeg aanvaard;
 - de echte gezinstest met meerdere personen en een groep is nog niet gedaan;
-- de algemene meerstappenketen heeft nog geen volledige fysieke readback en
-  afronding;
+- de algemene meerstappenketen controleert nog niet iedere echte eindtoestand
+  en rondt daarom nog niet alles veilig af;
 - spontane deurbel-/speakerpresence van de oude Eva is nog niet terug;
 - onderbreekbare, snelle voice is nog niet gebouwd;
 - de definitieve versie is nog niet bevroren en als geheel getest;

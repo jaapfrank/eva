@@ -4,49 +4,79 @@ Bijgewerkt: 25 augustus 2026.
 
 ## Het korte antwoord
 
-**Eva 2 is vandaag nog niet beter als compleet product.** Ze is nog in aanbouw.
-Op sommige onderdelen is zij al sterk bewezen, zoals Home Assistant-acties met
-controle achteraf, gescheiden gezinsgeheugen en doorgaan na een crash. Maar ze
-mist nog belangrijke dingen die de andere agents al tonen, zoals een echte
-browsercomputer, veel kant-en-klare kanalen, subagents en snelle voice.
+**Vandaag: nee.** Eva 2 is nog geen beter compleet product. Ze mist onder meer
+een echte browsercomputer, snelle onderbreekbare voice, eigen subagents en de
+definitieve huisaanwezigheid.
 
-**Als de afgesproken eindversie echt klaar en bewezen is, is Eva bedoeld als de
-betere agent voor jouw situatie:** niet alleen een chatbot of computerrobot,
-maar één herkenbare huisgenoot die mensen kent, zelf initiatief neemt, via chat
-en stem bereikbaar is, veilig zelfstandig werk doet en achteraf kan bewijzen
-wat werkelijk is gebeurd.
+**Wanneer Eva volgens onze eigen definitie klaar is: ja, voor jouw gebruik.**
+Dan combineert zij in één assistent wat nu over verschillende producten is
+verdeeld: jou en je gezin kennen, in huis aanwezig zijn, zelfstandig
+computerwerk doen, zelf nieuwe vaardigheden maken, na storingen veilig
+doorgaan en controleren of iets werkelijk gelukt is.
 
-Dat is nu nog een doel, geen gewonnen vergelijking.
+Dat betekent niet dat Eva op ieder los lijstje de meeste functies heeft.
+OpenClaw kan bijvoorbeeld meer kant-en-klare kanalen houden en OpenBot kan een
+uitgebreider los computerplatform houden. Eva is dan beter als **persoonlijke,
+autonome huisassistent**, omdat al die onderdelen bij dezelfde persoon,
+hetzelfde geheugen en dezelfde afspraken horen.
 
-## Hoe je deze pagina leest
+Belangrijk: “klaar” betekent hier niet alleen dat de code bestaat. Eva is pas
+klaar nadat dezelfde taken tegen de andere agents zijn uitgevoerd, de echte
+huis- en voiceproef is geslaagd en jij haar in dagelijks gebruik hebt
+goedgekeurd. Tot die tijd is het antwoord nog steeds: nee, nog niet bewezen.
 
-- **Nu** betekent: het werkt aantoonbaar in de huidige Eva 2-bron of in een
-  echte proef.
-- **Volledig productdoel** betekent: alles wat we uiteindelijk voor Eva hebben
-  afgesproken. Een deel daarvan komt pas na de eerste veilige overgang.
-- **Bewezen beter** betekent: Eva en de concurrent deden dezelfde taak met
-  dezelfde spelregels en Eva won. Alleen een plan of een mooie demo telt niet.
+## De stand van vandaag
 
-De eerste veilige overgang van de oude Eva naar Eva 2 is dus een kleinere
-tussenstap. Die staat apart in `EVA2_MOGELIJKHEDEN_EN_GATEN.md`.
+Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 
-## Is de eindversie werkelijk beter?
+| Onderdeel | Stand van Eva 2 vandaag | Wie staat vandaag voor? |
+|---|---|---|
+| Natuurlijk gesprek | Tekst werkt, maar jij hebt de ervaring nog niet goedgekeurd | Nog geen winnaar; de gelijke proef was te klein |
+| Mensen leren kennen | Feiten, voorkeuren en correcties per persoon werken | Hermes beschrijft een rijkere complete leercyclus |
+| Home Assistant | Lezen, bedienen en daarna echt controleren is op meerdere taken bewezen | Eva heeft in onze eigen opstelling het sterkste echte bewijs |
+| Voice zoals ChatGPT | Bestaat nog niet | Concurrenten hebben meer spraakbouwstenen; geen gelijke praktijktest |
+| Spontaan in huis praten | Eva 2 doet dit nog niet via haar eindroute | De oude Eva wint |
+| Zelfstandig computerwerk | Nog geen eigen browsercomputer | OpenBot en Agent Zero winnen |
+| Zelf nieuwe skills maken | Eén kleine verbetering is bewezen; de complete cyclus ontbreekt | Hermes wint vandaag |
+| Veel chatkanalen | Telegram is de eerste route; andere kanalen zijn niet vrij toevoegbaar | OpenClaw en Hermes winnen |
+| Subagents, dashboard en Kanban | Nog niet als complete Eva-functie aanwezig | Hermes en andere agents lopen voor |
+| Herstel na een crash | Meerdere herstelgevallen zijn bewezen; de hele keten is nog niet af | Eva heeft sterke bouwstenen, maar er is geen gelijke winnaarstest |
+| Makkelijk installeren | Vereist nog veel handwerk en technische kennis | De concurrenten zijn meestal makkelijker te starten |
+| Snelheid en kosten | Enkele kleine snelheidsproeven zijn gunstig; eindmeting ontbreekt | Onbeslist |
 
-| Wat jij merkt | Eva 2 nu | Volledig productdoel | Wie staat vandaag voor? | Is de volledige Eva dan beter? |
-|---|---|---|---|---|
-| Een natuurlijk gesprek | Tekstgesprek werkt, maar jij hebt de ervaring nog niet goedgekeurd | Dezelfde herkenbare Eva in tekst en stem, met meerbeurts begrip en korte natuurlijke antwoorden | Nog geen duidelijke winnaar; de gelijke test was te klein | **Beoogd: ja voor jou.** Pas bewezen wanneer jij Eva verkiest in blinde gesprekken en dagelijks gebruik |
-| Eva kent jou echt | Persoonsfeiten en correcties worden onthouden en gescheiden gehouden | Eva leert voorkeuren, doelen, gewoontes en relaties per persoon en laat fouten makkelijk corrigeren | Hermes beschrijft vandaag de rijkste groeicyclus | **Beoogd: ja.** Zij moet mensen minstens zo goed kennen zonder privélek of onbeheersbare kosten |
-| Praten zoals ChatGPT Voice | Nog niet aanwezig | Direct praten, antwoord horen, onderbreken en verdergaan via `Bel Eva` of Home Assistant | Andere producten hebben meer voicebouwstenen | **Beoogd: ja voor jouw Eva.** Niet door méér voicefuncties, maar doordat stem exact dezelfde Eva als chat en huis gebruikt |
-| Aanwezig zijn in huis | Oude Eva praat soms spontaan via speaker of deurbel; Eva 2 nog niet | Eva kiest zelf nuttige momenten, praat via een gekozen speaker of deurbel en weet ook wanneer ze moet zwijgen | De oude Eva staat hier voor op Eva 2 | **Ja, als jij dat zo ervaart.** De zeven dagen huisproef en jouw oordeel beslissen dit |
-| Iets in huis regelen | Meerdere Home Assistant-taken zijn echt uitgevoerd en teruggelezen | Algemene opdrachten kunnen uit meerdere stappen bestaan; Eva controleert na iedere belangrijke actie de echte toestand | Eva heeft in onze opstelling het beste echte Home Assistant-bewijs | **Beoogd: ja.** Vooral doordat “gedaan” pas volgt nadat Eva de gevraagde toestand werkelijk terugziet |
-| Zelfstandig computerwerk | Nog geen eigen browsercomputer | Eva kan websites gebruiken, formulieren voorbereiden, bestanden verwerken en binnen een duidelijke afspraak zelfstandig doorgaan | OpenBot en Agent Zero staan hier zichtbaar voor | **Niet per se als losse computeragent.** Wel beter voor jou als dit één geheel vormt met Eva's geheugen, huis en afspraken |
-| Lang werk en herstel na een crash | Verschillende doelen en herstelgevallen zijn bewezen; de complete keten is nog niet af | Eva hervat plannen, vraagt alleen hulp wanneer nodig en veroorzaakt geen dubbele betaling, actie of melding | Geen eerlijke volledige vergelijking uitgevoerd | **Beoogd: ja.** Dezelfde crashtest moet bij Eva geen dubbele echte actie en wel een eerlijk eindantwoord tonen |
-| Zelf nieuwe vaardigheden maken | Eén begrensde zelfgekozen verbetering is bewezen; geen volledige leercyclus | Eva maakt zelf een kleine skill wanneer die ontbreekt, test haar, zet haar veilig aan en draait terug bij verslechtering | Hermes staat vandaag voor in beschreven skillgroei | **Beoogd: ja voor veilig zelfleren.** Pas bewezen als herhaaltaken verbeteren zonder store, code-explosie of ruimere rechten |
-| Extra chatkanalen toevoegen | Telegram is de eerste route; WhatsApp kan Eva nog niet zelf toevoegen | Eva kan vanuit een gesprek een officiële kanaalroute onderzoeken, een kleine aansluiting maken, testen en koppelen | OpenClaw en Hermes hebben veel meer kanalen klaarstaan | **Niet per se in aantal.** Eva wint alleen als een nieuw toegestaan kanaal zonder breinwijziging of persoonsverwisseling werkt |
-| Werken met subagents | Alleen het ontwikkelteam gebruikt nu agents | Eva verdeelt begrensde deeltaken, controleert resultaten en bewaart alles op één werkbord | Hermes, OpenClaw en Agent Zero tonen al multi-agentmogelijkheden | **Nog onbekend.** Eva moet na uitval hervatten, dubbel werk voorkomen en één duidelijke opdrachteigenaar houden |
-| Dashboard en Kanban | Alleen een kleine alleen-lezen status- en identiteitspagina | Chat, geheugen, doelen, subagents, kosten, bewijs, stopknoppen en Kanban zijn begrijpelijk zichtbaar | Hermes en OpenBot hebben vandaag een rijker beheeroppervlak | **Niet automatisch.** Eva's dashboard is beter voor jou als het begrijpelijker is en exact dezelfde waarheid als haar database toont |
-| Installeren op een andere computer | Technisch mogelijk in delen, maar nog geen eenvoudige installatie | Een wizard stelt gewone vragen en koppelt Telegram, Home Assistant en e-mail; backup, update en rollback zijn ingebouwd | Concurrenten zijn meestal makkelijker te starten | **Nog onbekend.** Een gewone gebruiker moet Eva kunnen installeren en herstellen zonder YAML- of containerzoekwerk |
-| Snel en betaalbaar reageren | In twee kleine tests was Eva sneller, maar er is geen eindmeting | Tekst en voice hebben harde reactietijdbudgetten; geheugen, tokens, kosten en codeomvang worden begrensd | Onbeslist | **Nog onbekend.** Eva moet ook na zeven dagen snel blijven zonder steeds meer context, geheugen of achtergrondwerk |
+De conclusie van vandaag is dus simpel: **Eva wint al op het echte
+Home Assistant-bewijs, maar verliest als compleet product nog op te veel
+onderdelen.**
+
+## Het eindbeeld: waarom de afgeronde Eva beter is voor jou
+
+Deze tweede tabel gaat alleen over de afgeronde Eva. Een rij telt pas als
+“klaar” nadat het bewijs in de laatste kolom er werkelijk is.
+
+| Wat de afgeronde Eva doet | Waarom dit beter is voor jouw gebruik | Verplicht bewijs voordat we “beter” zeggen |
+|---|---|---|
+| Dezelfde Eva praat via tekst, voice en het huis | Je krijgt niet drie losse bots met verschillend geheugen en gedrag | Jij verkiest haar in blinde gesprekken en accepteert tien minuten onderbreekbare voice plus zeven dagen huisgebruik |
+| Zij kent ieder gezinslid afzonderlijk | Voorkeuren helpen het gesprek, terwijl privézaken niet bij de verkeerde persoon of groep belanden | Echte meerpersoons- en groepstest zonder privélek, ook na correctie en herstart |
+| Zij handelt in Home Assistant én op een computer | Eén opdracht kan van gesprek naar huisactie, website en document lopen zonder van assistent te wisselen | Dezelfde meerstapstaak slaagt met echte controle van de eindtoestand |
+| Zij zegt alleen “gedaan” als het controleerbaar waar is | Je hoeft een stoere succesmelding niet zelf na te lopen | Echte huis- en computertaken waarin ontvangst, mislukking en werkelijk resultaat aantoonbaar uit elkaar blijven |
+| Zij gaat na een crash veilig verder | Een storing veroorzaakt geen dubbele melding, huisactie, bestelling of betaling | Crashes vóór en na een echte actie, zonder blind herhalen en met een eerlijk eindantwoord |
+| Zij maakt zelf ontbrekende kleine skills | Eva zit niet vast aan een skillstore of aan wat wij vooraf hebben ingebouwd | Nieuwe skill wordt gemaakt, apart getest, veilig aangezet en automatisch teruggedraaid wanneer zij slechter werkt |
+| Zij kan werk verdelen over subagents | Onderzoek, uitvoering en controle kunnen tegelijk gebeuren zonder dat jij losse agents hoeft te managen | Eén taak met meerdere workers, duidelijk Kanbanbord, gecontroleerde overdracht en herstel na uitval |
+| Zij werkt zelfstandig binnen één afspraak | Je geeft doel, grenzen, tijd en eventueel budget één keer; normale tussenstappen vragen niet steeds opnieuw toestemming | Een echte lange taak blijft binnen de afspraak, is direct te stoppen en legt gevolgen en kosten helder vast |
+| Zij blijft snel, klein en betaalbaar | Een slimme assistent voelt alleen natuurlijk als antwoorden niet steeds trager en duurder worden | Gemeten tekst- en voicetijden, token- en geheugenplafonds en zeven dagen zonder oplopende vertraging |
+| Zij is begrijpelijk te installeren en beheren | Eva wordt een product dat je kunt verplaatsen en herstellen, geen eenmalig serverproject | Verse installatie via gewone vragen, koppelingen, backup, update en rollback op een andere computer |
+
+**Daar zit de echte voorsprong:** andere agents kunnen één of meer losse
+onderdelen even goed of beter houden. De afgeronde Eva wint voor jouw gebruik
+doordat zij deze onderdelen als één herkenbare, lerende en controleerbare
+huisassistent combineert.
+
+Het eindoordeel in één oogopslag:
+
+- **Beste complete product vandaag:** niet Eva 2.
+- **Beste beoogde persoonlijke huisassistent voor jou:** de afgeronde Eva.
+- **Beste agent voor iedere denkbare gebruiker en iedere losse functie:** dat
+  claimen we niet.
 
 ## Waarom Eva anders moet worden dan de rest
 
@@ -75,27 +105,24 @@ niet de betere levende assistent die we hier proberen te bouwen.
 
 | Product | Waar het vandaag sterk in is | Wat Eva daarvan nodig heeft | Waar Eva uiteindelijk beter moet zijn |
 |---|---|---|---|
-| **OpenClaw** | Veel kanalen, plugins, gateway en gekoppelde apparaten | De bestaande gateway en nodes mogen losse uitvoerders voor Eva worden | Eén consistent persoon en geheugen, plus streng bewijs na iedere echte actie |
-| **Hermes** | Veel tools en kanalen, persoonsgeheugen, zelf skills maken en verbeteren, subagents en werkbord | Goede standaarden en eventueel losse tools hergebruiken | Dezelfde groei combineren met gezinsprivacy, huisaanwezigheid, fysieke controle en crashveilig handelen |
-| **Agent Zero** | Browser, desktop, terminal, projecten en subagents | Een geïsoleerde computer kan als verwisselbare uitvoerder dienen | De computer blijft een hand van Eva, niet een tweede brein met eigen waarheid of geheugen |
-| **OpenBot** | Een eigen browsercomputer per bot, live meekijken en overnemen, duidelijk beheer van tools en credentials | Het computer- en takeoverpatroon is een goede referentie | Computerautonomie verbinden met Eva's huis, relaties, initiatief, lange doelen en bewezen eindtoestand |
+| **OpenClaw** | Veel kant-en-klare chatkanalen en aansluitingen voor apparaten | Bestaande aansluitingen mogen losse handen van Eva worden | Eén herkenbare persoon en één geheugen, plus controle na iedere echte actie |
+| **Hermes** | Veel hulpmiddelen en kanalen; leert mensen kennen; maakt skills; gebruikt subagents en een werkbord | Bruikbare losse hulpmiddelen mogen worden hergebruikt | Dezelfde groei combineren met gezinsprivacy, huisaanwezigheid en veilig herstel na een storing |
+| **Agent Zero** | Sterk in websites, computerprogramma's, bestanden en subagents | Een afgeschermde computer kan als verwisselbare uitvoerder dienen | De computer blijft een hand van Eva, niet een tweede assistent met een eigen waarheid of geheugen |
+| **OpenBot** | Eigen browsercomputer per bot; je kunt live meekijken en overnemen | De browserwerkplek is een goede referentie of mogelijke losse uitvoerder | Computerwerk verbinden met Eva's huis, relaties, initiatief, lange doelen en gecontroleerde resultaten |
 | **Oude Eva** | Voelt al aanwezig door spontaan spreken via deurbel en speakers | Die beleving moet behouden blijven | Dezelfde aanwezigheid combineren met beter geheugen, privacy, herstel en controleerbare acties |
 
 ## Wat Eva wel en niet hergebruikt
 
-Eva mag bestaande techniek gebruiken wanneer dat sneller en beter is:
+Eva hoeft niet alles zelf te bouwen. Ze mag een bestaande aansluiting voor een
+chatkanaal of apparaat gebruiken, een bestaande afgeschermde browser inzetten
+en een extra geheugenhulpmiddel toevoegen wanneer metingen aantonen dat dit
+echt helpt.
 
-- MCP-tools en `SKILL.md` als standaard aansluitingen;
-- OpenClaw Gateway of nodes voor apparaten en kanalen;
-- een geïsoleerde browsercomputer van OpenBot, Agent Zero of een andere
-  geschikte provider;
-- Hindsight als vast langetermijngeheugen;
-- eventueel Mnemosyne voor een snelle lokale geheugenlaag en Honcho voor een
-  beter persoonsmodel, maar alleen wanneer metingen echte winst tonen.
-
-Wat Eva niet uitbesteedt: haar naam en karakter, wie iemand is, wat privé is,
-welke toestemming geldt, welke taak loopt, of iets echt gelukt is en wat zij aan
-de gebruiker antwoordt.
+Die onderdelen zijn alleen haar handen en hulpmiddelen. Eva besteedt nooit uit
+wie zij is, wie zij voor zich heeft, wat privé is, welke afspraak geldt, welke
+taak loopt, of iets echt gelukt is en wat zij uiteindelijk aan jou antwoordt.
+De precieze namen, versies en veiligheidsregels staan in het technische
+bewijsbord.
 
 ## Wanneer we eerlijk mogen zeggen dat Eva beter is
 
@@ -113,8 +140,9 @@ claim mag pas na deze vier soorten bewijs:
 
 Tot die tijd is de eerlijke formulering:
 
-> Eva 2 heeft een duidelijke route om voor deze persoonlijke huisassistent beter
-> te worden dan de concurrenten, maar het complete voordeel is nog niet bewezen.
+> Vandaag is Eva 2 nog niet de beste complete agent. Als al het verplichte
+> vergelijkings-, huis- en gebruikersbewijs slaagt, is zij klaar en mogen we
+> zeggen dat zij voor jouw persoonlijke huisassistent de betere keuze is.
 
 ## Waar de technische details staan
 
