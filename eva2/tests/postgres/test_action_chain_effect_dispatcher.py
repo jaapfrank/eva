@@ -15,11 +15,19 @@ from eva.adapters.postgres.action_chain_ledger import PostgresActionChainLedger
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.connector_rpc import (
+    ConnectorInvokeSuccess,
+    classify_connector_protocol_failure,
+)
+from eva.contracts.execution import EffectIntent
 from eva.operations.action_chain_effect_authorizer import (
     PostgresActionChainEffectAuthorizer,
 )
 from eva.operations.action_chain_effect_dispatcher import (
     PostgresActionChainEffectDispatcher,
+)
+from eva.operations.action_chain_effect_results import (
+    project_action_chain_effect_result,
 )
 
 from test_action_chain_effect_authorizer import (
@@ -240,3 +248,118 @@ def test_effect_call_marker_rolls_back_before_material_is_returned(
     assert PostgresActionChainLedger(action_chain_engine, scope).load(
         chain.plan_id
     ).steps[1].state == "running"
+
+
+def _effect_result(claimed, outcome: dict[str, object]) -> ConnectorInvokeSuccess:
+    invoke = claimed.invoke
+    manifest = claimed.connector_manifest
+    assert invoke is not None
+    assert manifest is not None
+    return ConnectorInvokeSuccess.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ConnectorInvokeSuccess/v1",
+            "jsonrpc": "2.0",
+            "id": invoke.id,
+            "result": {
+                "schema_version": 1,
+                "contract": "ConnectorResult/v1",
+                "connector_id": invoke.params.connector_id,
+                "request_id": invoke.id,
+                "correlation_id": invoke.params.correlation_id,
+                "operation": invoke.params.operation,
+                "request_sha256": canonical_sha256(invoke.params),
+                "connector_manifest_sha256": canonical_sha256(manifest),
+                "outcome": outcome,
+                "completed_at": "2026-08-20T12:00:10Z",
+            },
+        }
+    )
+
+
+def test_effect_result_projection_separates_ack_reject_and_ambiguity(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    assert claimed.initialize is not None
+    assert claimed.invoke is not None
+    assert claimed.connector_manifest is not None
+    intent = EffectIntent.model_validate(
+        {**prepared.intent.model_dump(mode="json"), "state": "dispatch_authorized"}
+    )
+    common = {
+        "tenant_id": scope.tenant_id,
+        "intent": intent,
+        "attempt": claimed.attempt,
+        "initialize": claimed.initialize,
+        "invoke": claimed.invoke,
+        "manifest": claimed.connector_manifest,
+        "observed_at": NOW + timedelta(seconds=9),
+        "recorded_at": NOW + timedelta(seconds=11),
+        "retention_until": datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+    }
+
+    accepted = project_action_chain_effect_result(
+        **common,
+        result=_effect_result(
+            claimed,
+            {
+                "kind": "effect_response",
+                "provider_resource_id": "ha:entity:light.test_target",
+                "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+                "provider_time": "2026-08-20T12:00:10Z",
+            },
+        ),
+    )
+    assert accepted.attempt.state == "provider_accepted"
+    assert accepted.intent.state == "provider_accepted"
+    assert accepted.receipt is not None
+    assert accepted.receipt.decision == "accepted"
+    assert accepted.receipt.provider_resource_id == "ha:entity:light.test_target"
+
+    rejected = project_action_chain_effect_result(
+        **common,
+        result=_effect_result(
+            claimed,
+            {
+                "kind": "definitive_reject",
+                "provider_code": "target_unavailable",
+                "safe_message": "Target unavailable",
+                "evidence_sha256": canonical_sha256({"rejected": True}),
+            },
+        ),
+    )
+    assert rejected.attempt.state == "definitive_reject"
+    assert rejected.intent.state == "provider_rejected"
+    assert rejected.receipt is not None
+    assert rejected.receipt.decision == "rejected"
+    assert rejected.receipt.provider_resource_id is None
+
+    ambiguous_result = classify_connector_protocol_failure(
+        request_id=claimed.invoke.id,
+        request_sha256=canonical_sha256(claimed.invoke),
+        phase="invoke_external_io_possible",
+        violation="timeout",
+        evidence_sha256=canonical_sha256({"timeout": True}),
+        observed_at="2026-08-20T12:00:09Z",
+    )
+    ambiguous = project_action_chain_effect_result(
+        **common,
+        result=ambiguous_result,
+    )
+    assert ambiguous.attempt.state == "ambiguous_transport"
+    assert ambiguous.attempt.response_sha256 is None
+    assert ambiguous.intent.state == "ambiguous"
+    assert ambiguous.receipt is None
