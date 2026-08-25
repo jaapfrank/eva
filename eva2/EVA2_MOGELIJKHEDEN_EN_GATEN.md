@@ -8,6 +8,9 @@ Bijgewerkt: 25 augustus 2026.
 - Een door het model voorgestelde keten van maximaal zes lees- en actiestappen
   streng controleren en volledig in PostgreSQL bewaren zonder al iets uit te
   voeren; na een herstart wordt exact hetzelfde plan teruggelezen.
+- Na een bewezen read de vrijgegeven effectstap opnieuw tegen actuele authority
+  controleren en atomair als één duurzaam, idempotent effectintent voorbereiden,
+  nog zonder de provider aan te roepen.
 - Voor één voorbereide ketenread precies één duurzame callclaim maken, de
   algemene verzegelde providergrens aanroepen, resultaat en evidence bewaren en
   alleen na een echte succesobservatie de uitvoerbare vervolgstap vrijgeven.
@@ -105,11 +108,11 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/conversational-voice-v1.md`. De eerlijke
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu één gevalideerde read voorbereiden,
-  eenmalig uitvoeren, resultaat/evidence/observatie bewaren en na succes de
-  juiste afhankelijkheid vrijgeven. De onafhankelijke herreviews van het
-  resultaatpad en de nieuwe vrijgave blijven open. Daarna ontbreken nog de
-  algemene effectvoorbereiding en -uitvoering met fysieke readback en de echte
-  Telegram-B-/Home Assistant-proef.
+  eenmalig uitvoeren, resultaat/evidence/observatie bewaren, na succes de juiste
+  afhankelijkheid vrijgeven en die effectstap duurzaam voorbereiden. Reviews
+  van readresultaat, readvrijgave en effectvoorbereiding blijven open. Nog
+  ontbreken algemene effectdispatch, fysieke readback, effect-/dependency-
+  afronding en de echte Telegram-B-/Home Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie

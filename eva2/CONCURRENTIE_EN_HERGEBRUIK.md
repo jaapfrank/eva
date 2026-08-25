@@ -518,7 +518,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
   `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
-  komen geen aparte scripts per opdracht.
+  komen geen aparte scripts per opdracht. MC03c0 is `tested`: één vrijgegeven
+  effect wordt met actuele authority, payloadhash en idempotency key atomair
+  voorbereid (`d3cc6d7`–`4f0a8f4`), zonder attempt of provider-I/O. Review,
+  dispatch, readback en afronding blijven open; zie
+  `reviews/action-chain-effect-preparation-mc03c0.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

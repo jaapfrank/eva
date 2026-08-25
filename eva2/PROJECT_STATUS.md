@@ -32,13 +32,14 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: MC03b3 bindt een duurzame succesobservatie nu atomair aan de geslaagde
-  readstap, haar `outcome_ref`, alle daardoor uitvoerbare afhankelijkheden en
-  de continuation. Fout, ambiguïteit en rate-limit laten de vervolgstep
-  gesloten. Acht gerichte PostgreSQL-proeven plus 36 bredere keten- en 24
-  tijdlijntests zijn groen op `bccca57` en `617ba91`. Dit is `tested`, nog niet
-  onafhankelijk `reviewed`, niet op B gedeployd en geen live Home Assistant-
-  bewijs. De herreview van MC03b2b blijft eveneens open.
+- Bezig: MC03c0 zet uitsluitend een na bewezen read vrijgegeven effectstap
+  atomair om in één duurzaam `EffectIntent/v1`. Lease, actuele catalogus,
+  resource, activation, binding, policy, manifest, payloadhash, deadline en
+  idempotency key zijn exact gebonden; er ontstaat nog geen attempt,
+  `TOOL_PREPARED`, provider-I/O, receipt of readback. Zes gerichte, 23 bredere
+  action-chain- en 24 tijdlijntests zijn groen op `d3cc6d7`–`4f0a8f4`. Dit is
+  `tested`, nog niet onafhankelijk `reviewed`, niet op B gedeployd en geen live
+  Home Assistant-bewijs. De reviews van MC03b2b en MC03b3 blijven eveneens open.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -80,18 +81,19 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: MC03b3 gebruikt op `bccca57` één herstartvalidator
-  voor readbewijs en steprevisies; `617ba91` voert de bijbehorende vrijgave in
-  één PostgreSQL-transactie uit. Concurrency levert één advance plus één exacte
-  replay; geforceerde attentionfout rolt step en dependency terug; een nieuwe
-  engine herlaadt het geheel. Ook een afhankelijke tweede read doorloopt
-  aantoonbaar `pending(1)` → `ready(2)` → `running(3)`. Zie
-  `reviews/action-chain-read-advance-mc03b3.md`.
+- Laatste codecheckpoint: MC03c0 gebruikt één algemene PostgreSQL-writer en
+  herstartvalidator voor een vrijgegeven effect. Concurrency levert één intent
+  plus één bytegelijke replay; een geforceerde steperfout rolt intent en events
+  terug; intrekking of een verkeerde/verlopen lease stopt vóór voorbereiding.
+  Het bestaande ledgerbestand is ondanks de nieuwe status netto één regel
+  kleiner dan vóór deze slice; de twee nieuwe productbestanden blijven onder
+  800 regels. Zie `reviews/action-chain-effect-preparation-mc03c0.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: onafhankelijke review van MC03b3 en de nog open herreview van
-  MC03b2b. Daarna bereidt MC03c uitsluitend een reeds vrijgegeven effect voor
-  en hergebruikt de bestaande `TOOL_PREPARED` → provider → fysieke-readbackketen.
+- Eerstvolgend: onafhankelijke review van MC03c0 en de nog open reviews van
+  MC03b2b/MC03b3. Daarna laat MC03c1 alleen dit voorbereide intent door de
+  bestaande `TOOL_PREPARED`-dispatchgrens gaan; provideruitkomst, fysieke
+  readback en dependencyvrijgave blijven aparte MC03c2-slices.
 - Productie A: actief en niet gewijzigd.
 - Actuele B: `eva2-living-core:cross-channel-v53-20260824`, core ready,
   duurzame-doelenworker running met nul herstarts.

@@ -81,6 +81,11 @@ verdwenen autoriteit blijft wijzen.
   de huidige brede werkboom bevat nog policyfouten en ongetrackte recovery- en
   evidencepaden. Die inventaris is daarom diagnostiek, geen schone releasegate.
 - Packagegrenzen en performancebudgetten zijn machineleesbaar of meetbaar.
+- Nieuwe verticale slices registreren nu expliciet bestandsrol, bestaansreden,
+  bewijsstatus, Git-checkpoints, nonclaims en meetstatus. MC03c0 is hiervan een
+  concreet voorbeeld in `design/architecture/living-core-v1.md` en
+  `reviews/action-chain-effect-preparation-mc03c0.md`; runtime-optimalisatie
+  blijft daar eerlijk `unmeasured` terwijl codeomvang wel exact is gecontroleerd.
 - Er bestaat nog geen volledig, commitgebonden semantisch componentregister dat
   ieder productie-, deployment-, migration- en testpad dekt. Ook is
   optimalisatiestatus nog niet voor iedere component gemeten.
