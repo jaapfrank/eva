@@ -1,149 +1,109 @@
-# Eva 2 tegenover OpenBot
+# Eva 2 tegenover OpenBot — wie is waar beter?
 
 Bijgewerkt: 25 augustus 2026.
 
-## Welke OpenBot
+## Het korte antwoord
 
-- Met **OpenBot** bedoelen we hier
-  [`CopilotKit/OpenBot`](https://github.com/CopilotKit/OpenBot): het nieuwe
-  platform voor AI-collega's met ieder een eigen browsercomputer.
-- We bedoelen niet de smartphone-robot van `ob-f/OpenBot` en ook niet de
-  kleinere `meetopenbot/openbot`-harness.
-- De actuele openbare release is `v0.0.4`, commit
-  `6826e11afd52f03c30af2d873203792acad95f63`. De documentatie-inventaris is
-  daarnaast gecontroleerd op commit
-  `d293f2331bd5ff9ba4ad17af6ac94570a157d26d`.
-- OpenBot noemt zichzelf expliciet **alpha**. Onderstaande OpenBot-kolom is dus
-  documentatiebewijs, geen door ons uitgevoerde producttest.
+**OpenBot staat vandaag duidelijk voor in computergebruik.** Het geeft iedere
+bot een eigen browser, loginprofiel, werkmap en toegang tot computercommando's.
+Je kunt live meekijken en
+de computer tijdelijk overnemen. Het dashboard is veel uitgebreider dan dat van
+Eva 2.
 
-## Korte conclusie
+**Eva 2 staat vandaag voor in de onderdelen die van een computeragent een
+persoonlijke huisassistent moeten maken:** gescheiden gezinsgeheugen,
+Home Assistant met controle achteraf en een sterke basis voor herstel zonder
+een echte actie blind te herhalen. Eva's volledige uitvoerketen is echter nog
+niet af.
 
-- OpenBot ligt nu duidelijk voor op **browser- en computergebruik**: per Bot
-  een eigen Chromium, loginprofiel, werkmap en shell, met meekijken en
-  menselijke overname.
-- OpenBot heeft ook een veel verder dashboard voor coworkers, skills, MCP,
-  credentials, policies en audit.
-- OpenBot is niet automatisch een slimmer of levender brein. De eigenlijke
-  agent komt via AG-UI binnen; de officiële documentatie bewijst geen
-  langdurige doelen, self-improvement, Telegramgezin, Home Assistant,
-  deurbel-/speakerpresence of fysieke readback.
-- Eva heeft bewezen of ontworpen eigenschappen die niet in OpenBots openbare
-  documentatie staan: persoons- en groepsgeheugen, huisintegratie, bewijs na
-  een fysieke actie en herstel zonder een effect blind te herhalen. Dat is geen
-  algemene voorsprongclaim; Eva's toolketen en browsercomputer zijn nog niet af.
-- Om goed te concurreren moet Eva dus OpenBots praktische computerautonomie
-  evenaren, terwijl Eva eigenaar blijft van identiteit, geheugen, mandaat,
-  policy, ledger, readback en eindantwoord.
+De gewenste eindversie combineert beide kanten. Eva moet net zo zelfstandig een
+computer kunnen gebruiken als OpenBot, maar daarbij dezelfde Eva blijven die
+jouw gezin, huis, afspraken en lopende doelen kent.
 
-## Vergelijking die je zelf kunt lezen
+Dat maakt Eva niet automatisch beter voor iedereen. Voor alleen een algemene
+browsercollega kan OpenBot de betere keuze blijven. Voor jouw persoonlijke
+huisassistent is Eva pas beter wanneer zij de combinatie ook echt bewijst.
 
-| Onderdeel | Eva 2 nu | OpenBot gedocumenteerd | Wat Eva moet doen |
-|---|---|---|---|
-| Autonoom doorwerken | Duurzame plannen, continuation-leases en één voorbereide read zijn bewezen; algemene provideruitvoering ontbreekt nog | Een meegebrachte AG-UI-agent kan zelfstandig browser-, bestand-, shell- en MCP-calls voorstellen | Eén chatmandaat duurzaam omzetten in plan → act → observeer → herplan, tot doel, blocker of stopgrens |
-| Browser en websites | Nog geen interactieve browsercomputer | Per Bot een eigen Chromium, browserprofiel en live scherm; gVisor-isolatie is optioneel | Geïsoleerde browserprovider toevoegen met doel-, site-, actie-, tijd- en budgetbinding |
-| Bestanden en shell | Begrensde eigen bestandstools; geen vrije computerwerkplek | Eigen workspace en shell per Bot | Alleen een taakwerkmap aanbieden; commando's blijven getypeerd, begrensd en volledig gelogd |
-| Accounts en logins | Ontworpen in B01/E01, nog niet gebouwd | Persistent browserprofiel; mens kan login en 2FA tijdelijk overnemen | Veilige secretinvoer, blijvende sessie, chatmandaat, stopknop en overnamepad bouwen |
-| Policy vóór actie | Fail-closed Eva-policy en intentledger; volledige keten nog open | Gateway beslist en schrijft audit vóór doorsturen; lege of kapotte policy weigert | Iedere browser/toolactie eerst als Eva-intent/attempt vastleggen; providerpolicy is een extra laag |
-| Herstel na crash | Exacte read/effect/readbacktoestanden ontworpen; MC03b/c en MX05 open | Audit en duurzame threads aanwezig; geen gelijkwaardige no-duplicate-effectclaim gevonden | Crash na externe call als `ambiguous` behandelen en nooit blind dezelfde actie herhalen |
-| Bewijs van resultaat | Sterke PostgreSQL-tijdlijn en fysieke HA-readback | Acties en fouten in audit; live scherm en activityweergave | Naast audit altijd providerresultaat of echte doeltoestand teruglezen |
-| Menselijke controle | Chatmandaat en stopgrenzen gepland; geen browserovername-UI | Live meekijken, hulpvraag, overnemen en teruggeven | Dashboard krijgt live status, pauze, stop en tijdelijke overname zonder goedkeuring per normale stap |
-| Geheugen en identiteit | Hindsight, persoon/project, privé/groep en actuele consent grotendeels gebouwd | Coworkerrol en duurzame channels/threads via CopilotKit Intelligence | Eva's eigen geheugen behouden; OpenBot of een browserprovider krijgt dit niet als tweede brein |
-| Dashboard en skills | D01 en IdentityPack-preview bestaan; editor, skills, credentials en computers ontbreken | Uitgebreide routes voor agents, skills, plugins, credentials, computers, boundaries en audit | Dashboard in kleine D-slices uitbreiden met skills, tools, mandaten, computers en audit |
-| Huis en fysieke aanwezigheid | HA-readback bestaat; oude deurbel-/speakerpresence moet via P01-P05 terug | Geen officiële HA-, Telegram-, deurbel- of speakerclaim gevonden | MC03c/MX04-MX05 en P01-P05 blijven onderscheidende Eva-doelen en harde V1-gates |
-| Productafhankelijkheid | Eigen PostgreSQL/Hindsight/runtime plus gekozen modelprovider | Vereist volgens de quickstart een CopilotKit Intelligence-project/licentie en modelkey; Intelligence kan self-hosted | Voor hergebruik eerst licentie, self-hosting, protocolstabiliteit en uitvalsgedrag toetsen; Eva mag niet van een tweede geheugenauthority afhangen |
-| Productstatus | Pre-freeze; delen live bewezen op verschillende images | Expliciet alpha en actief in ontwikkeling | Geen algemene winnaar claimen vóór dezelfde echte eindtaken zijn uitgevoerd |
+## Eerst één naamverwarring voorkomen
 
-## Wat “echte autonomie” voor Eva betekent
+Met OpenBot bedoelen we hier
+[`CopilotKit/OpenBot`](https://github.com/CopilotKit/OpenBot), niet de
+gelijknamige smartphone-robot. De vergelijking gebruikt release `v0.0.4` en
+vaste bronversies. OpenBot noemt zichzelf alpha. De kolom over OpenBot komt uit
+zijn officiële documentatie; wij hebben het product nog niet door dezelfde live
+proeven als Eva gehaald.
 
-Echte autonomie betekent niet dat Eva onbeperkt alles mag. Het betekent dat jij
-in de chat één duidelijk mandaat kunt geven en dat Eva daarna niet voor iedere
-normale tussenstap opnieuw toestemming vraagt.
+## De vergelijking zonder vaktaal
 
-Een mandaat bevat minimaal:
+| Wat jij merkt | Eva 2 vandaag | OpenBot vandaag volgens de documentatie | Volledig Eva-doel | Wie wint vandaag? | Is volledige Eva beter? |
+|---|---|---|---|---|---|
+| Zelf websites gebruiken | Nog geen eigen interactieve browser | Iedere bot heeft een eigen browser en blijvende sessie | Eva kan zelfstandig navigeren, informatie verzamelen, formulieren invullen en het resultaat controleren | OpenBot | **Niet automatisch.** Eva moet eerst minstens dezelfde taken halen |
+| Live meekijken en overnemen | Nog niet aanwezig | Ingebouwd | Je ziet wat Eva doet, kunt pauzeren, overnemen en het werk teruggeven | OpenBot | **Niet automatisch.** Hier moet Eva eerst gelijkwaardig worden |
+| Werken met bestanden en computerprogramma's | Alleen begrensde bestands- en codetaken | Eigen werkmap en computercommando's per bot | Eva krijgt een afgeschermde taakcomputer zonder toegang tot al haar geheugen of geheimen | OpenBot | **Niet als losse functie.** De winst moet uit betere begrenzing en samenhang komen |
+| Lang zelfstandig doorwerken | Duurzame doelen en enkele herstelgevallen werken; de algemene keten is nog niet klaar | De meegebrachte agent kan computerstappen voorstellen en uitvoeren | Eén opdracht loopt door tot resultaat, echte blokkade of jouw stopgrens | OpenBot op computerwerk; Eva heeft sterkere herstelbouwstenen | **Beoogd: ja voor jouw gebruik,** als Eva computer, huis en lang doel veilig combineert |
+| Na een crash veilig verdergaan | Meerdere gevallen zijn bewezen; de complete computerroute ontbreekt | Duurzame gesprekken en logboek zijn aanwezig, maar geen gelijk bewijs tegen dubbele acties gevonden | Eva zoekt eerst uit wat al gebeurd is en herhaalt geen mogelijke betaling, verzending of klik blind | Eva heeft de sterkere bewijsbasis; eindroute nog open | **Beoogd: ja,** maar pas na dezelfde echte crashtest |
+| Weten of iets echt gelukt is | Home Assistant-acties zijn opnieuw gecontroleerd; de algemene route is nog niet af | Acties en fouten staan in het logboek en zijn op het scherm zichtbaar | Eva controleert de echte eindtoestand en zegt eerlijk wanneer die onzeker blijft | Eva in huisacties; computervergelijking nog niet gedaan | **Beoogd: ja,** als dezelfde controle ook bij computerwerk slaagt |
+| Jou en je gezin kennen | Persoons- en groepsgeheugen zijn streng gescheiden | Heeft bots, rollen en blijvende gesprekken; geen gelijkwaardig gezinsbewijs gevonden | De computer gebruikt alleen de context van de juiste persoon en opdracht | Eva | **Ja voor de persoonlijke huisassistent,** mits de echte gezinstest slaagt |
+| In huis aanwezig zijn | Home Assistant-acties werken, maar de spontane huisaanwezigheid van de oude Eva ontbreekt nog | Geen officiële deurbel-, speaker- of Home Assistant-belofte gevonden | Dezelfde Eva kan zowel computerwerk doen als passend in huis spreken of zwijgen | Eva als productdoel; vandaag staat de oude Eva voor in huisaanwezigheid | **Ja voor huisgebruik,** zodra Eva 2 haar geplande aanwezigheid echt bewijst |
+| Dashboard | Kleine alleen-lezen status- en identiteitspagina | Rijk beheer van bots, computers, skills, inloggegevens, regels en logboek | Begrijpelijk overzicht van gesprekken, geheugen, werk, kosten, bewijs en stopknoppen | OpenBot | **Niet automatisch.** Eva moet eerst aantoonbaar duidelijker en completer worden |
+| Eén herkenbare assistent | Eva's identiteit, geheugen en huiscontext zijn de kern | Het eigenlijke brein wordt aangesloten op het computerplatform | Browser en computer worden handen van Eva, geen tweede assistent met een eigen geheugen of antwoord | Eva als ontwerp; complete proef ontbreekt | **Dit is Eva's beoogde echte voordeel,** maar de eindproef ontbreekt |
+| Productrijpheid | Eva 2 is nog vóór de definitieve versie | OpenBot is expliciet alpha | Geen winnaarclaim voordat dezelfde echte taken zijn uitgevoerd | Geen algemene winnaar | **Nog onbekend** |
 
-- het gewenste resultaat;
-- toegelaten sites, accounts, apparaten en tools;
-- tijd-, geld-, order-, privacy- en verliesgrenzen waar relevant;
-- wat Eva zelfstandig mag beslissen;
-- wanneer zij moet waarschuwen, pauzeren of hulp vragen;
-- een directe stopknop.
+## Waarom Eva uiteindelijk beter kan zijn voor jouw gebruik
 
-Binnen dat mandaat mag Eva zelfstandig plannen, informatie ophalen, formulieren
-invullen, tools gebruiken, resultaten controleren, fouten herstellen en haar
-plan aanpassen. Buiten het mandaat stopt zij. Na een crash hervat zij vanuit de
-duurzame tijdlijn en herhaalt zij geen mogelijk uitgevoerde externe actie zonder
-reconcile of readback.
+OpenBot lost vooral de **computerwerkplek** goed op. Eva moet een breder geheel
+worden:
 
-## Autonomie-afvinkbord
+1. Je geeft Eva in gewone taal een doel, grenzen, tijd en eventueel een budget.
+2. Eva gebruikt binnen die afspraak chat, browser, tools of subagents zonder
+   voor iedere normale tussenstap opnieuw toestemming te vragen.
+3. De browsercomputer ziet alleen wat voor die taak nodig is.
+4. Eva controleert het eindresultaat en bewaart wat werkelijk is gebeurd.
+5. Bij twijfel, gevaar of een overschreden grens stopt ze en legt ze helder uit
+   wat er nodig is.
+6. Na afloop blijft niet de computerleverancier, maar Eva eigenaar van het gesprek,
+   geheugen en antwoord.
 
-Ieder vak is een afzonderlijk Git-checkpoint met gerichte tests en onafhankelijke
-review.
+Dat is de beoogde voorsprong: niet alleen autonoom klikken, maar zelfstandig
+handelen als dezelfde betrouwbare assistent die ook jou en je huis kent.
 
-- [x] `OB00` — relevante OpenBot, versie, claims, nonclaims en Eva-gaten uit
-  officiële bronnen vastgelegd.
-- [ ] `AU01` — chatmandaat als duurzaam contract: exacte owner-principal, doel,
-  scope, budget, looptijd, revision, intrekking en stopvoorwaarden.
-- [ ] `AU02` — algemene runner als drie kleine delen:
-  - [ ] `AU02a/MC03b` — één voorbereide read autoriseren, uitvoeren en duurzaam
-    observeren zonder dubbele providercall;
-  - [ ] `AU02b/MC03c` — één effect met readback sluiten en pas dan de volgende
-    afhankelijke stap vrijgeven;
-  - [ ] `AU02c` — na een waarneming begrensd herplannen of wachten zonder
-    opdrachtspecifiek script.
-- [ ] `AU03` — één geïsoleerde browsercomputer met eigen taakwerkmap en profiel;
-  geen direct netwerk naar Eva's database of secretopslag. Providerkeuze,
-  commit/imagepin, restrictive policy en een credentialvrije read-only proef
-  gaan aan de eerste start vooraf; OpenBots single-adminstand is niet toegestaan
-  in een gedeelde of productieroute.
-- [ ] `AU04` — de eerste browserroute en haar afgeschermde downloadbestand gaan
-  door Eva's eigen grant-, policy-, attempt-, audit- en readbackgrens. Shell,
-  MCP en brede bestandstoegang volgen later als afzonderlijke providers achter
-  hetzelfde contract.
-- [ ] `AU05` — dashboard toont live scherm, actuele stap, gebruikte tools,
-  receipts en kosten zonder secretinhoud; eigenaar kan pauzeren, stoppen,
-  overnemen en teruggeven en de duurzame audit blijft na reload beschikbaar.
-- [ ] `AU06` — echte meerstapstaak met een vooraf geautoriseerd testaccount op
-  een afgeschermde website: login, navigatie, formulier, download/bestand en
-  controle van de eindtoestand. Echte accountcreatie, voorwaarden, betaling,
-  KYC en financiële acties blijven mogelijk als latere B01/E01-gates binnen
-  een chatmandaat, maar tellen niet als deze eerste browserproef.
-- [ ] `AU07` — crash na mogelijke externe actie: nul blinde herhaling, eerlijke
-  `ambiguous`/reconcile-route en aantoonbare hervatting; ook crash na observation
-  maar vóór delivery maakt geen tweede call of dubbel bericht.
-- [ ] `AU08` — vooraf verzegelde zevendaagse praktijktest met aantallen cases,
-  toegelaten sites, tijd-/geldbudget, cooldown, waarschuwingsgrens en receiptset;
-  nuttige voortgang, geen scopelek en expliciete gebruikersacceptatie.
+## Wat Eva van OpenBot kan hergebruiken
 
-`AU01`, `AU02`, `AU04` en `AU07` sluiten aan op MC03/MX04/MX05. `AU03`, `AU05`
-en `AU06` zijn de browser-/dashboardachterstand tegenover OpenBot. AU01-AU07
-sluiten technisch vóór de freeze, maar worden voor eindbewijs allemaal opnieuw
-op de bevroren image gereceipt. AU08 start daarna op diezelfde image.
+Eva hoeft geen browserplatform vanaf nul te bouwen. OpenBot of een andere
+geschikte leverancier mag later de afgeschermde browsercomputer leveren. Daarbij
+gelden drie eenvoudige regels:
 
-## Hergebruiken zonder twee breinen
+- de computerleverancier krijgt niet Eva's volledige gezinsgeheugen of identiteit;
+- Eva bepaalt vooraf wat de taakcomputer voor deze opdracht mag;
+- Eva controleert zelf het resultaat en blijft de enige die aan jou antwoordt.
 
-- OpenBot kan later als gepinde, geïsoleerde browser-/computerprovider worden
-  onderzocht, of als referentie voor Eva's dashboard en human-takeover.
-- Een proef begint read-only, gebruikt geen echte credentials en schrijft eerst
-  Eva's eigen intent en attempt.
-- OpenBot mag niet zelfstandig Eva's persona, Hindsight, gezinsdata, policy of
-  eindantwoord beheren.
-- Alleen het computer-/browseroppervlak mag als capability-sidecar worden
-  onderzocht. OpenBots AG-UI-agent, threads en policy-eigenaarschap worden niet
-  Eva's runner of orchestrator.
-- De meegeleverde OpenBot-startpolicy is configureerbaar en staat volgens de
-  documentatie standaard breed open (`allow: ["true"]`). Eva moet dus haar
-  eigen fail-closed grens houden, ook als OpenBot zelf een tweede policylaag
-  toepast.
-- Een verse clone gebruikt volgens de README standaard
-  `OPENBOT_SINGLE_USER=true`, waardoor alle requests één administrator zijn.
-  Die ontwikkelstand is verboden voor een gedeelde of productieroute.
-- Een hergebruikbesluit volgt pas na een vastgepinde sidecarproef met crash en
-  receipt; documentatie alleen is daarvoor niet genoeg.
+Eerst volgt een onschuldige proef zonder echte inloggegevens. Accounts,
+betalingen, voorwaarden of financiële handelingen krijgen daarna ieder een
+afzonderlijke praktijkproef met duidelijke grenzen en een stopknop.
 
-## Primaire bronnen
+## Wanneer de vergelijking eerlijk is
 
-- OpenBot README en status: <https://github.com/CopilotKit/OpenBot/tree/d293f2331bd5ff9ba4ad17af6ac94570a157d26d>
-- Architectuur en action gateway: <https://github.com/CopilotKit/OpenBot/blob/d293f2331bd5ff9ba4ad17af6ac94570a157d26d/docs/architecture.md>
-- Coworkers en AG-UI: <https://github.com/CopilotKit/OpenBot/blob/d293f2331bd5ff9ba4ad17af6ac94570a157d26d/docs/coworkers.md>
-- Release `v0.0.4`: <https://github.com/CopilotKit/OpenBot/releases/tag/v0.0.4>
-- Gepinde releasecommit: <https://github.com/CopilotKit/OpenBot/commit/6826e11afd52f03c30af2d873203792acad95f63>
+Eva mag pas “beter dan OpenBot” worden genoemd nadat beide dezelfde taken onder
+dezelfde voorwaarden hebben gedaan, waaronder:
+
+- een meerstaps webtaak met login, formulier en download;
+- live pauzeren, overnemen en hervatten;
+- een crash vlak na een mogelijke externe actie;
+- controle van de echte eindtoestand;
+- dezelfde tijd-, geld- en modelbudgetten;
+- heropenbare resultaten en onafhankelijke controle.
+
+Tot die tijd is de juiste conclusie:
+
+> OpenBot heeft vandaag de betere computerwerkplek. Eva heeft de sterkere basis
+> voor een persoonlijke huisassistent. Eva's geplande combinatie is veelbelovend,
+> maar nog niet als compleet product bewezen.
+
+## Technische details en bronnen
+
+- alle OpenBot- en autonomiegates: `TECHNISCHE_PRODUCTGATES.md`;
+- algemene concurrentievergelijking: `CONCURRENTIE_EN_HERGEBRUIK.md`;
+- browser- en autonome productstatus: `EVA2_MOGELIJKHEDEN_EN_GATEN.md`;
+- OpenBot README en status: <https://github.com/CopilotKit/OpenBot/tree/d293f2331bd5ff9ba4ad17af6ac94570a157d26d>;
+- architectuur: <https://github.com/CopilotKit/OpenBot/blob/d293f2331bd5ff9ba4ad17af6ac94570a157d26d/docs/architecture.md>;
+- release `v0.0.4`: <https://github.com/CopilotKit/OpenBot/releases/tag/v0.0.4>.

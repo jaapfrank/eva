@@ -5,13 +5,17 @@ Laatst bijgewerkt: 2026-08-25
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 [`design/architecture/living-core-v1.md`](design/architecture/living-core-v1.md);
-de korte lijst met mogelijkheden, gaten en concurrentiestand staat in
-[`EVA2_MOGELIJKHEDEN_EN_GATEN.md`](EVA2_MOGELIJKHEDEN_EN_GATEN.md); de verplichte
-volledige productvergelijking en hergebruikroute staat in
-[`CONCURRENTIE_EN_HERGEBRUIK.md`](CONCURRENTIE_EN_HERGEBRUIK.md); de verplichte
-oude-naar-nieuwe behoudgate voor spontane huisaanwezigheid staat in
+de leesbare scheiding tussen wat Eva nu kan, wat nodig is voor de overgang en
+het volledige productdoel staat in
+[`EVA2_MOGELIJKHEDEN_EN_GATEN.md`](EVA2_MOGELIJKHEDEN_EN_GATEN.md); de
+vergelijking in gewone taal en de conclusie wie vandaag waar voorstaat staan in
+[`CONCURRENTIE_EN_HERGEBRUIK.md`](CONCURRENTIE_EN_HERGEBRUIK.md); alle precieze
+gatecodes, checkpoints en technische nonclaims staan apart in
+[`TECHNISCHE_PRODUCTGATES.md`](TECHNISCHE_PRODUCTGATES.md) en
+[`TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md`](TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md);
+de oude-naar-nieuwe vergelijking voor spontane huisaanwezigheid staat in
 [`OUDE_EVA_VS_EVA2.md`](OUDE_EVA_VS_EVA2.md); de verplichte
-OpenBot-vergelijking en autonomie-afvinklijst staan in
+leesbare OpenBot-vergelijking staat in
 [`OPENBOT_VERGELIJKING.md`](OPENBOT_VERGELIJKING.md); de verplichte
 full-duplex voice-mode, kanaalkeuze en latencygates staan in
 [`design/product/conversational-voice-v1.md`](design/product/conversational-voice-v1.md);
@@ -79,10 +83,14 @@ de controleerbare live receipts staan in
   bereikt de provider als RPC- en connector-request-ID. MC03c2 start daarna
   uitsluitend die eerste sealed subprocesscall en bewaart provideracceptatie,
   afwijzing of exacte fout plus evidence en optioneel receipt atomair. Een
-  onopgeloste call-start wordt nooit blind herhaald. Tien gerichte, 37 brede
-  action-chain- en afzonderlijk 24 tijdlijntests zijn groen op `cc3094c`–
-  `89de787`. Dit is `tested`, nog niet onafhankelijk `reviewed`; er is geen
-  echte Home Assistant-call/readback gedaan en A en B zijn niet gewijzigd.
+  onopgeloste call-start wordt nooit blind herhaald. MC03c3a zet uitsluitend
+  na een duurzaam geaccepteerd effect één afzonderlijk geautoriseerde,
+  onveranderlijke `effect_verify`-read klaar. De read gebruikt een eigen
+  `verification_read`-manifest, scope en tijdlijn en maakt de effectstap nog
+  niet af. Zeven gerichte, 41 brede action-chain- en afzonderlijk 24
+  tijdlijntests zijn groen op `45cd285`/`4bc39a9`. Dit is `tested`, nog niet
+  onafhankelijk `reviewed`; er is geen echte Home Assistant-call/readback
+  gedaan en A en B zijn niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -124,20 +132,20 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `89de787` voegt de enige algemene effectexecutor toe.
-  Een synthetisch geaccepteerde effectresponse en een werkelijk gestart
-  protocolfout subprocess werden ieder exact eenmaal opgeslagen; replay, een
-  nieuwe engine en een al achtergelaten call-start startten geen tweede proces.
-  Provider-ACK maakte geen readback of geslaagde planstap. De executor telt 155
-  regels en voegt geen dependency toe; zie
-  `reviews/action-chain-effect-execution-mc03c2.md`.
+- Laatste codecheckpoint: `4bc39a9` bereidt na geverifieerde provideracceptatie
+  exact één read-only effectreadback voor. Een nieuwe engine leest dezelfde
+  intent terug; concurrency, rollback, intrekking en kolom/payloadcorruptie
+  falen gesloten. Er zijn nul providerreads en nul `EffectReadback`-rijen
+  gemaakt en de effectstap blijft `running`; zie
+  `reviews/action-chain-effect-readback-preparation-mc03c3a.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: onafhankelijke review van MC03c0–MC03c2 en de nog open reviews
-  van MC03b2b/MC03b3. Daarna leest de effectketen via dezelfde providergrens de
-  fysieke Home Assistant-doeltoestand terug; alleen bewezen readback mag effect
-  en dependency afronden. Telegram-B en een echte crash tussen effect en
-  readback blijven afzonderlijke eindproeven.
+- Eerstvolgend: onafhankelijke review van MC03c0–MC03c3a en de nog open reviews
+  van MC03b2b/MC03b3. Daarna krijgt de voorbereide readback via dezelfde sealed
+  providergrens één autorisatie/callclaim en pas daarna provider-I/O plus
+  `EffectReadback`. Alleen exact overeenkomende doeltoestand mag effect en
+  dependency afronden. Telegram-B en een echte crash tussen effect en readback
+  blijven afzonderlijke eindproeven.
 - Productie A: actief en niet gewijzigd.
 - Actuele B: `eva2-living-core:cross-channel-v53-20260824`, core ready,
   duurzame-doelenworker running met nul herstarts.

@@ -21,11 +21,11 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 
 | Vraag | Primaire bron | Betekenis |
 |---|---|---|
-| Wat kan Eva nu echt en wat nog niet? | `EVA2_MOGELIJKHEDEN_EN_GATEN.md` | Leesbare capability- en gaplijst; alleen bewezen gedrag staat onder “kan” |
+| Wat kan Eva nu, wat is nodig voor de overgang en wat is het einddoel? | `EVA2_MOGELIJKHEDEN_EN_GATEN.md` | Leesbaar overzicht in drie duidelijk gescheiden momenten |
 | Waar werken we nu aan? | `PROJECT_STATUS.md` | Korte actuele werkstatus en laatste checkpoint |
 | Hoe hangt de runtime technisch samen? | `design/architecture/living-core-v1.md` | Componenten, primaire bestanden, verantwoordelijkheid, status en bewijsgrenzen |
-| Waarom bestaat een productgate? | `design/product/*.md`, `OPENBOT_VERGELIJKING.md`, `OUDE_EVA_VS_EVA2.md` | Productbelofte, huidige stand, acceptatiecriteria en nonclaims |
-| Hoe vergelijken en hergebruiken we? | `CONCURRENTIE_EN_HERGEBRUIK.md` | Capabilitymatrix, concurrentie, hergebruik en volledige afvinkvolgorde |
+| Wie staat vandaag voor en waarom zou Eva straks beter zijn? | `CONCURRENTIE_EN_HERGEBRUIK.md`, `OPENBOT_VERGELIJKING.md`, `OUDE_EVA_VS_EVA2.md` | Vergelijkingen in gewone taal; huidige winnaar en toekomstdoel blijven gescheiden |
+| Waar staan alle precieze gatecodes en technische claims? | `TECHNISCHE_PRODUCTGATES.md`, `TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md`, `design/product/*.md` | Technisch bewijsbord met acceptatiecriteria, checkpoints en nonclaims |
 | Welk pad bestaat en welke technische rol heeft het? | `../docs/eva-repository-inventory.generated.{json,md}` | Mechanische repository-inventaris; aanwezigheid of rol is geen bewijs dat gedrag af is |
 | Welke importgrens geldt? | `design/architecture/package-boundaries-v1.json` | Machineleesbare package-eigenaarschap en toegestane imports |
 | Waarom mag een checkpoint groen heten? | `reviews/` plus `evidence/` | Onafhankelijke review, tests en waar vereist live receipts |
@@ -85,9 +85,10 @@ verdwenen autoriteit blijft wijzen.
   evidencepaden. Die inventaris is daarom diagnostiek, geen schone releasegate.
 - Packagegrenzen en performancebudgetten zijn machineleesbaar of meetbaar.
 - Nieuwe verticale slices registreren nu expliciet bestandsrol, bestaansreden,
-  bewijsstatus, Git-checkpoints, nonclaims en meetstatus. MC03c2 is hiervan een
+  bewijsstatus, Git-checkpoints, nonclaims en meetstatus. MC03c3a is hiervan een
   concreet voorbeeld in `design/architecture/living-core-v1.md` en
-  `reviews/action-chain-effect-execution-mc03c2.md`; runtime-optimalisatie
+  `reviews/action-chain-effect-readback-preparation-mc03c3a.md`;
+  runtime-optimalisatie
   blijft daar eerlijk `unmeasured` terwijl codeomvang wel exact is gecontroleerd.
 - Externe agentscores hebben nu een afzonderlijk publicatiecontract. AgentBench,
   GAIA en OSWorld-resultaten tellen alleen met upstream scorer, vastgezette
