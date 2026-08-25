@@ -78,36 +78,43 @@ Eva's unieke hoofdfeature.
   daarom geen eigen voice-, browser-, worker-, Kanban-, scanner- of
   updateplatform voordat een gepinde dependencyproef een concreet gat bewijst.
   Ook Eva's 404 regels handgeschreven MCP-client en 763 regels directe
-  Home Assistant-adapter zijn nu expliciete vervangkandidaten: eerst de
-  officiële MCP Python SDK en Home Assistants ingebouwde MCP Server testen,
-  daarna alleen aantoonbaar ontbrekende Eva-grenzen behouden. De onafhankelijke
+  Home Assistant-adapter zijn expliciet onderzocht. De MCP-client blijft na
+  twee gemeten `NO-GO`-proeven voorlopig staan; voor de veel grotere
+  Home Assistant-route is `homeassistant-ai/ha-mcp v8.3.0` nu de eerste serieuze
+  community-sidecar. De onafhankelijke
   onderhoudsaudit geeft alleen Hindsight in zijn huidige smalle L2-rol en
   Renovate als niet-automerge voorstelbot een begrensde `GO`; onder meer
-  Pydantic AI, Harness, DBOS, de officiële MCP SDK, Home Assistant MCP Server,
-  Playwright MCP, Hindsight UI, LiveKit, OpenClaw, React-Admin, PyInstaller,
-  Agent Skills en Trivy blijven `PROEF`. Browser Use en een tweede
-  workflowplatform komen nu niet in V1.
+  Pydantic AI, Harness, DBOS, Home Assistant MCP Server, HA-MCP, Playwright
+  MCP, Hindsight UI, LiveKit, OpenClaw, React-Admin, PyInstaller, Agent Skills
+  en Trivy blijven `PROEF`. De officiële MCP SDK is voor de smalle V1-client
+  juist `NO-GO`; Browser Use en een tweede workflowplatform komen nu niet in
+  V1.
   `DF01`-`DF06` en de eerste kandidaten staan in
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
 
-- Dependencytransportwaarneming DF02-voorwerk: in een afgeschermde tijdelijke
-  Pythonomgeving zijn `pydantic-ai-slim[openai]==2.32.2`, `openai==3.3.1` en
-  `mcp==2.1.1` eenmalig geïnstalleerd. Een lokale proefserver zag een
-  Eva-achtig verzoek en gaf synthetische usagevelden terug die Pydantic/OpenAI
-  behield; dit was geen token- of providerkostenmeting. De gebruikte Pydantic
-  `Agent`-loop is geen productiekandidaat. De MCP-SDK doorliep lokaal de
-  initialize/list/call-route. Er is nog geen commitgebonden proefscript,
-  artifacthash of onafhankelijke replay. De onafhankelijke audit houdt beide
-  daarom op `PROEF`: exacte locks/wheels, PyPI/Git-provenance, nul SDK- én
-  frameworkretries, atomair leasepaar, byte-/deadlinegrenzen,
-  kwaadaardige-servertests en een echte providerproef staan open. De
-  wegwerpinstallatie week bovendien af van Eva's huidige Pydanticpins en trok
-  meerdere nieuwe transitieve packages binnen. A en B zijn niet benaderd of
-  gewijzigd; zie
-  `reviews/dependency-transport-trials-2026-08-25.md`.
-  De kleinste vervolgstap gebruikt eerst alleen de synchrone OpenAI-SDK
-  `3.3.1`; Pydantic AI wordt niet als tweede agentloop in dezelfde slice gezet.
+- MCP-dependencybesluit DF02c: de officiële MCP Python SDK `2.1.1` is met een
+  exacte 48-package-hashlock geïnstalleerd; hij voegt tien packages en voor
+  Eva's vaste read-route onnodige GET/DELETE-, reconnect-, callback- en
+  sessiemogelijkheden toe. Alleen `mcp-types==2.1.1` is daarna werkelijk in een
+  tijdelijke productdiff gebruikt: 22 tests groen, maar **87 productregels
+  erbij en niets verwijderd**. Beide routes zijn daarom voor deze smalle client
+  `NO-GO`; de kandidaatcode is teruggedraaid en productie bleef gelijk.
+  Checkpoints `c5b7d88` en `c83d395`, exacte locks, replaychecker en
+  onafhankelijke review zijn groen; zie `experiments/mcp-sdk-v1/` en
+  `reviews/mcp-dependency-bakeoff-c5b7d88.md`.
+
+- Home Assistant-communityproef DF02d: `homeassistant-ai/ha-mcp v8.3.0` is op
+  exacte bron en OCI-digest gebonden en lokaal zonder netwerk, secrets of echt
+  Home Assistant gestart. De handshake werkte; read-only waren 39 tools
+  zichtbaar, waaronder toestand, historie en automation-lezen. Een automation-
+  en backupwrite werden met `READ_ONLY_MODE` geblokkeerd. Dit is kandidaatbewijs,
+  geen B- of live-huisbewijs. De volgende pariteitsproef moet minimaal 300
+  regels eigen HA-code verwijderen tegen hoogstens 180 integratieregels en
+  dezelfde state-, historie-, service-, automation-, crash- en readbackcases
+  halen. De afgeschermde smoke en onafhankelijke herreview zijn groen op
+  `86c7247`/`3896f17`; zie `experiments/ha-mcp-sidecar-v1/` en
+  `reviews/ha-mcp-sidecar-candidate-3896f17.md`.
 
 - Dependencykandidaat DF02a: checkpoint `8526314` laat de officiële OpenAI
   Python-SDK `3.3.1` nu werkelijk één gewone Responses-stream vervoeren en

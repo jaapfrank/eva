@@ -1,6 +1,6 @@
 # Eva 2 — eerst hergebruiken, pas daarna zelf bouwen
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 26 augustus 2026.
 
 ## Het eerlijke antwoord
 
@@ -43,8 +43,9 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
-| Modeltransport en gestructureerde antwoorden | Eerst de officiële OpenAI-SDK; daarna alleen lagere Pydantic AI-primitives die extra code verwijderen | Identiteit, persoonscontext, agentloop, grants, tooluitvoering en antwoordbeleid | Algemene netwerk-/providerboilerplate vervangen zonder Pydantics Agent-loop een tweede brein te maken |
-| MCP-protocol en Home Assistant-skill | Officiële MCP Python SDK plus Home Assistants ingebouwde MCP Server | Toegelaten tools/entities, persoonsmandaat, idempotency en onafhankelijke controle achteraf | Vervang de handgeschreven JSON-RPC/SSE-client na een pariteitsproef; behoud alleen directe HA-code voor concreet onbewezen MCP-gat |
+| Modeltransport en gestructureerde antwoorden | Eerst de officiële OpenAI-SDK; daarna alleen lagere Pydantic AI-primitives die extra code verwijderen | Identiteit, persoonscontext, agentloop, grants, tooluitvoering en antwoordbeleid | De OpenAI-SDK-kandidaat is gereviewd en behoudt Eva's grenzen; echte provider- en releasepromotie staan nog open |
+| Smalle MCP-client | Eva's huidige begrensde client | Toegelaten tool/resource, byte- en tijdslimieten, schemahash en receipt | De volledige officiële MCP-SDK en alleen `mcp-types` zijn echt beproefd maar verwijderen voor deze route geen code; daarom nu niet installeren |
+| Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist minimaal 300 regels eigen HA-code weg tegen hoogstens 180 regels integratie |
 | Duurzame workflows en wachtrijen | DBOS via de officiële Pydantic AI-koppeling | Eva-ledger voor intent, call-start, ambigu resultaat en readback | DBOS laat starten, wachten en hervatten; geen tweede eigen queue-engine uitbreiden |
 | Korte subagents | Pydantic AI Harness `0.24.0` als eerste compatibele kandidaat | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Niet zelf spawnen, budgetteren en foutafhandelen wanneer Harness dit al doet |
 | Voice | Pydantic AI Realtime vanaf `2.32.2` als eerste proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
@@ -84,11 +85,14 @@ Hergebruik betekent niet blind `latest` installeren.
   echte accounts zien.
 
 De actuele eerste proefpins zijn: OpenAI Python `3.3.1`, Pydantic AI `2.32.2`,
-MCP Python SDK `2.1.1`, Playwright MCP `0.0.79`, Harness `0.24.0`, React Admin
+MCP Python SDK `2.1.1`, HA-MCP `v8.3.0` op OCI-index
+`sha256:38b3a0b6b6b69d3fd074f958fbf9653ae2d50c8727b4c0dcde640cfa3a638176`,
+Playwright MCP `0.0.79`, Harness `0.24.0`, React Admin
 `5.15.1` en PyInstaller `6.20.0`. Agent Skills wordt op commit `69ef37e…`
 beproefd. Dit zijn wegwerp- of toekomstige proefinputs, geen goedgekeurde
 productdependencies en geen toestemming om transitieve packages stil mee te
-veranderen. Eva's huidige productlock houdt Pydantic AI `2.32.1`.
+veranderen. Eva's huidige productlock houdt Pydantic AI `2.32.1`; HA-MCP is
+een losse Python-3.13-sidecar en verandert die lock niet.
 
 ## Wat nu echt is geprobeerd
 
@@ -112,44 +116,46 @@ nog open. De productie blijft daarom standaard de oude route gebruiken. Zie
 `experiments/openai-sdk-v1/` en
 `reviews/openai-sdk-transport-candidate-8526314.md`.
 
-### Eerdere wegwerpwaarnemingen
+### Officiële MCP-SDK: gemeten `NO-GO` voor de smalle client
 
-Er waren eerst twee kandidaten eenmalig in een wegwerpomgeving geïnstalleerd en tegen
-lokale HTTP-servers aangeroepen. Er bestaat nog geen commitgebonden proefscript,
-artifacthash of herhaalreceipt voor de MCP-waarneming; die blijft dus `PROEF`.
-De OpenAI-waarneming is inmiddels door de hierboven beschreven echte kandidaat
-vervangen. A en B zijn niet gewijzigd.
+De officiële MCP Python SDK `2.1.1` is inmiddels wel commitgebonden beproefd.
+De volledige dependency voegt tien packages toe aan Eva's runtimeclosure. Zijn
+standaardclient kan bovendien GET/DELETE, reconnects, callbacks en ruimere
+sessies gebruiken, terwijl Eva voor deze ene read-route exact vier begrensde
+POSTs nodig heeft.
 
-| Proef | Wat werkelijk lukte | Eerlijke beslissing |
-|---|---|---|
-| Pydantic AI `2.32.2` + OpenAI Python `3.3.1` | Een Eva-achtig verzoek en antwoord liepen door een lokale proefserver. De synthetische usagevelden die de server zelf teruggaf, bleven behouden; dit was geen tokenmeting of providerfactuur. De proef gebruikte Pydantics generieke `Agent`-loop. | **Doorgaan, maar eerst alleen met de lagere synchrone OpenAI-SDK.** De Agent-loop heeft geen productierol. Pydantic-modelmapping volgt pas als zij aantoonbaar extra eigen code verwijdert zonder zelf retries, tools of vervolgaanvragen te besturen. |
-| MCP Python SDK `2.1.1` | De SDK voltooide over echte lokale HTTP de handshake, toolinventaris en één getypeerde read-call. | **Nog geen vervanging.** De standaard-SDK staat meer verkeer, ruimere protocolversies en grotere antwoorden toe dan Eva's huidige smalle client. Alleen promoveren als een kleine wrapper alle bestaande weigertests behoudt. |
+Daarna is alleen `mcp-types==2.1.1` in een tijdelijke productdiff geprobeerd.
+Die proef was 22/22 groen, maar voegde 87 productregels toe en verwijderde geen
+transportcode. De kandidaat is daarom teruggedraaid. De huidige client blijft:
+niet omdat alles zelf bouwen stoerder is, maar omdat beide dependencies hier
+meetbaar groter werden. De exacte locks, replaychecker en onafhankelijke review
+staan in `experiments/mcp-sdk-v1/`, `experiments/mcp-types-v1/` en
+`reviews/mcp-dependency-bakeoff-c5b7d88.md`.
 
-Dit onderscheid voorkomt twee fouten. Een geslaagde demo is nog geen
-productdependency, maar een beveiligingswrapper is ook geen reden om het hele
-protocol zelf te blijven onderhouden. Een echt prototype moet nog aantonen
-hoeveel eigen code netto verdwijnt. De volgende getallen zijn alleen ruwe,
-ongeteste hypotheses uit een broninventaris:
+### Communitykandidaat HA-MCP: lokaal werkelijk gestart
 
-- modeltransport en parsing: op termijn ongeveer 270 regels kansrijk; de eerste
-  kandidaat gebruikt alleen de synchrone OpenAI-SDK met per poging één actueel
-  token/accountpaar en uitgeschakelde SDK-retries;
-- MCP: bruto circa 200 regels protocolcode weg, maar waarschijnlijk slechts
-  40–120 regels nettowinst na de verplichte grenzen;
-- Home Assistant: het onderzochte directe adapterbestand telt 763 regels. Dat is
-  een bovengrens voor onderzoek, geen verwijderbelofte; historie,
-  automatiseringsbewerking en onafhankelijke controle blijven direct zolang de
-  ingebouwde MCP-server die uitkomst niet bewijst.
+`homeassistant-ai/ha-mcp` `v8.3.0` is een veel grotere hergebruikkans. De exact
+gepinde amd64-image is lokaal gestart met `--network none`, read-only
+filesystem, zonder capabilities, zonder secrets en zonder echt Home Assistant.
+De MCP-handshake werkte en gaf in read-only modus 39 tools, waaronder zoeken,
+actuele toestand, historie en automation-lezen. Een automation-write en een
+backup-write werden vóór Home Assistant met `READ_ONLY_MODE` geweigerd.
 
-De wegwerpproef liet ook zien waarom een pin alleen niet genoeg is. `pip`
-installeerde PyPI-artifacts die niet aan de geïnspecteerde Git-commits of
-artifacthashes zijn gebonden en trok onder meer Pydantic `2.13.4` en
-`pydantic-core 2.46.4` binnen, terwijl Eva `2.12.5` en `2.41.5` pinnt. MCP trok
-onder meer Starlette, Uvicorn, `sse-starlette`, Cryptography en PyJWT mee. Die
-dependencydrift is een open blocker, geen adoptiebewijs.
+Dit project heeft 88 gedocumenteerde tools, vier vaste maintainers, een
+securitybeleid, multi-architectuurimages en 621 Pythonbestanden onder `tests/`,
+waarvan 483 `test_*.py`-modules. Het kan niet alleen
+de huidige adapter, maar ook toekomstige dashboard-, trace-, backup- en
+beheeradapters voorkomen. Daarom gaat het door naar een echte pariteitsproef met
+een least-privilege testtoken.
 
-De volledige technische proefgrens staat in
-`reviews/dependency-transport-trials-2026-08-25.md`.
+Het is nog geen productieonderdeel en heeft het echte huis niet benaderd. De
+harde toelatingseis is minimaal 300 regels bestaande Home Assistant-productcode
+verwijderen tegen hoogstens 180 regels dunne Eva-integratie, met dezelfde
+state-, historie-, service-, automation-, crash- en readbackgevallen. De exacte
+bron/imagebinding en herhaalbare smoke staan in
+`experiments/ha-mcp-sidecar-v1/`. Een onafhankelijke reviewer herhaalde beide
+checks en gaf `GO` voor de geïsoleerde pariteitsproef op checkpoint `3896f17`;
+zie `reviews/ha-mcp-sidecar-candidate-3896f17.md`.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -180,7 +186,7 @@ is geen geldige reden.
 
 ## Onderhouden projecten die nu serieus meetellen
 
-Dit is een momentopname van 25 augustus 2026. Zij geeft kandidaten, geen
+Dit is een momentopname van 26 augustus 2026. Zij geeft kandidaten, geen
 automatische productgoedkeuring.
 
 `GO` geldt alleen voor de genoemde smalle rol. `PROEF` betekent nog geen
@@ -192,8 +198,9 @@ een concreet gat laat zien.
 | Pydantic AI `2.32.1` huidige lock / `2.32.2` proefkandidaat | `PROEF` | MIT, stabiele V2-versiepolicy, compatibility-CI, meerdere recente bijdragers en openbare advisories | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
 | Pydantic AI Harness | `PROEF` | MIT, officieel apart Pydantic-project, recente `0.x`-releases en meerdere auteurs | API stabiliseert nog; exacte compatibele pin, geen taak-/geheugenautoriteit en directe rollback |
 | DBOS Transact | `PROEF` | MIT, gepubliceerde Pythonreleases en correctnessfixes rond herstel en duplicaten | Eva's private patch/imports zijn de blocker; eerst publieke API, schema-upgrade en downgrade op kopiedata |
-| Officiële MCP Python SDK | `PROEF` | MIT, Tier-1 SDK, twee ondersteunde releaselijnen plus expliciet versie-, release- en migratiebeleid | Bewijs dezelfde schema-, timeout-, callback- en secretblokkades als Eva's huidige smalle profiel |
-| Home Assistant MCP Server | `PROEF` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Actuele schema-issues en mogelijk geen volledige historie/automatiseringsbewerking/readback; directe code verdwijnt alleen na pariteit |
+| Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
+| Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
+| `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: uitgebreide HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Exacte image-smoke en onafhankelijke review zijn groen; echte least-privilege HA-pariteit, codeverwijdering, latency, upgrade en rollback zijn open |
 | Microsoft Playwright MCP | `PROEF` | Apache-2.0, eigen release- en securityroute en onderhoud binnen Microsoft | Nog `0.x`; originfilters zijn geen sandbox. Pin ook browser/container en test SIGKILL, egress, downloads en orphanprocessen |
 | Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
 | Hindsight API `0.9.1` | `GO: huidige L2` | MIT, exact artifact/digest en bestaande Eva-livebewijzen | PostgreSQL blijft canoniek; iedere upgrade blijft een aparte proef met export, privacy, latency en rollback |
@@ -212,8 +219,12 @@ een concreet gat laat zien.
   precies het deel dat generieke frameworks niet voor Eva kunnen beslissen.
 - Na de huidige actieketen komen er geen nieuwe handgeschreven workerloops bij.
   DBOS moet scheduling, wake-up en hervatting leveren.
-- MCP wordt de normale skill- en providerdraad. Eva's eigen connector-RPC blijft
-  alleen bestaan waar de strengere externe-I/O-ambiguïteit aantoonbaar nodig is.
+- MCP blijft de normale skill- en providerdraad, maar de volledige officiële
+  clientdependency komt niet in de smalle V1-route. De huidige begrensde client
+  blijft zolang een dependency aantoonbaar geen code verwijdert.
+- Home Assistant gaat niet per functie verder groeien in Eva. De volgende echte
+  proef zet `homeassistant-ai/ha-mcp` als geïsoleerde sidecar naast de huidige
+  adapter en promoveert alleen wanneer honderden eigen regels kunnen verdwijnen.
 - Voice, browser en subagents beginnen met een kleine dependencyproef, niet met
   een nieuw platformontwerp.
 - Hindsight's bestaande UI wordt eerst aangesloten voordat een eigen
@@ -240,8 +251,8 @@ upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
 | Huidige Eva-bron | Omvang op 25 augustus 2026 | Upstream proef | Wat altijd Eva-eigen blijft |
 |---|---:|---|---|
 | `adapters/model/conversation.py` | 2.378 regels | OpenAI-SDK voor providertransport en typed streaming; pas later lagere Pydantic-mapping | IdentityPack, audience, agentloop, budgetbesluit, tooluitvoering, actiebewijs en eindantwoord |
-| `adapters/connectors/mcp.py` | 404 regels | Officiële MCP Python SDK voor protocol, transports en berichten | Tool-/resourcewhitelist, schemahashes, tijdslimiet, secretgrens en receipt |
-| `adapters/connectors/home_assistant.py` | 763 regels | Home Assistants eigen MCP Server voor normale context en handelingen | Least-privilege binding en onafhankelijke readback; directe historie/automatisering alleen bij bewezen MCP-gat |
+| `adapters/connectors/mcp.py` | 404 regels | Volledige SDK en `mcp-types` zijn beproefd en afgewezen voor deze smalle route | Huidige begrensde client blijft; opnieuw openen als een provider de standaardclient vereist én de totale code aantoonbaar krimpt |
+| `adapters/connectors/home_assistant.py` | 763 regels | Officiële ingebouwde server voor basis plus `homeassistant-ai/ha-mcp v8.3.0` voor historie/configuratie/beheer | Least-privilege binding, één duurzame poging en onafhankelijke readback; promotie alleen bij minimaal 300 regels weg en maximaal 180 erbij |
 | Zeven application-workerbestanden | meerdere losse loops | DBOS scheduling, queues en durable execution op dezelfde crashcases | Taakbetekenis, mandaat, idempotency, externe ambiguïteit en gebruikersstatus |
 | HTML/JavaScript in `adapters/api/app.py` | onderdeel van 1.536 regels | React-Admin of Pydantic web/AG-UI als presentatielaag | Gesaneerde Eva-API, authenticatie, writes via commands en audit |
 
@@ -267,6 +278,18 @@ een lijst GitHub-links.
   geen tweede tool-, geheugen- of antwoordloop naast Eva. Een eventuele lagere
   primitive moet nul eigen retries, begrensde aanvragen/tooluitvoer en geen
   toolcallback vóór Eva's grant en ledger bewijzen.
+- [x] `DF02c` — de officiële MCP SDK `2.1.1` en de kleinere
+  `mcp-types==2.1.1`-route zijn met exacte hashlocks en productprototype
+  vergeleken. Beide zijn voor Eva's smalle V1-client `NO-GO`: de volledige SDK
+  voegt tien packages en te ruim gedrag toe; types-only gaf netto 87 regels
+  groei. Replay, bestaande regressies en onafhankelijke review zijn groen
+  (`c5b7d88`, `c83d395`).
+- [ ] `DF02d` — `homeassistant-ai/ha-mcp v8.3.0` draait exact gepind als
+  geïsoleerde sidecar en vervangt na echte least-privilege HA-pariteit minimaal
+  300 regels bestaande productcode met hoogstens 180 integratieregels. De
+  netwerkloze read-only image-smoke en onafhankelijke review zijn groen
+  (`86c7247`, `3896f17`); echt huis, codeverwijdering, latency, crash, upgrade
+  en rollback staan open.
 - [ ] `DF03` — DBOS versus de handgeschreven workflowdelen is op dezelfde
   crashcases vergeleken; dubbele scheduling krijgt een verwijderbesluit.
 - [ ] `DF04` — compatibel Harness, Pydantic Realtime en Playwright MCP krijgen
@@ -293,6 +316,9 @@ zijn de nieuwe packages nog geen goedgekeurde productdependencies.
 - Home Assistant MCP Server: <https://www.home-assistant.io/integrations/mcp_server/>
 - Home Assistant MCP-bron: <https://github.com/home-assistant/core/tree/dev/homeassistant/components/mcp_server>
 - Home Assistant MCP-schema-issue: <https://github.com/home-assistant/core/issues/178032>
+- HA-MCP communityproject: <https://github.com/homeassistant-ai/ha-mcp>
+- HA-MCP exact `v8.3.0`: <https://github.com/homeassistant-ai/ha-mcp/releases/tag/v8.3.0>
+- HA-MCP securitybeleid: <https://github.com/homeassistant-ai/ha-mcp/security/policy>
 - Microsoft Playwright MCP: <https://github.com/microsoft/playwright-mcp>
 - Microsoft Playwright MCP-securitybeleid: <https://github.com/microsoft/playwright-mcp/security/policy>
 - Browser Use: <https://github.com/browser-use/browser-use>
