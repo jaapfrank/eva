@@ -44,15 +44,18 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
 | Agentloop, tools en gestructureerde antwoorden | Pydantic AI | Identiteit, persoonscontext, grants en antwoordbeleid | Bestaande dependency werkelijk gebruiken; eigen modelboilerplate daarna verkleinen |
+| MCP-protocol en Home Assistant-skill | Officiële MCP Python SDK plus Home Assistants ingebouwde MCP Server | Toegelaten tools/entities, persoonsmandaat, idempotency en onafhankelijke controle achteraf | Vervang de handgeschreven JSON-RPC/SSE-client na een pariteitsproef; behoud alleen directe HA-code voor concreet onbewezen MCP-gat |
 | Duurzame workflows en wachtrijen | DBOS via de officiële Pydantic AI-koppeling | Eva-ledger voor intent, call-start, ambigu resultaat en readback | DBOS laat starten, wachten en hervatten; geen tweede eigen queue-engine uitbreiden |
 | Korte subagents | Pydantic AI Harness `0.24.0` als eerste compatibele kandidaat | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Niet zelf spawnen, budgetteren en foutafhandelen wanneer Harness dit al doet |
-| Voice | Pydantic AI Realtime als eerste route | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
+| Voice | Pydantic AI Realtime vanaf `2.32.2` als eerste proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
 | Browser | Microsoft Playwright MCP als eerste eenvoudige provider | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen |
-| Open-ended webwerk | Browser Use pas als tweede kandidaat | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Alleen inzetten wanneer Playwright-MCP de taak aantoonbaar niet goed genoeg doet |
+| Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
 | Geheugenbeheer | Hindsight `0.9.1` plus de bestaande lokale Control Plane UI | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
 | Chat- en beheerinterface | Pydantic web/AG-UI, Hindsight Control Plane en bestaande UI-componenten | Eén dun Eva-scherm voor taken, status, mandaten en bewijs | Geen compleet dashboardframework namaken |
 | Kanbanpresentatie | Een onderhouden datagrid/boardcomponent; eerste kandidaat React-Admin | PostgreSQL blijft taakautoriteit; iedere wijziging via Eva's API | Geen tweede taakdatabase of Hermes-kloon |
+| Installatielauncher | PyInstaller als eerste bundelkandidaat plus Eva's bestaande FastAPI-wizard | Docker/WSL-controle, secrets, restore, A/B-update, ondertekening en uninstall | Geen eigen Python-bootstrapper bouwen; wel per besturingssysteem een exact artifact testen |
+| Skillbestandsformaat | Agent Skills-specificatie plus officiële MCP SDK | Quarantaine, rechten, evaluatie, promotie, audit en rollback | Geen eigen skillformaat ontwerpen; een formaat is nog geen veilige store of sandbox |
 | Metrics en kosten | OpenTelemetry uit Pydantic AI en een bestaande backend zoals Grafana | Eva-specifieke productmetrics en privacyfilter | Geen eigen observabilityplatform bouwen |
 | Dependencyupdates | Renovate in de ontwikkelomgeving | Exacte pins, compatibiliteitstest, menselijke/reviewer-go en rollback | Nooit automatisch naar productie promoveren |
 | SBOM, CVE's, secrets en images | Trivy; eventueel Cosign/in-toto voor ondertekening en attestatie | Eva valideert de receipt en blokkeert de release | Geen eigen scanner of cryptografisch updateprotocol bouwen |
@@ -63,6 +66,11 @@ Hergebruik betekent niet blind `latest` installeren.
 
 - Eva pinnt nu `pydantic-ai-slim==2.32.1`. De bron op exact die tag bevat
   realtime voice, DBOS/Temporal-integratie en web-UI-adapters.
+- De eerste voiceproef gebruikt niet stil diezelfde pin. `2.32.2` repareert
+  coöperatieve realtime run-/sessie-annulering via `RunContext.cancel()`.
+  Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
+  playback/media-bridge. Die kleine upgrade wordt afzonderlijk gesloten; de
+  nieuwere `2.34.0` wordt niet automatisch meegenomen.
 - Het losse Pydantic AI Harness is jonger en gebruikt `0.x`-releases. De
   actuele `0.25.0` vereist `pydantic-ai-slim>=2.33.0` en past dus **niet** bij
   Eva's huidige pin. `0.24.0` accepteert `>=2.28.0` en is de eerste
@@ -74,6 +82,12 @@ Hergebruik betekent niet blind `latest` installeren.
 - Playwright MCP, Browser Use, OpenClaw en iedere andere sidecar worden op
   release, commit, image-digest en licentie vastgezet voordat zij secrets of
   echte accounts zien.
+
+De actuele eerste proefpins zijn: MCP Python SDK `2.1.1`, Playwright MCP
+`0.0.79`, Harness `0.24.0`, React Admin `5.15.1` en PyInstaller `6.20.0`.
+Agent Skills wordt op commit `69ef37e…` beproefd. Dit zijn proefinputs, geen
+goedgekeurde productdependencies en geen toestemming om transitieve packages
+stil mee te veranderen.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -94,6 +108,10 @@ pas door wanneer alle onderstaande vragen groen zijn:
 9. Slaagt een upgrade én een downgrade op gekopieerde testdata?
 10. Kan de dependency later worden vervangen zonder Eva's geheugen of
     taakgeschiedenis te verliezen?
+11. Welke versies ontvangen securityfixes, welke advisories zijn open en is het
+    exacte oude rollbackartifact lokaal beschikbaar?
+12. Wanneer is de volgende onderhoudscontrole en wie bezit de dunne
+    Eva-adapter?
 
 Een afwijzing krijgt een concrete mislukte proef. “Wij kunnen het zelf netter”
 is geen geldige reden.
@@ -103,19 +121,28 @@ is geen geldige reden.
 Dit is een momentopname van 25 augustus 2026. Zij geeft kandidaten, geen
 automatische productgoedkeuring.
 
-| Project | Waarom serieus | Voorbehoud |
-|---|---|---|
-| Pydantic AI | MIT, grote actieve community, exacte `2.32.1`-bron en officiële voice-, UI-, MCP- en durable-executionroutes | Eva gebruikt de dependency nu nog nauwelijks; eerst een echte verticale proef |
-| Pydantic AI Harness | Officieel Pydantic-project met subagents, planning, browser- en skillbouwstenen | Nog `0.x`; exact pinnen en achter Eva's eigen contract houden |
-| DBOS Transact | MIT, actieve releases, PostgreSQL-workflows en queues zonder extra broker | Lokale Eva-patch en private DBOS-imports eerst wegwerken of isoleren |
-| Microsoft Playwright MCP | Apache-2.0, Microsoft/Playwright-community, echte browserbediening via MCP | MCP bewijst niet vanzelf dat een aankoop of formulier werkelijk goed eindigde |
-| Browser Use | MIT, zeer actieve grote community en zelfherstellende browseragent | Meer modelcalls, sneller veranderend oppervlak en risico op een tweede agentbrein |
-| Hindsight | MIT, actieve community, API/SDK/CLI én lokale Control Plane UI op de al gekozen `0.9.1`-tag | Eva moet personen, groepen, consent en verwijdering blijven afdwingen |
-| LiveKit Agents | Apache-2.0 en een actieve realtime voice-community | Alleen fallback wanneer Pydantic Realtime de gemeten route niet haalt; anders dubbel |
-| OpenClaw | Zeer actieve channel-/gatewaycommunity en bestaande WhatsApp-plugin | Exacte pluginlicentie, versie, accountbeleid en sidecarisolatie per kanaal controleren |
-| React-Admin | MIT, volwassen dashboardframework boven REST/GraphQL | Alleen presentatielaag; geen directe toegang tot Eva's tabellen of secrets |
-| Renovate | Zeer actief dependency-updateproject | Alleen voorstellen maken; nooit zelf een Eva-release goedkeuren |
-| Trivy | Apache-2.0, volwassen scanner voor images, dependencies, secrets, licenties en SBOM | Scannerdata kan fout-positieven bevatten; releasebeleid bepaalt de blokkade |
+`GO` geldt alleen voor de genoemde smalle rol. `PROEF` betekent nog geen
+productdependency. `NO-GO V1` voorkomt overlap totdat een smallere kandidaat
+een concreet gat laat zien.
+
+| Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
+|---|---|---|---|
+| Pydantic AI `2.32.1` | `PROEF` | MIT, stabiele V2-versiepolicy, compatibility-CI, meerdere recente bijdragers en openbare advisories | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API |
+| Pydantic AI Harness | `PROEF` | MIT, officieel apart Pydantic-project, recente `0.x`-releases en meerdere auteurs | API stabiliseert nog; exacte compatibele pin, geen taak-/geheugenautoriteit en directe rollback |
+| DBOS Transact | `PROEF` | MIT, gepubliceerde Pythonreleases en correctnessfixes rond herstel en duplicaten | Eva's private patch/imports zijn de blocker; eerst publieke API, schema-upgrade en downgrade op kopiedata |
+| Officiële MCP Python SDK | `PROEF` | MIT, Tier-1 SDK, twee ondersteunde releaselijnen plus expliciet versie-, release- en migratiebeleid | Bewijs dezelfde schema-, timeout-, callback- en secretblokkades als Eva's huidige smalle profiel |
+| Home Assistant MCP Server | `PROEF` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Actuele schema-issues en mogelijk geen volledige historie/automatiseringsbewerking/readback; directe code verdwijnt alleen na pariteit |
+| Microsoft Playwright MCP | `PROEF` | Apache-2.0, eigen release- en securityroute en onderhoud binnen Microsoft | Nog `0.x`; originfilters zijn geen sandbox. Pin ook browser/container en test SIGKILL, egress, downloads en orphanprocessen |
+| Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
+| Hindsight API `0.9.1` | `GO: huidige L2` | MIT, exact artifact/digest en bestaande Eva-livebewijzen | PostgreSQL blijft canoniek; iedere upgrade blijft een aparte proef met export, privacy, latency en rollback |
+| Hindsight Control Plane UI | `PROEF` | Onderdeel van dezelfde releasefamilie | Auth en tenant-/ACL-grenzen passen niet direct bij Eva; begin read-only achter Eva's API |
+| LiveKit Agents | `PROEF: voicefallback` | Apache-2.0 framework, releases en bijdragen van meerdere auteurs | Alleen als Pydantic Realtime latency, reconnect of transport niet haalt; geen dubbele voicekern |
+| OpenClaw Gateway/plugin | `PROEF` | MIT core, signed releases, zeer recente commits en veel bijdragers | Hoge churn, eerdere gateway-scopeadvisory en volledig vertrouwde plugins; exact één geïsoleerde plugin per proef |
+| React-Admin | `PROEF: UI` | MIT, doorlopende releases en openbare issue-/releaseplanning | Alleen presentatie via Eva's API; CSP/XSS-tests, geen directe database of secrets |
+| PyInstaller | `PROEF: launcher` | `GPL-2.0-or-later WITH Bootloader-exception`, veel releases en ondersteuning voor gangbare desktopplatforms | Geen cross-compiler of complete installer; per OS bouwen, signen, verwijderen en rollback testen |
+| Agent Skills-specificatie | `PROEF: skillformaat` | Open specificatie/code met Apache-2.0 en een exact te pinnen commit | Geen store, sandbox of rechtenmodel; Eva's quarantaine en promotie blijven leidend |
+| Renovate | `GO: voorstelbot` | AGPL-3.0, immutable releases en concrete security-/permissiondocumentatie | `automerge=false`, geen base-branch push of post-upgradecode; ieder voorstel door tests en review |
+| Trivy | `PROEF: scannersignaal` | Apache-2.0, signed/checksummed artifacts en actieve advisoryafhandeling | Releases/actions zijn in 2026 gecompromitteerd; nooit `latest`, nooit de enige releasewaarheid |
 
 ## Wat dit concreet aan bestaand werk verandert
 
@@ -143,6 +170,24 @@ Ook kan na pariteitsproeven enkele duizenden bestaande productregels verdwijnen.
 Verwijderen gebeurt pas na dezelfde tests op beide routes en een eenvoudige
 rollback; een grote herschrijving zonder vangnet zou opnieuw tijd verspillen.
 
+## Grootste concrete vervangkansen in de huidige bron
+
+Dit zijn geen beloofde verwijdercijfers. Het zijn de eerste plekken waar een
+upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
+
+| Huidige Eva-bron | Omvang op 25 augustus 2026 | Upstream proef | Wat altijd Eva-eigen blijft |
+|---|---:|---|---|
+| `adapters/model/conversation.py` | 2.378 regels | Pydantic AI voor provider, getypeerde output, tools en usage | IdentityPack, audience, budgetbesluit, actiebewijs en eindantwoord |
+| `adapters/connectors/mcp.py` | 404 regels | Officiële MCP Python SDK voor protocol, transports en berichten | Tool-/resourcewhitelist, schemahashes, tijdslimiet, secretgrens en receipt |
+| `adapters/connectors/home_assistant.py` | 763 regels | Home Assistants eigen MCP Server voor normale context en handelingen | Least-privilege binding en onafhankelijke readback; directe historie/automatisering alleen bij bewezen MCP-gat |
+| Zeven application-workerbestanden | meerdere losse loops | DBOS scheduling, queues en durable execution op dezelfde crashcases | Taakbetekenis, mandaat, idempotency, externe ambiguïteit en gebruikersstatus |
+| HTML/JavaScript in `adapters/api/app.py` | onderdeel van 1.536 regels | React-Admin of Pydantic web/AG-UI als presentatielaag | Gesaneerde Eva-API, authenticatie, writes via commands en audit |
+
+De volgorde is bewust: eerst Pydantic AI en de officiële MCP SDK in twee
+kleine echte routes, daarna Home Assistant via zijn eigen MCP-server, dan pas
+de grotere worker- en UI-vereenvoudiging. Zo wordt "dependency-first" zichtbaar
+als verwijderbare code, niet alleen als een lijst GitHub-links.
+
 ## Kleine dependency-first gates
 
 - [ ] `DF01` — iedere hoofdcomponent heeft `reuse`, `thin Eva layer` of
@@ -164,13 +209,29 @@ zijn de nieuwe packages nog geen goedgekeurde productdependencies.
 ## Primaire bronnen
 
 - Pydantic AI exact `2.32.1`: <https://github.com/pydantic/pydantic-ai/tree/v2.32.1>
+- Pydantic AI realtime-fix `2.32.2`: <https://github.com/pydantic/pydantic-ai/releases/tag/v2.32.2>
+- Pydantic AI cancellation-fix: <https://github.com/pydantic/pydantic-ai/pull/7528>
+- Pydantic AI-versiebeleid: <https://github.com/pydantic/pydantic-ai/blob/main/docs/version-policy.md>
+- Pydantic AI telemetry-advisory: <https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-3gh4-cghq-f8v4>
 - Pydantic AI Harness: <https://github.com/pydantic/pydantic-ai-harness>
 - DBOS Python: <https://github.com/dbos-inc/dbos-transact-py>
+- Officiële MCP Python SDK: <https://github.com/modelcontextprotocol/python-sdk>
+- MCP Python SDK-versiebeleid: <https://github.com/modelcontextprotocol/python-sdk/blob/main/VERSIONING.md>
+- Home Assistant MCP Server: <https://www.home-assistant.io/integrations/mcp_server/>
+- Home Assistant MCP-bron: <https://github.com/home-assistant/core/tree/dev/homeassistant/components/mcp_server>
+- Home Assistant MCP-schema-issue: <https://github.com/home-assistant/core/issues/178032>
 - Microsoft Playwright MCP: <https://github.com/microsoft/playwright-mcp>
+- Microsoft Playwright MCP-securitybeleid: <https://github.com/microsoft/playwright-mcp/security/policy>
 - Browser Use: <https://github.com/browser-use/browser-use>
 - Hindsight exact `0.9.1`: <https://github.com/vectorize-io/hindsight/tree/v0.9.1>
+- Hindsight securitybeleid: <https://github.com/vectorize-io/hindsight/security>
 - LiveKit Agents: <https://github.com/livekit/agents>
 - OpenClaw-kanalen: <https://docs.openclaw.ai/channels>
+- OpenClaw scope-advisory: <https://github.com/openclaw/openclaw/security/advisories/GHSA-4f8g-77mw-3rxc>
 - React-Admin: <https://github.com/marmelab/react-admin>
+- PyInstaller: <https://github.com/pyinstaller/pyinstaller>
+- Agent Skills-specificatie: <https://github.com/agentskills/agentskills/commit/69ef37e9424c0a7ea9dd2293b559e43ec8176379>
 - Renovate: <https://github.com/renovatebot/renovate>
+- Renovate security en permissies: <https://docs.renovatebot.com/security-and-permissions/>
 - Trivy: <https://github.com/aquasecurity/trivy>
+- Trivy supply-chainadvisory: <https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23>

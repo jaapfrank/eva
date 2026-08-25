@@ -77,6 +77,16 @@ Eva's unieke hoofdfeature.
   duurzame DBOS-routes; Hindsight heeft al een lokale beheer-UI. Eva bouwt
   daarom geen eigen voice-, browser-, worker-, Kanban-, scanner- of
   updateplatform voordat een gepinde dependencyproef een concreet gat bewijst.
+  Ook Eva's 404 regels handgeschreven MCP-client en 763 regels directe
+  Home Assistant-adapter zijn nu expliciete vervangkandidaten: eerst de
+  officiële MCP Python SDK en Home Assistants ingebouwde MCP Server testen,
+  daarna alleen aantoonbaar ontbrekende Eva-grenzen behouden. De onafhankelijke
+  onderhoudsaudit geeft alleen Hindsight in zijn huidige smalle L2-rol en
+  Renovate als niet-automerge voorstelbot een begrensde `GO`; onder meer
+  Pydantic AI, Harness, DBOS, de officiële MCP SDK, Home Assistant MCP Server,
+  Playwright MCP, Hindsight UI, LiveKit, OpenClaw, React-Admin, PyInstaller,
+  Agent Skills en Trivy blijven `PROEF`. Browser Use en een tweede
+  workflowplatform komen nu niet in V1.
   `DF01`-`DF06` en de eerste kandidaten staan in
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
