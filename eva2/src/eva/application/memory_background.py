@@ -1,4 +1,4 @@
-"""Cold-path delivery of conversation memory to Hindsight."""
+"""Provider-neutral cold-path delivery of semantic conversation memory."""
 
 from __future__ import annotations
 
@@ -9,18 +9,11 @@ from threading import Event, Lock, Thread
 import time
 from typing import Callable, Protocol
 
-from eva.application.memory import ConversationMemoryDocument
-from eva.application.memory import MemoryRetentionReceipt
-
-
-class HindsightColdPathPort(Protocol):
-    def retain_conversation(
-        self, document: ConversationMemoryDocument
-    ) -> MemoryRetentionReceipt: ...
-
-    def ensure_background_reflection(
-        self, tenant_id: str, installation_id: str, principal_id: str
-    ) -> object: ...
+from eva.application.memory import (
+    ConversationMemoryDocument,
+    MemoryRetentionReceipt,
+    SemanticMemoryProviderPort,
+)
 
 
 class DurableMemoryOutboxPort(Protocol):
@@ -50,17 +43,17 @@ class _RetainJob:
     durable_job: object | None = None
 
 
-class HindsightColdPathWorker:
-    """Keep retain and reflect entirely outside the conversational hot path.
+class SemanticMemoryColdPathWorker:
+    """Keep retain and maintenance entirely outside the conversational hot path.
 
-    Retain is offered to Hindsight's asynchronous ingestion API. Reflection is
-    only scheduled after the configured idle period; the Hindsight mental model
-    itself refreshes nightly. A poison job is tried at most three times.
+    Retain is offered to the selected provider outside the response path.
+    Provider maintenance starts only after the configured idle period. A poison
+    job is tried at most three times.
     """
 
     def __init__(
         self,
-        memory: HindsightColdPathPort,
+        memory: SemanticMemoryProviderPort,
         *,
         idle_seconds: float = 300.0,
         retry_delay_seconds: float = 2.0,
@@ -229,7 +222,7 @@ class HindsightColdPathWorker:
             self._reflection_scopes.clear()
         for tenant_id, installation_id, principal_id in scopes:
             try:
-                self._memory.ensure_background_reflection(
+                self._memory.maintain_person_scope(
                     tenant_id, installation_id, principal_id
                 )
             except Exception as error:  # retried after the next retained exchange
@@ -248,8 +241,11 @@ class HindsightColdPathWorker:
             self._last_activity = time.monotonic()
 
 
+HindsightColdPathWorker = SemanticMemoryColdPathWorker
+
+
 __all__ = [
     "DurableMemoryOutboxPort",
-    "HindsightColdPathPort",
     "HindsightColdPathWorker",
+    "SemanticMemoryColdPathWorker",
 ]

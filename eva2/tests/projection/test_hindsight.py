@@ -996,7 +996,7 @@ def test_hindsight_config_applies_bounded_recall_settings_to_both_paths(
     )
 
     engine.recall_for_presence(_query())
-    engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
+    engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
 
     recall = next(
         body
@@ -1099,8 +1099,8 @@ def test_reflection_is_a_stale_only_nightly_background_mental_model(
     base_url, state = hindsight_server
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
 
-    receipt = engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
-    repeated = engine.ensure_background_reflection(TENANT, INSTALLATION, PRINCIPAL)
+    receipt = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+    repeated = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
 
     assert receipt.disposition == "created"
     assert repeated.disposition == "already_present"

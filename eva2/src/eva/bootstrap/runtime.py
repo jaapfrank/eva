@@ -70,7 +70,6 @@ from eva.adapters.postgres.commerce import (
 from eva.adapters.projection.hindsight import (
     HindsightMemoryEngine,
     HindsightProjectionConfig,
-    HindsightProjectionError,
 )
 from eva.application.conversation import (
     ConversationConflict,
@@ -101,6 +100,7 @@ from eva.application.memory import (
     MemoryRetentionReceipt,
     PresenceMemory,
     RecallCurrentFacts,
+    SemanticMemoryProviderError, SemanticMemoryProviderPort,
 )
 from eva.application.memory_audience import MemoryAudience
 from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
@@ -449,7 +449,7 @@ class PostgresHindsightMemoryRuntime:
     def __init__(
         self,
         engine: Engine,
-        memory: HindsightMemoryEngine,
+        memory: SemanticMemoryProviderPort,
         conversation: LivingConversation,
         cold_path: HindsightColdPathWorker,
         prototype_store: PostgresPersonalPrototypeStore,
@@ -596,7 +596,7 @@ class PostgresHindsightMemoryRuntime:
             return RuntimeHealth(False, "unavailable", "unknown", str(error), "unknown")
         try:
             self._memory.health()
-        except HindsightProjectionError as error:
+        except SemanticMemoryProviderError as error:
             return RuntimeHealth(False, "ready", "unavailable", str(error), "unknown")
         if self._conversation_model is not None:
             model_status = self._conversation_model.credential_status()

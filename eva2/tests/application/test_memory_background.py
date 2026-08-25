@@ -40,7 +40,7 @@ def test_retain_is_fire_and_forget_and_reflect_waits_for_idle() -> None:
             retain_entered.set()
             assert release_retain.wait(1)
 
-        def ensure_background_reflection(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
+        def maintain_person_scope(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
             reflections.append((tenant, installation, principal))
 
     worker = HindsightColdPathWorker(Memory(), idle_seconds=0.05, retry_delay_seconds=0)
@@ -72,7 +72,7 @@ def test_group_memory_never_schedules_a_person_style_reflection() -> None:
                 content_sha256="a" * 64,
             )
 
-        def ensure_background_reflection(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
+        def maintain_person_scope(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
             reflections.append((tenant, installation, principal))
 
     document = replace(
@@ -107,7 +107,7 @@ def test_poison_retain_stops_after_three_attempts() -> None:
             attempts += 1
             raise RuntimeError("bad memory input")
 
-        def ensure_background_reflection(self, *scope):  # type: ignore[no-untyped-def]
+        def maintain_person_scope(self, *scope):  # type: ignore[no-untyped-def]
             raise AssertionError("failed retain must not trigger reflection")
 
     worker = HindsightColdPathWorker(Memory(), idle_seconds=60, retry_delay_seconds=0)
@@ -175,7 +175,7 @@ def test_durable_pending_job_is_rehydrated_on_worker_start() -> None:
                 ),
             )
 
-        def ensure_background_reflection(self, *scope):  # type: ignore[no-untyped-def]
+        def maintain_person_scope(self, *scope):  # type: ignore[no-untyped-def]
             return None
 
     worker = HindsightColdPathWorker(

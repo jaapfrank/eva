@@ -33,7 +33,7 @@ from eva.application.memory import (
     MemoryRetentionReceipt,
     PresenceMemory,
     RecallCurrentFacts,
-    RememberFact,
+    RememberFact, SemanticMemoryProviderError,
 )
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -53,7 +53,7 @@ _SHA256 = re.compile(r"[0-9a-f]{64}")
 _OBSERVATION_EVIDENCE_PREFIX = "observation-binding:"
 
 
-class HindsightProjectionError(RuntimeError):
+class HindsightProjectionError(SemanticMemoryProviderError):
     """Base error for the replaceable Hindsight projection."""
 
 
@@ -563,7 +563,7 @@ class HindsightMemoryEngine:
             self._known_banks.add(bank_id)
         return bank_id
 
-    def ensure_background_reflection(
+    def maintain_person_scope(
         self, tenant_id: str, installation_id: str, principal_id: str
     ) -> BackgroundReflectionReceipt:
         """Provision one stale-only nightly mental model outside the chat path."""

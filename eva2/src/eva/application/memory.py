@@ -209,6 +209,26 @@ class MemoryRetentionReceipt:
             raise ValueError("memory retention receipt disposition is invalid")
 
 
+class SemanticMemoryProviderError(RuntimeError):
+    """Provider-neutral failure at Eva's semantic-memory boundary."""
+
+
+class SemanticMemoryProviderPort(Protocol):
+    """Small replaceable boundary for recall, retain, and cold maintenance."""
+
+    def health(self) -> None: ...
+
+    def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory: ...
+
+    def retain_conversation(
+        self, document: ConversationMemoryDocument
+    ) -> MemoryRetentionReceipt: ...
+
+    def maintain_person_scope(
+        self, tenant_id: str, installation_id: str, principal_id: str
+    ) -> object: ...
+
+
 class MemoryRepository(Protocol):
     def remember(self, command: RememberFact) -> MemoryWriteReceipt: ...
 
@@ -386,4 +406,6 @@ __all__ = [
     "RecallCurrentFacts",
     "RecalledMemoryFact",
     "RememberFact",
+    "SemanticMemoryProviderError",
+    "SemanticMemoryProviderPort",
 ]
