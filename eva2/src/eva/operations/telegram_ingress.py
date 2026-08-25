@@ -97,6 +97,12 @@ def main() -> int:
         ),
         timeout_seconds=10,
     )
+    pairing_store = PostgresTelegramPairingStore(
+        engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        trusted_bindings=bindings,
+    )
     worker = TelegramIngressWorker(
         provider,
         LivingCoreTurnHttpAdapter(
@@ -111,12 +117,7 @@ def main() -> int:
         ),
         bindings,
         TelegramPairingResponder(
-            PostgresTelegramPairingStore(
-                engine,
-                tenant_id=tenant_id,
-                installation_id=installation_id,
-                trusted_bindings=bindings,
-            ),
+            pairing_store,
             derivation_secret=pairing_secret,
         ),
         TelegramGroupConsentResponder(
@@ -124,6 +125,7 @@ def main() -> int:
                 engine, tenant_id=tenant_id, installation_id=installation_id
             )
         ),
+        dynamic_bindings=pairing_store,
     )
     stop = Event()
 

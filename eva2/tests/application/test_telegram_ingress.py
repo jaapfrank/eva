@@ -122,6 +122,305 @@ def test_one_person_can_bind_multiple_distinct_telegram_accounts() -> None:
     assert bindings.resolve(404, "101") is None
 
 
+def test_dynamic_private_binding_reaches_normal_core_without_static_fallback() -> None:
+    message = _message(10, 303, "Ken je mij nog?")
+    core_calls = []
+    delivered: list[str] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            assert offset == 0
+            return (message,)
+
+        def send_reply(self, inbound, text):  # type: ignore[no-untyped-def]
+            assert inbound == message
+            delivered.append(text)
+            return "telegram:303:910"
+
+    class Core:
+        def respond(self, inbound, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            core_calls.append((inbound, principal_id, audience))
+            import hashlib
+
+            text = "Ja, jij bent dezelfde persoon."
+            return TelegramCoreReply(
+                "telegram:303",
+                "telegram:303:110",
+                text,
+                hashlib.sha256(text.encode()).hexdigest(),
+            )
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, inbound, *, reason):  # type: ignore[no-untyped-def]
+            raise AssertionError((inbound, reason))
+
+        def admit(self, inbound, *, principal_id):  # type: ignore[no-untyped-def]
+            assert principal_id == "person:jaap"
+            return TelegramIngressJob(inbound, principal_id, "admitted", 1)
+
+        def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "prepared", 2, reply
+            )
+
+        def fail_processing(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "claimed", 3, job.reply
+            )
+
+        def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
+            assert receipt == "telegram:303:910"
+
+        def mark_delivery_ambiguous(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class DynamicBindings:
+        def resolve(self, *, telegram_user_id, chat_id):  # type: ignore[no-untyped-def]
+            assert (telegram_user_id, chat_id) == (303, "303")
+            return "person:jaap"
+
+    static_bindings = TelegramPrincipalBindings(
+        (TelegramPrincipalBinding(101, "person:jaap", ("101",)),)
+    )
+    assert static_bindings.resolve(303, "303") is None
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        static_bindings,
+        dynamic_bindings=DynamicBindings(),
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    assert len(core_calls) == 1
+    assert core_calls[0][1] == "person:jaap"
+    assert core_calls[0][2].kind == "private_person"
+    assert core_calls[0][2].principal_id == "person:jaap"
+    assert delivered == ["Ja, jij bent dezelfde persoon."]
+
+
+def test_group_only_static_sender_conflicts_with_private_dynamic_binding() -> None:
+    message = _message(29, 404, "Dit ben ik privé")
+    rejected: list[tuple[int, str]] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (message,)
+
+        def send_reply(self, inbound, text):  # type: ignore[no-untyped-def]
+            raise AssertionError((inbound, text))
+
+    class Core:
+        def respond(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, inbound, *, reason):  # type: ignore[no-untyped-def]
+            rejected.append((inbound.update_id, reason))
+            return "rejected"
+
+        def admit(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class Pairing:
+        def begin(self, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(kwargs)
+
+        def confirm(self, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(kwargs)
+
+    class DynamicBindings:
+        def resolve(self, *, telegram_user_id, chat_id):  # type: ignore[no-untyped-def]
+            assert (telegram_user_id, chat_id) == (404, "404")
+            return "person:jaap"
+
+    static_bindings = TelegramPrincipalBindings(
+        (TelegramPrincipalBinding(404, "person:frank", ("-42",)),)
+    )
+    assert static_bindings.resolve_sender(404) == "person:frank"
+    assert static_bindings.resolve(404, "404") is None
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        static_bindings,
+        pairing=Pairing(),
+        dynamic_bindings=DynamicBindings(),
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    assert rejected == [(29, "sender_or_chat_not_authorized")]
+
+
+def test_dynamic_binding_never_grants_group_access_and_conflicts_fail_closed() -> None:
+    messages = (
+        _message(30, 303, "/link"),
+        _message(31, 303, "Privéconflict"),
+        TelegramInboundMessage(32, "-42", 132, 303, NOW, "Groepsconflict"),
+        TelegramInboundMessage(33, "-42", 133, 404, NOW, "Geen groepsrecht"),
+        _message(34, 505, "Onbekend"),
+    )
+    rejected: list[tuple[int, str]] = []
+    resolutions: list[tuple[int, str]] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return messages
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, text))
+
+    class Core:
+        def respond(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class Pairing:
+        def begin(self, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(kwargs)
+
+        def confirm(self, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(kwargs)
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, message, *, reason):  # type: ignore[no-untyped-def]
+            rejected.append((message.update_id, reason))
+            return "rejected"
+
+        def admit(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class DynamicBindings:
+        def resolve(self, *, telegram_user_id, chat_id):  # type: ignore[no-untyped-def]
+            resolutions.append((telegram_user_id, chat_id))
+            return {
+                303: "person:jaap",
+                404: "person:jaap",
+            }.get(telegram_user_id)
+
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        TelegramPrincipalBindings(
+            (
+                TelegramPrincipalBinding(303, "person:frank", ("-42", "303")),
+                TelegramPrincipalBinding(101, "person:jaap", ("101",)),
+            )
+        ),
+        pairing=Pairing(),
+        dynamic_bindings=DynamicBindings(),
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    assert rejected == [
+        (30, "sender_or_chat_not_authorized"),
+        (31, "sender_or_chat_not_authorized"),
+        (32, "sender_or_chat_not_authorized"),
+        (33, "sender_or_chat_not_authorized"),
+        (34, "sender_or_chat_not_authorized"),
+    ]
+    assert resolutions == [
+        (303, "303"),
+        (303, "303"),
+        (303, "303"),
+        (404, "404"),
+        (505, "505"),
+    ]
+
+
+def test_dynamic_private_binding_does_not_inherit_static_group_consent_scope() -> None:
+    message = _message(35, 303, "/share -42")
+    delivered: list[str] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (message,)
+
+        def send_reply(self, inbound, text):  # type: ignore[no-untyped-def]
+            delivered.append(text)
+            return "telegram:303:935"
+
+    class Core:
+        def respond(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def admit(self, inbound, *, principal_id):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(inbound, principal_id, "admitted", 1)
+
+        def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "prepared", 2, reply
+            )
+
+        def fail_processing(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "claimed", 3, job.reply
+            )
+
+        def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
+            assert receipt == "telegram:303:935"
+
+        def mark_delivery_ambiguous(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    class ConsentStore:
+        def grant(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def revoke(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def permits(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            return False
+
+        def active_reference(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            return None
+
+    class DynamicBindings:
+        def resolve(self, *, telegram_user_id, chat_id):  # type: ignore[no-untyped-def]
+            return (
+                "person:jaap" if (telegram_user_id, chat_id) == (303, "303") else None
+            )
+
+    from eva.application.telegram_group_consent import TelegramGroupConsentResponder
+
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        TelegramPrincipalBindings(
+            (TelegramPrincipalBinding(101, "person:jaap", ("-42", "101")),)
+        ),
+        group_consent=TelegramGroupConsentResponder(ConsentStore()),
+        dynamic_bindings=DynamicBindings(),
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    assert delivered == ["Die groep hoort niet bij jouw gekoppelde Telegram-account."]
+
+
 def test_pairing_commands_bypass_core_but_use_the_normal_delivery_ledger() -> None:
     messages = (
         _message(11, 303, "/link"),

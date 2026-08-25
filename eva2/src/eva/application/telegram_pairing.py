@@ -48,7 +48,13 @@ class TelegramDynamicBinding:
             raise ValueError("Telegram dynamic binding is invalid")
 
 
-class TelegramPairingStorePort(Protocol):
+class TelegramDynamicBindingResolverPort(Protocol):
+    """Resolve a paired Telegram account without granting it chat scopes."""
+
+    def resolve(self, *, telegram_user_id: int, chat_id: str) -> str | None: ...
+
+
+class TelegramPairingStorePort(TelegramDynamicBindingResolverPort, Protocol):
     """Durable pairing state. Implementations must survive an ingress restart."""
 
     def start(
@@ -63,8 +69,6 @@ class TelegramPairingStorePort(Protocol):
         confirmer_chat_id: str,
         now: datetime,
     ) -> TelegramDynamicBinding | None: ...
-
-    def resolve(self, *, telegram_user_id: int, chat_id: str) -> str | None: ...
 
 
 class TelegramPairingResponder:
@@ -137,6 +141,7 @@ def derive_pairing_code(
 
 __all__ = [
     "TelegramDynamicBinding",
+    "TelegramDynamicBindingResolverPort",
     "TelegramPairingChallenge",
     "TelegramPairingStorePort",
     "TelegramPairingResponder",

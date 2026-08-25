@@ -8,7 +8,10 @@ import re
 from typing import Protocol
 
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
-from eva.application.telegram_pairing import TelegramPairingResponder
+from eva.application.telegram_pairing import (
+    TelegramDynamicBindingResolverPort,
+    TelegramPairingResponder,
+)
 from eva.application.memory_audience import MemoryAudience
 
 
@@ -78,6 +81,10 @@ class TelegramPrincipalBindings:
         if binding is None or chat_id not in binding.allowed_chat_ids:
             return None
         return binding.principal_id
+
+    def resolve_sender(self, sender_id: int) -> str | None:
+        binding = self._by_user.get(sender_id)
+        return None if binding is None else binding.principal_id
 
     def allowed_chat_ids(self, sender_id: int) -> tuple[str, ...]:
         binding = self._by_user.get(sender_id)
@@ -162,6 +169,7 @@ class TelegramIngressWorker:
         bindings: TelegramPrincipalBindings,
         pairing: TelegramPairingResponder | None = None,
         group_consent: TelegramGroupConsentResponder | None = None,
+        dynamic_bindings: TelegramDynamicBindingResolverPort | None = None,
     ) -> None:
         self._provider = provider
         self._core = core
@@ -169,6 +177,7 @@ class TelegramIngressWorker:
         self._bindings = bindings
         self._pairing = pairing
         self._group_consent = group_consent
+        self._dynamic_bindings = dynamic_bindings
 
     @staticmethod
     def _now() -> datetime:
@@ -182,7 +191,10 @@ class TelegramIngressWorker:
             if message.text is None:
                 self._store.reject(message, reason="unsupported_non_text_message")
                 continue
-            principal_id = self._bindings.resolve(message.sender_id, message.chat_id)
+            principal_id, identity_conflict = self._resolve_principal(message)
+            if identity_conflict:
+                self._store.reject(message, reason="sender_or_chat_not_authorized")
+                continue
             if principal_id is None:
                 if self._pairing is None or message.text.strip() != "/link":
                     self._store.reject(message, reason="sender_or_chat_not_authorized")
@@ -276,6 +288,33 @@ class TelegramIngressWorker:
             )
         return "processed"
 
+    def _resolve_principal(
+        self, message: TelegramInboundMessage
+    ) -> tuple[str | None, bool]:
+        static_sender_principal = self._bindings.resolve_sender(message.sender_id)
+        static_authorized_principal = self._bindings.resolve(
+            message.sender_id, message.chat_id
+        )
+        dynamic_principal = (
+            None
+            if self._dynamic_bindings is None
+            else self._dynamic_bindings.resolve(
+                telegram_user_id=message.sender_id,
+                chat_id=str(message.sender_id),
+            )
+        )
+        if (
+            static_sender_principal is not None
+            and dynamic_principal is not None
+            and static_sender_principal != dynamic_principal
+        ):
+            return None, True
+        if static_authorized_principal is not None:
+            return static_authorized_principal, False
+        if message.chat_id == str(message.sender_id):
+            return dynamic_principal, False
+        return None, False
+
     @staticmethod
     def _local_reply(message: TelegramInboundMessage, text: str) -> TelegramCoreReply:
         import hashlib
@@ -300,6 +339,7 @@ class TelegramIngressWorker:
             now=self._now(),
         )
         return None if text is None else self._local_reply(message, text)
+
 
 __all__ = [
     "TelegramCorePort",

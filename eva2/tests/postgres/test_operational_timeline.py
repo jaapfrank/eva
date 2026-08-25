@@ -57,6 +57,7 @@ from eva.application.telegram_ingress import (
 from eva.application.telegram_pairing import (
     TelegramDynamicBinding,
     TelegramPairingChallenge,
+    TelegramPairingResponder,
     derive_pairing_code,
     pairing_expiry,
 )
@@ -401,6 +402,201 @@ def test_telegram_pairing_is_private_two_sided_and_survives_restart(
         ).telegram_user_id
         == 404
     )
+
+
+def test_dynamically_paired_account_reaches_normal_ingress_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "telegram-dynamic-ingress"
+    installation_id = "home"
+    trusted_bindings = _pairing_bindings()
+    first_store = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        trusted_bindings=trusted_bindings,
+    )
+    responder = TelegramPairingResponder(first_store, derivation_secret=b"p" * 32)
+    request_text = responder.begin(
+        update_id=81007,
+        sender_id=404,
+        chat_id="404",
+        now=NOW,
+    )
+    assert request_text is not None
+    code = request_text.rsplit(maxsplit=1)[-1]
+    assert (
+        responder.confirm(
+            code=code,
+            sender_id=101,
+            chat_id="101",
+            now=NOW + timedelta(seconds=1),
+        )
+        == "Gekoppeld."
+    )
+    assert trusted_bindings.resolve(404, "404") is None
+
+    restarted_pairing = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        trusted_bindings=trusted_bindings,
+    )
+    message = TelegramInboundMessage(
+        81008,
+        "404",
+        904,
+        404,
+        NOW + timedelta(seconds=2),
+        "Ken je mij nog?",
+    )
+    core_calls = []
+    deliveries: list[str] = []
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (message,)
+
+        def send_reply(self, inbound, text):  # type: ignore[no-untyped-def]
+            assert inbound == message
+            deliveries.append(text)
+            return "telegram:404:9904"
+
+    class Core:
+        def respond(self, inbound, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            core_calls.append((inbound, principal_id, audience))
+            text = "Ik herken hetzelfde profiel."
+            return TelegramCoreReply(
+                "telegram:404",
+                "telegram:404:904",
+                text,
+                hashlib.sha256(text.encode()).hexdigest(),
+            )
+
+    first_ingress = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+    )
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        first_ingress,
+        trusted_bindings,
+        dynamic_bindings=restarted_pairing,
+    )
+
+    assert worker.run_once() == "processed"
+    assert len(core_calls) == 1
+    assert core_calls[0][1] == "person:jaap"
+    assert core_calls[0][2].kind == "private_person"
+    assert core_calls[0][2].principal_id == "person:jaap"
+    assert deliveries == ["Ik herken hetzelfde profiel."]
+
+    replayed_pairing = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        trusted_bindings=trusted_bindings,
+    )
+    replayed_ingress = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+    )
+    replayed_worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        replayed_ingress,
+        trusted_bindings,
+        dynamic_bindings=replayed_pairing,
+    )
+
+    assert replayed_worker.run_once() == "processed"
+    assert len(core_calls) == 1
+    assert deliveries == ["Ik herken hetzelfde profiel."]
+    assert replayed_ingress.next_offset() == 81009
+    events = replayed_ingress._timeline.events(  # noqa: SLF001
+        "telegram-inbound:81008"
+    )
+    assert [event.event_type for event in events] == [
+        "TELEGRAM_INGRESS_ADMITTED",
+        "TELEGRAM_REPLY_PREPARED",
+        "TELEGRAM_DELIVERY_CLAIMED",
+        "TELEGRAM_REPLY_DELIVERED",
+    ]
+
+
+def test_dynamic_binding_is_scope_isolated_and_conflict_rejects_without_text(
+    timeline_engine: Engine,
+) -> None:
+    trusted_bindings = _pairing_bindings()
+    pairing = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-dynamic-conflict",
+        installation_id="home",
+        trusted_bindings=trusted_bindings,
+    )
+    challenge = TelegramPairingChallenge(
+        "EVA-ABCDEFGHJKLM", 404, "404", pairing_expiry(NOW)
+    )
+    pairing.start(challenge, update_id=81009, now=NOW)
+    assert pairing.confirm(
+        challenge.code,
+        confirmer_user_id=101,
+        confirmer_chat_id="101",
+        now=NOW + timedelta(seconds=1),
+    ) == TelegramDynamicBinding(404, "person:jaap")
+    other_scope = PostgresTelegramPairingStore(
+        timeline_engine,
+        tenant_id="telegram-dynamic-conflict-other",
+        installation_id="home",
+        trusted_bindings=trusted_bindings,
+    )
+    assert other_scope.resolve(telegram_user_id=404, chat_id="404") is None
+
+    message = TelegramInboundMessage(
+        81010,
+        "404",
+        905,
+        404,
+        NOW + timedelta(seconds=2),
+        "Dit mag niet bij Frank terechtkomen.",
+    )
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return (message,)
+
+        def send_reply(self, inbound, text):  # type: ignore[no-untyped-def]
+            raise AssertionError((inbound, text))
+
+    class Core:
+        def respond(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    ingress = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-dynamic-conflict",
+        installation_id="home",
+    )
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        ingress,
+        TelegramPrincipalBindings(
+            (TelegramPrincipalBinding(404, "person:frank", ("404",)),)
+        ),
+        dynamic_bindings=pairing,
+    )
+
+    assert worker.run_once() == "processed"
+    events = ingress._timeline.events("telegram-inbound:81010")  # noqa: SLF001
+    assert [event.event_type for event in events] == ["TELEGRAM_INGRESS_REJECTED"]
+    data = events[0].payload["data"]
+    assert data["principal_id"] is None
+    assert data["text"] is None
+    assert data["reason"] == "sender_or_chat_not_authorized"
 
 
 def test_telegram_pairing_rejects_self_confirmation_and_expired_codes(
