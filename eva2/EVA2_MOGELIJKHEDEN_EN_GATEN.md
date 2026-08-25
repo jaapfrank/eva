@@ -8,10 +8,13 @@ Bijgewerkt: 25 augustus 2026.
 - Een door het model voorgestelde keten van maximaal zes lees- en actiestappen
   streng controleren en volledig in PostgreSQL bewaren zonder al iets uit te
   voeren; na een herstart wordt exact hetzelfde plan teruggelezen.
-- Voor de eerste leesstap precies één duurzame provider-call-startclaim maken;
-  slechts die eerste claim krijgt het exacte RPC-pakket. Gelijktijdige workers
-  en een herstart krijgen daarna geen oproepbytes terug. De provider zelf is in
-  deze bewezen slice nog niet aangeroepen.
+- Voor de eerste leesstap precies één duurzame provider-call-startclaim maken
+  en alleen voor die claim de algemene verzegelde connectorprocessgrens
+  aanroepen. Een succesvolle testuitkomst wordt als evidence plus observatie
+  geprojecteerd; een echte ongeldige testworker leverde een exact duurzaam
+  protocolfoutbewijs. Replay en een nieuwe engine starten geen tweede proces.
+  Dit is disposable bronbewijs; onafhankelijke herreview, B en een echte
+  Home Assistant-provider blijven open.
 - Recente gesprekken uit PostgreSQL meenemen zonder na een herstart opnieuw te
   beginnen.
 - Persoonlijke feiten, voorkeuren en correcties via Hindsight onthouden.
@@ -102,12 +105,12 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/conversational-voice-v1.md`. De eerlijke
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
-  worden opgepakt, één gevalideerde read duurzaam voorbereiden en daar na
-  hercontrole precies één releasegebonden dispatchfence én eenmalige
-  provider-call-startclaim voor vastleggen. Wat nog ontbreekt is de echte
-  providercall buiten die transactie plus duurzame waarnemingsopslag, daarna
-  effectuitvoering met readback en pas daarna het vrijgeven van de afhankelijke
-  volgende stap.
+  worden opgepakt, één gevalideerde read voorbereiden, de release en authority
+  hercontroleren, één providerproces aanroepen en de exacte uitkomst atomair
+  bewaren. De eerste onafhankelijke review vond dat de aparte observatietijd
+  niet herlaadbaar was; de fix en regressies zijn groen, maar de herreview is
+  nog open. Daarna ontbreken nog het vrijgeven van de afhankelijke stap,
+  effectuitvoering met fysieke readback en de echte Telegram-B-/HA-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie

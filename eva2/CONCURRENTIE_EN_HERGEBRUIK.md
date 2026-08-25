@@ -498,10 +498,18 @@ langdurige verzamelaanpassing telt niet als voortgang.
   ketentests en 24 tijdlijntests zijn groen (`376112f`). Er is geen
   providerproces gestart en geen waarneming geschreven; zie
   `reviews/action-chain-read-call-claim-mc03b2a.md`.
-- [ ] Meerstapsplanning MC03b2b: uitsluitend de eenmalig geclaimde read via de
-  algemene providergrens buiten de databasetransactie uitvoeren en de uitkomst,
-  exacte fout of ambigue crashgrens duurzaam vastleggen. Replay mag geen tweede
-  providerpoging maken.
+- [ ] Meerstapsplanning MC03b2b: de algemene runner voert uitsluitend de
+  eenmalig geclaimde read buiten de databasetransactie uit en bewaart succes,
+  exacte fout of ambigu resultaat atomair. Een synthetische succesuitkomst en
+  een echte subprocess-protocolfout, rollback, herstart en replay zonder tweede
+  proces zijn groen in 36 keten- en 24 tijdlijntests (`6e4f724`, `184516e`).
+  De eerste onafhankelijke review vond de toen niet bewaarde aparte
+  observatietijd; die fix is lokaal groen, maar de onafhankelijke herreview is
+  nog open. Daarom blijft dit vak onafgevinkt; zie
+  `reviews/action-chain-read-result-mc03b2b.md`.
+- [ ] Meerstapsplanning MC03b3: uitsluitend na een duurzaam bewezen readresultaat
+  de juiste afhankelijke stap en continuation vrijgeven; fout, ambiguïteit en
+  rate-limit mogen geen effect autoriseren.
 - [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
   `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
