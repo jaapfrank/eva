@@ -32,9 +32,10 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: MC03b, één reeds voorbereide read via de bestaande providergrens
-  uitvoeren en haar waarneming duurzaam teruglezen. Effectstappen en het
-  vrijgeven van afhankelijke stappen blijven daarna aparte opleverstukken.
+- Bezig: MC03b2, precies één reeds geautoriseerde read buiten de
+  databasetransactie via de bestaande providergrens uitvoeren en de waarneming
+  of exacte fout duurzaam teruglezen. Effectstappen en het vrijgeven van
+  afhankelijke stappen blijven daarna aparte opleverstukken.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -76,14 +77,15 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste afgeronde kleine checkpoint: MC03a zet precies één geleasede,
-  gevalideerde read-stap atomair om in één duurzaam `read_intent`. Het
-  leasetoken, de actuele toolcatalogus, resource-, activation-, binding-,
-  policy- en manifestauthority worden opnieuw gecontroleerd en tot commit
-  gelockt. Een geforceerde rollback liet nul resten achter; een echte
-  tweeverbindingsrace kon de activation niet tussentijds intrekken. Twee
-  onafhankelijke reviews, twee PostgreSQL-tests, 57 contracttests en 24
-  tijdlijntests zijn groen. Er is nog geen provider aangeroepen.
+- Laatste afgeronde kleine checkpoint: MC03b1 zet één voorbereid read-intent
+  na hercontrole van plan, catalogus en gelockte authority om in precies één
+  duurzame `dispatch_authorized`-fence. De provider komt uitsluitend uit een
+  ondertekende release-provenance; launcher en programma zijn semantisch en
+  byte-exact gebonden en gepinde bestanden worden via een sealed memfd
+  uitgevoerd. Rollback, concurrency, herstart, replay, intrekking en corruptie
+  zijn groen in PostgreSQL 16.13. De onafhankelijke herreview gaf GO nadat een
+  Python `-c`/`argv0`-bypass was gesloten. Er is nog geen provider aangeroepen;
+  zie `reviews/action-chain-read-authorization-mc03b1.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
 - Eerstvolgend: het gezamenlijke architectuurbesluit uitvoeren; daarna laat een

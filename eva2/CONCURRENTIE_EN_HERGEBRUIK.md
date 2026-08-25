@@ -479,9 +479,20 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke reviews, 57 contracttests en 24 tijdlijntests zijn groen.
   Er is geen provider aangeroepen; zie
   `reviews/action-chain-read-preparation-mc03a.md`.
-- [ ] Meerstapsplanning MC03b: een voorbereid read-intent via één algemene
-  providergrens uitvoeren en de uitkomst of exacte fout duurzaam vastleggen;
-  replay mag geen tweede readpoging maken.
+- [x] Meerstapsplanning MC03b1: één voorbereid read-intent krijgt na actuele
+  plan-, catalogus-, resource-, activation-, binding-, policy- en
+  manifestcontrole precies één duurzame `dispatch_authorized`-fence. De
+  providerregistry is aan ondertekende release-provenance gebonden; launcher en
+  programma zijn byte- én modespecifiek vastgezet en gepinde targets worden
+  vanuit een sealed memfd uitgevoerd. Rollback, concurrency, herstart, replay,
+  intrekking en corruptie zijn groen in PostgreSQL 16.13; 51 bredere checks,
+  24 tijdlijntests, 9 release/operatorchecks en onafhankelijke herreview zijn
+  groen. Er is nog nul provider-I/O; zie
+  `reviews/action-chain-read-authorization-mc03b1.md`.
+- [ ] Meerstapsplanning MC03b2: de geautoriseerde read via één algemene
+  providergrens buiten de databasetransactie uitvoeren en de uitkomst of exacte
+  fout duurzaam vastleggen; replay mag geen tweede readpoging maken en authority
+  en deadline worden vlak vóór I/O opnieuw gecontroleerd.
 - [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
   `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er

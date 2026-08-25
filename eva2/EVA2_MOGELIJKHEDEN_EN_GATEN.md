@@ -98,10 +98,11 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/conversational-voice-v1.md`. De eerlijke
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
-  worden opgepakt en één gevalideerde read als duurzaam intent voorbereiden.
-  Wat nog ontbreekt is de algemene providerdispatch en waarnemingsopslag,
-  daarna effectuitvoering met readback en pas daarna het vrijgeven van de
-  afhankelijke volgende stap.
+  worden opgepakt, één gevalideerde read duurzaam voorbereiden en daar na
+  hercontrole precies één releasegebonden dispatchfence voor vastleggen. Wat
+  nog ontbreekt is de echte providercall buiten die transactie plus duurzame
+  waarnemingsopslag, daarna effectuitvoering met readback en pas daarna het
+  vrijgeven van de afhankelijke volgende stap.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
