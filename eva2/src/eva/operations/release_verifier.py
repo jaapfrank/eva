@@ -21,6 +21,7 @@ from eva.operations.ab_slots import VerifiedReleaseSlot
 
 _PREFIX_FIELD = r"Eva2ReleaseSignature/v1\u0000"
 _PREFIX_BYTES = b"Eva2ReleaseSignature/v1\x00"
+_RELEASE_VERIFICATION_SEAL = object()
 _MANIFEST_KEYS = {
     "compatibleSchemaRevisions",
     "contract",
@@ -88,6 +89,18 @@ class ReleaseVerification:
     revocation_sequence: int
     migration_revision: str
     compatible_schema_revisions: tuple[str, ...]
+    provenance_sha256: str
+    _seal: object
+
+    def __post_init__(self) -> None:
+        if self._seal is not _RELEASE_VERIFICATION_SEAL:
+            raise ValueError("release verification must come from the trust verifier")
+
+    def require_verified(self) -> None:
+        """Fail closed when an object did not originate at the trust verifier."""
+
+        if self._seal is not _RELEASE_VERIFICATION_SEAL:
+            raise ValueError("release verification authority is invalid")
 
     def for_slot(self) -> VerifiedReleaseSlot:
         return VerifiedReleaseSlot(
@@ -344,6 +357,8 @@ def verify_release_manifest(
         revocation_sequence=manifest["revocationSequence"],
         migration_revision=manifest["migrationRevision"],
         compatible_schema_revisions=tuple(manifest["compatibleSchemaRevisions"]),
+        provenance_sha256=manifest["provenanceSha256"],
+        _seal=_RELEASE_VERIFICATION_SEAL,
     )
 
 

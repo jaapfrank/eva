@@ -3,13 +3,17 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
 import pytest
 
 from eva.adapters.connectors.process import (
+    ConnectorCommandTargetPin,
     ConnectorFixtureSelection,
+    ConnectorProgramBinding,
     ConnectorProcessSpec,
     run_connector_process,
 )
@@ -27,7 +31,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )
-ARTIFACT_SHA256 = "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+ARTIFACT_SHA256 = "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
 
 
 def _artifact() -> dict[str, object]:
@@ -426,3 +430,116 @@ def test_host_does_not_trust_worker_case_selection() -> None:
 
     assert isinstance(result, ConnectorProtocolFailure)
     assert result.automatic_resend_permitted is False
+
+
+def test_changed_command_target_fails_before_process_start(tmp_path: Path) -> None:
+    (
+        _,
+        _,
+        manifest,
+        initialize,
+        invoke,
+        program_bytes,
+        _,
+    ) = _selection("calendar.create.happy")
+    target = (tmp_path / "sealed-worker").resolve()
+    target.write_bytes(b"approved-worker-bytes")
+    approved_sha256 = hashlib.sha256(target.read_bytes()).hexdigest()
+    spec = ConnectorProcessSpec(
+        command=(str(target),),
+        program_bytes=program_bytes,
+        command_target_pins=(
+            ConnectorCommandTargetPin(
+                argument_index=0,
+                target_path=target,
+                target_sha256=approved_sha256,
+            ),
+        ),
+    )
+    target.write_bytes(b"changed-after-release-load")
+
+    result = run_connector_process(
+        spec=spec,
+        manifest=manifest,
+        initialize=initialize,
+        invoke=invoke,
+        observed_at="2026-08-20T12:00:00Z",
+        timeout_seconds=10,
+    )
+
+    assert isinstance(result, ConnectorProtocolFailure)
+    assert result.phase == "initialize"
+    assert result.violation == "executable_mismatch"
+    assert result.automatic_resend_permitted is False
+
+
+def test_pinned_command_executes_sealed_snapshot_after_path_mutation(
+    tmp_path: Path,
+) -> None:
+    approved_source = Path(shutil.which("true") or "").resolve(strict=True)
+    replacement_source = Path(shutil.which("false") or "").resolve(strict=True)
+    approved_bytes = approved_source.read_bytes()
+    target = (tmp_path / "connector-worker").resolve()
+    target.write_bytes(approved_bytes)
+    target.chmod(0o700)
+    spec = ConnectorProcessSpec(
+        command=(str(target),),
+        program_bytes=approved_bytes,
+        command_target_pins=(
+            ConnectorCommandTargetPin(
+                argument_index=0,
+                target_path=target,
+                target_sha256=hashlib.sha256(approved_bytes).hexdigest(),
+            ),
+        ),
+        program_binding=ConnectorProgramBinding(
+            kind="direct_target", argument_index=0
+        ),
+    )
+
+    with spec.open_pinned_command() as opened:
+        target.write_bytes(replacement_source.read_bytes())
+        changed = subprocess.run((str(target),), check=False)
+        sealed = subprocess.run(
+            opened.command,
+            check=False,
+            pass_fds=opened.pass_fds,
+        )
+
+    assert changed.returncode == 1
+    assert sealed.returncode == 0
+
+
+def test_python_inline_binding_rejects_bytes_at_a_different_position() -> None:
+    with pytest.raises(ValueError, match="inline code differs"):
+        ConnectorProcessSpec(
+            command=(
+                sys.executable,
+                "-I",
+                "-c",
+                "other-program",
+                "sealed-program",
+            ),
+            program_bytes=b"sealed-program",
+            program_binding=ConnectorProgramBinding(
+                kind="python_inline_code",
+                argument_index=3,
+            ),
+        )
+
+
+def test_python_inline_binding_rejects_program_bytes_as_argv0() -> None:
+    with pytest.raises(ValueError, match="must immediately follow -c"):
+        ConnectorProcessSpec(
+            command=(
+                sys.executable,
+                "-c",
+                "raise SystemExit(0)",
+                "sealed-program",
+            ),
+            program_bytes=b"sealed-program",
+            program_binding=ConnectorProgramBinding(
+                kind="python_inline_code",
+                argument_index=3,
+            ),
+        )

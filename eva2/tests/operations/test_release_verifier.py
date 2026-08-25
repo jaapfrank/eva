@@ -9,6 +9,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.release_verifier import (
+    ReleaseVerification,
     ReleaseVerificationError,
     signature_message,
     unsigned_manifest,
@@ -95,9 +96,25 @@ def test_signed_release_becomes_exact_ab_staging_authority() -> None:
     assert verified.release_id == "release:eva2:test:001"
     assert verified.signer_key_ids == ("release-key:test:001",)
     assert verified.compatible_schema_revisions == ("4d_0007", "4e_0001")
+    assert verified.provenance_sha256 == "6" * 64
     assert verified.for_slot().verification_receipt_sha256 == (
         verified.verification_receipt_sha256
     )
+    with pytest.raises(ValueError, match="must come from the trust verifier"):
+        ReleaseVerification(
+            release_id=verified.release_id,
+            release_version=verified.release_version,
+            manifest_sha256=verified.manifest_sha256,
+            unsigned_manifest_sha256=verified.unsigned_manifest_sha256,
+            image_set_sha256=verified.image_set_sha256,
+            verification_receipt_sha256=verified.verification_receipt_sha256,
+            signer_key_ids=verified.signer_key_ids,
+            revocation_sequence=verified.revocation_sequence,
+            migration_revision=verified.migration_revision,
+            compatible_schema_revisions=verified.compatible_schema_revisions,
+            provenance_sha256=verified.provenance_sha256,
+            _seal=object(),
+        )
 
 
 def test_release_tamper_expiry_and_revocation_fail_before_staging() -> None:
