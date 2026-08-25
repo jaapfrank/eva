@@ -116,7 +116,7 @@ class PostgresActionChainEffectReadbackPreparer:
 
             try:
                 effect, attempt, receipt = accepted_effect(
-                    connection, self._scope_value, effect_row
+                    connection, self._scope_value, effect_row, lock=True
                 )
                 activation, manifest, binding = readback_authority(
                     connection,
@@ -126,6 +126,7 @@ class PostgresActionChainEffectReadbackPreparer:
                     resource_scope=authority.resource_scope,
                     effect=effect,
                     policy_sha256=chain.plan.policy_sha256,
+                    lock=True,
                 )
             except (TypeError, ValueError) as error:
                 raise ActionChainEffectReadbackConflict(str(error)) from error

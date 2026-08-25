@@ -258,12 +258,10 @@ def validate_action_chain_read(
         return None
     if len(attempt_rows) != 1:
         raise corrupt("authorized read attempt cardinality differs")
-    return _validate_authorized_read(
+    return validate_authorized_action_chain_read(
         connection,
         scope,
         plan=plan,
-        plan_row=plan_row,
-        step=step,
         intent=intent,
         intent_row=intent_row,
         action_arguments=action.arguments,
@@ -272,17 +270,19 @@ def validate_action_chain_read(
         capability_manifest_id=activation.capability_manifest_id,
         attempt_row=attempt_rows[0],
         current_event_data=current_event_data,
+        operation_id=action_chain_step_operation_id(plan, step.step_id),
+        retention_policy_id=plan_row.retention_policy_id,
+        retention_until=plan_row.retention_until,
+        allow_terminal=True,
         corrupt=corrupt,
     )
 
 
-def _validate_authorized_read(
+def validate_authorized_action_chain_read(
     connection: sa.Connection,
     scope: TimelineScope,
     *,
     plan: ValidatedPlan,
-    plan_row: sa.Row,
-    step: Any,
     intent: ReadIntent,
     intent_row: sa.Row,
     action_arguments: dict[str, Any],
@@ -291,6 +291,10 @@ def _validate_authorized_read(
     capability_manifest_id: UUID,
     attempt_row: sa.Row,
     current_event_data: dict[str, Any],
+    operation_id: str,
+    retention_policy_id: str,
+    retention_until: datetime,
+    allow_terminal: bool,
     corrupt: type[RuntimeError],
 ) -> ReadAttempt:
     try:
@@ -366,7 +370,7 @@ def _validate_authorized_read(
             "contract": "ConnectorInvokeRequest/v1",
             "jsonrpc": "2.0",
             "id": envelope.request_id,
-            "method": "resource.read",
+            "method": _read_invoke_method(intent),
             "params": envelope.model_dump(mode="json"),
         }
     )
@@ -387,7 +391,7 @@ def _validate_authorized_read(
         or capability_grant.generation != plan.generation
         or capability_grant.capability_id != intent.capability_id
         or capability_grant.connector_binding_id != binding.binding_id
-        or capability_grant.operation != step.operation
+        or capability_grant.operation != intent.operation
         or capability_grant.resource_scope != intent.resource_scope
         or capability_grant.authorized_payload_sha256 != intent.query_sha256
         or capability_grant.policy_sha256 != plan.policy_sha256
@@ -433,8 +437,8 @@ def _validate_authorized_read(
         or bytes(attempt_row.payload_sha256).hex() != canonical_sha256(attempt)
         or int(attempt_row.revision)
         != (1 if attempt.state == "dispatch_authorized" else 2)
-        or attempt_row.retention_policy_id != plan_row.retention_policy_id
-        or attempt_row.retention_until != plan_row.retention_until
+        or attempt_row.retention_policy_id != retention_policy_id
+        or attempt_row.retention_until != retention_until
         or (
             attempt.state == "dispatch_authorized"
             and attempt_row.created_at != attempt_row.updated_at
@@ -498,7 +502,6 @@ def _validate_authorized_read(
         "read_intent_id": attempt.read_intent_id,
         "request_sha256": attempt.request_sha256,
     }
-    operation_id = action_chain_step_operation_id(plan, step.step_id)
     latest = connection.execute(
         sa.select(operational_events)
         .where(
@@ -540,6 +543,8 @@ def _validate_authorized_read(
         "ACTION_CHAIN_READ_REJECTED",
         "ACTION_CHAIN_READ_RATE_LIMITED",
     }:
+        if not allow_terminal:
+            raise corrupt("effect verification read cannot be terminal here")
         if attempt.state == "dispatch_authorized":
             raise corrupt("authorized read has a terminal result event")
         started_at = current_event_data.get("provider_call_started_at")
@@ -565,8 +570,8 @@ def _validate_authorized_read(
             expected_event_data=expected_event_data,
             latest=latest,
             checkpoint=checkpoint,
-            retention_policy_id=plan_row.retention_policy_id,
-            retention_until=plan_row.retention_until,
+            retention_policy_id=retention_policy_id,
+            retention_until=retention_until,
             corrupt=corrupt,
         )
         return attempt
@@ -693,6 +698,14 @@ def _worker_process_sha256(worker_id: str, *, corrupt: type[RuntimeError]) -> st
     return value
 
 
+def _read_invoke_method(intent: ReadIntent) -> str:
+    return {
+        "effect.reconcile": "effect.reconcile",
+        "effect.readback": "effect.readback",
+        "connector.probe": "connector.probe",
+    }.get(intent.operation, "resource.read")
+
+
 def _is_sha256(value: object) -> bool:
     return (
         isinstance(value, str)
@@ -709,4 +722,7 @@ def _format_timestamp(value: datetime) -> str:
     return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-__all__ = ["validate_action_chain_read"]
+__all__ = [
+    "validate_action_chain_read",
+    "validate_authorized_action_chain_read",
+]

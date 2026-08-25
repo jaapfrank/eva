@@ -173,7 +173,10 @@ def validate_action_chain_effect_history(
             effect_row=intent_row,
             plan_id=plan_id,
             plan_step_id=plan_step_id,
+            plan=plan,
             policy_sha256=plan.policy_sha256,
+            retention_policy_id=retention_policy_id,
+            retention_until=retention_until,
             corrupt=corrupt,
         )
         return

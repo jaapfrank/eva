@@ -27,17 +27,29 @@ from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import CapabilityManifest
+from eva.operations.action_chain_effect_readback_authorizer import (
+    PostgresActionChainEffectReadbackAuthorizer,
+)
 from eva.operations.action_chain_effect_dispatcher import (
     PostgresActionChainEffectDispatcher,
 )
 
-from test_action_chain_effect_authorizer import _prepared_effect, _provider_registry
+from test_action_chain_effect_authorizer import (
+    _prepared_effect,
+    _provider_registry as _effect_provider_registry,
+)
 from test_action_chain_effect_dispatcher import _effect_result
 from test_action_chain_effects import (
     _effect_authority,
     action_chain_engine as _shared_action_chain_engine,
 )
+from test_action_chain_read_authorizer import (
+    _provider_registry as _read_provider_registry,
+)
 from test_action_chain_ledger import NOW, POLICY_SHA256, RETENTION_UNTIL, _fact_values
+
+
+READBACK_WORKER_PROGRAM = b"# fixture-action-chain-readback-worker-v1"
 
 
 @pytest.fixture
@@ -47,7 +59,7 @@ def action_chain_engine() -> Iterator[Engine]:
 
 def _accepted(engine: Engine):
     scope, chain, catalog, _authority, prepared = _prepared_effect(engine)
-    registry = _provider_registry(engine, scope, prepared.intent)
+    registry = _effect_provider_registry(engine, scope, prepared.intent)
     claimed = PostgresActionChainEffectDispatcher(
         engine, scope, provider_registry=registry
     ).claim_provider_call(
@@ -92,9 +104,7 @@ def _seed_readback_authority(
         required_provider_scopes=["home_read"],
         proof_floor="current provider state matches intended effect",
         maximum_freshness_ms=0,
-        executable_sha256=hashlib.sha256(
-            b"# fixture-action-chain-readback-worker-v1"
-        ).hexdigest(),
+        executable_sha256=hashlib.sha256(READBACK_WORKER_PROGRAM).hexdigest(),
         sandbox_profile_sha256="6" * 64,
     )
     policy = _fact_values("static/policy-pack")[1]
@@ -196,6 +206,53 @@ def _counts(engine: Engine, scope) -> tuple[int, int, int]:
             )
         )
     return int(intents), int(physical), int(events)
+
+
+def _prepared_authorization(engine: Engine):
+    scope, chain, effect, stored = _accepted(engine)
+    authority = _seed_readback_authority(engine, scope)
+    prepared = PostgresActionChainEffectReadbackPreparer(engine, scope).prepare(
+        UUID(effect.intent.effect_intent_id),
+        authority=authority,
+        now=NOW + timedelta(seconds=12),
+    )
+    registry = _read_provider_registry(
+        engine,
+        scope,
+        prepared.intent,
+        capability_activation_id=authority.capability_activation_id,
+        worker_program=READBACK_WORKER_PROGRAM,
+    )
+    return scope, chain, effect, stored, authority, prepared, registry
+
+
+def _authorization_counts(
+    engine: Engine, scope, read_intent_id: UUID
+) -> tuple[int, int]:
+    attempts = metadata.tables["eva_effects.read_attempts"]
+    with engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_runtime"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        attempt_count = connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(attempts)
+            .where(attempts.c.read_intent_id == read_intent_id)
+        )
+        event_count = connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(operational_events)
+            .where(
+                operational_events.c.thread_id
+                == f"action-chain-effect-readback:{read_intent_id}",
+                operational_events.c.event_type
+                == "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED",
+            )
+        )
+    return int(attempt_count), int(event_count)
 
 
 def test_effect_readback_preparation_is_durable_read_only_and_replayable(
@@ -430,4 +487,229 @@ def test_reload_rejects_corrupt_effect_readback_intent(
             .values(query_sha256=bytes.fromhex("0" * 64))
         )
     with pytest.raises(ActionChainCorrupt, match="verification intent binding"):
+        PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+
+
+def test_effect_readback_authorization_is_durable_replayable_and_uncalled(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, _effect, _stored, _authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+    authorizer = PostgresActionChainEffectReadbackAuthorizer(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    )
+    authorized = authorizer.authorize_readback(
+        UUID(prepared.intent.read_intent_id),
+        now=NOW + timedelta(seconds=13),
+    )
+    assert authorized.disposition == "authorized"
+    assert authorized.attempt.state == "dispatch_authorized"
+    assert authorized.attempt.response_sha256 is None
+    assert not hasattr(authorized, "initialize")
+    assert not hasattr(authorized, "invoke")
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (1, 1)
+    assert _counts(action_chain_engine, scope) == (1, 0, 1)
+    assert PostgresActionChainLedger(action_chain_engine, scope).load(
+        chain.plan_id
+    ).steps[1].state == "running"
+
+    restarted = sa.create_engine(action_chain_engine.url, pool_pre_ping=False)
+    try:
+        replay = PostgresActionChainEffectReadbackAuthorizer(
+            restarted,
+            scope,
+            provider_registry=registry,
+        ).authorize_readback(
+            UUID(prepared.intent.read_intent_id),
+            now=NOW + timedelta(seconds=14),
+        )
+    finally:
+        restarted.dispose()
+    assert replay.disposition == "already_authorized"
+    assert replay.attempt == authorized.attempt
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (1, 1)
+
+
+def test_effect_readback_authorization_is_single_under_concurrency(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _chain, _effect, _stored, _authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+
+    def authorize(_: int):
+        return PostgresActionChainEffectReadbackAuthorizer(
+            action_chain_engine,
+            scope,
+            provider_registry=registry,
+        ).authorize_readback(
+            UUID(prepared.intent.read_intent_id),
+            now=NOW + timedelta(seconds=13),
+        )
+
+    with ThreadPoolExecutor(max_workers=2) as workers:
+        results = tuple(workers.map(authorize, (0, 1)))
+    assert sorted(item.disposition for item in results) == [
+        "already_authorized",
+        "authorized",
+    ]
+    assert results[0].attempt == results[1].attempt
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (1, 1)
+
+
+def test_effect_readback_authorization_rejects_expired_deadline(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _chain, _effect, _stored, _authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+    with pytest.raises(ActionChainEffectReadbackConflict, match="deadline"):
+        PostgresActionChainEffectReadbackAuthorizer(
+            action_chain_engine,
+            scope,
+            provider_registry=registry,
+        ).authorize_readback(
+            UUID(prepared.intent.read_intent_id),
+            now=NOW + timedelta(minutes=2),
+        )
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (0, 0)
+
+
+def test_effect_readback_authorization_rechecks_revoked_authority(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _chain, _effect, _stored, authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+    activations = metadata.tables["eva_core.capability_activations"]
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        connection.execute(
+            sa.update(activations)
+            .where(
+                activations.c.activation_id
+                == authority.capability_activation_id
+            )
+            .values(
+                state="revoked",
+                revision=2,
+                updated_at=NOW + timedelta(seconds=13),
+            )
+        )
+    with pytest.raises(ActionChainCorrupt, match="verification authority"):
+        PostgresActionChainEffectReadbackAuthorizer(
+            action_chain_engine,
+            scope,
+            provider_registry=registry,
+        ).authorize_readback(
+            UUID(prepared.intent.read_intent_id),
+            now=NOW + timedelta(seconds=13),
+        )
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (0, 0)
+
+
+def test_effect_readback_authorization_rolls_back_attempt_with_timeline(
+    action_chain_engine: Engine,
+) -> None:
+    scope, _chain, _effect, _stored, _authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        connection.exec_driver_sql(
+            """
+            CREATE FUNCTION eva_core.reject_mc03c3b_dispatch_event()
+            RETURNS trigger LANGUAGE plpgsql AS $function$
+            BEGIN
+                IF NEW.thread_id LIKE 'action-chain-effect-readback:%%'
+                   AND NEW.event_type = 'ACTION_CHAIN_READ_DISPATCH_AUTHORIZED' THEN
+                    RAISE EXCEPTION 'forced_mc03c3b_dispatch_failure'
+                        USING ERRCODE = '55000';
+                END IF;
+                RETURN NEW;
+            END
+            $function$
+            """
+        )
+        connection.exec_driver_sql(
+            """
+            CREATE TRIGGER reject_mc03c3b_dispatch_event
+            BEFORE INSERT ON eva_core.operational_events
+            FOR EACH ROW EXECUTE FUNCTION eva_core.reject_mc03c3b_dispatch_event()
+            """
+        )
+    try:
+        with pytest.raises(sa.exc.DBAPIError, match="forced_mc03c3b"):
+            PostgresActionChainEffectReadbackAuthorizer(
+                action_chain_engine,
+                scope,
+                provider_registry=registry,
+            ).authorize_readback(
+                UUID(prepared.intent.read_intent_id),
+                now=NOW + timedelta(seconds=13),
+            )
+    finally:
+        with action_chain_engine.begin() as connection:
+            connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+            connection.exec_driver_sql(
+                "DROP TRIGGER reject_mc03c3b_dispatch_event "
+                "ON eva_core.operational_events"
+            )
+            connection.exec_driver_sql(
+                "DROP FUNCTION eva_core.reject_mc03c3b_dispatch_event()"
+            )
+    assert _authorization_counts(
+        action_chain_engine, scope, UUID(prepared.intent.read_intent_id)
+    ) == (0, 0)
+
+
+def test_reload_rejects_corrupt_effect_readback_authorization(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, _effect, _stored, _authority, prepared, registry = (
+        _prepared_authorization(action_chain_engine)
+    )
+    authorized = PostgresActionChainEffectReadbackAuthorizer(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).authorize_readback(
+        UUID(prepared.intent.read_intent_id),
+        now=NOW + timedelta(seconds=13),
+    )
+    attempts = metadata.tables["eva_effects.read_attempts"]
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        connection.execute(
+            sa.update(attempts)
+            .where(
+                attempts.c.read_attempt_id
+                == UUID(authorized.attempt.read_attempt_id)
+            )
+            .values(capability_grant_sha256=bytes.fromhex("0" * 64))
+        )
+    with pytest.raises(ActionChainCorrupt, match="authorized read binding"):
         PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)

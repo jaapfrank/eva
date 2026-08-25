@@ -305,7 +305,7 @@ class PostgresActionChainReadAuthorizer:
                 status="waiting_for_proof",
                 event_type="ACTION_CHAIN_READ_DISPATCH_AUTHORIZED",
                 occurred_at=created_at,
-                data=_dispatch_event_data(
+                data=read_dispatch_event_data(
                     attempt,
                     capability_grant=capability_grant,
                     credential_grant=credential_grant,
@@ -488,7 +488,7 @@ def require_existing_action_chain_read_attempt(
         raise ActionChainReadConflict("authorized read attempt differs")
 
 
-def _dispatch_event_data(
+def read_dispatch_event_data(
     attempt: ReadAttempt,
     *,
     capability_grant: CapabilityGrant,
@@ -537,6 +537,7 @@ __all__ = [
     "AuthorizedActionChainRead",
     "PostgresActionChainReadAuthorizer",
     "build_action_chain_read_authority",
+    "read_dispatch_event_data",
     "require_existing_action_chain_read_attempt",
     "validate_action_chain_read_profile",
 ]

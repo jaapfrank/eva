@@ -7,6 +7,9 @@ from uuid import UUID, uuid5
 
 import sqlalchemy as sa
 
+from eva.adapters.postgres.action_chain_read_validation import (
+    validate_authorized_action_chain_read,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
@@ -23,6 +26,7 @@ from eva.contracts.execution import (
     ReadIntent,
     ResourceScope,
 )
+from eva.contracts.planning import ValidatedPlan
 
 
 capability_activations = metadata.tables["eva_core.capability_activations"]
@@ -30,6 +34,7 @@ capability_manifests = metadata.tables["eva_core.capability_manifests"]
 connector_bindings = metadata.tables["eva_core.connector_bindings"]
 policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
 read_intents = metadata.tables["eva_effects.read_intents"]
+read_attempts = metadata.tables["eva_effects.read_attempts"]
 effect_attempts = metadata.tables["eva_effects.effect_attempts"]
 effect_receipts = metadata.tables["eva_effects.effect_receipts"]
 
@@ -41,7 +46,10 @@ def validate_action_chain_effect_readback_preparation(
     effect_row: sa.Row,
     plan_id: UUID,
     plan_step_id: UUID,
+    plan: ValidatedPlan,
     policy_sha256: str,
+    retention_policy_id: str,
+    retention_until: datetime,
     corrupt: type[RuntimeError],
 ) -> None:
     rows = verification_rows(connection, scope, effect_row.effect_intent_id)
@@ -118,37 +126,46 @@ def validate_action_chain_effect_readback_preparation(
         connection,
         scope,
         intent=intent,
+        intent_row=row,
         request_payload=request_payload,
         attempt=attempt,
         receipt=receipt,
         activation=activation,
+        manifest=manifest,
         binding=binding,
         plan_id=plan_id,
         plan_step_id=plan_step_id,
+        plan=plan,
         policy_sha256=policy_sha256,
+        retention_policy_id=retention_policy_id,
+        retention_until=retention_until,
         created_at=row.created_at,
         corrupt=corrupt,
     )
 
 
 def accepted_effect(
-    connection: sa.Connection, scope: TimelineScope, effect_row: sa.Row
+    connection: sa.Connection,
+    scope: TimelineScope,
+    effect_row: sa.Row,
+    *,
+    lock: bool = False,
 ) -> tuple[EffectIntent, EffectAttempt, EffectReceipt]:
     effect = EffectIntent.model_validate(effect_row.payload)
-    attempts = connection.execute(
-        sa.select(effect_attempts).where(
-            effect_attempts.c.tenant_id == scope.tenant_id,
-            effect_attempts.c.installation_id == scope.installation_id,
-            effect_attempts.c.effect_intent_id == effect_row.effect_intent_id,
-        )
-    ).all()
-    receipts = connection.execute(
-        sa.select(effect_receipts).where(
-            effect_receipts.c.tenant_id == scope.tenant_id,
-            effect_receipts.c.installation_id == scope.installation_id,
-            effect_receipts.c.effect_intent_id == effect_row.effect_intent_id,
-        )
-    ).all()
+    attempt_statement = sa.select(effect_attempts).where(
+        effect_attempts.c.tenant_id == scope.tenant_id,
+        effect_attempts.c.installation_id == scope.installation_id,
+        effect_attempts.c.effect_intent_id == effect_row.effect_intent_id,
+    )
+    receipt_statement = sa.select(effect_receipts).where(
+        effect_receipts.c.tenant_id == scope.tenant_id,
+        effect_receipts.c.installation_id == scope.installation_id,
+        effect_receipts.c.effect_intent_id == effect_row.effect_intent_id,
+    )
+    if lock:
+        attempt_statement = attempt_statement.with_for_update(read=True)
+    attempts = connection.execute(attempt_statement).all()
+    receipts = connection.execute(receipt_statement).all()
     if len(attempts) != 1 or len(receipts) != 1:
         raise ValueError("accepted effect proof is incomplete")
     attempt = EffectAttempt.model_validate(attempts[0].payload)
@@ -175,9 +192,15 @@ def readback_authority(
     resource_scope: ResourceScope,
     effect: EffectIntent,
     policy_sha256: str,
+    lock: bool = False,
 ) -> tuple[sa.Row, CapabilityManifest, ConnectorBinding]:
     activation = _row(
-        connection, capability_activations, scope, "activation_id", activation_id
+        connection,
+        capability_activations,
+        scope,
+        "activation_id",
+        activation_id,
+        lock=lock,
     )
     manifest_row = _row(
         connection,
@@ -185,22 +208,29 @@ def readback_authority(
         scope,
         "capability_manifest_id",
         None if activation is None else activation.capability_manifest_id,
+        # Release manifests are immutable and intentionally not runtime-lockable.
+        lock=False,
     )
     binding_row = _row(
-        connection, connector_bindings, scope, "binding_id", binding_id
+        connection, connector_bindings, scope, "binding_id", binding_id, lock=lock
     )
-    policy = (
+    policy_statement = (
         None
         if activation is None
-        else connection.execute(
-            sa.select(policy_pack_versions).where(
-                policy_pack_versions.c.tenant_id == scope.tenant_id,
-                policy_pack_versions.c.installation_id == scope.installation_id,
-                policy_pack_versions.c.policy_id == activation.policy_id,
-                policy_pack_versions.c.policy_version
-                == activation.policy_pack_version,
-            )
-        ).one_or_none()
+        else sa.select(policy_pack_versions).where(
+            policy_pack_versions.c.tenant_id == scope.tenant_id,
+            policy_pack_versions.c.installation_id == scope.installation_id,
+            policy_pack_versions.c.policy_id == activation.policy_id,
+            policy_pack_versions.c.policy_version
+            == activation.policy_pack_version,
+        )
+    )
+    if policy_statement is not None and lock:
+        policy_statement = policy_statement.with_for_update(read=True)
+    policy = (
+        None
+        if policy_statement is None
+        else connection.execute(policy_statement).one_or_none()
     )
     if (
         activation is None
@@ -277,14 +307,19 @@ def _validate_thread(
     scope: TimelineScope,
     *,
     intent: ReadIntent,
+    intent_row: sa.Row,
     request_payload: dict[str, object],
     attempt: EffectAttempt,
     receipt: EffectReceipt,
     activation: sa.Row,
+    manifest: CapabilityManifest,
     binding: ConnectorBinding,
     plan_id: UUID,
     plan_step_id: UUID,
+    plan: ValidatedPlan,
     policy_sha256: str,
+    retention_policy_id: str,
+    retention_until: datetime,
     created_at: datetime,
     corrupt: type[RuntimeError],
 ) -> None:
@@ -297,13 +332,15 @@ def _validate_thread(
         )
     ).one_or_none()
     events = connection.execute(
-        sa.select(operational_events).where(
+        sa.select(operational_events)
+        .where(
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
             operational_events.c.thread_id == thread_id,
         )
+        .order_by(operational_events.c.sequence)
     ).all()
-    if checkpoint is None or len(events) != 1:
+    if checkpoint is None or not events:
         raise corrupt("effect verification timeline is absent")
     event = events[0]
     expected_data = {
@@ -322,33 +359,101 @@ def _validate_thread(
         "request_payload": request_payload,
         "request_payload_sha256": canonical_sha256(request_payload),
     }
+    expected_checkpoint = {
+        "checkpoint_id": f"checkpoint:{thread_id}:prepared",
+        "deadline": intent.deadline,
+        "last_error_fingerprint": None,
+        "operation_id": thread_id,
+        "phase": "action_chain_effect_readback_intent_prepared",
+        "retry_count": 0,
+        "revision": 1,
+        "status": "waiting_for_proof",
+        "updated_at": _format_timestamp(created_at),
+    }
     if (
         event.sequence != 1
         or event.event_type != "ACTION_CHAIN_EFFECT_READBACK_INTENT_PREPARED"
         or event.operation_id != thread_id
         or event.occurred_at != created_at
-        or event.payload.get("data") != expected_data
+        or event.payload != {"checkpoint": expected_checkpoint, "data": expected_data}
         or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
-        or checkpoint.revision != 1
-        or checkpoint.phase != "action_chain_effect_readback_intent_prepared"
-        or checkpoint.status != "waiting_for_proof"
-        or checkpoint.operation_id != thread_id
-        or checkpoint.deadline != _parse_timestamp(intent.deadline)
-        or checkpoint.updated_at != created_at
-        or event.payload.get("checkpoint")
-        != {
-            "checkpoint_id": checkpoint.checkpoint_id,
-            "deadline": intent.deadline,
-            "last_error_fingerprint": None,
-            "operation_id": thread_id,
-            "phase": checkpoint.phase,
-            "retry_count": 0,
-            "revision": 1,
-            "status": checkpoint.status,
-            "updated_at": _format_timestamp(created_at),
-        }
     ):
         raise corrupt("effect verification timeline differs")
+    attempts = connection.execute(
+        sa.select(read_attempts).where(
+            read_attempts.c.tenant_id == scope.tenant_id,
+            read_attempts.c.installation_id == scope.installation_id,
+            read_attempts.c.read_intent_id == UUID(intent.read_intent_id),
+        )
+    ).all()
+    if not attempts:
+        if (
+            len(events) != 1
+            or checkpoint.revision != 1
+            or checkpoint.phase
+            != "action_chain_effect_readback_intent_prepared"
+            or checkpoint.status != "waiting_for_proof"
+            or checkpoint.operation_id != thread_id
+            or checkpoint.deadline != _parse_timestamp(intent.deadline)
+            or checkpoint.updated_at != created_at
+        ):
+            raise corrupt("effect verification prepared state differs")
+        return
+    if len(attempts) != 1 or len(events) not in {2, 3}:
+        raise corrupt("effect verification dispatch cardinality differs")
+    for sequence, item in enumerate(events, start=1):
+        if (
+            int(item.sequence) != sequence
+            or item.operation_id != thread_id
+            or canonical_sha256(item.payload) != bytes(item.payload_sha256).hex()
+        ):
+            raise corrupt("effect verification dispatch history differs")
+    authorized = events[1]
+    if (
+        authorized.event_type != "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED"
+        or authorized.occurred_at != attempts[0].created_at
+        or not isinstance(authorized.payload.get("data"), dict)
+    ):
+        raise corrupt("effect verification authorization event differs")
+    latest = events[-1]
+    current_data = latest.payload.get("data")
+    if not isinstance(current_data, dict):
+        raise corrupt("effect verification current event data differs")
+    if len(events) == 3:
+        call_data = dict(current_data)
+        started_at = call_data.pop("provider_call_started_at", None)
+        if (
+            latest.event_type != "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED"
+            or call_data != authorized.payload["data"]
+            or started_at != _format_timestamp(latest.occurred_at)
+        ):
+            raise corrupt("effect verification call-start event differs")
+    elif latest.event_type != "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED":
+        raise corrupt("effect verification dispatch event differs")
+    if (
+        int(checkpoint.revision) != len(events)
+        or checkpoint.operation_id != thread_id
+        or checkpoint.deadline != _parse_timestamp(intent.deadline)
+    ):
+        raise corrupt("effect verification dispatch checkpoint differs")
+    validate_authorized_action_chain_read(
+        connection,
+        scope,
+        plan=plan,
+        intent=intent,
+        intent_row=intent_row,
+        action_arguments=request_payload,
+        manifest=manifest,
+        binding=binding,
+        capability_manifest_id=activation.capability_manifest_id,
+        attempt_row=attempts[0],
+        current_event_data=current_data,
+        operation_id=thread_id,
+        retention_policy_id=retention_policy_id,
+        retention_until=retention_until,
+        allow_terminal=False,
+        corrupt=corrupt,
+    )
 
 
 def verification_rows(
@@ -372,16 +477,19 @@ def _row(
     scope: TimelineScope,
     key: str,
     value: UUID | None,
+    *,
+    lock: bool = False,
 ) -> sa.Row | None:
     if value is None:
         return None
-    return connection.execute(
-        sa.select(table).where(
-            table.c.tenant_id == scope.tenant_id,
-            table.c.installation_id == scope.installation_id,
-            table.c[key] == value,
-        )
-    ).one_or_none()
+    statement = sa.select(table).where(
+        table.c.tenant_id == scope.tenant_id,
+        table.c.installation_id == scope.installation_id,
+        table.c[key] == value,
+    )
+    if lock:
+        statement = statement.with_for_update(read=True)
+    return connection.execute(statement).one_or_none()
 
 
 def effect_readback_thread_id(read_intent_id: UUID) -> str:

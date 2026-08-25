@@ -155,8 +155,10 @@ def _provider_registry(
     scope: TimelineScope,
     intent: ReadIntent,
     *,
+    capability_activation_id: UUID | None = None,
     command_suffix: str = "v1",
-    program_argument: bytes = WORKER_PROGRAM,
+    worker_program: bytes = WORKER_PROGRAM,
+    program_argument: bytes | None = None,
     program_binding_index: int | None = None,
     signed_registry_sha256: str | None = None,
 ) -> SealedReadProviderRegistry:
@@ -172,7 +174,11 @@ def _provider_registry(
         activation = connection.execute(
             sa.select(activations).where(
                 activations.c.activation_id
-                == _read_authority(scope).capability_activation_id
+                == (
+                    _read_authority(scope).capability_activation_id
+                    if capability_activation_id is None
+                    else capability_activation_id
+                )
             )
         ).one()
         capability_manifest = CapabilityManifest.model_validate(
@@ -212,7 +218,9 @@ def _provider_registry(
     command = [str(executable), "-I"]
     if command_suffix != "v1":
         command.append("-B")
-    command.extend(("-c", program_argument.decode("utf-8")))
+    command.extend(
+        ("-c", (worker_program if program_argument is None else program_argument).decode("utf-8"))
+    )
     release_id = f"fixture:mc03b:{command_suffix}"
     actual_program_index = command.index("-c") + 1
     artifact_bytes = canonical_json_bytes(
@@ -238,7 +246,7 @@ def _provider_registry(
                                 ).hexdigest(),
                             }
                         ],
-                        "program_base64": base64.b64encode(WORKER_PROGRAM).decode(
+                        "program_base64": base64.b64encode(worker_program).decode(
                             "ascii"
                         ),
                         "program_binding": {
