@@ -14,6 +14,9 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 | Telegram | B-tokenstatus als referentie, geverifieerde DM/groepsroutes, koppelchallenges, deliveryreceipts en teststatus beheren. | Tokens zijn alleen file-secret-referenties; koppelen vereist de wederzijdse private challenge. |
 | Skills en capabilities | Gepinde catalogus, uitgever, versie, digest, permissies, reviewstatus en receipts bekijken; alleen een quarantaine-import voorstellen. | Geen automatische installatie of scripts; code blijft in sidecar/quarantaine en Eva houdt policy/ledger/eindantwoord. |
 | Instellingen en connectors | Niet-geheime instellingen, configuratie-diffs, connectorstatus en testresultaat bekijken of als draft wijzigen. | Secretwaarden zijn write-only file references; muterende connectoracties volgen prepare → execute → readback. |
+| Chat en sessies | Met dezelfde Eva chatten, gesprekken hervatten, model-/token-/kostenstatus en toolreceipts bekijken. | Geen ingebedde shell of tweede chatagent; dezelfde identity-, conversation-, memory- en policyroute als Telegram. |
+| Werkbord | Borden, taken, afhankelijkheden, status, opmerkingen, artifacts, receipts, budget en blokkades volgen. | Dunne projectie van Eva's PostgreSQL-ledger; een kaartstatus vervangt nooit extern bewijs. |
+| Workers en subagents | Actieve en historische workers, rol, lease, heartbeat, poging, model, token-/kostenverbruik en stopstatus bekijken. | Alleen afgeleide taakgrants; geen ruwe prompt, secrets of ongefilterd persoonsgeheugen in de UI. |
 
 ## Kleine opleverslices
 
@@ -30,6 +33,15 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 5. **D05 — settings en gecontroleerde acties:** secret-referenties,
    connector-drafts en expliciete approval/readback, alleen wanneer de
    file-secret- en managed-B-grens groen is.
+6. **D06 — chat en sessies:** streaming gesprek met dezelfde Eva, een
+   gesaneerde sessielijst, hervatten en zichtbare tool-/token-/kostenreceipts;
+   geen PTY, shell of tweede modelroute in het dashboard.
+7. **D07 — read-only werkbord:** Kanbanprojectie, taakdetails, dependencies,
+   workers, pogingen, budgetten, blockers en live gesaneerde updates uit
+   dezelfde PostgreSQL-waarheid; zie `delegation-and-workboard-v1.md`.
+8. **D08 — gecontroleerde samenwerking:** create, comment, prioriteit, assign,
+   pause, cancel, resume en review via dezelfde service als Eva-chat. Geen
+   directe browserwrites naar tabellen en geen `done` zonder vereist bewijs.
 
 Elke slice krijgt gerichte tests, een onafhankelijke review en een Git-checkpoint.
 De dashboardroute draait uitsluitend in B totdat haar autorisatie- en

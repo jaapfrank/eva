@@ -25,12 +25,22 @@ verplaats-/updateroute staan in
 [`design/product/installer-and-onboarding-v1.md`](design/product/installer-and-onboarding-v1.md);
 de documentatiekaart, componentregistratie, bewijsstatus en optimalisatiegrens
 staan in [`DOCUMENTATIE_EN_ONDERHOUD.md`](DOCUMENTATIE_EN_ONDERHOUD.md);
+het subagentcontract, duurzame werkbord en Kanban-dashboard staan in
+[`design/product/delegation-and-workboard-v1.md`](design/product/delegation-and-workboard-v1.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
 [`evidence/living-core/`](evidence/living-core/).
 
 ## Nu
+
+- Subagents/werkbord WB00: Hermes' korte delegatie en duurzame multi-profile
+  Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Eva's
+  ontwikkelproces gebruikt agents, maar de runtime spawnt ze nog niet en het
+  dashboard heeft nog geen Kanban. WB01-WB07 bouwen parentgestuurde begrensde
+  workers, duurzame handoffs, crash/reclaim, dezelfde chat-/dashboardservice
+  en een live multi-workerproef boven Eva's bestaande PostgreSQL-ledger; er
+  komt geen tweede taakdatabase of tweede Eva-brein.
 
 - Bezig: MC03c0 zet uitsluitend een na bewezen read vrijgegeven effectstap
   atomair om in één duurzaam `EffectIntent/v1`. Lease, actuele catalogus,

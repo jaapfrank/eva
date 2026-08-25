@@ -70,6 +70,16 @@ Bijgewerkt: 25 augustus 2026.
   een kleine adapter maken, testen, koppelen en dynamisch activeren. AC01-AC06
   maken dat store- en catalogusonafhankelijke pad af; zie
   `design/architecture/ecosystem-bridge-v1.md`.
+- Eva-runtime kan nog geen algemene subagents spawnen. Het ontwikkelproces kan
+  dat wel, maar dat is geen productbewijs. WB01-WB07 voegen parentgestuurde,
+  begrensde workers met eigen taakgrant, contextscope, budget, lease,
+  heartbeat, crashherstel en gevalideerde teruglevering toe; zie
+  `design/product/delegation-and-workboard-v1.md`.
+- Het webdashboard heeft D01/D02 read-only basis, maar nog geen volledige
+  chat-/sessiesurface, Hermes-achtig duurzaam Kanbanbord of workerbediening.
+  D06 voegt dezelfde Eva-chat toe; D07/D08 tonen en bedienen dezelfde
+  PostgreSQL-taken via dashboard én Eva-chat. Een kaart op `done` is nooit een
+  vervanging voor providerreceipt of fysieke readback.
 - Er is geen runtime-`MEMORY.md`: PostgreSQL en Hindsight bewaren gescopeerd
   geheugen met herkomst, consent en crashherstel. Een toekomstige `MEMORY.md`
   is alleen een persoonsgebonden import/export, nooit de geheugenautoriteit.
@@ -209,6 +219,8 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/conversational-voice-v1.md`
 - Code-, dependency-, image- en reactietijdbudgetten:
   `design/product/performance-and-complexity-v1.md`
+- Subagents, duurzame taakdelegatie en Kanban-dashboard:
+  `design/product/delegation-and-workboard-v1.md`
 - Installer, onboarding, koppelingen, `SOUL.md`/`MEMORY.md` en verplaatsen:
   `design/product/installer-and-onboarding-v1.md`
 - Mogelijkhedenindex, bestandsdoel, status, bewijs en optimalisatie:

@@ -38,9 +38,9 @@ hebben.
 
 | Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
 |---|---|---|---|
-| **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; mensen merkbaar leren kennen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser- en huisproeven met bericht-, beurt-, latency-, token-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05, V01-V07, PC01-PC06, LG01-LG07 en eindimage. |
+| **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; mensen merkbaar leren kennen; chatmandaat; autonome plan-act-observeer-herplan-ketens; begrensde subagents en duurzaam werkbord; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser-, multi-worker- en huisproeven met bericht-, beurt-, latency-, token-, intent-, attempt-, tool-, handoff- en readbackreceipt. Jij ziet gedrag, werkbord en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, WB01-WB07, P01-P05, V01-V07, PC01-PC06, LG01-LG07 en eindimage. |
 | **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis gereed; eerste ledgergebonden sidecar/browsercomputer nog open. |
-| **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een brede coworkervloot, algemene video/media, Canvas en brede providerroutering. Eén browsercomputer, minimale huispresence en conversationele voice vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, voice, minimale presence en één autonome computerroute betrouwbaar zijn. | WhatsApp en algemene multimedia blokkeren V1 niet; AU01-AU08, P01-P05 en V01-V07 wel. |
+| **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een onbegrensde of multi-host coworkervloot, algemene video/media, Canvas en brede providerroutering. Begrensde parentgestuurde subagents en één duurzaam werkbord vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, voice, minimale presence, één autonome computerroute en controleerbare delegatie betrouwbaar zijn. | WhatsApp en algemene multimedia blokkeren V1 niet; AU01-AU08, P01-P05, V01-V07 en WB01-WB07 wel. |
 
 De bestaande vier-frameworkgate blijft alleen een bescherming tegen een
 algemene claim over Eva, OpenClaw, Hermes en Agent Zero. OpenBot zit nog niet in
@@ -106,6 +106,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [ ] `DG01-DG06` — alle capabilities, componenten en relevante bestanden aan
   doel, owner, status, Git-checkpoint, tests/review/livebewijs en expliciete
   optimalisatiemetric binden; zie `DOCUMENTATIE_EN_ONDERHOUD.md`.
+- [ ] `WB01-WB07` — parentgestuurde subagents met taak-/context-/tool-/budgetgrant,
+  duurzame PostgreSQL-handoffs, lease/crash/reclaim, Kanban in het dashboard,
+  dezelfde bediening vanuit Eva-chat en één echte multi-workerproef; zie
+  `design/product/delegation-and-workboard-v1.md`.
 - [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
   grenzen; zie `OPENBOT_VERGELIJKING.md`.
 - [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect
@@ -573,7 +577,7 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Companion nodes en apparaten | Niet aanwezig | Camera, scherm, locatie, voice, notificaties en hostcommands aanwezig | Geen gelijkwaardige nodeclaim door ons bewezen | A0 CLI geeft hostterminal, bestanden en hostbrowser; desktop/browser ingebouwd | OpenClaw-nodes via officiële Gateway-sidecar hergebruiken; A0 CLI alleen vergelijken, niet in Eva opnemen zonder voordeel |
 | Browser en computergebruik | Websearch en begrensde bestanden; interactieve gateway/browser B01 staat gepland | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Eén geïsoleerde provider achter Eva's ledger; accounts, contracten, betalingen en financiële stappen kunnen binnen een vastgelegd mandaat zelfstandig verlopen |
 | MCP en standaard toolservers | Eén vaste, no-secret read-only Streamable-HTTP-tool werkt tegen een echte lokale JSON/SSE-provider; geen sidecar, ledger of B-route | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | De volgende kleine stap is één gepinde sidecar achter Eva's ledger; geen losse nieuwe API-connectoren |
-| Multi-agentwerk | Ontwikkelproces gebruikt onafhankelijke agents; Eva-runtime heeft nog geen bewezen algemene delegatie | Multi-agent routing aanwezig | Delegatie/multi-agent aanwezig | Subagents en A2A aanwezig | Dezelfde onderzoek-, bouw-, review- en hervattingsopdracht op alle vier testen |
+| Multi-agentwerk en werkbord | Ontwikkelproces gebruikt onafhankelijke agents; runtime-subagents en Kanban zijn WB01-WB07 en nog niet gebouwd | Multi-agent routing aanwezig | Korte `delegate_task` plus duurzaam multi-profile Kanban/dashboard gedocumenteerd; niet door ons gelijk uitgevoerd | Subagents en A2A aanwezig | Eva bouwt beide vormen boven één PostgreSQL-ledger: korte begrensde fork/join én duurzame taken met handoff, review, crash/reclaim en chat-/dashboardbediening; daarna dezelfde onderzoek→uitvoering→reviewproef op alle vier |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
 | API, IDE en programmatische bediening | Interne HTTP-API; geen volledige externe SDK/IDE-gate | Gateway-RPC aanwezig | HTTP/API- en ACP/IDE-integraties aanwezig | HTTP/WebSocket en A0 CLI aanwezig | Dezelfde externe clienttaak, reconnect en permissiontest uitvoeren |
 | Voice, spraak en media | Geen full-duplex voice; P01-P05 bewaart spontane huispresence en V01-V07 bouwt onderbreekbare conversationele voice | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | `Bel Eva` via Telegram Mini App als voorkeur, Assist/Wyoming als fallback; dezelfde identiteit/geheugen/policy, p95-latencygates en geen tweede voicebrein |
@@ -644,19 +648,21 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 9. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
    runner, geïsoleerde browsercomputer, Eva-ledger/readback, live stop/overname,
    echte testwebtaak en crashherstel zonder blinde herhaling.
-10. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
-   PC05, LG07 en nieuwe AU01-AU07-receipts live uit via echt Telegram/voice,
+10. Sluit WB01-WB06: korte parentgestuurde subagents, duurzaam werkbord,
+   crash/reclaim en dezelfde gecontroleerde bediening via Eva-chat en dashboard.
+11. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
+   PC05, LG07, WB07 en nieuwe AU01-AU07-receipts live uit via echt Telegram/voice,
    het echte huis, de afgeschermde browser en afgeschermde providers. Start
    daarna AU08 zeven dagen op diezelfde image.
-11. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+12. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
    aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
    mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
-12. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
+13. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
    coworkervloot zijn aparte latere besluiten.
-13. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
+14. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
    snelheid en kosten mogen niet degraderen door queue-, context-, profiel- of
    geheugenlek/groei.
-14. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+15. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
@@ -673,6 +679,8 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 - Hermes integraties: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/index.md>
 - Hermes tools: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/tools.md>
 - Hermes MCP: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/guides/use-mcp-with-hermes.md>
+- Hermes subagents en Kanban: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/kanban.md>
+- Hermes webdashboard: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/web-dashboard.md>
 - Agent Zero documentatie: <https://github.com/agent0ai/agent-zero/blob/main/docs/README.md>
 - Agent Zero MCP: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/mcp-setup.md>
 - Agent Zero browser: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/browser.md>
