@@ -20,6 +20,9 @@ de harde code-, dependency-, image- en reactietijdbudgetten staan in
 het corrigeerbare persoonsmodel, de groeicyclus en de geheugen-, token- en
 kostenbudgetten staan in
 [`design/product/learning-and-person-model-v1.md`](design/product/learning-and-person-model-v1.md);
+de eenvoudige installatie, lokale koppelwizard, `SOUL.md`/`MEMORY.md`-grens en
+verplaats-/updateroute staan in
+[`design/product/installer-and-onboarding-v1.md`](design/product/installer-and-onboarding-v1.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
@@ -48,6 +51,11 @@ de controleerbare live receipts staan in
   corrigeerbaar persoonsmodel, token-/kostenreceipts, fysieke geheugenquota,
   skillquarantaine, evaluatie, promotie en rollback af. Tot die tijd is Eva niet
   aantoonbaar een agent die procedureel steeds beter wordt.
+- Installer/onboarding IN00: technisch bestaan schema-installatie,
+  managed-B-manifest, A/B-beheer, offline imagebouw en portable export, maar er
+  is nog geen eenvoudige setupwizard of bewezen restore op een andere computer.
+  IN01-IN08 maken één lokale wizard, IdentityPack/`SOUL.md`, Telegram, Home
+  Assistant, e-mail, secretinvoer, fresh install, restore en update af.
 - Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
@@ -133,6 +141,11 @@ de controleerbare live receipts staan in
   fysiek quotum en iedere geleerde procedure baseline/held-out-evaluatie,
   versie en rollback. De zevendaagse gate weigert profiel-, context-, token-,
   kosten- of latencygroei buiten de vastgelegde grenzen.
+- Installatie/onboarding: IN01-IN08 staan open. De huidige operatoronderdelen
+  zijn geen consumenteninstaller. V1 vereist een ondertekend pakket met lokale
+  wizard, zonder handmatige YAML/JSON/env-edit, plus least-privilege koppeling
+  van Telegram, Home Assistant en één e-mailprovider, restore op een andere
+  computer en A/B-update/rollback.
 - OpenBot/autonomie: `OB00` is klaar. `AU01-AU08` staan open voor een duurzaam
   chatmandaat, algemene plan-act-observeer-herplan-runner, één geïsoleerde
   browsercomputer, Eva's eigen policy/ledger/readback, live pauze/stop/overname,

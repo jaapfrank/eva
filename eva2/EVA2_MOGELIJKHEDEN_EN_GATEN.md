@@ -41,10 +41,22 @@ Bijgewerkt: 25 augustus 2026.
   downloadfulfillment maken.
 - Vanaf een lege PostgreSQL-installatie starten en na een harde herstart verdergaan.
 - Als geïsoleerde B-versie naast productie A draaien zonder A te vervangen.
+- Afzonderlijke installatiecomponenten door een operator laten renderen of op
+  disposable PostgreSQL/core testen. De fresh-proef hergebruikte externe
+  Hindsight/modelautoriteit en het managed manifest is nog niet geadopteerd;
+  dit is dus geen volledige lege-stack- of productinstallatie.
 
 ## Wat nog niet af is
 
 - Eva 2 draait nog niet als de definitieve productie-Eva; Eva A blijft actief.
+- Er is nog geen eenvoudige installer of lokale onboardingwizard. De huidige
+  setup vereist operatorwerk met Compose/configuratie en secrets. IN01-IN08
+  voegen één ondertekend pakket, IdentityPack/optionele `SOUL.md`-import,
+  Telegram-, Home Assistant- en e-mailkoppeling, fresh install, restore, update
+  en rollback toe; zie `design/product/installer-and-onboarding-v1.md`.
+- Er is geen runtime-`MEMORY.md`: PostgreSQL en Hindsight bewaren gescopeerd
+  geheugen met herkomst, consent en crashherstel. Een toekomstige `MEMORY.md`
+  is alleen een persoonsgebonden import/export, nooit de geheugenautoriteit.
 - Het huidige Home Assistant-token van B moet worden ingetrokken en vervangen;
   het staat nog inspecteerbaar in containerconfig in plaats van als file-secret.
 - De recente Living Core-bron, architectuur en receipts hebben nog geen reeks
@@ -173,6 +185,8 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/conversational-voice-v1.md`
 - Code-, dependency-, image- en reactietijdbudgetten:
   `design/product/performance-and-complexity-v1.md`
+- Installer, onboarding, koppelingen, `SOUL.md`/`MEMORY.md` en verplaatsen:
+  `design/product/installer-and-onboarding-v1.md`
 - Geblindeerde gesprekscase: `evidence/living-core/lab36-c04-blind-2026-08-24.json`
 - Resident-shakedown, niet de officiële zevendaagse run:
   `evidence/living-core/resident-long-run-v1-2026-08-24.json`
