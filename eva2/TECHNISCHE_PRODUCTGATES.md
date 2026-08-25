@@ -596,16 +596,20 @@ langdurige verzamelaanpassing telt niet als voortgang.
   executor start alleen die eerste claim (`cc3094c`–`89de787`). MC03c3a maakt
   na uitsluitend een geaccepteerd providerreceipt één afzonderlijk
   geautoriseerde `effect_verify`-read-intent met eigen tijdlijn
-  (`45cd285`/`4bc39a9`). Zeven gerichte, 41 brede action-chain- en afzonderlijk
-  24 tijdlijntests zijn groen, inclusief
+  (`45cd285`/`4bc39a9`). MC03c3b1 bindt die read daarna aan één actuele sealed
+  providerrelease en commit exact één `dispatch_authorized`-poging zonder
+  callable bytes (`2cb2c27`). Dertien gerichte, 47 brede action-chain- en
+  afzonderlijk 24 tijdlijntests zijn groen, inclusief
   echte subprocess-protocolfout, rollback, herstart, replay, corruptie en een
-  onopgeloste call-start zonder tweede proces. MC03c3a deed nul provider-I/O en
-  schreef nul fysieke readbacks; de effectstap bleef `running`. Onafhankelijke
-  reviews, readbackdispatch, fysieke Home Assistant-readback,
+  onopgeloste call-start zonder tweede proces. MC03c3a/b1 deden nul
+  readback-provider-I/O en schreven nul fysieke readbacks; de effectstap bleef
+  `running`. Onafhankelijke reviews, readback-callclaim en -provider-I/O,
+  fysieke Home Assistant-readback,
   effect-/dependencyafronding en B-livebewijs blijven open; zie
   `reviews/action-chain-effect-preparation-mc03c0.md` en
   `reviews/action-chain-effect-execution-mc03c2.md` en
-  `reviews/action-chain-effect-readback-preparation-mc03c3a.md`.
+  `reviews/action-chain-effect-readback-preparation-mc03c3a.md` en
+  `reviews/action-chain-effect-readback-authorization-mc03c3b1.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

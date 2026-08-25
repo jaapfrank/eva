@@ -87,10 +87,11 @@ de controleerbare live receipts staan in
   na een duurzaam geaccepteerd effect één afzonderlijk geautoriseerde,
   onveranderlijke `effect_verify`-read klaar. De read gebruikt een eigen
   `verification_read`-manifest, scope en tijdlijn en maakt de effectstap nog
-  niet af. Zeven gerichte, 41 brede action-chain- en afzonderlijk 24
-  tijdlijntests zijn groen op `45cd285`/`4bc39a9`. Dit is `tested`, nog niet
-  onafhankelijk `reviewed`; er is geen echte Home Assistant-call/readback
-  gedaan en A en B zijn niet gewijzigd.
+  niet af. MC03c3b1 autoriseert daarop exact één actuele sealed providerpoging
+  en bewaart die atomair, maar geeft nog geen callable bytes vrij. Dertien
+  gerichte, 47 brede action-chain- en afzonderlijk 24 tijdlijntests zijn groen
+  op `2cb2c27`. Dit is `tested`, nog niet onafhankelijk `reviewed`; er is geen
+  echte Home Assistant-call/readback gedaan en A en B zijn niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -132,20 +133,21 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `4bc39a9` bereidt na geverifieerde provideracceptatie
-  exact één read-only effectreadback voor. Een nieuwe engine leest dezelfde
-  intent terug; concurrency, rollback, intrekking en kolom/payloadcorruptie
-  falen gesloten. Er zijn nul providerreads en nul `EffectReadback`-rijen
-  gemaakt en de effectstap blijft `running`; zie
-  `reviews/action-chain-effect-readback-preparation-mc03c3a.md`.
+- Laatste codecheckpoint: `2cb2c27` autoriseert na de voorbereide
+  effectcontrole exact één read-only providerpoging. Een nieuwe engine leest
+  dezelfde poging terug; concurrency, deadline, rollback, intrekking en
+  corruptie falen gesloten. Er zijn geen callable bytes vrijgegeven, nul
+  providerreads en nul `EffectReadback`-rijen gemaakt en de effectstap blijft
+  `running`; zie
+  `reviews/action-chain-effect-readback-authorization-mc03c3b1.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: onafhankelijke review van MC03c0–MC03c3a en de nog open reviews
-  van MC03b2b/MC03b3. Daarna krijgt de voorbereide readback via dezelfde sealed
-  providergrens één autorisatie/callclaim en pas daarna provider-I/O plus
-  `EffectReadback`. Alleen exact overeenkomende doeltoestand mag effect en
-  dependency afronden. Telegram-B en een echte crash tussen effect en readback
-  blijven afzonderlijke eindproeven.
+- Eerstvolgend: MC03c3b2 commit vlak vóór readback-I/O precies één call-start en
+  geeft alleen aan die eerste caller het sealed proces- en RPC-pakket. Daarna
+  volgen afzonderlijk provider-I/O plus `EffectReadback`; alleen een exact
+  overeenkomende doeltoestand mag effect en dependency afronden. Onafhankelijke
+  reviews van MC03b2b/MC03b3 en MC03c0–MC03c3b1, Telegram-B en een echte crash
+  tussen effect en readback blijven afzonderlijke eindproeven.
 - Productie A: actief en niet gewijzigd.
 - Actuele B: `eva2-living-core:cross-channel-v53-20260824`, core ready,
   duurzame-doelenworker running met nul herstarts.

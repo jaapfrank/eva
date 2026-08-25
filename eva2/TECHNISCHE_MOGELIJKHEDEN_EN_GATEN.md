@@ -158,10 +158,13 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   provideruitkomst duurzaam herladen; concurrency, replay en herstart krijgen
   geen tweede set callable bytes of tweede proces. Na een geaccepteerd receipt
   kan zij nu tevens exact één afzonderlijk geautoriseerde, duurzame
-  `effect_verify`-read voorbereiden; herstart, concurrency, rollback,
-  intrekking en corruptie zijn getest. Reviews van readresultaat, readvrijgave
-  en alle effectslices blijven open. Nog ontbreken readbackdispatch, fysieke
-  readback, effect-/dependencyafronding en de Telegram-B-/Home Assistant-proef.
+  `effect_verify`-read voorbereiden en die aan exact één actuele sealed
+  providerrelease plus duurzame poging binden, nog zonder callmateriaal of
+  provider-I/O. Herstart, concurrency, deadline, rollback, intrekking en
+  corruptie zijn getest. Reviews van readresultaat, readvrijgave en alle
+  effectslices blijven open. Nog ontbreken readback-callclaim en -provider-I/O,
+  fysieke readback, effect-/dependencyafronding en de Telegram-B-/Home
+  Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
