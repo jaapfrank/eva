@@ -269,7 +269,7 @@ class PostgresActionChainReadDispatcher:
                 .limit(1)
             ).one()
             latest_data = _event_data(latest.payload)
-            _require_registry_event(
+            require_action_chain_read_registry_event(
                 latest_data,
                 profile,
                 self._provider_registry,
@@ -283,7 +283,7 @@ class PostgresActionChainReadDispatcher:
             deadline = _parse_timestamp(intent.deadline)
             if now < attempt_row.created_at or now >= deadline:
                 raise ActionChainReadConflict("read provider-call deadline has passed")
-            initialize, invoke = _build_claimed_exchange(
+            initialize, invoke = build_claimed_action_chain_read_exchange(
                 scope=self._scope_value,
                 chain=chain,
                 action_arguments=action.arguments,
@@ -346,7 +346,7 @@ class PostgresActionChainReadDispatcher:
         )
 
 
-def _require_registry_event(
+def require_action_chain_read_registry_event(
     data: object,
     profile: ReadProviderProfile,
     registry: SealedReadProviderRegistry,
@@ -368,7 +368,7 @@ def _require_registry_event(
         raise ActionChainReadConflict("read provider release authority differs")
 
 
-def _build_claimed_exchange(
+def build_claimed_action_chain_read_exchange(
     *,
     scope: TimelineScope,
     chain: StoredActionChain,
@@ -437,7 +437,7 @@ def _build_claimed_exchange(
             "contract": "ConnectorInvokeRequest/v1",
             "jsonrpc": "2.0",
             "id": envelope.request_id,
-            "method": "resource.read",
+            "method": _read_invoke_method(intent),
             "params": envelope.model_dump(mode="json"),
         }
     )
@@ -455,6 +455,14 @@ def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
         raise ActionChainReadConflict("read provider timeline payload differs")
     return payload["data"]
+
+
+def _read_invoke_method(intent: ReadIntent) -> str:
+    return {
+        "effect.reconcile": "effect.reconcile",
+        "effect.readback": "effect.readback",
+        "connector.probe": "connector.probe",
+    }.get(intent.operation, "resource.read")
 
 
 def _require_utc_second(value: datetime) -> None:

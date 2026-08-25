@@ -171,7 +171,7 @@ class PostgresActionChainEffectReadbackAuthorizer:
                 )
             except RuntimeError as error:
                 raise ActionChainEffectReadbackConflict(str(error)) from error
-            request_payload = _prepared_request_payload(
+            request_payload = prepared_effect_readback_request_payload(
                 connection, self._scope_value, intent
             )
 
@@ -317,7 +317,7 @@ class PostgresActionChainEffectReadbackAuthorizer:
         )
 
 
-def _prepared_request_payload(
+def prepared_effect_readback_request_payload(
     connection: sa.Connection,
     scope: TimelineScope,
     intent: ReadIntent,
