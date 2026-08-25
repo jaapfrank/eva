@@ -29,6 +29,7 @@ def test_every_registered_contract_has_a_closed_deterministic_schema() -> None:
 def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
     expected = {
         "AttentionWake/v1",
+        "AttentionWake/v2",
         "CapabilityGrant/v1",
         "CapabilityManifest/v1",
         "ClaimEvidenceBinding/v1",
@@ -47,6 +48,10 @@ def test_registry_matches_the_sealed_catalogue_plus_acceptance_bundle() -> None:
         "ConsentGrant/v1",
         "ContextSelection/v1",
         "CredentialGrant/v1",
+        "DelegatedWork/v1",
+        "DelegatedWorkGrant/v1",
+        "DelegatedWorkResult/v1",
+        "DelegatedWorkUsage/v1",
         "DeliveryIntent/v1",
         "DeliveryOffer/v1",
         "DeliveryOffer/v2",

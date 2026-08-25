@@ -22,7 +22,7 @@ class DelegatedWorkError(RuntimeError):
 
 
 class _DelegatedContract(Version1Contract):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[1]
 
     def to_payload(self) -> dict[str, object]:
         return self.model_dump(mode="json")
@@ -45,7 +45,7 @@ WorkerName = Annotated[
 class DelegatedWorkGrant(_DelegatedContract):
     """The complete derived authority of one child; no ambient inheritance."""
 
-    contract: Literal["DelegatedWorkGrant/v1"] = "DelegatedWorkGrant/v1"
+    contract: Literal["DelegatedWorkGrant/v1"]
     context_refs: list[Identifier] = Field(max_length=32)
     capability_ids: list[Identifier] = Field(max_length=16)
     workspace_ref: Identifier | None
@@ -58,7 +58,7 @@ class DelegatedWorkGrant(_DelegatedContract):
     maximum_cost_usd_micros: int = Field(ge=0, le=1_000_000_000)
     timeout_seconds: int = Field(ge=1, le=300)
     maximum_claims_before_call_start: int = Field(ge=1, le=3)
-    delegation_depth: Literal[1] = 1
+    delegation_depth: Literal[1]
 
     @model_validator(mode="after")
     def _first_slice_is_explicitly_isolated(self) -> DelegatedWorkGrant:
@@ -85,7 +85,7 @@ class DelegatedWorkGrant(_DelegatedContract):
 class DelegatedWorkSpec(_DelegatedContract):
     """One private child task bound to its parent and exact released worker."""
 
-    contract: Literal["DelegatedWork/v1"] = "DelegatedWork/v1"
+    contract: Literal["DelegatedWork/v1"]
     work_id: Identifier
     episode_id: Identifier
     generation: int = Field(ge=1, le=2_147_483_647)
@@ -122,7 +122,7 @@ class DelegatedWorkSpec(_DelegatedContract):
 class DelegatedWorkUsage(_DelegatedContract):
     """Portable counters with explicit completeness; unknown is never zero."""
 
-    contract: Literal["DelegatedWorkUsage/v1"] = "DelegatedWorkUsage/v1"
+    contract: Literal["DelegatedWorkUsage/v1"]
     measurement: Literal["measured", "partial", "unmeasured"]
     completed_model_responses: int | None = Field(default=None, ge=0, le=1_000)
     tool_calls: int | None = Field(default=None, ge=0, le=1_000)
@@ -163,11 +163,15 @@ class DelegatedWorkUsage(_DelegatedContract):
 
     @classmethod
     def unmeasured(cls) -> DelegatedWorkUsage:
-        return cls(measurement="unmeasured")
+        return cls(
+            contract="DelegatedWorkUsage/v1",
+            schema_version=1,
+            measurement="unmeasured",
+        )
 
 
 class DelegatedWorkResult(_DelegatedContract):
-    contract: Literal["DelegatedWorkResult/v1"] = "DelegatedWorkResult/v1"
+    contract: Literal["DelegatedWorkResult/v1"]
     work_id: Identifier
     call_id: Identifier
     output: NaturalText

@@ -55,6 +55,8 @@ class CountedFunctionModel(FunctionModel):
 
 def grant(**overrides: object) -> DelegatedWorkGrant:
     values: dict[str, object] = {
+        "contract": "DelegatedWorkGrant/v1",
+        "schema_version": 1,
         "context_refs": [],
         "capability_ids": [],
         "workspace_ref": None,
@@ -67,6 +69,7 @@ def grant(**overrides: object) -> DelegatedWorkGrant:
         "maximum_cost_usd_micros": 1_000_000,
         "timeout_seconds": 3,
         "maximum_claims_before_call_start": 2,
+        "delegation_depth": 1,
     }
     values.update(overrides)
     return DelegatedWorkGrant(**values)  # type: ignore[arg-type]
@@ -74,6 +77,8 @@ def grant(**overrides: object) -> DelegatedWorkGrant:
 
 def spec(**overrides: object) -> DelegatedWorkSpec:
     values: dict[str, object] = {
+        "contract": "DelegatedWork/v1",
+        "schema_version": 1,
         "work_id": "work:1",
         "episode_id": "episode:1",
         "generation": 1,
@@ -167,9 +172,19 @@ def test_closed_contract_rejects_ambient_authority_and_false_usage() -> None:
         with pytest.raises(ValueError):
             grant(**override)
     with pytest.raises(ValueError, match="unmeasured"):
-        DelegatedWorkUsage(measurement="unmeasured", input_tokens=0)
+        DelegatedWorkUsage(
+            contract="DelegatedWorkUsage/v1",
+            schema_version=1,
+            measurement="unmeasured",
+            input_tokens=0,
+        )
     with pytest.raises(ValueError, match="must carry every"):
-        DelegatedWorkUsage(measurement="measured", input_tokens=1)
+        DelegatedWorkUsage(
+            contract="DelegatedWorkUsage/v1",
+            schema_version=1,
+            measurement="measured",
+            input_tokens=1,
+        )
 
 
 def test_contract_round_trip_hash_and_result_tampering_are_exact() -> None:
@@ -177,6 +192,8 @@ def test_contract_round_trip_hash_and_result_tampering_are_exact() -> None:
     assert DelegatedWorkSpec.from_payload(work.to_payload()) == work
     assert DelegatedWorkSpec.from_payload(work.to_payload()).sha256 == work.sha256
     usage = DelegatedWorkUsage(
+        contract="DelegatedWorkUsage/v1",
+        schema_version=1,
         measurement="measured",
         completed_model_responses=1,
         tool_calls=0,
@@ -187,6 +204,8 @@ def test_contract_round_trip_hash_and_result_tampering_are_exact() -> None:
     )
     output = '{"findings":["bewijs-1"],"summary":"gecontroleerd"}'
     result = DelegatedWorkResult(
+        contract="DelegatedWorkResult/v1",
+        schema_version=1,
         work_id=work.work_id,
         call_id="call:1",
         output=output,
@@ -215,6 +234,8 @@ def test_public_agent_run_binds_profile_output_usage_cost_and_zero_tools() -> No
     )
     assert outcome.result.spec_sha256 == spec().sha256
     assert outcome.usage == DelegatedWorkUsage(
+        contract="DelegatedWorkUsage/v1",
+        schema_version=1,
         measurement="measured",
         completed_model_responses=1,
         tool_calls=0,

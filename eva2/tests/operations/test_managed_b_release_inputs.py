@@ -68,7 +68,7 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
         "version_matched_4d_dependency_inputs"
     )
     assert receipt["dependency_alignment"]["expected_wheel_count"] == 39
-    assert receipt["current_contract_count"] == 66
+    assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["migration_head"] == "4e_0001_operational_timeline"
     assert "source_commit" not in receipt
@@ -107,6 +107,28 @@ def test_release_inputs_refuse_a_missing_or_unapproved_current_addition() -> Non
 
     with pytest.raises(RuntimeError, match="contract count differs"):
         _validate(files, raw)
+
+
+def test_release_inputs_bind_exact_current_additions_without_resealing_v1() -> None:
+    authority, raw = _authority()
+    additions = authority["contractRegistry"]["historical4d"][
+        "allowedCurrentAdditions"
+    ]
+
+    assert set(additions) == {
+        "AttentionWake/v2",
+        "DelegatedWork/v1",
+        "DelegatedWorkGrant/v1",
+        "DelegatedWorkResult/v1",
+        "DelegatedWorkUsage/v1",
+        "IdentityPackDraft/v1",
+        "McpReadOnlyToolImport/v1",
+    }
+    files = _files(authority)
+    assert hashlib.sha256(
+        files["schemas/contracts/AttentionWake-v1.schema.json"][0]
+    ).hexdigest() == "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc"
+    _validate(files, raw)
 
 
 def test_release_inputs_refuse_current_manifest_or_corpus_drift() -> None:

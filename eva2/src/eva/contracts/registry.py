@@ -16,6 +16,12 @@ from .connector_rpc import (
     ConnectorInvokeSuccess,
     ConnectorProtocolFailure,
 )
+from .delegated_work import (
+    DelegatedWorkGrant,
+    DelegatedWorkResult,
+    DelegatedWorkSpec,
+    DelegatedWorkUsage,
+)
 from .evidence import (
     ClaimEvidenceBinding,
     EvaAcceptanceEvidenceBundle,
@@ -50,7 +56,7 @@ from .ingress import (
     IngressRequest,
     TurnEnvelope,
 )
-from .lifecycle import AttentionWake, Commitment, EpisodeState
+from .lifecycle import AttentionWake, AttentionWakeV2, Commitment, EpisodeState
 from .memory import (
     ExperienceSourceEvent,
     ImprovementCandidate,
@@ -83,6 +89,7 @@ from .platform import (
 
 _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "AttentionWake/v1": AttentionWake,
+    "AttentionWake/v2": AttentionWakeV2,
     "CapabilityGrant/v1": CapabilityGrant,
     "CapabilityManifest/v1": CapabilityManifest,
     "ClaimEvidenceBinding/v1": ClaimEvidenceBinding,
@@ -101,6 +108,10 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "ConsentGrant/v1": ConsentGrant,
     "ContextSelection/v1": ContextSelection,
     "CredentialGrant/v1": CredentialGrant,
+    "DelegatedWork/v1": DelegatedWorkSpec,
+    "DelegatedWorkGrant/v1": DelegatedWorkGrant,
+    "DelegatedWorkResult/v1": DelegatedWorkResult,
+    "DelegatedWorkUsage/v1": DelegatedWorkUsage,
     "DeliveryIntent/v1": DeliveryIntent,
     "DeliveryOffer/v1": DeliveryOffer,
     "DeliveryOffer/v2": DeliveryOfferV2,

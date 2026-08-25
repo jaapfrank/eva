@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
-from .base import Identifier, ShortText, Timestamp, Version1Contract
+from .base import Identifier, ShortText, Timestamp, Version1Contract, Version2Contract
 
 
 class EpisodeState(Version1Contract):
@@ -76,6 +76,43 @@ class AttentionWake(Version1Contract):
 
     @model_validator(mode="after")
     def _lease_presence_matches_state(self) -> "AttentionWake":
+        if self.deadline < self.not_before:
+            raise ValueError("attention deadline cannot precede not_before")
+        leased = self.lease_owner is not None and self.lease_expires_at is not None
+        if self.state == "claimed" and not leased:
+            raise ValueError("claimed attention requires a complete lease")
+        if self.state != "claimed" and (
+            self.lease_owner is not None or self.lease_expires_at is not None
+        ):
+            raise ValueError("only claimed attention may carry a lease")
+        return self
+
+
+class AttentionWakeV2(Version2Contract):
+    """Compatible attention task with an explicit delegated-work queue kind."""
+
+    contract: Literal["AttentionWake/v2"]
+    attention_id: Identifier
+    episode_id: Identifier
+    generation: int = Field(ge=1, le=2_147_483_647)
+    kind: Literal[
+        "ingress",
+        "continuation",
+        "deadline",
+        "external_signal",
+        "delivery_recovery",
+        "delegated_work",
+    ]
+    state: Literal["pending", "claimed", "completed", "waiting", "dead_letter"]
+    reason: ShortText
+    not_before: Timestamp
+    deadline: Timestamp
+    lease_owner: Identifier | None
+    lease_expires_at: Timestamp | None
+    ordinal: int = Field(ge=1, le=1_000)
+
+    @model_validator(mode="after")
+    def _lease_presence_matches_state(self) -> "AttentionWakeV2":
         if self.deadline < self.not_before:
             raise ValueError("attention deadline cannot precede not_before")
         leased = self.lease_owner is not None and self.lease_expires_at is not None

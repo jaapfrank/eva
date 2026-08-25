@@ -62,11 +62,15 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/contracts/manifest.json",
     "schemas/portable/generic-reader-output-schema-manifest-v1.json",
     "schemas/portable/record-schema-manifest-v1.json",
+    "src/eva/contracts/delegated_work.py",
+    "src/eva/contracts/lifecycle.py",
+    "src/eva/contracts/registry.py",
     "src/eva/operations/managed_b_build_context.py",
     "src/eva/operations/managed_b_offline_build.py",
     "src/eva/operations/managed_b_release_inputs.py",
     "src/eva/operations/managed_b_wheelhouse.py",
     "tools/check_4d_freeze.py",
+    "tools/generate_contract_schemas.py",
     "tools/prepare_managed_b_candidate_context.py",
 )
 _EXPECTED_TEST_PATHS = (
@@ -91,6 +95,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/connectors/test_telegram.py",
     "tests/contract/test_contract_corpus.py",
     "tests/contract/test_contract_invariants.py",
+    "tests/contract/test_delegated_work.py",
     "tests/contract/test_json_schema_reference.py",
     "tests/contract/test_schema_generation.py",
     "tests/model/test_conversation_model.py",
@@ -134,7 +139,7 @@ _NONCLAIMS = (
     "The active amd64 dependency inputs are version-matched to requirements-4d.lock; the stock 38-wheel authority remains historical and is not a fallback build input.",
     "The 4D installer environment, exact installer command, post-install attestations, physical 39-wheel wheelhouse, and runtime import remain separate open gates.",
     "Artifact-proxy provenance, two-builder reproducibility, immutable Compose image binding, SBOM, vulnerability evidence, signatures, trust root, and full-stack restart remain separate open gates.",
-    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 66-contract registry.",
+    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
 )
 _EXPECTED_MIGRATIONS = (
     ("4b_0000_core_namespace", None, "migrations/versions/4b_0000_core_namespace.py"),
@@ -359,6 +364,7 @@ def _validate_registry(
     projected_schemas = projected_manifest["schemas"]
     for contract in additions:
         projected_schemas.pop(contract)
+        projected_manifest.get("hostConformanceRules", {}).pop(contract, None)
     projected_manifest["contractCount"] = historical_count
     projected_manifest["corpusSha256"] = historical_corpus_sha
     if _sha256(_projected_json(projected_manifest)) != historical_manifest_sha:
@@ -380,7 +386,17 @@ def _validate_registry(
         case = case_by_id.get(case_id)
         if case is None or case.get("contract") != contract:
             raise RuntimeError("managed B historical 4D corpus projection differs")
-        removed_cases.add(case_id)
+    for case_id, case in case_by_id.items():
+        if case.get("encoding") != "utf8" or not isinstance(
+            case.get("wireUtf8"), str
+        ):
+            continue
+        try:
+            payload = json.loads(case["wireUtf8"])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict) and payload.get("contract") in additions:
+            removed_cases.add(case_id)
     projected_corpus = copy.deepcopy(corpus)
     projected_corpus["cases"] = [
         case for case in projected_corpus["cases"] if case["caseId"] not in removed_cases

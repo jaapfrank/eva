@@ -574,6 +574,90 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         },
     )
     add(
+        "valid-attention-wake-v2-delegated-work",
+        {
+            **_meta("AttentionWake/v2"),
+            "attention_id": "attention:delegated-work:noor:001",
+            "episode_id": episode_id,
+            "generation": 1,
+            "kind": "delegated_work",
+            "state": "pending",
+            "reason": "voer de begrensde childtaak uit",
+            "not_before": NOW,
+            "deadline": LATER,
+            "lease_owner": None,
+            "lease_expires_at": None,
+            "ordinal": 1,
+        },
+    )
+    delegated_grant = {
+        **_meta("DelegatedWorkGrant/v1"),
+        "context_refs": [],
+        "capability_ids": [],
+        "workspace_ref": None,
+        "child_network_access": False,
+        "maximum_model_runs": 1,
+        "maximum_completed_model_responses": 1,
+        "maximum_input_tokens": 2_000,
+        "maximum_output_tokens": 1_000,
+        "maximum_total_tokens": 3_000,
+        "maximum_cost_usd_micros": 50_000,
+        "timeout_seconds": 30,
+        "maximum_claims_before_call_start": 2,
+        "delegation_depth": 1,
+    }
+    delegated_spec = {
+        **_meta("DelegatedWork/v1"),
+        "work_id": "delegated-work:noor:001",
+        "episode_id": episode_id,
+        "generation": 1,
+        "parent_task_id": "task:noor:001",
+        "owner_principal_id": principal_id,
+        "principal_binding_id": "principal-binding:001",
+        "audience": "private",
+        "worker_name": "researcher",
+        "worker_profile_id": "worker-profile:researcher:001",
+        "worker_profile_release_sha256": H,
+        "task": "Vat de meegegeven vraag kort en feitelijk samen.",
+        "model_profile_id": "model-profile:bounded-child:001",
+        "model_profile_release_sha256": H1,
+        "worker_program_sha256": H,
+        "engine_release_sha256": H1,
+        "output_schema_sha256": H,
+        "grant": delegated_grant,
+        "created_at": NOW,
+        "deadline": LATER,
+    }
+    delegated_usage = {
+        **_meta("DelegatedWorkUsage/v1"),
+        "measurement": "measured",
+        "completed_model_responses": 1,
+        "tool_calls": 0,
+        "input_tokens": 120,
+        "output_tokens": 30,
+        "total_tokens": 150,
+        "cost_usd_micros": 500,
+    }
+    delegated_output = "De vraag is kort en feitelijk samengevat."
+    add("valid-delegated-work", delegated_spec)
+    add("valid-delegated-work-grant", delegated_grant)
+    add(
+        "valid-delegated-work-result",
+        {
+            **_meta("DelegatedWorkResult/v1"),
+            "work_id": delegated_spec["work_id"],
+            "call_id": "delegated-call:noor:001",
+            "output": delegated_output,
+            "output_sha256": hashlib.sha256(delegated_output.encode()).hexdigest(),
+            "spec_sha256": hashlib.sha256(
+                canonical_json_bytes(delegated_spec)
+            ).hexdigest(),
+            "usage": delegated_usage,
+            "completed_at": LATER,
+        },
+    )
+    add("valid-delegated-work-usage", delegated_usage)
+    add(
         "valid-capability-grant",
         {
             **_meta("CapabilityGrant/v1"),
@@ -1790,6 +1874,16 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
     invalid_presence_reply["fallback_reason"] = "candidate_rejected"
     invalid_credential = deepcopy(example("CredentialGrant/v1"))
     invalid_credential["model_provider_profile_id"] = "model-profile:001"
+    invalid_delegated_grant = deepcopy(example("DelegatedWorkGrant/v1"))
+    invalid_delegated_grant["capability_ids"] = ["capability:smuggled:001"]
+    invalid_delegated_token_budget = deepcopy(example("DelegatedWorkGrant/v1"))
+    invalid_delegated_token_budget["maximum_total_tokens"] = 999
+    invalid_delegated_usage = deepcopy(example("DelegatedWorkUsage/v1"))
+    invalid_delegated_usage["measurement"] = "unmeasured"
+    invalid_delegated_result = deepcopy(example("DelegatedWorkResult/v1"))
+    invalid_delegated_result["output_sha256"] = H1
+    invalid_delegated_deadline = deepcopy(example("DelegatedWork/v1"))
+    invalid_delegated_deadline["deadline"] = NOW
     invalid_read_intent = deepcopy(example("ReadIntent/v1"))
     invalid_read_intent.update(
         purpose="effect_reconcile",
@@ -2057,6 +2151,36 @@ def build_corpus(examples: dict[str, dict[str, Any]]) -> dict[str, Any]:
             "credential_target",
             "json_schema",
             payload=invalid_credential,
+        ),
+        invalid(
+            "invalid-delegated-work-smuggled-capability",
+            "delegated_work_v1_is_tool_free",
+            "json_schema",
+            payload=invalid_delegated_grant,
+        ),
+        invalid(
+            "invalid-delegated-work-token-budget",
+            "delegated_work_total_token_budget",
+            "host_conformance",
+            payload=invalid_delegated_token_budget,
+        ),
+        invalid(
+            "invalid-delegated-work-unmeasured-values",
+            "delegated_work_usage_measurement",
+            "json_schema",
+            payload=invalid_delegated_usage,
+        ),
+        invalid(
+            "invalid-delegated-work-output-hash",
+            "delegated_work_output_hash_binding",
+            "host_conformance",
+            payload=invalid_delegated_result,
+        ),
+        invalid(
+            "invalid-delegated-work-deadline",
+            "delegated_work_deadline_ordering",
+            "host_conformance",
+            payload=invalid_delegated_deadline,
         ),
         invalid(
             "invalid-reconcile-read-operation",
@@ -2651,7 +2775,7 @@ def _apply_schema_cross_field_rules(
                 ),
             ),
         )
-    elif contract_name == "AttentionWake/v1":
+    elif contract_name in {"AttentionWake/v1", "AttentionWake/v2"}:
         add_rules(
             schema,
             when(
@@ -2659,6 +2783,71 @@ def _apply_schema_cross_field_rules(
                 "claimed",
                 fields(lease_owner=nonnull, lease_expires_at=nonnull),
                 fields(lease_owner=null, lease_expires_at=null),
+            ),
+        )
+    elif contract_name == "DelegatedWorkGrant/v1":
+        add_rules(
+            schema,
+            fields(
+                context_refs={"maxItems": 0},
+                capability_ids={"maxItems": 0},
+                workspace_ref=null,
+                child_network_access={"const": False},
+            ),
+        )
+    elif contract_name == "DelegatedWorkUsage/v1":
+        counters = (
+            "completed_model_responses",
+            "tool_calls",
+            "input_tokens",
+            "output_tokens",
+            "total_tokens",
+            "cost_usd_micros",
+        )
+        add_rules(
+            schema,
+            when(
+                "measurement",
+                "unmeasured",
+                fields(**{field: null for field in counters}),
+            ),
+            when(
+                "measurement",
+                "measured",
+                fields(**{field: nonnull for field in counters}),
+            ),
+            when(
+                "measurement",
+                "partial",
+                {
+                    "anyOf": [fields(**{field: nonnull}) for field in counters],
+                },
+            ),
+            {
+                "anyOf": [
+                    fields(
+                        input_tokens=null,
+                        output_tokens=null,
+                        total_tokens=null,
+                    ),
+                    fields(
+                        input_tokens=nonnull,
+                        output_tokens=nonnull,
+                        total_tokens=nonnull,
+                    ),
+                ]
+            },
+        )
+    elif contract_name == "DelegatedWorkResult/v1":
+        add_rules(
+            schema,
+            fields(
+                usage={
+                    "properties": {
+                        "measurement": {"const": "measured"},
+                        "completed_model_responses": {"const": 1},
+                    }
+                }
             ),
         )
     elif contract_name == "MemoryFact/v1":
@@ -3194,6 +3383,7 @@ def _apply_schema_cross_field_rules(
 
 HOST_CONFORMANCE_RULES = {
     "AttentionWake/v1": ["deadline ordering and lease-time validity"],
+    "AttentionWake/v2": ["deadline ordering and lease-time validity"],
     "CapabilityGrant/v1": ["deadline follows issuance"],
     "ConnectorEnvelope/v1": ["request hash equals canonical request payload bytes"],
     "ConnectorErrorResponse/v1": [
@@ -3219,6 +3409,18 @@ HOST_CONFORMANCE_RULES = {
     ],
     "ConsentGrant/v1": ["expiry follows grant time"],
     "CredentialGrant/v1": ["deadline follows issuance"],
+    "DelegatedWork/v1": [
+        "deadline follows creation and task is at most 16384 UTF-8 bytes"
+    ],
+    "DelegatedWorkGrant/v1": [
+        "maximum_total_tokens is at least both the input and output token limit"
+    ],
+    "DelegatedWorkResult/v1": [
+        "output is at most 65536 UTF-8 bytes; output_sha256 binds its exact UTF-8 bytes; spec_sha256 equals the selected durable DelegatedWork/v1"
+    ],
+    "DelegatedWorkUsage/v1": [
+        "when token counters are present total_tokens equals input_tokens plus output_tokens"
+    ],
     "DeliveryOffer/v1": ["expiry follows offer time"],
     "DeliveryReceipt/v1": [
         "selected DeliveryOffer hash, delivery/content/wire, proof mode and client ACK request/challenge/algorithm/key match exactly"

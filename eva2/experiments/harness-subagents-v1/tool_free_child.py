@@ -343,6 +343,8 @@ class PydanticToolFreeChildRunner:
                 run_result.output.model_dump(mode="json")
             ).decode("utf-8")
             result = DelegatedWorkResult(
+                contract="DelegatedWorkResult/v1",
+                schema_version=1,
                 work_id=spec.work_id,
                 call_id=call_id,
                 output=output,
@@ -478,6 +480,8 @@ def _normalized_usage(
         cost = max(rated_cost, reported_cost)
         try:
             return DelegatedWorkUsage(
+                contract="DelegatedWorkUsage/v1",
+                schema_version=1,
                 measurement="measured",
                 completed_model_responses=responses,
                 tool_calls=tool_calls,
@@ -501,6 +505,8 @@ def _normalized_usage(
         )
     try:
         return DelegatedWorkUsage(
+            contract="DelegatedWorkUsage/v1",
+            schema_version=1,
             measurement="partial",
             completed_model_responses=responses,
             tool_calls=tool_calls,
