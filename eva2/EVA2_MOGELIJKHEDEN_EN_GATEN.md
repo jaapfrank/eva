@@ -11,6 +11,14 @@ Bijgewerkt: 25 augustus 2026.
 - Na een bewezen read de vrijgegeven effectstap opnieuw tegen actuele authority
   controleren en atomair als één duurzaam, idempotent effectintent voorbereiden,
   nog zonder de provider aan te roepen.
+- Voor zo'n effect precies één call-start vastleggen, de algemene verzegelde
+  subprocessprovider aanroepen en acceptatie, afwijzing, protocolfout of
+  ambiguïteit atomair met evidence en eventueel providerreceipt bewaren. Replay,
+  herstart en een achtergelaten onopgeloste call-start geven nooit een tweede
+  providercall. Provideracceptatie is nog geen fysiek succes: de effectstap blijft
+  `running` totdat een afzonderlijke Home Assistant-readback de doeltoestand
+  bewijst. Dit is getest op disposable PostgreSQL en een lokale procesgrens, niet
+  op B of een echte Home Assistant-provider.
 - Voor één voorbereide ketenread precies één duurzame callclaim maken, de
   algemene verzegelde providergrens aanroepen, resultaat en evidence bewaren en
   alleen na een echte succesobservatie de uitvoerbare vervolgstap vrijgeven.
@@ -142,11 +150,11 @@ Bijgewerkt: 25 augustus 2026.
   eenmalig uitvoeren, resultaat/evidence/observatie bewaren, na succes de juiste
   afhankelijkheid vrijgeven en die effectstap duurzaam voorbereiden. Voor dat
   effect kan zij ook één providerpoging autoriseren en precies één duurzame
-  call-startclaim uitgeven; concurrency en herstart krijgen geen tweede set
-  callable bytes. Reviews van readresultaat, readvrijgave, effectvoorbereiding,
-  effectautorisatie en callclaim blijven open. Nog ontbreken de echte algemene
-  effect-providercall, duurzame uitkomstopslag, fysieke readback, effect-/
-  dependencyafronding en de Telegram-B-/Home Assistant-proef.
+  call-startclaim uitgeven, de eerste geclaimde subprocesscall uitvoeren en de
+  provideruitkomst duurzaam herladen; concurrency, replay en herstart krijgen
+  geen tweede set callable bytes of tweede proces. Reviews van readresultaat,
+  readvrijgave en alle effectslices blijven open. Nog ontbreken fysieke
+  readback, effect-/dependencyafronding en de Telegram-B-/Home Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie

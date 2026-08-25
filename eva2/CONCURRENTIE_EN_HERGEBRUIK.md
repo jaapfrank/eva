@@ -587,12 +587,16 @@ langdurige verzamelaanpassing telt niet als voortgang.
   effect wordt met actuele authority, payloadhash en idempotency key atomair
   voorbereid (`d3cc6d7`–`4f0a8f4`). MC03c1a bindt daarna één poging aan de
   sealed providerrelease; MC03c1b commit vlak vóór I/O precies één call-start
-  en geeft alleen aan die eerste caller het private RPC-pakket (`106d2ec`). Drie
-  gerichte, 56 geselecteerde action-chain- en afzonderlijk 24 tijdlijntests
-  zijn groen, zonder providerproces. Onafhankelijke reviews, provideruitvoering,
-  uitkomst/receipt, fysieke readback en afronding blijven open; zie
+  en geeft alleen aan die eerste caller het private RPC-pakket (`106d2ec`).
+  MC03c2 projecteert en bewaart provideruitkomsten atomair en de algemene
+  executor start alleen die eerste claim (`cc3094c`–`89de787`). Tien gerichte,
+  37 brede action-chain- en afzonderlijk 24 tijdlijntests zijn groen, inclusief
+  echte subprocess-protocolfout, rollback, herstart, replay, corruptie en een
+  onopgeloste call-start zonder tweede proces. Onafhankelijke reviews, fysieke
+  Home Assistant-readback, effect-/dependencyafronding en B-livebewijs blijven
+  open; zie
   `reviews/action-chain-effect-preparation-mc03c0.md` en
-  `reviews/action-chain-effect-call-claim-mc03c1b.md`.
+  `reviews/action-chain-effect-execution-mc03c2.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

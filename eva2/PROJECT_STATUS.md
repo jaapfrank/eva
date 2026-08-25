@@ -76,10 +76,13 @@ de controleerbare live receipts staan in
   hercontroleert vlak vóór I/O alle authority plus deadline. Zij commit exact
   één `ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED` en geeft alleen aan de eerste
   caller het private proces- en RPC-materiaal. Dezelfde duurzame idempotency key
-  bereikt de provider als RPC- en connector-request-ID. Drie gerichte, 56
-  geselecteerde action-chain- en afzonderlijk 24 tijdlijntests zijn groen op
-  `106d2ec`. Dit is `tested`, nog niet onafhankelijk `reviewed`; er is geen
-  provider gestart, geen Home Assistant-call gedaan en A en B zijn niet gewijzigd.
+  bereikt de provider als RPC- en connector-request-ID. MC03c2 start daarna
+  uitsluitend die eerste sealed subprocesscall en bewaart provideracceptatie,
+  afwijzing of exacte fout plus evidence en optioneel receipt atomair. Een
+  onopgeloste call-start wordt nooit blind herhaald. Tien gerichte, 37 brede
+  action-chain- en afzonderlijk 24 tijdlijntests zijn groen op `cc3094c`–
+  `89de787`. Dit is `tested`, nog niet onafhankelijk `reviewed`; er is geen
+  echte Home Assistant-call/readback gedaan en A en B zijn niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -121,20 +124,20 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `106d2ec` voegt de algemene eenmalige
-  effect-callclaim toe. Twee gelijktijdige workers krijgen samen één echte claim;
-  replay en een nieuwe engine krijgen geen callable bytes. Een verlopen deadline
-  schrijft niets en een geforceerde eventfout rolt volledig terug voordat
-  callmateriaal wordt teruggegeven. De slice groeit netto 564 productregels,
-  de nieuwe dispatcher telt 527 regels en er is geen dependency toegevoegd.
-  Zie `reviews/action-chain-effect-call-claim-mc03c1b.md`.
+- Laatste codecheckpoint: `89de787` voegt de enige algemene effectexecutor toe.
+  Een synthetisch geaccepteerde effectresponse en een werkelijk gestart
+  protocolfout subprocess werden ieder exact eenmaal opgeslagen; replay, een
+  nieuwe engine en een al achtergelaten call-start startten geen tweede proces.
+  Provider-ACK maakte geen readback of geslaagde planstap. De executor telt 155
+  regels en voegt geen dependency toe; zie
+  `reviews/action-chain-effect-execution-mc03c2.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: onafhankelijke review van MC03c0/MC03c1 en de nog open reviews
-  van MC03b2b/MC03b3. Daarna voert MC03c2 uitsluitend de eerste geclaimde call
-  buiten de databasetransactie uit en bewaart iedere definitieve, geweigerde of
-  ambigue uitkomst. Fysieke readback, effectafronding en dependencyvrijgave
-  blijven daarna afzonderlijke slices.
+- Eerstvolgend: onafhankelijke review van MC03c0–MC03c2 en de nog open reviews
+  van MC03b2b/MC03b3. Daarna leest de effectketen via dezelfde providergrens de
+  fysieke Home Assistant-doeltoestand terug; alleen bewezen readback mag effect
+  en dependency afronden. Telegram-B en een echte crash tussen effect en
+  readback blijven afzonderlijke eindproeven.
 - Productie A: actief en niet gewijzigd.
 - Actuele B: `eva2-living-core:cross-channel-v53-20260824`, core ready,
   duurzame-doelenworker running met nul herstarts.
