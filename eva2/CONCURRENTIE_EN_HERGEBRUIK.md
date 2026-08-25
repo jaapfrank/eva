@@ -4,9 +4,19 @@ Bijgewerkt: 25 augustus 2026.
 
 ## Het korte antwoord
 
-**Vandaag: nee.** Eva 2 is nog geen beter compleet product. Ze mist onder meer
-een echte browsercomputer, snelle onderbreekbare voice, eigen subagents en de
-definitieve huisaanwezigheid.
+**Vandaag heeft Eva 2 al een aantoonbaar sterke kern en op enkele belangrijke
+punten een voorsprong. Ze is alleen nog geen af product.**
+
+Na vijf dagen bouwen staat er dus niet “bijna niets”. Er zijn vijftien live
+kerntaken geslaagd, negen zwaardere praktijkscenario's historisch live bewezen,
+echte Home Assistant-acties met controle achteraf uitgevoerd en meerdere
+herstelroutes gebouwd en getest. De algemene actieketen doorstaat inmiddels
+alle 75 tests, inclusief herstarten tussen uitvoering, teruglezen en afronden.
+
+Wat nog ontbreekt zijn vooral de delen die van die sterke kern een compleet
+dagelijks product maken: onderbreekbare voice, een browsercomputer, runtime-
+subagents, eenvoudige installatie en het terugbrengen van Eva's spontane
+aanwezigheid in huis.
 
 **Wanneer Eva volgens onze eigen definitie klaar is: ja, voor jouw gebruik.**
 Dan combineert zij in één assistent wat nu over verschillende producten is
@@ -23,30 +33,55 @@ hetzelfde geheugen en dezelfde afspraken horen.
 Belangrijk: “klaar” betekent hier niet alleen dat de code bestaat. Eva is pas
 klaar nadat dezelfde taken tegen de andere agents zijn uitgevoerd, de echte
 huis- en voiceproef is geslaagd en jij haar in dagelijks gebruik hebt
-goedgekeurd. Tot die tijd is het antwoord nog steeds: nee, nog niet bewezen.
+goedgekeurd. Tot die tijd zeggen we dus niet dat het hele product al gewonnen
+heeft. Dat doet niets af aan de onderdelen die vandaag wel degelijk af en sterk
+zijn.
+
+## Wat er na vijf dagen aantoonbaar staat
+
+Dit zijn geen wensen of ontwerpen, maar afgeronde bouwblokken met tests of echt
+praktijkbewijs. “Eindversie open” betekent dat het onderdeel later nog één keer
+op dezelfde definitieve versie moet worden herhaald; het eerdere resultaat
+verdwijnt daardoor niet.
+
+| Afgerond bouwblok | Wat is daadwerkelijk bewezen? | Waarom dit belangrijk of beter is |
+|---|---|---|
+| Live kerntaken | De bestaande core-live-reeks staat op **15 van 15** | Eva heeft al een brede eigen bewijsset; de concurrenten hebben deze volledige reeks niet doorlopen |
+| Echte Home Assistant-bediening | Toestand en historie lezen, apparaten bedienen, automatiseringen maken en daarna opnieuw controleren | In onze opstelling heeft Eva het sterkste bewijs dat een huisactie echt gelukt is, in plaats van alleen geaccepteerd |
+| Persoonsgebonden geheugen | Feiten, voorkeuren en correcties blijven na herstart bewaard en zijn per persoon en project gescheiden | Dit is de basis voor één Eva die gezinsleden kent zonder hun privégeheugen door elkaar te halen |
+| Duurzame doelen en herstel | Meerdere echte hervattingsscenario's zijn geslaagd; de algemene actieketen staat op **75 van 75 tests** | Eva bewaart wat al gebeurd is en voorkomt daarmee blinde dubbele acties na een storing |
+| Eerlijk actiebewijs | Ontvangst, uitvoering, mislukking, teruglezing en werkelijk succes zijn afzonderlijke toestanden | Eva kan minder makkelijk ten onrechte “gedaan” zeggen dan een agent die alleen een toolantwoord vertrouwt |
+| Veilige kandidaat naast productie | Back-ups, veel file-secretgrenzen, een reproduceerbare offline image en een gescheiden B-route bestaan; het huidige HA-token van B is nog een expliciete open uitzondering | We kunnen verder bouwen en terugrollen zonder de werkende oude Eva of haar gegevens zomaar te overschrijven, maar secretmigratie is nog niet compleet |
+| Zelfverbetering in het klein | Eva heeft één zelfgekozen repositoryverbetering werkelijk uitgevoerd en afgerond | De eerste echte stap naar zelfgemaakte skills bestaat; alleen de automatische herhaalcyclus is nog niet af |
+| Zwaardere praktijkscenario's | Negen native scenario's zijn historisch live bewezen, waaronder doelen, herstel, fan-out en zelfverbetering | Deze functies zijn meer dan losse unit-tests; de verplichte herhaling op één eindversie staat nog open |
+
+De sterkste voorsprong van de huidige Eva zit dus al in **controleerbaar
+handelen, duurzaam geheugen en veilig herstel**. De grootste achterstand zit in
+**voice, computerbediening, subagents, installatiegemak en productafwerking**.
 
 ## De stand van vandaag
 
 Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 
-| Onderdeel | Stand van Eva 2 vandaag | Wie staat vandaag voor? |
-|---|---|---|
-| Natuurlijk gesprek | Tekst werkt, maar jij hebt de ervaring nog niet goedgekeurd | Nog geen winnaar; de gelijke proef was te klein |
-| Mensen leren kennen | Feiten, voorkeuren en correcties per persoon werken | Hermes beschrijft een rijkere complete leercyclus |
-| Home Assistant | Lezen, bedienen en daarna echt controleren is op meerdere taken bewezen | Eva heeft in onze eigen opstelling het sterkste echte bewijs |
-| Voice zoals ChatGPT | Bestaat nog niet | Concurrenten hebben meer spraakbouwstenen; geen gelijke praktijktest |
-| Spontaan in huis praten | Eva 2 doet dit nog niet via haar eindroute | De oude Eva wint |
-| Zelfstandig computerwerk | Nog geen eigen browsercomputer | OpenBot en Agent Zero winnen |
-| Zelf nieuwe skills maken | Eén kleine verbetering is bewezen; de complete cyclus ontbreekt | Hermes wint vandaag |
-| Veel chatkanalen | Telegram is de eerste route; andere kanalen zijn niet vrij toevoegbaar | OpenClaw en Hermes winnen |
-| Subagents, dashboard en Kanban | Nog niet als complete Eva-functie aanwezig | Hermes en andere agents lopen voor |
-| Herstel na een crash | Meerdere herstelgevallen zijn bewezen. De algemene keten is in tests tot de eindcontrole afgemaakt; de echte proef midden in een huisactie ontbreekt nog | Eva heeft sterke bouwstenen, maar er is geen gelijke winnaarstest |
-| Makkelijk installeren | Vereist nog veel handwerk en technische kennis | De concurrenten zijn meestal makkelijker te starten |
-| Snelheid en kosten | Enkele kleine snelheidsproeven zijn gunstig; eindmeting ontbreekt | Onbeslist |
+| Onderdeel | Wat Eva vandaag al kan | Wat nog ontbreekt | Eerlijke stand tegenover de rest |
+|---|---|---|---|
+| Natuurlijk gesprek | Tekstgesprek werkt; in één kleine geblindeerde proef kreeg Eva gemiddeld de hoogste score en twee van drie beste-stemmen | Meer beurten, echte Telegramacceptatie en een grotere gelijke proef | Een bemoedigende kleine winst, nog geen algemene winnaar |
+| Mensen leren kennen | Feiten, voorkeuren en correcties per persoon werken en blijven gescheiden; groepsbescherming is technisch getest | Echte gezinsproef en een rijk, corrigeerbaar totaalprofiel | Eva heeft een sterke privacybasis; Hermes beschrijft de completere leercyclus |
+| Home Assistant | Lezen, historie, bedienen, automatiseringen en echte controle achteraf werken | De nieuwe algemene keten moet dit nog op de definitieve versie als één live taak doen | **Eva heeft in onze opstelling het sterkste echte bewijs** |
+| Voice zoals ChatGPT | Dezelfde identiteit en geheugenbasis zijn beschikbaar voor de toekomstige voiceroute | Doorlopend praten, snel antwoord en onderbreken zijn nog niet gebouwd | Concurrenten hebben meer spraakbouwstenen; geen gelijke praktijktest |
+| Spontaan in huis praten | De oude Eva bewijst dat de gewenste beleving mogelijk is; Eva 2 kan gebeurtenissen al veilig beoordelen | De definitieve speaker- en deurbelroute ontbreekt | De oude Eva wint vandaag op aanwezigheid |
+| Zelfstandig computerwerk | Onderzoek, bestanden en begrensde repositorytaken werken al | Een interactieve, afgeschermde browsercomputer met meekijken en overnemen | OpenBot en Agent Zero lopen voor |
+| Zelf nieuwe skills maken | Eén zelfgekozen verbetering is live bewezen | Automatisch maken, vergelijken, veilig activeren en terugdraaien als vaste cyclus | Eva heeft een echt begin; Hermes loopt voor op de complete cyclus |
+| Chatkanalen | Telegrambasis, meerdere accountbindings en groepsprivacy zijn gebouwd en getest | De echte groepstest en vrij toevoegbare kanalen zoals WhatsApp | OpenClaw en Hermes hebben vandaag meer kant-en-klare kanalen |
+| Subagents, dashboard en Kanban | Een kleine statuspagina en veilige identiteitspreview bestaan | Runtime-subagents en een compleet werkbord | Hermes en andere agents lopen voor op dit productoppervlak |
+| Herstel na een crash | Echte herstelgevallen werken; uitvoering, readback en afronding overleven in de algemene keten iedere geteste procesgrens zonder dubbele call | Dezelfde proef via echt Telegram en een echt huisapparaat | **Eva heeft hier al een aantoonbare ontwerpsterkte; een gelijke concurrentenproef ontbreekt** |
+| Installeren en bijwerken | Reproduceerbare images, offline build, back-up en A/B-scheiding bestaan | Een gewone installatie- en koppelwizard | De betrouwbare onderlaag is sterk; concurrenten zijn makkelijker te starten |
+| Snelheid en kosten | Eva was in twee kleine zichtbare vergelijkingen het snelst en geheugencontext is begrensd | Eindmeting voor tekst, voice, tokens, kosten en zeven dagen gebruik | Voorlopig gunstig, maar nog te klein voor een eindclaim |
 
-De conclusie van vandaag is dus simpel: **Eva wint al op het echte
-Home Assistant-bewijs, maar verliest als compleet product nog op te veel
-onderdelen.**
+De conclusie van vandaag is dus niet “er is bijna niets af”. De eerlijke
+conclusie is: **Eva heeft al een sterke en op Home Assistant, actiecontrole en
+herstel deels onderscheidende kern. Ze verliest de totaalvergelijking voorlopig
+omdat enkele grote gebruikersfuncties nog ontbreken.**
 
 ## Het eindbeeld: waarom de afgeronde Eva beter is voor jou
 
@@ -151,6 +186,8 @@ verdwenen:
 
 - volledige gates, checkpoints en wat nog niet bewezen is:
   `TECHNISCHE_PRODUCTGATES.md`;
+- wat daadwerkelijk af is, alle hoofdprojecten en de eerlijke resterende
+  ramingen: `PROJECTEN_EN_PLANNING.md`;
 - wat vandaag echt werkt en wat ontbreekt: `EVA2_MOGELIJKHEDEN_EN_GATEN.md`;
 - oude Eva tegenover Eva 2: `OUDE_EVA_VS_EVA2.md`;
 - technische architectuur: `design/architecture/living-core-v1.md`;

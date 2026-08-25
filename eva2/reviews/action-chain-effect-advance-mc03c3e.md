@@ -27,6 +27,8 @@ tweede gelijktijdige afronding doet dit niet opnieuw.
 - `f43b73f` — herstartvalidatie van effect- en dependencyvoortgang.
 - `a99563b` — atomische writer, `STATE_VERIFIED`, step en continuation.
 - `5a1556e` — werkelijke driestappenketen, vervolgclaim en rollbackbewijs.
+- `0ca0c4b` — geïntegreerd herstel over iedere procesgrens zonder dubbele call
+  of vrijgave.
 
 ## Belangrijkste bestanden
 
@@ -43,14 +45,14 @@ tweede gelijktijdige afronding doet dit niet opnieuw.
 
 - Ruff, Pythoncompile en `git diff --check`: groen.
 - Applicationlaag: 45 tests groen.
-- Gerichte PostgreSQL 16.13-slice: 8 tests groen.
-- De volledige reeks van twaalf action-chainmodules: 74/74 groen op een verse,
+- Gerichte PostgreSQL 16.13-slice: 9 tests groen.
+- De volledige reeks van twaalf action-chainmodules: 75/75 groen op een verse,
   2 GB begrensde PostgreSQL 16.13-database. Dit vervangt de eerdere onvolledige
   run die op een testschijf van 512 MB vastliep.
 - Alle tijdelijke containers zijn exact op naam verwijderd; A, B en hun
   volumes zijn niet benaderd.
 
-De acht MC03c3e-cases omvatten:
+De negen MC03c3e-cases omvatten:
 
 - een exacte match in een driestappenketen, replay na een nieuwe engine en een
   werkelijk claimbare vervolgstap;
@@ -60,6 +62,11 @@ De acht MC03c3e-cases omvatten:
 - een geforceerde fout bij `STATE_VERIFIED` rolt effect, step én nog gesloten
   vervolgstap terug;
 - een gewijzigd outcome-ref maakt ledgerreload rood.
+- een geïntegreerde procesgrensproef gebruikt na effect, readbackvoorbereiding,
+  readbackresultaat en afronding telkens een verse engine; zij telt exact één
+  effectattempt/call-start, één readbackattempt/call-start, één fysieke
+  readback, één `STATE_VERIFIED` en één dependencyvrijgave. Replay voegt niets
+  toe.
 
 ## Eerlijke bewijsgrens
 

@@ -5,6 +5,9 @@ Laatst bijgewerkt: 2026-08-25
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 [`design/architecture/living-core-v1.md`](design/architecture/living-core-v1.md);
+het begrijpelijke hoofdprojectbord met wat af is, wat resteert, vaste
+teamrollen en ramingen staat in
+[`PROJECTEN_EN_PLANNING.md`](PROJECTEN_EN_PLANNING.md);
 de leesbare scheiding tussen wat Eva nu kan, wat nodig is voor de overgang en
 het volledige productdoel staat in
 [`EVA2_MOGELIJKHEDEN_EN_GATEN.md`](EVA2_MOGELIJKHEDEN_EN_GATEN.md); de
@@ -43,6 +46,21 @@ de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
 [`evidence/living-core/`](evidence/living-core/).
+
+## Projectoverzicht in gewone taal
+
+| Hoofduitkomst | Wat aantoonbaar staat | Status van het complete project |
+|---|---|---|
+| Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
+| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
+| Zelfstandig handelen | Doelen, leases, bewijs, crashherstel en één zelfverbetering bestaan | Browsercomputer, volledige skillcyclus, subagents en Eigenaarmodus nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets en kleine status-/identiteitspagina bestaan | Installer, volledig dashboard/Kanban, update/restore en releasefreeze nog open |
+| Aantoonbaar beter | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk HA-bewijs | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
+
+De gedetailleerde resterende raming is: 2–3 weken voor een veilig beheerde
+B-alpha met echte Telegram-/HA-keten, 8–12 weken voor een veilige vervanger met
+presence en voice, en 14–20 weken voor de volledige productbelofte. Dit zijn
+teamramingen onder de aannames in `PROJECTEN_EN_PLANNING.md`, geen beloftes.
 
 ## Nu
 
@@ -100,12 +118,16 @@ de controleerbare live receipts staan in
   transactie `STATE_VERIFIED`, zet effect en planstap op succes en maakt
   uitvoerbare vervolgstappen vrij. Niet-waargenomen, tegenstrijdige,
   onbesliste of inhoudelijk verkeerde toestand blijft gesloten. De commits
-  `0acdd33`, `f43b73f`, `a99563b` en `5a1556e`, 45 applicationtests, acht
-  gerichte PostgreSQL 16.13-cases en de volledige 74-case action-chainreeks
-  zijn groen. De gerichte proef bevat nu werkelijk een derde stap: die blijft
+  `0acdd33`, `f43b73f`, `a99563b`, `5a1556e` en `0ca0c4b`, 45
+  applicationtests, negen gerichte PostgreSQL 16.13-cases en de volledige
+  75-case action-chainreeks zijn groen. De gerichte proef bevat nu werkelijk
+  een derde stap: die blijft
   dicht tot de effectreadback klopt, wordt daarna eenmaal vrijgegeven, kan na
-  herstart worden opgepakt en rolt bij een geforceerde fout mee terug. Dit is
-  `tested`, nog niet onafhankelijk `reviewed`; er is nog geen echte Home
+  herstart worden opgepakt en rolt bij een geforceerde fout mee terug. De
+  geïntegreerde herstelproef heropent de database na iedere procesgrens en
+  bewijst exact één effectcall, één readbackcall, één `STATE_VERIFIED` en één
+  dependencyvrijgave zonder dubbele replay. Dit is `tested`, nog niet
+  onafhankelijk `reviewed`; er is nog geen echte Home
   Assistant-call of fysieke readback via B uitgevoerd en A en B zijn niet
   gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
@@ -149,13 +171,14 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste checkpoint: `5a1556e` bewijst in een echte driestappenketen dat
+- Laatste checkpoint: `0ca0c4b` trekt de driestappenketen van `5a1556e`
+  door vijf verse databaseprocessen. Het bewijst dat
   `a99563b` een effect alleen afrondt na een verse,
   onafhankelijke en inhoudelijk exacte doelmatch. Effect, stap,
   `STATE_VERIFIED`, continuation en vrijgegeven vervolgstappen veranderen
-  atomair; herstart/replay schrijven niets dubbel, de vervolgworker kan de
-  vrijgegeven stap echt claimen en een geforceerde tijdlijnfout rolt alles
-  terug. Zie
+  atomair; herstart/replay schrijven niets dubbel, effect- en readbackprovider
+  worden ieder exact eenmaal aangeroepen, de vervolgworker kan de vrijgegeven
+  stap echt claimen en een geforceerde tijdlijnfout rolt alles terug. Zie
   `reviews/action-chain-effect-advance-mc03c3e.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.

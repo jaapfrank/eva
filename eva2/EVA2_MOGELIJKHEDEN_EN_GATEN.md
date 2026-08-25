@@ -90,6 +90,8 @@ aparte documenten:
 
 - technische mogelijkheden en alle open gates:
   `TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md`;
+- wat aantoonbaar af is, alle hoofdprojecten, resterende ramingen en vaste
+  teamrollen: `PROJECTEN_EN_PLANNING.md`;
 - begrijpelijke concurrentievergelijking: `CONCURRENTIE_EN_HERGEBRUIK.md`;
 - volledig technisch bewijsbord: `TECHNISCHE_PRODUCTGATES.md`;
 - oude Eva tegenover Eva 2: `OUDE_EVA_VS_EVA2.md`;

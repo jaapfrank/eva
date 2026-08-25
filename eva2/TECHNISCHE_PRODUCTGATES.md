@@ -615,10 +615,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   (`0acdd33`–`a99563b`). `5a1556e` vervangt de laatste tweestappenfixture door
   een echte driestappenproef: de vervolgread blijft pending tot de fysieke
   match, wordt eenmaal ready, is na herstart claimbaar en rolt bij een
-  geforceerde eventfout atomair mee terug. 45 applicationtests, acht gerichte
+  geforceerde eventfout atomair mee terug. `0ca0c4b` voegt een geïntegreerde
+  procesgrenstest toe die met vijf verse engines effectuitvoering, readback,
+  afronding en claimbare vervolgread doorloopt en iedere attempt, call-start,
+  `STATE_VERIFIED` en vrijgave exact eenmaal houdt. 45 applicationtests, negen gerichte
   PostgreSQL 16.13-cases dekken match, mismatch, onbekend, niet-waargenomen,
   inhoudelijk verkeerde providerclaim, replay/herstart, concurrency, rollback
-  en corruption-sensitive reload; de volledige 74-case action-chainreeks is op
+  en corruption-sensitive reload; de volledige 75-case action-chainreeks is op
   een verse PostgreSQL 16.13-database groen. MC03c3a/b1 deden nul
   readback-provider-I/O; MC03c3b2 startte evenmin een proces. MC03c3c gebruikt
   alleen synthetisch succes en een echte lokale protocolfout; MC03c3d/3e doen
