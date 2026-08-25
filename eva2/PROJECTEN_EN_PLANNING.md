@@ -14,12 +14,20 @@ een begrijpelijke gebruikersuitkomst, één vaste eigenaar, een onafhankelijke
 reviewer, een eindproef en een duidelijke status. Kleine codecheckpoints blijven
 nodig, maar vervangen niet meer het projectbord.
 
-De tijden hieronder zijn **effectieve werkdagen van de betrokken bouwstroom**,
-geen gegarandeerde kalenderdatum en geen optelsom voor de einddatum. Met vier
-vaste rollen kunnen twee tot drie bouwstromen echt tegelijk lopen; de vierde rol
-moet review, integratie en release bewaken. Een zevendaagse proef blijft zeven
-kalenderdagen duren. Live proeven vragen soms jouw accounts, apparaten of
-oordeel.
+De planning gebruikt niet langer menselijke, seriële werkdagen. Iedere raming
+is opgesplitst in:
+
+- **bouwen + gerichte tests:** actieve AI-uren van de bouwstromen;
+- **integratie + review:** samenvoegen, aanvallen op de wijziging, repareren en
+  dezelfde commit opnieuw uitvoeren;
+- **extern/live:** echte wachttijd op accounts, apparaten, providergoedkeuring,
+  jouw oordeel of een verplichte duurproef.
+
+Drie bouwstromen kunnen tegelijk werken; de vierde vaste rol bewaakt review en
+release. Daardoor zijn uren niet bij elkaar op te tellen tot een kalenderdatum.
+Ook worden gedeelde bouwstenen, zoals mandaat, herstel en readback, maar één
+keer gebouwd en daarna door meerdere projecten gebruikt. Een zevendaagse proef
+blijft wel echt zeven kalenderdagen duren, hoe snel de code ook wordt gemaakt.
 
 ## Wat vandaag live bewezen is
 
@@ -30,7 +38,7 @@ herhaald.
 | Live bewezen oplevering | Wat jij daarvan terugziet | Bewijsgrens |
 |---|---|---|
 | Bestaande live kernreeks | Vijftien afgesproken kerntaken zijn werkelijk geslaagd | **15/15 live bewezen**; herhaling op de uiteindelijke alles-in-één-versie blijft verplicht |
-| Home Assistant-basis | Eva kan toestand en historie lezen, apparaten bedienen, automatiseringen maken en het resultaat opnieuw controleren | Live bewezen op meerdere echte taken |
+| Eerste complete skill: Home Assistant | Eva kan toestand en historie lezen, apparaten bedienen, automatiseringen maken en het resultaat opnieuw controleren | Live bewezen op meerdere echte taken; Home Assistant is een verwisselbare skill, niet Eva's unieke hoofdfeature |
 | Persoons- en projectgeheugen | Feiten, voorkeuren en correcties blijven na herstart bewaard zonder personen en projecten samen te voegen | Live bewezen; de echte Telegram-groepproef is een apart open project |
 | Duurzame doelen | Lopende doelen, wachten, hervatten en verschillende eindstatussen blijven na een herstart begrijpelijk | Meerdere native praktijkscenario's live bewezen |
 | Historische native reeks | Fan-out, herstel, doelen, cross-channelgeheugen en één zelfgekozen verbetering hebben echt gewerkt | **9/9 historisch live bewezen**, verdeeld over meerdere versies; eindversie moet ze gezamenlijk herhalen |
@@ -42,7 +50,7 @@ Deze bouwblokken zijn waardevol, maar krijgen bewust niet de status `AF`:
 
 | Technisch bouwblok | Wat al is bewezen | Wat de live status nog blokkeert |
 |---|---|---|
-| Algemene actieketen | Eva onderscheidt ontvangst, uitvoering, fout en gecontroleerde eindtoestand; de volledige action-chainreeks is 75/75 groen | Onafhankelijke review en dezelfde totaalroute via echt Telegram-B en Home Assistant |
+| Algemene skill- en actieketen | Eva onderscheidt bij iedere geschikte skill ontvangst, uitvoering, fout en gecontroleerde eindtoestand; de volledige action-chainreeks is 75/75 groen | Onafhankelijke review en dezelfde totaalroute via echt Telegram-B en één echte skill; Home Assistant is de eerste testadapter |
 | Ontwikkel- en herstelbasis | Productie A blijft staan, kandidaat B is gescheiden, back-ups bestaan en een offline kandidaatimage kan afgeschermd worden gebouwd en gestart | Definitieve buildclosure, adoptie en releasebeslissing |
 | Kleine beheerbasis | Een gesaneerde statuspagina en veilige identiteitspreview zijn getest | Authenticatie, compleet dashboard, Kanban, geheugen- en taakbediening en live B-deploy |
 
@@ -57,30 +65,30 @@ Statussen:
 - `ONTWORPEN`: de uitkomst en eindproef zijn beschreven, de bouw moet nog
   beginnen.
 
-| Project | Status nu | Wat is al af? | Wat moet nog gebeuren? | Resterend bouwwerk | Extra praktijktijd |
-|---|---|---|---|---:|---:|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw, file-secrets en veel managed-B-controles bestaan | Open reviews sluiten, build-/schemaversie verzoenen, HA-secret roteren en managed B gecontroleerd adopteren | 5–8 werkdagen | Circa halve eigenaarsdag voor secrets/omschakeling |
-| 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbindings en groepsprivacy zijn gebouwd; kerngeheugen werkt live | Op eind-B zetten, twee echte accounts plus testgroep, natuurlijk meerbeurts gesprek en privacyacceptatie | 4–7 werkdagen | 2–3 gebruikerssessies |
-| 3. Algemene Home Assistant-keten | `TECHNISCH AF` | Losse echte HA-routes werken; lees→actie→teruglees→vervolg is lokaal 75/75 groen en herstelt over procesgrenzen | Onafhankelijke reviews en Telegram→planning→echt HA-effect→fysieke readback→vervolg plus crashtest | 4–8 werkdagen | Veilige testentiteit en eigenaar bij crashtest |
-| 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Eén speaker, deurbel, quiet hours, cooldown, budget, stop en herstel aansluiten | 6–10 werkdagen | Daarna 7 kalenderdagen huisproef |
-| 5. Conversationele voice | `ONTWORPEN` | Identiteit, geheugen, tools en latencydoelen zijn herbruikbaar | Audio-contract, streaming STT/TTS, client, onderbreken, reconnect, Telegram Mini App/HA-route, security en toolreadback | 15–25 werkdagen | 2–4 dagen gebruikers- en apparaatmetingen |
-| 6. Browser en zelfstandige computer | `ONTWORPEN` | Mandaat-, ledger-, runner- en readbackbouwstenen bestaan gedeeltelijk | Geïsoleerde browser, grants, meekijken, overnemen, stop, echte webtaak, resultaatcontrole en crashherstel | 15–25 werkdagen | Testaccount en gedeelde 7-daagse autonomierun |
-| 7. Mensen leren kennen en skills maken | `IN BOUW` | Persoonsfeiten, correcties, reflectie en één eigen verbetering werken | Inzien/vergeten, usage/kosten, quota, on-the-fly skillquarantaine, evaluatie, promotie en rollback | 14–22 werkdagen | Gedeelde 7-daagse groeiproef |
-| 8. Subagents, dashboard en Kanban | `IN BOUW` | Kleine status-/identiteitspagina en duurzame taakleases bestaan | Workergrants, handoff, heartbeat, crash/reclaim, Kanban, chat-/dashboardbediening en multi-workerproef | 12–20 werkdagen | 1–2 gebruikerssessies |
-| 9. Eigenaarmodus | `ONTWORPEN` | Mandaat-, stop- en auditbouwstenen bestaan deels | Eén ruim maar intrekbaar mandaat boven browser, skills en subagents, met preview, pauze, afloop en crashbewijs | 5–9 werkdagen na projecten 6–8 | Acceptatie van risicogrenzen |
-| 10. Installatie, update en verplaatsen | `IN BOUW` | Images, file-secrets, back-up, schema-installatie en A/B-onderdelen bestaan | Launcher/wizard, identiteit, Telegram/HA/e-mail, veilige secretinvoer, twee fresh installs, restore, update en rollback | 15–25 werkdagen | Twee schone computers en 2–5 dagen praktijkproef |
-| 11. Snelheid, omvang en kosten | `IN BOUW` | Codegrens, eerste geheugenlimieten en twee gunstige kleine snelheidsmetingen bestaan | CI-grenzen, streaming tekst, p50/p95, tokens/kosten, sidecarbudgetten en 200-beurtentest | 6–10 werkdagen | Stabiliteitsmeting loopt mee met 7 dagen |
-| 12. Eerlijke openbare benchmarks | `ONTWORPEN` | LAB-36, drie met dezelfde vragen uitgevoerde ontwikkelcases en publicatieregels bestaan; prompts, tools en context waren niet gelijk | Officiële GAIA, AgentBench en OSWorld-runs plus gecontroleerde vijf-agentmatrix met gelijk model, budget en omgeving | 12–22 werkdagen | Dataset/compute circa 3–10 dagen of langer |
-| 13. Documentatie als controleerbaar product | `IN BOUW` | Leesbare overzichten, technische gates, reviews en padinventaris bestaan | Componentregister, ownershipchecker, unieke gate-/bewijskoppeling en dashboardprojectie | 5–9 werkdagen | Geen belangrijke wachttijd |
-| 14. Vrije kanalen en connectoren | `ONTWORPEN` | Connectorneutrale kern en veilige read-only MCP-basis bestaan | Vanuit chat één niet-ingebakken kanaal onderzoeken, adapter maken/testen, least-privilege koppelen, stoppen en terugrollen | 10–18 werkdagen voor eerste extra kanaal | Providergoedkeuring kan dagen tot weken duren |
-| 15. Eindfreeze en veilige overgang | `IN BOUW` | A/B, back-ups, kandidaatbuild en veel losse receipts bestaan | Eén image bevriezen, alle kern/native/MX/voice/presenceproeven herhalen, zeven dagen draaien, gebruikersacceptatie en rollbackceremonie | 4–7 werkdagen voorbereiding | Minimaal 7 kalenderdagen zonder productwijziging |
+| Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
+|---|---|---|---|---:|---:|---|
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. Het nieuwe checkpoint bindt reproduceerbaar 31 release-inputs en 56 testbestanden en maakt de oude 38 tegenover huidige 39 dependencies zichtbaar | De 39-set als één bouwinput sluiten, volledige kandidaat bouwen/starten, HA-secret roteren en B gecontroleerd adopteren | 10-20 uur | 6-12 uur | 2-6 uur eigenaar en omschakelvenster |
+| 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy zijn gebouwd; kerngeheugen werkt live | Dynamisch gekoppeld account door normale chat laten herkennen, op eind-B zetten en echte gezins-/groepstest uitvoeren | 10-16 uur | 6-10 uur | 45-90 min eigenaar plus accounts/testgroep |
+| 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill | Onafhankelijke reviews en Telegram→planning→echte skill→readback→vervolg plus crashtest | 4-10 uur | 4-8 uur | 2-4 uur met veilige testskill/-entiteit |
+| 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Eén speaker, deurbel, quiet hours, cooldown, budget, stop en herstel aansluiten | 12-24 uur | 6-12 uur | Gedeelde 7-daagse huisproef |
+| 5. Conversationele voice | `ONTWORPEN` | Identiteit, geheugen, skills en latencydoelen zijn herbruikbaar | Audio-contract, streaming STT/TTS, client, onderbreken, reconnect, voorkeursroute, security en skillreadback | 24-48 uur | 12-24 uur | 4-8 uur gebruikers-/apparaatmeting |
+| 6. Browser en zelfstandige computer | `ONTWORPEN` | Mandaat-, ledger-, runner- en readbackbouwstenen bestaan gedeeltelijk | Geïsoleerde browser, grants, meekijken, overnemen, stop, echte webtaak, resultaatcontrole en crashherstel | 24-48 uur | 12-24 uur | Testaccount en gedeelde 7-daagse autonomierun |
+| 7. Mensen leren kennen en skills maken | `IN BOUW` | Persoonsfeiten, correcties, reflectie en één eigen verbetering werken | Inzien/vergeten, usage/kosten, quota, on-the-fly skillquarantaine, evaluatie, promotie en rollback | 24-48 uur | 12-24 uur | Gedeelde 7-daagse groeiproef |
+| 8. Subagents, dashboard en Kanban | `IN BOUW` | Kleine status-/identiteitspagina en duurzame taakleases bestaan | Workergrants, handoff, heartbeat, crash/reclaim, Kanban, chat-/dashboardbediening en multi-workerproef | 20-40 uur | 10-20 uur | 2-4 uur gebruikerssessies |
+| 9. Eigenaarmodus | `ONTWORPEN` | Mandaat-, stop- en auditbouwstenen bestaan deels | Na projecten 6-8 één ruim maar intrekbaar mandaat boven browser, skills en subagents sluiten | 6-12 uur | 6-12 uur | 1-3 uur risicoacceptatie |
+| 10. Installatie, update en verplaatsen | `IN BOUW` | Images, file-secrets, back-up, schema-installatie en A/B-onderdelen bestaan | Wizard, identiteit, Telegram/HA/e-mail, veilige secretinvoer, twee fresh installs, restore, update en rollback | 24-48 uur | 12-24 uur | Twee machines; 1-3 kalenderdagen testvenster |
+| 11. Snelheid, omvang en kosten | `IN BOUW` | Codegrens, eerste geheugenlimieten en twee gunstige kleine snelheidsmetingen bestaan | CI-grenzen, streaming tekst, p50/p95, tokens/kosten, sidecarbudgetten en 200-beurtentest | 8-16 uur | 6-12 uur | Metingen lopen mee in gedeelde 7 dagen |
+| 12. Eerlijke openbare benchmarks | `ONTWORPEN` | LAB-36, drie ontwikkelcases en publicatieregels bestaan; prompts, tools en context waren niet gelijk | Officiële GAIA, AgentBench en OSWorld-runs plus gecontroleerde vijf-agentmatrix | 24-56 uur | 12-24 uur | Dataset/compute 1-10 dagen, parallel waar mogelijk |
+| 13. Documentatie als controleerbaar product | `IN BOUW` | Leesbare overzichten, technische gates, reviews en padinventaris bestaan | Componentregister, ownershipchecker, unieke gate-/bewijskoppeling en dashboardprojectie | 8-16 uur | 4-8 uur | Geen belangrijke wachttijd |
+| 14. Vrije kanalen en connectoren | `ONTWORPEN` | Connectorneutrale kern en veilige read-only MCP-basis bestaan | Vanuit chat één niet-ingebakken kanaal maken/testen, least-privilege koppelen, stoppen en terugrollen | 12-32 uur | 6-16 uur | Providergoedkeuring 0-6+ weken; blokkeert V1 niet |
+| 15. Eindfreeze en veilige overgang | `IN BOUW` | A/B, back-ups, kandidaatbuild en veel losse receipts bestaan | Eén image bevriezen, alle eindproeven herhalen, gebruikersacceptatie en rollbackceremonie | 6-12 uur | 12-20 uur | Minimaal één gedeelde 7-daagse ongewijzigde run |
 
 ## Wat kan parallel en wat bepaalt de einddatum?
 
 Na het veilig sluiten van runtime/B kunnen drie bouwstromen echt naast elkaar
 lopen:
 
-1. Telegram, Home Assistant en huisaanwezigheid;
+1. gezinschat, algemene skilluitvoering en huisaanwezigheid;
 2. voice en reactietijd;
 3. browserautonomie, leren en daarna subagents/eigenaarmodus.
 
@@ -91,38 +99,45 @@ veranderen. Voice, browserautonomie en installer kennen de grootste technische
 onzekerheid. Iedere noodzakelijke fix tijdens de officiële zevendaagse proef
 start die klok opnieuw.
 
-Mijn huidige raming bij een stabiel team en tijdige toegang tot jouw testaccounts
-en apparaten:
+De resterende portfolio bevat ongeveer **342-696 actieve agenturen** voor
+bouwen, integreren en reviewen. Omdat drie bouwstromen parallel lopen en veel
+werk wordt hergebruikt, is dit geen optelsom in kalenderdagen. De eerste drie
+projecten vertegenwoordigen samen 40-76 agenturen; parallel bouwen en reviewen
+maakt daar onderstaande verstreken tijd van.
 
-- **Eerste veilig beheerde B-alpha met echte Telegram-/HA-keten:** ongeveer
-  2–3 kalenderweken.
-- **Veilige vervanger van de oude Eva**, inclusief presence, voice en
-  eindproef: ongeveer 8–12 kalenderweken.
+Mijn huidige raming bij tijdige toegang tot accounts en apparaten:
+
+- **Eerste veilig beheerde B-alpha met gezinschat en één echte skillketen:**
+  ongeveer 2-5 verstreken werkdagen met drie parallelle bouwstromen en review,
+  plus het afgesproken omschakelvenster.
+- **Veilige vervanger van de oude Eva**, inclusief presence, voice en de
+  gezamenlijke zevendaagse eindproef: ongeveer 2,5-5 kalenderweken.
 - **Volledige concurrerende productbelofte**, inclusief browser, leren,
-  subagents/Kanban, installer en vergelijkbare benchmarks: ongeveer 14–20
+  subagents/Kanban, installer, benchmarks en eindproef: ongeveer 5-9
   kalenderweken.
-- **Met een live extra kanaal zoals WhatsApp:** mogelijk 16–24 kalenderweken,
-  vooral door externe providergoedkeuring.
+- **Een extra kanaal zoals WhatsApp:** de bouw past in bovenstaande uren, maar
+  externe providergoedkeuring kan afzonderlijk 0-6+ weken duren en blokkeert
+  de eerste release niet.
 
-Dit zijn ramingen, geen beloftes. Ze veronderstellen een vast team van vier,
-geen nieuwe architectuurwissel en tijdige toegang tot accounts, apparaten,
-benchmarkdata en een tweede computer. Met drie teamrollen komt grofweg 20–30%
-kalendertijd erbij. Iedere week wordt de raming opnieuw gebaseerd op werkelijk
-afgeronde projecten, niet op hoeveelheid geschreven code.
+Dit zijn geen menselijke programmeerschattingen en geen beloftes. Na P1.1 en
+P2.1 vervangen we deze banden door de werkelijk gemeten tijd per kleine slice.
+Codegeneratie kan zeer snel gaan; onafhankelijke review, hardwaregedrag en een
+duurproef worden niet kunstmatig honderd keer korter gerekend.
 
 ## De eerstvolgende twee zichtbare mijlpalen
 
-1. **P1.1 — één versiepassende releasekandidaat.** Fermat legt vanuit een
-   schone Git-checkpoint exact bron, schema, tests, image en managed
-   startupconfiguratie vast. Curie herhaalt build, start, herstart,
-   schemadrift- en secret-nonleakcontrole onafhankelijk. Dit verandert A of B
-   nog niet; het voorkomt dat oude en nieuwe bewijssets ongemerkt worden
-   gemengd.
+1. **P1.1 — één versiepassende releasekandidaat.** Het eerste checkpoint is
+   nu onafhankelijk groen: 31 release-inputs en 56 testbestanden zijn exact en
+   reproduceerbaar gebonden. Daardoor is ook het echte resterende gat zichtbaar:
+   de oude build heeft 38 dependencies en de huidige Eva-bron 39. Fermat sluit
+   nu die 39-set als één bouwinput; daarna herhaalt Curie build, start, herstart,
+   schemadrift- en secret-nonleakcontrole. Dit verandert A of B nog niet.
 2. **P2.1 — echte Eva 2-gezinschat.** Na de veilige B-adoptie demonstreert
    Chandrasekhar via een eigen Telegram-B-bot: eigenaar plus tweede toegestaan
    account, verschillende onschuldige voorkeuren, herinnering na procesherstart,
    groep eerst dicht, bewuste toestemming en directe intrekking, geen privélek
-   en één afsluitende read-only Home Assistant-vraag. Productie A blijft actief.
+   en één afsluitende read-only skillvraag. Home Assistant is daarvoor de eerste
+   beschikbare adapter, niet het unieke productdoel. Productie A blijft actief.
 
 Voor P2.1 zijn vooraf nodig: een eigen B-bottoken als file-secret, twee
 geautoriseerde accounts, één testgroep, onschuldige geheugen-canaries, een
@@ -153,7 +168,7 @@ De primaire projectlead is expliciet verdeeld:
 | Vaste lead | Hoofdprojecten |
 |---|---|
 | Codex-hoofdagent | 12 openbare benchmarks, 13 documentatieproduct en 15 eindfreeze; integratielead voor alle projecten |
-| Fermat the 2nd | 1 eindruntime/B-release, 3 algemene HA-keten en 11 performance/kosten |
+| Fermat the 2nd | 1 eindruntime/B-release, 3 algemene skilluitvoering en bewijs en 11 performance/kosten |
 | Chandrasekhar the 2nd | 2 gezinschat, 4 presence, 5 voice, 6 browser, 7 leren/skills, 8 subagents/Kanban, 9 Eigenaarmodus, 10 installer en 14 vrije kanalen |
 | Curie the 2nd | Onafhankelijke verificatie en releasebesluit voor ieder project; schrijft geen eigen goedkeuring |
 

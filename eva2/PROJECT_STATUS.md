@@ -55,14 +55,27 @@ de controleerbare live receipts staan in
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
 | Zelfstandig handelen | Doelen, leases, bewijs, crashherstel en één zelfverbetering bestaan | Browsercomputer, volledige skillcyclus, subagents en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en kleine status-/identiteitspagina bestaan | Installer, volledig dashboard/Kanban, update/restore en releasefreeze nog open |
-| Aantoonbaar beter | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk HA-bewijs | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
+| Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
-De gedetailleerde resterende raming is: 2–3 weken voor een veilig beheerde
-B-alpha met echte Telegram-/HA-keten, 8–12 weken voor een veilige vervanger met
-presence en voice, en 14–20 weken voor de volledige productbelofte. Dit zijn
-teamramingen onder de aannames in `PROJECTEN_EN_PLANNING.md`, geen beloftes.
+De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
+is 2-5 verstreken werkdagen bij drie parallelle bouwstromen plus review voor een
+veilig beheerde B-alpha met gezinschat en één echte skillketen, 2,5-5
+kalenderweken voor een veilige vervanger met presence,
+voice en eindproef, en 5-9 kalenderweken voor de volledige productbelofte.
+Bouwuren, reviewuren en echte wachttijd staan afzonderlijk in
+`PROJECTEN_EN_PLANNING.md`; Home Assistant is één verwisselbare skill en niet
+Eva's unieke hoofdfeature.
 
 ## Nu
+
+- Releaseproject P1.1: checkpoint `a4a9b1e` bindt vanuit een schone Git-bron
+  exact 31 release-inputs en 56 testbestanden en weigert de oude 38-package
+  build ongemerkt als passend bij de huidige 39-package Eva-bron te behandelen.
+  Checkpoint `6f82614` maakt het bronarchief vervolgens onafhankelijk van
+  Git-umask zonder beschrijfbare releasebestanden toe te laten. Curie heeft de
+  publieke route op de exacte commit tweemaal bytegelijk herhaald. Dit is een
+  afgerond diagnostisch deelresultaat, geen image-, B- of releasebewijs; de
+  versiepassende 39-package bouwinput is de eerstvolgende slice.
 
 - Geheugenlagen MA00/MA01: PostgreSQL levert huidige beurt plus maximaal twaalf
   recente berichten; Hindsight blijft L2-langetermijngeheugen. Mnemosyne

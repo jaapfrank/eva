@@ -5,13 +5,15 @@ Bijgewerkt: 25 augustus 2026.
 ## Het korte antwoord
 
 **Vandaag heeft Eva 2 al een aantoonbaar sterke kern en op enkele belangrijke
-punten een voorsprong. Ze is alleen nog geen af product.**
+punten sterke eigen bewijzen. Ze is alleen nog geen af product.**
 
 Na vijf dagen bouwen staat er dus niet “bijna niets”. Er zijn vijftien live
 kerntaken geslaagd, negen zwaardere praktijkscenario's historisch live bewezen,
-echte Home Assistant-acties met controle achteraf uitgevoerd en meerdere
-herstelroutes gebouwd en getest. De algemene actieketen doorstaat inmiddels
-alle 75 tests, inclusief herstarten tussen uitvoering, teruglezen en afronden.
+een eerste echte skill van opdracht tot controle achteraf uitgevoerd en
+meerdere herstelroutes gebouwd en getest. Die eerste skill gebruikt Home
+Assistant, maar de belangrijke bouwsteen is providerneutraal. De algemene
+actieketen doorstaat inmiddels alle 75 tests, inclusief herstarten tussen
+uitvoering, teruglezen en afronden.
 
 Wat nog ontbreekt zijn vooral de delen die van die sterke kern een compleet
 dagelijks product maken: onderbreekbare voice, een browsercomputer, runtime-
@@ -47,7 +49,7 @@ verdwijnt daardoor niet.
 | Afgerond bouwblok | Wat is daadwerkelijk bewezen? | Waarom dit belangrijk of beter is |
 |---|---|---|
 | Live kerntaken | De bestaande core-live-reeks staat op **15 van 15** | Eva heeft al een brede eigen bewijsset; de concurrenten hebben deze volledige reeks niet doorlopen |
-| Echte Home Assistant-bediening | Toestand en historie lezen, apparaten bedienen, automatiseringen maken en daarna opnieuw controleren | In onze opstelling heeft Eva het sterkste bewijs dat een huisactie echt gelukt is, in plaats van alleen geaccepteerd |
+| Eerste complete live skill | Via Home Assistant toestand en historie lezen, apparaten bedienen, automatiseringen maken en daarna opnieuw controleren | Bewijst dat Eva een skill niet alleen kan aanroepen maar het resultaat kan teruglezen; Home Assistant zelf is verwisselbaar en geen unieke hoofdfeature |
 | Persoonsgebonden geheugen | Feiten, voorkeuren en correcties blijven na herstart bewaard en zijn per persoon en project gescheiden | Dit is de basis voor één Eva die gezinsleden kent zonder hun privégeheugen door elkaar te halen |
 | Duurzame doelen en herstel | Meerdere echte hervattingsscenario's zijn geslaagd; de algemene actieketen staat op **75 van 75 tests** | Eva bewaart wat al gebeurd is en voorkomt daarmee blinde dubbele acties na een storing |
 | Eerlijk actiebewijs | Ontvangst, uitvoering, mislukking, teruglezing en werkelijk succes zijn afzonderlijke toestanden | Eva kan minder makkelijk ten onrechte “gedaan” zeggen dan een agent die alleen een toolantwoord vertrouwt |
@@ -55,9 +57,11 @@ verdwijnt daardoor niet.
 | Zelfverbetering in het klein | Eva heeft één zelfgekozen repositoryverbetering werkelijk uitgevoerd en afgerond | De eerste echte stap naar zelfgemaakte skills bestaat; alleen de automatische herhaalcyclus is nog niet af |
 | Zwaardere praktijkscenario's | Negen native scenario's zijn historisch live bewezen, waaronder doelen, herstel, fan-out en zelfverbetering | Deze functies zijn meer dan losse unit-tests; de verplichte herhaling op één eindversie staat nog open |
 
-De sterkste voorsprong van de huidige Eva zit dus al in **controleerbaar
-handelen, duurzaam geheugen en veilig herstel**. De grootste achterstand zit in
-**voice, computerbediening, subagents, installatiegemak en productafwerking**.
+De sterkste eigen bewijsbasis van de huidige Eva zit dus al in **providerneutraal
+controleerbaar handelen, duurzaam geheugen en veilig herstel**. Home Assistant
+is daarvan de eerste echte skill, niet het einddoel. De grootste achterstand
+zit in **voice, computerbediening, subagents, installatiegemak en
+productafwerking**.
 
 ## De stand van vandaag
 
@@ -67,7 +71,7 @@ Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 |---|---|---|---|
 | Natuurlijk gesprek | Tekstgesprek werkt; in één kleine geblindeerde proef kreeg Eva gemiddeld de hoogste score en twee van drie beste-stemmen | Meer beurten, echte Telegramacceptatie en een grotere gelijke proef | Een bemoedigende kleine winst, nog geen algemene winnaar |
 | Mensen leren kennen | Feiten, voorkeuren en correcties per persoon werken en blijven gescheiden; groepsbescherming is technisch getest | Echte gezinsproef en een rijk, corrigeerbaar totaalprofiel | Eva heeft een sterke privacybasis; Hermes beschrijft de completere leercyclus |
-| Home Assistant | Lezen, historie, bedienen, automatiseringen en echte controle achteraf werken | De nieuwe algemene keten moet dit nog op de definitieve versie als één live taak doen | **Eva heeft in onze opstelling het sterkste echte bewijs** |
+| Skills en echte resultaatcontrole | De Home Assistant-skill kan lezen, bedienen, automatiseren en achteraf controleren | De algemene keten moet dit op de definitieve versie doen en daarna even makkelijk andere skills dragen | Sterk Eva-bewijs, maar geen eerlijke winnaar: de concurrenten kregen niet dezelfde aangesloten skillproef |
 | Voice zoals ChatGPT | Dezelfde identiteit en geheugenbasis zijn beschikbaar voor de toekomstige voiceroute | Doorlopend praten, snel antwoord en onderbreken zijn nog niet gebouwd | Concurrenten hebben meer spraakbouwstenen; geen gelijke praktijktest |
 | Spontaan in huis praten | De oude Eva bewijst dat de gewenste beleving mogelijk is; Eva 2 kan gebeurtenissen al veilig beoordelen | De definitieve speaker- en deurbelroute ontbreekt | De oude Eva wint vandaag op aanwezigheid |
 | Zelfstandig computerwerk | Onderzoek, bestanden en begrensde repositorytaken werken al | Een interactieve, afgeschermde browsercomputer met meekijken en overnemen | OpenBot en Agent Zero lopen voor |
@@ -79,9 +83,10 @@ Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 | Snelheid en kosten | Eva was in twee kleine zichtbare vergelijkingen het snelst en geheugencontext is begrensd | Eindmeting voor tekst, voice, tokens, kosten en zeven dagen gebruik | Voorlopig gunstig, maar nog te klein voor een eindclaim |
 
 De conclusie van vandaag is dus niet “er is bijna niets af”. De eerlijke
-conclusie is: **Eva heeft al een sterke en op Home Assistant, actiecontrole en
-herstel deels onderscheidende kern. Ze verliest de totaalvergelijking voorlopig
-omdat enkele grote gebruikersfuncties nog ontbreken.**
+conclusie is: **Eva heeft al een sterke kern met een duidelijke ontwerpsterkte
+in actiecontrole, geheugen en herstel. Home Assistant is één verwisselbare skill
+die dit zichtbaar maakt. Of dit beter is dan de rest moet nog in een gelijke
+proef worden bewezen; bovendien ontbreken nog enkele grote gebruikersfuncties.**
 
 ## Het eindbeeld: waarom de afgeronde Eva beter is voor jou
 
@@ -92,7 +97,7 @@ Deze tweede tabel gaat alleen over de afgeronde Eva. Een rij telt pas als
 |---|---|---|
 | Dezelfde Eva praat via tekst, voice en het huis | Je krijgt niet drie losse bots met verschillend geheugen en gedrag | Jij verkiest haar in blinde gesprekken en accepteert tien minuten onderbreekbare voice plus zeven dagen huisgebruik |
 | Zij kent ieder gezinslid afzonderlijk | Voorkeuren helpen het gesprek, terwijl privézaken niet bij de verkeerde persoon of groep belanden | Echte meerpersoons- en groepstest zonder privélek, ook na correctie en herstart |
-| Zij handelt in Home Assistant én op een computer | Eén opdracht kan van gesprek naar huisactie, website en document lopen zonder van assistent te wisselen | Dezelfde meerstapstaak slaagt met echte controle van de eindtoestand |
+| Zij gebruikt apparaten, diensten en een computer via verwisselbare skills | Eén opdracht kan van gesprek naar huisactie, website en document lopen zonder van assistent te wisselen of de kern te verbouwen | Dezelfde meerstapstaak slaagt via meerdere adapters met echte controle van de eindtoestand |
 | Zij zegt alleen “gedaan” als het controleerbaar waar is | Je hoeft een stoere succesmelding niet zelf na te lopen | Echte huis- en computertaken waarin ontvangst, mislukking en werkelijk resultaat aantoonbaar uit elkaar blijven |
 | Zij gaat na een crash veilig verder | Een storing veroorzaakt geen dubbele melding, huisactie, bestelling of betaling | Crashes vóór en na een echte actie, zonder blind herhalen en met een eerlijk eindantwoord |
 | Zij maakt zelf ontbrekende kleine skills | Eva zit niet vast aan een skillstore of aan wat wij vooraf hebben ingebouwd | Nieuwe skill wordt gemaakt, apart getest, veilig aangezet en automatisch teruggedraaid wanneer zij slechter werkt |
