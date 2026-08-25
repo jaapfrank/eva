@@ -25,10 +25,10 @@ automatisch dat jij het vandaag al kunt gebruiken.
 | Gewoon tekstgesprek | Werkt, maar jij hebt de natuurlijkheid nog niet goedgekeurd | Stabiel en menselijk gesprek via echte Telegram, ook over meerdere beurten | Hetzelfde gesprek via ieder toegestaan kanaal |
 | Mensen leren kennen | Persoonsfeiten, voorkeuren en correcties worden onthouden en gescheiden gehouden | Echte gezinstest met meerdere accounts en een groep, zonder privélek | Een begrijpelijk en corrigeerbaar persoonsmodel dat merkbaar beter wordt |
 | Langetermijngeheugen | Recente context, langdurige herinneringen en bewijs van acties worden apart en duurzaam bewaard | Zeven dagen laten zien dat herinneren, corrigeren en vergeten goed blijft gaan | Eventueel snellere of diepere extra lagen, alleen als metingen winst tonen |
-| Home Assistant | Toestanden lezen en verschillende echte acties met controle achteraf zijn bewezen | De algemene meerstappenketen moet op de eindversie een echte actie uitvoeren en teruglezen | Nieuwe apparaten en diensten via dezelfde veilige aansluiting gebruiken |
+| Home Assistant | Losse echte acties met controle achteraf zijn bewezen. De algemene keten kan in tests nu ook pas slagen na een exacte eindcontrole | Dezelfde algemene keten moet op de eindversie een echte huisactie uitvoeren en teruglezen | Nieuwe apparaten en diensten via dezelfde veilige aansluiting gebruiken |
 | Spontaan aanwezig zijn | De oude Eva doet dit; Eva 2 nog niet via haar definitieve route | Deurbel en één speaker werken, Eva kiest goede momenten en blijft bij ruis stil | Meer toegestane kamers en apparaten zonder opdringerig te worden |
 | Praten en onderbreken | Nog geen doorlopend voicegesprek | Snel praten, antwoord horen, onderbreken en verdergaan via `Bel Eva` of Home Assistant | Dezelfde voice-ervaring via andere geschikte apparaten en kanalen |
-| Lange opdrachten | Verschillende duurzame doelen en crashgevallen werken; de complete algemene keten is nog niet af | Een echte meerstapstaak hervat na een crash zonder dubbele huisactie of melding | Lang zelfstandig werken, opnieuw plannen en alleen hulp vragen wanneer nodig |
+| Lange opdrachten | Duurzame doelen en losse crashgevallen werken. De algemene keten is technisch tot en met eindcontrole getest, nog niet als echte totaalproef | Een echte meerstapstaak hervat na een crash zonder dubbele huisactie of melding | Lang zelfstandig werken, opnieuw plannen en alleen hulp vragen wanneer nodig |
 | Browser en computer | Nog geen eigen interactieve browsercomputer | Eén geïsoleerde browserroute met meekijken, stop, overname en controle van het resultaat | Breder computerwerk binnen een duidelijk mandaat, inclusief veilige accounts |
 | Zelf skills maken | Eén kleine zelfgekozen verbetering is bewezen | Zelf een ontbrekende kleine skill maken, testen, veilig activeren en terugdraaien | Herhaaltaken aantoonbaar blijven verbeteren zonder skillstore-afhankelijkheid |
 | Chatkanalen | Telegram is de eerste route; Web en e-mail bestaan slechts gedeeltelijk | Telegram moet betrouwbaar en persoonsgebonden werken | Eva kan later zelf een officiële route zoals WhatsApp onderzoeken, testen en koppelen |
@@ -60,8 +60,9 @@ Eva 2 vervangt de oude Eva nog niet, vooral omdat dit nog ontbreekt:
 
 - jij hebt het echte Telegramgesprek nog niet als natuurlijk genoeg aanvaard;
 - de echte gezinstest met meerdere personen en een groep is nog niet gedaan;
-- de algemene meerstappenketen controleert nog niet iedere echte eindtoestand
-  en rondt daarom nog niet alles veilig af;
+- de algemene meerstappenketen kan de bedoelde en werkelijke eindtoestand nu
+  in tests veilig vergelijken, maar dit is nog niet via de echte eindversie,
+  Telegram en Home Assistant als één geheel bewezen;
 - spontane deurbel-/speakerpresence van de oude Eva is nog niet terug;
 - onderbreekbare, snelle voice is nog niet gebouwd;
 - de definitieve versie is nog niet bevroren en als geheel getest;

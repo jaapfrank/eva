@@ -40,7 +40,7 @@ Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 | Zelf nieuwe skills maken | Eén kleine verbetering is bewezen; de complete cyclus ontbreekt | Hermes wint vandaag |
 | Veel chatkanalen | Telegram is de eerste route; andere kanalen zijn niet vrij toevoegbaar | OpenClaw en Hermes winnen |
 | Subagents, dashboard en Kanban | Nog niet als complete Eva-functie aanwezig | Hermes en andere agents lopen voor |
-| Herstel na een crash | Meerdere herstelgevallen zijn bewezen; de hele keten is nog niet af | Eva heeft sterke bouwstenen, maar er is geen gelijke winnaarstest |
+| Herstel na een crash | Meerdere herstelgevallen zijn bewezen. De algemene keten is in tests tot de eindcontrole afgemaakt; de echte proef midden in een huisactie ontbreekt nog | Eva heeft sterke bouwstenen, maar er is geen gelijke winnaarstest |
 | Makkelijk installeren | Vereist nog veel handwerk en technische kennis | De concurrenten zijn meestal makkelijker te starten |
 | Snelheid en kosten | Enkele kleine snelheidsproeven zijn gunstig; eindmeting ontbreekt | Onbeslist |
 

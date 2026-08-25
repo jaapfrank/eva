@@ -167,11 +167,15 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   MC03c3d zet een reeds opgeslagen getypeerde providerwaarneming daarna zonder
   nieuwe provider-I/O om in precies één canoniek `EffectReadback/v1`, inclusief
   de hash van de werkelijk waargenomen toestand. Replay, concurrency, rollback,
-  alle vier uitkomststatussen en corruptie zijn getest op `76404a4`.
+  alle vier uitkomststatussen en corruptie zijn getest op `76404a4`. MC03c3e
+  gebruikt vervolgens een verzegelde declaratieve projectie om de bedoelde en
+  waargenomen JSON-velden zelfstandig te vergelijken. Alleen een verse exacte
+  match schrijft atomair `STATE_VERIFIED`, effect- en stepsucces, continuation
+  en vrijgegeven dependencies (`0acdd33`–`a99563b`); mismatch, onbekend,
+  niet-waargenomen en type-lookalikes blijven gesloten.
   Reviews van readresultaat, readvrijgave en alle effectslices blijven open.
-  Nog ontbreken de inhoudelijke vergelijking met de gewenste doeltoestand,
-  `STATE_VERIFIED`, effect-/dependencyafronding en de echte Telegram-B-/Home
-  Assistant-proef.
+  Nog ontbreken de onafhankelijke review en de echte Telegram-B-/Home
+  Assistant-proef met fysieke readback en crashinjectie.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
