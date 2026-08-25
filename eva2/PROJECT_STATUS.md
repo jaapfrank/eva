@@ -100,13 +100,14 @@ de controleerbare live receipts staan in
   transactie `STATE_VERIFIED`, zet effect en planstap op succes en maakt
   uitvoerbare vervolgstappen vrij. Niet-waargenomen, tegenstrijdige,
   onbesliste of inhoudelijk verkeerde toestand blijft gesloten. De commits
-  `0acdd33`, `f43b73f` en `a99563b`, 45 applicationtests en acht gerichte
-  PostgreSQL 16.13-cases zijn groen. In de brede action-chainrun waren 67
-  gevallen groen voordat de begrensde tijdelijke testschijf vol liep; de ene
-  toen door resource-uitputting mislukte executorcase en alle acht nieuwe
-  gevallen zijn op een verse database opnieuw groen. Dit is `tested`, nog niet
-  onafhankelijk `reviewed`; er is nog geen echte Home Assistant-call of
-  fysieke readback via B uitgevoerd en A en B zijn niet gewijzigd.
+  `0acdd33`, `f43b73f`, `a99563b` en `5a1556e`, 45 applicationtests, acht
+  gerichte PostgreSQL 16.13-cases en de volledige 74-case action-chainreeks
+  zijn groen. De gerichte proef bevat nu werkelijk een derde stap: die blijft
+  dicht tot de effectreadback klopt, wordt daarna eenmaal vrijgegeven, kan na
+  herstart worden opgepakt en rolt bij een geforceerde fout mee terug. Dit is
+  `tested`, nog niet onafhankelijk `reviewed`; er is nog geen echte Home
+  Assistant-call of fysieke readback via B uitgevoerd en A en B zijn niet
+  gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -148,11 +149,13 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `a99563b` rondt een effect alleen af na een verse,
+- Laatste checkpoint: `5a1556e` bewijst in een echte driestappenketen dat
+  `a99563b` een effect alleen afrondt na een verse,
   onafhankelijke en inhoudelijk exacte doelmatch. Effect, stap,
   `STATE_VERIFIED`, continuation en vrijgegeven vervolgstappen veranderen
-  atomair; replay en concurrency schrijven niets dubbel en een geforceerde
-  tijdlijnfout rolt alles terug. Zie
+  atomair; herstart/replay schrijven niets dubbel, de vervolgworker kan de
+  vrijgegeven stap echt claimen en een geforceerde tijdlijnfout rolt alles
+  terug. Zie
   `reviews/action-chain-effect-advance-mc03c3e.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.

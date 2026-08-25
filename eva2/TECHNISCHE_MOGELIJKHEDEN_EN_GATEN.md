@@ -172,7 +172,10 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   waargenomen JSON-velden zelfstandig te vergelijken. Alleen een verse exacte
   match schrijft atomair `STATE_VERIFIED`, effect- en stepsucces, continuation
   en vrijgegeven dependencies (`0acdd33`–`a99563b`); mismatch, onbekend,
-  niet-waargenomen en type-lookalikes blijven gesloten.
+  niet-waargenomen en type-lookalikes blijven gesloten. `5a1556e` bewijst die
+  vrijgave daarna in een werkelijke driestappenketen, inclusief herstart,
+  vervolgclaim en volledige rollback. Alle 74 action-chaincases zijn groen op
+  een verse PostgreSQL 16.13-database.
   Reviews van readresultaat, readvrijgave en alle effectslices blijven open.
   Nog ontbreken de onafhankelijke review en de echte Telegram-B-/Home
   Assistant-proef met fysieke readback en crashinjectie.

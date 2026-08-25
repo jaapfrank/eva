@@ -612,10 +612,14 @@ langdurige verzamelaanpassing telt niet als voortgang.
   de opgeslagen werkelijke toestand via een declaratieve, hashgebonden
   projectie. Alleen een verse exacte match commit `STATE_VERIFIED`, effect- en
   stepsucces, continuation en dependencyvrijgave in één transactie
-  (`0acdd33`–`a99563b`). 45 applicationtests en acht gerichte PostgreSQL
-  16.13-cases dekken match, mismatch, onbekend, niet-waargenomen, inhoudelijk
-  verkeerde providerclaim, replay/herstart, concurrency, rollback en
-  corruption-sensitive reload. MC03c3a/b1 deden nul
+  (`0acdd33`–`a99563b`). `5a1556e` vervangt de laatste tweestappenfixture door
+  een echte driestappenproef: de vervolgread blijft pending tot de fysieke
+  match, wordt eenmaal ready, is na herstart claimbaar en rolt bij een
+  geforceerde eventfout atomair mee terug. 45 applicationtests, acht gerichte
+  PostgreSQL 16.13-cases dekken match, mismatch, onbekend, niet-waargenomen,
+  inhoudelijk verkeerde providerclaim, replay/herstart, concurrency, rollback
+  en corruption-sensitive reload; de volledige 74-case action-chainreeks is op
+  een verse PostgreSQL 16.13-database groen. MC03c3a/b1 deden nul
   readback-provider-I/O; MC03c3b2 startte evenmin een proces. MC03c3c gebruikt
   alleen synthetisch succes en een echte lokale protocolfout; MC03c3d/3e doen
   zelf geen I/O. Onafhankelijke reviews, fysieke Home Assistant-readback,

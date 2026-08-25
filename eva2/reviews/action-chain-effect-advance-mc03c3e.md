@@ -26,6 +26,7 @@ tweede gelijktijdige afronding doet dit niet opnieuw.
 - `0acdd33` — duurzame bewijsreconstructie en verified-statevalidatie.
 - `f43b73f` — herstartvalidatie van effect- en dependencyvoortgang.
 - `a99563b` — atomische writer, `STATE_VERIFIED`, step en continuation.
+- `5a1556e` — werkelijke driestappenketen, vervolgclaim en rollbackbewijs.
 
 ## Belangrijkste bestanden
 
@@ -43,31 +44,29 @@ tweede gelijktijdige afronding doet dit niet opnieuw.
 - Ruff, Pythoncompile en `git diff --check`: groen.
 - Applicationlaag: 45 tests groen.
 - Gerichte PostgreSQL 16.13-slice: 8 tests groen.
-- De brede action-chainrun bereikte 67 groene tests. Daarna raakte de bewust op
-  512 MB begrensde tijdelijke database vol; dit veroorzaakte zes setupfouten en
-  één memfd-resourcefout, geen assertion tegen MC03c3e.
-- Op een verse PostgreSQL 16.13-database zijn die ene executorcase en alle acht
-  MC03c3e-cases opnieuw uitgevoerd: 9/9 groen.
-- Beide tijdelijke containers zijn exact op naam verwijderd; A, B en hun
+- De volledige reeks van twaalf action-chainmodules: 74/74 groen op een verse,
+  2 GB begrensde PostgreSQL 16.13-database. Dit vervangt de eerdere onvolledige
+  run die op een testschijf van 512 MB vastliep.
+- Alle tijdelijke containers zijn exact op naam verwijderd; A, B en hun
   volumes zijn niet benaderd.
 
 De acht MC03c3e-cases omvatten:
 
-- een exacte match en replay na een nieuwe engine;
+- een exacte match in een driestappenketen, replay na een nieuwe engine en een
+  werkelijk claimbare vervolgstap;
 - `not_observed`, `conflict` en `inconclusive` blijven gesloten;
 - een providerclaim `matches` met de verkeerde werkelijke waarde blijft dicht;
 - twee gelijktijdige callers produceren één advance;
-- een geforceerde fout bij `STATE_VERIFIED` rolt effect- en stepupdates terug;
+- een geforceerde fout bij `STATE_VERIFIED` rolt effect, step én nog gesloten
+  vervolgstap terug;
 - een gewijzigd outcome-ref maakt ledgerreload rood.
 
 ## Eerlijke bewijsgrens
 
 - De provider in deze slice is een sealed testprovider, niet het echte Home
   Assistant-apparaat in B.
-- Het huidige tweestappenplan heeft na het effect geen derde teststap; de
-  dependencyvrijgave gebruikt en valideert dezelfde generieke topologische
-  regel als de bestaande readvrijgave, maar een echte langere HA-keten blijft
-  onderdeel van MX04.
+- De langere keten is nog een sealed testketen. Dezelfde vervolgclaim via een
+  werkelijk Home Assistant-apparaat blijft onderdeel van MX04.
 - Geen latency-, geheugen- of kostenoptimalisatieclaim; deze metrics zijn
   `unmeasured`.
 - Zonder onafhankelijke review is dit niet `reviewed`. Zonder Telegram-B,
