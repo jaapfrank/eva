@@ -103,6 +103,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   contracteren, actuele officiële providerroute kiezen, zo nodig on the fly een
   adapter maken, sandboxtesten, least-privilege koppelen en zonder core-rebuild
   activeren met persoonsbinding, receipt, stop en rollback.
+- [ ] `DG01-DG06` — alle capabilities, componenten en relevante bestanden aan
+  doel, owner, status, Git-checkpoint, tests/review/livebewijs en expliciete
+  optimalisatiemetric binden; zie `DOCUMENTATIE_EN_ONDERHOUD.md`.
 - [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
   grenzen; zie `OPENBOT_VERGELIJKING.md`.
 - [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect

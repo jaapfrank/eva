@@ -67,6 +67,11 @@ Bijgewerkt: 25 augustus 2026.
   het staat nog inspecteerbaar in containerconfig in plaats van als file-secret.
 - De recente Living Core-bron, architectuur en receipts hebben nog geen reeks
   kleine, onafhankelijk gecontroleerde Git-checkpoints.
+- De documentatie is breed maar nog niet volledig machine-afgedwongen. De
+  Living-Core-matrix en repository-inventaris beschrijven veel componenten en
+  paden, maar nog niet ieder productie-/deployment-/migrationbestand heeft één
+  semantische componentowner met actuele bewijs- en optimalisatiestatus.
+  DG01-DG06 maken dat af; zie `DOCUMENTATIE_EN_ONDERHOUD.md`.
 - Sensorbeslissingen en levering moeten uit de Hindsight-cold-path naar eigen
   duurzame workers met backlog- en livenessbewijs.
 - De residentpolicy heeft nog geen atomische PostgreSQL-state, exacte urgente
@@ -195,6 +200,8 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/performance-and-complexity-v1.md`
 - Installer, onboarding, koppelingen, `SOUL.md`/`MEMORY.md` en verplaatsen:
   `design/product/installer-and-onboarding-v1.md`
+- Mogelijkhedenindex, bestandsdoel, status, bewijs en optimalisatie:
+  `DOCUMENTATIE_EN_ONDERHOUD.md`
 - Geblindeerde gesprekscase: `evidence/living-core/lab36-c04-blind-2026-08-24.json`
 - Resident-shakedown, niet de officiële zevendaagse run:
   `evidence/living-core/resident-long-run-v1-2026-08-24.json`

@@ -23,6 +23,8 @@ kostenbudgetten staan in
 de eenvoudige installatie, lokale koppelwizard, `SOUL.md`/`MEMORY.md`-grens en
 verplaats-/updateroute staan in
 [`design/product/installer-and-onboarding-v1.md`](design/product/installer-and-onboarding-v1.md);
+de documentatiekaart, componentregistratie, bewijsstatus en optimalisatiegrens
+staan in [`DOCUMENTATIE_EN_ONDERHOUD.md`](DOCUMENTATIE_EN_ONDERHOUD.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
@@ -63,6 +65,11 @@ de controleerbare live receipts staan in
   een provider kiezen, zo nodig een kleine adapter in quarantaine maken en die
   na tests en least-privilege koppeling zonder core-rebuild activeren. Dit werkt
   nu nog niet.
+- Documentatiebeheer DG01-DG06: mogelijkheden, gaten, architectuur, reviews en
+  het mechanische padinventaris bestaan al, maar semantisch componentownership
+  en de labels `complete`/`optimized_for_<metric>` worden nog niet repositorybreed
+  machine-afgedwongen. Het nieuwe onderhoudscontract maakt die open grens en de
+  benodigde checker/eindsnapshot expliciet.
 - Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
