@@ -507,9 +507,14 @@ langdurige verzamelaanpassing telt niet als voortgang.
   observatietijd; die fix is lokaal groen, maar de onafhankelijke herreview is
   nog open. Daarom blijft dit vak onafgevinkt; zie
   `reviews/action-chain-read-result-mc03b2b.md`.
-- [ ] Meerstapsplanning MC03b3: uitsluitend na een duurzaam bewezen readresultaat
-  de juiste afhankelijke stap en continuation vrijgeven; fout, ambiguïteit en
-  rate-limit mogen geen effect autoriseren.
+- [ ] Meerstapsplanning MC03b3: uitsluitend een `observed` readresultaat zet de
+  readstep op `succeeded`, bindt de exacte observatie en maakt alle daardoor
+  uitvoerbare dependencies plus continuation atomair vrij. Fout, ambiguïteit en
+  rate-limit blijven gesloten. Acht gerichte PostgreSQL-proeven, 36 bredere
+  ketentests en 24 tijdlijntests zijn groen (`bccca57`, `617ba91`), inclusief
+  concurrency, rollback, herstart, replay en een afhankelijke tweede read. De
+  onafhankelijke review is nog open; daarom blijft dit vak onafgevinkt. Zie
+  `reviews/action-chain-read-advance-mc03b3.md`.
 - [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
   `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
