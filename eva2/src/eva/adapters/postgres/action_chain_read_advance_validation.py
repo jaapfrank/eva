@@ -32,6 +32,7 @@ def validate_action_chain_read_advances(
     plan: ValidatedPlan,
     step_rows: Sequence[sa.Row],
     root_current: dict[str, Any],
+    effect_released_step_ids: set[UUID] | None = None,
     corrupt: type[RuntimeError],
 ) -> dict[str, object] | None:
     """Require each succeeded read and released dependency to have one event."""
@@ -106,6 +107,7 @@ def validate_action_chain_read_advances(
         for context in context_by_sequence.values()
         for item in context["released_step_ids"]
     }
+    released_union.update(effect_released_step_ids or set())
     if progressed_dependencies != released_union:
         raise corrupt("dependent step progress lacks one read advance")
 
@@ -125,7 +127,10 @@ def validate_action_chain_read_advances(
         if not isinstance(current_context, dict) or current_context != expected:
             raise corrupt("current read advance context differs")
         return expected
-    if current_context is not None:
+    if (
+        current_context is not None
+        and latest.event_type != "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED"
+    ):
         raise corrupt("non-advance root event contains read advance context")
     return None
 

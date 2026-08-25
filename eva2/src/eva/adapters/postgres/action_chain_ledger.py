@@ -10,12 +10,19 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
-from eva.adapters.postgres.action_chain_effect_validation import is_prepared_action_chain_effect, validate_action_chain_effect
+from eva.adapters.postgres.action_chain_effect_validation import (
+    is_completed_action_chain_effect,
+    is_prepared_action_chain_effect,
+    validate_action_chain_effect,
+)
 from eva.adapters.postgres.action_chain_read_validation import (
     validate_action_chain_read,
 )
 from eva.adapters.postgres.action_chain_read_advance_validation import (
     validate_action_chain_read_advances,
+)
+from eva.adapters.postgres.action_chain_effect_progress_validation import (
+    validate_action_chain_effect_advances,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
@@ -551,6 +558,9 @@ class PostgresActionChainLedger:
             prepared_effect = is_prepared_action_chain_effect(
                 step, stored, running_revision
             )
+            completed_effect = is_completed_action_chain_effect(
+                step, stored, succeeded_revision
+            )
             completed_read = (
                 step.kind == "read"
                 and stored.state == "succeeded"
@@ -575,7 +585,14 @@ class PostgresActionChainLedger:
                 or stored.operation != step.operation
                 or stored.effect_class != step.kind
                 or stored.plan_step_id != uuid5(plan_id, f"step:{step.step_id}")
-                or not (initial_step or released_ready or prepared_read or completed_read or prepared_effect)
+                or not (
+                    initial_step
+                    or released_ready
+                    or prepared_read
+                    or completed_read
+                    or prepared_effect
+                    or completed_effect
+                )
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
                 != canonical_sha256(step_payload)
@@ -619,7 +636,7 @@ class PostgresActionChainLedger:
                     current_event_data=step_current,
                     corrupt=ActionChainCorrupt,
                 )
-            elif prepared_effect:
+            elif prepared_effect or completed_effect:
                 validate_action_chain_effect(
                     connection, self._scope_value, plan_id, plan, decision,
                     authority_snapshot, row, step, stored, step_current,
@@ -640,14 +657,29 @@ class PostgresActionChainLedger:
                     read_intent_id=stored.read_intent_id,
                 )
             )
-        current_transition_context = validate_action_chain_read_advances(
+        effect_transition_context, effect_released_step_ids = (
+            validate_action_chain_effect_advances(
+                connection,
+                self._scope_value,
+                plan_id=plan_id,
+                plan=plan,
+                step_rows=step_rows,
+                root_current=root_current,
+                corrupt=ActionChainCorrupt,
+            )
+        )
+        read_transition_context = validate_action_chain_read_advances(
             connection,
             self._scope_value,
             plan_id=plan_id,
             plan=plan,
             step_rows=step_rows,
             root_current=root_current,
+            effect_released_step_ids=effect_released_step_ids,
             corrupt=ActionChainCorrupt,
+        )
+        current_transition_context = (
+            effect_transition_context or read_transition_context
         )
         current_states = {row.plan_step_id: row.state for row in step_rows}
         if any(
