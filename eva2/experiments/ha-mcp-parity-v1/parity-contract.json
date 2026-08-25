@@ -1,0 +1,65 @@
+{
+  "candidateId": "DF02e-ha-mcp-parity-v1",
+  "contract": "EvaHomeAssistantMcpParity/v1",
+  "currentDirectProduction": {
+    "files": {
+      "eva2/src/eva/adapters/connectors/home_assistant.py": 763,
+      "eva2/src/eva/adapters/connectors/home_assistant_automations.py": 260
+    },
+    "lines": 1023
+  },
+  "excludedFromReplacement": [
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py",
+    "eva2/src/eva/adapters/connectors/home_assistant_events.py",
+    "eva2/src/eva/adapters/connectors/home_assistant_hacs.py",
+    "eva2/src/eva/adapters/connectors/home_assistant_localtuya.py",
+    "eva2/src/eva/application/home_automation.py"
+  ],
+  "image": "ghcr.io/homeassistant-ai/ha-mcp@sha256:2d06fa32c06a935700c44fbce3998a2741edf20e698cc8a0231743f595bd653e",
+  "mapping": {
+    "execute": ["ha_call_service"],
+    "history": ["ha_get_history"],
+    "history_group": ["ha_get_history"],
+    "observe": ["ha_get_state"],
+    "resolve_entities": ["ha_search"],
+    "resolve_history_targets": ["ha_search"],
+    "resolve_light": ["ha_search"],
+    "resolve_switch": ["ha_search"],
+    "state": ["ha_get_state"],
+    "automation_delete_verified": [
+      "ha_config_get_automation",
+      "ha_config_remove_automation",
+      "ha_config_get_automation"
+    ],
+    "automation_execute": [
+      "ha_config_get_automation",
+      "ha_config_set_automation"
+    ],
+    "automation_observe": ["ha_config_get_automation"]
+  },
+  "nonclaims": {
+    "connectedToRealHomeAssistant": false,
+    "provedCodeRemoval": false,
+    "provedCrashRecovery": false,
+    "provedLatencyWin": false,
+    "provedProductionPromotion": false
+  },
+  "promotion": {
+    "maximumNewIntegrationLines": 180,
+    "minimumRemovedProductionLines": 300,
+    "requiresIndependentReadback": true,
+    "requiresLeastPrivilegeTestToken": true,
+    "requiresRollbackByExactDigest": true
+  },
+  "protocolVersion": "2025-06-18",
+  "toolInputSchemaSha256": {
+    "ha_call_service": "9104b318256ff10e0e3edce620fe43981c01a3c4405a93cefcc92b2ef98c9c88",
+    "ha_config_get_automation": "bae748eb90c04a6f51aaa606d7b2b20afa76ede3bc0b40d4d8e0da847a581200",
+    "ha_config_remove_automation": "239a10c59c69242458e3f8ef41adead2b58cb5d59e65d9ffc1e6efe9097ce4ed",
+    "ha_config_set_automation": "269653db1d134f5d6a1010f0f702037803e55e2ad23a37c5f093e21f72b2c2b3",
+    "ha_get_history": "bb8276887ba10132e7d59fd99b41f564c18ead1f42fd9bb466c1b56c22416d36",
+    "ha_get_state": "bd1f2d5a94013f975b8aa5f0328cdcbe076dde11d99837876c03594580c5b78e",
+    "ha_search": "9e75d75b39f277391dd3e2d70719268c8d0be0ae8fcab9e60eb29a5594aa7375"
+  },
+  "version": "8.3.0"
+}
