@@ -57,6 +57,12 @@ de controleerbare live receipts staan in
   is nog geen eenvoudige setupwizard of bewezen restore op een andere computer.
   IN01-IN08 maken één lokale wizard, IdentityPack/`SOUL.md`, Telegram, Home
   Assistant, e-mail, secretinvoer, fresh install, restore en update af.
+- Adaptieve connectoren AC01-AC06: Telegram blijft de eerste V1-bewijsroute,
+  maar niet de productgrens. Eva moet vanuit de chat een ontbrekend legitiem
+  kanaal zoals WhatsApp kunnen contracteren, via actuele officiële documentatie
+  een provider kiezen, zo nodig een kleine adapter in quarantaine maken en die
+  na tests en least-privilege koppeling zonder core-rebuild activeren. Dit werkt
+  nu nog niet.
 - Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via

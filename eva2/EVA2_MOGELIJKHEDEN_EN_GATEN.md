@@ -54,6 +54,12 @@ Bijgewerkt: 25 augustus 2026.
   voegen één ondertekend pakket, IdentityPack/optionele `SOUL.md`-import,
   Telegram-, Home Assistant- en e-mailkoppeling, fresh install, restore, update
   en rollback toe; zie `design/product/installer-and-onboarding-v1.md`.
+- Eva's connectoren zijn nog grotendeels vooraf gebouwd. De architectuur is
+  connectorneutraal, maar Eva kan vandaag nog niet vanuit een gesprek zelf een
+  ontbrekend kanaal zoals WhatsApp onderzoeken, een standaardprovider kiezen of
+  een kleine adapter maken, testen, koppelen en dynamisch activeren. AC01-AC06
+  maken dat store- en catalogusonafhankelijke pad af; zie
+  `design/architecture/ecosystem-bridge-v1.md`.
 - Er is geen runtime-`MEMORY.md`: PostgreSQL en Hindsight bewaren gescopeerd
   geheugen met herkomst, consent en crashherstel. Een toekomstige `MEMORY.md`
   is alleen een persoonsgebonden import/export, nooit de geheugenautoriteit.

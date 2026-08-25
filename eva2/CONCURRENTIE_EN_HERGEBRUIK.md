@@ -25,6 +25,9 @@ Bijgewerkt: 25 augustus 2026.
 
 Eva hoeft niet ieder oppervlak zelf te evenaren. V1 is bewust **Telegram-first**:
 één betrouwbare gezinsroute is waardevoller dan tien half-afgemaakte kanalen.
+Dat is de eerste release- en bewijsroute, niet een vaste productgrens. AC01-AC06
+moeten Eva daarna vanuit haar eigen chat ontbrekende legitieme kanalen laten
+onderzoeken, maken, koppelen en activeren zonder core-rebuild of skillstore.
 Eén geïsoleerde browsercomputer en echte chatgestuurde autonomie zijn voortaan
 wel een V1-productgate; dat is een capability, geen extra chatkanaal.
 De documentatie van de concurrenten is voldoende voor deze
@@ -96,6 +99,10 @@ langdurige verzamelaanpassing telt niet als voortgang.
   geheugencompactie, on-the-fly skillcreatie zonder store-afhankelijkheid,
   evaluatie/promotie/rollback en zeven dagen meetbaar beter worden zonder drift
   of onbeperkte groei.
+- [ ] `AC01-AC06` — vanuit Eva's chat een niet-vooraf-ingebakken kanaal
+  contracteren, actuele officiële providerroute kiezen, zo nodig on the fly een
+  adapter maken, sandboxtesten, least-privilege koppelen en zonder core-rebuild
+  activeren met persoonsbinding, receipt, stop en rollback.
 - [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
   grenzen; zie `OPENBOT_VERGELIJKING.md`.
 - [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect
@@ -521,8 +528,8 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Home Assistant en fysieke verificatie | Beste bewijs in onze huidige configuratie: actuele staat, historie, acties en automatiseringen met readback | Integratie/skills aanwezig; vorige vergelijking had geen HA-configuratie | Eigen Home Assistant-toolset aanwezig; vorige vergelijking had geen HA-configuratie | Via MCP/API/plugin mogelijk; vorige vergelijking had geen HA-configuratie | Alle vier dezelfde afgeschermde HA-doelen geven; succes telt alleen na echte readback |
 | Proactieve huisgenoot en nuttig zwijgen | In aanbouw; residentpolicy nog niet toegelaten | Heartbeats/hooks/automation aanwezig; residentgedrag niet getest | Gateway/cron/routines aanwezig; residentgedrag niet getest | Scheduled tasks aanwezig; residentgedrag niet getest | Dezelfde zevendaagse resident-track en spam-/stiltegates voor alle vier |
 | Skillsmarktplaats | Geen vereiste productafhankelijkheid; LG04 moet skills on the fly kunnen maken, een veilige importer is alleen optioneel | ClawHub aanwezig | Skills Hub aanwezig | Skills en Plugin Hub aanwezig | Geen marktplaats namaken of vereisen; externe skills alleen veilig als optionele input, Eva's eigen skillcreatie moet zonder store werken |
-| Plugins en connectorbereik | Enkele eigen connectoren; geen volwassen marktplaats | Breed plugin- en kanaalecosysteem aanwezig | Skills, toolsets en MCP-integraties aanwezig | Gedocumenteerde community-Plugin Hub, custom tools, MCP en A2A; omvang niet door ons vastgepind of getest | Concurrentintegraties hergebruiken; alleen Eva's policy, geheugen en waarheid blijven leidend |
-| Gateway en chatkanalen | Connectorneutrale kern, Telegram/Web/AgentMail deels; geen brede gateway | Sterkste huidige surface: Gateway plus veel kanalen | Gateway voor 15+ platforms aanwezig | Web/API/CLI-connectors aanwezig; kanaalbreedte nader vaststellen | OpenClaw/Hermes als transportprovider onderzoeken; nooit twee breinen of twee eigenaren van één kanaal |
+| Plugins en connectorbereik | Enkele eigen connectoren; AC01-AC06 voor on-the-fly adaptercreatie zonder store/catalogusafhankelijkheid | Breed plugin- en kanaalecosysteem aanwezig | Skills, toolsets en MCP-integraties aanwezig | Gedocumenteerde community-Plugin Hub, custom tools, MCP en A2A; omvang niet door ons vastgepind of getest | Standaarden en concurrentintegraties eerst hergebruiken; ontbrekende kleine adapter veilig laten maken, terwijl alleen Eva's policy, geheugen en waarheid leidend blijven |
+| Gateway en chatkanalen | Connectorneutrale kern, Telegram/Web/AgentMail deels; WhatsApp of ander kanaal nog niet dynamisch koppelbaar | Sterkste huidige surface: Gateway plus veel kanalen | Gateway voor 15+ platforms aanwezig | Web/API/CLI-connectors aanwezig; kanaalbreedte nader vaststellen | Telegram-first maar niet Telegram-vast: AC01-AC06 bewijst één extra kanaal vanuit chat, zonder core-rebuild of tweede brein |
 | Companion nodes en apparaten | Niet aanwezig | Camera, scherm, locatie, voice, notificaties en hostcommands aanwezig | Geen gelijkwaardige nodeclaim door ons bewezen | A0 CLI geeft hostterminal, bestanden en hostbrowser; desktop/browser ingebouwd | OpenClaw-nodes via officiële Gateway-sidecar hergebruiken; A0 CLI alleen vergelijken, niet in Eva opnemen zonder voordeel |
 | Browser en computergebruik | Websearch en begrensde bestanden; interactieve gateway/browser B01 staat gepland | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Eén geïsoleerde provider achter Eva's ledger; accounts, contracten, betalingen en financiële stappen kunnen binnen een vastgelegd mandaat zelfstandig verlopen |
 | MCP en standaard toolservers | Eén vaste, no-secret read-only Streamable-HTTP-tool werkt tegen een echte lokale JSON/SSE-provider; geen sidecar, ledger of B-route | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | De volgende kleine stap is één gepinde sidecar achter Eva's ledger; geen losse nieuwe API-connectoren |

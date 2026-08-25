@@ -6,10 +6,13 @@ Status: ontwerp na teamreview, nog niet geïmplementeerd of live toegelaten.
 
 Eva gebruikt bewezen ecosystemen van OpenClaw, Hermes en Agent Zero zonder haar
 eigen identiteit, geheugen, toestemming, eventtijdlijn of bewijscontrole uit
-handen te geven.
+handen te geven. Zij mag bovendien niet vastzitten aan connectoren die tijdens
+de productbouw al bekend waren: een gebruiker moet vanuit de Eva-chat een nieuw
+legitiem kanaal of een nieuwe dienst kunnen laten onderzoeken, voorbereiden,
+koppelen en activeren zonder de Living Core te herschrijven.
 
 ```text
-Telegram / Web / Home Assistant events
+Telegram / Web / dynamisch gekoppelde kanalen / Home Assistant events
                    |
                    v
         Eva Living Core + policy
@@ -44,6 +47,53 @@ zelf of dat resultaat voldoende bewijs is en formuleert zelf het antwoord.
 
 Een sidecar is dus geen tweede brein, geen geheugenautoriteit en geen eigenaar
 van een duurzame gebruikersopdracht.
+
+## Adaptieve connectorcreatie
+
+Telegram-first is een oplevervolgorde, geen architecturale bovengrens. Als een
+persoon bijvoorbeeld WhatsApp in plaats van Telegram wil gebruiken, voert Eva
+vanuit de chat deze gesloten cyclus uit:
+
+1. Eva legt doel, eigenaar/persoon, privé- of groepsgebruik, alleen ontvangen of
+   ook verzenden, media, looptijd, budget en stopmogelijkheid vast.
+2. Zij raadpleegt actuele officiële documentatie en kiest eerst een bestaande
+   standaardroute: MCP, een gepinde Gateway, webhook/API of een geïsoleerde
+   transportprovider. Een store of vooraf ingebakken adapter is niet vereist.
+3. Ontbreekt een passende route, dan maakt Eva on the fly in quarantaine de
+   kleinst mogelijke connectoradapter plus gesloten `ConnectorManifest`. Deze
+   code importeert de Living Core niet en krijgt geen secrets tijdens ontwerp of
+   tests.
+4. Contract-, schema-, permission-, privacy-, timeout-, replay-, crash- en
+   nonleaktests draaien tegen een afgeschermde provider- of contractsandbox.
+5. Alleen ontbrekende account- of credentialstappen worden via chat en lokale
+   eenmalige secretinvoer afgehandeld. Eva mag binnen een vastgelegd mandaat de
+   browserroute gebruiken, maar omzeilt geen platformvoorwaarden, CAPTCHA,
+   identiteitseisen of ontbrekende providerondersteuning.
+6. Activatie registreert een content-addressed capability en kanaalbinding
+   buiten de core-image. Ingress bindt eerst de externe afzender aan een
+   geverifieerde Eva-persoon; uitgang gebruikt Eva's deliveryledger. Een echte
+   heen-en-terugproef, stopknop en rollback sluiten de koppeling.
+
+Zo kan het connectoroppervlak tijdens gebruik groeien terwijl identiteit,
+geheugen, consent, toolauthority en eindantwoord bij Eva blijven. “Alles
+mogelijk” betekent hier: iedere dienst met een legitieme browser-, API-,
+webhook-, MCP- of Gatewayroute kan kandidaat worden; het is geen belofte dat Eva
+een gesloten of automatisering-verbiedend platform kan forceren.
+
+### Adaptieve-connectorgates
+
+- [ ] AC01 — Chatmandaat en kanaalcontract met eigenaar, personen/groepen,
+  ingress/egress/media, permissies, budget, looptijd en stopknop.
+- [ ] AC02 — Actuele officiële discovery en providerkeuze; standaardadapter
+  gaat vóór nieuwe code en iedere bron/versie/digest wordt vastgelegd.
+- [ ] AC03 — On-the-fly adapter en `ConnectorManifest` in quarantaine, zonder
+  core-import, secret, packagehook of stil verkregen permissie.
+- [ ] AC04 — Sandbox- en held-out tests voor schema, privacy, replay, timeout,
+  crash, rate limit en secret-nonleak; onafhankelijke promotiebeslissing.
+- [ ] AC05 — Lokale credentialinvoer, geverifieerde persoonsbinding en echte
+  read-only/receiveproef vóór uitgaande rechten.
+- [ ] AC06 — Dynamische activatie zonder core-rebuild, echte heen-en-terugproef,
+  cross-channel geheugenisolatie, observability, directe stop en rollback.
 
 ## Adapters
 
@@ -125,12 +175,15 @@ Na drie herstartfouten op hetzelfde checkpoint gaat het checkpoint naar
 
 1. Read-only officiële Gatewaytool in een geïsoleerde B-sidecar.
 2. Live denial-, timeout-, restart- en identiteitsscheidingstest.
-3. ClawHub-importer die exact één skill alleen in quarantaine plaatst.
-4. Algemene MCP-adapter met één read-only server.
-5. Eén read-only companion-nodefunctie.
-6. Eén automation als Eva-PostgreSQL-projectie.
-7. Eén browser/desktoptaak na native productbenchmark.
-8. Pas daarna muterende plugins, channels, camera, locatie of commerce.
+3. Algemene MCP-adapter met één read-only server.
+4. AC01-AC04 tegen een credentialvrije lokale kanaalcontractprovider.
+5. ClawHub-importer die exact één optionele externe skill alleen in quarantaine
+   plaatst; Eva's eigen skillcreatie blijft hiervan onafhankelijk.
+6. Eén read-only companion-nodefunctie.
+7. Eén automation als Eva-PostgreSQL-projectie.
+8. Eén browser/desktoptaak na native productbenchmark.
+9. AC05-AC06 voor één echt extra chatkanaal; pas daarna bredere muterende
+   plugins, camera, locatie of commerce.
 
 Iedere stap krijgt eerst architectuurreview, daarna implementatie en daarna een
 andere agent die de echte B-uitvoering en receipts controleert.

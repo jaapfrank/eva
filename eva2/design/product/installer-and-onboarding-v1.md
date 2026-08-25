@@ -8,7 +8,9 @@ Eva moet op een andere computer te installeren zijn zonder dat de gebruiker
 Compose-YAML, JSON-bindings of env-bestanden handmatig hoeft te schrijven. Eén
 ondertekend installatiepakket start een lokale wizard, stelt begrijpelijke
 vragen, bewaart secrets buiten repository en image, voert preflights uit en
-bewijst iedere gekozen koppeling afzonderlijk.
+bewijst iedere gekozen koppeling afzonderlijk. De wizard toont startopties,
+maar is geen vaste connectorcatalogus: vanuit de chat kan Eva later via
+`AC01-AC06` ook een niet-vooraf-ingebakken kanaal voorbereiden en toevoegen.
 
 De eerste beoogde producttargets zijn een eigen Linux/amd64-machine en Windows
 met WSL2 en een lokale Docker/Compose-engine. Geen van beide is nu al een
@@ -75,7 +77,10 @@ permissions aanmaken.
    capabilities; “e-mail gekoppeld” betekent niet automatisch verzendrecht.
 7. Voice, speaker/deurbel en browsercomputer alleen tonen wanneer de
    bijbehorende V-/P-/AU-gates in die release bestaan.
-8. Geheugen-, token-, kosten- en achtergrondbudgetten, bewaartermijnen,
+8. `Ander kanaal of dienst` laat de gebruiker het doel beschrijven en start na
+   onboarding de adaptieve-connectorgate; de wizard doet niet alsof iedere
+   externe provider bij installatie al ondersteund is.
+9. Geheugen-, token-, kosten- en achtergrondbudgetten, bewaartermijnen,
    back-uplocatie en een directe stop-/herstelroute bevestigen.
 
 Iedere connector start met de kleinste permissie, toont wat Eva wel en niet kan
@@ -129,7 +134,8 @@ stil half-geconfigureerd.
 - [ ] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
 - [ ] IN04 — Telegram-, Home Assistant- en één e-mailproviderwizard met
-  least-privilege scopes, echte read-only proeven en capability-permissions.
+  least-privilege scopes, echte read-only proeven en capability-permissions,
+  plus een ingang naar AC01 voor een niet-vooraf-ingebakken kanaal.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
