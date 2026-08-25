@@ -1,0 +1,67 @@
+{
+  "candidateId": "DF02d-ha-mcp-v8.3.0",
+  "community": {
+    "fixedMaintainers": 4,
+    "forks": 196,
+    "githubListedContributors": 69,
+    "lastPushAt": "2026-08-25T21:24:03Z",
+    "stars": 4511
+  },
+  "contract": "EvaDependencySidecarReceipt/v1",
+  "decision": "promote_to_isolated_live_parity_trial",
+  "disposableSmoke": {
+    "betaAndCodeToolsDisabled": true,
+    "capabilitiesDropped": true,
+    "filesystemReadOnly": true,
+    "imagePulledByDigest": true,
+    "listedNonReadOnlyMixedTools": 6,
+    "listedTools": 39,
+    "mcpProtocolVersion": "2025-06-18",
+    "network": "none",
+    "realCredentialsUsed": false,
+    "readOnlyMode": true,
+    "requiredReadToolsPresent": [
+      "ha_config_get_automation",
+      "ha_get_history",
+      "ha_get_state",
+      "ha_search"
+    ],
+    "writeCallsBlocked": [
+      "ha_config_set_automation",
+      "ha_manage_backup:scope=snapshot,action=create"
+    ]
+  },
+  "image": {
+    "amd64Digest": "sha256:2d06fa32c06a935700c44fbce3998a2741edf20e698cc8a0231743f595bd653e",
+    "arm64Digest": "sha256:6e60aea9bb01f7e4b0cc20dc874d3043599dc3df77892b87e56ab9cbf18258c3",
+    "indexDigest": "sha256:38b3a0b6b6b69d3fd074f958fbf9653ae2d50c8727b4c0dcde640cfa3a638176",
+    "localAmd64SizeBytes": 81845039,
+    "nonRootUser": "mcpuser"
+  },
+  "nonclaims": {
+    "changedAOrB": false,
+    "connectedToRealHomeAssistant": false,
+    "installedInEvaCore": false,
+    "provedIndependentReadback": false,
+    "provedLatencyOrTokenWin": false,
+    "removedEvaCode": false,
+    "usedRealSecrets": false
+  },
+  "observedAt": "2026-08-26",
+  "project": {
+    "documentedTools": 88,
+    "license": "MIT",
+    "pythonTestFiles": 621,
+    "releaseImmutable": true,
+    "releasePublishedAt": "2026-08-19T10:27:29Z",
+    "repository": "https://github.com/homeassistant-ai/ha-mcp",
+    "version": "8.3.0"
+  },
+  "source": {
+    "imageLabelCommit": "8ed7f47105e7902ded6fa61d30f2a7f926e68f2a",
+    "imageLabelDiffOutsideRuntimeOnly": true,
+    "runtimeSourceTree": "b6f80bafd162c4e9ce99d66a25f3ea043a85894d",
+    "tag": "v8.3.0",
+    "tagCommit": "7f9227272df387df40ac2db844e2edeeee9ebe49"
+  }
+}
