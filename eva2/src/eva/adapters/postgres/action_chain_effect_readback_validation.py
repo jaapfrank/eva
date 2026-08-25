@@ -399,7 +399,7 @@ def _validate_thread(
         ):
             raise corrupt("effect verification prepared state differs")
         return
-    if len(attempts) != 1 or len(events) not in {2, 3}:
+    if len(attempts) != 1 or len(events) not in {2, 3, 4}:
         raise corrupt("effect verification dispatch cardinality differs")
     for sequence, item in enumerate(events, start=1):
         if (
@@ -419,15 +419,25 @@ def _validate_thread(
     current_data = latest.payload.get("data")
     if not isinstance(current_data, dict):
         raise corrupt("effect verification current event data differs")
-    if len(events) == 3:
-        call_data = dict(current_data)
+    if len(events) >= 3:
+        call_started = events[2]
+        call_data = dict(call_started.payload.get("data", {}))
         started_at = call_data.pop("provider_call_started_at", None)
         if (
-            latest.event_type != "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED"
+            call_started.event_type != "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED"
             or call_data != authorized.payload["data"]
-            or started_at != _format_timestamp(latest.occurred_at)
+            or started_at != _format_timestamp(call_started.occurred_at)
         ):
             raise corrupt("effect verification call-start event differs")
+        if len(events) == 3 and latest is not call_started:
+            raise corrupt("effect verification call-start ordering differs")
+        if len(events) == 4 and latest.event_type not in {
+            "ACTION_CHAIN_READ_OBSERVED",
+            "ACTION_CHAIN_READ_AMBIGUOUS",
+            "ACTION_CHAIN_READ_REJECTED",
+            "ACTION_CHAIN_READ_RATE_LIMITED",
+        }:
+            raise corrupt("effect verification result event differs")
     elif latest.event_type != "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED":
         raise corrupt("effect verification dispatch event differs")
     if (
@@ -451,7 +461,7 @@ def _validate_thread(
         operation_id=thread_id,
         retention_policy_id=retention_policy_id,
         retention_until=retention_until,
-        allow_terminal=False,
+        allow_terminal=len(events) == 4,
         corrupt=corrupt,
     )
 

@@ -16,6 +16,9 @@ from eva.adapters.postgres.action_chain_ledger import (
     plan_steps,
     read_intents,
 )
+from eva.adapters.postgres.action_chain_effect_readback_validation import (
+    effect_readback_thread_id,
+)
 from eva.adapters.postgres.action_chain_reads import ActionChainReadConflict
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
@@ -31,6 +34,9 @@ from eva.contracts.connector import ConnectorManifest
 from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.execution import ReadAttempt, ReadObservation
 from eva.operations.action_chain_read_dispatcher import ClaimedActionChainReadCall
+from eva.operations.action_chain_effect_readback_dispatcher import (
+    ClaimedActionChainEffectReadbackCall,
+)
 from eva.operations.action_chain_read_results import (
     ProjectedActionChainReadResult,
     ProviderReadResult,
@@ -86,12 +92,7 @@ class PostgresActionChainReadResultStore:
             if intent_row is None:
                 raise ActionChainReadConflict("read result intent is absent in scope")
             step_row = connection.execute(
-                sa.select(plan_steps).where(
-                    plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id == self._scope_value.installation_id,
-                    plan_steps.c.plan_step_id == intent_row.plan_step_id,
-                    plan_steps.c.read_intent_id == read_intent_id,
-                )
+                _step_statement(self._scope_value, intent_row, read_intent_id)
             ).one()
             attempt_row = connection.execute(
                 sa.select(read_attempts).where(
@@ -107,9 +108,11 @@ class PostgresActionChainReadResultStore:
             if stored_attempt.state == "dispatch_authorized":
                 return None
             chain = self._ledger.load_in_transaction(connection, step_row.plan_id)
-            operation_id = action_chain_step_operation_id(
-                chain.plan,
-                step_row.logical_step_key,
+            operation_id = _result_thread_id(
+                chain,
+                step_row,
+                intent_row,
+                read_intent_id,
             )
             return self._load_stored_result(
                 connection,
@@ -119,7 +122,7 @@ class PostgresActionChainReadResultStore:
 
     def record(
         self,
-        claim: ClaimedActionChainReadCall,
+        claim: ClaimedActionChainReadCall | ClaimedActionChainEffectReadbackCall,
         *,
         result: ProviderReadResult,
         observed_at: datetime,
@@ -149,14 +152,11 @@ class PostgresActionChainReadResultStore:
             if intent_row is None:
                 raise ActionChainReadConflict("call-started read intent is absent")
             step_row = connection.execute(
-                sa.select(plan_steps)
-                .where(
-                    plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id == self._scope_value.installation_id,
-                    plan_steps.c.plan_step_id == intent_row.plan_step_id,
-                    plan_steps.c.read_intent_id == read_intent_id,
-                )
-                .with_for_update(read=True)
+                _step_statement(
+                    self._scope_value,
+                    intent_row,
+                    read_intent_id,
+                ).with_for_update(read=True)
             ).one()
             attempt_row = connection.execute(
                 sa.select(read_attempts)
@@ -169,8 +169,11 @@ class PostgresActionChainReadResultStore:
                 .with_for_update()
             ).one()
             chain = self._ledger.load_in_transaction(connection, step_row.plan_id)
-            operation_id = action_chain_step_operation_id(
-                chain.plan, step_row.logical_step_key
+            operation_id = _result_thread_id(
+                chain,
+                step_row,
+                intent_row,
+                read_intent_id,
             )
             stored_attempt = _attempt(attempt_row)
             if stored_attempt.state != "dispatch_authorized":
@@ -278,7 +281,7 @@ class PostgresActionChainReadResultStore:
                 occurred_at=recorded_at,
                 data=data,
                 operation_id=operation_id,
-                deadline=_parse_timestamp(chain.plan.deadline),
+                deadline=intent_row.deadline,
                 retry_count=int(checkpoint.retry_count),
                 last_error_fingerprint=(
                     None
@@ -476,6 +479,42 @@ _TERMINAL_TIMELINE = {
         "active",
     ),
 }
+
+
+def _step_statement(
+    scope: TimelineScope,
+    intent_row: sa.Row,
+    read_intent_id: UUID,
+) -> sa.Select:
+    statement = sa.select(plan_steps).where(
+        plan_steps.c.tenant_id == scope.tenant_id,
+        plan_steps.c.installation_id == scope.installation_id,
+        plan_steps.c.plan_step_id == intent_row.plan_step_id,
+    )
+    if intent_row.purpose == "effect_verify":
+        if intent_row.effect_intent_id is None:
+            raise ActionChainReadConflict("effect readback result has no effect")
+        return statement.where(
+            plan_steps.c.effect_intent_id == intent_row.effect_intent_id,
+            plan_steps.c.read_intent_id.is_(None),
+        )
+    if intent_row.effect_intent_id is not None:
+        raise ActionChainReadConflict("ordinary read result binds an effect")
+    return statement.where(
+        plan_steps.c.read_intent_id == read_intent_id,
+        plan_steps.c.effect_intent_id.is_(None),
+    )
+
+
+def _result_thread_id(
+    chain: StoredActionChain,
+    step_row: sa.Row,
+    intent_row: sa.Row,
+    read_intent_id: UUID,
+) -> str:
+    if intent_row.purpose == "effect_verify":
+        return effect_readback_thread_id(read_intent_id)
+    return action_chain_step_operation_id(chain.plan, step_row.logical_step_key)
 
 
 def _terminal_timeline(state: str) -> tuple[str, str, str]:

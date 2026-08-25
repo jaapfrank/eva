@@ -8,7 +8,12 @@ from typing import Literal, TypeAlias
 from uuid import UUID, uuid5
 
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.connector import ConnectorManifest, InlinePayload, ReadOk
+from eva.contracts.connector import (
+    ConnectorManifest,
+    InlinePayload,
+    ReadbackResult,
+    ReadOk,
+)
 from eva.contracts.connector_rpc import (
     ConnectorErrorResponse,
     ConnectorInitializeRequest,
@@ -150,7 +155,7 @@ def _classify_result(
     result: ProviderReadResult,
     observed_at: datetime,
     recorded_at: datetime,
-) -> tuple[TerminalReadState, str | None, ReadOk | None]:
+) -> tuple[TerminalReadState, str | None, ReadOk | ReadbackResult | None]:
     result_sha256 = canonical_sha256(result)
     if isinstance(result, ConnectorInvokeSuccess):
         provider_result = result.result
@@ -167,7 +172,7 @@ def _classify_result(
             != attempt.connector_manifest_sha256
             or envelope.connector_manifest_sha256
             != attempt.connector_manifest_sha256
-            or invoke.method != "resource.read"
+            or invoke.method != _required_read_method(envelope.operation)
         ):
             raise ValueError("provider success binds another read request")
         completed_at = _parse_timestamp(provider_result.completed_at)
@@ -184,6 +189,26 @@ def _classify_result(
                 raise ValueError(
                     "provider retrieval is outside the host/completion window"
                 )
+            return "observed", result_sha256, outcome
+        if isinstance(outcome, ReadbackResult):
+            request_payload = envelope.request_payload
+            payload = outcome.payload
+            if (
+                invoke.method != "effect.readback"
+                or outcome.idempotency_key
+                != request_payload.get("idempotencyKey")
+                or outcome.request_sha256 != request_payload.get("requestSha256")
+                or outcome.provider_resource_id
+                != request_payload.get("providerResourceId")
+            ):
+                raise ValueError("provider readback binds another effect request")
+            readback_at = _parse_timestamp(outcome.observed_at)
+            if readback_at < observed_at or readback_at > completed_at:
+                raise ValueError(
+                    "provider readback is outside the host/completion window"
+                )
+            if payload is not None and payload.output_schema_sha256 != output_schema_sha256:
+                raise ValueError("provider readback uses another output schema")
             return "observed", result_sha256, outcome
         if outcome.kind == "rate_limited":
             return "rate_limited", result_sha256, None
@@ -230,7 +255,7 @@ def _validate_exchange_authority(
     envelope = invoke.params
     params = initialize.params
     if (
-        invoke.method != "resource.read"
+        invoke.method != _required_read_method(envelope.operation)
         or envelope.tenant_id != str(tenant_id)
         or canonical_sha256(envelope) != attempt.request_sha256
         or envelope.connector_manifest_sha256
@@ -260,18 +285,28 @@ def _validate_exchange_authority(
 def _build_observation(
     *,
     attempt: ReadAttempt,
-    outcome: ReadOk,
+    outcome: ReadOk | ReadbackResult,
     evidence_id: UUID,
     observed_at: datetime,
 ) -> ReadObservation:
-    retrieved_at = _parse_timestamp(outcome.retrieved_at)
+    retrieved_at = _parse_timestamp(
+        outcome.retrieved_at if isinstance(outcome, ReadOk) else outcome.observed_at
+    )
     if retrieved_at < observed_at:
         raise ValueError("provider retrieval precedes the host observation")
-    normalized_value = (
-        outcome.payload.normalized_payload
-        if isinstance(outcome.payload, InlinePayload)
-        else outcome.payload.object_handle.model_dump(mode="json")
-    )
+    if isinstance(outcome, ReadOk):
+        normalized_value = _normalized_payload(outcome.payload)
+        response_sha256 = outcome.response_sha256
+    else:
+        normalized_value = {
+            "idempotencyKey": outcome.idempotency_key,
+            "matchStatus": outcome.match_status,
+            "payload": (
+                None if outcome.payload is None else _normalized_payload(outcome.payload)
+            ),
+            "requestSha256": outcome.request_sha256,
+        }
+        response_sha256 = canonical_sha256(outcome)
     return ReadObservation.model_validate(
         {
             "schema_version": 1,
@@ -282,14 +317,29 @@ def _build_observation(
             "read_intent_id": attempt.read_intent_id,
             "read_attempt_id": attempt.read_attempt_id,
             "provider_resource_id": outcome.provider_resource_id,
-            "retrieved_at": outcome.retrieved_at,
+            "retrieved_at": _format_timestamp(retrieved_at),
             "observed_at": _format_timestamp(observed_at),
             "normalized_value": normalized_value,
-            "response_sha256": outcome.response_sha256,
+            "response_sha256": response_sha256,
             "trust": "untrusted_external",
             "evidence_ref": str(evidence_id),
         }
     )
+
+
+def _normalized_payload(payload: object) -> object:
+    if isinstance(payload, InlinePayload):
+        return payload.normalized_payload
+    object_handle = getattr(payload, "object_handle", None)
+    if object_handle is None:
+        raise ValueError("provider read payload is not typed")
+    return object_handle.model_dump(mode="json")
+
+
+def _required_read_method(operation: str) -> str:
+    if operation == "effect.readback":
+        return "effect.readback"
+    return "resource.read"
 
 
 def _result_subject_id(result: ProviderReadResult) -> str:
