@@ -28,7 +28,8 @@ huidige directe adapter. Pas daarna mag code verdwijnen.
 - Vier vaste maintainers in de repositorydocumentatie.
 - MIT-licentie, securitybeleid, changelog, Renovate/Dependabot en
   multi-architecture images.
-- 88 gedocumenteerde tools en 621 Python-testbestanden.
+- 88 gedocumenteerde tools en 621 Pythonbestanden onder `tests/`, waarvan 483
+  `test_*.py`-modules.
 - Het project gebruikt Python 3.13 en blijft daarom een losse sidecar; het
   verandert Eva's Python 3.12-lock niet.
 
@@ -48,7 +49,8 @@ sidecar bestaande én toekomstige Eva-code kan vervangen.
 | `linux/arm64` | `sha256:6e60aea9bb01f7e4b0cc20dc874d3043599dc3df77892b87e56ab9cbf18258c3` |
 
 De image noemt commit `8ed7f47105e7902ded6fa61d30f2a7f926e68f2a`.
-Die ligt direct na de releasecommit en wijzigt alleen twee add-onbestanden.
+Die ligt twee commits na de releasecommit; de totale diff wijzigt alleen twee
+add-onbestanden.
 De `src/`-boom is op beide commits exact `b6f80b…`. Dit verschil wordt dus
 niet verstopt, maar bindt wel aan dezelfde runtimebron.
 
