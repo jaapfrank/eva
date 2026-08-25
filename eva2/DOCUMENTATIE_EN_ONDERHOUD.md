@@ -25,6 +25,7 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 | Welke hoofdprojecten zijn af, wat resteert en hoe lang duurt dat? | `PROJECTEN_EN_PLANNING.md` | Primair projectbord met gebruikersuitkomst, status, raming, praktijktijd en eindproef |
 | Waar werken we technisch nu aan? | `PROJECT_STATUS.md` | Korte actuele werkstatus en laatste checkpoint |
 | Hoe blijft het team van begin tot eind betrokken? | `TEAM_WERKWIJZE.md` | Vaste projectrollen, vroege verificatie, gescheiden werkbomen, integratie en acceptatie |
+| Waarom bouwen we iets zelf in plaats van een dependency te gebruiken? | `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | Dependency-first selectie, exacte pins, onderhoud/licentie, proef, update, rollback en expliciete afwijzingsreden |
 | Hoe hangt de runtime technisch samen? | `design/architecture/living-core-v1.md` | Componenten, primaire bestanden, verantwoordelijkheid, status en bewijsgrenzen |
 | Wie staat vandaag voor en waarom zou Eva straks beter zijn? | `CONCURRENTIE_EN_HERGEBRUIK.md`, `OPENBOT_VERGELIJKING.md`, `OUDE_EVA_VS_EVA2.md` | Vergelijkingen in gewone taal; huidige winnaar en toekomstdoel blijven gescheiden |
 | Waar staan alle precieze gatecodes en technische claims? | `TECHNISCHE_PRODUCTGATES.md`, `TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md`, `design/product/*.md` | Technisch bewijsbord met acceptatiecriteria, checkpoints en nonclaims |

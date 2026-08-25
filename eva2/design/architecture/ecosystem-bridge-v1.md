@@ -32,6 +32,21 @@ Telegram / Web / dynamisch gekoppelde kanalen / Home Assistant events
 De pijl terug naar Eva bevat alleen een getypeerd providerresultaat. Eva beslist
 zelf of dat resultaat voldoende bewijs is en formuleert zelf het antwoord.
 
+## Dependency-first volgorde
+
+De brug begint niet meer bij nieuwe Eva-adapters. Voor algemene agentloops,
+voice, korte subagents en usagegegevens wordt eerst Eva's bestaande exacte
+Pydantic AI-pin benut. DBOS is de standaard voor generiek starten, wachten en
+hervatten. MCP is de normale providerdraad; Microsoft Playwright MCP is de
+eerste browserkandidaat. Een extra chatkanaal begint bij een gepinde
+OpenClaw-plugin of officiële provider-SDK.
+
+Eigen connector-RPC blijft alleen waar Eva's strengere call-start- en
+ambiguïteitsgrens aantoonbaar niet via MCP kan worden behouden. Er komt geen
+tweede scheduler, browserengine, voiceplatform of channelgateway zonder een
+vastgelegde mislukte dependencyproef. Exacte selectie-, licentie-, update- en
+rollbackregels staan in `../../OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`.
+
 ## Autoriteit
 
 | Gegeven of beslissing | Enige autoriteit |
@@ -173,9 +188,11 @@ Na drie herstartfouten op hetzelfde checkpoint gaat het checkpoint naar
 
 ## Bouw- en testvolgorde
 
-1. Read-only officiële Gatewaytool in een geïsoleerde B-sidecar.
-2. Live denial-, timeout-, restart- en identiteitsscheidingstest.
-3. Algemene MCP-adapter met één read-only server.
+1. Eva's bestaande Pydantic AI-pin in één gestructureerde toolbeurt werkelijk
+   gebruiken en usage plus identiteit door Eva laten controleren.
+2. Algemene MCP-adapter met één read-only server en dezelfde ledgergrens.
+3. Read-only officiële Gatewaytool in een geïsoleerde B-sidecar, gevolgd door
+   denial-, timeout-, restart- en identiteitsscheidingstest.
 4. AC01-AC04 tegen een credentialvrije lokale kanaalcontractprovider.
 5. ClawHub-importer die exact één optionele externe skill alleen in quarantaine
    plaatst; Eva's eigen skillcreatie blijft hiervan onafhankelijk.

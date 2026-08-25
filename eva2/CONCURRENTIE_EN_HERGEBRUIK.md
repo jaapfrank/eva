@@ -158,6 +158,15 @@ chatkanaal of apparaat gebruiken, een bestaande afgeschermde browser inzetten
 en een extra geheugenhulpmiddel toevoegen wanneer metingen aantonen dat dit
 echt helpt.
 
+Daar is nu een harde volgorde aan gekoppeld. Voice begint bij Pydantic AI
+Realtime, subagents bij het compatibele Pydantic AI Harness, browserwerk bij
+Microsoft Playwright MCP, duurzame scheduling bij DBOS, nieuwe kanalen bij een
+gepinde OpenClaw-plugin of officiële SDK en geheugenbeheer bij Hindsight's
+bestaande Control Plane. Renovate, Trivy, SBOM- en signingtools doen updates en
+scans; Eva bouwt daarvoor geen eigen platform. Pas wanneer zo'n afgeschermde
+proef de gebruikersuitkomst, privacy, snelheid of herstelgrens niet haalt, mag
+er gerichte eigen code bijkomen.
+
 Die onderdelen zijn alleen haar handen en hulpmiddelen. Eva besteedt nooit uit
 wie zij is, wie zij voor zich heeft, wat privé is, welke afspraak geldt, welke
 taak loopt, of iets echt gelukt is en wat zij uiteindelijk aan jou antwoordt.
@@ -196,6 +205,8 @@ verdwenen:
 - wat vandaag echt werkt en wat ontbreekt: `EVA2_MOGELIJKHEDEN_EN_GATEN.md`;
 - oude Eva tegenover Eva 2: `OUDE_EVA_VS_EVA2.md`;
 - technische architectuur: `design/architecture/living-core-v1.md`;
+- open-sourcekeuzes, pins, toelatingsregels en wat niet zelf wordt gebouwd:
+  `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`;
 - benchmarkregels: `design/product/comparable-agent-benchmarks-v1.md`;
 - actuele voortgang: `PROJECT_STATUS.md`;
 - onafhankelijke beoordelingen en echte bewijzen: `reviews/` en

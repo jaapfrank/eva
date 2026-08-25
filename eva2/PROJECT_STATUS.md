@@ -8,6 +8,9 @@ stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 het begrijpelijke hoofdprojectbord met wat af is, wat resteert, vaste
 teamrollen en ramingen staat in
 [`PROJECTEN_EN_PLANNING.md`](PROJECTEN_EN_PLANNING.md);
+de harde keuze om eerst onderhouden open source te beproeven en alleen Eva's
+eigen kern zelf te houden staat in
+[`OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`](OPEN_SOURCE_EN_DEPENDENCYKEUZES.md);
 de leesbare scheiding tussen wat Eva nu kan, wat nodig is voor de overgang en
 het volledige productdoel staat in
 [`EVA2_MOGELIJKHEDEN_EN_GATEN.md`](EVA2_MOGELIJKHEDEN_EN_GATEN.md); de
@@ -58,24 +61,34 @@ de controleerbare live receipts staan in
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
-is 2-5 verstreken werkdagen bij drie parallelle bouwstromen plus review voor een
-veilig beheerde B-alpha met gezinschat en één echte skillketen, 2,5-5
-kalenderweken voor een veilige vervanger met presence,
-voice en eindproef, en 5-9 kalenderweken voor de volledige productbelofte.
+is 0,5-2 verstreken werkdagen bij drie parallelle bouwstromen plus review voor
+een veilig beheerde B-alpha met gezinschat en één echte skillketen, 8-14
+kalenderdagen voor een veilige vervanger met presence, voice en de verplichte
+zevendaagse eindproef, en 2-4 kalenderweken voor de volledige productbelofte.
 Bouwuren, reviewuren en echte wachttijd staan afzonderlijk in
 `PROJECTEN_EN_PLANNING.md`; Home Assistant is één verwisselbare skill en niet
 Eva's unieke hoofdfeature.
 
 ## Nu
 
-- Releaseproject P1.1: checkpoint `a4a9b1e` bindt vanuit een schone Git-bron
-  exact 31 release-inputs en 56 testbestanden en weigert de oude 38-package
-  build ongemerkt als passend bij de huidige 39-package Eva-bron te behandelen.
-  Checkpoint `6f82614` maakt het bronarchief vervolgens onafhankelijk van
-  Git-umask zonder beschrijfbare releasebestanden toe te laten. Curie heeft de
-  publieke route op de exacte commit tweemaal bytegelijk herhaald. Dit is een
-  afgerond diagnostisch deelresultaat, geen image-, B- of releasebewijs; de
-  versiepassende 39-package bouwinput is de eerstvolgende slice.
+- Dependency-first audit DF00: `pydantic-ai-slim==2.32.1` staat al exact in
+  Eva's lock maar wordt nog niet als agentframework gebruikt. Pydantic AI en
+  zijn Harness leveren al voice, subagents, browserkoppelingen, MCP, web-UI en
+  duurzame DBOS-routes; Hindsight heeft al een lokale beheer-UI. Eva bouwt
+  daarom geen eigen voice-, browser-, worker-, Kanban-, scanner- of
+  updateplatform voordat een gepinde dependencyproef een concreet gat bewijst.
+  `DF01`-`DF06` en de eerste kandidaten staan in
+  `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
+  goedkeuring of installatie van nieuwe productdependencies.
+
+- Releaseproject P1.1: checkpoint `0bbfe3d` bindt de versiepassende statische
+  39-package-input nu onafhankelijk groen aan de huidige 4D-bron. Een fysieke
+  wheelhouse, imagebuild, start, B-adoptie of release is hiermee niet bewezen.
+
+- Gezinschat P2.1a: checkpoint `187f797` laat de normale Telegrambron een
+  dynamisch gekoppeld account veilig herkennen, ook na procesherstart, zonder
+  een conflict stil te overschrijven. De echte B-, netwerk-, multi-account- en
+  groepstest blijven open.
 
 - Geheugenlagen MA00/MA01: PostgreSQL levert huidige beurt plus maximaal twaalf
   recente berichten; Hindsight blijft L2-langetermijngeheugen. Mnemosyne

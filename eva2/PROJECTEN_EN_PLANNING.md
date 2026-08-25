@@ -14,6 +14,12 @@ een begrijpelijke gebruikersuitkomst, één vaste eigenaar, een onafhankelijke
 reviewer, een eindproef en een duidelijke status. Kleine codecheckpoints blijven
 nodig, maar vervangen niet meer het projectbord.
 
+Voor ieder algemeen technisch onderdeel geldt bovendien **dependency-first**:
+eerst een onderhouden open-sourceproject pinnen en in een kleine verticale
+proef gebruiken. Alleen Eva's identiteit, privacy, mandaat, ledger, readback en
+eindantwoord blijven eigen kern. De selectie en afwijzingsregels staan in
+`OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`.
+
 De planning gebruikt niet langer menselijke, seriële werkdagen. Iedere raming
 is opgesplitst in:
 
@@ -62,26 +68,28 @@ Statussen:
 - `TECHNISCH AF`: code en gerichte tests zijn groen, maar de echte eindroute
   of jouw acceptatie ontbreekt;
 - `IN BOUW`: ontwerp en een deel van de implementatie bestaan;
+- `DEPENDENCYPROEF`: een bestaande dependency of sidecar wordt eerst tegen
+  Eva's echte contract en budget beproefd; eigen platformbouw staat stil;
 - `ONTWORPEN`: de uitkomst en eindproef zijn beschreven, de bouw moet nog
   beginnen.
 
 | Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
 |---|---|---|---|---:|---:|---|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. Het nieuwe checkpoint bindt reproduceerbaar 31 release-inputs en 56 testbestanden en maakt de oude 38 tegenover huidige 39 dependencies zichtbaar | De 39-set als één bouwinput sluiten, volledige kandidaat bouwen/starten, HA-secret roteren en B gecontroleerd adopteren | 10-20 uur | 6-12 uur | 2-6 uur eigenaar en omschakelvenster |
-| 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy zijn gebouwd; kerngeheugen werkt live | Dynamisch gekoppeld account door normale chat laten herkennen, op eind-B zetten en echte gezins-/groepstest uitvoeren | 10-16 uur | 6-10 uur | 45-90 min eigenaar plus accounts/testgroep |
-| 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill | Onafhankelijke reviews en Telegram→planning→echte skill→readback→vervolg plus crashtest | 4-10 uur | 4-8 uur | 2-4 uur met veilige testskill/-entiteit |
-| 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Eén speaker, deurbel, quiet hours, cooldown, budget, stop en herstel aansluiten | 12-24 uur | 6-12 uur | Gedeelde 7-daagse huisproef |
-| 5. Conversationele voice | `ONTWORPEN` | Identiteit, geheugen, skills en latencydoelen zijn herbruikbaar | Audio-contract, streaming STT/TTS, client, onderbreken, reconnect, voorkeursroute, security en skillreadback | 24-48 uur | 12-24 uur | 4-8 uur gebruikers-/apparaatmeting |
-| 6. Browser en zelfstandige computer | `ONTWORPEN` | Mandaat-, ledger-, runner- en readbackbouwstenen bestaan gedeeltelijk | Geïsoleerde browser, grants, meekijken, overnemen, stop, echte webtaak, resultaatcontrole en crashherstel | 24-48 uur | 12-24 uur | Testaccount en gedeelde 7-daagse autonomierun |
-| 7. Mensen leren kennen en skills maken | `IN BOUW` | Persoonsfeiten, correcties, reflectie en één eigen verbetering werken | Inzien/vergeten, usage/kosten, quota, on-the-fly skillquarantaine, evaluatie, promotie en rollback | 24-48 uur | 12-24 uur | Gedeelde 7-daagse groeiproef |
-| 8. Subagents, dashboard en Kanban | `IN BOUW` | Kleine status-/identiteitspagina en duurzame taakleases bestaan | Workergrants, handoff, heartbeat, crash/reclaim, Kanban, chat-/dashboardbediening en multi-workerproef | 20-40 uur | 10-20 uur | 2-4 uur gebruikerssessies |
-| 9. Eigenaarmodus | `ONTWORPEN` | Mandaat-, stop- en auditbouwstenen bestaan deels | Na projecten 6-8 één ruim maar intrekbaar mandaat boven browser, skills en subagents sluiten | 6-12 uur | 6-12 uur | 1-3 uur risicoacceptatie |
-| 10. Installatie, update en verplaatsen | `IN BOUW` | Images, file-secrets, back-up, schema-installatie en A/B-onderdelen bestaan | Wizard, identiteit, Telegram/HA/e-mail, veilige secretinvoer, twee fresh installs, restore, update en rollback | 24-48 uur | 12-24 uur | Twee machines; 1-3 kalenderdagen testvenster |
-| 11. Snelheid, omvang en kosten | `IN BOUW` | Codegrens, eerste geheugenlimieten en twee gunstige kleine snelheidsmetingen bestaan | CI-grenzen, streaming tekst, p50/p95, tokens/kosten, sidecarbudgetten en 200-beurtentest | 8-16 uur | 6-12 uur | Metingen lopen mee in gedeelde 7 dagen |
-| 12. Eerlijke openbare benchmarks | `ONTWORPEN` | LAB-36, drie ontwikkelcases en publicatieregels bestaan; prompts, tools en context waren niet gelijk | Officiële GAIA, AgentBench en OSWorld-runs plus gecontroleerde vijf-agentmatrix | 24-56 uur | 12-24 uur | Dataset/compute 1-10 dagen, parallel waar mogelijk |
-| 13. Documentatie als controleerbaar product | `IN BOUW` | Leesbare overzichten, technische gates, reviews en padinventaris bestaan | Componentregister, ownershipchecker, unieke gate-/bewijskoppeling en dashboardprojectie | 8-16 uur | 4-8 uur | Geen belangrijke wachttijd |
-| 14. Vrije kanalen en connectoren | `ONTWORPEN` | Connectorneutrale kern en veilige read-only MCP-basis bestaan | Vanuit chat één niet-ingebakken kanaal maken/testen, least-privilege koppelen, stoppen en terugrollen | 12-32 uur | 6-16 uur | Providergoedkeuring 0-6+ weken; blokkeert V1 niet |
-| 15. Eindfreeze en veilige overgang | `IN BOUW` | A/B, back-ups, kandidaatbuild en veel losse receipts bestaan | Eén image bevriezen, alle eindproeven herhalen, gebruikersacceptatie en rollbackceremonie | 6-12 uur | 12-20 uur | Minimaal één gedeelde 7-daagse ongewijzigde run |
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De versiepassende statische 39-package-input is onafhankelijk groen | Fysieke wheelhouse en kandidaatimage op die set bouwen/starten, HA-secret roteren en B gecontroleerd adopteren | 4-8 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
+| 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy bestaan. De normale Telegrambron herkent nu na herstart een dynamisch gekoppeld account | Op eind-B zetten en echte gezins-/groepstest uitvoeren | 2-4 uur | 2-4 uur | 45-90 min eigenaar plus accounts/testgroep |
+| 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill | Onafhankelijke reviews en Telegram→planning→echte skill→readback→vervolg plus crashtest | 2-5 uur | 2-4 uur | 2-4 uur met veilige testskill/-entiteit |
+| 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Bestaande HA/Wyoming-/speakercomponenten hergebruiken voor één speaker, deurbel, quiet hours, cooldown, stop en herstel | 4-10 uur | 3-6 uur | Gedeelde 7-daagse huisproef |
+| 5. Conversationele voice | `DEPENDENCYPROEF` | Identiteit, geheugen, skills en latencydoelen zijn herbruikbaar; Pydantic AI Realtime bestaat op Eva's gepinde bronversie | Eerst één streaming barge-in-proef; alleen ontbrekende Eva-binding, privacy, reconnect en skillreadback toevoegen | 3-8 uur | 2-4 uur | 4-8 uur gebruikers-/apparaatmeting |
+| 6. Browser en zelfstandige computer | `DEPENDENCYPROEF` | Mandaat-, ledger-, runner- en readbackbouwstenen bestaan gedeeltelijk | Eerst Microsoft Playwright MCP geïsoleerd pinnen; Eva voegt grants, stop, artifacts, eindcontrole en crashbesluit toe | 3-8 uur | 2-4 uur | Testaccount en gedeelde 7-daagse autonomierun |
+| 7. Mensen leren kennen en skills maken | `IN BOUW` | Persoonsfeiten, correcties, reflectie en één eigen verbetering werken | Hindsight-UI eerst hergebruiken; alleen inzien/vergeten, usage/kosten, skillquarantaine, evaluatie, promotie en rollback toevoegen | 10-24 uur | 6-12 uur | Gedeelde 7-daagse groeiproef |
+| 8. Subagents, dashboard en Kanban | `DEPENDENCYPROEF` | Kleine status-/identiteitspagina en duurzame taakleases bestaan | Eerst compatibel Pydantic AI Harness `0.24.0`, DBOS en een onderhouden UI-laag proberen; Eva houdt grants, handoff, bewijs en taakautoriteit | 6-16 uur | 4-8 uur | 2-4 uur gebruikerssessies |
+| 9. Eigenaarmodus | `ONTWORPEN` | Mandaat-, stop- en auditbouwstenen bestaan deels | Na projecten 6-8 één ruim maar intrekbaar mandaat boven browser, skills en subagents sluiten | 3-6 uur | 3-6 uur | 1-3 uur risicoacceptatie |
+| 10. Installatie, update en verplaatsen | `IN BOUW` | Images, file-secrets, back-up, schema-installatie en A/B-onderdelen bestaan | Bestaande Compose/OCI-, signing-, SBOM- en scanmiddelen verbinden aan een dunne wizard; twee fresh installs, restore, update en rollback | 8-20 uur | 6-10 uur | Twee machines; 1-3 kalenderdagen testvenster |
+| 11. Snelheid, omvang en kosten | `IN BOUW` | Codegrens, eerste geheugenlimieten en twee gunstige kleine snelheidsmetingen bestaan | OpenTelemetry, Renovate, Trivy en SBOM-output hergebruiken; Eva voegt CI-budgetten, p50/p95, tokens/kosten en 200-beurtentest toe | 4-10 uur | 3-6 uur | Metingen lopen mee in gedeelde 7 dagen |
+| 12. Eerlijke openbare benchmarks | `ONTWORPEN` | LAB-36, drie ontwikkelcases en publicatieregels bestaan; prompts, tools en context waren niet gelijk | Officiële GAIA, AgentBench en OSWorld-runs plus gecontroleerde vijf-agentmatrix | 12-32 uur | 8-16 uur | Dataset/compute 1-10 dagen, parallel waar mogelijk |
+| 13. Documentatie als controleerbaar product | `IN BOUW` | Leesbare overzichten, technische gates, reviews en padinventaris bestaan | Componentregister, ownershipchecker, unieke gate-/bewijskoppeling en dashboardprojectie | 4-10 uur | 3-6 uur | Geen belangrijke wachttijd |
+| 14. Vrije kanalen en connectoren | `DEPENDENCYPROEF` | Connectorneutrale kern en veilige read-only MCP-basis bestaan | Eerst gepinde OpenClaw-plugin of officiële provider-SDK; Eva voegt persoonsbinding, consent, deliveryledger, stop en rollback toe | 2-6 uur | 2-4 uur | Providergoedkeuring 0-6+ weken; blokkeert V1 niet |
+| 15. Eindfreeze en veilige overgang | `IN BOUW` | A/B, back-ups, kandidaatbuild en veel losse receipts bestaan | Eén image bevriezen, alle eindproeven herhalen, gebruikersacceptatie en rollbackceremonie | 3-6 uur | 6-10 uur | Minimaal één gedeelde 7-daagse ongewijzigde run |
 
 ## Wat kan parallel en wat bepaalt de einddatum?
 
@@ -95,26 +103,29 @@ lopen:
 Installer, benchmarkadapters en documentatiecheckers kunnen gedeeltelijk
 parallel worden gebouwd, maar hun eindbewijs wacht op de bevroren versie. De
 eindversie kan pas worden bevroren wanneer de blokkerende onderdelen niet meer
-veranderen. Voice, browserautonomie en installer kennen de grootste technische
-onzekerheid. Iedere noodzakelijke fix tijdens de officiële zevendaagse proef
-start die klok opnieuw.
+veranderen. De eerste dependencyproeven voor voice, browser en subagents moeten
+binnen uren laten zien of de gekozen route past. Alleen een gemeten functioneel,
+privacy-, latency- of beheerprobleem rechtvaardigt daarna eigen platformcode.
+Iedere noodzakelijke fix tijdens de officiële zevendaagse proef start die klok
+opnieuw.
 
-De resterende portfolio bevat ongeveer **342-696 actieve agenturen** voor
+De dependency-first herplanning bevat ongeveer **125-279 actieve agenturen** voor
 bouwen, integreren en reviewen. Omdat drie bouwstromen parallel lopen en veel
 werk wordt hergebruikt, is dit geen optelsom in kalenderdagen. De eerste drie
-projecten vertegenwoordigen samen 40-76 agenturen; parallel bouwen en reviewen
+projecten vertegenwoordigen samen 15-31 agenturen; parallel bouwen en reviewen
 maakt daar onderstaande verstreken tijd van.
 
 Mijn huidige raming bij tijdige toegang tot accounts en apparaten:
 
 - **Eerste veilig beheerde B-alpha met gezinschat en één echte skillketen:**
-  ongeveer 2-5 verstreken werkdagen met drie parallelle bouwstromen en review,
+  ongeveer 0,5-2 verstreken werkdagen met drie parallelle bouwstromen en review,
   plus het afgesproken omschakelvenster.
 - **Veilige vervanger van de oude Eva**, inclusief presence, voice en de
-  gezamenlijke zevendaagse eindproef: ongeveer 2,5-5 kalenderweken.
+  gezamenlijke zevendaagse eindproef: ongeveer 8-14 kalenderdagen. Daarvan zijn
+  minimaal zeven dagen echte, niet-versnelbare praktijktest.
 - **Volledige concurrerende productbelofte**, inclusief browser, leren,
-  subagents/Kanban, installer, benchmarks en eindproef: ongeveer 5-9
-  kalenderweken.
+  subagents/Kanban, installer, benchmarks en eindproef: ongeveer 2-4
+  kalenderweken, los van externe providergoedkeuring.
 - **Een extra kanaal zoals WhatsApp:** de bouw past in bovenstaande uren, maar
   externe providergoedkeuring kan afzonderlijk 0-6+ weken duren en blokkeert
   de eerste release niet.
@@ -126,13 +137,13 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
 
 ## De eerstvolgende twee zichtbare mijlpalen
 
-1. **P1.1 — één versiepassende releasekandidaat.** Het eerste checkpoint is
-   nu onafhankelijk groen: 31 release-inputs en 56 testbestanden zijn exact en
-   reproduceerbaar gebonden. Daardoor is ook het echte resterende gat zichtbaar:
-   de oude build heeft 38 dependencies en de huidige Eva-bron 39. Fermat sluit
-   nu die 39-set als één bouwinput; daarna herhaalt Curie build, start, herstart,
-   schemadrift- en secret-nonleakcontrole. Dit verandert A of B nog niet.
-2. **P2.1 — echte Eva 2-gezinschat.** Na de veilige B-adoptie demonstreert
+1. **P1.1 — één versiepassende releasekandidaat.** De statische 39-package-
+   bouwinput is nu onafhankelijk groen op checkpoint `0bbfe3d`. De fysieke
+   wheelhouse, imagebuild, start, herstart, schemadrift en secret-nonleakproef
+   volgen nog. Dit verandert A of B niet.
+2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op
+   checkpoint `187f797` een dynamisch gekoppeld account veilig en ook na
+   herstart. Na de veilige B-adoptie demonstreert
    Chandrasekhar via een eigen Telegram-B-bot: eigenaar plus tweede toegestaan
    account, verschillende onschuldige voorkeuren, herinnering na procesherstart,
    groep eerst dicht, bewuste toestemming en directe intrekking, geen privélek

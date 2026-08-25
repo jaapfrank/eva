@@ -27,6 +27,21 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 - Dashboard D01 en D02 tonen lokaal read-only runtime- en IdentityPackinformatie.
   Er is nog geen Eva-Kanbanbord en geen live workerbediening.
 
+## Dependency-first uitvoerkeuze
+
+Eva bouwt geen eigen subagentproces, modelrunner, budgetmeter of algemene
+workerqueue voordat bestaande onderdelen zijn beproefd. De eerste compatibele
+kandidaat is Pydantic AI Harness `0.24.0`: `0.25.0` vereist
+`pydantic-ai-slim>=2.33.0` en past niet bij Eva's huidige exacte `2.32.1`-pin.
+Harness levert geïsoleerde subagentruns, context-/toolkeuze en gebruiksgrenzen;
+DBOS levert duurzame start, wake-up en hervatting.
+
+Eva houdt uitsluitend de afgeleide grant, duurzame handoff, taakgeschiedenis,
+bewijscontrole en de beslissing wat in de parentcontext terugkomt. Het Kanban
+wordt een projectie boven diezelfde service met een onderhouden UI-framework,
+niet een tweede taakdatabase. Pas een gemeten ontbrekende uitkomst in de
+verticale proef rechtvaardigt eigen infrastructuurcode.
+
 ## Eén autoriteit, drie bedieningsvormen
 
 Chat, dashboard en workers gebruiken dezelfde PostgreSQL-service en dezelfde
@@ -115,6 +130,12 @@ ledger en fysieke readback leidend blijven.
 
 ## Primaire Hermes-bronnen
 
+- Pydantic AI Harness subagents:
+  <https://pydantic.dev/docs/ai/harness/subagents/>
+- Pydantic AI Harness exact compatibele kandidaat:
+  <https://github.com/pydantic/pydantic-ai-harness/tree/v0.24.0>
+- Pydantic AI met DBOS:
+  <https://github.com/pydantic/pydantic-ai/blob/v2.32.1/docs/durable_execution/dbos.md>
 - Kanban en onderscheid met `delegate_task`:
   <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/kanban.md>
 - Webdashboard:

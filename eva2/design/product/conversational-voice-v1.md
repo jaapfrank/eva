@@ -14,6 +14,19 @@ Eva's identiteit, persoonsbinding, Hindsight-geheugen, policy, toolledger en
 eindantwoord blijven dezelfde als in tekstchat. STT, TTS, WebRTC en Home
 Assistant zijn vervangbare media-capabilities; zij worden geen tweede brein.
 
+## Dependency-first uitvoerkeuze
+
+De eerste verticale proef gebruikt de realtime voice-laag uit Eva's al gepinde
+Pydantic AI-bron `2.32.1`. Die route moet streaming audio, interruption/barge-in
+en usagegegevens leveren; Eva voegt alleen persoon, sessiegrant, privacy,
+duurzame toolstatus en eindantwoord toe. We bouwen geen eigen WebRTC-, STT-,
+TTS-, VAD- of jitterbufferplatform zolang deze proef de vaste p95-gates haalt.
+
+Alleen wanneer diezelfde afgeschermde proef een exact gemeten gat laat zien,
+wordt LiveKit Agents als tweede geïsoleerde mediakandidaat beproefd. Een
+providerwissel verandert Eva's `VoiceSession`-contract niet en levert de
+provider geen geheugen-, policy- of taakautoriteit op.
+
 ## Kanaalkeuze
 
 1. **Voorkeur — Telegram Mini App:** de Eva-bot toont één knop `Bel Eva`. De
@@ -152,6 +165,10 @@ latencytests; zij bezit geen identiteit, geheugen, policy of secretsauthority.
 
 ## Primaire technische bronnen
 
+- Pydantic AI realtime op exact `2.32.1`:
+  <https://github.com/pydantic/pydantic-ai/blob/v2.32.1/docs/realtime/overview.md>
+- LiveKit Agents, alleen fallback:
+  <https://github.com/livekit/agents>
 - Telegram Bot API: <https://core.telegram.org/bots/api>
 - Telegram `phone.requestCall`: <https://core.telegram.org/method/phone.requestCall>
 - Telegram Mini Apps: <https://core.telegram.org/bots/webapps>
