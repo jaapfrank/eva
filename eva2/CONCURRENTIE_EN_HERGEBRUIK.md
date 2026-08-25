@@ -1,6 +1,6 @@
 # Eva 2 tegenover OpenClaw, Hermes, Agent Zero en OpenBot
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 26 augustus 2026.
 
 ## Het korte antwoord
 
@@ -167,17 +167,14 @@ scans; Eva bouwt daarvoor geen eigen platform. Pas wanneer zo'n afgeschermde
 proef de gebruikersuitkomst, privacy, snelheid of herstelgrens niet haalt, mag
 er gerichte eigen code bijkomen.
 
-Dit is inmiddels meer dan een lijstje links, maar nog geen productbewijs. In
-een eenmalige wegwerpproef liep een Eva-achtig verzoek door Pydantic AI en de
-officiële OpenAI-SDK. Synthetische usagevelden van de lokale proefserver bleven
-behouden; er zijn geen echte tokens of providerkosten gemeten. Omdat de proef
-Pydantics eigen Agent-loop gebruikte, is de eerste echte modelkandidaat bewust
-alleen de lagere synchrone OpenAI-SDK. De officiële MCP-SDK riep in een tweede
-wegwerpproef een lokale read-tool aan. Geen van beide proeven heeft al een
-commitgebonden script, artifacthash, onafhankelijke replay of plek in Eva's
-productieimage. De modelroute moet Eva's roterende toegangspaar, nul verborgen
-retries en begrensde aanvragen bewijzen; de MCP-route moet antwoorden,
-callbacks en netwerkverkeer even streng begrensd houden.
+Dit is inmiddels meer dan een lijstje links. De officiële OpenAI-SDK neemt in
+een gereviewde kandidaat al één handgeschreven transportroute over. Harness
+voert in een tweede, onafhankelijk gereviewde kandidaat echte toolvrije
+subagents uit; 22 tests bewaken context, tools, calls, tokens en time-out. De
+officiële MCP-SDK is juist na twee echte proeven afgewezen omdat zij voor Eva's
+smalle route meer packages en meer code opleverde. HA-MCP is gestart en diep
+vergeleken, maar een directe wissel bespaart nog te weinig code. Geen van deze
+nieuwe kandidaten is stil in productie gezet.
 
 Die onderdelen zijn alleen haar handen en hulpmiddelen. Eva besteedt nooit uit
 wie zij is, wie zij voor zich heeft, wat privé is, welke afspraak geldt, welke
@@ -191,10 +188,11 @@ bouwen**:
 | Nodig voor Eva | Bestaand communityproject dat eerst de kans krijgt | Wat Eva zelf nog doet |
 |---|---|---|
 | Live voice | Pydantic AI Realtime `2.34.0` | De juiste persoon en herinneringen koppelen, onderbreken echt laten stoppen en huisacties controleren |
-| Subagents | Pydantic AI Harness `0.24.0` | Per helper bepalen welke taak, informatie, tools, tijd en kosten zijn toegestaan |
-| Browsercomputer | Harness PlaywrightBrowser óf Microsoft Playwright MCP `0.0.79`; na dezelfde proef houden we er één | Websites en bestanden afschermen, direct stoppen en het eindresultaat controleren |
-| Langlopende achtergrondtaken | DBOS `2.31.0` via de bestaande Pydantic-koppeling | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie |
+| Subagents | Pydantic AI Harness `0.24.0`; de geïsoleerde engineproef is al groen | De taak uit Eva's database halen, toestemming en kosten bewaren en na een procescrash hervatten |
+| Browsercomputer | Microsoft Playwright MCP `0.0.79` als geïsoleerde sidecar; Harness-browser alleen voor een wegwerpvergelijking | Websites en bestanden afschermen, direct stoppen en het eindresultaat controleren |
+| Langlopende achtergrondtaken | Huidige DBOS-route; eerst een kleine rebase naar `2.31.0+eva.1` | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie; stock 2.31 is hiervoor afgewezen |
 | Geheugenscherm | De bestaande lokale Hindsight Control Plane | Bepalen van wie een herinnering is en wie haar mag zien, corrigeren of vergeten |
+| Dashboard en Kanban | React-Admin OSS plus `dnd-kit` | Alleen Eva's gesaneerde API tonen; iedere bordwijziging blijft een gecontroleerde Eva-opdracht |
 | Home Assistant-hulpmiddelen | De ingebouwde HA MCP Server en eventueel HA-MCP `8.3.0` | Veilige doelkeuze en onafhankelijke controle achteraf; HA-MCP vervangt de huidige route pas bij echte nettokrimp |
 | Updates en beveiligingsscan | Renovate, Trivy en bestaande OCI-/SBOM-middelen | Alleen geteste upgrades promoveren en altijd kunnen terugrollen |
 

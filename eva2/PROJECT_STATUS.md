@@ -56,7 +56,7 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
-| Zelfstandig handelen | Doelen, leases, bewijs, crashherstel en één zelfverbetering bestaan | Browsercomputer, volledige skillcyclus, subagents en Eigenaarmodus nog open |
+| Zelfstandig handelen | Doelen, leases, bewijs, crashherstel en één zelfverbetering bestaan; de onderhouden subagentmotor is als geïsoleerde kandidaat groen | Duurzame runtimehandoff, browsercomputer, volledige skillcyclus, Kanban en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en kleine status-/identiteitspagina bestaan | Installer, volledig dashboard/Kanban, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
@@ -94,6 +94,27 @@ Eva's unieke hoofdfeature.
   `DF01`-`DF06` en de eerste kandidaten staan in
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
+
+- Subagentdependency DF04: Pydantic AI `2.34.0` en Harness `0.24.0` voeren in
+  een aparte exacte 42-package-omgeving echte toolvrije child-runs uit. Eva
+  bouwt daarom geen eigen spawn-, modelrun-, childcontext-, callbudget- of
+  coöperatieve async-time-outengine. Naam, tekstinstructie, workerlimiet,
+  calls, tokens en time-out worden fail-closed begrensd; diskagents,
+  parenttools, gedeelde capabilities en recursie staan uit. **22/22 tests**,
+  Ruff, `pip check` en de onafhankelijke herreview zijn groen op `55cf7cc`.
+  Productie is niet gewijzigd. Duurzame PostgreSQL-handoff, eigen
+  child-usage-receipt, harde processkill, crashherstel en Kanban blijven open;
+  zie `experiments/harness-subagents-v1/` en
+  `reviews/harness-subagent-engine-55cf7cc.md`.
+
+- Browser-/workflowbesluit DF03/DF04: Microsoft Playwright MCP `0.0.79` krijgt
+  de eerste productgerichte browsersidecarproef; Harness PlaywrightBrowser
+  draait alleen als wegwerpvergelijking omdat hij in Eva's proces zit en niet
+  met duurzame Pydantic-replay samengaat. Stock DBOS `2.31.0` is na bronaudit
+  `NO-GO`: upstream lost een belangrijke dubbele-workerfout op, maar mist nog
+  Eva's begrensde retry/no-DDL/commit-ambiguïteitsgrens. Alleen een smalle
+  `2.31.0+eva.1`-rebase wordt beproefd; er worden nu nul workerregels op basis
+  van DBOS verwijderd.
 
 - MCP-dependencybesluit DF02c: de officiële MCP Python SDK `2.1.1` is met een
   exacte 48-package-hashlock geïnstalleerd; hij voegt tien packages en voor
@@ -173,12 +194,12 @@ Eva's unieke hoofdfeature.
   bevestiging per tussenstap, met dashboardstatus en directe stop. OM01-OM06
   staan nog open; er is geen productie-safety-bypass toegevoegd.
 - Subagents/werkbord WB00: Hermes' korte delegatie en duurzame multi-profile
-  Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Eva's
-  ontwikkelproces gebruikt agents, maar de runtime spawnt ze nog niet en het
-  dashboard heeft nog geen Kanban. WB01-WB07 bouwen parentgestuurde begrensde
-  workers, duurzame handoffs, crash/reclaim, dezelfde chat-/dashboardservice
-  en een live multi-workerproef boven Eva's bestaande PostgreSQL-ledger; er
-  komt geen tweede taakdatabase of tweede Eva-brein.
+  Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Harness
+  neemt inmiddels de generieke child-run over, maar de Eva-runtime heeft nog
+  geen duurzame handoff en het dashboard nog geen Kanban. WB01-WB07 koppelen
+  de gereviewde engine aan Eva's grants, usage, leases en crash/reclaim;
+  React-Admin OSS plus `dnd-kit` projecteert daarna hetzelfde PostgreSQL-bord.
+  Er komt geen eigen subagentmotor, tweede taakdatabase of tweede Eva-brein.
 
 - Bezig: MC03c0 bereidt na bewezen read precies één duurzaam effectintent voor;
   MC03c1a autoriseert precies één poging zonder callable bytes en MC03c1b

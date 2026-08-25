@@ -1,6 +1,6 @@
 # Eva Conversational Voice v1
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 26 augustus 2026.
 
 ## Productuitkomst
 
@@ -16,16 +16,20 @@ Assistant zijn vervangbare media-capabilities; zij worden geen tweede brein.
 
 ## Dependency-first uitvoerkeuze
 
-De eerste verticale proef gebruikt Pydantic AI Realtime op exact `2.32.2`.
-Eva's huidige lock staat nog op `2.32.1`; `2.32.2` is de kleinste afzonderlijke
-proefupgrade met de realtime `RunContext.cancel()`-fix voor coöperatieve
-run-/sessie-annulering. Pydantic bezit niet Eva's audiotransport of playback;
-hoorbaar stoppen binnen 250 ms moet daarom afzonderlijk in de media-bridge
-worden bewezen. Die route moet streaming audio,
-interruption/barge-in en usagegegevens leveren; Eva voegt alleen persoon,
-sessiegrant, privacy, duurzame toolstatus en eindantwoord toe. We bouwen geen
-eigen WebRTC-, STT-, TTS-, VAD- of jitterbufferplatform zolang deze proef de
-vaste p95-gates haalt. De nieuwere `2.34.0` wordt niet stil meegeüpgraded.
+De eerste verticale proef gebruikt Pydantic AI Realtime op exact `2.34.0` in
+een aparte kandidaatlock; Eva's productlock blijft tot promotie op `2.32.1`.
+Upstream levert de realtime-agentloop, audio-/transcriptevents, usage,
+reconnectbouwstenen en `RealtimeSession.interrupt(played_ms)` voor barge-in.
+`RunContext.cancel()` is een andere grens: die annuleert een run en vervangt
+niet het leegmaken van de lokale speakerbuffer.
+
+Pydantic bezit dus niet Eva's microfoon-/speakerbridge of hoorbare playbackstop.
+Stil zijn binnen 250 ms moet afzonderlijk worden bewezen. Eva voegt alleen
+persoon, sessiegrant, privacy, duurzame toolstatus en eindantwoord toe. We
+bouwen geen eigen realtime-agent-, WebRTC-server-, STT-, TTS-, VAD- of
+jitterbufferplatform zolang de upstream/providerroutes de vaste p95-gates
+halen. Alleen de dunne client/media-aansluiting en gemeten playbackflush zijn
+Eva-integratiewerk.
 
 Alleen wanneer diezelfde afgeschermde proef een exact gemeten gat laat zien,
 wordt LiveKit Agents als tweede geïsoleerde mediakandidaat beproefd. Een
@@ -170,12 +174,10 @@ latencytests; zij bezit geen identiteit, geheugen, policy of secretsauthority.
 
 ## Primaire technische bronnen
 
-- Pydantic AI realtime op exact `2.32.2`:
-  <https://github.com/pydantic/pydantic-ai/blob/v2.32.2/docs/realtime/overview.md>
-- Realtime cancellation-fix in `2.32.2`:
-  <https://github.com/pydantic/pydantic-ai/releases/tag/v2.32.2>
-- Bijbehorende fix voor coöperatieve annulering:
-  <https://github.com/pydantic/pydantic-ai/pull/7528>
+- Pydantic AI realtime op exact `2.34.0`:
+  <https://github.com/pydantic/pydantic-ai/blob/v2.34.0/docs/realtime/overview.md>
+- Exacte actuele proefrelease:
+  <https://github.com/pydantic/pydantic-ai/releases/tag/v2.34.0>
 - LiveKit Agents, alleen fallback:
   <https://github.com/livekit/agents>
 - Telegram Bot API: <https://core.telegram.org/bots/api>

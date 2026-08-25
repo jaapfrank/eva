@@ -1,6 +1,6 @@
 # Eva 2 — subagents en duurzaam werkbord
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 26 augustus 2026.
 
 ## Productbelofte
 
@@ -21,6 +21,11 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 
 - Het ontwikkelproces kan onafhankelijke agents gebruiken; de Eva-runtime zelf
   kan nog geen algemene subagent spawnen.
+- De generieke subagentmotor hoeft niet meer zelf gebouwd te worden: een exact
+  gepinde Pydantic AI `2.34.0` + Harness `0.24.0`-kandidaat voert echte
+  toolvrije child-runs uit. De 22 tests en onafhankelijke review zijn groen.
+  Deze proef is nog niet aan Eva's PostgreSQL-taken of productieprovider
+  gekoppeld.
 - `plans`, `plan_steps`, `attention_items` en de operationele tijdlijn vormen
   al een duurzame taakgraaf met leases en crashherstel. Zij bewijzen nog geen
   multi-workerdelegatie.
@@ -30,17 +35,30 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 ## Dependency-first uitvoerkeuze
 
 Eva bouwt geen eigen subagentproces, modelrunner, budgetmeter of algemene
-workerqueue voordat bestaande onderdelen zijn beproefd. De eerste compatibele
-kandidaat is Pydantic AI Harness `0.24.0`: `0.25.0` vereist
-`pydantic-ai-slim>=2.33.0` en past niet bij Eva's huidige exacte `2.32.1`-pin.
-Harness levert geïsoleerde subagentruns, context-/toolkeuze en gebruiksgrenzen;
-DBOS levert duurzame start, wake-up en hervatting.
+workerqueue. De eerste echte proef gebruikt Pydantic AI `2.34.0` met Harness
+`0.24.0` in een aparte hashgebonden 42-package-omgeving. Harness levert de
+child-run, aparte context, request-/tokenlimieten, callbudget en coöperatieve
+async-time-out. De proef staat in `experiments/harness-subagents-v1/`; de
+onafhankelijke `GO` voor exact `55cf7cc` staat in
+`reviews/harness-subagent-engine-55cf7cc.md`.
 
-Eva houdt uitsluitend de afgeleide grant, duurzame handoff, taakgeschiedenis,
+Dat is nog geen processandbox of harde kill. Harness telt childgebruik ook niet
+automatisch op in Eva's duurzame parentreceipt. De eerste productkoppeling
+blijft daarom toolvrij en effectvrij. Eva bewaart de handoff en usage zelf; een
+procescrash wordt door haar lease-/herstelroute afgehandeld.
+
+DBOS blijft alleen kandidaat voor start, wake-up en scheduling. Stock `2.31.0`
+mist Eva's begrensde retry/no-DDL/commit-ambiguïteitsgaranties; de volgende proef
+is een smalle `2.31.0+eva.1`-rebase. DBOS wordt geen vervanger van grants,
+taakbetekenis, extern actiebewijs of readback.
+
+Eva houdt uitsluitend de afgeleide grant, duurzame handoff, eigen usage-receipt,
+taakgeschiedenis,
 bewijscontrole en de beslissing wat in de parentcontext terugkomt. Het Kanban
-wordt een projectie boven diezelfde service met een onderhouden UI-framework,
-niet een tweede taakdatabase. Pas een gemeten ontbrekende uitkomst in de
-verticale proef rechtvaardigt eigen infrastructuurcode.
+wordt een React-Admin-OSS-projectie boven diezelfde service; `dnd-kit` levert
+drag-and-drop. Dit is geen tweede taakdatabase. React-Admins Enterprise-Kanban
+wordt niet als gratis open source aangenomen. Pas een gemeten ontbrekende
+uitkomst in de verticale proef rechtvaardigt eigen infrastructuurcode.
 
 ## Eén autoriteit, drie bedieningsvormen
 
@@ -128,14 +146,16 @@ uitkomst is: zichtbaar parallel werk, duurzame handoffs, menselijke controle,
 herstart en meetbare grenzen, terwijl Eva's bestaande identiteit, consent,
 ledger en fysieke readback leidend blijven.
 
-## Primaire Hermes-bronnen
+## Primaire bronnen
 
 - Pydantic AI Harness subagents:
   <https://pydantic.dev/docs/ai/harness/subagents/>
 - Pydantic AI Harness exact compatibele kandidaat:
   <https://github.com/pydantic/pydantic-ai-harness/tree/v0.24.0>
 - Pydantic AI met DBOS:
-  <https://github.com/pydantic/pydantic-ai/blob/v2.32.1/docs/durable_execution/dbos.md>
+  <https://github.com/pydantic/pydantic-ai/blob/v2.34.0/docs/durable_execution/dbos.md>
+- React-Admin OSS: <https://github.com/marmelab/react-admin>
+- `dnd-kit`: <https://github.com/clauderic/dnd-kit>
 - Kanban en onderscheid met `delegate_task`:
   <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/kanban.md>
 - Webdashboard:
