@@ -5,6 +5,8 @@ import json
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import subprocess
+import sys
 import threading
 from time import monotonic as wall_monotonic, sleep
 import traceback
@@ -679,3 +681,78 @@ def test_ambient_sdk_debug_logging_is_rejected_before_network(
         OpenAIResponsesTransport(
             endpoint="https://example.test/responses", timeout_seconds=5
         ).request(_transport_body(), access_token="access", account_id="account")
+
+
+def test_cold_process_request_uses_one_absolute_wall_clock_deadline() -> None:
+    script = """
+import json, sys
+from time import monotonic
+from eva.bootstrap.runtime import CodexConversationModel
+from eva.adapters.model.conversation import ConversationModelError
+body = {
+    'include': [], 'input': [{'content': 'Hoi', 'role': 'user', 'type': 'message'}],
+    'instructions': 'Antwoord kort.', 'model': 'gpt-5.4-mini',
+    'parallel_tool_calls': False, 'prompt_cache_key': 'eva-cold-process',
+    'reasoning': {'effort': 'low', 'summary': 'auto'}, 'store': False,
+    'stream': True, 'tool_choice': 'none', 'tools': [],
+}
+model = CodexConversationModel(
+    auth_file=None, endpoint=sys.argv[1], timeout_seconds=1,
+    transport_kind='openai_sdk',
+)
+model._load_auth = lambda: ('access', 'account')
+started = monotonic()
+try:
+    model._request_conversation(body)
+except ConversationModelError as error:
+    if 'provider is unavailable' not in str(error):
+        raise
+else:
+    raise RuntimeError('slow response unexpectedly completed')
+print(json.dumps({'elapsed': monotonic() - started}))
+"""
+    with _slow_server(header_delay=0.7, body_delay=0.7) as endpoint:
+        environment = dict(os.environ)
+        environment.pop("OPENAI_LOG", None)
+        result = subprocess.run(
+            [sys.executable, "-c", script, endpoint],
+            check=False,
+            capture_output=True,
+            env=environment,
+            text=True,
+            timeout=5,
+        )
+        assert result.returncode == 0, result.stderr
+        elapsed = json.loads(result.stdout)["elapsed"]
+    assert 0.8 <= elapsed < 1.3
+
+
+def test_repeated_timeouts_do_not_accumulate_threads_or_descriptors() -> None:
+    descriptor_root = Path("/proc/self/fd")
+    if not descriptor_root.is_dir():
+        pytest.skip("descriptor accounting requires procfs")
+    baseline_descriptors = len(tuple(descriptor_root.iterdir()))
+
+    for header_delay, body_delay in ((1.2, 0.0), (0.0, 1.2)):
+        with _slow_server(
+            header_delay=header_delay, body_delay=body_delay
+        ) as endpoint:
+            for _ in range(2):
+                with pytest.raises(OpenAIResponsesUnavailable, match="total deadline"):
+                    OpenAIResponsesTransport(
+                        endpoint=endpoint, timeout_seconds=1
+                    ).request(
+                        _transport_body(), access_token="access", account_id="account"
+                    )
+
+    cleanup_deadline = wall_monotonic() + 1
+    while wall_monotonic() < cleanup_deadline:
+        candidate_threads = tuple(
+            thread for thread in threading.enumerate()
+            if thread.name in {"eva-openai-request", "eva-openai-response"}
+        )
+        if not candidate_threads:
+            break
+        sleep(0.02)
+    assert not candidate_threads
+    assert len(tuple(descriptor_root.iterdir())) <= baseline_descriptors

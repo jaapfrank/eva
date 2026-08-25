@@ -133,11 +133,11 @@ class _BoundedTransport(httpx2.BaseTransport):
         *,
         maximum_request_bytes: int,
         maximum_response_bytes: int,
-        total_timeout_seconds: float,
+        deadline: float,
     ):
         self._maximum_request_bytes = maximum_request_bytes
         self._maximum_response_bytes = maximum_response_bytes
-        self._total_timeout_seconds = total_timeout_seconds
+        self._deadline = deadline
         self._transport = httpx2.HTTPTransport(trust_env=False, retries=0)
         self._expired = Event()
 
@@ -148,7 +148,7 @@ class _BoundedTransport(httpx2.BaseTransport):
         Thread(target=self._transport.close, daemon=True).start()
 
     def handle_request(self, request: httpx2.Request) -> httpx2.Response:
-        deadline = monotonic() + self._total_timeout_seconds
+        deadline = self._deadline
         try:
             content = request.content
         except httpx2.RequestNotRead:
@@ -216,6 +216,13 @@ class OpenAIResponsesTransport:
         self._timeout_seconds = timeout_seconds
         self._maximum_request_bytes = maximum_request_bytes
         self._maximum_response_bytes = maximum_response_bytes
+        (
+            self._api_connection_error,
+            self._api_error,
+            self._api_status_error,
+            self._api_timeout_error,
+            self._openai_client,
+        ) = _load_sdk()
 
     def request(self, body: dict[str, Any], *, access_token: str,
                 account_id: str) -> OpenAIResponsesResult:
@@ -226,38 +233,23 @@ class OpenAIResponsesTransport:
             raise OpenAIResponsesTransportError(
                 "OpenAI SDK ambient logging is not allowed"
             )
-        try:
-            from openai import (
-                APIConnectionError,
-                APIError,
-                APIStatusError,
-                APITimeoutError,
-                OpenAI,
-            )
-        except ImportError:
-            dependency_available = False
-        else:
-            dependency_available = True
-        if not dependency_available:
-            raise OpenAIResponsesUnavailable(
-                "OpenAI SDK candidate dependency is unavailable"
-            )
-
+        deadline = monotonic() + self._timeout_seconds
         payload = dict(body)
         payload.pop("stream")
         transport = _BoundedTransport(
             maximum_request_bytes=self._maximum_request_bytes,
             maximum_response_bytes=self._maximum_response_bytes,
-            total_timeout_seconds=self._timeout_seconds,
+            deadline=deadline,
         )
         try:
+            remaining = _remaining(deadline)
             with httpx2.Client(
                 transport=transport,
                 trust_env=False,
                 follow_redirects=False,
-                timeout=httpx2.Timeout(self._timeout_seconds),
+                timeout=httpx2.Timeout(remaining),
             ) as http_client:
-                with OpenAI(
+                with self._openai_client(
                     api_key=access_token,
                     base_url=self._base_url,
                     default_headers={
@@ -270,25 +262,58 @@ class OpenAIResponsesTransport:
                     },
                     http_client=http_client,
                     max_retries=0,
-                    timeout=self._timeout_seconds,
+                    timeout=remaining,
                 ) as client:
                     stream = client.responses.create(
                         **payload,
                         stream=True,
                         extra_headers={"session_id": str(uuid4())},
-                        timeout=self._timeout_seconds,
+                        timeout=_remaining(deadline),
                     )
                     with cast(Any, stream) as events:
                         return _project_events(events)
         except Exception as error:
             failure = _sanitized_failure(
                 error,
-                api_connection_error=APIConnectionError,
-                api_error=APIError,
-                api_status_error=APIStatusError,
-                api_timeout_error=APITimeoutError,
+                api_connection_error=self._api_connection_error,
+                api_error=self._api_error,
+                api_status_error=self._api_status_error,
+                api_timeout_error=self._api_timeout_error,
             )
         raise failure from None
+
+
+def _load_sdk() -> tuple[Any, Any, Any, Any, Any]:
+    try:
+        from openai import (
+            APIConnectionError,
+            APIError,
+            APIStatusError,
+            APITimeoutError,
+            OpenAI,
+        )
+    except ImportError:
+        imported: tuple[Any, Any, Any, Any, Any] | None = None
+    else:
+        imported = (
+            APIConnectionError,
+            APIError,
+            APIStatusError,
+            APITimeoutError,
+            OpenAI,
+        )
+    if imported is None:
+        raise OpenAIResponsesUnavailable(
+            "OpenAI SDK candidate dependency is unavailable"
+        )
+    return imported
+
+
+def _remaining(deadline: float) -> float:
+    remaining = deadline - monotonic()
+    if remaining <= 0:
+        raise _DeadlineExceeded
+    return remaining
 
 
 def _responses_base_url(endpoint: str) -> str:
