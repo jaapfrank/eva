@@ -36,7 +36,6 @@ effect_readbacks = metadata.tables["eva_effects.effect_readbacks"]
 def validate_action_chain_effect(
     connection: sa.Connection,
     scope: TimelineScope,
-    *,
     plan_id: UUID,
     plan: ValidatedPlan,
     decision: ModelDecision,
@@ -252,6 +251,22 @@ def validate_action_chain_effect(
             raise corrupt("prepared effect already has external execution evidence")
 
 
+def is_prepared_action_chain_effect(
+    step: Any, stored: sa.Row, running_revision: int
+) -> bool:
+    """Recognize the sole effect state this validator currently owns."""
+
+    return (
+        step.kind == "effect"
+        and stored.state == "running"
+        and stored.read_intent_id is None
+        and stored.effect_intent_id is not None
+        and stored.outcome_ref is None
+        and stored.revision == running_revision
+        and stored.updated_at >= stored.created_at
+    )
+
+
 def _authority_row(
     connection: sa.Connection,
     table: sa.Table,
@@ -366,4 +381,4 @@ def _parse_timestamp(value: str) -> datetime:
     return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-__all__ = ["validate_action_chain_effect"]
+__all__ = ["is_prepared_action_chain_effect", "validate_action_chain_effect"]

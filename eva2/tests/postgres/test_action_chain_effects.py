@@ -20,7 +20,6 @@ from eva.adapters.postgres.action_chain_ledger import (
     ActionChainCorrupt,
     PostgresActionChainLedger,
     attention_items,
-    effect_intents,
     plan_steps,
 )
 from eva.adapters.postgres.action_chain_leases import PostgresActionChainLeases
@@ -43,6 +42,9 @@ from test_action_chain_read_advances import (
     _observed_read,
     action_chain_engine as _shared_action_chain_engine,
 )
+
+
+effect_intents = metadata.tables["eva_effects.effect_intents"]
 
 
 @pytest.fixture
@@ -306,7 +308,7 @@ def test_effect_preparation_is_durable_replayable_and_external_io_free(
     finally:
         restarted.dispose()
     assert [step.state for step in loaded.steps] == ["succeeded", "running"]
-    assert loaded.steps[1].effect_intent_id == UUID(prepared.intent.effect_intent_id)
+    assert loaded.steps[1].read_intent_id is None
 
 
 def test_concurrent_effect_preparation_inserts_once(

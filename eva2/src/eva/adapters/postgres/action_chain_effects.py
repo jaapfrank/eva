@@ -22,10 +22,10 @@ from eva.adapters.postgres.action_chain_ledger import (
     capability_activations,
     capability_manifests,
     connector_bindings,
-    effect_intents,
     plan_steps,
     policy_pack_versions,
 )
+from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_checkpoints,
@@ -46,6 +46,9 @@ from eva.contracts.execution import (
     EffectIntent,
     ResourceScope,
 )
+
+
+effect_intents = metadata.tables["eva_effects.effect_intents"]
 
 
 class ActionChainEffectError(RuntimeError):
@@ -171,7 +174,7 @@ class PostgresActionChainEffectPreparer:
 
             expected_intent_id = uuid5(claim.plan_step_id, "effect-intent:v1")
             if stored_step.state == "running":
-                if stored_step.effect_intent_id != expected_intent_id:
+                if step_row.effect_intent_id != expected_intent_id:
                     raise ActionChainEffectConflict("prepared effect identity differs")
                 event_data = self._latest_child_data(
                     connection, chain, stored_step.logical_step_key

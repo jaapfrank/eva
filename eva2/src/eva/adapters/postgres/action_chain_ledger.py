@@ -10,9 +10,7 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
-from eva.adapters.postgres.action_chain_effect_validation import (
-    validate_action_chain_effect,
-)
+from eva.adapters.postgres.action_chain_effect_validation import is_prepared_action_chain_effect, validate_action_chain_effect
 from eva.adapters.postgres.action_chain_read_validation import (
     validate_action_chain_read,
 )
@@ -49,7 +47,6 @@ capability_manifests = metadata.tables["eva_core.capability_manifests"]
 capability_activations = metadata.tables["eva_core.capability_activations"]
 policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
 read_intents = metadata.tables["eva_effects.read_intents"]
-effect_intents = metadata.tables["eva_effects.effect_intents"]
 
 
 class ActionChainLedgerError(RuntimeError):
@@ -75,7 +72,6 @@ class StoredActionChainStep:
     dependency_step_ids: tuple[UUID, ...]
     state: str
     read_intent_id: UUID | None
-    effect_intent_id: UUID | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -148,10 +144,7 @@ class PostgresActionChainLedger:
             plan.generation,
             plan_sha256,
         )
-        step_ids = {
-            step.step_id: uuid5(plan_id, f"step:{step.step_id}")
-            for step in plan.steps
-        }
+        step_ids = {step.step_id: uuid5(plan_id, f"step:{step.step_id}") for step in plan.steps}
 
         with self._engine.begin() as connection:
             self._scope(connection)
@@ -206,9 +199,7 @@ class PostgresActionChainLedger:
                     generation=plan.generation,
                     model_attempt_id=model_attempt_id,
                     state="current",
-                    model_decision_sha256=bytes.fromhex(
-                        plan.model_decision_sha256
-                    ),
+                    model_decision_sha256=bytes.fromhex(plan.model_decision_sha256),
                     policy_pack_sha256=bytes.fromhex(plan.policy_sha256),
                     capability_set_sha256=bytes.fromhex(catalog_sha256),
                     validated_plan_payload=plan.model_dump(mode="json"),
@@ -390,8 +381,7 @@ class PostgresActionChainLedger:
         row = connection.execute(
             sa.select(model_attempts).where(
                 model_attempts.c.tenant_id == self._scope_value.tenant_id,
-                model_attempts.c.installation_id
-                == self._scope_value.installation_id,
+                model_attempts.c.installation_id == self._scope_value.installation_id,
                 model_attempts.c.attempt_id == model_attempt_id,
             )
         ).one_or_none()
@@ -421,9 +411,7 @@ class PostgresActionChainLedger:
         ):
             raise ActionChainConflict("model attempt payload binding differs")
 
-    def _load(
-        self, connection: sa.Connection, plan_id: UUID
-    ) -> StoredActionChain:
+    def _load(self, connection: sa.Connection, plan_id: UUID) -> StoredActionChain:
         row = connection.execute(
             sa.select(plans).where(
                 plans.c.tenant_id == self._scope_value.tenant_id,
@@ -447,8 +435,7 @@ class PostgresActionChainLedger:
                 plan_sha256,
             )
             or bytes(row.validated_plan_sha256).hex() != plan_sha256
-            or bytes(row.model_decision_sha256).hex()
-            != plan.model_decision_sha256
+            or bytes(row.model_decision_sha256).hex() != plan.model_decision_sha256
             or bytes(row.policy_pack_sha256).hex() != plan.policy_sha256
             or row.generation != plan.generation
             or row.deadline != _parse_timestamp(plan.deadline)
@@ -533,9 +520,7 @@ class PostgresActionChainLedger:
             raise ActionChainCorrupt("stored plan-step membership differs")
         stored_steps: list[StoredActionChainStep] = []
         expected_admission_ids: list[dict[str, str]] = []
-        resolved_ids = {
-            key: by_key[key].plan_step_id for key in by_key
-        }
+        resolved_ids = {key: by_key[key].plan_step_id for key in by_key}
         for step in plan.steps:
             stored = by_key[step.step_id]
             step_payload = step.model_dump(mode="json")
@@ -564,14 +549,8 @@ class PostgresActionChainLedger:
                 and stored.revision == running_revision
                 and stored.updated_at >= stored.created_at
             )
-            prepared_effect = (
-                step.kind == "effect"
-                and stored.state == "running"
-                and stored.read_intent_id is None
-                and stored.effect_intent_id is not None
-                and stored.outcome_ref is None
-                and stored.revision == running_revision
-                and stored.updated_at >= stored.created_at
+            prepared_effect = is_prepared_action_chain_effect(
+                step, stored, running_revision
             )
             completed_read = (
                 step.kind == "read"
@@ -597,13 +576,7 @@ class PostgresActionChainLedger:
                 or stored.operation != step.operation
                 or stored.effect_class != step.kind
                 or stored.plan_step_id != uuid5(plan_id, f"step:{step.step_id}")
-                or not (
-                    initial_step
-                    or released_ready
-                    or prepared_read
-                    or completed_read
-                    or prepared_effect
-                )
+                or not (initial_step or released_ready or prepared_read or completed_read or prepared_effect)
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
                 != canonical_sha256(step_payload)
@@ -649,17 +622,9 @@ class PostgresActionChainLedger:
                 )
             elif prepared_effect:
                 validate_action_chain_effect(
-                    connection,
-                    self._scope_value,
-                    plan_id=plan_id,
-                    plan=plan,
-                    decision=decision,
-                    authority_snapshot=authority_snapshot,
-                    plan_row=row,
-                    step=step,
-                    stored=stored,
-                    current_event_data=step_current,
-                    corrupt=ActionChainCorrupt,
+                    connection, self._scope_value, plan_id, plan, decision,
+                    authority_snapshot, row, step, stored, step_current,
+                    ActionChainCorrupt,
                 )
             expected_admission_ids.append(
                 {
@@ -674,7 +639,6 @@ class PostgresActionChainLedger:
                     dependency_step_ids=expected_dependencies,
                     state=str(stored.state),
                     read_intent_id=stored.read_intent_id,
-                    effect_intent_id=stored.effect_intent_id,
                 )
             )
         current_transition_context = validate_action_chain_read_advances(
@@ -704,8 +668,7 @@ class PostgresActionChainLedger:
         attention_row = connection.execute(
             sa.select(attention_items).where(
                 attention_items.c.tenant_id == self._scope_value.tenant_id,
-                attention_items.c.installation_id
-                == self._scope_value.installation_id,
+                attention_items.c.installation_id == self._scope_value.installation_id,
                 attention_items.c.attention_id == attention_id,
             )
         ).one_or_none()
@@ -716,8 +679,7 @@ class PostgresActionChainLedger:
         except ValueError as error:
             raise ActionChainCorrupt("continuation attention payload is invalid") from error
         if (
-            canonical_sha256(attention)
-            != bytes(attention_row.payload_sha256).hex()
+            canonical_sha256(attention) != bytes(attention_row.payload_sha256).hex()
             or attention.attention_id != str(attention_id)
             or attention.episode_id != plan.episode_id
             or attention.generation != plan.generation
