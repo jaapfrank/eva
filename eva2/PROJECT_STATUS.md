@@ -72,13 +72,15 @@ Eva's unieke hoofdfeature.
 ## Nu
 
 - Dependency-first audit DF00: `pydantic-ai-slim==2.32.1` staat al exact in
-  Eva's lock maar wordt nog niet als agentframework gebruikt. Pydantic AI en
-  zijn Harness leveren al voice, subagents, browserkoppelingen, MCP, web-UI en
-  duurzame DBOS-routes; Hindsight heeft al een lokale beheer-UI. Eva bouwt
+  Eva's lock maar wordt nog niet als agentframework gebruikt. De actuele
+  Pydantic AI `2.34.0` en Harness `0.24.0` leveren al voice, subagents,
+  browserkoppelingen, MCP, web-UI en duurzame DBOS-routes; Hindsight heeft al
+  een lokale beheer-UI. Eva bouwt
   daarom geen eigen voice-, browser-, worker-, Kanban-, scanner- of
   updateplatform voordat een gepinde dependencyproef een concreet gat bewijst.
-  Ook Eva's 404 regels handgeschreven MCP-client en 763 regels directe
-  Home Assistant-adapter zijn expliciet onderzocht. De MCP-client blijft na
+  Ook Eva's 404 regels handgeschreven MCP-client en 1.023 regels directe
+  Home Assistant-/automationroute zijn expliciet onderzocht. De MCP-client
+  blijft na
   twee gemeten `NO-GO`-proeven voorlopig staan; voor de veel grotere
   Home Assistant-route is `homeassistant-ai/ha-mcp v8.3.0` nu de eerste serieuze
   community-sidecar. De onafhankelijke
@@ -109,12 +111,15 @@ Eva's unieke hoofdfeature.
   Home Assistant gestart. De handshake werkte; read-only waren 39 tools
   zichtbaar, waaronder toestand, historie en automation-lezen. Een automation-
   en backupwrite werden met `READ_ONLY_MODE` geblokkeerd. Dit is kandidaatbewijs,
-  geen B- of live-huisbewijs. De volgende pariteitsproef moet minimaal 300
-  regels eigen HA-code verwijderen tegen hoogstens 180 integratieregels en
-  dezelfde state-, historie-, service-, automation-, crash- en readbackcases
-  halen. De afgeschermde smoke en onafhankelijke herreview zijn groen op
-  `86c7247`/`3896f17`; zie `experiments/ha-mcp-sidecar-v1/` en
-  `reviews/ha-mcp-sidecar-candidate-3896f17.md`.
+  geen B- of live-huisbewijs. De bron-, mapping- en zeven toolbeschrijvingen
+  zijn nu exact gebonden; twaalf mutatietests en onafhankelijke herreview zijn
+  groen (`c03942d`). De verdiepende audit vindt echter slechts circa 174–192
+  direct vervangbare transportregels. Dat is minder dan de vereiste 300 tegen
+  hoogstens 180 integratieregels. Een simpele productieomschakeling is daarom
+  `NO-GO`; alleen een kleine state→service→aparte-stateproef mag nog bewijzen
+  of ook semantische code veilig kan verdwijnen. Echt huis, latency, crash,
+  upgrade en rollback staan open. Zie `experiments/ha-mcp-sidecar-v1/` en
+  `experiments/ha-mcp-parity-v1/`.
 
 - Dependencykandidaat DF02a: checkpoint `8526314` laat de officiële OpenAI
   Python-SDK `3.3.1` nu werkelijk één gewone Responses-stream vervoeren en

@@ -10,9 +10,10 @@ dependency of sidecar al beter en sneller kan leveren.
 
 Het duidelijkste voorbeeld staat al in de repository:
 `pydantic-ai-slim==2.32.1` is exact vastgezet, maar wordt in Eva's productiecode
-nog niet als agentframework gebruikt. Dezelfde officiële projectfamilie levert
-al realtime voice, webinterfaces, MCP, duurzame DBOS-uitvoering en een apart
-Harness voor subagents, planning, browsergebruik, skills en contextbeheer.
+nog niet als agentframework gebruikt. De actuele officiële release `2.34.0`
+levert al realtime voice, webinterfaces, MCP en duurzame uitvoering. Het aparte
+Harness `0.24.0` levert subagents, planning, browsergebruik, skills en
+contextbeheer.
 Tegelijk telt een kleine selectie van Eva's eigen action-chain-, API- en
 conversatiebestanden al meer dan 7.000 regels.
 
@@ -46,10 +47,10 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Modeltransport en gestructureerde antwoorden | Eerst de officiële OpenAI-SDK; daarna alleen lagere Pydantic AI-primitives die extra code verwijderen | Identiteit, persoonscontext, agentloop, grants, tooluitvoering en antwoordbeleid | De OpenAI-SDK-kandidaat is gereviewd en behoudt Eva's grenzen; echte provider- en releasepromotie staan nog open |
 | Smalle MCP-client | Eva's huidige begrensde client | Toegelaten tool/resource, byte- en tijdslimieten, schemahash en receipt | De volledige officiële MCP-SDK en alleen `mcp-types` zijn echt beproefd maar verwijderen voor deze route geen code; daarom nu niet installeren |
 | Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist minimaal 300 regels eigen HA-code weg tegen hoogstens 180 regels integratie |
-| Duurzame workflows en wachtrijen | DBOS via de officiële Pydantic AI-koppeling | Eva-ledger voor intent, call-start, ambigu resultaat en readback | DBOS laat starten, wachten en hervatten; geen tweede eigen queue-engine uitbreiden |
+| Duurzame workflows en wachtrijen | Pydantic AI durability met DBOS `2.31.0` als eerste bestaande route | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Geen tweede eigen queue-engine uitbreiden; eerst bewijzen dat Eva's lokale DBOS-patch kan verdwijnen |
 | Korte subagents | Pydantic AI Harness `0.24.0` als eerste compatibele kandidaat | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Niet zelf spawnen, budgetteren en foutafhandelen wanneer Harness dit al doet |
-| Voice | Pydantic AI Realtime vanaf `2.32.2` als eerste proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
-| Browser | Microsoft Playwright MCP als eerste eenvoudige provider | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen |
+| Voice | Pydantic AI Realtime `2.34.0` als actuele proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
+| Browser | Eerst Harness `0.24.0` `PlaywrightBrowser` naast Microsoft Playwright MCP `0.0.79` meten en er één kiezen | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen en geen twee browserstacks houden |
 | Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
 | Geheugenbeheer | Hindsight `0.9.1` plus de bestaande lokale Control Plane UI | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
@@ -65,26 +66,27 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 Hergebruik betekent niet blind `latest` installeren.
 
-- Eva pinnt nu `pydantic-ai-slim==2.32.1`. De bron op exact die tag bevat
-  realtime voice, DBOS/Temporal-integratie en web-UI-adapters.
-- De eerste voiceproef gebruikt niet stil diezelfde pin. `2.32.2` repareert
-  coöperatieve realtime run-/sessie-annulering via `RunContext.cancel()`.
-  Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
-  playback/media-bridge. Die kleine upgrade wordt afzonderlijk gesloten; de
-  nieuwere `2.34.0` wordt niet automatisch meegenomen.
+- Eva pinnt nu `pydantic-ai-slim==2.32.1`. De actuele officiële release is
+  `2.34.0` van 24 augustus 2026. Die wordt niet stil geïnstalleerd, maar is nu
+  de gezamenlijke proefbasis voor realtime voice en de officiële
+  Harness-koppeling. De eerdere tussenkandidaat `2.32.2` vervalt daarmee.
+- Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
+  playback/media-bridge. Een upstream cancellation-API is nog geen gemeten
+  barge-in.
 - Het losse Pydantic AI Harness is jonger en gebruikt `0.x`-releases. De
-  actuele `0.25.0` vereist `pydantic-ai-slim>=2.33.0` en past dus **niet** bij
-  Eva's huidige pin. `0.24.0` accepteert `>=2.28.0` en is de eerste
-  compatibele proefkandidaat. Er wordt niets stil geüpgraded.
+  actuele officiële release is `0.24.0` van 19 augustus 2026. Die bevat ook
+  een `PlaywrightBrowser`-capability. Daarom vergelijken we die eerst met
+  Playwright MCP en installeren we niet beide als permanente browserlaag.
 - Eva gebruikt nu een lokale DBOS-patch `2.30.0+eva.1` die retry na een
   onduidelijke databasecommit begrenst. Dat is onderhoudsschuld. De patch wordt
-  ofwel upstream overbodig gemaakt, of tot één smalle adapter begrensd; hij mag
-  niet de reden worden om de hele workflowstack zelf te onderhouden.
+  eerst tegen de actuele upstream `2.31.0` beproefd en wordt daarna ofwel
+  upstream overbodig gemaakt, of tot één smalle adapter begrensd; hij mag niet
+  de reden worden om de hele workflowstack zelf te onderhouden.
 - Playwright MCP, Browser Use, OpenClaw en iedere andere sidecar worden op
   release, commit, image-digest en licentie vastgezet voordat zij secrets of
   echte accounts zien.
 
-De actuele eerste proefpins zijn: OpenAI Python `3.3.1`, Pydantic AI `2.32.2`,
+De actuele eerste proefpins zijn: OpenAI Python `3.3.1`, Pydantic AI `2.34.0`,
 MCP Python SDK `2.1.1`, HA-MCP `v8.3.0` op OCI-index
 `sha256:38b3a0b6b6b69d3fd074f958fbf9653ae2d50c8727b4c0dcde640cfa3a638176`,
 Playwright MCP `0.0.79`, Harness `0.24.0`, React Admin
@@ -143,19 +145,25 @@ backup-write werden vóór Home Assistant met `READ_ONLY_MODE` geweigerd.
 
 Dit project heeft 88 gedocumenteerde tools, vier vaste maintainers, een
 securitybeleid, multi-architectuurimages en 621 Pythonbestanden onder `tests/`,
-waarvan 483 `test_*.py`-modules. Het kan niet alleen
-de huidige adapter, maar ook toekomstige dashboard-, trace-, backup- en
-beheeradapters voorkomen. Daarom gaat het door naar een echte pariteitsproef met
-een least-privilege testtoken.
+waarvan 483 `test_*.py`-modules. Het kan vooral toekomstige dashboard-, trace-,
+backup- en beheeradapters voorkomen. Daarom blijft het een serieuze optionele
+capabilityprovider.
 
 Het is nog geen productieonderdeel en heeft het echte huis niet benaderd. De
 harde toelatingseis is minimaal 300 regels bestaande Home Assistant-productcode
 verwijderen tegen hoogstens 180 regels dunne Eva-integratie, met dezelfde
-state-, historie-, service-, automation-, crash- en readbackgevallen. De exacte
-bron/imagebinding en herhaalbare smoke staan in
-`experiments/ha-mcp-sidecar-v1/`. Een onafhankelijke reviewer herhaalde beide
-checks en gaf `GO` voor de geïsoleerde pariteitsproef op checkpoint `3896f17`;
-zie `reviews/ha-mcp-sidecar-candidate-3896f17.md`.
+state-, historie-, service-, automation-, crash- en readbackgevallen. De
+verdiepende audit laat zien dat een veilige transportswap nu slechts circa
+174–192 regels verwijdert. Bovendien zijn alle zeven outputschema's open
+objecten; zoek-, historie- en resultaatsbetekenis moeten dus nog door Eva
+worden gecontroleerd. Een simpele productieomschakeling is daarom nu `NO-GO`.
+
+De exacte bron/imagebinding en herhaalbare smoke staan in
+`experiments/ha-mcp-sidecar-v1/`. De gesloten bron-, mapping- en
+tooldescriptorgrens staat in `experiments/ha-mcp-parity-v1/`. Het vervolg mag
+alleen een kleine state→service→aparte-stateproef zijn; pas bij echte
+semantische pariteit en nettokrimp mag productcode verdwijnen. De onafhankelijke
+herreview staat in `reviews/ha-mcp-parity-contract-c03942d.md`.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -195,13 +203,13 @@ een concreet gat laat zien.
 
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
-| Pydantic AI `2.32.1` huidige lock / `2.32.2` proefkandidaat | `PROEF` | MIT, stabiele V2-versiepolicy, compatibility-CI, meerdere recente bijdragers en openbare advisories | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
-| Pydantic AI Harness | `PROEF` | MIT, officieel apart Pydantic-project, recente `0.x`-releases en meerdere auteurs | API stabiliseert nog; exacte compatibele pin, geen taak-/geheugenautoriteit en directe rollback |
-| DBOS Transact | `PROEF` | MIT, gepubliceerde Pythonreleases en correctnessfixes rond herstel en duplicaten | Eva's private patch/imports zijn de blocker; eerst publieke API, schema-upgrade en downgrade op kopiedata |
+| Pydantic AI `2.32.1` huidige lock / `2.34.0` proefkandidaat | `PROEF` | MIT, 19.500 sterren, 2.810 commits, actuele signed release en officiële realtime-, UI-, MCP- en durable-executionroutes | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
+| Pydantic AI Harness `0.24.0` | `PROEF` | MIT, officiële Pydantic-repository en signed release met subagents, outputlimits en PlaywrightBrowser | `0.x`-API; geen taak-/geheugenautoriteit en eerst kiezen tussen zijn browser en Playwright MCP |
+| DBOS Transact `2.31.0` | `PROEF` | MIT, actuele officiële release en correctnessfixes rond herstel en duplicaten | Eva's private `2.30.0+eva.1`-patch/imports zijn de blocker; eerst publieke API, schema-upgrade en downgrade op kopiedata |
 | Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
 | Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
-| `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: uitgebreide HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Exacte image-smoke en onafhankelijke review zijn groen; echte least-privilege HA-pariteit, codeverwijdering, latency, upgrade en rollback zijn open |
-| Microsoft Playwright MCP | `PROEF` | Apache-2.0, eigen release- en securityroute en onderhoud binnen Microsoft | Nog `0.x`; originfilters zijn geen sandbox. Pin ook browser/container en test SIGKILL, egress, downloads en orphanprocessen |
+| `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: optionele HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Directe transportswap haalt met circa 174–192 verwijderbare regels de 300-regelgrens niet; alleen een semantische state/service-proef gaat door |
+| Microsoft Playwright MCP `0.0.79` | `PROEF` | Apache-2.0, signed release, 36.500 sterren, 573 commits en onderhoud binnen Microsoft | Nog `0.x` en upstream zegt zelf dat het geen securitygrens is; vergelijk eerst met Harness PlaywrightBrowser en behoud er één |
 | Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
 | Hindsight API `0.9.1` | `GO: huidige L2` | MIT, exact artifact/digest en bestaande Eva-livebewijzen | PostgreSQL blijft canoniek; iedere upgrade blijft een aparte proef met export, privacy, latency en rollback |
 | Hindsight Control Plane UI | `PROEF` | Onderdeel van dezelfde releasefamilie | Auth en tenant-/ACL-grenzen passen niet direct bij Eva; begin read-only achter Eva's API |
@@ -222,11 +230,13 @@ een concreet gat laat zien.
 - MCP blijft de normale skill- en providerdraad, maar de volledige officiële
   clientdependency komt niet in de smalle V1-route. De huidige begrensde client
   blijft zolang een dependency aantoonbaar geen code verwijdert.
-- Home Assistant gaat niet per functie verder groeien in Eva. De volgende echte
-  proef zet `homeassistant-ai/ha-mcp` als geïsoleerde sidecar naast de huidige
-  adapter en promoveert alleen wanneer honderden eigen regels kunnen verdwijnen.
-- Voice, browser en subagents beginnen met een kleine dependencyproef, niet met
-  een nieuw platformontwerp.
+- Home Assistant gaat niet per functie verder groeien in Eva. HA-MCP wordt niet
+  blind ingevoerd: de eerste diepere audit komt onder de 300-regelgrens. Alleen
+  één kleine state→service→aparte-stateproef mag nog aantonen of de semantische
+  laag werkelijk kan krimpen.
+- Voice, browser en subagents beginnen samen op de actuele Pydantic
+  AI/Harness-basis. Harness PlaywrightBrowser en Playwright MCP worden als
+  alternatieven getest; Eva houdt niet twee browserplatforms.
 - Hindsight's bestaande UI wordt eerst aangesloten voordat een eigen
   geheugenbeheerpagina wordt gebouwd.
 - De Hindsight Control Plane mag in productie niet stil via `npx` de nieuwste
@@ -252,7 +262,7 @@ upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
 |---|---:|---|---|
 | `adapters/model/conversation.py` | 2.378 regels | OpenAI-SDK voor providertransport en typed streaming; pas later lagere Pydantic-mapping | IdentityPack, audience, agentloop, budgetbesluit, tooluitvoering, actiebewijs en eindantwoord |
 | `adapters/connectors/mcp.py` | 404 regels | Volledige SDK en `mcp-types` zijn beproefd en afgewezen voor deze smalle route | Huidige begrensde client blijft; opnieuw openen als een provider de standaardclient vereist én de totale code aantoonbaar krimpt |
-| `adapters/connectors/home_assistant.py` | 763 regels | Officiële ingebouwde server voor basis plus `homeassistant-ai/ha-mcp v8.3.0` voor historie/configuratie/beheer | Least-privilege binding, één duurzame poging en onafhankelijke readback; promotie alleen bij minimaal 300 regels weg en maximaal 180 erbij |
+| `adapters/connectors/home_assistant.py` plus automationtransport | 1.023 regels | `homeassistant-ai/ha-mcp v8.3.0`; eerste audit vindt slechts circa 174–192 transportregels direct vervangbaar | Least-privilege binding, één duurzame poging en onafhankelijke readback; alleen verder bij echte semantische pariteit en minimaal 300 regels weg |
 | Zeven application-workerbestanden | meerdere losse loops | DBOS scheduling, queues en durable execution op dezelfde crashcases | Taakbetekenis, mandaat, idempotency, externe ambiguïteit en gebruikersstatus |
 | HTML/JavaScript in `adapters/api/app.py` | onderdeel van 1.536 regels | React-Admin of Pydantic web/AG-UI als presentatielaag | Gesaneerde Eva-API, authenticatie, writes via commands en audit |
 
@@ -273,7 +283,7 @@ een lijst GitHub-links.
   foutproeven en onafhankelijke review zijn groen (`8526314`). Echte
   providerpariteit, latency, beide wheelhouses, SBOM/scan, offline image en
   rollback staan nog open; daarom blijft de productiegate onafgevinkt.
-- [ ] `DF02b` — Pydantic AI `2.32.2` krijgt daarna alleen modelmapping of een
+- [ ] `DF02b` — Pydantic AI `2.34.0` krijgt daarna alleen modelmapping of een
   andere aantoonbaar verwijderende lagere primitive. Een Pydantic `Agent` wordt
   geen tweede tool-, geheugen- of antwoordloop naast Eva. Een eventuele lagere
   primitive moet nul eigen retries, begrensde aanvragen/tooluitvoer en geen
@@ -288,8 +298,10 @@ een lijst GitHub-links.
   geïsoleerde sidecar en vervangt na echte least-privilege HA-pariteit minimaal
   300 regels bestaande productcode met hoogstens 180 integratieregels. De
   netwerkloze read-only image-smoke en onafhankelijke review zijn groen
-  (`86c7247`, `3896f17`); echt huis, codeverwijdering, latency, crash, upgrade
-  en rollback staan open.
+  (`86c7247`, `3896f17`). De gesloten bron-/toolgrens en twaalf mutatietests
+  zijn onafhankelijk groen (`c03942d`). De huidige directe vervangingsraming
+  van 174–192 regels haalt de promotiegrens niet; echt huis, semantische
+  pariteit, latency, crash, upgrade en rollback staan open.
 - [ ] `DF03` — DBOS versus de handgeschreven workflowdelen is op dezelfde
   crashcases vergeleken; dubbele scheduling krijgt een verwijderbesluit.
 - [ ] `DF04` — compatibel Harness, Pydantic Realtime en Playwright MCP krijgen
@@ -305,12 +317,15 @@ zijn de nieuwe packages nog geen goedgekeurde productdependencies.
 ## Primaire bronnen
 
 - Pydantic AI exact `2.32.1`: <https://github.com/pydantic/pydantic-ai/tree/v2.32.1>
+- Pydantic AI actuele proefrelease `2.34.0`: <https://github.com/pydantic/pydantic-ai/releases/tag/v2.34.0>
 - Pydantic AI realtime-fix `2.32.2`: <https://github.com/pydantic/pydantic-ai/releases/tag/v2.32.2>
 - Pydantic AI cancellation-fix: <https://github.com/pydantic/pydantic-ai/pull/7528>
 - Pydantic AI-versiebeleid: <https://github.com/pydantic/pydantic-ai/blob/main/docs/version-policy.md>
 - Pydantic AI telemetry-advisory: <https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-3gh4-cghq-f8v4>
 - Pydantic AI Harness: <https://github.com/pydantic/pydantic-ai-harness>
+- Pydantic AI Harness `0.24.0`: <https://github.com/pydantic/pydantic-ai-harness/releases/tag/v0.24.0>
 - DBOS Python: <https://github.com/dbos-inc/dbos-transact-py>
+- DBOS Python `2.31.0`: <https://github.com/dbos-inc/dbos-transact-py/releases/tag/2.31.0>
 - Officiële MCP Python SDK: <https://github.com/modelcontextprotocol/python-sdk>
 - MCP Python SDK-versiebeleid: <https://github.com/modelcontextprotocol/python-sdk/blob/main/VERSIONING.md>
 - Home Assistant MCP Server: <https://www.home-assistant.io/integrations/mcp_server/>
@@ -320,6 +335,7 @@ zijn de nieuwe packages nog geen goedgekeurde productdependencies.
 - HA-MCP exact `v8.3.0`: <https://github.com/homeassistant-ai/ha-mcp/releases/tag/v8.3.0>
 - HA-MCP securitybeleid: <https://github.com/homeassistant-ai/ha-mcp/security/policy>
 - Microsoft Playwright MCP: <https://github.com/microsoft/playwright-mcp>
+- Microsoft Playwright MCP `0.0.79`: <https://github.com/microsoft/playwright-mcp/releases/tag/v0.0.79>
 - Microsoft Playwright MCP-securitybeleid: <https://github.com/microsoft/playwright-mcp/security/policy>
 - Browser Use: <https://github.com/browser-use/browser-use>
 - Hindsight exact `0.9.1`: <https://github.com/vectorize-io/hindsight/tree/v0.9.1>

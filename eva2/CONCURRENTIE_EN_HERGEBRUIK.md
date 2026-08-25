@@ -185,6 +185,25 @@ taak loopt, of iets echt gelukt is en wat zij uiteindelijk aan jou antwoordt.
 De precieze namen, versies en veiligheidsregels staan in het technische
 bewijsbord.
 
+Concreet betekent dit dat we de volgende grote stukken **niet opnieuw vanaf nul
+bouwen**:
+
+| Nodig voor Eva | Bestaand communityproject dat eerst de kans krijgt | Wat Eva zelf nog doet |
+|---|---|---|
+| Live voice | Pydantic AI Realtime `2.34.0` | De juiste persoon en herinneringen koppelen, onderbreken echt laten stoppen en huisacties controleren |
+| Subagents | Pydantic AI Harness `0.24.0` | Per helper bepalen welke taak, informatie, tools, tijd en kosten zijn toegestaan |
+| Browsercomputer | Harness PlaywrightBrowser óf Microsoft Playwright MCP `0.0.79`; na dezelfde proef houden we er één | Websites en bestanden afschermen, direct stoppen en het eindresultaat controleren |
+| Langlopende achtergrondtaken | DBOS `2.31.0` via de bestaande Pydantic-koppeling | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie |
+| Geheugenscherm | De bestaande lokale Hindsight Control Plane | Bepalen van wie een herinnering is en wie haar mag zien, corrigeren of vergeten |
+| Home Assistant-hulpmiddelen | De ingebouwde HA MCP Server en eventueel HA-MCP `8.3.0` | Veilige doelkeuze en onafhankelijke controle achteraf; HA-MCP vervangt de huidige route pas bij echte nettokrimp |
+| Updates en beveiligingsscan | Renovate, Trivy en bestaande OCI-/SBOM-middelen | Alleen geteste upgrades promoveren en altijd kunnen terugrollen |
+
+Een dependency wint dus niet op sterren of een mooie demo. Zij wint pas wanneer
+dezelfde Eva-taak slaagt en er aantoonbaar eigen code en beheerlast verdwijnen.
+De eerste diepe HA-MCP-controle is daar een goed voorbeeld van: het project is
+sterk, maar een simpele wissel verwijdert nu naar schatting slechts 174–192
+regels. Dat is te weinig voor een productieomschakeling, dus die gebeurt niet.
+
 ## Wanneer we eerlijk mogen zeggen dat Eva beter is
 
 We mogen niet zeggen “Eva is beter” omdat haar ontwerp uitgebreider klinkt. De
