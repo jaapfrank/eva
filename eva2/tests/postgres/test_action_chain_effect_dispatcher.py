@@ -4,12 +4,14 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 import subprocess
 from typing import Iterator
+from types import SimpleNamespace
 from uuid import UUID
 
 import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
+import eva.operations.action_chain_effect_executor as effect_executor_module
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
 from eva.adapters.postgres.action_chain_effect_results import (
     PostgresActionChainEffectResultStore,
@@ -31,6 +33,9 @@ from eva.operations.action_chain_effect_authorizer import (
 )
 from eva.operations.action_chain_effect_dispatcher import (
     PostgresActionChainEffectDispatcher,
+)
+from eva.operations.action_chain_effect_executor import (
+    PostgresActionChainEffectExecutor,
 )
 from eva.operations.action_chain_effect_results import (
     project_action_chain_effect_result,
@@ -593,3 +598,168 @@ def test_effect_result_reload_rejects_corrupt_provider_evidence(
         assert updated.rowcount == 1
     with pytest.raises(ActionChainCorrupt, match="evidence differs"):
         PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+
+
+def test_effect_executor_retains_provider_acceptance_and_never_repeats_call(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scope, chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    process_calls: list[dict[str, object]] = []
+
+    def accepted_run(**kwargs: object) -> ConnectorInvokeSuccess:
+        process_calls.append(kwargs)
+        return _effect_result(
+            SimpleNamespace(
+                invoke=kwargs["invoke"],
+                connector_manifest=kwargs["manifest"],
+            ),
+            {
+                "kind": "effect_response",
+                "provider_resource_id": "ha:entity:light.test_target",
+                "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+                "provider_time": "2026-08-20T12:00:10Z",
+            },
+        )
+
+    monkeypatch.setattr(
+        effect_executor_module,
+        "run_connector_process",
+        accepted_run,
+    )
+    executor = PostgresActionChainEffectExecutor(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+        clock=lambda: NOW + timedelta(seconds=11),
+    )
+    executed = executor.execute(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+        timeout_seconds=2,
+    )
+
+    assert executed.disposition == "executed"
+    assert executed.stored_result is not None
+    assert executed.stored_result.attempt.state == "provider_accepted"
+    assert executed.stored_result.receipt is not None
+    assert executed.stored_result.receipt.decision == "accepted"
+    assert len(process_calls) == 1
+    counts = _effect_counts(action_chain_engine, scope, chain.plan_id)
+    assert counts["intents"] == counts["attempts"] == counts["receipts"] == 1
+    assert counts["readbacks"] == 0
+
+    replay = executor.execute(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=12),
+        timeout_seconds=2,
+    )
+    assert replay.disposition == "already_started"
+    assert replay.stored_result is not None
+    assert replay.stored_result.disposition == "already_recorded"
+    assert len(process_calls) == 1
+
+    restart_engine = sa.create_engine(action_chain_engine.url)
+    try:
+        reloaded = PostgresActionChainLedger(restart_engine, scope).load(chain.plan_id)
+    finally:
+        restart_engine.dispose()
+    assert reloaded.steps[1].state == "running"
+
+
+def test_effect_executor_preserves_real_protocol_failure_once(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scope, chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    real_run = effect_executor_module.run_connector_process
+    process_calls: list[dict[str, object]] = []
+
+    def counted_run(**kwargs: object):
+        process_calls.append(kwargs)
+        return real_run(**kwargs)
+
+    monkeypatch.setattr(effect_executor_module, "run_connector_process", counted_run)
+    executor = PostgresActionChainEffectExecutor(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+        clock=lambda: NOW + timedelta(seconds=11),
+    )
+    executed = executor.execute(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+        timeout_seconds=2,
+    )
+
+    assert executed.disposition == "executed"
+    assert executed.stored_result is not None
+    assert executed.stored_result.attempt.state == "internal_failure"
+    assert executed.stored_result.receipt is None
+    assert executed.stored_result.evidence.subject_contract == (
+        "ConnectorProtocolFailure/v1"
+    )
+    assert len(process_calls) == 1
+
+    replay = executor.execute(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=12),
+        timeout_seconds=2,
+    )
+    assert replay.disposition == "already_started"
+    assert replay.stored_result is not None
+    assert len(process_calls) == 1
+    assert PostgresActionChainLedger(action_chain_engine, scope).load(
+        chain.plan_id
+    ).steps[1].state == "running"
+
+
+def test_effect_executor_never_repeats_an_unresolved_started_call(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scope, _chain, catalog, _authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    registry = _provider_registry(action_chain_engine, scope, prepared.intent)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    assert claimed.disposition == "claimed"
+
+    def forbidden_run(**_kwargs: object):
+        raise AssertionError("unresolved effect call must never be repeated")
+
+    monkeypatch.setattr(
+        effect_executor_module,
+        "run_connector_process",
+        forbidden_run,
+    )
+    replay = PostgresActionChainEffectExecutor(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).execute(
+        UUID(prepared.intent.effect_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=10),
+        timeout_seconds=2,
+    )
+    assert replay.disposition == "already_started"
+    assert replay.stored_result is None
