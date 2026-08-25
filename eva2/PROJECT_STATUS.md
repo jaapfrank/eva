@@ -1,6 +1,6 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-25
+Laatst bijgewerkt: 2026-08-26
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
@@ -108,6 +108,18 @@ Eva's unieke hoofdfeature.
   `reviews/dependency-transport-trials-2026-08-25.md`.
   De kleinste vervolgstap gebruikt eerst alleen de synchrone OpenAI-SDK
   `3.3.1`; Pydantic AI wordt niet als tweede agentloop in dezelfde slice gezet.
+
+- Dependencykandidaat DF02a: checkpoint `8526314` laat de officiële OpenAI
+  Python-SDK `3.3.1` nu werkelijk één gewone Responses-stream vervoeren en
+  decoderen. Eva houdt identiteit, leasepaar, tools, retries, usage en
+  eindantwoord. De volledige 38→41-packagekandidaat is hashgebonden; 18
+  SDK-tests, 63 gerichte regressies en onafhankelijke review zijn groen. Een
+  koude eerste modelcall hield de totale tijdsgrens en herhaalde time-outs
+  lieten geen thread- of bestandsdescriptorgroei achter. Productie gebruikt nog
+  steeds `legacy_urllib`: echte providerpariteit, latency, wheelhouses,
+  licenties/SBOM/scan, offline image, B en rollback zijn open. Zie
+  `experiments/openai-sdk-v1/` en
+  `reviews/openai-sdk-transport-candidate-8526314.md`.
 
 - Pydantic-voorwaarde DF02a0: checkpoint `4e5d5af` kan gerapporteerd
   modelgebruik nu providerneutraal over één of twee modelcalls optellen, met

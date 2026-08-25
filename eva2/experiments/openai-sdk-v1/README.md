@@ -1,6 +1,6 @@
 # DF02a — OpenAI SDK-kandidaat
 
-Status op 25 augustus 2026: `tested`, niet `reviewed`, niet in productie.
+Status op 26 augustus 2026: `reviewed`, niet in productie.
 Implementatiecheckpoint: `8526314fde754ba56cbedde4be352f2496ed4910`.
 
 Deze proef vervangt voor één gewone gespreksroute Eva's zelfgeschreven
@@ -70,14 +70,13 @@ heeft na de gerichte policy-uitbreiding nul boundaryschendingen.
 - geen echte OpenAI/Codex-providercall;
 - geen bewijs dat de private Codex-route exact dezelfde terminal events levert;
 - geen latencyvergelijking met het bestaande transport;
-- geen productie-lock, image, managed-B-start, A/B-wijziging of voicegebruik;
-- geen onafhankelijke review zolang de bijbehorende review nog ontbreekt.
+- geen productie-lock, image, managed-B-start, A/B-wijziging of voicegebruik.
 
 De eerste onafhankelijke review vond drie echte blockers: de wandklokdeadline
 begon te laat, SDK-exceptions konden via hun cause secrets lekken en remote
 plain HTTP was toegestaan. De herreview vond daarna dat de koude SDK-import nog
 buiten die deadline viel. Checkpoint `8526314` initialiseert de dependency bij
 de production-composition en gebruikt vanaf de eerste modelaanroep één absolute
-deadline; het bevat ook koude- en herhaalde-resourceregressies. Dat is nog geen
-`reviewed`-claim: de onafhankelijke herreview op exact dit checkpoint staat nog
-open.
+deadline; het bevat ook koude- en herhaalde-resourceregressies. De
+onafhankelijke herreview op exact dit checkpoint is groen en staat in
+`../../reviews/openai-sdk-transport-candidate-8526314.md`.

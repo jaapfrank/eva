@@ -1,9 +1,9 @@
 {
   "contract": "EvaDependencyCandidateReceipt/v1",
   "candidateId": "DF02a-openai-sdk-v1",
-  "checkedAt": "2026-08-25T22:15:00Z",
+  "checkedAt": "2026-08-26T00:05:00Z",
   "implementationGitCommit": "8526314fde754ba56cbedde4be352f2496ed4910",
-  "status": "tested",
+  "status": "reviewed",
   "productionAuthority": false,
   "managedBChanged": false,
   "realProviderCalled": false,
@@ -45,7 +45,6 @@
     "amd64_arm64_wheelhouse",
     "license_sbom_vulnerability_scan",
     "offline_candidate_image",
-    "managed_b_adoption_and_rollback",
-    "independent_review"
+    "managed_b_adoption_and_rollback"
   ]
 }

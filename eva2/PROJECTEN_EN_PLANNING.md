@@ -1,6 +1,6 @@
 # Eva 2 — projecten, wat af is en hoeveel werk nog resteert
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 26 augustus 2026.
 
 ## Het eerlijke overzicht
 
@@ -59,6 +59,7 @@ Deze bouwblokken zijn waardevol, maar krijgen bewust niet de status `AF`:
 | Algemene skill- en actieketen | Eva onderscheidt bij iedere geschikte skill ontvangst, uitvoering, fout en gecontroleerde eindtoestand; de volledige action-chainreeks is 75/75 groen | Onafhankelijke review en dezelfde totaalroute via echt Telegram-B en één echte skill; Home Assistant is de eerste testadapter |
 | Ontwikkel- en herstelbasis | Productie A blijft staan, kandidaat B is gescheiden, back-ups bestaan en een offline kandidaatimage kan afgeschermd worden gebouwd en gestart | Definitieve buildclosure, adoptie en releasebeslissing |
 | Kleine beheerbasis | Een gesaneerde statuspagina en veilige identiteitspreview zijn getest | Authenticatie, compleet dashboard, Kanban, geheugen- en taakbediening en live B-deploy |
+| Eerste dependencyvervanging | De officiële OpenAI-SDK neemt in een gereviewde kandidaat één gewone modeltransportroute over; 18 SDK-tests en 63 gerichte regressies zijn groen | Echte provider- en snelheidspariteit, supply-chainbewijs, offline image en veilige productiepromotie |
 
 ## Het projectbord
 

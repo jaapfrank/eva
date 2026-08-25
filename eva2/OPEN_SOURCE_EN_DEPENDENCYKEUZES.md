@@ -90,12 +90,35 @@ beproefd. Dit zijn wegwerp- of toekomstige proefinputs, geen goedgekeurde
 productdependencies en geen toestemming om transitieve packages stil mee te
 veranderen. Eva's huidige productlock houdt Pydantic AI `2.32.1`.
 
-## Wat op 25 augustus echt is geprobeerd
+## Wat nu echt is geprobeerd
 
-Er zijn twee kandidaten eenmalig in een wegwerpomgeving geïnstalleerd en tegen
+### Eerste echte vervangkandidaat: officiële OpenAI-SDK
+
+Checkpoint `8526314` gebruikt de officiële OpenAI Python-SDK `3.3.1`
+daadwerkelijk voor één gewone gespreksroute. Dit is dus meer dan een GitHub-link
+of installatiedemo: 18 SDK-tests en in totaal 63 gerichte regressies zijn groen,
+de volledige dependencydelta is hashgebonden en een onafhankelijke reviewer gaf
+`GO` voor de kandidaatcode.
+
+Wat hierdoor niet meer door Eva zelf hoeft te worden onderhouden, is het gewone
+versturen en decoderen van die ene Responses-stream. Wat wel Eva-eigen blijft,
+is wie spreekt, wat privé is, welk token/accountpaar actueel is, of een tool mag
+worden uitgevoerd, wanneer opnieuw geprobeerd mag worden en wat Eva uiteindelijk
+zegt.
+
+De SDK staat nog niet in productie. Een echte providercall, snelheidsvergelijking,
+beide processorarchitecturen, licentie/SBOM/scan, offline image en rollback zijn
+nog open. De productie blijft daarom standaard de oude route gebruiken. Zie
+`experiments/openai-sdk-v1/` en
+`reviews/openai-sdk-transport-candidate-8526314.md`.
+
+### Eerdere wegwerpwaarnemingen
+
+Er waren eerst twee kandidaten eenmalig in een wegwerpomgeving geïnstalleerd en tegen
 lokale HTTP-servers aangeroepen. Er bestaat nog geen commitgebonden proefscript,
-artifacthash of herhaalreceipt; dit is dus een waarneming met status `PROEF`,
-geen geteste productgate. Dit veranderde Eva, A en B niet.
+artifacthash of herhaalreceipt voor de MCP-waarneming; die blijft dus `PROEF`.
+De OpenAI-waarneming is inmiddels door de hierboven beschreven echte kandidaat
+vervangen. A en B zijn niet gewijzigd.
 
 | Proef | Wat werkelijk lukte | Eerlijke beslissing |
 |---|---|---|
@@ -235,9 +258,10 @@ een lijst GitHub-links.
   `Eva-owned` plus kandidaat, licentie, pin en onderhoudsbewijs.
 - [ ] `DF02a` — de synchrone OpenAI Python SDK `3.3.1` vervangt eerst één
   gewone handgeschreven request-/SSE-route met Eva's bestaande identiteit,
-  actuele lease en usage-receipt. Een eenmalige lokale happy path is
-  waargenomen; reproduceerbaar script/receipt, artifacthashes, lock, wheelhouse,
-  streamingpariteit, echte providercall en review staan open.
+  actuele lease en usage-receipt. De hashgebonden kandidaat, streaming- en
+  foutproeven en onafhankelijke review zijn groen (`8526314`). Echte
+  providerpariteit, latency, beide wheelhouses, SBOM/scan, offline image en
+  rollback staan nog open; daarom blijft de productiegate onafgevinkt.
 - [ ] `DF02b` — Pydantic AI `2.32.2` krijgt daarna alleen modelmapping of een
   andere aantoonbaar verwijderende lagere primitive. Een Pydantic `Agent` wordt
   geen tweede tool-, geheugen- of antwoordloop naast Eva. Een eventuele lagere
