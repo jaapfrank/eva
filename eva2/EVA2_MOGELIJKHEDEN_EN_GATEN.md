@@ -75,6 +75,17 @@ Bijgewerkt: 25 augustus 2026.
   begrensde workers met eigen taakgrant, contextscope, budget, lease,
   heartbeat, crashherstel en gevalideerde teruglevering toe; zie
   `design/product/delegation-and-workboard-v1.md`.
+- Er bestaan nog geen officiële Eva-scores voor AgentBench, GAIA of OSWorld.
+  CB01-CB07 verplichten exact dezelfde upstream release, split en scorer,
+  heropenbare trajecten en twee gescheiden scoreborden: native productopstelling
+  en gecontroleerde frameworkvergelijking met gelijk model en budget. Zie
+  `design/product/comparable-agent-benchmarks-v1.md`.
+- Eva heeft nog geen Eigenaarmodus. Hermes' huidige officiële `Godmode` is een
+  optionele jailbreak-/safety-bypassskill en geen bewijs van computerautonomie.
+  OM01-OM06 bouwen daarom de gewenste uitkomst op Eva's eigen runner: één
+  vooraf gewaarschuwd, exact en intrekbaar mandaat, daarna zelfstandig handelen
+  zonder bevestiging per tussenstap, met readback en stopknop. Zie
+  `design/product/owner-autonomy-mode-v1.md`.
 - Het webdashboard heeft D01/D02 read-only basis, maar nog geen volledige
   chat-/sessiesurface, Hermes-achtig duurzaam Kanbanbord of workerbediening.
   D06 voegt dezelfde Eva-chat toe; D07/D08 tonen en bedienen dezelfde
@@ -191,6 +202,11 @@ Bijgewerkt: 25 augustus 2026.
   onbegrensde geheugen-, token-, kosten-, latency- en codegroei.
 - De nog onbewezen claim is: structureel menselijker, autonomer en betrouwbaarder
   dan alle drie over alle 36 cases en zeven dagen echt gebruik.
+- AgentBench, GAIA en OSWorld worden toegevoegd als de extern verifieerbare
+  scorelaag. Scores blijven per officiële benchmark en release zichtbaar; er
+  komt geen eigen gewogen totaalcijfer. Eva, OpenClaw, Hermes, Agent Zero en
+  OpenBot krijgen daarnaast een gecontroleerde run met gelijk model, budget en
+  omgeving voordat een frameworkclaim wordt gedaan.
 - De volledige capabilitymatrix, de ontbrekende tests en de hergebruikroute via
   ClawHub/OpenClaw staan in `CONCURRENTIE_EN_HERGEBRUIK.md`.
 - `CopilotKit/OpenBot` is apart uit officiële, gepinde bronnen vergeleken. Het
@@ -221,6 +237,10 @@ Bijgewerkt: 25 augustus 2026.
   `design/product/performance-and-complexity-v1.md`
 - Subagents, duurzame taakdelegatie en Kanban-dashboard:
   `design/product/delegation-and-workboard-v1.md`
+- Openbaar vergelijkbare AgentBench-, GAIA- en OSWorldscorecontracten:
+  `design/product/comparable-agent-benchmarks-v1.md`
+- Vergaande autonomie zonder bevestiging per tussenstap binnen één mandaat:
+  `design/product/owner-autonomy-mode-v1.md`
 - Installer, onboarding, koppelingen, `SOUL.md`/`MEMORY.md` en verplaatsen:
   `design/product/installer-and-onboarding-v1.md`
 - Mogelijkhedenindex, bestandsdoel, status, bewijs en optimalisatie:

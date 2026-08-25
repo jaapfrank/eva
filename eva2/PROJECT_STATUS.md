@@ -27,6 +27,11 @@ de documentatiekaart, componentregistratie, bewijsstatus en optimalisatiegrens
 staan in [`DOCUMENTATIE_EN_ONDERHOUD.md`](DOCUMENTATIE_EN_ONDERHOUD.md);
 het subagentcontract, duurzame werkbord en Kanban-dashboard staan in
 [`design/product/delegation-and-workboard-v1.md`](design/product/delegation-and-workboard-v1.md);
+het contract voor openbaar vergelijkbare AgentBench-, GAIA- en OSWorldscores
+staat in
+[`design/product/comparable-agent-benchmarks-v1.md`](design/product/comparable-agent-benchmarks-v1.md);
+Eva's vergaande maar begrensde Eigenaarmodus staat in
+[`design/product/owner-autonomy-mode-v1.md`](design/product/owner-autonomy-mode-v1.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
@@ -34,6 +39,19 @@ de controleerbare live receipts staan in
 
 ## Nu
 
+- Vergelijkbare benchmarks CB00: AgentBench, GAIA en de actuele OSWorld 2.0-
+  release `v2026.08.08` zijn als drie verschillende openbare scorelagen
+  vastgelegd. Iedere toekomstige score moet de upstream release, split,
+  officiële scorer, agent/model/config, budgetten en ruwe trajecten publiceren.
+  Native en gecontroleerde frameworkruns krijgen aparte tabellen; LAB-36 wordt
+  niet als openbare leaderboardscore hernoemd. CB01-CB07 en alle echte runs
+  staan nog open.
+- Eigenaarmodus OM00: Hermes' actuele officiële `Godmode` blijkt een optionele
+  jailbreak-/safety-bypassskill, geen autonome superstand. Eva krijgt in plaats
+  daarvan één expliciete Eigenaarmodus boven haar bestaande mandaat/ledger:
+  vooraf gevolgen en grenzen vastleggen, daarna zelfstandig handelen zonder
+  bevestiging per tussenstap, met dashboardstatus en directe stop. OM01-OM06
+  staan nog open; er is geen productie-safety-bypass toegevoegd.
 - Subagents/werkbord WB00: Hermes' korte delegatie en duurzame multi-profile
   Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Eva's
   ontwikkelproces gebruikt agents, maar de runtime spawnt ze nog niet en het
@@ -110,7 +128,8 @@ de controleerbare live receipts staan in
 - Eindacceptatie is uitgebreid maar nog niet gestart: naast core 15/15 en
   native 9/9 moeten echte multi-persoon-, multi-beurt-, multi-tool-,
   crashherstel-, self-improvement-, presence- en autonome computerproeven groen
-  zijn, plus de echte voice-mode V01-V07. De norm staat in
+  zijn, plus de echte voice-mode V01-V07. Openbare vergelijkingsclaims wachten
+  daarnaast op CB01-CB07; de Eigenaarmodus op OM01-OM06. De norm staat in
   [`design/validation/lab-36-final-acceptance-addendum-v1.md`](design/validation/lab-36-final-acceptance-addendum-v1.md).
 
 ## Afgerond en live bewezen

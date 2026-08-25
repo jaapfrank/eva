@@ -30,6 +30,8 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 | Welke importgrens geldt? | `design/architecture/package-boundaries-v1.json` | Machineleesbare package-eigenaarschap en toegestane imports |
 | Waarom mag een checkpoint groen heten? | `reviews/` plus `evidence/` | Onafhankelijke review, tests en waar vereist live receipts |
 | Is iets snel, klein of geoptimaliseerd? | `design/product/performance-and-complexity-v1.md` plus commitgebonden meting | Alleen een genoemde metric en baseline rechtvaardigt zo'n claim |
+| Is een agentscore extern vergelijkbaar? | `design/product/comparable-agent-benchmarks-v1.md` | Alleen officiële benchmarkmetrics op exact dezelfde release/split/scorer; native en gecontroleerd blijven aparte scoreborden |
+| Wat betekent vergaande autonomie? | `design/product/owner-autonomy-mode-v1.md` | Eigenaarmodus is een ruim maar begrensd mandaat, niet Hermes' jailbreakskill of een tweede orchestrator |
 
 ## Statuswoorden
 
@@ -86,6 +88,10 @@ verdwenen autoriteit blijft wijzen.
   concreet voorbeeld in `design/architecture/living-core-v1.md` en
   `reviews/action-chain-effect-preparation-mc03c0.md`; runtime-optimalisatie
   blijft daar eerlijk `unmeasured` terwijl codeomvang wel exact is gecontroleerd.
+- Externe agentscores hebben nu een afzonderlijk publicatiecontract. AgentBench,
+  GAIA en OSWorld-resultaten tellen alleen met upstream scorer, vastgezette
+  release/split/configuratie en heropenbare trajecten; LAB-36 blijft een eigen
+  productsuite en wordt niet tot een openbare leaderboardscore omgedoopt.
 - Er bestaat nog geen volledig, commitgebonden semantisch componentregister dat
   ieder productie-, deployment-, migration- en testpad dekt. Ook is
   optimalisatiestatus nog niet voor iedere component gemeten.

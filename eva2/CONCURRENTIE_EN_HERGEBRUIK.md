@@ -47,6 +47,32 @@ algemene claim over Eva, OpenClaw, Hermes en Agent Zero. OpenBot zit nog niet in
 die live gate. Zolang beide bewijsgrenzen open zijn, doen we geen claim als
 “Eva is overal beter”.
 
+## Extern vergelijkbare scores
+
+- AgentBench, GAIA en OSWorld meten respectievelijk afgeschermd agentgedrag,
+  algemeen onderzoek/toolgebruik en echte computerbediening. Zij vullen elkaar
+  aan en worden niet tot één eigen Eva-cijfer gemiddeld.
+- Iedere score gebruikt de ongewijzigde officiële scorer en exact dezelfde
+  release/split als de vergeleken openbare score. OSWorld 2.0 staat daarom op
+  `v2026.08.08`; oudere OSWorld- en andere 2.0-scores blijven aparte tabellen.
+- Er komen twee scoreborden: `native` voor de standaardproductopstelling en
+  `controlled` voor Eva, OpenClaw, Hermes, Agent Zero en OpenBot met gelijk
+  model, budget, omgeving en taakset.
+- CB01-CB07 verplichten manifests, hashes, alle trajecten, skips, kosten,
+  latency en onafhankelijke replay. De precieze claimregels staan in
+  `design/product/comparable-agent-benchmarks-v1.md`.
+
+## Hermes Godmode tegenover Eva Eigenaarmodus
+
+- Hermes' actuele officiële `Godmode` is een optionele securityskill voor
+  jailbreaks en safety-bypass; het is geen autonome computer- of uitvoermodus.
+- Eva neemt geen permanente jailbreak over in haar productiepersona. Zij krijgt
+  wel de bedoelde vergaande autonomie: binnen één vooraf gewaarschuwd, exact en
+  intrekbaar eigenaarsmandaat mag zij tools, zelfgemaakte skills, computer en
+  subagents combineren zonder per tussenstap opnieuw toestemming te vragen.
+- OM01-OM06 hergebruiken AU, MC03, WB, LG en B01/E01; er komt geen tweede brein.
+  Volledig contract: `design/product/owner-autonomy-mode-v1.md`.
+
 ## OpenBot: autonome computercollega
 
 - Vergeleken product: `CopilotKit/OpenBot` release `v0.0.4`; documentatie ook
@@ -95,6 +121,18 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] Leren `LG00`: Hermes' officiële groeiclaim, Eva's bestaande
   geheugen/I02-bewijs en de ontbrekende procedurele cyclus eerlijk begrensd;
   persoons-, geheugen-, token- en kostengates zijn vastgelegd.
+- [x] Vergelijkbare benchmarks `CB00`: AgentBench, GAIA en OSWorld zijn op
+  primaire bronnen en actuele releases afgebakend; officiële versus
+  gecontroleerde scores, publicatievelden en nonclaims zijn vastgelegd. Er is
+  nog geen benchmark uitgevoerd.
+- [ ] `CB01-CB07` — gesloten runmanifest, officiële adapters/scorers,
+  AgentBench-, GAIA- en OSWorldruns, publieke artifacts en een gecontroleerde
+  vijf-frameworkmatrix met gelijk model, budget en omgeving.
+- [x] Eigenaarmodus `OM00`: Hermes Godmode is als jailbreakskill afgebakend en
+  Eva's autonome mandaatuitkomst is beschreven; dit is geen implementatie.
+- [ ] `OM01-OM06` — duurzaam eigenaarsmandaat, chat/dashboardbediening,
+  zelfstandige uitvoering zonder tussenbevestigingen, afgeleide skill-/worker-
+  grants, stop/crash/readback en echte afgeschermde eindproef.
 - [ ] `LG01-LG07` — corrigeerbaar persoonsmodel, token/kostenreceipts,
   geheugencompactie, on-the-fly skillcreatie zonder store-afhankelijkheid,
   evaluatie/promotie/rollback en zeven dagen meetbaar beter worden zonder drift
@@ -578,6 +616,8 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Browser en computergebruik | Websearch en begrensde bestanden; interactieve gateway/browser B01 staat gepland | Browser/tools en nodes aanwezig | Browser/terminal/code-toolsets aanwezig | Sterkste zichtbare surface: browser, hostbrowser en Linuxdesktop | Eén geïsoleerde provider achter Eva's ledger; accounts, contracten, betalingen en financiële stappen kunnen binnen een vastgelegd mandaat zelfstandig verlopen |
 | MCP en standaard toolservers | Eén vaste, no-secret read-only Streamable-HTTP-tool werkt tegen een echte lokale JSON/SSE-provider; geen sidecar, ledger of B-route | MCP/node-hosted tools aanwezig | MCP met toolfilters aanwezig | MCP-configuratie aanwezig | De volgende kleine stap is één gepinde sidecar achter Eva's ledger; geen losse nieuwe API-connectoren |
 | Multi-agentwerk en werkbord | Ontwikkelproces gebruikt onafhankelijke agents; runtime-subagents en Kanban zijn WB01-WB07 en nog niet gebouwd | Multi-agent routing aanwezig | Korte `delegate_task` plus duurzaam multi-profile Kanban/dashboard gedocumenteerd; niet door ons gelijk uitgevoerd | Subagents en A2A aanwezig | Eva bouwt beide vormen boven één PostgreSQL-ledger: korte begrensde fork/join én duurzame taken met handoff, review, crash/reclaim en chat-/dashboardbediening; daarna dezelfde onderzoek→uitvoering→reviewproef op alle vier |
+| Extern vergelijkbare benchmarks | LAB-36 bestaat, maar AgentBench/GAIA/OSWorld zijn nog niet uitgevoerd; CB01-CB07 staan open | Geen gelijkwaardige run door ons | Geen gelijkwaardige run door ons | Geen gelijkwaardige run door ons | Officiële metrics per benchmark/release publiceren en daarnaast een gecontroleerde vijf-frameworkrun met hetzelfde model, budget en omgeving; geen eigen totaalscore |
+| Vergaande eigenaarautonomie | AU/MC/WB/LG-bouwstenen deels of gepland; Eigenaarmodus OM01-OM06 nog niet gebouwd | Brede tools/approvals aanwezig; niet gelijk getest | `Godmode` is een optionele jailbreakskill, geen autonome productmodus | Brede browser/plugins aanwezig; niet gelijk getest | Eva krijgt zelfstandig handelen binnen één gewaarschuwd eigenaarsmandaat zonder bevestiging per tussenstap; geen permanente safety-bypass of tweede orchestrator |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
 | API, IDE en programmatische bediening | Interne HTTP-API; geen volledige externe SDK/IDE-gate | Gateway-RPC aanwezig | HTTP/API- en ACP/IDE-integraties aanwezig | HTTP/WebSocket en A0 CLI aanwezig | Dezelfde externe clienttaak, reconnect en permissiontest uitvoeren |
 | Voice, spraak en media | Geen full-duplex voice; P01-P05 bewaart spontane huispresence en V01-V07 bouwt onderbreekbare conversationele voice | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | `Bel Eva` via Telegram Mini App als voorkeur, Assist/Wyoming als fallback; dezelfde identiteit/geheugen/policy, p95-latencygates en geen tweede voicebrein |
@@ -650,19 +690,26 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
    echte testwebtaak en crashherstel zonder blinde herhaling.
 10. Sluit WB01-WB06: korte parentgestuurde subagents, duurzaam werkbord,
    crash/reclaim en dezelfde gecontroleerde bediening via Eva-chat en dashboard.
-11. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
+11. Sluit OM01-OM05 boven AU/MC/WB/LG: één gewaarschuwd eigenaarsmandaat geeft
+   zelfstandige uitvoering binnen scope, zonder bevestiging per tussenstap,
+   met stop, expiry, audit en crashreadback.
+12. Sluit CB01-CB03 vóór de eindfreeze; benchmarkadapters en runners mogen geen
+   taakantwoorden of evaluatieregels in Eva's productcontext brengen.
+13. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
    PC05, LG07, WB07 en nieuwe AU01-AU07-receipts live uit via echt Telegram/voice,
    het echte huis, de afgeschermde browser en afgeschermde providers. Start
    daarna AU08 zeven dagen op diezelfde image.
-12. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+14. Voer CB04-CB07 op deze exacte image uit en publiceer officiële ruwe scores,
+   manifests en trajecten; scoreboardvergelijking vervangt de productgates niet.
+15. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
    aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
    mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
-13. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
+16. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
    coworkervloot zijn aparte latere besluiten.
-14. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
+17. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
    snelheid en kosten mogen niet degraderen door queue-, context-, profiel- of
    geheugenlek/groei.
-15. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+18. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
@@ -681,6 +728,10 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 - Hermes MCP: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/guides/use-mcp-with-hermes.md>
 - Hermes subagents en Kanban: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/kanban.md>
 - Hermes webdashboard: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/web-dashboard.md>
+- Hermes Godmode op gecontroleerde actuele commit: <https://github.com/NousResearch/hermes-agent/blob/1bbb6e5bce56e721ab685af4cd87df21bbff4d35/website/docs/user-guide/skills/optional/security/security-godmode.md>
+- AgentBench: <https://github.com/THUDM/AgentBench>
+- GAIA: <https://huggingface.co/gaia-benchmark>
+- OSWorld 2.0 `v2026.08.08`: <https://github.com/xlang-ai/OSWorld-V2/tree/v2026.08.08>
 - Agent Zero documentatie: <https://github.com/agent0ai/agent-zero/blob/main/docs/README.md>
 - Agent Zero MCP: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/mcp-setup.md>
 - Agent Zero browser: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/browser.md>

@@ -17,6 +17,8 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 | Chat en sessies | Met dezelfde Eva chatten, gesprekken hervatten, model-/token-/kostenstatus en toolreceipts bekijken. | Geen ingebedde shell of tweede chatagent; dezelfde identity-, conversation-, memory- en policyroute als Telegram. |
 | Werkbord | Borden, taken, afhankelijkheden, status, opmerkingen, artifacts, receipts, budget en blokkades volgen. | Dunne projectie van Eva's PostgreSQL-ledger; een kaartstatus vervangt nooit extern bewijs. |
 | Workers en subagents | Actieve en historische workers, rol, lease, heartbeat, poging, model, token-/kostenverbruik en stopstatus bekijken. | Alleen afgeleide taakgrants; geen ruwe prompt, secrets of ongefilterd persoonsgeheugen in de UI. |
+| Eigenaarmodus | Mandaat previewen, gevolgen en grenzen zien, activeren, aanpassen, pauzeren en direct stoppen; actief plan, resterend budget en attempts volgen. | Alleen een geverifieerde eigenaar kan activeren; de UI kan mandaat of providergrants niet stil verruimen. |
+| Evaluaties | AgentBench-, GAIA-, OSWorld- en Eva-productsuites per exacte release volgen; manifests, scores, skips, kosten en openbare artifacts openen. | Native en gecontroleerde scoreborden blijven apart; dashboardberekening vervangt nooit de officiële scorer. |
 
 ## Kleine opleverslices
 
@@ -42,6 +44,12 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 8. **D08 — gecontroleerde samenwerking:** create, comment, prioriteit, assign,
    pause, cancel, resume en review via dezelfde service als Eva-chat. Geen
    directe browserwrites naar tabellen en geen `done` zonder vereist bewijs.
+9. **D09 — Eigenaarmodus:** hetzelfde `OwnerAutonomyMandate/v1` via chat en
+   dashboard previewen, activeren, bewaken en stoppen; zie
+   `owner-autonomy-mode-v1.md`.
+10. **D10 — benchmarkscorebord:** uitsluitend gesaneerde, hashgebonden
+    `ComparableAgentRun/v1`-projecties tonen met links naar officiële scorer en
+    heropenbare artifacts; zie `comparable-agent-benchmarks-v1.md`.
 
 Elke slice krijgt gerichte tests, een onafhankelijke review en een Git-checkpoint.
 De dashboardroute draait uitsluitend in B totdat haar autorisatie- en
