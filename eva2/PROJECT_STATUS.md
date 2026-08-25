@@ -91,6 +91,15 @@ Eva's unieke hoofdfeature.
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
 
+- Pydantic-voorwaarde DF02a0: checkpoint `4e5d5af` kan gerapporteerd
+  modelgebruik nu providerneutraal over één of twee modelcalls optellen, met
+  het antwoord in PostgreSQL bewaren en na herstart exact teruglezen. Oude en
+  huidige niet-aangesloten providers blijven eerlijk `unmeasured` met lege
+  waarden, nooit alsof nul tokens zijn gebruikt. Er is nog geen
+  runtimebudgetclaim. Onafhankelijke review `ae088c9`, 69 conversationtests
+  en een echte wegwerp-PostgreSQL-16.13-proef zijn groen. De officiële
+  Pydantic-provideradapter en echte usage-/budgetwiring blijven DF02-vervolgwerk.
+
 - Releaseproject P1.1: checkpoint `0bbfe3d` bindt de versiepassende statische
   39-package-input nu onafhankelijk groen aan de huidige 4D-bron. Een fysieke
   wheelhouse, imagebuild, start, B-adoptie of release is hiermee niet bewezen.
