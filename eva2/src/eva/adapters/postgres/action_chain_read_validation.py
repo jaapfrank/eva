@@ -8,6 +8,9 @@ from uuid import UUID, uuid5
 
 import sqlalchemy as sa
 
+from eva.adapters.postgres.action_chain_read_result_validation import (
+    validate_action_chain_read_terminal,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
@@ -20,6 +23,10 @@ from eva.application.action_chain import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope
+from eva.contracts.connector_rpc import (
+    ConnectorInitializeRequest,
+    ConnectorInvokeRequest,
+)
 from eva.contracts.execution import (
     CapabilityGrant,
     CapabilityManifest,
@@ -299,6 +306,9 @@ def _validate_authorized_read(
     expected_attempt_id = uuid5(UUID(intent.read_intent_id), "read-attempt:1")
     expected_capability_grant_id = uuid5(expected_attempt_id, "capability-grant:v1")
     expected_credential_grant_id = uuid5(expected_attempt_id, "credential-grant:v1")
+    authorized_attempt = attempt.model_copy(
+        update={"state": "dispatch_authorized", "response_sha256": None}
+    )
     process_spec_sha256 = _worker_process_sha256(
         credential_grant.worker_id, corrupt=corrupt
     )
@@ -325,15 +335,50 @@ def _validate_authorized_read(
             "request_payload": action_arguments,
         }
     )
+    initialize = ConnectorInitializeRequest.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ConnectorInitializeRequest/v1",
+            "jsonrpc": "2.0",
+            "id": str(uuid5(expected_attempt_id, "connector-initialize:v1")),
+            "method": "connector.initialize",
+            "params": {
+                "protocol_version": "EvaConnectorProtocol/v1",
+                "request_id": str(
+                    uuid5(expected_attempt_id, "connector-initialize:v1")
+                ),
+                "correlation_id": envelope.correlation_id,
+                "connector_id": binding.provider_id,
+                "connector_manifest_sha256": attempt.connector_manifest_sha256,
+                "worker_id": credential_grant.worker_id,
+                "worker_executable_sha256": manifest.executable_sha256,
+                "connector_binding": binding.model_dump(mode="json"),
+                "capability_manifest": manifest.model_dump(mode="json"),
+                "capability_grant": capability_grant.model_dump(mode="json"),
+                "credential_grant": credential_grant.model_dump(mode="json"),
+                "deadline": intent.deadline,
+            },
+        }
+    )
+    invoke = ConnectorInvokeRequest.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ConnectorInvokeRequest/v1",
+            "jsonrpc": "2.0",
+            "id": envelope.request_id,
+            "method": "resource.read",
+            "params": envelope.model_dump(mode="json"),
+        }
+    )
     if (
         attempt.read_attempt_id != str(expected_attempt_id)
         or attempt.read_intent_id != intent.read_intent_id
         or attempt.ordinal != 1
-        or attempt.state != "dispatch_authorized"
+        or attempt.state
+        not in {"dispatch_authorized", "observed", "ambiguous", "rejected", "rate_limited"}
         or attempt.capability_grant_id != str(expected_capability_grant_id)
         or attempt.credential_grant_id != str(expected_credential_grant_id)
         or attempt.request_sha256 != canonical_sha256(envelope)
-        or attempt.response_sha256 is not None
         or attempt.deadline != intent.deadline
         or attempt.created_at != _format_timestamp(attempt_row.created_at)
         or capability_grant.grant_id != str(expected_capability_grant_id)
@@ -364,7 +409,7 @@ def _validate_authorized_read(
         or attempt_row.read_attempt_id != expected_attempt_id
         or attempt_row.read_intent_id != intent_row.read_intent_id
         or int(attempt_row.ordinal) != 1
-        or attempt_row.state != "dispatch_authorized"
+        or attempt_row.state != attempt.state
         or attempt_row.capability_grant_id != expected_capability_grant_id
         or attempt_row.credential_grant_id != expected_credential_grant_id
         or bytes(attempt_row.capability_grant_sha256).hex()
@@ -378,16 +423,26 @@ def _validate_authorized_read(
         or bytes(attempt_row.connector_manifest_sha256).hex()
         != attempt.connector_manifest_sha256
         or bytes(attempt_row.request_sha256).hex() != attempt.request_sha256
-        or attempt_row.response_sha256 is not None
+        or (
+            None
+            if attempt_row.response_sha256 is None
+            else bytes(attempt_row.response_sha256).hex()
+        )
+        != attempt.response_sha256
         or attempt_row.deadline != _parse_timestamp(intent.deadline)
         or bytes(attempt_row.payload_sha256).hex() != canonical_sha256(attempt)
-        or int(attempt_row.revision) != 1
+        or int(attempt_row.revision)
+        != (1 if attempt.state == "dispatch_authorized" else 2)
         or attempt_row.retention_policy_id != plan_row.retention_policy_id
         or attempt_row.retention_until != plan_row.retention_until
-        or attempt_row.created_at != attempt_row.updated_at
+        or (
+            attempt.state == "dispatch_authorized"
+            and attempt_row.created_at != attempt_row.updated_at
+        )
+        or attempt_row.updated_at < attempt_row.created_at
     ):
         raise corrupt("authorized read binding differs")
-    if connection.scalar(
+    observation_count = connection.scalar(
         sa.select(sa.func.count())
         .select_from(read_observations)
         .where(
@@ -395,7 +450,8 @@ def _validate_authorized_read(
             read_observations.c.installation_id == scope.installation_id,
             read_observations.c.read_attempt_id == expected_attempt_id,
         )
-    ):
+    )
+    if attempt.state == "dispatch_authorized" and observation_count:
         raise corrupt("authorized undispatched read has an observation")
     profile_revision = current_event_data.get("provider_profile_revision")
     registry_sha256 = current_event_data.get("provider_registry_sha256")
@@ -438,7 +494,7 @@ def _validate_authorized_read(
             release_verification_receipt_sha256
         ),
         "read_attempt_id": attempt.read_attempt_id,
-        "read_attempt_payload_sha256": canonical_sha256(attempt),
+        "read_attempt_payload_sha256": canonical_sha256(authorized_attempt),
         "read_intent_id": attempt.read_intent_id,
         "request_sha256": attempt.request_sha256,
     }
@@ -461,9 +517,13 @@ def _validate_authorized_read(
         )
     ).one()
     if latest.event_type == "ACTION_CHAIN_READ_DISPATCH_AUTHORIZED":
+        if attempt.state != "dispatch_authorized":
+            raise corrupt("terminal read still has an authorization event")
         expected_phase = "action_chain_read_dispatch_authorized"
         expected_updated_at = attempt_row.created_at
     elif latest.event_type == "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED":
+        if attempt.state != "dispatch_authorized":
+            raise corrupt("terminal read still has a call-start event")
         expected_phase = "action_chain_read_provider_call_started"
         expected_updated_at = checkpoint.updated_at
         started_at = current_event_data.get("provider_call_started_at")
@@ -474,6 +534,42 @@ def _validate_authorized_read(
         ):
             raise corrupt("authorized read provider-call time differs")
         expected_event_data["provider_call_started_at"] = started_at
+    elif latest.event_type in {
+        "ACTION_CHAIN_READ_OBSERVED",
+        "ACTION_CHAIN_READ_AMBIGUOUS",
+        "ACTION_CHAIN_READ_REJECTED",
+        "ACTION_CHAIN_READ_RATE_LIMITED",
+    }:
+        if attempt.state == "dispatch_authorized":
+            raise corrupt("authorized read has a terminal result event")
+        started_at = current_event_data.get("provider_call_started_at")
+        try:
+            started = _parse_timestamp(str(started_at))
+        except ValueError as error:
+            raise corrupt("terminal read call-start time is invalid") from error
+        if (
+            started < attempt_row.created_at
+            or started >= attempt_row.deadline
+            or started > checkpoint.updated_at
+        ):
+            raise corrupt("terminal read call-start time differs")
+        expected_event_data["provider_call_started_at"] = started_at
+        validate_action_chain_read_terminal(
+            connection,
+            scope,
+            authorized_attempt=authorized_attempt,
+            initialize=initialize,
+            invoke=invoke,
+            attempt_row=attempt_row,
+            current_event_data=current_event_data,
+            expected_event_data=expected_event_data,
+            latest=latest,
+            checkpoint=checkpoint,
+            retention_policy_id=plan_row.retention_policy_id,
+            retention_until=plan_row.retention_until,
+            corrupt=corrupt,
+        )
+        return
     else:
         raise corrupt("authorized read timeline event differs")
     if (

@@ -12,6 +12,9 @@ from sqlalchemy.engine import Engine
 
 import eva.operations.action_chain_read_authorizer as read_authorizer_module
 import eva.operations.action_chain_read_dispatcher as read_dispatcher_module
+from eva.adapters.postgres.action_chain_read_results import (
+    PostgresActionChainReadResultStore,
+)
 from eva.adapters.postgres.action_chain_ledger import PostgresActionChainLedger
 from eva.adapters.postgres.action_chain_leases import PostgresActionChainLeases
 from eva.adapters.postgres.action_chain_reads import (
@@ -30,6 +33,7 @@ from eva.operations.action_chain_read_authorizer import (
     PostgresActionChainReadAuthorizer,
 )
 from eva.operations.action_chain_read_dispatcher import (
+    ClaimedActionChainReadCall,
     PostgresActionChainReadDispatcher,
 )
 from eva.operations.action_chain_read_results import (
@@ -80,6 +84,80 @@ def _prepared_read(engine: Engine):
     )
     registry = _provider_registry(engine, scope, prepared.intent)
     return scope, chain, prepared, catalog, registry
+
+
+def _read_success(claimed: ClaimedActionChainReadCall) -> ConnectorInvokeSuccess:
+    invoke = claimed.invoke
+    manifest = claimed.connector_manifest
+    assert invoke is not None
+    assert manifest is not None
+    return ConnectorInvokeSuccess.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "ConnectorInvokeSuccess/v1",
+            "jsonrpc": "2.0",
+            "id": invoke.id,
+            "result": {
+                "schema_version": 1,
+                "contract": "ConnectorResult/v1",
+                "connector_id": invoke.params.connector_id,
+                "request_id": invoke.id,
+                "correlation_id": invoke.params.correlation_id,
+                "operation": invoke.params.operation,
+                "request_sha256": canonical_sha256(invoke.params),
+                "connector_manifest_sha256": canonical_sha256(manifest),
+                "outcome": {
+                    "kind": "read_ok",
+                    "provider_resource_id": "ha:entity:light.test_target",
+                    "retrieved_at": "2026-08-20T12:00:04Z",
+                    "response_sha256": canonical_sha256({"state": "on"}),
+                    "payload": {
+                        "representation": "inline",
+                        "output_schema_sha256": (
+                            manifest.operations[0].output_schema_sha256
+                        ),
+                        "normalized_payload": {"state": "on"},
+                    },
+                },
+                "completed_at": "2026-08-20T12:00:04Z",
+            },
+        }
+    )
+
+
+def _install_result_failure(engine: Engine) -> None:
+    with engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        connection.exec_driver_sql(
+            """
+            CREATE FUNCTION eva_effects.reject_mc03b2b_observation()
+            RETURNS trigger LANGUAGE plpgsql AS $function$
+            BEGIN
+                RAISE EXCEPTION 'forced_mc03b2b_observation_failure'
+                    USING ERRCODE = '55000';
+            END
+            $function$
+            """
+        )
+        connection.exec_driver_sql(
+            """
+            CREATE TRIGGER reject_mc03b2b_observation
+            BEFORE INSERT ON eva_effects.read_observations
+            FOR EACH ROW EXECUTE FUNCTION eva_effects.reject_mc03b2b_observation()
+            """
+        )
+
+
+def _remove_result_failure(engine: Engine) -> None:
+    with engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
+        connection.exec_driver_sql(
+            "DROP TRIGGER reject_mc03b2b_observation "
+            "ON eva_effects.read_observations"
+        )
+        connection.exec_driver_sql(
+            "DROP FUNCTION eva_effects.reject_mc03b2b_observation()"
+        )
 
 
 def test_provider_call_claim_is_single_durable_and_has_no_process_io(
@@ -248,40 +326,7 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
     assert claimed.invoke is not None
     assert claimed.connector_manifest is not None
     response_sha256 = canonical_sha256({"state": "on"})
-    success = ConnectorInvokeSuccess.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "ConnectorInvokeSuccess/v1",
-            "jsonrpc": "2.0",
-            "id": claimed.invoke.id,
-            "result": {
-                "schema_version": 1,
-                "contract": "ConnectorResult/v1",
-                "connector_id": claimed.invoke.params.connector_id,
-                "request_id": claimed.invoke.id,
-                "correlation_id": claimed.invoke.params.correlation_id,
-                "operation": claimed.invoke.params.operation,
-                "request_sha256": canonical_sha256(claimed.invoke.params),
-                "connector_manifest_sha256": canonical_sha256(
-                    claimed.connector_manifest
-                ),
-                "outcome": {
-                    "kind": "read_ok",
-                    "provider_resource_id": "ha:entity:light.test_target",
-                    "retrieved_at": "2026-08-20T12:00:04Z",
-                    "response_sha256": response_sha256,
-                    "payload": {
-                        "representation": "inline",
-                        "output_schema_sha256": (
-                            claimed.connector_manifest.operations[0].output_schema_sha256
-                        ),
-                        "normalized_payload": {"state": "on"},
-                    },
-                },
-                "completed_at": "2026-08-20T12:00:04Z",
-            },
-        }
-    )
+    success = _read_success(claimed)
     projected = project_action_chain_read_result(
         tenant_id=scope.tenant_id,
         attempt=claimed.attempt,
@@ -392,3 +437,134 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
             recorded_at=NOW + timedelta(seconds=4),
             retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
         )
+
+
+def test_provider_result_is_atomic_replayable_and_reload_valid(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, prepared, catalog, registry = _prepared_read(action_chain_engine)
+    claimed = PostgresActionChainReadDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.read_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=3),
+    )
+    success = _read_success(claimed)
+    store = PostgresActionChainReadResultStore(action_chain_engine, scope)
+    recorded = store.record(
+        claimed,
+        result=success,
+        observed_at=NOW + timedelta(seconds=3),
+        recorded_at=NOW + timedelta(seconds=4),
+    )
+    assert recorded.disposition == "recorded"
+    assert recorded.attempt.state == "observed"
+    assert recorded.observation is not None
+    assert recorded.observation.normalized_value == {"state": "on"}
+
+    replay = store.record(
+        claimed,
+        result=success,
+        observed_at=NOW + timedelta(seconds=3),
+        recorded_at=NOW + timedelta(seconds=4),
+    )
+    assert replay.disposition == "already_recorded"
+    assert replay == recorded.__class__(
+        "already_recorded",
+        recorded.attempt,
+        recorded.evidence,
+        recorded.observation,
+    )
+
+    attempts = metadata.tables["eva_effects.read_attempts"]
+    observations = metadata.tables["eva_effects.read_observations"]
+    evidence = metadata.tables["eva_evidence.evidence_envelopes"]
+    with action_chain_engine.connect() as connection:
+        assert connection.scalar(sa.select(sa.func.count()).select_from(attempts)) == 1
+        assert (
+            connection.scalar(sa.select(sa.func.count()).select_from(observations))
+            == 1
+        )
+        assert (
+            connection.scalar(
+                sa.select(sa.func.count())
+                .select_from(evidence)
+                .where(evidence.c.evidence_id == UUID(recorded.evidence.evidence_id))
+            )
+            == 1
+        )
+
+    restart_engine = sa.create_engine(action_chain_engine.url)
+    try:
+        reloaded = PostgresActionChainLedger(restart_engine, scope).load(chain.plan_id)
+    finally:
+        restart_engine.dispose()
+    assert reloaded.plan_id == chain.plan_id
+    assert reloaded.steps[0].state == "running"
+
+
+def test_provider_result_rolls_back_all_rows_when_observation_insert_fails(
+    action_chain_engine: Engine,
+) -> None:
+    scope, chain, prepared, catalog, registry = _prepared_read(action_chain_engine)
+    claimed = PostgresActionChainReadDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+    ).claim_provider_call(
+        UUID(prepared.intent.read_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=3),
+    )
+    evidence_id = UUID(claimed.attempt.read_attempt_id)
+    provider_evidence_id = UUID(
+        project_action_chain_read_result(
+            tenant_id=scope.tenant_id,
+            attempt=claimed.attempt,
+            initialize=claimed.initialize,
+            invoke=claimed.invoke,
+            manifest=claimed.connector_manifest,
+            result=_read_success(claimed),
+            observed_at=NOW + timedelta(seconds=3),
+            recorded_at=NOW + timedelta(seconds=4),
+            retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+        ).evidence.evidence_id
+    )
+    assert evidence_id != provider_evidence_id
+    _install_result_failure(action_chain_engine)
+    try:
+        with pytest.raises(sa.exc.DBAPIError, match="forced_mc03b2b"):
+            PostgresActionChainReadResultStore(action_chain_engine, scope).record(
+                claimed,
+                result=_read_success(claimed),
+                observed_at=NOW + timedelta(seconds=3),
+                recorded_at=NOW + timedelta(seconds=4),
+            )
+    finally:
+        _remove_result_failure(action_chain_engine)
+
+    attempts = metadata.tables["eva_effects.read_attempts"]
+    observations = metadata.tables["eva_effects.read_observations"]
+    evidence = metadata.tables["eva_evidence.evidence_envelopes"]
+    with action_chain_engine.connect() as connection:
+        attempt = connection.execute(
+            sa.select(attempts).where(
+                attempts.c.read_attempt_id == UUID(claimed.attempt.read_attempt_id)
+            )
+        ).one()
+        assert attempt.state == "dispatch_authorized"
+        assert int(attempt.revision) == 1
+        assert connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(observations)
+            .where(observations.c.read_attempt_id == attempt.read_attempt_id)
+        ) == 0
+        assert connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(evidence)
+            .where(evidence.c.evidence_id == provider_evidence_id)
+        ) == 0
+    PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
