@@ -11,6 +11,8 @@ volledige productvergelijking en hergebruikroute staat in
 [`CONCURRENTIE_EN_HERGEBRUIK.md`](CONCURRENTIE_EN_HERGEBRUIK.md); de verplichte
 oude-naar-nieuwe behoudgate voor spontane huisaanwezigheid staat in
 [`OUDE_EVA_VS_EVA2.md`](OUDE_EVA_VS_EVA2.md); de verplichte
+OpenBot-vergelijking en autonomie-afvinklijst staan in
+[`OPENBOT_VERGELIJKING.md`](OPENBOT_VERGELIJKING.md); de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
 [`evidence/living-core/`](evidence/living-core/).
@@ -20,6 +22,12 @@ de controleerbare live receipts staan in
 - Bezig: MC03b, één reeds voorbereide read via de bestaande providergrens
   uitvoeren en haar waarneming duurzaam teruglezen. Effectstappen en het
   vrijgeven van afhankelijke stappen blijven daarna aparte opleverstukken.
+- Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
+  documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
+  veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
+  AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
+  readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
+  echte computerautonomie nu zichtbaar en afvinkbaar.
 - Laatste afgeronde kleine checkpoint: MC03a zet precies één geleasede,
   gevalideerde read-stap atomair om in één duurzaam `read_intent`. Het
   leasetoken, de actuele toolcatalogus, resource-, activation-, binding-,
@@ -37,7 +45,8 @@ de controleerbare live receipts staan in
   duurzame-doelenworker running met nul herstarts.
 - Eindacceptatie is uitgebreid maar nog niet gestart: naast core 15/15 en
   native 9/9 moeten echte multi-persoon-, multi-beurt-, multi-tool-,
-  crashherstel- en self-improvementproeven groen zijn. De norm staat in
+  crashherstel-, self-improvement-, presence- en autonome computerproeven groen
+  zijn. De norm staat in
   [`design/validation/lab-36-final-acceptance-addendum-v1.md`](design/validation/lab-36-final-acceptance-addendum-v1.md).
 
 ## Afgerond en live bewezen
@@ -84,6 +93,10 @@ de controleerbare live receipts staan in
 - Presence-behoud: de bestaande spontane deurbel-, intercom- en speakerbeleving
   van Eva A moet via P01-P05 op Eva2 terugkomen. Brede multimedia is niet V1,
   maar deze minimale bestaande huisaanwezigheid blokkeert de overgang wel.
+- OpenBot/autonomie: `OB00` is klaar. `AU01-AU08` staan open voor een duurzaam
+  chatmandaat, algemene plan-act-observeer-herplan-runner, één geïsoleerde
+  browsercomputer, Eva's eigen policy/ledger/readback, live pauze/stop/overname,
+  een echte afgeschermde webtaak, crashherstel en zeven dagen praktijkbewijs.
 - Security: het HA-token van B staat nog als inspecteerbare container-env. Het
   moet worden ingetrokken, opnieuw uitgegeven en uitsluitend als file-secret
   worden gemount.
@@ -95,7 +108,7 @@ de controleerbare live receipts staan in
   Telegram-token/bindings, Stripe-testaccount, nieuw AgentMail-secret en de
   afzonderlijk goed te keuren LocalTuya-mutatiestappen.
 
-## Laatste receipts
+## Laatste receipts en reviews
 
 - [`live-b-native-a01-a02-durable-goals-v50-2026-08-24.json`](evidence/living-core/live-b-native-a01-a02-durable-goals-v50-2026-08-24.json)
 - [`live-b-native-a03-f03-goal-pivot-blocker-v50-2026-08-24.json`](evidence/living-core/live-b-native-a03-f03-goal-pivot-blocker-v50-2026-08-24.json)
@@ -104,6 +117,7 @@ de controleerbare live receipts staan in
 - [`live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json`](evidence/living-core/live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json)
 - [`resident-long-run-v1-2026-08-24.json`](evidence/living-core/resident-long-run-v1-2026-08-24.json)
 - [`live-b-v53-source-provenance-2026-08-24.json`](evidence/living-core/live-b-v53-source-provenance-2026-08-24.json)
+- [`openbot-competitive-inventory-ob00.md`](reviews/openbot-competitive-inventory-ob00.md)
 
 ## Betekenis van status
 

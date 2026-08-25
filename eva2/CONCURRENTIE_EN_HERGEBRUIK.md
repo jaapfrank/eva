@@ -1,4 +1,4 @@
-# Eva 2 tegenover OpenClaw, Hermes en Agent Zero
+# Eva 2 tegenover OpenClaw, Hermes, Agent Zero en OpenBot
 
 Bijgewerkt: 25 augustus 2026.
 
@@ -16,11 +16,17 @@ Bijgewerkt: 25 augustus 2026.
   of vergeleken.
 - De bestaande cijfers blijven geldig voor die drie gevallen, maar bewijzen
   niet dat Eva 2 als compleet product beter is.
+- Het nieuwe `CopilotKit/OpenBot` is afzonderlijk op officiële documentatie en
+  vaste commits geïnventariseerd. Het is nog niet door onze live benchmark
+  gegaan. OpenBot is vooral een sterke browser-/computer- en dashboardreferentie;
+  zie `OPENBOT_VERGELIJKING.md`.
 
 ## Productstrategie v1: beter waar het telt, hergebruiken waar dat slimmer is
 
 Eva hoeft niet ieder oppervlak zelf te evenaren. V1 is bewust **Telegram-first**:
 één betrouwbare gezinsroute is waardevoller dan tien half-afgemaakte kanalen.
+Eén geïsoleerde browsercomputer en echte chatgestuurde autonomie zijn voortaan
+wel een V1-productgate; dat is een capability, geen extra chatkanaal.
 De documentatie van de concurrenten is voldoende voor deze
 capability-inventaris; zij is geen bewijs dat hun functie in onze opstelling
 werkt. Daarom testen we niet hun hele product opnieuw, maar uitsluitend Eva's
@@ -29,13 +35,30 @@ hebben.
 
 | Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
 |---|---|---|---|
-| **Zelf beter maken** | Menselijk, consequent gesprek met meerbeurts begrip; afzonderlijk en gedeeld geheugen voor gezinsleden; geen verzonnen actie; toolketens met readback; hervatten zonder dubbel effect; begrensde self-improvement. | Eén echte Telegram-B-proef per eindcase met bericht-, event-, tool- en readbackreceipt. Jij ziet antwoord en gedrag; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: multi-persoonidentiteit, eindimage en MX01-MX06. |
-| **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel browser/desktop blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | Ontwerp gereed; eerste read-only sidecar nog open. |
-| **Bewust niet v1** | Veel kanalen, eigen gateway, companion-nodevloot, brede voice/media, Canvas/desktop en brede providerroutering. De bestaande minimale deurbel-/speakerpresence valt hier uitdrukkelijk niet onder. | Geen brede vergelijking nodig voordat Telegram + kern betrouwbaar zijn. Een later kanaal moet dezelfde identity-, receipt- en consentcontracten volgen. | WhatsApp en brede multimedia blokkeren V1 niet; behoud van Eva A's spontane huisaanwezigheid via P01-P05 wel. |
+| **Zelf beter maken** | Menselijk, consequent gesprek; afzonderlijk en gedeeld gezinsgeheugen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, browser- en huisproeven met bericht-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05 en eindimage. |
+| **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis gereed; eerste ledgergebonden sidecar/browsercomputer nog open. |
+| **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een brede coworkervloot, brede voice/media, Canvas en brede providerroutering. Eén browsercomputer en de bestaande deurbel-/speakerpresence vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, minimale presence en één autonome computerroute betrouwbaar zijn. | WhatsApp en brede multimedia blokkeren V1 niet; AU01-AU08 en P01-P05 wel. |
 
-De vier-framework gate blijft alleen een bescherming tegen een algemene claim
-als “Eva is overal beter”. Zolang hij rood is, doen we die claim niet. Hij is
-geen voorwaarde om Eva v1 op Telegram af te maken.
+De bestaande vier-frameworkgate blijft alleen een bescherming tegen een
+algemene claim over Eva, OpenClaw, Hermes en Agent Zero. OpenBot zit nog niet in
+die live gate. Zolang beide bewijsgrenzen open zijn, doen we geen claim als
+“Eva is overal beter”.
+
+## OpenBot: autonome computercollega
+
+- Vergeleken product: `CopilotKit/OpenBot` release `v0.0.4`; documentatie ook
+  gecontroleerd op commit `d293f2331bd5ff9ba4ad17af6ac94570a157d26d`.
+- Sterk: per Bot eigen Chromium, browserprofiel, werkmap en shell; live
+  meekijken en overnemen; skills, MCP, credentials, policies en audit in een
+  gedocumenteerd breder beheeroppervlak dan Eva's huidige dashboard.
+- Bewijsgrens: OpenBot is expliciet alpha en brengt via AG-UI een agent mee. De
+  documentatie bewijst geen eigen levend persona, langlopende doelen,
+  self-improvement, Telegramgezin, Home Assistant of spontane huispresence.
+- Eva's antwoord: geen tweede brein, maar één algemene autonome runner en één
+  geïsoleerde computerprovider achter Eva's eigen mandaat, ledger en readback.
+  OpenBots AG-UI-agent, threads en policy-eigenaarschap worden geen Eva-runner.
+- De volledige leesbare vergelijking en `OB00`/`AU01`–`AU08` staan in
+  `OPENBOT_VERGELIJKING.md`.
 
 ## V1-afvinkbord — kleine opleverstukken
 
@@ -44,7 +67,26 @@ onafhankelijke review. Een vak wordt pas afgevinkt als die drie er zijn; een
 langdurige verzamelaanpassing telt niet als voortgang.
 
 - [x] Concurrentiedocumentatie vertaald naar `zelf beter`, `hergebruik` en
-  `niet v1`; Telegram is de enige verplichte v1-route.
+  `niet v1`; Telegram is het enige verplichte v1-chatkanaal.
+- [x] OpenBot `OB00`: de relevante CopilotKit-variant, vaste release/commits,
+  sterke computerautonomie, beperkingen en Eva-gaten zijn uit officiële bronnen
+  vastgelegd; dit is documentatiebewijs, geen live producttest.
+- [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
+  grenzen; zie `OPENBOT_VERGELIJKING.md`.
+- [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect
+  plus dependency en daarna begrensd herplannen/wachten.
+- [ ] `AU03` — providerkeuze en -pin, restrictive policy, credentialvrije
+  read-only proef en daarna één geïsoleerde browsercomputer.
+- [ ] `AU04` — browser en één afgeschermd downloadbestand uitsluitend via
+  Eva's grant-, policy-, attempt-, audit- en readbackgrens.
+- [ ] `AU05` — secretvrije live status, pauze, stop en tijdelijke overname met
+  een duurzame audit.
+- [ ] `AU06` — echte afgeschermde meerstaps-webtaak met vooraf geautoriseerd
+  testaccount en controle van de eindtoestand.
+- [ ] `AU07` — crash vóór lokale resultaat- of deliverycommit zonder blinde
+  tweede call of dubbel bericht.
+- [ ] `AU08` — vooraf verzegelde zevendaagse autonome praktijktest met exacte
+  cases, providers, budgets, waarschuwingen en receipts.
 - [x] Eindnorm vastgelegd: bestaande core 15/15 en native 9/9 blijven intact;
   MX01-MX06 dekken multi-persoon, meerbeurts gesprek, toolketen, crashherstel
   en begrensde self-improvement.
@@ -403,15 +445,17 @@ langdurige verzamelaanpassing telt niet als voortgang.
   fysieke Home Assistant-readback bewijzen en midden in de keten crashen;
   hervatting mag geen provideractie dupliceren.
 - [ ] Gateway/browser B01: Eva kan een site in een geïsoleerde browser zien,
-  documentatie volgen en een onboarding of formulier voorbereiden. Een account
-  maken, voorwaarden accepteren, betalen, KYC afronden of een financiële actie
-  uitvoeren kan zelfstandig binnen een vooraf in de Eva-chat vastgelegd
-  mandaat; Eva waarschuwt, vat de gevolgen samen en bewaart het mandaat,
-  bewijs en een directe stopknop in haar tijdlijn. Buiten dat mandaat vraagt
-  zij opnieuw om toestemming.
+  documentatie volgen en een onboarding of formulier voorbereiden. AU03-AU07
+  leveren eerst de afgeschermde browser- en crashbasis. Daarna kan het maken
+  van een account, accepteren van voorwaarden, betalen, afronden van KYC of
+  uitvoeren van een financiële actie een eigen verticale B01-slice krijgen
+  binnen een vooraf in de Eva-chat
+  vastgelegd mandaat; Eva waarschuwt, vat de gevolgen samen en bewaart mandaat,
+  bewijs en stopknop. Buiten dat mandaat vraagt zij opnieuw om toestemming.
 - [ ] Externe-accounttool E01: Eva kan na toestemming een dienstadapter
   opleveren, credentials als beheerd file-secret installeren en de verbinding
-  read-only bewijzen. Het mandaat (budget, looptijd, markt, order- en
+  read-only bewijzen. Dit volgt na AU03-AU07 en de eerste B01-testtaak. Het
+  mandaat (budget, looptijd, markt, order- en
   verlieslimiet, stilzetten) wordt als vraag-en-antwoordgesprek in Eva
   vastgelegd; alleen de geheime sleutel gaat via een eenmalige veilige invoer.
   Bitvavo krijgt eerst alleen view/trade, IP-whitelist, geen opnamebevoegdheid
@@ -424,6 +468,11 @@ langdurige verzamelaanpassing telt niet als voortgang.
 
 `Bewezen` betekent live getest. `Aanwezig` betekent gedocumenteerde
 productfunctie die nog niet in onze live vergelijking is getest.
+
+De tabel hieronder bewaart de bestaande gelijk uitgevoerde vergelijking met
+OpenClaw, Hermes en Agent Zero. OpenBot heeft nog geen gelijkwaardige run en
+staat daarom niet misleidend als vijfde scorekolom toegevoegd; zijn aparte
+capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 
 | Onderdeel | Eva 2 nu | OpenClaw | Hermes | Agent Zero | Besluit |
 |---|---|---|---|---|---|
@@ -496,13 +545,21 @@ productfunctie die nog niet in onze live vergelijking is getest.
    self-improvement af.
 4. Sluit P01-P04 voor behoud van de bestaande minimale spontane
    deurbel-/speakerpresence; brede voice/media blijft een latere producttrack.
-5. Bevries één image en voer core 15/15, native 9/9, MX01-MX06 en de
-   zevendaagse presenceproef P05 live uit via echt Telegram, het echte huis en
-   afgeschermde providers.
-6. Hergebruik pas daarna één read-only capability-pad (MCP of Gateway/ClawHub)
-   achter Eva's bestaande ledger. Extra kanalen, brede camera-/locatie-/voice-
-   mogelijkheden en economische acties zijn aparte latere besluiten.
-7. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+5. Kies en pin eerst één computerprovider; bewijs een restrictive,
+   credentialvrije read-only sidecar zonder tweede agent/orchestrator.
+6. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
+   runner, geïsoleerde browsercomputer, Eva-ledger/readback, live stop/overname,
+   echte testwebtaak en crashherstel zonder blinde herhaling.
+7. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05 en nieuwe
+   AU01-AU07-receipts live uit via echt Telegram, het echte huis, de
+   afgeschermde browser en afgeschermde providers. Start daarna AU08 zeven
+   dagen op diezelfde image.
+8. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+   aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
+   mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
+9. Extra kanalen, brede camera-/locatie-/voice-mogelijkheden en een brede
+   coworkervloot zijn aparte latere besluiten.
+10. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
@@ -520,6 +577,8 @@ productfunctie die nog niet in onze live vergelijking is getest.
 - Agent Zero documentatie: <https://github.com/agent0ai/agent-zero/blob/main/docs/README.md>
 - Agent Zero MCP: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/mcp-setup.md>
 - Agent Zero browser: <https://github.com/agent0ai/agent-zero/blob/main/docs/guides/browser.md>
+- OpenBot gepinde bron: <https://github.com/CopilotKit/OpenBot/tree/d293f2331bd5ff9ba4ad17af6ac94570a157d26d>
+- OpenBot architectuur: <https://github.com/CopilotKit/OpenBot/blob/d293f2331bd5ff9ba4ad17af6ac94570a157d26d/docs/architecture.md>
 
 ## Lokale bewijsgrens
 

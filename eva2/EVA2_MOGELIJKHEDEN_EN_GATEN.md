@@ -66,6 +66,10 @@ Bijgewerkt: 25 augustus 2026.
   Wat nog ontbreekt is de algemene providerdispatch en waarnemingsopslag,
   daarna effectuitvoering met readback en pas daarna het vrijgeven van de
   afhankelijke volgende stap.
+- Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
+  loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
+  chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
+  afzonderlijk afvinkbaar; zie `OPENBOT_VERGELIJKING.md`.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,
   geen officiële zevendaagse praktijktest. Na het bevriezen van de echte
   kandidaat begint een nieuwe klok van zeven dagen.
@@ -82,7 +86,7 @@ Bijgewerkt: 25 augustus 2026.
 - Langdurige betrouwbaarheid, stilte, herstel en geheugengedrag moeten nog zeven
   dagen met echte gebeurtenissen worden bewezen.
 
-## Stand tegenover OpenClaw, Hermes en Agent Zero
+## Stand tegenover OpenClaw, Hermes, Agent Zero en OpenBot
 
 - Correctie op de eerdere vergelijking: die was technisch echt en gebruikte
   actuele, gepinde builds, maar dekte op alle vier slechts C01, T02 en C04.
@@ -114,6 +118,18 @@ Bijgewerkt: 25 augustus 2026.
   dan alle drie over alle 36 cases en zeven dagen echt gebruik.
 - De volledige capabilitymatrix, de ontbrekende tests en de hergebruikroute via
   ClawHub/OpenClaw staan in `CONCURRENTIE_EN_HERGEBRUIK.md`.
+- `CopilotKit/OpenBot` is apart uit officiële, gepinde bronnen vergeleken. Het
+  is nog niet in dezelfde live benchmark uitgevoerd. OpenBots documentatie
+  omvat een veel breder computer- en beheeroppervlak: eigen browsercomputer per
+  Bot, shell/workspace, live takeover en dashboard voor skills, MCP,
+  credentials, policies en audit.
+- OpenBot is expliciet alpha en brengt het eigenlijke brein via AG-UI mee. De
+  documentatie bewijst geen langlopende doelen, self-improvement,
+  Telegramgezin, Home Assistant, fysieke readback of spontane huispresence.
+- Eva moet voor een eerlijke concurrentie `AU01-AU08` sluiten: één duurzaam
+  chatmandaat, algemene autonome runner, geïsoleerde browsercomputer,
+  Eva-ledger/readback, live stop/overname, echte webtaak, crashherstel en een
+  zevendaagse praktijktest. Zie `OPENBOT_VERGELIJKING.md`.
 
 ## Waar je de bewijzen vindt
 
@@ -123,6 +139,7 @@ Bijgewerkt: 25 augustus 2026.
 - Live receipts: `evidence/living-core/`
 - Concurrentenrun: `evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json`
 - Volledige product- en hergebruikmatrix: `CONCURRENTIE_EN_HERGEBRUIK.md`
+- OpenBot- en autonomie-afvinkmatrix: `OPENBOT_VERGELIJKING.md`
 - Geblindeerde gesprekscase: `evidence/living-core/lab36-c04-blind-2026-08-24.json`
 - Resident-shakedown, niet de officiële zevendaagse run:
   `evidence/living-core/resident-long-run-v1-2026-08-24.json`
