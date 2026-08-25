@@ -63,7 +63,11 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     receipt = _validate(_files(authority), raw)
 
     assert receipt["contract"] == "EvaManagedBReleaseInputReceipt/v1"
-    assert receipt["status"] == "diagnostic_inputs_bound"
+    assert receipt["status"] == "version_matched_dependency_inputs_bound"
+    assert receipt["dependency_alignment"]["status"] == (
+        "version_matched_4d_dependency_inputs"
+    )
+    assert receipt["dependency_alignment"]["expected_wheel_count"] == 39
     assert receipt["current_contract_count"] == 66
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["migration_head"] == "4e_0001_operational_timeline"
@@ -167,6 +171,22 @@ def test_release_inputs_refuse_changed_build_or_test_input() -> None:
     test_path = authority["requiredTests"][0]["path"]
     files[test_path] = (files[test_path][0] + b"\n", 0o644)
     with pytest.raises(RuntimeError, match="pinned input differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_semantically_resealed_dependency_drift() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    path = "release/managed-b-wheelhouse-amd64-v2.json"
+    manifest = json.loads(files[path][0])
+    manifest["selectedManifestSha256"] = "0" * 64
+    files[path] = (_canonical(manifest).rstrip(b"\n"), 0o644)
+    row = next(item for item in changed["requiredInputs"] if item["path"] == path)
+    row["sha256"] = hashlib.sha256(files[path][0]).hexdigest()
+    raw = _replace_authority(files, changed)
+
+    with pytest.raises(RuntimeError, match="selected manifest differs"):
         _validate(files, raw)
 
 

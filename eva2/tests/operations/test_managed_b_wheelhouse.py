@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -8,6 +9,7 @@ import tempfile
 import pytest
 
 from eva.operations.managed_b_wheelhouse import (
+    inspect_4d_dependency_alignment,
     inspect_wheelhouse_manifest,
     materialize_wheelhouse,
     validate_wheelhouse,
@@ -187,3 +189,131 @@ def test_committed_manifest_binds_the_current_metadata_not_wheel_bytes() -> None
     assert inspect_wheelhouse_manifest(manifest_raw, coverage, lock)["status"] == (
         "metadata_validated_no_wheelhouse_bytes"
     )
+
+
+def _committed_alignment_inputs() -> tuple[bytes, bytes, bytes, bytes, bytes, bytes, bytes]:
+    root = Path(__file__).resolve().parents[2]
+    return (
+        (root / "release" / "managed-b-wheelhouse-amd64-v2.json").read_bytes(),
+        (root / "release" / "managed-b-wheel-coverage-4d-amd64-v1.json").read_bytes(),
+        (root / "requirements-4d.lock").read_bytes(),
+        (root / "release" / "managed-b-wheelhouse-amd64-v1.json").read_bytes(),
+        (root / "release" / "python-wheel-coverage.json").read_bytes(),
+        (root / "requirements.lock").read_bytes(),
+        (root / "release" / "4d-dependency-source-binding.json").read_bytes(),
+    )
+
+
+def test_committed_v2_manifest_is_the_exact_version_matched_4d_delta() -> None:
+    inputs = _committed_alignment_inputs()
+
+    receipt = inspect_4d_dependency_alignment(*inputs)
+
+    assert receipt == {
+        "contract": "EvaManagedB4DDependencyAlignmentReceipt/v1",
+        "expected_wheel_count": 39,
+        "network_used": False,
+        "requirements_lock_path": "requirements-4d.lock",
+        "requirements_lock_sha256": (
+            "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708"
+        ),
+        "selected_manifest_sha256": (
+            "0e877383ffdef9d148a8d60729c91c2461685a31f001ee19787cfd96a4e56930"
+        ),
+        "status": "version_matched_4d_dependency_inputs",
+        "wheelhouse_tree_sha256": (
+            "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+        ),
+    }
+    assert hashlib.sha256(inputs[3]).hexdigest() == (
+        "07736abff46636ec48d5ffb454469e2ab4e8b7905ac725a695ecb2d34684d58d"
+    )
+
+
+def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
+    active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
+        _committed_alignment_inputs()
+    )
+    coverage = json.loads(coverage_raw)
+    artifacts = coverage["targets"][0]["artifacts"]
+    patched = next(item for item in artifacts if item["filename"].startswith("dbos-2.30.0+"))
+    patched.update(
+        filename="dbos-2.30.0-py3-none-any.whl",
+        sha256="363f8209f808fd42c59ad0f19f7e2c25abdd17d73b581dd8ada6336c4ef47e8e",
+        byteLength=268218,
+    )
+    changed_coverage = _canonical(coverage)
+    manifest = json.loads(active_manifest)
+    manifest["coverageSha256"] = hashlib.sha256(changed_coverage).hexdigest()
+    manifest["selectedManifestSha256"] = hashlib.sha256(
+        _canonical([[item["filename"], item["sha256"]] for item in artifacts])
+    ).hexdigest()
+
+    with pytest.raises(RuntimeError, match="artifact is not sealed"):
+        inspect_4d_dependency_alignment(
+            _canonical(manifest),
+            changed_coverage,
+            lock,
+            baseline_manifest,
+            baseline_coverage,
+            baseline_lock,
+            binding,
+        )
+
+    active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
+        _committed_alignment_inputs()
+    )
+    coverage = json.loads(coverage_raw)
+    artifacts = coverage["targets"][0]["artifacts"]
+    artifacts[0]["byteLength"] += 1
+    changed_coverage = _canonical(coverage)
+    manifest = json.loads(active_manifest)
+    manifest["coverageSha256"] = hashlib.sha256(changed_coverage).hexdigest()
+    with pytest.raises(RuntimeError, match="exact 38-to-39 delta"):
+        inspect_4d_dependency_alignment(
+            _canonical(manifest),
+            changed_coverage,
+            lock,
+            baseline_manifest,
+            baseline_coverage,
+            baseline_lock,
+            binding,
+        )
+
+
+def test_4d_alignment_refuses_baseline_binding_lock_or_selected_manifest_drift() -> None:
+    inputs = list(_committed_alignment_inputs())
+    inputs[4] += b" "
+    with pytest.raises(RuntimeError, match="coverage digest differs"):
+        inspect_4d_dependency_alignment(*inputs)
+
+    inputs = list(_committed_alignment_inputs())
+    inputs[6] += b" "
+    with pytest.raises(RuntimeError, match="binding digest differs"):
+        inspect_4d_dependency_alignment(*inputs)
+
+    inputs = list(_committed_alignment_inputs())
+    inputs[2] += b"\n# changed"
+    with pytest.raises(RuntimeError, match="requirements lock digest differs"):
+        inspect_4d_dependency_alignment(*inputs)
+
+    inputs = list(_committed_alignment_inputs())
+    manifest = json.loads(inputs[0])
+    manifest["selectedManifestSha256"] = "0" * 64
+    inputs[0] = _canonical(manifest)
+    with pytest.raises(RuntimeError, match="selected manifest differs"):
+        inspect_4d_dependency_alignment(*inputs)
+
+
+def test_4d_alignment_refuses_an_extra_target_even_when_rehashed() -> None:
+    inputs = list(_committed_alignment_inputs())
+    coverage = json.loads(inputs[1])
+    coverage["targets"].append(copy.deepcopy(coverage["targets"][0]))
+    changed_coverage = _canonical(coverage)
+    manifest = json.loads(inputs[0])
+    manifest["coverageSha256"] = hashlib.sha256(changed_coverage).hexdigest()
+    inputs[0] = _canonical(manifest)
+    inputs[1] = changed_coverage
+
+    with pytest.raises(RuntimeError, match="target set differs"):
+        inspect_4d_dependency_alignment(*inputs)

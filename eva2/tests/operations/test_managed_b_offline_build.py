@@ -26,9 +26,9 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
         "deploy/living-core/Dockerfile": b"\n".join(
             (
                 b"FROM docker.io/library/python@sha256:" + b"1" * 64,
-                b"COPY requirements.lock ./requirements.lock",
+                b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
+                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
                 b"COPY src ./src",
                 b"COPY connector_sdk ./connector_sdk",
                 b"COPY alembic.ini ./alembic.ini",
@@ -36,7 +36,7 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
                 b"COPY schemas ./schemas",
             )
         ),
-        "requirements.lock": lock,
+        "requirements-4d.lock": lock,
         "src/eva/__init__.py": b"",
         "connector_sdk/__init__.py": b"",
         "alembic.ini": b"[alembic]",
@@ -142,6 +142,7 @@ def test_preflight_binds_candidate_source_and_exact_wheelhouse(
     assert receipt["status"] == "passed"
     assert receipt["network_used"] is False
     assert receipt["wheelhouse_wheel_count"] == 1
+    assert receipt["requirements_lock_path"] == "requirements-4d.lock"
     assert "Docker context" in receipt["nonclaims"][0]
 
 

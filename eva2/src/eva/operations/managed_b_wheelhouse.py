@@ -17,6 +17,26 @@ from typing import Any
 
 MAX_WHEEL_BYTES = 64 * 1024 * 1024
 MANIFEST_CONTRACT = "EvaManagedBWheelhouseManifest/v1"
+ACTIVE_MANIFEST_CONTRACT = "EvaManagedBWheelhouseManifest/v2"
+ALIGNED_COVERAGE_CONTRACT = "EvaManagedBAlignedWheelCoverage/v1"
+ACTIVE_COVERAGE_PATH = "release/managed-b-wheel-coverage-4d-amd64-v1.json"
+ACTIVE_LOCK_PATH = "requirements-4d.lock"
+BASELINE_MANIFEST_PATH = "release/managed-b-wheelhouse-amd64-v1.json"
+DEPENDENCY_BINDING_PATH = "release/4d-dependency-source-binding.json"
+STOCK_DBOS_WHEEL = "dbos-2.30.0-py3-none-any.whl"
+PATCHED_DBOS_WHEEL = "dbos-2.30.0+eva.1-py3-none-any.whl"
+PYNACL_AMD64_WHEEL = (
+    "pynacl-1.6.2-cp38-abi3-manylinux_2_26_x86_64."
+    "manylinux_2_28_x86_64.whl"
+)
+PATCHED_DBOS_ARTIFACT = (
+    "e20ca9a038eb2ae195b40484f3fa43c34e3f4c48797cabe6e5e387f01875b464",
+    266745,
+)
+PYNACL_AMD64_ARTIFACT = (
+    "8a66d6fb6ae7661c58995f9c6435bda2b1e68b54b598a6a10247bfcdadac996c",
+    1437614,
+)
 
 
 class MaterializedWheelhouse:
@@ -67,19 +87,60 @@ def _manifest(raw: bytes) -> dict[str, Any]:
     value = _json_object(raw, label="managed B wheelhouse manifest")
     if raw.rstrip(b"\n") != _canonical_json(value) or raw.endswith(b"\n\n"):
         raise RuntimeError("managed B wheelhouse manifest is not canonical")
-    expected = {
-        "contract",
-        "coveragePath",
-        "coverageSha256",
-        "expectedWheelCount",
-        "onlyBinary",
-        "requirementsLockSha256",
-        "target",
-    }
-    if set(value) != expected or value.get("contract") != MANIFEST_CONTRACT:
+    contract = value.get("contract")
+    if contract == MANIFEST_CONTRACT:
+        expected = {
+            "contract",
+            "coveragePath",
+            "coverageSha256",
+            "expectedWheelCount",
+            "onlyBinary",
+            "requirementsLockSha256",
+            "target",
+        }
+        if set(value) != expected:
+            raise RuntimeError("managed B wheelhouse manifest contract differs")
+        if value.get("coveragePath") != "release/python-wheel-coverage.json":
+            raise RuntimeError("managed B wheelhouse coverage path differs")
+    elif contract == ACTIVE_MANIFEST_CONTRACT:
+        expected = {
+            "baselineManifestPath",
+            "baselineManifestSha256",
+            "contract",
+            "coveragePath",
+            "coverageSha256",
+            "dependencyBindingPath",
+            "dependencyBindingSha256",
+            "expectedWheelCount",
+            "onlyBinary",
+            "requirementsLockPath",
+            "requirementsLockSha256",
+            "selectedManifestSha256",
+            "target",
+        }
+        if set(value) != expected:
+            raise RuntimeError("managed B wheelhouse manifest contract differs")
+        if (
+            value.get("baselineManifestPath") != BASELINE_MANIFEST_PATH
+            or value.get("coveragePath") != ACTIVE_COVERAGE_PATH
+            or value.get("dependencyBindingPath") != DEPENDENCY_BINDING_PATH
+            or value.get("requirementsLockPath") != ACTIVE_LOCK_PATH
+        ):
+            raise RuntimeError("managed B wheelhouse active input path differs")
+        _require_sha256(
+            value.get("baselineManifestSha256"),
+            label="wheelhouse baseline manifest sha256",
+        )
+        _require_sha256(
+            value.get("dependencyBindingSha256"),
+            label="wheelhouse dependency binding sha256",
+        )
+        _require_sha256(
+            value.get("selectedManifestSha256"),
+            label="wheelhouse selected manifest sha256",
+        )
+    else:
         raise RuntimeError("managed B wheelhouse manifest contract differs")
-    if value.get("coveragePath") != "release/python-wheel-coverage.json":
-        raise RuntimeError("managed B wheelhouse coverage path differs")
     _require_sha256(value.get("coverageSha256"), label="wheelhouse coverage sha256")
     _require_sha256(
         value.get("requirementsLockSha256"), label="wheelhouse requirements lock sha256"
@@ -97,6 +158,13 @@ def _manifest(raw: bytes) -> dict[str, Any]:
         "pythonVersion",
     } or not all(isinstance(item, str) and item for item in target.values()):
         raise RuntimeError("managed B wheelhouse target is invalid")
+    if contract == ACTIVE_MANIFEST_CONTRACT and target != {
+        "architecture": "amd64",
+        "os": "Ubuntu Server 24.04.4 LTS",
+        "pythonAbi": "cp312",
+        "pythonVersion": "3.12.14",
+    }:
+        raise RuntimeError("managed B active wheelhouse target differs")
     return value
 
 
@@ -108,11 +176,51 @@ def _expected_wheels(
     if _sha256(lock_raw) != manifest["requirementsLockSha256"]:
         raise RuntimeError("managed B wheelhouse requirements lock digest differs")
     coverage = _json_object(coverage_raw, label="wheel coverage")
-    if coverage.get("contract") != "Eva2PythonWheelCoverage/v1" or coverage.get("onlyBinary") is not True:
+    coverage_contract = coverage.get("contract")
+    if coverage.get("onlyBinary") is not True or coverage_contract not in {
+        "Eva2PythonWheelCoverage/v1",
+        ALIGNED_COVERAGE_CONTRACT,
+    }:
         raise RuntimeError("managed B wheelhouse coverage contract differs")
+    if coverage_contract == ALIGNED_COVERAGE_CONTRACT:
+        if set(coverage) != {
+            "baselineCoveragePath",
+            "baselineCoverageSha256",
+            "contract",
+            "dependencySourceBindingPath",
+            "dependencySourceBindingSha256",
+            "onlyBinary",
+            "requirementsLockPath",
+            "requirementsLockSha256",
+            "status",
+            "targets",
+        }:
+            raise RuntimeError("managed B aligned wheel coverage fields differ")
+        if (
+            coverage.get("baselineCoveragePath")
+            != "eva2/release/python-wheel-coverage.json"
+            or coverage.get("dependencySourceBindingPath")
+            != "eva2/release/4d-dependency-source-binding.json"
+            or coverage.get("requirementsLockPath") != "eva2/requirements-4d.lock"
+            or coverage.get("requirementsLockSha256")
+            != manifest["requirementsLockSha256"]
+            or coverage.get("status")
+            != "derived_from_hash_pinned_baseline_plus_4d_wheels_no_install_or_execution"
+        ):
+            raise RuntimeError("managed B aligned wheel coverage authority differs")
+        _require_sha256(
+            coverage.get("baselineCoverageSha256"),
+            label="aligned baseline coverage sha256",
+        )
+        _require_sha256(
+            coverage.get("dependencySourceBindingSha256"),
+            label="aligned dependency binding sha256",
+        )
     targets = coverage.get("targets")
     if not isinstance(targets, list):
         raise RuntimeError("managed B wheelhouse coverage targets are invalid")
+    if coverage_contract == ALIGNED_COVERAGE_CONTRACT and len(targets) != 1:
+        raise RuntimeError("managed B aligned wheel coverage target set differs")
     target = next(
         (
             item
@@ -126,6 +234,23 @@ def _expected_wheels(
     )
     if not isinstance(target, dict):
         raise RuntimeError("managed B wheelhouse target is absent from coverage")
+    if coverage_contract == ALIGNED_COVERAGE_CONTRACT and (
+        set(target)
+        != {
+            "acceptedWheelPlatforms",
+            "allArtifactsMatchedRequirementsLockHashes",
+            "architecture",
+            "artifacts",
+            "lockedPackageCount",
+            "os",
+            "pythonAbi",
+            "pythonVersion",
+            "resolvedWheelCount",
+        }
+        or target.get("acceptedWheelPlatforms")
+        != ["manylinux_2_28_x86_64", "manylinux2014_x86_64"]
+    ):
+        raise RuntimeError("managed B aligned wheel coverage target differs")
     artifacts = target.get("artifacts")
     if (
         target.get("lockedPackageCount") != manifest["expectedWheelCount"]
@@ -171,10 +296,116 @@ def _expected_wheels(
         expected[filename] = (digest, length)
     if list(expected) != sorted(expected):
         raise RuntimeError("managed B wheelhouse artifacts are not lexicographically ordered")
+    selected_manifest_sha256 = _sha256(
+        _canonical_json([[filename, digest] for filename, (digest, _length) in expected.items()])
+    )
+    if (
+        manifest["contract"] == ACTIVE_MANIFEST_CONTRACT
+        and selected_manifest_sha256 != manifest["selectedManifestSha256"]
+    ):
+        raise RuntimeError("managed B wheelhouse selected manifest differs")
     return expected, _sha256(_canonical_json([
         {"byteLength": length, "filename": filename, "sha256": digest}
         for filename, (digest, length) in expected.items()
     ]))
+
+
+def inspect_4d_dependency_alignment(
+    active_manifest_raw: bytes,
+    aligned_coverage_raw: bytes,
+    requirements_4d_raw: bytes,
+    baseline_manifest_raw: bytes,
+    baseline_coverage_raw: bytes,
+    baseline_lock_raw: bytes,
+    dependency_binding_raw: bytes,
+) -> dict[str, object]:
+    """Prove the exact 38-to-39 dependency-input transformation without wheel I/O."""
+
+    active_manifest = _manifest(active_manifest_raw)
+    if active_manifest["contract"] != ACTIVE_MANIFEST_CONTRACT:
+        raise RuntimeError("managed B active wheelhouse manifest must be v2")
+    if _sha256(baseline_manifest_raw) != active_manifest["baselineManifestSha256"]:
+        raise RuntimeError("managed B wheelhouse baseline manifest digest differs")
+    if _sha256(dependency_binding_raw) != active_manifest["dependencyBindingSha256"]:
+        raise RuntimeError("managed B wheelhouse dependency binding digest differs")
+    baseline_manifest = _manifest(baseline_manifest_raw)
+    if baseline_manifest["contract"] != MANIFEST_CONTRACT:
+        raise RuntimeError("managed B wheelhouse historical manifest must remain v1")
+    baseline, _baseline_tree = _expected_wheels(
+        baseline_coverage_raw, baseline_manifest, baseline_lock_raw
+    )
+    active, active_tree = _expected_wheels(
+        aligned_coverage_raw, active_manifest, requirements_4d_raw
+    )
+    coverage = _json_object(aligned_coverage_raw, label="aligned wheel coverage")
+    if (
+        _sha256(baseline_coverage_raw) != coverage["baselineCoverageSha256"]
+        or _sha256(dependency_binding_raw)
+        != coverage["dependencySourceBindingSha256"]
+    ):
+        raise RuntimeError("managed B aligned wheel coverage provenance differs")
+    expected_active = dict(baseline)
+    if expected_active.pop(STOCK_DBOS_WHEEL, None) is None:
+        raise RuntimeError("managed B historical wheel set omits stock DBOS")
+    expected_active[PATCHED_DBOS_WHEEL] = PATCHED_DBOS_ARTIFACT
+    expected_active[PYNACL_AMD64_WHEEL] = PYNACL_AMD64_ARTIFACT
+    expected_active = dict(sorted(expected_active.items()))
+    if len(baseline) != 38 or len(active) != 39 or active != expected_active:
+        raise RuntimeError("managed B aligned wheel set is not the exact 38-to-39 delta")
+    binding = _json_object(dependency_binding_raw, label="4D dependency binding")
+    standalone = binding.get("standaloneLock")
+    dependencies = binding.get("dependencies")
+    protocol = binding.get("wheelhouseInstallProtocol")
+    if (
+        binding.get("contract") != "Eva24DDependencySourceBinding/v1"
+        or not isinstance(standalone, dict)
+        or standalone.get("path") != "eva2/requirements-4d.lock"
+        or standalone.get("sha256") != active_manifest["requirementsLockSha256"]
+        or standalone.get("packageCount") != 39
+        or not isinstance(dependencies, dict)
+        or not isinstance(protocol, dict)
+    ):
+        raise RuntimeError("managed B 4D dependency authority differs")
+    dbos = dependencies.get("dbos")
+    pynacl = dependencies.get("pynacl")
+    if (
+        not isinstance(dbos, dict)
+        or not isinstance(pynacl, dict)
+        or dbos.get("outputWheel")
+        != {
+            "filename": PATCHED_DBOS_WHEEL,
+            "sha256": PATCHED_DBOS_ARTIFACT[0],
+            "mustBePresentInEveryTier1Wheelhouse": True,
+        }
+        or pynacl.get("version") != "1.6.2"
+    ):
+        raise RuntimeError("managed B 4D selected dependency differs")
+    targets = protocol.get("targets")
+    target = next(
+        (
+            item
+            for item in targets
+            if isinstance(item, dict) and item.get("architecture") == "amd64"
+        ),
+        None,
+    ) if isinstance(targets, list) else None
+    if (
+        not isinstance(target, dict)
+        or target.get("wheelCount") != 39
+        or target.get("selectedManifestSha256")
+        != active_manifest["selectedManifestSha256"]
+    ):
+        raise RuntimeError("managed B 4D selected manifest authority differs")
+    return {
+        "contract": "EvaManagedB4DDependencyAlignmentReceipt/v1",
+        "expected_wheel_count": 39,
+        "network_used": False,
+        "requirements_lock_sha256": active_manifest["requirementsLockSha256"],
+        "requirements_lock_path": active_manifest["requirementsLockPath"],
+        "selected_manifest_sha256": active_manifest["selectedManifestSha256"],
+        "status": "version_matched_4d_dependency_inputs",
+        "wheelhouse_tree_sha256": active_tree,
+    }
 
 
 def _wheel_bytes(path: Path, *, expected_size: int) -> str:
@@ -427,10 +658,13 @@ def expected_wheel_artifacts(
 
 
 __all__ = [
+    "ACTIVE_MANIFEST_CONTRACT",
+    "ALIGNED_COVERAGE_CONTRACT",
     "MANIFEST_CONTRACT",
     "MaterializedWheelhouse",
     "expected_wheel_artifacts",
     "inspect_wheelhouse_manifest",
+    "inspect_4d_dependency_alignment",
     "materialize_wheelhouse",
     "validate_wheelhouse",
 ]

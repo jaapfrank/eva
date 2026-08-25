@@ -30,9 +30,9 @@ def _archive(
         or b"\n".join(
             (
                 b"FROM docker.io/library/python@sha256:" + b"1" * 64,
-                b"COPY requirements.lock ./requirements.lock",
+                b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
+                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
                 b"COPY src ./src",
                 b"COPY connector_sdk ./connector_sdk",
                 b"COPY alembic.ini ./alembic.ini",
@@ -40,7 +40,7 @@ def _archive(
                 b"COPY schemas ./schemas",
             )
         ),
-        "eva2/requirements.lock": b"package==1 --hash=sha256:" + b"2" * 64,
+        "eva2/requirements-4d.lock": b"package==1 --hash=sha256:" + b"2" * 64,
         "eva2/src/eva/__init__.py": b"",
         "eva2/connector_sdk/__init__.py": b"",
         "eva2/alembic.ini": b"[alembic]",
@@ -90,7 +90,7 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
             "connector_sdk/__init__.py",
             "deploy/living-core/Dockerfile",
             "migrations/env.py",
-            "requirements.lock",
+            "requirements-4d.lock",
             "schemas/example.json",
             "src/eva/__init__.py",
         ]
@@ -106,6 +106,7 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
     assert receipt["network"] == "not_used"
     assert receipt["image_build"] == "not_started"
     assert receipt["external_inputs_required"] == ["wheelhouse"]
+    assert receipt["requirements_lock_path"] == "requirements-4d.lock"
     assert "secret" not in json.dumps(receipt).casefold()
 
 
@@ -142,7 +143,10 @@ def test_preparation_refuses_archive_with_missing_copy_input() -> None:
 
 
 def test_preparation_refuses_changed_copy_contract() -> None:
-    dockerfile = b"FROM python\nCOPY requirements.lock ./requirements.lock\nCOPY unknown ./unknown\n"
+    dockerfile = (
+        b"FROM python\nCOPY requirements-4d.lock ./requirements-4d.lock\n"
+        b"COPY unknown ./unknown\n"
+    )
     run, _ = _runner(_archive(dockerfile=dockerfile))
 
     with pytest.raises(RuntimeError, match="COPY inputs differ"):
@@ -153,9 +157,9 @@ def test_preparation_refuses_online_or_unsealed_package_install() -> None:
     dockerfile = b"\n".join(
         (
             b"FROM docker.io/library/python@sha256:" + b"1" * 64,
-            b"COPY requirements.lock ./requirements.lock",
+            b"COPY requirements-4d.lock ./requirements-4d.lock",
             b"COPY wheelhouse ./wheelhouse",
-            b"RUN python -m pip install --require-hashes -r requirements.lock",
+            b"RUN python -m pip install --require-hashes -r requirements-4d.lock",
             b"COPY src ./src",
             b"COPY connector_sdk ./connector_sdk",
             b"COPY alembic.ini ./alembic.ini",
@@ -166,6 +170,26 @@ def test_preparation_refuses_online_or_unsealed_package_install() -> None:
     run, _ = _runner(_archive(dockerfile=dockerfile))
 
     with pytest.raises(RuntimeError, match="exact offline pip install"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_the_historical_requirements_lock_as_build_input() -> None:
+    dockerfile = b"\n".join(
+        (
+            b"FROM docker.io/library/python@sha256:" + b"1" * 64,
+            b"COPY requirements.lock ./requirements.lock",
+            b"COPY wheelhouse ./wheelhouse",
+            b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
+            b"COPY src ./src",
+            b"COPY connector_sdk ./connector_sdk",
+            b"COPY alembic.ini ./alembic.ini",
+            b"COPY migrations ./migrations",
+            b"COPY schemas ./schemas",
+        )
+    )
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="COPY inputs differ"):
         prepare_candidate_build_inputs(COMMIT, runner=run)
 
 
@@ -180,9 +204,9 @@ def test_preparation_refuses_an_unpinned_or_ambiguous_base_image() -> None:
     dockerfile = b"\n".join(
         (
                 b"FROM python:3.12",
-                b"COPY requirements.lock ./requirements.lock",
+                b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock",
+                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
                 b"COPY src ./src",
             b"COPY connector_sdk ./connector_sdk",
             b"COPY alembic.ini ./alembic.ini",

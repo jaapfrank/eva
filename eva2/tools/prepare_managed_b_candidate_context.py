@@ -26,12 +26,13 @@ GIT_BINARY = "/usr/bin/git"
 CONTEXT_TREE = "eva2"
 MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
 COMMIT_PATTERN = re.compile(r"[0-9a-f]{40}")
+RUNTIME_REQUIREMENTS_LOCK = "requirements-4d.lock"
 BASE_IMAGE_PATTERN = re.compile(
     r"FROM\s+docker\.io/library/python@(?P<digest>sha256:[0-9a-f]{64})"
 )
 EXPECTED_COPY_SOURCES = frozenset(
     {
-        "requirements.lock",
+        RUNTIME_REQUIREMENTS_LOCK,
         "src",
         "connector_sdk",
         "alembic.ini",
@@ -42,7 +43,7 @@ EXPECTED_COPY_SOURCES = frozenset(
 EXTERNAL_COPY_SOURCES = frozenset({"wheelhouse"})
 EXPECTED_OFFLINE_PIP_INSTALL = (
     "RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: "
-    "--find-links=./wheelhouse --require-hashes -r requirements.lock"
+    f"--find-links=./wheelhouse --require-hashes -r {RUNTIME_REQUIREMENTS_LOCK}"
 )
 
 
@@ -73,6 +74,7 @@ class CandidateBuildInputs:
                 "The required wheelhouse must be separately sealed before a later offline build.",
                 "This receipt does not prove hermetic or reproducible image construction.",
             ],
+            "requirements_lock_path": RUNTIME_REQUIREMENTS_LOCK,
             "requirements_lock_sha256": self.requirements_lock_sha256,
             "source_archive_sha256": self.source_archive_sha256,
             "source_commit": self.source_commit,
@@ -94,7 +96,7 @@ def validate_candidate_build_inputs(
     if _canonical_archive(files, source_date_epoch=inputs.source_date_epoch) != inputs.archive_bytes:
         raise RuntimeError("candidate source archive is not canonical")
     dockerfile_entry = files.get("deploy/living-core/Dockerfile")
-    requirements_lock_entry = files.get("requirements.lock")
+    requirements_lock_entry = files.get(RUNTIME_REQUIREMENTS_LOCK)
     if dockerfile_entry is None or requirements_lock_entry is None:
         raise RuntimeError("candidate archive omits its Dockerfile or requirements lock")
     dockerfile, requirements_lock = dockerfile_entry[0], requirements_lock_entry[0]
@@ -292,7 +294,7 @@ def prepare_candidate_build_inputs(
     )
     files = _archive_files(raw_archive)
     dockerfile_entry = files.get("deploy/living-core/Dockerfile")
-    requirements_lock_entry = files.get("requirements.lock")
+    requirements_lock_entry = files.get(RUNTIME_REQUIREMENTS_LOCK)
     dockerfile = dockerfile_entry[0] if dockerfile_entry is not None else None
     requirements_lock = (
         requirements_lock_entry[0] if requirements_lock_entry is not None else None

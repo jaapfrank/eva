@@ -10,9 +10,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /opt/eva
 
-COPY requirements.lock ./requirements.lock
+COPY requirements-4d.lock ./requirements-4d.lock
 COPY wheelhouse ./wheelhouse
-RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements.lock
+RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock
 
 COPY src ./src
 COPY connector_sdk ./connector_sdk

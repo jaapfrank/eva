@@ -16,6 +16,7 @@ from eva.operations.managed_b_wheelhouse import (
 )
 from tools.prepare_managed_b_candidate_context import (
     CandidateBuildInputs,
+    RUNTIME_REQUIREMENTS_LOCK,
     validate_candidate_build_inputs,
 )
 
@@ -79,7 +80,7 @@ def validate_offline_candidate_inputs(
     """Bind one B01 source archive to one B02b-validated local wheel set."""
 
     source_files = validate_candidate_build_inputs(candidate)
-    source_lock = source_files["requirements.lock"][0]
+    source_lock = source_files[RUNTIME_REQUIREMENTS_LOCK][0]
     if source_lock != requirements_lock_raw:
         raise RuntimeError("offline candidate wheelhouse lock differs from source lock")
     validated_wheelhouse = _validate_materialized_wheelhouse(
@@ -102,6 +103,7 @@ def validate_offline_candidate_inputs(
             "No B configuration, container, volume, secret, or live service was opened.",
         ],
         "requirements_lock_sha256": candidate.requirements_lock_sha256,
+        "requirements_lock_path": RUNTIME_REQUIREMENTS_LOCK,
         "status": "passed",
         "wheelhouse_tree_sha256": validated_wheelhouse["wheelhouse_tree_sha256"],
         "wheelhouse_wheel_count": validated_wheelhouse["expected_wheel_count"],

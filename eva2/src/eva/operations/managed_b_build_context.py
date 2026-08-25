@@ -25,6 +25,7 @@ from eva.operations.managed_b_wheelhouse import (
 )
 from tools.prepare_managed_b_candidate_context import (
     CandidateBuildInputs,
+    RUNTIME_REQUIREMENTS_LOCK,
     validate_candidate_build_inputs,
 )
 
@@ -231,7 +232,7 @@ def materialize_build_context(
     """Materialize exact B01+B02b bytes and bind B03c without using Docker."""
 
     source_files = validate_candidate_build_inputs(candidate)
-    lock = source_files["requirements.lock"][0]
+    lock = source_files[RUNTIME_REQUIREMENTS_LOCK][0]
     wheel_receipt = validate_offline_candidate_inputs(
         candidate,
         wheelhouse_manifest_raw,
@@ -296,6 +297,7 @@ def materialize_build_context(
             "No B configuration, container, volume, secret, or live service was opened.",
         ],
         "requirements_lock_sha256": candidate.requirements_lock_sha256,
+        "requirements_lock_path": RUNTIME_REQUIREMENTS_LOCK,
         "status": "materialized",
         "wheelhouse_tree_sha256": wheel_receipt["wheelhouse_tree_sha256"],
     }

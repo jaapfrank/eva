@@ -1,4 +1,4 @@
-"""Validate one diagnostic pre-4D managed-B input authority.
+"""Validate one version-matched managed-B dependency-input authority.
 
 The source archive remains the authority for bytes.  This module only proves
 that the selected commit contains the exact runtime registry, historical 4D
@@ -17,6 +17,7 @@ from pathlib import PurePosixPath
 import re
 from typing import Any, Mapping
 
+from eva.operations.managed_b_wheelhouse import inspect_4d_dependency_alignment
 from tools.prepare_managed_b_candidate_context import (
     prepare_candidate_build_inputs,
     validate_candidate_build_inputs,
@@ -45,7 +46,9 @@ _EXPECTED_INPUT_PATHS = (
     "release/formats/eva-build-provenance-v1.schema.json",
     "release/formats/eva-release-manifest-v1.schema.json",
     "release/license-inventory.json",
+    "release/managed-b-wheel-coverage-4d-amd64-v1.json",
     "release/managed-b-wheelhouse-amd64-v1.json",
+    "release/managed-b-wheelhouse-amd64-v2.json",
     "release/oci-image-slots.json",
     "release/platform-lock.json",
     "release/python-wheel-coverage.json",
@@ -59,7 +62,10 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/contracts/manifest.json",
     "schemas/portable/generic-reader-output-schema-manifest-v1.json",
     "schemas/portable/record-schema-manifest-v1.json",
+    "src/eva/operations/managed_b_build_context.py",
+    "src/eva/operations/managed_b_offline_build.py",
     "src/eva/operations/managed_b_release_inputs.py",
+    "src/eva/operations/managed_b_wheelhouse.py",
     "tools/check_4d_freeze.py",
     "tools/prepare_managed_b_candidate_context.py",
 )
@@ -123,9 +129,10 @@ _EXPECTED_TEST_PATHS = (
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
-    "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, or production readiness.",
+    "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, another capability provider, or production readiness.",
     "The pinned test files are inputs only; this authority does not prove collection, execution, results, skips, xfails, environment, toolchain, or complete regression coverage.",
-    "The stock 38-wheel baseline and the current 39-package 4D dependency authority are both pinned because they are not yet one version-matched Managed-B build input; P1.1 remains blocked on that alignment.",
+    "The active amd64 dependency inputs are version-matched to requirements-4d.lock; the stock 38-wheel authority remains historical and is not a fallback build input.",
+    "The 4D installer environment, exact installer command, post-install attestations, physical 39-wheel wheelhouse, and runtime import remain separate open gates.",
     "Artifact-proxy provenance, two-builder reproducibility, immutable Compose image binding, SBOM, vulnerability evidence, signatures, trust root, and full-stack restart remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 66-contract registry.",
 )
@@ -517,7 +524,7 @@ def _validate_static_archive_inputs(
     if (
         authority.get("contract") != "EvaManagedBReleaseInputAuthority/v1"
         or authority.get("schemaVersion") != 1
-        or authority.get("status") != "diagnostic_pre_4d_static_inputs"
+        or authority.get("status") != "version_matched_4d_dependency_static_inputs"
         or authority.get("nonClaims") != list(_NONCLAIMS)
     ):
         raise RuntimeError("managed B release authority header differs")
@@ -533,6 +540,35 @@ def _validate_static_archive_inputs(
         expected_paths=_EXPECTED_TEST_PATHS,
         label="release test",
     )
+    alignment = inspect_4d_dependency_alignment(
+        _file(
+            files,
+            "release/managed-b-wheelhouse-amd64-v2.json",
+            label="active wheelhouse manifest",
+        ),
+        _file(
+            files,
+            "release/managed-b-wheel-coverage-4d-amd64-v1.json",
+            label="aligned wheel coverage",
+        ),
+        _file(files, "requirements-4d.lock", label="4D requirements lock"),
+        _file(
+            files,
+            "release/managed-b-wheelhouse-amd64-v1.json",
+            label="historical wheelhouse manifest",
+        ),
+        _file(
+            files,
+            "release/python-wheel-coverage.json",
+            label="historical wheel coverage",
+        ),
+        _file(files, "requirements.lock", label="historical requirements lock"),
+        _file(
+            files,
+            "release/4d-dependency-source-binding.json",
+            label="4D dependency binding",
+        ),
+    )
     registry = authority["contractRegistry"]
     if not isinstance(registry, dict):
         raise RuntimeError("managed B contract registry authority is invalid")
@@ -541,13 +577,14 @@ def _validate_static_archive_inputs(
     return {
         "authority_sha256": _sha256(authority_raw),
         "contract": "EvaManagedBReleaseInputReceipt/v1",
+        "dependency_alignment": alignment,
         **registry_receipt,
         "migration_head": migration_head,
         "network_used": False,
         "nonclaims": list(_NONCLAIMS),
         "required_input_count": len(inputs),
         "required_test_count": len(tests),
-        "status": "diagnostic_inputs_bound",
+        "status": "version_matched_dependency_inputs_bound",
     }
 
 
@@ -562,7 +599,7 @@ def prepare_managed_b_release_inputs(commit: str) -> dict[str, object]:
         **receipt,
         "source_archive_sha256": candidate.source_archive_sha256,
         "source_commit": candidate.source_commit,
-        "status": "diagnostic_pre_4d_inputs_bound_not_built_or_deployed",
+        "status": "version_matched_4d_dependency_inputs_bound_not_built_or_deployed",
     }
 
 
