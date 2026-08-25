@@ -1,10 +1,13 @@
 # Eva 2: wat werkt en wat nog moet
 
-Bijgewerkt: 24 augustus 2026, 12:16 CEST.
+Bijgewerkt: 25 augustus 2026.
 
 ## Wat Eva 2 nu daadwerkelijk kan
 
 - Een normaal gesprek voeren vanuit één configureerbare identiteit.
+- Een door het model voorgestelde keten van maximaal zes lees- en actiestappen
+  streng controleren en volledig in PostgreSQL bewaren zonder al iets uit te
+  voeren; na een herstart wordt exact hetzelfde plan teruggelezen.
 - Recente gesprekken uit PostgreSQL meenemen zonder na een herstart opnieuw te
   beginnen.
 - Persoonlijke feiten, voorkeuren en correcties via Hindsight onthouden.
@@ -54,6 +57,9 @@ Bijgewerkt: 24 augustus 2026, 12:16 CEST.
 - De menselijke gesprekservaring is nog niet door jou geaccepteerd; vooral
   natuurlijkheid, initiatief en bondigheid moeten in echte Telegramgesprekken
   stabiel blijken.
+- De opgeslagen meerstappenketen kan nog niet door een geleasede worker stap
+  voor stap worden uitgevoerd. Claim/release, leaseherstel en daarna de algemene
+  runner met echte Home Assistant-readback zijn de volgende losse bouwstukken.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,
   geen officiële zevendaagse praktijktest. Na het bevriezen van de echte
   kandidaat begint een nieuwe klok van zeven dagen.

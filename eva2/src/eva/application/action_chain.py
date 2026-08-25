@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 import re
-from typing import Literal
+from typing import Any, Literal
 
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
@@ -149,6 +149,16 @@ class ActionToolCatalog:
             for descriptor in self._descriptors
             if descriptor.enabled
         )
+
+    def authority_snapshot(self) -> dict[str, JsonValue]:
+        """Return the complete sanitized authority used to validate one plan."""
+
+        return {
+            "catalog_sha256": self.sha256,
+            "descriptors": [
+                descriptor.authority_payload() for descriptor in self._descriptors
+            ],
+        }
 
     def require(self, operation: str) -> ActionToolDescriptor:
         try:
@@ -312,11 +322,173 @@ def action_chain_step_operation_id(plan: ValidatedPlan, step_id: str) -> str:
     return f"action-chain-step:{digest[:48]}"
 
 
+def validate_admitted_action_chain(
+    decision: ModelDecision,
+    plan: ValidatedPlan,
+    authority_snapshot: dict[str, JsonValue],
+) -> str:
+    """Revalidate the exact model decision, plan and full catalog binding."""
+
+    if decision.episode_id != plan.episode_id or decision.generation != plan.generation:
+        raise ActionChainValidationError(
+            "admitted decision and plan use another episode generation"
+        )
+    if canonical_sha256(decision) != plan.model_decision_sha256:
+        raise ActionChainValidationError("admitted model decision hash differs")
+    if len(decision.actions) != len(plan.steps):
+        raise ActionChainValidationError("admitted action and step counts differ")
+    for action, step in zip(decision.actions, plan.steps, strict=True):
+        expected_kind = "read" if action.kind == "request_read" else "effect"
+        if (
+            action.action_id != step.step_id
+            or action.operation != step.operation
+            or action.resource != step.resource
+            or action.depends_on != step.depends_on
+            or expected_kind != step.kind
+        ):
+            raise ActionChainValidationError(
+                "admitted model action differs from its validated step"
+            )
+    if (
+        plan.maximum_connector_calls != len(plan.steps)
+        or plan.maximum_visible_deliveries != 0
+    ):
+        raise ActionChainValidationError("admitted plan budget shape differs")
+
+    descriptors, catalog_sha256 = _validate_authority_snapshot(authority_snapshot)
+    for step in plan.steps:
+        descriptor = descriptors.get(step.operation)
+        if descriptor is None or descriptor["enabled"] is not True:
+            raise ActionChainValidationError(
+                "admitted step is absent or disabled in the authority snapshot"
+            )
+        expected_manifest = f"capability:plan:{canonical_sha256({
+            'catalog_sha256': catalog_sha256,
+            'descriptor_manifest_id': descriptor['capability_manifest_id'],
+        })}"
+        if step.capability_manifest_id != expected_manifest:
+            raise ActionChainValidationError(
+                "admitted step differs from the complete catalog authority"
+            )
+        if (
+            step.kind != descriptor["effect_class"]
+            or step.input_schema_sha256 != descriptor["input_schema_sha256"]
+            or step.output_schema_sha256 != descriptor["output_schema_sha256"]
+            or step.proof_floor != descriptor["proof_floor"]
+            or plan.policy_sha256 != descriptor["policy_scope_sha256"]
+        ):
+            raise ActionChainValidationError(
+                "admitted step metadata differs from its tool authority"
+            )
+    return catalog_sha256
+
+
+def validate_action_chain_requests(
+    decision: ModelDecision, catalog: ActionToolCatalog
+) -> None:
+    """Recheck exact request arguments at the durable admission boundary."""
+
+    for action in decision.actions:
+        descriptor = catalog.require(action.operation)
+        expected_kind = "read" if action.kind == "request_read" else "effect"
+        if descriptor.effect_class != expected_kind:
+            raise ActionChainValidationError(
+                "admitted request kind differs from the host tool descriptor"
+            )
+        _reject_unsafe_plan_input(action.resource)
+        _reject_unsafe_plan_input(action.arguments)
+        try:
+            descriptor.validate_request(action.resource, action.arguments)
+        except Exception as error:
+            raise ActionChainValidationError(
+                "admitted request differs from the tool schema or resource scope"
+            ) from error
+
+
 def _operation_policies(policy: PolicyPack) -> dict[str, EffectPolicy]:
     operations = [item.operation for item in policy.effect_policies]
     if len(operations) != len(set(operations)):
         raise ActionChainValidationError("active policy operations must be unique")
     return {item.operation: item for item in policy.effect_policies}
+
+
+def _validate_authority_snapshot(
+    snapshot: dict[str, JsonValue],
+) -> tuple[dict[str, dict[str, Any]], str]:
+    validate_json_value(snapshot)
+    if set(snapshot) != {"catalog_sha256", "descriptors"}:
+        raise ActionChainValidationError("authority snapshot fields differ")
+    catalog_sha256 = snapshot["catalog_sha256"]
+    raw_descriptors = snapshot["descriptors"]
+    if not isinstance(catalog_sha256, str) or not _SHA256.fullmatch(catalog_sha256):
+        raise ActionChainValidationError("authority snapshot catalog hash is invalid")
+    if (
+        not isinstance(raw_descriptors, list)
+        or not 1 <= len(raw_descriptors) <= 64
+    ):
+        raise ActionChainValidationError("authority snapshot descriptor count is invalid")
+
+    required = {
+        "capability_manifest_id",
+        "effect_class",
+        "enabled",
+        "input_schema_sha256",
+        "operation",
+        "output_schema_sha256",
+        "permission_class",
+        "policy_scope_sha256",
+        "proof_floor",
+        "validator_sha256",
+    }
+    descriptors: dict[str, dict[str, Any]] = {}
+    previous_operation: str | None = None
+    for raw in raw_descriptors:
+        if not isinstance(raw, dict) or set(raw) != required:
+            raise ActionChainValidationError("authority descriptor fields differ")
+        operation = raw["operation"]
+        effect_class = raw["effect_class"]
+        enabled = raw["enabled"]
+        permission_class = raw["permission_class"]
+        proof_floor = raw["proof_floor"]
+        if not isinstance(operation, str) or not _IDENTIFIER.fullmatch(operation):
+            raise ActionChainValidationError("authority operation is invalid")
+        if previous_operation is not None and operation <= previous_operation:
+            raise ActionChainValidationError(
+                "authority descriptors are not uniquely sorted"
+            )
+        if effect_class not in {"read", "effect"} or not isinstance(enabled, bool):
+            raise ActionChainValidationError("authority effect class is invalid")
+        if (
+            not isinstance(permission_class, str)
+            or not _IDENTIFIER.fullmatch(permission_class)
+            or not isinstance(proof_floor, str)
+            or not proof_floor.strip()
+            or len(proof_floor) > 512
+        ):
+            raise ActionChainValidationError("authority policy metadata is invalid")
+        for field in (
+            "input_schema_sha256",
+            "output_schema_sha256",
+            "policy_scope_sha256",
+            "validator_sha256",
+        ):
+            value = raw[field]
+            if not isinstance(value, str) or not _SHA256.fullmatch(value):
+                raise ActionChainValidationError("authority digest is invalid")
+        descriptor_manifest_id = raw["capability_manifest_id"]
+        manifest_payload = {key: raw[key] for key in required - {"capability_manifest_id"}}
+        expected_descriptor_id = (
+            f"capability:sha256:{canonical_sha256(manifest_payload)}"
+        )
+        if descriptor_manifest_id != expected_descriptor_id:
+            raise ActionChainValidationError(
+                "authority descriptor content address differs"
+            )
+        descriptors[operation] = raw
+        previous_operation = operation
+    if canonical_sha256(raw_descriptors) != catalog_sha256:
+        raise ActionChainValidationError("authority catalog content address differs")
+    return descriptors, catalog_sha256
 
 
 def _reject_unsafe_plan_input(value: JsonValue) -> None:
@@ -352,5 +524,7 @@ __all__ = [
     "ActionToolDescriptor",
     "action_chain_step_operation_id",
     "action_chain_thread_id",
+    "validate_admitted_action_chain",
+    "validate_action_chain_requests",
     "validate_model_decision",
 ]

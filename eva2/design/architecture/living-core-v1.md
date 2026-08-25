@@ -152,8 +152,15 @@ flowchart TD
   het bestaande `ValidatedPlan/v1`. Een effect vereist een voorafgaande
   afhankelijke read. Schemas, resources, proof floors, budgets en de volledige
   catalogus- en validatorversie komen uitsluitend van de host. URI's, secrets
-  en uitvoerbare instructies uit modelargumenten worden geweigerd. MC01 stopt
-  na validatie; duurzame opslag en uitvoering volgen in afzonderlijke stappen.
+  en uitvoerbare instructies uit modelargumenten worden geweigerd. MC02a legt
+  het gevalideerde plan, de stappen, de exacte ruwe modelbeslissing, de volledige
+  gesaneerde catalogus, een parent/child-checkpoint per stap en precies één
+  pending continuation atomair vast. Alleen het append-only admissionevent
+  bevat de modelargumenten; `plans` en `plan_steps` houden de bestaande strikte
+  `ValidatedPlan/v1`- en `ValidatedStep`-vorm. Herladen controleert alle hashes,
+  deterministische UUID's, beginstates, scope, retentie en de volledige
+  checkpointprojectie. MC02a claimt of voert nog niets uit; attention-leases,
+  retries en hervatting volgen afzonderlijk in MC02b.
 - Voor een externe call wordt `TOOL_PREPARED` committed. De call draait buiten
   de SQL-transactie. Daarna wordt `TOOL_EXECUTED` of een exacte fout committed.
 - Verificatie is asynchroon. Polling blokkeert de event-loop niet, heeft een
@@ -381,7 +388,8 @@ flowchart TD
 | Cross-channel persoonscontinuïteit | definitieve Telegram-ingress, `src/eva/adapters/projection/hindsight.py`, `src/eva/application/conversation.py` en de geauthenticeerde web/core-grens | Telegram bindt afzender plus chat vóór opslag aan één principal; Hindsight bewaart bevestigde directe voorkeuren onder die persoon; een ander kanaal levert dezelfde principal en leest uitsluitend die scope | Native M01 live groen op v53: Telegramvoorkeur A werd in een nieuwe webconversatie zonder herhaling herinnerd, terwijl de tegengestelde Telegramvoorkeur van persoon B nul geselecteerde memories had |
 | Operationele tijdlijn | `src/eva/adapters/postgres/operational_timeline.py` | Append-only events, CAS-cursor, retry en rehydratie | Werkend in echte PostgreSQL 16.13 en B-container |
 | Tijdlijnschema | `migrations/versions/4e_0001_operational_timeline.py` | Tabellen, RLS, grants en DB-afgedwongen eventimmutability | Gemigreerd in B; downgrade en disposable gate bewezen |
-| Algemene meerstapsplanning | `src/eva/contracts/planning.py` en `src/eva/application/action_chain.py` | Bestaande `ModelDecision` en `ValidatedPlan` hergebruiken; mixed read→effect, maximaal zes topologische stappen, exacte episode/generation-, policy-, budget-, resource-, schema-, proof- en volledige catalogusbinding; stabiele thread- en step-operation-ID's | MC01 groen na onafhankelijke review en 51 gerichte regressies; nog geen PostgreSQL-write, runner, model-, Telegram-, HA- of crashbewijs |
+| Algemene meerstapsplanning | `src/eva/contracts/planning.py` en `src/eva/application/action_chain.py` | Bestaande `ModelDecision` en `ValidatedPlan` hergebruiken; mixed read→effect, maximaal zes topologische stappen, exacte episode/generation-, policy-, budget-, resource-, schema-, proof- en volledige catalogusbinding; stabiele thread- en step-operation-ID's | MC01 groen na onafhankelijke review en 51 gerichte regressies; nog geen runner-, model-, Telegram-, HA- of crashbewijs |
+| Duurzame meerstapsadmission | `src/eva/adapters/postgres/action_chain_ledger.py`, `src/eva/adapters/postgres/operational_timeline.py` en bestaande `plans`, `plan_steps`, `attention_items`, events en checkpoints | Eén atomaire admission met exact model-/plan-/catalogusbewijs, deterministische plan- en stap-ID's, parent/child-herstelcursors en één pending vervolgtaak; strikt scope- en corruptiegevoelig herladen | MC02a groen op echte disposable PostgreSQL 16.13, inclusief geforceerde rollback, twee gelijktijdige writers, nieuwe engine, RLS en onafhankelijke herreview; nul read/effect-intents. Lease/claim/retry blijft MC02b |
 | Toolbewijs | `src/eva/application/orchestration.py` plus `src/eva/adapters/connectors/home_assistant.py` | Prepare, execute buiten transactie, async readback en deadline | Werkend in live B en vanuit het gewone gesprekspad bewezen |
 | Passieve zintuigen en vrije wil | `src/eva/application/sensory.py`, `src/eva/application/free_will.py`, `src/eva/adapters/connectors/home_assistant_events.py` en `src/eva/adapters/postgres/sensory_events.py` | Kanaalneutrale prikkel, duurzame minimale waarneming, deterministische ruisfilter en alleen voor relevante gebeurtenissen Hindsight-context plus modelbeslissing; respond maakt een duurzame, geleasede expressie die pas na apart transportbewijs sluit | Echte Home Assistant-websocketroute bewezen: ruis niet opgeslagen, gewone lampbediening zonder recall/model stilgehouden, rook-, water- en gaswaarschuwingen natuurlijk geformuleerd en herhaling door cooldown onderdrukt |
 | Proactieve Telegram-uitgang | `src/eva/adapters/connectors/telegram.py`, `src/eva/application/free_will.py` en `deploy/living-core/telegram-proactive.compose.yml` | Outbound-only sendMessage buiten PostgreSQL, providerreceipt daarna committen; een verlopen claim zonder bewijs wordt `expression_ambiguous/needs_help` en nooit automatisch opnieuw verstuurd; secretbestand en één expliciet goedgekeurd chat-ID | Contractpad groen; echte Home Assistant-gaswaarschuwing bleef na een corecrash zowel direct als na lease-expiry gesloten en eindigde zonder resend in durable menselijke hulpstatus; echte Telegram-send staat uit tot bestemming en nieuw Eva 2-secret expliciet zijn goedgekeurd |

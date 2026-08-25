@@ -12,6 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.engine import Engine
 
+from eva.application.episode_repository import TransactionRequired
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -232,57 +233,26 @@ class PostgresOperationalTimeline:
         phase: str = "admitted",
         status: CheckpointStatus = "active",
         operation_id: str | None = None,
+        deadline: datetime | None = None,
     ) -> CheckpointState:
-        _require_identifier(thread_id, "thread_id")
-        _require_identifier(checkpoint_id, "checkpoint_id")
-        _require_identifier(event_type, "event_type")
-        _require_identifier(phase, "phase")
-        if operation_id is not None:
-            _require_identifier(operation_id, "operation_id")
-        _require_utc_second(occurred_at, "occurred_at")
-        state = CheckpointState(
-            thread_id=thread_id,
-            checkpoint_id=checkpoint_id,
-            operation_id=operation_id,
-            phase=phase,
-            status=status,
-            retry_count=0,
-            last_error_fingerprint=None,
-            deadline=None,
-            revision=1,
-            updated_at=occurred_at,
-        )
-        payload = _checkpoint_payload(state, data)
         with self._engine.begin() as connection:
             self._scope(connection)
             try:
-                connection.execute(
-                    sa.insert(operational_checkpoints).values(
-                        tenant_id=self._scope_value.tenant_id,
-                        installation_id=self._scope_value.installation_id,
-                        thread_id=thread_id,
-                        checkpoint_id=checkpoint_id,
-                        operation_id=operation_id,
-                        phase=state.phase,
-                        status=state.status,
-                        retry_count=0,
-                        last_error_fingerprint=None,
-                        deadline=None,
-                        revision=1,
-                        updated_at=occurred_at,
-                    )
-                )
-                self._insert_event(
+                return insert_initial_timeline_thread(
                     connection,
-                    state=state,
-                    sequence=1,
-                    event_type=event_type,
-                    payload=payload,
+                    self._scope_value,
+                    thread_id=thread_id,
+                    checkpoint_id=checkpoint_id,
                     occurred_at=occurred_at,
+                    data=data,
+                    event_type=event_type,
+                    phase=phase,
+                    status=status,
+                    operation_id=operation_id,
+                    deadline=deadline,
                 )
             except sa.exc.IntegrityError as error:
                 raise CheckpointConflict("thread already exists") from error
-        return state
 
     def transition(
         self,
@@ -632,21 +602,112 @@ class PostgresOperationalTimeline:
         payload: dict[str, JsonValue],
         occurred_at: datetime,
     ) -> None:
-        connection.execute(
-            sa.insert(operational_events).values(
-                tenant_id=self._scope_value.tenant_id,
-                installation_id=self._scope_value.installation_id,
-                event_id=uuid4(),
-                thread_id=state.thread_id,
-                sequence=sequence,
-                checkpoint_id=state.checkpoint_id,
-                operation_id=state.operation_id,
-                event_type=event_type,
-                payload=payload,
-                payload_sha256=bytes.fromhex(canonical_sha256(payload)),
-                occurred_at=occurred_at,
-            )
+        _insert_event_in_transaction(
+            connection,
+            self._scope_value,
+            state=state,
+            sequence=sequence,
+            event_type=event_type,
+            payload=payload,
+            occurred_at=occurred_at,
         )
+
+
+def insert_initial_timeline_thread(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    thread_id: str,
+    checkpoint_id: str,
+    occurred_at: datetime,
+    data: dict[str, JsonValue],
+    event_type: str = "INGRESS_COMMITTED",
+    phase: str = "admitted",
+    status: CheckpointStatus = "active",
+    operation_id: str | None = None,
+    deadline: datetime | None = None,
+) -> CheckpointState:
+    """Insert one event and checkpoint inside the caller's root transaction."""
+
+    if not connection.in_transaction() or connection.in_nested_transaction():
+        raise TransactionRequired()
+    _require_identifier(thread_id, "thread_id")
+    _require_identifier(checkpoint_id, "checkpoint_id")
+    _require_identifier(event_type, "event_type")
+    _require_identifier(phase, "phase")
+    if operation_id is not None:
+        _require_identifier(operation_id, "operation_id")
+    _require_utc_second(occurred_at, "occurred_at")
+    if deadline is not None:
+        _require_utc_second(deadline, "deadline")
+        if deadline < occurred_at:
+            raise ValueError("checkpoint deadline cannot precede admission")
+    state = CheckpointState(
+        thread_id=thread_id,
+        checkpoint_id=checkpoint_id,
+        operation_id=operation_id,
+        phase=phase,
+        status=status,
+        retry_count=0,
+        last_error_fingerprint=None,
+        deadline=deadline,
+        revision=1,
+        updated_at=occurred_at,
+    )
+    payload = _checkpoint_payload(state, data)
+    connection.execute(
+        sa.insert(operational_checkpoints).values(
+            tenant_id=scope.tenant_id,
+            installation_id=scope.installation_id,
+            thread_id=thread_id,
+            checkpoint_id=checkpoint_id,
+            operation_id=operation_id,
+            phase=state.phase,
+            status=state.status,
+            retry_count=0,
+            last_error_fingerprint=None,
+            deadline=deadline,
+            revision=1,
+            updated_at=occurred_at,
+        )
+    )
+    _insert_event_in_transaction(
+        connection,
+        scope,
+        state=state,
+        sequence=1,
+        event_type=event_type,
+        payload=payload,
+        occurred_at=occurred_at,
+    )
+    return state
+
+
+def _insert_event_in_transaction(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    state: CheckpointState,
+    sequence: int,
+    event_type: str,
+    payload: dict[str, JsonValue],
+    occurred_at: datetime,
+) -> None:
+    connection.execute(
+        sa.insert(operational_events).values(
+            tenant_id=scope.tenant_id,
+            installation_id=scope.installation_id,
+            event_id=uuid4(),
+            thread_id=state.thread_id,
+            sequence=sequence,
+            checkpoint_id=state.checkpoint_id,
+            operation_id=state.operation_id,
+            event_type=event_type,
+            payload=payload,
+            payload_sha256=bytes.fromhex(canonical_sha256(payload)),
+            occurred_at=occurred_at,
+        )
+    )
 
 
 def _require_sha256(value: str) -> None:
@@ -768,6 +829,7 @@ __all__ = [
     "PostgresOperationalTimeline",
     "TimelineEvent",
     "TimelineScope",
+    "insert_initial_timeline_thread",
     "living_metadata",
     "operational_checkpoints",
     "operational_events",

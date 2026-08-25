@@ -1,6 +1,6 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-24 20:33 CEST
+Laatst bijgewerkt: 2026-08-25
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
@@ -15,9 +15,14 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: buildclosure voor een reproduceerbare B-kandidaat. De v53-broninhoud
-  is hashgebonden vastgelegd en de herstelstappen worden nu als kleine,
-  onafhankelijk gecontroleerde Git-checkpoints toegevoegd.
+- Bezig: MC02b, één opgeslagen meerstappenketen via een PostgreSQL-lease aan
+  precies één worker geven en na leaseverloop veilig hervatten.
+- Laatste afgeronde kleine checkpoint: MC02a bewaart een gevalideerd plan,
+  stappen, exacte model-/catalogusautoriteit, herstelcursors en één vervolgtaak
+  atomair. De echte PostgreSQL 16.13-proef bewees rollback zonder resten,
+  concurrerende idempotente admission, herladen via een nieuwe engine, RLS en
+  fail-closed corruptiedetectie. Twee onafhankelijke reviews zijn groen; er is
+  nog geen tool of Home Assistant-actie uitgevoerd.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
 - Eerstvolgend: het gezamenlijke architectuurbesluit uitvoeren; daarna laat een

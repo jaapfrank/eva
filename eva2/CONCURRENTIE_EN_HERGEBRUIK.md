@@ -354,9 +354,19 @@ langdurige verzamelaanpassing telt niet als voortgang.
   weigering van secrets, URI's en commands zijn met 51 gerichte tests en een
   onafhankelijke review groen. Dit voert nog niets uit en schrijft nog niets
   naar PostgreSQL.
-- [ ] Meerstapsplanning MC02: het gevalideerde plan en iedere stap duurzaam in
-  de bestaande PostgreSQL-`plans`/`plan_steps`-tijdlijn vastleggen, met cursor,
-  retry_count en hervatting zonder een stap dubbel te claimen.
+- [x] Meerstapsplanning MC02a: het gevalideerde plan, iedere stap, de ruwe
+  modelbeslissing met argumenten, de volledige gesaneerde toolcatalogus en één
+  vervolgtaak worden atomair in de bestaande PostgreSQL-tabellen en append-only
+  tijdlijn vastgelegd. Een geforceerde fout halverwege liet nul resten achter;
+  twee gelijktijdige schrijvers leverden één insert en één bytegelijke replay.
+  Een nieuwe databaseverbinding las alles exact terug en weigerde verkeerde
+  scope en corrupte plan-, stap-, attention- en checkpointprojecties. 27
+  planningtests, 24 tijdlijntests, één echte PostgreSQL 16.13-gate en twee
+  onafhankelijke reviews zijn groen; er is geen tool uitgevoerd.
+- [ ] Meerstapsplanning MC02b: de bestaande `attention_items`-vervolgtaak met
+  een lease claimen, na leaseverloop veilig herpakken, stale releases weigeren
+  en `retry_count` duurzaam begrenzen; twee workers mogen nooit dezelfde stap
+  tegelijk bezitten.
 - [ ] Meerstapsplanning MC03: één algemene runner uitsluitend
   `ValidatedPlan/v1` laten uitvoeren en per effect de bestaande
   `TOOL_PREPARED`→providercall→readback-orchestrator hergebruiken; Home Assistant
