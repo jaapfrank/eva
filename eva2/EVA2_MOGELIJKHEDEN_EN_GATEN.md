@@ -8,6 +8,10 @@ Bijgewerkt: 25 augustus 2026.
 - Een door het model voorgestelde keten van maximaal zes lees- en actiestappen
   streng controleren en volledig in PostgreSQL bewaren zonder al iets uit te
   voeren; na een herstart wordt exact hetzelfde plan teruggelezen.
+- Voor de eerste leesstap precies één duurzame provider-call-startclaim maken;
+  slechts die eerste claim krijgt het exacte RPC-pakket. Gelijktijdige workers
+  en een herstart krijgen daarna geen oproepbytes terug. De provider zelf is in
+  deze bewezen slice nog niet aangeroepen.
 - Recente gesprekken uit PostgreSQL meenemen zonder na een herstart opnieuw te
   beginnen.
 - Persoonlijke feiten, voorkeuren en correcties via Hindsight onthouden.
@@ -99,10 +103,11 @@ Bijgewerkt: 25 augustus 2026.
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
   worden opgepakt, één gevalideerde read duurzaam voorbereiden en daar na
-  hercontrole precies één releasegebonden dispatchfence voor vastleggen. Wat
-  nog ontbreekt is de echte providercall buiten die transactie plus duurzame
-  waarnemingsopslag, daarna effectuitvoering met readback en pas daarna het
-  vrijgeven van de afhankelijke volgende stap.
+  hercontrole precies één releasegebonden dispatchfence én eenmalige
+  provider-call-startclaim voor vastleggen. Wat nog ontbreekt is de echte
+  providercall buiten die transactie plus duurzame waarnemingsopslag, daarna
+  effectuitvoering met readback en pas daarna het vrijgeven van de afhankelijke
+  volgende stap.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie

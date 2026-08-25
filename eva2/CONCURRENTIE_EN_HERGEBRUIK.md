@@ -489,10 +489,19 @@ langdurige verzamelaanpassing telt niet als voortgang.
   24 tijdlijntests, 9 release/operatorchecks en onafhankelijke herreview zijn
   groen. Er is nog nul provider-I/O; zie
   `reviews/action-chain-read-authorization-mc03b1.md`.
-- [ ] Meerstapsplanning MC03b2: de geautoriseerde read via één algemene
-  providergrens buiten de databasetransactie uitvoeren en de uitkomst of exacte
-  fout duurzaam vastleggen; replay mag geen tweede readpoging maken en authority
-  en deadline worden vlak vóór I/O opnieuw gecontroleerd.
+- [x] Meerstapsplanning MC03b2a: vlak vóór provider-I/O worden plan, catalogus,
+  release, resource, activation, binding, policy en deadline opnieuw
+  gecontroleerd en wordt precies één duurzame call-startclaim vastgelegd.
+  Alleen de eerste claim krijgt het private RPC-pakket; concurrency en herstart
+  krijgen geen callable bytes. De eerste review vond een publieke
+  reconstructiehelper; die is verwijderd en de herreview gaf `GO`. 32
+  ketentests en 24 tijdlijntests zijn groen (`376112f`). Er is geen
+  providerproces gestart en geen waarneming geschreven; zie
+  `reviews/action-chain-read-call-claim-mc03b2a.md`.
+- [ ] Meerstapsplanning MC03b2b: uitsluitend de eenmalig geclaimde read via de
+  algemene providergrens buiten de databasetransactie uitvoeren en de uitkomst,
+  exacte fout of ambigue crashgrens duurzaam vastleggen. Replay mag geen tweede
+  providerpoging maken.
 - [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
   `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
