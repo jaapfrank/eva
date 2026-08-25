@@ -31,7 +31,7 @@ hebben.
 |---|---|---|---|
 | **Zelf beter maken** | Menselijk, consequent gesprek met meerbeurts begrip; afzonderlijk en gedeeld geheugen voor gezinsleden; geen verzonnen actie; toolketens met readback; hervatten zonder dubbel effect; begrensde self-improvement. | Eén echte Telegram-B-proef per eindcase met bericht-, event-, tool- en readbackreceipt. Jij ziet antwoord en gedrag; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: multi-persoonidentiteit, eindimage en MX01-MX06. |
 | **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel browser/desktop blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | Ontwerp gereed; eerste read-only sidecar nog open. |
-| **Bewust niet v1** | Veel kanalen, eigen gateway, companion-nodevloot, voice/media, Canvas/desktop en brede providerroutering. | Geen vergelijking nodig voordat Telegram + kern betrouwbaar zijn. Een later kanaal moet dezelfde identity-, receipt- en consentcontracten volgen. | Niet blokkend voor v1. WhatsApp is alleen een toekomstige connectorinterface. |
+| **Bewust niet v1** | Veel kanalen, eigen gateway, companion-nodevloot, brede voice/media, Canvas/desktop en brede providerroutering. De bestaande minimale deurbel-/speakerpresence valt hier uitdrukkelijk niet onder. | Geen brede vergelijking nodig voordat Telegram + kern betrouwbaar zijn. Een later kanaal moet dezelfde identity-, receipt- en consentcontracten volgen. | WhatsApp en brede multimedia blokkeren V1 niet; behoud van Eva A's spontane huisaanwezigheid via P01-P05 wel. |
 
 De vier-framework gate blijft alleen een bescherming tegen een algemene claim
 als “Eva is overal beter”. Zolang hij rood is, doen we die claim niet. Hij is
@@ -346,6 +346,15 @@ langdurige verzamelaanpassing telt niet als voortgang.
   dezelfde actuele PostgreSQL-grant en stoppen bij intrekking zonder private
   fallback. De echte multi-account- en Telegram-groepproef blijft hieronder
   bewust afzonderlijk open.
+- [x] Oude-Eva-behoudinventaris P00: Eva A heeft aantoonbaar deurbel-,
+  intercom-, speaker-, voice-, initiatief- en stiltecode; de eigenaar ervaart
+  die spontane aanwezigheid live. Eva2 is sterker in geheugen, herstel en
+  bewijs, maar heeft die fysieke presence nog niet als V1-route. P01-P05 zijn
+  daarom overgangsgates; zie `OUDE_EVA_VS_EVA2.md` en
+  `reviews/old-eva-presence-parity-p00.md`.
+- [ ] Presence P01-P05: één connectorneutraal expressiecontract, één exacte
+  speakerroute, één deurbelroute, live stilte-/timingpolicy en een zevendaagse
+  huisproef met hardware-receipts en expliciete gebruikersacceptatie.
 - [x] Meerstapsplanning MC01: het bestaande `ModelDecision/v1` kan nu
   voorbereidende reads en effecten in één topologische keten voorstellen; de
   host maakt daar alleen na exacte episode/generation-, policy-, budget-,
@@ -433,7 +442,7 @@ productfunctie die nog niet in onze live vergelijking is getest.
 | Multi-agentwerk | Ontwikkelproces gebruikt onafhankelijke agents; Eva-runtime heeft nog geen bewezen algemene delegatie | Multi-agent routing aanwezig | Delegatie/multi-agent aanwezig | Subagents en A2A aanwezig | Dezelfde onderzoek-, bouw-, review- en hervattingsopdracht op alle vier testen |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
 | API, IDE en programmatische bediening | Interne HTTP-API; geen volledige externe SDK/IDE-gate | Gateway-RPC aanwezig | HTTP/API- en ACP/IDE-integraties aanwezig | HTTP/WebSocket en A0 CLI aanwezig | Dezelfde externe clienttaak, reconnect en permissiontest uitvoeren |
-| Voice, spraak en media | Nog geen complete live multimodale producttrack | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | Afzonderlijke privacy- en latencytrack met echte apparaten en media |
+| Voice, spraak en media | Geen Eva2-speakerroute; Eva A's minimale deurbel-/speakerpresence is P01-P05-behoudgate | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | Eerst bestaande spontane huispresence behouden op één exact gebonden speaker en deurbel; brede multimedia blijft een latere privacy- en latencytrack |
 | Webextractie, UI, Canvas en artifacts | Bronzoeking en heropenbare Markdown live; geen volwaardige Canvas | Web/search/media en Control UI aanwezig | Webextractie en desktop/command surfaces aanwezig | Browser Canvas, desktop en documentsurface aanwezig | Echte research-, screenshot-, formulier- en documenttaken vergelijken |
 | RL, batch en evaluatie | LAB-36 en receipts; geen algemene RL-toolset | Evaluatieoppervlak nader inventariseren | RL-toolset en overige batch/evalfuncties aanwezig; niet getest | Evaluatie- en workflowplugins nader inventariseren | Als aparte productcategorie testen of expliciet motiveren waarom niet nodig |
 | Controleerbaarheid en bewijs | PostgreSQL-eventtijdlijn en readback zijn Eva's ontwerpsterkte | Gateway-events/logs aanwezig | Sessies, taken en deliverydata aanwezig | Live UI/logs, projecten en workspace time travel aanwezig | Eén gedeeld receipt-schema gebruiken; product-UI telt niet als bewijs van echt extern effect |
@@ -485,12 +494,15 @@ productfunctie die nog niet in onze live vergelijking is getest.
    meerbeurts gesprek.
 3. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
    self-improvement af.
-4. Bevries één image en voer core 15/15, native 9/9 en MX01-MX06 live uit via
-   echt Telegram en afgeschermde echte providers.
-5. Hergebruik pas daarna één read-only capability-pad (MCP of Gateway/ClawHub)
-   achter Eva's bestaande ledger. Extra kanalen, camera, locatie, voice en
-   economische acties zijn aparte latere besluiten.
-6. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+4. Sluit P01-P04 voor behoud van de bestaande minimale spontane
+   deurbel-/speakerpresence; brede voice/media blijft een latere producttrack.
+5. Bevries één image en voer core 15/15, native 9/9, MX01-MX06 en de
+   zevendaagse presenceproef P05 live uit via echt Telegram, het echte huis en
+   afgeschermde providers.
+6. Hergebruik pas daarna één read-only capability-pad (MCP of Gateway/ClawHub)
+   achter Eva's bestaande ledger. Extra kanalen, brede camera-/locatie-/voice-
+   mogelijkheden en economische acties zijn aparte latere besluiten.
+7. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen

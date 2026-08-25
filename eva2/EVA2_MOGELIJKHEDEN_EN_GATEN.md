@@ -57,6 +57,10 @@ Bijgewerkt: 25 augustus 2026.
 - De menselijke gesprekservaring is nog niet door jou geaccepteerd; vooral
   natuurlijkheid, initiatief en bondigheid moeten in echte Telegramgesprekken
   stabiel blijken.
+- Eva A praat volgens de eigenaar nu soms spontaan via deurbel of huisspeaker.
+  Eva2 heeft daarvoor nog geen toegelaten V1-route. Deze minimale presence is
+  daarom een overgangsgate P01-P05; brede voice/media blijft later. De eerlijke
+  oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
   worden opgepakt en één gevalideerde read als duurzaam intent voorbereiden.
   Wat nog ontbreekt is de algemene providerdispatch en waarnemingsopslag,

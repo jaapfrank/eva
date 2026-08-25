@@ -9,6 +9,8 @@ de korte lijst met mogelijkheden, gaten en concurrentiestand staat in
 [`EVA2_MOGELIJKHEDEN_EN_GATEN.md`](EVA2_MOGELIJKHEDEN_EN_GATEN.md); de verplichte
 volledige productvergelijking en hergebruikroute staat in
 [`CONCURRENTIE_EN_HERGEBRUIK.md`](CONCURRENTIE_EN_HERGEBRUIK.md); de verplichte
+oude-naar-nieuwe behoudgate voor spontane huisaanwezigheid staat in
+[`OUDE_EVA_VS_EVA2.md`](OUDE_EVA_VS_EVA2.md); de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
 [`evidence/living-core/`](evidence/living-core/).
@@ -79,6 +81,9 @@ de controleerbare live receipts staan in
   readback, crash midden in een keten en begrensde self-improvement.
 - Resident-track: een nieuwe officiële zevendaagse run op die eindimage; de
   huidige v53-shakedown heeft nul geslaagde residentcases.
+- Presence-behoud: de bestaande spontane deurbel-, intercom- en speakerbeleving
+  van Eva A moet via P01-P05 op Eva2 terugkomen. Brede multimedia is niet V1,
+  maar deze minimale bestaande huisaanwezigheid blokkeert de overgang wel.
 - Security: het HA-token van B staat nog als inspecteerbare container-env. Het
   moet worden ingetrokken, opnieuw uitgegeven en uitsluitend als file-secret
   worden gemount.
