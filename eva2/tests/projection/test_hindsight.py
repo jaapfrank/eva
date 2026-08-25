@@ -46,6 +46,7 @@ class _State:
         self.bound_low_score_recall = False
         self.bound_bank_id: str | None = None
         self.source_fact_recall = False
+        self.group_recall_response: dict[str, Any] | None = None
         self.mental_models: set[str] = set()
 
 
@@ -109,6 +110,9 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
             body = self._body()
             state.requests.append(("POST", self.path, body))
             if self.path.endswith("/memories/recall"):
+                if state.group_recall_response is not None:
+                    self._send(200, state.group_recall_response)
+                    return
                 if state.bound_low_score_recall and body is not None:
                     if (
                         body["query"] == "Mark"
@@ -627,11 +631,179 @@ def test_hindsight_rejects_group_recall_without_private_or_sql_fallback(
     )
     query = replace(_query(), audience=audience, conversation_id="telegram:-100123")
 
-    with pytest.raises(HindsightMemoryScopeError, match="not wired"):
+    with pytest.raises(HindsightMemoryScopeError, match="no active consent resolver"):
         engine.recall_for_presence(query)
     with pytest.raises(HindsightMemoryScopeError, match="not wired"):
         engine.recall_or_sql_fallback(query)
 
+    assert state.requests == []
+
+
+def test_hindsight_group_recall_uses_only_group_tag_and_no_style_mirror(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:51",
+    )
+    state.group_recall_response = {
+        "results": [
+            {
+                "id": "group-memory-1",
+                "scores": {"final": 0.91},
+                "text": "De barbecue begint om zes uur.",
+                "type": "world",
+                "mentioned_at": NOW,
+                "document_id": "telegram:-100123:history:1",
+                "metadata": {
+                    "audience_id": "telegram-group:-100123",
+                    "audience_kind": "telegram_group",
+                    "consent_operation_id": consent_ref.operation_id,
+                    "conversation_id": "telegram:-100123",
+                    "group_chat_id": "-100123",
+                    "principal_id": PRINCIPAL,
+                    "privacy_class": "internal",
+                    "source_ref": "telegram:-100123:message:1",
+                    "evidence_ref": "telegram:-100123:evidence:1",
+                    "trust": "direct_user",
+                },
+            }
+        ]
+    }
+
+    class Resolver:
+        def active_reference(self, **_kwargs):  # type: ignore[no-untyped-def]
+            return consent_ref
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    query = replace(
+        _query(),
+        audience=MemoryAudience.telegram_group(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            consent_ref=consent_ref,
+        ),
+        conversation_id="telegram:-100123",
+        query_text="bbq",
+        scope={"kind": "telegram_group", "group_chat_id": "-100123"},
+    )
+
+    memory = engine.recall_for_presence(query)
+
+    recall_request = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories/recall")
+    )
+    assert recall_request is not None
+    assert recall_request["tags"] == [HindsightMemoryEngine._group_tag("-100123")]
+    assert HindsightMemoryEngine._person_tag(PRINCIPAL) not in recall_request["tags"]
+    assert [fact.value["text"] for fact in memory.confirmed_facts] == [
+        "De barbecue begint om zes uur."
+    ]
+    assert memory.style_mirror is None
+    assert not any("/mental-models/" in path for _method, path, _body in state.requests)
+
+
+def test_hindsight_group_recall_excludes_result_after_consent_is_revoked(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:52",
+    )
+    state.group_recall_response = {
+        "results": [
+            {
+                "id": "revoked-group-memory",
+                "scores": {"final": 0.91},
+                "text": "Dit mag na intrekking niet verschijnen.",
+                "type": "world",
+                "mentioned_at": NOW,
+                "metadata": {
+                    "audience_id": "telegram-group:-100123",
+                    "audience_kind": "telegram_group",
+                    "consent_operation_id": consent_ref.operation_id,
+                    "conversation_id": "telegram:-100123",
+                    "evidence_ref": "telegram:-100123:evidence:2",
+                    "group_chat_id": "-100123",
+                    "principal_id": PRINCIPAL,
+                    "privacy_class": "internal",
+                    "source_ref": "telegram:-100123:message:2",
+                    "trust": "direct_user",
+                },
+            }
+        ]
+    }
+    calls = 0
+
+    class Resolver:
+        def active_reference(self, **_kwargs):  # type: ignore[no-untyped-def]
+            nonlocal calls
+            calls += 1
+            return consent_ref if calls == 1 else None
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    query = replace(
+        _query(),
+        audience=MemoryAudience.telegram_group(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            consent_ref=consent_ref,
+        ),
+        conversation_id="telegram:-100123",
+        query_text="bbq",
+        scope={"kind": "telegram_group", "group_chat_id": "-100123"},
+    )
+
+    memory = engine.recall_for_presence(query)
+
+    assert memory.confirmed_facts == ()
+    assert memory.style_mirror is None
+    assert not any(method == "DELETE" for method, _path, _body in state.requests)
+
+
+def test_hindsight_group_recall_stops_before_http_when_caller_consent_is_revoked(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    consent_ref = TelegramGroupConsentReference(
+        principal_id=PRINCIPAL,
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:53",
+    )
+
+    class Resolver:
+        def active_reference(self, **_kwargs):  # type: ignore[no-untyped-def]
+            return None
+
+    engine = HindsightMemoryEngine(
+        HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
+    )
+    query = replace(
+        _query(),
+        audience=MemoryAudience.telegram_group(
+            principal_id=PRINCIPAL,
+            group_chat_id="-100123",
+            consent_ref=consent_ref,
+        ),
+        conversation_id="telegram:-100123",
+        query_text="bbq",
+        scope={"kind": "telegram_group", "group_chat_id": "-100123"},
+    )
+
+    memory = engine.recall_for_presence(query)
+
+    assert memory.confirmed_facts == ()
+    assert memory.style_mirror is None
     assert state.requests == []
 
 

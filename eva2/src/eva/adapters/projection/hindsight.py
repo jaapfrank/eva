@@ -203,22 +203,58 @@ class HindsightMemoryEngine:
             )
         assert audience.group_chat_id is not None
         assert audience.consent_ref is not None
+        active = self._resolve_active_group_reference(
+            principal_id=audience.principal_id,
+            group_chat_id=audience.group_chat_id,
+        )
+        if active != audience.consent_ref:
+            raise HindsightMemoryScopeError(
+                "Telegram group memory consent is not active and exact"
+            )
+        return active
+
+    def _resolve_active_group_reference(
+        self, *, principal_id: str, group_chat_id: str
+    ) -> TelegramGroupConsentReference | None:
+        if self._active_group_consent_resolver is None:
+            raise HindsightMemoryScopeError(
+                "Telegram group memory has no active consent resolver"
+            )
         now = datetime.now(tz=timezone.utc).replace(microsecond=0)
         try:
-            active = self._active_group_consent_resolver.active_reference(
-                principal_id=audience.principal_id,
-                group_chat_id=audience.group_chat_id,
+            return self._active_group_consent_resolver.active_reference(
+                principal_id=principal_id,
+                group_chat_id=group_chat_id,
                 now=now,
             )
         except Exception as error:
             raise HindsightMemoryScopeError(
                 "Telegram group memory consent could not be resolved"
             ) from error
-        if active != audience.consent_ref:
-            raise HindsightMemoryScopeError(
-                "Telegram group memory consent is not active and exact"
-            )
-        return active
+
+    @staticmethod
+    def _empty_presence(query: RecallCurrentFacts) -> PresenceMemory:
+        return PresenceMemory(
+            recall=MemoryRecall(
+                schema_version=1,
+                contract="MemoryRecall/v1",
+                recall_id=query.recall_id,
+                query_purpose=query.query_purpose,
+                tenant_id=query.tenant_id,
+                principal_id=query.principal_id,
+                conversation_id=query.conversation_id,
+                project_id=query.project_id,
+                requested_valid_at=query.requested_valid_at,
+                admitted_fact_ids_sha256=canonical_sha256([]),
+                selected=[],
+                excluded_reasons={},
+                projection_version=_PROJECTION_VERSION,
+                scope_sha256=canonical_sha256(query.scope),
+                created_at=query.requested_valid_at,
+            ),
+            confirmed_facts=(),
+            style_mirror=None,
+        )
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -770,11 +806,33 @@ class HindsightMemoryEngine:
     def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory:
         """Recall semantic memories directly from Hindsight for model Presence."""
 
-        self._require_private_recall_audience(query)
         if not query.subject_ids or query.principal_id not in query.subject_ids:
             raise HindsightMemoryScopeError(
                 "memory recall must include the admitted principal"
             )
+        group_recall = query.audience.kind == "telegram_group"
+        if group_recall:
+            assert query.audience.group_chat_id is not None
+            assert query.audience.consent_ref is not None
+            if (
+                query.conversation_id
+                != f"telegram:{query.audience.group_chat_id}"
+                or query.project_id is not None
+                or "observation_binding_sha256" in query.scope
+            ):
+                raise HindsightMemoryScopeError(
+                    "Telegram group recall is not bound to its group"
+                )
+            active = self._resolve_active_group_reference(
+                principal_id=query.principal_id,
+                group_chat_id=query.audience.group_chat_id,
+            )
+            if active != query.audience.consent_ref:
+                return self._empty_presence(query)
+            audience_tag = self._group_tag(query.audience.group_chat_id)
+        else:
+            self._require_private_recall_audience(query)
+            audience_tag = self._person_tag(query.principal_id)
         observation_binding_sha256 = query.scope.get(
             "observation_binding_sha256"
         )
@@ -813,7 +871,6 @@ class HindsightMemoryEngine:
                     observation_binding_sha256,
                 )
             )
-        person_tag = self._person_tag(query.principal_id)
         variants = self._recall_query_variants(query.query_text)
         requests = [
             (text, bank_id, project_id, binding_sha256)
@@ -825,7 +882,7 @@ class HindsightMemoryEngine:
                 executor.map(
                     lambda request: self._recall_response(
                         request[1],
-                        person_tag,
+                        audience_tag,
                         query,
                         request[0],
                         request[2],
@@ -935,7 +992,56 @@ class HindsightMemoryEngine:
             seen.add(fact_id)
             admitted_text_chars += len(text)
             subject_id = metadata.get("principal_id", query.principal_id)
-            if subject_id not in query.subject_ids:
+            if group_recall:
+                assert query.audience.group_chat_id is not None
+                required_group_metadata = {
+                    "audience_id": query.audience.audience_id,
+                    "audience_kind": "telegram_group",
+                    "conversation_id": query.conversation_id,
+                    "group_chat_id": query.audience.group_chat_id,
+                }
+                if any(
+                    metadata.get(key) != value
+                    for key, value in required_group_metadata.items()
+                ):
+                    raise HindsightMemoryScopeError(
+                        "Hindsight returned memory for another audience"
+                    )
+                group_prefix = f"telegram:{query.audience.group_chat_id}:"
+                if not all(
+                    isinstance(metadata.get(key), str)
+                    and metadata[key].startswith(group_prefix)
+                    for key in ("source_ref", "evidence_ref")
+                ):
+                    raise HindsightMemoryScopeError(
+                        "Hindsight group memory has cross-scope provenance"
+                    )
+                consent_operation_id = metadata.get("consent_operation_id")
+                if not isinstance(subject_id, str) or not isinstance(
+                    consent_operation_id, str
+                ):
+                    raise HindsightMemoryScopeError(
+                        "Hindsight group memory lacks consent metadata"
+                    )
+                try:
+                    retained_reference = TelegramGroupConsentReference(
+                        principal_id=subject_id,
+                        group_chat_id=query.audience.group_chat_id,
+                        operation_id=consent_operation_id,
+                    )
+                except ValueError as error:
+                    raise HindsightMemoryScopeError(
+                        "Hindsight group memory has invalid consent metadata"
+                    ) from error
+                if (
+                    self._resolve_active_group_reference(
+                        principal_id=subject_id,
+                        group_chat_id=query.audience.group_chat_id,
+                    )
+                    != retained_reference
+                ):
+                    continue
+            elif subject_id not in query.subject_ids:
                 raise HindsightMemoryScopeError(
                     "Hindsight returned memory for another subject"
                 )
@@ -1051,8 +1157,10 @@ class HindsightMemoryEngine:
         return PresenceMemory(
             recall=recall,
             confirmed_facts=tuple(confirmed),
-            style_mirror=self._recall_style_mirror(
-                global_bank_id, query.principal_id
+            style_mirror=(
+                None
+                if group_recall
+                else self._recall_style_mirror(global_bank_id, query.principal_id)
             ),
         )
 
