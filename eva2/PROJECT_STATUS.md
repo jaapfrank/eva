@@ -92,10 +92,15 @@ de controleerbare live receipts staan in
   exact één call-start en geeft alleen aan die eerste caller het sealed proces-
   en `effect.readback`-RPC-pakket. MC03c3c voert dat pakket nu eenmaal uit en
   bewaart antwoord, protocolfout of ambiguïteit atomair als providerbewijs en
-  waarneming. Vier gerichte, 58 brede action-chain- en afzonderlijk 24
-  tijdlijntests zijn groen op `77923e2`. Dit is `tested`, nog niet onafhankelijk
-  `reviewed`; er is geen echte Home Assistant-call of fysieke effectafronding
-  uitgevoerd en A en B zijn niet gewijzigd.
+  waarneming. MC03c3d maakt uit zo'n reeds opgeslagen waarneming precies één
+  onveranderlijk `EffectReadback/v1`; zij roept de provider daarvoor niet
+  opnieuw aan en bewaart ook mismatch, onbekend of niet-waargenomen eerlijk.
+  Acht gerichte MC03c3d-cases zijn groen op `76404a4`; de bredere keten had
+  daarvoor 67 action-chain- en afzonderlijk 24 tijdlijntests groen. Dit is
+  `tested`, nog niet onafhankelijk `reviewed`; de gewenste en waargenomen
+  doeltoestand worden nog niet vergeleken, `STATE_VERIFIED` wordt nog niet
+  geschreven, er is geen echte Home Assistant-call uitgevoerd en A en B zijn
+  niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -137,18 +142,19 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `77923e2` voert uitsluitend de eerste geclaimde
-  `effect.readback` uit en bewaart het exacte resultaat atomair. Succes,
-  protocolfout, herstart/replay, onopgeloste call-start en geforceerde rollback
-  zijn groen; geen route start een tweede proces. Er zijn nog nul fysieke
-  `EffectReadback`-rijen en de effectstap blijft `running`. Zie
-  `reviews/action-chain-effect-readback-execution-mc03c3c.md`.
+- Laatste codecheckpoint: `76404a4` bindt een reeds opgeslagen
+  readbackwaarneming aan exact effect, receipt, verzoek, providerresource,
+  idempotency key, bewijs en waargenomen statehash en schrijft precies één
+  canoniek `EffectReadback/v1`. Replay schrijft niets dubbel; concurrentie,
+  rollback en corruptie zijn getest. De effectstap blijft `running` en er is
+  nog geen doelvergelijking of `STATE_VERIFIED`. Zie
+  `reviews/action-chain-effect-readback-result-mc03c3d.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: `EffectReadback/v1` bindt de opgeslagen providerwaarneming aan
-  exact effect, receipt, doel en verzoek. Alleen status `matches` met verse,
-  exact passende doeltoestand mag daarna `STATE_VERIFIED` schrijven en effect,
-  stap en dependency afronden.
+- Eerstvolgend: vergelijk de gewenste toestand uit het effect met de werkelijk
+  opgeslagen toestand. Alleen een verse, inhoudelijk exacte match mag daarna
+  `STATE_VERIFIED` schrijven en effect, stap en dependency atomair afronden;
+  alle andere uitkomsten blijven zichtbaar gesloten.
   Onafhankelijke reviews van MC03b2b/MC03b3 en MC03c0–MC03c3b2, Telegram-B en
   een echte crash tussen effect en readback blijven afzonderlijke eindproeven.
 - Productie A: actief en niet gewijzigd.

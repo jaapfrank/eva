@@ -602,21 +602,26 @@ langdurige verzamelaanpassing telt niet als voortgang.
   call-start en geeft het sealed proces- en `effect.readback`-RPC-pakket alleen
   aan die eerste caller (`bfea6f4`). MC03c3c start alleen dat eerste pakket en
   bewaart providerresultaat, protocolfout of ambiguïteit atomair als evidence
-  en `ReadObservation` (`77923e2`). Vier gerichte, 58 brede action-chain- en
-  afzonderlijk 24 tijdlijntests zijn voor deze uitvoering groen, inclusief
-  echte subprocess-protocolfout, rollback, herstart, replay, corruptie en een
-  onopgeloste call-start zonder tweede proces. MC03c3a/b1 deden nul
+  en `ReadObservation` (`77923e2`). MC03c3d projecteert uitsluitend uit die
+  opgeslagen providerbytes precies één canoniek `EffectReadback/v1`, bindt de
+  werkelijke toestand via een canonieke statehash en herlaadt die bewijsrij
+  corruption-sensitive (`76404a4`). Acht gerichte MC03c3d-cases zijn groen;
+  de bredere keten had 67 action-chain- en afzonderlijk 24 tijdlijntests groen,
+  inclusief concurrency, rollback, herstart/replay, alle vier readbackstatussen
+  en corruptie. MC03c3a/b1 deden nul
   readback-provider-I/O; MC03c3b2 startte evenmin een proces. MC03c3c gebruikt
-  alleen synthetisch succes en een echte lokale protocolfout en schrijft nog
-  nul fysieke `EffectReadback`-rijen. De effectstap bleef `running`.
-  Onafhankelijke reviews, fysieke Home Assistant-readback,
+  alleen synthetisch succes en een echte lokale protocolfout; MC03c3d doet zelf
+  geen I/O en maakt een opgeslagen waarneming nog niet inhoudelijk waar. De
+  effectstap bleef `running` en `STATE_VERIFIED` ontbreekt. Onafhankelijke
+  reviews, exacte doelvergelijking, fysieke Home Assistant-readback,
   effect-/dependencyafronding en B-livebewijs blijven open; zie
   `reviews/action-chain-effect-preparation-mc03c0.md` en
   `reviews/action-chain-effect-execution-mc03c2.md` en
   `reviews/action-chain-effect-readback-preparation-mc03c3a.md` en
   `reviews/action-chain-effect-readback-authorization-mc03c3b1.md` en
   `reviews/action-chain-effect-readback-call-claim-mc03c3b2.md` en
-  `reviews/action-chain-effect-readback-execution-mc03c3c.md`.
+  `reviews/action-chain-effect-readback-execution-mc03c3c.md` en
+  `reviews/action-chain-effect-readback-result-mc03c3d.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

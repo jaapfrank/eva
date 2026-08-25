@@ -164,10 +164,14 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   `effect.readback`-pakket ontvangen; de executor voert alleen dat eerste pakket
   uit en bewaart readbackantwoord, protocolfout of ambiguïteit atomair. Herstart,
   concurrency en een onopgeloste call-start krijgen geen tweede proces.
-  Deadline, rollback, intrekking en corruptie zijn getest.
+  MC03c3d zet een reeds opgeslagen getypeerde providerwaarneming daarna zonder
+  nieuwe provider-I/O om in precies één canoniek `EffectReadback/v1`, inclusief
+  de hash van de werkelijk waargenomen toestand. Replay, concurrency, rollback,
+  alle vier uitkomststatussen en corruptie zijn getest op `76404a4`.
   Reviews van readresultaat, readvrijgave en alle effectslices blijven open.
-  Nog ontbreken de omzetting naar een fysiek `EffectReadback`-contract, exacte
-  doelmatch, effect-/dependencyafronding en de Telegram-B-/Home Assistant-proef.
+  Nog ontbreken de inhoudelijke vergelijking met de gewenste doeltoestand,
+  `STATE_VERIFIED`, effect-/dependencyafronding en de echte Telegram-B-/Home
+  Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
