@@ -13,6 +13,9 @@ Bijgewerkt: 25 augustus 2026.
 - Persoonlijke feiten, voorkeuren en correcties via Hindsight onthouden.
 - Geheugen per persoon en per project gescheiden houden.
 - Een Telegramvoorkeur later via een webgesprek van dezelfde persoon herinneren.
+- Persoonscontext begrensd ophalen: de kandidaatconfiguratie kent 2.000–4.000
+  recalltokens en 20–100 retrieval-nodes; retain en reflectie blijven buiten de
+  eerste-antwoordroute.
 - Hindsight snel gebruiken in gesprekken: alleen `recall` zit in de chatroute.
 - Nieuwe herinneringen asynchroon via `retain` opslaan.
 - Langzame reflectie buiten de chatroute uitvoeren wanneer Eva niets te doen heeft.
@@ -57,6 +60,11 @@ Bijgewerkt: 25 augustus 2026.
 - De menselijke gesprekservaring is nog niet door jou geaccepteerd; vooral
   natuurlijkheid, initiatief en bondigheid moeten in echte Telegramgesprekken
   stabiel blijken.
+- Eva kent nog geen volledige Hermes-achtige gesloten leercyclus. Persoonsfeiten
+  en correcties werken, maar een corrigeerbaar totaalprofiel, usage-/kostenmeter,
+  fysieke geheugenquota en automatisch geëvalueerde, versieerbare skills met
+  rollback ontbreken nog. LG01-LG07 maken dit af; zie
+  `design/product/learning-and-person-model-v1.md`.
 - Eva A praat volgens de eigenaar nu soms spontaan via deurbel of huisspeaker.
   Eva2 heeft daarvoor nog geen toegelaten V1-route. Deze minimale presence is
   daarom een overgangsgate P01-P05. Daarnaast ontbreekt nog echte
@@ -129,6 +137,12 @@ Bijgewerkt: 25 augustus 2026.
   volledige reeksen niet doorlopen.
 - De huidige voorsprong is daarom: betere eigen evidence, crashherstel,
   Home Assistant-integratie en een kleine winst in één menselijke case.
+- Hermes documenteert daarnaast een gesloten loop waarin geheugen en autonome
+  skillcreatie/-verbetering tijdens gebruik groeien. Eva heeft al
+  persoonsgeheugen en één begrensde I02-verbetering, maar loopt op die volledige
+  procedurele cyclus nu achter. LG01-LG07 zijn de expliciete concurrentiegate;
+  groei telt alleen als herhaaltaken verbeteren zonder persoonslek, drift of
+  onbegrensde geheugen-, token-, kosten-, latency- en codegroei.
 - De nog onbewezen claim is: structureel menselijker, autonomer en betrouwbaarder
   dan alle drie over alle 36 cases en zeven dagen echt gebruik.
 - De volledige capabilitymatrix, de ontbrekende tests en de hergebruikroute via

@@ -17,6 +17,9 @@ full-duplex voice-mode, kanaalkeuze en latencygates staan in
 [`design/product/conversational-voice-v1.md`](design/product/conversational-voice-v1.md);
 de harde code-, dependency-, image- en reactietijdbudgetten staan in
 [`design/product/performance-and-complexity-v1.md`](design/product/performance-and-complexity-v1.md);
+het corrigeerbare persoonsmodel, de groeicyclus en de geheugen-, token- en
+kostenbudgetten staan in
+[`design/product/learning-and-person-model-v1.md`](design/product/learning-and-person-model-v1.md);
 de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
@@ -39,6 +42,12 @@ de controleerbare live receipts staan in
   handgeschreven productregels, maximaal twaalf directe coredependencies en
   p95-doelen voor acknowledgement, eerste inhoud en voice-barge-in. PC01-PC06
   maken teller, hot-path, sidecars, eindmeting en degradatiebewijs af.
+- Leren/persoonsmodel LG00: Eva's bestaande persoonsgebonden Hindsight-geheugen,
+  correcties, M01-continuiteit en I02-verbetering zijn van een volledige
+  Hermes-achtige leercyclus onderscheiden. LG01-LG07 maken een inzichtelijk,
+  corrigeerbaar persoonsmodel, token-/kostenreceipts, fysieke geheugenquota,
+  skillquarantaine, evaluatie, promotie en rollback af. Tot die tijd is Eva niet
+  aantoonbaar een agent die procedureel steeds beter wordt.
 - Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
@@ -118,6 +127,12 @@ de controleerbare live receipts staan in
   commitgebonden budgetchecker, begrenzing van grote hot-pathbestanden,
   streaming tekstrespons, aparte sidecarbudgetten en een eindmeting met minstens
   200 tekstbeurten. Boven 75.000 eigen productregels is de V1-gate rood.
+- Leren en persoonsmodel: LG01-LG07 staan open. Eva moet per geverifieerde
+  persoon kunnen tonen, corrigeren en vergeten wat zij gebruikt; iedere
+  modelcall krijgt token-, latency- en kostenusage, iedere geheugenscope een
+  fysiek quotum en iedere geleerde procedure baseline/held-out-evaluatie,
+  versie en rollback. De zevendaagse gate weigert profiel-, context-, token-,
+  kosten- of latencygroei buiten de vastgelegde grenzen.
 - OpenBot/autonomie: `OB00` is klaar. `AU01-AU08` staan open voor een duurzaam
   chatmandaat, algemene plan-act-observeer-herplan-runner, één geïsoleerde
   browsercomputer, Eva's eigen policy/ledger/readback, live pauze/stop/overname,

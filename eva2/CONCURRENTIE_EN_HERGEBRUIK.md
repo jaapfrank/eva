@@ -35,7 +35,7 @@ hebben.
 
 | Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
 |---|---|---|---|
-| **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser- en huisproeven met bericht-, beurt-, latency-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05, V01-V07, PC01-PC06 en eindimage. |
+| **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; mensen merkbaar leren kennen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser- en huisproeven met bericht-, beurt-, latency-, token-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05, V01-V07, PC01-PC06, LG01-LG07 en eindimage. |
 | **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis gereed; eerste ledgergebonden sidecar/browsercomputer nog open. |
 | **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een brede coworkervloot, algemene video/media, Canvas en brede providerroutering. Eén browsercomputer, minimale huispresence en conversationele voice vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, voice, minimale presence en één autonome computerroute betrouwbaar zijn. | WhatsApp en algemene multimedia blokkeren V1 niet; AU01-AU08, P01-P05 en V01-V07 wel. |
 
@@ -60,6 +60,23 @@ die live gate. Zolang beide bewijsgrenzen open zijn, doen we geen claim als
 - De volledige leesbare vergelijking en `OB00`/`AU01`–`AU08` staan in
   `OPENBOT_VERGELIJKING.md`.
 
+## Hermes: groeien met gebruik
+
+- Hermes documenteert een gesloten leercyclus met persoonsgeheugen,
+  cross-session recall, autonome skillcreatie en skillverbetering tijdens
+  gebruik. Wij hebben die volledige cyclus niet zelf live gevalideerd.
+- Eva 2 heeft al geïsoleerd persoonsgeheugen, correcties, achtergrondreflectie
+  en één live bewezen begrensde zelfgekozen repositoryverbetering. Zij heeft
+  nog geen gelijkwaardige automatische procedurele skillcyclus; Hermes staat
+  daar vandaag dus voor.
+- Eva's antwoord is `LG01-LG07`: een corrigeerbaar persoonsmodel, usage- en
+  tokenreceipts, geheugenquota/compactie, procedurele kandidaten in quarantaine,
+  held-out evaluatie, gecontroleerde promotie, live degradatiedetectie en
+  rollback. Zelfleren mag nooit stil permissies, identiteit, privacy- of
+  financiële grenzen verruimen.
+- Het volledige contract en de concrete context-, token- en kostengrenzen staan
+  in `design/product/learning-and-person-model-v1.md`.
+
 ## V1-afvinkbord — kleine opleverstukken
 
 Elk open vak is één klein stuk werk met eigen Git-checkpoint, gerichte test en
@@ -71,6 +88,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [x] OpenBot `OB00`: de relevante CopilotKit-variant, vaste release/commits,
   sterke computerautonomie, beperkingen en Eva-gaten zijn uit officiële bronnen
   vastgelegd; dit is documentatiebewijs, geen live producttest.
+- [x] Leren `LG00`: Hermes' officiële groeiclaim, Eva's bestaande
+  geheugen/I02-bewijs en de ontbrekende procedurele cyclus eerlijk begrensd;
+  persoons-, geheugen-, token- en kostengates zijn vastgelegd.
+- [ ] `LG01-LG07` — corrigeerbaar persoonsmodel, token/kostenreceipts,
+  geheugencompactie, skillkandidaat/evaluatie/promotie/rollback en zeven dagen
+  meetbaar beter worden zonder drift of onbeperkte groei.
 - [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
   grenzen; zie `OPENBOT_VERGELIJKING.md`.
 - [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect
@@ -491,6 +514,7 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Natuurlijk gesprek en eigen karakter | C01, T02 en C04 live; gebruiker accepteert de ervaring nog niet | Dezelfde drie live | Dezelfde drie live | Dezelfde drie live | Eva's eigen meerbeurts Telegram-eindproef uitvoeren; geen algemene vergelijking claimen |
 | Persoons- en projectisolatie | C02 live via geïsoleerde contractprovider; M01 gebruikte een lokale Telegram Bot API-contractprovider, geen Telegramnetwerk; echte Telegrambinding nog open | Aanwezig via gateway-routing en geïsoleerde sessies; niet door ons getest | Aanwezig via profielen/gateway; niet door ons getest | Aanwezig via projecten/profielen; niet door ons getest | Dezelfde private canaries en een echte cross-channelproef op alle vier |
 | Langetermijngeheugen en stijl | PostgreSQL + Hindsight live; hot/cold-path gescheiden | Geheugenadapters aanwezig; niet vergeleken | Geheugen en sessiezoeking aanwezig; niet vergeleken | Doorzoekbaar en bewerkbaar geheugen aanwezig; niet vergeleken | Zelfde correctie-, verouderings-, privacy- en herstartproeven |
+| Persoonsmodel en leren met gebruik | Persoonsgebonden feiten/correcties, reflectie en I02 bewezen; LG01-LG07 voor een corrigeerbaar profiel, procedurele skillcyclus en geheugen-/tokenbudget | Gedocumenteerde memory/skills; niet gelijk uitgevoerd | Gesloten leercyclus met memory, user model en autonome skillcreatie/-verbetering gedocumenteerd; niet door ons gelijk uitgevoerd | Bewerkbaar geheugen en skills aanwezig; geen gelijkwaardige groeicyclus door ons bewezen | Hermes loopt nu voor in procedureel zelfleren. Eva moet op herhaaltaken aantoonbaar verbeteren zonder persoonslek, drift, latency-, token-, kosten- of codegroei |
 | Duurzame doelen en crashherstel | A01-A03, X01-X04 en F03-F04 deels/live bewezen; eindimage moet regressie nog krijgen | Gateway- en deliveryherstel aanwezig; niet gelijkwaardig getest | Cron, taken en deliveryledger aanwezig; niet gelijkwaardig getest | Taken/scheduling en workspacegeschiedenis aanwezig; niet gelijkwaardig getest | Fault injection op alle vier: crash vóór/na effect, geen duplicaat en eerlijke eindstatus |
 | Home Assistant en fysieke verificatie | Beste bewijs in onze huidige configuratie: actuele staat, historie, acties en automatiseringen met readback | Integratie/skills aanwezig; vorige vergelijking had geen HA-configuratie | Eigen Home Assistant-toolset aanwezig; vorige vergelijking had geen HA-configuratie | Via MCP/API/plugin mogelijk; vorige vergelijking had geen HA-configuratie | Alle vier dezelfde afgeschermde HA-doelen geven; succes telt alleen na echte readback |
 | Proactieve huisgenoot en nuttig zwijgen | In aanbouw; residentpolicy nog niet toegelaten | Heartbeats/hooks/automation aanwezig; residentgedrag niet getest | Gateway/cron/routines aanwezig; residentgedrag niet getest | Scheduled tasks aanwezig; residentgedrag niet getest | Dezelfde zevendaagse resident-track en spam-/stiltegates voor alle vier |
@@ -553,32 +577,36 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 2. Bouw eerst Eva's Telegram-kern af: meerdere geverifieerde personen,
    privé/gedeeld groepsgeheugen met toestemming, Hindsight-recall en een menselijk
    meerbeurts gesprek.
-3. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
+3. Sluit LG01-LG06: Eva leert iedere geverifieerde persoon corrigeerbaar kennen,
+   meet geheugen/tokens/kosten en promoveert alleen geëvalueerde procedurele
+   kennis met rollback.
+4. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
    self-improvement af.
-4. Sluit P01-P04 voor behoud van de bestaande minimale spontane
+5. Sluit P01-P04 voor behoud van de bestaande minimale spontane
    deurbel-/speakerpresence.
-5. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
+6. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
    streaming teksthot-path en afzonderlijk gebudgetteerde sidecars.
-6. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
+7. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
    privacy/crashherstel en dezelfde Eva-context; algemene video/media blijft
    een latere producttrack.
-7. Kies en pin eerst één computerprovider; bewijs een restrictive,
+8. Kies en pin eerst één computerprovider; bewijs een restrictive,
    credentialvrije read-only sidecar zonder tweede agent/orchestrator.
-8. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
+9. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
    runner, geïsoleerde browsercomputer, Eva-ledger/readback, live stop/overname,
    echte testwebtaak en crashherstel zonder blinde herhaling.
-9. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07, PC05 en
-   nieuwe AU01-AU07-receipts live uit via echt Telegram/voice, het echte huis, de
-   afgeschermde browser en afgeschermde providers. Start daarna AU08 zeven
-   dagen op diezelfde image.
-10. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+10. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07,
+   PC05, LG07 en nieuwe AU01-AU07-receipts live uit via echt Telegram/voice,
+   het echte huis, de afgeschermde browser en afgeschermde providers. Start
+   daarna AU08 zeven dagen op diezelfde image.
+11. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
    aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
    mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
-11. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
+12. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
    coworkervloot zijn aparte latere besluiten.
-12. PC06, AU08 en de residentrun gebruiken dezelfde image zeven dagen; snelheid
-   mag niet degraderen door queuegroei, contextgroei of geheugenlek.
-13. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+13. PC06, LG07, AU08 en de residentrun gebruiken dezelfde image zeven dagen;
+   snelheid en kosten mogen niet degraderen door queue-, context-, profiel- of
+   geheugenlek/groei.
+14. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen
@@ -590,6 +618,8 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 - ClawHub-formaat: <https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md>
 - ClawHub-audits: <https://docs.openclaw.ai/clawhub/security-audits>
 - Gepinde Hermes-bron uit de vergelijking: <https://github.com/NousResearch/hermes-agent/tree/f293e7206b4ddd66042329442c6afebc19a8808d>
+- Hermes gesloten leercyclus: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/index.mdx>
+- Hermes skillgroei tijdens gebruik: <https://github.com/NousResearch/hermes-agent/blob/main/README.md>
 - Hermes integraties: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/integrations/index.md>
 - Hermes tools: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/tools.md>
 - Hermes MCP: <https://github.com/NousResearch/hermes-agent/blob/main/website/docs/guides/use-mcp-with-hermes.md>
