@@ -257,6 +257,13 @@ class SealedReadProviderRegistry:
         return profile
 
 
+# The signed v1 artifact kept its historical read-specific contract name, but
+# the sealed profile itself is operation-neutral.  Effect authorization uses
+# these aliases without changing the already released artifact bytes.
+ActionProviderProfile = ReadProviderProfile
+SealedActionProviderRegistry = SealedReadProviderRegistry
+
+
 def _load_profile(value: object) -> ReadProviderProfile:
     _require_keys(
         value,
@@ -366,6 +373,8 @@ def _require_keys(value: object, expected: set[str], label: str) -> None:
 
 
 __all__ = [
+    "ActionProviderProfile",
     "ReadProviderProfile",
+    "SealedActionProviderRegistry",
     "SealedReadProviderRegistry",
 ]
