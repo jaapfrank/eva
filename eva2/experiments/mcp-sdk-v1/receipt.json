@@ -1,0 +1,38 @@
+{
+  "contract": "EvaDependencyBakeoffReceipt/v1",
+  "candidateId": "DF02c-mcp-python-sdk-v2.1.1",
+  "checkedAt": "2026-08-26T00:40:00Z",
+  "decision": "no_go_for_narrow_v1_client",
+  "productionAuthority": false,
+  "managedBChanged": false,
+  "liveProviderCalled": false,
+  "fullSdk": {
+    "root": "mcp==2.1.1",
+    "productionDistributionCount": 38,
+    "candidateDistributionCount": 48,
+    "rootsSha256": "59ae90f862b7fd584262c0cd7c540ecb035973d744b8cb686088b104f8afa3c8",
+    "lockSha256": "034ce635e0697c3708df07fbbd341f3c393c1b26e2d4b3fd8c9af5530f432e05",
+    "hashRequiredInstall": "passed"
+  },
+  "wireTypesOnly": {
+    "root": "mcp-types==2.1.1",
+    "productionDistributionCount": 38,
+    "candidateDistributionCount": 39,
+    "rootsSha256": "d4fb4c5b71f48a2aed53152523343847b1e5d70eec63548786cbec383a30de9f",
+    "lockSha256": "0a3454d1d9b9f0df8068071a125817dbd7a6a0d9d472c8fceae4ff54103b3861",
+    "wheelSha256": "26f9f7f03f2a5730717a5b98e2ab7eb640ac352d05a00cdc725c311864778295",
+    "hashRequiredInstall": "passed",
+    "fullMcpPackageAbsent": true
+  },
+  "ephemeralPrototype": {
+    "testsPassed": 22,
+    "testsFailed": 0,
+    "netProductLinesAdded": 87,
+    "persisted": false
+  },
+  "reasons": [
+    "full_sdk_adds_unneeded_get_delete_reconnect_and_callback_surface",
+    "full_sdk_has_no_public_eva_request_response_session_byte_caps",
+    "types_only_prototype_did_not_reduce_product_code"
+  ]
+}

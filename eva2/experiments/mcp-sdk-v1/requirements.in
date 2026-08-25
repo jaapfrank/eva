@@ -1,0 +1,13 @@
+# Candidate-only roots: the sealed Eva runtime roots plus the official MCP SDK.
+# This file is not a runtime or managed-B dependency authority.
+alembic==1.19.1
+cryptography==46.0.5
+dbos==2.30.0
+fastapi==0.141.1
+mcp==2.1.1
+psycopg[binary]==3.3.4
+pydantic==2.12.5
+pydantic-ai-slim==2.32.1
+setuptools==84.0.0
+SQLAlchemy==2.0.52
+uvicorn==0.41.0
