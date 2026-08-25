@@ -166,9 +166,16 @@ flowchart TD
   het child-checkpoint; drie gelijke foutfingerprints zetten die stap op
   `needs_help` en de continuation op `waiting`. Alle attentionmutaties staan
   tevens in de append-only parenttijdlijn en worden bij herladen tegen de
-  actuele projectie gecontroleerd. MC02b wijzigt geen planstap, maakt geen
-  intent en roept geen provider aan; uitvoering en dependency-advance volgen
-  afzonderlijk in MC03.
+  actuele projectie gecontroleerd. MC03a mag daarna uitsluitend een read-stap
+  voorbereiden. De host hercontroleert het volledige plan, het leasetoken, de
+  actuele catalogus en de exacte resource-, activation-, binding-, policy- en
+  manifestauthority. Veranderlijke authority-rijen blijven met PostgreSQL-
+  readlocks tot dezelfde commit gebonden. Die transactie maakt deterministisch
+  precies één `read_intent`, zet alleen die stap op `running` en de continuation
+  op `waiting` en voegt hetzelfde prepare-event aan child- en parenttijdlijn
+  toe. Exacte replay is idempotent; stale of gewijzigde authority faalt. MC03a
+  maakt geen poging of waarneming en roept geen provider aan. Dispatch,
+  effectuitvoering, readback en dependency-advance volgen afzonderlijk.
 - Voor een externe call wordt `TOOL_PREPARED` committed. De call draait buiten
   de SQL-transactie. Daarna wordt `TOOL_EXECUTED` of een exacte fout committed.
 - Verificatie is asynchroon. Polling blokkeert de event-loop niet, heeft een
@@ -399,6 +406,7 @@ flowchart TD
 | Algemene meerstapsplanning | `src/eva/contracts/planning.py` en `src/eva/application/action_chain.py` | Bestaande `ModelDecision` en `ValidatedPlan` hergebruiken; mixed read→effect, maximaal zes topologische stappen, exacte episode/generation-, policy-, budget-, resource-, schema-, proof- en volledige catalogusbinding; stabiele thread- en step-operation-ID's | MC01 groen na onafhankelijke review en 51 gerichte regressies; nog geen runner-, model-, Telegram-, HA- of crashbewijs |
 | Duurzame meerstapsadmission | `src/eva/adapters/postgres/action_chain_ledger.py`, `src/eva/adapters/postgres/operational_timeline.py` en bestaande `plans`, `plan_steps`, `attention_items`, events en checkpoints | Eén atomaire admission met exact model-/plan-/catalogusbewijs, deterministische plan- en stap-ID's, parent/child-herstelcursors en één pending vervolgtaak; strikt scope- en corruptiegevoelig herladen | MC02a groen op echte disposable PostgreSQL 16.13, inclusief geforceerde rollback, twee gelijktijdige writers, nieuwe engine, RLS en onafhankelijke herreview; nul read/effect-intents |
 | Meerstapswerklease | `src/eva/adapters/postgres/action_chain_leases.py`, `action_chain_ledger.py` en `operational_timeline.py` | Eén due continuation per revision/worker/expiry-token; `SKIP LOCKED`, harde expiry-reclaim, stale release faalt, per-step foutfingerprint en maximaal drie retries; attention en checkpoint blijven event-backed | MC02b groen in twee afzonderlijke echte PostgreSQL 16.13-proeven en twee onafhankelijke reviews; concurrency, procesherstart, future wake, RLS, expiry en retry-3 bewezen. Plan/stappen ongewijzigd, nul intents of providercalls; nog geen runner of dependency-advance |
+| Meerstaps-readvoorbereiding | `src/eva/adapters/postgres/action_chain_reads.py`, `action_chain_ledger.py`, `action_chain_leases.py` en `operational_timeline.py` | Exact geleasede read opnieuw valideren tegen actuele catalogus en gelockte resourceauthority; deterministisch één intent en gelijklopende step-, attention-, child- en parentprojectie in één transactie | MC03a groen in echte PostgreSQL 16.13: rollback, concurrency, herstart, replay en een tweeverbindings-intrekkingsrace; twee onafhankelijke reviews. Nul readpogingen, waarnemingen, effecten of providercalls; dispatch en dependency-advance blijven open |
 | Toolbewijs | `src/eva/application/orchestration.py` plus `src/eva/adapters/connectors/home_assistant.py` | Prepare, execute buiten transactie, async readback en deadline | Werkend in live B en vanuit het gewone gesprekspad bewezen |
 | Passieve zintuigen en vrije wil | `src/eva/application/sensory.py`, `src/eva/application/free_will.py`, `src/eva/adapters/connectors/home_assistant_events.py` en `src/eva/adapters/postgres/sensory_events.py` | Kanaalneutrale prikkel, duurzame minimale waarneming, deterministische ruisfilter en alleen voor relevante gebeurtenissen Hindsight-context plus modelbeslissing; respond maakt een duurzame, geleasede expressie die pas na apart transportbewijs sluit | Echte Home Assistant-websocketroute bewezen: ruis niet opgeslagen, gewone lampbediening zonder recall/model stilgehouden, rook-, water- en gaswaarschuwingen natuurlijk geformuleerd en herhaling door cooldown onderdrukt |
 | Proactieve Telegram-uitgang | `src/eva/adapters/connectors/telegram.py`, `src/eva/application/free_will.py` en `deploy/living-core/telegram-proactive.compose.yml` | Outbound-only sendMessage buiten PostgreSQL, providerreceipt daarna committen; een verlopen claim zonder bewijs wordt `expression_ambiguous/needs_help` en nooit automatisch opnieuw verstuurd; secretbestand en één expliciet goedgekeurd chat-ID | Contractpad groen; echte Home Assistant-gaswaarschuwing bleef na een corecrash zowel direct als na lease-expiry gesloten en eindigde zonder resend in durable menselijke hulpstatus; echte Telegram-send staat uit tot bestemming en nieuw Eva 2-secret expliciet zijn goedgekeurd |

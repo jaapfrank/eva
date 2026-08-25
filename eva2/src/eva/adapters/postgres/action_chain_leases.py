@@ -50,6 +50,22 @@ class ActionChainClaim:
     worker_id: str
     lease_expires_at: datetime
 
+    @property
+    def token_sha256(self) -> str:
+        """Bind every authority-bearing field of this exact worker lease."""
+
+        return canonical_sha256(
+            {
+                "attention_id": str(self.attention_id),
+                "attention_revision": self.attention_revision,
+                "lease_expires_at": _format_timestamp(self.lease_expires_at),
+                "logical_step_key": self.logical_step_key,
+                "plan_id": str(self.plan_id),
+                "plan_step_id": str(self.plan_step_id),
+                "worker_id": self.worker_id,
+            }
+        )
+
 
 class PostgresActionChainLeases:
     """Lease one ready step atomically without creating an intent or effect."""
@@ -139,8 +155,9 @@ class PostgresActionChainLeases:
                     now=now,
                 )
                 if needs_help:
-                    self._write_attention(
+                    write_action_chain_attention(
                         connection,
+                        self._scope_value,
                         chain,
                         attention_row,
                         state="waiting",
@@ -159,8 +176,9 @@ class PostgresActionChainLeases:
             )
             if lease_expires_at <= now:
                 return None
-            revision = self._write_attention(
+            revision = write_action_chain_attention(
                 connection,
+                self._scope_value,
                 chain,
                 attention_row,
                 state="claimed",
@@ -243,8 +261,9 @@ class PostgresActionChainLeases:
                     now=now,
                 )
             final_state = "waiting" if needs_help else disposition
-            self._write_attention(
+            write_action_chain_attention(
                 connection,
+                self._scope_value,
                 chain,
                 attention_row,
                 state=final_state,
@@ -316,105 +335,6 @@ class PostgresActionChainLeases:
         )
         return needs_help
 
-    def _write_attention(
-        self,
-        connection: sa.Connection,
-        chain: StoredActionChain,
-        row: sa.Row,
-        *,
-        state: Literal["pending", "claimed", "waiting"],
-        worker_id: str | None,
-        lease_expires_at: datetime | None,
-        not_before: datetime,
-        now: datetime,
-        root_event_type: str,
-        root_status: Literal["active", "needs_help"],
-        reason: str | None = None,
-    ) -> int:
-        revision = int(row.revision) + 1
-        payload_data = dict(row.payload)
-        payload_data.update(
-            {
-                "state": state,
-                "reason": row.reason if reason is None else reason,
-                "not_before": _format_timestamp(not_before),
-                "lease_owner": worker_id,
-                "lease_expires_at": (
-                    None
-                    if lease_expires_at is None
-                    else _format_timestamp(lease_expires_at)
-                ),
-            }
-        )
-        attention = AttentionWake.model_validate(payload_data)
-        payload = attention.model_dump(mode="json")
-        result = connection.execute(
-            sa.update(attention_items)
-            .where(
-                attention_items.c.tenant_id == self._scope_value.tenant_id,
-                attention_items.c.installation_id
-                == self._scope_value.installation_id,
-                attention_items.c.attention_id == row.attention_id,
-                attention_items.c.revision == row.revision,
-                attention_items.c.state == row.state,
-                attention_items.c.lease_owner.is_not_distinct_from(row.lease_owner),
-                attention_items.c.lease_expires_at.is_not_distinct_from(
-                    row.lease_expires_at
-                ),
-            )
-            .values(
-                state=state,
-                reason=attention.reason,
-                not_before=not_before,
-                lease_owner=worker_id,
-                lease_expires_at=lease_expires_at,
-                payload=payload,
-                payload_sha256=bytes.fromhex(canonical_sha256(attention)),
-                revision=revision,
-                updated_at=now,
-            )
-        )
-        if result.rowcount != 1:
-            raise ActionChainLeaseConflict("attention lease changed")
-
-        root_thread_id = action_chain_thread_id(chain.plan)
-        checkpoint = connection.execute(
-            sa.select(operational_checkpoints)
-            .where(
-                operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
-                operational_checkpoints.c.installation_id
-                == self._scope_value.installation_id,
-                operational_checkpoints.c.thread_id == root_thread_id,
-            )
-            .with_for_update()
-        ).one()
-        transition_timeline_thread(
-            connection,
-            self._scope_value,
-            thread_id=root_thread_id,
-            expected_revision=int(checkpoint.revision),
-            checkpoint_id=f"checkpoint:{root_thread_id}:continuation:{revision}",
-            phase=(
-                "action_chain_needs_help"
-                if root_status == "needs_help"
-                else "action_chain_continuation"
-            ),
-            status=root_status,
-            event_type=root_event_type,
-            occurred_at=now,
-            data={
-                "attention": payload,
-                "attention_payload_sha256": canonical_sha256(attention),
-                "attention_revision": revision,
-                "plan_id": str(chain.plan_id),
-            },
-            operation_id=root_thread_id,
-            deadline=_parse_timestamp(chain.plan.deadline),
-            retry_count=0,
-            last_error_fingerprint=None,
-        )
-        return revision
-
     def _scope(self, connection: sa.Connection) -> None:
         connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
         set_local_scope(
@@ -422,6 +342,106 @@ class PostgresActionChainLeases:
             tenant_id=str(self._scope_value.tenant_id),
             installation_id=str(self._scope_value.installation_id),
         )
+
+
+def write_action_chain_attention(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    chain: StoredActionChain,
+    row: sa.Row,
+    *,
+    state: Literal["pending", "claimed", "waiting"],
+    worker_id: str | None,
+    lease_expires_at: datetime | None,
+    not_before: datetime,
+    now: datetime,
+    root_event_type: str,
+    root_status: Literal["active", "needs_help"],
+    reason: str | None = None,
+) -> int:
+    """CAS continuation state and append its matching root timeline event."""
+
+    revision = int(row.revision) + 1
+    payload_data = dict(row.payload)
+    payload_data.update(
+        {
+            "state": state,
+            "reason": row.reason if reason is None else reason,
+            "not_before": _format_timestamp(not_before),
+            "lease_owner": worker_id,
+            "lease_expires_at": (
+                None
+                if lease_expires_at is None
+                else _format_timestamp(lease_expires_at)
+            ),
+        }
+    )
+    attention = AttentionWake.model_validate(payload_data)
+    payload = attention.model_dump(mode="json")
+    result = connection.execute(
+        sa.update(attention_items)
+        .where(
+            attention_items.c.tenant_id == scope.tenant_id,
+            attention_items.c.installation_id == scope.installation_id,
+            attention_items.c.attention_id == row.attention_id,
+            attention_items.c.revision == row.revision,
+            attention_items.c.state == row.state,
+            attention_items.c.lease_owner.is_not_distinct_from(row.lease_owner),
+            attention_items.c.lease_expires_at.is_not_distinct_from(
+                row.lease_expires_at
+            ),
+        )
+        .values(
+            state=state,
+            reason=attention.reason,
+            not_before=not_before,
+            lease_owner=worker_id,
+            lease_expires_at=lease_expires_at,
+            payload=payload,
+            payload_sha256=bytes.fromhex(canonical_sha256(attention)),
+            revision=revision,
+            updated_at=now,
+        )
+    )
+    if result.rowcount != 1:
+        raise ActionChainLeaseConflict("attention lease changed")
+
+    root_thread_id = action_chain_thread_id(chain.plan)
+    checkpoint = connection.execute(
+        sa.select(operational_checkpoints)
+        .where(
+            operational_checkpoints.c.tenant_id == scope.tenant_id,
+            operational_checkpoints.c.installation_id == scope.installation_id,
+            operational_checkpoints.c.thread_id == root_thread_id,
+        )
+        .with_for_update()
+    ).one()
+    transition_timeline_thread(
+        connection,
+        scope,
+        thread_id=root_thread_id,
+        expected_revision=int(checkpoint.revision),
+        checkpoint_id=f"checkpoint:{root_thread_id}:continuation:{revision}",
+        phase=(
+            "action_chain_needs_help"
+            if root_status == "needs_help"
+            else "action_chain_continuation"
+        ),
+        status=root_status,
+        event_type=root_event_type,
+        occurred_at=now,
+        data={
+            "attention": payload,
+            "attention_payload_sha256": canonical_sha256(attention),
+            "attention_revision": revision,
+            "plan_id": str(chain.plan_id),
+        },
+        operation_id=root_thread_id,
+        deadline=_parse_timestamp(chain.plan.deadline),
+        retry_count=0,
+        last_error_fingerprint=None,
+    )
+    return revision
 
 
 def _locked_attention(
@@ -480,4 +500,5 @@ __all__ = [
     "ActionChainLeaseConflict",
     "ActionChainLeaseError",
     "PostgresActionChainLeases",
+    "write_action_chain_attention",
 ]

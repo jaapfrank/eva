@@ -15,16 +15,17 @@ de controleerbare live receipts staan in
 
 ## Nu
 
-- Bezig: MC03, de eerste algemene runnerstap die uitsluitend een geleasede,
-  gevalideerde read-stap mag voorbereiden; provideruitvoering en effectstappen
-  blijven daarna afzonderlijke opleverstukken.
-- Laatste afgeronde kleine checkpoint: MC02b geeft een opgeslagen keten via een
-  revisiongebonden PostgreSQL-lease aan precies één worker. Een nieuwe worker
-  kan haar na harde expiry en procesherstart herpakken; een oude worker kan
-  niet meer releasen. Drie gelijke fouten zetten alleen die stap op
-  `needs_help` en de continuation op `waiting`. Twee onafhankelijke reviews en
-  twee afzonderlijke PostgreSQL 16.13-proeven zijn groen; plan/stappen bleven
-  ongewijzigd en er ontstonden nul read- of effect-intents.
+- Bezig: MC03b, één reeds voorbereide read via de bestaande providergrens
+  uitvoeren en haar waarneming duurzaam teruglezen. Effectstappen en het
+  vrijgeven van afhankelijke stappen blijven daarna aparte opleverstukken.
+- Laatste afgeronde kleine checkpoint: MC03a zet precies één geleasede,
+  gevalideerde read-stap atomair om in één duurzaam `read_intent`. Het
+  leasetoken, de actuele toolcatalogus, resource-, activation-, binding-,
+  policy- en manifestauthority worden opnieuw gecontroleerd en tot commit
+  gelockt. Een geforceerde rollback liet nul resten achter; een echte
+  tweeverbindingsrace kon de activation niet tussentijds intrekken. Twee
+  onafhankelijke reviews, twee PostgreSQL-tests, 57 contracttests en 24
+  tijdlijntests zijn groen. Er is nog geen provider aangeroepen.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
 - Eerstvolgend: het gezamenlijke architectuurbesluit uitvoeren; daarna laat een

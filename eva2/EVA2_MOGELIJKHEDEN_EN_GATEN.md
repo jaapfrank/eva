@@ -58,9 +58,10 @@ Bijgewerkt: 25 augustus 2026.
   natuurlijkheid, initiatief en bondigheid moeten in echte Telegramgesprekken
   stabiel blijken.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
-  worden opgepakt en na leaseverloop zonder stale release worden hervat. Wat
-  nog ontbreekt is de algemene runner die een gevalideerde stap voorbereidt,
-  uitvoert, terugleest en pas daarna de afhankelijke volgende stap vrijgeeft.
+  worden opgepakt en één gevalideerde read als duurzaam intent voorbereiden.
+  Wat nog ontbreekt is de algemene providerdispatch en waarnemingsopslag,
+  daarna effectuitvoering met readback en pas daarna het vrijgeven van de
+  afhankelijke volgende stap.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,
   geen officiële zevendaagse praktijktest. Na het bevriezen van de echte
   kandidaat begint een nieuwe klok van zeven dagen.

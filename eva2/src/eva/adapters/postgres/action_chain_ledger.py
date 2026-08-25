@@ -28,6 +28,7 @@ from eva.application.action_chain import (
     validate_action_chain_requests,
 )
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.execution import CapabilityManifest, ConnectorBinding, ReadIntent
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelAttempt, ModelDecision, ValidatedPlan
 
@@ -36,6 +37,11 @@ plans = metadata.tables["eva_core.plans"]
 plan_steps = metadata.tables["eva_core.plan_steps"]
 attention_items = metadata.tables["eva_core.attention_items"]
 model_attempts = metadata.tables["eva_core.model_attempts"]
+connector_bindings = metadata.tables["eva_core.connector_bindings"]
+capability_manifests = metadata.tables["eva_core.capability_manifests"]
+capability_activations = metadata.tables["eva_core.capability_activations"]
+policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
+read_intents = metadata.tables["eva_effects.read_intents"]
 
 
 class ActionChainLedgerError(RuntimeError):
@@ -60,6 +66,7 @@ class StoredActionChainStep:
     plan_step_id: UUID
     dependency_step_ids: tuple[UUID, ...]
     state: str
+    read_intent_id: UUID | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -526,17 +533,31 @@ class PostgresActionChainLedger:
             expected_dependencies = tuple(
                 resolved_ids[item] for item in step.depends_on
             )
+            initial_state = "ready" if not step.depends_on else "pending"
+            prepared_read = (
+                step.kind == "read"
+                and stored.state == "running"
+                and stored.read_intent_id is not None
+                and stored.effect_intent_id is None
+                and stored.outcome_ref is None
+                and stored.revision == 2
+                and stored.updated_at >= stored.created_at
+            )
+            initial_step = (
+                stored.state == initial_state
+                and stored.read_intent_id is None
+                and stored.effect_intent_id is None
+                and stored.outcome_ref is None
+                and stored.updated_at == stored.created_at
+                and stored.revision == 1
+            )
             if (
                 stored.episode_id != row.episode_id
                 or stored.generation != plan.generation
                 or stored.operation != step.operation
                 or stored.effect_class != step.kind
                 or stored.plan_step_id != uuid5(plan_id, f"step:{step.step_id}")
-                or stored.state
-                != ("ready" if not step.depends_on else "pending")
-                or stored.read_intent_id is not None
-                or stored.effect_intent_id is not None
-                or stored.outcome_ref is not None
+                or not (initial_step or prepared_read)
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
                 != canonical_sha256(step_payload)
@@ -544,12 +565,10 @@ class PostgresActionChainLedger:
                 or stored.retention_policy_id != row.retention_policy_id
                 or stored.retention_until != row.retention_until
                 or stored.created_at != row.created_at
-                or stored.updated_at != stored.created_at
-                or stored.revision != 1
             ):
                 raise ActionChainCorrupt("stored plan-step binding differs")
             operation_id = action_chain_step_operation_id(plan, step.step_id)
-            step_admission, _ = _origin_data(
+            step_admission, step_current = _origin_data(
                 connection,
                 self._scope_value,
                 thread_id=operation_id,
@@ -568,6 +587,18 @@ class PostgresActionChainLedger:
             }
             if step_admission != expected_step_admission:
                 raise ActionChainCorrupt("step admission event differs")
+            if prepared_read:
+                self._validate_prepared_read(
+                    connection,
+                    plan_id=plan_id,
+                    plan=plan,
+                    decision=decision,
+                    authority_snapshot=authority_snapshot,
+                    plan_row=row,
+                    step=step,
+                    stored=stored,
+                    current_event_data=step_current,
+                )
             expected_admission_ids.append(
                 {
                     "logical_step_key": step.step_id,
@@ -580,6 +611,7 @@ class PostgresActionChainLedger:
                     plan_step_id=stored.plan_step_id,
                     dependency_step_ids=expected_dependencies,
                     state=str(stored.state),
+                    read_intent_id=stored.read_intent_id,
                 )
             )
         if admission.get("step_ids") != expected_admission_ids:
@@ -665,6 +697,211 @@ class PostgresActionChainLedger:
             created_at=row.created_at,
         )
 
+    def _validate_prepared_read(
+        self,
+        connection: sa.Connection,
+        *,
+        plan_id: UUID,
+        plan: ValidatedPlan,
+        decision: ModelDecision,
+        authority_snapshot: dict[str, Any],
+        plan_row: sa.Row,
+        step: Any,
+        stored: sa.Row,
+        current_event_data: dict[str, Any],
+    ) -> None:
+        intent_row = connection.execute(
+            sa.select(read_intents).where(
+                read_intents.c.tenant_id == self._scope_value.tenant_id,
+                read_intents.c.installation_id == self._scope_value.installation_id,
+                read_intents.c.read_intent_id == stored.read_intent_id,
+            )
+        ).one_or_none()
+        if intent_row is None:
+            raise ActionChainCorrupt("prepared read intent is absent")
+        try:
+            intent = ReadIntent.model_validate(intent_row.payload)
+        except ValidationError as error:
+            raise ActionChainCorrupt("prepared read intent is invalid") from error
+        action = next(
+            (item for item in decision.actions if item.action_id == step.step_id),
+            None,
+        )
+        descriptor = next(
+            (
+                item
+                for item in authority_snapshot.get("descriptors", [])
+                if isinstance(item, dict) and item.get("operation") == step.operation
+            ),
+            None,
+        )
+        if action is None or descriptor is None:
+            raise ActionChainCorrupt("prepared read authority is absent")
+        expected_intent_id = uuid5(stored.plan_step_id, "read-intent:v1")
+        expected_query_sha256 = canonical_sha256(action.arguments)
+        expected_scope_payload = {
+            "resource_type": intent.resource_scope.resource_type,
+            "resource_id": intent.resource_scope.resource_id,
+        }
+        if (
+            stored.read_intent_id != expected_intent_id
+            or intent.read_intent_id != str(expected_intent_id)
+            or intent.episode_id != plan.episode_id
+            or intent.generation != plan.generation
+            or intent.purpose != "business_read"
+            or intent.effect_intent_id is not None
+            or intent.operation != step.operation
+            or intent.resource_scope.resource_id != action.resource
+            or intent.resource_scope.scope_sha256
+            != canonical_sha256(expected_scope_payload)
+            or intent.query_sha256 != expected_query_sha256
+            or intent.maximum_attempts != 2
+            or intent.deadline != plan.deadline
+            or canonical_sha256(intent) != bytes(intent_row.payload_sha256).hex()
+            or intent_row.episode_id != plan_row.episode_id
+            or int(intent_row.generation) != plan.generation
+            or intent_row.logical_read_key
+            != f"action-chain:{stored.plan_step_id}:read"
+            or intent_row.plan_step_id != stored.plan_step_id
+            or intent_row.purpose != intent.purpose
+            or intent_row.effect_intent_id is not None
+            or intent_row.circuit_breaker_id is not None
+            or intent_row.operation != intent.operation
+            or intent_row.resource_scope != intent.resource_scope.model_dump(mode="json")
+            or bytes(intent_row.resource_scope_sha256).hex()
+            != intent.resource_scope.scope_sha256
+            or bytes(intent_row.query_sha256).hex() != expected_query_sha256
+            or int(intent_row.maximum_freshness_ms) != intent.maximum_freshness_ms
+            or int(intent_row.maximum_attempts) != intent.maximum_attempts
+            or intent_row.capability_id != intent.capability_id
+            or intent_row.deadline != _parse_timestamp(intent.deadline)
+            or intent_row.retention_policy_id != plan_row.retention_policy_id
+            or intent_row.retention_until != plan_row.retention_until
+            or intent_row.created_at != stored.updated_at
+        ):
+            raise ActionChainCorrupt("prepared read intent binding differs")
+
+        activation = connection.execute(
+            sa.select(capability_activations).where(
+                capability_activations.c.tenant_id == self._scope_value.tenant_id,
+                capability_activations.c.installation_id
+                == self._scope_value.installation_id,
+                capability_activations.c.activation_id
+                == intent_row.capability_activation_id,
+            )
+        ).one_or_none()
+        manifest = (
+            None
+            if activation is None
+            else connection.execute(
+                sa.select(capability_manifests).where(
+                    capability_manifests.c.tenant_id == self._scope_value.tenant_id,
+                    capability_manifests.c.installation_id
+                    == self._scope_value.installation_id,
+                    capability_manifests.c.capability_manifest_id
+                    == activation.capability_manifest_id,
+                )
+            ).one_or_none()
+        )
+        binding = (
+            None
+            if activation is None
+            else connection.execute(
+                sa.select(connector_bindings).where(
+                    connector_bindings.c.tenant_id == self._scope_value.tenant_id,
+                    connector_bindings.c.installation_id
+                    == self._scope_value.installation_id,
+                    connector_bindings.c.binding_id == activation.connector_binding_id,
+                )
+            ).one_or_none()
+        )
+        policy = (
+            None
+            if activation is None
+            else connection.execute(
+                sa.select(policy_pack_versions).where(
+                    policy_pack_versions.c.tenant_id == self._scope_value.tenant_id,
+                    policy_pack_versions.c.installation_id
+                    == self._scope_value.installation_id,
+                    policy_pack_versions.c.policy_id == activation.policy_id,
+                    policy_pack_versions.c.policy_version
+                    == activation.policy_pack_version,
+                )
+            ).one_or_none()
+        )
+        try:
+            manifest_payload = CapabilityManifest.model_validate(
+                None if manifest is None else manifest.payload
+            )
+            binding_payload = ConnectorBinding.model_validate(
+                None if binding is None else binding.payload
+            )
+        except ValidationError as error:
+            raise ActionChainCorrupt("prepared read capability payload is invalid") from error
+        if (
+            activation is None
+            or manifest is None
+            or binding is None
+            or policy is None
+            or activation.state != "active"
+            or binding.status != "verified"
+            or manifest.state != "active"
+            or activation.capability_id != manifest.capability_id
+            or activation.operation != manifest.operation
+            or activation.operation != step.operation
+            or intent.capability_id != activation.capability_id
+            or activation.connector_binding_id != binding.binding_id
+            or step.operation not in binding.confirmed_operations
+            or intent.resource_scope.resource_type not in binding.confirmed_scopes
+            or not set(manifest_payload.required_provider_scopes).issubset(
+                binding.confirmed_scopes
+            )
+            or bytes(activation.policy_pack_sha256).hex() != plan.policy_sha256
+            or bytes(policy.canonical_sha256).hex() != plan.policy_sha256
+            or bytes(activation.executable_sha256)
+            != bytes(manifest.executable_sha256)
+            or bytes(activation.sandbox_profile_sha256)
+            != bytes(manifest.sandbox_profile_sha256)
+            or manifest_payload.operation != step.operation
+            or manifest_payload.effect_class != "read"
+            or manifest_payload.input_schema_sha256 != step.input_schema_sha256
+            or manifest_payload.output_schema_sha256 != step.output_schema_sha256
+            or manifest_payload.proof_floor != step.proof_floor
+            or manifest_payload.maximum_freshness_ms
+            != intent.maximum_freshness_ms
+            or canonical_sha256(manifest_payload)
+            != bytes(manifest.payload_sha256).hex()
+            or binding_payload.status != "verified"
+            or canonical_sha256(binding_payload) != bytes(binding.payload_sha256).hex()
+        ):
+            raise ActionChainCorrupt("prepared read capability binding differs")
+
+        claim_sha256 = _prepared_claim_sha256(
+            connection,
+            self._scope_value,
+            plan=plan,
+            plan_id=plan_id,
+            plan_step_id=stored.plan_step_id,
+            logical_step_key=step.step_id,
+        )
+        expected_event_data = {
+            "capability_activation_id": str(intent_row.capability_activation_id),
+            "capability_manifest_id": str(activation.capability_manifest_id),
+            "catalog_sha256": authority_snapshot["catalog_sha256"],
+            "claim_token_sha256": claim_sha256,
+            "connector_binding_id": str(activation.connector_binding_id),
+            "logical_step_key": step.step_id,
+            "plan_id": str(plan_id),
+            "plan_step_id": str(stored.plan_step_id),
+            "query_sha256": expected_query_sha256,
+            "read_intent_id": str(expected_intent_id),
+            "read_intent_payload_sha256": canonical_sha256(intent),
+        }
+        if (
+            current_event_data != expected_event_data
+        ):
+            raise ActionChainCorrupt("prepared read timeline binding differs")
+
 
 def _origin_data(
     connection: sa.Connection,
@@ -724,6 +961,82 @@ def _origin_data(
     return data, current
 
 
+def _prepared_claim_sha256(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    plan: ValidatedPlan,
+    plan_id: UUID,
+    plan_step_id: UUID,
+    logical_step_key: str,
+) -> str:
+    root_thread_id = action_chain_thread_id(plan)
+    rows = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == root_thread_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(2)
+    ).all()
+    if (
+        len(rows) != 2
+        or rows[0].event_type != "ACTION_CHAIN_READ_INTENT_PREPARED"
+        or rows[1].event_type != "ACTION_CHAIN_CONTINUATION_CLAIMED"
+        or int(rows[0].sequence) != int(rows[1].sequence) + 1
+    ):
+        raise ActionChainCorrupt("prepared read lease timeline differs")
+    for event in rows:
+        if (
+            event.operation_id != root_thread_id
+            or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
+            or set(event.payload) != {"checkpoint", "data"}
+        ):
+            raise ActionChainCorrupt("prepared read lease event differs")
+    claimed_data = rows[1].payload.get("data")
+    if not isinstance(claimed_data, dict):
+        raise ActionChainCorrupt("prepared read claim data is absent")
+    attention_payload = claimed_data.get("attention")
+    if not isinstance(attention_payload, dict):
+        raise ActionChainCorrupt("prepared read claim attention is absent")
+    try:
+        attention = AttentionWake.model_validate(attention_payload)
+    except ValidationError as error:
+        raise ActionChainCorrupt("prepared read claim attention is invalid") from error
+    expected_attention_id = uuid5(plan_id, "continuation:1")
+    if (
+        set(claimed_data)
+        != {
+            "attention",
+            "attention_payload_sha256",
+            "attention_revision",
+            "plan_id",
+        }
+        or attention.attention_id != str(expected_attention_id)
+        or attention.state != "claimed"
+        or attention.lease_owner is None
+        or attention.lease_expires_at is None
+        or claimed_data.get("attention_payload_sha256")
+        != canonical_sha256(attention)
+        or claimed_data.get("attention_revision") != rows[1].sequence
+        or claimed_data.get("plan_id") != str(plan_id)
+    ):
+        raise ActionChainCorrupt("prepared read claim binding differs")
+    return canonical_sha256(
+        {
+            "attention_id": str(expected_attention_id),
+            "attention_revision": claimed_data["attention_revision"],
+            "lease_expires_at": attention.lease_expires_at,
+            "logical_step_key": logical_step_key,
+            "plan_id": str(plan_id),
+            "plan_step_id": str(plan_step_id),
+            "worker_id": attention.lease_owner,
+        }
+    )
+
+
 def _current_timeline_data(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -758,18 +1071,21 @@ def _current_timeline_data(
             "ACTION_CHAIN_CONTINUATION_CLAIMED",
             "ACTION_CHAIN_CONTINUATION_RELEASED",
             "ACTION_CHAIN_CONTINUATION_NEEDS_HELP",
+            "ACTION_CHAIN_READ_INTENT_PREPARED",
         }
         if root
         else {
             "ACTION_CHAIN_STEP_ADMITTED",
             "ACTION_CHAIN_STEP_RETRY_FAILED",
             "ACTION_CHAIN_STEP_NEEDS_HELP",
+            "ACTION_CHAIN_READ_INTENT_PREPARED",
         }
     )
     allowed_statuses = {"active", "needs_help"} if root else {
         "active",
         "failed",
         "needs_help",
+        "waiting_for_proof",
     }
     expected_checkpoint = {
         "checkpoint_id": str(checkpoint.checkpoint_id),
@@ -861,4 +1177,8 @@ __all__ = [
     "PostgresActionChainLedger",
     "StoredActionChain",
     "StoredActionChainStep",
+    "capability_activations",
+    "capability_manifests",
+    "connector_bindings",
+    "read_intents",
 ]

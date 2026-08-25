@@ -372,10 +372,22 @@ langdurige verzamelaanpassing telt niet als voortgang.
   onafhankelijke reviews zijn groen. Plannen en stappen bleven bytegelijk en
   er zijn nul read/effect-intents of providercalls gemaakt; zie
   `reviews/action-chain-leases-mc02b.md`.
-- [ ] Meerstapsplanning MC03: één algemene runner uitsluitend
-  `ValidatedPlan/v1` laten uitvoeren en per effect de bestaande
-  `TOOL_PREPARED`→providercall→readback-orchestrator hergebruiken; Home Assistant
-  wordt de eerste provider, geen aparte scripts per opdracht.
+- [x] Meerstapsplanning MC03a: één geleasede read-stap wordt na hercontrole van
+  de exacte actuele catalogus, resource, activation, binding, policy en het
+  onveranderlijke manifest atomair als precies één duurzaam `read_intent`
+  voorbereid. De veranderlijke authority blijft tot commit met PostgreSQL-
+  readlocks gebonden. Rollback, gelijktijdige prepare, procesherstart, exacte
+  replay en een echte intrekkingsrace zijn groen in PostgreSQL 16.13; twee
+  onafhankelijke reviews, 57 contracttests en 24 tijdlijntests zijn groen.
+  Er is geen provider aangeroepen; zie
+  `reviews/action-chain-read-preparation-mc03a.md`.
+- [ ] Meerstapsplanning MC03b: een voorbereid read-intent via één algemene
+  providergrens uitvoeren en de uitkomst of exacte fout duurzaam vastleggen;
+  replay mag geen tweede readpoging maken.
+- [ ] Meerstapsplanning MC03c: na bewezen read een effect via de bestaande
+  `TOOL_PREPARED`→providercall→fysieke-readbackketen uitvoeren en pas daarna
+  de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
+  komen geen aparte scripts per opdracht.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,
