@@ -10,6 +10,9 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
+from eva.adapters.postgres.action_chain_effect_validation import (
+    validate_action_chain_effect,
+)
 from eva.adapters.postgres.action_chain_read_validation import (
     validate_action_chain_read,
 )
@@ -46,6 +49,7 @@ capability_manifests = metadata.tables["eva_core.capability_manifests"]
 capability_activations = metadata.tables["eva_core.capability_activations"]
 policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
 read_intents = metadata.tables["eva_effects.read_intents"]
+effect_intents = metadata.tables["eva_effects.effect_intents"]
 
 
 class ActionChainLedgerError(RuntimeError):
@@ -71,6 +75,7 @@ class StoredActionChainStep:
     dependency_step_ids: tuple[UUID, ...]
     state: str
     read_intent_id: UUID | None
+    effect_intent_id: UUID | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -559,6 +564,15 @@ class PostgresActionChainLedger:
                 and stored.revision == running_revision
                 and stored.updated_at >= stored.created_at
             )
+            prepared_effect = (
+                step.kind == "effect"
+                and stored.state == "running"
+                and stored.read_intent_id is None
+                and stored.effect_intent_id is not None
+                and stored.outcome_ref is None
+                and stored.revision == running_revision
+                and stored.updated_at >= stored.created_at
+            )
             completed_read = (
                 step.kind == "read"
                 and stored.state == "succeeded"
@@ -583,7 +597,13 @@ class PostgresActionChainLedger:
                 or stored.operation != step.operation
                 or stored.effect_class != step.kind
                 or stored.plan_step_id != uuid5(plan_id, f"step:{step.step_id}")
-                or not (initial_step or released_ready or prepared_read or completed_read)
+                or not (
+                    initial_step
+                    or released_ready
+                    or prepared_read
+                    or completed_read
+                    or prepared_effect
+                )
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
                 != canonical_sha256(step_payload)
@@ -627,6 +647,20 @@ class PostgresActionChainLedger:
                     current_event_data=step_current,
                     corrupt=ActionChainCorrupt,
                 )
+            elif prepared_effect:
+                validate_action_chain_effect(
+                    connection,
+                    self._scope_value,
+                    plan_id=plan_id,
+                    plan=plan,
+                    decision=decision,
+                    authority_snapshot=authority_snapshot,
+                    plan_row=row,
+                    step=step,
+                    stored=stored,
+                    current_event_data=step_current,
+                    corrupt=ActionChainCorrupt,
+                )
             expected_admission_ids.append(
                 {
                     "logical_step_key": step.step_id,
@@ -640,6 +674,7 @@ class PostgresActionChainLedger:
                     dependency_step_ids=expected_dependencies,
                     state=str(stored.state),
                     read_intent_id=stored.read_intent_id,
+                    effect_intent_id=stored.effect_intent_id,
                 )
             )
         current_transition_context = validate_action_chain_read_advances(
@@ -843,6 +878,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_CONTINUATION_NEEDS_HELP",
             "ACTION_CHAIN_READ_INTENT_PREPARED",
             "ACTION_CHAIN_READ_DEPENDENCIES_RELEASED",
+            "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
         }
         if root
         else {
@@ -856,6 +892,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_AMBIGUOUS",
             "ACTION_CHAIN_READ_REJECTED",
             "ACTION_CHAIN_READ_RATE_LIMITED",
+            "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
         }
     )
     allowed_statuses = {"active", "needs_help"} if root else {
