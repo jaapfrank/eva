@@ -14,7 +14,9 @@
     "honcho_may_own_identity_consent_effects_or_receipts": false,
     "honcho_output_is_derived_and_rebuildable": true,
     "honcho_may_enter_every_reply_hot_path_without_latency_proof": false,
-    "mem0_is_in_v1_runtime_plan": false
+    "mem0_is_in_v1_runtime_plan": false,
+    "memory_dashboard_is_provider_independent": true,
+    "memory_dashboard_may_bypass_eva_authority": false
   },
   "pins": {
     "hindsight": {
@@ -69,7 +71,8 @@
     "assistant_inference_never_becomes_direct_user_fact",
     "same_person_cross_channel_continuity",
     "no_duplicate_retain_or_unbounded_feedback_loop",
-    "erase_export_rebuild_upgrade_and_rollback"
+    "erase_export_rebuild_upgrade_and_rollback",
+    "dashboard_edits_follow_eva_correction_and_erasure_authority"
   ],
   "required_metrics": [
     "augmentation_correctness_delta_percent",
@@ -77,7 +80,10 @@
     "representation_read_latency_p50_ms",
     "representation_read_latency_p95_ms",
     "first_answer_added_latency_p95_ms",
+    "hot_path_context_tokens_added_p50",
+    "hot_path_context_tokens_added_p95",
     "input_output_tokens_total",
+    "background_model_tokens_total",
     "estimated_model_cost_eur",
     "resident_memory_peak_mib",
     "persistent_storage_mib",

@@ -15,6 +15,12 @@ vervangers:
 - Honcho mag als achtergrond-persoons-/relatiemodel worden onderzocht;
 - Mem0 krijgt nu geen V1-runtimefunctie.
 
+Een geheugenbrowser of dashboard is een afzonderlijke presentatielaag. Eva
+kiest geen extra geheugenprovider alleen voor diens UI: haar eigen dashboard
+moet de canonieke PostgreSQL-bron en toegelaten Hindsight-projecties tonen en
+iedere correctie, intrekking en verwijdering via Eva's bestaande contracten
+laten lopen.
+
 De laatste twee lagen zijn optioneel en afgeleid. Als zij uitvallen, oud zijn of
 te langzaam worden, blijven PostgreSQL, Hindsight en Eva's gesprek gezond. Zij
 mogen identiteit, consent, groepsaudience, toolbewijs of crashstate nooit
@@ -41,7 +47,7 @@ productmatrix.
 | Combinatie | Reële potentiële winst | Correctie en open bewijs |
 |---|---|---|
 | Mnemosyne + Hindsight | Lokale SQLite-L1 kan goedkope snelle hits leveren; een bestaand Hermes-composiet gebruikt L1-first, Hindsight-L2 en een duurzame promotie-outbox | De exacte Mnemosyne 3.15.1 heeft ook een lokale memory browser; “alleen code/CLI” is verouderd. De gevonden composietproef was gedeeltelijk: echte live SIGKILL-recovery ontbrak. Eva heeft bovendien al directe L0-context en een PostgreSQL-retain-outbox, dus extra winst moet worden gemeten |
-| Mem0 + Hindsight | Mem0 heeft beheer- en UI-oppervlakken en kan zelfgehost | Mem0 is ook duurzaam geheugen en geen bewezen snelle cache. De combinatie zou voorlopig opslag/extractie dupliceren. Cloud is niet verplicht, maar Mem0 heeft voor Eva nu geen unieke V1-rol |
+| Mem0 + Hindsight | Mem0 heeft een self-hosted REST-server met dashboard, gebruikers/API-keys en auditlog | Mem0 is ook duurzaam geheugen en geen bewezen snelle cache. De combinatie zou voorlopig opslag/extractie dupliceren. Cloud is niet verplicht. Het dashboard is los van de geheugenkeuze oplosbaar, dus Mem0 heeft voor Eva nu geen unieke V1-runtimefunctie |
 | Honcho + Hindsight | Honcho modelleert veranderende personen, agents, groepen en projecten; de statische representationroute is bedoeld voor lage-latency persoonscontext | Honcho is eveneens zelfhostbaar, maar vraagt API + deriver + PostgreSQL/pgvector + Redis en meerdere modelroutes. “Tot 3× tokens” is geen door ons gereproduceerde vaste factor. Alleen achtergrondafleiding plus goedkope representation-read wordt kandidaat; niet `peer.chat` op iedere beurt |
 
 ## Gepinde kandidaten
@@ -111,6 +117,8 @@ Beide optionele lagen moeten passend bij hun rol aantonen:
 - dezelfde geverifieerde persoon houdt gecontroleerde cross-channelcontinuïteit;
 - er ontstaat geen dubbele retain, feedbacklus of onbegrensde achtergrondqueue;
 - erase, export, herbouw, upgrade en rollback houden verwijderde data weg.
+- een dashboardcorrectie of -verwijdering gebruikt Eva's authoritycontract en
+  kan nooit rechtstreeks een afgeleide laag tot waarheid maken.
 
 Een privacy-, consent-, provenance-, erase- of rollbackfout is NO-GO en kan
 niet door gemiddelde benchmarkwinst worden gecompenseerd.
@@ -120,9 +128,10 @@ niet door gemiddelde benchmarkwinst worden gecompenseerd.
 We vergelijken dezelfde verzegelde Eva-corpus eerst zonder augmentatie en daarna
 per laag afzonderlijk. We meten correctheidsdelta, correctielatency,
 representation/L1-read p50/p95, toegevoegde p95-first-answerlatency,
-input/outputtokens, modelkosten, piek-RSS, disk, oudste queueleeftijd,
-dubbele/conflicterende memories, backup/restore, upgradedowntime en
-operatorstappen.
+toegevoegde hot-path-contexttokens p50/p95, totale input/outputtokens,
+afzonderlijke achtergrondmodeltokens, modelkosten, piek-RSS, disk, oudste
+queueleeftijd, dubbele/conflicterende memories, backup/restore,
+upgradedowntime en operatorstappen.
 
 Mnemosyne en Honcho worden pas samen getest wanneer ieder afzonderlijk een
 positieve bijdrage bewijst. Anders zou een derde geheugenproces snelheid,
@@ -177,3 +186,4 @@ context plus Hindsight-langetermijngeheugen.
 - Honcho 3.0.12: <https://github.com/plastic-labs/honcho/tree/v3.0.12>
 - Honcho-documentatie: <https://honcho.dev/docs/>
 - Hindsight 0.9.1: <https://hindsight.vectorize.io/blog/2026/08/14/version-0-9-1>
+- Mem0 self-hosted server en dashboard: <https://docs.mem0.ai/open-source/setup>

@@ -97,7 +97,9 @@ verdwenen autoriteit blijft wijzen.
   Hindsight blijft de L2. De machineleesbare augmentatiegate voorkomt dat een
   Mnemosyne-L1 of Honcho-persoonsmodel Hindsight/SQL vervangt of zonder
   privacy-, correctie-, latency-, token-, beheer-, upgrade- en rollbackbewijs
-  in Eva's antwoordroute komt.
+  in Eva's antwoordroute komt. Ook een geheugendashboard blijft een projectie:
+  het mag geen providerkeuze afdwingen of Eva's correctie- en
+  verwijderautoriteit omzeilen.
 - Er bestaat nog geen volledig, commitgebonden semantisch componentregister dat
   ieder productie-, deployment-, migration- en testpad dekt. Ook is
   optimalisatiestatus nog niet voor iedere component gemeten.

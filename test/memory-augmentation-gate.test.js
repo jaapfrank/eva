@@ -110,6 +110,19 @@ test('hard-codes Hindsight as L2 and forbids either augmentation replacing it', 
   }
 });
 
+test('keeps the memory dashboard independent and behind Eva authority', () => {
+  for (const [field, invalid] of [
+    ['memory_dashboard_is_provider_independent', false],
+    ['memory_dashboard_may_bypass_eva_authority', true],
+  ]) {
+    const gate = structuredClone(source);
+    gate.architecture[field] = invalid;
+    withFixture(gate, { contract: 'EvaMemoryAugmentationReceipt/v1' }, (gatePath) => {
+      assert.throws(() => loadAndEvaluate(gatePath), /memoryrollen of authoritygrens wijken af/u);
+    });
+  }
+});
+
 test('required privacy cases and resource metrics cannot be edited away', () => {
   for (const [field, expected] of [
     ['required_hard_cases', /required_hard_cases/u],

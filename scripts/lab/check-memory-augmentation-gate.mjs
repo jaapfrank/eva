@@ -17,6 +17,7 @@ const REQUIRED_HARD_CASES = [
   'same_person_cross_channel_continuity',
   'no_duplicate_retain_or_unbounded_feedback_loop',
   'erase_export_rebuild_upgrade_and_rollback',
+  'dashboard_edits_follow_eva_correction_and_erasure_authority',
 ];
 const REQUIRED_METRICS = [
   'augmentation_correctness_delta_percent',
@@ -24,7 +25,10 @@ const REQUIRED_METRICS = [
   'representation_read_latency_p50_ms',
   'representation_read_latency_p95_ms',
   'first_answer_added_latency_p95_ms',
+  'hot_path_context_tokens_added_p50',
+  'hot_path_context_tokens_added_p95',
   'input_output_tokens_total',
+  'background_model_tokens_total',
   'estimated_model_cost_eur',
   'resident_memory_peak_mib',
   'persistent_storage_mib',
@@ -119,7 +123,9 @@ function validateContract(gate) {
     || architecture.honcho_may_own_identity_consent_effects_or_receipts !== false
     || architecture.honcho_output_is_derived_and_rebuildable !== true
     || architecture.honcho_may_enter_every_reply_hot_path_without_latency_proof !== false
-    || architecture.mem0_is_in_v1_runtime_plan !== false) {
+    || architecture.mem0_is_in_v1_runtime_plan !== false
+    || architecture.memory_dashboard_is_provider_independent !== true
+    || architecture.memory_dashboard_may_bypass_eva_authority !== false) {
     throw new Error('memoryrollen of authoritygrens wijken af');
   }
   assertExactSet(Object.keys(gate.augmentations ?? {}), REQUIRED_AUGMENTATIONS, 'augmentations');
