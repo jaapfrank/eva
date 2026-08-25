@@ -68,6 +68,55 @@ class PostgresActionChainReadResultStore:
         self._role = role
         self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
+    def load_terminal(
+        self,
+        read_intent_id: UUID,
+    ) -> StoredActionChainReadResult | None:
+        """Load an already validated terminal result without call material."""
+
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            intent_row = connection.execute(
+                sa.select(read_intents).where(
+                    read_intents.c.tenant_id == self._scope_value.tenant_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
+                    read_intents.c.read_intent_id == read_intent_id,
+                )
+            ).one_or_none()
+            if intent_row is None:
+                raise ActionChainReadConflict("read result intent is absent in scope")
+            step_row = connection.execute(
+                sa.select(plan_steps).where(
+                    plan_steps.c.tenant_id == self._scope_value.tenant_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
+                    plan_steps.c.plan_step_id == intent_row.plan_step_id,
+                    plan_steps.c.read_intent_id == read_intent_id,
+                )
+            ).one()
+            attempt_row = connection.execute(
+                sa.select(read_attempts).where(
+                    read_attempts.c.tenant_id == self._scope_value.tenant_id,
+                    read_attempts.c.installation_id == self._scope_value.installation_id,
+                    read_attempts.c.read_intent_id == read_intent_id,
+                    read_attempts.c.ordinal == 1,
+                )
+            ).one_or_none()
+            if attempt_row is None:
+                return None
+            stored_attempt = _attempt(attempt_row)
+            if stored_attempt.state == "dispatch_authorized":
+                return None
+            chain = self._ledger.load_in_transaction(connection, step_row.plan_id)
+            operation_id = action_chain_step_operation_id(
+                chain.plan,
+                step_row.logical_step_key,
+            )
+            return self._load_stored_result(
+                connection,
+                stored_attempt=stored_attempt,
+                operation_id=operation_id,
+            )
+
     def record(
         self,
         claim: ClaimedActionChainReadCall,
@@ -344,6 +393,37 @@ class PostgresActionChainReadResultStore:
             != _format_timestamp(recorded_at)
         ):
             raise ActionChainReadConflict("read result replay differs")
+        return self._load_stored_result(
+            connection,
+            stored_attempt=stored_attempt,
+            operation_id=operation_id,
+            event=event,
+        )
+
+    def _load_stored_result(
+        self,
+        connection: sa.Connection,
+        *,
+        stored_attempt: ReadAttempt,
+        operation_id: str,
+        event: sa.Row | None = None,
+    ) -> StoredActionChainReadResult:
+        if event is None:
+            event = connection.execute(
+                sa.select(operational_events)
+                .where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.thread_id == operation_id,
+                    operational_events.c.event_type.in_(
+                        tuple(item[0] for item in _TERMINAL_TIMELINE.values())
+                    ),
+                )
+                .order_by(operational_events.c.occurred_at.desc())
+                .limit(1)
+            ).one()
+        data = _event_data(event.payload)
         evidence = EvidenceEnvelopeV2.model_validate(
             connection.scalar(
                 sa.select(evidence_envelopes.c.payload).where(

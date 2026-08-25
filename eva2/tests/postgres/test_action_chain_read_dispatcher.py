@@ -12,6 +12,7 @@ from sqlalchemy.engine import Engine
 
 import eva.operations.action_chain_read_authorizer as read_authorizer_module
 import eva.operations.action_chain_read_dispatcher as read_dispatcher_module
+import eva.operations.action_chain_read_executor as read_executor_module
 from eva.adapters.postgres.action_chain_read_results import (
     PostgresActionChainReadResultStore,
 )
@@ -35,6 +36,9 @@ from eva.operations.action_chain_read_authorizer import (
 from eva.operations.action_chain_read_dispatcher import (
     ClaimedActionChainReadCall,
     PostgresActionChainReadDispatcher,
+)
+from eva.operations.action_chain_read_executor import (
+    PostgresActionChainReadExecutor,
 )
 from eva.operations.action_chain_read_results import (
     project_action_chain_read_result,
@@ -591,3 +595,57 @@ def test_provider_result_rolls_back_all_rows_when_observation_insert_fails(
             .where(evidence.c.evidence_id == provider_evidence_id)
         ) == 0
     PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+
+
+def test_executor_runs_real_provider_process_once_and_retains_exact_failure(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scope, chain, prepared, catalog, registry = _prepared_read(action_chain_engine)
+    real_run = read_executor_module.run_connector_process
+    process_calls: list[dict[str, object]] = []
+
+    def counted_run(**kwargs: object):
+        process_calls.append(kwargs)
+        return real_run(**kwargs)
+
+    monkeypatch.setattr(read_executor_module, "run_connector_process", counted_run)
+    executor = PostgresActionChainReadExecutor(
+        action_chain_engine,
+        scope,
+        provider_registry=registry,
+        clock=lambda: NOW + timedelta(seconds=4),
+    )
+    executed = executor.execute(
+        UUID(prepared.intent.read_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=3),
+        timeout_seconds=2,
+    )
+
+    assert executed.disposition == "executed"
+    assert executed.stored_result is not None
+    assert executed.stored_result.attempt.state == "rejected"
+    assert executed.stored_result.observation is None
+    assert executed.stored_result.evidence.subject_contract == (
+        "ConnectorProtocolFailure/v1"
+    )
+    assert len(process_calls) == 1
+
+    replay = executor.execute(
+        UUID(prepared.intent.read_intent_id),
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=5),
+        timeout_seconds=2,
+    )
+    assert replay.disposition == "already_started"
+    assert replay.stored_result is not None
+    assert replay.stored_result.disposition == "already_recorded"
+    assert len(process_calls) == 1
+
+    restart_engine = sa.create_engine(action_chain_engine.url)
+    try:
+        reloaded = PostgresActionChainLedger(restart_engine, scope).load(chain.plan_id)
+    finally:
+        restart_engine.dispose()
+    assert reloaded.plan_id == chain.plan_id
