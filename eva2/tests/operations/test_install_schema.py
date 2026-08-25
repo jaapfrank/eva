@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from eva.operations.install_schema import _secret
+from eva.operations.install_schema import _HEAD_REVISION, _KNOWN_FORWARD_REVISIONS, _secret
+
+
+def test_delegated_work_migration_is_the_explicit_schema_head() -> None:
+    assert _HEAD_REVISION == "4e_0002_delegated_work"
+    assert _HEAD_REVISION in _KNOWN_FORWARD_REVISIONS
 
 
 def test_secret_file_is_read_without_putting_value_in_environment(

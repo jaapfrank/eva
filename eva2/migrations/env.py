@@ -11,7 +11,7 @@ from alembic.script import ScriptDirectory
 from sqlalchemy.engine import Connection
 from sqlalchemy.pool import NullPool
 
-from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.current_catalog import metadata
 from eva.adapters.postgres.operational_timeline import living_metadata
 from eva.operations.migration_admission import (
     InitialCatalogAdmissionError,

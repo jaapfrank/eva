@@ -38,6 +38,7 @@ _EXPECTED_INPUT_PATHS = (
     "deploy/living-core/runtime.env.example",
     "deploy/living-core/telegram-principal-bindings.example.json",
     "design/vertical/noor-4d-schema-export-freeze-v1.json",
+    "migrations/env.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
     "release/build-policy.json",
@@ -62,9 +63,11 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/contracts/manifest.json",
     "schemas/portable/generic-reader-output-schema-manifest-v1.json",
     "schemas/portable/record-schema-manifest-v1.json",
+    "src/eva/adapters/postgres/current_catalog.py",
     "src/eva/contracts/delegated_work.py",
     "src/eva/contracts/lifecycle.py",
     "src/eva/contracts/registry.py",
+    "src/eva/operations/install_schema.py",
     "src/eva/operations/managed_b_build_context.py",
     "src/eva/operations/managed_b_offline_build.py",
     "src/eva/operations/managed_b_release_inputs.py",
@@ -126,6 +129,8 @@ _EXPECTED_TEST_PATHS = (
     "tests/postgres/test_action_chain_read_advances.py",
     "tests/postgres/test_action_chain_read_authorizer.py",
     "tests/postgres/test_action_chain_read_dispatcher.py",
+    "tests/postgres/test_current_catalog.py",
+    "tests/postgres/test_delegated_work_migration.py",
     "tests/postgres/test_memory_repository.py",
     "tests/postgres/test_operational_timeline.py",
     "tests/postgres/test_postgres_migrations.py",
@@ -151,6 +156,7 @@ _EXPECTED_MIGRATIONS = (
     ("4d_0006_memory", "4d_0005_evidence_objects", "migrations/versions/4d_0006_memory.py"),
     ("4d_0007_projection_telemetry", "4d_0006_memory", "migrations/versions/4d_0007_projection_telemetry.py"),
     ("4e_0001_operational_timeline", "4d_0007_projection_telemetry", "migrations/versions/4e_0001_operational_timeline.py"),
+    ("4e_0002_delegated_work", "4e_0001_operational_timeline", "migrations/versions/4e_0002_delegated_work.py"),
 )
 
 

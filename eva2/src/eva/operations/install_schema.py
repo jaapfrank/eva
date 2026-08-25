@@ -35,7 +35,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4d_0006_memory",
     "4d_0007_projection_telemetry",
     "4e_0001_operational_timeline",
+    "4e_0002_delegated_work",
 }
+_HEAD_REVISION = "4e_0002_delegated_work"
 
 
 @dataclass(frozen=True, slots=True)
@@ -113,11 +115,11 @@ def install_schema(
                     config.attributes.pop("connection", None)
             route.append("migrator_role_to_4b_0002_episode_atomicity")
             current = _REVISION_4B2
-        if current != "4e_0001_operational_timeline":
+        if current != _HEAD_REVISION:
             command.upgrade(config, "head")
             route.append("online_empty_admission_or_forward_upgrade_to_head")
         final_revision = _current_revision(engine)
-        if final_revision != "4e_0001_operational_timeline":
+        if final_revision != _HEAD_REVISION:
             raise RuntimeError("Eva schema installation did not reach head")
         command.check(config)
         return SchemaInstallationReceipt(

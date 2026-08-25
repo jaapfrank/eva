@@ -70,7 +70,7 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["dependency_alignment"]["expected_wheel_count"] == 39
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
-    assert receipt["migration_head"] == "4e_0001_operational_timeline"
+    assert receipt["migration_head"] == "4e_0002_delegated_work"
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
     assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()
@@ -152,7 +152,7 @@ def test_release_inputs_refuse_migration_bytes_or_head_drift() -> None:
 
     files = _files(authority)
     changed = copy.deepcopy(authority)
-    changed["migrationAuthority"]["head"] = "4d_0007_projection_telemetry"
+    changed["migrationAuthority"]["head"] = "4e_0001_operational_timeline"
     changed_raw = _replace_authority(files, changed)
     with pytest.raises(RuntimeError, match="migration authority is invalid"):
         _validate(files, changed_raw)
