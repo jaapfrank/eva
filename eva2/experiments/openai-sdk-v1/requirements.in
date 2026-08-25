@@ -1,0 +1,14 @@
+# Candidate-only dependency roots for DF02a. This file is not runtime authority.
+# Keep the sealed production roots byte-for-byte represented, then add only the
+# dependency under evaluation.
+alembic==1.19.1
+cryptography==46.0.5
+dbos==2.30.0
+fastapi==0.141.1
+openai==3.3.1
+psycopg[binary]==3.3.4
+pydantic==2.12.5
+pydantic-ai-slim==2.32.1
+setuptools==84.0.0
+SQLAlchemy==2.0.52
+uvicorn==0.41.0

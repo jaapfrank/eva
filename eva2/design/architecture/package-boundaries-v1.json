@@ -36,7 +36,7 @@
     "adapters.model": {
       "path": "src/eva/adapters/model",
       "allowedLocalImports": ["eva.adapters.model", "eva.application", "eva.contracts"],
-      "allowedExternalImports": ["pydantic_ai"]
+      "allowedExternalImports": ["httpx2", "openai", "pydantic_ai"]
     },
     "adapters.connectors": {
       "path": "src/eva/adapters/connectors",

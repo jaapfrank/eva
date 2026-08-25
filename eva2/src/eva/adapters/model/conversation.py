@@ -22,6 +22,7 @@ from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
     ConversationModelResult,
+    ConversationModelUsage,
     ConversationTurn,
     IdentityProfile,
     MemorySearchPlan,
@@ -46,6 +47,12 @@ from eva.application.repository_improvements import (
 )
 from eva.bootstrap.secrets import read_shared_runtime_file_bytes
 from eva.contracts.canonical_json import canonical_json_bytes
+from eva.adapters.model.openai_responses_transport import (
+    OpenAIResponsesCredentialRejected,
+    OpenAIResponsesTransport,
+    OpenAIResponsesTransportError,
+    OpenAIResponsesUnavailable,
+)
 
 
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
@@ -811,6 +818,7 @@ class CodexConversationModel:
         timeout_seconds: float = 30.0,
         research_timeout_seconds: float = 90.0,
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
+        transport_kind: Literal["legacy_urllib", "openai_sdk"] = "legacy_urllib",
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -822,12 +830,25 @@ class CodexConversationModel:
             raise ValueError("research timeout must be 10..180 seconds")
         if reasoning_effort not in {"low", "medium", "high"}:
             raise ValueError("conversation reasoning effort is invalid")
+        if transport_kind not in {"legacy_urllib", "openai_sdk"}:
+            raise ValueError("conversation model transport is invalid")
         self._auth_file = auth_file
         self._model = model
         self._endpoint = endpoint
         self._timeout_seconds = timeout_seconds
         self._research_timeout_seconds = research_timeout_seconds
         self._reasoning_effort = reasoning_effort
+        self._transport_kind = transport_kind
+        self._openai_transport = (
+            OpenAIResponsesTransport(
+                endpoint=endpoint,
+                timeout_seconds=timeout_seconds,
+                maximum_request_bytes=_MAX_STREAM_BYTES,
+                maximum_response_bytes=_MAX_STREAM_BYTES,
+            )
+            if transport_kind == "openai_sdk"
+            else None
+        )
         self._credential_lock = threading.Lock()
         self._rejected_token_sha256: str | None = None
 
@@ -994,7 +1015,9 @@ class CodexConversationModel:
             "tool_choice": "none" if completed_action is not None else "auto",
             "tools": [_ACTION_TOOLS[name] for name in available_actions],
         }
-        text, action_call = self._request(body)
+        usages: list[ConversationModelUsage] = []
+        text, action_call, usage = self._request_conversation(body)
+        usages.append(usage)
         if (
             action_call is None
             and text.strip()
@@ -1007,7 +1030,8 @@ class CodexConversationModel:
                 "schrifttaal. Formuleer het antwoord opnieuw, volledig in natuurlijk "
                 "Nederlands en zonder de inhoud of bewijsgrenzen te veranderen."
             )
-            text, action_call = self._request(body)
+            text, action_call, usage = self._request_conversation(body)
+            usages.append(usage)
         if action_call is not None and action_call.name not in available_actions:
             raise ConversationModelError(
                 "conversation model requested an unavailable action"
@@ -1020,6 +1044,7 @@ class CodexConversationModel:
             text=text.strip() or None,
             provider=f"chatgpt-codex:{self._model}",
             action_call=action_call,
+            usage=ConversationModelUsage.aggregate(tuple(usages)),
         )
 
     def explore(self, claim: PersonalInterestClaim) -> PersonalInterestExploration:
@@ -1491,6 +1516,63 @@ class CodexConversationModel:
         self, body: dict[str, Any]
     ) -> tuple[str, ConversationActionCall | None]:
         return self._request_using(body, self._parse_sse)
+
+    def _request_conversation(
+        self, body: dict[str, Any]
+    ) -> tuple[
+        str,
+        ConversationActionCall | None,
+        ConversationModelUsage,
+    ]:
+        """Use the explicit candidate only for the ordinary conversation route."""
+
+        if self._transport_kind == "legacy_urllib":
+            text, action_call = self._request(body)
+            return text, action_call, ConversationModelUsage.unmeasured()
+        assert self._openai_transport is not None
+        last_auth: tuple[str, str] | None = None
+        for attempt in range(2):
+            auth = self._load_auth()
+            expires_at = self._jwt_expiry(auth[0])
+            if expires_at is not None and expires_at <= datetime.now(tz=UTC):
+                raise ConversationModelError("conversation access token is expired")
+            if attempt and auth == last_auth:
+                break
+            last_auth = auth
+            try:
+                result = self._openai_transport.request(
+                    body,
+                    access_token=auth[0],
+                    account_id=auth[1],
+                )
+            except OpenAIResponsesCredentialRejected:
+                continue
+            except OpenAIResponsesUnavailable as error:
+                raise ConversationModelError(
+                    "conversation provider is unavailable"
+                ) from error
+            except OpenAIResponsesTransportError as error:
+                raise ConversationModelError(str(error)) from error
+            with self._credential_lock:
+                self._rejected_token_sha256 = None
+            usage = result.usage
+            if usage.measurement == "measured":
+                assert usage.tool_calls is not None
+                assert usage.input_tokens is not None
+                assert usage.output_tokens is not None
+                usage = ConversationModelUsage.measured(
+                    model_attempts=attempt + 1,
+                    tool_calls=usage.tool_calls,
+                    input_tokens=usage.input_tokens,
+                    output_tokens=usage.output_tokens,
+                )
+            return result.text, result.action_call, usage
+        if last_auth is not None:
+            with self._credential_lock:
+                self._rejected_token_sha256 = hashlib.sha256(
+                    last_auth[0].encode()
+                ).hexdigest()
+        raise ConversationModelError("conversation credentials were rejected")
 
     def _request_research(
         self, body: dict[str, Any]
