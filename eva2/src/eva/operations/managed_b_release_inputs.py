@@ -1,0 +1,589 @@
+"""Validate one diagnostic pre-4D managed-B input authority.
+
+The source archive remains the authority for bytes.  This module only proves
+that the selected commit contains the exact runtime registry, historical 4D
+compatibility projection, migration chain, build inputs and test files named by
+the release authority.  It does not build, deploy, inspect secrets or open B.
+"""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import copy
+import hashlib
+import json
+from pathlib import PurePosixPath
+import re
+from typing import Any, Mapping
+
+from tools.prepare_managed_b_candidate_context import (
+    prepare_candidate_build_inputs,
+    validate_candidate_build_inputs,
+)
+
+
+AUTHORITY_PATH = "release/managed-b-release-input-authority-v1.json"
+_SHA256 = re.compile(r"[0-9a-f]{64}")
+_MAX_AUTHORITY_BYTES = 64 * 1024
+_MANIFEST_PATH = "schemas/contracts/manifest.json"
+_CORPUS_PATH = "schemas/contracts/contract-corpus-v1.json"
+_PROFILE_PATH = "schemas/contracts/canonical-json-profile-v1.json"
+_FOUR_D_FREEZE_PATH = "design/vertical/noor-4d-schema-export-freeze-v1.json"
+_EXPECTED_INPUT_PATHS = (
+    "alembic.ini",
+    "deploy/living-core/Dockerfile",
+    "deploy/living-core/managed-b.compose.yml",
+    "deploy/living-core/runtime.env.example",
+    "deploy/living-core/telegram-principal-bindings.example.json",
+    "design/vertical/noor-4d-schema-export-freeze-v1.json",
+    "pyproject.toml",
+    "release/4d-dependency-source-binding.json",
+    "release/build-policy.json",
+    "release/design-source-bindings.json",
+    "release/formats/eva-build-inputs-v1.schema.json",
+    "release/formats/eva-build-provenance-v1.schema.json",
+    "release/formats/eva-release-manifest-v1.schema.json",
+    "release/license-inventory.json",
+    "release/managed-b-wheelhouse-amd64-v1.json",
+    "release/oci-image-slots.json",
+    "release/platform-lock.json",
+    "release/python-wheel-coverage.json",
+    "release/sbom-policy.json",
+    "release/signature-policy.json",
+    "release/trust-root-slot.json",
+    "requirements-4d.lock",
+    "requirements.lock",
+    "schemas/contracts/canonical-json-profile-v1.json",
+    "schemas/contracts/contract-corpus-v1.json",
+    "schemas/contracts/manifest.json",
+    "schemas/portable/generic-reader-output-schema-manifest-v1.json",
+    "schemas/portable/record-schema-manifest-v1.json",
+    "src/eva/operations/managed_b_release_inputs.py",
+    "tools/check_4d_freeze.py",
+    "tools/prepare_managed_b_candidate_context.py",
+)
+_EXPECTED_TEST_PATHS = (
+    "tests/api/test_memory_api.py",
+    "tests/application/test_action_chain.py",
+    "tests/application/test_action_chain_effect_advances.py",
+    "tests/application/test_conversation.py",
+    "tests/application/test_identity_verifier.py",
+    "tests/application/test_memory_audience.py",
+    "tests/application/test_memory_authority.py",
+    "tests/application/test_memory_background.py",
+    "tests/application/test_telegram_group_consent.py",
+    "tests/application/test_telegram_ingress.py",
+    "tests/application/test_telegram_pairing.py",
+    "tests/bootstrap/test_home_assistant_deployment.py",
+    "tests/bootstrap/test_managed_b_manifest.py",
+    "tests/bootstrap/test_memory_provenance.py",
+    "tests/bootstrap/test_runtime_settings.py",
+    "tests/bootstrap/test_schema_install_deployment.py",
+    "tests/bootstrap/test_telegram_ingress_deployment.py",
+    "tests/connectors/test_home_assistant_live_adapters.py",
+    "tests/connectors/test_telegram.py",
+    "tests/contract/test_contract_corpus.py",
+    "tests/contract/test_contract_invariants.py",
+    "tests/contract/test_json_schema_reference.py",
+    "tests/contract/test_schema_generation.py",
+    "tests/model/test_conversation_model.py",
+    "tests/operations/test_core_b_preflight.py",
+    "tests/operations/test_install_schema.py",
+    "tests/operations/test_managed_b_base_image.py",
+    "tests/operations/test_managed_b_build_context.py",
+    "tests/operations/test_managed_b_candidate_image.py",
+    "tests/operations/test_managed_b_offline_build.py",
+    "tests/operations/test_managed_b_release_inputs.py",
+    "tests/operations/test_managed_b_render.py",
+    "tests/operations/test_managed_b_runtime_smoke.py",
+    "tests/operations/test_managed_b_wheelhouse.py",
+    "tests/operations/test_prepare_managed_b_candidate_context.py",
+    "tests/operations/test_telegram_binding_loader.py",
+    "tests/portable/test_portable_schema_resources.py",
+    "tests/postgres/test_4d_migration_admission.py",
+    "tests/postgres/test_4d_migrations.py",
+    "tests/postgres/test_action_chain_effect_advances.py",
+    "tests/postgres/test_action_chain_effect_authorizer.py",
+    "tests/postgres/test_action_chain_effect_dispatcher.py",
+    "tests/postgres/test_action_chain_effect_readback_dispatcher.py",
+    "tests/postgres/test_action_chain_effect_readback_executor.py",
+    "tests/postgres/test_action_chain_effect_readback_results.py",
+    "tests/postgres/test_action_chain_effect_readbacks.py",
+    "tests/postgres/test_action_chain_effects.py",
+    "tests/postgres/test_action_chain_ledger.py",
+    "tests/postgres/test_action_chain_read_advances.py",
+    "tests/postgres/test_action_chain_read_authorizer.py",
+    "tests/postgres/test_action_chain_read_dispatcher.py",
+    "tests/postgres/test_memory_repository.py",
+    "tests/postgres/test_operational_timeline.py",
+    "tests/postgres/test_postgres_migrations.py",
+    "tests/postgres/test_postgres_schema.py",
+    "tests/projection/test_hindsight.py",
+)
+_NONCLAIMS = (
+    "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
+    "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, or production readiness.",
+    "The pinned test files are inputs only; this authority does not prove collection, execution, results, skips, xfails, environment, toolchain, or complete regression coverage.",
+    "The stock 38-wheel baseline and the current 39-package 4D dependency authority are both pinned because they are not yet one version-matched Managed-B build input; P1.1 remains blocked on that alignment.",
+    "Artifact-proxy provenance, two-builder reproducibility, immutable Compose image binding, SBOM, vulnerability evidence, signatures, trust root, and full-stack restart remain separate open gates.",
+    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 66-contract registry.",
+)
+_EXPECTED_MIGRATIONS = (
+    ("4b_0000_core_namespace", None, "migrations/versions/4b_0000_core_namespace.py"),
+    ("4b_0001_tenant_scope", "4b_0000_core_namespace", "migrations/versions/4b_0001_tenant_scope.py"),
+    ("4b_0002_episode_atomicity", "4b_0001_tenant_scope", "migrations/versions/4b_0002_episode_atomicity.py"),
+    ("4d_0003_core_continuity", "4b_0002_episode_atomicity", "migrations/versions/4d_0003_core_continuity.py"),
+    ("4d_0004_effect_authority", "4d_0003_core_continuity", "migrations/versions/4d_0004_effect_authority.py"),
+    ("4d_0005_evidence_objects", "4d_0004_effect_authority", "migrations/versions/4d_0005_evidence_objects.py"),
+    ("4d_0006_memory", "4d_0005_evidence_objects", "migrations/versions/4d_0006_memory.py"),
+    ("4d_0007_projection_telemetry", "4d_0006_memory", "migrations/versions/4d_0007_projection_telemetry.py"),
+    ("4e_0001_operational_timeline", "4d_0007_projection_telemetry", "migrations/versions/4e_0001_operational_timeline.py"),
+)
+
+
+ArchiveFiles = Mapping[str, tuple[bytes, int]]
+
+
+def _sha256(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def _json(raw: bytes, *, label: str) -> dict[str, Any]:
+    try:
+        value = json.loads(raw.decode("utf-8", "strict"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError(f"managed B {label} is not canonical JSON") from error
+    if not isinstance(value, dict):
+        raise RuntimeError(f"managed B {label} must be an object")
+    canonical = json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8") + b"\n"
+    if raw != canonical:
+        raise RuntimeError(f"managed B {label} is not canonical JSON")
+    return value
+
+
+def _json_object(raw: bytes, *, label: str) -> dict[str, Any]:
+    """Parse an exact hash-pinned legacy JSON document without reformatting it."""
+
+    try:
+        value = json.loads(raw.decode("utf-8", "strict"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise RuntimeError(f"managed B {label} is invalid JSON") from error
+    if not isinstance(value, dict):
+        raise RuntimeError(f"managed B {label} must be an object")
+    return value
+
+
+def _exact_keys(value: Mapping[str, Any], expected: set[str], *, label: str) -> None:
+    if set(value) != expected:
+        raise RuntimeError(f"managed B {label} fields differ")
+
+
+def _path(value: object, *, label: str) -> str:
+    if not isinstance(value, str) or "\\" in value or "\x00" in value:
+        raise RuntimeError(f"managed B {label} path is invalid")
+    path = PurePosixPath(value)
+    if (
+        path.is_absolute()
+        or path.as_posix() != value
+        or any(part in {"", ".", ".."} for part in path.parts)
+    ):
+        raise RuntimeError(f"managed B {label} path is invalid")
+    return path.as_posix()
+
+
+def _digest(value: object, *, label: str) -> str:
+    if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
+        raise RuntimeError(f"managed B {label} digest is invalid")
+    return value
+
+
+def _file(files: ArchiveFiles, path: str, *, label: str) -> bytes:
+    entry = files.get(path)
+    if entry is None:
+        raise RuntimeError(f"managed B {label} is absent from the source archive")
+    raw, mode = entry
+    if mode & 0o022:
+        raise RuntimeError(f"managed B {label} is group/world writable")
+    return raw
+
+
+def _pin_rows(
+    files: ArchiveFiles,
+    value: object,
+    *,
+    expected_paths: tuple[str, ...],
+    label: str,
+) -> tuple[tuple[str, str], ...]:
+    if not isinstance(value, list) or not value:
+        raise RuntimeError(f"managed B {label} pins are invalid")
+    rows: list[tuple[str, str]] = []
+    for index, row in enumerate(value):
+        if not isinstance(row, dict):
+            raise RuntimeError(f"managed B {label} pin is invalid")
+        _exact_keys(row, {"path", "sha256"}, label=f"{label} pin")
+        path = _path(row["path"], label=f"{label} pin {index}")
+        digest = _digest(row["sha256"], label=f"{label} pin {index}")
+        if _sha256(_file(files, path, label=path)) != digest:
+            raise RuntimeError(f"managed B pinned input differs: {path}")
+        rows.append((path, digest))
+    if rows != sorted(rows) or len({path for path, _ in rows}) != len(rows):
+        raise RuntimeError(f"managed B {label} pins must be unique and sorted")
+    if tuple(path for path, _ in rows) != expected_paths:
+        raise RuntimeError(f"managed B {label} path set differs")
+    return tuple(rows)
+
+
+def _projected_json(value: Mapping[str, Any]) -> bytes:
+    return json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8") + b"\n"
+
+
+def _validate_registry(
+    files: ArchiveFiles, authority: Mapping[str, Any]
+) -> dict[str, object]:
+    _exact_keys(
+        authority,
+        {
+            "currentContractCount",
+            "currentCorpusSha256",
+            "currentManifestSha256",
+            "currentProfileSha256",
+            "historical4d",
+        },
+        label="contract registry authority",
+    )
+    manifest_raw = _file(files, _MANIFEST_PATH, label="contract manifest")
+    corpus_raw = _file(files, _CORPUS_PATH, label="contract corpus")
+    profile_raw = _file(files, _PROFILE_PATH, label="canonical profile")
+    expected_manifest = _digest(
+        authority["currentManifestSha256"], label="current manifest"
+    )
+    expected_corpus = _digest(
+        authority["currentCorpusSha256"], label="current corpus"
+    )
+    expected_profile = _digest(
+        authority["currentProfileSha256"], label="current profile"
+    )
+    if (
+        _sha256(manifest_raw) != expected_manifest
+        or _sha256(corpus_raw) != expected_corpus
+        or _sha256(profile_raw) != expected_profile
+    ):
+        raise RuntimeError("managed B current contract authority differs")
+    manifest = _json(manifest_raw, label="contract manifest")
+    corpus = _json(corpus_raw, label="contract corpus")
+    count = authority["currentContractCount"]
+    schemas = manifest.get("schemas")
+    if (
+        isinstance(count, bool)
+        or not isinstance(count, int)
+        or count <= 0
+        or manifest.get("manifest") != "EvaContractSchemaManifest/v1"
+        or manifest.get("contractCount") != count
+        or manifest.get("corpusSha256") != expected_corpus
+        or manifest.get("profileSha256") != expected_profile
+        or not isinstance(schemas, dict)
+        or len(schemas) != count
+    ):
+        raise RuntimeError("managed B current contract manifest differs")
+    for contract, schema_digest in schemas.items():
+        if not isinstance(contract, str):
+            raise RuntimeError("managed B contract manifest name is invalid")
+        digest = _digest(schema_digest, label=f"schema {contract}")
+        path = f"schemas/contracts/{contract.replace('/', '-')}.schema.json"
+        schema_raw = _file(files, path, label=path)
+        schema = _json(schema_raw, label=path)
+        if (
+            _sha256(schema_raw) != digest
+            or schema.get("properties", {}).get("contract", {}).get("const")
+            != contract
+        ):
+            raise RuntimeError(f"managed B contract schema differs: {contract}")
+    expected_schema_paths = {
+        f"schemas/contracts/{contract.replace('/', '-')}.schema.json"
+        for contract in schemas
+    }
+    actual_schema_paths = {
+        path
+        for path in files
+        if path.startswith("schemas/contracts/") and path.endswith(".schema.json")
+    }
+    if actual_schema_paths != expected_schema_paths:
+        raise RuntimeError("managed B contract schema file set differs")
+
+    historical = authority["historical4d"]
+    if not isinstance(historical, dict):
+        raise RuntimeError("managed B historical 4D authority is invalid")
+    _exact_keys(
+        historical,
+        {
+            "allowedCurrentAdditions",
+            "contractCount",
+            "corpusSha256",
+            "freezeArtifactSha256",
+            "manifestSha256",
+        },
+        label="historical 4D authority",
+    )
+    additions = historical["allowedCurrentAdditions"]
+    if not isinstance(additions, dict) or not additions:
+        raise RuntimeError("managed B historical 4D additions are invalid")
+    if any(not isinstance(case_id, str) for case_id in additions.values()):
+        raise RuntimeError("managed B historical 4D additions are invalid")
+    historical_count = historical["contractCount"]
+    if (
+        isinstance(historical_count, bool)
+        or not isinstance(historical_count, int)
+        or historical_count + len(additions) != count
+        or set(additions) - set(schemas)
+    ):
+        raise RuntimeError("managed B historical 4D contract count differs")
+    historical_manifest_sha = _digest(
+        historical["manifestSha256"], label="historical 4D manifest"
+    )
+    historical_corpus_sha = _digest(
+        historical["corpusSha256"], label="historical 4D corpus"
+    )
+    projected_manifest = copy.deepcopy(manifest)
+    projected_schemas = projected_manifest["schemas"]
+    for contract in additions:
+        projected_schemas.pop(contract)
+    projected_manifest["contractCount"] = historical_count
+    projected_manifest["corpusSha256"] = historical_corpus_sha
+    if _sha256(_projected_json(projected_manifest)) != historical_manifest_sha:
+        raise RuntimeError("managed B historical 4D manifest projection differs")
+
+    cases = corpus.get("cases")
+    if not isinstance(cases, list):
+        raise RuntimeError("managed B contract corpus cases are invalid")
+    case_by_id: dict[str, dict[str, Any]] = {}
+    for case in cases:
+        if not isinstance(case, dict) or not isinstance(case.get("caseId"), str):
+            raise RuntimeError("managed B contract corpus case is invalid")
+        case_id = case["caseId"]
+        if case_id in case_by_id:
+            raise RuntimeError("managed B contract corpus repeats a case")
+        case_by_id[case_id] = case
+    removed_cases: set[str] = set()
+    for contract, case_id in additions.items():
+        case = case_by_id.get(case_id)
+        if case is None or case.get("contract") != contract:
+            raise RuntimeError("managed B historical 4D corpus projection differs")
+        removed_cases.add(case_id)
+    projected_corpus = copy.deepcopy(corpus)
+    projected_corpus["cases"] = [
+        case for case in projected_corpus["cases"] if case["caseId"] not in removed_cases
+    ]
+    if _sha256(_projected_json(projected_corpus)) != historical_corpus_sha:
+        raise RuntimeError("managed B historical 4D corpus projection differs")
+
+    freeze_raw = _file(files, _FOUR_D_FREEZE_PATH, label="4D freeze artifact")
+    if _sha256(freeze_raw) != _digest(
+        historical["freezeArtifactSha256"], label="4D freeze artifact"
+    ):
+        raise RuntimeError("managed B historical 4D freeze artifact differs")
+    freeze = _json_object(freeze_raw, label="4D freeze artifact")
+    binding = freeze.get("authorityBindings", {}).get("contracts", {})
+    if (
+        binding.get("manifestPath") != f"eva2/{_MANIFEST_PATH}"
+        or binding.get("manifestSha256") != historical_manifest_sha
+        or binding.get("corpusSha256") != historical_corpus_sha
+        or binding.get("contractCount") != historical_count
+    ):
+        raise RuntimeError("managed B historical 4D freeze binding differs")
+    return {
+        "current_contract_count": count,
+        "current_corpus_sha256": expected_corpus,
+        "current_manifest_sha256": expected_manifest,
+        "historical_4d_contract_count": historical_count,
+        "historical_4d_corpus_sha256": historical_corpus_sha,
+        "historical_4d_manifest_sha256": historical_manifest_sha,
+    }
+
+
+def _assignment(module: ast.Module, name: str) -> object:
+    found: list[object] = []
+    for node in module.body:
+        value: ast.expr | None = None
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and node.targets[0].id == name
+        ):
+            value = node.value
+        elif (
+            isinstance(node, ast.AnnAssign)
+            and isinstance(node.target, ast.Name)
+            and node.target.id == name
+        ):
+            value = node.value
+        if value is not None:
+            try:
+                found.append(ast.literal_eval(value))
+            except (ValueError, TypeError) as error:
+                raise RuntimeError("managed B migration metadata is not literal") from error
+    if len(found) != 1:
+        raise RuntimeError(f"managed B migration {name} is not unique")
+    return found[0]
+
+
+def _validate_migrations(files: ArchiveFiles, value: object) -> str:
+    if not isinstance(value, dict):
+        raise RuntimeError("managed B migration authority is invalid")
+    _exact_keys(value, {"head", "revisions"}, label="migration authority")
+    head = value["head"]
+    revisions = value["revisions"]
+    if (
+        head != _EXPECTED_MIGRATIONS[-1][0]
+        or not isinstance(revisions, list)
+        or len(revisions) != len(_EXPECTED_MIGRATIONS)
+    ):
+        raise RuntimeError("managed B migration authority is invalid")
+    actual_migration_paths = {
+        path
+        for path in files
+        if path.startswith("migrations/versions/")
+        and path.endswith(".py")
+        and not path.endswith("/__init__.py")
+    }
+    if actual_migration_paths != {row[2] for row in _EXPECTED_MIGRATIONS}:
+        raise RuntimeError("managed B migration file set differs")
+    previous: str | None = None
+    seen: set[str] = set()
+    for index, row in enumerate(revisions):
+        if not isinstance(row, dict):
+            raise RuntimeError("managed B migration row is invalid")
+        _exact_keys(
+            row, {"downRevision", "path", "revision", "sha256"}, label="migration row"
+        )
+        path = _path(row["path"], label=f"migration {index}")
+        revision = row["revision"]
+        down_revision = row["downRevision"]
+        expected_revision, expected_down, expected_path = _EXPECTED_MIGRATIONS[index]
+        if (
+            revision != expected_revision
+            or down_revision != expected_down
+            or path != expected_path
+            or revision in seen
+            or down_revision != previous
+            or _sha256(_file(files, path, label=path))
+            != _digest(row["sha256"], label=f"migration {revision}")
+        ):
+            raise RuntimeError("managed B migration chain differs")
+        try:
+            module = ast.parse(_file(files, path, label=path), filename=path)
+        except SyntaxError as error:
+            raise RuntimeError("managed B migration source is invalid") from error
+        if (
+            _assignment(module, "revision") != revision
+            or _assignment(module, "down_revision") != down_revision
+        ):
+            raise RuntimeError("managed B migration metadata differs")
+        seen.add(revision)
+        previous = revision
+    if previous != head:
+        raise RuntimeError("managed B migration head differs")
+    return head
+
+
+def _validate_static_archive_inputs(
+    files: ArchiveFiles, authority_raw: bytes
+) -> dict[str, object]:
+    """Validate static inputs without making a source-archive claim."""
+
+    archived_authority = _file(files, AUTHORITY_PATH, label="release authority")
+    if archived_authority != authority_raw or len(authority_raw) > _MAX_AUTHORITY_BYTES:
+        raise RuntimeError("managed B release authority differs from source archive")
+    authority = _json(authority_raw, label="release authority")
+    _exact_keys(
+        authority,
+        {
+            "contract",
+            "contractRegistry",
+            "migrationAuthority",
+            "nonClaims",
+            "requiredInputs",
+            "requiredTests",
+            "schemaVersion",
+            "status",
+        },
+        label="release authority",
+    )
+    if (
+        authority.get("contract") != "EvaManagedBReleaseInputAuthority/v1"
+        or authority.get("schemaVersion") != 1
+        or authority.get("status") != "diagnostic_pre_4d_static_inputs"
+        or authority.get("nonClaims") != list(_NONCLAIMS)
+    ):
+        raise RuntimeError("managed B release authority header differs")
+    inputs = _pin_rows(
+        files,
+        authority["requiredInputs"],
+        expected_paths=_EXPECTED_INPUT_PATHS,
+        label="release input",
+    )
+    tests = _pin_rows(
+        files,
+        authority["requiredTests"],
+        expected_paths=_EXPECTED_TEST_PATHS,
+        label="release test",
+    )
+    registry = authority["contractRegistry"]
+    if not isinstance(registry, dict):
+        raise RuntimeError("managed B contract registry authority is invalid")
+    registry_receipt = _validate_registry(files, registry)
+    migration_head = _validate_migrations(files, authority["migrationAuthority"])
+    return {
+        "authority_sha256": _sha256(authority_raw),
+        "contract": "EvaManagedBReleaseInputReceipt/v1",
+        **registry_receipt,
+        "migration_head": migration_head,
+        "network_used": False,
+        "nonclaims": list(_NONCLAIMS),
+        "required_input_count": len(inputs),
+        "required_test_count": len(tests),
+        "status": "diagnostic_inputs_bound",
+    }
+
+
+def prepare_managed_b_release_inputs(commit: str) -> dict[str, object]:
+    """Resolve one real Git commit and validate only its archived inputs."""
+
+    candidate = prepare_candidate_build_inputs(commit)
+    files = validate_candidate_build_inputs(candidate)
+    authority_raw = _file(files, AUTHORITY_PATH, label="release authority")
+    receipt = _validate_static_archive_inputs(files, authority_raw)
+    return {
+        **receipt,
+        "source_archive_sha256": candidate.source_archive_sha256,
+        "source_commit": candidate.source_commit,
+        "status": "diagnostic_pre_4d_inputs_bound_not_built_or_deployed",
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("commit")
+    arguments = parser.parse_args(argv)
+    try:
+        receipt = prepare_managed_b_release_inputs(arguments.commit)
+    except RuntimeError as error:
+        print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
+        return 2
+    print(json.dumps(receipt, sort_keys=True))
+    return 0
+
+
+__all__ = [
+    "AUTHORITY_PATH",
+    "prepare_managed_b_release_inputs",
+]
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

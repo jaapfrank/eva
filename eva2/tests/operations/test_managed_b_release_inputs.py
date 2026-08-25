@@ -1,0 +1,233 @@
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+import pytest
+
+from eva.operations.managed_b_release_inputs import (
+    AUTHORITY_PATH,
+    _validate_static_archive_inputs,
+    prepare_managed_b_release_inputs,
+)
+
+
+ROOT = Path(__file__).resolve().parents[2]
+def _canonical(value: object) -> bytes:
+    return json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8") + b"\n"
+
+
+def _authority() -> tuple[dict[str, object], bytes]:
+    raw = (ROOT / AUTHORITY_PATH).read_bytes()
+    return json.loads(raw), raw
+
+
+def _files(authority: dict[str, object]) -> dict[str, tuple[bytes, int]]:
+    paths = {AUTHORITY_PATH}
+    for key in ("requiredInputs", "requiredTests"):
+        paths.update(row["path"] for row in authority[key])
+    migration_authority = authority["migrationAuthority"]
+    paths.update(row["path"] for row in migration_authority["revisions"])
+    manifest = json.loads((ROOT / "schemas/contracts/manifest.json").read_bytes())
+    paths.update(
+        f"schemas/contracts/{contract.replace('/', '-')}.schema.json"
+        for contract in manifest["schemas"]
+    )
+    return {
+        path: ((ROOT / path).read_bytes(), (ROOT / path).stat().st_mode & 0o777)
+        for path in sorted(paths)
+    }
+
+
+def _validate(
+    files: dict[str, tuple[bytes, int]], authority_raw: bytes
+) -> dict[str, object]:
+    return _validate_static_archive_inputs(files, authority_raw)
+
+
+def _replace_authority(
+    files: dict[str, tuple[bytes, int]], authority: dict[str, object]
+) -> bytes:
+    raw = _canonical(authority)
+    files[AUTHORITY_PATH] = (raw, 0o644)
+    return raw
+
+
+def test_release_inputs_bind_current_registry_historical_projection_and_migrations() -> None:
+    authority, raw = _authority()
+
+    receipt = _validate(_files(authority), raw)
+
+    assert receipt["contract"] == "EvaManagedBReleaseInputReceipt/v1"
+    assert receipt["status"] == "diagnostic_inputs_bound"
+    assert receipt["current_contract_count"] == 66
+    assert receipt["historical_4d_contract_count"] == 64
+    assert receipt["migration_head"] == "4e_0001_operational_timeline"
+    assert "source_commit" not in receipt
+    assert "source_archive_sha256" not in receipt
+    assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()
+    assert receipt["network_used"] is False
+    assert not ({"dsn", "password", "secret_value", "token"} & set(receipt))
+
+
+def test_release_inputs_refuse_drift_in_an_original_historical_contract() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    manifest = json.loads(files["schemas/contracts/manifest.json"][0])
+    historical_contract = next(
+        contract
+        for contract in manifest["schemas"]
+        if contract
+        not in authority["contractRegistry"]["historical4d"]["allowedCurrentAdditions"]
+    )
+    path = f"schemas/contracts/{historical_contract.replace('/', '-')}.schema.json"
+    files[path] = (b"{}\n", 0o644)
+
+    with pytest.raises(RuntimeError, match="contract schema differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_a_missing_or_unapproved_current_addition() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    additions = changed["contractRegistry"]["historical4d"][
+        "allowedCurrentAdditions"
+    ]
+    additions.pop("IdentityPackDraft/v1")
+    raw = _replace_authority(files, changed)
+
+    with pytest.raises(RuntimeError, match="contract count differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_current_manifest_or_corpus_drift() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    path = "schemas/contracts/contract-corpus-v1.json"
+    files[path] = (files[path][0] + b" ", 0o644)
+
+    with pytest.raises(RuntimeError, match="pinned input differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_migration_bytes_or_head_drift() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    path = authority["migrationAuthority"]["revisions"][0]["path"]
+    files[path] = (files[path][0] + b"\n", 0o644)
+
+    with pytest.raises(RuntimeError, match="migration chain differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed["migrationAuthority"]["head"] = "4d_0007_projection_telemetry"
+    changed_raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="migration authority is invalid"):
+        _validate(files, changed_raw)
+
+
+def test_release_inputs_refuse_orphan_schema_or_migration_files() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    files["schemas/contracts/Orphan-v1.schema.json"] = (b"{}\n", 0o644)
+    with pytest.raises(RuntimeError, match="schema file set differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    files["migrations/versions/4z_9999_orphan.py"] = (
+        b'revision = "4z_9999_orphan"\ndown_revision = "4e_0001_operational_timeline"\n',
+        0o644,
+    )
+    with pytest.raises(RuntimeError, match="migration file set differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed["migrationAuthority"]["revisions"].pop()
+    changed_raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="migration authority is invalid"):
+        _validate(files, changed_raw)
+
+
+def test_release_inputs_refuse_changed_build_or_test_input() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    build_path = "deploy/living-core/Dockerfile"
+    files[build_path] = (files[build_path][0] + b"\n", 0o644)
+    with pytest.raises(RuntimeError, match="pinned input differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    test_path = authority["requiredTests"][0]["path"]
+    files[test_path] = (files[test_path][0] + b"\n", 0o644)
+    with pytest.raises(RuntimeError, match="pinned input differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_require_authority_from_same_archive_and_real_git_commit() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed["nonClaims"] = [*changed["nonClaims"], "Changed outside archive."]
+    changed_raw = _canonical(changed)
+
+    with pytest.raises(RuntimeError, match="authority differs from source archive"):
+        _validate(files, changed_raw)
+    with pytest.raises(RuntimeError, match="source preparation failed"):
+        prepare_managed_b_release_inputs("c" * 40)
+
+
+@pytest.mark.parametrize("key", ["requiredInputs", "requiredTests"])
+def test_release_inputs_refuse_a_removed_or_extra_authority_pin(key: str) -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed[key].pop()
+    raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="path set differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    extra_path = "src/eva/__init__.py"
+    files[extra_path] = ((ROOT / extra_path).read_bytes(), 0o644)
+    changed[key].append(
+        {"path": extra_path, "sha256": hashlib.sha256(files[extra_path][0]).hexdigest()}
+    )
+    changed[key].sort(key=lambda row: row["path"])
+    raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="path set differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_oversold_nonclaims_or_an_unsafe_path() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed["nonClaims"] = ["Everything is production ready."]
+    raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="authority header differs"):
+        _validate(files, raw)
+
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    changed["requiredInputs"][0]["path"] = "unsafe\\path"
+    raw = _replace_authority(files, changed)
+    with pytest.raises(RuntimeError, match="path is invalid"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_group_or_world_writable_pins() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    path = authority["requiredInputs"][0]["path"]
+    files[path] = (files[path][0], 0o666)
+
+    with pytest.raises(RuntimeError, match="group/world writable"):
+        _validate(files, raw)
