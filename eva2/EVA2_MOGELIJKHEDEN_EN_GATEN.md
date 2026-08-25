@@ -74,8 +74,10 @@ Bijgewerkt: 25 augustus 2026.
   stabiel blijken.
 - Eva kent nog geen volledige Hermes-achtige gesloten leercyclus. Persoonsfeiten
   en correcties werken, maar een corrigeerbaar totaalprofiel, usage-/kostenmeter,
-  fysieke geheugenquota en automatisch geëvalueerde, versieerbare skills met
-  rollback ontbreken nog. LG01-LG07 maken dit af; zie
+  fysieke geheugenquota en zelf on the fly gemaakte, automatisch geëvalueerde,
+  versieerbare skills met rollback ontbreken nog. Eva mag daarvoor niet van een
+  skillstore of vooraf bestaande catalogus afhankelijk zijn. LG01-LG07 maken
+  dit af; zie
   `design/product/learning-and-person-model-v1.md`.
 - Eva A praat volgens de eigenaar nu soms spontaan via deurbel of huisspeaker.
   Eva2 heeft daarvoor nog geen toegelaten V1-route. Deze minimale presence is

@@ -49,7 +49,8 @@ de controleerbare live receipts staan in
   correcties, M01-continuiteit en I02-verbetering zijn van een volledige
   Hermes-achtige leercyclus onderscheiden. LG01-LG07 maken een inzichtelijk,
   corrigeerbaar persoonsmodel, token-/kostenreceipts, fysieke geheugenquota,
-  skillquarantaine, evaluatie, promotie en rollback af. Tot die tijd is Eva niet
+  store-onafhankelijke on-the-fly skillcreatie, skillquarantaine, evaluatie,
+  promotie en rollback af. Tot die tijd is Eva niet
   aantoonbaar een agent die procedureel steeds beter wordt.
 - Installer/onboarding IN00: technisch bestaan schema-installatie,
   managed-B-manifest, A/B-beheer, offline imagebouw en portable export, maar er

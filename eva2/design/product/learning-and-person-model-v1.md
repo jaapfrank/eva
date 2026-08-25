@@ -10,6 +10,13 @@ voorkeuren, gewoonten, relaties, terugkerende doelen, communicatiestijl en wat
 eerder wel of niet hielp. Dat persoonsmodel blijft gescheiden van andere
 personen en van gedeeld groepsgeheugen.
 
+Eva mag voor procedurele groei niet afhankelijk zijn van een skillstore of een
+vooraf gevulde catalogus. Als een nieuwe taak daarom vraagt, moet zij binnen het
+chatmandaat zelf on the fly een kleine skillkandidaat kunnen ontwerpen,
+uitproberen, corrigeren, versieeren en later hergebruiken. Een externe store,
+`SKILL.md`-bundle of MCP-server is hoogstens optionele input; Eva blijft ook
+zonder zo'n bron nieuwe werkwijzen kunnen maken.
+
 Groei mag Eva niet steeds duurder, trager of eigenwijzer maken. Iedere
 herinnering en procedure heeft daarom herkomst, audience, tijd, vertrouwen,
 laatste gebruik, correctiestatus en een retentie- of vervaldatum. De hot path
@@ -40,7 +47,7 @@ belangrijk actief doel stil te verliezen.
 | Laag | Wat Eva mag leren | Promotiegrens |
 |---|---|---|
 | Persoonlijk/episodisch | Feiten, voorkeuren, correcties, relaties, toon, terugkerende doelen en nuttige eerdere uitkomsten | Automatisch na geverifieerde bron en audiencecontrole; een relatie-afleiding blijft een onbevestigde private kandidaat en wordt nooit identiteit of toegangsautoriteit |
-| Procedureel | Een herbruikbare werkwijze of `SKILL.md` voor een terugkerende taak | Eerst quarantaine, provenance, permissiondiff, held-out tests, security-, latency- en tokenbudget; alleen laag risico mag binnen een vooraf chatvastgelegd leermandaat automatisch promoveren |
+| Procedureel | On the fly een nieuwe herbruikbare werkwijze of optionele `SKILL.md` maken wanneer de taak die nog niet kent; bestaande of externe skills mogen alleen als input dienen | Eerst quarantaine, provenance, permissiondiff, held-out tests, security-, latency- en tokenbudget; alleen laag risico mag binnen een vooraf chatvastgelegd leermandaat automatisch promoveren |
 | Product/runtime | Code, dependencies, IdentityPack, policy, permissies, schema of release | Nooit stil in de draaiende kern; kandidaatbranch/image, onafhankelijke tests/review, ondertekende promotie en directe rollback |
 
 De leercyclus mag nooit zelf haar eigen mandaat, eigenaar, identity-trustroot,
@@ -59,8 +66,10 @@ tools.
 2. Eva onderscheidt een persoonlijk feit, een mogelijke voorkeur, een
    correctie, een procedurele les en een mogelijke productbug. Twijfel blijft
    zichtbaar kandidaat.
-3. Een procedurele kandidaat gaat naar een geïsoleerde, content-addressed
-   quarantaine zonder secrets of nieuwe permissies.
+3. Als geen passende procedure bestaat, ontwerpt Eva on the fly de kleinst
+   mogelijke procedurele kandidaat. Die gaat naar een geïsoleerde,
+   content-addressed quarantaine zonder secrets of nieuwe permissies; het
+   ontbreken van een skillstore is geen blocker.
 4. De kandidaat draait tegen vooraf verzegelde succesvolle, mislukte,
    privacy-, crash- en held-out gevallen. De bestaande versie draait tegelijk
    als baseline.
@@ -142,8 +151,10 @@ release evenmin met een onbegrensde opslagconfiguratie door.
   dashboard/chat-totalen; ontbrekende providerusage blijft `unknown`.
 - [ ] LG03 — Geheugenquota, cold-compaction en betekenisbehoudtest per persoon,
   groep en project; geen onbegrensde profiel- of contextgroei.
-- [ ] LG04 — Procedurele skillkandidaat uit echte ervaring naar quarantaine met
-  exacte provenance, digest, permissiondiff en geen secrettoegang.
+- [ ] LG04 — Zelf on the fly een procedurele skillkandidaat maken wanneer geen
+  passende werkwijze bestaat, en die vanuit echte ervaring naar quarantaine
+  brengen met exacte provenance, digest, permissiondiff en geen secrettoegang;
+  geen store of vooraf bestaande skill is vereist.
 - [ ] LG05 — Baseline/held-out evaluatie en automatische lage-risicopromotie
   uitsluitend binnen chatmandaat; overige kandidaten blijven staged.
 - [ ] LG06 — Versie, gebruiksfeedback, degradatiedetectie, veroudering,

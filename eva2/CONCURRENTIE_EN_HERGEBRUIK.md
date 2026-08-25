@@ -70,10 +70,11 @@ die live gate. Zolang beide bewijsgrenzen open zijn, doen we geen claim als
   nog geen gelijkwaardige automatische procedurele skillcyclus; Hermes staat
   daar vandaag dus voor.
 - Eva's antwoord is `LG01-LG07`: een corrigeerbaar persoonsmodel, usage- en
-  tokenreceipts, geheugenquota/compactie, procedurele kandidaten in quarantaine,
+  tokenreceipts, zelf on the fly gemaakte procedurele kandidaten in quarantaine,
   held-out evaluatie, gecontroleerde promotie, live degradatiedetectie en
-  rollback. Zelfleren mag nooit stil permissies, identiteit, privacy- of
-  financiële grenzen verruimen.
+  rollback. Een skillstore of vooraf bestaande catalogus is hiervoor niet
+  vereist; externe skills zijn hoogstens optionele input. Zelfleren mag nooit
+  stil permissies, identiteit, privacy- of financiële grenzen verruimen.
 - Het volledige contract en de concrete context-, token- en kostengrenzen staan
   in `design/product/learning-and-person-model-v1.md`.
 
@@ -92,8 +93,9 @@ langdurige verzamelaanpassing telt niet als voortgang.
   geheugen/I02-bewijs en de ontbrekende procedurele cyclus eerlijk begrensd;
   persoons-, geheugen-, token- en kostengates zijn vastgelegd.
 - [ ] `LG01-LG07` — corrigeerbaar persoonsmodel, token/kostenreceipts,
-  geheugencompactie, skillkandidaat/evaluatie/promotie/rollback en zeven dagen
-  meetbaar beter worden zonder drift of onbeperkte groei.
+  geheugencompactie, on-the-fly skillcreatie zonder store-afhankelijkheid,
+  evaluatie/promotie/rollback en zeven dagen meetbaar beter worden zonder drift
+  of onbeperkte groei.
 - [ ] `AU01` — duurzaam, revocable chatmandaat met exacte eigenaar, scope en
   grenzen; zie `OPENBOT_VERGELIJKING.md`.
 - [ ] `AU02` — algemene runner in drie kleine delen: MC03b-read, MC03c-effect
@@ -518,7 +520,7 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Duurzame doelen en crashherstel | A01-A03, X01-X04 en F03-F04 deels/live bewezen; eindimage moet regressie nog krijgen | Gateway- en deliveryherstel aanwezig; niet gelijkwaardig getest | Cron, taken en deliveryledger aanwezig; niet gelijkwaardig getest | Taken/scheduling en workspacegeschiedenis aanwezig; niet gelijkwaardig getest | Fault injection op alle vier: crash vóór/na effect, geen duplicaat en eerlijke eindstatus |
 | Home Assistant en fysieke verificatie | Beste bewijs in onze huidige configuratie: actuele staat, historie, acties en automatiseringen met readback | Integratie/skills aanwezig; vorige vergelijking had geen HA-configuratie | Eigen Home Assistant-toolset aanwezig; vorige vergelijking had geen HA-configuratie | Via MCP/API/plugin mogelijk; vorige vergelijking had geen HA-configuratie | Alle vier dezelfde afgeschermde HA-doelen geven; succes telt alleen na echte readback |
 | Proactieve huisgenoot en nuttig zwijgen | In aanbouw; residentpolicy nog niet toegelaten | Heartbeats/hooks/automation aanwezig; residentgedrag niet getest | Gateway/cron/routines aanwezig; residentgedrag niet getest | Scheduled tasks aanwezig; residentgedrag niet getest | Dezelfde zevendaagse resident-track en spam-/stiltegates voor alle vier |
-| Skillsmarktplaats | Nog geen veilige importer | ClawHub aanwezig | Skills Hub aanwezig | Skills en Plugin Hub aanwezig | Niet namaken: veilige importlaag en waar nodig een geïsoleerde sidecar gebruiken |
+| Skillsmarktplaats | Geen vereiste productafhankelijkheid; LG04 moet skills on the fly kunnen maken, een veilige importer is alleen optioneel | ClawHub aanwezig | Skills Hub aanwezig | Skills en Plugin Hub aanwezig | Geen marktplaats namaken of vereisen; externe skills alleen veilig als optionele input, Eva's eigen skillcreatie moet zonder store werken |
 | Plugins en connectorbereik | Enkele eigen connectoren; geen volwassen marktplaats | Breed plugin- en kanaalecosysteem aanwezig | Skills, toolsets en MCP-integraties aanwezig | Gedocumenteerde community-Plugin Hub, custom tools, MCP en A2A; omvang niet door ons vastgepind of getest | Concurrentintegraties hergebruiken; alleen Eva's policy, geheugen en waarheid blijven leidend |
 | Gateway en chatkanalen | Connectorneutrale kern, Telegram/Web/AgentMail deels; geen brede gateway | Sterkste huidige surface: Gateway plus veel kanalen | Gateway voor 15+ platforms aanwezig | Web/API/CLI-connectors aanwezig; kanaalbreedte nader vaststellen | OpenClaw/Hermes als transportprovider onderzoeken; nooit twee breinen of twee eigenaren van één kanaal |
 | Companion nodes en apparaten | Niet aanwezig | Camera, scherm, locatie, voice, notificaties en hostcommands aanwezig | Geen gelijkwaardige nodeclaim door ons bewezen | A0 CLI geeft hostterminal, bestanden en hostbrowser; desktop/browser ingebouwd | OpenClaw-nodes via officiële Gateway-sidecar hergebruiken; A0 CLI alleen vergelijken, niet in Eva opnemen zonder voordeel |
@@ -578,8 +580,9 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
    privé/gedeeld groepsgeheugen met toestemming, Hindsight-recall en een menselijk
    meerbeurts gesprek.
 3. Sluit LG01-LG06: Eva leert iedere geverifieerde persoon corrigeerbaar kennen,
-   meet geheugen/tokens/kosten en promoveert alleen geëvalueerde procedurele
-   kennis met rollback.
+   meet geheugen/tokens/kosten, maakt waar nodig zelf on the fly een procedure
+   en promoveert alleen geëvalueerde procedurele kennis met rollback. Een
+   skillstore is geen voorwaarde.
 4. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
    self-improvement af.
 5. Sluit P01-P04 voor behoud van de bestaande minimale spontane
