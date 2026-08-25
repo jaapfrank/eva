@@ -35,9 +35,9 @@ hebben.
 
 | Keuze | Eva-doel en vergelijkbare uitkomst | Hoe jij het vergelijkt | Huidige stand |
 |---|---|---|---|
-| **Zelf beter maken** | Menselijk, consequent gesprek; afzonderlijk en gedeeld gezinsgeheugen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, browser- en huisproeven met bericht-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05 en eindimage. |
+| **Zelf beter maken** | Menselijk, consequent tekst- én voicegesprek; onderbreekbare streaming voice; afzonderlijk en gedeeld gezinsgeheugen; chatmandaat; autonome plan-act-observeer-herplan-ketens; geen verzonnen actie; readback; hervatten zonder dubbel effect; begrensde self-improvement. | Echte Telegram-, voice-, browser- en huisproeven met bericht-, beurt-, latency-, intent-, attempt-, tool- en readbackreceipt. Jij ziet gedrag en live status; de onafhankelijke reviewer controleert de keten. | Nog pre-freeze: MC03b/c, MX01-MX06, AU01-AU08, P01-P05, V01-V07, PC01-PC06 en eindimage. |
 | **Standaard hergebruiken** | MCP, `SKILL.md`, ClawHub, OpenClaw Gateway/nodes en eventueel OpenBot of een andere browsercomputer blijven vervangbare capability-providers. Eva houdt identiteit, Hindsight, mandaat, policy, ledger en eindantwoord. | Vergelijk de providerfunctie met Eva's receipt: Eva mag dezelfde capability gebruiken, maar moet haar veilige doelbinding en bewijs behouden. | MCP read-only basis gereed; eerste ledgergebonden sidecar/browsercomputer nog open. |
-| **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een brede coworkervloot, brede voice/media, Canvas en brede providerroutering. Eén browsercomputer en de bestaande deurbel-/speakerpresence vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, minimale presence en één autonome computerroute betrouwbaar zijn. | WhatsApp en brede multimedia blokkeren V1 niet; AU01-AU08 en P01-P05 wel. |
+| **Bewust niet v1** | Veel chatkanalen, een eigen companion-nodevloot, een brede coworkervloot, algemene video/media, Canvas en brede providerroutering. Eén browsercomputer, minimale huispresence en conversationele voice vallen hier uitdrukkelijk niet onder. | Geen brede oppervlakvergelijking nodig voordat Telegram, kern, voice, minimale presence en één autonome computerroute betrouwbaar zijn. | WhatsApp en algemene multimedia blokkeren V1 niet; AU01-AU08, P01-P05 en V01-V07 wel. |
 
 De bestaande vier-frameworkgate blijft alleen een bescherming tegen een
 algemene claim over Eva, OpenClaw, Hermes en Agent Zero. OpenBot zit nog niet in
@@ -397,6 +397,18 @@ langdurige verzamelaanpassing telt niet als voortgang.
 - [ ] Presence P01-P05: één connectorneutraal expressiecontract, één exacte
   speakerroute, één deurbelroute, live stilte-/timingpolicy en een zevendaagse
   huisproef met hardware-receipts en expliciete gebruikersacceptatie.
+- [ ] Conversationele voice V01-V07: dezelfde Eva via een full-duplex sessie
+  spreken, streaming antwoord horen en haar kunnen onderbreken. Voorkeur is
+  `Bel Eva` in een Telegram Mini App; Home Assistant Assist/Wyoming is fallback.
+  Voice notes tellen niet. Contract, latency, privacy, crash/reconnect,
+  toolreadback en een echte tienminutenproef staan in
+  `design/product/conversational-voice-v1.md`.
+- [x] Performance/complexiteit PC00: Git-checkpoint `35e2c0d…` exact gebonden
+  aan 51.928 productregels en bronmanifesthash `58627232…`; een latere dirty
+  observatie telde 53.428 niet-gegenereerde regels. Harde V1-grens 75.000 handgeschreven
+  productregels, twaalf directe coredependencies en p95-reactiviteitsdoelen.
+  PC01-PC06 sluiten teller, hot-path, sidecars, eindmeting en residentdegradatie;
+  zie `design/product/performance-and-complexity-v1.md`.
 - [x] Meerstapsplanning MC01: het bestaande `ModelDecision/v1` kan nu
   voorbereidende reads en effecten in één topologische keten voorstellen; de
   host maakt daar alleen na exacte episode/generation-, policy-, budget-,
@@ -460,7 +472,7 @@ langdurige verzamelaanpassing telt niet als voortgang.
   vastgelegd; alleen de geheime sleutel gaat via een eenmalige veilige invoer.
   Bitvavo krijgt eerst alleen view/trade, IP-whitelist, geen opnamebevoegdheid
   en paper-/limiettests vóór echte orders.
-- [ ] Eén eindimage bevriezen; core 15/15, native 9/9 en MX01-MX06 daarop
+- [ ] Eén eindimage bevriezen; core 15/15, native 9/9, MX01-MX06 en V07 daarop
   werkelijk uitvoeren.
 - [ ] Zevendaagse resident-run en onafhankelijke promotiebeslissing.
 
@@ -491,7 +503,7 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 | Multi-agentwerk | Ontwikkelproces gebruikt onafhankelijke agents; Eva-runtime heeft nog geen bewezen algemene delegatie | Multi-agent routing aanwezig | Delegatie/multi-agent aanwezig | Subagents en A2A aanwezig | Dezelfde onderzoek-, bouw-, review- en hervattingsopdracht op alle vier testen |
 | Modelproviders en fallback | Eén gecontroleerde modelauthorityroute | Meerdere providers/routing aanwezig | Sterke providerselectie en fallback aanwezig | Modelpresets en meerdere providers aanwezig | Providerrouter alleen toevoegen als die Eva's receipts, budget en identiteit niet omzeilt |
 | API, IDE en programmatische bediening | Interne HTTP-API; geen volledige externe SDK/IDE-gate | Gateway-RPC aanwezig | HTTP/API- en ACP/IDE-integraties aanwezig | HTTP/WebSocket en A0 CLI aanwezig | Dezelfde externe clienttaak, reconnect en permissiontest uitvoeren |
-| Voice, spraak en media | Geen Eva2-speakerroute; Eva A's minimale deurbel-/speakerpresence is P01-P05-behoudgate | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | Eerst bestaande spontane huispresence behouden op één exact gebonden speaker en deurbel; brede multimedia blijft een latere privacy- en latencytrack |
+| Voice, spraak en media | Geen full-duplex voice; P01-P05 bewaart spontane huispresence en V01-V07 bouwt onderbreekbare conversationele voice | Voice/media en companion nodes aanwezig | Vision, TTS, voice en media-toolsets aanwezig | Speechplugins, attachments, browser en desktop aanwezig | `Bel Eva` via Telegram Mini App als voorkeur, Assist/Wyoming als fallback; dezelfde identiteit/geheugen/policy, p95-latencygates en geen tweede voicebrein |
 | Webextractie, UI, Canvas en artifacts | Bronzoeking en heropenbare Markdown live; geen volwaardige Canvas | Web/search/media en Control UI aanwezig | Webextractie en desktop/command surfaces aanwezig | Browser Canvas, desktop en documentsurface aanwezig | Echte research-, screenshot-, formulier- en documenttaken vergelijken |
 | RL, batch en evaluatie | LAB-36 en receipts; geen algemene RL-toolset | Evaluatieoppervlak nader inventariseren | RL-toolset en overige batch/evalfuncties aanwezig; niet getest | Evaluatie- en workflowplugins nader inventariseren | Als aparte productcategorie testen of expliciet motiveren waarom niet nodig |
 | Controleerbaarheid en bewijs | PostgreSQL-eventtijdlijn en readback zijn Eva's ontwerpsterkte | Gateway-events/logs aanwezig | Sessies, taken en deliverydata aanwezig | Live UI/logs, projecten en workspace time travel aanwezig | Eén gedeeld receipt-schema gebruiken; product-UI telt niet als bewijs van echt extern effect |
@@ -544,22 +556,29 @@ capabilitymatrix staat in `OPENBOT_VERGELIJKING.md`.
 3. Bouw daarna toolketens, fysieke readback, crashherstel en begrensde
    self-improvement af.
 4. Sluit P01-P04 voor behoud van de bestaande minimale spontane
-   deurbel-/speakerpresence; brede voice/media blijft een latere producttrack.
-5. Kies en pin eerst één computerprovider; bewijs een restrictive,
+   deurbel-/speakerpresence.
+5. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
+   streaming teksthot-path en afzonderlijk gebudgetteerde sidecars.
+6. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
+   privacy/crashherstel en dezelfde Eva-context; algemene video/media blijft
+   een latere producttrack.
+7. Kies en pin eerst één computerprovider; bewijs een restrictive,
    credentialvrije read-only sidecar zonder tweede agent/orchestrator.
-6. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
+8. Sluit daarna AU01-AU07 in hun afzonderlijke slices: chatmandaat, algemene
    runner, geïsoleerde browsercomputer, Eva-ledger/readback, live stop/overname,
    echte testwebtaak en crashherstel zonder blinde herhaling.
-7. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05 en nieuwe
-   AU01-AU07-receipts live uit via echt Telegram, het echte huis, de
+9. Bevries één image en voer core 15/15, native 9/9, MX01-MX06, P05, V07, PC05 en
+   nieuwe AU01-AU07-receipts live uit via echt Telegram/voice, het echte huis, de
    afgeschermde browser en afgeschermde providers. Start daarna AU08 zeven
    dagen op diezelfde image.
-8. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
+10. Accountcreatie, voorwaarden, betaling, KYC en financiële acties volgen als
    aparte B01/E01-slices op testaccounts en paper-/testmodus binnen hetzelfde
    mandaatcontract; zij zijn geen bewijs van de eerste AU06-browserproef.
-9. Extra kanalen, brede camera-/locatie-/voice-mogelijkheden en een brede
+11. Extra kanalen, brede camera-/locatie-/videomogelijkheden en een brede
    coworkervloot zijn aparte latere besluiten.
-10. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
+12. PC06, AU08 en de residentrun gebruiken dezelfde image zeven dagen; snelheid
+   mag niet degraderen door queuegroei, contextgroei of geheugenlek.
+13. Een onafhankelijke agent controleert ontwerp, Git-scope, live-receipts en
    nonclaims. Synthetische tests blijven regressietests, niet eindbewijs.
 
 ## Primaire bronnen

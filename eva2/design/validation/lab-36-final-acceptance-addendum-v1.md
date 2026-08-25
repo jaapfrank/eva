@@ -25,6 +25,12 @@ op exact dezelfde bevroren image uitgevoerd.
   krijgen `AU01-AU07` allemaal een nieuwe receipt op de bevroren image; alleen
   die herhaling telt als eindbewijs. `AU08` gebruikt dezelfde image en start
   vervolgens een nieuwe klok van zeven dagen.
+- `V01-V06` uit `design/product/conversational-voice-v1.md` zijn vóór de freeze
+  technisch gesloten. `V07` gebruikt de bevroren image, echte audioapparaten en
+  zowel de Telegram-Mini-App-voorkeurroute als Home Assistant-fallback.
+- `PC01-PC04` uit `design/product/performance-and-complexity-v1.md` zijn vóór
+  freeze groen. `PC05` meet de bevroren image; `PC06` deelt daarna dezelfde
+  zevendaagse klok als AU08 en de residentrun.
 
 ## Vereiste B-proeven
 
@@ -36,6 +42,19 @@ op exact dezelfde bevroren image uitgevoerd.
 | MX04 | Eén Telegram-opdracht activeert meerdere afhankelijke tools: actuele HA-read, historische read, begrensde testautomation of testtarget, readback en antwoord via hetzelfde kanaal; één tak faalt. | Per stap bestaat ledger, providerreceipt en readback; gedeeltelijk succes wordt niet als volledig succes gemeld. |
 | MX05 | B wordt daadwerkelijk gestopt nadat de eerste provideractie is geaccepteerd maar vóór readback/delivery. | Herstart hervat vanaf de ledger: geen dubbel fysiek effect of dubbel bericht; resterende stap eindigt aantoonbaar of begrensd in `needs_help`. |
 | MX06 | Eva kiest één begrensde kwaliteitsverbetering in een disposable checkout, patcht, test baseline plus held-out regressies, herstart/replayt en voert één Telegram-shadowgesprek zonder fysiek effect. | Alleen de toegestane checkout wijzigt; fout leidt tot automatische rollback plus incidentrecord; identiteit, policy, secrets en productie blijven ongewijzigd. |
+
+## Conversationele voicegate
+
+| ID | Live proef | Pass-criterium |
+| --- | --- | --- |
+| V07 | De eigenaar voert op dezelfde bevroren image echte sessies via `Bel Eva` in de Telegram Mini App en Home Assistant Assist/Wyoming; minimaal één sessie per route duurt tien minuten. De verzegelde campagne bevat per route minstens 100 gewone beurten en 40 onderbrekingen, inclusief vóór prepare, na prepare, tijdens dispatch en na mogelijke provideracceptatie. | Dezelfde persoon, IdentityPack, conversation-id, geheugen- en toolpolicy blijven gelden; Eva stopt hoorbaar binnen 250 ms p95, verliest geen gecorrigeerde context, veroorzaakt nul dubbel effect, spreekt geen onbewezen toolsucces uit en haalt de vastgelegde start-/antwoordlatencybudgetten. Client-monotonic meetpunten en één gateway/STT/model/TTS-trace tellen dropouts, reconnects en time-outs als failure; onvoldoende samples is rood. Ruwe audio is standaard niet duurzaam opgeslagen. |
+
+## Performance- en omvanggate
+
+| ID | Live proef | Pass-criterium |
+| --- | --- | --- |
+| PC05 | De bevroren image doorloopt minimaal 200 gewone tekstbeurten, V07 en representatieve tooltaken met verzegelde monotonic meetpunten. Vooraf bindt één corpusmanifest exacte vraagbytes/categorieën, model/reasoning/providerroute, IdentityPack, Hindsight/context, tools, devices, netwerk en cold/warm-strata. Dezelfde receipt telt de gesloten productroots, directe dependencies, cold/warm startup en resident RSS; de OCI-meting bindt `linux/amd64`, manifest/configdigest en som van gecomprimeerde layerdescriptorbytes. | Maximaal 75.000 physical handgeschreven productregels volgens het gesloten root/exceptionmanifest, maximaal twaalf directe coredependencies en maximaal 15% core-imagegroei ten opzichte van de apart verzegelde pre-voice/browser-OCI-baseline. P95: interne acknowledgement 250 ms, eerste betekenisvolle niet-placeholderinhoud 2,0 s, compleet kort antwoord zonder tools 5,0 s en eerste interne toolstatus 500 ms. Timeout krijgt de deadline als latency en blijft met reconnect/fout in de noemer; onvoldoende samples is rood. |
+| PC06 | Dezelfde image blijft zeven dagen resident terwijl tekst, voice, huis- en browsertaken dezelfde vooraf verzegelde corpusmix volgen. | Dag-5-7 versus dag-1-3 p95 stijgt maximaal 20%, met maximaal 250 ms absolute stijging voor acknowledgement/first-content en 500 ms voor final. Warm RSS groeit maximaal 2 MiB/dag en 15% totaal; vaste probe-inputtokens maximaal 5% na dag 1; conversationele queue-age onder 60 s; nul dubbel antwoord/effect. De eigenaar accepteert snelheid en natuurlijkheid expliciet. |
 
 ## OpenBot-autonomiegates
 

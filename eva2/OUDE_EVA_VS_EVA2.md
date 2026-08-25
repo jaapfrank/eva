@@ -14,8 +14,9 @@ Bijgewerkt: 25 augustus 2026.
   repository is nog geen onveranderlijke oude hardware-receipt gevonden die
   exact bewijst welk apparaat het bericht werkelijk afspeelde.
 - Deze minimale bestaande huisaanwezigheid is voortaan een **blokkerende
-  V1-behoudgate**. Brede voice/media, veel apparaten en algemene multimodaliteit
-  mogen later; wat Eva nu al herkenbaar Eva maakt mag niet verdwijnen.
+  V1-behoudgate**. Daarnaast is een ChatGPT-achtige, onderbreekbare voice mode
+  nu een eigen blokkerende V1-productgate. Algemene video/media en veel
+  apparaten mogen later; wat Eva nu al herkenbaar Eva maakt mag niet verdwijnen.
 
 ## Bewijslabels
 
@@ -31,6 +32,7 @@ Bijgewerkt: 25 augustus 2026.
 | Spontaan iets zeggen | `Gebruiker-live`; de autonomy-scheduler en private deurbel-wake bestaan ook in de bron | Echte HA-events en een keuze tussen reageren en zwijgen zijn bewezen; de residentroute zit niet in de draaiende kandidaat | Eva 2 initieert tijdens een zevendaagse proef zelf enkele relevante, korte momenten en blijft bij ruis stil |
 | Deurbel als aanleiding | Privé deurbelincident, foto, modelkeuze en `silent`/Telegram/intercom zijn `Bron-getest`; hoorbare deurbel-/speakeruitvoer is `Gebruiker-live` | Geen toegelaten deurbel-/cameramanifest en geen Eva2-intercomroute | Echte deurbel → duurzaam incident → actuele context → stilte, tekst of exact gebonden intercom; na crash nooit dubbel spreken |
 | Praten via speaker | Exacte deurbel-speakerbinding, TTS-audio-preflight en voice-ACK-herstel zijn `Bron-getest`; speakergebruik is `Gebruiker-live` | Geen algemene TTS- of speakercapability in de V1-B-route | Eerst één expliciet gekozen speaker: readiness, delivery-ACK en doelreadback; nooit stil terugvallen op een andere speaker |
+| Doorlopend voicegesprek | Geen gelijkwaardige full-duplex oude-Eva-receipt gevonden | Geen streaming sessie, barge-in of lage-latencygate | V01-V07: `Bel Eva` via Telegram Mini App, Assist/Wyoming-fallback, dezelfde context en tools, onderbreken binnen 250 ms p95 en echte gebruikersacceptatie |
 | Nuttig zwijgen | De deurbelkeuze kent `silent`; bron bevat incident-cooldown, nacht- en budgetgrenzen | Ruis en gewone lamp-events zijn aantoonbaar stilgehouden; volledige bewonerspolicy nog niet live | Quiet hours, cooldown, dagbudget en urgente uitzondering worden vlak vóór levering opnieuw gecontroleerd |
 | Timing en dosering | Scheduler, versnelde deurbel-wake en dagbudget bestaan in de bron | PostgreSQL-aandachtsontwerp bestaat; officiële residentrun heeft nog nul geslaagde cases | Geen vaste chatbotcadans: alleen relevante aanleiding, juiste timing, begrensde frequentie en directe stopmogelijkheid |
 | Persoon en context | Personen, SQLite-geheugen en gesprekarchief bestaan; geen onafhankelijke oude isolatie-/crashreceipt gevonden | PostgreSQL + Hindsight, persoonsisolatie, herstart en cross-channel recall zijn Eva2's aantoonbare voorsprong | Gesproken tekst gebruikt alleen toegestane persoon-/groepscontext en lekt nooit privégeheugen naar een aanwezige groep |
@@ -59,9 +61,14 @@ Bijgewerkt: 25 augustus 2026.
 
 ## Overgangsregel
 
-Eva A blijft leidend totdat P01–P05 én de overige V1-eindgates groen zijn. Een
+Eva A blijft leidend totdat P01–P05, V01-V07 én de overige V1-eindgates groen zijn. Een
 technisch betere kern is geen geslaagde opvolger wanneer de herkenbare spontane
 huisaanwezigheid verdwijnt.
+
+Conversationele voice is geen vervanging voor presence: P01-P05 meet of Eva
+zelf het juiste moment kiest om in huis te spreken; V01-V07 meet een door de
+gebruiker gestarte, snelle tweerichtingssessie met onderbreken. Het volledige
+voiceontwerp staat in `design/product/conversational-voice-v1.md`.
 
 ## Lokale bronnen
 

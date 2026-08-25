@@ -59,7 +59,10 @@ Bijgewerkt: 25 augustus 2026.
   stabiel blijken.
 - Eva A praat volgens de eigenaar nu soms spontaan via deurbel of huisspeaker.
   Eva2 heeft daarvoor nog geen toegelaten V1-route. Deze minimale presence is
-  daarom een overgangsgate P01-P05; brede voice/media blijft later. De eerlijke
+  daarom een overgangsgate P01-P05. Daarnaast ontbreekt nog echte
+  conversationele voice: doorlopend praten, snel antwoord horen en Eva kunnen
+  onderbreken. V01-V07 maken dat een afzonderlijke V1-gate; zie
+  `design/product/conversational-voice-v1.md`. De eerlijke
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu door precies één geleasede worker
   worden opgepakt en één gevalideerde read als duurzaam intent voorbereiden.
@@ -70,6 +73,18 @@ Bijgewerkt: 25 augustus 2026.
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
   afzonderlijk afvinkbaar; zie `OPENBOT_VERGELIJKING.md`.
+- Eva 2 is nu een Python 3.12-product; er staat geen Rust-crate in deze bronboom.
+  Python blijft de Living Core. Rust is alleen kandidaat voor een vervangbare
+  lage-latency audioworker of sandbox wanneer de V02-metingen aantonen dat de
+  gekozen standaardcomponenten de p95-budgetten niet halen.
+- Git-baseline `35e2c0d…` bevat 51.928 productregels; een latere dirty
+  werkboomobservatie bevatte 53.428 niet-gegenereerde regels. Dat is niet
+  “klein”, maar ook geen pakket van honderdduizenden regels. PC00 zet daarom V1
+  hard op maximaal 75.000 handgeschreven productregels, maximaal twaalf directe
+  coredependencies en gemeten p95-reactiviteit. De commitgebonden checker en
+  eindmeting PC01-PC06 zijn nog open; zie
+  `design/product/performance-and-complexity-v1.md` en de exacte baseline in
+  `evidence/product/performance-complexity-pc00-2026-08-25.json`.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,
   geen officiële zevendaagse praktijktest. Na het bevriezen van de echte
   kandidaat begint een nieuwe klok van zeven dagen.
@@ -140,6 +155,10 @@ Bijgewerkt: 25 augustus 2026.
 - Concurrentenrun: `evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json`
 - Volledige product- en hergebruikmatrix: `CONCURRENTIE_EN_HERGEBRUIK.md`
 - OpenBot- en autonomie-afvinkmatrix: `OPENBOT_VERGELIJKING.md`
+- Full-duplex voice, Telegram/HA-route en latencygates:
+  `design/product/conversational-voice-v1.md`
+- Code-, dependency-, image- en reactietijdbudgetten:
+  `design/product/performance-and-complexity-v1.md`
 - Geblindeerde gesprekscase: `evidence/living-core/lab36-c04-blind-2026-08-24.json`
 - Resident-shakedown, niet de officiële zevendaagse run:
   `evidence/living-core/resident-long-run-v1-2026-08-24.json`

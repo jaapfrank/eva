@@ -13,6 +13,11 @@ oude-naar-nieuwe behoudgate voor spontane huisaanwezigheid staat in
 [`OUDE_EVA_VS_EVA2.md`](OUDE_EVA_VS_EVA2.md); de verplichte
 OpenBot-vergelijking en autonomie-afvinklijst staan in
 [`OPENBOT_VERGELIJKING.md`](OPENBOT_VERGELIJKING.md); de verplichte
+full-duplex voice-mode, kanaalkeuze en latencygates staan in
+[`design/product/conversational-voice-v1.md`](design/product/conversational-voice-v1.md);
+de harde code-, dependency-, image- en reactietijdbudgetten staan in
+[`design/product/performance-and-complexity-v1.md`](design/product/performance-and-complexity-v1.md);
+de verplichte
 teamvolgorde staat in [`TEAM_WERKWIJZE.md`](TEAM_WERKWIJZE.md);
 de controleerbare live receipts staan in
 [`evidence/living-core/`](evidence/living-core/).
@@ -22,6 +27,18 @@ de controleerbare live receipts staan in
 - Bezig: MC03b, één reeds voorbereide read via de bestaande providergrens
   uitvoeren en haar waarneming duurzaam teruglezen. Effectstappen en het
   vrijgeven van afhankelijke stappen blijven daarna aparte opleverstukken.
+- Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
+  STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
+  Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
+  huidige kern is Python 3.12. Rust is alleen een mogelijke geïsoleerde
+  audio-dataplane wanneer metingen bewijzen dat dit nodig is; er loopt geen
+  Rust-herschrijving.
+- Omvang/reactiviteit PC00: Git-checkpoint `35e2c0d…` bindt 51.928 regels in
+  133 productbestanden aan een exact bronmanifest; de dirty werkboomobservatie
+  lag tijdens ontwerp op 53.428 niet-gegenereerde regels. V1 heeft een harde grens van 75.000
+  handgeschreven productregels, maximaal twaalf directe coredependencies en
+  p95-doelen voor acknowledgement, eerste inhoud en voice-barge-in. PC01-PC06
+  maken teller, hot-path, sidecars, eindmeting en degradatiebewijs af.
 - Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
@@ -46,7 +63,7 @@ de controleerbare live receipts staan in
 - Eindacceptatie is uitgebreid maar nog niet gestart: naast core 15/15 en
   native 9/9 moeten echte multi-persoon-, multi-beurt-, multi-tool-,
   crashherstel-, self-improvement-, presence- en autonome computerproeven groen
-  zijn. De norm staat in
+  zijn, plus de echte voice-mode V01-V07. De norm staat in
   [`design/validation/lab-36-final-acceptance-addendum-v1.md`](design/validation/lab-36-final-acceptance-addendum-v1.md).
 
 ## Afgerond en live bewezen
@@ -93,6 +110,14 @@ de controleerbare live receipts staan in
 - Presence-behoud: de bestaande spontane deurbel-, intercom- en speakerbeleving
   van Eva A moet via P01-P05 op Eva2 terugkomen. Brede multimedia is niet V1,
   maar deze minimale bestaande huisaanwezigheid blokkeert de overgang wel.
+- Conversationele voice: V01-V07 staan open voor full-duplex audio, barge-in,
+  lage p95-latency, Home Assistant-fallback en de voorkeurroute `Bel Eva` via
+  een Telegram Mini App. Voice notes tellen niet als deze gate; native bellen
+  door een Bot API-bot is niet beschikbaar.
+- Omvang en snelheid: PC00 is vastgelegd; PC01-PC06 staan open voor een
+  commitgebonden budgetchecker, begrenzing van grote hot-pathbestanden,
+  streaming tekstrespons, aparte sidecarbudgetten en een eindmeting met minstens
+  200 tekstbeurten. Boven 75.000 eigen productregels is de V1-gate rood.
 - OpenBot/autonomie: `OB00` is klaar. `AU01-AU08` staan open voor een duurzaam
   chatmandaat, algemene plan-act-observeer-herplan-runner, één geïsoleerde
   browsercomputer, Eva's eigen policy/ledger/readback, live pauze/stop/overname,
@@ -118,6 +143,8 @@ de controleerbare live receipts staan in
 - [`resident-long-run-v1-2026-08-24.json`](evidence/living-core/resident-long-run-v1-2026-08-24.json)
 - [`live-b-v53-source-provenance-2026-08-24.json`](evidence/living-core/live-b-v53-source-provenance-2026-08-24.json)
 - [`openbot-competitive-inventory-ob00.md`](reviews/openbot-competitive-inventory-ob00.md)
+- [`voice-performance-product-gates-v1.md`](reviews/voice-performance-product-gates-v1.md)
+- [`performance-complexity-pc00-2026-08-25.json`](evidence/product/performance-complexity-pc00-2026-08-25.json)
 
 ## Betekenis van status
 

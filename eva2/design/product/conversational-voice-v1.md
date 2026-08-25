@@ -1,0 +1,161 @@
+# Eva Conversational Voice v1
+
+Bijgewerkt: 25 augustus 2026.
+
+## Productuitkomst
+
+De eigenaar kan een doorlopend gesprek met Eva voeren zoals in een moderne
+voice mode: spreken, snel antwoord horen, tijdens Eva's antwoord opnieuw gaan
+praten, Eva onmiddellijk laten stoppen en daarna vanuit dezelfde context
+doorgaan. Dit is iets anders dan een voice note of de spontane
+deurbel-/speakerpresence uit `OUDE_EVA_VS_EVA2.md`.
+
+Eva's identiteit, persoonsbinding, Hindsight-geheugen, policy, toolledger en
+eindantwoord blijven dezelfde als in tekstchat. STT, TTS, WebRTC en Home
+Assistant zijn vervangbare media-capabilities; zij worden geen tweede brein.
+
+## Kanaalkeuze
+
+1. **Voorkeur — Telegram Mini App:** de Eva-bot toont één knop `Bel Eva`. De
+   ingebedde HTML5-app opent na geverifieerde Telegram-initdata een tijdelijke
+   full-duplex audiosessie met Eva's voice-gateway. Dit voelt als bellen binnen
+   Telegram en houdt de bestaande persoonsbinding.
+2. **Lokale fallback — Home Assistant:** Assist/Wyoming levert microfoon,
+   wake-word, streaming STT en TTS. De STT-run stopt vóór Home Assistants
+   `intent`-fase; alleen Eva verwerkt de definitieve tekst. Een afzonderlijke
+   TTS-run krijgt uitsluitend Eva's antwoord. HA-intent, conversation-agent en
+   servicecalls zijn op deze route uitgeschakeld.
+3. **Niet de basis — native Telegram-call:** de Bot API ondersteunt
+   voiceberichten, geen bottelefoongesprek. Telegrams `phone.requestCall` is
+   uitsluitend voor useraccounts. Een apart Eva-useraccount/MTProto-prototype
+   is daarom pas toelaatbaar na een afzonderlijke account-, voorwaarden-,
+   privacy- en stabiliteitsgate; V1 is er niet van afhankelijk.
+
+## Sessiestroom
+
+```text
+microfoon -> streaming audio -> VAD/STT -> Eva ConversationTurn
+          <- streaming TTS  <- antwoord/zinchunks <- Eva Living Core
+                  ^
+                  | barge-in: playback annuleren en huidige generatie stoppen
+```
+
+- Iedere sessie bindt server-side exact één geverifieerde persoon, conversation-id,
+  IdentityPack-versie, policyversie en kanaal/device.
+- Partial transcripts zijn vluchtig. Alleen de definitieve beurt gaat, volgens
+  dezelfde toestemming als tekstchat, naar gesprek en geheugen.
+- Barge-in annuleert audio-uitvoer en de nog niet geleverde antwoordgeneratie,
+  maar is op zichzelf geen geauthenticeerde tool-cancel. Vóór `prepare` kan een
+  definitieve expliciete stop/correctie de geplande actie sluiten. Na prepare
+  maar vóór dispatch volgt de gewone duurzame cancelroute. Vanaf
+  `dispatch_authorized` of zodra provideracceptatie mogelijk is, wordt nooit
+  teruggedraaid of blind opnieuw uitgevoerd: Eva markeert alleen voice-delivery
+  als interrupted en wacht op observation/readback, reconcile, `ambiguous` of
+  `needs_help`. Zij spreekt geen succes uit vóór bewijs.
+- Een toolactie volgt dezelfde prepare/call/readbackketen als tekstchat. Eva
+  spreekt geen succes uit voordat de bestaande bewijsgrens succes kent.
+- Ruwe audio wordt standaard niet duurzaam bewaard. Opt-in diagnostiek is
+  maximaal 24 uur versleuteld met een per-sessie-DEK onder de privacyservice,
+  los van Hindsight, met append-only toegangslog. Verwijderen wist data en DEK;
+  back-ups volgen uiterlijk binnen zeven dagen. Logs bevatten geen audio,
+  tokens of secrets. Een externe STT/TTS-provider mag audio alleen na aparte,
+  providergebonden toestemming bewaren; standaard is providerretentie uit.
+
+## Vertrouwde sessiegrens
+
+- De server accepteert uitsluitend ruwe Telegram `initData`, nooit
+  `initDataUnsafe`: officiële Telegram-HMAC, `auth_date` maximaal 60 seconden
+  oud, exact bot/audience en een single-use replayrecord moeten kloppen.
+- De server kiest principal en conversation uit de geverifieerde Telegram-
+  binding. Clientvelden kunnen die IDs niet aanleveren of overschrijven.
+- Daarna ontstaat één kortlevende sessiecredential met single-use `jti`, exact
+  principal, conversation, Telegram-user/chat, sessie, device/channel,
+  audience en deadline. Tokens staan alleen in headers/protocolmessages, nooit
+  in URL, SDP, ICE, logs of audioframes.
+- Signaling en media gebruiken uitsluitend HTTPS/WSS of geauthenticeerde
+  WebRTC-signaling met een exacte Origin-allowlist. Authenticatie gaat vóór
+  SDP/ICE. Frame-, byte-, bitrate-, sessie- en rategrenzen zijn fail-closed.
+  WebRTC gebruikt een gepinde relay-only TURN-route; een publieke STUN/directe
+  peerroute mag geen IP-adressen lekken.
+- De mediaworker krijgt alleen de sessiegrant en mediaframes. Hij krijgt geen
+  Telegram-/HA-token, PostgreSQL, Hindsight, IdentityPack-signer of
+  secret-storetoegang.
+- Voor Home Assistant is `device_id`/`conversation_id` geen identiteit. De
+  server kiest een vooraf geverifieerde device→principal-binding. Een onbekend
+  of gedeeld apparaat krijgt geen privégeheugen of toolrechten. Een negatieve
+  gate bewijst dat een HA-native intent nooit een antwoord, tool of servicecall
+  kan veroorzaken.
+
+## Snelheidsbudgetten
+
+Deze waarden zijn acceptatiedoelen, nog geen gemeten productclaims.
+
+| Meting | V1-doel (p95) |
+| --- | ---: |
+| Sessiestart tot audio-ready | maximaal 2,0 s |
+| Laatste gebruikersspraak tot eerste hoorbare Eva-audio, gewone beurt | maximaal 1,5 s lokaal; maximaal 2,0 s via internet |
+| Onderbreking tot Eva stil is | maximaal 250 ms |
+| Hervatten na onderbreking zonder contextverlies | maximaal 1,0 s tot nieuwe verwerking start |
+
+De gateway streamt STT en TTS en wacht niet op een volledig audiobestand. De
+metingen bevatten device-, netwerk-, STT-, model- en TTS-tijd afzonderlijk,
+zodat een trage provider zichtbaar blijft.
+
+Iedere route gebruikt client-monotonic meetpunten voor
+`speech_end→first_playout` en `barge_vad_start→playout_stopped`, plus één
+trace-id door gateway, STT, Eva, model en TTS. De verzegelde V07-campagne bevat
+per route minimaal 100 gewone beurten en 40 onderbrekingen, verdeeld over
+minstens drie sessies. Dropouts, reconnects en time-outs blijven failures in de
+noemer; onvoldoende samples is rood. Device, netwerkklasse en warm/koud worden
+vooraf vastgelegd en niet achteraf weggefilterd.
+
+## Opleverslices en eindgate
+
+- [ ] V01 — Eén connectorneutraal `VoiceSession`-/`VoiceTurn`-/`BargeIn`-
+  contract met persoon, gesprek, deadlines, cancel-generation en privacy.
+- [ ] V02 — Lokale full-duplex testclient met echte streaming STT/TTS,
+  onderbreken en gescheiden latencyreceipts; nog geen Telegram of HA.
+- [ ] V03 — Home Assistant Assist/Wyoming-route tegen Eva's bestaande
+  gesprekcore, met dezelfde persoon/context en zonder tweede intentbrein.
+- [ ] V04 — Telegram Mini App `Bel Eva`: server-side initdataverificatie,
+  HMAC/auth-date/single-use-replay, servergekozen persoon/gesprek, kortlevende
+  scoped sessiecredential, Origin/TURN/framegrenzen, WebRTC/WebSocket-audio en
+  directe hang-up.
+- [ ] V05 — Toolbeurt via voice: minstens één echte Home Assistant-read en één
+  begrensd effect met fysieke readback; gesproken status blijft eerlijk.
+- [ ] V06 — Crash, reconnect, dubbel audioframe, gestolen/expired sessietoken,
+  Origin/signalingmisbruik, cross-person leakage en barge-in vóór prepare, na
+  prepare, tijdens dispatch en na mogelijke provideracceptatie fail-closed;
+  nul dubbel effect en geen gesproken succes vóór readback/reconcile.
+- [ ] V07 — Op de bevroren eindimage een echt gesprek van minimaal tien
+  minuten via voorkeurroute én HA-fallback. De eigenaar onderbreekt Eva
+  in iedere kritieke toolfase; de verzegelde campagne haalt per route de vaste
+  100 gewone beurten/40 onderbrekingen. P95-budgetten, failure-noemer, context,
+  privacy en gebruikersacceptatie zijn groen.
+
+V01-V06 moeten technisch vóór de imagefreeze sluiten. V07 wordt op exact
+dezelfde bevroren kandidaat uitgevoerd en blokkeert productiepromotie.
+
+## Taalkeuze
+
+De Living Core blijft Python 3.12: daar zitten nu contracten, planning,
+PostgreSQL, Hindsight, policy en connectors. Een volledige Rust-herschrijving
+zou de huidige bewijsketen opnieuw openen zonder dat dit op zichzelf voice
+sneller maakt.
+
+Rust is wel een gerichte optie voor de geïsoleerde media-dataplane—VAD,
+resampling, jitterbuffer, WebRTC-audioworker of protocol-sandbox—als de
+Python/standaardcomponenten het gemeten p95-budget niet halen. De Telegram Mini
+App zelf is HTML/TypeScript. Elke Rust-component blijft een vervangbare
+capability achter hetzelfde contract en krijgt eigen fuzz-, crash- en
+latencytests; zij bezit geen identiteit, geheugen, policy of secretsauthority.
+
+## Primaire technische bronnen
+
+- Telegram Bot API: <https://core.telegram.org/bots/api>
+- Telegram `phone.requestCall`: <https://core.telegram.org/method/phone.requestCall>
+- Telegram Mini Apps: <https://core.telegram.org/bots/webapps>
+- Home Assistant Assist pipelines:
+  <https://developers.home-assistant.io/docs/voice/pipelines/>
+- Home Assistant Wyoming:
+  <https://www.home-assistant.io/integrations/wyoming/>

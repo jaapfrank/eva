@@ -1,0 +1,35 @@
+{
+  "contract": "EvaPerformanceComplexityBaseline/v1",
+  "status": "baseline_only_not_release_acceptance",
+  "measured_at": "2026-08-25T11:33:17Z",
+  "git_commit": "35e2c0daab4adf96fe8d80c29565288e66109563",
+  "working_tree_included": false,
+  "source_root": "src/eva",
+  "included_extensions": [
+    ".py",
+    ".rs",
+    ".ts",
+    ".tsx"
+  ],
+  "excluded_exact_paths": [
+    "src/eva/adapters/postgres/catalog_generated.py"
+  ],
+  "excluded_path_segments": [
+    "generated"
+  ],
+  "line_definition": "awk record count (NR) over exact Git blob bytes; blank and comment lines count; a nonempty final record counts without requiring a trailing LF",
+  "byte_definition": "Git blob byte length from git cat-file -s",
+  "manifest_entry_definition": "UTF-8 path, TAB, byte length, TAB, physical line count, TAB, lowercase SHA-256 of exact blob bytes, LF; entries sorted by Git path",
+  "file_count": 133,
+  "physical_line_count": 51928,
+  "source_bytes": 2018005,
+  "source_manifest_sha256": "58627232b4cf36b9a505fb593350dbd01a17aec6777079f2b39b30585c8962a5",
+  "direct_runtime_dependency_count": 9,
+  "direct_runtime_dependency_source": "pyproject.toml project.dependencies at the bound commit",
+  "claims": {
+    "image_size_baseline": false,
+    "latency_baseline": false,
+    "resident_memory_baseline": false,
+    "release_gate_passed": false
+  }
+}
