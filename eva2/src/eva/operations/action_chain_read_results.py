@@ -67,12 +67,27 @@ def project_action_chain_read_result(
         raise ValueError("provider result recording precedes observation")
     if retention_until < recorded_at:
         raise ValueError("provider result retention ends before recording")
+    _validate_exchange_authority(
+        attempt=attempt,
+        initialize=initialize,
+        invoke=invoke,
+        tenant_id=tenant_id,
+    )
+    if canonical_sha256(manifest) != attempt.connector_manifest_sha256:
+        raise ValueError("selected connector manifest differs from read attempt")
+    invoke.validate_against_initialize(initialize, manifest)
+    operation = next(
+        (item for item in manifest.operations if item.operation == invoke.params.operation),
+        None,
+    )
+    if operation is None:
+        raise ValueError("read operation is absent from connector manifest")
 
     state, response_sha256, read_ok = _classify_result(
         attempt=attempt,
         initialize=initialize,
         invoke=invoke,
-        manifest=manifest,
+        output_schema_sha256=operation.output_schema_sha256,
         result=result,
         observed_at=observed_at,
         recorded_at=recorded_at,
@@ -129,21 +144,39 @@ def _classify_result(
     attempt: ReadAttempt,
     initialize: ConnectorInitializeRequest,
     invoke: ConnectorInvokeRequest,
-    manifest: ConnectorManifest,
+    output_schema_sha256: str,
     result: ProviderReadResult,
     observed_at: datetime,
     recorded_at: datetime,
 ) -> tuple[TerminalReadState, str | None, ReadOk | None]:
     result_sha256 = canonical_sha256(result)
     if isinstance(result, ConnectorInvokeSuccess):
-        result.validate_against_request(invoke, manifest)
-        if result.result.request_sha256 != attempt.request_sha256:
+        provider_result = result.result
+        envelope = invoke.params
+        if (
+            result.id != invoke.id
+            or provider_result.request_id != envelope.request_id
+            or provider_result.correlation_id != envelope.correlation_id
+            or provider_result.connector_id != envelope.connector_id
+            or provider_result.operation != envelope.operation
+            or provider_result.request_sha256 != attempt.request_sha256
+            or provider_result.request_sha256 != canonical_sha256(envelope)
+            or provider_result.connector_manifest_sha256
+            != attempt.connector_manifest_sha256
+            or envelope.connector_manifest_sha256
+            != attempt.connector_manifest_sha256
+            or invoke.method != "resource.read"
+        ):
             raise ValueError("provider success binds another read request")
-        completed_at = _parse_timestamp(result.result.completed_at)
+        completed_at = _parse_timestamp(provider_result.completed_at)
+        if completed_at > _parse_timestamp(envelope.deadline):
+            raise ValueError("provider completion exceeds the read deadline")
         if completed_at < observed_at or completed_at > recorded_at:
             raise ValueError("provider completion is outside the host observation window")
-        outcome = result.result.outcome
+        outcome = provider_result.outcome
         if isinstance(outcome, ReadOk):
+            if outcome.payload.output_schema_sha256 != output_schema_sha256:
+                raise ValueError("provider result uses another output schema")
             return "observed", result_sha256, outcome
         if outcome.kind == "rate_limited":
             return "rate_limited", result_sha256, None
@@ -178,6 +211,43 @@ def _classify_result(
     if result.failure_class == "ambiguous_transport":
         return "ambiguous", None, None
     return "rejected", result_sha256, None
+
+
+def _validate_exchange_authority(
+    *,
+    attempt: ReadAttempt,
+    initialize: ConnectorInitializeRequest,
+    invoke: ConnectorInvokeRequest,
+    tenant_id: UUID,
+) -> None:
+    envelope = invoke.params
+    params = initialize.params
+    if (
+        invoke.method != "resource.read"
+        or envelope.tenant_id != str(tenant_id)
+        or canonical_sha256(envelope) != attempt.request_sha256
+        or envelope.connector_manifest_sha256
+        != attempt.connector_manifest_sha256
+        or envelope.capability_grant_id != attempt.capability_grant_id
+        or envelope.credential_grant_id != attempt.credential_grant_id
+        or envelope.deadline != attempt.deadline
+        or envelope.correlation_id != params.correlation_id
+        or envelope.connector_id != params.connector_id
+        or envelope.connector_manifest_sha256
+        != params.connector_manifest_sha256
+        or envelope.connector_binding_id
+        != params.connector_binding.binding_id
+        or envelope.capability_id != params.capability_grant.capability_id
+        or envelope.operation != params.capability_grant.operation
+        or envelope.resource_scope != params.capability_grant.resource_scope
+        or envelope.request_payload_sha256
+        != params.capability_grant.authorized_payload_sha256
+        or params.capability_grant.grant_id != attempt.capability_grant_id
+        or params.credential_grant.credential_grant_id
+        != attempt.credential_grant_id
+        or params.deadline != attempt.deadline
+    ):
+        raise ValueError("provider exchange binds another read attempt")
 
 
 def _build_observation(

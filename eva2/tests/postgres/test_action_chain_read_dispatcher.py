@@ -345,3 +345,30 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
     assert ambiguous.attempt.state == "ambiguous"
     assert ambiguous.attempt.response_sha256 is None
     assert ambiguous.observation is None
+
+    wrong_invoke_payload = claimed.invoke.model_dump(mode="json")
+    wrong_invoke_payload["params"]["request_payload"] = {"entity_id": "light.other"}
+    wrong_invoke_payload["params"]["request_payload_sha256"] = canonical_sha256(
+        wrong_invoke_payload["params"]["request_payload"]
+    )
+    wrong_invoke = type(claimed.invoke).model_validate(wrong_invoke_payload)
+    self_consistent_wrong_failure = classify_connector_protocol_failure(
+        request_id=wrong_invoke.id,
+        request_sha256=canonical_sha256(wrong_invoke),
+        phase="invoke_external_io_possible",
+        violation="timeout",
+        evidence_sha256="3" * 64,
+        observed_at="2026-08-20T12:00:04Z",
+    )
+    with pytest.raises(ValueError, match="another read attempt"):
+        project_action_chain_read_result(
+            tenant_id=scope.tenant_id,
+            attempt=claimed.attempt,
+            initialize=claimed.initialize,
+            invoke=wrong_invoke,
+            manifest=claimed.connector_manifest,
+            result=self_consistent_wrong_failure,
+            observed_at=NOW + timedelta(seconds=3),
+            recorded_at=NOW + timedelta(seconds=4),
+            retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+        )
