@@ -23,6 +23,7 @@ def _archive(
     dockerfile: bytes | None = None,
     include_external_wheelhouse: bool = False,
     mtime: int = 0,
+    mode: int = 0o644,
 ) -> bytes:
     entries = {
         "eva2/deploy/living-core/Dockerfile": dockerfile
@@ -55,7 +56,7 @@ def _archive(
         for name, content in sorted(entries.items()):
             member = tarfile.TarInfo(name)
             member.size = len(content)
-            member.mode = 0o644
+            member.mode = mode
             member.mtime = mtime
             bundle.addfile(member, io.BytesIO(content))
     return output.getvalue()
@@ -122,6 +123,15 @@ def test_preparation_normalizes_archive_metadata_from_the_same_commit() -> None:
 
     assert first.archive_bytes == second.archive_bytes
     assert first.source_archive_sha256 == second.source_archive_sha256
+
+
+def test_preparation_normalizes_git_tar_umask_without_making_inputs_writable() -> None:
+    run, _ = _runner(_archive(mode=0o664))
+
+    prepared = prepare_candidate_build_inputs(COMMIT, runner=run)
+
+    with tarfile.open(fileobj=io.BytesIO(prepared.archive_bytes), mode="r:") as bundle:
+        assert {member.mode for member in bundle if member.isfile()} == {0o644}
 
 
 def test_preparation_refuses_archive_with_missing_copy_input() -> None:

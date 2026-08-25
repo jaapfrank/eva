@@ -175,7 +175,8 @@ def _archive_files(
                 content = handle.read(MAX_ARCHIVE_BYTES + 1)
                 if len(content) > MAX_ARCHIVE_BYTES:
                     raise RuntimeError("candidate archive input exceeds its size limit")
-                files[name] = (content, member.mode & 0o777)
+                canonical_mode = 0o755 if member.mode & 0o111 else 0o644
+                files[name] = (content, canonical_mode)
     except (tarfile.TarError, OSError) as error:
         raise RuntimeError("candidate archive is invalid") from error
     return files
