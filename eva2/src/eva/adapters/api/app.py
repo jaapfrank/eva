@@ -92,6 +92,7 @@ _RETAIN_KEYS = {
 _RETAIN_OPTIONAL_KEYS = {"project_id"}
 
 _TURN_REQUIRED_KEYS = {
+    "audience",
     "conversation_id",
     "installation_id",
     "message_id",
@@ -438,6 +439,11 @@ def _turn_from_wire(
                 source_ref=raw_binding["source_ref"],
             )
         )
+        audience = memory_audience_from_wire(payload["audience"])
+        if audience.kind != "private_person":
+            raise ValueError(
+                "Telegram group turn requires trusted connector admission"
+            )
         turn = ConversationTurn(
             tenant_id=payload["tenant_id"],
             installation_id=payload["installation_id"],
@@ -446,6 +452,7 @@ def _turn_from_wire(
             message_id=payload["message_id"],
             text=payload["text"],
             occurred_at=payload["occurred_at"],
+            audience=audience,
             project_id=payload.get("project_id"),
             observation_binding=observation_binding,
         )

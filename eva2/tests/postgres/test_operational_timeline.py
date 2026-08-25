@@ -547,7 +547,7 @@ def test_conversation_replay_returns_one_durable_reply_and_one_memory_queue(
     scope = _scope("conversation-replay")
     journal = PostgresConversationJournal(timeline_engine, scope)
     timeline = PostgresOperationalTimeline(timeline_engine, scope)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="tenant",
         installation_id="installation",
         principal_id="jaap",
@@ -563,7 +563,7 @@ def test_conversation_replay_returns_one_durable_reply_and_one_memory_queue(
         "INGRESS_COMMITTED"
     ]
 
-    changed = ConversationTurn(
+    changed = ConversationTurn.private(
         tenant_id=turn.tenant_id,
         installation_id=turn.installation_id,
         principal_id=turn.principal_id,
@@ -803,7 +803,7 @@ def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
     timeline_engine: Engine,
 ) -> None:
     actions = PostgresConversationActions(timeline_engine)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="living-personal-interest",
         installation_id="home",
         principal_id="jaap",
@@ -915,7 +915,7 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
                 "window_start": "2026-08-23T00:00:00+02:00",
             }
 
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="living-history-read",
         installation_id="home",
         principal_id="jaap",
@@ -993,7 +993,7 @@ def test_home_assistant_current_state_read_is_durable_and_not_repeated(
                 "state": "on",
             }
 
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="living-state-read",
         installation_id="home",
         principal_id="jaap",
@@ -1048,7 +1048,7 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
                 "live-search-model",
             )
 
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="living-current-research",
         installation_id="home",
         principal_id="jaap",

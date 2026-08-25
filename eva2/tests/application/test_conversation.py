@@ -12,6 +12,10 @@ from eva.application.conversation import (
     load_current_identity_pack,
 )
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.memory import MemoryRecall, RecalledFact
 from eva.contracts.planning import ConfirmedFact
@@ -117,7 +121,7 @@ def test_hot_path_recalls_then_lets_evas_model_answer() -> None:
             maximum_reply_words=80,
         ),
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="tenant",
         installation_id="installation",
         principal_id="jaap",
@@ -145,7 +149,7 @@ def test_hot_path_binds_recall_to_the_explicit_person_and_project() -> None:
         _Model(),
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -164,6 +168,43 @@ def test_hot_path_binds_recall_to_the_explicit_person_and_project() -> None:
         "kind": "person_project",
         "principal_id": "jaap",
         "project_id": "project-red",
+    }
+
+
+def test_group_turn_passes_the_exact_audience_and_group_scope_to_recall() -> None:
+    memory = _Memory()
+    conversation = LivingConversation(
+        memory,
+        _Model(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+    )
+    audience = MemoryAudience.telegram_group(
+        principal_id="jaap",
+        group_chat_id="-100123",
+        consent_ref=TelegramGroupConsentReference(
+            principal_id="jaap",
+            group_chat_id="-100123",
+            operation_id="telegram-group-consent:turn-test",
+        ),
+    )
+    turn = ConversationTurn(
+        "tenant",
+        "installation",
+        "jaap",
+        "telegram:-100123",
+        "telegram:-100123:9002",
+        "Hoe laat begint de barbecue?",
+        NOW,
+        audience,
+    )
+
+    conversation.respond(turn)
+
+    assert memory.query is not None
+    assert memory.query.audience is audience
+    assert memory.query.scope == {
+        "kind": "telegram_group",
+        "group_chat_id": "-100123",
     }
 
 
@@ -209,7 +250,7 @@ def test_bound_photo_region_is_carried_into_recall_and_action_availability() -> 
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
         Actions(),  # type: ignore[arg-type]
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -290,7 +331,7 @@ def test_photo_identity_memory_is_filtered_to_the_exact_bound_region() -> None:
         scope_sha256=canonical_sha256({"kind": "person"}),
         created_at=NOW,
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -340,7 +381,7 @@ def test_memory_intent_is_model_planned_without_question_mark() -> None:
     )
 
     conversation.respond(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -431,7 +472,7 @@ def test_model_chosen_interest_is_committed_before_eva_claims_it() -> None:
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
         Actions(),
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -508,7 +549,7 @@ def test_pending_durable_interest_resumes_without_choosing_again() -> None:
         Actions(),
     )
     reply = conversation.respond(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",

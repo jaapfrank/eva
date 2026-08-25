@@ -88,7 +88,7 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
         "telegram:file:mark-1",
     )
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -134,7 +134,7 @@ def test_validated_file_edit_is_a_closed_model_action(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -311,7 +311,7 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     auth_file = tmp_path / "auth.json"
     _write_access_lease(auth_file)
     model = CodexConversationModel(auth_file=auth_file, endpoint=endpoint)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -381,7 +381,7 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
     auth_file = tmp_path / "auth.json"
     _write_access_lease(auth_file)
     model = CodexConversationModel(auth_file=auth_file, endpoint=endpoint)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -425,7 +425,7 @@ def test_direct_model_accepts_an_explicit_bounded_reasoning_effort(
         auth_file=auth_file, endpoint=endpoint, reasoning_effort="high"
     )
     model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant", "installation", "jaap", "conversation", "message", "Hoi", NOW
         ),
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
@@ -462,7 +462,7 @@ def test_memory_query_planner_expands_meaning_without_answering(
         )
 
     monkeypatch.setattr(model, "_request", request)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -604,7 +604,7 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -660,7 +660,7 @@ def test_model_can_choose_bounded_home_assistant_history_read(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -703,7 +703,7 @@ def test_model_can_choose_current_home_assistant_state_read(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -743,7 +743,7 @@ def test_dutch_identity_retries_an_accidental_foreign_script(
     monkeypatch.setattr(model, "_request", request)
     pack = load_current_identity_pack()
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -809,7 +809,7 @@ def test_model_action_roundtrip_uses_durable_receipt_before_visible_text(
         model = CodexConversationModel(
             auth_file=auth_file, endpoint=f"http://{host}:{port}/responses"
         )
-        turn = ConversationTurn(
+        turn = ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -931,7 +931,7 @@ def test_explicit_automation_request_uses_exact_bounded_action(
         return "", call
 
     monkeypatch.setattr(model, "_request", request)
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -980,7 +980,7 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1042,7 +1042,7 @@ def test_explicit_multistep_automation_uses_advanced_action(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1126,7 +1126,7 @@ def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
     )
 
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1171,7 +1171,7 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1224,7 +1224,7 @@ def test_tuya_receipt_is_factual_input_not_a_robotic_script(
     )
 
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1264,7 +1264,7 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1306,7 +1306,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1353,7 +1353,7 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1392,7 +1392,7 @@ def test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt(
         {"message": "Test", "recipients": ["sink-a", "sink-b"]},
     )
     model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1445,7 +1445,7 @@ def test_future_condition_selects_bounded_durable_goal_action(
 
     monkeypatch.setattr(model, "_request", request)
     result = model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -1500,7 +1500,7 @@ def test_durable_goal_receipt_does_not_claim_work_already_finished(
         },
     )
     model.generate(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",

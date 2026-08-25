@@ -51,7 +51,7 @@ def test_validated_file_edit_action_requires_its_bounded_adapter() -> None:
     assert action in available.action_names
     with pytest.raises(Exception, match="fields differ"):
         available.execute(
-            ConversationTurn(
+            ConversationTurn.private(
                 "tenant",
                 "installation",
                 "jaap",
@@ -173,7 +173,7 @@ def test_fanout_action_reports_each_sink_without_resending_successes(
         sa.create_engine("sqlite://"), fanout_delivery=sink
     )
     receipt = actions.execute(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -244,7 +244,7 @@ def test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it(
         durable_goal_provider="goal-test",
         durable_goal_recipients=("sink-a",),
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -275,7 +275,7 @@ def test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it(
     assert actions.pending(turn).output["disposition"] == "already_scheduled"  # type: ignore[union-attr]
 
     cancelled = actions.execute(
-        ConversationTurn(
+        ConversationTurn.private(
             "tenant",
             "installation",
             "jaap",
@@ -295,7 +295,7 @@ def test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it(
 
 def test_identity_correction_action_exists_only_for_a_bound_photo_region() -> None:
     actions = PostgresConversationActions(sa.create_engine("sqlite://"))
-    plain = ConversationTurn(
+    plain = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -304,7 +304,7 @@ def test_identity_correction_action_exists_only_for_a_bound_photo_region() -> No
         "Nee, via de Voice PE.",
         "2026-08-23T14:00:00Z",
     )
-    bound = ConversationTurn(
+    bound = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -341,7 +341,7 @@ def test_identity_retrieval_hint_is_scoped_to_the_exact_bound_region(
         "image/jpeg",
         "object:mark",
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -381,7 +381,7 @@ def test_identity_retrieval_hint_is_scoped_to_the_exact_bound_region(
     monkeypatch.setattr(actions, "_timeline", lambda _turn: Timeline())
 
     assert actions.memory_query_hints(turn) == ("Mark",)
-    other = ConversationTurn(
+    other = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -479,7 +479,7 @@ def test_document_continue_rejects_a_noop_checkpoint(
         "_timeline",
         lambda _self, _turn: Timeline(),
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",
@@ -577,7 +577,7 @@ def test_advanced_automation_resolves_natural_names_before_durable_admission(
         "_automation_receipt",
         lambda _self, _turn, _events: expected_receipt,
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant",
         "installation",
         "jaap",

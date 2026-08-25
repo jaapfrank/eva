@@ -11,6 +11,10 @@ from eva.application.telegram_ingress import (
     TelegramCoreReply,
     TelegramInboundMessage,
 )
+from eva.application.memory_audience import (
+    MemoryAudience,
+    memory_audience_to_wire,
+)
 
 
 class TelegramProactiveDelivery:
@@ -210,10 +214,17 @@ class LivingCoreTurnHttpAdapter:
     def respond(
         self, message: TelegramInboundMessage, *, principal_id: str
     ) -> TelegramCoreReply:
+        if message.chat_id.startswith("-"):
+            raise RuntimeError(
+                "Telegram group turn requires trusted connector admission"
+            )
         conversation_id = f"telegram:{message.chat_id}"
         message_id = f"telegram:{message.chat_id}:{message.message_id}"
         payload = json.dumps(
             {
+                "audience": memory_audience_to_wire(
+                    MemoryAudience.private_person(principal_id=principal_id)
+                ),
                 "conversation_id": conversation_id,
                 "installation_id": self._installation_id,
                 "message_id": message_id,

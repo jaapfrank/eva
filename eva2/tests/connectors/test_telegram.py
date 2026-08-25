@@ -139,6 +139,11 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
         }
         assert captured[1][1]["reply_parameters"] == {"message_id": 501}
         assert captured[2][1]["principal_id"] == "person:jaap"
+        assert captured[2][1]["audience"] == {
+            "audience_id": "person:person:jaap",
+            "kind": "private_person",
+            "principal_id": "person:jaap",
+        }
     finally:
         server.shutdown()
         thread.join(timeout=5)

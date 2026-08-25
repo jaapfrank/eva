@@ -12,6 +12,10 @@ from eva.application.conversation import (
     GroundedReply,
 )
 from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 
 
 @dataclass
@@ -37,7 +41,7 @@ class _Journal:
 
 
 def test_semantic_retention_never_promotes_model_output_to_direct_user() -> None:
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         tenant_id="tenant:1",
         installation_id="installation:1",
         principal_id="person:1",
@@ -79,7 +83,7 @@ def test_bound_identity_correction_retains_only_the_grounded_user_fact() -> None
         "image/jpeg",
         "telegram:file:mark-1",
     )
-    turn = ConversationTurn(
+    turn = ConversationTurn.private(
         "tenant:1",
         "installation:1",
         "person:1",
@@ -152,8 +156,64 @@ def test_bound_identity_correction_retains_only_the_grounded_user_fact() -> None
     assert reply.text not in document.content  # type: ignore[attr-defined]
 
 
-def test_conversation_rejects_a_cross_installation_scope_before_model_work() -> None:
+def test_group_turn_retains_the_same_audience_and_group_bound_provenance() -> None:
+    audience = MemoryAudience.telegram_group(
+        principal_id="person:1",
+        group_chat_id="-100123",
+        consent_ref=TelegramGroupConsentReference(
+            principal_id="person:1",
+            group_chat_id="-100123",
+            operation_id="telegram-group-consent:retention-test",
+        ),
+    )
     turn = ConversationTurn(
+        tenant_id="tenant:1",
+        installation_id="installation:1",
+        principal_id="person:1",
+        conversation_id="telegram:-100123",
+        message_id="telegram:-100123:message:7",
+        text="De barbecue begint om zes uur.",
+        occurred_at="2026-08-24T12:00:00Z",
+        audience=audience,
+    )
+    reply = GroundedReply(
+        turn.conversation_id,
+        turn.message_id,
+        "Gezellig.",
+        (),
+        turn.occurred_at,
+        "test",
+    )
+
+    class Journal:
+        def load(self, _turn: ConversationTurn) -> object:
+            return object()
+
+        def memory_queued(
+            self,
+            _turn: ConversationTurn,
+            _state: object,
+            *,
+            operation_document_id: str,
+        ) -> None:
+            assert operation_document_id.startswith("telegram:-100123:")
+
+    cold_path = _ColdPath([])
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._cold_path = cold_path  # type: ignore[attr-defined]
+    runtime._journal = lambda _turn: Journal()  # type: ignore[attr-defined,method-assign]
+
+    runtime.after_response(turn, reply)
+
+    document = cold_path.documents[0]
+    assert document.audience is audience  # type: ignore[attr-defined]
+    assert document.document_id.startswith("telegram:-100123:")  # type: ignore[attr-defined]
+    assert document.source_ref.startswith("telegram:-100123:")  # type: ignore[attr-defined]
+    assert document.evidence_ref.startswith("telegram:-100123:")  # type: ignore[attr-defined]
+
+
+def test_conversation_rejects_a_cross_installation_scope_before_model_work() -> None:
+    turn = ConversationTurn.private(
         tenant_id="other-tenant",
         installation_id="other-installation",
         principal_id="person:2",

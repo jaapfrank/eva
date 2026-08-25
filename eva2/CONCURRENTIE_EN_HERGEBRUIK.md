@@ -298,6 +298,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   Eva's context uit. Groep, conversatie, bron en bewijs moeten exact kloppen.
   92 bredere geheugenchecks en onafhankelijke review zijn groen. A03c sluit de
   connectorneutrale turn- en Telegram-runtimewiring.
+- [x] Groepsgeheugen A03c0: de connectorneutrale `ConversationTurn` vereist nu
+  zelf een expliciet audience; recall en retentie ontvangen exact hetzelfde
+  object. Groepsturns vereisen canonieke groep-ID's en blokkeren project- en
+  foto-observaties. De generieke turn-API en huidige Telegram-HTTP-adapter
+  weigeren groepen totdat A03c1 de vertrouwde connectoradmission levert. De
+  private route blijft expliciet en ongewijzigd. 77 gerichte tests en
+  onafhankelijke review zijn groen.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -329,7 +336,7 @@ langdurige verzamelaanpassing telt niet als voortgang.
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
   getest; admission, duurzame consentreferentie en veilige outbox-propagatie
   zijn eveneens klaar; generieke recall weigert een groep nu fail-closed. Wat
-  nog ontbreekt is A03c: de connectorneutrale turn- en Telegram-runtimewiring
+  nog ontbreekt is A03c1: de vertrouwde Telegram-admission en runtime-injectie
   met end-to-end non-leakagebewijs; de echte
   multi-account- en Telegram-groepproef blijft daarna afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit

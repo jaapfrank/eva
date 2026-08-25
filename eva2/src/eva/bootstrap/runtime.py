@@ -99,7 +99,6 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
-from eva.application.memory_audience import MemoryAudience
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.mail import MailInboxPage, MailMessage
@@ -654,7 +653,11 @@ class PostgresHindsightMemoryRuntime:
         if grounded_correction is None:
             document_id = f"{turn.conversation_id}:exchange:{turn.message_id}"
             content = f"Gebruiker (directe bron): {turn.text}"
-            evidence_ref = f"conversation-reply:{turn.message_id}"
+            evidence_ref = (
+                f"{turn.conversation_id}:evidence:{turn.message_id}"
+                if turn.audience.kind == "telegram_group"
+                else f"conversation-reply:{turn.message_id}"
+            )
             privacy_class = "internal"
         else:
             binding = turn.observation_binding
@@ -692,7 +695,7 @@ class PostgresHindsightMemoryRuntime:
             evidence_ref=evidence_ref,
             privacy_class=privacy_class,
             trust="direct_user",
-            audience=MemoryAudience.private_person(principal_id=turn.principal_id),
+            audience=turn.audience,
             project_id=turn.project_id,
         )
         # ``submit`` commits the separate outbox thread before returning. The

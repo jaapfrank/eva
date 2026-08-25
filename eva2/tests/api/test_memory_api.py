@@ -1103,6 +1103,11 @@ def test_channel_neutral_turn_returns_a_grounded_reply_receipt() -> None:
     response = client.post(
         "/internal/v1/turns/respond",
         json={
+            "audience": {
+                "audience_id": f"person:{PRINCIPAL}",
+                "kind": "private_person",
+                "principal_id": PRINCIPAL,
+            },
             "conversation_id": "conversation:telegram:jaap",
             "installation_id": INSTALLATION,
             "message_id": "telegram:5004",
@@ -1120,7 +1125,36 @@ def test_channel_neutral_turn_returns_a_grounded_reply_receipt() -> None:
     assert payload["provider"] == "hindsight-0.9.1-reflect"
     assert len(payload["text_sha256"]) == 64
     assert runtime.turns[0].message_id == "telegram:5004"
+    assert runtime.turns[0].audience.kind == "private_person"
     assert runtime.after[0][0].message_id == "telegram:5004"
+
+
+def test_generic_turn_endpoint_rejects_untrusted_group_audience() -> None:
+    client = TestClient(create_app(_Runtime()))
+    response = client.post(
+        "/internal/v1/turns/respond",
+        json={
+            "audience": {
+                "audience_id": "telegram-group:-100123",
+                "consent_group_chat_id": "-100123",
+                "consent_operation_id": "telegram-group-consent:api-test",
+                "consent_principal_id": PRINCIPAL,
+                "group_chat_id": "-100123",
+                "kind": "telegram_group",
+                "principal_id": PRINCIPAL,
+            },
+            "conversation_id": "telegram:-100123",
+            "installation_id": INSTALLATION,
+            "message_id": "telegram:-100123:5004",
+            "occurred_at": NOW,
+            "principal_id": PRINCIPAL,
+            "tenant_id": TENANT,
+            "text": "Dit mag niet zonder connectorbewijs.",
+        },
+    )
+
+    assert response.status_code == 422
+    assert response.json()["detail"] == "conversation turn is invalid"
 
 
 def test_channel_neutral_turn_accepts_only_a_complete_bound_photo_region() -> None:
@@ -1134,6 +1168,11 @@ def test_channel_neutral_turn_accepts_only_a_complete_bound_photo_region() -> No
         "subject_region_sha256": "b" * 64,
     }
     payload = {
+        "audience": {
+            "audience_id": f"person:{PRINCIPAL}",
+            "kind": "private_person",
+            "principal_id": PRINCIPAL,
+        },
         "conversation_id": "conversation:telegram:jaap",
         "installation_id": INSTALLATION,
         "message_id": "telegram:5005",
@@ -1169,6 +1208,11 @@ def test_reused_conversation_message_identity_is_reported_as_conflict() -> None:
     response = client.post(
         "/internal/v1/turns/respond",
         json={
+            "audience": {
+                "audience_id": f"person:{PRINCIPAL}",
+                "kind": "private_person",
+                "principal_id": PRINCIPAL,
+            },
             "conversation_id": "conversation:telegram:jaap",
             "installation_id": INSTALLATION,
             "message_id": "telegram:reused",
@@ -1192,6 +1236,11 @@ def test_unavailable_conversation_model_is_not_exposed_as_http_500() -> None:
     response = client.post(
         "/internal/v1/turns/respond",
         json={
+            "audience": {
+                "audience_id": f"person:{PRINCIPAL}",
+                "kind": "private_person",
+                "principal_id": PRINCIPAL,
+            },
             "conversation_id": "conversation:telegram:jaap",
             "installation_id": INSTALLATION,
             "message_id": "telegram:model-unavailable",

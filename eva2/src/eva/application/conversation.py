@@ -141,6 +141,7 @@ class ConversationTurn:
     message_id: str
     text: str
     occurred_at: str
+    audience: MemoryAudience
     project_id: str | None = None
     observation_binding: ConversationObservationBinding | None = None
 
@@ -157,6 +158,18 @@ class ConversationTurn:
             raise ValueError("conversation turn identifiers are required")
         if not self.text.strip() or len(self.text.encode("utf-8")) > 65_536:
             raise ValueError("conversation turn text is empty or too large")
+        if self.audience.principal_id != self.principal_id:
+            raise ValueError("conversation turn audience principal differs")
+        if self.audience.kind == "telegram_group":
+            assert self.audience.group_chat_id is not None
+            prefix = f"telegram:{self.audience.group_chat_id}:"
+            if (
+                self.conversation_id != f"telegram:{self.audience.group_chat_id}"
+                or not self.message_id.startswith(prefix)
+                or self.project_id is not None
+                or self.observation_binding is not None
+            ):
+                raise ValueError("Telegram group turn is not bound to its audience")
         if self.project_id is not None and (
             not self.project_id.strip() or len(self.project_id) > 200
         ):
@@ -167,6 +180,35 @@ class ConversationTurn:
             raise ValueError(
                 "conversation turn timestamp must be canonical UTC"
             ) from error
+
+    @classmethod
+    def private(
+        cls,
+        tenant_id: str,
+        installation_id: str,
+        principal_id: str,
+        conversation_id: str,
+        message_id: str,
+        text: str,
+        occurred_at: str,
+        *,
+        project_id: str | None = None,
+        observation_binding: ConversationObservationBinding | None = None,
+    ) -> "ConversationTurn":
+        """Construct an explicitly private turn for non-group connectors/tests."""
+
+        return cls(
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+            principal_id=principal_id,
+            conversation_id=conversation_id,
+            message_id=message_id,
+            text=text,
+            occurred_at=occurred_at,
+            audience=MemoryAudience.private_person(principal_id=principal_id),
+            project_id=project_id,
+            observation_binding=observation_binding,
+        )
 
     @property
     def grounded_text(self) -> str:
@@ -352,14 +394,18 @@ class LivingConversation:
                     installation_id=turn.installation_id,
                     tenant_id=turn.tenant_id,
                     principal_id=turn.principal_id,
-                    audience=MemoryAudience.private_person(
-                        principal_id=turn.principal_id
-                    ),
+                    audience=turn.audience,
                     conversation_id=turn.conversation_id,
                     query_purpose="conversation_reply",
                     requested_valid_at=turn.occurred_at,
                     project_id=turn.project_id,
                     scope=(
+                        {
+                            "kind": "telegram_group",
+                            "group_chat_id": turn.audience.group_chat_id,
+                        }
+                        if turn.audience.kind == "telegram_group"
+                        else
                         {
                             "kind": "person",
                             "principal_id": turn.principal_id,
