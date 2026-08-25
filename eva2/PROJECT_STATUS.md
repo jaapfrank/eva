@@ -86,11 +86,13 @@ Eva's unieke hoofdfeature.
   community-sidecar. De onafhankelijke
   onderhoudsaudit geeft alleen Hindsight in zijn huidige smalle L2-rol en
   Renovate als niet-automerge voorstelbot een begrensde `GO`; onder meer
-  Pydantic AI, Harness, DBOS, Home Assistant MCP Server, HA-MCP, Playwright
-  MCP, Hindsight UI, LiveKit, OpenClaw, React-Admin, PyInstaller, Agent Skills
-  en Trivy blijven `PROEF`. De officiële MCP SDK is voor de smalle V1-client
-  juist `NO-GO`; Browser Use en een tweede workflowplatform komen nu niet in
-  V1.
+  Pydantic AI, DBOS, Home Assistant MCP Server, HA-MCP, Playwright MCP,
+  Hindsight UI, LiveKit, OpenClaw, React-Admin, PyInstaller, Agent Skills en
+  Trivy blijven `PROEF`. Harness begon daar ook, maar checkpoint `55cf7cc`
+  promoveert uitsluitend zijn geïsoleerde toolvrije/effectvrije subagentengine
+  naar `GO`; runtime-integratie en productpromotie blijven open. De officiële
+  MCP SDK is voor de smalle V1-client juist `NO-GO`; Browser Use en een tweede
+  workflowplatform komen nu niet in V1.
   `DF01`-`DF06` en de eerste kandidaten staan in
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
