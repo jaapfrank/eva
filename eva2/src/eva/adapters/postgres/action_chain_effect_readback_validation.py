@@ -129,7 +129,10 @@ def validate_action_chain_effect_readback_preparation(
         or bytes(row.payload_sha256).hex() != canonical_sha256(expected)
         or row.retention_policy_id != effect_row.retention_policy_id
         or row.retention_until != effect_row.retention_until
-        or row.created_at < effect_row.updated_at
+        or (
+            effect_row.state == "provider_accepted"
+            and row.created_at < effect_row.updated_at
+        )
         or row.created_at >= row.deadline
     ):
         raise corrupt("effect verification intent binding differs")
@@ -163,7 +166,17 @@ def accepted_effect(
     *,
     lock: bool = False,
 ) -> tuple[EffectIntent, EffectAttempt, EffectReceipt]:
-    effect = EffectIntent.model_validate(effect_row.payload)
+    stored_effect = EffectIntent.model_validate(effect_row.payload)
+    effect = (
+        EffectIntent.model_validate(
+            {
+                **stored_effect.model_dump(mode="json"),
+                "state": "provider_accepted",
+            }
+        )
+        if stored_effect.state == "verified"
+        else stored_effect
+    )
     attempt_statement = sa.select(effect_attempts).where(
         effect_attempts.c.tenant_id == scope.tenant_id,
         effect_attempts.c.installation_id == scope.installation_id,
@@ -184,7 +197,7 @@ def accepted_effect(
     receipt = EffectReceipt.model_validate(receipts[0].payload)
     if (
         effect.state != "provider_accepted"
-        or effect_row.state != "provider_accepted"
+        or effect_row.state not in {"provider_accepted", "verified"}
         or attempt.state != "provider_accepted"
         or receipt.decision != "accepted"
         or receipt.provider_resource_id is None

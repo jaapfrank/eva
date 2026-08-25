@@ -48,6 +48,7 @@ def reconstruct_action_chain_effect_state(
         intent=authorized_intent,
         attempt=authorized_attempt,
         terminal=stored_attempt.state != "dispatch_authorized",
+        verified=intent.state == "verified",
     )
 
 
@@ -95,6 +96,25 @@ def _effect_state_matches(
         if stored_attempt.state == "provider_accepted"
         else external_counts[1] == 0
     )
+    if stored_attempt.state == "provider_accepted" and intent.state == "verified":
+        return (
+            intent_row.state == "verified"
+            and int(intent_row.revision) == 4
+            and bytes(intent_row.payload_sha256).hex() == canonical_sha256(intent)
+            and attempt_row.state == "provider_accepted"
+            and _optional_hash(attempt_row.dispatch_permit_sha256)
+            == stored_attempt.dispatch_permit_sha256
+            and _optional_hash(attempt_row.response_sha256)
+            == stored_attempt.response_sha256
+            and attempt_row.error_class == stored_attempt.error_class
+            and attempt_row.transport_evidence_id is not None
+            and bytes(attempt_row.payload_sha256).hex()
+            == canonical_sha256(stored_attempt)
+            and int(attempt_row.revision) == 2
+            and attempt_row.updated_at >= attempt_row.created_at
+            and attempt_row.updated_at <= intent_row.updated_at
+            and external_counts == (1, 1)
+        )
     return (
         expected_intent_state is not None
         and intent.state == expected_intent_state

@@ -23,6 +23,10 @@ from eva.application.action_chain import (
     action_chain_step_operation_id,
     action_chain_thread_id,
 )
+from eva.application.effect_verification import (
+    EffectVerificationError,
+    EffectVerificationProjection,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope
 from eva.contracts.execution import (
@@ -88,6 +92,12 @@ def validate_action_chain_effect(
     )
     if action is None or descriptor is None:
         raise corrupt("prepared effect authority is absent")
+    try:
+        verification = EffectVerificationProjection.from_authority_payload(
+            descriptor.get("effect_verification")
+        )
+    except EffectVerificationError as error:
+        raise corrupt("prepared effect verification authority is invalid") from error
 
     expected_intent_id = uuid5(stored.plan_step_id, "effect-intent:v1")
     expected_idempotency_key = f"action-chain:{expected_intent_id}:effect:v1"
@@ -130,6 +140,7 @@ def validate_action_chain_effect(
             "ambiguous",
             "waiting_breaker",
             "blocked",
+            "verified",
         }
         or intent.supersedes_effect_intent_id is not None
         or intent.deadline != plan.deadline
@@ -294,6 +305,15 @@ def validate_action_chain_effect(
         return
     if len(attempts) != 1:
         raise corrupt("authorized effect attempt cardinality differs")
+    history_event_data = _effect_history_event_data(
+        connection,
+        scope,
+        plan=plan,
+        logical_step_key=step.step_id,
+        intent=intent,
+        current_event_data=current_event_data,
+        corrupt=corrupt,
+    )
     _validate_authorized_effect(
         connection,
         scope,
@@ -303,12 +323,14 @@ def validate_action_chain_effect(
         intent=intent,
         intent_row=intent_row,
         action_arguments=action.arguments,
+        action_resource=action.resource,
+        effect_verification=verification,
         manifest=manifest,
         binding=binding,
         capability_manifest_id=activation.capability_manifest_id,
         attempt_row=attempts[0],
         external_counts=external_counts,
-        current_event_data=current_event_data,
+        current_event_data=history_event_data,
         corrupt=corrupt,
     )
 
@@ -323,6 +345,8 @@ def _validate_authorized_effect(
     intent: EffectIntent,
     intent_row: sa.Row,
     action_arguments: dict[str, Any],
+    action_resource: str,
+    effect_verification: EffectVerificationProjection,
     manifest: CapabilityManifest,
     binding: ConnectorBinding,
     capability_manifest_id: UUID,
@@ -534,6 +558,8 @@ def _validate_authorized_effect(
         state=state,
         plan=plan,
         action_arguments=action_arguments,
+        action_resource=action_resource,
+        effect_verification=effect_verification,
         capability_manifest=manifest,
         binding=binding,
         capability_grant=capability_grant,
@@ -545,6 +571,39 @@ def _validate_authorized_effect(
         retention_until=plan_row.retention_until,
         corrupt=corrupt,
     )
+
+
+def _effect_history_event_data(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    plan: ValidatedPlan,
+    logical_step_key: str,
+    intent: EffectIntent,
+    current_event_data: dict[str, Any],
+    corrupt: type[RuntimeError],
+) -> dict[str, Any]:
+    if intent.state != "verified":
+        return current_event_data
+    operation_id = action_chain_step_operation_id(plan, logical_step_key)
+    rows = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == operation_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(2)
+    ).all()
+    if (
+        len(rows) != 2
+        or rows[0].event_type != "STATE_VERIFIED"
+        or rows[1].event_type != "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED"
+        or not isinstance(rows[1].payload.get("data"), dict)
+    ):
+        raise corrupt("verified effect provider history differs")
+    return dict(rows[1].payload["data"])
 
 
 def is_prepared_action_chain_effect(
@@ -559,6 +618,23 @@ def is_prepared_action_chain_effect(
         and stored.effect_intent_id is not None
         and stored.outcome_ref is None
         and stored.revision == running_revision
+        and stored.updated_at >= stored.created_at
+    )
+
+
+def is_completed_action_chain_effect(
+    step: Any, stored: sa.Row, succeeded_revision: int
+) -> bool:
+    """Recognize an effect that earned success from physical readback."""
+
+    return (
+        step.kind == "effect"
+        and stored.state == "succeeded"
+        and stored.read_intent_id is None
+        and stored.effect_intent_id is not None
+        and isinstance(stored.outcome_ref, str)
+        and stored.outcome_ref.startswith("effect-readback:")
+        and stored.revision == succeeded_revision
         and stored.updated_at >= stored.created_at
     )
 
@@ -697,4 +773,8 @@ def _format_timestamp(value: datetime) -> str:
     return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-__all__ = ["is_prepared_action_chain_effect", "validate_action_chain_effect"]
+__all__ = [
+    "is_completed_action_chain_effect",
+    "is_prepared_action_chain_effect",
+    "validate_action_chain_effect",
+]

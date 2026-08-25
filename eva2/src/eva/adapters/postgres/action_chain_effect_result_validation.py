@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from types import SimpleNamespace
 from uuid import UUID, uuid5
 
 import sqlalchemy as sa
@@ -11,6 +12,10 @@ import sqlalchemy as sa
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
     validate_action_chain_effect_readback_preparation,
+)
+from eva.adapters.postgres.action_chain_effect_advance_validation import (
+    effect_completion_context,
+    project_stored_action_chain_effect_proof,
 )
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
@@ -37,6 +42,7 @@ from eva.contracts.execution import (
     EffectReceipt,
 )
 from eva.contracts.planning import ValidatedPlan
+from eva.application.effect_verification import EffectVerificationProjection
 from eva.operations.action_chain_effect_results import (
     ProjectedActionChainEffectResult,
     ProviderEffectResult,
@@ -103,6 +109,7 @@ class ReconstructedActionChainEffectState:
     intent: EffectIntent
     attempt: EffectAttempt
     terminal: bool
+    verified: bool = False
 
 
 def validate_action_chain_effect_history(
@@ -115,6 +122,8 @@ def validate_action_chain_effect_history(
     state: ReconstructedActionChainEffectState,
     plan: ValidatedPlan,
     action_arguments: dict[str, object],
+    action_resource: str,
+    effect_verification: EffectVerificationProjection,
     capability_manifest: CapabilityManifest,
     binding: ConnectorBinding,
     capability_grant: CapabilityGrant,
@@ -145,6 +154,32 @@ def validate_action_chain_effect_history(
             operational_checkpoints.c.thread_id == operation_id,
         )
     ).one()
+    verification_latest = None
+    terminal_latest = latest
+    terminal_checkpoint = checkpoint
+    if state.verified:
+        verification_latest = latest
+        terminal_latest = connection.execute(
+            sa.select(operational_events).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.thread_id == operation_id,
+                operational_events.c.sequence == int(latest.sequence) - 1,
+            )
+        ).one_or_none()
+        terminal_payload = (
+            None if terminal_latest is None else terminal_latest.payload.get("checkpoint")
+        )
+        if not isinstance(terminal_payload, dict):
+            raise corrupt("verified effect provider checkpoint is absent")
+        try:
+            terminal_checkpoint = SimpleNamespace(
+                phase=terminal_payload["phase"],
+                status=terminal_payload["status"],
+                updated_at=_parse_timestamp(terminal_payload["updated_at"]),
+            )
+        except (KeyError, TypeError, ValueError) as error:
+            raise corrupt("verified effect provider checkpoint is invalid") from error
     if state.terminal:
         validate_action_chain_effect_terminal(
             connection,
@@ -159,10 +194,14 @@ def validate_action_chain_effect_history(
             credential_grant=credential_grant,
             intent_row=intent_row,
             attempt_row=attempt_row,
-            current_event_data=latest.payload["data"],
+            current_event_data=terminal_latest.payload["data"],
             expected_authorization_data=expected_authorization_data,
-            latest=latest,
-            checkpoint=checkpoint,
+            latest=terminal_latest,
+            checkpoint=terminal_checkpoint,
+            verified=state.verified,
+            verified_at=(
+                None if verification_latest is None else verification_latest.occurred_at
+            ),
             retention_policy_id=retention_policy_id,
             retention_until=retention_until,
             corrupt=corrupt,
@@ -179,6 +218,42 @@ def validate_action_chain_effect_history(
             retention_until=retention_until,
             corrupt=corrupt,
         )
+        if state.verified:
+            proof, readback, observation = project_stored_action_chain_effect_proof(
+                connection,
+                scope,
+                effect_intent_id=intent_row.effect_intent_id,
+                projection=effect_verification,
+                resource=action_resource,
+                arguments=action_arguments,
+                provider_accepted_at=attempt_row.updated_at,
+                verified_at=intent_row.updated_at,
+                deadline=_parse_timestamp(plan.deadline),
+                corrupt=corrupt,
+            )
+            data = verification_latest.payload.get("data")
+            raw_released = data.get("released_step_ids") if isinstance(data, dict) else None
+            try:
+                released = tuple(UUID(str(item)) for item in raw_released)
+            except (TypeError, ValueError) as error:
+                raise corrupt("verified effect released steps are invalid") from error
+            expected = effect_completion_context(
+                effect_step_id=plan_step_id,
+                projection=effect_verification,
+                proof=proof,
+                readback=readback,
+                observation=observation,
+                released_step_ids=released,
+            )
+            if (
+                verification_latest.event_type != "STATE_VERIFIED"
+                or verification_latest.occurred_at != intent_row.updated_at
+                or data != expected
+                or checkpoint.phase != "action_chain_effect_state_verified"
+                or checkpoint.status != "completed"
+                or checkpoint.updated_at != intent_row.updated_at
+            ):
+                raise corrupt("verified effect timeline binding differs")
         return
     current_event_data = latest.payload.get("data")
     if not isinstance(current_event_data, dict):
@@ -241,6 +316,8 @@ def validate_action_chain_effect_terminal(
     expected_authorization_data: dict[str, object],
     latest: sa.Row,
     checkpoint: sa.Row,
+    verified: bool,
+    verified_at: datetime | None,
     retention_policy_id: str,
     retention_until: datetime,
     corrupt: type[RuntimeError],
@@ -342,17 +419,26 @@ def validate_action_chain_effect_terminal(
     ):
         raise corrupt("terminal effect timeline binding differs")
 
+    expected_intent = (
+        EffectIntent.model_validate(
+            {**projected.intent.model_dump(mode="json"), "state": "verified"}
+        )
+        if verified
+        else projected.intent
+    )
+    expected_intent_revision = 4 if verified else 3
+    expected_intent_updated_at = verified_at if verified else recorded_at
     if (
-        stored_intent != projected.intent
+        stored_intent != expected_intent
         or stored_attempt != projected.attempt
-        or intent_row.state != projected.intent.state
+        or intent_row.state != expected_intent.state
         or attempt_row.state != projected.attempt.state
-        or bytes(intent_row.payload_sha256).hex() != canonical_sha256(projected.intent)
+        or bytes(intent_row.payload_sha256).hex() != canonical_sha256(expected_intent)
         or bytes(attempt_row.payload_sha256).hex()
         != canonical_sha256(projected.attempt)
-        or int(intent_row.revision) != 3
+        or int(intent_row.revision) != expected_intent_revision
         or int(attempt_row.revision) != 2
-        or intent_row.updated_at != recorded_at
+        or intent_row.updated_at != expected_intent_updated_at
         or attempt_row.updated_at != recorded_at
         or attempt_row.error_class != projected.attempt.error_class
         or _optional_hash(attempt_row.dispatch_permit_sha256)
