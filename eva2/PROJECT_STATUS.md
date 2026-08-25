@@ -118,11 +118,16 @@ Eva's unieke hoofdfeature.
   verzegeld model-/worker-/prijsprofiel, absolute deadline, provider-outputlimiet,
   contracthash en uitgezette telemetry. 23 nieuwe tests plus de bestaande
   22 Harnesschecks zijn **45/45 groen**. De onafhankelijke herreview van
-  `b7e9af7` is groen. Dit is nog geen WB01/WB02: attentiontype,
-  version-matched migratie/releaseauthority,
-  eenmalige PostgreSQL-callfence, echte provider en crashbewijs staan open; B
-  is niet gewijzigd; zie
-  `reviews/pydantic-tool-free-child-candidate-b7e9af7.md`.
+  `b7e9af7` is groen. WB01a en WB01b hebben daarna het contract geregistreerd
+  en `delegated_work` als zesde soort toegelaten in Eva's bestaande taakrij.
+  Een echte PostgreSQL 16.13-proef staat op **19/19**: oude taken blijven
+  gelijk, onbekende soorten worden geweigerd en rollback met nog aanwezige
+  gedelegeerde taken faalt zonder dataverlies. De onafhankelijke review op
+  `d510366` is groen. Dit is nog geen werkende runtime-subagent: handoffwriter,
+  portable-v2-export, lease/reclaim, eenmalige call-start, echte provider en
+  crashbewijs staan open; B is niet gewijzigd. Zie
+  `reviews/pydantic-tool-free-child-candidate-b7e9af7.md` en
+  `reviews/delegated-work-database-admission-d510366.md`.
 
 - Browser-/workflowbesluit DF03/DF04: Microsoft Playwright MCP `0.0.79` krijgt
   de eerste productgerichte browsersidecarproef; Harness PlaywrightBrowser

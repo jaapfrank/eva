@@ -28,7 +28,11 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
   rechtstreeks de publieke Pydantic AI-runner. Getypeerde output, usage,
   cancellation en gesaneerde foutcategorieën zijn daarmee na een eerste
   `NO-GO` in 23 extra tests groen. De onafhankelijke herreview van `b7e9af7`
-  is groen; PostgreSQL en een productieprovider zijn niet gekoppeld.
+  is groen. Het contract en de zesde taaksoort `delegated_work` zijn inmiddels
+  ook version-matched geregistreerd en in echte PostgreSQL 16.13 beproefd:
+  19 tests plus onafhankelijke review zijn groen op `d510366`. De duurzame
+  handoffwriter, lease/reclaim, call-startgrens en productieprovider zijn nog
+  niet gekoppeld.
 - `plans`, `plan_steps`, `attention_items` en de operationele tijdlijn vormen
   al een duurzame taakgraaf met leases en crashherstel. Zij bewijzen nog geen
   multi-workerdelegatie.
@@ -131,9 +135,10 @@ vereisen een herstelbare bevestiging en verwijdering wordt standaard archiveren.
 
 - [ ] WB01 — Eén connectorneutraal `DelegatedWork/v1`-contract en duurzame
   PostgreSQL-projectie boven de bestaande plan-, attention- en eventtabellen;
-  geen tweede taakdatabase. Het gesloten Pydantic-contract is als technische
-  kandidaat getest; registry, attentiontype, migratie en PostgreSQL-projectie
-  staan nog open.
+  geen tweede taakdatabase. WB01a (contract/register) en WB01b (de zesde
+  taaksoort in de bestaande rij) zijn getest en onafhankelijk gereviewd. De
+  handoffwriter, cross-objectbindingen en portable-v2-exportgrens sluiten WB01
+  in de volgende afzonderlijke slice.
 - [ ] WB02 — Parentgestuurde subagentspawn met afgeleid capability-, context-,
   token-, kosten-, tijd- en workspacegrant; harde paralleliteits- en dieptelimiet.
 - [ ] WB03 — Workerprotocol voor show/heartbeat/comment/artifact/complete/block/
