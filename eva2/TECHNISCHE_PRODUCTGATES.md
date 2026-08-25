@@ -600,20 +600,23 @@ langdurige verzamelaanpassing telt niet als voortgang.
   providerrelease en commit exact één `dispatch_authorized`-poging zonder
   callable bytes (`2cb2c27`). MC03c3b2 commit vlak vóór I/O exact één
   call-start en geeft het sealed proces- en `effect.readback`-RPC-pakket alleen
-  aan die eerste caller (`bfea6f4`). Vijf gerichte, 54 brede action-chain- en
-  afzonderlijk 24 tijdlijntests zijn voor de callclaim groen, inclusief
+  aan die eerste caller (`bfea6f4`). MC03c3c start alleen dat eerste pakket en
+  bewaart providerresultaat, protocolfout of ambiguïteit atomair als evidence
+  en `ReadObservation` (`77923e2`). Vier gerichte, 58 brede action-chain- en
+  afzonderlijk 24 tijdlijntests zijn voor deze uitvoering groen, inclusief
   echte subprocess-protocolfout, rollback, herstart, replay, corruptie en een
   onopgeloste call-start zonder tweede proces. MC03c3a/b1 deden nul
-  readback-provider-I/O; MC03c3b2 startte evenmin een proces en schreef nul
-  fysieke readbacks. De effectstap bleef `running`. Onafhankelijke reviews,
-  readback-provider-I/O en resultaatopslag,
-  fysieke Home Assistant-readback,
+  readback-provider-I/O; MC03c3b2 startte evenmin een proces. MC03c3c gebruikt
+  alleen synthetisch succes en een echte lokale protocolfout en schrijft nog
+  nul fysieke `EffectReadback`-rijen. De effectstap bleef `running`.
+  Onafhankelijke reviews, fysieke Home Assistant-readback,
   effect-/dependencyafronding en B-livebewijs blijven open; zie
   `reviews/action-chain-effect-preparation-mc03c0.md` en
   `reviews/action-chain-effect-execution-mc03c2.md` en
   `reviews/action-chain-effect-readback-preparation-mc03c3a.md` en
   `reviews/action-chain-effect-readback-authorization-mc03c3b1.md` en
-  `reviews/action-chain-effect-readback-call-claim-mc03c3b2.md`.
+  `reviews/action-chain-effect-readback-call-claim-mc03c3b2.md` en
+  `reviews/action-chain-effect-readback-execution-mc03c3c.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

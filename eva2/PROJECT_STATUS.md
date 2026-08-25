@@ -90,10 +90,12 @@ de controleerbare live receipts staan in
   niet af. MC03c3b1 autoriseert daarop exact één actuele sealed providerpoging
   en bewaart die atomair zonder callable bytes. MC03c3b2 commit vlak vóór I/O
   exact één call-start en geeft alleen aan die eerste caller het sealed proces-
-  en `effect.readback`-RPC-pakket. Vijf gerichte, 54 brede action-chain- en
-  afzonderlijk 24 tijdlijntests zijn groen op `bfea6f4`. Dit is `tested`, nog
-  niet onafhankelijk `reviewed`; er is geen proces of echte Home
-  Assistant-call/readback uitgevoerd en A en B zijn niet gewijzigd.
+  en `effect.readback`-RPC-pakket. MC03c3c voert dat pakket nu eenmaal uit en
+  bewaart antwoord, protocolfout of ambiguïteit atomair als providerbewijs en
+  waarneming. Vier gerichte, 58 brede action-chain- en afzonderlijk 24
+  tijdlijntests zijn groen op `77923e2`. Dit is `tested`, nog niet onafhankelijk
+  `reviewed`; er is geen echte Home Assistant-call of fysieke effectafronding
+  uitgevoerd en A en B zijn niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -135,19 +137,18 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: `bfea6f4` claimt na de geautoriseerde effectcontrole
-  exact één provider-callstart. Alleen de eerste caller ontvangt het sealed
-  proces- en RPC-pakket; concurrency, replay en een nieuwe engine ontvangen
-  niets uitvoerbaars. Deadline, rollback en intrekking falen gesloten. Er zijn
-  nul providerprocessen gestart en nul `EffectReadback`-rijen gemaakt; de
-  effectstap blijft `running`. Zie
-  `reviews/action-chain-effect-readback-call-claim-mc03c3b2.md`.
+- Laatste codecheckpoint: `77923e2` voert uitsluitend de eerste geclaimde
+  `effect.readback` uit en bewaart het exacte resultaat atomair. Succes,
+  protocolfout, herstart/replay, onopgeloste call-start en geforceerde rollback
+  zijn groen; geen route start een tweede proces. Er zijn nog nul fysieke
+  `EffectReadback`-rijen en de effectstap blijft `running`. Zie
+  `reviews/action-chain-effect-readback-execution-mc03c3c.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: een aparte readbackexecutor voert uitsluitend de eerste claim
-  uit en bewaart resultaat, fout of ambiguïteit zonder een tweede proces. Pas
-  daarna bindt `EffectReadback` de waarneming aan effect en receipt; alleen een
-  exact overeenkomende doeltoestand mag effect en dependency afronden.
+- Eerstvolgend: `EffectReadback/v1` bindt de opgeslagen providerwaarneming aan
+  exact effect, receipt, doel en verzoek. Alleen status `matches` met verse,
+  exact passende doeltoestand mag daarna `STATE_VERIFIED` schrijven en effect,
+  stap en dependency afronden.
   Onafhankelijke reviews van MC03b2b/MC03b3 en MC03c0–MC03c3b2, Telegram-B en
   een echte crash tussen effect en readback blijven afzonderlijke eindproeven.
 - Productie A: actief en niet gewijzigd.

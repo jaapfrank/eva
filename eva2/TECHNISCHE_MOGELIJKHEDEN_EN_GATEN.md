@@ -161,11 +161,13 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   `effect_verify`-read voorbereiden en die aan exact één actuele sealed
   providerrelease plus duurzame poging binden. Vlak vóór I/O kan exact één
   caller nu een duurzame call-start vastleggen en pas daarna het sealed
-  `effect.readback`-pakket ontvangen; herstart en concurrency krijgen geen
-  tweede pakket. Deadline, rollback, intrekking en corruptie zijn getest.
+  `effect.readback`-pakket ontvangen; de executor voert alleen dat eerste pakket
+  uit en bewaart readbackantwoord, protocolfout of ambiguïteit atomair. Herstart,
+  concurrency en een onopgeloste call-start krijgen geen tweede proces.
+  Deadline, rollback, intrekking en corruptie zijn getest.
   Reviews van readresultaat, readvrijgave en alle effectslices blijven open.
-  Nog ontbreken readback-provider-I/O en resultaatopslag, fysieke readback,
-  effect-/dependencyafronding en de Telegram-B-/Home Assistant-proef.
+  Nog ontbreken de omzetting naar een fysiek `EffectReadback`-contract, exacte
+  doelmatch, effect-/dependencyafronding en de Telegram-B-/Home Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
