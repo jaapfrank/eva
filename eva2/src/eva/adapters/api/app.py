@@ -295,6 +295,8 @@ class MemoryRecallRuntime(Protocol):
         self, document: ConversationMemoryDocument
     ) -> MemoryRetentionReceipt: ...
 
+    def admit_turn_audience(self, turn: ConversationTurn) -> None: ...
+
     def respond(
         self,
         turn: ConversationTurn,
@@ -440,10 +442,6 @@ def _turn_from_wire(
             )
         )
         audience = memory_audience_from_wire(payload["audience"])
-        if audience.kind != "private_person":
-            raise ValueError(
-                "Telegram group turn requires trusted connector admission"
-            )
         turn = ConversationTurn(
             tenant_id=payload["tenant_id"],
             installation_id=payload["installation_id"],
@@ -774,6 +772,7 @@ fetch('/internal/v1/dashboard/identity').then(r=>r.json()).then(data=>{const i=d
     ) -> dict[str, Any]:
         try:
             turn, recent_messages = _turn_from_wire(payload)
+            runtime.admit_turn_audience(turn)
             reply = runtime.respond(turn, recent_messages)
         except ConversationConflict as error:
             raise HTTPException(status_code=409, detail=str(error)) from error

@@ -158,6 +158,68 @@ class PostgresTelegramIngressStore:
             self._prepared_reply(thread_id),
         )
 
+    def reject_admitted(
+        self,
+        job: TelegramIngressJob,
+        *,
+        reason: str,
+        now: datetime,
+    ) -> str:
+        """Complete an admitted update that lost group consent before core work."""
+
+        if reason != "group_consent_required":
+            raise ValueError("Telegram admitted rejection reason is invalid")
+        thread_id = self._thread_id(job.message.update_id)
+        data: dict[str, JsonValue] = {
+            "principal_id": job.principal_id,
+            "reason": reason,
+            "update_id": job.message.update_id,
+        }
+        current = self._timeline.load(thread_id)
+        if current.status == "completed":
+            events = self._timeline.events(thread_id)
+            durable = events[-1].payload.get("data") if events else None
+            if (
+                events
+                and events[-1].event_type
+                == "TELEGRAM_INGRESS_REJECTED_AFTER_ADMISSION"
+                and durable == data
+            ):
+                return "already_rejected"
+            raise RuntimeError("Telegram admitted update is already completed")
+        if current.status == "needs_help" or current.revision != job.revision:
+            raise RuntimeError("Telegram admitted rejection revision differs")
+        if self._prepared_reply(thread_id) is not None:
+            raise RuntimeError("Telegram admitted update already has a reply")
+        try:
+            self._timeline.transition(
+                thread_id=thread_id,
+                expected_revision=job.revision,
+                checkpoint_id=f"{thread_id}:rejected:{job.revision + 1}",
+                operation_id=f"telegram-update:{job.message.update_id}",
+                occurred_at=now,
+                data=data,
+                event_type="TELEGRAM_INGRESS_REJECTED_AFTER_ADMISSION",
+                phase="ingress_rejected",
+                status="completed",
+                retry_count=0,
+                last_error_fingerprint=None,
+            )
+        except CheckpointConflict:
+            current = self._timeline.load(thread_id)
+            events = self._timeline.events(thread_id)
+            durable = events[-1].payload.get("data") if events else None
+            if (
+                current.status == "completed"
+                and events
+                and events[-1].event_type
+                == "TELEGRAM_INGRESS_REJECTED_AFTER_ADMISSION"
+                and durable == data
+            ):
+                return "already_rejected"
+            raise RuntimeError("Telegram admitted rejection changed concurrently") from None
+        return "rejected"
+
     def prepare_reply(
         self,
         job: TelegramIngressJob,

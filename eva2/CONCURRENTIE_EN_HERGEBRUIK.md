@@ -305,6 +305,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   weigeren groepen totdat A03c1 de vertrouwde connectoradmission levert. De
   private route blijft expliciet en ongewijzigd. 77 gerichte tests en
   onafhankelijke review zijn groen.
+- [x] Groepsgeheugen A03c1: de Telegram-worker maakt een groepsaudience alleen
+  uit de op dat moment actieve PostgreSQL-consentreferentie. De core controleert
+  diezelfde grant opnieuw vóór journal en model; dezelfde consentstore begrenst
+  Hindsight-retentie en -recall. Een admit/crash/intrekking/replay eindigt
+  duurzaam zonder core-call en laat de Telegram-offset doorlopen. 77 gerichte
+  checks, vijf echte wegwerp-PostgreSQL-16-proeven en onafhankelijke herreview
+  zijn groen. Dit is bronbewijs, geen B-deploy of echte Telegram-netwerkproef.
 - [x] Dashboard D01: gesaneerde read-only runtime-statusroute, met expliciete
   secret-nonleaktest, `no-store`, onafhankelijke review en lokale read-only
   pagina (`a395cd7`). Authenticatie en B-deploy blijven open.
@@ -332,13 +339,13 @@ langdurige verzamelaanpassing telt niet als voortgang.
   modellease; broninventaris en onafhankelijke review vonden geen resterende
   inline-secretconsumer. De feitelijke B-adoptie/start blijft afzonderlijk
   open. AgentMail en Stripe zijn latere, eigen capabilitygates.
-- [ ] Telegram-groepsgeheugen sluiten: de geverifieerde multi-accountbindings,
+- [x] Telegram-groepsgeheugen technisch sluiten: de geverifieerde multi-accountbindings,
   wederzijdse koppeling en groepsconsent zijn geïmplementeerd en gericht
   getest; admission, duurzame consentreferentie en veilige outbox-propagatie
-  zijn eveneens klaar; generieke recall weigert een groep nu fail-closed. Wat
-  nog ontbreekt is A03c1: de vertrouwde Telegram-admission en runtime-injectie
-  met end-to-end non-leakagebewijs; de echte
-  multi-account- en Telegram-groepproef blijft daarna afzonderlijk open.
+  zijn eveneens klaar. Telegram-admission, core en Hindsight gebruiken nu
+  dezelfde actuele PostgreSQL-grant en stoppen bij intrekking zonder private
+  fallback. De echte multi-account- en Telegram-groepproef blijft hieronder
+  bewust afzonderlijk open.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] Toolketen, fysieke readback en crash midden in de keten op hetzelfde

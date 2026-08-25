@@ -9,6 +9,7 @@ from typing import Protocol
 
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
+from eva.application.memory_audience import MemoryAudience
 
 
 _PRINCIPAL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
@@ -108,7 +109,11 @@ class TelegramProviderPort(Protocol):
 
 class TelegramCorePort(Protocol):
     def respond(
-        self, message: TelegramInboundMessage, *, principal_id: str
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
     ) -> TelegramCoreReply: ...
 
 
@@ -120,6 +125,10 @@ class TelegramIngressStorePort(Protocol):
     def admit(
         self, message: TelegramInboundMessage, *, principal_id: str
     ) -> TelegramIngressJob | None: ...
+
+    def reject_admitted(
+        self, job: TelegramIngressJob, *, reason: str, now: datetime
+    ) -> str: ...
 
     def prepare_reply(
         self, job: TelegramIngressJob, reply: TelegramCoreReply, *, now: datetime
@@ -190,6 +199,7 @@ class TelegramIngressWorker:
                 principal_id = f"pairing:{message.sender_id}"
                 reply = self._local_reply(message, text)
             else:
+                audience = MemoryAudience.private_person(principal_id=principal_id)
                 match = _LINK_CONFIRM.fullmatch(message.text.strip())
                 reply = (
                     None
@@ -204,23 +214,33 @@ class TelegramIngressWorker:
                         ),
                     )
                 )
-                if (
-                    reply is None
-                    and message.chat_id.startswith("-")
-                    and (
-                        self._group_consent is None
-                        or not self._group_consent_permits(
-                            principal_id=principal_id, group_chat_id=message.chat_id
-                        )
-                    )
-                ):
-                    self._store.reject(message, reason="group_consent_required")
-                    continue
             job = self._store.admit(message, principal_id=principal_id)
             if job is None:
                 continue
             if job.reply is None:
                 try:
+                    if reply is None and message.chat_id.startswith("-"):
+                        consent_ref = (
+                            None
+                            if self._group_consent is None
+                            else self._group_consent.active_reference(
+                                principal_id=principal_id,
+                                group_chat_id=message.chat_id,
+                                now=self._now(),
+                            )
+                        )
+                        if consent_ref is None:
+                            self._store.reject_admitted(
+                                job,
+                                reason="group_consent_required",
+                                now=self._now(),
+                            )
+                            continue
+                        audience = MemoryAudience.telegram_group(
+                            principal_id=principal_id,
+                            group_chat_id=message.chat_id,
+                            consent_ref=consent_ref,
+                        )
                     reply = (
                         reply
                         if reply is not None
@@ -231,7 +251,11 @@ class TelegramIngressWorker:
                     reply = (
                         reply
                         if reply is not None
-                        else self._core.respond(message, principal_id=principal_id)
+                        else self._core.respond(
+                            message,
+                            principal_id=principal_id,
+                            audience=audience,
+                        )
                     )
                 except Exception as error:
                     self._store.fail_processing(job, error, now=self._now())
@@ -276,13 +300,6 @@ class TelegramIngressWorker:
             now=self._now(),
         )
         return None if text is None else self._local_reply(message, text)
-
-    def _group_consent_permits(self, *, principal_id: str, group_chat_id: str) -> bool:
-        assert self._group_consent is not None
-        return self._group_consent.permits(
-            principal_id=principal_id, group_chat_id=group_chat_id, now=self._now()
-        )
-
 
 __all__ = [
     "TelegramCorePort",

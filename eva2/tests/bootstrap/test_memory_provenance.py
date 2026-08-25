@@ -229,3 +229,51 @@ def test_conversation_rejects_a_cross_installation_scope_before_model_work() -> 
 
     with pytest.raises(ValueError, match="crossed its runtime scope"):
         runtime.respond(turn)
+
+
+def test_group_turn_revalidates_exact_consent_before_journal_or_model() -> None:
+    reference = TelegramGroupConsentReference(
+        principal_id="person:1",
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:current",
+    )
+    turn = ConversationTurn(
+        tenant_id="tenant:1",
+        installation_id="installation:1",
+        principal_id="person:1",
+        conversation_id="telegram:-100123",
+        message_id="telegram:-100123:message:8",
+        text="Dit is voor de groep.",
+        occurred_at="2026-08-24T12:00:00Z",
+        audience=MemoryAudience.telegram_group(
+            principal_id="person:1",
+            group_chat_id="-100123",
+            consent_ref=reference,
+        ),
+    )
+
+    class Consent:
+        active = reference
+
+        def active_reference(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
+            assert (principal_id, group_chat_id) == ("person:1", "-100123")
+            assert now.tzinfo is not None
+            return self.active
+
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._runtime_tenant_id = "tenant:1"  # type: ignore[attr-defined]
+    runtime._runtime_installation_id = "installation:1"  # type: ignore[attr-defined]
+    runtime._group_consent = Consent()  # type: ignore[attr-defined]
+    runtime._journal = lambda _turn: pytest.fail("journal must not be opened")  # type: ignore[attr-defined,method-assign]
+
+    Consent.active = TelegramGroupConsentReference(
+        principal_id="person:1",
+        group_chat_id="-100123",
+        operation_id="telegram-group-consent:replaced",
+    )
+    with pytest.raises(ValueError, match="not active and exact"):
+        runtime.respond(turn)
+
+    Consent.active = None
+    with pytest.raises(ValueError, match="not active and exact"):
+        runtime.respond(turn)

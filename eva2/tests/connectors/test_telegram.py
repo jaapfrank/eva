@@ -10,6 +10,7 @@ from eva.adapters.connectors.telegram import (
     TelegramProactiveDelivery,
 )
 from eva.application.free_will import ProactiveExpressionClaim
+from eva.application.memory_audience import MemoryAudience
 
 
 def test_outbound_telegram_delivery_returns_provider_receipt() -> None:
@@ -129,7 +130,11 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
             installation_id="home",
             timeout_seconds=2,
         )
-        reply = core.respond(updates[0], principal_id="person:jaap")
+        reply = core.respond(
+            updates[0],
+            principal_id="person:jaap",
+            audience=MemoryAudience.private_person(principal_id="person:jaap"),
+        )
         assert reply.text == "Hoi terug."
         assert captured[0][1] == {
             "allowed_updates": ["message"],

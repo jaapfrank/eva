@@ -10,6 +10,7 @@ from eva.application.telegram_ingress import (
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
 )
+from eva.application.memory_audience import TelegramGroupConsentReference
 
 
 NOW = datetime(2026, 8, 24, 12, 0, tzinfo=UTC)
@@ -39,7 +40,7 @@ def test_worker_binds_each_sender_to_its_own_principal_and_rejects_unknown() -> 
             return f"telegram:{message.chat_id}:900{message.update_id}"
 
     class Core:
-        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
             calls.append((message.update_id, principal_id))
             text = f"Dag {principal_id}"
             import hashlib
@@ -138,7 +139,7 @@ def test_pairing_commands_bypass_core_but_use_the_normal_delivery_ledger() -> No
             return f"telegram:{message.chat_id}:{message.message_id}"
 
     class Core:
-        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
             calls.append(("core", message.update_id))
             import hashlib
 
@@ -220,6 +221,7 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
         22, "-100123", 122, 101, NOW, "Onthoud dit voor de groep"
     )
     calls: list[tuple[str, int | str]] = []
+    audiences = []
 
     class Provider:
         def poll(self, *, offset):  # type: ignore[no-untyped-def]
@@ -230,8 +232,9 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
             return f"telegram:{message.chat_id}:{message.message_id}"
 
     class Core:
-        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
             calls.append(("core", message.update_id))
+            audiences.append(audience)
             import hashlib
 
             return TelegramCoreReply(
@@ -274,9 +277,11 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
     class ConsentStore:
         def __init__(self):
             self.active: tuple[str, str] | None = None
+            self.operation_id: str | None = None
 
         def grant(self, consent, *, operation_id):  # type: ignore[no-untyped-def]
             self.active = (consent.principal_id, consent.group_chat_id)
+            self.operation_id = operation_id
             return consent
 
         def revoke(  # type: ignore[no-untyped-def]
@@ -285,10 +290,21 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
             if self.active != (principal_id, group_chat_id):
                 return False
             self.active = None
+            self.operation_id = None
             return True
 
         def permits(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
             return self.active == (principal_id, group_chat_id)
+
+        def active_reference(self, *, principal_id, group_chat_id, now):  # type: ignore[no-untyped-def]
+            if self.active != (principal_id, group_chat_id):
+                return None
+            assert self.operation_id is not None
+            return TelegramGroupConsentReference(
+                principal_id=principal_id,
+                group_chat_id=group_chat_id,
+                operation_id=self.operation_id,
+            )
 
     from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 
@@ -305,6 +321,10 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
     assert worker.run_once() == "processed"
     assert ("core", 21) not in calls
     assert ("core", 22) in calls
+    assert len(audiences) == 1
+    assert audiences[0].kind == "telegram_group"
+    assert audiences[0].group_chat_id == "-100123"
+    assert audiences[0].consent_ref.operation_id == "telegram-group-consent:21"
 
 
 def test_group_message_without_consent_never_reaches_core() -> None:
@@ -319,7 +339,7 @@ def test_group_message_without_consent_never_reaches_core() -> None:
             raise AssertionError((message, text))
 
     class Core:
-        def respond(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
             raise AssertionError((message, principal_id))
 
     class Store:
@@ -327,6 +347,12 @@ def test_group_message_without_consent_never_reaches_core() -> None:
             return 0
 
         def reject(self, message, *, reason):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, reason))
+
+        def admit(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(message, principal_id, "admitted", 1)
+
+        def reject_admitted(self, job, *, reason, now):  # type: ignore[no-untyped-def]
             rejected.append(reason)
             return "rejected"
 

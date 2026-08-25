@@ -212,19 +212,25 @@ class LivingCoreTurnHttpAdapter:
         self._timeout = timeout_seconds
 
     def respond(
-        self, message: TelegramInboundMessage, *, principal_id: str
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
     ) -> TelegramCoreReply:
-        if message.chat_id.startswith("-"):
-            raise RuntimeError(
-                "Telegram group turn requires trusted connector admission"
-            )
+        if audience.principal_id != principal_id:
+            raise ValueError("Telegram turn audience principal differs")
+        if message.chat_id.startswith("-") != (audience.kind == "telegram_group"):
+            raise ValueError("Telegram turn audience differs from chat")
+        if audience.kind == "telegram_group" and (
+            audience.group_chat_id != message.chat_id
+        ):
+            raise ValueError("Telegram group audience differs from chat")
         conversation_id = f"telegram:{message.chat_id}"
         message_id = f"telegram:{message.chat_id}:{message.message_id}"
         payload = json.dumps(
             {
-                "audience": memory_audience_to_wire(
-                    MemoryAudience.private_person(principal_id=principal_id)
-                ),
+                "audience": memory_audience_to_wire(audience),
                 "conversation_id": conversation_id,
                 "installation_id": self._installation_id,
                 "message_id": message_id,

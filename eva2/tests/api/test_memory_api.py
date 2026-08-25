@@ -23,6 +23,7 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
+from eva.application.memory_audience import MemoryAudience
 from eva.application.mail import MailInboxPage, MailMessage, MailMessageSummary
 from eva.application.personal_interests import (
     PersonalProductListing,
@@ -141,6 +142,10 @@ class _Runtime:
             document_id=document.document_id,
             content_sha256="a" * 64,
         )
+
+    def admit_turn_audience(self, turn: ConversationTurn) -> None:
+        if turn.audience.kind != "private_person":
+            raise ValueError("Telegram group turn requires active consent")
 
     def respond(self, turn: ConversationTurn, recent_messages=()) -> GroundedReply:  # type: ignore[no-untyped-def]
         self.turns.append(turn)
@@ -1154,7 +1159,51 @@ def test_generic_turn_endpoint_rejects_untrusted_group_audience() -> None:
     )
 
     assert response.status_code == 422
-    assert response.json()["detail"] == "conversation turn is invalid"
+    assert response.json()["detail"] == (
+        "Telegram group turn requires active consent"
+    )
+
+
+def test_trusted_group_turn_propagates_exact_audience_to_runtime() -> None:
+    class TrustedGroupRuntime(_Runtime):
+        def __init__(self) -> None:
+            super().__init__()
+            self.admitted: list[MemoryAudience] = []
+
+        def admit_turn_audience(self, turn: ConversationTurn) -> None:
+            self.admitted.append(turn.audience)
+
+    runtime = TrustedGroupRuntime()
+    client = TestClient(create_app(runtime))
+    response = client.post(
+        "/internal/v1/turns/respond",
+        json={
+            "audience": {
+                "audience_id": "telegram-group:-100123",
+                "consent_group_chat_id": "-100123",
+                "consent_operation_id": "telegram-group-consent:api-test",
+                "consent_principal_id": PRINCIPAL,
+                "group_chat_id": "-100123",
+                "kind": "telegram_group",
+                "principal_id": PRINCIPAL,
+            },
+            "conversation_id": "telegram:-100123",
+            "installation_id": INSTALLATION,
+            "message_id": "telegram:-100123:5005",
+            "occurred_at": NOW,
+            "principal_id": PRINCIPAL,
+            "tenant_id": TENANT,
+            "text": "Onthoud dit voor de groep.",
+        },
+    )
+
+    assert response.status_code == 200
+    assert runtime.admitted == [runtime.turns[0].audience]
+    assert runtime.turns[0].audience.kind == "telegram_group"
+    assert runtime.turns[0].audience.consent_ref is not None
+    assert runtime.turns[0].audience.consent_ref.operation_id == (
+        "telegram-group-consent:api-test"
+    )
 
 
 def test_channel_neutral_turn_accepts_only_a_complete_bound_photo_region() -> None:

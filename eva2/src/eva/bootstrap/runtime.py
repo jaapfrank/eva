@@ -58,6 +58,9 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
+from eva.adapters.postgres.telegram_group_consent import (
+    PostgresTelegramGroupConsentStore,
+)
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
 from eva.adapters.postgres.commerce import (
@@ -99,6 +102,8 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
+from eva.application.memory_audience import MemoryAudience
+from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.mail import MailInboxPage, MailMessage
@@ -463,6 +468,7 @@ class PostgresHindsightMemoryRuntime:
         commerce_installation_id: str | None = None,
         runtime_tenant_id: str | None = None,
         runtime_installation_id: str | None = None,
+        group_consent: TelegramGroupConsentStorePort | None = None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -486,6 +492,7 @@ class PostgresHindsightMemoryRuntime:
             raise ValueError("conversation runtime scope must be complete")
         self._runtime_tenant_id = runtime_tenant_id
         self._runtime_installation_id = runtime_installation_id
+        self._group_consent = group_consent
 
     def admit_durable_goal(
         self,
@@ -609,19 +616,34 @@ class PostgresHindsightMemoryRuntime:
     def retain(self, document: ConversationMemoryDocument) -> MemoryRetentionReceipt:
         return self._memory.retain_conversation(document)
 
+    def admit_turn_audience(self, turn: ConversationTurn) -> None:
+        """Revalidate a connector's group grant at the core boundary."""
+
+        self._require_runtime_scope(turn.tenant_id, turn.installation_id)
+        audience: MemoryAudience = turn.audience
+        if audience.kind == "private_person":
+            return
+        if self._group_consent is None:
+            raise ValueError("Telegram group turn has no consent verifier")
+        assert audience.group_chat_id is not None
+        assert audience.consent_ref is not None
+        try:
+            active = self._group_consent.active_reference(
+                principal_id=turn.principal_id,
+                group_chat_id=audience.group_chat_id,
+                now=datetime.now(tz=UTC).replace(microsecond=0),
+            )
+        except Exception as error:
+            raise ValueError("Telegram group turn consent could not be verified") from error
+        if active != audience.consent_ref:
+            raise ValueError("Telegram group turn consent is not active and exact")
+
     def respond(
         self,
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
     ) -> GroundedReply:
-        if (
-            self._runtime_tenant_id is not None
-            and (
-                turn.tenant_id != self._runtime_tenant_id
-                or turn.installation_id != self._runtime_installation_id
-            )
-        ):
-            raise ValueError("conversation turn crossed its runtime scope")
+        self.admit_turn_audience(turn)
         journal = self._journal(turn)
         journal.admit(turn)
         committed = journal.committed_reply(turn)
@@ -1502,6 +1524,16 @@ class PostgresHindsightMemoryRuntime:
 def create_runtime_app() -> FastAPI:
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(settings.database_dsn, pool_pre_ping=True)
+    if (
+        settings.background_tenant_id is None
+        or settings.background_installation_id is None
+    ):
+        raise RuntimeError("Eva runtime tenant and installation scope are required")
+    group_consent = PostgresTelegramGroupConsentStore(
+        engine,
+        tenant_id=settings.background_tenant_id,
+        installation_id=settings.background_installation_id,
+    )
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -1509,7 +1541,8 @@ def create_runtime_app() -> FastAPI:
             recall_budget=settings.hindsight_recall_budget,  # type: ignore[arg-type]
             recall_max_tokens=settings.hindsight_recall_max_tokens,
             recall_node_budget=settings.hindsight_recall_node_budget,
-        )
+        ),
+        active_group_consent_resolver=group_consent,
     )
     identity_pack_path = os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip()
     identity_pack = load_current_identity_pack(
@@ -1809,6 +1842,7 @@ def create_runtime_app() -> FastAPI:
             commerce_installation_id=settings.background_installation_id,
             runtime_tenant_id=settings.background_tenant_id,
             runtime_installation_id=settings.background_installation_id,
+            group_consent=group_consent,
         )
     )
 

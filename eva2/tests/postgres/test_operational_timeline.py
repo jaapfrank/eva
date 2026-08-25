@@ -50,6 +50,7 @@ from eva.application.research import ResearchArtifact, ResearchSource
 from eva.application.telegram_ingress import (
     TelegramCoreReply,
     TelegramInboundMessage,
+    TelegramIngressWorker,
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
 )
@@ -59,7 +60,10 @@ from eva.application.telegram_pairing import (
     derive_pairing_code,
     pairing_expiry,
 )
-from eva.application.telegram_group_consent import TelegramGroupConsent
+from eva.application.telegram_group_consent import (
+    TelegramGroupConsent,
+    TelegramGroupConsentResponder,
+)
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -1194,3 +1198,64 @@ def test_telegram_group_without_consent_is_durably_rejected(
     event = store._timeline.events("telegram-inbound:99001")[0]  # noqa: SLF001
     assert event.event_type == "TELEGRAM_INGRESS_REJECTED"
     assert event.payload["data"]["reason"] == "group_consent_required"
+
+
+def test_admitted_group_replay_after_consent_revoke_completes_without_core(
+    timeline_engine: Engine,
+) -> None:
+    message = TelegramInboundMessage(
+        99002, "-100126", 72, 101, NOW, "Onthoud dit voor de groep"
+    )
+    ingress = PostgresTelegramIngressStore(
+        timeline_engine,
+        tenant_id="telegram-group-replay-tenant",
+        installation_id="telegram-group-replay-home",
+    )
+    consent = PostgresTelegramGroupConsentStore(
+        timeline_engine,
+        tenant_id="telegram-group-replay-tenant",
+        installation_id="telegram-group-replay-home",
+    )
+    grant = TelegramGroupConsent(
+        "-100126", "person:jaap", NOW, NOW + timedelta(days=7)
+    )
+    consent.grant(grant, operation_id="telegram-group-consent:99001")
+
+    assert ingress.admit(message, principal_id="person:jaap") is not None
+    assert consent.revoke(
+        principal_id="person:jaap",
+        group_chat_id="-100126",
+        operation_id="telegram-group-consent:99002",
+        now=NOW + timedelta(seconds=1),
+    )
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            assert offset == 99002
+            return (message,)
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, text))
+
+    class Core:
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, principal_id, audience))
+
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        ingress,
+        TelegramPrincipalBindings(
+            (TelegramPrincipalBinding(101, "person:jaap", ("-100126",)),)
+        ),
+        group_consent=TelegramGroupConsentResponder(consent),
+    )
+
+    assert worker.run_once() == "processed"
+    assert ingress.next_offset() == 99003
+    events = ingress._timeline.events("telegram-inbound:99002")  # noqa: SLF001
+    assert [event.event_type for event in events] == [
+        "TELEGRAM_INGRESS_ADMITTED",
+        "TELEGRAM_INGRESS_REJECTED_AFTER_ADMISSION",
+    ]
+    assert events[-1].payload["data"]["reason"] == "group_consent_required"
