@@ -82,6 +82,8 @@ def project_action_chain_read_result(
     )
     if operation is None:
         raise ValueError("read operation is absent from connector manifest")
+    if isinstance(result, ConnectorInvokeSuccess):
+        result.validate_against_request(invoke, manifest)
 
     state, response_sha256, read_ok = _classify_result(
         attempt=attempt,

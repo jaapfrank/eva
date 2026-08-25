@@ -323,6 +323,26 @@ def test_provider_result_projection_binds_success_failure_and_evidence(
     assert rate_projection.attempt.state == "rate_limited"
     assert rate_projection.observation is None
 
+    forbidden_ambiguous = success.model_dump(mode="json")
+    forbidden_ambiguous["result"]["outcome"] = {
+        "kind": "ambiguous_transport",
+        "phase": "during_send",
+        "safe_message": "read response became uncertain",
+        "evidence_sha256": "4" * 64,
+    }
+    with pytest.raises(ValueError, match="read-only connector result"):
+        project_action_chain_read_result(
+            tenant_id=scope.tenant_id,
+            attempt=claimed.attempt,
+            initialize=claimed.initialize,
+            invoke=claimed.invoke,
+            manifest=claimed.connector_manifest,
+            result=ConnectorInvokeSuccess.model_validate(forbidden_ambiguous),
+            observed_at=NOW + timedelta(seconds=3),
+            recorded_at=NOW + timedelta(seconds=4),
+            retention_until=datetime(2026, 9, 19, 12, 0, tzinfo=UTC),
+        )
+
     protocol_failure = classify_connector_protocol_failure(
         request_id=claimed.invoke.id,
         request_sha256=canonical_sha256(claimed.invoke),
