@@ -27,9 +27,8 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
   Een tweede providerloze proef gebruikt voor reeds toegelaten duurzame taken
   rechtstreeks de publieke Pydantic AI-runner. Getypeerde output, usage,
   cancellation en gesaneerde foutcategorieën zijn daarmee na een eerste
-  `NO-GO` in 23 extra tests lokaal groen. Die correctie wacht nog op
-  onafhankelijke herreview; PostgreSQL en een productieprovider zijn niet
-  gekoppeld.
+  `NO-GO` in 23 extra tests groen. De onafhankelijke herreview van `b7e9af7`
+  is groen; PostgreSQL en een productieprovider zijn niet gekoppeld.
 - `plans`, `plan_steps`, `attention_items` en de operationele tijdlijn vormen
   al een duurzame taakgraaf met leases en crashherstel. Zij bewijzen nog geen
   multi-workerdelegatie.
@@ -49,6 +48,8 @@ contracthash toe. De proef staat in
 `experiments/harness-subagents-v1/`; de
 onafhankelijke `GO` voor exact `55cf7cc` staat in
 `reviews/harness-subagent-engine-55cf7cc.md`.
+De begrensde directe-workerreview staat in
+`reviews/pydantic-tool-free-child-candidate-b7e9af7.md`.
 
 Harness' publieke `delegate_task` retourneert alleen tekst en is daarom niet de
 duurzame workerinterface. Eva bewaart uitsluitend haar Pydantic-contract,

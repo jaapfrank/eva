@@ -37,8 +37,9 @@ contractcode gebruikt Eva's bestaande Pydantic-basis onder `eva.contracts`;
 er is geen eigen serializersysteem toegevoegd.
 
 Dit is nog geen productpromotie. De eerste review vond echte fouten in deadline,
-kosten, usage en pakketplaatsing; bovenstaande 23 tests zijn de lokale
-correctie en wachten op onafhankelijke herreview. PostgreSQL-attention/handoff,
+kosten, usage en pakketplaatsing; bovenstaande 23 tests zijn de gecorrigeerde
+route. De onafhankelijke herreview van checkpoint `b7e9af7` is groen.
+PostgreSQL-attention/handoff,
 de eenmalige `call_started`-fence, cumulatieve crashbudgetten, echte
 model-/prijsreleaseauthority, processandbox, Kanbanprojectie en een echte
 provider-run staan open. Pydantic AI telt voltooide modelantwoorden, niet
@@ -50,3 +51,4 @@ niet en gebruikt geen secret of productdatabase; alleen de fixture draait en er
 is geen echte providerverbinding gemaakt. De prijsreserve is dus alleen hard
 tegen het gedeclareerde proefprofiel; een echte providerproef moet nog bewijzen
 dat de releaseauthority de werkelijke providerprijs juist bindt.
+Zie `../../reviews/pydantic-tool-free-child-candidate-b7e9af7.md`.

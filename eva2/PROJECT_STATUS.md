@@ -117,10 +117,12 @@ Eva's unieke hoofdfeature.
   als nul en verkeerde pakketplaatsing. De lokale correctie bindt nu een
   verzegeld model-/worker-/prijsprofiel, absolute deadline, provider-outputlimiet,
   contracthash en uitgezette telemetry. 23 nieuwe tests plus de bestaande
-  22 Harnesschecks zijn **45/45 groen**. Dit wacht op herreview en is nog geen
-  WB01/WB02: attentiontype, version-matched migratie/releaseauthority,
+  22 Harnesschecks zijn **45/45 groen**. De onafhankelijke herreview van
+  `b7e9af7` is groen. Dit is nog geen WB01/WB02: attentiontype,
+  version-matched migratie/releaseauthority,
   eenmalige PostgreSQL-callfence, echte provider en crashbewijs staan open; B
-  is niet gewijzigd.
+  is niet gewijzigd; zie
+  `reviews/pydantic-tool-free-child-candidate-b7e9af7.md`.
 
 - Browser-/workflowbesluit DF03/DF04: Microsoft Playwright MCP `0.0.79` krijgt
   de eerste productgerichte browsersidecarproef; Harness PlaywrightBrowser

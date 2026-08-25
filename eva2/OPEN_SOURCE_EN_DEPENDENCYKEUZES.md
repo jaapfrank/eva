@@ -203,8 +203,8 @@ lokale correctie voegt bovendien contracthashes, provider-outputlimiet en
 uitgeschakelde telemetry toe. 23 nieuwe tests houden de child privé,
 context-/tool-/workspacevrij en zonder child-netwerktools; samen met Harness is
 de map 45/45 groen. De vaste modelproviderverbinding is geen childtool.
-PostgreSQL, transportattemptreceipts, een echte provider en onafhankelijke
-herreview zijn nog niet bewezen.
+PostgreSQL, transportattemptreceipts en een echte provider zijn nog niet
+bewezen. De onafhankelijke API-kandidaatherreview op `b7e9af7` is groen.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -245,7 +245,7 @@ een concreet gat laat zien.
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
 | Pydantic AI `2.32.1` huidige lock / `2.34.0` proefkandidaat | `PROEF` | MIT, 19.500 sterren, 2.810 commits, actuele signed release en officiële realtime-, UI-, MCP- en durable-executionroutes | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
-| Pydantic AI `2.34.0` + Harness `0.24.0` | `GO Harness-spike / HERREVIEW Pydantic-worker` | Harness voor interactieve fork/join is onafhankelijk groen. De publieke Pydantic AI-run voor reeds gekozen duurzaam werk is na een terechte `NO-GO` lokaal hersteld; de exacte 42-package-kandidaat staat providerloos op 45/45 tests | Directe worker wacht op herreview. PostgreSQL-handoff, schemarelease, transportattemptfence, processandbox, harde kill, echte model-/prijsrelease, provider, crashresume en Kanban staan open |
+| Pydantic AI `2.34.0` + Harness `0.24.0` | `GO: twee API-kandidaten` | Harness voor interactieve fork/join is onafhankelijk groen. De publieke Pydantic AI-run voor reeds gekozen duurzaam werk is na een terechte `NO-GO` hersteld; de exacte 42-package-kandidaat staat op `b7e9af7` providerloos 45/45 en onafhankelijk groen | Dit is geen product-GO. PostgreSQL-handoff, schemarelease, transportattemptfence, processandbox, harde kill, echte model-/prijsrelease, provider, crashresume en Kanban staan open |
 | DBOS Transact `2.31.0` | `NO-GO stock / GO rebaseproef` | MIT, actuele officiële release met de belangrijke duplicate-loserfix #823 en nul nieuwe basispackages | Stock behoudt onbegrensde transactieretry en kan na verloren commitbevestiging de body herhalen; Eva's smalle patch moet op 2.31 worden gerebased |
 | Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
 | Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
@@ -358,8 +358,8 @@ een lijst GitHub-links.
   vooraf getelde inputtokens, begrensde calls en een coöperatieve async-time-out.
   De gesloten 42-package-lock, 22 tests, Ruff, `pip check` en onafhankelijke
   review zijn groen. De publieke Pydantic AI-worker voegt 23 groene checks
-  voor gesloten output, eigen usage, cancellation en foutredactie toe, maar
-  wacht nog op onafhankelijke review. Productpromotie blijft open totdat Eva
+  voor gesloten output, eigen usage, cancellation en foutredactie toe; de
+  onafhankelijke review op `b7e9af7` is groen. Productpromotie blijft open totdat Eva
   een version-matched schema, duurzame PostgreSQL-handoff en
   procescrashherstel heeft; harde processkill, Pydantic Realtime en Playwright
   MCP zijn aparte proeven.
