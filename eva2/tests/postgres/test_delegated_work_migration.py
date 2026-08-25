@@ -11,6 +11,7 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import make_url
 
+from eva.adapters.postgres.current_catalog import metadata
 from eva.operations.install_schema import install_schema
 
 
@@ -76,19 +77,12 @@ def _insert_attention(
         "created_at": now,
         "updated_at": now,
     }
-    columns = ",".join(values)
-    parameters = ",".join(f":{name}" for name in values)
+    attention_items = metadata.tables["eva_core.attention_items"]
     with engine.begin() as connection:
         connection.exec_driver_sql(
             "ALTER TABLE eva_core.attention_items DISABLE TRIGGER ALL"
         )
-        connection.execute(
-            sa.text(
-                f"INSERT INTO eva_core.attention_items ({columns}) "  # noqa: S608
-                f"VALUES ({parameters})"
-            ),
-            values,
-        )
+        connection.execute(attention_items.insert().values(**values))
         connection.exec_driver_sql(
             "ALTER TABLE eva_core.attention_items ENABLE TRIGGER ALL"
         )
