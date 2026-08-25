@@ -37,7 +37,6 @@ from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelAttempt, ModelDecision, ValidatedPlan
 
-
 plans = metadata.tables["eva_core.plans"]
 plan_steps = metadata.tables["eva_core.plan_steps"]
 attention_items = metadata.tables["eva_core.attention_items"]
@@ -856,6 +855,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_RATE_LIMITED",
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
             "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
+            "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
         }
     )
     allowed_statuses = (

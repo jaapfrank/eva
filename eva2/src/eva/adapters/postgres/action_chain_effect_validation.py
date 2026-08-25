@@ -337,7 +337,7 @@ def _validate_authorized_effect(
                 "contract": "ConnectorEnvelope/v1",
                 "installation_id": str(scope.installation_id),
                 "tenant_id": str(scope.tenant_id),
-                "request_id": str(uuid5(expected_attempt_id, "connector-invoke:v1")),
+                "request_id": intent.idempotency_key,
                 "correlation_id": str(uuid5(expected_attempt_id, "correlation:v1")),
                 "episode_id": plan.episode_id,
                 "generation": plan.generation,
@@ -526,13 +526,45 @@ def _validate_authorized_effect(
             operational_checkpoints.c.thread_id == operation_id,
         )
     ).one()
-    if (
-        latest.event_type != "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
-        or current_event_data != expected_event_data
-        or checkpoint.phase != "action_chain_effect_dispatch_authorized"
-        or checkpoint.status != "waiting_for_proof"
-        or checkpoint.updated_at != attempt_row.created_at
-    ):
+    if latest.event_type == "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED":
+        valid_timeline = (
+            current_event_data == expected_event_data
+            and checkpoint.phase == "action_chain_effect_dispatch_authorized"
+            and checkpoint.status == "waiting_for_proof"
+            and checkpoint.updated_at == attempt_row.created_at
+        )
+    elif latest.event_type == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED":
+        call_data = dict(current_event_data)
+        started_at = call_data.pop("provider_call_started_at", None)
+        previous = connection.execute(
+            sa.select(operational_events).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.thread_id == operation_id,
+                operational_events.c.sequence == int(latest.sequence) - 1,
+            )
+        ).one_or_none()
+        try:
+            started = _parse_timestamp(started_at)
+        except (TypeError, ValueError):
+            started = None
+        valid_timeline = (
+            call_data == expected_event_data
+            and started is not None
+            and started == latest.occurred_at
+            and attempt_row.created_at <= started < _parse_timestamp(intent.deadline)
+            and checkpoint.phase == "action_chain_effect_provider_call_started"
+            and checkpoint.status == "waiting_for_proof"
+            and checkpoint.updated_at == started
+            and previous is not None
+            and previous.event_type
+            == "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
+            and previous.occurred_at == attempt_row.created_at
+            and previous.payload.get("data") == expected_event_data
+        )
+    else:
+        valid_timeline = False
+    if not valid_timeline:
         raise corrupt("authorized effect timeline binding differs")
 
 

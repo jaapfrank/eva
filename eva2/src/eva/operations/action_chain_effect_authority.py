@@ -116,7 +116,11 @@ def build_action_chain_effect_authority(
             "contract": "ConnectorEnvelope/v1",
             "installation_id": str(scope.installation_id),
             "tenant_id": str(scope.tenant_id),
-            "request_id": str(uuid5(attempt_id, "connector-invoke:v1")),
+            # The connector protocol exposes request_id to every provider.  For
+            # effects it is therefore also the exact durable idempotency key;
+            # no provider-specific payload field or hidden side channel is
+            # needed to prevent duplicate external effects.
+            "request_id": intent.idempotency_key,
             "correlation_id": str(uuid5(attempt_id, "correlation:v1")),
             "episode_id": chain.plan.episode_id,
             "generation": chain.plan.generation,
