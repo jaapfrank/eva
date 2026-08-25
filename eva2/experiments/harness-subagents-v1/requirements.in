@@ -1,0 +1,14 @@
+# Isolated DF03a candidate roots. This is not Eva's production dependency authority.
+# Keep the current product roots fixed while replacing only the Pydantic AI pin
+# and adding Harness, so the dependency delta is measurable rather than hidden.
+alembic==1.19.1
+cryptography==46.0.5
+dbos==2.30.0
+fastapi==0.141.1
+psycopg[binary]==3.3.4
+pydantic==2.12.5
+pydantic-ai-slim==2.34.0
+pydantic-ai-harness==0.24.0
+setuptools==84.0.0
+SQLAlchemy==2.0.52
+uvicorn==0.41.0
