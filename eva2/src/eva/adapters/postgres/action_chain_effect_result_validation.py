@@ -9,6 +9,9 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 
 from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.action_chain_effect_readback_validation import (
+    validate_action_chain_effect_readback_preparation,
+)
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_checkpoints,
@@ -107,6 +110,8 @@ def validate_action_chain_effect_history(
     scope: TimelineScope,
     *,
     operation_id: UUID,
+    plan_id: UUID,
+    plan_step_id: UUID,
     state: ReconstructedActionChainEffectState,
     plan: ValidatedPlan,
     action_arguments: dict[str, object],
@@ -160,6 +165,15 @@ def validate_action_chain_effect_history(
             checkpoint=checkpoint,
             retention_policy_id=retention_policy_id,
             retention_until=retention_until,
+            corrupt=corrupt,
+        )
+        validate_action_chain_effect_readback_preparation(
+            connection,
+            scope,
+            effect_row=intent_row,
+            plan_id=plan_id,
+            plan_step_id=plan_step_id,
+            policy_sha256=plan.policy_sha256,
             corrupt=corrupt,
         )
         return

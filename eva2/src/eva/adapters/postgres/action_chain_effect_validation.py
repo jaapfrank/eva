@@ -529,6 +529,8 @@ def _validate_authorized_effect(
         connection,
         scope,
         operation_id=action_chain_step_operation_id(plan, step.step_id),
+        plan_id=plan_row.plan_id,
+        plan_step_id=intent_row.plan_step_id,
         state=state,
         plan=plan,
         action_arguments=action_arguments,
