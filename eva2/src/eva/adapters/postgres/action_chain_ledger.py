@@ -872,6 +872,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_INTENT_PREPARED",
             "ACTION_CHAIN_READ_DEPENDENCIES_RELEASED",
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
+            "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED",
         }
         if root
         else {
@@ -888,12 +889,13 @@ def _current_timeline_data(
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
             "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
             "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED", "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED", "ACTION_CHAIN_EFFECT_REJECTED", "ACTION_CHAIN_EFFECT_AMBIGUOUS", "ACTION_CHAIN_EFFECT_RATE_LIMITED", "ACTION_CHAIN_EFFECT_BLOCKED",
+            "STATE_VERIFIED",
         }
     )
     allowed_statuses = (
         {"active", "needs_help"}
         if root
-        else {"active", "failed", "needs_help", "waiting_for_proof"}
+        else {"active", "completed", "failed", "needs_help", "waiting_for_proof"}
     )
     expected_checkpoint = {
         "checkpoint_id": str(checkpoint.checkpoint_id),
