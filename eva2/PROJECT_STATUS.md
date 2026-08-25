@@ -91,6 +91,24 @@ Eva's unieke hoofdfeature.
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
 
+- Dependencytransportwaarneming DF02-voorwerk: in een afgeschermde tijdelijke
+  Pythonomgeving zijn `pydantic-ai-slim[openai]==2.32.2`, `openai==3.3.1` en
+  `mcp==2.1.1` eenmalig geïnstalleerd. Een lokale proefserver zag een
+  Eva-achtig verzoek en gaf synthetische usagevelden terug die Pydantic/OpenAI
+  behield; dit was geen token- of providerkostenmeting. De gebruikte Pydantic
+  `Agent`-loop is geen productiekandidaat. De MCP-SDK doorliep lokaal de
+  initialize/list/call-route. Er is nog geen commitgebonden proefscript,
+  artifacthash of onafhankelijke replay. De onafhankelijke audit houdt beide
+  daarom op `PROEF`: exacte locks/wheels, PyPI/Git-provenance, nul SDK- én
+  frameworkretries, atomair leasepaar, byte-/deadlinegrenzen,
+  kwaadaardige-servertests en een echte providerproef staan open. De
+  wegwerpinstallatie week bovendien af van Eva's huidige Pydanticpins en trok
+  meerdere nieuwe transitieve packages binnen. A en B zijn niet benaderd of
+  gewijzigd; zie
+  `reviews/dependency-transport-trials-2026-08-25.md`.
+  De kleinste vervolgstap gebruikt eerst alleen de synchrone OpenAI-SDK
+  `3.3.1`; Pydantic AI wordt niet als tweede agentloop in dezelfde slice gezet.
+
 - Pydantic-voorwaarde DF02a0: checkpoint `4e5d5af` kan gerapporteerd
   modelgebruik nu providerneutraal over één of twee modelcalls optellen, met
   het antwoord in PostgreSQL bewaren en na herstart exact teruglezen. Oude en

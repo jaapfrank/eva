@@ -167,6 +167,18 @@ scans; Eva bouwt daarvoor geen eigen platform. Pas wanneer zo'n afgeschermde
 proef de gebruikersuitkomst, privacy, snelheid of herstelgrens niet haalt, mag
 er gerichte eigen code bijkomen.
 
+Dit is inmiddels meer dan een lijstje links, maar nog geen productbewijs. In
+een eenmalige wegwerpproef liep een Eva-achtig verzoek door Pydantic AI en de
+officiële OpenAI-SDK. Synthetische usagevelden van de lokale proefserver bleven
+behouden; er zijn geen echte tokens of providerkosten gemeten. Omdat de proef
+Pydantics eigen Agent-loop gebruikte, is de eerste echte modelkandidaat bewust
+alleen de lagere synchrone OpenAI-SDK. De officiële MCP-SDK riep in een tweede
+wegwerpproef een lokale read-tool aan. Geen van beide proeven heeft al een
+commitgebonden script, artifacthash, onafhankelijke replay of plek in Eva's
+productieimage. De modelroute moet Eva's roterende toegangspaar, nul verborgen
+retries en begrensde aanvragen bewijzen; de MCP-route moet antwoorden,
+callbacks en netwerkverkeer even streng begrensd houden.
+
 Die onderdelen zijn alleen haar handen en hulpmiddelen. Eva besteedt nooit uit
 wie zij is, wie zij voor zich heeft, wat privé is, welke afspraak geldt, welke
 taak loopt, of iets echt gelukt is en wat zij uiteindelijk aan jou antwoordt.

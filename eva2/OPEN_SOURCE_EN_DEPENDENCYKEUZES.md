@@ -43,7 +43,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
-| Agentloop, tools en gestructureerde antwoorden | Pydantic AI | Identiteit, persoonscontext, grants en antwoordbeleid | Bestaande dependency werkelijk gebruiken; eigen modelboilerplate daarna verkleinen |
+| Modeltransport en gestructureerde antwoorden | Eerst de officiële OpenAI-SDK; daarna alleen lagere Pydantic AI-primitives die extra code verwijderen | Identiteit, persoonscontext, agentloop, grants, tooluitvoering en antwoordbeleid | Algemene netwerk-/providerboilerplate vervangen zonder Pydantics Agent-loop een tweede brein te maken |
 | MCP-protocol en Home Assistant-skill | Officiële MCP Python SDK plus Home Assistants ingebouwde MCP Server | Toegelaten tools/entities, persoonsmandaat, idempotency en onafhankelijke controle achteraf | Vervang de handgeschreven JSON-RPC/SSE-client na een pariteitsproef; behoud alleen directe HA-code voor concreet onbewezen MCP-gat |
 | Duurzame workflows en wachtrijen | DBOS via de officiële Pydantic AI-koppeling | Eva-ledger voor intent, call-start, ambigu resultaat en readback | DBOS laat starten, wachten en hervatten; geen tweede eigen queue-engine uitbreiden |
 | Korte subagents | Pydantic AI Harness `0.24.0` als eerste compatibele kandidaat | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Niet zelf spawnen, budgetteren en foutafhandelen wanneer Harness dit al doet |
@@ -83,11 +83,50 @@ Hergebruik betekent niet blind `latest` installeren.
   release, commit, image-digest en licentie vastgezet voordat zij secrets of
   echte accounts zien.
 
-De actuele eerste proefpins zijn: MCP Python SDK `2.1.1`, Playwright MCP
-`0.0.79`, Harness `0.24.0`, React Admin `5.15.1` en PyInstaller `6.20.0`.
-Agent Skills wordt op commit `69ef37e…` beproefd. Dit zijn proefinputs, geen
-goedgekeurde productdependencies en geen toestemming om transitieve packages
-stil mee te veranderen.
+De actuele eerste proefpins zijn: OpenAI Python `3.3.1`, Pydantic AI `2.32.2`,
+MCP Python SDK `2.1.1`, Playwright MCP `0.0.79`, Harness `0.24.0`, React Admin
+`5.15.1` en PyInstaller `6.20.0`. Agent Skills wordt op commit `69ef37e…`
+beproefd. Dit zijn wegwerp- of toekomstige proefinputs, geen goedgekeurde
+productdependencies en geen toestemming om transitieve packages stil mee te
+veranderen. Eva's huidige productlock houdt Pydantic AI `2.32.1`.
+
+## Wat op 25 augustus echt is geprobeerd
+
+Er zijn twee kandidaten eenmalig in een wegwerpomgeving geïnstalleerd en tegen
+lokale HTTP-servers aangeroepen. Er bestaat nog geen commitgebonden proefscript,
+artifacthash of herhaalreceipt; dit is dus een waarneming met status `PROEF`,
+geen geteste productgate. Dit veranderde Eva, A en B niet.
+
+| Proef | Wat werkelijk lukte | Eerlijke beslissing |
+|---|---|---|
+| Pydantic AI `2.32.2` + OpenAI Python `3.3.1` | Een Eva-achtig verzoek en antwoord liepen door een lokale proefserver. De synthetische usagevelden die de server zelf teruggaf, bleven behouden; dit was geen tokenmeting of providerfactuur. De proef gebruikte Pydantics generieke `Agent`-loop. | **Doorgaan, maar eerst alleen met de lagere synchrone OpenAI-SDK.** De Agent-loop heeft geen productierol. Pydantic-modelmapping volgt pas als zij aantoonbaar extra eigen code verwijdert zonder zelf retries, tools of vervolgaanvragen te besturen. |
+| MCP Python SDK `2.1.1` | De SDK voltooide over echte lokale HTTP de handshake, toolinventaris en één getypeerde read-call. | **Nog geen vervanging.** De standaard-SDK staat meer verkeer, ruimere protocolversies en grotere antwoorden toe dan Eva's huidige smalle client. Alleen promoveren als een kleine wrapper alle bestaande weigertests behoudt. |
+
+Dit onderscheid voorkomt twee fouten. Een geslaagde demo is nog geen
+productdependency, maar een beveiligingswrapper is ook geen reden om het hele
+protocol zelf te blijven onderhouden. Een echt prototype moet nog aantonen
+hoeveel eigen code netto verdwijnt. De volgende getallen zijn alleen ruwe,
+ongeteste hypotheses uit een broninventaris:
+
+- modeltransport en parsing: op termijn ongeveer 270 regels kansrijk; de eerste
+  kandidaat gebruikt alleen de synchrone OpenAI-SDK met per poging één actueel
+  token/accountpaar en uitgeschakelde SDK-retries;
+- MCP: bruto circa 200 regels protocolcode weg, maar waarschijnlijk slechts
+  40–120 regels nettowinst na de verplichte grenzen;
+- Home Assistant: het onderzochte directe adapterbestand telt 763 regels. Dat is
+  een bovengrens voor onderzoek, geen verwijderbelofte; historie,
+  automatiseringsbewerking en onafhankelijke controle blijven direct zolang de
+  ingebouwde MCP-server die uitkomst niet bewijst.
+
+De wegwerpproef liet ook zien waarom een pin alleen niet genoeg is. `pip`
+installeerde PyPI-artifacts die niet aan de geïnspecteerde Git-commits of
+artifacthashes zijn gebonden en trok onder meer Pydantic `2.13.4` en
+`pydantic-core 2.46.4` binnen, terwijl Eva `2.12.5` en `2.41.5` pinnt. MCP trok
+onder meer Starlette, Uvicorn, `sse-starlette`, Cryptography en PyJWT mee. Die
+dependencydrift is een open blocker, geen adoptiebewijs.
+
+De volledige technische proefgrens staat in
+`reviews/dependency-transport-trials-2026-08-25.md`.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -127,7 +166,7 @@ een concreet gat laat zien.
 
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
-| Pydantic AI `2.32.1` | `PROEF` | MIT, stabiele V2-versiepolicy, compatibility-CI, meerdere recente bijdragers en openbare advisories | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API |
+| Pydantic AI `2.32.1` huidige lock / `2.32.2` proefkandidaat | `PROEF` | MIT, stabiele V2-versiepolicy, compatibility-CI, meerdere recente bijdragers en openbare advisories | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
 | Pydantic AI Harness | `PROEF` | MIT, officieel apart Pydantic-project, recente `0.x`-releases en meerdere auteurs | API stabiliseert nog; exacte compatibele pin, geen taak-/geheugenautoriteit en directe rollback |
 | DBOS Transact | `PROEF` | MIT, gepubliceerde Pythonreleases en correctnessfixes rond herstel en duplicaten | Eva's private patch/imports zijn de blocker; eerst publieke API, schema-upgrade en downgrade op kopiedata |
 | Officiële MCP Python SDK | `PROEF` | MIT, Tier-1 SDK, twee ondersteunde releaselijnen plus expliciet versie-, release- en migratiebeleid | Bewijs dezelfde schema-, timeout-, callback- en secretblokkades als Eva's huidige smalle profiel |
@@ -177,23 +216,33 @@ upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
 
 | Huidige Eva-bron | Omvang op 25 augustus 2026 | Upstream proef | Wat altijd Eva-eigen blijft |
 |---|---:|---|---|
-| `adapters/model/conversation.py` | 2.378 regels | Pydantic AI voor provider, getypeerde output, tools en usage | IdentityPack, audience, budgetbesluit, actiebewijs en eindantwoord |
+| `adapters/model/conversation.py` | 2.378 regels | OpenAI-SDK voor providertransport en typed streaming; pas later lagere Pydantic-mapping | IdentityPack, audience, agentloop, budgetbesluit, tooluitvoering, actiebewijs en eindantwoord |
 | `adapters/connectors/mcp.py` | 404 regels | Officiële MCP Python SDK voor protocol, transports en berichten | Tool-/resourcewhitelist, schemahashes, tijdslimiet, secretgrens en receipt |
 | `adapters/connectors/home_assistant.py` | 763 regels | Home Assistants eigen MCP Server voor normale context en handelingen | Least-privilege binding en onafhankelijke readback; directe historie/automatisering alleen bij bewezen MCP-gat |
 | Zeven application-workerbestanden | meerdere losse loops | DBOS scheduling, queues en durable execution op dezelfde crashcases | Taakbetekenis, mandaat, idempotency, externe ambiguïteit en gebruikersstatus |
 | HTML/JavaScript in `adapters/api/app.py` | onderdeel van 1.536 regels | React-Admin of Pydantic web/AG-UI als presentatielaag | Gesaneerde Eva-API, authenticatie, writes via commands en audit |
 
-De volgorde is bewust: eerst Pydantic AI en de officiële MCP SDK in twee
-kleine echte routes, daarna Home Assistant via zijn eigen MCP-server, dan pas
-de grotere worker- en UI-vereenvoudiging. Zo wordt "dependency-first" zichtbaar
-als verwijderbare code, niet alleen als een lijst GitHub-links.
+De volgorde is bewust: eerst de officiële OpenAI- en MCP-SDK's in twee kleine
+echte routes, daarna Home Assistant via zijn eigen MCP-server en pas daarna de
+grotere worker- en UI-vereenvoudiging. Lagere Pydantic-primitives komen alleen
+tussen Eva en de OpenAI-SDK als een diff bewijst dat zij meer code verwijderen.
+Zo wordt "dependency-first" zichtbaar als verwijderbare code, niet alleen als
+een lijst GitHub-links.
 
 ## Kleine dependency-first gates
 
 - [ ] `DF01` — iedere hoofdcomponent heeft `reuse`, `thin Eva layer` of
   `Eva-owned` plus kandidaat, licentie, pin en onderhoudsbewijs.
-- [ ] `DF02` — Pydantic AI `2.32.1` draait één echte connectorneutrale
-  gespreks-/toolbeurt met Eva's bestaande identiteit en usage-receipt.
+- [ ] `DF02a` — de synchrone OpenAI Python SDK `3.3.1` vervangt eerst één
+  gewone handgeschreven request-/SSE-route met Eva's bestaande identiteit,
+  actuele lease en usage-receipt. Een eenmalige lokale happy path is
+  waargenomen; reproduceerbaar script/receipt, artifacthashes, lock, wheelhouse,
+  streamingpariteit, echte providercall en review staan open.
+- [ ] `DF02b` — Pydantic AI `2.32.2` krijgt daarna alleen modelmapping of een
+  andere aantoonbaar verwijderende lagere primitive. Een Pydantic `Agent` wordt
+  geen tweede tool-, geheugen- of antwoordloop naast Eva. Een eventuele lagere
+  primitive moet nul eigen retries, begrensde aanvragen/tooluitvoer en geen
+  toolcallback vóór Eva's grant en ledger bewijzen.
 - [ ] `DF03` — DBOS versus de handgeschreven workflowdelen is op dezelfde
   crashcases vergeleken; dubbele scheduling krijgt een verwijderbesluit.
 - [ ] `DF04` — compatibel Harness, Pydantic Realtime en Playwright MCP krijgen
