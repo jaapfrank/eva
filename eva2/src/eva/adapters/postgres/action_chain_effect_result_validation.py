@@ -421,12 +421,11 @@ def _validate_evidence_and_receipt(
         or current_event_data.get("provider_evidence_id") != evidence.evidence_id
         or current_event_data.get("provider_evidence_payload_sha256")
         != canonical_sha256(evidence)
-        or readback_count != 0
     ):
         raise corrupt("terminal effect evidence differs")
     receipt = projected.receipt
     if receipt is None:
-        if receipt_rows or any(
+        if receipt_rows or readback_count != 0 or any(
             current_event_data.get(key) is not None
             for key in ("effect_receipt_id", "effect_receipt_payload_sha256")
         ):
@@ -434,6 +433,8 @@ def _validate_evidence_and_receipt(
         return
     if len(receipt_rows) != 1:
         raise corrupt("terminal effect receipt cardinality differs")
+    if readback_count not in {0, 1}:
+        raise corrupt("terminal effect readback cardinality differs")
     row = receipt_rows[0]
     if (
         EffectReceipt.model_validate(row.payload) != receipt

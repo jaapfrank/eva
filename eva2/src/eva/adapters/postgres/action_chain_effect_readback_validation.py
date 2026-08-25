@@ -17,16 +17,24 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
 )
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.connector_rpc import ConnectorInvokeSuccess
+from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.execution import (
     CapabilityManifest,
     ConnectorBinding,
     EffectAttempt,
     EffectIntent,
+    EffectReadback,
     EffectReceipt,
+    ReadAttempt,
     ReadIntent,
+    ReadObservation,
     ResourceScope,
 )
 from eva.contracts.planning import ValidatedPlan
+from eva.application.action_chain_effect_readback_results import (
+    project_action_chain_effect_readback,
+)
 
 
 capability_activations = metadata.tables["eva_core.capability_activations"]
@@ -35,8 +43,11 @@ connector_bindings = metadata.tables["eva_core.connector_bindings"]
 policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
 read_intents = metadata.tables["eva_effects.read_intents"]
 read_attempts = metadata.tables["eva_effects.read_attempts"]
+read_observations = metadata.tables["eva_effects.read_observations"]
 effect_attempts = metadata.tables["eva_effects.effect_attempts"]
 effect_receipts = metadata.tables["eva_effects.effect_receipts"]
+effect_readbacks = metadata.tables["eva_effects.effect_readbacks"]
+evidence_envelopes = metadata.tables["eva_evidence.evidence_envelopes"]
 
 
 def validate_action_chain_effect_readback_preparation(
@@ -128,6 +139,7 @@ def validate_action_chain_effect_readback_preparation(
         intent=intent,
         intent_row=row,
         request_payload=request_payload,
+        effect=effect,
         attempt=attempt,
         receipt=receipt,
         activation=activation,
@@ -309,6 +321,7 @@ def _validate_thread(
     intent: ReadIntent,
     intent_row: sa.Row,
     request_payload: dict[str, object],
+    effect: EffectIntent,
     attempt: EffectAttempt,
     receipt: EffectReceipt,
     activation: sa.Row,
@@ -464,6 +477,99 @@ def _validate_thread(
         allow_terminal=len(events) == 4,
         corrupt=corrupt,
     )
+    _validate_physical_readback(
+        connection,
+        scope,
+        effect=effect,
+        receipt=receipt,
+        intent=intent,
+        attempt_rows=attempts,
+        current_event_data=current_data,
+        retention_policy_id=retention_policy_id,
+        retention_until=retention_until,
+        corrupt=corrupt,
+    )
+
+
+def _validate_physical_readback(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    effect: EffectIntent,
+    receipt: EffectReceipt,
+    intent: ReadIntent,
+    attempt_rows: list[sa.Row],
+    current_event_data: dict[str, object],
+    retention_policy_id: str,
+    retention_until: datetime,
+    corrupt: type[RuntimeError],
+) -> None:
+    rows = connection.execute(
+        sa.select(effect_readbacks).where(
+            effect_readbacks.c.tenant_id == scope.tenant_id,
+            effect_readbacks.c.installation_id == scope.installation_id,
+            effect_readbacks.c.effect_intent_id == UUID(effect.effect_intent_id),
+        )
+    ).all()
+    if not rows:
+        return
+    if len(rows) != 1 or len(attempt_rows) != 1:
+        raise corrupt("physical effect readback cardinality differs")
+    try:
+        attempt = ReadAttempt.model_validate(attempt_rows[0].payload)
+        observation_row = connection.execute(
+            sa.select(read_observations).where(
+                read_observations.c.tenant_id == scope.tenant_id,
+                read_observations.c.installation_id == scope.installation_id,
+                read_observations.c.read_attempt_id
+                == UUID(attempt.read_attempt_id),
+            )
+        ).one()
+        observation = ReadObservation.model_validate(observation_row.payload)
+        evidence_row = connection.execute(
+            sa.select(evidence_envelopes).where(
+                evidence_envelopes.c.tenant_id == scope.tenant_id,
+                evidence_envelopes.c.installation_id == scope.installation_id,
+                evidence_envelopes.c.evidence_id
+                == UUID(observation.evidence_ref),
+            )
+        ).one()
+        evidence = EvidenceEnvelopeV2.model_validate(evidence_row.payload)
+        provider_result = ConnectorInvokeSuccess.model_validate(
+            current_event_data.get("provider_result")
+        )
+        projected = project_action_chain_effect_readback(
+            effect=effect,
+            receipt=receipt,
+            read_intent=intent,
+            read_attempt=attempt,
+            observation=observation,
+            evidence=evidence,
+            provider_result=provider_result,
+        )
+        stored = EffectReadback.model_validate(rows[0].payload)
+    except (TypeError, ValueError, sa.exc.MultipleResultsFound, sa.exc.NoResultFound) as error:
+        raise corrupt("physical effect readback proof is invalid") from error
+    readback = projected.readback
+    row = rows[0]
+    if (
+        stored != readback
+        or row.readback_id != UUID(readback.readback_id)
+        or row.effect_intent_id != UUID(readback.effect_intent_id)
+        or row.read_intent_id != UUID(readback.read_intent_id)
+        or row.read_attempt_id != UUID(readback.read_attempt_id)
+        or row.provider_resource_id != readback.provider_resource_id
+        or row.idempotency_key != readback.idempotency_key
+        or bytes(row.request_sha256).hex() != readback.request_sha256
+        or row.observed_at != _parse_timestamp(readback.observed_at)
+        or bytes(row.state_sha256).hex() != readback.state_sha256
+        or row.match_status != readback.match_status
+        or row.evidence_id != UUID(readback.evidence_ref)
+        or bytes(row.payload_sha256).hex() != canonical_sha256(readback)
+        or row.retention_policy_id != retention_policy_id
+        or row.retention_until != retention_until
+    ):
+        raise corrupt("physical effect readback binding differs")
 
 
 def verification_rows(

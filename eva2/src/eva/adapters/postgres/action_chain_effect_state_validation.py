@@ -90,6 +90,11 @@ def _effect_state_matches(
     expected_receipts = (
         1 if stored_attempt.state in {"provider_accepted", "definitive_reject"} else 0
     )
+    readback_count_allowed = (
+        external_counts[1] in {0, 1}
+        if stored_attempt.state == "provider_accepted"
+        else external_counts[1] == 0
+    )
     return (
         expected_intent_state is not None
         and intent.state == expected_intent_state
@@ -108,7 +113,8 @@ def _effect_state_matches(
         and int(attempt_row.revision) == 2
         and attempt_row.updated_at == intent_row.updated_at
         and attempt_row.updated_at >= attempt_row.created_at
-        and external_counts == (expected_receipts, 0)
+        and external_counts[0] == expected_receipts
+        and readback_count_allowed
     )
 
 
