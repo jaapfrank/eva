@@ -9,6 +9,8 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
+import test_action_chain_read_dispatcher as read_dispatcher_fixtures
+
 from eva.adapters.postgres.action_chain_effect_advances import (
     ActionChainEffectAdvanceConflict,
     PostgresActionChainEffectAdvancer,
@@ -20,15 +22,17 @@ from eva.adapters.postgres.action_chain_ledger import (
     ActionChainCorrupt,
     PostgresActionChainLedger,
 )
+from eva.adapters.postgres.action_chain_leases import PostgresActionChainLeases
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
+from eva.contracts.canonical_json import canonical_sha256
 
 from test_action_chain_effect_readback_results import (
     _observed,
     action_chain_engine as _shared_action_chain_engine,
 )
-from test_action_chain_ledger import NOW
+from test_action_chain_ledger import NOW, _decision_and_plan
 
 
 @pytest.fixture
@@ -53,9 +57,60 @@ def _ready(
     return scope, chain, effect, stored
 
 
+def _decision_and_plan_with_followup():
+    decision, plan, catalog = _decision_and_plan()
+    decision_payload = decision.model_dump(mode="json")
+    decision_payload["actions"].append(
+        {
+            "action_id": "step:confirm-after-effect",
+            "kind": "request_read",
+            "operation": "ha.state.read",
+            "resource": "overkapping",
+            "arguments": {"target": "overkapping"},
+            "depends_on": ["step:test-effect"],
+            "uncertainty_basis_points": 100,
+        }
+    )
+    decision = decision.__class__.model_validate(decision_payload)
+    plan_payload = plan.model_dump(mode="json")
+    plan_payload.update(
+        {
+            "model_decision_sha256": canonical_sha256(decision),
+            "maximum_connector_calls": 3,
+        }
+    )
+    plan_payload["steps"].append(
+        {
+            "step_id": "step:confirm-after-effect",
+            "kind": "read",
+            "operation": "ha.state.read",
+            "resource": "overkapping",
+            "input_schema_sha256": "a" * 64,
+            "output_schema_sha256": "b" * 64,
+            "depends_on": ["step:test-effect"],
+            "capability_manifest_id": catalog.plan_capability_manifest_id(
+                "ha.state.read"
+            ),
+            "proof_floor": "fresh provider observation",
+        }
+    )
+    plan = plan.__class__.model_validate(plan_payload)
+    return decision, plan, catalog
+
+
+def _use_followup_plan(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        read_dispatcher_fixtures,
+        "_decision_and_plan",
+        _decision_and_plan_with_followup,
+    )
+
+
 def test_matching_physical_readback_verifies_effect_and_replays_after_restart(
     action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    _use_followup_plan(monkeypatch)
     scope, chain, effect, readback = _ready(action_chain_engine)
     effect_intent_id = UUID(effect.intent.effect_intent_id)
     advanced = PostgresActionChainEffectAdvancer(
@@ -63,10 +118,11 @@ def test_matching_physical_readback_verifies_effect_and_replays_after_restart(
     ).advance(effect_intent_id, now=NOW + timedelta(seconds=17))
 
     assert advanced.disposition == "advanced"
-    assert advanced.released_step_ids == ()
+    assert advanced.released_step_ids == (chain.steps[2].plan_step_id,)
     assert advanced.outcome_ref == f"effect-readback:{readback.readback.readback_id}"
     loaded = PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
     assert loaded.steps[1].state == "succeeded"
+    assert loaded.steps[2].state == "ready"
     effects = metadata.tables["eva_effects.effect_intents"]
     with action_chain_engine.connect() as connection:
         row = connection.execute(
@@ -95,6 +151,16 @@ def test_matching_physical_readback_verifies_effect_and_replays_after_restart(
         advanced.released_step_ids,
         advanced.outcome_ref,
     )
+    next_claim = PostgresActionChainLeases(
+        action_chain_engine, scope
+    ).claim_next(
+        worker_id="worker:mc03c3e:followup",
+        now=NOW + timedelta(seconds=19),
+        lease_seconds=10,
+    )
+    assert next_claim is not None
+    assert next_claim.plan_step_id == chain.steps[2].plan_step_id
+    PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
 
 
 @pytest.mark.parametrize(
@@ -147,7 +213,9 @@ def test_effect_advance_is_single_under_concurrency(
 
 def test_effect_advance_rolls_back_rows_and_events_together(
     action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    _use_followup_plan(monkeypatch)
     scope, chain, effect, _readback = _ready(action_chain_engine)
     with action_chain_engine.begin() as connection:
         connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
@@ -190,6 +258,7 @@ def test_effect_advance_rolls_back_rows_and_events_together(
             )
     loaded = PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
     assert loaded.steps[1].state == "running"
+    assert loaded.steps[2].state == "pending"
 
 
 def test_reload_rejects_corrupt_verified_effect_outcome(
