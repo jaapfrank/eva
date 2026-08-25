@@ -585,9 +585,14 @@ langdurige verzamelaanpassing telt niet als voortgang.
   de afhankelijke stap vrijgeven. Home Assistant is de eerste provider; er
   komen geen aparte scripts per opdracht. MC03c0 is `tested`: één vrijgegeven
   effect wordt met actuele authority, payloadhash en idempotency key atomair
-  voorbereid (`d3cc6d7`–`4f0a8f4`), zonder attempt of provider-I/O. Review,
-  dispatch, readback en afronding blijven open; zie
-  `reviews/action-chain-effect-preparation-mc03c0.md`.
+  voorbereid (`d3cc6d7`–`4f0a8f4`). MC03c1a bindt daarna één poging aan de
+  sealed providerrelease; MC03c1b commit vlak vóór I/O precies één call-start
+  en geeft alleen aan die eerste caller het private RPC-pakket (`106d2ec`). Drie
+  gerichte, 56 geselecteerde action-chain- en afzonderlijk 24 tijdlijntests
+  zijn groen, zonder providerproces. Onafhankelijke reviews, provideruitvoering,
+  uitkomst/receipt, fysieke readback en afronding blijven open; zie
+  `reviews/action-chain-effect-preparation-mc03c0.md` en
+  `reviews/action-chain-effect-call-claim-mc03c1b.md`.
 - [ ] Eén echte B-Telegramproef met meerdere personen en groep uitvoeren. Dit
   vereist twee door de eigenaar geautoriseerde testaccounts en een testgroep.
 - [ ] MX04/MX05: dezelfde algemene toolketen via echt Telegram-B uitvoeren,

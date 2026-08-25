@@ -71,14 +71,15 @@ de controleerbare live receipts staan in
   en een live multi-workerproef boven Eva's bestaande PostgreSQL-ledger; er
   komt geen tweede taakdatabase of tweede Eva-brein.
 
-- Bezig: MC03c0 zet uitsluitend een na bewezen read vrijgegeven effectstap
-  atomair om in één duurzaam `EffectIntent/v1`. Lease, actuele catalogus,
-  resource, activation, binding, policy, manifest, payloadhash, deadline en
-  idempotency key zijn exact gebonden; er ontstaat nog geen attempt,
-  `TOOL_PREPARED`, provider-I/O, receipt of readback. Zes gerichte, 23 bredere
-  action-chain- en 24 tijdlijntests zijn groen op `d3cc6d7`–`4f0a8f4`. Dit is
-  `tested`, nog niet onafhankelijk `reviewed`, niet op B gedeployd en geen live
-  Home Assistant-bewijs. De reviews van MC03b2b en MC03b3 blijven eveneens open.
+- Bezig: MC03c0 bereidt na bewezen read precies één duurzaam effectintent voor;
+  MC03c1a autoriseert precies één poging zonder callable bytes en MC03c1b
+  hercontroleert vlak vóór I/O alle authority plus deadline. Zij commit exact
+  één `ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED` en geeft alleen aan de eerste
+  caller het private proces- en RPC-materiaal. Dezelfde duurzame idempotency key
+  bereikt de provider als RPC- en connector-request-ID. Drie gerichte, 56
+  geselecteerde action-chain- en afzonderlijk 24 tijdlijntests zijn groen op
+  `106d2ec`. Dit is `tested`, nog niet onafhankelijk `reviewed`; er is geen
+  provider gestart, geen Home Assistant-call gedaan en A en B zijn niet gewijzigd.
 - Nieuw vastgelegd productdoel: ChatGPT-achtige full-duplex voice met streaming
   STT/TTS, onderbreken en dezelfde Eva-context. De voorkeur is `Bel Eva` in een
   Telegram Mini App; Home Assistant Assist/Wyoming is de lokale fallback. De
@@ -120,19 +121,20 @@ de controleerbare live receipts staan in
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste codecheckpoint: MC03c0 gebruikt één algemene PostgreSQL-writer en
-  herstartvalidator voor een vrijgegeven effect. Concurrency levert één intent
-  plus één bytegelijke replay; een geforceerde steperfout rolt intent en events
-  terug; intrekking of een verkeerde/verlopen lease stopt vóór voorbereiding.
-  Het bestaande ledgerbestand is ondanks de nieuwe status netto één regel
-  kleiner dan vóór deze slice; de twee nieuwe productbestanden blijven onder
-  800 regels. Zie `reviews/action-chain-effect-preparation-mc03c0.md`.
+- Laatste codecheckpoint: `106d2ec` voegt de algemene eenmalige
+  effect-callclaim toe. Twee gelijktijdige workers krijgen samen één echte claim;
+  replay en een nieuwe engine krijgen geen callable bytes. Een verlopen deadline
+  schrijft niets en een geforceerde eventfout rolt volledig terug voordat
+  callmateriaal wordt teruggegeven. De slice groeit netto 564 productregels,
+  de nieuwe dispatcher telt 527 regels en er is geen dependency toegevoegd.
+  Zie `reviews/action-chain-effect-call-claim-mc03c1b.md`.
 - De eerdere run `resident-long-2026-08-24-a` is na review teruggezet naar
   shakedown. Hij verzamelt echte HA-events, maar telt niet als acceptatierun.
-- Eerstvolgend: onafhankelijke review van MC03c0 en de nog open reviews van
-  MC03b2b/MC03b3. Daarna laat MC03c1 alleen dit voorbereide intent door de
-  bestaande `TOOL_PREPARED`-dispatchgrens gaan; provideruitkomst, fysieke
-  readback en dependencyvrijgave blijven aparte MC03c2-slices.
+- Eerstvolgend: onafhankelijke review van MC03c0/MC03c1 en de nog open reviews
+  van MC03b2b/MC03b3. Daarna voert MC03c2 uitsluitend de eerste geclaimde call
+  buiten de databasetransactie uit en bewaart iedere definitieve, geweigerde of
+  ambigue uitkomst. Fysieke readback, effectafronding en dependencyvrijgave
+  blijven daarna afzonderlijke slices.
 - Productie A: actief en niet gewijzigd.
 - Actuele B: `eva2-living-core:cross-channel-v53-20260824`, core ready,
   duurzame-doelenworker running met nul herstarts.

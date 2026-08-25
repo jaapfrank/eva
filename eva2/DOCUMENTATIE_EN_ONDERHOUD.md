@@ -85,9 +85,9 @@ verdwenen autoriteit blijft wijzen.
   evidencepaden. Die inventaris is daarom diagnostiek, geen schone releasegate.
 - Packagegrenzen en performancebudgetten zijn machineleesbaar of meetbaar.
 - Nieuwe verticale slices registreren nu expliciet bestandsrol, bestaansreden,
-  bewijsstatus, Git-checkpoints, nonclaims en meetstatus. MC03c0 is hiervan een
+  bewijsstatus, Git-checkpoints, nonclaims en meetstatus. MC03c1b is hiervan een
   concreet voorbeeld in `design/architecture/living-core-v1.md` en
-  `reviews/action-chain-effect-preparation-mc03c0.md`; runtime-optimalisatie
+  `reviews/action-chain-effect-call-claim-mc03c1b.md`; runtime-optimalisatie
   blijft daar eerlijk `unmeasured` terwijl codeomvang wel exact is gecontroleerd.
 - Externe agentscores hebben nu een afzonderlijk publicatiecontract. AgentBench,
   GAIA en OSWorld-resultaten tellen alleen met upstream scorer, vastgezette

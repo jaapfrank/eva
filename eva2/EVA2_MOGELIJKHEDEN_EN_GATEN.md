@@ -140,10 +140,13 @@ Bijgewerkt: 25 augustus 2026.
   oude/nieuwe vergelijking staat in `OUDE_EVA_VS_EVA2.md`.
 - De opgeslagen meerstappenketen kan nu één gevalideerde read voorbereiden,
   eenmalig uitvoeren, resultaat/evidence/observatie bewaren, na succes de juiste
-  afhankelijkheid vrijgeven en die effectstap duurzaam voorbereiden. Reviews
-  van readresultaat, readvrijgave en effectvoorbereiding blijven open. Nog
-  ontbreken algemene effectdispatch, fysieke readback, effect-/dependency-
-  afronding en de echte Telegram-B-/Home Assistant-proef.
+  afhankelijkheid vrijgeven en die effectstap duurzaam voorbereiden. Voor dat
+  effect kan zij ook één providerpoging autoriseren en precies één duurzame
+  call-startclaim uitgeven; concurrency en herstart krijgen geen tweede set
+  callable bytes. Reviews van readresultaat, readvrijgave, effectvoorbereiding,
+  effectautorisatie en callclaim blijven open. Nog ontbreken de echte algemene
+  effect-providercall, duurzame uitkomstopslag, fysieke readback, effect-/
+  dependencyafronding en de Telegram-B-/Home Assistant-proef.
 - Eva heeft nog geen OpenBot-achtige eigen browsercomputer, blijvend
   loginprofiel, live scherm of human-takeover. `AU01-AU08` maken het pad van
   chatmandaat naar autonome webtaak, crashherstel en praktijkacceptatie
