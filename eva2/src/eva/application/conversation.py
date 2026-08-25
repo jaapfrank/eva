@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
 import re
-from typing import Protocol
+from typing import Literal, Protocol
 
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
@@ -27,6 +27,119 @@ class ConversationConflict(RuntimeError):
 
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
+
+
+@dataclass(frozen=True, slots=True)
+class ConversationModelUsage:
+    """Provider-neutral reported usage or an explicit legacy unknown value."""
+
+    measurement: Literal["measured", "unmeasured"]
+    model_attempts: int | None
+    tool_calls: int | None
+    input_tokens: int | None
+    output_tokens: int | None
+
+    def __post_init__(self) -> None:
+        values = (
+            self.model_attempts,
+            self.tool_calls,
+            self.input_tokens,
+            self.output_tokens,
+        )
+        if self.measurement == "unmeasured":
+            if any(value is not None for value in values):
+                raise ValueError("unmeasured model usage cannot carry values")
+            return
+        if self.measurement != "measured" or any(value is None for value in values):
+            raise ValueError("measured model usage is incomplete")
+        if any(
+            not isinstance(value, int) or isinstance(value, bool) for value in values
+        ):
+            raise ValueError("measured model usage is invalid")
+        assert self.model_attempts is not None
+        assert self.tool_calls is not None
+        assert self.input_tokens is not None
+        assert self.output_tokens is not None
+        if (
+            self.model_attempts < 1
+            or self.tool_calls < 0
+            or self.input_tokens < 0
+            or self.output_tokens < 0
+        ):
+            raise ValueError("measured model usage is invalid")
+
+    @classmethod
+    def measured(
+        cls,
+        *,
+        model_attempts: int = 1,
+        tool_calls: int,
+        input_tokens: int,
+        output_tokens: int,
+    ) -> "ConversationModelUsage":
+        return cls(
+            "measured",
+            model_attempts,
+            tool_calls,
+            input_tokens,
+            output_tokens,
+        )
+
+    @classmethod
+    def unmeasured(cls) -> "ConversationModelUsage":
+        return cls("unmeasured", None, None, None, None)
+
+    @classmethod
+    def aggregate(
+        cls, usages: tuple["ConversationModelUsage", ...]
+    ) -> "ConversationModelUsage":
+        if not usages or any(usage.measurement == "unmeasured" for usage in usages):
+            return cls.unmeasured()
+        return cls.measured(
+            model_attempts=sum(usage.model_attempts or 0 for usage in usages),
+            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
+            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
+            output_tokens=sum(usage.output_tokens or 0 for usage in usages),
+        )
+
+    def to_wire(self) -> dict[str, str | int | None]:
+        return {
+            "input_tokens": self.input_tokens,
+            "measurement": self.measurement,
+            "model_attempts": self.model_attempts,
+            "output_tokens": self.output_tokens,
+            "tool_calls": self.tool_calls,
+        }
+
+    @classmethod
+    def from_wire(cls, value: object) -> "ConversationModelUsage":
+        if not isinstance(value, dict) or set(value) != {
+            "input_tokens",
+            "measurement",
+            "model_attempts",
+            "output_tokens",
+            "tool_calls",
+        }:
+            raise ValueError("model usage payload is invalid")
+        measurement = value["measurement"]
+        numeric = (
+            value["model_attempts"],
+            value["tool_calls"],
+            value["input_tokens"],
+            value["output_tokens"],
+        )
+        if measurement not in {"measured", "unmeasured"} or any(
+            item is not None and (not isinstance(item, int) or isinstance(item, bool))
+            for item in numeric
+        ):
+            raise ValueError("model usage payload is invalid")
+        return cls(
+            measurement,  # type: ignore[arg-type]
+            numeric[0],
+            numeric[1],
+            numeric[2],
+            numeric[3],
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -225,6 +338,13 @@ class GroundedReply:
     evidence_memory_ids: tuple[str, ...]
     generated_at: str
     provider: str
+    model_usage: ConversationModelUsage = field(
+        default_factory=ConversationModelUsage.unmeasured
+    )
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.model_usage, ConversationModelUsage):
+            raise ValueError("grounded reply model usage is invalid")
 
     @property
     def text_sha256(self) -> str:
@@ -259,6 +379,9 @@ class ConversationModelResult:
     text: str | None
     provider: str
     action_call: ConversationActionCall | None = None
+    usage: ConversationModelUsage = field(
+        default_factory=ConversationModelUsage.unmeasured
+    )
 
     def __post_init__(self) -> None:
         if self.text is not None and not self.text.strip():
@@ -267,6 +390,8 @@ class ConversationModelResult:
             raise ValueError("conversation model provider is required")
         if self.text is None and self.action_call is None:
             raise ValueError("conversation model returned neither text nor action")
+        if not isinstance(self.usage, ConversationModelUsage):
+            raise ValueError("conversation model usage is invalid")
 
 
 @dataclass(frozen=True, slots=True)
@@ -489,6 +614,7 @@ class LivingConversation:
             completed_action=completed,
             self_context=self_context,
         )
+        usages = [generated.usage]
         if generated.action_call is not None:
             if self._actions is None or completed is not None:
                 raise RuntimeError("conversation model requested an unavailable action")
@@ -502,6 +628,7 @@ class LivingConversation:
                 completed_action=completed,
                 self_context=self_context,
             )
+            usages.append(generated.usage)
         if generated.action_call is not None:
             raise RuntimeError("conversation model requested more than one action")
         text = "" if generated.text is None else generated.text.strip()
@@ -516,6 +643,7 @@ class LivingConversation:
             evidence_memory_ids=tuple(item.fact_id for item in memory.recall.selected),
             generated_at=turn.occurred_at,
             provider=generated.provider,
+            model_usage=ConversationModelUsage.aggregate(tuple(usages)),
         )
 
     @staticmethod
@@ -565,6 +693,7 @@ __all__ = [
     "ConversationObservationBinding",
     "ConversationTurn",
     "ConversationMemoryPort",
+    "ConversationModelUsage",
     "ConversationModelPort",
     "ConversationModelResult",
     "GroundedReply",

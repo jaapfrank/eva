@@ -16,6 +16,7 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.conversation import (
     ConversationConflict,
+    ConversationModelUsage,
     ConversationTurn,
     GroundedReply,
     RecentConversationMessage,
@@ -118,6 +119,16 @@ class PostgresConversationJournal:
                 raise ConversationConflict(
                     "durable conversation reply fields are invalid"
                 )
+            try:
+                usage = (
+                    ConversationModelUsage.unmeasured()
+                    if "model_usage" not in data
+                    else ConversationModelUsage.from_wire(data["model_usage"])
+                )
+            except ValueError as error:
+                raise ConversationConflict(
+                    "durable conversation reply usage is invalid"
+                ) from error
             reply = GroundedReply(
                 conversation_id=turn.conversation_id,
                 message_id=turn.message_id,
@@ -125,6 +136,7 @@ class PostgresConversationJournal:
                 evidence_memory_ids=tuple(evidence),
                 generated_at=event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 provider=provider,
+                model_usage=usage,
             )
             if data.get("text_sha256") != reply.text_sha256:
                 raise ConversationConflict("durable conversation reply hash differs")
@@ -216,6 +228,7 @@ class PostgresConversationJournal:
             "evidence_memory_ids": list(reply.evidence_memory_ids),
             "kind": "conversation_reply",
             "message_id": turn.message_id,
+            "model_usage": reply.model_usage.to_wire(),
             "principal_id": turn.principal_id,
             "provider": reply.provider,
             "text": reply.text,
