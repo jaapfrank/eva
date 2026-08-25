@@ -5,6 +5,7 @@ from collections.abc import Callable
 import pytest
 from pydantic import ValidationError
 
+import eva.application.action_chain as action_chain_module
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -12,6 +13,10 @@ from eva.application.action_chain import (
     action_chain_step_operation_id,
     action_chain_thread_id,
     validate_model_decision,
+)
+from eva.application.effect_verification import (
+    EffectVerificationField,
+    EffectVerificationProjection,
 )
 from eva.contracts.base import JsonValue
 from eva.contracts.canonical_json import canonical_sha256
@@ -113,6 +118,20 @@ def _descriptor(
         proof_floor=proof_floor or policy_entry.proof_floor,
         enabled=enabled,
         validate_request=_exact(resource, *keys),
+        effect_verification=(
+            EffectVerificationProjection(
+                (
+                    EffectVerificationField(
+                        name="state",
+                        expected_source="arguments",
+                        expected_pointer="/state",
+                        observed_pointer="/state",
+                    ),
+                )
+            )
+            if effect_class == "effect"
+            else None
+        ),
     )
 
 
@@ -405,6 +424,65 @@ def test_disabled_tool_and_proof_floor_mismatch_fail_closed() -> None:
         )
 
 
+def test_effect_without_independent_projection_fails_closed() -> None:
+    policy = _policy()
+    descriptors = list(_catalog(policy)._descriptors)  # noqa: SLF001
+    effect_index = next(
+        index
+        for index, descriptor in enumerate(descriptors)
+        if descriptor.effect_class == "effect"
+    )
+    source = descriptors[effect_index]
+    descriptors[effect_index] = ActionToolDescriptor(
+        operation=source.operation,
+        effect_class=source.effect_class,
+        permission_class=source.permission_class,
+        input_schema_sha256=source.input_schema_sha256,
+        output_schema_sha256=source.output_schema_sha256,
+        validator_sha256=source.validator_sha256,
+        policy_scope_sha256=source.policy_scope_sha256,
+        proof_floor=source.proof_floor,
+        enabled=source.enabled,
+        validate_request=source.validate_request,
+    )
+    with pytest.raises(
+        ActionChainValidationError,
+        match="lacks independent verification projection",
+    ):
+        _validate(
+            _valid_decision(),
+            policy=policy,
+            catalog=ActionToolCatalog(tuple(descriptors)),
+        )
+
+
+def test_legacy_sealed_effect_authority_remains_reloadable_for_safe_upgrade() -> None:
+    snapshot = _catalog(_policy()).authority_snapshot()
+    effect = next(
+        item
+        for item in snapshot["descriptors"]
+        if item["effect_class"] == "effect"
+    )
+    effect.pop("effect_verification")
+    effect["capability_manifest_id"] = (
+        "capability:sha256:"
+        + canonical_sha256(
+            {
+                key: value
+                for key, value in effect.items()
+                if key != "capability_manifest_id"
+            }
+        )
+    )
+    snapshot["catalog_sha256"] = canonical_sha256(snapshot["descriptors"])
+
+    descriptors, digest = action_chain_module._validate_authority_snapshot(  # noqa: SLF001
+        snapshot
+    )
+    assert digest == snapshot["catalog_sha256"]
+    assert "effect_verification" not in descriptors["ha.test_target.set"]
+
+
 def test_catalog_digest_and_operation_ids_are_deterministic() -> None:
     policy = _policy()
     catalog = _catalog(policy)
@@ -418,6 +496,52 @@ def test_catalog_digest_and_operation_ids_are_deterministic() -> None:
     )
     with pytest.raises(ValueError, match="does not belong"):
         action_chain_step_operation_id(plan, "step:other")
+
+
+def test_verification_projection_drift_changes_sealed_plan_identity() -> None:
+    policy = _policy()
+    original = _catalog(policy)
+    changed_descriptors = list(original._descriptors)  # noqa: SLF001
+    changed_index = next(
+        index
+        for index, descriptor in enumerate(changed_descriptors)
+        if descriptor.effect_class == "effect"
+    )
+    source = changed_descriptors[changed_index]
+    changed_descriptors[changed_index] = ActionToolDescriptor(
+        operation=source.operation,
+        effect_class=source.effect_class,
+        permission_class=source.permission_class,
+        input_schema_sha256=source.input_schema_sha256,
+        output_schema_sha256=source.output_schema_sha256,
+        validator_sha256=source.validator_sha256,
+        policy_scope_sha256=source.policy_scope_sha256,
+        proof_floor=source.proof_floor,
+        enabled=source.enabled,
+        validate_request=source.validate_request,
+        effect_verification=EffectVerificationProjection(
+            (
+                EffectVerificationField(
+                    name="state",
+                    expected_source="arguments",
+                    expected_pointer="/state",
+                    observed_pointer="/status",
+                ),
+            )
+        ),
+    )
+    changed = ActionToolCatalog(tuple(changed_descriptors))
+    decision = _valid_decision()
+
+    original_plan = _validate(decision, policy=policy, catalog=original)
+    changed_plan = _validate(decision, policy=policy, catalog=changed)
+    assert original.sha256 != changed.sha256
+    assert original_plan.steps[-1].capability_manifest_id != (
+        changed_plan.steps[-1].capability_manifest_id
+    )
+    assert action_chain_thread_id(original_plan) != action_chain_thread_id(
+        changed_plan
+    )
 
 
 def test_validator_drift_changes_the_sealed_plan_and_operation_ids() -> None:

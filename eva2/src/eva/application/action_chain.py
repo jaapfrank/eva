@@ -7,6 +7,10 @@ from dataclasses import dataclass
 import re
 from typing import Any, Literal
 
+from eva.application.effect_verification import (
+    EffectVerificationError,
+    EffectVerificationProjection,
+)
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import EffectPolicy, PolicyPack
@@ -65,6 +69,7 @@ class ActionToolDescriptor:
     proof_floor: str
     enabled: bool
     validate_request: RequestValidator
+    effect_verification: EffectVerificationProjection | None = None
 
     def __post_init__(self) -> None:
         for name, value in (
@@ -87,9 +92,11 @@ class ActionToolDescriptor:
             raise ValueError("action tool proof floor is invalid")
         if not callable(self.validate_request):
             raise ValueError("action tool request validator is missing")
+        if self.effect_class == "read" and self.effect_verification is not None:
+            raise ValueError("a read tool cannot define effect verification")
 
     def authority_payload(self) -> dict[str, JsonValue]:
-        return {
+        payload: dict[str, JsonValue] = {
             "capability_manifest_id": self.capability_manifest_id,
             "effect_class": self.effect_class,
             "enabled": self.enabled,
@@ -101,6 +108,11 @@ class ActionToolDescriptor:
             "proof_floor": self.proof_floor,
             "validator_sha256": self.validator_sha256,
         }
+        if self.effect_verification is not None:
+            payload["effect_verification"] = (
+                self.effect_verification.authority_payload()
+            )
+        return payload
 
     @property
     def capability_manifest_id(self) -> str:
@@ -109,7 +121,7 @@ class ActionToolDescriptor:
         return f"capability:sha256:{canonical_sha256(self._manifest_payload())}"
 
     def _manifest_payload(self) -> dict[str, JsonValue]:
-        return {
+        payload: dict[str, JsonValue] = {
             "effect_class": self.effect_class,
             "enabled": self.enabled,
             "input_schema_sha256": self.input_schema_sha256,
@@ -120,6 +132,11 @@ class ActionToolDescriptor:
             "proof_floor": self.proof_floor,
             "validator_sha256": self.validator_sha256,
         }
+        if self.effect_verification is not None:
+            payload["effect_verification"] = (
+                self.effect_verification.authority_payload()
+            )
+        return payload
 
 
 class ActionToolCatalog:
@@ -257,6 +274,19 @@ def validate_model_decision(
             raise ActionChainValidationError(
                 "model request differs from the admitted schema or resource scope"
             ) from error
+        if expected_kind == "effect":
+            if descriptor.effect_verification is None:
+                raise ActionChainValidationError(
+                    "effect tool lacks independent verification projection"
+                )
+            try:
+                descriptor.effect_verification.project_expected(
+                    action.resource, action.arguments
+                )
+            except EffectVerificationError as error:
+                raise ActionChainValidationError(
+                    "effect request cannot produce its expected proof"
+                ) from error
 
         dependency_ancestors = set(action.depends_on)
         for dependency in action.depends_on:
@@ -403,6 +433,19 @@ def validate_action_chain_requests(
             raise ActionChainValidationError(
                 "admitted request differs from the tool schema or resource scope"
             ) from error
+        if expected_kind == "effect":
+            if descriptor.effect_verification is None:
+                raise ActionChainValidationError(
+                    "effect tool lacks independent verification projection"
+                )
+            try:
+                descriptor.effect_verification.project_expected(
+                    action.resource, action.arguments
+                )
+            except EffectVerificationError as error:
+                raise ActionChainValidationError(
+                    "effect request cannot produce its expected proof"
+                ) from error
 
 
 def _operation_policies(policy: PolicyPack) -> dict[str, EffectPolicy]:
@@ -443,7 +486,10 @@ def _validate_authority_snapshot(
     descriptors: dict[str, dict[str, Any]] = {}
     previous_operation: str | None = None
     for raw in raw_descriptors:
-        if not isinstance(raw, dict) or set(raw) != required:
+        if not isinstance(raw, dict) or frozenset(raw) not in {
+            frozenset(required),
+            frozenset(required | {"effect_verification"}),
+        }:
             raise ActionChainValidationError("authority descriptor fields differ")
         operation = raw["operation"]
         effect_class = raw["effect_class"]
@@ -458,6 +504,20 @@ def _validate_authority_snapshot(
             )
         if effect_class not in {"read", "effect"} or not isinstance(enabled, bool):
             raise ActionChainValidationError("authority effect class is invalid")
+        raw_verification = raw.get("effect_verification")
+        if raw_verification is not None:
+            if effect_class != "effect":
+                raise ActionChainValidationError(
+                    "read authority cannot define effect verification"
+                )
+            try:
+                EffectVerificationProjection.from_authority_payload(
+                    raw_verification
+                )
+            except EffectVerificationError as error:
+                raise ActionChainValidationError(
+                    "authority effect verification is invalid"
+                ) from error
         if (
             not isinstance(permission_class, str)
             or not _IDENTIFIER.fullmatch(permission_class)
@@ -476,7 +536,11 @@ def _validate_authority_snapshot(
             if not isinstance(value, str) or not _SHA256.fullmatch(value):
                 raise ActionChainValidationError("authority digest is invalid")
         descriptor_manifest_id = raw["capability_manifest_id"]
-        manifest_payload = {key: raw[key] for key in required - {"capability_manifest_id"}}
+        manifest_payload = {
+            key: value
+            for key, value in raw.items()
+            if key != "capability_manifest_id"
+        }
         expected_descriptor_id = (
             f"capability:sha256:{canonical_sha256(manifest_payload)}"
         )

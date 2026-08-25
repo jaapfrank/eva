@@ -50,6 +50,10 @@ from eva.application.action_chain import (
     action_chain_step_operation_id,
     action_chain_thread_id,
 )
+from eva.application.effect_verification import (
+    EffectVerificationField,
+    EffectVerificationProjection,
+)
 from eva.contracts.base import JsonValue
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import CapabilityManifest, ConnectorBinding, ResourceScope
@@ -417,6 +421,16 @@ def _decision_and_plan() -> tuple[ModelDecision, ValidatedPlan, ActionToolCatalo
                 proof_floor="provider receipt plus independent readback",
                 enabled=True,
                 validate_request=validate_effect,
+                effect_verification=EffectVerificationProjection(
+                    (
+                        EffectVerificationField(
+                            name="state",
+                            expected_source="arguments",
+                            expected_pointer="/state",
+                            observed_pointer="/state",
+                        ),
+                    )
+                ),
             ),
         )
     )
