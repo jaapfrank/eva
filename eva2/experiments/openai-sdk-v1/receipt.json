@@ -1,0 +1,51 @@
+{
+  "contract": "EvaDependencyCandidateReceipt/v1",
+  "candidateId": "DF02a-openai-sdk-v1",
+  "checkedAt": "2026-08-25T22:15:00Z",
+  "implementationGitCommit": "8526314fde754ba56cbedde4be352f2496ed4910",
+  "status": "tested",
+  "productionAuthority": false,
+  "managedBChanged": false,
+  "realProviderCalled": false,
+  "dependency": {
+    "name": "openai",
+    "version": "3.3.1",
+    "upstreamTagCommit": "753ab5c1a81cd85e8bf0aef4c04c51a2e8dae6cd",
+    "newDistributions": [
+      "jiter==0.16.0",
+      "openai==3.3.1",
+      "sniffio==1.3.1"
+    ],
+    "existingDistributionsChanged": [],
+    "productionDistributionCount": 38,
+    "candidateDistributionCount": 41,
+    "productionLockSha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+    "candidateRootsSha256": "d7ec45355c0ea64a588b06bcefd09ddac69490dea5b06782f6e901c2fa34eba9",
+    "candidateLockSha256": "66d30604d6b818bad41c61ff003a482badc84401b6b4c5d89796a64f38245f02",
+    "hashRequiredInstall": "passed"
+  },
+  "sourceSha256": {
+    "src/eva/adapters/model/openai_responses_transport.py": "87307a90e037fb133aeb59fa020e34a5dee15995d3d6ecb48b9631a56432d27d",
+    "src/eva/adapters/model/conversation.py": "589e5c86ad59acd8b415dfa34f2c494b0c748696532849aa626606740a57f8e2",
+    "tests/model/test_openai_responses_transport.py": "39279cc498a57bd1a8d4fa377508fad12d8021ac19b788df5744b6b268570869"
+  },
+  "packagePolicySha256": "6ffbcb9794a369acac3e9d77bc236a025a7fdd30f273081e5f96f1b91cafb4cf",
+  "checks": {
+    "candidateSdkTests": {"passed": 18, "failed": 0},
+    "existingModelAndUsageTests": {"passed": 39, "failed": 0},
+    "broaderTargetedTests": {"passed": 63, "failed": 0},
+    "ruff": "passed",
+    "productionLockImportWithoutOpenAI": "passed",
+    "candidateTransportBoundaryViolations": 0,
+    "preExistingWorktreeBoundaryViolations": 21
+  },
+  "openProof": [
+    "real_provider_protocol",
+    "latency_comparison",
+    "amd64_arm64_wheelhouse",
+    "license_sbom_vulnerability_scan",
+    "offline_candidate_image",
+    "managed_b_adoption_and_rollback",
+    "independent_review"
+  ]
+}
