@@ -42,6 +42,23 @@
     ],
     "cleanup": "Temporary PostgreSQL container and database were removed after the test."
   },
+  "operator_trial_tool": {
+    "path": "tools/run_legacy_memory_trial.py",
+    "status": "tested_in_disposable_postgresql",
+    "preconditions": [
+      "A named eva2_legacy_memory_trial_ database.",
+      "One private 0600 legacy-person-label file.",
+      "One private 0600 explicit confirmation file.",
+      "Existing Eva2 tenant, installation, principal, and provenance evidence anchors."
+    ],
+    "limits": {
+      "active_rows_only": true,
+      "maximum_rows": 50,
+      "retention_days_minimum": 1,
+      "retention_days_maximum": 30
+    },
+    "output": "Hashes and counts only; no raw person label or memory content."
+  },
   "nonclaims": [
     "No old-Eva memory is active in Eva2.",
     "No old-Eva person label has been mapped to an Eva2 person.",
