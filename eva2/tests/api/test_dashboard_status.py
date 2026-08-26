@@ -272,6 +272,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "directe egress was geblokkeerd" in capability_by_id["browser"]["meaning"]
     assert "andere website kreeg 403" in capability_by_id["browser"]["meaning"]
     assert "geen blinde tweede poging" in capability_by_id["browser"]["meaning"]
+    assert "afgekeurd voor release" in capability_by_id["browser"]["meaning"]
     assert capability_by_id["telegram-real-test"]["state"] == "selected"
     assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
         "proof"
@@ -288,7 +289,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"
     assert dependency_by_name["Renovate + Trivy"]["state"] == "selected"
-    assert "Trivy nog niet uitgevoerd" in dependency_by_name["Renovate + Trivy"][
+    assert "gerichte Trivy-scan vond blockers" in dependency_by_name["Renovate + Trivy"][
         "version"
     ]
     for item in [*payload["capabilities"], *payload["dependencies"]]:

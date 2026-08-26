@@ -93,8 +93,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Gecontroleerde browserhand",
                 "state": "tested",
                 "proof": "Lokale read + klik én 1 openbare accountloze pagina via allowlist; 37 + 3 controles groen",
-                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging.",
-                "next": "Een tweede openbare testtaak met eigenaargrant en live stop; daarna pas formulieren, downloads, accounts en Telegram/B.",
+                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging. De huidige proxy en browserimage zijn echter afgekeurd voor release na 3 HIGH respectievelijk 1 CRITICAL + 22 HIGH bevindingen met fixes.",
+                "next": "Eerst beide images vervangen en opnieuw scannen; pas daarna een tweede openbare testtaak met eigenaargrant en live stop.",
                 "evidence": _evidence("capability/browser"),
             },
             {
@@ -178,7 +178,7 @@ def cockpit_progress() -> dict[str, Any]:
                 "version": "0.0.79",
                 "role": "Browsercomputer",
                 "state": "tested",
-                "decision": "Exacte MCR-image en Chromium-sandbox; lokale read/actie en één openbare accountloze read via allowlist zijn groen. Breder browserwerk blijft open.",
+                "decision": "Functioneel getest, maar huidige MCR-digest is afgekeurd voor release: 1 CRITICAL + 22 HIGH bevindingen met fixes. Nieuwe gepinde kandidaat moet opnieuw scannen en proeven.",
                 "evidence": _evidence("dependency/microsoft-playwright-mcp"),
             },
             {
@@ -205,10 +205,10 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Renovate + Trivy",
-                "version": "Renovate-config; Trivy nog niet uitgevoerd",
+                "version": "Renovate-config; gerichte Trivy-scan vond blockers",
                 "role": "Updatevoorstellen en beveiligingsscan",
                 "state": "selected",
-                "decision": "Renovate doet alleen kleine, handmatig goed te keuren voorstellen met gepinde image-digests. Trivy blijft een verplichte maar nog niet uitgevoerde scan.",
+                "decision": "Renovate doet alleen kleine, handmatig goed te keuren voorstellen met gepinde image-digests. De eerste gerichte scan blokkeert beide browserimages; een volledige release-scan blijft open.",
             },
         ],
     }

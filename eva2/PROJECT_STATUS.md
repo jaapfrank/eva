@@ -56,8 +56,8 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
-| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | Echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, kwetsbaarheidsscan en releasefreeze nog open |
+| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Sinds 03:00 daadwerkelijk opgeleverd
@@ -71,7 +71,7 @@ Dat zijn niet 41 producten, maar vier gesloten, begrijpelijke uitkomsten:
 | Subagent van opdracht tot werkbord | implementatie `f9373f1`; cockpit-/bewijsbinding `db4cedd` | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
 | Afgeschermde browser-read | `27965d8` | Een echte Chromium las één vaste lokale pagina zonder host- of internetroute |
 | Duurzame browseractie | `72625e0` | Eén vaste klik liep via Eva's logboek en aparte servercontrole; twee providerfouten gaven geen blinde tweede klik |
-| Veilige openbare browser-read | kandidaat, receipt 2026-08-26 | Chromium las `example.com` zonder account; directe browser-egress was geblokkeerd en de proxy weigerde `iana.org` |
+| Veilige openbare browser-read | kandidaat, receipt 2026-08-26 | Chromium las `example.com` zonder account; directe browser-egress was geblokkeerd en de proxy weigerde `iana.org`. De gebruikte proxy- en browserdigest zijn vervolgens afgekeurd voor release door 3 HIGH respectievelijk 1 CRITICAL + 22 HIGH bevindingen met fixes |
 
 De subagentuitkomst was te breed als één werkblok: motor, opslag, chatbediening,
 stop, workerimage, Kanban en bewijs liepen achter elkaar voordat de zichtbare
@@ -106,9 +106,14 @@ Ook onderhoud is nu begrensd in plaats van handwerk of stil automatische
 updates. [`renovate.json`](renovate.json) maakt op GitHub hooguit twee kleine
 dependencyvoorstellen tegelijk, pas na zeven dagen, met handmatige goedkeuring
 en zonder automerge. Docker-updates moeten op een immutable digest blijven.
-De lokale checker is groen. Dit is nadrukkelijk nog **geen** uitgevoerde
-Trivy-kwetsbaarheidsscan of productie-upgrade; die blijven afzonderlijke
-releasegates.
+De lokale checker is groen. De eerste gerichte Trivy-scan is inmiddels ook
+uitgevoerd op de twee nieuwe browserimages. Dat leverde geen promotie op maar
+een blokkade: de Squid-proxy heeft **3 HIGH** bevindingen met fixes; de
+Playwright-sidecar **1 CRITICAL + 22 HIGH** met fixes. Beide exacte digests
+zijn daarom afgewezen voor release. Zie
+[`browser-dependency-vulnerability-scan-2026-08-26.json`](evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json).
+Dit is nog geen volledige release-scan of productie-upgrade: een vervangende
+image moet opnieuw worden gepind, gescand en functioneel beproefd.
 
 Checkpoint `d65350b` maakt de volgende echte gebruikersproef direct zichtbaar
 in Eva's cockpit. De kaart **Telegram met twee testaccounts** zegt nu precies

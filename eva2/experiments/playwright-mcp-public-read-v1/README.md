@@ -29,6 +29,17 @@ browser-egress naar `1.1.1.1:443` was geblokkeerd, en de proxy gaf `403` voor
 webtaken, formulieren, downloads, accounts, meekijken/overnemen of productie-
 browserwerk kan uitvoeren.
 
+## Belangrijke onderhoudsuitkomst
+
+De functionele proef is groen, maar de twee gebruikte **huidige** image-digests
+zijn op 26 augustus 2026 afgekeurd voor promotie. Een gerichte Trivy-scan vond
+in de Squid-proxy drie HIGH-bevindingen met beschikbare fixes; in de
+Playwright-sidecar één CRITICAL en 22 HIGH-bevindingen met beschikbare fixes.
+Deze proef mag dus niet als releasebrowser worden hergebruikt. Eerst is een
+nieuwe gepinde kandidaat nodig, daarna dezelfde scan én deze functionele proef
+opnieuw. De precieze, heropenbare samenvatting staat in
+[`browser-dependency-vulnerability-scan-2026-08-26.json`](../../evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json).
+
 De Playwright-documentatie beschrijft de ingebouwde `--proxy-server`-optie,
 maar zegt ook expliciet dat browser-originfilters geen securitygrens zijn. De
 netwerkscheiding en Squid-allowlist zijn daarom de werkelijke grens:
