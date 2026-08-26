@@ -32,6 +32,7 @@ def test_people_memory_overview_has_one_closed_non_identifying_wire_shape() -> N
         ("group_sharing", "person:jaap"),
         ("memory_flow", "secret memory text"),
         ("hindsight", "http://hindsight:8888"),
+        ("control_plane", "selected_not_connected"),
     ),
 )
 def test_people_memory_overview_refuses_open_or_identifying_states(
@@ -42,6 +43,7 @@ def test_people_memory_overview_refuses_open_or_identifying_states(
         "group_sharing": "private_only",
         "memory_flow": "no_signals",
         "hindsight": "unknown",
+        "control_plane": "not_admitted",
     }
     values[field] = value
 
