@@ -154,7 +154,7 @@ def cockpit_progress() -> dict[str, Any]:
                 "version": "0.9.1",
                 "role": "Langetermijngeheugen",
                 "state": "live",
-                "decision": "Behouden; Control Plane wordt de geheugenmodule.",
+                "decision": "Behouden; de Control Plane is hoogstens een eigenaar-only, read-only overzicht en nooit Eva's geheugenwaarheid.",
                 "evidence": _evidence("dependency/hindsight"),
             },
             {
