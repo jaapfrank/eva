@@ -1,0 +1,62 @@
+{
+  "contract": "EvaPlaywrightMcpSystemRefreshReceipt/v1",
+  "date": "2026-08-26",
+  "purpose": "Compare the current official Microsoft Playwright MCP image after ordinary Debian security updates and removal of unused npm tooling against the same fixed Eva browser test cell.",
+  "candidate": {
+    "parentImage": "mcr.microsoft.com/playwright/mcp@sha256:18c0a9c934004fe9580cc79f1e8e6e6cde7c667348b215335e8a23fd3e509804",
+    "localImage": "eva2/playwright-mcp-system-refresh@sha256:26e2c6fa22a40d4ce21273c021e329b950e9ed5718cca82e722031c42b4019ff",
+    "platform": "linux/amd64",
+    "runtimeUser": "node",
+    "sizeBytes": 419557572,
+    "source": {
+      "path": "experiments/playwright-mcp-system-refresh-v1/Dockerfile",
+      "sha256": "254effcda1997603f6f3869e285b58d1683be7b06198b82d093ffa149ea73053"
+    },
+    "updatedPackages": {
+      "libnss3": "2:3.87.1-1+deb12u4",
+      "xserver-common": "2:21.1.7-3+deb12u13",
+      "xvfb": "2:21.1.7-3+deb12u13"
+    },
+    "removedUnusedTools": ["npm", "npx"]
+  },
+  "build": {
+    "command": "docker build --pull=false --no-cache --tag eva2/playwright-mcp-system-refresh:0.0.79-dev -f experiments/playwright-mcp-system-refresh-v1/Dockerfile experiments/playwright-mcp-system-refresh-v1",
+    "network": "Debian package mirrors only during candidate build",
+    "result": "passed",
+    "nonreproducibleInput": "Debian update repositories were deliberately live for this comparison; this image is not a release artifact."
+  },
+  "compatibilityProof": {
+    "command": "PYTHONPATH=.:src python3 experiments/playwright-mcp-sidecar-v1/smoke_candidate.py --browser-image eva2/playwright-mcp-system-refresh:0.0.79-dev",
+    "result": "passed",
+    "fixtureGets": 1,
+    "toolSequence": ["browser_navigate", "browser_snapshot"],
+    "externalEgressBlocked": true,
+    "hostNetworkBlocked": true,
+    "publishedPorts": 0,
+    "sandboxRequested": true,
+    "stopMilliseconds": 283
+  },
+  "vulnerabilityScan": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "advisorySnapshot": {
+      "trivyDbSha256": "8bb6fdce37551657903562ee2ca733a75bd9407fe837a02b2de82da0eb069967",
+      "metadataSha256": "76f6078a2fa1a3a1dda929b6e19389394696873b1e6b20201be0623586c621d4",
+      "scanNetwork": "none"
+    },
+    "upstream": {"critical": 8, "high": 69},
+    "npmTrimOnly": {"critical": 7, "high": 61},
+    "systemRefreshAndNpmTrim": {"critical": 7, "high": 47, "nodePackageFindings": 0}
+  },
+  "decision": {
+    "state": "rejected_not_promoted",
+    "reason": "The candidate improves the exact scan but still has seven CRITICAL and 47 HIGH findings; Eva's release gate remains zero.",
+    "productionChanged": false,
+    "liveEva1Changed": false,
+    "next": "Evaluate a maintained browser provider or different base rather than relaxing the vulnerability gate."
+  },
+  "nonclaims": [
+    "This is not a release, deployment or provider replacement.",
+    "This does not prove a public account flow, downloads, human takeover, Telegram or B adoption.",
+    "This does not modify Eva 1, its SQLite memory, its service, live credentials or volumes."
+  ]
+}

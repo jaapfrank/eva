@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 CANDIDATE = ROOT / "experiments" / "playwright-mcp-public-read-v1"
 SIDECAR_CANDIDATE = ROOT / "experiments" / "playwright-mcp-sidecar-v1"
+SYSTEM_REFRESH_CANDIDATE = ROOT / "experiments" / "playwright-mcp-system-refresh-v1"
 
 
 def test_public_read_profile_stays_one_page_and_one_allowlisted_destination() -> None:
@@ -85,3 +86,19 @@ def test_sidecar_runner_keeps_the_sealed_image_by_default_but_allows_a_local_can
     assert "main(browser_image=parser.parse_args().browser_image)" in runner
     assert '"browserImage": browser_image' in runner
     assert 'if browser_image == PLAYWRIGHT_IMAGE:' in runner
+
+
+def test_system_refresh_candidate_only_updates_the_official_base_and_unused_npm() -> None:
+    dockerfile = (SYSTEM_REFRESH_CANDIDATE / "Dockerfile").read_text(encoding="utf-8")
+
+    assert (
+        "FROM mcr.microsoft.com/playwright/mcp@sha256:"
+        "18c0a9c934004fe9580cc79f1e8e6e6cde7c667348b215335e8a23fd3e509804"
+        in dockerfile
+    )
+    assert "apt-get update" in dockerfile
+    assert "apt-get upgrade --yes --no-install-recommends" in dockerfile
+    assert "/usr/local/lib/node_modules/npm" in dockerfile
+    assert "USER node" in dockerfile
+    assert "--no-sandbox" not in dockerfile
+    assert "curl " not in dockerfile
