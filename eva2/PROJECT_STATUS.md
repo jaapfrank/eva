@@ -55,7 +55,7 @@ de controleerbare live receipts staan in
 | Hoofduitkomst | Wat aantoonbaar staat | Status van het complete project |
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
-| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; de eerste veilige voicegrens laat alleen een definitieve private transcriptie in dezelfde gesprekcore toe | Echte gezinschat, spontane presence en bellen met streaming audio/onderbreking nog open |
+| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; een lokale synthetische Piper→Whisper→dezelfde Eva-kern→Piper-keten is groen | Echte gezinschat, microfoon/speaker, spontane presence en bellen met streaming audio/onderbreking nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. Een afgeschermde browser las één vaste pagina en voerde via Eva's duurzame logboek één vaste klik uit met onafhankelijke controle achteraf | Publieke websites, echte accounts, meekijken/overname, volledige skillcyclus en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
@@ -175,6 +175,17 @@ blijft compatibel. Er is nul sleutel, providerverbinding, microfoon, speaker,
 audio, transcriptie of latencyclaim. De kandidaat verandert de productlock,
 image, B of bestaande Eva-route niet. Zie
 [`experiments/pydantic-realtime-v1/`](experiments/pydantic-realtime-v1/).
+
+Checkpoint `73561ce` levert daarna de eerste **werkelijk uitgevoerde lokale
+spraakketen** op, zonder een eigen STT/TTS-protocol of -engine te bouwen.
+Gepinde Piper, Faster-Whisper en de officiële Wyoming-client spreken een vaste
+Nederlandse testzin, herkennen haar lokaal, laten uitsluitend de definitieve
+tekst toe tot Eva's bestaande private gesprekcore en maken een vaste
+antwoordzin als PCM. De receipt is gebonden aan locks, code, sidecar-digests,
+teksthashes en PCM-hashes en hercontroleert lokaal groen. Dit is geen menselijk
+voicegesprek: microfoon, speaker, full duplex, onderbreken, modelantwoord,
+tool, latency, offline cacheherstel en onafhankelijke review zijn nog open.
+Zie [`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**

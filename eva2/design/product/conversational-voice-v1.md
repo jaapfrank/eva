@@ -122,9 +122,9 @@ transcripthash, een andere persoon of gesprek, verlopen sessies en een
 barge-in buiten de sessie. Een barge-in heeft expliciet geen toestemming om
 een tool-effect te annuleren: hij mag alleen hoorbare output en een nog niet
 afgemaakte antwoordgeneratie stoppen. **21** contract-, gesprek- en
-schemachecks zijn groen. Er is nog geen microfoon, audio, provider, token,
-opslag, latencyclaim of onafhankelijke review; V01 blijft daarom op het
-aftekenbord open totdat de review is uitgevoerd.
+schemachecks zijn groen. Er is nog geen microfoon, speaker, echte persoon,
+voiceprovider, token, opslag, latencyclaim of onafhankelijke review; V01
+blijft daarom op het aftekenbord open totdat de review is uitgevoerd.
 
 De types staan bewust nog niet in de permanente portable-wire-registry. Die
 registry is de exportgrens voor bestaande duurzame records; er bestaat nog
@@ -140,6 +140,26 @@ geen blocker. De echte `Agent.realtime(...).session()`- en
 `RealtimeSession.interrupt(played_ms=...)`-interface importeert groen. Dit is
 dependencybewijs, geen audio- of providerbewijs: V02 blijft een echte
 microfoon→speaker streamingproef nodig hebben.
+
+## Eerste lokale V02-keten is echt uitgevoerd, maar nog geen voice-call
+
+Checkpoint `73561ce` gebruikt geen zelfgebouwde STT- of TTS-engine. De proef
+in `experiments/wyoming-local-voice-v1/` gebruikt de officiële
+`wyoming==1.10.0`-client, een gepinde lokale Piper-sidecar met Nederlandse
+`nl_NL-pim-medium`-stem en een gepinde lokale Faster-Whisper-sidecar met
+`base-int8`. Een vaste, synthetisch gesproken Nederlandse testzin werd als PCM
+naar lokale STT gestuurd. Alleen de teruggekomen **definitieve** tekst ging
+door `VoiceTurn/v1` naar Eva's gewone private gesprekbeurt; daarna maakte Piper
+weer PCM voor een vaste antwoordzin. De controllerlock, bronhashes,
+sidecar-pins, teksthashes en PCM-hashes staan in één receipt;
+`verify_receipt.py` controleert dit zonder Docker of netwerk opnieuw.
+
+Dit is nuttig omdat de route nu niet alleen op papier bestaat: audioformaat,
+officiële Wyoming-protocolgrens, Nederlandse STT, Eva's privacygrens en lokale
+TTS zijn samen geraakt. Maar het is nadrukkelijk **geen** gesprek met een mens:
+geen microfoon of speaker, geen modelantwoord, tool, opslag, barge-in,
+full-duplexstream, latencyclaim of volledig offline cacheherstel. Daarom blijft
+V02 onafgevinkt.
 
 ## Snelheidsbudgetten
 
@@ -170,6 +190,9 @@ vooraf vastgelegd en niet achteraf weggefilterd.
   contract met persoon, gesprek, deadlines, cancel-generation en privacy.
 - [ ] V02 — Lokale full-duplex testclient met echte streaming STT/TTS,
   onderbreken en gescheiden latencyreceipts; nog geen Telegram of HA.
+  `73561ce` sluit alleen de eerste synthetische Piper→Faster-Whisper→V01→Piper
+  keten; echte microfoon/speaker, streaming, interrupt, latency en offline
+  cacheherstel blijven open.
 - [ ] V03 — Home Assistant Assist/Wyoming-route tegen Eva's bestaande
   gesprekcore, met dezelfde persoon/context en zonder tweede intentbrein.
 - [ ] V04 — Telegram Mini App `Bel Eva`: server-side initdataverificatie,

@@ -74,6 +74,13 @@ Hergebruik betekent niet blind `latest` installeren.
   bevestigde de publieke sessie-/onderbrekingsinterface. De extra vereist
   `websockets>=14`; de kandidaat behoudt daarom compatibel
   `websockets==17.0.1`. De eerdere tussenkandidaat `2.32.2` vervalt daarmee.
+- Voor de lokale voicefallback is geen eigen audio- of spraakprotocol gemaakt:
+  checkpoint `73561ce` beproeft de officiële `wyoming==1.10.0`-client met
+  gepinde `OHF-Voice/wyoming-piper v2.4.2`- en
+  `OHF-Voice/wyoming-faster-whisper v3.6.0`-sidecars. De kleine synthetische
+  STT→Eva→TTS-keten is groen, maar beide sidecars blijven `PROEF`: hardware,
+  streaming, interrupt, latency, cacheherstel zonder netwerk en review zijn
+  nog niet bewezen. Er is niets aan de productlock of B toegevoegd.
 - Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
   playback/media-bridge. Een upstream cancellation-API is nog geen gemeten
   barge-in.
