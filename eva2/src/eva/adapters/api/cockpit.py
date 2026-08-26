@@ -81,11 +81,11 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "id": "runtime-subagents",
-                "title": "Duurzame subagentproef en werkbord",
+                "title": "Subagents vanuit Eva-chat",
                 "state": "tested",
-                "proof": "Een afgeschermde proeftaak draait in een apart testproces; twee workers starten samen maar één modelrun.",
-                "meaning": "Bij een normale processtop bewaart Eva dat er geen bevestigd resultaat is. Na een harde crash toont het bord zodra de korte werklease verloopt dat het contact weg is. In beide gevallen start Eva dezelfde modelrun niet opnieuw.",
-                "next": "Dezelfde route met één echte modelprovider en vanuit Eva's gewone privéchat starten, volgen en stoppen.",
+                "proof": "Starten, volgen en actief stoppen werkt; de aparte workerimage van 86,6 MB is onafhankelijk groen.",
+                "meaning": "Eva kan één begrensde onderzoeker aansturen. Na stop of crash verzint zij geen resultaat en start zij dezelfde provider-call niet blind opnieuw.",
+                "next": "Eén eigenaar-goedgekeurde externe providercanary via echt Telegram en de beheerde kandidaat uitvoeren.",
                 "evidence": _evidence("capability/runtime-subagents"),
             },
             {
@@ -150,10 +150,10 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Pydantic AI",
-                "version": "2.32.1 release · 2.34.0 proef",
+                "version": "2.32.1 + OpenAI SDK 3.3.1",
                 "role": "Model- en realtimebasis",
                 "state": "tested",
-                "decision": "De duurzame worker gebruikt de huidige productlock; 2.34.0 blijft de apart geteste voice-/upgradekandidaat.",
+                "decision": "De duurzame subagentworker gebruikt deze gepinde communityroute; 2.34.0 blijft de apart geteste voicekandidaat.",
                 "evidence": _evidence("dependency/pydantic-ai"),
             },
             {
@@ -228,6 +228,7 @@ COCKPIT_HTML = """<!doctype html>
     .core-stage{display:grid;place-items:center;min-height:420px;transform-style:preserve-3d}.core{position:relative;width:clamp(220px,27vw,350px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.96),rgba(97,231,255,.52) 5%,rgba(50,83,230,.42) 18%,rgba(13,23,52,.92) 57%,#030812 72%);box-shadow:0 0 80px rgba(58,157,255,.28),inset -28px -32px 70px #01040a,inset 16px 16px 45px rgba(255,255,255,.12);animation:float 7s ease-in-out infinite}.core:before,.core:after{content:"";position:absolute;inset:-18%;border:1px solid rgba(97,231,255,.35);border-radius:50%;transform:rotateX(68deg) rotateZ(9deg);box-shadow:0 0 28px rgba(97,231,255,.12)}.core:after{inset:-34%;border-color:rgba(166,132,255,.2);transform:rotateX(72deg) rotateZ(-28deg)}.core-copy{text-align:center;z-index:2}.core-name{font-size:clamp(2rem,4vw,4rem);font-weight:820;letter-spacing:.12em;text-shadow:0 0 30px rgba(255,255,255,.5)}.core-state{display:block;margin-top:.3rem;color:#b9d6e8;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase}
     .signal-list{transform:rotateY(-5deg);transform-origin:left}.signal{margin:.7rem 0;padding:.9rem 1rem;border-left:1px solid var(--cyan);background:linear-gradient(90deg,rgba(97,231,255,.08),transparent);color:#bdd0dd}.signal strong{display:block;color:var(--ink);font-size:.92rem}.signal span{color:var(--muted);font-size:.8rem}
     section.content{scroll-margin-top:85px;margin-top:2rem}.section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem}.section-head h2{margin:0;font-size:clamp(1.55rem,3vw,2.6rem);letter-spacing:-.035em}.section-head p{margin:0;color:var(--muted);max-width:52ch}.kicker{color:var(--cyan);font-size:.7rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    .delivery-stage{position:relative;padding:clamp(1.2rem,3vw,2.2rem);border:1px solid rgba(118,242,176,.25);border-radius:26px;background:radial-gradient(circle at 84% 10%,rgba(118,242,176,.12),transparent 34%),linear-gradient(145deg,rgba(10,30,45,.96),rgba(4,12,23,.9));box-shadow:var(--depth);overflow:hidden;perspective:1200px}.delivery-stage:before{content:"";position:absolute;inset:auto -12% -78% 36%;height:360px;border:1px solid rgba(97,231,255,.18);border-radius:50%;transform:rotateX(68deg);box-shadow:0 0 70px rgba(97,231,255,.08);pointer-events:none}.delivery-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;margin-top:1.2rem}.delivery-metric{min-height:132px;padding:1rem;border:1px solid var(--line);border-radius:16px;background:rgba(3,12,22,.72);transform:translateZ(18px);box-shadow:0 18px 36px rgba(0,0,0,.26)}.delivery-metric strong{display:block;color:var(--green);font-size:clamp(1.45rem,3vw,2.35rem);letter-spacing:-.04em}.delivery-metric span{display:block;color:#d8e8f2;font-weight:700}.delivery-metric small{display:block;margin-top:.35rem;color:var(--muted)}.journey{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.7rem;margin-top:1rem}.journey-step{position:relative;padding:1rem;border:1px solid rgba(97,231,255,.2);border-radius:15px;background:rgba(7,22,36,.82)}.journey-step:not(:last-child):after{content:"→";position:absolute;right:-1.28rem;top:50%;transform:translateY(-50%);color:var(--cyan);font-size:1.25rem}.journey-step b{display:block;color:var(--cyan)}.journey-step span{color:var(--muted);font-size:.82rem}.proof-boundary{position:relative;margin:.9rem 0 0;color:#7995a8;font-size:.78rem}.proof-boundary strong{color:var(--amber)}
     .constellation{position:relative;min-height:480px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:center;padding:3rem clamp(1rem,4vw,4rem);border:1px solid var(--line);border-radius:26px;background:radial-gradient(circle at 50% 48%,rgba(97,231,255,.13),transparent 22%),linear-gradient(145deg,rgba(9,25,43,.9),rgba(3,9,18,.78));box-shadow:var(--depth);overflow:hidden;perspective:1100px}.constellation:before,.constellation:after{content:"";position:absolute;left:50%;top:48%;width:min(68vw,850px);height:270px;transform:translate(-50%,-50%) rotateX(69deg);border:1px solid rgba(97,231,255,.16);border-radius:50%;pointer-events:none}.constellation:after{width:min(46vw,570px);height:180px;border-color:rgba(166,132,255,.2);transform:translate(-50%,-50%) rotateX(69deg) rotateZ(8deg)}
     .circle-card{position:relative;z-index:2;min-height:180px;padding:1.15rem;border:1px solid rgba(97,231,255,.19);border-radius:18px;background:rgba(4,14,25,.88);backdrop-filter:blur(12px);box-shadow:0 22px 55px rgba(0,0,0,.35);transition:border-color .2s ease,transform .2s ease}.circle-card:hover{transform:translateY(-4px);border-color:rgba(97,231,255,.4)}.circle-card:nth-child(1){transform:rotateY(8deg)}.circle-card:nth-child(3){transform:rotateY(-8deg)}.circle-card:nth-child(4){grid-column:2}.circle-card h3{margin:.7rem 0 .35rem;font-size:1.15rem}.circle-card p{margin:.25rem 0;color:var(--muted)}.orbit-state{display:inline-flex;align-items:center;gap:.45rem;color:var(--cyan);font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.orbit-state:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 12px currentColor}.circle-card.good .orbit-state{color:var(--green)}.circle-card.attention .orbit-state{color:var(--amber)}.circle-card.unavailable .orbit-state{color:var(--red)}
     .circle-core{position:relative;z-index:3;justify-self:center;display:grid;place-items:center;width:190px;aspect-ratio:1;border-radius:50%;text-align:center;padding:1.2rem;background:radial-gradient(circle at 35% 28%,#fff 0 2%,rgba(97,231,255,.85) 4%,rgba(55,81,225,.48) 22%,rgba(5,15,29,.96) 68%);border:1px solid rgba(97,231,255,.36);box-shadow:0 0 60px rgba(97,231,255,.28),inset 0 0 45px rgba(255,255,255,.08)}.circle-core strong{display:block;font-size:1.25rem}.circle-core span{display:block;margin-top:.35rem;color:#b5cede;font-size:.78rem}.memory-door{position:relative;z-index:3;grid-column:1/-1;justify-self:center;width:min(520px,100%);padding:.85rem 1rem;border:1px solid var(--line);border-radius:12px;text-align:center;color:#7591a5;background:rgba(255,255,255,.025);font-size:.8rem}.memory-door strong{color:#9cb2c2}
@@ -238,7 +239,7 @@ COCKPIT_HTML = """<!doctype html>
     footer{margin:4rem 0 1rem;padding-top:1.4rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;color:#678196;font-size:.78rem}
     .error{color:var(--red)!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-13px) rotate(1deg)}}
-    @media(max-width:950px){.shell{grid-template-columns:1fr}nav{position:static;height:auto;display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:.6rem}.nav-label{display:none}.nav-link{min-width:max-content}.hero{grid-template-columns:1fr;min-height:auto;padding:3rem 0}.intro,.signal-list{transform:none}.core-stage{grid-row:1}.constellation{grid-template-columns:1fr;min-height:0}.circle-card:nth-child(1),.circle-card:nth-child(3){transform:none}.circle-card:nth-child(4){grid-column:auto}.circle-core{grid-row:1}.memory-door{grid-column:auto}}
+    @media(max-width:950px){.shell{grid-template-columns:1fr}nav{position:static;height:auto;display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:.6rem}.nav-label{display:none}.nav-link{min-width:max-content}.hero{grid-template-columns:1fr;min-height:auto;padding:3rem 0}.intro,.signal-list{transform:none}.core-stage{grid-row:1}.delivery-grid,.journey{grid-template-columns:repeat(2,minmax(0,1fr))}.journey-step:after{display:none}.constellation{grid-template-columns:1fr;min-height:0}.circle-card:nth-child(1),.circle-card:nth-child(3){transform:none}.circle-card:nth-child(4){grid-column:auto}.circle-core{grid-row:1}.memory-door{grid-column:auto}}
     @media(max-width:560px){.topbar{align-items:flex-start}.hero{padding-top:1rem}.core{width:230px}.section-head{display:block}.section-head p{margin-top:.5rem}footer{display:block}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.core{animation:none}.card{transition:none}.card:hover{transform:none}}
   </style>
@@ -253,6 +254,7 @@ COCKPIT_HTML = """<!doctype html>
     <nav aria-label="Cockpitonderdelen">
       <p class="nav-label">Eva</p>
       <a class="nav-link" href="#main"><span class="nav-icon"></span>Leven</a>
+      <a class="nav-link" href="#vandaag"><span class="nav-icon"></span>Vandaag opgeleverd</a>
       <a class="nav-link" href="#kring"><span class="nav-icon"></span>Mijn kring</a>
       <a class="nav-link" href="#bewijs"><span class="nav-icon"></span>Echte voortgang</a>
       <p class="nav-label">Werk</p>
@@ -277,6 +279,25 @@ COCKPIT_HTML = """<!doctype html>
           <div class="signal"><strong>Kan ik werken?</strong><span id="runtime-detail">Niet beschikbaar</span></div>
           <div class="signal"><strong>Waar werk ik aan?</strong><span id="work-signal">Duurzame subagenttaken ophalen…</span></div>
           <div class="signal"><strong>Wat blijft van mij?</strong><span>Identiteit, privacy, mandaat, ledger en eindantwoord</span></div>
+        </div>
+      </section>
+
+      <section id="vandaag" class="content" aria-labelledby="vandaag-title">
+        <div class="delivery-stage">
+          <div class="section-head"><div><span class="kicker">Verticale slice gesloten</span><h2 id="vandaag-title">Vandaag kreeg Eva haar eerste echte onderzoeker</h2></div><p>Niet nog een ontwerpdocument: één kleine subagentroute is van Eva-opdracht tot stop, opslag, workerimage en onafhankelijke controle afgemaakt.</p></div>
+          <div class="delivery-grid" aria-label="Bewijs van de subagentkandidaat">
+            <article class="delivery-metric"><strong>40 + 28</strong><span>gerichte controles groen</span><small>Inclusief echte PostgreSQL-, proces- en stopraces.</small></article>
+            <article class="delivery-metric"><strong>1×</strong><span>provider-call fence</span><small>Twee workers of een herstart veroorzaken geen tweede blinde call.</small></article>
+            <article class="delivery-metric"><strong>86,6 MB</strong><span>aparte workerimage</span><small>Niet-root, read-only en zonder browser-, web- of migratieplatform.</small></article>
+            <article class="delivery-metric"><strong>GO</strong><span>onafhankelijke herreview</span><small>De gevonden stopraces zijn eerst hersteld en daarna opnieuw beproefd.</small></article>
+          </div>
+          <div class="journey" aria-label="Hoe Eva een subagent gebruikt">
+            <article class="journey-step"><b>1 · Jij vraagt</b><span>Eva's commandroute ontvangt start, status of stop.</span></article>
+            <article class="journey-step"><b>2 · Eva begrenst</b><span>Taak, eigenaar, model, calls, tokens, tijd en kosten liggen vast.</span></article>
+            <article class="journey-step"><b>3 · Onderzoeker werkt</b><span>Een kleine losse worker gebruikt de officiële SDK precies binnen die grenzen.</span></article>
+            <article class="journey-step"><b>4 · Eva blijft eerlijk</b><span>Resultaat, actieve stop of verloren contact verschijnt als afzonderlijke toestand.</span></article>
+          </div>
+          <p class="proof-boundary"><strong>Nog niet live:</strong> de eigenaar-goedgekeurde externe modelprovidercanary, echt Telegram en de beheerde B-kandidaat blijven de volgende poort.</p>
         </div>
       </section>
 
@@ -309,14 +330,15 @@ COCKPIT_HTML = """<!doctype html>
           </div>
         </div>
         <div class="dock roadmap" aria-label="Bewuste projectvolgorde">
-          <article class="module connected"><strong>Nu · Subagents echt afmaken</strong><span>Echte modelprovider, bediening via Eva-chat en eigenaar-authenticatie volgen</span></article>
+          <article class="module connected"><strong>Af · Subagentkandidaat</strong><span>Chatcommando's, actieve stop, duurzame status, workerimage en onafhankelijke GO</span></article>
+          <article class="module connected"><strong>Volgende poort · echte canary</strong><span>Een externe provider via echt Telegram en de beheerde kandidaat, na toestemming van de eigenaar</span></article>
           <article class="module pending"><strong>Daarna · Browsercomputer</strong><span>Eén afgeschermde webtaak van begin tot gecontroleerd eindresultaat</span></article>
           <article class="module pending"><strong>Daarna · Voice & aanwezigheid</strong><span>Dezelfde Eva snel, onderbreekbaar en weer voelbaar in huis</span></article>
         </div>
       </section>
 
       <section id="dependencies" class="content" aria-labelledby="dep-title">
-        <div class="section-head"><div><span class="kicker">Bestaande bouwstenen eerst</span><h2 id="dep-title">Wat we hergebruiken</h2></div><p>Een proefroute is nog geen winnaar. Alleen een gemeten dependency wordt een afgeschermde hand van Eva, nooit een tweede brein of taakdatabase.</p></div>
+        <div class="section-head"><div><span class="kicker">Bestaande bouwstenen eerst</span><h2 id="dep-title">Wat we hergebruiken</h2></div><p>Versie, rol, besluit en bewijs staan hier bij elkaar. Alleen een gemeten dependency wordt een afgeschermde hand van Eva, nooit een tweede brein of taakdatabase.</p></div>
         <div class="dep-table" aria-live="polite"><table><thead><tr><th scope="col">Bouwsteen</th><th scope="col">Versie</th><th scope="col">Rol</th><th scope="col">Besluit</th><th scope="col">Bewijs</th></tr></thead><tbody id="dependency-table"><tr><th scope="row">Bouwstenen ophalen…</th><td>Niet beschikbaar</td><td>Niet beschikbaar</td><td>Niet beschikbaar</td><td>Niet beschikbaar</td></tr></tbody></table></div>
       </section>
 
@@ -328,7 +350,7 @@ COCKPIT_HTML = """<!doctype html>
           <article class="module pending"><strong>Gesprekken</strong><span>Nog niet aangesloten</span></article>
           <article class="module connected"><strong>Personen & geheugen</strong><span>Veilige actuele status aangesloten; inhoudelijk geheugenbeheer volgt later</span></article>
           <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
-          <article class="module connected"><strong>Workers & subagents</strong><span>Providerloze Pydantic-proef draait in een apart testproces; echte provider en chatbediening zijn open</span></article>
+          <article class="module connected"><strong>Workers & subagents</strong><span>Chatstart, status, actieve stop en kleine workerimage getest; externe provider- en Telegramcanary volgen</span></article>
           <article class="module pending"><strong>Skills & browser</strong><span>Sidecars nog niet gekoppeld</span></article>
           <article class="module pending"><strong>Voice & huis</strong><span>Live routes nog open</span></article>
           <article class="module pending"><strong>Kosten & budget</strong><span>Projectie nog open</span></article>
