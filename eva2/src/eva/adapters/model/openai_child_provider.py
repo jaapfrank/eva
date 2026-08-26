@@ -355,6 +355,8 @@ def _validate_terminal_sse(content: bytes) -> None:
             raise ChildProviderProtocolError(
                 "child model returned an event after completion"
             )
+        if kind == "error":
+            raise ChildProviderProtocolError("child model returned an error event")
         if kind in {
             "response.cancelled",
             "response.completed",
@@ -370,6 +372,8 @@ def _validate_terminal_sse(content: bytes) -> None:
     response = terminal[0].get("response")
     if not isinstance(response, dict) or response.get("status") != "completed":
         raise ChildProviderProtocolError("child model completion status is invalid")
+    if response.get("error") is not None:
+        raise ChildProviderProtocolError("child model completion contains an error")
     usage = response.get("usage")
     if not isinstance(usage, dict):
         raise ChildProviderProtocolError("child model completion usage is missing")

@@ -104,6 +104,8 @@ def _provider_server(
     body_delay: float = 0,
     terminal: str = "completed",
     usage_mode: str = "valid",
+    error_before_completion: bool = False,
+    completion_error: bool = False,
     error_message: str = "provider failure",
 ) -> Iterator[tuple[str, list[dict[str, Any]]]]:
     captured: list[dict[str, Any]] = []
@@ -165,6 +167,19 @@ def _provider_server(
                         completed["usage"] = None
                     elif usage_mode == "corrupt":
                         completed["usage"]["total_tokens"] = -1
+                    if completion_error:
+                        completed["error"] = {
+                            "code": "server_error",
+                            "message": "provider contradicted completion",
+                        }
+                    if error_before_completion:
+                        events.append(
+                            {
+                                "type": "error",
+                                "code": "server_error",
+                                "message": "provider failed before completion",
+                            }
+                        )
                     events.append({"type": "response.completed", "response": completed})
                 elif terminal in {"cancelled", "failed", "incomplete"}:
                     failed = _response()
@@ -503,6 +518,50 @@ def test_completed_response_requires_valid_usage(
             return await runner.run(_spec(), call_id="call:provider:usage")
 
     with _provider_server(usage_mode=usage_mode) as (endpoint, captured):
+        outcome = asyncio.run(run(endpoint))
+    assert outcome.status != "succeeded"
+    assert len(captured) == 1
+
+
+@pytest.mark.parametrize(
+    ("error_before_completion", "completion_error"),
+    [(True, False), (False, True)],
+)
+def test_provider_error_can_never_hide_behind_completed(
+    tmp_path: Path,
+    error_before_completion: bool,
+    completion_error: bool,
+) -> None:
+    lease = tmp_path / "auth.json"
+    _write_lease(lease)
+
+    async def run(endpoint: str):  # type: ignore[no-untyped-def]
+        async with OpenAIChildProvider(
+            OpenAIChildProviderSettings(endpoint=endpoint, model_name="gpt-5.4-mini"),
+            credential_loader=lambda: _load_lease(lease),
+        ) as model:
+            profile = ToolFreeChildProfile(
+                model_profile_id="model:codex:gpt-5.4-mini:v1",
+                model_profile_release_sha256=MODEL_RELEASE,
+                worker_profile_id="worker:research:v1",
+                worker_profile_release_sha256=WORKER_RELEASE,
+                instructions="Geef alleen een controleerbaar onderzoeksresultaat.",
+                model=model,
+                input_cost_usd_micros_per_million_tokens=750_000,
+                output_cost_usd_micros_per_million_tokens=4_500_000,
+            )
+            runner = PydanticToolFreeChildRunner(
+                ClosedModelRegistry({profile.model_profile_id: profile}),
+                worker_program_sha256=WORKER_PROGRAM,
+                engine_release_sha256=ENGINE_RELEASE,
+                clock=lambda: datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+            )
+            return await runner.run(_spec(), call_id="call:provider:hidden-error")
+
+    with _provider_server(
+        error_before_completion=error_before_completion,
+        completion_error=completion_error,
+    ) as (endpoint, captured):
         outcome = asyncio.run(run(endpoint))
     assert outcome.status != "succeeded"
     assert len(captured) == 1

@@ -38,7 +38,9 @@ from eva.adapters.subagents.tool_free_child import (
     ToolFreeChildOutcome,
     ToolFreeChildProfile,
 )
-from eva.bootstrap.delegated_work_provider import build_delegated_work_spec
+from eva.bootstrap.delegated_work_provider import (
+    build_unadmitted_delegated_work_spec,
+)
 from eva.contracts.delegated_work import (
     DelegatedWorkGrant,
     DelegatedWorkResult,
@@ -303,7 +305,7 @@ def _product_process_spec(
     binding: UUID,
 ) -> DelegatedWorkSpec:
     del scope
-    return build_delegated_work_spec(
+    return build_unadmitted_delegated_work_spec(
         work_id=f"work:{label}:research",
         episode_id=str(episode),
         generation=1,

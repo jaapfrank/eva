@@ -75,7 +75,9 @@ WORKER_PROFILE_RELEASE_SHA256 = canonical_sha256(
     }
 )
 _EVA_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
-_EVA2_ROOT = Path(__file__).resolve().parents[3]
+DEPENDENCY_LOCK_SHA256 = (
+    "0f270ccc6b4086ce7f5a5300563a74dfa53569d51109fb60f21958fb0acaa6a5"
+)
 
 
 def _source_hashes() -> dict[str, str]:
@@ -83,6 +85,9 @@ def _source_hashes() -> dict[str, str]:
         "adapters/model/openai_child_provider.py",
         "adapters/postgres/delegated_work.py",
         "adapters/subagents/tool_free_child.py",
+        "bootstrap/delegated_work_provider.py",
+        "bootstrap/delegated_work_service.py",
+        "contracts/delegated_work.py",
         "operations/delegated_work_worker.py",
     )
     return {
@@ -100,9 +105,7 @@ WORKER_PROGRAM_SHA256 = canonical_sha256(
 ENGINE_RELEASE_SHA256 = canonical_sha256(
     {
         "contract": "EvaDelegatedEngineRelease/v1",
-        "dependency_lock_sha256": hashlib.sha256(
-            (_EVA2_ROOT / "requirements-delegated-work.lock").read_bytes()
-        ).hexdigest(),
+        "dependency_lock_sha256": DEPENDENCY_LOCK_SHA256,
         "openai_sdk": OPENAI_SDK_VERSION,
         "pydantic_ai": PYDANTIC_AI_VERSION,
     }
@@ -124,7 +127,7 @@ def verify_delegated_provider_dependencies() -> None:
         raise RuntimeError("delegated provider dependency release differs")
 
 
-def build_delegated_work_spec(
+def build_unadmitted_delegated_work_spec(
     *,
     work_id: str,
     episode_id: str,
@@ -136,7 +139,7 @@ def build_delegated_work_spec(
     created_at: datetime,
     deadline: datetime,
 ) -> DelegatedWorkSpec:
-    """Build the one release-authorized product task; callers choose no model knobs."""
+    """Build a sealed candidate; PostgreSQL admission remains the authority check."""
 
     def timestamp(value: datetime) -> str:
         if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
@@ -263,12 +266,13 @@ async def open_delegated_work_runner(
 
 __all__ = [
     "ENGINE_RELEASE_SHA256",
+    "DEPENDENCY_LOCK_SHA256",
     "MODEL_PROFILE_ID",
     "MODEL_PROFILE_RELEASE_SHA256",
     "WORKER_PROFILE_ID",
     "WORKER_PROFILE_RELEASE_SHA256",
     "WORKER_PROGRAM_SHA256",
-    "build_delegated_work_spec",
+    "build_unadmitted_delegated_work_spec",
     "open_delegated_work_runner",
     "verify_delegated_provider_dependencies",
 ]

@@ -12,13 +12,14 @@ from pathlib import Path
 import pytest
 from eva.bootstrap import delegated_work_provider as provider_module
 from eva.bootstrap.delegated_work_provider import (
+    DEPENDENCY_LOCK_SHA256,
     ENGINE_RELEASE_SHA256,
     MODEL_PROFILE_ID,
     MODEL_PROFILE_RELEASE_SHA256,
     WORKER_PROFILE_ID,
     WORKER_PROFILE_RELEASE_SHA256,
     WORKER_PROGRAM_SHA256,
-    build_delegated_work_spec,
+    build_unadmitted_delegated_work_spec,
     open_delegated_work_runner,
     verify_delegated_provider_dependencies,
 )
@@ -48,6 +49,9 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
             "adapters/model/openai_child_provider.py",
             "adapters/postgres/delegated_work.py",
             "adapters/subagents/tool_free_child.py",
+            "bootstrap/delegated_work_provider.py",
+            "bootstrap/delegated_work_service.py",
+            "contracts/delegated_work.py",
             "operations/delegated_work_worker.py",
         )
     }
@@ -57,6 +61,7 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
     lock_sha256 = hashlib.sha256(
         (EVA2_ROOT / "requirements-delegated-work.lock").read_bytes()
     ).hexdigest()
+    assert DEPENDENCY_LOCK_SHA256 == lock_sha256
     assert ENGINE_RELEASE_SHA256 == canonical_sha256(
         {
             "contract": "EvaDelegatedEngineRelease/v1",
@@ -105,9 +110,9 @@ def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> Non
         verify_delegated_provider_dependencies()
 
 
-def test_product_task_builder_matches_the_only_sealed_runner_authority() -> None:
+def test_unadmitted_task_builder_matches_the_only_sealed_runner_profile() -> None:
     created = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
-    spec = build_delegated_work_spec(
+    spec = build_unadmitted_delegated_work_spec(
         work_id="work:owner:research:1",
         episode_id="11111111-1111-1111-1111-111111111111",
         generation=7,
