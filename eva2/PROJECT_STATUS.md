@@ -80,6 +80,17 @@ zijn. Het actieve project blijft daarom **browser en zelfstandige computer**;
 de volgende uitkomst is één afgeschermde publieke testsite met grant en live
 stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
+## Nieuwste afgeronde stap
+
+Checkpoint `fedfb15` voegt één kleine veiligheidsrem toe: de geverifieerde
+eigenaar kan de laatste voorbereide actie annuleren **voordat** Eva haar voor
+uitvoering heeft vrijgegeven. In zeven tijdelijke PostgreSQL-proeven was er bij
+annuleren nul effectpoging en nul providerproces; bij een race met autorisatie
+won precies één van beide. De onafhankelijke review is groen. Dit is nog geen
+knop in Telegram of de cockpit en kan een al gestarte browser- of huisactie
+niet stoppen; die grens blijft zichtbaar open. Zie
+[`reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md`](reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md).
+
 De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
 is 0,5-2 verstreken werkdagen bij drie parallelle bouwstromen plus review voor
 een veilig beheerde B-alpha met gezinschat en één echte skillketen, 8-14
