@@ -56,7 +56,7 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
-| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. Een afgeschermde browser las één vaste pagina en voerde via Eva's duurzame logboek één vaste klik uit met onafhankelijke controle achteraf | Publieke websites, echte accounts, meekijken/overname, volledige skillcyclus en Eigenaarmodus nog open |
+| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | Echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
@@ -71,6 +71,7 @@ Dat zijn niet 41 producten, maar vier gesloten, begrijpelijke uitkomsten:
 | Subagent van opdracht tot werkbord | implementatie `f9373f1`; cockpit-/bewijsbinding `db4cedd` | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
 | Afgeschermde browser-read | `27965d8` | Een echte Chromium las één vaste lokale pagina zonder host- of internetroute |
 | Duurzame browseractie | `72625e0` | Eén vaste klik liep via Eva's logboek en aparte servercontrole; twee providerfouten gaven geen blinde tweede klik |
+| Veilige openbare browser-read | kandidaat, receipt 2026-08-26 | Chromium las `example.com` zonder account; directe browser-egress was geblokkeerd en de proxy weigerde `iana.org` |
 
 De subagentuitkomst was te breed als één werkblok: motor, opslag, chatbediening,
 stop, workerimage, Kanban en bewijs liepen achter elkaar voordat de zichtbare
@@ -84,6 +85,22 @@ erbij verzinnen. De eerste V02-ingress relayt nu echt audiochunks; de volledige
 lokale full-duplexproef met onderbreking en meetreceipt blijft de volgende gate.
 
 ## Nieuwste afgeronde stap
+
+De browser kan nu ook één **echte openbare maar volledig accountloze pagina**
+lezen, zonder een vrije internetbrowser van Eva te maken. De nieuwe kandidaat
+laat Chromium alleen `https://example.com/` openen. Chromium zit op een intern
+Docker-netwerk zonder gateway; een aparte, gepinde Canonical Squid-proxy is de
+enige uitgaande poort en accepteert uitsluitend `example.com:443`. De proef
+las daadwerkelijk de titel **Example Domain**, blokkeerde een directe TCP-route
+van de browser naar `1.1.1.1:443`, en kreeg bij een test naar `iana.org` de
+verwachte `403`-weigering. Er zijn nul accounts, secrets, klikken, downloads,
+uploads, mounts of gepubliceerde poorten. De browser stopt in 233 ms.
+Herhaalcommando en begrenzing:
+[`experiments/playwright-mcp-public-read-v1/README.md`](experiments/playwright-mcp-public-read-v1/README.md).
+Receipt:
+[`browser-public-read-allowlist-2026-08-26.json`](evidence/living-core/browser-public-read-allowlist-2026-08-26.json).
+Dit is een geslaagde, kleine publieke leesroute; het is **geen** algemene
+browsercomputer, accountflow, overnamefunctie, B-deploy of onafhankelijke review.
 
 Checkpoint `d65350b` maakt de volgende echte gebruikersproef direct zichtbaar
 in Eva's cockpit. De kaart **Telegram met twee testaccounts** zegt nu precies

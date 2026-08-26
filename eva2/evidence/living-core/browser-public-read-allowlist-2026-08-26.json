@@ -1,0 +1,37 @@
+{
+  "artifact": "EvaBrowserPublicReadAllowlistReceipt/v1",
+  "date": "2026-08-26",
+  "execution": {
+    "command": "PYTHONPATH=src:. python3 experiments/playwright-mcp-public-read-v1/smoke_candidate.py",
+    "result": {
+      "allowlistedDestination": "example.com:443",
+      "browserDirectEgressBlocked": true,
+      "browserImage": "sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+      "finalUrl": "https://example.com/",
+      "proxyDeniedIana": true,
+      "publishedPorts": 0,
+      "snapshotSha256": "99a00e73d44dbeebbcbc1a8d59e17baf6691f43f2c724d67000371189d3c92d8",
+      "stopMilliseconds": 233,
+      "title": "Example Domain",
+      "toolSequence": [
+        "browser_navigate",
+        "browser_snapshot"
+      ]
+    }
+  },
+  "inputs": {
+    "clientSha256": "c69081e22890d8a7ad4b17a88403d87e2212478e3c48c4a19b417ddf9b5d2507",
+    "profileSha256": "8870c5b41ceec71b28b454a348edaf6e837ba45c66b9fbb39de317a91fc93844",
+    "proxyConfigSha256": "40d5db98111bcd0a2dac921d729c304c86038c79dbcf4758cf1f27ef830c82d6",
+    "proxyImage": "ubuntu/squid@sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029",
+    "runnerSha256": "4f6cb26ad45922ded127eeaaca73f3d7abf11efd7a4646d58323b07a015e4f69"
+  },
+  "nonclaims": {
+    "accountsOrCredentials": false,
+    "arbitraryInternet": false,
+    "clicksFormsDownloadsOrUploads": false,
+    "managedBDeployment": false,
+    "persistentBrowserProfile": false,
+    "provedGeneralComputerUse": false
+  }
+}

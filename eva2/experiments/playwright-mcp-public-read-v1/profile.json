@@ -1,0 +1,79 @@
+{
+  "contract": "EvaPlaywrightMcpPublicReadCandidateProfile/v1",
+  "decision": "admit_one_credential_free_public_page_read_via_allowlist_proxy",
+  "target": {
+    "expectedTitle": "Example Domain",
+    "requiredVisibleTexts": [
+      "Example Domain"
+    ],
+    "url": "https://example.com/"
+  },
+  "image": {
+    "amd64Digest": "sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "repository": "mcr.microsoft.com/playwright/mcp",
+    "user": "node"
+  },
+  "proxy": {
+    "allowedDestination": "example.com:443",
+    "amd64Digest": "sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029",
+    "configSha256": "40d5db98111bcd0a2dac921d729c304c86038c79dbcf4758cf1f27ef830c82d6",
+    "imageSizeBytes": 70253242,
+    "repository": "ubuntu/squid",
+    "user": "13:13"
+  },
+  "sandbox": {
+    "arguments": [
+      "/app/cli.js",
+      "--headless",
+      "--browser",
+      "chromium",
+      "--sandbox",
+      "--isolated",
+      "--block-service-workers",
+      "--image-responses",
+      "omit",
+      "--codegen",
+      "none",
+      "--timeout-action",
+      "3000",
+      "--timeout-navigation",
+      "10000",
+      "--timeout-settle",
+      "0",
+      "--allowed-origins",
+      "https://example.com",
+      "--proxy-server",
+      "http://proxy.eva.test:3128",
+      "--port",
+      "8931",
+      "--host",
+      "0.0.0.0",
+      "--allowed-hosts",
+      "browser.eva.test:8931"
+    ],
+    "memoryBytes": 1073741824,
+    "pidsLimit": 192,
+    "tmpfs": {
+      "/dev/shm": "rw,nosuid,size=256m,mode=1777",
+      "/home/node": "rw,nosuid,size=128m,uid=1000,gid=1000,mode=0700",
+      "/tmp": "rw,nosuid,size=384m,mode=1777"
+    }
+  },
+  "tools": {
+    "browserNavigateSha256": "4bd2f88138e75bb639e57c781bacc3465723eff08879f84976b76d21a4a66295",
+    "browserSnapshotSha256": "b4df87ac5b5691cf8ac04cad340509c5fd93496996ae4a1d3499553ae6103b68",
+    "maximumCalls": 2,
+    "sequence": [
+      "browser_navigate",
+      "browser_snapshot"
+    ]
+  },
+  "nonclaims": {
+    "accountsOrCredentials": false,
+    "arbitraryInternet": false,
+    "clicksFormsDownloadsOrUploads": false,
+    "installedInManagedB": false,
+    "persistentBrowserProfile": false,
+    "provedGeneralComputerUse": false
+  }
+}
