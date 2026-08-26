@@ -1,0 +1,73 @@
+{
+  "candidateCommit": "1c627787e73f33e6c29ab58be95ebd2c75de6995",
+  "contract": "EvaPeopleMemoryCockpitTestReceipt/v1",
+  "environment": {
+    "cockpitRuntimeImageId": "sha256:d1a861106ecaaa2230e5bcac63232808eced907bf2b1febeff4db2ab7cc161ae",
+    "postgresImage": "postgres:16.13",
+    "postgresImageDigest": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "postgresServerVersionNum": 160013,
+    "pytestVersion": "8.4.2",
+    "pythonVersion": "3.12.3"
+  },
+  "executedOn": "2026-08-26",
+  "nonClaims": [
+    "This receipt does not claim a managed-B deployment or managed-B live data.",
+    "The Hindsight Control Plane remains selected but not connected.",
+    "The cockpit remains read-only and exposes no memory content or identity identifiers.",
+    "A disposable PostgreSQL result is test evidence, not a production-live receipt."
+  ],
+  "runs": [
+    {
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable-postgresql-16.13-dsn> PYTHONPATH=eva2/src:eva2 python3 -m pytest -q -s eva2/tests/postgres/test_people_memory_overview.py",
+      "environmentBoundary": "Fresh disposable PostgreSQL 16.13 database; empty Eva namespace asserted before migration; database downgraded to base and container removed after the run.",
+      "failed": 0,
+      "id": "people-memory-postgresql",
+      "passed": 8,
+      "skipped": 0,
+      "status": "passed",
+      "testFile": "eva2/tests/postgres/test_people_memory_overview.py"
+    },
+    {
+      "command": "PYTHONPATH=eva2/src:eva2 python3 -m pytest -q -s eva2/tests/application/test_people_memory_overview.py eva2/tests/api/test_dashboard_status.py eva2/tests/api/test_memory_api.py -k 'not exact_reopenable_evidence'",
+      "deselected": 1,
+      "failed": 0,
+      "id": "people-memory-api-and-memory-regression",
+      "passed": 47,
+      "skipped": 0,
+      "status": "passed"
+    },
+    {
+      "command": "ruff check eva2/src/eva/adapters/api/cockpit.py eva2/src/eva/adapters/postgres/memory_outbox.py eva2/src/eva/adapters/postgres/people_memory_overview.py eva2/src/eva/operations/managed_b_release_inputs.py eva2/tests/api/test_dashboard_status.py eva2/tests/bootstrap/test_runtime_settings.py eva2/tests/postgres/test_people_memory_overview.py",
+      "failed": 0,
+      "id": "candidate-static-check",
+      "status": "passed"
+    },
+    {
+      "command": "docker run --rm --network none --read-only -e PYTHONPATH=/opt/eva/src -v $CANDIDATE_ARCHIVE/eva2/src:/opt/eva/src:ro -v $RELEASE_TREE/eva2/tools/smoke_people_memory_runtime.py:/opt/eva/smoke_people_memory_runtime.py:ro --entrypoint python sha256:d1a861106ecaaa2230e5bcac63232808eced907bf2b1febeff4db2ab7cc161ae /opt/eva/smoke_people_memory_runtime.py",
+      "environmentBoundary": "Network-disabled, read-only candidate runtime container with the exact git-archive source mounted read-only.",
+      "failed": 0,
+      "id": "runtime-composition-smoke",
+      "passedAssertions": [
+        "healthy Hindsight maps to ready",
+        "Hindsight failure maps to attention",
+        "the real runtime calls the privacy-safe overview port"
+      ],
+      "scriptPath": "eva2/tools/smoke_people_memory_runtime.py",
+      "status": "passed"
+    }
+  ],
+  "source": {
+    "gitArchiveCommit": "1c627787e73f33e6c29ab58be95ebd2c75de6995",
+    "mode": "clean_git_archive",
+    "worktreeChangesExcluded": true
+  },
+  "status": "passed",
+  "verifiedAdversarialCases": [
+    "Telegram user ID zero cannot become a positive linked-account state.",
+    "A group consent longer than 31 days cannot become an active-sharing state.",
+    "A group consent with an invalid durable operation reference cannot become an active-sharing state.",
+    "A queued-only memory event cannot become up-to-date through a false completed checkpoint.",
+    "A memory success event without an attempted provider call cannot become up-to-date.",
+    "Cross-tenant and cross-installation data remain absent from the projection."
+  ]
+}
