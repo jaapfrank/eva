@@ -395,8 +395,10 @@ Eva's unieke hoofdfeature.
   vastgelegd. Iedere toekomstige score moet de upstream release, split,
   officiële scorer, agent/model/config, budgetten en ruwe trajecten publiceren.
   Native en gecontroleerde frameworkruns krijgen aparte tabellen; LAB-36 wordt
-  niet als openbare leaderboardscore hernoemd. CB01-CB07 en alle echte runs
-  staan nog open.
+  niet als openbare leaderboardscore hernoemd. Checkpoint `e4da0ec` sluit
+  CB01: een gesloten `ComparableAgentRun/v1`-schema en validator weigeren een
+  score zonder provenance, immutable image, limits of replay-artifacts. Er is
+  nog geen score uitgevoerd; CB02-CB07 en alle echte runs staan open.
 - Eigenaarmodus OM00: Hermes' actuele officiële `Godmode` blijkt een optionele
   jailbreak-/safety-bypassskill, geen autonome superstand. Eva krijgt in plaats
   daarvan één expliciete Eigenaarmodus boven haar bestaande mandaat/ledger:
