@@ -76,9 +76,12 @@ De subagentuitkomst was te breed als één werkblok: motor, opslag, chatbedienin
 stop, workerimage, Kanban en bewijs liepen achter elkaar voordat de zichtbare
 projectstatus werd bijgewerkt. Vanaf `72625e0` blijft één capabilityproject
 actief totdat code, test, onafhankelijke review én cockpitstatus samen gesloten
-zijn. Het actieve project blijft daarom **browser en zelfstandige computer**;
-de volgende uitkomst is één afgeschermde publieke testsite met grant en live
-stop. Voice of een ander groot capabilityproject start niet tussendoor.
+zijn. **Browser en zelfstandige computer** wacht nu op onafhankelijke review
+en een afgeschermde publieke proef; die zijn niet als stilstaande voortgang
+weggeschreven. Terwijl die externe checks wachten, loopt uitsluitend de kleine
+V01-voicegrens parallel: dezelfde kern voorbereiden, geen mediafunctie
+erbij verzinnen. De volgende voice-uitkomst is pas V02, een echte lokale
+full-duplexproef met meetreceipt.
 
 ## Nieuwste afgeronde stap
 
