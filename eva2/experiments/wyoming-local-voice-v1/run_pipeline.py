@@ -11,12 +11,13 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 import hashlib
 from importlib.metadata import version
 import json
 from pathlib import Path
-from typing import Final
+from typing import Final, Protocol
 
 from wyoming.asr import Transcript, Transcribe
 from wyoming.audio import AudioChunk, AudioStart, AudioStop
@@ -60,11 +61,84 @@ def _normalized(value: str) -> str:
     return " ".join(value.casefold().split()).strip(".?! ")
 
 
-async def _synthesize(*, host: str, port: int, text: str) -> tuple[AudioStart, bytes]:
-    """Read exactly one bounded PCM stream from a local Piper endpoint."""
+@dataclass(frozen=True, slots=True)
+class PcmDigest:
+    """A bounded PCM stream summary which deliberately retains no raw audio."""
+
+    rate: int
+    width: int
+    channels: int
+    byte_count: int
+    chunk_count: int
+    sha256: str
+
+    def to_payload(self) -> dict[str, int | str]:
+        return {
+            "rate": self.rate,
+            "width": self.width,
+            "channels": self.channels,
+            "bytes": self.byte_count,
+            "chunks": self.chunk_count,
+            "sha256": self.sha256,
+        }
+
+
+class _PcmHasher(Protocol):
+    def update(self, data: bytes, /) -> None: ...
+
+    def hexdigest(self) -> str: ...
+
+
+def _empty_digest() -> tuple[_PcmHasher, int, int]:
+    return hashlib.sha256(), 0, 0
+
+
+def _append_pcm(
+    *,
+    audio_format: AudioStart,
+    event: object,
+    digest: _PcmHasher,
+    byte_count: int,
+    chunk_count: int,
+) -> tuple[int, int]:
+    if not isinstance(event, AudioChunk):
+        raise TypeError("expected a Wyoming AudioChunk")
+    if (
+        event.rate != audio_format.rate
+        or event.width != audio_format.width
+        or event.channels != audio_format.channels
+    ):
+        raise RuntimeError("Piper changed PCM format mid-stream")
+    next_bytes = byte_count + len(event.audio)
+    next_chunks = chunk_count + 1
+    if next_chunks > MAX_AUDIO_CHUNKS or next_bytes > MAX_AUDIO_BYTES:
+        raise RuntimeError("Piper audio exceeds local proof bound")
+    digest.update(event.audio)
+    return next_bytes, next_chunks
+
+
+def _finished_digest(
+    *, audio_format: AudioStart, digest: _PcmHasher, byte_count: int, chunk_count: int
+) -> PcmDigest:
+    if byte_count == 0 or chunk_count == 0:
+        raise RuntimeError("Piper returned no audible PCM")
+    return PcmDigest(
+        rate=audio_format.rate,
+        width=audio_format.width,
+        channels=audio_format.channels,
+        byte_count=byte_count,
+        chunk_count=chunk_count,
+        sha256=digest.hexdigest(),
+    )
+
+
+async def _synthesize(*, host: str, port: int, text: str) -> PcmDigest:
+    """Read one bounded TTS stream while retaining only its digest."""
 
     audio_format: AudioStart | None = None
-    chunks: list[bytes] = []
+    digest: _PcmHasher | None = None
+    byte_count = 0
+    chunk_count = 0
     async with AsyncTcpClient(host, port) as client:
         await client.write_event(
             Synthesize(text=text, voice=SynthesizeVoice(name=INPUT_VOICE)).event()
@@ -77,61 +151,103 @@ async def _synthesize(*, host: str, port: int, text: str) -> tuple[AudioStart, b
                 if audio_format is not None:
                     raise RuntimeError("Piper sent two audio-start events")
                 audio_format = AudioStart.from_event(event)
+                digest, byte_count, chunk_count = _empty_digest()
             elif AudioChunk.is_type(event.type):
-                if audio_format is None:
+                if audio_format is None or digest is None:
                     raise RuntimeError("Piper sent audio before audio-start")
                 chunk = AudioChunk.from_event(event)
-                if (
-                    chunk.rate != audio_format.rate
-                    or chunk.width != audio_format.width
-                    or chunk.channels != audio_format.channels
-                ):
-                    raise RuntimeError("Piper changed PCM format mid-stream")
-                chunks.append(chunk.audio)
-                if len(chunks) > MAX_AUDIO_CHUNKS or sum(map(len, chunks)) > MAX_AUDIO_BYTES:
-                    raise RuntimeError("Piper audio exceeds local proof bound")
+                byte_count, chunk_count = _append_pcm(
+                    audio_format=audio_format,
+                    event=chunk,
+                    digest=digest,
+                    byte_count=byte_count,
+                    chunk_count=chunk_count,
+                )
             elif AudioStop.is_type(event.type):
                 break
             else:
                 raise RuntimeError(f"unexpected Piper event: {event.type}")
-    if audio_format is None or not chunks:
-        raise RuntimeError("Piper returned no audible PCM")
-    return audio_format, b"".join(chunks)
+    if audio_format is None or digest is None:
+        raise RuntimeError("Piper ended before audio-start")
+    return _finished_digest(
+        audio_format=audio_format,
+        digest=digest,
+        byte_count=byte_count,
+        chunk_count=chunk_count,
+    )
 
 
-async def _transcribe(
-    *, host: str, port: int, audio_format: AudioStart, audio: bytes
-) -> str:
-    """Use the official Wyoming client; no custom speech protocol is parsed."""
+async def _stream_synthesize_to_transcribe(
+    *, piper_host: str, piper_port: int, whisper_host: str, whisper_port: int
+) -> tuple[str, PcmDigest]:
+    """Relay each Piper PCM chunk to Whisper before Piper finishes.
 
-    async with AsyncTcpClient(host, port) as client:
-        await client.write_event(Transcribe(language="nl").event())
-        await client.write_event(
-            AudioStart(
-                rate=audio_format.rate,
-                width=audio_format.width,
-                channels=audio_format.channels,
-            ).event()
+    This is streaming ingress, not a full-duplex call: the final transcript is
+    requested only after Piper emits ``audio-stop``.  The controller never
+    assembles the complete input audio in memory or on disk.
+    """
+
+    audio_format: AudioStart | None = None
+    digest: _PcmHasher | None = None
+    byte_count = 0
+    chunk_count = 0
+    async with AsyncTcpClient(piper_host, piper_port) as piper, AsyncTcpClient(
+        whisper_host, whisper_port
+    ) as whisper:
+        await whisper.write_event(Transcribe(language="nl").event())
+        await piper.write_event(
+            Synthesize(text=INPUT_TEXT, voice=SynthesizeVoice(name=INPUT_VOICE)).event()
         )
-        for offset in range(0, len(audio), 4_096):
-            await client.write_event(
-                AudioChunk(
-                    rate=audio_format.rate,
-                    width=audio_format.width,
-                    channels=audio_format.channels,
-                    audio=audio[offset : offset + 4_096],
-                ).event()
-            )
-        await client.write_event(AudioStop().event())
         while True:
-            event = await asyncio.wait_for(client.read_event(), timeout=90)
+            event = await asyncio.wait_for(piper.read_event(), timeout=60)
+            if event is None:
+                raise RuntimeError("Piper closed before audio-stop")
+            if AudioStart.is_type(event.type):
+                if audio_format is not None:
+                    raise RuntimeError("Piper sent two audio-start events")
+                audio_format = AudioStart.from_event(event)
+                digest, byte_count, chunk_count = _empty_digest()
+                await whisper.write_event(
+                    AudioStart(
+                        rate=audio_format.rate,
+                        width=audio_format.width,
+                        channels=audio_format.channels,
+                    ).event()
+                )
+            elif AudioChunk.is_type(event.type):
+                if audio_format is None or digest is None:
+                    raise RuntimeError("Piper sent audio before audio-start")
+                chunk = AudioChunk.from_event(event)
+                byte_count, chunk_count = _append_pcm(
+                    audio_format=audio_format,
+                    event=chunk,
+                    digest=digest,
+                    byte_count=byte_count,
+                    chunk_count=chunk_count,
+                )
+                await whisper.write_event(chunk.event())
+            elif AudioStop.is_type(event.type):
+                await whisper.write_event(AudioStop().event())
+                break
+            else:
+                raise RuntimeError(f"unexpected Piper event: {event.type}")
+        if audio_format is None or digest is None:
+            raise RuntimeError("Piper ended before audio-start")
+        input_pcm = _finished_digest(
+            audio_format=audio_format,
+            digest=digest,
+            byte_count=byte_count,
+            chunk_count=chunk_count,
+        )
+        while True:
+            event = await asyncio.wait_for(whisper.read_event(), timeout=90)
             if event is None:
                 raise RuntimeError("Whisper closed before transcript")
             if Transcript.is_type(event.type):
                 transcript = Transcript.from_event(event).text.strip()
                 if not transcript:
                     raise RuntimeError("Whisper returned a blank final transcript")
-                return transcript
+                return transcript, input_pcm
             raise RuntimeError(f"unexpected Whisper event: {event.type}")
 
 
@@ -193,21 +309,18 @@ def _admit(transcript: str) -> VoiceTurn:
 
 
 async def _run(args: argparse.Namespace) -> dict[str, object]:
-    input_format, input_audio = await _synthesize(
-        host=args.piper_host, port=args.piper_port, text=INPUT_TEXT
-    )
-    transcript = await _transcribe(
-        host=args.whisper_host,
-        port=args.whisper_port,
-        audio_format=input_format,
-        audio=input_audio,
+    transcript, input_pcm = await _stream_synthesize_to_transcribe(
+        piper_host=args.piper_host,
+        piper_port=args.piper_port,
+        whisper_host=args.whisper_host,
+        whisper_port=args.whisper_port,
     )
     # The synthetic test phrase is intentionally tiny: this checks wire and
     # admission integrity, not Dutch recognition quality.
     if _normalized(transcript) != _normalized(INPUT_TEXT):
         raise RuntimeError("local STT did not preserve the sealed synthetic phrase")
     admitted = _admit(transcript)
-    reply_format, reply_audio = await _synthesize(
+    reply_pcm = await _synthesize(
         host=args.piper_host, port=args.piper_port, text=REPLY_TEXT
     )
     return {
@@ -228,12 +341,11 @@ async def _run(args: argparse.Namespace) -> dict[str, object]:
         "input": {
             "phraseSha256": _sha256(INPUT_TEXT),
             "voice": INPUT_VOICE,
-            "pcm": {
-                "rate": input_format.rate,
-                "width": input_format.width,
-                "channels": input_format.channels,
-                "bytes": len(input_audio),
-                "sha256": _sha256(input_audio),
+            "pcm": input_pcm.to_payload(),
+            "streaming": {
+                "mode": "piper_chunk_relay_to_whisper",
+                "completeInputAudioBuffered": False,
+                "chunksRelayedBeforeAudioStop": input_pcm.chunk_count,
             },
         },
         "voiceAdmission": {
@@ -246,13 +358,7 @@ async def _run(args: argparse.Namespace) -> dict[str, object]:
         },
         "reply": {
             "phraseSha256": _sha256(REPLY_TEXT),
-            "pcm": {
-                "rate": reply_format.rate,
-                "width": reply_format.width,
-                "channels": reply_format.channels,
-                "bytes": len(reply_audio),
-                "sha256": _sha256(reply_audio),
-            },
+            "pcm": reply_pcm.to_payload(),
         },
         "nonclaims": [
             "No microphone, speaker, real person, audio recording or hardware path was used.",
