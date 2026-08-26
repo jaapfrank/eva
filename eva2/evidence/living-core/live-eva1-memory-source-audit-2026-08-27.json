@@ -1,0 +1,28 @@
+{
+  "contract": "Eva1LegacyMemorySourceAudit/v1",
+  "checked_at": "2026-08-27",
+  "method": "SQLite immutable read-only connection; schema and aggregate counts only",
+  "source": {
+    "kind": "live_eva1_sqlite",
+    "path": "/home/administrator/project/Bottie/data/eva.db",
+    "sha256": "60cc48e1017daf869269555ecb6dfe70cf7370890db7ce610796fa6ffbaade4a",
+    "selected_schema_sha256": "18197e11aa416a059712693631336eecc1a9207fe3cb079b1e3ac92da71e2775"
+  },
+  "counts": {
+    "memories_total": 3187,
+    "memories_active": 1212,
+    "memories_archived": 1975,
+    "memory_person_labels": 21,
+    "people": 19,
+    "messages": 3108,
+    "goals": 5,
+    "aspirations": 10,
+    "reminders": 36
+  },
+  "nonclaims": [
+    "No memory, message, name, Telegram identifier, goal text, or other source content was read or written into this receipt.",
+    "The live Eva1 service and SQLite database were not modified, copied, restarted, or locked for writing.",
+    "This is not an Eva2 import, a Hindsight migration, a Telegram test, or a live acceptance result."
+  ],
+  "conclusion": "Eva1 has its own SQLite memory source. Eva2 Hindsight volumes are separate candidate data and must not be described as Eva1 memory."
+}
