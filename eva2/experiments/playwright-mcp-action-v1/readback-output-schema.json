@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "event_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "post_requests": {
+      "const": 1
+    },
+    "state": {
+      "const": "committed"
+    },
+    "target": {
+      "const": "browser_fixture.eva_action_a02"
+    },
+    "transitions": {
+      "const": 1
+    }
+  },
+  "required": [
+    "event_sha256",
+    "post_requests",
+    "state",
+    "target",
+    "transitions"
+  ],
+  "type": "object"
+}

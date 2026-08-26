@@ -93,6 +93,49 @@ SNAPSHOT_TOOL = {
     },
     "name": "browser_snapshot",
 }
+CLICK_TOOL = {
+    "annotations": {
+        "destructiveHint": True,
+        "openWorldHint": True,
+        "readOnlyHint": False,
+        "title": "Click",
+    },
+    "description": "Perform click on a web page",
+    "inputSchema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": False,
+        "properties": {
+            "button": {
+                "description": "Button to click, defaults to left",
+                "enum": ["left", "right", "middle"],
+                "type": "string",
+            },
+            "doubleClick": {
+                "description": "Whether to perform a double click instead of a single click",
+                "type": "boolean",
+            },
+            "element": {
+                "description": "Human-readable element description used to obtain permission to interact with the element",
+                "type": "string",
+            },
+            "modifiers": {
+                "description": "Modifier keys to press",
+                "items": {
+                    "enum": ["Alt", "Control", "ControlOrMeta", "Meta", "Shift"],
+                    "type": "string",
+                },
+                "type": "array",
+            },
+            "target": {
+                "description": "Exact target element reference from the page snapshot, or a unique element selector",
+                "type": "string",
+            },
+        },
+        "required": ["target"],
+        "type": "object",
+    },
+    "name": "browser_click",
+}
 
 
 @dataclass
@@ -102,10 +145,18 @@ class _ServerState:
     tool_drift: bool = False
     navigation_error: bool = False
     snapshot_error: bool = False
+    click_error: bool = False
     navigation_url: str = PAGE_URL
     snapshot_url: str = PAGE_URL
     title: str = PAGE_TITLE
     snapshot_text: str = SNAPSHOT
+    click_text: str = (
+        "### Page\n"
+        "- Page URL: http://fixture.eva.test:8080/effect\n"
+        "- Page Title: Eva browserproef A02\n"
+        "### Snapshot\n"
+        "- [Snapshot](.playwright-mcp/page-2026-08-26T07-31-55-122Z.yml)"
+    )
     unsupported_content: bool = False
     delay_seconds: float = 0.0
     calls: list[dict[str, Any]] = field(default_factory=list)
@@ -144,7 +195,9 @@ def _server(state: _ServerState) -> Iterator[str]:
                 navigate = dict(NAVIGATE_TOOL)
                 if state.tool_drift:
                     navigate["description"] = "drifted"
-                self._rpc(message["id"], {"tools": [navigate, SNAPSHOT_TOOL]})
+                self._rpc(
+                    message["id"], {"tools": [navigate, SNAPSHOT_TOOL, CLICK_TOOL]}
+                )
                 return
             if method == "tools/call":
                 if state.delay_seconds:
@@ -161,10 +214,15 @@ def _server(state: _ServerState) -> Iterator[str]:
                     self._tool(message["id"], text, error=state.navigation_error)
                     return
                 if name == "browser_snapshot":
-                    text = state.snapshot_text.replace(PAGE_URL, state.snapshot_url).replace(
-                        PAGE_TITLE, state.title
-                    )
+                    text = state.snapshot_text
+                    if text == SNAPSHOT:
+                        text = text.replace(PAGE_URL, state.snapshot_url).replace(
+                            PAGE_TITLE, state.title
+                        )
                     self._tool(message["id"], text, error=state.snapshot_error)
+                    return
+                if name == "browser_click":
+                    self._tool(message["id"], state.click_text, error=state.click_error)
                     return
             raise AssertionError(f"unexpected browser MCP method {method!r}")
 

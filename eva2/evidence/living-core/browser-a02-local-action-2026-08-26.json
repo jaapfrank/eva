@@ -1,0 +1,74 @@
+{
+  "checks": {
+    "connectorTests": {
+      "passed": 37,
+      "status": "passed"
+    },
+    "postgresBrowserScenarios": {
+      "passed": 3,
+      "scenarios": [
+        "normal_click_with_independent_readback",
+        "crash_before_effect_io_without_second_call",
+        "crash_after_effect_io_without_second_call"
+      ],
+      "status": "passed"
+    },
+    "ruff": {
+      "status": "passed"
+    }
+  },
+  "claimBoundary": {
+    "accountOrCredentialUseProven": false,
+    "browserDownloadProven": false,
+    "generalComputerUseProven": false,
+    "liveTelegramOrBProven": false,
+    "publicInternetTaskProven": false,
+    "scope": "one fixed credential-free local browser action",
+    "userTakeoverProven": false
+  },
+  "contract": "EvaBrowserActionEvidence/v1",
+  "execution": {
+    "browserImage": "mcr.microsoft.com/playwright/mcp@sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "browserNetworkCount": 1,
+    "externalEgressBlocked": true,
+    "gatewaylessNetworks": 2,
+    "postgresImage": "postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "productionChanged": false,
+    "publishedBrowserPorts": 0
+  },
+  "outcomes": {
+    "crashAfterClick": {
+      "blindSecondProviderCall": false,
+      "durableResult": "ambiguous",
+      "serverPostRequests": 1,
+      "serverTransitions": 1,
+      "stateVerified": false
+    },
+    "crashBeforeClick": {
+      "blindSecondProviderCall": false,
+      "durableResult": "ambiguous",
+      "serverPostRequests": 0,
+      "serverTransitions": 0,
+      "stateVerified": false
+    },
+    "normalClick": {
+      "durableProviderResult": "provider_accepted",
+      "independentServerReadback": "matches",
+      "serverPostRequests": 1,
+      "serverTransitions": 1,
+      "stateVerified": true
+    }
+  },
+  "recordedAt": "2026-08-26T10:16:33+02:00",
+  "sourceHashes": {
+    "experiments/playwright-mcp-action-v1/fixture_server.py": "6be987eecf2d909e91db095c861edd45a43469f39b12dc2fffd9716f08680797",
+    "experiments/playwright-mcp-action-v1/smoke_candidate.py": "8acea10d89d97b0ffab71f2b1fad0f5e38299e13d04a7ee94b1de45984921d7a",
+    "experiments/playwright-mcp-action-v1/worker-profile.json": "b7cbf0fccb42ac47f6a0ad1e2d78b3d56cc0a4aee012967ee0a4853bc434d343",
+    "src/eva/adapters/connectors/playwright_mcp_action.py": "de788e071ff245b588b5da2519c327c52486ef45de3fef0c905da308c7763441",
+    "src/eva/adapters/connectors/playwright_mcp_worker.py": "9578c4598b008f9b1e0dbc9d704b8d5fdfd37ee3c3a5a5f7c65ba80d59003a15",
+    "tests/connectors/test_playwright_mcp.py": "868bd519c50c17b5fd588746395a0a6b7dc4829621b5dec759943e27f5a531bb",
+    "tests/connectors/test_playwright_mcp_action.py": "d61920964aa66b2951cae448bf0ad3aea6b3dc21ac5b3e8030d7ec11ddfd7378",
+    "tests/postgres/test_playwright_mcp_action_chain.py": "47e1695d8da29068d1055b548957a84b57e014f9d8b463dbc33886600271eb2e"
+  },
+  "status": "tested"
+}
