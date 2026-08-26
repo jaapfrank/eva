@@ -1,0 +1,5 @@
+# Isolated local V02 controller.  This is deliberately separate from Eva's
+# production dependency authority and from the Pydantic Realtime candidate.
+cryptography==46.0.5
+pydantic==2.12.5
+wyoming==1.10.0

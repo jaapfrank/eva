@@ -1,0 +1,51 @@
+{
+  "candidate": "V02-wyoming-local-voice-v1",
+  "controller": {
+    "pydantic": "2.12.5",
+    "requirementsSha256": "1547d30b9eb441e4027aaf91663ce668385e6eec58f64648990e37422bcda97b",
+    "runnerSha256": "4589d3d9ec127f7cd1969694920d6cc9e83da3cdd182a67353e85c2816d49415",
+    "wyoming": "1.10.0"
+  },
+  "input": {
+    "pcm": {
+      "bytes": 73216,
+      "channels": 1,
+      "rate": 22050,
+      "sha256": "9166c577e08aab44d70b343f0a0ad5bb48a039b9f587c8f4e6432fb808a8cc1e",
+      "width": 2
+    },
+    "phraseSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
+    "voice": "nl_NL-pim-medium"
+  },
+  "nonclaims": [
+    "No microphone, speaker, real person, audio recording or hardware path was used.",
+    "No speech-provider credential, LLM reply, tool call, persistence or production route was used.",
+    "This run alone does not prove that a model-cache restart is fully offline.",
+    "This is not full-duplex voice, a barge-in proof, a latency measurement or a semantic accuracy benchmark."
+  ],
+  "reply": {
+    "pcm": {
+      "bytes": 101888,
+      "channels": 1,
+      "rate": 22050,
+      "sha256": "8c2336aa0724bf226f56b327b49d8edf380040b1dbc6d8ac4a6d6d3956b62128",
+      "width": 2
+    },
+    "phraseSha256": "82a7c6e0cade94072c48184837393691c2838111ddaff64e7f6e778a30b33d22"
+  },
+  "sidecarsExpected": {
+    "piperImage": "rhasspy/wyoming-piper@sha256:6b837615b543e38587b735b72abad2dfd7ead50fd10ec1a4d5815241e5539377",
+    "piperUpstream": "OHF-Voice/wyoming-piper@v2.4.2",
+    "whisperImage": "rhasspy/wyoming-whisper@sha256:731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d",
+    "whisperModel": "base-int8",
+    "whisperUpstream": "OHF-Voice/wyoming-faster-whisper@v3.6.0"
+  },
+  "voiceAdmission": {
+    "audience": "private",
+    "contract": "VoiceTurn/v1",
+    "finalTranscriptSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
+    "language": "nl",
+    "schemaVersion": 1,
+    "transcriptState": "final"
+  }
+}
