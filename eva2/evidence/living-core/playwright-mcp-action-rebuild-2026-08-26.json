@@ -1,0 +1,40 @@
+{
+  "contract": "EvaPlaywrightMcpActionRebuildReceipt/v1",
+  "recorded_at": "2026-08-26T00:00:00Z",
+  "scope": "repeated credential-free local browser-action proof in disposable containers",
+  "dependency": {
+    "name": "Microsoft Playwright MCP",
+    "image": "mcr.microsoft.com/playwright/mcp@sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9"
+  },
+  "database": {
+    "image": "postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "data": "temporary tmpfs only"
+  },
+  "isolation": {
+    "networks": 2,
+    "networks_internal_and_gatewayless": true,
+    "browser_published_ports": 0,
+    "browser_external_egress_blocked": true,
+    "browser_read_only_root": true,
+    "browser_capabilities_dropped": true,
+    "browser_no_new_privileges": true,
+    "secrets_mounted": false,
+    "live_eva1_touched": false
+  },
+  "results": {
+    "scenarios_passed": 4,
+    "normal_click_independently_read_back": true,
+    "stop_after_authorization_prevents_click": true,
+    "crash_before_click_has_no_second_call": true,
+    "crash_after_click_has_no_second_call": true
+  },
+  "cleanup": {
+    "temporary_containers_removed": true,
+    "temporary_networks_removed": true
+  },
+  "nonclaims": [
+    "This used one fixed local fixture, not a public website.",
+    "This did not use an account, download, Telegram route, production B, or live Eva 1.",
+    "This does not prove browser SIGKILL handling, general computer use, or human takeover."
+  ]
+}
