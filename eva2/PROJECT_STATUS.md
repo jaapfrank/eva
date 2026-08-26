@@ -82,6 +82,18 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
+Checkpoint `d8b8d2f` sluit een belangrijke **stopknop-kloof vóór een externe
+actie**. Eerder kon stoppen alleen vóór autorisatie; nu kan de eigenaar ook
+stoppen nadat Eva de actie al technisch heeft toegestaan, maar voordat een
+browserproces of andere provider daadwerkelijk is gestart. De dispatcher en
+stoproute delen hiervoor dezelfde database-lock. De uitkomst is dan eerlijk
+`geannuleerd`: één eventueel aangemaakte autorisatiepoging blijft als auditspoor
+bestaan, maar er is nul provider-call-start, nul browserproces, nul klik en nul
+externe receipt. Acht echte PostgreSQL-gevallen zijn groen, inclusief beide
+races (stop eerst of autorisatie eerst), replay, manipulatie en rollback. De
+onafhankelijke review is nog open; daarom is dit **getest**, niet als live
+browser- of Telegramproef geclaimd.
+
 De Telegramproef heeft nu ook een **één-opdracht voorbereiding**: de operator
 geeft alleen account A's numerieke Telegram-ID op en voert de nieuwe
 `tools/prepare_telegram_test_config.py` als root uit. Die vraagt de aparte
