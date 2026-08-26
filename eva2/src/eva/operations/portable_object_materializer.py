@@ -57,7 +57,9 @@ class MaterializedPortableObject:
 
     object_id: str
     ciphertext_sha256: str
+    record_row_sha256: str
     status: CasInstallStatus
+    target_object_root: Path
     relative_path: Path
 
 
@@ -331,7 +333,9 @@ def materialize_verified_portable_objects(
             MaterializedPortableObject(
                 object_id=item.candidate.binding.object_id,
                 ciphertext_sha256=digest,
+                record_row_sha256=item.record_row_sha256,
                 status=readback.status,
+                target_object_root=target_object_root,
                 relative_path=readback.path,
             )
         )

@@ -14,10 +14,12 @@ import re
 from collections.abc import Sequence
 from datetime import datetime
 from collections.abc import Mapping
+from pathlib import Path
 from typing import Any
 from uuid import UUID
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
+from eva.adapters.objects.cas import FileSystemCAS
 from eva.contracts.execution import (
     CapabilityGrant,
     ConnectorBinding,
@@ -26,6 +28,7 @@ from eva.contracts.execution import (
     ReadAttempt,
 )
 from eva.contracts.planning import ModelAttempt
+from eva.operations.portable_object_materializer import MaterializedPortableObject
 
 
 _IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
@@ -84,6 +87,64 @@ def _portable_row(record: Mapping[str, Any], *, table: str) -> dict[str, Any]:
     if record.get("row_sha256") != hashlib.sha256(row_bytes).hexdigest():
         raise PortableRestoreError("portable record row hash differs")
     return row
+
+
+def _materialized_object_index(
+    materialized_objects: Sequence[MaterializedPortableObject] | None,
+    *,
+    object_store_root: Path | None,
+) -> dict[tuple[str, str, str], MaterializedPortableObject]:
+    """Accept only one exact, completed target-CAS proof per active record."""
+
+    if materialized_objects is None:
+        if object_store_root is not None:
+            raise PortableRestoreError("object store root requires materialized object proof")
+        return {}
+    if isinstance(materialized_objects, (str, bytes)) or not isinstance(
+        materialized_objects, Sequence
+    ):
+        raise PortableRestoreError("materialized object proof set is invalid")
+    if not isinstance(object_store_root, Path):
+        raise PortableRestoreError("materialized object proof requires target object root")
+    result: dict[tuple[str, str, str], MaterializedPortableObject] = {}
+    for item in materialized_objects:
+        if not isinstance(item, MaterializedPortableObject):
+            raise PortableRestoreError("materialized object proof is invalid")
+        key = (item.object_id, item.ciphertext_sha256, item.record_row_sha256)
+        if (
+            item.target_object_root != object_store_root
+            or item.status not in {"created", "already_same"}
+            or item.relative_path != FileSystemCAS.relative_path(item.ciphertext_sha256)
+            or key in result
+        ):
+            raise PortableRestoreError("materialized object proof is invalid")
+        result[key] = item
+    return result
+
+
+def _require_materialized_object_ref(
+    record: Mapping[str, Any],
+    restored: Mapping[str, Any],
+    *,
+    materialized_index: Mapping[tuple[str, str, str], MaterializedPortableObject],
+    consumed: set[tuple[str, str, str]],
+) -> None:
+    """Bind an ObjectRef row to exactly the target CAS result for its archive row."""
+
+    state = restored.get("state")
+    if state == "crypto_shredded":
+        return
+    if state != "active":
+        raise PortableRestoreError("portable ObjectRef state is invalid")
+    row_sha256 = record.get("row_sha256")
+    object_id = restored.get("object_id")
+    digest = restored.get("ciphertext_sha256")
+    if not all(isinstance(value, str) for value in (row_sha256, object_id, digest)):
+        raise PortableRestoreError("portable ObjectRef materialization key is invalid")
+    key = (object_id, digest, row_sha256)
+    if key not in materialized_index:
+        raise PortableRestoreError("portable restore requires verified object CAS materialization")
+    consumed.add(key)
 
 
 def _spec_for_table(table_specs: tuple[Mapping[str, Any], ...], table: str) -> Mapping[str, Any]:
@@ -1055,6 +1116,8 @@ def _validate_record_sets(
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
     table_specs: tuple[Mapping[str, Any], ...],
+    materialized_objects: Sequence[MaterializedPortableObject] | None,
+    object_store_root: Path | None,
 ) -> tuple[
     tuple[
         Mapping[str, Any],
@@ -1070,6 +1133,10 @@ def _validate_record_sets(
     ):
         raise PortableRestoreError("portable record sets differ from sealed table list")
 
+    materialized_index = _materialized_object_index(
+        materialized_objects, object_store_root=object_store_root
+    )
+    consumed_materialized: set[tuple[str, str, str]] = set()
     prepared: list[
         tuple[
             Mapping[str, Any],
@@ -1090,9 +1157,35 @@ def _validate_record_sets(
             if not isinstance(record, Mapping):
                 raise PortableRestoreError("portable table record is not an object")
             if table == _OBJECT_REF_TABLE:
-                raise PortableRestoreError(
-                    "portable restore requires verified object CAS materialization"
+                restored = decode_column_preserving_record(
+                    record, table=table, table_specs=table_specs
                 )
+                _require_materialized_object_ref(
+                    record,
+                    restored,
+                    materialized_index=materialized_index,
+                    consumed=consumed_materialized,
+                )
+                bindings: list[Any] = []
+                placeholders: list[str] = []
+                for mapping in mappings:
+                    property_name = mapping.get("portableProperty")
+                    source = mapping.get("source")
+                    encoding = mapping.get("encoding")
+                    if (
+                        not isinstance(property_name, str)
+                        or not isinstance(source, Mapping)
+                        or source.get("kind") != "column"
+                        or not isinstance(encoding, str)
+                    ):
+                        raise PortableRestoreError("restore mapping is not column-preserving")
+                    placeholder, value = _bind_value(
+                        restored[str(source["column"])], encoding
+                    )
+                    placeholders.append(placeholder)
+                    bindings.append(value)
+                rows.append((restored, tuple(placeholders), tuple(bindings)))
+                continue
             if table == _CONNECTOR_BINDING_TABLE:
                 rows.append(
                     _prepare_reauthorization_required_connector_record(
@@ -1142,6 +1235,8 @@ def _validate_record_sets(
                 bindings.append(value)
             rows.append((restored, tuple(placeholders), tuple(bindings)))
         prepared.append((spec, tuple(rows)))
+    if set(materialized_index) != consumed_materialized:
+        raise PortableRestoreError("materialized object proof is not referenced by archive")
     return tuple(prepared)
 
 
@@ -1150,6 +1245,8 @@ def restore_column_preserving_records(
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
     table_specs: tuple[Mapping[str, Any], ...],
+    materialized_objects: Sequence[MaterializedPortableObject] | None = None,
+    object_store_root: Path | None = None,
 ) -> int:
     """Write one verified, all-column archive only into an empty target.
 
@@ -1164,7 +1261,12 @@ def restore_column_preserving_records(
     history, never a working secret, provider call, or retry.
     """
 
-    prepared = _validate_record_sets(records_by_table, table_specs=table_specs)
+    prepared = _validate_record_sets(
+        records_by_table,
+        table_specs=table_specs,
+        materialized_objects=materialized_objects,
+        object_store_root=object_store_root,
+    )
     verify_empty_restore_target(connection, table_specs=table_specs)
     _execute(connection, "SAVEPOINT eva_portable_restore_write")
     inserted = 0
