@@ -7,14 +7,18 @@ bestaande Eva-bot, gezinsgroep, B-secrets of productiedatabase.
 ## Wat je nodig hebt
 
 1. Een nieuwe BotFather-testbot met een apart token.
-2. Twee Telegram-accounts met twee verschillende telefoonnummers:
-   account A is de eigenaar, account B is het tweede gezinslid. Twee fysieke
-   telefoons zijn handig, maar Telegram kan ook twee accounts op één toestel
-   gebruiken.
+2. Twee Telegram-accounts met twee verschillende telefoonnummers. Twee fysieke
+   telefoons zijn handig, maar account B mag ook in Telegram Desktop/Web.
 3. Eén lege testgroep met alleen A, B en de testbot.
-4. Het numerieke Telegram-gebruikers-ID van account A. Dit is **niet** het
-   telefoonnummer en ook niet de gebruikersnaam. Haal het bijvoorbeeld op met
-   een bestaande, betrouwbare Telegram-ID-bot en noteer alleen het nummer.
+4. Het numerieke Telegram-gebruikers-ID van A en, voor de gezinsproef, B. Dit
+   is **niet** het telefoonnummer of de gebruikersnaam.
+
+Er zijn twee verschillende proeven. Kies bewust welke je uitvoert:
+
+| Wat wil je weten? | Accounts | Betekenis |
+|---|---|---|
+| Kan één persoon een tweede Telegram-account veilig koppelen? | A en B zijn allebei van jou | B krijgt via `/link` dezelfde persoon als A. Dit is **geen** gezins- of privacyproef. |
+| Blijven twee gezinsleden en hun groepstoestemming apart? | A en B zijn verschillende personen | A en B krijgen vóór de start ieder hun eigen testpersoon. Alleen zo is een groepsproef echt meerpersoons. |
 
 Je maakt geen losse DSN, wachtwoorden, JSON-bestanden, volumes of
 netwerknamen. De voorbereidingsopdracht hieronder maakt die zelf, uitsluitend
@@ -46,24 +50,43 @@ Kopieer uitsluitend de `image`-waarde uit de JSON-receipt naar de private
 testconfiguratie. De builder weigert een andere dependency-lock, een ontbrekende
 lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
-## Veilige proefvolgorde
+## Veilige proefvolgorde: twee gezinsleden en een groep
 
-1. Maak in BotFather een nieuwe testbot. Gebruik nooit de token van Eva A/B.
-2. Maak de testconfiguratie op de Docker-host. De opdracht vraagt de token
-   onzichtbaar op, maakt sterke testwachtwoorden en vertrouwt aanvankelijk
-   alleen account A. Plak de token niet in Telegram, een shellgeschiedenis of
-   een document.
+1. Maak in BotFather een nieuwe testbot. Schakel voor **alleen deze bot**
+   groepsprivacy uit via BotFather `/setprivacy`, anders ziet zij gewone
+   groepsberichten niet. Gebruik nooit de token van Eva A/B.
+2. Maak de lege testgroep, voeg A, B en de testbot toe en stuur vanuit A één
+   unieke marker, bijvoorbeeld `EVA2-TEST-GROUP-3fj7Qz8Nw2Ka`. De marker is
+   geen wachtwoord en mag uitsluitend in deze lege groep staan.
+3. Maak de testconfiguratie op de Docker-host. De opdracht vraagt de token
+   onzichtbaar op, maakt sterke testwachtwoorden en vertrouwt A en B als twee
+   verschillende testpersonen. Plak de token niet in Telegram, een
+   shellgeschiedenis of een document.
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
    sudo env PYTHONPATH=src:. python3 tools/prepare_telegram_test_config.py \
-     --owner-telegram-user-id <NUMERIEK_ID_VAN_ACCOUNT_A>
+     --owner-telegram-user-id <NUMERIEK_ID_VAN_ACCOUNT_A> \
+     --owner-principal-id test:persoon-a \
+     --member <NUMERIEK_ID_VAN_ACCOUNT_B>=test:persoon-b
    ```
 
    De output bevat alleen een veilig vervolgcommando; geen token of wachtwoord.
    De opdracht weigert een bestaande `/run/eva2-test` te overschrijven en
    start geen container of Telegram-verbinding.
-3. Start daarna uitsluitend de afgescheiden teststack:
+4. Laat de voorbereidingsopdracht één keer veilig de exacte groeps-ID uit die
+   marker lezen en voeg de groep alleen voor A en B toe. De commandoregel
+   drukt noch de BotFather-token noch de markerinhoud terug. Dit start nog
+   geen container of Telegram-poller.
+
+   ```bash
+   sudo env PYTHONPATH=src:. python3 tools/admit_telegram_test_group.py \
+     --marker EVA2-TEST-GROUP-3fj7Qz8Nw2Ka \
+     --grant-to <NUMERIEK_ID_VAN_ACCOUNT_A> \
+     --grant-to <NUMERIEK_ID_VAN_ACCOUNT_B>
+   ```
+
+5. Start daarna uitsluitend de afgescheiden teststack:
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
@@ -74,13 +97,32 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    De launcher weigert afwijkende images, productiepaden, volumes en secrets.
    Hij mag pas een Telegram-poller starten nadat de eigen lege database en
    diagnosecore gezond zijn.
-4. Start een privégesprek met account A. De vaste diagnosezin bewijst alleen
-   Telegram-transport; zij is nog geen Eva-gesprek.
-5. Koppel account B via de normale koppelroute.
-6. Voeg A, B en de testbot toe aan de lege testgroep. Test toestemming geven,
-   een onschuldig groepsbericht en toestemming intrekken.
-7. Herstart de testopstelling en controleer dat een ingetrokken toestemming
-   ook daarna niet opnieuw toegang geeft.
+6. Start privégesprekken met A én B. Ieder ontvangt de vaste diagnosezin:
+   `Telegram-test ontvangen. Dit controleert de verbinding, niet Eva's gesprek.`
+   Daarmee is alleen de echte Telegram-transportroute bewezen.
+7. Stuur in de groep eerst één onschuldig bericht vanuit A en één vanuit B.
+   Zonder toestemming mag de bot op beide **niet** reageren.
+8. Stuur vanuit A's privéchat `/share <GROEPS_ID>`. Stuur daarna vanuit A één
+   groepsbericht: de vaste diagnosezin moet alleen daarop volgen. Een bericht
+   van B blijft nog stil.
+9. Herhaal `/share <GROEPS_ID>` vanuit B's privéchat. Nu mag B's groepsbericht
+   ook de vaste diagnosezin krijgen.
+10. Stuur vanuit A `/stop-sharing <GROEPS_ID>` en stuur weer vanuit A in de
+    groep. Eva moet stil blijven voor A, ook na een herstart van de teststack;
+    B mag alleen blijven werken zolang B's eigen toestemming nog actief is.
+
+De diagnosecore bewaart geen echte herinnering en voert geen echte Eva-taak
+uit. Deze proef bewijst dus Telegram-bezorging, accounttoelating en de
+groepsconsentgrens; zij bewijst nog geen volledige Eva-conversatie.
+
+## Afzonderlijke proef: twee accounts van één persoon
+
+Laat `--member` en de groepstappen weg wanneer B jouw tweede eigen account is.
+Start de teststack met alleen A. Stuur vanuit B in een privéchat `/link`; B
+krijgt een korte code. Stuur die code vanuit A's privéchat als
+`/link EVA-...`. A krijgt `Gekoppeld.`. Daarna kan B privé dezelfde vaste
+diagnosezin krijgen. B wordt daarmee **geen tweede gezinslid** en krijgt geen
+automatisch groepsrecht.
 
 ## Voor je de launcher uitvoert
 

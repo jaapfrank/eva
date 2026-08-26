@@ -8,6 +8,7 @@ import pytest
 import tools.prepare_telegram_test_config as telegram_config
 from tools.prepare_telegram_test_config import (
     TEST_IMAGE,
+    TelegramTestPrincipal,
     build_test_binding,
     build_test_environment,
 )
@@ -26,6 +27,52 @@ def test_binding_trusts_only_the_owner_private_chat() -> None:
     }
 
 
+def test_binding_can_admit_a_separate_test_person_and_one_exact_group() -> None:
+    assert build_test_binding(
+        owner_user_id=123,
+        owner_principal_id="test:owner",
+        members=(TelegramTestPrincipal(456, "test:member"),),
+        allowed_group_chat_ids=((123, "-100999"), (456, "-100999")),
+    ) == {
+        "contract": "EvaTelegramPrincipalBindings/v1",
+        "bindings": [
+            {
+                "allowed_chat_ids": ["123", "-100999"],
+                "principal_id": "test:owner",
+                "telegram_user_id": 123,
+            },
+            {
+                "allowed_chat_ids": ["456", "-100999"],
+                "principal_id": "test:member",
+                "telegram_user_id": 456,
+            },
+        ],
+    }
+
+
+@pytest.mark.parametrize(
+    ("members", "groups", "match"),
+    [
+        ((TelegramTestPrincipal(123, "test:member"),), (), "user IDs"),
+        ((TelegramTestPrincipal(456, "test:owner"),), (), "principals"),
+        ((), ((456, "-100999"),), "requires a trusted"),
+        ((), ((123, "not-a-group"),), "group ID"),
+    ],
+)
+def test_binding_rejects_ambiguous_or_unscoped_test_people(
+    members: tuple[TelegramTestPrincipal, ...],
+    groups: tuple[tuple[int, str], ...],
+    match: str,
+) -> None:
+    with pytest.raises(ValueError, match=match):
+        build_test_binding(
+            owner_user_id=123,
+            owner_principal_id="test:owner",
+            members=members,
+            allowed_group_chat_ids=groups,
+        )
+
+
 @pytest.mark.parametrize("user_id", (0, -1))
 def test_binding_rejects_an_invalid_owner_id(user_id: int) -> None:
     with pytest.raises(ValueError, match="positive"):
@@ -38,11 +85,16 @@ def test_environment_has_closed_nonsecret_test_routes() -> None:
     assert environment["EVA_TEST_LIVING_CORE_IMAGE"] == TEST_IMAGE
     assert environment["EVA_TEST_LIVING_CORE_URL"] == "http://eva-test-core:8080"
     assert environment["EVA_TEST_TELEGRAM_API_BASE_URL"] == "https://api.telegram.org"
-    assert all(value.startswith("eva2-telegram-test-") for key, value in environment.items() if key in {
-        "EVA_TEST_NETWORK_NAME",
-        "EVA_TEST_DATABASE_NETWORK_NAME",
-        "EVA_TEST_POSTGRES_VOLUME_NAME",
-    })
+    assert all(
+        value.startswith("eva2-telegram-test-")
+        for key, value in environment.items()
+        if key
+        in {
+            "EVA_TEST_NETWORK_NAME",
+            "EVA_TEST_DATABASE_NETWORK_NAME",
+            "EVA_TEST_POSTGRES_VOLUME_NAME",
+        }
+    )
 
 
 def test_environment_refuses_a_different_image() -> None:
@@ -69,7 +121,9 @@ def test_preparation_writes_closed_secret_files_without_returning_them(
 
     monkeypatch.setattr(telegram_config.os, "fchmod", remember_fchmod)
     passwords = iter(("database-password", "pairing-secret"))
-    monkeypatch.setattr(telegram_config.secrets, "token_urlsafe", lambda _: next(passwords))
+    monkeypatch.setattr(
+        telegram_config.secrets, "token_urlsafe", lambda _: next(passwords)
+    )
 
     receipt = telegram_config.prepare_test_config(
         owner_user_id=123,
@@ -78,12 +132,15 @@ def test_preparation_writes_closed_secret_files_without_returning_them(
     )
 
     assert receipt["status"] == "prepared"
+    assert receipt["trusted_account_count"] == 1
     assert "123456:" not in json.dumps(receipt)
     assert "database-password" not in json.dumps(receipt)
     environment = (test_root / "telegram-test.env").read_text()
     assert "EVA_TEST_LIVING_CORE_IMAGE=" + TEST_IMAGE in environment
     assert "database-password" not in environment
-    binding = json.loads((test_root / "secrets" / "telegram-test-bindings.json").read_text())
+    binding = json.loads(
+        (test_root / "secrets" / "telegram-test-bindings.json").read_text()
+    )
     assert binding["bindings"][0]["telegram_user_id"] == 123
     assert "database-password" in (test_root / "secrets" / "database-dsn").read_text()
     assert fchmod_calls == [0o600] * 6

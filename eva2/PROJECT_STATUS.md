@@ -107,18 +107,18 @@ Dit is nog steeds geen publieke site, account, download, overname, Telegram of
 B-deploy; onafhankelijke review blijft open.
 
 De Telegramproef heeft nu ook een **één-opdracht voorbereiding**: de operator
-geeft alleen account A's numerieke Telegram-ID op en voert de nieuwe
-`tools/prepare_telegram_test_config.py` als root uit. Die vraagt de aparte
-BotFather-testtoken onzichtbaar op, maakt de vijf private testbestanden met de
+geeft account A op en kan account B als een afzonderlijke testpersoon
+toevoegen. `tools/prepare_telegram_test_config.py` vraagt de aparte
+BotFather-testtoken onzichtbaar op, maakt de private testbestanden met de
 juiste containereigenaren en schrijft een geheimevrije launcherconfiguratie.
-Zij overschrijft nooit een eerdere proef en start geen container, database of
-Telegramverbinding. Daardoor hoeft niemand meer zelf een DSN, wachtwoord,
-bindingsbestand, volume- of netwerknaam te verzinnen. Account B blijft bewust
-alleen via de echte koppelroute toe te voegen. De volgende stap is nu tastbaar:
-testbot + twee accounts + testgroep aanmaken, voorbereiden, starten en de vier
-gedragsstappen in `TELEGRAM_TEST.md` uitvoeren. De exact gepinde
-PostgreSQL-testinput moet nog wel lokaal bij Docker beschikbaar zijn; de
-launcher vervangt die nooit stil door `latest` of een andere tag. Dit is
+`tools/admit_telegram_test_group.py` leest daarna één unieke marker uit de
+lege testgroep, haalt alleen de exacte negatieve groeps-ID op en voegt die
+atomair alleen voor A en B toe. Zo test `/link` eerlijk een tweede account van
+dezelfde persoon, terwijl de groepsproef werkelijk twee personen test. Geen
+van beide opdrachten start een container, poller, migratie of gesprek. De
+exacte afvinkstappen staan in `deploy/living-core/TELEGRAM_TEST.md`. De exact
+gepinde PostgreSQL-testinput moet nog wel lokaal bij Docker beschikbaar zijn;
+de launcher vervangt die nooit stil door `latest` of een andere tag. Dit is
 testvoorbereiding, geen Telegram-liveclaim of B-wijziging.
 
 Checkpoint `e11c136` maakt de **Telegram-testimage daadwerkelijk lokaal

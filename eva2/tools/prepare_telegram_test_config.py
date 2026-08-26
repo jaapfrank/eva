@@ -15,7 +15,8 @@ import os
 from pathlib import Path
 import re
 import secrets
-from typing import NoReturn
+from dataclasses import dataclass
+from typing import Iterable, NoReturn
 from urllib.parse import quote
 from uuid import uuid4
 
@@ -35,23 +36,73 @@ POSTGRES_IMAGE = (
 )
 TOKEN_PATTERN = re.compile(r"[0-9]{6,20}:[A-Za-z0-9_-]{20,}\Z")
 PRINCIPAL_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,159}\Z")
+GROUP_CHAT_ID_PATTERN = re.compile(r"-[0-9]{1,30}\Z")
+MAX_TRUSTED_TEST_ACCOUNTS = 8
 
 
-def build_test_binding(*, owner_user_id: int, owner_principal_id: str) -> dict[str, object]:
-    """Return the sole initial binding; every other person must pair in chat."""
+@dataclass(frozen=True, slots=True)
+class TelegramTestPrincipal:
+    """One explicitly trusted test person, never an implicit group grant."""
 
-    if owner_user_id < 1:
-        raise ValueError("owner Telegram user ID must be positive")
-    if not PRINCIPAL_PATTERN.fullmatch(owner_principal_id):
-        raise ValueError("owner principal ID is invalid")
+    telegram_user_id: int
+    principal_id: str
+
+    def __post_init__(self) -> None:
+        if self.telegram_user_id < 1:
+            raise ValueError("trusted Telegram user ID must be positive")
+        if not PRINCIPAL_PATTERN.fullmatch(self.principal_id):
+            raise ValueError("trusted principal ID is invalid")
+
+
+def build_test_binding(
+    *,
+    owner_user_id: int,
+    owner_principal_id: str,
+    members: Iterable[TelegramTestPrincipal] = (),
+    allowed_group_chat_ids: Iterable[tuple[int, str]] = (),
+) -> dict[str, object]:
+    """Return closed private and explicitly granted group test bindings.
+
+    ``/link`` adds another Telegram account to one existing person. A second
+    household member must receive its own principal here; otherwise a group
+    test would quietly test one person twice.
+    """
+
+    entries = (
+        TelegramTestPrincipal(owner_user_id, owner_principal_id),
+        *tuple(members),
+    )
+    if not 1 <= len(entries) <= MAX_TRUSTED_TEST_ACCOUNTS:
+        raise ValueError("test configuration requires 1-8 trusted accounts")
+    user_ids = [entry.telegram_user_id for entry in entries]
+    if len(set(user_ids)) != len(user_ids):
+        raise ValueError("trusted Telegram user IDs must be unique")
+    principal_ids = [entry.principal_id for entry in entries]
+    if len(set(principal_ids)) != len(principal_ids):
+        raise ValueError(
+            "trusted principals must be unique; use /link for another account of one person"
+        )
+    groups_by_user: dict[int, set[str]] = {
+        entry.telegram_user_id: set() for entry in entries
+    }
+    for user_id, group_chat_id in allowed_group_chat_ids:
+        if user_id not in groups_by_user:
+            raise ValueError("a group grant requires a trusted Telegram account")
+        if not GROUP_CHAT_ID_PATTERN.fullmatch(group_chat_id):
+            raise ValueError("Telegram test group ID is invalid")
+        groups_by_user[user_id].add(group_chat_id)
     return {
         "contract": "EvaTelegramPrincipalBindings/v1",
         "bindings": [
             {
-                "allowed_chat_ids": [str(owner_user_id)],
-                "principal_id": owner_principal_id,
-                "telegram_user_id": owner_user_id,
+                "allowed_chat_ids": [
+                    str(entry.telegram_user_id),
+                    *sorted(groups_by_user[entry.telegram_user_id]),
+                ],
+                "principal_id": entry.principal_id,
+                "telegram_user_id": entry.telegram_user_id,
             }
+            for entry in entries
         ],
     }
 
@@ -93,7 +144,14 @@ def build_test_environment(*, owner_user_id: int, image: str) -> dict[str, str]:
     }
 
 
-def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: str) -> dict[str, object]:
+def prepare_test_config(
+    *,
+    owner_user_id: int,
+    owner_principal_id: str,
+    token: str,
+    members: Iterable[TelegramTestPrincipal] = (),
+    allowed_group_chat_ids: Iterable[tuple[int, str]] = (),
+) -> dict[str, object]:
     """Write the test-only root exactly once and return a secret-free receipt."""
 
     if os.geteuid() != 0:
@@ -101,7 +159,10 @@ def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: s
     if not TOKEN_PATTERN.fullmatch(token):
         raise ValueError("test BotFather token format is invalid")
     binding = build_test_binding(
-        owner_user_id=owner_user_id, owner_principal_id=owner_principal_id
+        owner_user_id=owner_user_id,
+        owner_principal_id=owner_principal_id,
+        members=members,
+        allowed_group_chat_ids=allowed_group_chat_ids,
     )
     environment = build_test_environment(owner_user_id=owner_user_id, image=TEST_IMAGE)
     if TEST_ROOT.exists():
@@ -132,7 +193,9 @@ def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: s
         )
         _write_private(
             RUNTIME_SECRET_ROOT / "telegram-test-bindings.json",
-            (json.dumps(binding, sort_keys=True, separators=(",", ":")) + "\n").encode(),
+            (
+                json.dumps(binding, sort_keys=True, separators=(",", ":")) + "\n"
+            ).encode(),
             owner=RUNTIME_OWNER,
         )
         _write_private(
@@ -142,7 +205,9 @@ def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: s
         )
         _write_private(
             TEST_ROOT / "telegram-test.env",
-            "".join(f"{key}={value}\n" for key, value in sorted(environment.items())).encode(),
+            "".join(
+                f"{key}={value}\n" for key, value in sorted(environment.items())
+            ).encode(),
             owner=0,
         )
     except BaseException:
@@ -154,6 +219,7 @@ def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: s
         "configuration_file": str(TEST_ROOT / "telegram-test.env"),
         "owner_telegram_user_id": owner_user_id,
         "status": "prepared",
+        "trusted_account_count": len(binding["bindings"]),
         "next_command": (
             "PYTHONPATH=src:. python3 -m eva.operations.telegram_test_launch "
             f"--env-file {TEST_ROOT / 'telegram-test.env'}"
@@ -161,7 +227,7 @@ def prepare_test_config(*, owner_user_id: int, owner_principal_id: str, token: s
         "nonclaims": [
             "No Telegram API call, container, database, or poller was started.",
             "The test bot token and generated passwords are never printed.",
-            "Only the owner is statically trusted; a second account must pair through Telegram.",
+            "Only named test people are statically trusted; /link adds another account to an existing person, not another person.",
         ],
     }
 
@@ -192,7 +258,35 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--owner-telegram-user-id", required=True, type=int)
     parser.add_argument("--owner-principal-id", default="test:owner")
+    parser.add_argument(
+        "--member",
+        action="append",
+        default=[],
+        metavar="TELEGRAM_USER_ID=PRINCIPAL_ID",
+        help="separate test person; repeat for up to seven additional people",
+    )
+    parser.add_argument(
+        "--allow-group-for",
+        action="append",
+        default=[],
+        metavar="TELEGRAM_USER_ID=GROUP_CHAT_ID",
+        help="explicitly allow one known negative Telegram group ID for a named test person",
+    )
     return parser
+
+
+def _parse_member(value: str) -> TelegramTestPrincipal:
+    user_id_raw, separator, principal_id = value.partition("=")
+    if not separator or not user_id_raw.isdecimal() or not principal_id:
+        raise ValueError("--member must be TELEGRAM_USER_ID=PRINCIPAL_ID")
+    return TelegramTestPrincipal(int(user_id_raw), principal_id)
+
+
+def _parse_group_grant(value: str) -> tuple[int, str]:
+    user_id_raw, separator, group_chat_id = value.partition("=")
+    if not separator or not user_id_raw.isdecimal() or not group_chat_id:
+        raise ValueError("--allow-group-for must be TELEGRAM_USER_ID=GROUP_CHAT_ID")
+    return int(user_id_raw), group_chat_id
 
 
 def main() -> int:
@@ -203,6 +297,10 @@ def main() -> int:
             owner_user_id=arguments.owner_telegram_user_id,
             owner_principal_id=arguments.owner_principal_id,
             token=token,
+            members=tuple(_parse_member(value) for value in arguments.member),
+            allowed_group_chat_ids=tuple(
+                _parse_group_grant(value) for value in arguments.allow_group_for
+            ),
         )
     except (RuntimeError, ValueError) as error:
         _die(str(error))
