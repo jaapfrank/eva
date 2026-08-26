@@ -22,6 +22,7 @@ from eva.contracts.execution import (
     CapabilityGrant,
     ConnectorBinding,
     CredentialGrant,
+    EffectAttempt,
     ReadAttempt,
 )
 from eva.contracts.planning import ModelAttempt
@@ -32,6 +33,7 @@ _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _CONNECTOR_BINDING_TABLE = "eva_core.connector_bindings"
 _MODEL_ATTEMPT_TABLE = "eva_core.model_attempts"
 _READ_ATTEMPT_TABLE = "eva_effects.read_attempts"
+_EFFECT_ATTEMPT_TABLE = "eva_effects.effect_attempts"
 
 
 class PortableRestoreError(PortableArchiveError):
@@ -575,6 +577,156 @@ def decode_terminal_read_attempt(
     return restored
 
 
+def decode_terminal_effect_attempt(
+    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    """Restore completed effect history without reviving its provider access."""
+
+    spec = _spec_for_table(table_specs, _EFFECT_ATTEMPT_TABLE)
+    if record.get("contract") != spec.get("record_contract"):
+        raise PortableRestoreError("portable effect attempt record contract differs")
+    row = _portable_row(record, table=_EFFECT_ATTEMPT_TABLE)
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    expected_properties = (
+        tuple(transform.get("portablePropertyOrder", ()))
+        if isinstance(transform, Mapping)
+        else ()
+    )
+    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+        raise PortableRestoreError("portable effect attempt properties differ")
+    if row.get("credential_reauthorization_required") is not True:
+        raise PortableRestoreError("portable effect attempt lacks a redacted credential grant")
+    if row.get("state") not in {
+        "provider_accepted",
+        "definitive_reject",
+        "ambiguous_transport",
+        "rate_limited",
+        "policy_denied",
+        "hash_conflict",
+        "internal_failure",
+    }:
+        raise PortableRestoreError("portable effect attempt is still executable")
+
+    capability_payload = row.get("capability_grant_payload")
+    if not isinstance(capability_payload, dict):
+        raise PortableRestoreError("portable effect attempt capability grant is invalid")
+    try:
+        capability_grant = CapabilityGrant.model_validate(capability_payload).model_dump(
+            mode="json"
+        )
+    except ValueError as error:
+        raise PortableRestoreError("portable effect attempt capability grant is invalid") from error
+    capability_hash = hashlib.sha256(canonical_json_bytes(capability_grant)).hexdigest()
+    if (
+        capability_hash != row.get("capability_grant_sha256")
+        or capability_grant["grant_id"] != row.get("capability_grant_id")
+        or capability_grant["nonce"] != row.get("capability_grant_nonce")
+        or capability_grant["deadline"] != row.get("capability_grant_deadline")
+    ):
+        raise PortableRestoreError("portable effect attempt capability grant and row differ")
+
+    redacted_grant = row.get("credential_grant_payload")
+    if not isinstance(redacted_grant, dict):
+        raise PortableRestoreError("portable effect attempt redacted grant is invalid")
+    grant_id = _canonical_uuid(row.get("credential_grant_id"))
+    if grant_id is None:
+        raise PortableRestoreError("portable effect attempt credential grant ID is absent")
+    if (
+        redacted_grant.get("contract") != "EvaRedactedCredentialGrant/v1"
+        or redacted_grant.get("source_contract") != "CredentialGrant/v1"
+        or redacted_grant.get("secret_descriptor_id") is not None
+        or redacted_grant.get("credential_reauthorization_required") is not True
+        or not isinstance(redacted_grant.get("secret_descriptor_id_sha256"), str)
+        or not _SHA256.fullmatch(redacted_grant["secret_descriptor_id_sha256"])
+    ):
+        raise PortableRestoreError("portable effect attempt grant redaction differs")
+    grant_payload = {
+        key: value
+        for key, value in redacted_grant.items()
+        if key
+        not in {
+            "source_contract",
+            "secret_descriptor_id_sha256",
+            "credential_reauthorization_required",
+        }
+    }
+    grant_payload["contract"] = "CredentialGrant/v1"
+    grant_payload["secret_descriptor_id"] = f"portable-restore-redacted:{grant_id}"
+    try:
+        credential_grant = CredentialGrant.model_validate(grant_payload).model_dump(
+            mode="json"
+        )
+    except ValueError as error:
+        raise PortableRestoreError("portable effect attempt grant cannot be re-linked") from error
+    if (
+        credential_grant["credential_grant_id"] != grant_id
+        or credential_grant["connector_binding_id"]
+        != capability_grant["connector_binding_id"]
+        or credential_grant["model_provider_profile_id"] is not None
+        or credential_grant["nonce"] != row.get("credential_grant_nonce")
+        or credential_grant["deadline"] != row.get("credential_grant_deadline")
+    ):
+        raise PortableRestoreError("portable effect attempt grant and row differ")
+
+    source_payload = row.get("payload")
+    if not isinstance(source_payload, dict):
+        raise PortableRestoreError("portable effect attempt payload is invalid")
+    try:
+        attempt = EffectAttempt.model_validate(source_payload).model_dump(mode="json")
+    except ValueError as error:
+        raise PortableRestoreError("portable effect attempt payload is invalid") from error
+    direct_pairs = {
+        "effect_attempt_id": "effect_attempt_id",
+        "effect_intent_id": "effect_intent_id",
+        "ordinal": "ordinal",
+        "state": "state",
+        "dispatch_permit_sha256": "dispatch_permit_sha256",
+        "capability_grant_id": "capability_grant_id",
+        "credential_grant_id": "credential_grant_id",
+        "connector_manifest_sha256": "connector_manifest_sha256",
+        "request_sha256": "request_sha256",
+        "response_sha256": "response_sha256",
+        "error_class": "error_class",
+        "deadline": "deadline",
+        "created_at": "created_at",
+    }
+    if any(attempt[key] != row[value] for key, value in direct_pairs.items()):
+        raise PortableRestoreError("portable effect attempt payload and row differ")
+    if hashlib.sha256(canonical_json_bytes(attempt)).hexdigest() != row.get(
+        "payload_sha256"
+    ):
+        raise PortableRestoreError("portable effect attempt payload hash differs")
+
+    restored: dict[str, Any] = {}
+    for mapping in mappings:
+        source, property_name = mapping.get("source"), mapping.get("portableProperty")
+        if not isinstance(source, Mapping) or not isinstance(property_name, str):
+            raise PortableRestoreError("portable effect attempt transform mapping is incomplete")
+        kind = source.get("kind")
+        if kind == "column":
+            column = source.get("column")
+            if not isinstance(column, str):
+                raise PortableRestoreError("portable effect attempt source column is invalid")
+            if column == "credential_grant_payload":
+                restored[column] = credential_grant
+            elif column == "credential_grant_sha256":
+                restored[column] = hashlib.sha256(
+                    canonical_json_bytes(credential_grant)
+                ).hexdigest()
+            else:
+                restored[column] = row[property_name]
+        elif kind == "redactedContractColumn" and property_name == "credential_grant_payload":
+            restored["credential_grant_payload"] = credential_grant
+        elif kind == "credentialGrantPresence":
+            continue
+        else:
+            raise PortableRestoreError("portable effect attempt transform kind is unknown")
+    if tuple(restored) != tuple(spec.get("database_column_order", ())):
+        raise PortableRestoreError("re-linked effect attempt columns differ from table pin")
+    return restored
+
+
 def verify_empty_restore_target(
     connection: Any,
     *,
@@ -854,6 +1006,50 @@ def _prepare_terminal_read_attempt_record(
     return restored, tuple(placeholders), tuple(bindings)
 
 
+def _prepare_terminal_effect_attempt_record(
+    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
+    """Type one completed effect-history row for the common restore writer."""
+
+    spec = _spec_for_table(table_specs, _EFFECT_ATTEMPT_TABLE)
+    restored = decode_terminal_effect_attempt(record, table_specs=table_specs)
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    if not isinstance(mappings, list):
+        raise PortableRestoreError("portable effect attempt transform mappings are absent")
+    encodings: dict[str, str] = {}
+    for mapping in mappings:
+        source, property_name, encoding = (
+            mapping.get("source"), mapping.get("portableProperty"), mapping.get("encoding")
+        )
+        if (
+            not isinstance(source, Mapping)
+            or not isinstance(property_name, str)
+            or not isinstance(encoding, str)
+        ):
+            raise PortableRestoreError("portable effect attempt transform mapping is incomplete")
+        if source.get("kind") == "column":
+            column = source.get("column")
+            if not isinstance(column, str) or column in encodings:
+                raise PortableRestoreError("portable effect attempt source column is invalid")
+            encodings[column] = encoding
+        elif (
+            source.get("kind") == "redactedContractColumn"
+            and property_name == "credential_grant_payload"
+        ):
+            encodings["credential_grant_payload"] = "canonicalJson"
+    columns = tuple(spec.get("database_column_order", ()))
+    if tuple(encodings) != columns:
+        raise PortableRestoreError("portable effect attempt encodings differ from table pin")
+    placeholders: list[str] = []
+    bindings: list[Any] = []
+    for column in columns:
+        placeholder, value = _bind_value(restored[column], encodings[column])
+        placeholders.append(placeholder)
+        bindings.append(value)
+    return restored, tuple(placeholders), tuple(bindings)
+
+
 def _validate_record_sets(
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
@@ -913,6 +1109,13 @@ def _validate_record_sets(
                     )
                 )
                 continue
+            if table == _EFFECT_ATTEMPT_TABLE:
+                rows.append(
+                    _prepare_terminal_effect_attempt_record(
+                        record, table_specs=table_specs
+                    )
+                )
+                continue
             restored = decode_column_preserving_record(
                 record, table=table, table_specs=table_specs
             )
@@ -951,9 +1154,9 @@ def restore_column_preserving_records(
     every inserted row when a later database constraint rejects the archive.
 
     A redacted connector restores only as ``reauthorization_required``; a
-    redacted model or completed read attempt restores with a new unusable
-    credential descriptor. These exceptions preserve audit history, never a
-    working secret, provider call, or retry.
+    redacted model, completed read, or completed effect attempt restores with
+    a new unusable credential descriptor. These exceptions preserve audit
+    history, never a working secret, provider call, or retry.
     """
 
     prepared = _validate_record_sets(records_by_table, table_specs=table_specs)
@@ -989,6 +1192,7 @@ __all__ = [
     "decode_ambiguous_model_attempt",
     "decode_column_preserving_record",
     "decode_reauthorization_required_connector_binding",
+    "decode_terminal_effect_attempt",
     "decode_terminal_read_attempt",
     "restore_column_preserving_records",
     "verify_empty_restore_target",
