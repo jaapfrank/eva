@@ -50,7 +50,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
 | Subagents | Harness `0.25.0` voor korte parentgestuurde fork/join; publieke Pydantic AI `Agent.run()` voor één reeds duurzaam gekozen child | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Harness retourneert publiek alleen tekst en verliest voor een databaseworker getypeerde output/usage/cancellation; geen eigen spawn-, model-, budget-, time-out- of child-contextengine bouwen |
 | Voice | Pydantic AI Realtime `2.34.0` als actuele proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
-| Browser | Microsoft Playwright MCP `0.0.79` krijgt de eerste productgerichte sidecarproef; Harness `PlaywrightBrowser` alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces |
+| Browser | Microsoft Playwright MCP `0.0.79` heeft de eerste lokale read- en actieproef doorlopen; Harness `PlaywrightBrowser` blijft alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces |
 | Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
 | Geheugenbeheer | Hindsight `0.9.1` plus de bestaande lokale Control Plane UI | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
@@ -254,7 +254,7 @@ een concreet gat laat zien.
 | Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
 | Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
 | `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: optionele HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Directe transportswap haalt met circa 174–192 verwijderbare regels de 300-regelgrens niet; alleen een semantische state/service-proef gaat door |
-| Microsoft Playwright MCP `0.0.79` | `PROEF: eerste browsersidecar` | Apache-2.0, signed release, 36.500 sterren, 573 commits en onderhoud binnen Microsoft | Nog `0.x`; vereist Node 20+, een gepinde browser en externe netwerkisolatie. Upstream zegt zelf dat originfilters geen securitygrens zijn |
+| Microsoft Playwright MCP `0.0.79` | `PROEF: lokale read + vaste actie groen` | Apache-2.0, signed release, 36.500 sterren, 573 commits en onderhoud binnen Microsoft; checkpoint `72625e0` is onafhankelijk herhaald | Nog `0.x`; alleen een credentialvrije lokale fixture is getest. Publieke sites, accounts en productisolatie blijven open; upstream zegt zelf dat originfilters geen securitygrens zijn |
 | Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
 | Hindsight API `0.9.1` | `GO: huidige L2` | MIT, exact artifact/digest en bestaande Eva-livebewijzen | PostgreSQL blijft canoniek; iedere upgrade blijft een aparte proef met export, privacy, latency en rollback |
 | Hindsight Control Plane UI | `PROEF` | Onderdeel van dezelfde releasefamilie | Auth en tenant-/ACL-grenzen passen niet direct bij Eva; begin read-only achter Eva's API |
@@ -283,10 +283,10 @@ een concreet gat laat zien.
   laag werkelijk kan krimpen.
 - Voice en subagents beginnen op de actuele Pydantic AI/Harness-basis. De
   subagentengine werkt al in een onafhankelijk gereviewde providerloze proef;
-  een eigen generieke runner vervalt. Voor de browser is
-  Microsoft Playwright MCP de eerste productgerichte sidecar; Harness blijft
-  alleen de goedkope vergelijkingsroute. Eva houdt niet twee
-  browserplatforms.
+  een eigen generieke runner vervalt. Voor de browser heeft Microsoft
+  Playwright MCP inmiddels één vaste lokale pagina gelezen en één vaste klik
+  via Eva's duurzame logboek uitgevoerd. Harness blijft alleen de goedkope
+  vergelijkingsroute. Eva houdt niet twee browserplatforms.
 - Hindsight's bestaande UI wordt eerst aangesloten voordat een eigen
   geheugenbeheerpagina wordt gebouwd.
 - De Hindsight Control Plane mag in productie niet stil via `npx` de nieuwste

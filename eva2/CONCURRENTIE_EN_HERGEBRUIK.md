@@ -16,9 +16,10 @@ actieketen doorstaat inmiddels alle 75 tests, inclusief herstarten tussen
 uitvoering, teruglezen en afronden.
 
 Wat nog ontbreekt zijn vooral de delen die van die sterke kern een compleet
-dagelijks product maken: onderbreekbare voice, een browsercomputer, echte
-provider-subagents vanuit Eva-chat, eenvoudige installatie en het terugbrengen
-van Eva's spontane aanwezigheid in huis.
+dagelijks product maken: onderbreekbare voice, een publiek bruikbare
+browsercomputer, de eerste eigenaar-goedgekeurde provider-/Telegramproef voor
+subagents, eenvoudige installatie en het terugbrengen van Eva's spontane
+aanwezigheid in huis.
 
 **Wanneer Eva volgens onze eigen definitie klaar is: ja, voor jouw gebruik.**
 Dan combineert zij in één assistent wat nu over verschillende producten is
@@ -56,6 +57,8 @@ verdwijnt daardoor niet.
 | Veilige kandidaat naast productie | Back-ups, veel file-secretgrenzen, een reproduceerbare offline image en een gescheiden B-route bestaan; het huidige HA-token van B is nog een expliciete open uitzondering | We kunnen verder bouwen en terugrollen zonder de werkende oude Eva of haar gegevens zomaar te overschrijven, maar secretmigratie is nog niet compleet |
 | Zelfverbetering in het klein | Eva heeft één zelfgekozen repositoryverbetering werkelijk uitgevoerd en afgerond | De eerste echte stap naar zelfgemaakte skills bestaat; alleen de automatische herhaalcyclus is nog niet af |
 | Zwaardere praktijkscenario's | Negen native scenario's zijn historisch live bewezen, waaronder doelen, herstel, fan-out en zelfverbetering | Deze functies zijn meer dan losse unit-tests; de verplichte herhaling op één eindversie staat nog open |
+| Eerste subagentlijn | Eva's commandolaag kan een begrensde onderzoeker starten, volgen en actief stoppen; de officiële-SDK-worker draait in een aparte kandidaatimage en dezelfde modeloproep wordt na stop of crash niet blind herhaald | Dit is een serieuze verticale productkandidaat met duurzaam Kanbanbord; de eigenaar-goedgekeurde providerproef via Telegram/B blijft open |
+| Eerste browseractie | Een geïsoleerde Playwright/Chromium las één vaste lokale pagina en klikte via Eva's duurzame logboek precies één vaste knop; een aparte servercontrole bepaalde het succes | Twee providerfoutvensters veroorzaakten geen blinde tweede klik. Publieke sites, accounts, downloads en overname zijn nog niet bewezen |
 
 De sterkste eigen bewijsbasis van de huidige Eva zit dus al in **providerneutraal
 controleerbaar handelen, duurzaam geheugen en veilig herstel**. Home Assistant
@@ -74,10 +77,10 @@ Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 | Skills en echte resultaatcontrole | De Home Assistant-skill kan lezen, bedienen, automatiseren en achteraf controleren | De algemene keten moet dit op de definitieve versie doen en daarna even makkelijk andere skills dragen | Sterk Eva-bewijs, maar geen eerlijke winnaar: de concurrenten kregen niet dezelfde aangesloten skillproef |
 | Voice zoals ChatGPT | Dezelfde identiteit en geheugenbasis zijn beschikbaar voor de toekomstige voiceroute | Doorlopend praten, snel antwoord en onderbreken zijn nog niet gebouwd | Concurrenten hebben meer spraakbouwstenen; geen gelijke praktijktest |
 | Spontaan in huis praten | De oude Eva bewijst dat de gewenste beleving mogelijk is; Eva 2 kan gebeurtenissen al veilig beoordelen | De definitieve speaker- en deurbelroute ontbreekt | De oude Eva wint vandaag op aanwezigheid |
-| Zelfstandig computerwerk | Onderzoek, bestanden en begrensde repositorytaken werken al | Een interactieve, afgeschermde browsercomputer met meekijken en overnemen | OpenBot en Agent Zero lopen voor |
+| Zelfstandig computerwerk | Eén lokale pagina-read en één vaste browseractie via Eva's duurzame logboek en aparte servercontrole zijn technisch en onafhankelijk groen | Een afgeschermde publieke site, grants, live stop, formulieren, accounts, downloads en meekijken/overname | OpenBot en Agent Zero lopen voor als compleet computerproduct; Eva heeft nu wel haar eerste controleerbare browseractie |
 | Zelf nieuwe skills maken | Eén zelfgekozen verbetering is live bewezen | Automatisch maken, vergelijken, veilig activeren en terugdraaien als vaste cyclus | Eva heeft een echt begin; Hermes loopt voor op de complete cyclus |
 | Chatkanalen | Telegrambasis, meerdere accountbindings en groepsprivacy zijn gebouwd en getest | De echte groepstest en vrij toevoegbare kanalen zoals WhatsApp | OpenClaw en Hermes hebben vandaag meer kant-en-klare kanalen |
-| Subagents, dashboard en Kanban | Eén proeftaak wordt veilig opgeslagen, na uitval teruggevonden, één keer uitgevoerd en als kaart op Eva's geïntegreerde 3D-cockpit gezet | Een echt model in een apart workerproces, starten/stoppen vanuit Eva-chat, authenticatie en bordbediening | Eva heeft nu een serieuze verticale basis; Hermes loopt nog voor in de complete gebruikerservaring |
+| Subagents, dashboard en Kanban | Starten, volgen en actief stoppen via Eva's commandolaag werkt; de officiële-SDK-worker draait in een aparte kandidaatimage en taak/resultaat/Kanbankaart blijven duurzaam bewaard | Eén eigenaar-goedgekeurde echte providerproef via Telegram/B, authenticatie en bordbediening | Eva heeft nu een serieuze verticale productkandidaat; Hermes loopt nog voor in de complete gebruikerservaring |
 | Herstel na een crash | Echte herstelgevallen werken; uitvoering, readback en afronding overleven in de algemene keten iedere geteste procesgrens zonder dubbele call | Dezelfde proef via echt Telegram en een echt huisapparaat | **Eva heeft hier al een aantoonbare ontwerpsterkte; een gelijke concurrentenproef ontbreekt** |
 | Installeren en bijwerken | Reproduceerbare images, offline build, back-up en A/B-scheiding bestaan | Een gewone installatie- en koppelwizard | De betrouwbare onderlaag is sterk; concurrenten zijn makkelijker te starten |
 | Snelheid en kosten | Eva was in twee kleine zichtbare vergelijkingen het snelst en geheugencontext is begrensd | Eindmeting voor tekst, voice, tokens, kosten en zeven dagen gebruik | Voorlopig gunstig, maar nog te klein voor een eindclaim |
@@ -189,8 +192,8 @@ bouwen**:
 | Nodig voor Eva | Bestaand communityproject dat eerst de kans krijgt | Wat Eva zelf nog doet |
 |---|---|---|
 | Live voice | Pydantic AI Realtime `2.34.0` | De juiste persoon en herinneringen koppelen, onderbreken echt laten stoppen en huisacties controleren |
-| Subagents | Pydantic AI Harness `0.25.0`; de losse motor en de opgeslagen proeftaak tot Kanbankaart zijn groen | Een echt model in een apart workerproces, starten/stoppen vanuit chat, authenticatie en productpromotie |
-| Browsercomputer | Microsoft Playwright MCP `0.0.79` als geïsoleerde sidecar; Harness-browser alleen voor een wegwerpvergelijking | Websites en bestanden afschermen, direct stoppen en het eindresultaat controleren |
+| Subagents | Pydantic AI Harness `0.25.0` plus de officiële-SDK-worker; starten, volgen, actief stoppen, aparte kandidaatimage en duurzame Kanbankaart zijn groen | Eigenaar-goedgekeurde providerproef via Telegram/B, authenticatie en productpromotie |
+| Browsercomputer | Microsoft Playwright MCP `0.0.79`; lokale read en één vaste actie via Eva's logboek zijn onafhankelijk groen. Harness-browser blijft alleen een wegwerpvergelijking | Publieke websites en bestanden afschermen, direct stoppen, meekijken/overnemen en het eindresultaat controleren |
 | Langlopende achtergrondtaken | Huidige DBOS-route; eerst een kleine rebase naar `2.31.0+eva.1` | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie; stock 2.31 is hiervoor afgewezen |
 | Geheugenscherm | De bestaande lokale Hindsight Control Plane | Bepalen van wie een herinnering is en wie haar mag zien, corrigeren of vergeten |
 | Dashboard en Kanban | React-Admin OSS plus `dnd-kit` | Alleen Eva's gesaneerde API tonen; iedere bordwijziging blijft een gecontroleerde Eva-opdracht |

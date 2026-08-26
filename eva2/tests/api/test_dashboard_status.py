@@ -144,14 +144,15 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "result-stopped" in response.text
     assert "lokale route · authenticatie nog open" in response.text
     assert "Vandaag kreeg Eva haar eerste echte onderzoeker" in response.text
-    assert "Eva heeft nu haar eerste echte browserhand" in response.text
-    assert "Af · Eerste browserhand" in response.text
-    assert "Precies 2" in response.text
+    assert "Eva klikte één keer en controleerde zelf het resultaat" in response.text
+    assert "Af · Eerste browser-read" in response.text
+    assert "Af · Eerste lokale browseractie" in response.text
+    assert "Precies 1×" in response.text
     assert "40 + 28" in response.text
     assert "86,6 MB" in response.text
     assert "Maximaal 1×" in response.text
     assert "Af · Subagentkandidaat" in response.text
-    assert "Volgende · Browseractie en herstel" in response.text
+    assert "Volgende · Publieke testroute" in response.text
     assert "Nog niet live:" in response.text
     assert "Echte taken · geen demo-kaarten" not in response.text
     assert "Object.keys(value).sort()" in response.text
@@ -267,13 +268,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
         "runtime-subagents"
     ]["meaning"]
     assert capability_by_id["browser"]["state"] == "tested"
-    assert "29 van 29" in capability_by_id["browser"]["proof"]
-    assert "verdachte pagina-instructie bleef gewone data" in capability_by_id[
-        "browser"
-    ]["meaning"]
-    assert "host én internet waren onbereikbaar" in capability_by_id["browser"][
-        "meaning"
-    ]
+    assert "37 + 3" in capability_by_id["browser"]["proof"]
+    assert "afzonderlijke servercontrole" in capability_by_id["browser"]["meaning"]
+    assert "geen blinde tweede klik" in capability_by_id["browser"]["meaning"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI"]["version"] == (

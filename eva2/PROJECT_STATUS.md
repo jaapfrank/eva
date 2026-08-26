@@ -56,9 +56,29 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
-| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Eén proeftaak wordt nu opgeslagen, één keer opgepakt, uitgevoerd en als Kanbankaart bewaard | Een echt model in een apart workerproces, starten vanuit chat, browsercomputer, volledige skillcyclus en Eigenaarmodus nog open |
+| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. Een afgeschermde browser las één vaste pagina en voerde via Eva's duurzame logboek één vaste klik uit met onafhankelijke controle achteraf | Publieke websites, echte accounts, meekijken/overname, volledige skillcyclus en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
+
+## Sinds 03:00 daadwerkelijk opgeleverd
+
+Git bevat in dit tijdvak 39 kleine checkpoints. Dat zijn niet 39 producten,
+maar vier gesloten, begrijpelijke uitkomsten:
+
+| Uitkomst | Eindcheckpoint | Wat jij ervan terugziet |
+|---|---|---|
+| Kring en geheugen in de cockpit | `1c62778` | De centrale pagina toont privacyveilige actuele persoons-, deel- en geheugenstatus |
+| Subagent van opdracht tot werkbord | `f9373f1` plus cockpitbinding | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
+| Afgeschermde browser-read | `27965d8` | Een echte Chromium las één vaste lokale pagina zonder host- of internetroute |
+| Duurzame browseractie | `72625e0` | Eén vaste klik liep via Eva's logboek en aparte servercontrole; twee providerfouten gaven geen blinde tweede klik |
+
+De subagentuitkomst was te breed als één werkblok: motor, opslag, chatbediening,
+stop, workerimage, Kanban en bewijs liepen achter elkaar voordat de zichtbare
+projectstatus werd bijgewerkt. Vanaf `72625e0` blijft één capabilityproject
+actief totdat code, test, onafhankelijke review én cockpitstatus samen gesloten
+zijn. Het actieve project blijft daarom **browser en zelfstandige computer**;
+de volgende uitkomst is één afgeschermde publieke testsite met grant en live
+stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
 is 0,5-2 verstreken werkdagen bij drie parallelle bouwstromen plus review voor
@@ -131,10 +151,20 @@ Eva's unieke hoofdfeature.
   `reviews/pydantic-tool-free-child-candidate-b7e9af7.md` en
   `reviews/delegated-work-database-admission-d510366.md`.
 
-- Browser-/workflowbesluit DF03/DF04: Microsoft Playwright MCP `0.0.79` krijgt
-  de eerste productgerichte browsersidecarproef; Harness PlaywrightBrowser
-  draait alleen als wegwerpvergelijking omdat hij in Eva's proces zit en niet
-  met duurzame Pydantic-replay samengaat. Stock DBOS `2.31.0` is na bronaudit
+- Browseractie A02: checkpoint `72625e0` laat de gepinde Microsoft Playwright
+  MCP-/Chromium-sidecar via Eva's bestaande PostgreSQL-logboek precies één
+  vooraf toegestane lokale knop bedienen. Eva leest de servertoestand apart
+  terug en zet pas daarna `STATE_VERIFIED`. In twee echte niet-nul eindigende
+  providerprocessen — vóór en ná effect-I/O — bewaart zij de uitkomst eerlijk
+  als onduidelijk en klikt zij na hervatten niet blind opnieuw. De schone
+  Git-archive-review herhaalde 37/37 connectorgevallen, Ruff, 8/8 bronhashes en
+  3/3 disposable PostgreSQL-/Chromiumscenario's groen. Dit is technisch lokaal
+  bewijs, geen publieke website, download, account, Telegram/B, browser-SIGKILL
+  of algemene computerbediening; zie
+  `reviews/browser-action-a02-72625e0.md`.
+- Browser-/workflowbesluit DF03/DF04: Harness PlaywrightBrowser blijft alleen
+  een wegwerpvergelijking omdat hij in Eva's proces zit en niet met duurzame
+  Pydantic-replay samengaat. Stock DBOS `2.31.0` is na bronaudit
   `NO-GO`: upstream lost een belangrijke dubbele-workerfout op, maar mist nog
   Eva's begrensde retry/no-DDL/commit-ambiguïteitsgrens. Alleen een smalle
   `2.31.0+eva.1`-rebase wordt beproefd; er worden nu nul workerregels op basis
