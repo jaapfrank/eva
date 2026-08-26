@@ -27,7 +27,7 @@ MemoryFlowState = Literal[
     "unavailable",
 ]
 HindsightState = Literal["ready", "attention", "unknown"]
-ControlPlaneState = Literal["not_admitted"]
+ControlPlaneState = Literal["owner_viewer_candidate"]
 
 
 class PeopleMemoryOverviewError(RuntimeError):
@@ -42,7 +42,7 @@ class PeopleMemoryOverview:
     group_sharing: GroupSharingState
     memory_flow: MemoryFlowState
     hindsight: HindsightState
-    control_plane: ControlPlaneState = "not_admitted"
+    control_plane: ControlPlaneState = "owner_viewer_candidate"
 
     def __post_init__(self) -> None:
         allowed = (
@@ -66,7 +66,7 @@ class PeopleMemoryOverview:
                 },
             ),
             (self.hindsight, {"ready", "attention", "unknown"}),
-            (self.control_plane, {"not_admitted"}),
+            (self.control_plane, {"owner_viewer_candidate"}),
         )
         if any(value not in choices for value, choices in allowed):
             raise ValueError("people and memory overview state is invalid")

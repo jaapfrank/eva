@@ -22,11 +22,12 @@
     "ui_exposes_memory_and_configuration_mutation": true,
     "ui_has_no_eva_person_or_group_scope": true
   },
-  "decision": "not_admitted_for_eva_production_memory",
-  "reason": "The upstream UI is a general write-capable bank manager. Its access key gates one shared UI, not Eva's person, group, consent, or correction rules.",
+  "decision": "owner_viewer_candidate_direct_write_not_admitted",
+  "reason": "The upstream UI is a general write-capable bank manager. It remains a candidate for an owner-only visual route, but its direct writes cannot become Eva's person, group, consent, or correction authority.",
   "non_claims": [
     "No Eva production memory, database, volume, account, or secret was opened.",
     "This is not an Hindsight API rejection; Hindsight 0.9.1 remains Eva's long-term memory provider.",
+    "No owner authentication, read-only bridge, or correction workflow has been deployed yet.",
     "This is not a full vulnerability scan or release approval for the image."
   ]
 }

@@ -146,7 +146,7 @@ def test_people_memory_overview_tracks_real_durable_states_without_raw_data(
     assert overview.snapshot(now=NOW, hindsight_state="ready").to_payload() == {
         "contains_raw_content": False,
         "contract": "EvaPeopleMemoryOverview/v1",
-        "control_plane": {"state": "not_admitted"},
+        "control_plane": {"state": "owner_viewer_candidate"},
         "hindsight": {"state": "ready"},
         "memory": {"state": "no_signals"},
         "people": {"dynamic_account": "no_extra_account"},
