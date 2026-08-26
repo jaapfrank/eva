@@ -18,12 +18,14 @@ from typing import Any
 from uuid import UUID
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
-from eva.contracts.execution import ConnectorBinding
+from eva.contracts.execution import ConnectorBinding, CredentialGrant
+from eva.contracts.planning import ModelAttempt
 
 
 _IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _CONNECTOR_BINDING_TABLE = "eva_core.connector_bindings"
+_MODEL_ATTEMPT_TABLE = "eva_core.model_attempts"
 
 
 class PortableRestoreError(PortableArchiveError):
@@ -296,6 +298,126 @@ def decode_reauthorization_required_connector_binding(
         raise PortableRestoreError("portable connector primary key shape differs")
     if any(restored[column] != value for column, value in primary_key.items()):
         raise PortableRestoreError("portable connector primary key differs")
+    return restored
+
+
+def decode_ambiguous_model_attempt(
+    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+) -> dict[str, Any]:
+    """Keep a redacted historical model call without preserving a usable grant.
+
+    A restored model attempt is never a candidate for replay.  Its old provider
+    result is deliberately reduced to ``ambiguous`` and its grant receives a
+    deterministic non-secret descriptor.  This preserves the audit identity
+    while making any old call impossible to resume.
+    """
+
+    spec = _spec_for_table(table_specs, _MODEL_ATTEMPT_TABLE)
+    if record.get("contract") != spec.get("record_contract"):
+        raise PortableRestoreError("portable model attempt record contract differs")
+    row = _portable_row(record, table=_MODEL_ATTEMPT_TABLE)
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    expected_properties = tuple(transform.get("portablePropertyOrder", ())) if isinstance(transform, Mapping) else ()
+    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+        raise PortableRestoreError("portable model attempt properties differ")
+    if row.get("credential_reauthorization_required") is not True:
+        raise PortableRestoreError("portable model attempt lacks a redacted credential grant")
+    redacted_grant = row.get("credential_grant_payload")
+    if not isinstance(redacted_grant, dict):
+        raise PortableRestoreError("portable model attempt redacted grant is invalid")
+    grant_id = _canonical_uuid(row.get("credential_grant_id"))
+    if grant_id is None:
+        raise PortableRestoreError("portable model attempt credential grant ID is absent")
+    if (
+        redacted_grant.get("contract") != "EvaRedactedCredentialGrant/v1"
+        or redacted_grant.get("source_contract") != "CredentialGrant/v1"
+        or redacted_grant.get("secret_descriptor_id") is not None
+        or redacted_grant.get("credential_reauthorization_required") is not True
+        or not isinstance(redacted_grant.get("secret_descriptor_id_sha256"), str)
+        or not _SHA256.fullmatch(redacted_grant["secret_descriptor_id_sha256"])
+    ):
+        raise PortableRestoreError("portable model attempt grant redaction differs")
+    grant_payload = {
+        key: value
+        for key, value in redacted_grant.items()
+        if key not in {"source_contract", "secret_descriptor_id_sha256", "credential_reauthorization_required"}
+    }
+    grant_payload["contract"] = "CredentialGrant/v1"
+    grant_payload["secret_descriptor_id"] = f"portable-restore-redacted:{grant_id}"
+    try:
+        grant = CredentialGrant.model_validate(grant_payload).model_dump(mode="json")
+    except ValueError as error:
+        raise PortableRestoreError("portable model attempt grant cannot be re-linked") from error
+    if (
+        grant["credential_grant_id"] != grant_id
+        or grant["model_provider_profile_id"] != row.get("provider_profile_id")
+        or grant["nonce"] != row.get("credential_grant_nonce")
+        or grant["deadline"] != row.get("credential_grant_deadline")
+    ):
+        raise PortableRestoreError("portable model attempt grant and row differ")
+
+    source_payload = row.get("payload")
+    if not isinstance(source_payload, dict):
+        raise PortableRestoreError("portable model attempt payload is invalid")
+    attempt_payload = dict(source_payload)
+    attempt_payload.update(
+        state="ambiguous",
+        response_sha256=None,
+        credential_grant_id=grant_id,
+    )
+    try:
+        attempt = ModelAttempt.model_validate(attempt_payload).model_dump(mode="json")
+    except ValueError as error:
+        raise PortableRestoreError("portable model attempt cannot become terminal") from error
+    direct_pairs = {
+        "attempt_id": "attempt_id", "episode_id": "episode_id", "generation": "generation",
+        "purpose": "purpose", "ordinal": "ordinal",
+        "provider_profile_id": "provider_profile_id", "request_sha256": "request_sha256",
+        "maximum_input_tokens": "maximum_input_tokens", "maximum_output_tokens": "maximum_output_tokens",
+        "timeout_ms": "timeout_ms", "input_tokens_used": "input_tokens_used",
+        "output_tokens_used": "output_tokens_used", "provider_cost_euro_micros": "provider_cost_euro_micros",
+        "created_at": "created_at",
+    }
+    if any(attempt[key] != row[value] for key, value in direct_pairs.items()):
+        raise PortableRestoreError("portable model attempt payload and row differ")
+
+    restored: dict[str, Any] = {}
+    for mapping in mappings:
+        source, property_name = mapping.get("source"), mapping.get("portableProperty")
+        if not isinstance(source, Mapping) or not isinstance(property_name, str):
+            raise PortableRestoreError("portable model attempt transform mapping is incomplete")
+        kind = source.get("kind")
+        if kind == "column":
+            column = source.get("column")
+            if not isinstance(column, str):
+                raise PortableRestoreError("portable model attempt source column is invalid")
+            if column == "state":
+                restored[column] = "ambiguous"
+            elif column == "response_sha256":
+                restored[column] = None
+            elif column == "credential_grant_payload":
+                restored[column] = grant
+            elif column == "credential_grant_sha256":
+                restored[column] = hashlib.sha256(canonical_json_bytes(grant)).hexdigest()
+            elif column == "provider_reference":
+                restored[column] = None
+            elif column == "payload":
+                restored[column] = attempt
+            elif column == "payload_sha256":
+                restored[column] = hashlib.sha256(
+                    canonical_json_bytes(attempt)
+                ).hexdigest()
+            else:
+                restored[column] = row[property_name]
+        elif kind == "redactedContractColumn" and property_name == "credential_grant_payload":
+            restored["credential_grant_payload"] = grant
+        elif kind == "credentialGrantPresence":
+            continue
+        else:
+            raise PortableRestoreError("portable model attempt transform kind is unknown")
+    if tuple(restored) != tuple(spec.get("database_column_order", ())):
+        raise PortableRestoreError("re-linked model attempt columns differ from table pin")
     return restored
 
 
@@ -617,6 +739,7 @@ def restore_column_preserving_records(
 
 __all__ = [
     "PortableRestoreError",
+    "decode_ambiguous_model_attempt",
     "decode_column_preserving_record",
     "decode_reauthorization_required_connector_binding",
     "restore_column_preserving_records",
