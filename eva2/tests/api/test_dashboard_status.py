@@ -273,6 +273,8 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "andere website kreeg 403" in capability_by_id["browser"]["meaning"]
     assert "geen blinde tweede poging" in capability_by_id["browser"]["meaning"]
     assert "afgekeurd voor release" in capability_by_id["browser"]["meaning"]
+    assert "8 kritieke + 69 hoge" in capability_by_id["browser"]["meaning"]
+    assert "7 + 61" in capability_by_id["browser"]["meaning"]
     assert capability_by_id["telegram-real-test"]["state"] == "selected"
     assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
         "proof"
@@ -291,6 +293,8 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"
+    assert "8 CRITICAL + 69 HIGH" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
+    assert "7 + 61" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
     assert dependency_by_name["Hindsight Control Plane"]["state"] == "open"
     assert dependency_by_name["Hindsight Control Plane"]["version"] == "0.9.1 kandidaat"
     assert "nooit Eva's geheugenwaarheid" in dependency_by_name["Hindsight"][

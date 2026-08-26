@@ -93,8 +93,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Gecontroleerde browserhand",
                 "state": "tested",
                 "proof": "Lokale read + klik én 1 openbare accountloze pagina via allowlist; 37 + 3 controles groen",
-                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging. De huidige proxy en browserimage zijn echter afgekeurd voor release na 3 HIGH respectievelijk 1 CRITICAL + 22 HIGH bevindingen met fixes.",
-                "next": "Eerst beide images vervangen en opnieuw scannen; pas daarna een tweede openbare testtaak met eigenaargrant en live stop.",
+                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging. Een verse scan vond 8 kritieke + 69 hoge bevindingen in de upstreamimage; een kleinere kandidaat verbeterde dat naar 7 + 61, maar is afgekeurd voor release en terecht niet toegelaten.",
+                "next": "Kies een beter onderhouden browserbasis of provider en herhaal scan én dezelfde proeven; pas daarna een tweede openbare testtaak met eigenaargrant en live stop.",
                 "evidence": _evidence("capability/browser"),
             },
             {
@@ -178,7 +178,7 @@ def cockpit_progress() -> dict[str, Any]:
                 "version": "0.0.79",
                 "role": "Browsercomputer",
                 "state": "tested",
-                "decision": "Functioneel getest, maar huidige MCR-digest is afgekeurd voor release: 1 CRITICAL + 22 HIGH bevindingen met fixes. Nieuwe gepinde kandidaat moet opnieuw scannen en proeven.",
+                "decision": "Functioneel getest, maar een verse scan blokkeert de huidige MCR-digest met 8 CRITICAL + 69 HIGH. De onderzochte npm-verkleining haalde Node-bevindingen weg maar bleef 7 + 61 en is afgewezen; een beter onderhouden basis of provider moet opnieuw scannen en proeven.",
                 "evidence": _evidence("dependency/microsoft-playwright-mcp"),
             },
             {

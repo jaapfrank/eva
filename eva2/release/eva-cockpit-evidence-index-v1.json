@@ -4,7 +4,7 @@
     {
       "claimId": "capability/browser",
       "claimState": "tested",
-      "claimSummary": "Een afgeschermde Playwright/Chromium-container las precies één lokale pagina en voerde via Eva's duurzame logboek precies één vaste klik uit. Een aparte openbare proef las alleen example.com via een allowlist-proxy: directe browser-egress was geblokkeerd en iana.org kreeg 403. Onafhankelijke serverreadback bewees de lokale wijziging; twee providerfoutvensters veroorzaakten geen blinde tweede klik. Een eigenaarstop na autorisatie maar vóór provider-I/O liet nul browsercalls en nul kliks achter. De functionele proef is geen releaseclaim: de huidige proxy- en browserimage zijn in de eerste gerichte scan afgekeurd wegens bevindingen met beschikbare fixes.",
+      "claimSummary": "Een afgeschermde Playwright/Chromium-container las precies één lokale pagina en voerde via Eva's duurzame logboek precies één vaste klik uit. Een aparte openbare proef las alleen example.com via een allowlist-proxy: directe browser-egress was geblokkeerd en iana.org kreeg 403. Onafhankelijke serverreadback bewees de lokale wijziging; twee providerfoutvensters veroorzaakten geen blinde tweede klik. Een eigenaarstop na autorisatie maar vóór provider-I/O liet nul browsercalls en nul kliks achter. De functionele proef is geen releaseclaim: een verse scan vond 8 CRITICAL + 69 HIGH in de upstreamimage; een geteste npm-verkleining verbeterde dat tot 7 + 61 maar is afgewezen voor promotie.",
       "sources": [
         {
           "path": "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
@@ -25,6 +25,10 @@
         {
           "path": "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
           "sha256": "8a81a2bfdd98aa542a2a7444aaf1cdb10cfae2bc49b54de400131ca9b6bebb89"
+        },
+        {
+          "path": "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
+          "sha256": "228f9260cd8ac27f1aa1467643d553ede51d96dd3beb6ad3cc5f136bc9b3c1d8"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
@@ -186,11 +190,11 @@
         },
         {
           "path": "src/eva/adapters/api/cockpit.py",
-          "sha256": "ffbe3c771576a6780875a586dceef6fd4261badbd106488462cb504ce5f9c7ac"
+          "sha256": "1d6fd1d2ac88049bdf60c1860234559ce5fa1ea0405a3c1576581ca468bf8988"
         },
         {
           "path": "tests/api/test_dashboard_status.py",
-          "sha256": "16938bab7e8bb3fcf30a6fe844d6d7484fa4910aa9f20d6451cd5c09c9c35519"
+          "sha256": "88e7ef1110d5283cff9cac14322a620a3e645c921e18c7de413822c8ccf7e656"
         }
       ]
     },
@@ -356,7 +360,7 @@
     {
       "claimId": "dependency/microsoft-playwright-mcp",
       "claimState": "tested",
-      "claimSummary": "Microsoft Playwright MCP 0.0.79 is exact gepind en lokaal voor een gesloten pagina-read plus één vaste actie via Eva's duurzame logboek beproefd. De huidige MCR-digest is echter afgekeurd voor release wegens één CRITICAL en 22 HIGH bevindingen met beschikbare fixes; een nieuwe kandidaat moet opnieuw scannen en proeven.",
+      "claimSummary": "Microsoft Playwright MCP 0.0.79 is exact gepind en lokaal voor een gesloten pagina-read plus één vaste actie via Eva's duurzame logboek beproefd. Een verse scan blokkeert de huidige MCR-digest met 8 CRITICAL en 69 HIGH bevindingen. Een getest afgeleid beeld zonder npm verwijderde de Node-bevindingen maar bleef 7 CRITICAL en 61 HIGH; het is niet gepromoveerd.",
       "sources": [
         {
           "path": "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
@@ -373,6 +377,10 @@
         {
           "path": "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
           "sha256": "5a3c0702d7e5d3d73e87aa5dd3290634a21fa13d15c01e09790f333917136119"
+        },
+        {
+          "path": "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
+          "sha256": "228f9260cd8ac27f1aa1467643d553ede51d96dd3beb6ad3cc5f136bc9b3c1d8"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
