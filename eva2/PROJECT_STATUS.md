@@ -82,6 +82,17 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
+Checkpoint `aac1fda` maakt een **aparte Telegram-testdeur** klaar. De enige
+ondersteunde startopdracht weigert een verkeerd pad, een productie-achtig
+netwerk, een losse image-tag of een verkeerde testcore vóór er een container
+start. Twaalf gerichte controles zijn groen, waaronder een echte tijdelijke
+Dockerproef die zichzelf opruimt. Hierdoor kunnen we straks een nieuwe
+BotFather-testbot met twee testaccounts en één lege testgroep proberen zonder
+Eva A/B te gebruiken. Dit is voorbereiding, niet de Telegramproef zelf: er is
+nog geen nieuwe bot, testdatabase, testcore, bericht, groep of B-deploy
+gestart. Zie
+[`reviews/telegram-test-ingress-isolation-aac1fda.md`](reviews/telegram-test-ingress-isolation-aac1fda.md).
+
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
 opslaan. Eva start die call niet opnieuw en wacht op het echte resultaat. Acht
