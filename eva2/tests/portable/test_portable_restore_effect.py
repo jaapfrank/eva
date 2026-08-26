@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import os
 from datetime import datetime, timezone
 from typing import Any
 
@@ -15,6 +16,9 @@ from eva.operations.portable_restore import (
     decode_terminal_effect_attempt,
     restore_column_preserving_records,
 )
+
+
+POSTGRES_DSN = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
 
 
 def _record() -> dict[str, Any]:
@@ -225,3 +229,67 @@ def test_restore_writer_inserts_only_the_safe_terminal_effect_history() -> None:
     bound_values = "\n".join(str(value) for value in insert[1])
     assert "portable-restore-redacted:66666666-6666-4666-8666-666666666666" in bound_values
     assert "legacy-secret" not in bound_values
+
+
+@pytest.mark.skipif(
+    not POSTGRES_DSN,
+    reason="EVA2_TEST_POSTGRES_DSN is required for the real portable restore gate",
+)
+def test_terminal_effect_history_writes_to_real_postgres() -> None:
+    sqlalchemy = pytest.importorskip("sqlalchemy")
+    engine = sqlalchemy.create_engine(POSTGRES_DSN, pool_pre_ping=False)
+    spec = next(
+        item
+        for item in CANONICAL_EXPORT_SPECS
+        if item["table"] == "eva_effects.effect_attempts"
+    )
+    records = {"eva_effects.effect_attempts": [_record()]}
+    try:
+        connection = engine.connect().execution_options(isolation_level="SERIALIZABLE")
+        try:
+            transaction = connection.begin()
+            try:
+                connection.exec_driver_sql("CREATE SCHEMA eva_effects")
+                connection.exec_driver_sql(
+                    "CREATE TABLE eva_effects.effect_attempts ("
+                    "tenant_id uuid NOT NULL, installation_id uuid NOT NULL, "
+                    "effect_attempt_id uuid NOT NULL, effect_intent_id uuid NOT NULL, "
+                    "ordinal integer NOT NULL, state text NOT NULL, dispatch_permit_sha256 bytea, "
+                    "capability_grant_id uuid NOT NULL, capability_grant_payload jsonb NOT NULL, "
+                    "capability_grant_sha256 bytea NOT NULL, capability_grant_nonce text NOT NULL, "
+                    "capability_grant_deadline timestamptz NOT NULL, credential_grant_id uuid NOT NULL, "
+                    "credential_grant_payload jsonb NOT NULL, credential_grant_sha256 bytea NOT NULL, "
+                    "credential_grant_nonce text NOT NULL, credential_grant_deadline timestamptz NOT NULL, "
+                    "connector_manifest_sha256 bytea NOT NULL, request_sha256 bytea NOT NULL, "
+                    "response_sha256 bytea, error_class text NOT NULL, transport_evidence_id uuid, "
+                    "object_store_id uuid, object_candidate_id uuid, object_candidate_ciphertext_sha256 bytea, "
+                    "object_candidate_envelope_byte_length bigint, object_candidate_temp_name_sha256 bytea, "
+                    "object_candidate_state text, deadline timestamptz NOT NULL, payload jsonb NOT NULL, "
+                    "payload_sha256 bytea NOT NULL, revision bigint NOT NULL, retention_policy_id text NOT NULL, "
+                    "retention_until timestamptz NOT NULL, created_at timestamptz NOT NULL, "
+                    "updated_at timestamptz NOT NULL)"
+                )
+
+                assert (
+                    restore_column_preserving_records(
+                        connection, records, table_specs=(spec,)
+                    )
+                    == 1
+                )
+                row = connection.exec_driver_sql(
+                    "SELECT state, response_sha256, error_class, "
+                    "credential_grant_payload->>'secret_descriptor_id' "
+                    "FROM eva_effects.effect_attempts"
+                ).one()
+                assert row == (
+                    "provider_accepted",
+                    bytes.fromhex("1" * 64),
+                    "none",
+                    "portable-restore-redacted:66666666-6666-4666-8666-666666666666",
+                )
+            finally:
+                transaction.rollback()
+        finally:
+            connection.close()
+    finally:
+        engine.dispose()

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import os
 from datetime import datetime, timezone
 from typing import Any
 
@@ -15,6 +16,9 @@ from eva.operations.portable_restore import (
     decode_terminal_read_attempt,
     restore_column_preserving_records,
 )
+
+
+POSTGRES_DSN = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
 
 
 def _record() -> dict[str, Any]:
@@ -211,3 +215,62 @@ def test_restore_writer_inserts_only_the_safe_terminal_read_history() -> None:
     bound_values = "\n".join(str(value) for value in insert[1])
     assert "portable-restore-redacted:66666666-6666-4666-8666-666666666666" in bound_values
     assert "legacy-secret" not in bound_values
+
+
+@pytest.mark.skipif(
+    not POSTGRES_DSN,
+    reason="EVA2_TEST_POSTGRES_DSN is required for the real portable restore gate",
+)
+def test_terminal_read_history_writes_to_real_postgres() -> None:
+    sqlalchemy = pytest.importorskip("sqlalchemy")
+    engine = sqlalchemy.create_engine(POSTGRES_DSN, pool_pre_ping=False)
+    spec = next(
+        item
+        for item in CANONICAL_EXPORT_SPECS
+        if item["table"] == "eva_effects.read_attempts"
+    )
+    records = {"eva_effects.read_attempts": [_record()]}
+    try:
+        connection = engine.connect().execution_options(isolation_level="SERIALIZABLE")
+        try:
+            transaction = connection.begin()
+            try:
+                connection.exec_driver_sql("CREATE SCHEMA eva_effects")
+                connection.exec_driver_sql(
+                    "CREATE TABLE eva_effects.read_attempts ("
+                    "tenant_id uuid NOT NULL, installation_id uuid NOT NULL, "
+                    "read_attempt_id uuid NOT NULL, read_intent_id uuid NOT NULL, "
+                    "ordinal integer NOT NULL, state text NOT NULL, capability_grant_id uuid NOT NULL, "
+                    "capability_grant_payload jsonb NOT NULL, capability_grant_sha256 bytea NOT NULL, "
+                    "capability_grant_nonce text NOT NULL, capability_grant_deadline timestamptz NOT NULL, "
+                    "credential_grant_id uuid NOT NULL, credential_grant_payload jsonb NOT NULL, "
+                    "credential_grant_sha256 bytea NOT NULL, credential_grant_nonce text NOT NULL, "
+                    "credential_grant_deadline timestamptz NOT NULL, connector_manifest_sha256 bytea NOT NULL, "
+                    "request_sha256 bytea NOT NULL, response_sha256 bytea, deadline timestamptz NOT NULL, "
+                    "payload jsonb NOT NULL, payload_sha256 bytea NOT NULL, revision bigint NOT NULL, "
+                    "retention_policy_id text NOT NULL, retention_until timestamptz NOT NULL, "
+                    "created_at timestamptz NOT NULL, updated_at timestamptz NOT NULL)"
+                )
+
+                assert (
+                    restore_column_preserving_records(
+                        connection, records, table_specs=(spec,)
+                    )
+                    == 1
+                )
+                row = connection.exec_driver_sql(
+                    "SELECT state, response_sha256, "
+                    "credential_grant_payload->>'secret_descriptor_id' "
+                    "FROM eva_effects.read_attempts"
+                ).one()
+                assert row == (
+                    "observed",
+                    bytes.fromhex("0" * 64),
+                    "portable-restore-redacted:66666666-6666-4666-8666-666666666666",
+                )
+            finally:
+                transaction.rollback()
+        finally:
+            connection.close()
+    finally:
+        engine.dispose()
