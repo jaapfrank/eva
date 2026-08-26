@@ -15,10 +15,10 @@
     }
   ],
   "proven": [
-    "A synthetic source installation with exactly one tenant, one installation, one current identity pack and one current policy pack exported as a complete 39-record-set archive.",
+    "A synthetic source installation with one tenant, installation, current identity pack, current policy pack, principal, evidence envelope, source event, fact assertion and current-fact pointer exported as a complete 39-record-set archive.",
     "The normal archive publication path ran its standalone reader validation before publication.",
-    "A distinct fresh PostgreSQL database reached the current migration head and restored exactly the four source records in one serializable transaction.",
-    "All other canonical record sets were present and empty; no action, worker, connector, credential, memory or encrypted object was imported."
+    "A distinct fresh PostgreSQL database reached the current migration head and restored exactly the nine source records in one serializable transaction.",
+    "The synthetic memory fact was written through Eva's ordinary memory authority and read back after restore. All other canonical record sets were present and empty; no action, worker, connector, credential or encrypted object was imported."
   ],
   "not_proven": [
     "This is not a real user backup, a full nonempty 39-table workload, an encrypted-object migration or an off-host restore.",
