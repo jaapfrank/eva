@@ -46,8 +46,15 @@ uitsluitend de buildconstraint `linux/amd64`.
 - De eerste decoder voor die adapter bestaat nu: hij accepteert uitsluitend
   kolompreserverende records met de exacte contract-, hash- en primary-keybinding
   uit de export. Eén geredigeerde connector- of credentialrij stopt hard. De
-  transactionele PostgreSQL-import, object-CAS-kopie en herautorisatieflow zijn
-  nog afzonderlijke open stappen.
+  restore-admission eist bovendien een serialiseerbare transactie, één
+  exclusieve herstel-lock en nul rijen in alle 39 canonieke tabellen. De writer
+  controleert de volledige archiefset vóór de eerste targetwrite, gebruikt een
+  savepoint en draait die writes bij een databasefout terug. Dit is eenmaal op
+  een nieuwe PostgreSQL 16.13-database bewezen; zie
+  `evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json`.
+  Hij herstelt bewust nog geen gewone backup met geredigeerde records:
+  herautorisatie, object-CAS-kopie en de volledige tweede-machineproef blijven
+  afzonderlijke open stappen.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.
