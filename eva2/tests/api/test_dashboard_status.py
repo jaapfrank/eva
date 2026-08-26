@@ -84,6 +84,8 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "async function loadIdentity" in response.text
     assert "async function loadProgress" in response.text
     assert "async function loadPeopleMemory" in response.text
+    assert "Veilige actuele status aangesloten" in response.text
+    assert "Veilige live status aangesloten" not in response.text
     assert "statusPayload" in response.text
     assert "identityPayload" in response.text
     assert "pack.state!=='current'" in response.text
