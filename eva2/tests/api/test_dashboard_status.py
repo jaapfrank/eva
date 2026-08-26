@@ -287,6 +287,10 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"
+    assert dependency_by_name["Renovate + Trivy"]["state"] == "selected"
+    assert "Trivy nog niet uitgevoerd" in dependency_by_name["Renovate + Trivy"][
+        "version"
+    ]
     for item in [*payload["capabilities"], *payload["dependencies"]]:
         if item["state"] in {"live", "tested"}:
             assert item["evidence"].startswith(

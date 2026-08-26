@@ -57,7 +57,7 @@ de controleerbare live receipts staan in
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | Echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, kwetsbaarheidsscan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Sinds 03:00 daadwerkelijk opgeleverd
@@ -101,6 +101,14 @@ Receipt:
 [`browser-public-read-allowlist-2026-08-26.json`](evidence/living-core/browser-public-read-allowlist-2026-08-26.json).
 Dit is een geslaagde, kleine publieke leesroute; het is **geen** algemene
 browsercomputer, accountflow, overnamefunctie, B-deploy of onafhankelijke review.
+
+Ook onderhoud is nu begrensd in plaats van handwerk of stil automatische
+updates. [`renovate.json`](renovate.json) maakt op GitHub hooguit twee kleine
+dependencyvoorstellen tegelijk, pas na zeven dagen, met handmatige goedkeuring
+en zonder automerge. Docker-updates moeten op een immutable digest blijven.
+De lokale checker is groen. Dit is nadrukkelijk nog **geen** uitgevoerde
+Trivy-kwetsbaarheidsscan of productie-upgrade; die blijven afzonderlijke
+releasegates.
 
 Checkpoint `d65350b` maakt de volgende echte gebruikersproef direct zichtbaar
 in Eva's cockpit. De kaart **Telegram met twee testaccounts** zegt nu precies

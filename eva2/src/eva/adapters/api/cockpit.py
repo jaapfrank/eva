@@ -205,10 +205,10 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Renovate + Trivy",
-                "version": "nog te pinnen",
+                "version": "Renovate-config; Trivy nog niet uitgevoerd",
                 "role": "Updatevoorstellen en beveiligingsscan",
-                "state": "open",
-                "decision": "Losse CI-jobs; nooit automatische productiepromotie.",
+                "state": "selected",
+                "decision": "Renovate doet alleen kleine, handmatig goed te keuren voorstellen met gepinde image-digests. Trivy blijft een verplichte maar nog niet uitgevoerde scan.",
             },
         ],
     }

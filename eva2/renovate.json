@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "prConcurrentLimit": 2,
+  "prHourlyLimit": 1,
+  "minimumReleaseAge": "7 days",
+  "rangeStrategy": "pin",
+  "ignorePaths": [
+    "**/build/**",
+    "**/evidence/**",
+    "**/vendor/**"
+  ],
+  "packageRules": [
+    {
+      "description": "Eva updates are proposals; tests, scan and explicit promotion stay mandatory.",
+      "matchManagers": ["pip_requirements", "pep621", "dockerfile", "docker-compose"],
+      "automerge": false,
+      "labels": ["dependencies", "needs-eva-validation"]
+    },
+    {
+      "description": "Do not hide a breaking dependency change inside a mixed update.",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "separateMajorMinor": true
+    },
+    {
+      "description": "A container update must remain content-addressed.",
+      "matchDatasources": ["docker"],
+      "pinDigests": true
+    }
+  ]
+}
