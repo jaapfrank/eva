@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 import os
 import signal
+from contextlib import asynccontextmanager
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -18,11 +19,41 @@ from uuid import UUID
 
 import sqlalchemy as sa
 
-from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+from eva.adapters.postgres.delegated_work import (
+    DelegatedWorkReleaseSelector,
+    PostgresDelegatedWorkStore,
+)
 from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.bootstrap.delegated_work_provider import open_delegated_work_runner
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
+
+
+def _provider_release() -> DelegatedWorkReleaseSelector:
+    from eva.adapters.subagents.tool_free_child import OUTPUT_SCHEMA_SHA256
+    from eva.bootstrap.delegated_work_provider import (
+        ENGINE_RELEASE_SHA256,
+        MODEL_PROFILE_RELEASE_SHA256,
+        WORKER_PROFILE_RELEASE_SHA256,
+        WORKER_PROGRAM_SHA256,
+    )
+
+    return DelegatedWorkReleaseSelector(
+        worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
+        model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
+        worker_program_sha256=WORKER_PROGRAM_SHA256,
+        engine_release_sha256=ENGINE_RELEASE_SHA256,
+        output_schema_sha256=OUTPUT_SCHEMA_SHA256,
+    )
+
+
+@asynccontextmanager
+async def _open_provider_runner(model_access_lease_file: Path):
+    from eva.bootstrap.delegated_work_provider import open_delegated_work_runner
+
+    async with open_delegated_work_runner(
+        model_access_lease_file=model_access_lease_file
+    ) as runner:
+        yield runner
 
 
 @dataclass(frozen=True, slots=True)
@@ -158,6 +189,7 @@ class DelegatedWorkService:
 def run_delegated_work_service(
     runner: ChildRunner,
     *,
+    release: DelegatedWorkReleaseSelector,
     settings: DelegatedWorkServiceSettings | None = None,
     once: bool = False,
     clock: Callable[[], datetime] | None = None,
@@ -167,6 +199,7 @@ def run_delegated_work_service(
     return asyncio.run(
         serve_delegated_work_service(
             runner,
+            release=release,
             settings=settings,
             once=once,
             clock=clock,
@@ -177,6 +210,7 @@ def run_delegated_work_service(
 async def serve_delegated_work_service(
     runner: ChildRunner,
     *,
+    release: DelegatedWorkReleaseSelector,
     settings: DelegatedWorkServiceSettings | None = None,
     once: bool = False,
     clock: Callable[[], datetime] | None = None,
@@ -197,6 +231,7 @@ async def serve_delegated_work_service(
             ),
             runner,
             worker_id=selected.worker_id,
+            release=release,
             clock=clock or (lambda: datetime.now(UTC).replace(microsecond=0)),
         )
         service = DelegatedWorkService(
@@ -215,11 +250,10 @@ async def serve_openai_delegated_work(
 ) -> Literal["stopped", "completed"]:
     """Keep provider, model runner and PostgreSQL worker on one event loop."""
 
-    async with open_delegated_work_runner(
-        model_access_lease_file=settings.model_access_lease_file
-    ) as runner:
+    async with _open_provider_runner(settings.model_access_lease_file) as runner:
         return await serve_delegated_work_service(
             runner,
+            release=_provider_release(),
             settings=settings.service,
             once=once,
         )

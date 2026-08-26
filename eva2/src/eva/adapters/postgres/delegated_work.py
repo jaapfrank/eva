@@ -47,6 +47,38 @@ class DelegatedWorkNotFound(DelegatedWorkStoreError):
 
 
 @dataclass(frozen=True, slots=True)
+class DelegatedWorkReleaseSelector:
+    """Exact worker release allowed to lease durable delegated work."""
+
+    worker_profile_release_sha256: str
+    model_profile_release_sha256: str
+    worker_program_sha256: str
+    engine_release_sha256: str
+    output_schema_sha256: str
+
+    def __post_init__(self) -> None:
+        for value in (
+            self.worker_profile_release_sha256,
+            self.model_profile_release_sha256,
+            self.worker_program_sha256,
+            self.engine_release_sha256,
+            self.output_schema_sha256,
+        ):
+            if re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                raise ValueError("delegated release selector hash is invalid")
+
+    @classmethod
+    def from_spec(cls, spec: DelegatedWorkSpec) -> DelegatedWorkReleaseSelector:
+        return cls(
+            worker_profile_release_sha256=spec.worker_profile_release_sha256,
+            model_profile_release_sha256=spec.model_profile_release_sha256,
+            worker_program_sha256=spec.worker_program_sha256,
+            engine_release_sha256=spec.engine_release_sha256,
+            output_schema_sha256=spec.output_schema_sha256,
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class StoredDelegatedWork:
     spec: DelegatedWorkSpec
     attention: AttentionWakeV2
@@ -110,6 +142,30 @@ class PostgresDelegatedWorkStore:
         self._engine = engine
         self._scope_value = scope
         self._role = role
+
+    def validate_admission_authority(
+        self,
+        *,
+        episode_id: UUID,
+        generation: int,
+        owner_principal_id: UUID,
+        principal_binding_id: UUID,
+    ) -> None:
+        """Fail startup before chat can advertise a stale delegated authority."""
+
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                self._validate_authority(
+                    connection,
+                    storage_episode_id=episode_id,
+                    generation=generation,
+                    owner_principal_id=owner_principal_id,
+                    principal_binding_id=principal_binding_id,
+                )
+            finally:
+                transaction.rollback()
 
     def admit(
         self,
@@ -308,6 +364,7 @@ class PostgresDelegatedWorkStore:
         self,
         *,
         worker_id: str,
+        release: DelegatedWorkReleaseSelector,
         now: datetime,
         lease_seconds: int = 30,
     ) -> DelegatedWorkClaim | None:
@@ -337,6 +394,26 @@ class PostgresDelegatedWorkStore:
                     == self._scope_value.installation_id,
                     delegated_work_runs.c.state == "admitted",
                     delegated_work_runs.c.deadline >= now,
+                    delegated_work_runs.c.spec_payload[
+                        "worker_profile_release_sha256"
+                    ].as_string()
+                    == release.worker_profile_release_sha256,
+                    delegated_work_runs.c.spec_payload[
+                        "model_profile_release_sha256"
+                    ].as_string()
+                    == release.model_profile_release_sha256,
+                    delegated_work_runs.c.spec_payload[
+                        "worker_program_sha256"
+                    ].as_string()
+                    == release.worker_program_sha256,
+                    delegated_work_runs.c.spec_payload[
+                        "engine_release_sha256"
+                    ].as_string()
+                    == release.engine_release_sha256,
+                    delegated_work_runs.c.spec_payload[
+                        "output_schema_sha256"
+                    ].as_string()
+                    == release.output_schema_sha256,
                     sa.or_(
                         sa.and_(
                             attention_items.c.state == "pending",
@@ -765,13 +842,13 @@ class PostgresDelegatedWorkStore:
                 raise DelegatedWorkConflict("delegated stop raced")
             return self._load_locked(connection, work_id)
 
-    def latest_active_work_id(
+    def latest_stoppable_work_id(
         self,
         *,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
     ) -> str | None:
-        """Find only the owner's latest unfinished work without exposing task text."""
+        """Find the latest stoppable task, retaining stopped work for exact replay."""
 
         with self._engine.connect() as connection:
             transaction = connection.begin()
@@ -794,11 +871,11 @@ class PostgresDelegatedWorkStore:
                         delegated_work_runs.c.principal_binding_id
                         == principal_binding_id,
                         delegated_work_runs.c.state.in_(
-                            ("admitted", "call_started")
+                            ("admitted", "call_started", "stopped")
                         ),
                     )
                     .order_by(
-                        delegated_work_runs.c.updated_at.desc(),
+                        delegated_work_runs.c.created_at.desc(),
                         delegated_work_runs.c.work_id.desc(),
                     )
                     .limit(1)

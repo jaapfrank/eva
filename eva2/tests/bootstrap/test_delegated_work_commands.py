@@ -21,6 +21,10 @@ class FakeStore:
         self.active_work_id: str | None = None
         self.call_started = False
         self.stopped: list[dict[str, object]] = []
+        self.validated: list[dict[str, object]] = []
+
+    def validate_admission_authority(self, **values: object) -> None:
+        self.validated.append(values)
 
     def admit(self, **values: object) -> SimpleNamespace:
         self.admitted.append(values)
@@ -31,7 +35,7 @@ class FakeStore:
     def workboard(self, **_values: object) -> SimpleNamespace:
         return SimpleNamespace(cards=self.cards)
 
-    def latest_active_work_id(self, **_values: object) -> str | None:
+    def latest_stoppable_work_id(self, **_values: object) -> str | None:
         return self.active_work_id
 
     def stop_before_call(self, work_id: str, **values: object) -> SimpleNamespace:
@@ -74,16 +78,15 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     commands = _commands(store)
     turn = _turn("Laat een onderzoeker uitzoeken welke trein morgen het snelst is")
 
-    first = commands.handle(turn)
-    replay = commands.handle(turn)
+    first = commands.handle(turn, principal_binding_id=BINDING)
+    replay = commands.handle(turn, principal_binding_id=BINDING)
 
     assert first is not None
     assert first.text == (
         "Ik heb één afgeschermde onderzoeker ingepland. "
         "Je ziet de taak op het werkbord."
     )
-    assert replay is not None
-    assert "dezelfde taak" in replay.text
+    assert replay == first
     assert len(store.admitted) == 2
     first_values, replay_values = store.admitted
     assert first_values == replay_values
@@ -114,8 +117,14 @@ def test_owner_gets_board_counts_and_can_stop_latest_work_before_call() -> None:
     store.active_work_id = "work:eva-chat:latest"
     commands = _commands(store)
 
-    status = commands.handle(_turn("Hoe staat mijn onderzoek?", message_id="status"))
-    stopped = commands.handle(_turn("Stop mijn onderzoek", message_id="stop"))
+    status = commands.handle(
+        _turn("Hoe staat mijn onderzoek?", message_id="status"),
+        principal_binding_id=BINDING,
+    )
+    stopped = commands.handle(
+        _turn("Stop mijn onderzoek", message_id="stop"),
+        principal_binding_id=BINDING,
+    )
 
     assert status is not None
     assert status.text == (
@@ -141,7 +150,9 @@ def test_started_call_is_never_falsely_reported_as_stopped() -> None:
     store.active_work_id = "work:eva-chat:started"
     store.call_started = True
 
-    reply = _commands(store).handle(_turn("Stop het onderzoek"))
+    reply = _commands(store).handle(
+        _turn("Stop het onderzoek"), principal_binding_id=BINDING
+    )
 
     assert reply is not None
     assert "niet dat hij gestopt is" in reply.text
@@ -152,13 +163,26 @@ def test_commands_are_private_to_the_exact_owner_and_ignore_normal_chat() -> Non
     store = FakeStore()
     commands = _commands(store)
 
-    assert commands.handle(_turn("Vertel me iets leuks")) is None
+    assert (
+        commands.handle(
+            _turn("Vertel me iets leuks"), principal_binding_id=BINDING
+        )
+        is None
+    )
     assert (
         commands.handle(
             _turn(
                 "Laat een onderzoeker dit doen",
                 principal_id="66666666-6666-6666-6666-666666666666",
-            )
+            ),
+            principal_binding_id=BINDING,
+        )
+        is None
+    )
+    assert (
+        commands.handle(
+            _turn("Laat een onderzoeker dit doen"),
+            principal_binding_id=UUID("77777777-7777-7777-7777-777777777777"),
         )
         is None
     )

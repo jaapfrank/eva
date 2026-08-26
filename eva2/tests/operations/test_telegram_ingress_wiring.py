@@ -7,6 +7,31 @@ from eva.application.telegram_ingress import (
 from eva.operations import telegram_ingress
 
 
+def test_v2_binding_file_carries_exact_database_binding(
+    monkeypatch,
+) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setattr(
+        telegram_ingress,
+        "read_runtime_secret_file",
+        lambda path, *, setting_name: (
+            '{"bindings":[{"allowed_chat_ids":["101"],'
+            '"principal_binding_id":"44444444-4444-4444-4444-444444444444",'
+            '"principal_id":"33333333-3333-3333-3333-333333333333",'
+            '"telegram_user_id":101}],'
+            '"contract":"EvaTelegramPrincipalBindings/v2"}'
+        ),
+    )
+
+    bindings = telegram_ingress.load_principal_bindings("/run/eva/bindings")
+
+    assert bindings.resolve(101, "101") == (
+        "33333333-3333-3333-3333-333333333333"
+    )
+    assert bindings.resolve_binding_id(101, "101").hex == (
+        "44444444444444444444444444444444"
+    )
+
+
 def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
     monkeypatch,
 ) -> None:  # type: ignore[no-untyped-def]

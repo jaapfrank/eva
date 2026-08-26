@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from uuid import UUID
 
+from eva.application.conversation import GroundedReply
 from eva.application.telegram_ingress import (
     TelegramCoreReply,
     TelegramInboundMessage,
@@ -25,7 +27,11 @@ def _message(
 
 
 def test_worker_binds_each_sender_to_its_own_principal_and_rejects_unknown() -> None:
-    messages = (_message(1, 101), _message(2, 202), _message(3, 303))
+    messages = (
+        _message(1, 101, "Laat een onderzoeker dit uitzoeken"),
+        _message(2, 202),
+        _message(3, 303),
+    )
     calls: list[tuple[int, str]] = []
     rejected: list[tuple[int, str]] = []
     delivered: list[tuple[int, str]] = []
@@ -82,17 +88,49 @@ def test_worker_binds_each_sender_to_its_own_principal_and_rejects_unknown() -> 
         def mark_delivery_ambiguous(self, job, error, *, now):  # type: ignore[no-untyped-def]
             raise AssertionError((job, error, now))
 
+    class Commands:
+        def handle(  # type: ignore[no-untyped-def]
+            self, turn, *, principal_binding_id
+        ):
+            if principal_binding_id != UUID(
+                "44444444-4444-4444-4444-444444444444"
+            ):
+                return None
+            assert turn.principal_id == "person:jaap"
+            assert turn.conversation_id == "telegram:101"
+            return GroundedReply(
+                conversation_id=turn.conversation_id,
+                message_id=turn.message_id,
+                text="Onderzoek gestart",
+                evidence_memory_ids=(),
+                generated_at="2026-08-24T12:00:00Z",
+                provider="test-command",
+            )
+
     bindings = TelegramPrincipalBindings(
         (
-            TelegramPrincipalBinding(101, "person:jaap", ("101",)),
+            TelegramPrincipalBinding(
+                101,
+                "person:jaap",
+                ("101",),
+                "44444444-4444-4444-4444-444444444444",
+            ),
             TelegramPrincipalBinding(202, "person:frank", ("202",)),
         )
     )
-    worker = TelegramIngressWorker(Provider(), Core(), Store(), bindings)  # type: ignore[arg-type]
+    worker = TelegramIngressWorker(  # type: ignore[arg-type]
+        Provider(),
+        Core(),
+        Store(),
+        bindings,
+        delegated_work_commands=Commands(),
+        tenant_id="11111111-1111-1111-1111-111111111111",
+        installation_id="22222222-2222-2222-2222-222222222222",
+    )
 
     assert worker.run_once() == "processed"
-    assert calls == [(1, "person:jaap"), (2, "person:frank")]
-    assert delivered == [(1, "Dag person:jaap"), (2, "Dag person:frank")]
+    assert calls == [(2, "person:frank")]
+    assert delivered == [(1, "Onderzoek gestart"), (2, "Dag person:frank")]
     assert rejected == [(3, "sender_or_chat_not_authorized")]
 
 

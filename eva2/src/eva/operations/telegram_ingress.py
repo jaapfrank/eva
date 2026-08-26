@@ -6,6 +6,7 @@ import json
 import os
 import signal
 from threading import Event
+from uuid import UUID
 
 import sqlalchemy as sa
 
@@ -18,6 +19,8 @@ from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
 )
 from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
+from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.application.telegram_ingress import (
     TelegramIngressWorker,
     TelegramPrincipalBinding,
@@ -26,6 +29,7 @@ from eva.application.telegram_ingress import (
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
 from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
 
 def load_principal_bindings(path_value: str) -> TelegramPrincipalBindings:
@@ -36,18 +40,32 @@ def load_principal_bindings(path_value: str) -> TelegramPrincipalBindings:
         decoded = json.loads(raw)
     except json.JSONDecodeError as error:
         raise RuntimeError("Telegram principal bindings are invalid JSON") from error
+    contract = decoded.get("contract") if isinstance(decoded, dict) else None
     if (
         not isinstance(decoded, dict)
         or set(decoded) != {"bindings", "contract"}
-        or decoded.get("contract") != "EvaTelegramPrincipalBindings/v1"
+        or contract not in {
+            "EvaTelegramPrincipalBindings/v1",
+            "EvaTelegramPrincipalBindings/v2",
+        }
         or not isinstance(decoded.get("bindings"), list)
     ):
         raise RuntimeError("Telegram principal bindings contract differs")
     bindings: list[TelegramPrincipalBinding] = []
     for item in decoded["bindings"]:
+        expected_keys = (
+            {"allowed_chat_ids", "principal_id", "telegram_user_id"}
+            if contract == "EvaTelegramPrincipalBindings/v1"
+            else {
+                "allowed_chat_ids",
+                "principal_binding_id",
+                "principal_id",
+                "telegram_user_id",
+            }
+        )
         if (
             not isinstance(item, dict)
-            or set(item) != {"allowed_chat_ids", "principal_id", "telegram_user_id"}
+            or set(item) != expected_keys
             or not isinstance(item.get("telegram_user_id"), int)
             or not isinstance(item.get("principal_id"), str)
             or not isinstance(item.get("allowed_chat_ids"), list)
@@ -59,6 +77,7 @@ def load_principal_bindings(path_value: str) -> TelegramPrincipalBindings:
                 item["telegram_user_id"],
                 item["principal_id"],
                 tuple(item["allowed_chat_ids"]),
+                item.get("principal_binding_id"),
             )
         )
     return TelegramPrincipalBindings(tuple(bindings))
@@ -69,6 +88,47 @@ def _required_environment(name: str) -> str:
     if not value:
         raise RuntimeError(f"{name} is required")
     return value
+
+
+def _delegated_commands(
+    engine: sa.Engine,
+    *,
+    tenant_id: str,
+    installation_id: str,
+    bindings: TelegramPrincipalBindings,
+) -> DelegatedWorkConversationCommands | None:
+    names = (
+        "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
+        "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
+        "EVA_DELEGATED_WORK_EPISODE_ID",
+        "EVA_DELEGATED_WORK_GENERATION",
+    )
+    values = {name: os.environ.get(name, "").strip() for name in names}
+    if not any(values.values()):
+        return None
+    if not all(values.values()):
+        raise RuntimeError("delegated Telegram command authority is incomplete")
+    try:
+        scope = TimelineScope(UUID(tenant_id), UUID(installation_id))
+        owner = UUID(values["EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID"])
+        binding = UUID(values["EVA_DELEGATED_WORK_OWNER_BINDING_ID"])
+        episode = UUID(values["EVA_DELEGATED_WORK_EPISODE_ID"])
+        generation = int(values["EVA_DELEGATED_WORK_GENERATION"])
+    except ValueError as error:
+        raise RuntimeError("delegated Telegram command authority is invalid") from error
+    if not bindings.contains_binding(
+        principal_id=str(owner), principal_binding_id=binding
+    ):
+        raise RuntimeError(
+            "delegated Telegram owner binding is absent from the trusted bindings"
+        )
+    return DelegatedWorkConversationCommands(
+        PostgresDelegatedWorkStore(engine, scope),
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        episode_id=episode,
+        generation=generation,
+    )
 
 
 def main() -> int:
@@ -103,6 +163,12 @@ def main() -> int:
         installation_id=installation_id,
         trusted_bindings=bindings,
     )
+    delegated_commands = _delegated_commands(
+        engine,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        bindings=bindings,
+    )
     worker = TelegramIngressWorker(
         provider,
         LivingCoreTurnHttpAdapter(
@@ -126,6 +192,9 @@ def main() -> int:
             )
         ),
         dynamic_bindings=pairing_store,
+        delegated_work_commands=delegated_commands,
+        tenant_id=tenant_id,
+        installation_id=installation_id,
     )
     stop = Event()
 

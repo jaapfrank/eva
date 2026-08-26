@@ -26,6 +26,7 @@ from alembic.config import Config
 from eva.adapters.postgres.current_catalog import metadata
 from eva.adapters.postgres.delegated_work import (
     DelegatedWorkConflict,
+    DelegatedWorkReleaseSelector,
     DelegatedWorkStoreError,
     PostgresDelegatedWorkStore,
 )
@@ -282,6 +283,10 @@ def _spec(
     )
 
 
+def _release(spec: DelegatedWorkSpec) -> DelegatedWorkReleaseSelector:
+    return DelegatedWorkReleaseSelector.from_spec(spec)
+
+
 def _process_spec(
     label: str,
     scope: TimelineScope,
@@ -438,6 +443,11 @@ def _process_environment(
     now: str = "2026-08-26T12:02:00Z",
     after_claim_marker: Path | None = None,
 ) -> dict[str, str]:
+    try:
+        import pydantic_ai
+    except ImportError:
+        pytest.skip("the exact delegated worker environment is unavailable")
+    worker_site_packages = str(Path(pydantic_ai.__file__).resolve().parents[1])
     environment = {
         name: os.environ[name]
         for name in ("LANG", "LC_ALL", "PATH", "PYTHONHASHSEED")
@@ -454,7 +464,7 @@ def _process_environment(
         "EVA_TEST_SUBAGENT_MODE": mode,
         "EVA_TEST_NOW": now,
         "PYTHONDONTWRITEBYTECODE": "1",
-        "PYTHONPATH": f"{ROOT / 'src'}:{ROOT}",
+        "PYTHONPATH": f"{ROOT / 'src'}:{ROOT}:{worker_site_packages}",
         }
     )
     if after_claim_marker is not None:
@@ -481,7 +491,8 @@ def _official_process_environment(
     except ImportError:
         pytest.skip("the exact delegated provider environment is unavailable")
     sdk_site_packages = str(Path(openai.__file__).resolve().parents[1])
-    environment["PYTHONPATH"] = f"{environment['PYTHONPATH']}:{sdk_site_packages}"
+    if sdk_site_packages not in environment["PYTHONPATH"].split(":"):
+        environment["PYTHONPATH"] = f"{environment['PYTHONPATH']}:{sdk_site_packages}"
     environment["EVA_TEST_PROVIDER_ENDPOINT"] = endpoint
     environment["EVA_TEST_PROVIDER_LEASE_FILE"] = str(lease_file)
     return environment
@@ -591,11 +602,15 @@ def test_durable_handoff_call_result_review_and_workboard(
         )
 
     claim = store.claim_next(
-        worker_id="worker:test", now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC)
+        worker_id="worker:test",
+        release=_release(spec),
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
     assert store.claim_next(
-        worker_id="worker:other", now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC)
+        worker_id="worker:other",
+        release=_release(spec),
+        now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
     ) is None
     call = store.start_call(
         claim, now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC)
@@ -608,7 +623,9 @@ def test_durable_handoff_call_result_review_and_workboard(
     # A fresh process sees call_started and never claims or calls it again.
     restarted = _store(delegated_engine, scope)
     assert restarted.claim_next(
-        worker_id="worker:restart", now=datetime(2026, 8, 26, 12, 1, tzinfo=UTC)
+        worker_id="worker:restart",
+        release=_release(spec),
+        now=datetime(2026, 8, 26, 12, 1, tzinfo=UTC),
     ) is None
     before_result = restarted.workboard(
         owner_principal_id=_id(label, "principal"),
@@ -683,6 +700,7 @@ def test_concurrent_admission_and_claim_choose_one_winner(
         claim_barrier.wait(timeout=5)
         return _store(delegated_engine, scope).claim_next(
             worker_id=worker_id,
+            release=_release(spec),
             now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
         )
 
@@ -695,6 +713,53 @@ def test_concurrent_admission_and_claim_choose_one_winner(
             ]
         ]
     assert sum(value is not None for value in claims) == 1
+
+
+def test_new_worker_release_skips_old_work_until_old_worker_drains_it(
+    delegated_engine: Engine,
+) -> None:
+    label = "release-drain"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    old_spec = _spec(label, scope, episode, binding, work_suffix="old-release")
+    new_spec = DelegatedWorkSpec.model_validate(
+        _spec(
+            label, scope, episode, binding, work_suffix="new-release"
+        ).model_dump(mode="json")
+        | {
+            "engine_release_sha256": "aa" * 32,
+            "model_profile_release_sha256": "bb" * 32,
+            "output_schema_sha256": "cc" * 32,
+            "worker_profile_release_sha256": "dd" * 32,
+            "worker_program_sha256": "ee" * 32,
+        }
+    )
+    _admit(store, old_spec)
+    _admit(store, new_spec)
+
+    new_claim = store.claim_next(
+        worker_id="worker:new-release",
+        release=_release(new_spec),
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+    assert new_claim is not None
+    assert new_claim.work_id == new_spec.work_id
+    old_waiting = store.load(
+        old_spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert old_waiting.state == "admitted"
+    assert old_waiting.call_id is None
+    assert old_waiting.claim_count == 0
+
+    old_claim = store.claim_next(
+        worker_id="worker:old-release-drain",
+        release=_release(old_spec),
+        now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
+    )
+    assert old_claim is not None
+    assert old_claim.work_id == old_spec.work_id
 
 
 def test_runtime_role_cannot_read_another_scope(delegated_engine: Engine) -> None:
@@ -726,6 +791,7 @@ def test_result_usage_cannot_exceed_the_child_grant(
     _admit(store, spec)
     claim = store.claim_next(
         worker_id="worker:budget",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
@@ -772,6 +838,7 @@ def test_revoked_binding_stops_before_call_start(delegated_engine: Engine) -> No
     _admit(store, spec)
     claim = store.claim_next(
         worker_id="worker:revoked",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
@@ -806,7 +873,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     store = _store(delegated_engine, scope)
     spec = _spec(label, scope, episode, binding)
     _admit(store, spec)
-    assert store.latest_active_work_id(
+    assert store.latest_stoppable_work_id(
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
     ) == spec.work_id
@@ -828,6 +895,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     ) == stopped
     assert store.claim_next(
         worker_id="worker:after-stop",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 3, tzinfo=UTC),
     ) is None
     card = store.workboard(
@@ -837,10 +905,10 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     ).cards[0]
     assert card.column == "done"
     assert card.result_status == "stopped"
-    assert store.latest_active_work_id(
+    assert store.latest_stoppable_work_id(
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
-    ) is None
+    ) == spec.work_id
 
 
 def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
@@ -853,6 +921,7 @@ def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
     _admit(store, claimed_spec)
     claim = store.claim_next(
         worker_id="worker:claimed",
+        release=_release(claimed_spec),
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
@@ -870,6 +939,7 @@ def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
     _admit(store, started_spec)
     started_claim = store.claim_next(
         worker_id="worker:started",
+        release=_release(started_spec),
         now=datetime(2026, 8, 26, 12, 0, 4, tzinfo=UTC),
     )
     assert started_claim is not None
@@ -899,6 +969,14 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
     scope, episode, binding = _seed_authority(delegated_engine, label)
     owner = _id(label, "principal")
     store = _store(delegated_engine, scope)
+    with pytest.raises(DelegatedWorkConflict):
+        DelegatedWorkConversationCommands(
+            store,
+            owner_principal_id=owner,
+            principal_binding_id=binding,
+            episode_id=episode,
+            generation=2,
+        )
     commands = DelegatedWorkConversationCommands(
         store,
         owner_principal_id=owner,
@@ -923,11 +1001,12 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
         turn(
             "telegram:owner-chat-control:1",
             "Laat een onderzoeker de onderhoudsstatus van onze dependencies samenvatten",
-        )
+        ),
+        principal_binding_id=binding,
     )
     assert started is not None
     assert "ingepland" in started.text
-    work_id = store.latest_active_work_id(
+    work_id = store.latest_stoppable_work_id(
         owner_principal_id=owner,
         principal_binding_id=binding,
     )
@@ -943,16 +1022,23 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
     )
 
     status = commands.handle(
-        turn("telegram:owner-chat-control:2", "Hoe staat mijn onderzoek?")
+        turn("telegram:owner-chat-control:2", "Hoe staat mijn onderzoek?"),
+        principal_binding_id=binding,
     )
     assert status is not None
     assert "1 wachtend" in status.text
 
     stopped = commands.handle(
-        turn("telegram:owner-chat-control:3", "Stop mijn onderzoek")
+        turn("telegram:owner-chat-control:3", "Stop mijn onderzoek"),
+        principal_binding_id=binding,
     )
     assert stopped is not None
     assert "Gestopt voordat" in stopped.text
+    stopped_replay = commands.handle(
+        turn("telegram:owner-chat-control:3", "Stop mijn onderzoek"),
+        principal_binding_id=binding,
+    )
+    assert stopped_replay == stopped
     assert store.load(
         work_id,
         owner_principal_id=owner,
@@ -960,6 +1046,7 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
     ).state == "stopped"
     assert store.claim_next(
         worker_id="worker:after-owner-chat-stop",
+        release=_release(stored.spec),
         now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
     ) is None
 
@@ -975,6 +1062,7 @@ def test_revocation_waits_for_atomic_call_start(
     _admit(store, spec)
     claim = store.claim_next(
         worker_id="worker:race",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
@@ -1043,6 +1131,7 @@ def test_crash_before_call_is_reclaimed_but_after_call_is_not(
     _admit(store, spec)
     first = store.claim_next(
         worker_id="worker:first",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
         lease_seconds=5,
     )
@@ -1051,6 +1140,7 @@ def test_crash_before_call_is_reclaimed_but_after_call_is_not(
     restarted = _store(delegated_engine, scope)
     second = restarted.claim_next(
         worker_id="worker:second",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 0, 7, tzinfo=UTC),
         lease_seconds=5,
     )
@@ -1064,6 +1154,7 @@ def test_crash_before_call_is_reclaimed_but_after_call_is_not(
     after_fence = _store(delegated_engine, scope)
     assert after_fence.claim_next(
         worker_id="worker:third",
+        release=_release(spec),
         now=datetime(2026, 8, 26, 12, 1, tzinfo=UTC),
     ) is None
 
@@ -1075,7 +1166,9 @@ def test_ambiguous_failure_and_scope_isolation(delegated_engine: Engine) -> None
     spec = _spec(label, scope, episode, binding)
     _admit(store, spec)
     claim = store.claim_next(
-        worker_id="worker:test", now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC)
+        worker_id="worker:test",
+        release=_release(spec),
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
     call = store.start_call(
@@ -1253,6 +1346,7 @@ def test_worker_couples_one_durable_call_and_never_replays_it(
         store,
         runner,
         worker_id="worker:one",
+        release=_release(spec),
         clock=clock,
     )
     assert asyncio.run(worker.run_once()) == "succeeded"
@@ -1262,6 +1356,7 @@ def test_worker_couples_one_durable_call_and_never_replays_it(
         _store(delegated_engine, scope),
         runner,
         worker_id="worker:restarted",
+        release=_release(spec),
         clock=clock,
     )
     assert asyncio.run(restarted.run_once()) == "idle"
@@ -1312,6 +1407,7 @@ def test_real_pydantic_runner_crosses_the_durable_fence_once(
         store,
         runner,
         worker_id="worker:pydantic",
+        release=_release(spec),
         clock=lambda: now,
     )
 
@@ -1321,6 +1417,7 @@ def test_real_pydantic_runner_crosses_the_durable_fence_once(
         _store(delegated_engine, scope),
         runner,
         worker_id="worker:pydantic:restarted",
+        release=_release(spec),
         clock=lambda: now,
     )
     assert asyncio.run(restarted.run_once()) == "idle"

@@ -12,28 +12,16 @@ from pathlib import Path
 
 import sqlalchemy as sa
 import eva.bootstrap  # noqa: F401  # Load root before its model submodule.
-from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
-from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.model.openai_child_provider import (
-    OpenAIChildProvider,
-    OpenAIChildProviderSettings,
+from eva.adapters.postgres.delegated_work import (
+    DelegatedWorkReleaseSelector,
+    PostgresDelegatedWorkStore,
 )
+from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.subagents.tool_free_child import (
+    OUTPUT_SCHEMA_SHA256,
     ClosedModelRegistry,
     PydanticToolFreeChildRunner,
     ToolFreeChildProfile,
-)
-from eva.bootstrap.delegated_work_provider import (
-    ENGINE_RELEASE_SHA256,
-    INPUT_PRICE_USD_MICROS_PER_MILLION,
-    MODEL_NAME,
-    MODEL_PROFILE_ID,
-    MODEL_PROFILE_RELEASE_SHA256,
-    OUTPUT_PRICE_USD_MICROS_PER_MILLION,
-    WORKER_INSTRUCTIONS,
-    WORKER_PROFILE_ID,
-    WORKER_PROFILE_RELEASE_SHA256,
-    WORKER_PROGRAM_SHA256,
 )
 from eva.bootstrap.delegated_work_service import (
     DelegatedWorkService,
@@ -127,7 +115,10 @@ def _clock() -> datetime:
     )
 
 
-def _run_paused_after_claim(runner: PydanticToolFreeChildRunner) -> None:
+def _run_paused_after_claim(
+    runner: PydanticToolFreeChildRunner,
+    release: DelegatedWorkReleaseSelector,
+) -> None:
     settings = DelegatedWorkServiceSettings.from_environment()
     database_dsn = read_runtime_secret_file(
         settings.database_dsn_file,
@@ -146,6 +137,7 @@ def _run_paused_after_claim(runner: PydanticToolFreeChildRunner) -> None:
             store,  # type: ignore[arg-type]
             runner,
             worker_id=settings.worker_id,
+            release=release,
             clock=_clock,
         )
         asyncio.run(
@@ -172,6 +164,23 @@ def _test_provider_credentials() -> tuple[str, str]:
 
 
 async def _run_official_sdk() -> None:
+    from eva.adapters.model.openai_child_provider import (
+        OpenAIChildProvider,
+        OpenAIChildProviderSettings,
+    )
+    from eva.bootstrap.delegated_work_provider import (
+        ENGINE_RELEASE_SHA256,
+        INPUT_PRICE_USD_MICROS_PER_MILLION,
+        MODEL_NAME,
+        MODEL_PROFILE_ID,
+        MODEL_PROFILE_RELEASE_SHA256,
+        OUTPUT_PRICE_USD_MICROS_PER_MILLION,
+        WORKER_INSTRUCTIONS,
+        WORKER_PROFILE_ID,
+        WORKER_PROFILE_RELEASE_SHA256,
+        WORKER_PROGRAM_SHA256,
+    )
+
     provider = OpenAIChildProvider(
         OpenAIChildProviderSettings(
             endpoint=_required("EVA_TEST_PROVIDER_ENDPOINT"),
@@ -204,6 +213,13 @@ async def _run_official_sdk() -> None:
         settings = DelegatedWorkServiceSettings.from_environment()
         await serve_delegated_work_service(
             runner,
+            release=DelegatedWorkReleaseSelector(
+                worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
+                model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
+                worker_program_sha256=WORKER_PROGRAM_SHA256,
+                engine_release_sha256=ENGINE_RELEASE_SHA256,
+                output_schema_sha256=OUTPUT_SCHEMA_SHA256,
+            ),
             settings=settings,
             once=True,
             clock=_clock,
@@ -246,10 +262,19 @@ def main() -> int:
         engine_release_sha256="88" * 32,
         clock=_clock,
     )
+    release = DelegatedWorkReleaseSelector(
+        worker_profile_release_sha256=profile.worker_profile_release_sha256,
+        model_profile_release_sha256=profile.model_profile_release_sha256,
+        worker_program_sha256=program_sha256,
+        engine_release_sha256="88" * 32,
+        output_schema_sha256=OUTPUT_SCHEMA_SHA256,
+    )
     if mode == "pause_after_claim":
-        _run_paused_after_claim(runner)
+        _run_paused_after_claim(runner, release)
     else:
-        run_delegated_work_service(runner, once=True, clock=_clock)
+        run_delegated_work_service(
+            runner, release=release, once=True, clock=_clock
+        )
     return 0
 
 

@@ -7,7 +7,10 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Literal, Protocol
 
-from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+from eva.adapters.postgres.delegated_work import (
+    DelegatedWorkReleaseSelector,
+    PostgresDelegatedWorkStore,
+)
 from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.contracts.delegated_work import DelegatedWorkSpec
 
@@ -37,11 +40,13 @@ class DelegatedWorkWorker:
         runner: ChildRunner,
         *,
         worker_id: str,
+        release: DelegatedWorkReleaseSelector,
         clock: Callable[[], datetime] | None = None,
     ) -> None:
         self._store = store
         self._runner = runner
         self._worker_id = worker_id
+        self._release = release
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
     async def run_once(
@@ -52,7 +57,11 @@ class DelegatedWorkWorker:
     ) -> WorkerDisposition:
         if cancellation_event is not None and cancellation_event.is_set():
             return "idle"
-        claim = self._store.claim_next(worker_id=self._worker_id, now=self._now())
+        claim = self._store.claim_next(
+            worker_id=self._worker_id,
+            release=self._release,
+            now=self._now(),
+        )
         if claim is None:
             return "idle"
         if fault_after == "after_claim":

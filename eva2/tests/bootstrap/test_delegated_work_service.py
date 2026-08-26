@@ -6,6 +6,7 @@ from pathlib import Path
 from uuid import UUID
 
 import pytest
+from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
 from eva.bootstrap import delegated_work_service as service_module
 from eva.bootstrap.delegated_work_service import (
     DelegatedWorkService,
@@ -91,6 +92,13 @@ def test_process_stop_gets_one_event_loop_turn_between_claim_and_call_fence() ->
         store,
         _UnusedRunner(),
         worker_id="subagent-worker:stop-boundary",
+        release=DelegatedWorkReleaseSelector(
+            worker_profile_release_sha256="11" * 32,
+            model_profile_release_sha256="22" * 32,
+            worker_program_sha256="33" * 32,
+            engine_release_sha256="44" * 32,
+            output_schema_sha256="55" * 32,
+        ),
     )
 
     async def stop_after_claim() -> str:
@@ -132,9 +140,16 @@ def test_provider_entrypoint_uses_one_async_lifecycle(
 ) -> None:
     observed: dict[str, object] = {}
     runner = object()
+    release = DelegatedWorkReleaseSelector(
+        worker_profile_release_sha256="11" * 32,
+        model_profile_release_sha256="22" * 32,
+        worker_program_sha256="33" * 32,
+        engine_release_sha256="44" * 32,
+        output_schema_sha256="55" * 32,
+    )
 
     @asynccontextmanager
-    async def open_runner(*, model_access_lease_file: Path):
+    async def open_runner(model_access_lease_file: Path):
         observed["lease"] = model_access_lease_file
         observed["provider_open"] = True
         try:
@@ -142,14 +157,18 @@ def test_provider_entrypoint_uses_one_async_lifecycle(
         finally:
             observed["provider_open"] = False
 
-    async def serve(selected, *, settings, once):  # type: ignore[no-untyped-def]
+    async def serve(  # type: ignore[no-untyped-def]
+        selected, *, release, settings, once
+    ):
         assert observed["provider_open"] is True
         observed["runner"] = selected
         observed["service"] = settings
+        observed["release"] = release
         observed["once"] = once
         return "completed"
 
-    monkeypatch.setattr(service_module, "open_delegated_work_runner", open_runner)
+    monkeypatch.setattr(service_module, "_open_provider_runner", open_runner)
+    monkeypatch.setattr(service_module, "_provider_release", lambda: release)
     monkeypatch.setattr(service_module, "serve_delegated_work_service", serve)
     settings = OpenAIDelegatedWorkSettings.from_environment(
         {
@@ -166,6 +185,7 @@ def test_provider_entrypoint_uses_one_async_lifecycle(
         "lease": Path("/run/eva/model-lease/auth.json"),
         "provider_open": False,
         "runner": runner,
+        "release": release,
         "service": settings.service,
         "once": True,
     }

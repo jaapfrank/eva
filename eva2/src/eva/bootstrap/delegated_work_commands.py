@@ -51,11 +51,23 @@ class DelegatedWorkConversationCommands:
         self._episode_id = episode_id
         self._generation = generation
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
+        self._store.validate_admission_authority(
+            episode_id=episode_id,
+            generation=generation,
+            owner_principal_id=owner_principal_id,
+            principal_binding_id=principal_binding_id,
+        )
 
-    def handle(self, turn: ConversationTurn) -> GroundedReply | None:
+    def handle(
+        self,
+        turn: ConversationTurn,
+        *,
+        principal_binding_id: UUID | None,
+    ) -> GroundedReply | None:
         if (
             turn.audience.kind != "private_person"
             or turn.principal_id != str(self._owner_principal_id)
+            or principal_binding_id != self._principal_binding_id
         ):
             return None
         text = turn.text.strip()
@@ -97,12 +109,12 @@ class DelegatedWorkConversationCommands:
             retention_until=occurred_at + timedelta(days=7),
             occurred_at=occurred_at,
         )
-        text = (
-            "De onderzoeker was al veilig ingepland; ik gebruik dezelfde taak."
-            if admission.disposition == "already_present"
-            else "Ik heb één afgeschermde onderzoeker ingepland. Je ziet de taak op het werkbord."
+        del admission
+        return self._reply(
+            turn,
+            "Ik heb één afgeschermde onderzoeker ingepland. "
+            "Je ziet de taak op het werkbord.",
         )
-        return self._reply(turn, text)
 
     def _status(self, turn: ConversationTurn) -> GroundedReply:
         board = self._store.workboard(
@@ -125,7 +137,7 @@ class DelegatedWorkConversationCommands:
         )
 
     def _stop(self, turn: ConversationTurn) -> GroundedReply:
-        work_id = self._store.latest_active_work_id(
+        work_id = self._store.latest_stoppable_work_id(
             owner_principal_id=self._owner_principal_id,
             principal_binding_id=self._principal_binding_id,
         )

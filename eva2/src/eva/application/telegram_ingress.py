@@ -6,7 +6,9 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 import re
 from typing import Protocol
+from uuid import UUID
 
+from eva.application.conversation import ConversationTurn, GroundedReply
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import (
     TelegramDynamicBindingResolverPort,
@@ -53,10 +55,16 @@ class TelegramPrincipalBinding:
     telegram_user_id: int
     principal_id: str
     allowed_chat_ids: tuple[str, ...]
+    principal_binding_id: str | None = None
 
     def __post_init__(self) -> None:
         if self.telegram_user_id < 1 or not _PRINCIPAL.fullmatch(self.principal_id):
             raise ValueError("Telegram principal binding is invalid")
+        if self.principal_binding_id is not None:
+            try:
+                UUID(self.principal_binding_id)
+            except ValueError as error:
+                raise ValueError("Telegram principal binding ID is invalid") from error
         if not self.allowed_chat_ids:
             raise ValueError("Telegram principal binding has no allowed chat")
         normalized = tuple(sorted(set(self.allowed_chat_ids)))
@@ -90,6 +98,23 @@ class TelegramPrincipalBindings:
         binding = self._by_user.get(sender_id)
         return () if binding is None else binding.allowed_chat_ids
 
+    def resolve_binding_id(self, sender_id: int, chat_id: str) -> UUID | None:
+        binding = self._by_user.get(sender_id)
+        if (
+            binding is None
+            or chat_id not in binding.allowed_chat_ids
+            or binding.principal_binding_id is None
+        ):
+            return None
+        return UUID(binding.principal_binding_id)
+
+    def contains_binding(self, *, principal_id: str, principal_binding_id: UUID) -> bool:
+        return any(
+            binding.principal_id == principal_id
+            and binding.principal_binding_id == str(principal_binding_id)
+            for binding in self._by_user.values()
+        )
+
 
 @dataclass(frozen=True, slots=True)
 class TelegramCoreReply:
@@ -122,6 +147,15 @@ class TelegramCorePort(Protocol):
         principal_id: str,
         audience: MemoryAudience,
     ) -> TelegramCoreReply: ...
+
+
+class TelegramDelegatedWorkCommandsPort(Protocol):
+    def handle(
+        self,
+        turn: ConversationTurn,
+        *,
+        principal_binding_id: UUID | None,
+    ) -> GroundedReply | None: ...
 
 
 class TelegramIngressStorePort(Protocol):
@@ -170,7 +204,14 @@ class TelegramIngressWorker:
         pairing: TelegramPairingResponder | None = None,
         group_consent: TelegramGroupConsentResponder | None = None,
         dynamic_bindings: TelegramDynamicBindingResolverPort | None = None,
+        delegated_work_commands: TelegramDelegatedWorkCommandsPort | None = None,
+        tenant_id: str | None = None,
+        installation_id: str | None = None,
     ) -> None:
+        if delegated_work_commands is not None and (
+            tenant_id is None or installation_id is None
+        ):
+            raise ValueError("delegated Telegram commands require a fixed scope")
         self._provider = provider
         self._core = core
         self._store = store
@@ -178,6 +219,9 @@ class TelegramIngressWorker:
         self._pairing = pairing
         self._group_consent = group_consent
         self._dynamic_bindings = dynamic_bindings
+        self._delegated_work_commands = delegated_work_commands
+        self._tenant_id = tenant_id
+        self._installation_id = installation_id
 
     @staticmethod
     def _now() -> datetime:
@@ -263,6 +307,15 @@ class TelegramIngressWorker:
                     reply = (
                         reply
                         if reply is not None
+                        else self._delegated_work_reply(
+                            message,
+                            principal_id=principal_id,
+                            audience=audience,
+                        )
+                    )
+                    reply = (
+                        reply
+                        if reply is not None
                         else self._core.respond(
                             message,
                             principal_id=principal_id,
@@ -287,6 +340,44 @@ class TelegramIngressWorker:
                 claimed, provider_message_id, now=self._now()
             )
         return "processed"
+
+    def _delegated_work_reply(
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
+    ) -> TelegramCoreReply | None:
+        if (
+            self._delegated_work_commands is None
+            or self._tenant_id is None
+            or self._installation_id is None
+            or message.text is None
+            or audience.kind != "private_person"
+        ):
+            return None
+        reply = self._delegated_work_commands.handle(
+            ConversationTurn.private(
+                tenant_id=self._tenant_id,
+                installation_id=self._installation_id,
+                principal_id=principal_id,
+                conversation_id=f"telegram:{message.chat_id}",
+                message_id=f"telegram:{message.chat_id}:{message.message_id}",
+                text=message.text,
+                occurred_at=message.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            ),
+            principal_binding_id=self._bindings.resolve_binding_id(
+                message.sender_id, message.chat_id
+            ),
+        )
+        if reply is None:
+            return None
+        return TelegramCoreReply(
+            reply.conversation_id,
+            reply.message_id,
+            reply.text,
+            reply.text_sha256,
+        )
 
     def _resolve_principal(
         self, message: TelegramInboundMessage
