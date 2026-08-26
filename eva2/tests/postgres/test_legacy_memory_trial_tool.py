@@ -15,6 +15,7 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine, make_url
 
 from eva.adapters.postgres.noor_4d_repository import PostgresNoor4DRepository
+from eva.application.legacy_memory_trial import LegacyMemoryTrialError
 from tools.run_legacy_memory_trial import run_trial
 from tests.postgres import test_memory_repository as memory_fixture
 
@@ -105,6 +106,24 @@ def test_tool_imports_confirmed_slice_as_restricted_and_not_recallable(
                 retention_days=7,
             )
         )
+        with pytest.raises(
+            LegacyMemoryTrialError,
+            match="target already contains memory authority data",
+        ):
+            run_trial(
+                Namespace(
+                    source_sqlite=source,
+                    person_label_file=label,
+                    confirmation_file=confirmation,
+                    trial_dsn=os.environ["EVA2_LEGACY_MEMORY_TRIAL_DSN"],
+                    tenant_id=tenant_id,
+                    installation_id=installation_id,
+                    target_principal_id=principal_id,
+                    provenance_evidence_id=evidence_id,
+                    limit=25,
+                    retention_days=7,
+                )
+            )
     finally:
         shutil.rmtree(temporary)
 

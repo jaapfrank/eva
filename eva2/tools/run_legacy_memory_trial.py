@@ -24,6 +24,7 @@ import sqlalchemy as sa
 from sqlalchemy.engine import make_url
 
 from eva.adapters.postgres.memory import PostgresMemoryRepository
+from eva.adapters.postgres.scope import set_local_scope
 from eva.application.legacy_memory_trial import (
     LegacyMemoryRecord,
     LegacyMemoryTrialError,
@@ -178,6 +179,38 @@ def _trial_url(value: str) -> str:
     return value
 
 
+def _require_empty_memory_trial_target(
+    connection: sa.Connection, spec: LegacyMemoryTrialSpec
+) -> None:
+    """Refuse to merge a selected old-Eva slice into an existing memory trial.
+
+    The destination has a deliberately disposable database name, but that name
+    alone does not prove it is unused.  A second selection must use a fresh
+    target instead of silently mixing two old-Eva labels, source snapshots or
+    review decisions in one Eva2 memory authority.
+    """
+
+    for table in (
+        "eva_memory.source_events",
+        "eva_memory.fact_assertions",
+        "eva_memory.current_facts",
+    ):
+        count = connection.execute(
+            sa.text(
+                f"SELECT COUNT(*) FROM {table} "
+                "WHERE tenant_id = :tenant_id AND installation_id = :installation_id"
+            ),
+            {
+                "tenant_id": spec.tenant_id,
+                "installation_id": spec.installation_id,
+            },
+        ).scalar_one()
+        if count != 0:
+            raise LegacyMemoryTrialError(
+                "legacy memory trial target already contains memory authority data"
+            )
+
+
 def run_trial(args: argparse.Namespace) -> dict[str, object]:
     source = Path(args.source_sqlite)
     if not source.is_absolute():
@@ -217,6 +250,12 @@ def run_trial(args: argparse.Namespace) -> dict[str, object]:
         with engine.begin() as connection:
             connection.execute(sa.text("SET CONSTRAINTS ALL DEFERRED"))
             connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+            set_local_scope(
+                connection,
+                tenant_id=spec.tenant_id,
+                installation_id=spec.installation_id,
+            )
+            _require_empty_memory_trial_target(connection, spec)
             memory = MemoryAuthority(
                 PostgresMemoryRepository(connection, spec.tenant_id, spec.installation_id)
             )
