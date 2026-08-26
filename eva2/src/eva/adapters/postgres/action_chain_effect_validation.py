@@ -134,6 +134,7 @@ def validate_action_chain_effect(
         or intent.state
         not in {
             "prepared",
+            "cancelled",
             "dispatch_authorized",
             "provider_accepted",
             "provider_rejected",
@@ -294,6 +295,22 @@ def validate_action_chain_effect(
         for table in (effect_receipts, effect_readbacks)
     )
     if not attempts:
+        if intent.state == "cancelled":
+            if (
+                int(intent_row.revision) != 2
+                or intent_row.updated_at < prepared_at
+                or current_event_data.get("effect_intent_id")
+                != str(expected_intent_id)
+                or current_event_data.get("effect_intent_payload_sha256")
+                != canonical_sha256(intent)
+                or current_event_data.get("logical_step_key") != step.step_id
+                or current_event_data.get("plan_id") != str(plan_id)
+                or current_event_data.get("plan_step_id")
+                != str(stored.plan_step_id)
+                or any(external_counts)
+            ):
+                raise corrupt("cancelled effect timeline binding differs")
+            return
         if (
             intent.state != "prepared"
             or int(intent_row.revision) != 1
@@ -622,6 +639,22 @@ def is_prepared_action_chain_effect(
     )
 
 
+def is_cancelled_action_chain_effect(
+    step: Any, stored: sa.Row, cancelled_revision: int
+) -> bool:
+    """Recognize a pre-dispatch cancellation without inventing a receipt."""
+
+    return (
+        step.kind == "effect"
+        and stored.state == "cancelled"
+        and stored.effect_intent_id is not None
+        and stored.read_intent_id is None
+        and stored.outcome_ref is None
+        and stored.revision == cancelled_revision
+        and stored.updated_at >= stored.created_at
+    )
+
+
 def is_completed_action_chain_effect(
     step: Any, stored: sa.Row, succeeded_revision: int
 ) -> bool:
@@ -774,6 +807,7 @@ def _format_timestamp(value: datetime) -> str:
 
 
 __all__ = [
+    "is_cancelled_action_chain_effect",
     "is_completed_action_chain_effect",
     "is_prepared_action_chain_effect",
     "validate_action_chain_effect",

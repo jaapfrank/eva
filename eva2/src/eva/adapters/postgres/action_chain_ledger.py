@@ -11,6 +11,7 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effect_validation import (
+    is_cancelled_action_chain_effect,
     is_completed_action_chain_effect,
     is_prepared_action_chain_effect,
     validate_action_chain_effect,
@@ -41,6 +42,7 @@ from eva.application.action_chain import (
     validate_action_chain_requests,
 )
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.execution import EffectIntent
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelAttempt, ModelDecision, ValidatedPlan
 
@@ -53,6 +55,10 @@ capability_manifests = metadata.tables["eva_core.capability_manifests"]
 capability_activations = metadata.tables["eva_core.capability_activations"]
 policy_pack_versions = metadata.tables["eva_core.policy_pack_versions"]
 read_intents = metadata.tables["eva_effects.read_intents"]
+effect_intents = metadata.tables["eva_effects.effect_intents"]
+effect_attempts = metadata.tables["eva_effects.effect_attempts"]
+effect_receipts = metadata.tables["eva_effects.effect_receipts"]
+effect_readbacks = metadata.tables["eva_effects.effect_readbacks"]
 
 
 class ActionChainLedgerError(RuntimeError):
@@ -561,6 +567,9 @@ class PostgresActionChainLedger:
             completed_effect = is_completed_action_chain_effect(
                 step, stored, succeeded_revision
             )
+            cancelled_effect = is_cancelled_action_chain_effect(
+                step, stored, succeeded_revision
+            )
             completed_read = (
                 step.kind == "read"
                 and stored.state == "succeeded"
@@ -592,6 +601,7 @@ class PostgresActionChainLedger:
                     or completed_read
                     or prepared_effect
                     or completed_effect
+                    or cancelled_effect
                 )
                 or stored.step_definition != step_payload
                 or bytes(stored.step_definition_sha256).hex()
@@ -636,7 +646,7 @@ class PostgresActionChainLedger:
                     current_event_data=step_current,
                     corrupt=ActionChainCorrupt,
                 )
-            elif prepared_effect or completed_effect:
+            elif prepared_effect or completed_effect or cancelled_effect:
                 validate_action_chain_effect(
                     connection, self._scope_value, plan_id, plan, decision,
                     authority_snapshot, row, step, stored, step_current,
@@ -678,7 +688,7 @@ class PostgresActionChainLedger:
             effect_released_step_ids=effect_released_step_ids,
             corrupt=ActionChainCorrupt,
         )
-        current_transition_context = (
+        normal_transition_context = (
             effect_transition_context or read_transition_context
         )
         current_states = {row.plan_step_id: row.state for row in step_rows}
@@ -715,7 +725,7 @@ class PostgresActionChainLedger:
             or attention.episode_id != plan.episode_id
             or attention.generation != plan.generation
             or attention.kind != "continuation"
-            or attention.state not in {"pending", "claimed", "waiting"}
+            or attention.state not in {"pending", "claimed", "waiting", "completed"}
             or attention_row.episode_id != row.episode_id
             or attention_row.generation != plan.generation
             or attention_row.kind != attention.kind
@@ -739,6 +749,22 @@ class PostgresActionChainLedger:
             or attention_row.revision < 1
         ):
             raise ActionChainCorrupt("continuation attention binding differs")
+        cancellation_context = _validate_action_chain_effect_cancellation(
+            connection,
+            self._scope_value,
+            plan_id=plan_id,
+            plan=plan,
+            step_rows=step_rows,
+            attention=attention,
+            attention_revision=int(attention_row.revision),
+            root_current=root_current,
+            corrupt=ActionChainCorrupt,
+        )
+        if normal_transition_context is not None and cancellation_context is not None:
+            raise ActionChainCorrupt("cancellation overlaps a completion transition")
+        current_transition_context = (
+            normal_transition_context or cancellation_context
+        )
         if attention_row.revision == 1:
             if (
                 attention.state != "pending"
@@ -873,6 +899,7 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_DEPENDENCIES_RELEASED",
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
             "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED",
+            "ACTION_CHAIN_EFFECT_CANCELLED",
         }
         if root
         else {
@@ -887,13 +914,14 @@ def _current_timeline_data(
             "ACTION_CHAIN_READ_REJECTED",
             "ACTION_CHAIN_READ_RATE_LIMITED",
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
+            "ACTION_CHAIN_EFFECT_CANCELLED",
             "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
             "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED", "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED", "ACTION_CHAIN_EFFECT_REJECTED", "ACTION_CHAIN_EFFECT_AMBIGUOUS", "ACTION_CHAIN_EFFECT_RATE_LIMITED", "ACTION_CHAIN_EFFECT_BLOCKED",
             "STATE_VERIFIED",
         }
     )
     allowed_statuses = (
-        {"active", "needs_help"}
+        {"active", "completed", "needs_help"}
         if root
         else {"active", "completed", "failed", "needs_help", "waiting_for_proof"}
     )
@@ -931,6 +959,190 @@ def _current_timeline_data(
     if not isinstance(data, dict):
         raise ActionChainCorrupt("action-chain current timeline lacks data")
     return data
+
+
+def _validate_action_chain_effect_cancellation(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    plan_id: UUID,
+    plan: ValidatedPlan,
+    step_rows: list[sa.Row],
+    attention: AttentionWake,
+    attention_revision: int,
+    root_current: dict[str, Any],
+    corrupt: type[RuntimeError],
+) -> dict[str, Any] | None:
+    """Accept exactly one owner-bound pre-authorization cancellation state."""
+
+    cancelled_rows = [row for row in step_rows if row.state == "cancelled"]
+    if not cancelled_rows:
+        return None
+    if (
+        len(cancelled_rows) != 1
+        or any(
+            row.plan_step_id != cancelled_rows[0].plan_step_id
+            and row.state != "succeeded"
+            for row in step_rows
+        )
+        or attention.state != "completed"
+        or attention.lease_owner is not None
+        or attention.lease_expires_at is not None
+    ):
+        raise corrupt("cancelled action-chain projection differs")
+    step_row = cancelled_rows[0]
+    step = next(
+        (item for item in plan.steps if item.step_id == step_row.logical_step_key),
+        None,
+    )
+    if (
+        step is None
+        or step.kind != "effect"
+        or step_row.effect_intent_id is None
+        or step_row.read_intent_id is not None
+        or step_row.outcome_ref is not None
+    ):
+        raise corrupt("cancelled action-chain effect binding differs")
+    intent_row = connection.execute(
+        sa.select(effect_intents).where(
+            effect_intents.c.tenant_id == scope.tenant_id,
+            effect_intents.c.installation_id == scope.installation_id,
+            effect_intents.c.effect_intent_id == step_row.effect_intent_id,
+        )
+    ).one_or_none()
+    if intent_row is None:
+        raise corrupt("cancelled action-chain effect intent is absent")
+    try:
+        intent = EffectIntent.model_validate(intent_row.payload)
+    except ValueError as error:
+        raise corrupt("cancelled action-chain effect payload is invalid") from error
+    operation_id = action_chain_step_operation_id(plan, step.step_id)
+    child = _latest_timeline_event(connection, scope, operation_id, corrupt)
+    root_operation_id = action_chain_thread_id(plan)
+    root = _latest_timeline_event(connection, scope, root_operation_id, corrupt)
+    child_context = child.payload.get("data")
+    if not isinstance(child_context, dict):
+        raise corrupt("cancelled action-chain effect lacks event data")
+    expected_keys = {
+        "binding_verification_evidence_id",
+        "binding_subject_sha256",
+        "binding_revision",
+        "binding_verified_at",
+        "contract",
+        "effect_intent_id",
+        "effect_intent_payload_sha256",
+        "logical_step_key",
+        "owner_principal_id",
+        "plan_id",
+        "plan_step_id",
+        "principal_binding_id",
+    }
+    if (
+        set(child_context) != expected_keys
+        or child_context.get("contract") != "ActionChainEffectCancellation/v1"
+        or not _is_sha256(child_context.get("binding_subject_sha256"))
+        or not isinstance(child_context.get("binding_revision"), int)
+        or child_context["binding_revision"] < 1
+        or child_context.get("effect_intent_id") != str(step_row.effect_intent_id)
+        or child_context.get("effect_intent_payload_sha256") != canonical_sha256(intent)
+        or child_context.get("logical_step_key") != step.step_id
+        or child_context.get("plan_id") != str(plan_id)
+        or child_context.get("plan_step_id") != str(step_row.plan_step_id)
+        or child.event_type != "ACTION_CHAIN_EFFECT_CANCELLED"
+        or child.payload.get("checkpoint", {}).get("phase")
+        != "action_chain_effect_cancelled"
+        or child.payload.get("checkpoint", {}).get("status") != "completed"
+        or root.event_type != "ACTION_CHAIN_EFFECT_CANCELLED"
+        or root.payload.get("checkpoint", {}).get("phase")
+        != "action_chain_continuation"
+        or root.payload.get("checkpoint", {}).get("status") != "completed"
+    ):
+        raise corrupt("cancelled action-chain event context differs")
+    try:
+        UUID(str(child_context["owner_principal_id"]))
+        UUID(str(child_context["principal_binding_id"]))
+        UUID(str(child_context["binding_verification_evidence_id"]))
+        _parse_timestamp(str(child_context["binding_verified_at"]))
+    except (TypeError, ValueError) as error:
+        raise corrupt("cancelled action-chain owner context is invalid") from error
+    blocked_history = connection.scalar(
+        sa.select(sa.func.count())
+        .select_from(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == operation_id,
+            operational_events.c.event_type.in_(
+                (
+                    "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
+                    "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
+                )
+            ),
+        )
+    )
+    external_count = sum(
+        int(
+            connection.scalar(
+                sa.select(sa.func.count())
+                .select_from(table)
+                .where(
+                    table.c.tenant_id == scope.tenant_id,
+                    table.c.installation_id == scope.installation_id,
+                    table.c.effect_intent_id == step_row.effect_intent_id,
+                )
+            )
+        )
+        for table in (effect_attempts, effect_receipts, effect_readbacks)
+    )
+    expected_root = {
+        "attention": attention.model_dump(mode="json"),
+        "attention_payload_sha256": canonical_sha256(attention),
+        "attention_revision": attention_revision,
+        "plan_id": str(plan_id),
+        "transition_context": child_context,
+    }
+    if (
+        blocked_history
+        or external_count
+        or root_current != expected_root
+    ):
+        raise corrupt("cancelled action-chain authority or history differs")
+    return child_context
+
+
+def _latest_timeline_event(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    thread_id: str,
+    corrupt: type[RuntimeError],
+) -> sa.Row:
+    event = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == thread_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(1)
+    ).one_or_none()
+    if (
+        event is None
+        or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
+        or set(event.payload) != {"checkpoint", "data"}
+    ):
+        raise corrupt("cancelled action-chain timeline event differs")
+    return event
+
+
+def _is_sha256(value: object) -> bool:
+    if not isinstance(value, str) or len(value) != 64:
+        return False
+    try:
+        bytes.fromhex(value)
+    except ValueError:
+        return False
+    return True
 
 
 def _plan_id(

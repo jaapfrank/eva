@@ -129,7 +129,11 @@ def validate_action_chain_read_advances(
         return expected
     if (
         current_context is not None
-        and latest.event_type != "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED"
+        and latest.event_type
+        not in {
+            "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED",
+            "ACTION_CHAIN_EFFECT_CANCELLED",
+        }
     ):
         raise corrupt("non-advance root event contains read advance context")
     return None
