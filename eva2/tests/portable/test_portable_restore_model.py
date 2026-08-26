@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import os
 from datetime import datetime, timezone
 from typing import Any
 
@@ -16,6 +17,9 @@ from eva.operations.portable_restore import (
     decode_ambiguous_model_attempt,
     restore_column_preserving_records,
 )
+
+
+POSTGRES_DSN = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
 
 
 def _record() -> dict[str, Any]:
@@ -156,3 +160,63 @@ def test_restore_writer_inserts_only_terminal_secretless_model_history() -> None
         "legacy-secret" not in str(value) and "provider-reference" not in str(value)
         for value in insert[1]
     )
+
+
+@pytest.mark.skipif(
+    not POSTGRES_DSN,
+    reason="EVA2_TEST_POSTGRES_DSN is required for the real portable restore gate",
+)
+def test_terminalized_model_history_writes_to_real_postgres() -> None:
+    sqlalchemy = pytest.importorskip("sqlalchemy")
+    engine = sqlalchemy.create_engine(POSTGRES_DSN, pool_pre_ping=False)
+    spec = next(
+        item
+        for item in CANONICAL_EXPORT_SPECS
+        if item["table"] == "eva_core.model_attempts"
+    )
+    records = {"eva_core.model_attempts": [_record()]}
+    try:
+        connection = engine.connect().execution_options(isolation_level="SERIALIZABLE")
+        try:
+            with connection.begin():
+                connection.exec_driver_sql("CREATE SCHEMA eva_core")
+                connection.exec_driver_sql(
+                    "CREATE TABLE eva_core.model_attempts ("
+                    "tenant_id uuid NOT NULL, installation_id uuid NOT NULL, "
+                    "attempt_id uuid NOT NULL, episode_id uuid NOT NULL, generation integer NOT NULL, "
+                    "purpose text NOT NULL, ordinal integer NOT NULL, state text NOT NULL, "
+                    "provider_profile_id text NOT NULL, request_sha256 bytea NOT NULL, "
+                    "response_sha256 bytea, credential_grant_id uuid NOT NULL, "
+                    "credential_grant_payload jsonb NOT NULL, credential_grant_sha256 bytea NOT NULL, "
+                    "credential_grant_nonce text NOT NULL, credential_grant_deadline timestamptz NOT NULL, "
+                    "model_adapter_manifest_sha256 bytea NOT NULL, model_program_sha256 bytea NOT NULL, "
+                    "maximum_input_tokens integer NOT NULL, maximum_output_tokens integer NOT NULL, "
+                    "timeout_ms integer NOT NULL, input_tokens_used integer NOT NULL, "
+                    "output_tokens_used integer NOT NULL, provider_cost_euro_micros bigint NOT NULL, "
+                    "provider_reference text, payload jsonb NOT NULL, payload_sha256 bytea NOT NULL, "
+                    "revision bigint NOT NULL, retention_policy_id text NOT NULL, "
+                    "retention_until timestamptz NOT NULL, created_at timestamptz NOT NULL, "
+                    "updated_at timestamptz NOT NULL)"
+                )
+
+                assert (
+                    restore_column_preserving_records(
+                        connection, records, table_specs=(spec,)
+                    )
+                    == 1
+                )
+                row = connection.exec_driver_sql(
+                    "SELECT state, response_sha256, provider_reference, "
+                    "credential_grant_payload->>'secret_descriptor_id' "
+                    "FROM eva_core.model_attempts"
+                ).one()
+                assert row == (
+                    "ambiguous",
+                    None,
+                    None,
+                    "portable-restore-redacted:44444444-4444-4444-8444-444444444444",
+                )
+        finally:
+            connection.close()
+    finally:
+        engine.dispose()
