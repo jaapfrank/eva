@@ -309,7 +309,7 @@ COCKPIT_HTML = """<!doctype html>
           </div>
         </div>
         <div class="dock roadmap" aria-label="Bewuste projectvolgorde">
-          <article class="module connected"><strong>Nu · Providerloze subagentproef & werkbord</strong><span>Duurzame workerbasis en deze read-only cockpitprojectie zijn technisch getest</span></article>
+          <article class="module connected"><strong>Nu · Subagents echt afmaken</strong><span>Echte providerworker, Eva-chat en eigenaar-authenticatie volgen vóór de browser</span></article>
           <article class="module pending"><strong>Daarna · Browsercomputer</strong><span>Eén afgeschermde webtaak van begin tot gecontroleerd eindresultaat</span></article>
           <article class="module pending"><strong>Daarna · Voice & aanwezigheid</strong><span>Dezelfde Eva snel, onderbreekbaar en weer voelbaar in huis</span></article>
         </div>

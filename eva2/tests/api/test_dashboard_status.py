@@ -142,7 +142,8 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "result-approved" in response.text
     assert "result-stopped" in response.text
     assert "lokale route · authenticatie nog open" in response.text
-    assert "Providerloze subagentproef & werkbord" in response.text
+    assert "Nu · Subagents echt afmaken" in response.text
+    assert "Echte providerworker, Eva-chat en eigenaar-authenticatie volgen vóór de browser" in response.text
     assert "Echte taken · geen demo-kaarten" not in response.text
     assert "Object.keys(value).sort()" in response.text
     assert "prefers-reduced-motion" in response.text
