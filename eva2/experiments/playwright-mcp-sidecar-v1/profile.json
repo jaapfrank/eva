@@ -46,11 +46,17 @@
     "tag": "v0.0.79",
     "version": "0.0.79"
   },
-  "sandboxProfileSha256": "efaf960ba2e02536c52ab0214c607be1dfb9576dba700e7b769f4670802cfe0d",
+  "sandboxProfileSha256": "f3e99ea7a5bc6691771f2d0b4f50d41fa838d47ed7c35c3f8d98959bd453dd9c",
   "server": {
     "mcpProtocolVersion": "2025-06-18",
     "name": "Playwright",
     "version": "1.63.0-alpha-2026-08-05"
+  },
+  "testCell": {
+    "controllerImage": "eva2-living-core@sha256:d1a861106ecaaa2230e5bcac63232808eced907bf2b1febeff4db2ab7cc161ae",
+    "fixtureImage": "python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "gatewaylessBridgeOption": "com.docker.network.bridge.inhibit_ipv4=true",
+    "networkDriver": "bridge"
   },
   "tools": {
     "browserNavigateSha256": "4bd2f88138e75bb639e57c781bacc3465723eff08879f84976b76d21a4a66295",

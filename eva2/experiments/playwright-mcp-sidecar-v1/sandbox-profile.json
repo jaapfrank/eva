@@ -24,7 +24,7 @@
     "--host",
     "0.0.0.0",
     "--allowed-hosts",
-    "*"
+    "browser.eva.test:8931"
   ],
   "capabilitiesDropped": true,
   "contract": "EvaPlaywrightMcpSandboxProfile/v1",
@@ -37,6 +37,9 @@
   "memoryBytes": 1073741824,
   "network": {
     "externalAccess": false,
+    "gatewayless": true,
+    "hostAccess": false,
+    "inhibitBridgeIpv4": true,
     "internalDockerNetwork": true,
     "publishedPorts": false,
     "reachableServices": [

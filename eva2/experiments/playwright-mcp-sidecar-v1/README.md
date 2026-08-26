@@ -17,11 +17,12 @@ bewijs exact klopt.
 
 ## Wat de echte proef deed
 
-De herhaalbare proef start twee tijdelijke containers op één intern Docker-
-netwerk:
+De herhaalbare proef start drie tijdelijke containers op één gatewayloos
+Docker-netwerk:
 
 1. een kleine, vaste testpagina;
-2. de officiële Playwright MCP-browser.
+2. de officiële Playwright MCP-browser;
+3. een kleine, secretvrije controleclient die Eva's echte adapter uitvoert.
 
 De browsercontainer:
 
@@ -32,8 +33,15 @@ De browsercontainer:
   procesgrenzen;
 - krijgt geen secrets, Eva-database, Hindsight, gebruikersbestanden of
   workspace;
-- heeft geen gepubliceerde poort en geen route naar het publieke internet;
+- heeft geen gepubliceerde poort, netwerkgateway of route naar host en publiek
+  internet;
 - kan alleen de testserver op dat interne netwerk bereiken.
+
+De controleclient staat bewust in hetzelfde gatewayloze testvak, omdat de host
+de browsercontainer evenmin mag bereiken. De proef controleert zowel de lege
+gateway als een mislukte hostverbinding. Daarmee kan een toevallig op de
+Docker-host luisterende database, API of secretservice niet via het bridgeadres
+worden benaderd.
 
 Eva riep uitsluitend `browser_navigate` en `browser_snapshot` aan. Zij zag de
 verwachte URL, titel en twee bewijszinnen. Ook stond er expres een kwaadaardig
