@@ -23,6 +23,7 @@ from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.memory import MemoryAuthority, RememberFact
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.evidence import EvidenceEnvelopeV2
+from eva.contracts.ingress import TurnEnvelope
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 from eva.operations.install_schema import install_schema
 from eva.operations.portable_export import export_portable_archive
@@ -93,7 +94,7 @@ def _archive_records(archive: Path) -> dict[str, list[dict[str, Any]]]:
 
 def _synthetic_memory_command(
     *, tenant_id: str, installation_id: str, principal_id: str
-) -> tuple[dict[str, Any], RememberFact, str]:
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], RememberFact, str, str]:
     """Make a complete, non-personal memory write through Eva's real contract."""
 
     evidence_id = uuid5(NAMESPACE_URL, "eva2-portable-recovery-memory-evidence")
@@ -102,6 +103,8 @@ def _synthetic_memory_command(
     )
     fact_id = uuid5(NAMESPACE_URL, "eva2-portable-recovery-memory-fact")
     current_fact_id = uuid5(NAMESPACE_URL, "eva2-portable-recovery-memory-current")
+    conversation_id = uuid5(NAMESPACE_URL, "eva2-portable-recovery-conversation")
+    message_id = uuid5(NAMESPACE_URL, "eva2-portable-recovery-message")
     at = "2026-08-27T12:00:00Z"
     retention_until = "2026-09-26T12:00:00Z"
     subject_payload_sha256 = hashlib.sha256(
@@ -213,7 +216,78 @@ def _synthetic_memory_command(
         retention_policy_id="synthetic-recovery-test",
         committed_at=at,
     )
-    return evidence_row, command, str(fact_id)
+    text = "Synthetische herstelturn voor Eva2."
+    text_sha256 = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    turn = TurnEnvelope.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "TurnEnvelope/v1",
+            "installation_id": installation_id,
+            "tenant_id": tenant_id,
+            "principal_id": principal_id,
+            "principal_binding_id": "synthetic-recovery-binding",
+            "authentication_evidence_sha256": subject_payload_sha256,
+            "channel_id": "synthetic-recovery",
+            "request_id": "synthetic-recovery-request",
+            "message_id": str(message_id),
+            "conversation_id": str(conversation_id),
+            "content_type": "text/plain",
+            "text": text,
+            "raw_bytes_sha256": text_sha256,
+            "received_at": at,
+        }
+    )
+    conversation_row = {
+        "tenant_id": UUID(tenant_id),
+        "installation_id": UUID(installation_id),
+        "conversation_id": conversation_id,
+        "owner_principal_id": UUID(principal_id),
+        "participant_principal_ids": [UUID(principal_id)],
+        "channel_class": "synthetic_recovery",
+        "status": "active",
+        "current_episode_id": None,
+        "revision": 1,
+        "retention_policy_id": "synthetic-recovery-test",
+        "retention_until": retention_until,
+        "created_at": at,
+        "updated_at": at,
+    }
+    message_row = {
+        "tenant_id": UUID(tenant_id),
+        "installation_id": UUID(installation_id),
+        "message_id": message_id,
+        "conversation_id": conversation_id,
+        "episode_id": None,
+        "generation": None,
+        "principal_id": UUID(principal_id),
+        "identity_id": None,
+        "identity_pack_version": None,
+        "role": "user",
+        "channel_id": "synthetic-recovery",
+        "content_type": "text/plain",
+        "text_content": text,
+        "object_ref_id": None,
+        "raw_bytes_sha256": bytes.fromhex(text_sha256),
+        "content_sha256": bytes.fromhex(text_sha256),
+        "provenance_evidence_id": evidence_id,
+        "content_status": "validated",
+        "payload_contract": "TurnEnvelope/v1",
+        "payload_schema_version": 1,
+        "payload": turn.model_dump(mode="json"),
+        "payload_sha256": bytes.fromhex(canonical_sha256(turn)),
+        "privacy_class": "internal",
+        "retention_policy_id": "synthetic-recovery-test",
+        "retention_until": retention_until,
+        "created_at": at,
+    }
+    return (
+        evidence_row,
+        conversation_row,
+        message_row,
+        command,
+        str(fact_id),
+        str(message_id),
+    )
 
 
 @pytest.mark.skipif(
@@ -282,7 +356,14 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
         assert isinstance(tenant, UUID)
         assert isinstance(installation, UUID)
         assert isinstance(principal, UUID)
-        evidence_row, memory_command, fact_id = _synthetic_memory_command(
+        (
+            evidence_row,
+            conversation_row,
+            message_row,
+            memory_command,
+            fact_id,
+            message_id,
+        ) = _synthetic_memory_command(
             tenant_id=str(tenant),
             installation_id=str(installation),
             principal_id=str(principal),
@@ -309,6 +390,14 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
                 .insert()
                 .values(**evidence_row)
             )
+            connection.execute(
+                metadata.tables["eva_core.conversations"]
+                .insert()
+                .values(**conversation_row)
+            )
+            connection.execute(
+                metadata.tables["eva_core.messages"].insert().values(**message_row)
+            )
             memory = MemoryAuthority(
                 PostgresMemoryRepository(connection, str(tenant), str(installation))
             )
@@ -334,6 +423,8 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
             "eva_core.identity_pack_versions": 1,
             "eva_core.policy_pack_versions": 1,
             "eva_core.principals": 1,
+            "eva_core.conversations": 1,
+            "eva_core.messages": 1,
             "eva_memory.source_events": 1,
             "eva_memory.fact_assertions": 1,
             "eva_memory.current_facts": 1,
@@ -362,12 +453,16 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
                     "SELECT fact_id::text, value->>'preference' "
                     "FROM eva_memory.fact_assertions"
                 ).one()
+                restored_message = connection.exec_driver_sql(
+                    "SELECT message_id::text, text_content FROM eva_core.messages"
+                ).one()
                 transaction.commit()
             except BaseException:
                 transaction.rollback()
                 raise
         assert restored == nonempty
         assert restored_fact == (fact_id, "synthetic-portable-recovery")
+        assert restored_message == (message_id, "Synthetische herstelturn voor Eva2.")
     finally:
         source_engine.dispose()
         target_engine.dispose()

@@ -1,7 +1,7 @@
 {
   "receipt_contract": "EvaPortableNonemptyFullSchemaRestoreReceipt/v1",
   "recorded_at": "2026-08-27T00:00:00Z",
-  "scope": "Two new disposable PostgreSQL 16.13 databases and a synthetic, quiescent four-record core only. No Eva1, live Eva, Hindsight, provider, connector, user archive, user object, volume or secret was read or changed.",
+  "scope": "Two new disposable PostgreSQL 16.13 databases and a synthetic, quiescent eleven-record core, conversation and memory set only. No Eva1, live Eva, Hindsight, provider, connector, user archive, user object, volume or secret was read or changed.",
   "checks": [
     {
       "name": "source export to distinct fresh target restore",
@@ -15,10 +15,10 @@
     }
   ],
   "proven": [
-    "A synthetic source installation with one tenant, installation, current identity pack, current policy pack, principal, evidence envelope, source event, fact assertion and current-fact pointer exported as a complete 39-record-set archive.",
+    "A synthetic source installation with one tenant, installation, current identity pack, current policy pack, principal, conversation, user message, evidence envelope, source event, fact assertion and current-fact pointer exported as a complete 39-record-set archive.",
     "The normal archive publication path ran its standalone reader validation before publication.",
-    "A distinct fresh PostgreSQL database reached the current migration head and restored exactly the nine source records in one serializable transaction.",
-    "The synthetic memory fact was written through Eva's ordinary memory authority and read back after restore. All other canonical record sets were present and empty; no action, worker, connector, credential or encrypted object was imported."
+    "A distinct fresh PostgreSQL database reached the current migration head and restored exactly the eleven source records in one serializable transaction.",
+    "The synthetic memory fact was written through Eva's ordinary memory authority and read back after restore; the synthetic TurnEnvelope/v1 user message was also read back. All other canonical record sets were present and empty; no action, worker, connector, credential or encrypted object was imported."
   ],
   "not_proven": [
     "This is not a real user backup, a full nonempty 39-table workload, an encrypted-object migration or an off-host restore.",
