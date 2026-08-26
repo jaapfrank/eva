@@ -2,13 +2,13 @@
 
 Deze map bewijst dat Eva geen eigen modelrunner, contextisolatie,
 request-/tokenbudget, time-out, annulering of interactieve subagentmotor hoeft
-te bouwen. De exact vastgezette Pydantic AI `2.34.0` en Harness `0.24.0` leveren
+te bouwen. De exact vastgezette Pydantic AI `2.34.0` en Harness `0.25.0` leveren
 die delen.
 
 Er zijn bewust twee publieke routes. Harness voert de korte, door het
 parentmodel gekozen `delegate_task` uit. Voor een taak die al duurzaam in
 PostgreSQL is toegelaten gebruikt `tool_free_child.py` rechtstreeks Pydantic
-AI `Agent.run()`: Harness `0.24.0` retourneert daar publiek alleen tekst en
+AI `Agent.run()`: Harness `0.25.0` retourneert daar publiek alleen tekst en
 maakt getypeerde output, eigen usage en cancellationstate niet beschikbaar.
 De smalle adapter bewaart die gegevens wel zonder een tweede plannermodel.
 

@@ -76,7 +76,7 @@ def _returns(result: object) -> list[str]:
 
 def test_exact_candidate_versions() -> None:
     assert version("pydantic-ai-slim") == "2.34.0"
-    assert version("pydantic-ai-harness") == "0.24.0"
+    assert version("pydantic-ai-harness") == "0.25.0"
 
 
 def test_real_harness_delegation_returns_child_result() -> None:

@@ -500,9 +500,9 @@ pydantic==2.12.5 \
     #   genai-prices
     #   pydantic-ai-slim
     #   pydantic-graph
-pydantic-ai-harness==0.24.0 \
-    --hash=sha256:6caa05a553b0cef6acc8a63fd1440ce80aaba2709ef02987daaf8ef415c85234 \
-    --hash=sha256:f1b738b788b48a30570d47ea094b0e6cbcb4ff1b3ec5a889d0d37691733178a1
+pydantic-ai-harness==0.25.0 \
+    --hash=sha256:2cf4abc5983c96cc7e0fc7040e4109900c4470718da56ef7771cf596b0e175a4 \
+    --hash=sha256:bfe4dc8a042ba9ebac95f4b5e81dae34f879fe676c6d9a3e9967c4ff71de59a7
     # via -r eva2/experiments/harness-subagents-v1/requirements.in
 pydantic-ai-slim==2.34.0 \
     --hash=sha256:933acdd8139674df53e8453c1ccc39b08d6b1a80bf238d212bd6fed1d023c95d \
