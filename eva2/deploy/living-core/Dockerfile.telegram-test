@@ -1,0 +1,16 @@
+# A local-only Telegram test image.  The parent is a previously verified Eva
+# image whose requirements-4d.lock has the same digest as this source commit.
+# It is deliberately not a managed-B or release image build.
+FROM eva2-living-core:telegram-native-v17-20260824
+
+ARG EVA_TEST_SOURCE_COMMIT
+LABEL io.eva2.telegram-test-image="v1" \
+      io.eva2.source-commit="${EVA_TEST_SOURCE_COMMIT}"
+
+USER root
+COPY --chown=65532:65532 src ./src
+COPY --chown=65532:65532 connector_sdk ./connector_sdk
+COPY --chown=65532:65532 alembic.ini ./alembic.ini
+COPY --chown=65532:65532 migrations ./migrations
+COPY --chown=65532:65532 schemas ./schemas
+USER 65532:65532
