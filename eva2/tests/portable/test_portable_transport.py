@@ -154,3 +154,35 @@ def test_seal_rejects_linked_or_unvalidated_source_members(tmp_path: Path) -> No
             validator=lambda _source: None,
         )
     assert not (tmp_path / "should-not-exist.eva2pt").exists()
+
+
+def test_transport_never_overwrites_an_existing_output_or_restore_target(
+    tmp_path: Path,
+) -> None:
+    source = _portable_archive(tmp_path)
+    transport = tmp_path / "portable.eva2pt"
+    seal_portable_archive(source, transport, passphrase=PASSPHRASE, validator=_validate)
+
+    existing_restore = tmp_path / "existing-restore"
+    existing_restore.mkdir()
+    marker = existing_restore / "must-stay"
+    marker.write_text("do not replace", encoding="utf-8")
+    with pytest.raises(PortableTransportError, match="already exists"):
+        open_portable_transport(
+            transport,
+            existing_restore,
+            passphrase=PASSPHRASE,
+            validator=_validate,
+        )
+    assert marker.read_text(encoding="utf-8") == "do not replace"
+
+    existing_transport = tmp_path / "existing.eva2pt"
+    existing_transport.write_bytes(b"do not replace")
+    with pytest.raises(PortableTransportError, match="already exists"):
+        seal_portable_archive(
+            source,
+            existing_transport,
+            passphrase=PASSPHRASE,
+            validator=_validate,
+        )
+    assert existing_transport.read_bytes() == b"do not replace"
