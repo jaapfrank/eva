@@ -160,7 +160,7 @@ def test_people_memory_overview_tracks_real_durable_states_without_raw_data(
     )
     consent.grant(
         TelegramGroupConsent("-100123", PRINCIPAL, NOW, NOW + timedelta(days=7)),
-        operation_id="cockpit-consent-active",
+        operation_id="telegram-group-consent:cockpit-active",
     )
     outbox = PostgresMemoryOutbox(
         postgres_engine, tenant_id=TENANT, installation_id=INSTALLATION
@@ -212,6 +212,15 @@ def test_people_memory_overview_tracks_real_durable_states_without_raw_data(
     assert other_scope.memory_flow == "no_signals"
     assert other_scope.hindsight == "unknown"
 
+    other_tenant = PostgresPeopleMemoryOverview(
+        postgres_engine,
+        tenant_id="cockpit-family-other-tenant",
+        installation_id=INSTALLATION,
+    ).snapshot(now=NOW, hindsight_state="unknown")
+    assert other_tenant.dynamic_account == "no_extra_account"
+    assert other_tenant.group_sharing == "private_only"
+    assert other_tenant.memory_flow == "no_signals"
+
 
 def test_people_memory_overview_recalculates_consent_and_memory_attention(
     people_memory_engine: Engine,
@@ -228,7 +237,7 @@ def test_people_memory_overview_recalculates_consent_and_memory_attention(
     )
     consent.grant(
         TelegramGroupConsent("-200001", principal, NOW, NOW + timedelta(hours=12)),
-        operation_id="cockpit-consent-expiring",
+        operation_id="telegram-group-consent:cockpit-expiring",
     )
     assert overview.snapshot(now=NOW, hindsight_state="ready").group_sharing == (
         "expires_soon"
@@ -305,3 +314,188 @@ def test_people_memory_overview_makes_a_corrupt_track_unavailable(
     assert result.memory_flow == "unavailable"
     assert result.dynamic_account == "no_extra_account"
     assert result.group_sharing == "private_only"
+
+
+def _timeline(engine: Engine, *, tenant: str, installation: str) -> PostgresOperationalTimeline:
+    return PostgresOperationalTimeline(
+        engine,
+        TimelineScope(
+            tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant}"),
+            installation_id=uuid5(
+                NAMESPACE_URL, f"eva2:{tenant}:{installation}"
+            ),
+        ),
+    )
+
+
+def test_people_memory_overview_rejects_a_hash_valid_invalid_binding(
+    people_memory_engine: Engine,
+) -> None:
+    tenant = "cockpit-invalid-binding-tenant"
+    installation = "cockpit-invalid-binding-home"
+    timeline = _timeline(
+        people_memory_engine, tenant=tenant, installation=installation
+    )
+    timeline.create_thread(
+        thread_id="telegram-dynamic-binding:0",
+        checkpoint_id="telegram-dynamic-binding:0:bound",
+        operation_id="telegram-dynamic-binding:0",
+        occurred_at=NOW,
+        data={"principal_id": "person:invalid-binding", "telegram_user_id": 0},
+        event_type="TELEGRAM_DYNAMIC_BINDING_CREATED",
+        phase="bound",
+        status="completed",
+    )
+
+    result = PostgresPeopleMemoryOverview(
+        people_memory_engine, tenant_id=tenant, installation_id=installation
+    ).snapshot(now=NOW, hindsight_state="ready")
+    assert result.dynamic_account == "unavailable"
+
+
+@pytest.mark.parametrize(
+    ("tenant", "operation_id", "expires_at"),
+    (
+        (
+            "cockpit-invalid-consent-duration",
+            "telegram-group-consent:invalid-duration",
+            NOW + timedelta(days=60),
+        ),
+        (
+            "cockpit-invalid-consent-operation",
+            "invalid-consent-operation",
+            NOW + timedelta(days=7),
+        ),
+    ),
+)
+def test_people_memory_overview_rejects_hash_valid_invalid_consent(
+    people_memory_engine: Engine,
+    tenant: str,
+    operation_id: str,
+    expires_at: datetime,
+) -> None:
+    installation = "cockpit-invalid-consent-home"
+    group = "-300001"
+    principal = "person:invalid-consent"
+    timeline = _timeline(
+        people_memory_engine, tenant=tenant, installation=installation
+    )
+    timeline.create_thread(
+        thread_id=f"telegram-group-consent:{principal}:{group}",
+        checkpoint_id=f"telegram-group-consent:{principal}:{group}:granted:1",
+        operation_id=operation_id,
+        occurred_at=NOW,
+        data={
+            "expires_at": expires_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "granted_at": NOW.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "group_chat_id": group,
+            "principal_id": principal,
+        },
+        event_type="TELEGRAM_GROUP_CONSENT_GRANTED",
+        phase="group_memory_shared",
+        status="active",
+    )
+
+    result = PostgresPeopleMemoryOverview(
+        people_memory_engine, tenant_id=tenant, installation_id=installation
+    ).snapshot(now=NOW, hindsight_state="ready")
+    assert result.group_sharing == "unavailable"
+
+
+def test_people_memory_overview_rejects_incomplete_positive_memory_timeline(
+    people_memory_engine: Engine,
+) -> None:
+    tenant = "cockpit-incomplete-memory-tenant"
+    installation = "cockpit-incomplete-memory-home"
+    document = ConversationMemoryDocument(
+        tenant_id=tenant,
+        installation_id=installation,
+        principal_id="person:incomplete-memory",
+        conversation_id="telegram:incomplete-memory",
+        document_id="telegram:incomplete-memory:exchange:1",
+        content="Gebruiker (directe bron): incomplete memory canary",
+        occurred_at="2026-08-26T12:00:00Z",
+        source_ref="telegram:incomplete-memory",
+        evidence_ref="conversation-reply:incomplete-memory",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.private_person(
+            principal_id="person:incomplete-memory"
+        ),
+    )
+    thread_id = PostgresMemoryOutbox._thread_id(document.document_id)
+    _timeline(
+        people_memory_engine, tenant=tenant, installation=installation
+    ).create_thread(
+        thread_id=thread_id,
+        checkpoint_id=f"{thread_id}:false-success",
+        operation_id=str(uuid5(NAMESPACE_URL, document.document_id)),
+        occurred_at=NOW,
+        data=PostgresMemoryOutbox._document_data(document),
+        event_type="MEMORY_RETAIN_QUEUED",
+        phase="memory_retained",
+        status="completed",
+    )
+
+    result = PostgresPeopleMemoryOverview(
+        people_memory_engine, tenant_id=tenant, installation_id=installation
+    ).snapshot(now=NOW, hindsight_state="ready")
+    assert result.memory_flow == "unavailable"
+
+
+def test_people_memory_overview_rejects_out_of_order_memory_success(
+    people_memory_engine: Engine,
+) -> None:
+    tenant = "cockpit-out-of-order-memory-tenant"
+    installation = "cockpit-out-of-order-memory-home"
+    document = ConversationMemoryDocument(
+        tenant_id=tenant,
+        installation_id=installation,
+        principal_id="person:out-of-order-memory",
+        conversation_id="telegram:out-of-order-memory",
+        document_id="telegram:out-of-order-memory:exchange:1",
+        content="Gebruiker (directe bron): out of order memory canary",
+        occurred_at="2026-08-26T12:00:00Z",
+        source_ref="telegram:out-of-order-memory",
+        evidence_ref="conversation-reply:out-of-order-memory",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.private_person(
+            principal_id="person:out-of-order-memory"
+        ),
+    )
+    timeline = _timeline(
+        people_memory_engine, tenant=tenant, installation=installation
+    )
+    thread_id = PostgresMemoryOutbox._thread_id(document.document_id)
+    operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
+    timeline.create_thread(
+        thread_id=thread_id,
+        checkpoint_id=f"{thread_id}:queued",
+        operation_id=operation_id,
+        occurred_at=NOW,
+        data=PostgresMemoryOutbox._document_data(document),
+        event_type="MEMORY_RETAIN_QUEUED",
+        phase="memory_queued",
+        status="active",
+    )
+    timeline.transition(
+        thread_id=thread_id,
+        expected_revision=1,
+        checkpoint_id=f"{thread_id}:false-success",
+        operation_id=operation_id,
+        occurred_at=NOW + timedelta(seconds=1),
+        data={
+            "bank_id": "invalid-order-bank",
+            "content_sha256": hashlib.sha256(document.content.encode()).hexdigest(),
+            "document_id": document.document_id,
+        },
+        event_type="MEMORY_RETAIN_SUCCEEDED",
+        phase="memory_retained",
+        status="completed",
+    )
+
+    result = PostgresPeopleMemoryOverview(
+        people_memory_engine, tenant_id=tenant, installation_id=installation
+    ).snapshot(now=NOW + timedelta(seconds=2), hindsight_state="ready")
+    assert result.memory_flow == "unavailable"

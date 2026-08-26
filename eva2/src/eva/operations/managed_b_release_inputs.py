@@ -84,6 +84,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/adapters/api/app.py",
     "src/eva/adapters/api/cockpit.py",
     "src/eva/adapters/postgres/current_catalog.py",
+    "src/eva/adapters/postgres/memory_outbox.py",
     "src/eva/adapters/postgres/people_memory_overview.py",
     "src/eva/adapters/postgres/portable_export.py",
     "src/eva/application/people_memory_overview.py",

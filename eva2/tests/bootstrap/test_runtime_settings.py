@@ -8,6 +8,7 @@ import pytest
 from eva.bootstrap.runtime import RuntimeSettings
 from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
 from eva.adapters.model.conversation import ConversationCredentialStatus
+from eva.application.people_memory_overview import PeopleMemoryOverview
 
 
 def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
@@ -335,3 +336,48 @@ def test_runtime_readiness_reports_a_rejected_model_lease() -> None:
     assert result.database == "ready"
     assert result.memory_projection == "ready"
     assert result.model_provider == "credentials_rejected"
+
+
+def test_runtime_composes_the_real_people_memory_projection_fail_closed() -> None:
+    class Memory:
+        available = True
+
+        def health(self) -> None:
+            if not self.available:
+                raise RuntimeError("private Hindsight detail canary")
+
+    class Overview:
+        calls: list[str] = []
+
+        def snapshot(
+            self, *, now: datetime, hindsight_state: str
+        ) -> PeopleMemoryOverview:
+            assert now.tzinfo is not None
+            assert now.microsecond == 0
+            self.calls.append(hindsight_state)
+            return PeopleMemoryOverview(
+                dynamic_account="no_extra_account",
+                group_sharing="private_only",
+                memory_flow="no_signals",
+                hindsight=hindsight_state,  # type: ignore[arg-type]
+            )
+
+    memory = Memory()
+    overview = Overview()
+    runtime = PostgresHindsightMemoryRuntime(
+        object(),  # type: ignore[arg-type]
+        memory,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        runtime_tenant_id="tenant:cockpit-runtime",
+        runtime_installation_id="installation:cockpit-runtime",
+        people_memory_overview=overview,  # type: ignore[arg-type]
+    )
+
+    assert runtime.dashboard_people_memory().hindsight == "ready"
+    memory.available = False
+    assert runtime.dashboard_people_memory().hindsight == "attention"
+    assert overview.calls == ["ready", "attention"]

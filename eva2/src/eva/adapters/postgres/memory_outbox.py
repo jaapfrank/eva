@@ -29,6 +29,72 @@ class DurableMemoryRetentionJob:
     state: CheckpointState
 
 
+def conversation_memory_document_from_outbox_data(
+    data: object,
+) -> ConversationMemoryDocument:
+    """Rebuild and validate the exact document stored at the durable boundary."""
+
+    if not isinstance(data, dict) or data.get("kind") != "hindsight_memory_document":
+        raise RuntimeError("durable memory outbox document is malformed")
+    legacy_keys = {
+        "content",
+        "conversation_id",
+        "document_id",
+        "evidence_ref",
+        "installation_id",
+        "kind",
+        "occurred_at",
+        "principal_id",
+        "privacy_class",
+        "source_ref",
+        "tenant_id",
+        "trust",
+    }
+    audience_keys = {*legacy_keys, "audience"}
+    if set(data) not in {
+        frozenset(legacy_keys),
+        frozenset((*legacy_keys, "project_id")),
+        frozenset(audience_keys),
+        frozenset((*audience_keys, "project_id")),
+    }:
+        raise RuntimeError("durable memory outbox document fields are malformed")
+    scalar_keys = set(data) - {"audience"}
+    if not all(isinstance(data[key], str) for key in scalar_keys):
+        raise RuntimeError("durable memory outbox document fields are malformed")
+    raw_audience = data.get("audience")
+    if raw_audience is None:
+        conversation_id = data["conversation_id"]
+        principal_id = data["principal_id"]
+        if not isinstance(conversation_id, str) or not isinstance(principal_id, str):
+            raise RuntimeError("durable memory outbox document fields are malformed")
+        if conversation_id.startswith("telegram:-"):
+            raise RuntimeError("legacy Telegram group memory lacks an audience")
+        audience = MemoryAudience.private_person(principal_id=principal_id)
+    else:
+        try:
+            audience = memory_audience_from_wire(raw_audience)
+        except ValueError as error:
+            raise RuntimeError("durable memory outbox audience is invalid") from error
+    try:
+        return ConversationMemoryDocument(
+            tenant_id=data["tenant_id"],
+            installation_id=data["installation_id"],
+            principal_id=data["principal_id"],
+            conversation_id=data["conversation_id"],
+            document_id=data["document_id"],
+            content=data["content"],
+            occurred_at=data["occurred_at"],
+            source_ref=data["source_ref"],
+            evidence_ref=data["evidence_ref"],
+            privacy_class=data["privacy_class"],  # type: ignore[arg-type]
+            trust=data["trust"],  # type: ignore[arg-type]
+            audience=audience,
+            project_id=data.get("project_id"),
+        )
+    except (KeyError, TypeError, ValueError) as error:
+        raise RuntimeError("durable memory outbox document is invalid") from error
+
+
 class PostgresMemoryOutbox:
     """Own a retry-bounded memory delivery timeline for one installation."""
 
@@ -79,62 +145,7 @@ class PostgresMemoryOutbox:
 
     @staticmethod
     def _document_from_data(data: object) -> ConversationMemoryDocument:
-        if not isinstance(data, dict) or data.get("kind") != "hindsight_memory_document":
-            raise RuntimeError("durable memory outbox document is malformed")
-        legacy_keys = {
-            "content",
-            "conversation_id",
-            "document_id",
-            "evidence_ref",
-            "installation_id",
-            "kind",
-            "occurred_at",
-            "principal_id",
-            "privacy_class",
-            "source_ref",
-            "tenant_id",
-            "trust",
-        }
-        audience_keys = {*legacy_keys, "audience"}
-        if set(data) not in {
-            frozenset(legacy_keys),
-            frozenset((*legacy_keys, "project_id")),
-            frozenset(audience_keys),
-            frozenset((*audience_keys, "project_id")),
-        }:
-            raise RuntimeError("durable memory outbox document fields are malformed")
-        scalar_keys = set(data) - {"audience"}
-        if not all(isinstance(data[key], str) for key in scalar_keys):
-            raise RuntimeError("durable memory outbox document fields are malformed")
-        raw_audience = data.get("audience")
-        if raw_audience is None:
-            conversation_id = data["conversation_id"]
-            principal_id = data["principal_id"]
-            if not isinstance(conversation_id, str) or not isinstance(principal_id, str):
-                raise RuntimeError("durable memory outbox document fields are malformed")
-            if conversation_id.startswith("telegram:-"):
-                raise RuntimeError("legacy Telegram group memory lacks an audience")
-            audience = MemoryAudience.private_person(principal_id=principal_id)
-        else:
-            try:
-                audience = memory_audience_from_wire(raw_audience)
-            except ValueError as error:
-                raise RuntimeError("durable memory outbox audience is invalid") from error
-        return ConversationMemoryDocument(
-            tenant_id=data["tenant_id"],
-            installation_id=data["installation_id"],
-            principal_id=data["principal_id"],
-            conversation_id=data["conversation_id"],
-            document_id=data["document_id"],
-            content=data["content"],
-            occurred_at=data["occurred_at"],
-            source_ref=data["source_ref"],
-            evidence_ref=data["evidence_ref"],
-            privacy_class=data["privacy_class"],  # type: ignore[arg-type]
-            trust=data["trust"],  # type: ignore[arg-type]
-            audience=audience,
-            project_id=data.get("project_id"),
-        )
+        return conversation_memory_document_from_outbox_data(data)
 
     def enqueue(self, document: ConversationMemoryDocument) -> DurableMemoryRetentionJob:
         if (
@@ -306,4 +317,8 @@ class PostgresMemoryOutbox:
         )
 
 
-__all__ = ["DurableMemoryRetentionJob", "PostgresMemoryOutbox"]
+__all__ = [
+    "DurableMemoryRetentionJob",
+    "PostgresMemoryOutbox",
+    "conversation_memory_document_from_outbox_data",
+]
