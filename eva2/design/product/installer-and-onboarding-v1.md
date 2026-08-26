@@ -61,6 +61,15 @@ uitsluitend de buildconstraint `linux/amd64`.
   `evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json`.
   Dit is bewust nog geen gewone volledige backuprestore: object-CAS-kopie,
   redacted-attemptgeschiedenis en de tweede-machineproef blijven open stappen.
+- De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
+  uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
+  actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
+  maakt geen portable backup. Daardoor kan een herstelde Eva nooit uit een
+  backup verdergaan met een oude provideractie. Doelen die alleen wachten mogen
+  blijven bestaan; zij bevatten op dat moment geen uitvoerbare externe call.
+  Dit is op de hele 39-tabellenroute met een tijdelijke PostgreSQL 16.13-proef
+  gecontroleerd; zie
+  `evidence/living-core/portable-quiescent-external-work-2026-08-27.json`.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.

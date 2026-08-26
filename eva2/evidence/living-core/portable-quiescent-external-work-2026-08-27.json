@@ -1,0 +1,33 @@
+{
+  "receipt_contract": "EvaPortableQuiescentExternalWorkReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "f50bb04600d809dfd07e197d974c775e2f8706dc",
+  "scope": "Synthetic Eva2 action-chain data in a new automatically removed local PostgreSQL 16.13 container. No Eva1, managed-B, provider, credential, Home Assistant, Telegram or Hindsight system was read or changed.",
+  "checks": [
+    {
+      "name": "state-boundary unit tests",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_postgres_portable_export.py tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py",
+      "result": "27 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/adapters/postgres/portable_export.py tests/portable/test_postgres_portable_export.py tests/postgres/test_action_chain_effects.py",
+      "result": "passed"
+    },
+    {
+      "name": "actual 39-table PostgreSQL route",
+      "environment": "new automatically removed PostgreSQL 16.13-alpine container and new disposable database",
+      "command": "EVA2_TEST_POSTGRES_DSN=<temporary disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/postgres/test_action_chain_effects.py -k portable_snapshot_refuses",
+      "result": "1 passed, 7 deselected"
+    }
+  ],
+  "proven": [
+    "The portable snapshot rejects reserved or dispatch-authorized model/read/effect work, ready/running plan steps, pending/claimed attention, waiting breaker effects and unfinished external deliveries.",
+    "The rejection occurs before an archive is materialized, so no archive can be restored as a duplicate provider call.",
+    "Terminal and manual-reconciliation history remains eligible for the later dedicated redacted-history restore path."
+  ],
+  "not_proven": [
+    "No full normal backup restore, provider reauthorization, object-CAS transfer, second-machine install, update or deployment was performed.",
+    "The existing redacted attempt-history importer remains an open separate task."
+  ]
+}
