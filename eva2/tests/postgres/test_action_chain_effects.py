@@ -27,8 +27,10 @@ from eva.adapters.postgres.action_chain_read_advances import (
     PostgresActionChainReadAdvancer,
 )
 from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.portable_export import PostgresPortableSnapshot
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
+from eva.application.portable_archive import PortableArchiveError
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import CapabilityManifest, ConnectorBinding, ResourceScope
 
@@ -268,6 +270,23 @@ def _effect_counts(engine: Engine, scope, plan_id: UUID) -> dict[str, int]:
     counts["step_running"] = int(step.state == "running")
     counts["attention_waiting"] = int(attention.state == "waiting")
     return counts
+
+
+def test_portable_snapshot_refuses_an_inflight_action_chain(
+    action_chain_engine: Engine,
+) -> None:
+    """A recovery archive cannot become a second execution of a live action."""
+
+    scope, _chain, _catalog, _authority, _claim = _claimed_effect(action_chain_engine)
+
+    with action_chain_engine.connect() as connection:
+        with PostgresPortableSnapshot(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        ) as snapshot:
+            with pytest.raises(PortableArchiveError, match="quiescent external work"):
+                snapshot.read_all()
 
 
 def test_effect_preparation_is_durable_replayable_and_external_io_free(

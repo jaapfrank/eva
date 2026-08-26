@@ -27,6 +27,24 @@ _PORTABLE_V1_ATTENTION_KINDS = {
     "external_signal",
     "delivery_recovery",
 }
+# A portable archive is a recovery artefact, not a way to hand a second Eva a
+# live external call. These states mean that a provider call/delivery could
+# still be attempted by a scheduler after restore, so v1 refuses to export
+# them. Durable goals may remain, but they must reach a normal waiting state
+# with no executable external work before the snapshot is taken.
+_PORTABLE_V1_INFLIGHT_STATES = {
+    "eva_core.model_attempts": frozenset({"reserved", "dispatch_authorized"}),
+    "eva_core.plan_steps": frozenset({"ready", "running"}),
+    "eva_core.attention_items": frozenset({"pending", "claimed"}),
+    "eva_effects.read_attempts": frozenset({"prepared", "dispatch_authorized"}),
+    "eva_effects.effect_intents": frozenset(
+        {"prepared", "dispatch_authorized", "waiting_breaker"}
+    ),
+    "eva_effects.effect_attempts": frozenset({"reserved", "dispatch_authorized"}),
+    "eva_effects.deliveries": frozenset(
+        {"prepared", "dispatch_authorized", "provider_accepted"}
+    ),
+}
 
 
 class PrincipalBindingIsolationError(PortableArchiveError):
@@ -185,6 +203,22 @@ def validate_portable_v1_attention_rows(
             raise PortableArchiveError(
                 "portable v1 cannot export this attention kind or payload contract"
             )
+
+
+def validate_portable_v1_no_inflight_external_work(
+    records: Mapping[str, Sequence[Mapping[str, Any]]],
+) -> None:
+    """Reject an archive that could resume an old external action after restore."""
+
+    for table, forbidden_states in _PORTABLE_V1_INFLIGHT_STATES.items():
+        for record in records.get(table, ()):
+            row = _portable_row(record)
+            state = row.get("state")
+            if state in forbidden_states:
+                raise PortableArchiveError(
+                    "portable v1 requires quiescent external work: "
+                    f"{table} state {state!r} is still executable"
+                )
 
 
 def _mapping_rows(result: Any, columns: Sequence[str]) -> list[dict[str, Any]]:
@@ -400,6 +434,7 @@ class PostgresPortableSnapshot:
             result[table] = rows
         validate_principal_binding_evidence_scope(result)
         validate_portable_v1_attention_rows(result)
+        validate_portable_v1_no_inflight_external_work(result)
         return result
 
     def build_record_sets(self) -> tuple[RecordSetBytes, ...]:

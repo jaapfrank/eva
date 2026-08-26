@@ -8,6 +8,7 @@ from eva.adapters.postgres.portable_export import (
     PostgresPortableSnapshot,
     SNAPSHOT_BEGIN_SQL,
     validate_portable_v1_attention_rows,
+    validate_portable_v1_no_inflight_external_work,
 )
 from eva.application.portable_archive import PortableArchiveError
 
@@ -68,6 +69,32 @@ class _EmptyConnection(_Connection):
         if normalized.startswith("SELECT set_config"):
             return _Result(one=(None, None))
         return _Result(rows=[])
+
+
+class _InflightConnection(_Connection):
+    def execute(self, sql: str, params: object | None = None) -> _Result:
+        self.calls.append((sql, params))
+        normalized = " ".join(sql.split())
+        if normalized == "SELECT pg_catalog.pg_export_snapshot()":
+            return _Result(one=("00000003-0000001B-1",))
+        if "current_user" in normalized:
+            return _Result(one=("eva_backup", "on"))
+        if normalized.startswith("SELECT set_config"):
+            return _Result(one=(None, None))
+        if "COUNT(*)" in normalized:
+            return _Result(one=(1,))
+        if normalized.startswith("SELECT tenant_id, installation_id, effect_attempt_id"):
+            return _Result(
+                rows=[
+                    {
+                        "tenant_id": "66a4aad5-0550-5211-8b36-398eabe5b7be",
+                        "installation_id": "0a44a85c-4bbb-5330-8803-60fab86e5a94",
+                        "effect_attempt_id": "33333333-3333-4333-8333-333333333333",
+                        "state": "dispatch_authorized",
+                    }
+                ]
+            )
+        return _Result(one=(None, None))
 
 
 def test_all_reads_use_one_deferrable_repeatable_read_snapshot_without_dbos() -> None:
@@ -220,6 +247,69 @@ def test_portable_v1_attention_preflight_accepts_only_the_historical_contract() 
             validate_portable_v1_attention_rows(
                 {"eva_core.attention_items": [changed]}
             )
+
+
+@pytest.mark.parametrize(
+    ("table", "state"),
+    (
+        ("eva_core.model_attempts", "dispatch_authorized"),
+        ("eva_core.plan_steps", "running"),
+        ("eva_core.attention_items", "claimed"),
+        ("eva_effects.read_attempts", "prepared"),
+        ("eva_effects.effect_intents", "waiting_breaker"),
+        ("eva_effects.effect_attempts", "dispatch_authorized"),
+        ("eva_effects.deliveries", "provider_accepted"),
+    ),
+)
+def test_portable_v1_rejects_every_executable_external_work_state(
+    table: str, state: str
+) -> None:
+    with pytest.raises(PortableArchiveError, match="quiescent external work"):
+        validate_portable_v1_no_inflight_external_work({table: [{"state": state}]})
+
+
+def test_portable_v1_keeps_terminal_history_but_not_a_live_call() -> None:
+    validate_portable_v1_no_inflight_external_work(
+        {
+            "eva_core.model_attempts": [{"state": "ambiguous"}],
+            "eva_core.plan_steps": [{"state": "blocked"}],
+            "eva_core.attention_items": [{"state": "waiting"}],
+            "eva_effects.read_attempts": [{"state": "observed"}],
+            "eva_effects.effect_intents": [{"state": "manual_reconciliation"}],
+            "eva_effects.effect_attempts": [{"state": "ambiguous_transport"}],
+            "eva_effects.deliveries": [{"state": "acknowledged"}],
+        }
+    )
+
+
+def test_snapshot_refuses_an_inflight_provider_call_before_it_can_be_archived() -> None:
+    connection = _InflightConnection()
+    specs = (
+        {
+            "export_ordinal": 1,
+            "table": "eva_effects.effect_attempts",
+            "database_column_order": (
+                "tenant_id",
+                "installation_id",
+                "effect_attempt_id",
+                "state",
+            ),
+            "primary_key": ("tenant_id", "installation_id", "effect_attempt_id"),
+            "scope": "installation",
+        },
+    )
+
+    with pytest.raises(PortableArchiveError, match="quiescent external work"):
+        with PostgresPortableSnapshot(
+            connection,
+            tenant_id="66a4aad5-0550-5211-8b36-398eabe5b7be",
+            installation_id="0a44a85c-4bbb-5330-8803-60fab86e5a94",
+            table_specs=specs,
+        ) as snapshot:
+            snapshot.read_all()
+
+    assert connection.commits == 0
+    assert connection.rollbacks == 1
 
 
 def test_snapshot_refuses_to_nest_inside_a_caller_transaction() -> None:
