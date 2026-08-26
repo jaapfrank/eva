@@ -1,0 +1,33 @@
+{
+  "receipt_contract": "EvaPortableObjectRefCasBoundPostgresRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "9cdf980b18961426eb3ab3ea965aeb6cccaed8f3",
+  "scope": "Synthetic sealed 4D fixture object, synthetic private target keyring, temporary private target CAS and disposable PostgreSQL 16.13 only. No Eva1, live Eva, Hindsight, provider, connector, user archive or user object was read or changed.",
+  "checks": [
+    {
+      "name": "real PostgreSQL ObjectRef restore after target CAS materialization",
+      "command": "EVA2_TEST_POSTGRES_DSN='postgresql+psycopg://eva2:…@127.0.0.1:55437/eva2_test' PYTHONPATH=/tmp/eva2-pynacl-probe-20260827c:src python3 -m pytest -q -s tests/portable/test_portable_restore_object_boundary.py",
+      "result": "4 passed"
+    },
+    {
+      "name": "portable restore, object and CAS regression",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827c:src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py tests/portable/test_portable_restore_object_boundary.py tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py tests/objects/test_envelope.py tests/objects/test_cas.py",
+      "result": "66 passed, 4 skipped"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_restore.py src/eva/operations/portable_object_materializer.py tests/portable/test_portable_restore_object_boundary.py",
+      "result": "passed"
+    }
+  ],
+  "proven": [
+    "An active ObjectRef row is rejected before any target database query unless its exact row hash, object ID and ciphertext digest have a completed proof for the configured target CAS root.",
+    "After that exact proof, one ObjectRef row was inserted into disposable PostgreSQL and read back with the expected object ID, digest, fixed CAS path and active state.",
+    "A materialization result for another target root is rejected before database access."
+  ],
+  "not_proven": [
+    "No full 39-table restore, source-key transfer, fresh-install flow, second-machine restore or deployment occurred.",
+    "The temporary PostgreSQL container and temporary PyNaCl test target were removed after the proof.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations; these new modules add none."
+  ]
+}

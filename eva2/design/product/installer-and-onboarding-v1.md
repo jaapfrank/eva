@@ -94,6 +94,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   opslagroute schrijft bewust nog **geen** `ObjectRef` in PostgreSQL: een aparte
   databasekoppeling moet straks alleen een voltooid opslagbewijs toelaten. Zie
   `evidence/living-core/portable-object-cas-materialization-2026-08-27.json`.
+- Die databasekoppeling is nu gesloten: een actieve `ObjectRef` wordt vóór de
+  eerste SQL-query afgewezen tenzij exact dezelfde archiefregel én ciphertext
+  aantoonbaar in de **geconfigureerde** doelopslag zijn geplaatst. Daarna is
+  één regel in een wegwerp-PostgreSQL geschreven en teruggelezen. Een bewijs
+  voor een andere doelmap wordt geweigerd. Dit is een afgerond
+  object-opslag→ObjectRef-bouwblok, maar nog geen complete 39-tabellenrestore,
+  tweede-machineproef of sleuteloverdracht; zie
+  `evidence/living-core/portable-objectref-cas-bound-postgres-restore-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
