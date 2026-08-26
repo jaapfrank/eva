@@ -172,7 +172,7 @@ def test_dashboard_people_memory_is_closed_read_only_and_non_identifying() -> No
     assert response.json() == {
         "contains_raw_content": False,
         "contract": "EvaPeopleMemoryOverview/v1",
-        "control_plane": {"state": "selected_not_connected"},
+        "control_plane": {"state": "not_admitted"},
         "hindsight": {"state": "attention"},
         "memory": {"state": "retrying"},
         "people": {"dynamic_account": "extra_account_linked"},

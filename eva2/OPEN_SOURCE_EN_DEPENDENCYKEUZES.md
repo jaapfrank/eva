@@ -53,8 +53,8 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Browser | Microsoft Playwright MCP `0.0.79` heeft de eerste lokale read- en actieproef doorlopen; Harness `PlaywrightBrowser` blijft alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces |
 | Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
-| Geheugenbeheer | Hindsight `0.9.1` plus de bestaande lokale Control Plane UI | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
-| Chat- en beheerinterface | Hindsight Control Plane voor geheugen en React-Admin `5.15.1` voor Eva's beheerpagina's; Pydantic `to_web()` alleen voor lokale ontwikkeling | Eén dun Eva-scherm voor taken, status, mandaten en bewijs | Geen compleet dashboardframework namaken; Pydantic waarschuwt zelf dat zijn ingebouwde webchat geen onbeveiligde productie-UI is |
+| Geheugenbeheer | Hindsight `0.9.1` | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
+| Chat- en beheerinterface | React-Admin `5.15.1` voor Eva's beheerpagina's; Pydantic `to_web()` alleen voor lokale ontwikkeling | Eén dun Eva-scherm voor taken, status, mandaten en bewijs | Geen compleet dashboardframework namaken; Hindsight Control Plane valt af omdat het een algemene schrijfinterface zonder Eva-persoonsgrens is |
 | Kanbanpresentatie | React-Admin OSS plus de onderhouden drag-and-dropbouwstenen van `dnd-kit` | PostgreSQL blijft taakautoriteit; iedere wijziging via Eva's API | Geen tweede taakdatabase of Hermes-kloon; React-Admins Enterprise-Kanban wordt niet stil als gratis OSS-dependency aangenomen |
 | Installatielauncher | PyInstaller als eerste bundelkandidaat plus Eva's bestaande FastAPI-wizard | Docker/WSL-controle, secrets, restore, A/B-update, ondertekening en uninstall | Geen eigen Python-bootstrapper bouwen; wel per besturingssysteem een exact artifact testen |
 | Skillbestandsformaat | Agent Skills-specificatie plus officiële MCP SDK | Quarantaine, rechten, evaluatie, promotie, audit en rollback | Geen eigen skillformaat ontwerpen; een formaat is nog geen veilige store of sandbox |
@@ -273,7 +273,7 @@ een concreet gat laat zien.
 | Microsoft Playwright MCP `0.0.79` | `PROEF: lokale read + vaste actie groen` | Apache-2.0, signed release, 36.500 sterren, 573 commits en onderhoud binnen Microsoft; checkpoint `72625e0` is onafhankelijk herhaald | Nog `0.x`; alleen een credentialvrije lokale fixture is getest. Publieke sites, accounts en productisolatie blijven open; upstream zegt zelf dat originfilters geen securitygrens zijn |
 | Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
 | Hindsight API `0.9.1` | `GO: huidige L2` | MIT, exact artifact/digest en bestaande Eva-livebewijzen | PostgreSQL blijft canoniek; iedere upgrade blijft een aparte proef met export, privacy, latency en rollback |
-| Hindsight Control Plane UI | `PROEF` | Onderdeel van dezelfde releasefamilie | Auth en tenant-/ACL-grenzen passen niet direct bij Eva; begin read-only achter Eva's API |
+| Hindsight Control Plane UI | `NO-GO V1` | Tijdelijk leeg gestart uit de gepinde Hindsight `0.9.1`-image; health en UI kwamen op, zonder Eva-data of secrets | De UI biedt bankaanmaak, geheugenwissen, configuratie en bankverwijdering. Eén gedeelde access key is geen persoon-, groep- of consentgrens. Receipt: `evidence/living-core/hindsight-control-plane-isolation-2026-08-26.json` |
 | LiveKit Agents | `PROEF: voicefallback` | Apache-2.0 framework, releases en bijdragen van meerdere auteurs | Alleen als Pydantic Realtime latency, reconnect of transport niet haalt; geen dubbele voicekern |
 | OpenClaw Gateway/plugin | `PROEF` | MIT core, signed releases, zeer recente commits en veel bijdragers | Hoge churn, eerdere gateway-scopeadvisory en volledig vertrouwde plugins; exact één geïsoleerde plugin per proef |
 | React-Admin | `PROEF: UI` | MIT, doorlopende releases en openbare issue-/releaseplanning | Alleen presentatie via Eva's API; CSP/XSS-tests, geen directe database of secrets |
@@ -303,11 +303,11 @@ een concreet gat laat zien.
   Playwright MCP inmiddels één vaste lokale pagina gelezen en één vaste klik
   via Eva's duurzame logboek uitgevoerd. Harness blijft alleen de goedkope
   vergelijkingsroute. Eva houdt niet twee browserplatforms.
-- Hindsight's bestaande UI wordt eerst aangesloten voordat een eigen
-  geheugenbeheerpagina wordt gebouwd.
-- De Hindsight Control Plane mag in productie niet stil via `npx` de nieuwste
-  code ophalen. Ook die UI krijgt een exacte package- of imagepin, offline
-  materialisatie, scan en rollback.
+- Hindsight's bestaande UI is niet aangesloten: de tijdelijke proef bewees dat
+  het een algemene schrijfinterface is zonder Eva's persoon-, groep- en
+  consentgrens. Hindsight blijft wel het bestaande langetermijngeheugen.
+- Een toekomstig geheugenbeheerscherm mag alleen Eva's eigen afgeschermde API
+  aanspreken; het wordt geen doorgeefluik naar de algemene Hindsight-UI.
 - Nieuwe chatkanalen beginnen bij OpenClaw of de officiële SDK. Zelf adaptercode
   maken is de laatste uitweg.
 - De lokale DBOS-fork, private imports en dubbele workflowcode worden vóór de
@@ -386,8 +386,9 @@ een lijst GitHub-links.
   harde processkill, eigenaar-authenticatie en een eigenaar-goedgekeurde externe
   providerproef via Telegram/B; Pydantic Realtime en de publieke browserroute
   zijn aparte proeven.
-- [ ] `DF05` — Hindsight Control Plane, standaard observability en een
-  dashboardframework leveren samen de beheerbasis zonder tweede waarheid.
+- [ ] `DF05` — standaard observability en een dashboardframework leveren de
+  beheerbasis zonder tweede waarheid; de algemene Hindsight Control Plane is
+  expliciet uitgesloten.
 - [ ] `DF06` — Renovatevoorstel, Trivy-scan, SBOM, upgrade, rollback en
   onafhankelijke review zijn groen op exact dezelfde kandidaatimage.
 

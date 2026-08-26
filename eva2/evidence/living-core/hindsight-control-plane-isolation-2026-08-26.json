@@ -1,0 +1,32 @@
+{
+  "contract": "EvaDependencyIsolationReceipt/v1",
+  "date": "2026-08-26",
+  "dependency": {
+    "name": "Hindsight Control Plane",
+    "image": "ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "version": "0.9.1"
+  },
+  "isolation": {
+    "fresh_temporary_volume": true,
+    "existing_eva_volumes_attached": false,
+    "existing_eva_secrets_attached": false,
+    "published_only_on_loopback": true,
+    "temporary_container_removed": true,
+    "temporary_volume_removed": true
+  },
+  "observed": {
+    "control_plane_health": "ok",
+    "dataplane": "connected",
+    "ui_exposes_bank_creation": true,
+    "ui_exposes_bank_deletion": true,
+    "ui_exposes_memory_and_configuration_mutation": true,
+    "ui_has_no_eva_person_or_group_scope": true
+  },
+  "decision": "not_admitted_for_eva_production_memory",
+  "reason": "The upstream UI is a general write-capable bank manager. Its access key gates one shared UI, not Eva's person, group, consent, or correction rules.",
+  "non_claims": [
+    "No Eva production memory, database, volume, account, or secret was opened.",
+    "This is not an Hindsight API rejection; Hindsight 0.9.1 remains Eva's long-term memory provider.",
+    "This is not a full vulnerability scan or release approval for the image."
+  ]
+}

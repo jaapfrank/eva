@@ -27,6 +27,7 @@ MemoryFlowState = Literal[
     "unavailable",
 ]
 HindsightState = Literal["ready", "attention", "unknown"]
+ControlPlaneState = Literal["not_admitted"]
 
 
 class PeopleMemoryOverviewError(RuntimeError):
@@ -41,6 +42,7 @@ class PeopleMemoryOverview:
     group_sharing: GroupSharingState
     memory_flow: MemoryFlowState
     hindsight: HindsightState
+    control_plane: ControlPlaneState = "not_admitted"
 
     def __post_init__(self) -> None:
         allowed = (
@@ -64,6 +66,7 @@ class PeopleMemoryOverview:
                 },
             ),
             (self.hindsight, {"ready", "attention", "unknown"}),
+            (self.control_plane, {"not_admitted"}),
         )
         if any(value not in choices for value, choices in allowed):
             raise ValueError("people and memory overview state is invalid")
@@ -72,7 +75,7 @@ class PeopleMemoryOverview:
         return {
             "contains_raw_content": False,
             "contract": "EvaPeopleMemoryOverview/v1",
-            "control_plane": {"state": "selected_not_connected"},
+            "control_plane": {"state": self.control_plane},
             "hindsight": {"state": self.hindsight},
             "memory": {"state": self.memory_flow},
             "people": {"dynamic_account": self.dynamic_account},
@@ -89,6 +92,7 @@ class PeopleMemoryOverviewPort(Protocol):
 
 __all__ = [
     "DynamicAccountState",
+    "ControlPlaneState",
     "GroupSharingState",
     "HindsightState",
     "MemoryFlowState",

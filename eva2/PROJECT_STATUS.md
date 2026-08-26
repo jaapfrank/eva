@@ -60,6 +60,21 @@ de controleerbare live receipts staan in
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
+## Nieuwste gesloten keuze
+
+De Hindsight Control Plane is **niet** toegelaten als Eva's geheugenbeheer.
+Niet omdat we liever zelf een dashboard bouwen, maar omdat de echte,
+geïsoleerde proef aantoonde dat deze upstream-UI een algemene schrijfinterface
+is: zij kan banken aanmaken en verwijderen, geheugen wissen en configuratie
+wijzigen. De ene gedeelde toegangssleutel van de UI weet niets van een persoon,
+groep of toestemming binnen Eva.
+
+De proef draaide met een nieuwe tijdelijke volume, zonder Eva-data, secrets of
+bestaande volumes, en is daarna volledig verwijderd. Hindsight `0.9.1` blijft
+wel Eva's langetermijngeheugen. Alleen de algemene beheersite valt af. Hierdoor
+bouwen we niet door op een mooie maar ongeschikte dependency. Receipt:
+[`hindsight-control-plane-isolation-2026-08-26.json`](evidence/living-core/hindsight-control-plane-isolation-2026-08-26.json).
+
 ## Sinds 03:00 daadwerkelijk opgeleverd
 
 Tussen 03:00 en statuscheckpoint `8d93338` bevat Git 41 kleine checkpoints.

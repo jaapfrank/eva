@@ -16,7 +16,7 @@ def test_people_memory_overview_has_one_closed_non_identifying_wire_shape() -> N
     assert overview.to_payload() == {
         "contains_raw_content": False,
         "contract": "EvaPeopleMemoryOverview/v1",
-        "control_plane": {"state": "selected_not_connected"},
+        "control_plane": {"state": "not_admitted"},
         "hindsight": {"state": "ready"},
         "memory": {"state": "up_to_date"},
         "people": {"dynamic_account": "no_extra_account"},
