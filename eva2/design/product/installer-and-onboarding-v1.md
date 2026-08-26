@@ -102,6 +102,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   object-opslag→ObjectRef-bouwblok, maar nog geen complete 39-tabellenrestore,
   tweede-machineproef of sleuteloverdracht; zie
   `evidence/living-core/portable-objectref-cas-bound-postgres-restore-2026-08-27.json`.
+- De restore leest een portable archief nu ook correct zoals het werkelijk is
+  opgeslagen: canonieke JSON sorteert objectvelden alfabetisch. Eva controleert
+  daarom de **exacte veldenset**, primaire sleutel en rijhash, terwijl alleen de
+  verzegelde transform bepaalt in welke volgorde de databasekolommen worden
+  geschreven. Een oude reader-fixture met onderling verschillende test-ID's
+  blijft terecht vóór de eerste SQL-query geweigerd; die is geen echte
+  databaseback-up. Zie
+  `evidence/living-core/portable-canonical-key-order-restore-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding

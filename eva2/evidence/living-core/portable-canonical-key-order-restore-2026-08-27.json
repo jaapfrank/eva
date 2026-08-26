@@ -1,0 +1,29 @@
+{
+  "receipt_contract": "EvaPortableCanonicalKeyOrderRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "e42e506e478f0355a4840dad3fcb0b7d3a6ce393",
+  "scope": "Synthetic sealed 4D fixture object, synthetic private target keyring, temporary private target CAS and disposable PostgreSQL 16.13 only. No Eva1, live Eva, Hindsight, provider, connector, user archive or user object was read or changed.",
+  "checks": [
+    {
+      "name": "real PostgreSQL ObjectRef restore from a canonical sorted archive record",
+      "command": "EVA2_TEST_POSTGRES_DSN='postgresql+psycopg://eva2:…@127.0.0.1:55438/eva2_test' PYTHONPATH=/tmp/eva2-pynacl-probe-20260827d:src python3 -m pytest -q -s tests/portable/test_portable_restore_object_boundary.py",
+      "result": "5 passed"
+    },
+    {
+      "name": "portable restore and object regression",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827d:src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py tests/portable/test_portable_restore_object_boundary.py tests/portable/test_portable_p1_regressions.py tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py tests/objects/test_envelope.py tests/objects/test_cas.py",
+      "result": "94 passed, 4 skipped"
+    }
+  ],
+  "proven": [
+    "Restore accepts a valid canonical archive record whose JSON keys are lexicographically ordered, while retaining exact field-set, primary-key and row-hash checks.",
+    "The database column order still comes only from the sealed transform mapping, not incidental JSON parse order.",
+    "The known internally inconsistent historical reader fixture is refused before the target database is queried."
+  ],
+  "not_proven": [
+    "The reader fixture is not a database-restorable user backup and was not relabelled as one.",
+    "No full 39-table database restore, second-machine restore or deployment occurred.",
+    "The temporary PostgreSQL container and temporary PyNaCl test target were removed after the proof.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations; this change adds none."
+  ]
+}
