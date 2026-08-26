@@ -59,7 +59,12 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "https://" not in response.text
     assert "/readyz" not in response.text
     assert "response.ok" in response.text
-    assert "Promise.allSettled" in response.text
+    assert "async function loadStatus" in response.text
+    assert "async function loadIdentity" in response.text
+    assert "async function loadProgress" in response.text
+    assert "statusPayload" in response.text
+    assert "identityPayload" in response.text
+    assert "progressPayload" in response.text
     assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
     assert "connect-src 'self'" in response.headers["content-security-policy"]
@@ -85,8 +90,13 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     }
     capability_states = {item["state"] for item in payload["capabilities"]}
     assert capability_states == {"live", "tested", "selected", "open"}
-    assert len(payload["capabilities"]) == 12
+    assert len(payload["capabilities"]) == 13
     assert len(payload["dependencies"]) == 8
+    capability_by_id = {item["id"]: item for item in payload["capabilities"]}
+    assert capability_by_id["child-engine"]["state"] == "tested"
+    assert capability_by_id["runtime-subagents"]["state"] == "open"
+    dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
+    assert dependency_by_name["Pydantic AI"]["state"] == "selected"
     for secret_word in ("password", "token", "dsn", "prompt"):
         assert secret_word not in response.text.lower()
 
