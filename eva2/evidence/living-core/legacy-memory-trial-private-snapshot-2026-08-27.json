@@ -1,0 +1,35 @@
+{
+  "receipt_contract": "EvaLegacyMemoryTrialPrivateSnapshotReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "5865b1e04fc3a6a15cc5633df90d466f9eee4d02",
+  "scope": "Synthetic SQLite source and new disposable local PostgreSQL 16.13 only. The live Eva1 service and its SQLite file were not opened, copied or changed.",
+  "checks": [
+    {
+      "name": "unit and source-boundary checks",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/application/test_legacy_memory_trial.py tests/tools/test_run_legacy_memory_trial.py",
+      "result": "17 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check tools/run_legacy_memory_trial.py tests/tools/test_run_legacy_memory_trial.py",
+      "result": "passed"
+    },
+    {
+      "name": "actual disposable database trial",
+      "environment": "new automatically removed PostgreSQL 16.13-alpine container and new local eva2_legacy_memory_trial_ database",
+      "command": "EVA2_LEGACY_MEMORY_TRIAL_DSN=<temporary local disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/postgres/test_legacy_memory_trial_tool.py",
+      "result": "1 passed"
+    }
+  ],
+  "proven": [
+    "The selected rows are read from a consistent SQLite backup API snapshot, not directly from a changing live database file.",
+    "The snapshot must be a private 0600 file in a private local directory and is removed at scope exit.",
+    "The target trial DSN is restricted to local PostgreSQL and an eva2_legacy_memory_trial_ database name.",
+    "A selected synthetic record remains legacy_unverified and restricted and does not enter ordinary recall."
+  ],
+  "not_proven": [
+    "No actual Eva1 memory label was selected or imported.",
+    "No normal recall, live Eva2 deployment, Telegram interaction or user acceptance was tested.",
+    "This does not authorize copying all Eva1 memories or mapping a legacy person label to an Eva2 person."
+  ]
+}
