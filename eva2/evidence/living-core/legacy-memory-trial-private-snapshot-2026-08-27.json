@@ -1,7 +1,7 @@
 {
   "receipt_contract": "EvaLegacyMemoryTrialPrivateSnapshotReceipt/v1",
   "recorded_at": "2026-08-27T00:00:00Z",
-  "git_checkpoint": "5865b1e04fc3a6a15cc5633df90d466f9eee4d02",
+  "git_checkpoint": "9c41b78cc10facd254fed1c2e390fcdef4cccd7d",
   "scope": "Synthetic SQLite source and new disposable local PostgreSQL 16.13 only. The live Eva1 service and its SQLite file were not opened, copied or changed.",
   "checks": [
     {
@@ -15,9 +15,9 @@
       "result": "passed"
     },
     {
-      "name": "actual disposable database trial",
+      "name": "actual disposable database trial, including refused second import",
       "environment": "new automatically removed PostgreSQL 16.13-alpine container and new local eva2_legacy_memory_trial_ database",
-      "command": "EVA2_LEGACY_MEMORY_TRIAL_DSN=<temporary local disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/postgres/test_legacy_memory_trial_tool.py",
+      "command": "EVA2_LEGACY_MEMORY_TRIAL_DSN=<temporary local disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/postgres/test_legacy_memory_trial_tool.py tests/application/test_legacy_memory_trial.py tests/tools/test_run_legacy_memory_trial.py",
       "result": "1 passed"
     }
   ],
@@ -25,6 +25,7 @@
     "The selected rows are read from a consistent SQLite backup API snapshot, not directly from a changing live database file.",
     "The snapshot must be a private 0600 file in a private local directory and is removed at scope exit.",
     "The target trial DSN is restricted to local PostgreSQL and an eva2_legacy_memory_trial_ database name.",
+    "The target's normal tenant/install privacy scope is set before inspection; any pre-existing source event, fact assertion or current-fact pointer for that scope rejects the trial before a second memory write.",
     "A selected synthetic record remains legacy_unverified and restricted and does not enter ordinary recall."
   ],
   "not_proven": [
