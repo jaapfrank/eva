@@ -10,14 +10,42 @@ or revive an old provider attempt.
 from __future__ import annotations
 
 import hashlib
+import re
 from collections.abc import Mapping
 from typing import Any
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
 
 
+_IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
+
+
 class PortableRestoreError(PortableArchiveError):
     """A portable record is malformed or cannot safely become a database row."""
+
+
+def _one_value(result: Any, *, label: str) -> Any:
+    row = result.fetchone()
+    if row is None:
+        raise PortableRestoreError(f"restore target {label} returned no value")
+    if isinstance(row, Mapping):
+        if len(row) != 1:
+            raise PortableRestoreError(f"restore target {label} returned extra values")
+        return next(iter(row.values()))
+    if hasattr(row, "_mapping"):
+        values = tuple(row._mapping.values())
+    else:
+        values = tuple(row)
+    if len(values) != 1:
+        raise PortableRestoreError(f"restore target {label} returned extra values")
+    return values[0]
+
+
+def _execute(connection: Any, sql: str) -> Any:
+    execute = getattr(connection, "exec_driver_sql", None)
+    if callable(execute):
+        return execute(sql)
+    return connection.execute(sql)
 
 
 def _portable_row(record: Mapping[str, Any], *, table: str) -> dict[str, Any]:
@@ -108,4 +136,61 @@ def decode_column_preserving_record(
     return restored
 
 
-__all__ = ["PortableRestoreError", "decode_column_preserving_record"]
+def verify_empty_restore_target(
+    connection: Any,
+    *,
+    table_specs: tuple[Mapping[str, Any], ...],
+) -> None:
+    """Require the caller's current serializable transaction to have no Eva rows.
+
+    This is an admission check, not an import.  The later importer must call it
+    while traffic to the new target is closed and before it writes a first row.
+    It intentionally checks every canonical table, not just installations, so
+    a target with a stray tenant or a prior failed restore never looks empty.
+    """
+
+    isolation = _one_value(
+        _execute(connection, "SHOW transaction_isolation"), label="isolation"
+    )
+    if isolation != "serializable":
+        raise PortableRestoreError("restore target transaction is not serializable")
+    _one_value(
+        _execute(
+            connection,
+            "SELECT pg_catalog.pg_advisory_xact_lock("
+            "pg_catalog.hashtextextended('EvaPortableRestore/v1', 0))",
+        ),
+        label="restore lock",
+    )
+    seen: set[str] = set()
+    for spec in table_specs:
+        table = spec.get("table")
+        if (
+            not isinstance(table, str)
+            or table in seen
+            or len(table.split(".")) != 2
+            or any(not _IDENTIFIER.fullmatch(part) for part in table.split("."))
+        ):
+            raise PortableRestoreError("restore target table specification is invalid")
+        seen.add(table)
+        present = _one_value(
+            _execute(connection, f"SELECT pg_catalog.to_regclass('{table}') IS NOT NULL"),
+            label=f"table {table}",
+        )
+        if present is not True:
+            raise PortableRestoreError(f"restore target lacks sealed table {table}")
+        row_count = _one_value(
+            _execute(connection, f"SELECT COUNT(*) FROM {table}"),
+            label=f"row count {table}",
+        )
+        if isinstance(row_count, bool) or not isinstance(row_count, int):
+            raise PortableRestoreError(f"restore target {table} count is invalid")
+        if row_count:
+            raise PortableRestoreError(f"restore target is not empty: {table}")
+
+
+__all__ = [
+    "PortableRestoreError",
+    "decode_column_preserving_record",
+    "verify_empty_restore_target",
+]

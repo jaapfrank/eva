@@ -11,6 +11,7 @@ from eva.application.portable_archive import canonical_json_bytes
 from eva.operations.portable_restore import (
     PortableRestoreError,
     decode_column_preserving_record,
+    verify_empty_restore_target,
 )
 
 
@@ -103,4 +104,62 @@ def test_restore_rejects_changed_row_or_primary_key() -> None:
     with pytest.raises(PortableRestoreError, match="primary key differs"):
         decode_column_preserving_record(
             record, table=table, table_specs=CANONICAL_EXPORT_SPECS
+        )
+
+
+class _Result:
+    def __init__(self, value: object) -> None:
+        self._value = value
+
+    def fetchone(self) -> tuple[object]:
+        return (self._value,)
+
+
+class _RestoreTarget:
+    def __init__(self, *, isolation: str = "serializable", nonempty: str | None = None) -> None:
+        self.isolation = isolation
+        self.nonempty = nonempty
+        self.queries: list[str] = []
+
+    def exec_driver_sql(self, sql: str) -> _Result:
+        self.queries.append(sql)
+        if sql == "SHOW transaction_isolation":
+            return _Result(self.isolation)
+        if "pg_advisory_xact_lock" in sql:
+            return _Result(None)
+        if "to_regclass" in sql:
+            return _Result(True)
+        if sql.startswith("SELECT COUNT(*) FROM "):
+            table = sql.removeprefix("SELECT COUNT(*) FROM ")
+            return _Result(1 if table == self.nonempty else 0)
+        raise AssertionError(sql)
+
+
+def test_restore_target_must_be_serializable_locked_and_empty() -> None:
+    target = _RestoreTarget()
+
+    verify_empty_restore_target(target, table_specs=CANONICAL_EXPORT_SPECS)
+
+    assert target.queries[0] == "SHOW transaction_isolation"
+    assert "pg_advisory_xact_lock" in target.queries[1]
+    assert len([sql for sql in target.queries if sql.startswith("SELECT COUNT")]) == len(
+        CANONICAL_EXPORT_SPECS
+    )
+
+
+def test_restore_target_rejects_weaker_isolation_or_existing_data() -> None:
+    with pytest.raises(PortableRestoreError, match="not serializable"):
+        verify_empty_restore_target(
+            _RestoreTarget(isolation="read committed"),
+            table_specs=CANONICAL_EXPORT_SPECS,
+        )
+    with pytest.raises(PortableRestoreError, match="not empty: eva_core.tenants"):
+        verify_empty_restore_target(
+            _RestoreTarget(nonempty="eva_core.tenants"),
+            table_specs=CANONICAL_EXPORT_SPECS,
+        )
+    with pytest.raises(PortableRestoreError, match="table specification"):
+        verify_empty_restore_target(
+            _RestoreTarget(),
+            table_specs=({"table": "eva_core.tenants; SELECT 1"},),
         )
