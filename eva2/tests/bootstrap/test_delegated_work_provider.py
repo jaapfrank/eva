@@ -22,6 +22,7 @@ from eva.bootstrap.delegated_work_provider import (
     build_unadmitted_delegated_work_spec,
     open_delegated_work_runner,
     verify_delegated_provider_dependencies,
+    validate_delegated_model_access_lease,
 )
 from eva.contracts.canonical_json import canonical_sha256
 from pydantic_ai.models.function import FunctionModel
@@ -170,6 +171,7 @@ def test_bootstrap_reads_exact_shared_access_lease_contract(
             "required_mode": 0o640,
         },
     }
+    assert validate_delegated_model_access_lease(lease) is None
 
 
 def test_factory_uses_only_the_sealed_provider_profile(

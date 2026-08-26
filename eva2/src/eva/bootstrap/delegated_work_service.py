@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 import os
 import signal
+import sys
 from contextlib import asynccontextmanager
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
@@ -26,6 +27,8 @@ from eva.adapters.postgres.delegated_work import (
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
+
+_SCHEMA_HEAD = "4e_0004_delegated_work_stop"
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:
@@ -259,9 +262,44 @@ async def serve_openai_delegated_work(
         )
 
 
-def main() -> int:
+def check_openai_delegated_work(
+    settings: OpenAIDelegatedWorkSettings | None = None,
+) -> None:
+    """Check the sealed sidecar inputs without starting a provider request."""
+
+    from eva.bootstrap.delegated_work_provider import (
+        validate_delegated_model_access_lease,
+        verify_delegated_provider_dependencies,
+    )
+
+    selected = settings or OpenAIDelegatedWorkSettings.from_environment()
+    verify_delegated_provider_dependencies()
+    validate_delegated_model_access_lease(selected.model_access_lease_file)
+    database_dsn = read_runtime_secret_file(
+        selected.service.database_dsn_file,
+        setting_name="EVA_DATABASE_DSN_FILE",
+    )
+    engine = sa.create_engine(database_dsn, pool_pre_ping=True)
+    try:
+        with engine.connect() as connection:
+            revision = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if revision != _SCHEMA_HEAD:
+                raise RuntimeError("delegated worker schema head differs")
+    finally:
+        engine.dispose()
+
+
+def main(arguments: list[str] | None = None) -> int:
     """Run until SIGTERM/SIGINT; configuration failures return non-zero."""
 
+    selected_arguments = sys.argv[1:] if arguments is None else arguments
+    if selected_arguments == ["--check"]:
+        check_openai_delegated_work()
+        return 0
+    if selected_arguments:
+        raise RuntimeError("delegated worker arguments are invalid")
     asyncio.run(
         serve_openai_delegated_work(
             OpenAIDelegatedWorkSettings.from_environment()
@@ -278,6 +316,7 @@ __all__ = [
     "DelegatedWorkService",
     "DelegatedWorkServiceSettings",
     "OpenAIDelegatedWorkSettings",
+    "check_openai_delegated_work",
     "run_delegated_work_service",
     "serve_delegated_work_service",
     "serve_openai_delegated_work",

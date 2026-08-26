@@ -224,6 +224,12 @@ def _read_access_lease(auth_file: Path) -> tuple[str, str]:
     return access_token, account_id
 
 
+def validate_delegated_model_access_lease(auth_file: Path) -> None:
+    """Validate the shared lease without exposing its sensitive values."""
+
+    _read_access_lease(auth_file)
+
+
 @asynccontextmanager
 async def open_delegated_work_runner(
     *,
@@ -278,4 +284,5 @@ __all__ = [
     "build_unadmitted_delegated_work_spec",
     "open_delegated_work_runner",
     "verify_delegated_provider_dependencies",
+    "validate_delegated_model_access_lease",
 ]

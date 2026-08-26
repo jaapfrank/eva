@@ -12,6 +12,8 @@ from eva.bootstrap.delegated_work_service import (
     DelegatedWorkService,
     DelegatedWorkServiceSettings,
     OpenAIDelegatedWorkSettings,
+    check_openai_delegated_work,
+    main,
     serve_openai_delegated_work,
 )
 from eva.operations.delegated_work_worker import DelegatedWorkWorker
@@ -133,6 +135,73 @@ def test_provider_entrypoint_accepts_only_file_and_release_authority() -> None:
             OpenAIDelegatedWorkSettings.from_environment(
                 environment | {forbidden: "attacker-controlled"}
             )
+
+
+def test_health_check_validates_dependencies_lease_database_and_schema(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: list[object] = []
+    settings = OpenAIDelegatedWorkSettings.from_environment(
+        {
+            "EVA_DATABASE_DSN_FILE": "/run/eva/database-dsn",
+            "EVA_MODEL_ACCESS_LEASE_FILE": "/run/eva/model-lease/auth.json",
+            "EVA_RUNTIME_TENANT_ID": "11111111-1111-1111-1111-111111111111",
+            "EVA_RUNTIME_INSTALLATION_ID": "22222222-2222-2222-2222-222222222222",
+            "EVA_DELEGATED_WORKER_ID": "subagent-worker:one",
+        }
+    )
+
+    class Connection:
+        def __enter__(self):  # type: ignore[no-untyped-def]
+            return self
+
+        def __exit__(self, *_args):  # type: ignore[no-untyped-def]
+            return None
+
+        def scalar(self, statement):  # type: ignore[no-untyped-def]
+            observed.append(str(statement))
+            return "4e_0004_delegated_work_stop"
+
+    class Engine:
+        def connect(self) -> Connection:
+            return Connection()
+
+        def dispose(self) -> None:
+            observed.append("disposed")
+
+    monkeypatch.setattr(
+        "eva.bootstrap.delegated_work_provider.verify_delegated_provider_dependencies",
+        lambda: observed.append("dependencies"),
+    )
+    monkeypatch.setattr(
+        "eva.bootstrap.delegated_work_provider.validate_delegated_model_access_lease",
+        lambda path: observed.append(path),
+    )
+    monkeypatch.setattr(service_module, "read_runtime_secret_file", lambda *_a, **_k: "dsn")
+    monkeypatch.setattr(service_module.sa, "create_engine", lambda dsn, **_k: Engine())
+
+    assert check_openai_delegated_work(settings) is None
+    assert observed == [
+        "dependencies",
+        Path("/run/eva/model-lease/auth.json"),
+        "SELECT version_num FROM public.eva_alembic_version",
+        "disposed",
+    ]
+
+
+def test_entrypoint_accepts_only_check_or_no_arguments(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: list[str] = []
+    monkeypatch.setattr(
+        service_module,
+        "check_openai_delegated_work",
+        lambda: observed.append("checked"),
+    )
+    assert main(["--check"]) == 0
+    assert observed == ["checked"]
+    with pytest.raises(RuntimeError, match="arguments are invalid"):
+        main(["--unknown"])
 
 
 def test_provider_entrypoint_uses_one_async_lifecycle(
