@@ -55,7 +55,7 @@ de controleerbare live receipts staan in
 | Hoofduitkomst | Wat aantoonbaar staat | Status van het complete project |
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
-| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; een lokale synthetische Piper→Whisper→dezelfde Eva-kern→Piper-keten is groen | Echte gezinschat, microfoon/speaker, spontane presence en bellen met streaming audio/onderbreking nog open |
+| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. Een afgeschermde browser las één vaste pagina en voerde via Eva's duurzame logboek één vaste klik uit met onafhankelijke controle achteraf | Publieke websites, echte accounts, meekijken/overname, volledige skillcyclus en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
@@ -80,8 +80,8 @@ zijn. **Browser en zelfstandige computer** wacht nu op onafhankelijke review
 en een afgeschermde publieke proef; die zijn niet als stilstaande voortgang
 weggeschreven. Terwijl die externe checks wachten, loopt uitsluitend de kleine
 V01-voicegrens parallel: dezelfde kern voorbereiden, geen mediafunctie
-erbij verzinnen. De volgende voice-uitkomst is pas V02, een echte lokale
-full-duplexproef met meetreceipt.
+erbij verzinnen. De eerste V02-ingress relayt nu echt audiochunks; de volledige
+lokale full-duplexproef met onderbreking en meetreceipt blijft de volgende gate.
 
 ## Nieuwste afgeronde stap
 
@@ -188,6 +188,15 @@ tool, latency en onafhankelijke review zijn nog open. Checkpoint `8af6a15`
 herstelt de gepinde Piper-, Faster-Whisper- en controllerroute wel al uit
 voorverwarmde caches op één intern Docker-netwerk zonder gateway, hostpoort of
 hostmount. Zie [`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
+
+Checkpoint `d28ee3a` maakt diezelfde lokale ingangsroute daarna daadwerkelijk
+**streamend**: iedere Piper-PCM-chunk wordt direct naar Whisper doorgestuurd
+vóór Piper `audio-stop` stuurt. De controller houdt alleen teller, formaat en
+SHA-256 bij, nooit het volledige invoeraudiobestand. De echte geïsoleerde run
+relayeerde 38 chunks en leverde daarna via dezelfde private `VoiceTurn/v1`
+route een antwoord-PCM-stroom. Dit is doelbewust nog geen full duplex,
+microfoon/speaker, barge-in of latencyclaim; het voorkomt alleen dat een
+toekomstige voice-route stiekem eerst een compleet geluidsbestand moet bouwen.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**

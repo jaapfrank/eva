@@ -7,9 +7,11 @@ vaste Nederlandse testzin -> Piper -> Faster-Whisper -> Eva VoiceTurn/v1 -> Pipe
 ```
 
 De controller gebruikt de officiële `wyoming`-client in plaats van een eigen
-spraakprotocol. De sidecars blijven afzonderlijke processen; Eva krijgt alleen
-de eindtekst via `admit_final_voice_turn`. Ruwe audio, gedeeltelijke transcriptie
-en de testzin worden niet in de receipt bewaard.
+spraakprotocol. Iedere Piper-PCM-chunk gaat direct naar Faster-Whisper, zonder
+dat de controller het volledige invoeraudiobestand opbouwt. De sidecars blijven
+afzonderlijke processen; Eva krijgt alleen de eindtekst via
+`admit_final_voice_turn`. Ruwe audio, gedeeltelijke transcriptie en de testzin
+worden niet in de receipt bewaard.
 
 ## Exacte inputs
 

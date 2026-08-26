@@ -80,9 +80,11 @@ Hergebruik betekent niet blind `latest` installeren.
   `OHF-Voice/wyoming-faster-whisper v3.6.0`-sidecars. De kleine synthetische
   STT→Eva→TTS-keten is groen. Checkpoint `8af6a15` herhaalt de exact gepinde
   route ook vanuit voorverwarmde caches op een alleen-lezen intern netwerk
-  zonder gateway, hostpoort of hostmount. Beide sidecars blijven `PROEF`:
-  hardware, streaming, interrupt, latency en review zijn nog niet bewezen.
-  Er is niets aan de productlock of B toegevoegd.
+  zonder gateway, hostpoort of hostmount. Checkpoint `d28ee3a` relayt nu de
+  Piper-PCM direct chunk voor chunk naar Faster-Whisper zonder een compleet
+  invoerbestand te bewaren. Beide sidecars blijven `PROEF`: hardware, twee
+  richtingen tegelijk, interrupt, latency en review zijn nog niet bewezen. Er
+  is niets aan de productlock of B toegevoegd.
 - Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
   playback/media-bridge. Een upstream cancellation-API is nog geen gemeten
   barge-in.

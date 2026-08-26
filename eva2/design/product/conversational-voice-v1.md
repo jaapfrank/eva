@@ -148,9 +148,12 @@ in `experiments/wyoming-local-voice-v1/` gebruikt de officiële
 `wyoming==1.10.0`-client, een gepinde lokale Piper-sidecar met Nederlandse
 `nl_NL-pim-medium`-stem en een gepinde lokale Faster-Whisper-sidecar met
 `base-int8`. Een vaste, synthetisch gesproken Nederlandse testzin werd als PCM
-naar lokale STT gestuurd. Alleen de teruggekomen **definitieve** tekst ging
-door `VoiceTurn/v1` naar Eva's gewone private gesprekbeurt; daarna maakte Piper
-weer PCM voor een vaste antwoordzin. De controllerlock, bronhashes,
+naar lokale STT gestuurd. Checkpoint `d28ee3a` relayt iedere PCM-chunk direct
+naar Whisper vóór Piper klaar is en bewaart daarbij alleen teller, formaat en
+SHA-256—nooit het volledige invoeraudiobestand. Alleen de teruggekomen
+**definitieve** tekst ging door `VoiceTurn/v1` naar Eva's gewone private
+gesprekbeurt; daarna maakte Piper weer PCM voor een vaste antwoordzin. De
+controllerlock, bronhashes,
 sidecar-pins, teksthashes en PCM-hashes staan in één receipt;
 `verify_receipt.py` controleert dit zonder Docker of netwerk opnieuw.
 
@@ -194,9 +197,10 @@ vooraf vastgelegd en niet achteraf weggefilterd.
   contract met persoon, gesprek, deadlines, cancel-generation en privacy.
 - [ ] V02 — Lokale full-duplex testclient met echte streaming STT/TTS,
   onderbreken en gescheiden latencyreceipts; nog geen Telegram of HA.
-  `73561ce` sluit alleen de eerste synthetische Piper→Faster-Whisper→V01→Piper
-  keten; echte microfoon/speaker, streaming, interrupt, latency en offline
-  cacheherstel blijven open.
+  `73561ce`/`d28ee3a` sluiten de synthetische Piper→Faster-Whisper→V01→Piper-
+  keten inclusief chunk-relay; echte microfoon/speaker, twee richtingen tegelijk,
+  interrupt en latency blijven open. `8af6a15` sluit de cacheherstart op het
+  interne netwerk.
 - [ ] V03 — Home Assistant Assist/Wyoming-route tegen Eva's bestaande
   gesprekcore, met dezelfde persoon/context en zonder tweede intentbrein.
 - [ ] V04 — Telegram Mini App `Bel Eva`: server-side initdataverificatie,
