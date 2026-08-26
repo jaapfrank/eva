@@ -61,7 +61,9 @@ uitsluitend de buildconstraint `linux/amd64`.
   terug. Zie
   `evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json`
   en
-  `evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json`.
+  `evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json`
+  en
+  `evidence/living-core/portable-model-terminal-restore-postgres-2026-08-27.json`.
   Het archief neemt actieve versleutelde objectbytes al mee en valideert hun
   envelope, hash en metadata. De databasewriter weigert echter vóór de eerste
   doelquery zodra zo'n object nog niet via een aparte, geverifieerde CAS- én

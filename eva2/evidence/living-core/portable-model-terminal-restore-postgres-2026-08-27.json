@@ -1,0 +1,33 @@
+{
+  "receipt_contract": "EvaPortableTerminalModelRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "68e9b1ac45f9798fb820f937d5ebf1906d162cc9",
+  "scope": "One synthetic redacted ModelAttempt/v1 in a new automatically removed local PostgreSQL 16.13-alpine container. No Eva1 file, service, provider, credential, Home Assistant, Telegram, Hindsight or managed-B environment was read or changed.",
+  "checks": [
+    {
+      "name": "portable restore unit suite",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py tests/portable/test_portable_restore_object_boundary.py tests/portable/test_portable_restore_boundary.py",
+      "result": "23 passed, 1 skipped"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_restore.py tests/portable/test_portable_restore_model.py",
+      "result": "passed"
+    },
+    {
+      "name": "actual PostgreSQL terminal model restore",
+      "environment": "new automatically removed PostgreSQL 16.13-alpine container and new disposable database",
+      "command": "EVA2_TEST_POSTGRES_DSN=<temporary disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore_model.py::test_terminalized_model_history_writes_to_real_postgres",
+      "result": "1 passed"
+    }
+  ],
+  "proven": [
+    "A valid redacted historical model attempt writes to PostgreSQL as state ambiguous.",
+    "The restored database row has no provider reference or response hash and carries only a deterministic non-secret credential descriptor.",
+    "The disposable PostgreSQL database and container were removed after the test."
+  ],
+  "not_proven": [
+    "No real model provider, connector, credential, full archive, object-CAS transfer, second-machine restore, update, rollback or deployment was used.",
+    "Equivalent real PostgreSQL writes for terminal read and effect history remain separate tests."
+  ]
+}
