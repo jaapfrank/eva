@@ -1053,6 +1053,16 @@ class PostgresDelegatedWorkStore:
         usage_payload = usage.model_dump(mode="json")
         with self._engine.begin() as connection:
             self._scope(connection)
+            attention_row = connection.execute(
+                sa.select(attention_items)
+                .where(
+                    attention_items.c.tenant_id == self._scope_value.tenant_id,
+                    attention_items.c.installation_id
+                    == self._scope_value.installation_id,
+                    attention_items.c.attention_id == call.attention_id,
+                )
+                .with_for_update()
+            ).mappings().one_or_none()
             row = connection.execute(
                 sa.select(delegated_work_runs)
                 .where(
@@ -1063,7 +1073,7 @@ class PostgresDelegatedWorkStore:
                 )
                 .with_for_update()
             ).mappings().one_or_none()
-            if row is None:
+            if attention_row is None or row is None:
                 raise DelegatedWorkNotFound("delegated work call is absent")
             loaded = self._validated(connection, row)
             if loaded.state != "call_started":
@@ -1416,8 +1426,17 @@ class PostgresDelegatedWorkStore:
             health = "active" if active else "contact_lost"
             result_status = "not_received" if active else "ambiguous"
             if work.stop_requested_at is not None:
-                health = "active"
-                reason = "De stopopdracht is bewaard en wordt door de actieve worker uitgevoerd."
+                if active:
+                    reason = (
+                        "De stopopdracht is bewaard en wordt door de actieve worker "
+                        "uitgevoerd."
+                    )
+                else:
+                    reason = (
+                        "De stopopdracht is bewaard, maar het workercontact is verlopen. "
+                        "De beëindiging is niet bevestigd en Eva start de modelcall niet "
+                        "opnieuw."
+                    )
             else:
                 reason = (
                     "De subagent werkt aan de afgesproken taak."

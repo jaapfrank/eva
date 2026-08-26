@@ -972,6 +972,109 @@ def test_owner_stop_after_claim_prevents_call_and_active_call_records_request(
     )
     assert loaded.state == "call_started"
     assert loaded.stop_requested_at == stopping.stop_requested_at
+    lost = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 1, tzinfo=UTC),
+    ).cards[0]
+    assert lost.column == "attention"
+    assert lost.worker_health == "contact_lost"
+    assert lost.result_status == "ambiguous"
+    assert lost.reason == (
+        "De stopopdracht is bewaard, maar het workercontact is verlopen. "
+        "De beëindiging is niet bevestigd en Eva start de modelcall niet opnieuw."
+    )
+
+
+@pytest.mark.parametrize("terminal_kind", ["success", "failure"])
+def test_owner_stop_and_terminal_commit_share_one_lock_order(
+    delegated_engine: Engine,
+    terminal_kind: str,
+) -> None:
+    label = f"owner-stop-terminal-race-{terminal_kind}"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _spec(label, scope, episode, binding)
+    _admit(store, spec)
+    claim = store.claim_next(
+        worker_id=f"worker:{terminal_kind}",
+        release=_release(spec),
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+    assert claim is not None
+    call = store.start_call(
+        claim, now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC)
+    )
+    assert call is not None
+    now = datetime(2026, 8, 26, 12, 0, 3, tzinfo=UTC)
+    barrier = threading.Barrier(2)
+
+    def stop() -> object:
+        barrier.wait(timeout=5)
+        try:
+            return _store(delegated_engine, scope).request_stop(
+                spec.work_id,
+                owner_principal_id=_id(label, "principal"),
+                principal_binding_id=binding,
+                now=now,
+            )
+        except Exception as error:  # returned for exact race classification
+            return error
+
+    def finish() -> object:
+        barrier.wait(timeout=5)
+        competing_store = _store(delegated_engine, scope)
+        try:
+            if terminal_kind == "failure":
+                return competing_store.record_failure(
+                    call,
+                    usage=DelegatedWorkUsage.unmeasured(),
+                    error_code="provider_unavailable",
+                    error_fingerprint="aa" * 32,
+                    ambiguous=False,
+                    now=now,
+                )
+            output = "De gelijktijdige modeluitkomst is duurzaam bewaard."
+            result = DelegatedWorkResult(
+                contract="DelegatedWorkResult/v1",
+                schema_version=1,
+                work_id=spec.work_id,
+                call_id=call.call_id,
+                output=output,
+                output_sha256=hashlib.sha256(output.encode()).hexdigest(),
+                spec_sha256=spec.sha256,
+                usage=_usage().model_dump(mode="json"),
+                completed_at="2026-08-26T12:00:03Z",
+            )
+            return competing_store.record_success(call, result, now=now)
+        except Exception as error:  # returned for exact race classification
+            return error
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        stop_future = executor.submit(stop)
+        finish_future = executor.submit(finish)
+        outcomes = (stop_future.result(timeout=10), finish_future.result(timeout=10))
+
+    assert not any(isinstance(outcome, sa.exc.OperationalError) for outcome in outcomes)
+    assert all(
+        not isinstance(outcome, Exception)
+        or isinstance(outcome, DelegatedWorkConflict)
+        for outcome in outcomes
+    )
+    loaded = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    if loaded.state == "call_started":
+        assert loaded.stop_requested_at == now
+        loaded = store.record_stopped(
+            call,
+            usage=DelegatedWorkUsage.unmeasured(),
+            now=now,
+        )
+    expected_terminal = "succeeded" if terminal_kind == "success" else "failed"
+    assert loaded.state in {"stopped", expected_terminal}
 
 
 def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
@@ -1457,6 +1560,17 @@ def test_owner_stop_cancels_active_worker_and_never_replays_it(
     assert loaded.error_code is None
     assert loaded.error_fingerprint is None
     assert loaded.attention.state == "completed"
+    with pytest.raises(sa.exc.IntegrityError):
+        with delegated_engine.begin() as connection:
+            connection.execute(
+                sa.update(delegated_work_runs)
+                .where(
+                    delegated_work_runs.c.tenant_id == scope.tenant_id,
+                    delegated_work_runs.c.installation_id == scope.installation_id,
+                    delegated_work_runs.c.work_id == spec.work_id,
+                )
+                .values(completed_at=now - timedelta(seconds=1))
+            )
 
     restarted = DelegatedWorkWorker(
         _store(delegated_engine, scope),
@@ -1743,8 +1857,8 @@ def test_owner_chat_stop_cancels_official_sdk_call_and_never_replays(
         )
         assert reply is not None
         assert reply.text == (
-            "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
-            "en zijn resultaat wordt niet meer aan Eva geleverd."
+            "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall "
+            "wordt niet aan Eva geleverd en Eva start hem niet opnieuw."
         )
         _closed_process(process)
 
@@ -1767,17 +1881,14 @@ def test_owner_chat_stop_cancels_official_sdk_call_and_never_replays(
                 installation_id=str(scope.installation_id),
                 principal_id=str(owner),
                 conversation_id="telegram:owner-stop",
-                message_id="telegram:owner-stop:2",
+                message_id="telegram:owner-stop:1",
                 text="Stop mijn onderzoek",
                 occurred_at="2026-08-26T12:02:01Z",
             ),
             principal_binding_id=binding,
         )
         assert replay is not None
-        assert replay.text == (
-            "Gestopt. De actieve modelcall is afgebroken en zijn resultaat wordt "
-            "niet meer aan Eva geleverd."
-        )
+        assert replay == reply
 
         restarted = _start_process(environment)
         _closed_process(restarted)

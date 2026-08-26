@@ -222,6 +222,8 @@ delegated_work_runs = sa.Table(
         "AND (stop_requested_at IS NULL OR (call_started_at IS NOT NULL "
         "AND stop_requested_at >= call_started_at)) "
         "AND (completed_at IS NULL OR completed_at >= created_at) "
+        "AND (stop_requested_at IS NULL OR completed_at IS NULL "
+        "OR completed_at >= stop_requested_at) "
         "AND (call_started_at IS NULL OR completed_at IS NULL "
         "OR completed_at >= call_started_at)",
         name="ck_delegated_work_runs_time",

@@ -146,19 +146,19 @@ class DelegatedWorkConversationCommands:
             principal_binding_id=self._principal_binding_id,
             now=self._now(),
         )
-        if stopped.state == "call_started":
-            return self._reply(
-                turn,
-                "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
-                "en zijn resultaat wordt niet meer aan Eva geleverd.",
-            )
         if stopped.state != "stopped":
+            if stopped.state == "call_started":
+                return self._reply(
+                    turn,
+                    "De stopopdracht is bewaard. Het resultaat van deze actieve "
+                    "modelcall wordt niet aan Eva geleverd en Eva start hem niet opnieuw.",
+                )
             return self._reply(turn, "Deze onderzoekstaak was al afgerond.")
         if stopped.call_id is not None:
             return self._reply(
                 turn,
-                "Gestopt. De actieve modelcall is afgebroken en zijn resultaat wordt "
-                "niet meer aan Eva geleverd.",
+                "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall "
+                "wordt niet aan Eva geleverd en Eva start hem niet opnieuw.",
             )
         return self._reply(
             turn,

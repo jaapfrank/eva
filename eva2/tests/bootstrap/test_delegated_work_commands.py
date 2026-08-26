@@ -157,8 +157,8 @@ def test_started_call_gets_a_durable_honest_stop_request() -> None:
 
     assert reply is not None
     assert reply.text == (
-        "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
-        "en zijn resultaat wordt niet meer aan Eva geleverd."
+        "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall "
+        "wordt niet aan Eva geleverd en Eva start hem niet opnieuw."
     )
     assert store.stopped == [
         {
