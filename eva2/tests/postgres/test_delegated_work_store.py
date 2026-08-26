@@ -796,6 +796,100 @@ def test_revoked_binding_stops_before_call_start(delegated_engine: Engine) -> No
     assert state == "needs_help"
 
 
+def test_owner_stop_wins_before_call_and_never_claims_again(
+    delegated_engine: Engine,
+) -> None:
+    label = "owner-stop"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _spec(label, scope, episode, binding)
+    _admit(store, spec)
+    assert store.latest_active_work_id(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ) == spec.work_id
+
+    stopped = store.stop_before_call(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+    assert stopped.state == "stopped"
+    assert stopped.call_id is None
+    assert stopped.attention.state == "completed"
+    assert store.stop_before_call(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
+    ) == stopped
+    assert store.claim_next(
+        worker_id="worker:after-stop",
+        now=datetime(2026, 8, 26, 12, 0, 3, tzinfo=UTC),
+    ) is None
+    card = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 0, 4, tzinfo=UTC),
+    ).cards[0]
+    assert card.column == "done"
+    assert card.result_status == "stopped"
+    assert store.latest_active_work_id(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ) is None
+
+
+def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
+    delegated_engine: Engine,
+) -> None:
+    label = "owner-stop-race"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    claimed_spec = _spec(label, scope, episode, binding, work_suffix="claimed")
+    _admit(store, claimed_spec)
+    claim = store.claim_next(
+        worker_id="worker:claimed",
+        now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+    assert claim is not None
+    assert store.stop_before_call(
+        claimed_spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
+    ).state == "stopped"
+    assert store.start_call(
+        claim, now=datetime(2026, 8, 26, 12, 0, 3, tzinfo=UTC)
+    ) is None
+
+    started_spec = _spec(label, scope, episode, binding, work_suffix="started")
+    _admit(store, started_spec)
+    started_claim = store.claim_next(
+        worker_id="worker:started",
+        now=datetime(2026, 8, 26, 12, 0, 4, tzinfo=UTC),
+    )
+    assert started_claim is not None
+    call = store.start_call(
+        started_claim,
+        now=datetime(2026, 8, 26, 12, 0, 5, tzinfo=UTC),
+    )
+    assert call is not None
+    with pytest.raises(DelegatedWorkConflict, match="already started"):
+        store.stop_before_call(
+            started_spec.work_id,
+            owner_principal_id=_id(label, "principal"),
+            principal_binding_id=binding,
+            now=datetime(2026, 8, 26, 12, 0, 6, tzinfo=UTC),
+        )
+    assert store.load(
+        started_spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ).state == "call_started"
+
+
 def test_revocation_waits_for_atomic_call_start(
     delegated_engine: Engine,
     monkeypatch: pytest.MonkeyPatch,

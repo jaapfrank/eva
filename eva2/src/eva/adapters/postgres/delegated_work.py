@@ -643,6 +643,169 @@ class PostgresDelegatedWorkStore:
             )
             return self._load_locked(connection, work_id)
 
+    def stop_before_call(
+        self,
+        work_id: str,
+        *,
+        owner_principal_id: UUID,
+        principal_binding_id: UUID,
+        now: datetime,
+    ) -> StoredDelegatedWork:
+        """Stop owner-bound work atomically, but never pretend an active call stopped."""
+
+        now = _whole_second(now, label="stop time")
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            self._validate_owner_binding(
+                connection,
+                owner_principal_id=owner_principal_id,
+                principal_binding_id=principal_binding_id,
+            )
+            observed = connection.execute(
+                sa.select(
+                    delegated_work_runs.c.attention_id,
+                    delegated_work_runs.c.owner_principal_id,
+                    delegated_work_runs.c.principal_binding_id,
+                ).where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id
+                    == self._scope_value.installation_id,
+                    delegated_work_runs.c.work_id == work_id,
+                )
+            ).one_or_none()
+            if (
+                observed is None
+                or observed.owner_principal_id != owner_principal_id
+                or observed.principal_binding_id != principal_binding_id
+            ):
+                raise DelegatedWorkNotFound("delegated work is absent")
+            attention = connection.execute(
+                sa.select(attention_items)
+                .where(
+                    attention_items.c.tenant_id == self._scope_value.tenant_id,
+                    attention_items.c.installation_id
+                    == self._scope_value.installation_id,
+                    attention_items.c.attention_id == observed.attention_id,
+                )
+                .with_for_update()
+            ).mappings().one_or_none()
+            row = connection.execute(
+                sa.select(delegated_work_runs)
+                .where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id
+                    == self._scope_value.installation_id,
+                    delegated_work_runs.c.work_id == work_id,
+                )
+                .with_for_update()
+            ).mappings().one_or_none()
+            if attention is None or row is None:
+                raise DelegatedWorkNotFound("delegated work is absent")
+            loaded = self._validated(connection, row)
+            if (
+                loaded.spec.owner_principal_id != str(owner_principal_id)
+                or loaded.spec.principal_binding_id != str(principal_binding_id)
+            ):
+                raise DelegatedWorkNotFound("delegated work is absent")
+            if loaded.state == "stopped":
+                return loaded
+            if loaded.state != "admitted" or loaded.call_id is not None:
+                raise DelegatedWorkConflict(
+                    "delegated model call already started and cannot be safely stopped"
+                )
+            stopped_attention = loaded.attention.model_copy(
+                update={
+                    "state": "completed",
+                    "lease_owner": None,
+                    "lease_expires_at": None,
+                }
+            )
+            attention_payload = stopped_attention.model_dump(mode="json")
+            work_update = connection.execute(
+                sa.update(delegated_work_runs)
+                .where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id
+                    == self._scope_value.installation_id,
+                    delegated_work_runs.c.work_id == work_id,
+                    delegated_work_runs.c.revision == loaded.revision,
+                    delegated_work_runs.c.state == "admitted",
+                    delegated_work_runs.c.call_id.is_(None),
+                )
+                .values(
+                    state="stopped",
+                    completed_at=now,
+                    revision=loaded.revision + 1,
+                    updated_at=now,
+                )
+            )
+            attention_update = connection.execute(
+                sa.update(attention_items)
+                .where(
+                    attention_items.c.tenant_id == self._scope_value.tenant_id,
+                    attention_items.c.installation_id
+                    == self._scope_value.installation_id,
+                    attention_items.c.attention_id == observed.attention_id,
+                    attention_items.c.revision == loaded.attention_revision,
+                    attention_items.c.state.in_(("pending", "claimed")),
+                )
+                .values(
+                    state="completed",
+                    lease_owner=None,
+                    lease_expires_at=None,
+                    payload=attention_payload,
+                    payload_sha256=bytes.fromhex(
+                        canonical_sha256(attention_payload)
+                    ),
+                    revision=loaded.attention_revision + 1,
+                    updated_at=now,
+                )
+            )
+            if work_update.rowcount != 1 or attention_update.rowcount != 1:
+                raise DelegatedWorkConflict("delegated stop raced")
+            return self._load_locked(connection, work_id)
+
+    def latest_active_work_id(
+        self,
+        *,
+        owner_principal_id: UUID,
+        principal_binding_id: UUID,
+    ) -> str | None:
+        """Find only the owner's latest unfinished work without exposing task text."""
+
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                self._validate_owner_binding(
+                    connection,
+                    owner_principal_id=owner_principal_id,
+                    principal_binding_id=principal_binding_id,
+                )
+                return connection.scalar(
+                    sa.select(delegated_work_runs.c.work_id)
+                    .where(
+                        delegated_work_runs.c.tenant_id
+                        == self._scope_value.tenant_id,
+                        delegated_work_runs.c.installation_id
+                        == self._scope_value.installation_id,
+                        delegated_work_runs.c.owner_principal_id
+                        == owner_principal_id,
+                        delegated_work_runs.c.principal_binding_id
+                        == principal_binding_id,
+                        delegated_work_runs.c.state.in_(
+                            ("admitted", "call_started")
+                        ),
+                    )
+                    .order_by(
+                        delegated_work_runs.c.updated_at.desc(),
+                        delegated_work_runs.c.work_id.desc(),
+                    )
+                    .limit(1)
+                )
+            finally:
+                transaction.rollback()
+
     def load(
         self,
         work_id: str,
