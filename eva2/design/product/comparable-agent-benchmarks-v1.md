@@ -86,6 +86,14 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   controleerbare resultaten; CB02-CB07 en iedere echte score blijven open.
 - [ ] CB02 — Dunne Eva-adapters voor de officiële runnerinterfaces; geen
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
+  De GAIA-developmentadapter is hiervoor als eerste deel gereed:
+  `../benchmark/run_gaia_development.py` leest uitsluitend een door de eigenaar
+  geautoriseerde lokale metadata-JSONL en geeft de agent alleen `task_id`,
+  `Question` en optioneel bestaand lokaal bestand. Hij schrijft het officiële
+  antwoordpaar `task_id`/`model_answer`, maar leest geen `Final answer`, roept
+  geen scorer aan en kan dus geen score of leaderboardclaim maken. AgentBench-
+  en OSWorld-adapters, de echte modelroute en een volledige CB02-closure blijven
+  open.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie
