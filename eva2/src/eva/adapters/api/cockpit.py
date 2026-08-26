@@ -98,12 +98,20 @@ def cockpit_progress() -> dict[str, Any]:
                 "evidence": _evidence("capability/browser"),
             },
             {
+                "id": "telegram-real-test",
+                "title": "Telegram met twee testaccounts",
+                "state": "selected",
+                "proof": "Testbot, afgescheiden testdatabase en privacyveilige receipt zijn klaar; nog nul echte testberichten.",
+                "meaning": "Eva verwerkt niets totdat twee door de eigenaar gekozen testaccounts de nieuwe testbot benaderen. Dit is geen productie- of gezinsgroep.",
+                "next": "Laat beide accounts privé /start sturen, maak een lege testgroep en voer daarna de groeps-, intrek- en herstartproef uit.",
+            },
+            {
                 "id": "voice",
                 "title": "Onderbreekbare voice",
                 "state": "selected",
-                "proof": "Pydantic AI Realtime 2.34.0 gekozen als eerste providerroute",
-                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen.",
-                "next": "Eerste full-duplex sessie bouwen en de echte spreektijd meten.",
+                "proof": "Lokale spraakketen stuurde 38 audioblokken door vóór einde invoer; deze WSL-host heeft geen bruikbare audiohardware.",
+                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen. Dat is nog geen echte microfoon-, speaker- of onderbreekproef.",
+                "next": "Dezelfde keten op een host met microfoon en speaker draaien, onderbreken testen en de echte spreektijd meten.",
             },
             {
                 "id": "presence",
@@ -371,7 +379,7 @@ COCKPIT_HTML = """<!doctype html>
           <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
           <article class="module connected"><strong>Workers & subagents</strong><span>Chatstart, status, actieve stop en kleine workerimage getest; externe provider- en Telegramcanary volgen</span></article>
           <article class="module connected"><strong>Skills & browser</strong><span>Eén lokale Playwright-read en één vaste actie via Eva's logboek getest; publieke sites, accounts, downloads en live route zijn open</span></article>
-          <article class="module pending"><strong>Voice & huis</strong><span>Live routes nog open</span></article>
+          <article class="module pending"><strong>Voice & huis</strong><span>Lokale audiostroom getest; echte microfoon-, speaker- en huisproef nog open</span></article>
           <article class="module pending"><strong>Kosten & budget</strong><span>Projectie nog open</span></article>
           <article class="module pending"><strong>Bewijs & benchmarks</strong><span>Scorebord nog open</span></article>
           <article class="module pending"><strong>Updates & herstel</strong><span>CI-signalen nog niet gekoppeld</span></article>

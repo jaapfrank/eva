@@ -254,7 +254,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     }
     capability_states = {item["state"] for item in payload["capabilities"]}
     assert capability_states == {"live", "tested", "selected", "open"}
-    assert len(payload["capabilities"]) == 13
+    assert len(payload["capabilities"]) == 14
     assert len(payload["dependencies"]) == 8
     capability_by_id = {item["id"]: item for item in payload["capabilities"]}
     assert capability_by_id["child-engine"]["state"] == "tested"
@@ -274,6 +274,13 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
         "browser"
     ]["meaning"]
     assert "geen blinde tweede klik" in capability_by_id["browser"]["meaning"]
+    assert capability_by_id["telegram-real-test"]["state"] == "selected"
+    assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
+        "proof"
+    ]
+    assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
+    assert capability_by_id["voice"]["state"] == "selected"
+    assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI"]["version"] == (
