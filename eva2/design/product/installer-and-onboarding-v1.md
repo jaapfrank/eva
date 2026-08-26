@@ -51,7 +51,10 @@ uitsluitend de buildconstraint `linux/amd64`.
   koppeling vóór er een intent, providercall of retry ontstaat; dit is op een
   verse PostgreSQL 16.13-database uitgevoerd. Geredigeerde model-, read- en
   effectpogingen blijven hard blokkeren totdat hun geschiedenis apart en veilig
-  is vertaald. De restore-admission eist bovendien een serialiseerbare
+  is vertaald. Oude modelcalls worden als niet-hervatbare `ambiguous`
+  auditgeschiedenis teruggezet; afgeronde read- en effectpogingen bewaren hun
+  eindstatus maar krijgen alleen een nieuwe onbruikbare credentialmarkering.
+  De restore-admission eist bovendien een serialiseerbare
   transactie, één exclusieve herstel-lock en nul rijen in alle 39 canonieke
   tabellen. De writer controleert de volledige archiefset vóór de eerste
   targetwrite, gebruikt een savepoint en draait die writes bij een databasefout
@@ -59,8 +62,12 @@ uitsluitend de buildconstraint `linux/amd64`.
   `evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json`
   en
   `evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json`.
-  Dit is bewust nog geen gewone volledige backuprestore: object-CAS-kopie,
-  redacted-attemptgeschiedenis en de tweede-machineproef blijven open stappen.
+  Het archief neemt actieve versleutelde objectbytes al mee en valideert hun
+  envelope, hash en metadata. De databasewriter weigert echter vóór de eerste
+  doelquery zodra zo'n object nog niet via een aparte, geverifieerde CAS- én
+  sleutelmigratie kan worden neergezet. Dat voorkomt een ogenschijnlijk groen
+  herstel met onleesbare bestanden. Die sleutelmigratie en de tweede-machineproef
+  blijven open stappen.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding

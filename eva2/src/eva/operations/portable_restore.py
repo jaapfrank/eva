@@ -34,6 +34,7 @@ _CONNECTOR_BINDING_TABLE = "eva_core.connector_bindings"
 _MODEL_ATTEMPT_TABLE = "eva_core.model_attempts"
 _READ_ATTEMPT_TABLE = "eva_effects.read_attempts"
 _EFFECT_ATTEMPT_TABLE = "eva_effects.effect_attempts"
+_OBJECT_REF_TABLE = "eva_evidence.object_refs"
 
 
 class PortableRestoreError(PortableArchiveError):
@@ -1088,6 +1089,10 @@ def _validate_record_sets(
         for record in records:
             if not isinstance(record, Mapping):
                 raise PortableRestoreError("portable table record is not an object")
+            if table == _OBJECT_REF_TABLE:
+                raise PortableRestoreError(
+                    "portable restore requires verified object CAS materialization"
+                )
             if table == _CONNECTOR_BINDING_TABLE:
                 rows.append(
                     _prepare_reauthorization_required_connector_record(
