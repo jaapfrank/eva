@@ -1,0 +1,90 @@
+{
+  "candidate": "V02-wyoming-local-offline-isolation-v1",
+  "captureScriptSha256": "8802d9557b609ef9d523f289a79029430eedb99e788c3b08b39151a3326f0290",
+  "containers": {
+    "controller": {
+      "allCapabilitiesDropped": true,
+      "exitCode": 0,
+      "hostMounts": false,
+      "image": "eva2-v02-wyoming-controller:81f18f4",
+      "noNewPrivileges": true,
+      "publishedHostPorts": false,
+      "readOnlyRoot": true,
+      "receiptVolumeOnly": true,
+      "sourceCommit": "81f18f4341e7b5356065bf884b454968a955c2e5"
+    },
+    "piper": {
+      "hostMounts": false,
+      "image": "rhasspy/wyoming-piper@sha256:6b837615b543e38587b735b72abad2dfd7ead50fd10ec1a4d5815241e5539377",
+      "modelVolume": "eva2-v02-offline-piper-20260826",
+      "modelVolumeReadOnly": true,
+      "publishedHostPorts": false,
+      "readOnlyRoot": true
+    },
+    "whisper": {
+      "hostMounts": false,
+      "image": "rhasspy/wyoming-whisper@sha256:731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d",
+      "modelVolume": "eva2-v02-offline-whisper-20260826",
+      "modelVolumeReadOnly": true,
+      "publishedHostPorts": false,
+      "readOnlyRoot": true
+    }
+  },
+  "network": {
+    "hostPublishedPorts": false,
+    "internal": true,
+    "internetGateway": false,
+    "name": "eva2-v02-offline-net-20260826"
+  },
+  "nonclaims": [
+    "No microphone, speaker, real person, audio recording or hardware path was used.",
+    "No speech-provider credential, LLM reply, tool call, persistence or production route was used.",
+    "This is not full-duplex voice, a barge-in proof, a latency measurement or a semantic accuracy benchmark."
+  ],
+  "pipeline": {
+    "candidate": "V02-wyoming-local-voice-v1",
+    "controller": {
+      "pydantic": "2.12.5",
+      "requirementsSha256": "1547d30b9eb441e4027aaf91663ce668385e6eec58f64648990e37422bcda97b",
+      "runnerSha256": "4589d3d9ec127f7cd1969694920d6cc9e83da3cdd182a67353e85c2816d49415",
+      "wyoming": "1.10.0"
+    },
+    "input": {
+      "pcm": {
+        "bytes": 73728,
+        "channels": 1,
+        "rate": 22050,
+        "sha256": "cb211775a12674a8b269c82baa20938bf6e987b5079b7fb0ad461a6d63b99332",
+        "width": 2
+      },
+      "phraseSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
+      "voice": "nl_NL-pim-medium"
+    },
+    "reply": {
+      "pcm": {
+        "bytes": 104960,
+        "channels": 1,
+        "rate": 22050,
+        "sha256": "1983a6649de890fdcb98a95f5aa2f43a7e25b45b9812e07ef8e096f50a9af3aa",
+        "width": 2
+      },
+      "phraseSha256": "82a7c6e0cade94072c48184837393691c2838111ddaff64e7f6e778a30b33d22"
+    },
+    "sidecarsExpected": {
+      "piperImage": "rhasspy/wyoming-piper@sha256:6b837615b543e38587b735b72abad2dfd7ead50fd10ec1a4d5815241e5539377",
+      "piperUpstream": "OHF-Voice/wyoming-piper@v2.4.2",
+      "whisperImage": "rhasspy/wyoming-whisper@sha256:731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d",
+      "whisperModel": "base-int8",
+      "whisperUpstream": "OHF-Voice/wyoming-faster-whisper@v3.6.0"
+    },
+    "voiceAdmission": {
+      "audience": "private",
+      "contract": "VoiceTurn/v1",
+      "finalTranscriptSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
+      "language": "nl",
+      "schemaVersion": 1,
+      "transcriptState": "final"
+    }
+  },
+  "pipelineReceiptSha256": "c57ab9527490bdc1c2c0fbbffc9829c4e77cac818ce1c47861f4d538ada26cd7"
+}

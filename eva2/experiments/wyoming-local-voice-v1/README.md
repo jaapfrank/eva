@@ -23,11 +23,15 @@ en de testzin worden niet in de receipt bewaard.
 | Whisper amd64-image | `rhasspy/wyoming-whisper@sha256:731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d` |
 | STT-model | `base-int8`, taal `nl` |
 
-De eerste modeldownload krijgt een nieuwe, wegwerp-Dockervolume. De huidige
-receipt bewijst nog **niet** dat dezelfde sidecars daarna zonder extern netwerk
-kunnen herstarten: Faster-Whisper heeft daarvoor ook een verzegelde tokenizer-
-cache nodig. Dat is een aparte, nog open stap. De proef gebruikt nooit Eva B,
-een productiedatabase, secrets, hostaudio of een hostmount in een sidecar.
+De eerste modeldownload krijgt een nieuwe, wegwerp-Dockervolume. Daarna bewijst
+`offline-isolation-receipt.json` één echte herstart met die caches: Piper,
+Faster-Whisper en de controller draaien in een Docker-netwerk met `--internal`,
+zonder gateway of hostpoort. De twee modelvolumes en de roots van de sidecars
+zijn alleen-lezen; de controller heeft geen hostmount, alle Linux-capabilities
+verwijderd en alleen een tijdelijke receiptvolume. Dit bewijs geldt alleen voor
+de gepinde images, de gekozen Nederlandse stem en `base-int8`, niet voor iedere
+toekomstige modelupgrade. De proef gebruikt nooit Eva B, een productiedatabase,
+secrets of hostaudio.
 
 Een groene receipt betekent uitsluitend: een synthetische lokale stem leverde
 PCM, lokale STT leverde de verzegelde korte eindzin, Eva accepteerde die via
@@ -45,3 +49,8 @@ proef: Piper, Whisper en de controller draaien dan op één Docker-netwerk met
 `--internal`, zonder hostpoort, hostmount of internetroute. De controllerimage
 heeft een vaste `python:3.12-slim` amd64-basisdigest en installeert uitsluitend
 de hashgebonden experimentlock. Zij is geen Eva-productimage.
+
+`capture_offline_isolation.py` weigert bij de echte proef een niet-intern
+netwerk, gepubliceerde poorten, hostmounts, schrijvende modelvolumes of een
+verzwakte controller. `verify_offline_isolation.py` hercontroleert daarna de
+committed offline-receipt zonder Docker of netwerk.
