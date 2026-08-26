@@ -76,8 +76,14 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
 - [x] CB00 — AgentBench, GAIA en OSWorld op primaire bronnen afgebakend;
   benchmarkrollen, actuele OSWorldrelease en nonclaims zijn vastgelegd. Dit is
   documentatiebewijs, geen uitgevoerde score.
-- [ ] CB01 — Eén `ComparableAgentRun/v1`-schema en fail-closed validator voor
+- [x] CB01 — Eén `ComparableAgentRun/v1`-schema en fail-closed validator voor
   alle hierboven verplichte provenance-, configuratie- en resultaatvelden.
+  De validator weigert onder meer een ontbrekende upstream-/scorerhash,
+  mutabele image, ontbrekend answer/log/tooltrace-artifact, padtraversal en een
+  score op een nog `planned` run. Schema en validator staan in
+  `../benchmark/comparable-agent-run-v1.schema.json` en
+  `../benchmark/validate_comparable_agent_run.py`. Dit registreert alleen
+  controleerbare resultaten; CB02-CB07 en iedere echte score blijven open.
 - [ ] CB02 — Dunne Eva-adapters voor de officiële runnerinterfaces; geen
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
