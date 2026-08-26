@@ -1,6 +1,6 @@
 # Eva installer en onboarding v1
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 27 augustus 2026.
 
 ## Productbelofte
 
@@ -43,18 +43,24 @@ uitsluitend de buildconstraint `linux/amd64`.
   geheugen komen terug in een lege doelinstallatie; connectoren krijgen de
   status “opnieuw koppelen”; open provideracties worden niet hervat totdat een
   nieuwe, beperkte autorisatie en readback bestaan.
-- De eerste decoder voor die adapter bestaat nu: hij accepteert uitsluitend
+- De eerste decoder en writer voor die adapter bestaan nu: zij accepteren
   kolompreserverende records met de exacte contract-, hash- en primary-keybinding
-  uit de export. Eén geredigeerde connector- of credentialrij stopt hard. De
-  restore-admission eist bovendien een serialiseerbare transactie, één
-  exclusieve herstel-lock en nul rijen in alle 39 canonieke tabellen. De writer
-  controleert de volledige archiefset vóór de eerste targetwrite, gebruikt een
-  savepoint en draait die writes bij een databasefout terug. Dit is eenmaal op
-  een nieuwe PostgreSQL 16.13-database bewezen; zie
-  `evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json`.
-  Hij herstelt bewust nog geen gewone backup met geredigeerde records:
-  herautorisatie, object-CAS-kopie en de volledige tweede-machineproef blijven
-  afzonderlijke open stappen.
+  uit de export. Een geredigeerde **connector** is de ene veilige uitzondering:
+  hij komt alleen terug als “opnieuw koppelen”, met een nieuwe onbruikbare
+  plaatshouder in plaats van het oude secret. De action-chain weigert zo'n
+  koppeling vóór er een intent, providercall of retry ontstaat; dit is op een
+  verse PostgreSQL 16.13-database uitgevoerd. Geredigeerde model-, read- en
+  effectpogingen blijven hard blokkeren totdat hun geschiedenis apart en veilig
+  is vertaald. De restore-admission eist bovendien een serialiseerbare
+  transactie, één exclusieve herstel-lock en nul rijen in alle 39 canonieke
+  tabellen. De writer controleert de volledige archiefset vóór de eerste
+  targetwrite, gebruikt een savepoint en draait die writes bij een databasefout
+  terug. Zie
+  `evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json`
+  en
+  `evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json`.
+  Dit is bewust nog geen gewone volledige backuprestore: object-CAS-kopie,
+  redacted-attemptgeschiedenis en de tweede-machineproef blijven open stappen.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.

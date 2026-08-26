@@ -1,0 +1,38 @@
+{
+  "receipt_contract": "EvaPortableConnectorReauthorizationRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "2dda1878d0ccc4d1c5e9ede4bef2b196cc00f873",
+  "scope": "Disposable Eva2 PostgreSQL only; no Eva1 file, service, provider, credential, Home Assistant, Telegram, Hindsight or managed-B environment was read or changed.",
+  "input": {
+    "kind": "synthetic ConnectorBinding/v1 portable record",
+    "secret_handling": "The source credential descriptor was redacted by the portable-export contract before restore. The receipt contains no descriptor or credential value."
+  },
+  "checks": [
+    {
+      "name": "sealed redacted connector decoder",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_boundary.py",
+      "result": "13 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_restore.py tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/postgres/test_action_chain_effects.py",
+      "result": "passed"
+    },
+    {
+      "name": "actual action-chain rejection",
+      "environment": "new automatically removed PostgreSQL 16.13-alpine container and new disposable database",
+      "command": "EVA2_TEST_POSTGRES_DSN=<temporary disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/postgres/test_action_chain_effects.py -k reauthorization_required",
+      "result": "1 passed, 6 deselected"
+    }
+  ],
+  "proven": [
+    "A sealed, redacted connector record is restored with a new non-secret sentinel descriptor and database/payload status reauthorization_required.",
+    "The original credential descriptor is absent from the restored row and its bound SQL values.",
+    "The action chain rejects the reauthorization_required binding before it creates an effect intent or attempt."
+  ],
+  "not_proven": [
+    "No real connector was restored, reauthorized, contacted or retried.",
+    "No normal full portable archive was restored: redacted model, read and effect attempts still deliberately block that path.",
+    "No object-CAS transfer, second-machine restore, installer, update, rollback or production deployment was performed."
+  ]
+}
