@@ -117,6 +117,18 @@ naar `latest` wisselen is dus geen oplossing.
 Dit is nog geen volledige release-scan of productie-upgrade: een vervangende
 image moet opnieuw worden gepind, gescand en functioneel beproefd.
 
+De scan is vanaf nu geen los handwerk meer. De kleine releasepoort
+[`check_container_vulnerabilities.py`](tools/check_container_vulnerabilities.py)
+exporteert uitsluitend een lokaal aanwezige, digest-gepinde image en laat de
+gepinde Trivy-container die archive netwerkloos scannen. Eén HIGH of CRITICAL
+bevinding maakt de opdracht rood. De vulnerabilitydatabase moet vooraf bewust
+als lokale cache worden bijgewerkt; de releasepoort downloadt zelf niets en
+accepteert nooit `latest`. Dit is nog geen complete SBOM-/releasegate, maar
+voorkomt dat een gevonden kwetsbare image per ongeluk alsnog als kandidaat
+wordt gepromoveerd. De nieuwste Playwright-digest liep hierdoor bewust rood
+met **8 CRITICAL + 69 HIGH** bevindingen wanneer ook issues zonder beschikbare
+fix meetellen.
+
 Checkpoint `d65350b` maakt de volgende echte gebruikersproef direct zichtbaar
 in Eva's cockpit. De kaart **Telegram met twee testaccounts** zegt nu precies
 wat waar is: de afgescheiden testbotroute, lege testdatabase en geschoonde

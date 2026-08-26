@@ -37,6 +37,8 @@ in de Squid-proxy drie HIGH-bevindingen met beschikbare fixes; in de
 Playwright-sidecar één CRITICAL en 22 HIGH-bevindingen met beschikbare fixes.
 Ook de op die dag opgehaalde nieuwste upstream-Playwright-digest had exact
 dezelfde telling. Een tag-update alleen is dus geen oplossing.
+De strengere herhaalbare releasepoort telt ook bevindingen zonder beschikbare
+fix en blokkeerde dezelfde nieuwste digest met 8 CRITICAL en 69 HIGH.
 Deze proef mag dus niet als releasebrowser worden hergebruikt. Eerst is een
 nieuwe gepinde kandidaat nodig, daarna dezelfde scan én deze functionele proef
 opnieuw. De precieze, heropenbare samenvatting staat in

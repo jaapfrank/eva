@@ -20,7 +20,7 @@
         },
         {
           "path": "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
-          "sha256": "6da0030533c4a2493c214dfd8e3b52b4bafe69d4e8817e96f2c64504f5458f55"
+          "sha256": "5a3c0702d7e5d3d73e87aa5dd3290634a21fa13d15c01e09790f333917136119"
         },
         {
           "path": "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
@@ -32,7 +32,7 @@
         },
         {
           "path": "experiments/playwright-mcp-public-read-v1/README.md",
-          "sha256": "b90eff7cd739e3e4879dedb5260860ca40a2344c6b9726ea5d213723089aea27"
+          "sha256": "b5b1162a96a186cba35781337cb62b72d6c83f4165eab35c8768f513098c928a"
         },
         {
           "path": "experiments/playwright-mcp-public-read-v1/profile.json",
@@ -115,8 +115,16 @@
           "sha256": "9c3f24eb410ed015d9cd5aef5b7079da46e93a3a9e963c7032565ec3063aa983"
         },
         {
+          "path": "tests/operations/test_container_vulnerability_gate.py",
+          "sha256": "ec014f25e525cebbcc96a6a87a1ffd7715122d7f584702f65045ce4c9ce1e23c"
+        },
+        {
           "path": "tests/postgres/test_playwright_mcp_action_chain.py",
           "sha256": "9d94ec650a6875f4cbe10ac3c0593387a20eea714fb3cfa04e97efe5a65d356a"
+        },
+        {
+          "path": "tools/check_container_vulnerabilities.py",
+          "sha256": "a1e1904de9f53866bdce9abe90602ad89c6b6138ed62014fb41917eb506b21b5"
         }
       ]
     },
@@ -364,7 +372,7 @@
         },
         {
           "path": "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
-          "sha256": "6da0030533c4a2493c214dfd8e3b52b4bafe69d4e8817e96f2c64504f5458f55"
+          "sha256": "5a3c0702d7e5d3d73e87aa5dd3290634a21fa13d15c01e09790f333917136119"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
@@ -431,8 +439,16 @@
           "sha256": "d61920964aa66b2951cae448bf0ad3aea6b3dc21ac5b3e8030d7ec11ddfd7378"
         },
         {
+          "path": "tests/operations/test_container_vulnerability_gate.py",
+          "sha256": "ec014f25e525cebbcc96a6a87a1ffd7715122d7f584702f65045ce4c9ce1e23c"
+        },
+        {
           "path": "tests/postgres/test_playwright_mcp_action_chain.py",
           "sha256": "9d94ec650a6875f4cbe10ac3c0593387a20eea714fb3cfa04e97efe5a65d356a"
+        },
+        {
+          "path": "tools/check_container_vulnerabilities.py",
+          "sha256": "a1e1904de9f53866bdce9abe90602ad89c6b6138ed62014fb41917eb506b21b5"
         }
       ]
     },
