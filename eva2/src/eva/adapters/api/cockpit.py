@@ -191,10 +191,10 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Hindsight Control Plane",
-                "version": "0.8.6 kandidaat",
+                "version": "0.9.1 kandidaat",
                 "role": "Algemene Hindsight-beheerinterface",
-                "state": "selected",
-                "decision": "Gekozen als toekomstige eigenaar-weergave; directe UI-wijzigingen worden niet Eva's geheugenwaarheid.",
+                "state": "open",
+                "decision": "Open kandidaat voor een toekomstige eigenaar-weergave; directe UI-wijzigingen worden niet Eva's geheugenwaarheid.",
             },
             {
                 "name": "React-Admin + dnd-kit",
