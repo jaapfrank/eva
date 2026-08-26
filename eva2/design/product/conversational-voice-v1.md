@@ -158,8 +158,12 @@ Dit is nuttig omdat de route nu niet alleen op papier bestaat: audioformaat,
 officiële Wyoming-protocolgrens, Nederlandse STT, Eva's privacygrens en lokale
 TTS zijn samen geraakt. Maar het is nadrukkelijk **geen** gesprek met een mens:
 geen microfoon of speaker, geen modelantwoord, tool, opslag, barge-in,
-full-duplexstream, latencyclaim of volledig offline cacheherstel. Daarom blijft
-V02 onafgevinkt.
+full-duplexstream of latencyclaim. Checkpoint `8af6a15` herstart dezelfde
+Piper-, Faster-Whisper- en controllerpins inmiddels vanuit hun voorgewarmde
+caches op een `--internal` Docker-netwerk, zonder gateway, hostpoort of
+hostmount. Dat sluit alleen de cache-/netwerkgrens voor deze exacte stem en
+`base-int8`; het maakt V02 nog geen menselijk gesprek. Daarom blijft V02
+onafgevinkt.
 
 ## Snelheidsbudgetten
 

@@ -78,9 +78,11 @@ Hergebruik betekent niet blind `latest` installeren.
   checkpoint `73561ce` beproeft de officiële `wyoming==1.10.0`-client met
   gepinde `OHF-Voice/wyoming-piper v2.4.2`- en
   `OHF-Voice/wyoming-faster-whisper v3.6.0`-sidecars. De kleine synthetische
-  STT→Eva→TTS-keten is groen, maar beide sidecars blijven `PROEF`: hardware,
-  streaming, interrupt, latency, cacheherstel zonder netwerk en review zijn
-  nog niet bewezen. Er is niets aan de productlock of B toegevoegd.
+  STT→Eva→TTS-keten is groen. Checkpoint `8af6a15` herhaalt de exact gepinde
+  route ook vanuit voorverwarmde caches op een alleen-lezen intern netwerk
+  zonder gateway, hostpoort of hostmount. Beide sidecars blijven `PROEF`:
+  hardware, streaming, interrupt, latency en review zijn nog niet bewezen.
+  Er is niets aan de productlock of B toegevoegd.
 - Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
   playback/media-bridge. Een upstream cancellation-API is nog geen gemeten
   barge-in.

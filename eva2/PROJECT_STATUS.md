@@ -184,8 +184,10 @@ tekst toe tot Eva's bestaande private gesprekcore en maken een vaste
 antwoordzin als PCM. De receipt is gebonden aan locks, code, sidecar-digests,
 teksthashes en PCM-hashes en hercontroleert lokaal groen. Dit is geen menselijk
 voicegesprek: microfoon, speaker, full duplex, onderbreken, modelantwoord,
-tool, latency, offline cacheherstel en onafhankelijke review zijn nog open.
-Zie [`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
+tool, latency en onafhankelijke review zijn nog open. Checkpoint `8af6a15`
+herstelt de gepinde Piper-, Faster-Whisper- en controllerroute wel al uit
+voorverwarmde caches op één intern Docker-netwerk zonder gateway, hostpoort of
+hostmount. Zie [`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
