@@ -1,25 +1,30 @@
 {
   "contract": "EvaPortableWholeArchiveTransportReceipt/v1",
   "recorded_at": "2026-08-26T23:44:07+02:00",
-  "checkpoint": "69b24fc9ac79287ff82c38b4ee8fff904f09f3a3",
+  "checkpoints": [
+    "69b24fc9ac79287ff82c38b4ee8fff904f09f3a3",
+    "e580522dcbae312b27c96d505d956679e6076de4",
+    "068047e19849622d86369cf5023733ca03e1a4d1"
+  ],
   "scope": "isolated Eva2 portable archive transport; no Eva1, B, PostgreSQL, Hindsight, provider or secret was accessed",
   "implementation": {
     "module": "src/eva/operations/portable_transport.py",
-    "module_sha256": "6ccf65cf393fc7b62986fd98c16c6b2c078d5c33bb0621012ff4e8734e22e884",
+    "module_sha256": "21ed371072e97b9b59d4255d12f7e7a5350168c46871eecc43fc216b01270db9",
     "dependency": "cryptography==46.0.5",
     "key_derivation": "scrypt N=32768 r=8 p=1, 32-byte salt and 32-byte key",
     "cipher": "AES-256-GCM with a fresh 12-byte nonce and authenticated canonical header",
     "plaintext_format": "validated EvaPortableArchive/v1 packed as a regular-file-only tar stream"
   },
   "tests": {
-    "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_transport.py",
-    "test_sha256": "078cec101d2c3f39e165ffdd23c49abf6d4b834cf1b0d82d853f5b25c6aa4c70",
-    "result": "3 passed",
+    "command": "four isolated PYTHONPATH=src python3 -m pytest -vv -s invocations, one per named transport test",
+    "test_sha256": "ac65b5a80358ddc4be2d7c06a487b9377d6f60d3f2f77d3b43ec9e27b1d34e52",
+    "result": "4 named tests passed",
     "assertions": [
       "a generic-reader-validated export round-trips byte-equivalently after whole-file encryption",
       "a wrong passphrase publishes no restored directory",
       "a modified ciphertext byte publishes no restored directory",
-      "linked source members are rejected before transport publication"
+      "linked source members are rejected before transport publication",
+      "an already-existing transport or restore path is never overwritten"
     ]
   },
   "result": "tested",
