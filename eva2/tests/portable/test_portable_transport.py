@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -186,3 +188,76 @@ def test_transport_never_overwrites_an_existing_output_or_restore_target(
             validator=_validate,
         )
     assert existing_transport.read_bytes() == b"do not replace"
+
+
+def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -> None:
+    source = _portable_archive(tmp_path)
+    with tempfile.TemporaryDirectory(prefix="eva2-transport-secret-", dir="/tmp") as raw:
+        private = Path(raw)
+        passphrase_file = private / "transport-passphrase"
+        passphrase_file.write_text(PASSPHRASE + "\n", encoding="utf-8")
+        os.chmod(passphrase_file, 0o600)
+        transport = tmp_path / "portable.eva2pt"
+
+        sealed = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "eva.operations.portable_transport_cli",
+                "seal",
+                "--source",
+                str(source),
+                "--destination",
+                str(transport),
+                "--passphrase-file",
+                str(passphrase_file),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert sealed.returncode == 0, sealed.stdout
+        assert PASSPHRASE not in sealed.stdout
+
+        restored = tmp_path / "cli-restored"
+        opened = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "eva.operations.portable_transport_cli",
+                "open",
+                "--source",
+                str(transport),
+                "--destination",
+                str(restored),
+                "--passphrase-file",
+                str(passphrase_file),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert opened.returncode == 0, opened.stdout
+        assert _tree_digest(restored) == _tree_digest(source)
+
+        os.chmod(passphrase_file, 0o644)
+        rejected = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "eva.operations.portable_transport_cli",
+                "seal",
+                "--source",
+                str(source),
+                "--destination",
+                str(tmp_path / "rejected.eva2pt"),
+                "--passphrase-file",
+                str(passphrase_file),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert rejected.returncode == 2
+        assert "passphrase file must be an owner-only" in rejected.stdout
+        assert PASSPHRASE not in rejected.stdout
