@@ -43,6 +43,11 @@ uitsluitend de buildconstraint `linux/amd64`.
   geheugen komen terug in een lege doelinstallatie; connectoren krijgen de
   status “opnieuw koppelen”; open provideracties worden niet hervat totdat een
   nieuwe, beperkte autorisatie en readback bestaan.
+- De eerste decoder voor die adapter bestaat nu: hij accepteert uitsluitend
+  kolompreserverende records met de exacte contract-, hash- en primary-keybinding
+  uit de export. Eén geredigeerde connector- of credentialrij stopt hard. De
+  transactionele PostgreSQL-import, object-CAS-kopie en herautorisatieflow zijn
+  nog afzonderlijke open stappen.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.
