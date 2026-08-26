@@ -35,6 +35,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   het wachtwoord uitsluitend uit een owner-private `0600`-file, nooit uit een
   argument of receipt. Dit is nog geen complete gebruikersproef of
   database-import op een tweede computer.
+- Een directe `INSERT` van de portable records is bewust **verboden**. Vier
+  secretdragende recordtransformaties vervangen credential- en
+  connectorverwijzingen door een onomkeerbare, geredigeerde variant. Dat is
+  nodig zodat een transportbestand geen werkend providersecret bevat. IN07
+  vereist daarom een eigen restore-adapter: persoonsgegevens, gesprekken en
+  geheugen komen terug in een lege doelinstallatie; connectoren krijgen de
+  status “opnieuw koppelen”; open provideracties worden niet hervat totdat een
+  nieuwe, beperkte autorisatie en readback bestaan.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.
