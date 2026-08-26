@@ -5,7 +5,8 @@
     "69b24fc9ac79287ff82c38b4ee8fff904f09f3a3",
     "e580522dcbae312b27c96d505d956679e6076de4",
     "068047e19849622d86369cf5023733ca03e1a4d1",
-    "ee352ab0f9759a45753241a04c163ef1e33a03ff"
+    "ee352ab0f9759a45753241a04c163ef1e33a03ff",
+    "07cb1c646515d6cd83ac5114c8f514645b58226f"
   ],
   "scope": "isolated Eva2 portable archive transport; no Eva1, B, PostgreSQL, Hindsight, provider or secret was accessed",
   "implementation": {
@@ -19,8 +20,8 @@
   "tests": {
     "command": "five isolated PYTHONPATH=src python3 -m pytest -vv -s invocations, one per named transport test",
     "operator_cli_module": "src/eva/operations/portable_transport_cli.py",
-    "operator_cli_module_sha256": "b6bfe9af0fab5fe894d837b319a3b853981295a7dcda555311e96198a811ac26",
-    "test_sha256": "e39802dc4f5d1b667f4ffe721f9645198a2fbeb82bc36afb9959861f68551a55",
+    "operator_cli_module_sha256": "3ff1185a87b7c354aac09955e1104f80ef6a4539e787f8cce61a436529c63d68",
+    "test_sha256": "6d85aa4c89b5ccc869d7d433b22613290d86a5bfcaf8c2dbbcb199d2a94f6899",
     "result": "5 named tests passed",
     "assertions": [
       "a generic-reader-validated export round-trips byte-equivalently after whole-file encryption",
@@ -28,7 +29,7 @@
       "a modified ciphertext byte publishes no restored directory",
       "linked source members are rejected before transport publication",
       "an already-existing transport or restore path is never overwritten",
-      "the operator CLI reads only an owner-private passphrase file and never prints its secret"
+      "the operator CLI reads only an owner-private passphrase file, rejects a symlink path and never prints its secret"
     ]
   },
   "result": "tested",
