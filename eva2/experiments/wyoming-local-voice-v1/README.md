@@ -39,3 +39,9 @@ volledige duplex, onderbreking, latency of herkenningskwaliteit.
 controllerlock, runnerhash, sidecar-pins, eindtekstbinding en de private
 `VoiceTurn/v1`-grens. Audiohashes worden alleen op vorm gecontroleerd, omdat
 Piper-audio geen stabiele golden fixture is.
+
+`Dockerfile.controller` is uitsluitend de wegwerpcontroller voor de volgende
+proef: Piper, Whisper en de controller draaien dan op één Docker-netwerk met
+`--internal`, zonder hostpoort, hostmount of internetroute. De controllerimage
+heeft een vaste `python:3.12-slim` amd64-basisdigest en installeert uitsluitend
+de hashgebonden experimentlock. Zij is geen Eva-productimage.

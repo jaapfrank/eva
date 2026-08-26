@@ -1,0 +1,18 @@
+# Disposable controller used only to prove that the local voice sidecars can
+# communicate over an internal Docker network.  It is not Eva's product image.
+FROM python:3.12-slim@sha256:a249c9f47e05708dd367f3fe8ada03cf347390fad66fb8b0518c0ef55ae3cb84
+
+ENV PYTHONPATH=/app/src \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+COPY experiments/wyoming-local-voice-v1/requirements.lock /tmp/requirements.lock
+RUN python -m pip install --no-cache-dir --require-hashes -r /tmp/requirements.lock
+
+COPY src/eva /app/src/eva
+COPY experiments/wyoming-local-voice-v1 /app/experiments/wyoming-local-voice-v1
+
+WORKDIR /app/experiments/wyoming-local-voice-v1
+ENTRYPOINT ["python", "run_pipeline.py"]
