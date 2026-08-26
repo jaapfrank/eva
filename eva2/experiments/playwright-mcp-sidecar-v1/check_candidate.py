@@ -87,10 +87,26 @@ def main() -> None:
         canonical_sha256(sandbox) == profile["sandboxProfileSha256"],
         "sandbox profile hash drifted",
     )
+    require(
+        profile["testCell"]
+        == {
+            "controllerImage": "eva2-living-core@sha256:d1a861106ecaaa2230e5bcac63232808eced907bf2b1febeff4db2ab7cc161ae",
+            "fixtureImage": "python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+            "gatewaylessBridgeOption": "com.docker.network.bridge.inhibit_ipv4=true",
+            "networkDriver": "bridge",
+        },
+        "browser test cell drifted",
+    )
     require(sandbox["filesystemReadOnly"] is True, "sandbox filesystem became writable")
     require(sandbox["capabilitiesDropped"] is True, "sandbox retained capabilities")
     require(sandbox["noNewPrivileges"] is True, "sandbox lost no-new-privileges")
     require(sandbox["network"]["internalDockerNetwork"] is True, "sandbox network widened")
+    require(sandbox["network"]["gatewayless"] is True, "sandbox gained a gateway")
+    require(sandbox["network"]["hostAccess"] is False, "sandbox gained host access")
+    require(
+        sandbox["network"]["inhibitBridgeIpv4"] is True,
+        "sandbox bridge inhibition disappeared",
+    )
     require(sandbox["network"]["externalAccess"] is False, "sandbox gained egress")
     require(sandbox["network"]["publishedPorts"] is False, "sandbox published a port")
     require(sandbox["secrets"] == [], "sandbox gained a secret")
@@ -109,7 +125,7 @@ def main() -> None:
     )
     require(receipt["candidateId"] == "BROWSER-R01", "wrong browser candidate ID")
     require(
-        receipt["sourceCommit"] == "6b4cc87d4a2286f2e9a857cf9195961c9894cb45",
+        receipt["sourceCommit"] == "a7913a8992e0f0a0fde19d37b0ead11d4c46b785",
         "wrong browser source commit",
     )
     require(
@@ -119,6 +135,11 @@ def main() -> None:
     inputs = receipt["inputs"]
     paths = [entry["path"] for entry in inputs]
     require(paths == sorted(paths) and len(paths) == len(set(paths)), "browser inputs are not closed")
+    require(
+        "experiments/playwright-mcp-sidecar-v1/smoke_client.py" in paths,
+        "gatewayless controller source is not bound",
+    )
+    require("tests/connectors/test_mcp.py" in paths, "MCP regression source is not bound")
     for entry in inputs:
         path = REPOSITORY / entry["path"]
         require(path.is_file(), f"browser input disappeared: {entry['path']}")
@@ -127,7 +148,14 @@ def main() -> None:
     runtime = receipt["runtime"]
     require(runtime["browserImage"] == PLAYWRIGHT_MCP_AMD64_DIGEST, "runtime image drifted")
     require(runtime["browserUser"] == "node", "runtime browser user drifted")
+    require(
+        runtime["controllerImage"] == profile["testCell"]["controllerImage"],
+        "runtime controller image drifted",
+    )
     require(runtime["externalEgressBlocked"] is True, "runtime egress was not blocked")
+    require(runtime["gatewaylessNetwork"] is True, "runtime network retained a gateway")
+    require(runtime["hostNetworkBlocked"] is True, "runtime host access was not blocked")
+    require(runtime["networkGateway"] is None, "runtime recorded a network gateway")
     require(runtime["internalNetwork"] is True, "runtime network was not internal")
     require(runtime["publishedPorts"] == 0, "runtime browser published a port")
     require(runtime["fixtureGets"] == 1, "runtime browser made another page request")
