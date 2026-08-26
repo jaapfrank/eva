@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import socket
 import subprocess
@@ -53,7 +54,7 @@ def inspect(kind: str, name: str) -> dict[str, Any]:
     return value[0]
 
 
-def main() -> None:
+def main(*, browser_image: str = PLAYWRIGHT_IMAGE) -> None:
     profile = json.loads(PROFILE_PATH.read_text(encoding="utf-8"))
     sandbox = json.loads(SANDBOX_PATH.read_text(encoding="utf-8"))
     suffix = uuid4().hex[:12]
@@ -63,10 +64,14 @@ def main() -> None:
     client_name = f"eva-browser-client-{suffix}"
     browser_stopped = False
 
-    image = inspect("image", PLAYWRIGHT_IMAGE)
+    image = inspect("image", browser_image)
     require(image["Architecture"] == "amd64", "wrong browser image architecture")
     require(image["Config"]["User"] == "node", "browser image is not non-root")
-    require(image["Size"] == profile["image"]["localAmd64ContentSizeBytes"], "browser image size drifted")
+    if browser_image == PLAYWRIGHT_IMAGE:
+        require(
+            image["Size"] == profile["image"]["localAmd64ContentSizeBytes"],
+            "browser image size drifted",
+        )
     fixture_image = inspect("image", FIXTURE_IMAGE)
     require(fixture_image["Architecture"] == "amd64", "wrong fixture architecture")
     client_image = inspect("image", CLIENT_IMAGE)
@@ -165,7 +170,7 @@ def main() -> None:
                 "1.0",
                 "--entrypoint",
                 "node",
-                PLAYWRIGHT_IMAGE,
+                browser_image,
                 *sandbox["arguments"],
             ]
         )
@@ -290,7 +295,7 @@ def main() -> None:
         print(
             json.dumps(
                 {
-                    "browserImage": profile["image"]["amd64Digest"],
+                    "browserImage": browser_image,
                     "browserUser": browser["Config"]["User"],
                     "externalEgressBlocked": True,
                     "finalUrl": result["finalUrl"],
@@ -320,4 +325,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--browser-image",
+        default=PLAYWRIGHT_IMAGE,
+        help="exact local candidate image; default is the sealed upstream image",
+    )
+    main(browser_image=parser.parse_args().browser_image)

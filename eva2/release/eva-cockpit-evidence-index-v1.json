@@ -72,7 +72,7 @@
         },
         {
           "path": "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
-          "sha256": "acc737b1e8a737a93a4cda3f9fdf79734a364056a2675ef4b3148b34791a22a9"
+          "sha256": "7cc89a4011931b236b3bc01e6bd4cb6449eaeceddaa86f60ab64e08943431f7f"
         },
         {
           "path": "experiments/playwright-mcp-sidecar-v1/smoke_client.py",
@@ -112,7 +112,7 @@
         },
         {
           "path": "tests/experiments/test_playwright_mcp_public_read.py",
-          "sha256": "9c3f24eb410ed015d9cd5aef5b7079da46e93a3a9e963c7032565ec3063aa983"
+          "sha256": "4e8e16b4e9202968c3cfbecf9c4287c74ac050eafd19546b2985bee265dabf7e"
         },
         {
           "path": "tests/operations/test_container_vulnerability_gate.py",
@@ -400,7 +400,7 @@
         },
         {
           "path": "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
-          "sha256": "acc737b1e8a737a93a4cda3f9fdf79734a364056a2675ef4b3148b34791a22a9"
+          "sha256": "7cc89a4011931b236b3bc01e6bd4cb6449eaeceddaa86f60ab64e08943431f7f"
         },
         {
           "path": "experiments/playwright-mcp-sidecar-v1/smoke_client.py",

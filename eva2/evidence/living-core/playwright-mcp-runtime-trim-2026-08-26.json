@@ -1,0 +1,83 @@
+{
+  "contract": "EvaPlaywrightMcpRuntimeTrimReceipt/v1",
+  "date": "2026-08-26",
+  "purpose": "Test whether removing unused npm tooling from the pinned Microsoft Playwright MCP image materially clears Eva's release-blocking vulnerability gate without changing browser behavior.",
+  "candidate": {
+    "parentImage": "mcr.microsoft.com/playwright/mcp@sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "localImage": "eva2/playwright-mcp-runtime-trim@sha256:01f5b7db8ff26ea23f7cad3ba2155c538a616ad606b897dd206107f3d868db75",
+    "platform": "linux/amd64",
+    "runtimeUser": "node",
+    "sizeBytes": 416702049,
+    "change": "Remove /usr/local/lib/node_modules/npm, /usr/local/bin/npm and /usr/local/bin/npx; leave the MCP server and Chromium unchanged.",
+    "source": {
+      "path": "experiments/playwright-mcp-runtime-trim-v1/Dockerfile",
+      "sha256": "fcc7c857fca817c4179f7d17dbb8315b04aa28ca83723f708e24d6994c1c95f1"
+    }
+  },
+  "build": {
+    "command": "docker build --network=none --pull=false --no-cache --tag eva2/playwright-mcp-runtime-trim:0.0.79-dev -f experiments/playwright-mcp-runtime-trim-v1/Dockerfile experiments/playwright-mcp-runtime-trim-v1",
+    "networkDisabled": true,
+    "result": "passed"
+  },
+  "compatibilityProof": {
+    "command": "PYTHONPATH=.:src python3 experiments/playwright-mcp-sidecar-v1/smoke_candidate.py --browser-image eva2/playwright-mcp-runtime-trim:0.0.79-dev",
+    "result": "passed",
+    "browserImage": "eva2/playwright-mcp-runtime-trim:0.0.79-dev",
+    "fixtureGets": 1,
+    "toolSequence": [
+      "browser_navigate",
+      "browser_snapshot"
+    ],
+    "externalEgressBlocked": true,
+    "hostNetworkBlocked": true,
+    "publishedPorts": 0,
+    "sandboxRequested": true,
+    "stopMilliseconds": 245,
+    "runnerSource": {
+      "path": "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
+      "sha256": "7cc89a4011931b236b3bc01e6bd4cb6449eaeceddaa86f60ab64e08943431f7f"
+    }
+  },
+  "vulnerabilityScan": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "database": "freshly downloaded from mirror.gcr.io/aquasec/trivy-db:2 before the two offline scans",
+    "scanNetwork": "none",
+    "severityFilter": [
+      "HIGH",
+      "CRITICAL"
+    ],
+    "upstream": {
+      "high": 69,
+      "critical": 8,
+      "total": 77,
+      "nodeTarFindings": [
+        "CVE-2026-59873",
+        "CVE-2026-59874",
+        "CVE-2026-73566"
+      ]
+    },
+    "candidate": {
+      "high": 61,
+      "critical": 7,
+      "total": 68,
+      "nodePackageFindings": 0
+    },
+    "result": "The npm/tar findings disappeared, but the remaining Debian/browser-base findings still violate Eva's zero HIGH/CRITICAL promotion gate."
+  },
+  "validation": {
+    "command": "PYTHONPATH=.:src pytest -q -s tests/experiments/test_playwright_mcp_public_read.py tests/api/test_dashboard_status.py",
+    "passed": 18
+  },
+  "decision": {
+    "state": "rejected_not_promoted",
+    "reason": "A reduction from 77 to 68 HIGH/CRITICAL findings is not a release-safe result.",
+    "productionChanged": false,
+    "liveEva1Changed": false,
+    "next": "Evaluate a maintained browser provider or a newer upstream base; do not relax the vulnerability gate or silently replace the pinned provider."
+  },
+  "nonclaims": [
+    "This is not a browser release or production adoption.",
+    "This does not prove an interactive public-web task, account flow, download, human takeover or Telegram route.",
+    "This does not alter Eva 1, its SQLite memory, its service or any live credentials."
+  ]
+}

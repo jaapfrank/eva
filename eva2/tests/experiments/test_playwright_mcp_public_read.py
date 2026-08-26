@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CANDIDATE = ROOT / "experiments" / "playwright-mcp-public-read-v1"
+SIDECAR_CANDIDATE = ROOT / "experiments" / "playwright-mcp-sidecar-v1"
 
 
 def test_public_read_profile_stays_one_page_and_one_allowlisted_destination() -> None:
@@ -66,3 +67,21 @@ def test_runner_keeps_browser_private_and_explicitly_tests_denial() -> None:
     assert "403 Forbidden" in runner
     assert '"--network", "host"' not in runner
     assert '"--privileged"' not in runner
+
+
+def test_sidecar_runner_keeps_the_sealed_image_by_default_but_allows_a_local_candidate() -> None:
+    """The remediation image must run through the existing identical test cell.
+
+    Keeping the sealed upstream image as the default prevents a remediation
+    experiment from silently changing the normal proof.  An explicit argument
+    makes a locally-built, separately-scanned image testable in that same cell.
+    """
+
+    runner = (SIDECAR_CANDIDATE / "smoke_candidate.py").read_text(encoding="utf-8")
+
+    assert 'def main(*, browser_image: str = PLAYWRIGHT_IMAGE)' in runner
+    assert '"--browser-image"' in runner
+    assert "default=PLAYWRIGHT_IMAGE" in runner
+    assert "main(browser_image=parser.parse_args().browser_image)" in runner
+    assert '"browserImage": browser_image' in runner
+    assert 'if browser_image == PLAYWRIGHT_IMAGE:' in runner
