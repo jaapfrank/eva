@@ -28,7 +28,7 @@
         },
         {
           "path": "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
-          "sha256": "228f9260cd8ac27f1aa1467643d553ede51d96dd3beb6ad3cc5f136bc9b3c1d8"
+          "sha256": "669e5f591989a39c398c793494d4e33c3ef871a8d588943afad04b8cfa4074b7"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
@@ -380,7 +380,7 @@
         },
         {
           "path": "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
-          "sha256": "228f9260cd8ac27f1aa1467643d553ede51d96dd3beb6ad3cc5f136bc9b3c1d8"
+          "sha256": "669e5f591989a39c398c793494d4e33c3ef871a8d588943afad04b8cfa4074b7"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",

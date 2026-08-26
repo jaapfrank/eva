@@ -40,7 +40,14 @@
   },
   "vulnerabilityScan": {
     "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
-    "database": "freshly downloaded from mirror.gcr.io/aquasec/trivy-db:2 before the two offline scans",
+    "database": {
+      "source": "mirror.gcr.io/aquasec/trivy-db:2",
+      "updatedAt": "2026-08-26T19:37:57.525382341Z",
+      "downloadedAt": "2026-08-26T21:00:14.637126862Z",
+      "trivyDbSha256": "8bb6fdce37551657903562ee2ca733a75bd9407fe837a02b2de82da0eb069967",
+      "metadataSha256": "76f6078a2fa1a3a1dda929b6e19389394696873b1e6b20201be0623586c621d4",
+      "note": "The database was fetched before both scans and the scans themselves ran with network none. This receipt pins the advisory bytes for comparison; it does not make the temporary local cache a release artifact."
+    },
     "scanNetwork": "none",
     "severityFilter": [
       "HIGH",
