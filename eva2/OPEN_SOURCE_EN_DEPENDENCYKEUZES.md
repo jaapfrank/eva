@@ -49,7 +49,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist minimaal 300 regels eigen HA-code weg tegen hoogstens 180 regels integratie |
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
 | Subagents | Harness `0.25.0` voor korte parentgestuurde fork/join; publieke Pydantic AI `Agent.run()` voor één reeds duurzaam gekozen child | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Harness retourneert publiek alleen tekst en verliest voor een databaseworker getypeerde output/usage/cancellation; geen eigen spawn-, model-, budget-, time-out- of child-contextengine bouwen |
-| Voice | Pydantic AI Realtime `2.34.0` als actuele proef | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | Geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen |
+| Voice | Pydantic AI Realtime `2.34.0` met upstream-extra `openai-realtime` | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | De aparte 47-package kandidaat is hashgeïnstalleerd en exposeert `interrupt(played_ms)` met `websockets==17.0.1`; geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen. Echte audio/providercall en promotie blijven open |
 | Browser | Microsoft Playwright MCP `0.0.79` heeft de eerste lokale read- en actieproef doorlopen; Harness `PlaywrightBrowser` blijft alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces |
 | Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
@@ -69,7 +69,11 @@ Hergebruik betekent niet blind `latest` installeren.
 - Eva pinnt nu `pydantic-ai-slim==2.32.1`. De actuele officiële release is
   `2.34.0` van 24 augustus 2026. Die wordt niet stil geïnstalleerd, maar is nu
   de gezamenlijke proefbasis voor realtime voice en de officiële
-  Harness-koppeling. De eerdere tussenkandidaat `2.32.2` vervalt daarmee.
+  Harness-koppeling. De voicekandidaat
+  `experiments/pydantic-realtime-v1/` installeerde 47 hashgepinde packages en
+  bevestigde de publieke sessie-/onderbrekingsinterface. De extra vereist
+  `websockets>=14`; de kandidaat behoudt daarom compatibel
+  `websockets==17.0.1`. De eerdere tussenkandidaat `2.32.2` vervalt daarmee.
 - Hoorbaar stoppen binnen 250 ms blijft een aparte proef van Eva's eigen
   playback/media-bridge. Een upstream cancellation-API is nog geen gemeten
   barge-in.

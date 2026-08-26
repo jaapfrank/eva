@@ -166,6 +166,16 @@ zijn samen **21/21 groen**. Dit is nog geen microfoon, voiceprovider,
 Telegram-call, Home Assistant-route, latencyresultaat of live voice; de
 onafhankelijke review is eveneens nog open.
 
+Checkpoint `61c629c` plus de hashgebonden receipt `8145bd7` sluit daarna de
+eerste dependencyvraag voor V02. Pydantic AI Realtime
+`2.34.0[openai-realtime]` is in een aparte 47-package kandidaat met hashes
+geïnstalleerd. `pip check`, import, `Agent.realtime(...).session()` en de
+publieke `interrupt(played_ms=...)`-grens zijn groen; `websockets==17.0.1`
+blijft compatibel. Er is nul sleutel, providerverbinding, microfoon, speaker,
+audio, transcriptie of latencyclaim. De kandidaat verandert de productlock,
+image, B of bestaande Eva-route niet. Zie
+[`experiments/pydantic-realtime-v1/`](experiments/pydantic-realtime-v1/).
+
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
 opslaan. Eva start die call niet opnieuw en wacht op het echte resultaat. Acht

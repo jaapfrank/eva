@@ -132,6 +132,15 @@ geen V01-voiceconnector of migratie die zo'n extern/draagbaar record mag
 schrijven. V03/V04 promoveren de exact dezelfde shapes pas samen met die
 concrete route en opslagautoriteit.
 
+De benodigde upstreamroute is ook echt afzonderlijk geïnstalleerd:
+`experiments/pydantic-realtime-v1/` bindt Pydantic AI
+`2.34.0[openai-realtime]` op upstreamcommit `bfa8e91…` aan een 47-package
+hashlock. De kandidaat behoudt `websockets==17.0.1`; `websockets>=14` is dus
+geen blocker. De echte `Agent.realtime(...).session()`- en
+`RealtimeSession.interrupt(played_ms=...)`-interface importeert groen. Dit is
+dependencybewijs, geen audio- of providerbewijs: V02 blijft een echte
+microfoon→speaker streamingproef nodig hebben.
+
 ## Snelheidsbudgetten
 
 Deze waarden zijn acceptatiedoelen, nog geen gemeten productclaims.
