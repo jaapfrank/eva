@@ -1,12 +1,17 @@
 from __future__ import annotations
 
 import asyncio
+from contextlib import asynccontextmanager
+from pathlib import Path
 from uuid import UUID
 
 import pytest
+from eva.bootstrap import delegated_work_service as service_module
 from eva.bootstrap.delegated_work_service import (
     DelegatedWorkService,
     DelegatedWorkServiceSettings,
+    OpenAIDelegatedWorkSettings,
+    serve_openai_delegated_work,
 )
 from eva.operations.delegated_work_worker import DelegatedWorkWorker
 
@@ -95,3 +100,72 @@ def test_process_stop_gets_one_event_loop_turn_between_claim_and_call_fence() ->
 
     assert asyncio.run(stop_after_claim()) == "crashed_before_call"
     assert store.start_call_count == 0
+
+
+def test_provider_entrypoint_accepts_only_file_and_release_authority() -> None:
+    environment = {
+        "EVA_DATABASE_DSN_FILE": "/run/eva/database-dsn",
+        "EVA_MODEL_ACCESS_LEASE_FILE": "/run/eva/model-lease/auth.json",
+        "EVA_RUNTIME_TENANT_ID": "11111111-1111-1111-1111-111111111111",
+        "EVA_RUNTIME_INSTALLATION_ID": "22222222-2222-2222-2222-222222222222",
+        "EVA_DELEGATED_WORKER_ID": "subagent-worker:one",
+    }
+    settings = OpenAIDelegatedWorkSettings.from_environment(environment)
+    assert settings.model_access_lease_file == Path(
+        "/run/eva/model-lease/auth.json"
+    )
+
+    for forbidden in (
+        "OPENAI_API_KEY",
+        "OPENAI_BASE_URL",
+        "EVA_DELEGATED_MODEL",
+        "EVA_DELEGATED_MODEL_ENDPOINT",
+    ):
+        with pytest.raises(RuntimeError, match="authority is forbidden"):
+            OpenAIDelegatedWorkSettings.from_environment(
+                environment | {forbidden: "attacker-controlled"}
+            )
+
+
+def test_provider_entrypoint_uses_one_async_lifecycle(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: dict[str, object] = {}
+    runner = object()
+
+    @asynccontextmanager
+    async def open_runner(*, model_access_lease_file: Path):
+        observed["lease"] = model_access_lease_file
+        observed["provider_open"] = True
+        try:
+            yield runner
+        finally:
+            observed["provider_open"] = False
+
+    async def serve(selected, *, settings, once):  # type: ignore[no-untyped-def]
+        assert observed["provider_open"] is True
+        observed["runner"] = selected
+        observed["service"] = settings
+        observed["once"] = once
+        return "completed"
+
+    monkeypatch.setattr(service_module, "open_delegated_work_runner", open_runner)
+    monkeypatch.setattr(service_module, "serve_delegated_work_service", serve)
+    settings = OpenAIDelegatedWorkSettings.from_environment(
+        {
+            "EVA_DATABASE_DSN_FILE": "/run/eva/database-dsn",
+            "EVA_MODEL_ACCESS_LEASE_FILE": "/run/eva/model-lease/auth.json",
+            "EVA_RUNTIME_TENANT_ID": "11111111-1111-1111-1111-111111111111",
+            "EVA_RUNTIME_INSTALLATION_ID": "22222222-2222-2222-2222-222222222222",
+            "EVA_DELEGATED_WORKER_ID": "subagent-worker:one",
+        }
+    )
+
+    assert asyncio.run(serve_openai_delegated_work(settings, once=True)) == "completed"
+    assert observed == {
+        "lease": Path("/run/eva/model-lease/auth.json"),
+        "provider_open": False,
+        "runner": runner,
+        "service": settings.service,
+        "once": True,
+    }

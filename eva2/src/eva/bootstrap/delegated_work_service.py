@@ -12,6 +12,7 @@ import signal
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Literal
 from uuid import UUID
 
@@ -19,6 +20,7 @@ import sqlalchemy as sa
 
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
 from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.bootstrap.delegated_work_provider import open_delegated_work_runner
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
@@ -69,6 +71,39 @@ class DelegatedWorkServiceSettings:
             installation_id=installation_id,
             worker_id=required("EVA_DELEGATED_WORKER_ID"),
             poll_interval_seconds=interval,
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class OpenAIDelegatedWorkSettings:
+    """Closed process settings; sensitive bytes remain in mounted files."""
+
+    service: DelegatedWorkServiceSettings
+    model_access_lease_file: Path
+
+    def __post_init__(self) -> None:
+        if not self.model_access_lease_file.is_absolute():
+            raise ValueError("delegated model lease file must be absolute")
+
+    @classmethod
+    def from_environment(
+        cls, environment: Mapping[str, str] | None = None
+    ) -> OpenAIDelegatedWorkSettings:
+        values = os.environ if environment is None else environment
+        forbidden = {
+            "OPENAI_API_KEY",
+            "OPENAI_BASE_URL",
+            "EVA_DELEGATED_MODEL",
+            "EVA_DELEGATED_MODEL_ENDPOINT",
+        }
+        if forbidden & set(values):
+            raise RuntimeError("inline delegated provider authority is forbidden")
+        lease = values.get("EVA_MODEL_ACCESS_LEASE_FILE", "").strip()
+        if not lease:
+            raise RuntimeError("EVA_MODEL_ACCESS_LEASE_FILE is required")
+        return cls(
+            service=DelegatedWorkServiceSettings.from_environment(values),
+            model_access_lease_file=Path(lease),
         )
 
 
@@ -129,6 +164,25 @@ def run_delegated_work_service(
 ) -> Literal["stopped", "completed"]:
     """Construct the scoped store without exposing DSN or profiles in argv/logs."""
 
+    return asyncio.run(
+        serve_delegated_work_service(
+            runner,
+            settings=settings,
+            once=once,
+            clock=clock,
+        )
+    )
+
+
+async def serve_delegated_work_service(
+    runner: ChildRunner,
+    *,
+    settings: DelegatedWorkServiceSettings | None = None,
+    once: bool = False,
+    clock: Callable[[], datetime] | None = None,
+) -> Literal["stopped", "completed"]:
+    """Run the service inside an existing async provider lifecycle."""
+
     selected = settings or DelegatedWorkServiceSettings.from_environment()
     database_dsn = read_runtime_secret_file(
         selected.database_dsn_file,
@@ -149,13 +203,48 @@ def run_delegated_work_service(
             worker,
             poll_interval_seconds=selected.poll_interval_seconds,
         )
-        return asyncio.run(service.serve(once=once))
+        return await service.serve(once=once)
     finally:
         engine.dispose()
+
+
+async def serve_openai_delegated_work(
+    settings: OpenAIDelegatedWorkSettings,
+    *,
+    once: bool = False,
+) -> Literal["stopped", "completed"]:
+    """Keep provider, model runner and PostgreSQL worker on one event loop."""
+
+    async with open_delegated_work_runner(
+        model_access_lease_file=settings.model_access_lease_file
+    ) as runner:
+        return await serve_delegated_work_service(
+            runner,
+            settings=settings.service,
+            once=once,
+        )
+
+
+def main() -> int:
+    """Run until SIGTERM/SIGINT; configuration failures return non-zero."""
+
+    asyncio.run(
+        serve_openai_delegated_work(
+            OpenAIDelegatedWorkSettings.from_environment()
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 
 __all__ = [
     "DelegatedWorkService",
     "DelegatedWorkServiceSettings",
+    "OpenAIDelegatedWorkSettings",
     "run_delegated_work_service",
+    "serve_delegated_work_service",
+    "serve_openai_delegated_work",
 ]
