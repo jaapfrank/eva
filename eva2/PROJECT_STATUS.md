@@ -136,6 +136,14 @@ externe ID-bot nodig. De volgende stap blijft bewust handmatig: de eigenaar
 start de afgescheiden stack met zijn eigen testtoken en voert de echte
 privé- en groepsberichten uit.
 
+Checkpoint `604d700` maakt ook de afloop controleerbaar: na de echte proef
+leest `tools/capture_telegram_test_receipt.py` uitsluitend de
+append-only testledger terug. De nieuwe receipt telt toegelaten, geweigerde,
+afgeleverde en onduidelijke updates en controleert opnieuw container-, netwerk-,
+image- en database-isolatie. Zij bevat geen token, naam, account-/chat-ID,
+berichttekst of provider-ID. Een afgeleverde reply blijft provideracceptatie,
+geen verzonnen claim dat iemand haar al gelezen heeft.
+
 Checkpoint `e11c136` maakt de **Telegram-testimage daadwerkelijk lokaal
 bruikbaar**. Hij bouwt uit een schone, vaste Git-commit en een bestaande,
 gepinde Eva-parent met exact dezelfde dependency-lock. De build heeft geen
