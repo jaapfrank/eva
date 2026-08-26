@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import base64
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -10,13 +9,13 @@ from typing import Any
 import pytest
 
 from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
-from eva.application.portable_archive import canonical_json_bytes
 from eva.operations.object_keyring import FileObjectKeyResolver
 from eva.operations.portable_object_materializer import materialize_verified_portable_objects
 from eva.operations.portable_restore import (
     PortableRestoreError,
     restore_column_preserving_records,
 )
+from test_portable_export_end_to_end import _fixture_record_sets
 
 
 POSTGRES_DSN = os.getenv("EVA2_TEST_POSTGRES_DSN")
@@ -86,18 +85,6 @@ def _current_object_record() -> tuple[dict[str, Any], dict[str, Any], dict[str, 
         )
     )
     record = _terminal_object_reference()
-    spec = next(item for item in CANONICAL_EXPORT_SPECS if item["table"] == "eva_evidence.object_refs")
-    row = record["row"]
-    assert isinstance(row, dict)
-    record["row"] = {
-        field: row[field] for field in spec["transform_spec"]["portablePropertyOrder"]
-    }
-    record["primary_key"] = {
-        field: record["row"][field] for field in spec["primary_key"]
-    }
-    record["row_sha256"] = hashlib.sha256(
-        canonical_json_bytes(record["row"])
-    ).hexdigest()
     selected = schedule["portableSnapshotAuthority"]["selectedEncryptedObjects"]["objects"][0]
     key = profile["encryptedObjectFormat"]["keyBinding"]["fourDFixtureKeyRecords"][0]
     return record, selected, key
@@ -207,6 +194,40 @@ def test_object_proof_for_another_target_root_is_rejected_before_database_access
             table_specs=CANONICAL_EXPORT_SPECS,
             materialized_objects=materialized,
             object_store_root=private_tmp_path / "another-target",
+        )
+
+
+def test_internally_inconsistent_historical_fixture_stops_before_target_database_access(
+    private_tmp_path: Path,
+) -> None:
+    record_sets, _installation_id, authority = _fixture_record_sets("terminal")
+    records = {item.table: list(item.records) for item in record_sets}
+    selected = authority["selectedEncryptedObjects"]["objects"][0]
+    key = json.loads(
+        (Path(__file__).resolve().parents[2] / "design/vertical/noor-4d-execution-profile-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )["encryptedObjectFormat"]["keyBinding"]["fourDFixtureKeyRecords"][0]
+    digest = selected["ciphertext_sha256"]
+    assert isinstance(digest, str)
+    source = private_tmp_path / "source"
+    source_path = source / "sha256" / digest[:2] / f"{digest}.eva2xo"
+    source_path.parent.mkdir(parents=True)
+    source_path.write_bytes(base64.b64decode(selected["complete_envelope_base64"], validate=True))
+    target_root = private_tmp_path / "target"
+    materialized = materialize_verified_portable_objects(
+        source_object_root=source,
+        target_object_root=target_root,
+        records_by_table={"eva_evidence.object_refs": records["eva_evidence.object_refs"]},
+        key_resolver=_keyring(private_tmp_path / "keys.json", key),
+    )
+    with pytest.raises(PortableRestoreError, match="model attempt grant and row differ"):
+        restore_column_preserving_records(
+            _NeverTarget(),
+            records,
+            table_specs=CANONICAL_EXPORT_SPECS,
+            materialized_objects=materialized,
+            object_store_root=target_root,
         )
 
 

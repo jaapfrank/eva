@@ -89,6 +89,22 @@ def _portable_row(record: Mapping[str, Any], *, table: str) -> dict[str, Any]:
     return row
 
 
+def _require_exact_properties(
+    value: Mapping[str, Any], expected: Sequence[str], *, label: str
+) -> None:
+    """Require exactly the sealed names, never an incidental JSON key order.
+
+    Portable records are canonical JSON and are deliberately emitted with
+    lexicographically sorted object keys. Their Python insertion order after a
+    read therefore cannot be the database column order. The transform mapping
+    remains the sole authority for output order; this guard protects the exact
+    field set instead.
+    """
+
+    if len(set(expected)) != len(expected) or set(value) != set(expected):
+        raise PortableRestoreError(f"portable {label} properties differ from sealed set")
+
+
 def _materialized_object_index(
     materialized_objects: Sequence[MaterializedPortableObject] | None,
     *,
@@ -180,8 +196,7 @@ def decode_column_preserving_record(
         raise PortableRestoreError("restore transform mappings are absent")
 
     expected_properties = tuple(transform.get("portablePropertyOrder", ()))
-    if tuple(row) != expected_properties:
-        raise PortableRestoreError("portable row properties differ from sealed order")
+    _require_exact_properties(row, expected_properties, label="row")
 
     restored: dict[str, Any] = {}
     for mapping in mappings:
@@ -205,10 +220,11 @@ def decode_column_preserving_record(
     if tuple(restored) != expected_columns:
         raise PortableRestoreError("restored database columns differ from table pin")
     primary_key = record.get("primary_key")
-    if not isinstance(primary_key, Mapping) or tuple(primary_key) != tuple(
-        spec.get("primary_key", ())
-    ):
+    if not isinstance(primary_key, Mapping):
         raise PortableRestoreError("portable primary key shape differs from table pin")
+    _require_exact_properties(
+        primary_key, tuple(spec.get("primary_key", ())), label="primary key"
+    )
     if any(restored[column] != value for column, value in primary_key.items()):
         raise PortableRestoreError("portable primary key differs from restored row")
     return restored
@@ -242,8 +258,9 @@ def decode_reauthorization_required_connector_binding(
         if isinstance(transform, Mapping)
         else ()
     )
-    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+    if not isinstance(mappings, list):
         raise PortableRestoreError("portable connector record properties differ")
+    _require_exact_properties(row, expected_properties, label="connector row")
     if (
         row.get("credential_reference") is not None
         or row.get("credential_reauthorization_required") is not True
@@ -362,10 +379,11 @@ def decode_reauthorization_required_connector_binding(
     if tuple(restored) != expected_columns:
         raise PortableRestoreError("re-linked connector columns differ from table pin")
     primary_key = record.get("primary_key")
-    if not isinstance(primary_key, Mapping) or tuple(primary_key) != tuple(
-        spec.get("primary_key", ())
-    ):
+    if not isinstance(primary_key, Mapping):
         raise PortableRestoreError("portable connector primary key shape differs")
+    _require_exact_properties(
+        primary_key, tuple(spec.get("primary_key", ())), label="connector primary key"
+    )
     if any(restored[column] != value for column, value in primary_key.items()):
         raise PortableRestoreError("portable connector primary key differs")
     return restored
@@ -389,8 +407,9 @@ def decode_ambiguous_model_attempt(
     transform = spec.get("transform_spec")
     mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
     expected_properties = tuple(transform.get("portablePropertyOrder", ())) if isinstance(transform, Mapping) else ()
-    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+    if not isinstance(mappings, list):
         raise PortableRestoreError("portable model attempt properties differ")
+    _require_exact_properties(row, expected_properties, label="model attempt row")
     if row.get("credential_reauthorization_required") is not True:
         raise PortableRestoreError("portable model attempt lacks a redacted credential grant")
     redacted_grant = row.get("credential_grant_payload")
@@ -515,8 +534,9 @@ def decode_terminal_read_attempt(
         if isinstance(transform, Mapping)
         else ()
     )
-    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+    if not isinstance(mappings, list):
         raise PortableRestoreError("portable read attempt properties differ")
+    _require_exact_properties(row, expected_properties, label="read attempt row")
     if row.get("credential_reauthorization_required") is not True:
         raise PortableRestoreError("portable read attempt lacks a redacted credential grant")
     if row.get("state") not in {"observed", "ambiguous", "rejected", "rate_limited"}:
@@ -655,8 +675,9 @@ def decode_terminal_effect_attempt(
         if isinstance(transform, Mapping)
         else ()
     )
-    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+    if not isinstance(mappings, list):
         raise PortableRestoreError("portable effect attempt properties differ")
+    _require_exact_properties(row, expected_properties, label="effect attempt row")
     if row.get("credential_reauthorization_required") is not True:
         raise PortableRestoreError("portable effect attempt lacks a redacted credential grant")
     if row.get("state") not in {
