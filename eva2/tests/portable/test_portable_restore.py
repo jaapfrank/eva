@@ -11,6 +11,7 @@ from eva.application.portable_archive import canonical_json_bytes
 from eva.operations.portable_restore import (
     PortableRestoreError,
     decode_column_preserving_record,
+    restore_column_preserving_records,
     verify_empty_restore_target,
 )
 
@@ -135,6 +136,51 @@ class _RestoreTarget:
         raise AssertionError(sql)
 
 
+class _WritingRestoreTarget:
+    def __init__(self, *, fail_insert: bool = False) -> None:
+        self.fail_insert = fail_insert
+        self.queries: list[tuple[str, tuple[object, ...] | None]] = []
+
+    def exec_driver_sql(
+        self, sql: str, params: tuple[object, ...] | None = None
+    ) -> _Result:
+        self.queries.append((sql, params))
+        if sql == "SHOW transaction_isolation":
+            return _Result("serializable")
+        if "pg_advisory_xact_lock" in sql:
+            return _Result(None)
+        if "to_regclass" in sql:
+            return _Result(True)
+        if sql.startswith("SELECT COUNT(*) FROM "):
+            return _Result(0)
+        if sql.startswith("SAVEPOINT ") or sql.startswith("RELEASE SAVEPOINT"):
+            return _Result(None)
+        if sql.startswith("ROLLBACK TO SAVEPOINT"):
+            return _Result(None)
+        if sql.startswith("INSERT INTO "):
+            if self.fail_insert:
+                raise RuntimeError("synthetic target failure")
+            return _Result(None)
+        raise AssertionError(sql)
+
+
+def _empty_record_sets() -> dict[str, list[dict[str, object]]]:
+    return {str(spec["table"]): [] for spec in CANONICAL_EXPORT_SPECS}
+
+
+def _tenant_row() -> dict[str, object]:
+    return {
+        "tenant_id": "11111111-1111-4111-8111-111111111111",
+        "status": "active",
+        "authority_policy_version": 1,
+        "revision": 1,
+        "retention_policy_id": "test",
+        "retention_until": "2027-08-26T12:00:00Z",
+        "created_at": "2026-08-26T12:00:00Z",
+        "updated_at": "2026-08-26T12:00:00Z",
+    }
+
+
 def test_restore_target_must_be_serializable_locked_and_empty() -> None:
     target = _RestoreTarget()
 
@@ -163,3 +209,76 @@ def test_restore_target_rejects_weaker_isolation_or_existing_data() -> None:
             _RestoreTarget(),
             table_specs=({"table": "eva_core.tenants; SELECT 1"},),
         )
+
+
+def test_column_preserving_restore_prevalidates_then_writes_to_empty_target() -> None:
+    records = _empty_record_sets()
+    records["eva_core.tenants"] = [_record("eva_core.tenants", _tenant_row())]
+    target = _WritingRestoreTarget()
+
+    assert (
+        restore_column_preserving_records(
+            target, records, table_specs=CANONICAL_EXPORT_SPECS
+        )
+        == 1
+    )
+
+    inserts = [query for query in target.queries if query[0].startswith("INSERT INTO ")]
+    assert len(inserts) == 1
+    assert inserts[0][0].startswith("INSERT INTO eva_core.tenants")
+    assert inserts[0][1] == (
+        "11111111-1111-4111-8111-111111111111",
+        "active",
+        1,
+        1,
+        "test",
+        "2027-08-26T12:00:00Z",
+        "2026-08-26T12:00:00Z",
+        "2026-08-26T12:00:00Z",
+    )
+    assert any(sql == "SAVEPOINT eva_portable_restore_write" for sql, _ in target.queries)
+    assert any(
+        sql == "RELEASE SAVEPOINT eva_portable_restore_write" for sql, _ in target.queries
+    )
+
+
+def test_column_preserving_restore_rejects_redaction_before_target_is_touched() -> None:
+    records = _empty_record_sets()
+    connector_spec = _spec("eva_core.connector_bindings")
+    row = {
+        property_name: "placeholder"
+        for property_name in connector_spec["transform_spec"]["portablePropertyOrder"]
+    }
+    row.update(
+        {
+            "tenant_id": "11111111-1111-4111-8111-111111111111",
+            "installation_id": "22222222-2222-4222-8222-222222222222",
+            "binding_id": "33333333-3333-4333-8333-333333333333",
+        }
+    )
+    records["eva_core.connector_bindings"] = [
+        _record("eva_core.connector_bindings", row)
+    ]
+    target = _WritingRestoreTarget()
+
+    with pytest.raises(PortableRestoreError, match="re-authorisation"):
+        restore_column_preserving_records(
+            target, records, table_specs=CANONICAL_EXPORT_SPECS
+        )
+
+    assert target.queries == []
+
+
+def test_column_preserving_restore_rolls_back_its_savepoint_on_target_failure() -> None:
+    records = _empty_record_sets()
+    records["eva_core.tenants"] = [_record("eva_core.tenants", _tenant_row())]
+    target = _WritingRestoreTarget(fail_insert=True)
+
+    with pytest.raises(RuntimeError, match="synthetic target failure"):
+        restore_column_preserving_records(
+            target, records, table_specs=CANONICAL_EXPORT_SPECS
+        )
+
+    queries = [sql for sql, _ in target.queries]
+    assert "ROLLBACK TO SAVEPOINT eva_portable_restore_write" in queries
+    assert queries[-1] == "RELEASE SAVEPOINT eva_portable_restore_write"

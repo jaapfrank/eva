@@ -1,0 +1,44 @@
+{
+  "contract": "EvaPortableColumnRestoreDisposablePostgresReceipt/v1",
+  "checked_at": "2026-08-27",
+  "scope": "A newly created, empty PostgreSQL 16.13 candidate database only",
+  "source_revision": "recovery/v2-containment",
+  "source_files": {
+    "src/eva/operations/portable_restore.py": "6dc9820fdade2ead5c6012bad1dbfcfbfc1fef783de5ecd29aff1ffcd9ac9dd4",
+    "tests/portable/test_portable_restore.py": "a4c8529d1ac4a527c3ffb01e541c072f1f365347539cb7408058667f3b7fb485"
+  },
+  "environment": {
+    "postgres_image": "postgres:16.13-alpine",
+    "network": "temporary localhost port only",
+    "persistent_volume": false,
+    "target_schema": "fresh Alembic head through 4e_0004_delegated_work_stop"
+  },
+  "checks": [
+    {
+      "name": "full_schema_migration",
+      "result": "passed",
+      "meaning": "A fresh database reached the current schema through the normal migration chain."
+    },
+    {
+      "name": "column_preserving_restore",
+      "result": "passed",
+      "meaning": "A signed tenant record was admitted only in a serializable, exclusively locked, otherwise empty 39-table target and read back as exactly one row."
+    },
+    {
+      "name": "cleanup",
+      "result": "passed",
+      "meaning": "The schema was downgraded to base and the temporary PostgreSQL container was removed."
+    }
+  ],
+  "unit_checks": {
+    "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_boundary.py",
+    "result": "9 passed in 0.04s",
+    "lint": "ruff check src/eva/operations/portable_restore.py tests/portable/test_portable_restore.py: passed"
+  },
+  "nonclaims": [
+    "No Eva1 or managed-B database, volume, Hindsight bank, secret, Telegram route, or Home Assistant route was opened, mounted, changed, or restarted.",
+    "This restored only one synthetic column-preserving record; it is not a full portable-backup restore.",
+    "Real portable backups containing redacted connector or credential records still fail before the first target write until the separate re-authorisation importer exists.",
+    "Object-CAS restoration, second-machine recovery, update, and A/B acceptance remain open."
+  ]
+}
