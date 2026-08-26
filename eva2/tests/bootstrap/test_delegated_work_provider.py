@@ -46,11 +46,14 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
     sources = {
         path: hashlib.sha256((package_root / path).read_bytes()).hexdigest()
         for path in (
+            "adapters/model/__init__.py",
             "adapters/model/openai_child_provider.py",
             "adapters/postgres/delegated_work.py",
             "adapters/subagents/tool_free_child.py",
+            "bootstrap/__init__.py",
             "bootstrap/delegated_work_provider.py",
             "bootstrap/delegated_work_service.py",
+            "bootstrap/secrets.py",
             "contracts/delegated_work.py",
             "operations/delegated_work_worker.py",
         )

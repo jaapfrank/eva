@@ -82,11 +82,14 @@ DEPENDENCY_LOCK_SHA256 = (
 
 def _source_hashes() -> dict[str, str]:
     relative_paths = (
+        "adapters/model/__init__.py",
         "adapters/model/openai_child_provider.py",
         "adapters/postgres/delegated_work.py",
         "adapters/subagents/tool_free_child.py",
+        "bootstrap/__init__.py",
         "bootstrap/delegated_work_provider.py",
         "bootstrap/delegated_work_service.py",
+        "bootstrap/secrets.py",
         "contracts/delegated_work.py",
         "operations/delegated_work_worker.py",
     )
