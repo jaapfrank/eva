@@ -1,0 +1,111 @@
+services:
+  postgres-test:
+    profiles: ["telegram-native-test"]
+    image: ${EVA_TEST_POSTGRES_IMAGE:?set an immutable PostgreSQL test image}
+    pull_policy: never
+    restart: "no"
+    environment:
+      POSTGRES_DB: eva2test
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2-test/postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_TEST_POSTGRES_PASSWORD_FILE_HOST:?set a separate test PostgreSQL password file}
+        target: /run/eva2-test/postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: postgres-test-data
+        target: /var/lib/postgresql/data
+    networks: [telegram-test-db]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d eva2test && psql -U postgres -d eva2test -Atc 'SELECT 1' | grep -qx 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    security_opt: ["no-new-privileges:true"]
+    labels:
+      io.eva2.test-database: telegram-native-test-db-v1
+      io.eva2.test-run: telegram-native-test-v1
+
+  schema-installer-test:
+    profiles: ["telegram-native-test"]
+    image: ${EVA_TEST_LIVING_CORE_IMAGE:?set a separate immutable Eva test image}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=16m
+    command: ["python", "-m", "eva.operations.install_schema"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+    volumes:
+      - type: bind
+        source: ${EVA_TEST_DATABASE_DSN_FILE_HOST:?set a separate test database DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+    networks: [telegram-test-db]
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+    labels:
+      io.eva2.test-database: telegram-native-test-db-v1
+      io.eva2.test-run: telegram-native-test-v1
+
+  telegram-test-core:
+    profiles: ["telegram-native-test"]
+    image: ${EVA_TEST_LIVING_CORE_IMAGE:?set a separate immutable Eva test image}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    command: ["python", "-m", "eva.operations.telegram_test_core"]
+    environment:
+      EVA_TEST_RUNTIME_INSTALLATION_ID: ${EVA_TEST_RUNTIME_INSTALLATION_ID:?set a test installation identity}
+      EVA_TEST_RUNTIME_TENANT_ID: ${EVA_TEST_RUNTIME_TENANT_ID:?set a test tenant identity}
+    networks:
+      telegram-test:
+        aliases: [eva-test-core]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=2).read()"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+    labels:
+      io.eva2.test-route: telegram-native-test-v1
+      io.eva2.test-run: telegram-native-test-v1
+
+networks:
+  telegram-test:
+    name: ${EVA_TEST_NETWORK_NAME:?set the dedicated Telegram test network}
+    driver: bridge
+    labels:
+      io.eva2.test-route: telegram-native-test-v1
+      io.eva2.test-run: telegram-native-test-v1
+  telegram-test-db:
+    name: ${EVA_TEST_DATABASE_NETWORK_NAME:?set the dedicated Telegram test database network}
+    driver: bridge
+    internal: true
+    labels:
+      io.eva2.test-database: telegram-native-test-db-v1
+      io.eva2.test-run: telegram-native-test-v1
+
+volumes:
+  postgres-test-data:
+    name: ${EVA_TEST_POSTGRES_VOLUME_NAME:?set a dedicated Telegram test PostgreSQL volume}
+    labels:
+      io.eva2.test-database: telegram-native-test-db-v1
+      io.eva2.test-run: telegram-native-test-v1

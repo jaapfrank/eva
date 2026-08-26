@@ -13,21 +13,34 @@ from eva.operations.telegram_test_preflight import (
     TelegramTestPlan,
     load_telegram_test_plan,
     preflight_telegram_test,
+    preflight_telegram_test_files,
 )
 
 
 ROOT = Path(__file__).resolve().parents[3]
 MANIFEST = ROOT / "deploy" / "living-core" / "telegram-test-ingress.compose.yml"
+SUPPORT_MANIFEST = ROOT / "deploy" / "living-core" / "telegram-test-support.compose.yml"
 PROJECT_NAME = "eva2-telegram-native-test"
+INSPECTION_HINT = (
+    "Telegram test support may still be active for inspection; do not rerun it. "
+    f"Inspect project {PROJECT_NAME!r} before an explicit operator cleanup."
+)
 
 
 def launch_telegram_test(plan: TelegramTestPlan) -> None:
-    """Run host preflight, then start only the isolated ingress service."""
+    """Start, inspect, migrate, and finally attach the isolated test ingress.
 
-    preflight_telegram_test(plan)
+    Support resources deliberately remain inspectable after a later failure.
+    This command never guesses that it owns a malformed or pre-existing test
+    resource, so it never performs automatic destructive cleanup.
+    """
+
+    preflight_telegram_test_files(plan)
     environment = {"LC_ALL": "C"}
+    support_may_exist = False
+    ingress_may_exist = False
     with _materialize_environment(plan) as directory:
-        command = [
+        prefix = [
             plan.value("EVA_TEST_DOCKER_BINARY"),
             "compose",
             "--project-name",
@@ -35,20 +48,107 @@ def launch_telegram_test(plan: TelegramTestPlan) -> None:
             "--env-file",
             str(Path(directory) / "sealed.env"),
             "-f",
-            str(MANIFEST),
+            str(SUPPORT_MANIFEST),
             "--profile",
             "telegram-native-test",
-            "up",
-            "--detach",
-            "--no-deps",
-            "--pull",
-            "never",
-            "telegram-ingress-test",
         ]
         try:
-            subprocess.run(command, check=True, env=environment, timeout=30)
-        except (OSError, subprocess.SubprocessError) as error:
-            raise RuntimeError("Telegram test ingress launch failed") from error
+            support_may_exist = True
+            _run_compose(
+                [
+                    *prefix,
+                    "up",
+                    "--detach",
+                    "--wait",
+                    "--pull",
+                    "never",
+                    "postgres-test",
+                    "telegram-test-core",
+                ],
+                environment,
+            )
+            # Migration never gets authority until the actually running support
+            # containers, their networks, and their test-only volume are bound.
+            preflight_telegram_test(plan)
+            _run_compose(
+                [
+                    *prefix,
+                    "run",
+                    "--rm",
+                    "--no-deps",
+                    "schema-installer-test",
+                ],
+                environment,
+            )
+            preflight_telegram_test(plan)
+            command = [
+                plan.value("EVA_TEST_DOCKER_BINARY"),
+                "compose",
+                "--project-name",
+                PROJECT_NAME,
+                "--env-file",
+                str(Path(directory) / "sealed.env"),
+                "-f",
+                str(MANIFEST),
+                "--profile",
+                "telegram-native-test",
+                "up",
+                "--detach",
+                "--no-deps",
+                "--pull",
+                "never",
+                "telegram-ingress-test",
+            ]
+            ingress_may_exist = True
+            _run_compose(command, environment)
+            preflight_telegram_test(plan, ingress_running=True)
+        except RuntimeError as error:
+            ingress_status = ""
+            if ingress_may_exist:
+                ingress_status = _stop_test_ingress(plan, directory, environment)
+            if support_may_exist:
+                raise RuntimeError(f"{error}. {ingress_status}{INSPECTION_HINT}") from error
+            raise
+
+
+def _run_compose(command: list[str], environment: dict[str, str]) -> None:
+    try:
+        subprocess.run(command, check=True, env=environment, timeout=60)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise RuntimeError("Telegram test stack launch failed") from error
+
+
+def _stop_test_ingress(
+    plan: TelegramTestPlan,
+    directory: str,
+    environment: dict[str, str],
+) -> str:
+    """Best-effort stop for the one poller that may have reached Telegram.
+
+    The support database/core intentionally remain available for inspection.  A
+    stopped ingress container has no polling loop, while its metadata remains
+    available to the operator through the explicit test Compose project.
+    """
+
+    command = [
+        plan.value("EVA_TEST_DOCKER_BINARY"),
+        "compose",
+        "--project-name",
+        PROJECT_NAME,
+        "--env-file",
+        str(Path(directory) / "sealed.env"),
+        "-f",
+        str(MANIFEST),
+        "--profile",
+        "telegram-native-test",
+        "stop",
+        "telegram-ingress-test",
+    ]
+    try:
+        subprocess.run(command, check=True, env=environment, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return "Telegram test ingress stop was requested but not confirmed. "
+    return "Telegram test ingress was stopped after the failed postflight. "
 
 
 def _materialize_environment(plan: TelegramTestPlan) -> tempfile.TemporaryDirectory[str]:
