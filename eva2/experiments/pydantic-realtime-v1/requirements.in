@@ -1,0 +1,14 @@
+# Isolated V02 voice candidate. This never changes Eva's production lock.
+#
+# The product roots deliberately stay equal to the Harness candidate.  Only
+# Pydantic AI's version/extra changes, making the dependency delta auditable.
+alembic==1.19.1
+cryptography==46.0.5
+dbos==2.30.0
+fastapi==0.141.1
+psycopg[binary]==3.3.4
+pydantic==2.12.5
+pydantic-ai-slim[openai-realtime]==2.34.0
+setuptools==84.0.0
+SQLAlchemy==2.0.52
+uvicorn==0.41.0
