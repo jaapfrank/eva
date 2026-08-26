@@ -194,11 +194,11 @@
         },
         {
           "path": "src/eva/adapters/api/cockpit.py",
-          "sha256": "4573b1c9d69a53cabecf9f7c6b042e1ddc633dbf7c362d13813b9851d2e3785e"
+          "sha256": "eca60e87dc005532a658f6c62f5f1bc1a38433478658684d3e4dac5e3f72c5d4"
         },
         {
           "path": "tests/api/test_dashboard_status.py",
-          "sha256": "a0449c62f143410629e786fac1e52d7576260bd887cfeb2900b4fddae02cd6db"
+          "sha256": "3276bf201175467db5a029b96003e81cec144a61eb2e5a9f173e4b2216f693c4"
         }
       ]
     },
@@ -496,6 +496,33 @@
         {
           "path": "tests/subagents/test_openai_child_provider.py",
           "sha256": "47f3da15720b4f7528196810d0373493319f0eff50e6004fde9ec0e89cfcfcc8"
+        }
+      ]
+    },
+    {
+      "claimId": "dependency/agent-browser",
+      "claimState": "tested",
+      "claimSummary": "Vercel agent-browser 0.35.1 doorliep als niet-root dezelfde gesloten Eva read-, één-klik- en onafhankelijke-readbackproef. De upstreambrede MCP-core en 8 CRITICAL + 55 HIGH scanbevindingen blokkeren promotie.",
+      "sources": [
+        {
+          "path": "evidence/living-core/agent-browser-sidecar-evaluation-2026-08-26.json",
+          "sha256": "952763fa0cf16ab2ebf91f1517884b189d84822de96ab9e563020709b68f2d26"
+        },
+        {
+          "path": "experiments/agent-browser-sidecar-v1/Dockerfile",
+          "sha256": "8c885dff785774206ea0fde3b2c248a63126149590005afd9a1e0907bbc42c17"
+        },
+        {
+          "path": "experiments/agent-browser-sidecar-v1/README.md",
+          "sha256": "4cd5b653497e935c07997187d94889521cd87739181ed637618f0f6592284599"
+        },
+        {
+          "path": "experiments/agent-browser-sidecar-v1/smoke_candidate.py",
+          "sha256": "b3c9e3dbb0574ad7d40c6bf50bb0cc280ee8e256986d9bf61c1f3c4033facb30"
+        },
+        {
+          "path": "tools/check_container_vulnerabilities.py",
+          "sha256": "a1e1904de9f53866bdce9abe90602ad89c6b6138ed62014fb41917eb506b21b5"
         }
       ]
     },

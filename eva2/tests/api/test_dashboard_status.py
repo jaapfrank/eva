@@ -255,7 +255,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     capability_states = {item["state"] for item in payload["capabilities"]}
     assert capability_states == {"live", "tested", "selected", "open"}
     assert len(payload["capabilities"]) == 14
-    assert len(payload["dependencies"]) == 8
+    assert len(payload["dependencies"]) == 9
     capability_by_id = {item["id"]: item for item in payload["capabilities"]}
     assert capability_by_id["child-engine"]["state"] == "tested"
     assert capability_by_id["runtime-subagents"]["state"] == "tested"
@@ -275,6 +275,8 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "afgekeurd voor release" in capability_by_id["browser"]["meaning"]
     assert "8 kritieke + 69 hoge" in capability_by_id["browser"]["meaning"]
     assert "7 + 47" in capability_by_id["browser"]["meaning"]
+    assert "agent-browser" in capability_by_id["browser"]["meaning"]
+    assert "8 kritieke + 55 hoge" in capability_by_id["browser"]["meaning"]
     assert capability_by_id["telegram-real-test"]["state"] == "selected"
     assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
         "proof"
@@ -295,6 +297,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"
     assert "8 CRITICAL + 69 HIGH" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
     assert "7 + 47" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
+    assert dependency_by_name["agent-browser"]["state"] == "tested"
+    assert dependency_by_name["agent-browser"]["version"] == "0.35.1 kandidaat"
+    assert "8 CRITICAL + 55 HIGH" in dependency_by_name["agent-browser"]["decision"]
     assert dependency_by_name["Hindsight Control Plane"]["state"] == "open"
     assert dependency_by_name["Hindsight Control Plane"]["version"] == "0.9.1 kandidaat"
     assert "nooit Eva's geheugenwaarheid" in dependency_by_name["Hindsight"][

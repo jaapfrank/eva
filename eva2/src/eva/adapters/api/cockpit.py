@@ -93,8 +93,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Gecontroleerde browserhand",
                 "state": "tested",
                 "proof": "Lokale read + klik én 1 openbare accountloze pagina via allowlist; 37 + 3 controles groen",
-                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging. Een verse scan vond 8 kritieke + 69 hoge bevindingen in de upstreamimage; twee onderhoudskandidaten verbeterden dat tot maximaal 7 + 47, maar ook die beste kandidaat is afgekeurd voor release.",
-                "next": "Kies een beter onderhouden browserbasis of provider en herhaal scan én dezelfde proeven; pas daarna een tweede openbare testtaak met eigenaargrant en live stop.",
+                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging. Een verse scan vond 8 kritieke + 69 hoge bevindingen in de upstreamimage; twee onderhoudskandidaten verbeterden dat tot maximaal 7 + 47, maar ook die beste kandidaat is afgekeurd voor release. Een derde, onderhouden kandidaat (`agent-browser`) slaagde in dezelfde gesloten klikproef maar bleef 8 kritieke + 55 hoge bevindingen houden en is eveneens niet toegelaten.",
+                "next": "Wacht op een aantoonbaar schonere onderhouden browserbasis en herhaal scan én dezelfde proeven; pas daarna een tweede openbare testtaak met eigenaargrant en live stop.",
                 "evidence": _evidence("capability/browser"),
             },
             {
@@ -180,6 +180,14 @@ def cockpit_progress() -> dict[str, Any]:
                 "state": "tested",
                 "decision": "Functioneel getest, maar een verse scan blokkeert de huidige MCR-digest met 8 CRITICAL + 69 HIGH. Twee onderhoudskandidaten haalden Node-bevindingen weg; de beste (standaard Debian-updates plus npm-verkleining) bleef 7 + 47 en is afgewezen. Een beter onderhouden basis of provider moet opnieuw scannen en proeven.",
                 "evidence": _evidence("dependency/microsoft-playwright-mcp"),
+            },
+            {
+                "name": "agent-browser",
+                "version": "0.35.1 kandidaat",
+                "role": "Onderhouden native browserprovider",
+                "state": "tested",
+                "decision": "De gesloten read/één-klik/readbackproef, domeinallowlist en gatewayloze netwerkcel zijn groen. De standaard MCP-core bevat echter JavaScript-evaluatie en de verse scan vond 8 CRITICAL + 55 HIGH; daarom afgewezen, niet geïnstalleerd in Eva.",
+                "evidence": _evidence("dependency/agent-browser"),
             },
             {
                 "name": "DBOS",

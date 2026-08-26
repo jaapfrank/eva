@@ -1,0 +1,74 @@
+{
+  "contract": "EvaAgentBrowserSidecarEvaluationReceipt/v1",
+  "date": "2026-08-26",
+  "purpose": "Evaluate the maintained Vercel agent-browser CLI as an isolated browser provider after Microsoft Playwright MCP and two maintenance candidates remained blocked by vulnerabilities.",
+  "candidate": {
+    "project": "vercel-labs/agent-browser",
+    "package": "agent-browser",
+    "version": "0.35.1",
+    "npmIntegrity": "sha512-lbVEtcKvZcQQLSKhcH2G0oEGMT04MKj6CBLdM7koGRSs6DqsFO9UVKZuYTpikskJoAklnvtDjbtgCfSbW/yZjQ==",
+    "baseImage": "node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df",
+    "localImage": "eva2/agent-browser-sidecar@sha256:6d4e6ca1ec1229837c3e517ee143ecba2b7c8c112b57cf813941a650d5416d4e",
+    "platform": "linux/amd64",
+    "sizeBytes": 447015813,
+    "runtimeUser": "10001:10001",
+    "chromeForTestingVersion": "152.0.7977.64",
+    "source": {
+      "dockerfile": {
+        "path": "experiments/agent-browser-sidecar-v1/Dockerfile",
+        "sha256": "8c885dff785774206ea0fde3b2c248a63126149590005afd9a1e0907bbc42c17"
+      },
+      "probe": {
+        "path": "experiments/agent-browser-sidecar-v1/smoke_candidate.py",
+        "sha256": "b3c9e3dbb0574ad7d40c6bf50bb0cc280ee8e256986d9bf61c1f3c4033facb30"
+      }
+    }
+  },
+  "functionalProof": {
+    "result": "passed",
+    "command": "python3 experiments/agent-browser-sidecar-v1/smoke_candidate.py",
+    "fixture": "A02 local form action with independent server oracle",
+    "effectState": "committed",
+    "effectPostRequests": 1,
+    "rootFilesystemReadOnly": true,
+    "hostMounts": 0,
+    "publishedPorts": 0,
+    "directEgressBlocked": true,
+    "allowlistRejectedForeignDestination": true,
+    "stopMilliseconds": 3178
+  },
+  "securityDesignFindings": {
+    "positive": [
+      "Upstream domain allowlisting was active in the closed cell.",
+      "Chrome binary is immutable outside the disposable user-home, socket, cache and profile tmpfs paths.",
+      "The candidate ran non-root with read-only rootfs, no Linux capabilities, no host mount, no published port and a gatewayless network."
+    ],
+    "notAdmissibleAsIs": [
+      "The default MCP core profile includes JavaScript evaluation.",
+      "The package exposes plugins, saved browser state, credentials and a full tools profile.",
+      "Eva may therefore only use a future narrow adapter with fixed allowed domains and individually admitted action types; it may never hand the upstream full MCP tool surface to a model."
+    ]
+  },
+  "vulnerabilityScan": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "advisorySnapshot": {
+      "trivyDbSha256": "8bb6fdce37551657903562ee2ca733a75bd9407fe837a02b2de82da0eb069967",
+      "metadataSha256": "76f6078a2fa1a3a1dda929b6e19389394696873b1e6b20201be0623586c621d4",
+      "scanNetwork": "none"
+    },
+    "findings": {"critical": 8, "high": 55}
+  },
+  "decision": {
+    "state": "rejected_not_promoted",
+    "reason": "The provider passed the isolated functional cell but the same fresh advisory snapshot still reports 8 CRITICAL and 55 HIGH findings. Eva's release gate remains zero.",
+    "productionChanged": false,
+    "liveEva1Changed": false,
+    "liveEva2Changed": false,
+    "next": "Keep this as a concrete community-provider comparison. Do not deploy it; evaluate a materially cleaner maintained browser base or wait for upstream security fixes before repeating the exact cell."
+  },
+  "nonclaims": [
+    "This is not an Eva deployment, managed-B change, Telegram test, public account flow, download proof or human-takeover proof.",
+    "This does not modify Eva 1, its SQLite memory, its service, live credentials or volumes.",
+    "This does not make the upstream MCP core profile safe to expose directly to an Eva model."
+  ]
+}
