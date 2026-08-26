@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Literal, Protocol
@@ -44,12 +45,24 @@ class DelegatedWorkWorker:
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
     async def run_once(
-        self, *, fault_after: FaultPoint | None = None
+        self,
+        *,
+        fault_after: FaultPoint | None = None,
+        cancellation_event: asyncio.Event | None = None,
     ) -> WorkerDisposition:
+        if cancellation_event is not None and cancellation_event.is_set():
+            return "idle"
         claim = self._store.claim_next(worker_id=self._worker_id, now=self._now())
         if claim is None:
             return "idle"
         if fault_after == "after_claim":
+            return "crashed_before_call"
+        # Let a process stop requested while claim_next was committing become
+        # observable before the durable, non-repeatable model-call fence.
+        await asyncio.sleep(0)
+        # A graceful process stop after the lease but before the durable call fence
+        # leaves the admitted task reclaimable when this short lease expires.
+        if cancellation_event is not None and cancellation_event.is_set():
             return "crashed_before_call"
         call = self._store.start_call(claim, now=self._now())
         if call is None:
@@ -57,13 +70,18 @@ class DelegatedWorkWorker:
         if fault_after == "after_call_started":
             return "crashed_after_call"
 
-        outcome = await self._runner.run(call.spec, call_id=call.call_id)
+        outcome = await self._runner.run(
+            call.spec,
+            call_id=call.call_id,
+            cancellation_event=cancellation_event,
+        )
         if outcome.result is not None:
             completed_at = _parse_timestamp(outcome.result.completed_at)
             self._store.record_success(call, outcome.result, now=completed_at)
             return "succeeded"
         assert outcome.error_fingerprint is not None
         ambiguous = outcome.status in {
+            "cancelled",
             "timed_out",
             "provider_transient",
             "provider_unavailable",

@@ -1114,8 +1114,18 @@ class PostgresDelegatedWorkStore:
             column, health, result_status = "attention", "stopped", "failed"
             reason = "De taak is veilig gestopt en vraagt aandacht."
         elif state == "ambiguous":
-            column, health, result_status = "attention", "contact_lost", "ambiguous"
-            reason = "De uitkomst is onzeker; Eva voert de modelcall niet opnieuw uit."
+            column, result_status = "attention", "ambiguous"
+            if work.error_code == "cancelled":
+                health = "stopped"
+                reason = (
+                    "De worker is tijdens de modelrun netjes gestopt. Er is geen "
+                    "bevestigd resultaat; Eva start deze modelrun niet opnieuw."
+                )
+            else:
+                health = "contact_lost"
+                reason = (
+                    "De uitkomst is onzeker; Eva voert de modelcall niet opnieuw uit."
+                )
         elif state == "stopped":
             column, health, result_status = "done", "stopped", "stopped"
             reason = "De taak is gestopt voordat een resultaat is goedgekeurd."

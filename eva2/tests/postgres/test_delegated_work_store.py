@@ -3,7 +3,12 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import os
+import shutil
+import subprocess
+import sys
+import tempfile
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -49,6 +54,17 @@ episode_generations = metadata.tables["eva_core.episode_generations"]
 episodes = metadata.tables["eva_core.episodes"]
 delegated_work_runs = metadata.tables["eva_core.delegated_work_runs"]
 ROOT = Path(__file__).resolve().parents[2]
+PROCESS_FIXTURE = ROOT / "tests/fixtures/subagents/delegated_work_service_fixture.py"
+
+
+@pytest.fixture
+def process_tmp_path() -> Path:
+    path = Path(tempfile.mkdtemp(prefix="eva2-delegated-process-", dir="/tmp"))
+    path.chmod(0o700)
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path)
 
 
 @pytest.fixture(scope="module")
@@ -254,6 +270,87 @@ def _spec(
         created_at="2026-08-26T12:00:00Z",
         deadline="2026-08-26T12:10:00Z",
     )
+
+
+def _process_spec(
+    label: str,
+    scope: TimelineScope,
+    episode: UUID,
+    binding: UUID,
+) -> DelegatedWorkSpec:
+    base = _spec(label, scope, episode, binding)
+    return DelegatedWorkSpec.model_validate(
+        base.model_dump(mode="json")
+        | {
+            "output_schema_sha256": OUTPUT_SCHEMA_SHA256,
+            "worker_program_sha256": hashlib.sha256(
+                PROCESS_FIXTURE.read_bytes()
+            ).hexdigest(),
+        }
+    )
+
+
+def _process_environment(
+    *,
+    dsn_file: Path,
+    scope: TimelineScope,
+    count_file: Path,
+    mode: str,
+    now: str = "2026-08-26T12:02:00Z",
+    after_claim_marker: Path | None = None,
+) -> dict[str, str]:
+    environment = {
+        name: os.environ[name]
+        for name in ("LANG", "LC_ALL", "PATH", "PYTHONHASHSEED")
+        if name in os.environ
+    }
+    environment.update(
+        {
+        "EVA_DATABASE_DSN_FILE": str(dsn_file),
+        "EVA_RUNTIME_TENANT_ID": str(scope.tenant_id),
+        "EVA_RUNTIME_INSTALLATION_ID": str(scope.installation_id),
+        "EVA_DELEGATED_WORKER_ID": "subagent-worker:process-test",
+        "EVA_DELEGATED_WORK_POLL_SECONDS": "0.05",
+        "EVA_TEST_CALL_COUNTER": str(count_file),
+        "EVA_TEST_SUBAGENT_MODE": mode,
+        "EVA_TEST_NOW": now,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": f"{ROOT / 'src'}:{ROOT}",
+        }
+    )
+    if after_claim_marker is not None:
+        environment["EVA_TEST_AFTER_CLAIM_MARKER"] = str(after_claim_marker)
+    return environment
+
+
+def _start_process(environment: dict[str, str]) -> subprocess.Popen[bytes]:
+    return subprocess.Popen(
+        [sys.executable, str(PROCESS_FIXTURE)],
+        cwd=ROOT,
+        env=environment,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        start_new_session=True,
+    )
+
+
+def _wait_for_call(count_file: Path, *, timeout_seconds: float = 10) -> None:
+    deadline = time.monotonic() + timeout_seconds
+    while time.monotonic() < deadline:
+        if count_file.exists() and count_file.read_text().count("provider-call") >= 1:
+            return
+        time.sleep(0.02)
+    pytest.fail("separate delegated worker did not start its model call")
+
+
+def _wait_for_file(path: Path, *, timeout_seconds: float = 10) -> None:
+    deadline = time.monotonic() + timeout_seconds
+    while time.monotonic() < deadline:
+        if path.exists():
+            return
+        time.sleep(0.02)
+    pytest.fail(f"separate delegated worker did not create {path.name}")
 
 
 def _store(engine: Engine, scope: TimelineScope) -> PostgresDelegatedWorkStore:
@@ -907,3 +1004,235 @@ def test_real_pydantic_runner_crosses_the_durable_fence_once(
     assert "duurzame callgrens" in loaded.result.output
     assert loaded.usage is not None
     assert loaded.usage.total_tokens == 28
+
+
+def _dsn_secret(engine: Engine, path: Path) -> Path:
+    path.write_text(engine.url.render_as_string(hide_password=False))
+    path.chmod(0o600)
+    return path
+
+
+def _closed_process(process: subprocess.Popen[bytes]) -> tuple[bytes, bytes]:
+    stdout, stderr = process.communicate(timeout=20)
+    assert process.returncode == 0, stderr.decode(errors="replace")
+    assert stdout == b""
+    assert stderr == b""
+    return stdout, stderr
+
+
+def test_separate_process_executes_one_durable_pydantic_call(
+    delegated_engine: Engine, process_tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    label = "separate-process-success"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    count_file = process_tmp_path / "provider-calls"
+    monkeypatch.setenv("EVA_TEST_PARENT_SECRET_CANARY", "must-not-reach-child")
+    monkeypatch.setenv("OPENAI_API_KEY", "must-not-reach-child")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "must-not-reach-child")
+    environment = _process_environment(
+        dsn_file=dsn_file,
+        scope=scope,
+        count_file=count_file,
+        mode="success",
+    )
+    assert "EVA_TEST_PARENT_SECRET_CANARY" not in environment
+    assert "OPENAI_API_KEY" not in environment
+    assert "ANTHROPIC_API_KEY" not in environment
+    assert "EVA2_TEST_POSTGRES_DSN" not in environment
+
+    process = _start_process(environment)
+    assert process.pid != os.getpid()
+    assert all(spec.task not in argument for argument in process.args)
+    assert all(str(delegated_engine.url) not in argument for argument in process.args)
+    _closed_process(process)
+
+    assert count_file.read_text() == "provider-call\n"
+    loaded = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert loaded.state == "succeeded"
+    assert loaded.result is not None
+    assert "apart OS-proces" in loaded.result.output
+    assert loaded.usage is not None and loaded.usage.total_tokens == 28
+    card = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 2, 1, tzinfo=UTC),
+    ).cards[0]
+    assert card.column == "review"
+    assert spec.task not in card.model_dump_json()
+    assert spec.work_id not in card.model_dump_json()
+
+
+def test_two_separate_processes_share_one_call_start_fence(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "separate-process-race"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    environment = _process_environment(
+        dsn_file=_dsn_secret(
+            delegated_engine, process_tmp_path / "database-dsn"
+        ),
+        scope=scope,
+        count_file=process_tmp_path / "provider-calls",
+        mode="success",
+    )
+
+    first = _start_process(environment)
+    second = _start_process(environment)
+    _closed_process(first)
+    _closed_process(second)
+
+    assert (process_tmp_path / "provider-calls").read_text() == "provider-call\n"
+    assert store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ).state == "succeeded"
+
+
+def test_process_death_before_call_start_is_reclaimable(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "separate-process-before-call"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    count_file = process_tmp_path / "provider-calls"
+    claimed_marker = process_tmp_path / "claimed-before-call"
+    paused = _process_environment(
+        dsn_file=dsn_file,
+        scope=scope,
+        count_file=count_file,
+        mode="pause_after_claim",
+        after_claim_marker=claimed_marker,
+    )
+
+    first = _start_process(paused)
+    _wait_for_file(claimed_marker)
+    claimed = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert claimed.state == "admitted"
+    assert claimed.attention.state == "claimed"
+    assert claimed.call_id is None
+    first.kill()
+    first.communicate(timeout=10)
+    assert first.returncode == -9
+    assert not count_file.exists()
+
+    restarted = _start_process(
+        _process_environment(
+            dsn_file=dsn_file,
+            scope=scope,
+            count_file=count_file,
+            mode="success",
+            now="2026-08-26T12:03:00Z",
+        )
+    )
+    _closed_process(restarted)
+    assert count_file.read_text() == "provider-call\n"
+    assert store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ).state == "succeeded"
+
+
+def test_sigterm_during_model_call_is_recorded_ambiguous_and_never_replayed(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "separate-process-sigterm"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    count_file = process_tmp_path / "provider-calls"
+    environment = _process_environment(
+        dsn_file=dsn_file,
+        scope=scope,
+        count_file=count_file,
+        mode="slow",
+    )
+
+    process = _start_process(environment)
+    _wait_for_call(count_file)
+    process.terminate()
+    _closed_process(process)
+    loaded = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert loaded.state == "ambiguous"
+    assert loaded.error_code == "cancelled"
+    card = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 2, 1, tzinfo=UTC),
+    ).cards[0]
+    assert card.column == "attention"
+    assert card.worker_health == "stopped"
+    assert card.result_status == "ambiguous"
+    assert card.reason == (
+        "De worker is tijdens de modelrun netjes gestopt. Er is geen bevestigd "
+        "resultaat; Eva start deze modelrun niet opnieuw."
+    )
+
+    restarted = _start_process(environment | {"EVA_TEST_SUBAGENT_MODE": "success"})
+    _closed_process(restarted)
+    assert count_file.read_text() == "provider-call\n"
+
+
+def test_sigkill_after_call_start_is_visible_and_never_replayed(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "separate-process-sigkill"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    count_file = process_tmp_path / "provider-calls"
+    environment = _process_environment(
+        dsn_file=dsn_file,
+        scope=scope,
+        count_file=count_file,
+        mode="slow",
+    )
+
+    process = _start_process(environment)
+    _wait_for_call(count_file)
+    process.kill()
+    process.communicate(timeout=10)
+    assert process.returncode == -9
+    assert store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    ).state == "call_started"
+
+    restarted = _start_process(environment | {"EVA_TEST_SUBAGENT_MODE": "success"})
+    _closed_process(restarted)
+    assert count_file.read_text() == "provider-call\n"
+    card = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 3, tzinfo=UTC),
+    ).cards[0]
+    assert card.worker_health == "contact_lost"
+    assert card.result_status == "ambiguous"
