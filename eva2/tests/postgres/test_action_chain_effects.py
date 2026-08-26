@@ -400,6 +400,46 @@ def test_effect_preparation_revalidates_live_authority(
     assert counts["step_running"] == 0
 
 
+def test_effect_preparation_stops_a_reauthorization_required_connector(
+    action_chain_engine: Engine,
+) -> None:
+    """A transported connector cannot prepare, call, or retry an old provider."""
+
+    scope, chain, catalog, authority, claim = _claimed_effect(action_chain_engine)
+    bindings = metadata.tables["eva_core.connector_bindings"]
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        updated = connection.execute(
+            sa.update(bindings)
+            .where(bindings.c.binding_id == authority.connector_binding_id)
+            .values(
+                status="reauthorization_required",
+                revision=2,
+                updated_at=NOW + timedelta(seconds=8),
+            )
+        )
+    assert updated.rowcount == 1
+
+    with pytest.raises(ActionChainEffectConflict, match="authority differs"):
+        PostgresActionChainEffectPreparer(
+            action_chain_engine, scope
+        ).prepare_effect(
+            claim,
+            live_catalog=catalog,
+            authority=authority,
+            now=NOW + timedelta(seconds=8),
+        )
+    counts = _effect_counts(action_chain_engine, scope, chain.plan_id)
+    assert counts["intents"] == 0
+    assert counts["attempts"] == 0
+    assert counts["step_running"] == 0
+
+
 def test_effect_preparation_rolls_back_when_step_cas_fails(
     action_chain_engine: Engine,
 ) -> None:
