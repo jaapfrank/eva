@@ -107,6 +107,7 @@ def test_submits_one_isolated_private_turn(monkeypatch: pytest.MonkeyPatch) -> N
     "endpoint",
     [
         "https://example.com/internal/v1/turns/respond",
+        "http://core.eva.internal/internal/v1/turns/respond",
         "http://127.0.0.1/not-eva",
         "http://user:password@127.0.0.1/internal/v1/turns/respond",
     ],

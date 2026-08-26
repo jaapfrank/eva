@@ -45,12 +45,9 @@ def _turn_endpoint() -> str:
     endpoint = _required_environment("EVA_GAIA_TURN_ENDPOINT")
     parsed = urlsplit(endpoint)
     hostname = parsed.hostname
-    allowed_host = hostname in _LOCAL_HOSTS or bool(
-        hostname and (hostname.endswith(".eva.test") or hostname.endswith(".eva.internal"))
-    )
     if (
         parsed.scheme not in {"http", "https"}
-        or not allowed_host
+        or hostname not in _LOCAL_HOSTS
         or parsed.username is not None
         or parsed.password is not None
         or parsed.query
