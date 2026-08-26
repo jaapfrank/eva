@@ -35,15 +35,60 @@ def test_dashboard_status_is_read_only_and_non_secret() -> None:
     assert "not-a-real-secret" not in response.text
 
 
-def test_dashboard_page_has_only_the_read_only_status_surface() -> None:
+def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard")
 
     assert response.status_code == 200
     assert "dashboard/status" in response.text
     assert "dashboard/identity" in response.text
+    assert "dashboard/progress" in response.text
+    for visible_module in (
+        "Echte voortgang",
+        "Werkbord",
+        "Skills & bouwstenen",
+        "Gesprekken",
+        "Personen & geheugen",
+        "Workers & subagents",
+        "Voice & huis",
+        "Kosten & budget",
+        "Bewijs & benchmarks",
+        "Updates & herstel",
+    ):
+        assert visible_module in response.text
     assert "<form" not in response.text
+    assert "https://" not in response.text
+    assert "/readyz" not in response.text
+    assert "response.ok" in response.text
+    assert "Promise.allSettled" in response.text
+    assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
     assert "connect-src 'self'" in response.headers["content-security-policy"]
+    assert response.headers["x-content-type-options"] == "nosniff"
+
+
+def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> None:
+    response = TestClient(create_app(_Runtime())).get(
+        "/internal/v1/dashboard/progress"
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    payload = response.json()
+    assert payload["contract"] == "EvaCockpitProgress/v1"
+    assert payload["read_only"] is True
+    assert payload["updated_on"] == "2026-08-26"
+    assert {item["id"] for item in payload["legend"]} == {
+        "live",
+        "tested",
+        "selected",
+        "open",
+    }
+    capability_states = {item["state"] for item in payload["capabilities"]}
+    assert capability_states == {"live", "tested", "selected", "open"}
+    assert len(payload["capabilities"]) == 12
+    assert len(payload["dependencies"]) == 8
+    for secret_word in ("password", "token", "dsn", "prompt"):
+        assert secret_word not in response.text.lower()
 
 
 def test_dashboard_identity_exposes_only_verified_operator_fields() -> None:

@@ -70,6 +70,8 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/portable/record-schema-manifest-v1.json",
     "schemas/portable/v1/contracts/canonical-json-profile-v1.json",
     "schemas/portable/v1/contracts/manifest.json",
+    "src/eva/adapters/api/app.py",
+    "src/eva/adapters/api/cockpit.py",
     "src/eva/adapters/postgres/current_catalog.py",
     "src/eva/adapters/postgres/portable_export.py",
     "src/eva/contracts/delegated_work.py",
@@ -86,6 +88,7 @@ _EXPECTED_INPUT_PATHS = (
     "tools/prepare_managed_b_candidate_context.py",
 )
 _EXPECTED_TEST_PATHS = (
+    "tests/api/test_dashboard_status.py",
     "tests/api/test_memory_api.py",
     "tests/application/test_action_chain.py",
     "tests/application/test_action_chain_effect_advances.py",

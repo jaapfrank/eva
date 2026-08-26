@@ -10,6 +10,8 @@ from typing import Any, Protocol
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
+from eva.adapters.api.cockpit import COCKPIT_HTML, cockpit_progress
+
 from eva.application.conversation import (
     ConversationConflict,
     ConversationObservationBinding,
@@ -669,22 +671,24 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
 
     @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
     def dashboard() -> HTMLResponse:
-        """Serve the first local, read-only operator surface."""
+        """Serve Eva's central local, read-only operator cockpit."""
 
         return HTMLResponse(
-            """<!doctype html>
-<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eva — status</title><style>
-body{background:#10151c;color:#e8edf2;font:16px system-ui,sans-serif;margin:0;padding:2rem}main{max-width:680px;margin:auto}.card{background:#19212b;border:1px solid #304050;border-radius:12px;padding:1.25rem}h1{margin-top:0}.state{font-weight:700}.ok{color:#82d19a}.bad{color:#f0a0a0}small{color:#aebdca}
-</style></head><body><main><h1>Eva</h1><section class="card"><p>Living Core</p><p id="state" class="state">Status ophalen…</p><p id="identity"><small>Identiteit ophalen…</small></p><small>Alleen-lezen operatoroverzicht. Deze pagina bevat geen instellingen of geheimen.</small></section></main><script>
-fetch('/internal/v1/dashboard/status').then(r=>r.json()).then(data=>{const node=document.getElementById('state');node.textContent=data.runtime.state;node.className='state '+(data.runtime.ready?'ok':'bad')}).catch(()=>{const node=document.getElementById('state');node.textContent='onbereikbaar';node.className='state bad'});
-fetch('/internal/v1/dashboard/identity').then(r=>r.json()).then(data=>{const i=data.identity;document.getElementById('identity').textContent=i.display_name+' · '+i.voice_style.qualities.join(', ')}).catch(()=>{document.getElementById('identity').textContent='Identiteit onbereikbaar'});
-</script></body></html>""",
+            COCKPIT_HTML,
             headers={
                 "Cache-Control": "no-store",
                 "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
                 "X-Content-Type-Options": "nosniff",
             },
+        )
+
+    @app.get("/internal/v1/dashboard/progress")
+    def dashboard_progress() -> JSONResponse:
+        """Expose the maintained proof ladder without implying live runtime state."""
+
+        return JSONResponse(
+            cockpit_progress(),
+            headers={"Cache-Control": "no-store"},
         )
 
     @app.post("/public/v1/commerce/stripe/webhook")
