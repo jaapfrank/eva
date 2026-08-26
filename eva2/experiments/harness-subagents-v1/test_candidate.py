@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import asyncio
-from importlib.metadata import version
 import math
+from importlib.metadata import version
 
 import pytest
 from pydantic_ai import Agent
@@ -20,7 +20,6 @@ from pydantic_ai.models.function import AgentInfo, FunctionModel
 from pydantic_ai.models.test import TestModel
 from pydantic_ai.settings import ModelSettings
 from pydantic_ai.usage import RequestUsage
-
 from smoke_candidate import DelegationLimit, WorkerSpec, bounded_subagents
 
 

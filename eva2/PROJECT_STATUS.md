@@ -56,8 +56,8 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
-| Zelfstandig handelen | Doelen, leases, bewijs, crashherstel en één zelfverbetering bestaan; de onderhouden subagentmotor is als geïsoleerde kandidaat groen | Duurzame runtimehandoff, browsercomputer, volledige skillcyclus, Kanban en Eigenaarmodus nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets en kleine status-/identiteitspagina bestaan | Installer, volledig dashboard/Kanban, update/restore en releasefreeze nog open |
+| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Eén proeftaak wordt nu opgeslagen, één keer opgepakt, uitgevoerd en als Kanbankaart bewaard | Een echt model in een apart workerproces, starten vanuit chat, browsercomputer, volledige skillcyclus en Eigenaarmodus nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
@@ -73,7 +73,7 @@ Eva's unieke hoofdfeature.
 
 - Dependency-first audit DF00: `pydantic-ai-slim==2.32.1` staat al exact in
   Eva's lock maar wordt nog niet als agentframework gebruikt. De actuele
-  Pydantic AI `2.34.0` en Harness `0.24.0` leveren al voice, subagents,
+  Pydantic AI `2.34.0` en Harness `0.25.0` leveren al voice, subagents,
   browserkoppelingen, MCP, web-UI en duurzame DBOS-routes; Hindsight heeft al
   een lokale beheer-UI. Eva bouwt
   daarom geen eigen voice-, browser-, worker-, Kanban-, scanner- of
@@ -97,7 +97,7 @@ Eva's unieke hoofdfeature.
   `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`; dit is een selectiecontract, nog geen
   goedkeuring of installatie van nieuwe productdependencies.
 
-- Subagentdependency DF04: Pydantic AI `2.34.0` en Harness `0.24.0` voeren in
+- Subagentdependency DF04: Pydantic AI `2.34.0` en Harness `0.25.0` voeren in
   een aparte exacte 42-package-omgeving echte toolvrije child-runs uit. Eva
   bouwt daarom geen eigen spawn-, modelrun-, childcontext-, callbudget- of
   coöperatieve async-time-outengine. Naam, tekstinstructie, workerlimiet,
@@ -108,7 +108,7 @@ Eva's unieke hoofdfeature.
   child-usage-receipt, harde processkill, crashherstel en Kanban blijven open;
   zie `experiments/harness-subagents-v1/` en
   `reviews/harness-subagent-engine-55cf7cc.md`.
-- Duurzame-childkandidaat: Harness blijft de korte parentgestuurde fork/join-
+- Duurzame-subagentlijn: Harness blijft de korte parentgestuurde fork/join-
   motor, maar wordt niet geforceerd als databaseworker omdat zijn publieke
   route alleen tekst teruggeeft. Een dunne adapter rond de publieke Pydantic AI
   `Agent.run()` levert nu gesloten `DelegatedWork/v1`-output, usage,
@@ -120,12 +120,14 @@ Eva's unieke hoofdfeature.
   22 Harnesschecks zijn **45/45 groen**. De onafhankelijke herreview van
   `b7e9af7` is groen. WB01a en WB01b hebben daarna het contract geregistreerd
   en `delegated_work` als zesde soort toegelaten in Eva's bestaande taakrij.
-  Een echte PostgreSQL 16.13-proef staat op **19/19**: oude taken blijven
-  gelijk, onbekende soorten worden geweigerd en rollback met nog aanwezige
-  gedelegeerde taken faalt zonder dataverlies. De onafhankelijke review op
-  `d510366` is groen. Dit is nog geen werkende runtime-subagent: handoffwriter,
-  portable-v2-export, lease/reclaim, eenmalige call-start, echte provider en
-  crashbewijs staan open; B is niet gewijzigd. Zie
+  De lijn is nu verder dan het losse contract: een echte tijdelijke PostgreSQL
+  neemt de handoff atomair aan, leaset en reclaimt, zet vóór uitvoering een
+  eenmalige call-startfence, bewaart resultaat of ambiguïteit en projecteert de
+  taak als veldarme kaart in de vijfkoloms cockpit. Een providerloze Pydantic-
+  run gaat werkelijk door die hele keten; een herstart na `call_started`
+  veroorzaakt geen tweede run. Dit is technisch kandidaatbewijs, geen echte
+  provider, apart proces, Eva-chat, eigenaar-authenticatie, portable-v2-
+  schemarelease of B-livebewijs. B is niet gewijzigd. Zie
   `reviews/pydantic-tool-free-child-candidate-b7e9af7.md` en
   `reviews/delegated-work-database-admission-d510366.md`.
 
@@ -218,12 +220,12 @@ Eva's unieke hoofdfeature.
 - Subagents/werkbord WB00: Hermes' korte delegatie en duurzame multi-profile
   Kanban zijn uit de officiële documentatie van elkaar onderscheiden. Harness
   neemt inmiddels interactieve fork/join over en Pydantic AI de reeds gekozen
-  child-run, maar de Eva-runtime heeft nog geen duurzame PostgreSQL-handoff en
-  het dashboard nog geen Kanban.
-  Het gesloten taakcontract en de dependency-runner zijn inmiddels als
-  providerloze kandidaat getest. WB01-WB07 koppelen
-  de gereviewde engine aan Eva's grants, usage, leases en crash/reclaim;
-  React-Admin OSS plus `dnd-kit` projecteert daarna hetzelfde PostgreSQL-bord.
+  child-run. De providerloze proef slaat een taak duurzaam op, pakt haar één
+  keer op, bewaart het resultaat en toont haar op het vijfkolomsbord in de
+  cockpit. Een herstart na het begin veroorzaakt geen tweede modelrun.
+  WB01-WB07 voegen nog een echt model in een apart proces, starten en stoppen
+  vanuit Eva-chat, eigenaar-authenticatie en bordbediening toe;
+  React-Admin OSS plus `dnd-kit` kunnen die bediening presenteren.
   Er komt geen eigen subagentmotor, tweede taakdatabase of tweede Eva-brein.
 
 - Bezig: MC03c0 bereidt na bewezen read precies één duurzaam effectintent voor;

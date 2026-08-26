@@ -1,4 +1,4 @@
-"""Dependency-first tool-free child candidate on Pydantic AI's public API.
+"""Dependency-backed tool-free child runner on Pydantic AI's public API.
 
 Pydantic AI owns model execution, structured output, cancellation and its
 portable usage counters. Eva adds only the authority that a generic model
@@ -10,12 +10,12 @@ to PostgreSQL and is deliberately outside this API spike.
 from __future__ import annotations
 
 import asyncio
+import hashlib
 from collections.abc import Callable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from decimal import Decimal, ROUND_CEILING
-import hashlib
+from decimal import ROUND_CEILING, Decimal
 from types import MappingProxyType
 from typing import Annotated, Literal
 
@@ -45,7 +45,6 @@ from eva.contracts.delegated_work import (
     DelegatedWorkSpec,
     DelegatedWorkUsage,
 )
-
 
 Finding = Annotated[str, StringConstraints(min_length=1, max_length=1_000)]
 
@@ -119,9 +118,9 @@ class ToolFreeChildProfile:
         _SHA256.validate_python(self.worker_profile_release_sha256, strict=True)
         _INSTRUCTIONS.validate_python(self.instructions, strict=True)
         if not isinstance(self.model, Model):
-            raise ValueError("child profile model is invalid")
+            raise TypeError("child profile model is invalid")
         if isinstance(self.model, (FallbackModel, InstrumentedModel)):
-            raise ValueError("fallback and instrumented child models are forbidden")
+            raise TypeError("fallback and instrumented child models are forbidden")
         for rate in (
             self.input_cost_usd_micros_per_million_tokens,
             self.output_cost_usd_micros_per_million_tokens,
@@ -289,7 +288,7 @@ class PydanticToolFreeChildRunner:
             return self._error("invalid_output", usage, error, retryable=False)
         except (UserError, NotImplementedError) as error:
             return self._error("misconfigured", usage, error, retryable=False)
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001 - redact every unknown provider failure
             return self._error("internal_error", usage, error, retryable=False)
         finally:
             if cancellation_watcher is not None:
@@ -521,7 +520,7 @@ def _normalized_usage(
 
 def _portable_counter(value: object) -> int:
     if isinstance(value, bool) or not isinstance(value, int):
-        raise ValueError("provider usage counter is not an integer")
+        raise TypeError("provider usage counter is not an integer")
     if not 0 <= value <= _MAX_PORTABLE_COUNTER:
         raise ValueError("provider usage counter is outside the portable range")
     return value
@@ -547,9 +546,9 @@ async def _forward_cancellation(event: asyncio.Event, token: CancellationToken) 
 
 
 __all__ = [
+    "OUTPUT_SCHEMA_SHA256",
     "ClosedModelRegistry",
     "EvaToolFreeChildOutputV1",
-    "OUTPUT_SCHEMA_SHA256",
     "PydanticToolFreeChildRunner",
     "ToolFreeChildOutcome",
     "ToolFreeChildProfile",

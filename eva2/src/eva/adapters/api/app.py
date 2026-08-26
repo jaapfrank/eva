@@ -31,6 +31,7 @@ from eva.application.memory import (
 )
 from eva.application.memory_audience import memory_audience_from_wire
 from eva.application.people_memory_overview import PeopleMemoryOverview
+from eva.contracts.workboard import WorkBoard
 from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.advanced_tasks import (
     AdvancedTaskApproval,
@@ -713,6 +714,24 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
             )
         return JSONResponse(
             overview.to_payload(),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/internal/v1/dashboard/workboard")
+    def dashboard_workboard() -> JSONResponse:
+        """Expose a fixed local operator's field-minimized work cards."""
+
+        projection = getattr(runtime, "dashboard_workboard", None)
+        if not callable(projection):
+            raise HTTPException(status_code=503, detail="workboard unavailable")
+        try:
+            workboard = projection()
+        except Exception as error:
+            raise HTTPException(status_code=503, detail="workboard unavailable") from error
+        if not isinstance(workboard, WorkBoard):
+            raise HTTPException(status_code=503, detail="workboard unavailable")
+        return JSONResponse(
+            workboard.model_dump(mode="json"),
             headers={"Cache-Control": "no-store"},
         )
 

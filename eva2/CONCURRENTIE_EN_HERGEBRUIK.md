@@ -16,9 +16,9 @@ actieketen doorstaat inmiddels alle 75 tests, inclusief herstarten tussen
 uitvoering, teruglezen en afronden.
 
 Wat nog ontbreekt zijn vooral de delen die van die sterke kern een compleet
-dagelijks product maken: onderbreekbare voice, een browsercomputer, runtime-
-subagents, eenvoudige installatie en het terugbrengen van Eva's spontane
-aanwezigheid in huis.
+dagelijks product maken: onderbreekbare voice, een browsercomputer, echte
+provider-subagents vanuit Eva-chat, eenvoudige installatie en het terugbrengen
+van Eva's spontane aanwezigheid in huis.
 
 **Wanneer Eva volgens onze eigen definitie klaar is: ja, voor jouw gebruik.**
 Dan combineert zij in één assistent wat nu over verschillende producten is
@@ -77,7 +77,7 @@ Deze tabel gaat alleen over wat nu bestaat. Plannen tellen hier niet mee.
 | Zelfstandig computerwerk | Onderzoek, bestanden en begrensde repositorytaken werken al | Een interactieve, afgeschermde browsercomputer met meekijken en overnemen | OpenBot en Agent Zero lopen voor |
 | Zelf nieuwe skills maken | Eén zelfgekozen verbetering is live bewezen | Automatisch maken, vergelijken, veilig activeren en terugdraaien als vaste cyclus | Eva heeft een echt begin; Hermes loopt voor op de complete cyclus |
 | Chatkanalen | Telegrambasis, meerdere accountbindings en groepsprivacy zijn gebouwd en getest | De echte groepstest en vrij toevoegbare kanalen zoals WhatsApp | OpenClaw en Hermes hebben vandaag meer kant-en-klare kanalen |
-| Subagents, dashboard en Kanban | Een kleine statuspagina en veilige identiteitspreview bestaan | Runtime-subagents en een compleet werkbord | Hermes en andere agents lopen voor op dit productoppervlak |
+| Subagents, dashboard en Kanban | Eén proeftaak wordt veilig opgeslagen, na uitval teruggevonden, één keer uitgevoerd en als kaart op Eva's geïntegreerde 3D-cockpit gezet | Een echt model in een apart workerproces, starten/stoppen vanuit Eva-chat, authenticatie en bordbediening | Eva heeft nu een serieuze verticale basis; Hermes loopt nog voor in de complete gebruikerservaring |
 | Herstel na een crash | Echte herstelgevallen werken; uitvoering, readback en afronding overleven in de algemene keten iedere geteste procesgrens zonder dubbele call | Dezelfde proef via echt Telegram en een echt huisapparaat | **Eva heeft hier al een aantoonbare ontwerpsterkte; een gelijke concurrentenproef ontbreekt** |
 | Installeren en bijwerken | Reproduceerbare images, offline build, back-up en A/B-scheiding bestaan | Een gewone installatie- en koppelwizard | De betrouwbare onderlaag is sterk; concurrenten zijn makkelijker te starten |
 | Snelheid en kosten | Eva was in twee kleine zichtbare vergelijkingen het snelst en geheugencontext is begrensd | Eindmeting voor tekst, voice, tokens, kosten en zeven dagen gebruik | Voorlopig gunstig, maar nog te klein voor een eindclaim |
@@ -168,9 +168,10 @@ proef de gebruikersuitkomst, privacy, snelheid of herstelgrens niet haalt, mag
 er gerichte eigen code bijkomen.
 
 Dit is inmiddels meer dan een lijstje links. De officiële OpenAI-SDK neemt in
-een gereviewde kandidaat al één handgeschreven transportroute over. Harness
-voert in een tweede, onafhankelijk gereviewde kandidaat echte toolvrije
-subagents uit; 22 tests bewaken context, tools, calls, tokens en time-out. De
+een gereviewde kandidaat al één handgeschreven transportroute over. Harness en
+de publieke Pydantic-runner voeren in een tweede kandidaat echte toolvrije
+subagents uit; 45 tests bewaken context, tools, calls, tokens en time-out. De
+providerloze lijn koppelt dit inmiddels aan duurzame opslag en het werkbord. De
 officiële MCP-SDK is juist na twee echte proeven afgewezen omdat zij voor Eva's
 smalle route meer packages en meer code opleverde. HA-MCP is gestart en diep
 vergeleken, maar een directe wissel bespaart nog te weinig code. Geen van deze
@@ -188,7 +189,7 @@ bouwen**:
 | Nodig voor Eva | Bestaand communityproject dat eerst de kans krijgt | Wat Eva zelf nog doet |
 |---|---|---|
 | Live voice | Pydantic AI Realtime `2.34.0` | De juiste persoon en herinneringen koppelen, onderbreken echt laten stoppen en huisacties controleren |
-| Subagents | Pydantic AI Harness `0.24.0`; de geïsoleerde engineproef is al groen | De taak uit Eva's database halen, toestemming en kosten bewaren en na een procescrash hervatten |
+| Subagents | Pydantic AI Harness `0.25.0`; de losse motor en de opgeslagen proeftaak tot Kanbankaart zijn groen | Een echt model in een apart workerproces, starten/stoppen vanuit chat, authenticatie en productpromotie |
 | Browsercomputer | Microsoft Playwright MCP `0.0.79` als geïsoleerde sidecar; Harness-browser alleen voor een wegwerpvergelijking | Websites en bestanden afschermen, direct stoppen en het eindresultaat controleren |
 | Langlopende achtergrondtaken | Huidige DBOS-route; eerst een kleine rebase naar `2.31.0+eva.1` | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie; stock 2.31 is hiervoor afgewezen |
 | Geheugenscherm | De bestaande lokale Hindsight Control Plane | Bepalen van wie een herinnering is en wie haar mag zien, corrigeren of vergeten |

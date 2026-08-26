@@ -4,14 +4,13 @@ import hashlib
 import json
 from pathlib import Path
 
-from fastapi.testclient import TestClient
-
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
 from eva.application.conversation import load_current_identity_pack
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.canonical_json import canonical_sha256
-
+from eva.contracts.workboard import WorkBoard
+from fastapi.testclient import TestClient
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE_INDEX_PATH = ROOT / "release/eva-cockpit-evidence-index-v1.json"
@@ -39,6 +38,49 @@ class _PeopleMemoryRuntime(_Runtime):
         )
 
 
+class _WorkboardRuntime(_Runtime):
+    def dashboard_workboard(self) -> WorkBoard:
+        return WorkBoard.model_validate(
+            {
+                "contract": "EvaWorkBoard/v1",
+                "schema_version": 1,
+                "read_only": True,
+                "status": "ready",
+                "cards": [
+                    {
+                        "contract": "EvaWorkBoardCard/v1",
+                        "schema_version": 1,
+                        "title": "Kies de beste voice-route",
+                        "summary": "Vergelijk de onderhouden opties.",
+                        "column": "review",
+                        "worker_name": "onderzoeker",
+                        "worker_role": "Onderzoek",
+                        "worker_health": "finished",
+                        "attempt": 1,
+                        "maximum_attempts": 2,
+                        "deadline": "2026-08-26T12:10:00Z",
+                        "duration_seconds": 70,
+                        "overdue": False,
+                        "usage": {
+                            "contract": "EvaWorkBoardUsage/v1",
+                            "schema_version": 1,
+                            "measurement": "measured",
+                            "input_tokens": 20,
+                            "output_tokens": 8,
+                            "total_tokens": 28,
+                            "cost_usd_micros": 14,
+                        },
+                        "result_status": "awaiting_review",
+                        "reason": "Het resultaat is ontvangen en wacht op controle.",
+                        "changed": "minutes_ago",
+                    }
+                ],
+                "truncated": False,
+                "message": "1 duurzame taak zichtbaar.",
+            }
+        )
+
+
 def test_dashboard_status_is_read_only_and_non_secret() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/status")
 
@@ -63,6 +105,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "dashboard/identity" in response.text
     assert "dashboard/progress" in response.text
     assert "dashboard/people-memory" in response.text
+    assert "dashboard/workboard" in response.text
     for visible_module in (
         "Echte voortgang",
         "Werkbord",
@@ -84,6 +127,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "async function loadIdentity" in response.text
     assert "async function loadProgress" in response.text
     assert "async function loadPeopleMemory" in response.text
+    assert "async function loadWorkboard" in response.text
     assert "Veilige actuele status aangesloten" in response.text
     assert "Veilige live status aangesloten" not in response.text
     assert "statusPayload" in response.text
@@ -91,6 +135,15 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "pack.state!=='current'" in response.text
     assert "progressPayload" in response.text
     assert "peopleMemoryPayload" in response.text
+    assert "workboardPayload" in response.text
+    assert "allowed={not_received:['todo','doing']" in response.text
+    assert "!allowed[card.result_status].includes(card.column)" in response.text
+    assert "finished:'klaar met uitvoeren'" in response.text
+    assert "result-approved" in response.text
+    assert "result-stopped" in response.text
+    assert "lokale route · authenticatie nog open" in response.text
+    assert "Providerloze subagentproef & werkbord" in response.text
+    assert "Echte taken · geen demo-kaarten" not in response.text
     assert "Object.keys(value).sort()" in response.text
     assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
@@ -137,6 +190,42 @@ def test_dashboard_people_memory_fails_closed_without_a_projection() -> None:
     assert response.json() == {"detail": "people and memory overview unavailable"}
 
 
+def test_dashboard_workboard_is_owner_bound_read_only_and_field_minimized() -> None:
+    response = TestClient(create_app(_WorkboardRuntime())).get(
+        "/internal/v1/dashboard/workboard"
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    payload = response.json()
+    assert payload["contract"] == "EvaWorkBoard/v1"
+    assert payload["read_only"] is True
+    assert payload["cards"][0]["title"] == "Kies de beste voice-route"
+    assert payload["cards"][0]["worker_health"] == "finished"
+    assert payload["cards"][0]["usage"]["total_tokens"] == 28
+    for forbidden in (
+        "work_id",
+        "attention_id",
+        "episode_id",
+        "principal_id",
+        "binding_id",
+        "task",
+        '"output":',
+        '"payload":',
+        "sha256",
+    ):
+        assert forbidden not in response.text.lower()
+
+
+def test_dashboard_workboard_fails_closed_without_projection() -> None:
+    response = TestClient(create_app(_Runtime())).get(
+        "/internal/v1/dashboard/workboard"
+    )
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "workboard unavailable"}
+
+
 def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/progress")
 
@@ -158,9 +247,14 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert len(payload["dependencies"]) == 8
     capability_by_id = {item["id"]: item for item in payload["capabilities"]}
     assert capability_by_id["child-engine"]["state"] == "tested"
-    assert capability_by_id["runtime-subagents"]["state"] == "open"
+    assert capability_by_id["runtime-subagents"]["state"] == "tested"
+    assert (
+        capability_by_id["runtime-subagents"]["title"]
+        == "Providerloze subagentproef en werkbord"
+    )
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
-    assert dependency_by_name["Pydantic AI"]["state"] == "selected"
+    assert dependency_by_name["Pydantic AI"]["state"] == "tested"
+    assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     for item in [*payload["capabilities"], *payload["dependencies"]]:
         if item["state"] in {"live", "tested"}:
             assert item["evidence"].startswith(

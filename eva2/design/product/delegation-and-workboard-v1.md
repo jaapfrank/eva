@@ -19,30 +19,37 @@ ongefilterd gezinsgeheugen en geen impliciete toegang tot secrets of tools.
 
 ## Huidige eerlijke stand
 
-- Het ontwikkelproces kan onafhankelijke agents gebruiken; de Eva-runtime zelf
-  kan nog geen algemene subagent spawnen.
+- Eva heeft nu één **providerloze, technisch geteste verticale subagentlijn**:
+  een toegelaten taak wordt atomair in PostgreSQL gezet, geleased, precies één
+  keer door de Pydantic-runner gestart, duurzaam afgerond en als gesaneerde
+  kaart op het read-only Kanbanbord getoond. Herstart na `call_started` doet
+  geen tweede modelcall. Dit is nog geen echte provider-, proces-, chat- of
+  B-liveproef.
 - De generieke subagentmotor hoeft niet meer zelf gebouwd te worden: een exact
-  gepinde Pydantic AI `2.34.0` + Harness `0.24.0`-kandidaat voert echte
+  gepinde Pydantic AI `2.34.0` + Harness `0.25.0`-kandidaat voert echte
   toolvrije child-runs uit. De 22 tests en onafhankelijke review zijn groen.
   Een tweede providerloze proef gebruikt voor reeds toegelaten duurzame taken
   rechtstreeks de publieke Pydantic AI-runner. Getypeerde output, usage,
   cancellation en gesaneerde foutcategorieën zijn daarmee na een eerste
   `NO-GO` in 23 extra tests groen. De onafhankelijke herreview van `b7e9af7`
   is groen. Het contract en de zesde taaksoort `delegated_work` zijn inmiddels
-  ook version-matched geregistreerd en in echte PostgreSQL 16.13 beproefd:
-  19 tests plus onafhankelijke review zijn groen op `d510366`. De duurzame
-  handoffwriter, lease/reclaim, call-startgrens en productieprovider zijn nog
-  niet gekoppeld.
+  ook version-matched geregistreerd en in echte PostgreSQL 16.13 beproefd.
+  Daarboven werken nu de handoffwriter, lease/reclaim, call-startgrens,
+  resultaatopslag en veldarme Kanbanprojectie als één providerloze kandidaat.
+  Portable-v2-export, eigenaar-authenticatie, een harde processandbox, echte
+  provider en B-promotie zijn nog niet gekoppeld.
 - `plans`, `plan_steps`, `attention_items` en de operationele tijdlijn vormen
   al een duurzame taakgraaf met leases en crashherstel. Zij bewijzen nog geen
   multi-workerdelegatie.
-- Dashboard D01 en D02 tonen lokaal read-only runtime- en IdentityPackinformatie.
-  Er is nog geen Eva-Kanbanbord en geen live workerbediening.
+- De lokale Eva-cockpit toont status, identiteit, Mijn kring en het duurzame
+  vijfkoloms-Kanbanbord op één pagina. Het bord leest taken uit Eva's opslag en
+  bevat geen hardgecodeerde demokaarten. Authenticatie en bordbediening zijn
+  nog open.
 
 ## Dependency-first uitvoerkeuze
 
 Eva bouwt geen eigen subagentproces, modelrunner, budgetmeter of algemene
-workerqueue. Pydantic AI `2.34.0` met Harness `0.24.0` draait in een aparte
+workerqueue. Pydantic AI `2.34.0` met Harness `0.25.0` draait in een aparte
 hashgebonden 42-package-omgeving. Harness levert korte parentgestuurde
 fork/join; Pydantic AI `Agent.run()` levert de reeds duurzaam gekozen worker
 met getypeerde output, usage, cancellation, request-/tokenlimieten en
@@ -133,6 +140,11 @@ vereisen een herstelbare bevestiging en verwijdering wordt standaard archiveren.
 
 ## Kleine opleverslices
 
+De eerste verticale kandidaat is technisch gesloten: opslag → lease →
+eenmalige providerloze Pydantic-call → resultaat → read-only bord. Dat sluit
+nog niet automatisch de bredere WB-gates hieronder; die eisen onder meer
+portable export, echte provider/processen, chatbediening en live bewijs.
+
 - [ ] WB01 — Eén connectorneutraal `DelegatedWork/v1`-contract en duurzame
   PostgreSQL-projectie boven de bestaande plan-, attention- en eventtabellen;
   geen tweede taakdatabase. WB01a (contract/register) en WB01b (de zesde
@@ -146,8 +158,10 @@ vereisen een herstelbare bevestiging en verwijdering wordt standaard archiveren.
   mag.
 - [ ] WB04 — Lease-expiry, procescrash, reclaim, retrylimiet, stop en hervatten
   bewijzen zonder dubbele provideractie of verloren handoff.
-- [ ] WB05 — Dashboard D07: read-only Kanban met taakdetails, afhankelijkheden,
-  workers, pogingen, gebruik, blockers en live gesaneerde events.
+- [ ] WB05 — Dashboard D07: de eerste read-only projectie met workers,
+  pogingen, gebruik en blockers staat in de cockpit. Afhankelijkheden, live
+  events, eigenaar-authenticatie en de volledige taakdetailweergave sluiten
+  deze bredere gate later.
 - [ ] WB06 — Dashboard D08: dezelfde gecontroleerde bordacties via Eva-chat en
   dashboard:
   create, comment, prioriteit, assign, pause, cancel, resume en review. Beide
@@ -173,7 +187,7 @@ ledger en fysieke readback leidend blijven.
 - Pydantic AI Harness subagents:
   <https://pydantic.dev/docs/ai/harness/subagents/>
 - Pydantic AI Harness exact compatibele kandidaat:
-  <https://github.com/pydantic/pydantic-ai-harness/tree/v0.24.0>
+  <https://github.com/pydantic/pydantic-ai-harness/tree/v0.25.0>
 - Pydantic AI met DBOS:
   <https://github.com/pydantic/pydantic-ai/blob/v2.34.0/docs/durable_execution/dbos.md>
 - React-Admin OSS: <https://github.com/marmelab/react-admin>

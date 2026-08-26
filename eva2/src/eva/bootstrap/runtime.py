@@ -9,7 +9,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from uuid import NAMESPACE_URL, uuid5
+from uuid import NAMESPACE_URL, UUID, uuid5
 
 import sqlalchemy as sa
 from fastapi import FastAPI
@@ -59,6 +59,7 @@ from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.people_memory_overview import (
     PostgresPeopleMemoryOverview,
 )
+from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.telegram_group_consent import (
@@ -110,6 +111,7 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverview,
     PeopleMemoryOverviewPort,
 )
+from eva.contracts.workboard import WorkBoard
 from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
@@ -158,6 +160,7 @@ class RuntimeSettings:
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
+    dashboard_principal_binding_id: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
     home_assistant_url: str | None = None
@@ -224,6 +227,21 @@ class RuntimeSettings:
         background_principal_id = (
             os.environ.get("EVA_RUNTIME_PRINCIPAL_ID", "").strip() or None
         )
+        dashboard_principal_binding_id = (
+            os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
+        )
+        if dashboard_principal_binding_id is not None:
+            if background_principal_id is None:
+                raise RuntimeError(
+                    "Eva dashboard owner binding requires a runtime principal"
+                )
+            try:
+                UUID(background_tenant_id or "")
+                UUID(background_installation_id or "")
+                UUID(background_principal_id)
+                UUID(dashboard_principal_binding_id)
+            except ValueError as error:
+                raise RuntimeError("Eva dashboard owner binding is invalid") from error
         try:
             cold_path_idle_seconds = float(
                 os.environ.get("EVA_COLD_PATH_IDLE_SECONDS", "300")
@@ -428,6 +446,7 @@ class RuntimeSettings:
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
+            dashboard_principal_binding_id=dashboard_principal_binding_id,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             home_assistant_url=home_assistant_url,
@@ -477,6 +496,9 @@ class PostgresHindsightMemoryRuntime:
         runtime_installation_id: str | None = None,
         group_consent: TelegramGroupConsentStorePort | None = None,
         people_memory_overview: PeopleMemoryOverviewPort | None = None,
+        delegated_work_store: PostgresDelegatedWorkStore | None = None,
+        dashboard_owner_principal_id: UUID | None = None,
+        dashboard_principal_binding_id: UUID | None = None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -502,6 +524,13 @@ class PostgresHindsightMemoryRuntime:
         self._runtime_installation_id = runtime_installation_id
         self._group_consent = group_consent
         self._people_memory_overview = people_memory_overview
+        if (delegated_work_store is None) != (dashboard_owner_principal_id is None):
+            raise ValueError("delegated work dashboard owner is incomplete")
+        if (delegated_work_store is None) != (dashboard_principal_binding_id is None):
+            raise ValueError("delegated work dashboard binding is incomplete")
+        self._delegated_work_store = delegated_work_store
+        self._dashboard_owner_principal_id = dashboard_owner_principal_id
+        self._dashboard_principal_binding_id = dashboard_principal_binding_id
 
     def admit_durable_goal(
         self,
@@ -632,6 +661,21 @@ class PostgresHindsightMemoryRuntime:
         return self._people_memory_overview.snapshot(
             now=datetime.now(tz=UTC).replace(microsecond=0),
             hindsight_state=hindsight_state,
+        )
+
+    def dashboard_workboard(self) -> WorkBoard:
+        """Return only the board bound to this configured local operator."""
+
+        if (
+            self._delegated_work_store is None
+            or self._dashboard_owner_principal_id is None
+            or self._dashboard_principal_binding_id is None
+        ):
+            raise RuntimeError("delegated workboard projection is unavailable")
+        return self._delegated_work_store.workboard(
+            owner_principal_id=self._dashboard_owner_principal_id,
+            principal_binding_id=self._dashboard_principal_binding_id,
+            now=datetime.now(tz=UTC).replace(microsecond=0),
         )
 
     def recall(self, query: RecallCurrentFacts) -> PresenceMemory:
@@ -1844,6 +1888,24 @@ def create_runtime_app() -> FastAPI:
             evaluate_one_sensory_event,
             deliver_one_proactive_expression,
         )
+    delegated_work_store = None
+    dashboard_owner_principal_id = None
+    dashboard_principal_binding_id = None
+    if settings.dashboard_principal_binding_id is not None:
+        assert settings.background_tenant_id is not None
+        assert settings.background_installation_id is not None
+        assert settings.background_principal_id is not None
+        dashboard_owner_principal_id = UUID(settings.background_principal_id)
+        dashboard_principal_binding_id = UUID(
+            settings.dashboard_principal_binding_id
+        )
+        delegated_work_store = PostgresDelegatedWorkStore(
+            engine,
+            TimelineScope(
+                UUID(settings.background_tenant_id),
+                UUID(settings.background_installation_id),
+            ),
+        )
     return create_app(
         PostgresHindsightMemoryRuntime(
             engine,
@@ -1873,6 +1935,9 @@ def create_runtime_app() -> FastAPI:
             runtime_installation_id=settings.background_installation_id,
             group_consent=group_consent,
             people_memory_overview=people_memory_overview,
+            delegated_work_store=delegated_work_store,
+            dashboard_owner_principal_id=dashboard_owner_principal_id,
+            dashboard_principal_binding_id=dashboard_principal_binding_id,
         )
     )
 

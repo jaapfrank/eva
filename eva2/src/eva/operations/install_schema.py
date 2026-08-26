@@ -9,18 +9,17 @@ owns the one supported fresh/forward route used by the full-stack installer.
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
 import json
 import os
-from pathlib import Path
 import sys
+from dataclasses import dataclass
+from pathlib import Path
 
+import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
-import sqlalchemy as sa
 
 from eva.bootstrap.secrets import read_runtime_secret_file
-
 
 _REVISION_4B0 = "4b_0000_core_namespace"
 _REVISION_4B1 = "4b_0001_tenant_scope"
@@ -36,8 +35,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4d_0007_projection_telemetry",
     "4e_0001_operational_timeline",
     "4e_0002_delegated_work",
+    "4e_0003_delegated_work_runs",
 }
-_HEAD_REVISION = "4e_0002_delegated_work"
+_HEAD_REVISION = "4e_0003_delegated_work_runs"
 
 
 @dataclass(frozen=True, slots=True)

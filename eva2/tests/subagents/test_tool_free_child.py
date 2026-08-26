@@ -1,11 +1,25 @@
+"""Checks for Eva's dependency-backed, tool-free durable child runner."""
+
 from __future__ import annotations
 
 import asyncio
+import hashlib
 from datetime import UTC, datetime, timedelta
 from decimal import Decimal
-import hashlib
 
 import pytest
+from eva.adapters.subagents.tool_free_child import (
+    OUTPUT_SCHEMA_SHA256,
+    ClosedModelRegistry,
+    PydanticToolFreeChildRunner,
+    ToolFreeChildProfile,
+)
+from eva.contracts.delegated_work import (
+    DelegatedWorkGrant,
+    DelegatedWorkResult,
+    DelegatedWorkSpec,
+    DelegatedWorkUsage,
+)
 from pydantic_ai import Agent, ModelHTTPError
 from pydantic_ai.messages import ModelMessage, ModelResponse, TextPart
 from pydantic_ai.models import ModelRequestParameters
@@ -14,20 +28,6 @@ from pydantic_ai.models.function import AgentInfo, FunctionModel
 from pydantic_ai.models.instrumented import InstrumentedModel
 from pydantic_ai.settings import ModelSettings
 from pydantic_ai.usage import RequestUsage
-
-from eva.contracts.delegated_work import (
-    DelegatedWorkGrant,
-    DelegatedWorkResult,
-    DelegatedWorkSpec,
-    DelegatedWorkUsage,
-)
-from tool_free_child import (
-    ClosedModelRegistry,
-    OUTPUT_SCHEMA_SHA256,
-    PydanticToolFreeChildRunner,
-    ToolFreeChildProfile,
-)
-
 
 NOW = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
 HASH_A = hashlib.sha256(b"worker-program").hexdigest()
@@ -270,9 +270,9 @@ def test_release_schema_and_closed_profiles_fail_before_model_request() -> None:
 
 def test_fallback_and_instrumented_models_are_forbidden() -> None:
     model = success_model()
-    with pytest.raises(ValueError, match="fallback and instrumented"):
+    with pytest.raises(TypeError, match="fallback and instrumented"):
         profile(FallbackModel(model, success_model()))  # type: ignore[arg-type]
-    with pytest.raises(ValueError, match="fallback and instrumented"):
+    with pytest.raises(TypeError, match="fallback and instrumented"):
         profile(InstrumentedModel(model))  # type: ignore[arg-type]
 
 
@@ -322,7 +322,7 @@ def test_sealed_price_reserve_is_hard_and_zero_price_is_measured() -> None:
     (
         (Decimal("0.000001"), 106),
         (Decimal("0.000106"), 106),
-        (Decimal("100"), 100_000_000),
+        (Decimal(100), 100_000_000),
     ),
 )
 def test_known_provider_cost_uses_the_higher_conservative_value(
@@ -338,7 +338,7 @@ def test_known_provider_cost_uses_the_higher_conservative_value(
 
 
 def test_known_provider_cost_above_grant_is_not_hidden_by_lower_rate_card() -> None:
-    usage = RequestUsage(input_tokens=31, output_tokens=11, cost=Decimal("100"))
+    usage = RequestUsage(input_tokens=31, output_tokens=11, cost=Decimal(100))
     outcome = asyncio.run(
         runner(success_model(usage=usage)).run(spec(), call_id="call:cost-overrun")
     )
@@ -348,7 +348,7 @@ def test_known_provider_cost_above_grant_is_not_hidden_by_lower_rate_card() -> N
     assert outcome.usage.cost_usd_micros == 100_000_000
 
 
-@pytest.mark.parametrize("bad_cost", (Decimal("NaN"), Decimal("-1")))
+@pytest.mark.parametrize("bad_cost", (Decimal("NaN"), Decimal(-1)))
 def test_nonfinite_or_negative_provider_cost_is_invalid_usage(
     bad_cost: Decimal,
 ) -> None:

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import Any
 
-
 _EVIDENCE_INDEX = "release/eva-cockpit-evidence-index-v1.json"
 
 
@@ -66,28 +65,28 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "cockpit",
                 "title": "Centrale cockpit",
                 "state": "tested",
-                "proof": "Status, identiteit, voortgang en Mijn kring zijn lokaal en alleen-lezen aangesloten",
-                "meaning": "De eerste echte cockpitmodule leest account-, toestemming- en geheugenstatus uit Eva's duurzame bron.",
-                "next": "Subagents en hun duurzame werkbord als volgende complete module aansluiten.",
+                "proof": "Status, identiteit, Mijn kring en het duurzame Kanbanbord zijn lokaal aangesloten",
+                "meaning": "Eén pagina leest Eva's veilige status en duurzaam opgeslagen proeftaken; er staan geen voorbeeldkaarten in.",
+                "next": "De cockpit achter eigenaar-authenticatie op de beheerde kandidaat starten.",
                 "evidence": _evidence("capability/cockpit"),
             },
             {
                 "id": "child-engine",
-                "title": "Geïsoleerde child-engine",
+                "title": "Losse subagentmotor",
                 "state": "tested",
                 "proof": "Pydantic/Harness-kandidaten samen 45 van 45 tests en onafhankelijk groen",
-                "meaning": "De generieke child-runner wordt hergebruikt; hij is nog geen Eva-runtimefunctie.",
-                "next": "De workeromgeving aan een duurzame, geautoriseerde Eva-taak koppelen.",
+                "meaning": "De herbruikbare modelmotor is apart getest; de volgende kaart laat zien hoe Eva hem duurzaam gebruikt.",
+                "next": "Harness pas inzetten wanneer Eva korte interactieve fork/join nodig heeft.",
                 "evidence": _evidence("capability/child-engine"),
             },
             {
                 "id": "runtime-subagents",
-                "title": "Runtime-subagents en werkbord",
-                "state": "open",
-                "proof": "Contract en database-admission bestaan; spawn, lease, resultaat en Kanban nog niet",
-                "meaning": "Een geteste enginekandidaat is nog geen werkende productfunctie.",
-                "next": "Portable-v2, workerlease, resultaat, ouderhervatting en read-only Kanban sluiten.",
-                "evidence": "reviews/delegated-work-database-admission-d510366.md",
+                "title": "Providerloze subagentproef en werkbord",
+                "state": "tested",
+                "proof": "Een proeftaak is opgeslagen, één keer opgepakt, uitgevoerd en op het bord gezet",
+                "meaning": "De volledige technische keten werkt providerloos; een echte provider, apart proces, Eva-chat en B-live zijn nog open.",
+                "next": "Eén echte providerworker in een apart proces starten en vanuit Eva-chat laten delegeren.",
+                "evidence": _evidence("capability/runtime-subagents"),
             },
             {
                 "id": "browser",
@@ -151,17 +150,18 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Pydantic AI",
-                "version": "2.34.0 kandidaat",
+                "version": "2.32.1 release · 2.34.0 proef",
                 "role": "Model- en realtimebasis",
-                "state": "selected",
-                "decision": "Realtime en productmodelroute zijn gekozen maar nog niet als Eva-functie getest.",
+                "state": "tested",
+                "decision": "De duurzame worker gebruikt de huidige productlock; 2.34.0 blijft de apart geteste voice-/upgradekandidaat.",
+                "evidence": _evidence("dependency/pydantic-ai"),
             },
             {
                 "name": "Pydantic AI Harness",
-                "version": "0.24.0",
+                "version": "0.25.0 kandidaat",
                 "role": "Geïsoleerde interactieve subagents",
                 "state": "tested",
-                "decision": "Alleen worker-sidecar; geen tweede taakwaarheid.",
+                "decision": "Voor korte interactieve fork/join; de duurzame worker gebruikt rechtstreeks Pydantic AI zodat usage en getypeerde output behouden blijven.",
                 "evidence": _evidence("dependency/pydantic-ai-harness"),
             },
             {
@@ -234,6 +234,7 @@ COCKPIT_HTML = """<!doctype html>
     .proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}.card{position:relative;min-height:245px;padding:1.2rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(14,31,51,.88),rgba(6,15,27,.78));box-shadow:var(--depth);overflow:hidden;transform:translateZ(0);transition:transform .25s ease,border-color .25s ease}.card:hover{transform:translateY(-5px);border-color:rgba(97,231,255,.36)}.card:before{content:"";position:absolute;width:130px;height:130px;right:-55px;top:-55px;border-radius:50%;background:var(--tone,var(--cyan));opacity:.08;filter:blur(2px)}.state-label{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .55rem;border-radius:999px;background:rgba(255,255,255,.045);font-size:.69rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tone,var(--cyan))}.state-label:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}.card h3{margin:1rem 0 .4rem;font-size:1.2rem}.proof{font-weight:700;color:#d9ebf6}.meaning,.next,.evidence{color:var(--muted);font-size:.86rem}.next{margin-top:.9rem;padding-top:.8rem;border-top:1px solid var(--line)}.next strong{color:#b9cddd}.evidence{font-size:.72rem;overflow-wrap:anywhere}.evidence strong{color:#7894a8}.card.live{--tone:var(--green)}.card.tested{--tone:var(--cyan)}.card.selected{--tone:var(--violet)}.card.open{--tone:var(--amber)}
     .dep-table{border:1px solid var(--line);border-radius:18px;overflow:auto;background:var(--glass);box-shadow:var(--depth)}.dep-table table{width:100%;border-collapse:collapse;min-width:930px}.dep-table th,.dep-table td{padding:1rem 1.1rem;border-top:1px solid var(--line);text-align:left;vertical-align:middle}.dep-table thead th{border-top:0;color:#6f8aa0;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}.dep-table tbody tr:hover{background:rgba(97,231,255,.035)}.dep-name{font-weight:750}.dep-version,.dep-role,.dep-decision,.dep-evidence{color:var(--muted);font-size:.86rem}.dep-evidence{font-size:.72rem;overflow-wrap:anywhere}.dep-state{display:inline-block;margin-top:.28rem;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan)}
     .dock{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem}.module{padding:1rem;border:1px solid var(--line);border-radius:14px;background:rgba(8,20,34,.62)}.module strong{display:block}.module span{color:var(--muted);font-size:.8rem}.module.connected{border-color:rgba(118,242,176,.28)}.module.pending{opacity:.76}
+    .board-shell{position:relative;border:1px solid rgba(97,231,255,.18);border-radius:24px;padding:1rem;background:linear-gradient(145deg,rgba(9,25,43,.94),rgba(3,9,18,.84));box-shadow:var(--depth);overflow:hidden}.board-shell:before{content:"";position:absolute;inset:-40% 20% 45%;background:radial-gradient(circle,rgba(97,231,255,.12),transparent 58%);pointer-events:none}.board-status{position:relative;display:flex;justify-content:space-between;gap:1rem;align-items:center;margin:.2rem .2rem 1rem;color:var(--muted);font-size:.82rem}.readonly{border:1px solid var(--line);border-radius:999px;padding:.32rem .62rem;color:var(--cyan);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.kanban{position:relative;display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:.75rem;overflow-x:auto;padding-bottom:.35rem}.lane{min-height:280px;padding:.8rem;border:1px solid var(--line);border-radius:16px;background:rgba(3,11,20,.66)}.lane h3{display:flex;justify-content:space-between;gap:.5rem;margin:.1rem 0 .8rem;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#8ba7ba}.lane-count{display:grid;place-items:center;min-width:22px;height:22px;border:1px solid var(--line);border-radius:50%;color:var(--ink);font-size:.68rem}.work-cards{display:grid;gap:.65rem}.work-card{padding:.85rem;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,rgba(16,34,55,.96),rgba(6,16,29,.95));box-shadow:0 12px 28px rgba(0,0,0,.3);transform:translateZ(12px)}.work-card.result-failed,.work-card.result-ambiguous{border-color:rgba(255,124,143,.38)}.work-card.result-awaiting_review{border-color:rgba(166,132,255,.35)}.work-card.result-approved{border-color:rgba(118,242,176,.3)}.work-card.result-stopped{border-color:rgba(255,200,106,.35)}.work-card h4{margin:.35rem 0;font-size:.94rem}.work-card p{margin:.2rem 0;color:var(--muted);font-size:.76rem}.worker-line{display:flex;justify-content:space-between;gap:.5rem;color:var(--cyan);font-size:.67rem}.work-meta{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.65rem}.work-meta span{border:1px solid var(--line);border-radius:999px;padding:.22rem .42rem;color:#9eb5c5;font-size:.63rem}.lane-empty{padding:.8rem;border:1px dashed var(--line);border-radius:12px;color:#607d91;text-align:center;font-size:.72rem}.roadmap{margin-top:1rem}
     footer{margin:4rem 0 1rem;padding-top:1.4rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;color:#678196;font-size:.78rem}
     .error{color:var(--red)!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-13px) rotate(1deg)}}
@@ -266,7 +267,7 @@ COCKPIT_HTML = """<!doctype html>
           <p class="eyebrow">Eén assistent · één waarheid</p>
           <h1 id="eva-title">Het leven <span>van Eva</span></h1>
           <p>Niet alleen een serverstatus. Hier zie je wie Eva is, wat echt werkt, waar zij mee bezig is en welke handen uit de open-sourcewereld zij gebruikt.</p>
-          <div class="micro"><span class="chip">alleen-lezen</span><span class="chip">geen secrets</span><span class="chip" id="progress-date">voortgang ophalen…</span></div>
+          <div class="micro"><span class="chip">alleen-lezen</span><span class="chip">lokale route · authenticatie nog open</span><span class="chip" id="progress-date">voortgang ophalen…</span></div>
         </div>
         <div class="core-stage" aria-label="Eva kern">
           <div class="core"><div class="core-copy"><span id="identity-name" class="core-name">EVA</span><span id="identity-style" class="core-state">identiteit ophalen…</span></div></div>
@@ -274,7 +275,7 @@ COCKPIT_HTML = """<!doctype html>
         <div class="signal-list" aria-label="Kernsignalen">
           <div class="signal"><strong>Wie ben ik?</strong><span id="identity-detail">Niet beschikbaar</span></div>
           <div class="signal"><strong>Kan ik werken?</strong><span id="runtime-detail">Niet beschikbaar</span></div>
-          <div class="signal"><strong>Waar werk ik aan?</strong><span>Mijn kring aangesloten · subagents en werkbord zijn het volgende project</span></div>
+          <div class="signal"><strong>Waar werk ik aan?</strong><span id="work-signal">Duurzame subagenttaken ophalen…</span></div>
           <div class="signal"><strong>Wat blijft van mij?</strong><span>Identiteit, privacy, mandaat, ledger en eindantwoord</span></div>
         </div>
       </section>
@@ -296,14 +297,21 @@ COCKPIT_HTML = """<!doctype html>
       </section>
 
       <section id="werkbord" class="content" aria-labelledby="work-title">
-        <div class="section-head"><div><span class="kicker">Eerst echt afmaken</span><h2 id="work-title">Van project naar product</h2></div><p>Groen is afgebouwd en getest. Het eerste donkere blok is het enige actieve vervolgproject; de rest wacht bewust.</p></div>
-        <div class="dock">
-          <article class="module connected"><strong>1. Upgradeveiligheid</strong><span>Portable-v1 hersteld en onafhankelijk gereviewd</span></article>
-          <article class="module connected"><strong>2. Centrale cockpit</strong><span>Lokale HTML/CSS-3D + echte status en identiteit</span></article>
-          <article class="module connected"><strong>3. Mijn kring</strong><span>Rechtstreeks uit PostgreSQL · gebouwd en getest; B-live nog open</span></article>
-          <article class="module pending"><strong>4. Subagents & werkbord</strong><span>Het eerstvolgende complete project</span></article>
-          <article class="module pending"><strong>5. Browsercomputer</strong><span>Daarna één echte afgeschermde webtaak</span></article>
-          <article class="module pending"><strong>6. Voice & aanwezigheid</strong><span>Daarna dezelfde Eva snel, onderbreekbaar en in huis</span></article>
+        <div class="section-head"><div><span class="kicker">Taken uit Eva's eigen opslag · geen hardgecodeerde voorbeeldkaarten</span><h2 id="work-title">Eva's werkplaats</h2></div><p>Iedere kaart komt uit Eva's opgeslagen werk. Je ziet alleen een veilige titel, korte uitleg, workerstatus, poging, tijd en gemeten kosten. De volledige opdracht, interne nummers en ruwe resultaten blijven verborgen. Deze lokale route heeft nog geen eigenaar-authenticatie.</p></div>
+        <div class="board-shell" aria-live="polite">
+          <div class="board-status"><span id="workboard-message">Werkbord ophalen…</span><span class="readonly">alleen-lezen</span></div>
+          <div class="kanban">
+            <section class="lane"><h3>Te doen <span id="count-todo" class="lane-count">0</span></h3><div id="cards-todo" class="work-cards"><p class="lane-empty">Ophalen…</p></div></section>
+            <section class="lane"><h3>Bezig <span id="count-doing" class="lane-count">0</span></h3><div id="cards-doing" class="work-cards"><p class="lane-empty">Ophalen…</p></div></section>
+            <section class="lane"><h3>Aandacht <span id="count-attention" class="lane-count">0</span></h3><div id="cards-attention" class="work-cards"><p class="lane-empty">Ophalen…</p></div></section>
+            <section class="lane"><h3>Controle <span id="count-review" class="lane-count">0</span></h3><div id="cards-review" class="work-cards"><p class="lane-empty">Ophalen…</p></div></section>
+            <section class="lane"><h3>Klaar <span id="count-done" class="lane-count">0</span></h3><div id="cards-done" class="work-cards"><p class="lane-empty">Ophalen…</p></div></section>
+          </div>
+        </div>
+        <div class="dock roadmap" aria-label="Bewuste projectvolgorde">
+          <article class="module connected"><strong>Nu · Providerloze subagentproef & werkbord</strong><span>Duurzame workerbasis en deze read-only cockpitprojectie zijn technisch getest</span></article>
+          <article class="module pending"><strong>Daarna · Browsercomputer</strong><span>Eén afgeschermde webtaak van begin tot gecontroleerd eindresultaat</span></article>
+          <article class="module pending"><strong>Daarna · Voice & aanwezigheid</strong><span>Dezelfde Eva snel, onderbreekbaar en weer voelbaar in huis</span></article>
         </div>
       </section>
 
@@ -319,8 +327,8 @@ COCKPIT_HTML = """<!doctype html>
           <article class="module connected"><strong>Identiteit</strong><span>Aangesloten</span></article>
           <article class="module pending"><strong>Gesprekken</strong><span>Nog niet aangesloten</span></article>
           <article class="module connected"><strong>Personen & geheugen</strong><span>Veilige actuele status aangesloten; inhoudelijk geheugenbeheer volgt later</span></article>
-          <article class="module pending"><strong>Werkbord</strong><span>Read-only projectie volgt</span></article>
-          <article class="module pending"><strong>Workers & subagents</strong><span>Runtimewriter nog open</span></article>
+          <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
+          <article class="module connected"><strong>Workers & subagents</strong><span>Providerloze Pydantic-proef zichtbaar; echte provider en chat nog open</span></article>
           <article class="module pending"><strong>Skills & browser</strong><span>Sidecars nog niet gekoppeld</span></article>
           <article class="module pending"><strong>Voice & huis</strong><span>Live routes nog open</span></article>
           <article class="module pending"><strong>Kosten & budget</strong><span>Projectie nog open</span></article>
@@ -341,15 +349,18 @@ COCKPIT_HTML = """<!doctype html>
     function progressPayload(data){const states=['live','tested','selected','open'];if(!object(data)||data.contract!=='EvaCockpitProgress/v1'||data.read_only!==true||!bounded(data.updated_on,32)||!Array.isArray(data.capabilities)||data.capabilities.length<1||data.capabilities.length>32||!Array.isArray(data.dependencies)||data.dependencies.length<1||data.dependencies.length>32)throw new Error('invalid progress');for(const item of [...data.capabilities,...data.dependencies]){if(!object(item)||!states.includes(item.state)||(['live','tested'].includes(item.state)&&!bounded(item.evidence)))throw new Error('invalid progress item')}for(const item of data.capabilities){if(!bounded(item.title,120)||!bounded(item.proof)||!bounded(item.meaning)||!bounded(item.next)||('evidence' in item&&!bounded(item.evidence)))throw new Error('invalid capability')}for(const item of data.dependencies){if(!bounded(item.name,120)||!bounded(item.version,120)||!bounded(item.role,240)||!bounded(item.decision)||('evidence' in item&&!bounded(item.evidence)))throw new Error('invalid dependency')}return data}
     function exact(value,keys){return object(value)&&Object.keys(value).sort().join('|')===keys.slice().sort().join('|')}
     function peopleMemoryPayload(data){if(!exact(data,['contains_raw_content','contract','control_plane','hindsight','memory','people','read_only','sharing'])||data.contract!=='EvaPeopleMemoryOverview/v1'||data.read_only!==true||data.contains_raw_content!==false||!exact(data.people,['dynamic_account'])||!exact(data.sharing,['state'])||!exact(data.memory,['state'])||!exact(data.hindsight,['state'])||!exact(data.control_plane,['state'])||!['extra_account_linked','no_extra_account','unavailable'].includes(data.people.dynamic_account)||!['private_only','group_active','expires_soon','unavailable'].includes(data.sharing.state)||!['no_signals','up_to_date','processing','retrying','needs_help','unavailable'].includes(data.memory.state)||!['ready','attention','unknown'].includes(data.hindsight.state)||data.control_plane.state!=='selected_not_connected')throw new Error('invalid people memory');return data}
+    function workboardPayload(data){const columns=['todo','doing','attention','review','done'];const health=['waiting','active','contact_lost','finished','stopped'];const results=['not_received','awaiting_review','approved','failed','ambiguous','stopped'];const allowed={not_received:['todo','doing'],awaiting_review:['review'],approved:['done'],failed:['attention'],ambiguous:['attention'],stopped:['done']};const root=['cards','contract','message','read_only','schema_version','status','truncated'];const cardKeys=['attempt','changed','column','contract','deadline','duration_seconds','maximum_attempts','overdue','reason','result_status','schema_version','summary','title','usage','worker_health','worker_name','worker_role'];const usageKeys=['contract','cost_usd_micros','input_tokens','measurement','output_tokens','schema_version','total_tokens'];if(!exact(data,root)||data.contract!=='EvaWorkBoard/v1'||data.schema_version!==1||data.read_only!==true||data.status!=='ready'||typeof data.truncated!=='boolean'||!bounded(data.message,240)||!Array.isArray(data.cards)||data.cards.length>64)throw new Error('invalid workboard');for(const card of data.cards){if(!exact(card,cardKeys)||card.contract!=='EvaWorkBoardCard/v1'||card.schema_version!==1||!bounded(card.title,120)||!bounded(card.summary,240)||!columns.includes(card.column)||!bounded(card.worker_name,32)||!bounded(card.worker_role,80)||!health.includes(card.worker_health)||!Number.isInteger(card.attempt)||!Number.isInteger(card.maximum_attempts)||card.attempt<0||card.attempt>card.maximum_attempts||typeof card.overdue!=='boolean'||!Number.isInteger(card.duration_seconds)||card.duration_seconds<0||!bounded(card.deadline,40)||Number.isNaN(Date.parse(card.deadline))||!results.includes(card.result_status)||!allowed[card.result_status].includes(card.column)||!bounded(card.reason,240)||!bounded(card.changed,32)||!exact(card.usage,usageKeys)||card.usage.contract!=='EvaWorkBoardUsage/v1'||card.usage.schema_version!==1||!['measured','partial','unmeasured'].includes(card.usage.measurement))throw new Error('invalid workboard card')}return data}
     function text(id,value,error=false){const node=document.getElementById(id);node.textContent=value;if(error)node.classList.add('error')}
     function renderCapability(item){const card=document.createElement('article');card.className='card '+item.state;const label=document.createElement('span');label.className='state-label';label.textContent=labels[item.state]||'Onbekend';const title=document.createElement('h3');title.textContent=item.title;const proof=document.createElement('p');proof.className='proof';proof.textContent=item.proof;const meaning=document.createElement('p');meaning.className='meaning';meaning.textContent=item.meaning;const next=document.createElement('p');next.className='next';const strong=document.createElement('strong');strong.textContent='Om dit af te maken: ';next.append(strong,document.createTextNode(item.next));card.append(label,title,proof,meaning,next);if(item.evidence){const evidence=document.createElement('p');evidence.className='evidence';const evidenceLabel=document.createElement('strong');evidenceLabel.textContent='Bewijs: ';evidence.append(evidenceLabel,document.createTextNode(item.evidence));card.append(evidence)}return card}
     function renderDependency(item){const row=document.createElement('tr');const name=document.createElement('th');name.scope='row';name.className='dep-name';name.textContent=item.name;const state=document.createElement('span');state.className='dep-state';state.textContent=labels[item.state]||item.state;name.append(document.createElement('br'),state);row.append(name);for(const [value,className] of [[item.version,'dep-version'],[item.role,'dep-role'],[item.decision,'dep-decision'],[item.evidence||'—','dep-evidence']]){const node=document.createElement('td');node.className=className;node.textContent=value;row.append(node)}return row}
+    function renderWorkCard(card){const healthLabels={waiting:'wacht',active:'bezig',contact_lost:'contact kwijt',finished:'klaar met uitvoeren',stopped:'gestopt'};const node=document.createElement('article');node.className='work-card result-'+card.result_status;const worker=document.createElement('div');worker.className='worker-line';worker.append(document.createTextNode(card.worker_name+' · '+card.worker_role),document.createTextNode(healthLabels[card.worker_health]));const title=document.createElement('h4');title.textContent=card.title;const summary=document.createElement('p');summary.textContent=card.summary;const reason=document.createElement('p');reason.textContent=card.reason;const meta=document.createElement('div');meta.className='work-meta';const usage=card.usage.measurement==='unmeasured'?'verbruik onbekend':(card.usage.total_tokens===null?'tokens deels gemeten':card.usage.total_tokens+' tokens');const cost=card.usage.cost_usd_micros===null?'kosten onbekend':'$'+(card.usage.cost_usd_micros/1000000).toFixed(4);for(const value of ['poging '+card.attempt+'/'+card.maximum_attempts,Math.round(card.duration_seconds/60)+' min',usage,cost,card.overdue?'te laat':'binnen tijd']){const chip=document.createElement('span');chip.textContent=value;meta.append(chip)}node.append(worker,title,summary,reason,meta);return node}
     async function loadStatus(){const pill=document.getElementById('runtime-pill');try{const status=statusPayload(await getJson('/internal/v1/dashboard/status'));const ready=status.runtime.ready;pill.classList.add(ready?'ready':'not-ready');text('runtime-text',ready?'Kern gereed':'Kern heeft aandacht nodig');text('runtime-detail',ready?'Gereed voor werk':'Niet gereed · details blijven afgeschermd',!ready)}catch(_error){pill.classList.add('not-ready');text('runtime-text','Kernstatus niet beschikbaar',true);text('runtime-detail','Niet beschikbaar',true)}}
     async function loadIdentity(){try{const pack=identityPayload(await getJson('/internal/v1/dashboard/identity')).identity;const temperament=Array.isArray(pack.temperament)?pack.temperament.join(', '):pack.temperament;text('identity-name',pack.display_name.toUpperCase());text('identity-style',pack.voice_style.name+' · v'+pack.pack_version);text('identity-detail',pack.language+' · '+temperament)}catch(_error){text('identity-name','—',true);text('identity-style','identiteit niet beschikbaar',true);text('identity-detail','Niet beschikbaar',true)}}
     async function loadProgress(){const grid=document.getElementById('proof-grid');const table=document.getElementById('dependency-table');try{const progress=progressPayload(await getJson('/internal/v1/dashboard/progress'));text('progress-date','bijgewerkt '+progress.updated_on);grid.replaceChildren(...progress.capabilities.map(renderCapability));table.replaceChildren(...progress.dependencies.map(renderDependency))}catch(_error){text('progress-date','voortgang niet beschikbaar',true);grid.replaceChildren(renderCapability({state:'open',title:'Voortgang niet beschikbaar',proof:'De bewijsprojectie kon niet worden geladen.',meaning:'Er wordt geen oude of verzonnen status getoond.',next:'Herstel de lokale cockpitroute en laad opnieuw.'}));const row=document.createElement('tr');const cell=document.createElement('td');cell.colSpan=5;cell.className='error';cell.textContent='Dependencies niet beschikbaar';row.append(cell);table.replaceChildren(row)}}
     function orbit(id,state,label,detail,tone){const card=document.getElementById(id+'-card');card.className='circle-card '+tone;text(id+'-state',label);text(id+'-detail',detail)}
     async function loadPeopleMemory(){try{const data=peopleMemoryPayload(await getJson('/internal/v1/dashboard/people-memory'));const people={extra_account_linked:['Veilig gekoppeld','Een extra Telegram-account gebruikt hetzelfde afgeschermde profiel.','good'],no_extra_account:['Geen extra koppeling','Geen extra dynamisch gekoppeld Telegram-account gezien.','good'],unavailable:['Niet beschikbaar','De veilige koppelstatus kan nu niet worden vastgesteld.','unavailable']}[data.people.dynamic_account];orbit('people',data.people.dynamic_account,...people);const sharing={private_only:['Alleen privé','Groepsdelen staat niet actief.','good'],group_active:['Delen actief','Er is geldige toestemming om in een groep te delen.','good'],expires_soon:['Loopt binnenkort af','Een toestemming voor groepsdelen verloopt binnen 24 uur.','attention'],unavailable:['Niet beschikbaar','De deeltoestemming kan nu niet worden vastgesteld.','unavailable']}[data.sharing.state];orbit('sharing',data.sharing.state,...sharing);const memory={no_signals:['Nog geen stroom','Er zijn nog geen duurzame geheugenopdrachten.','good'],up_to_date:['Bijgewerkt','Alle geheugenopdrachten zijn verwerkt.','good'],processing:['Bezig','Eva verwerkt iets nieuws voor haar geheugen.','attention'],retrying:['Probeert opnieuw','Een geheugenopdracht wordt veilig opnieuw geprobeerd.','attention'],needs_help:['Hulp nodig','Een geheugenopdracht is gestopt en vraagt controle.','unavailable'],unavailable:['Niet beschikbaar','De geheugenstroom kan nu niet worden vastgesteld.','unavailable']}[data.memory.state];orbit('memory',data.memory.state,...memory);text('hindsight-detail',data.hindsight.state==='ready'?'Hindsight-langetermijngeheugen is bereikbaar.':data.hindsight.state==='attention'?'Hindsight-langetermijngeheugen vraagt aandacht.':'Hindsight-status is onbekend.',data.hindsight.state!=='ready');const attention=[data.people.dynamic_account,data.sharing.state,data.memory.state,data.hindsight.state].some(value=>['unavailable','needs_help','attention'].includes(value));text('memory-story',attention?'Mijn geheugen vraagt aandacht.':['processing','retrying'].includes(data.memory.state)?'Ik verwerk iets nieuws.':data.memory.state==='no_signals'?'Mijn geheugen wacht op een eerste signaal.':'Mijn geheugen is bijgewerkt.',attention)}catch(_error){orbit('people','unavailable','Niet beschikbaar','De veilige koppelstatus kan nu niet worden vastgesteld.','unavailable');orbit('sharing','unavailable','Niet beschikbaar','De deeltoestemming kan nu niet worden vastgesteld.','unavailable');orbit('memory','unavailable','Niet beschikbaar','De geheugenstroom kan nu niet worden vastgesteld.','unavailable');text('hindsight-detail','Hindsight-status is onbekend.',true);text('memory-story','Mijn geheugenstatus is niet beschikbaar.',true)}}
-    void loadStatus();void loadIdentity();void loadProgress();void loadPeopleMemory();
+    async function loadWorkboard(){const columns=['todo','doing','attention','review','done'];try{const data=workboardPayload(await getJson('/internal/v1/dashboard/workboard'));for(const column of columns){const cards=data.cards.filter(card=>card.column===column);text('count-'+column,String(cards.length));const lane=document.getElementById('cards-'+column);if(cards.length){lane.replaceChildren(...cards.map(renderWorkCard))}else{const empty=document.createElement('p');empty.className='lane-empty';empty.textContent='Geen taken';lane.replaceChildren(empty)}}text('workboard-message',data.message+(data.truncated?' · toon de laatste 64':''));text('work-signal',data.cards.length?data.cards.length+' duurzame subagenttaak'+(data.cards.length===1?'':'en')+' zichtbaar':'Geen duurzame subagenttaak actief.')}catch(_error){for(const column of columns){text('count-'+column,'—');const lane=document.getElementById('cards-'+column);const empty=document.createElement('p');empty.className='lane-empty error';empty.textContent='Niet beschikbaar';lane.replaceChildren(empty)}text('workboard-message','Werkbord niet beschikbaar · er worden geen voorbeeldkaarten getoond',true);text('work-signal','Werkbord niet beschikbaar',true)}}
+    void loadStatus();void loadIdentity();void loadProgress();void loadPeopleMemory();void loadWorkboard();
   </script>
 </body>
 </html>

@@ -7,7 +7,8 @@ die delen.
 
 Er zijn bewust twee publieke routes. Harness voert de korte, door het
 parentmodel gekozen `delegate_task` uit. Voor een taak die al duurzaam in
-PostgreSQL is toegelaten gebruikt `tool_free_child.py` rechtstreeks Pydantic
+PostgreSQL is toegelaten gebruikt `eva.adapters.subagents.tool_free_child`
+rechtstreeks Pydantic
 AI `Agent.run()`: Harness `0.25.0` retourneert daar publiek alleen tekst en
 maakt getypeerde output, eigen usage en cancellationstate niet beschikbaar.
 De smalle adapter bewaart die gegevens wel zonder een tweede plannermodel.
@@ -28,8 +29,9 @@ heten `unmeasured` en nooit stil nul. Procesbrede Pydantic AI-telemetrie wordt
 voor de privétaak expliciet uitgezet; vooraf geïnstrumenteerde en fallback-
 modellen worden geweigerd.
 
-De gecombineerde providerloze suite staat op 45 tests: de bestaande 22
-Harnesschecks plus 23 checks voor het gesloten `DelegatedWork/v1`,
+De gecombineerde providerloze suite staat op 45 tests: de 22 Harnesschecks in
+deze experimentmap plus 23 productchecks in
+`../../tests/subagents/test_tool_free_child.py` voor het gesloten `DelegatedWork/v1`,
 getypeerde JSON, contract- en outputhashes, verzegelde model-/workerprofielen,
 absolute deadline, prijsreserve, provider-outputlimiet, eerlijke usage,
 cancellation, telemetry-uitzetting, outputvalidatie en foutredactie. De

@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from pathlib import Path
 from datetime import UTC, datetime
+from pathlib import Path
+from uuid import UUID
 
 import pytest
-
-from eva.bootstrap.runtime import RuntimeSettings
-from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
 from eva.adapters.model.conversation import ConversationCredentialStatus
 from eva.application.people_memory_overview import PeopleMemoryOverview
+from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime, RuntimeSettings
+from eva.contracts.workboard import WorkBoard
 
 
 def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
@@ -35,6 +35,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_FANOUT_ALLOW_INSECURE_HTTP",
         "EVA_DURABLE_GOAL_PROVIDER",
         "EVA_DURABLE_GOAL_RECIPIENTS",
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
     ):
         monkeypatch.delenv(name, raising=False)
     database = private_tmp_path / "database-dsn"
@@ -61,6 +62,33 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     assert settings.database_dsn.endswith("@postgres/eva")
     assert settings.home_assistant_token == "test-token"
     assert settings.conversation_reasoning_effort == "medium"
+
+
+def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "11111111-1111-1111-1111-111111111111")
+    monkeypatch.setenv(
+        "EVA_RUNTIME_INSTALLATION_ID", "22222222-2222-2222-2222-222222222222"
+    )
+    monkeypatch.setenv(
+        "EVA_RUNTIME_PRINCIPAL_ID", "33333333-3333-3333-3333-333333333333"
+    )
+    monkeypatch.setenv(
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+        "44444444-4444-4444-4444-444444444444",
+    )
+
+    settings = RuntimeSettings.from_environment()
+    assert settings.dashboard_principal_binding_id == (
+        "44444444-4444-4444-4444-444444444444"
+    )
+
+    monkeypatch.setenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "not-a-uuid")
+    with pytest.raises(RuntimeError, match="dashboard owner binding is invalid"):
+        RuntimeSettings.from_environment()
 
 
 def test_runtime_reads_and_bounds_conversation_reasoning_effort(
@@ -381,3 +409,48 @@ def test_runtime_composes_the_real_people_memory_projection_fail_closed() -> Non
     memory.available = False
     assert runtime.dashboard_people_memory().hindsight == "attention"
     assert overview.calls == ["ready", "attention"]
+
+
+def test_runtime_workboard_uses_only_its_fixed_owner_and_binding() -> None:
+    owner = UUID("33333333-3333-3333-3333-333333333333")
+    binding = UUID("44444444-4444-4444-4444-444444444444")
+
+    class Store:
+        def __init__(self) -> None:
+            self.calls: list[tuple[UUID, UUID]] = []
+
+        def workboard(
+            self,
+            *,
+            owner_principal_id: UUID,
+            principal_binding_id: UUID,
+            now: datetime,
+        ) -> WorkBoard:
+            assert now.tzinfo is not None and now.microsecond == 0
+            self.calls.append((owner_principal_id, principal_binding_id))
+            return WorkBoard(
+                contract="EvaWorkBoard/v1",
+                schema_version=1,
+                read_only=True,
+                status="ready",
+                cards=[],
+                truncated=False,
+                message="Nog geen duurzame subagenttaken.",
+            )
+
+    store = Store()
+    runtime = PostgresHindsightMemoryRuntime(
+        object(),  # type: ignore[arg-type]
+        object(),  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        delegated_work_store=store,  # type: ignore[arg-type]
+        dashboard_owner_principal_id=owner,
+        dashboard_principal_binding_id=binding,
+    )
+
+    assert runtime.dashboard_workboard().cards == []
+    assert store.calls == [(owner, binding)]

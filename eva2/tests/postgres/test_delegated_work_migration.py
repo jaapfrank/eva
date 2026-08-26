@@ -1,19 +1,17 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
 import os
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from uuid import NAMESPACE_URL, uuid5
 
-from alembic import command
-from alembic.config import Config
 import pytest
 import sqlalchemy as sa
-from sqlalchemy.engine import make_url
-
+from alembic import command
+from alembic.config import Config
 from eva.adapters.postgres.current_catalog import metadata
 from eva.operations.install_schema import install_schema
-
+from sqlalchemy.engine import make_url
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -49,9 +47,8 @@ def _insert_attention(
     label: str,
     kind: str,
 ) -> str:
-    identifier = lambda part: str(  # noqa: E731
-        uuid5(NAMESPACE_URL, f"eva2-delegated-migration-{label}-{part}")
-    )
+    def identifier(part: str) -> str:
+        return str(uuid5(NAMESPACE_URL, f"eva2-delegated-migration-{label}-{part}"))
     attention_id = identifier("attention")
     now = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
     values = {
@@ -117,7 +114,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     try:
         receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-        assert receipt.final_revision == "4e_0002_delegated_work"
+        assert receipt.final_revision == "4e_0003_delegated_work_runs"
         command.downgrade(config, "4e_0001_operational_timeline")
         assert _revision(engine) == "4e_0001_operational_timeline"
         assert "delegated_work" not in _kind_check(engine)
@@ -126,7 +123,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
         old_row = _row(engine, old_id)
 
         command.upgrade(config, "head")
-        assert _revision(engine) == "4e_0002_delegated_work"
+        assert _revision(engine) == "4e_0003_delegated_work_runs"
         assert "delegated_work" in _kind_check(engine)
         assert _row(engine, old_id) == old_row
 
@@ -138,7 +135,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
 
         with pytest.raises(sa.exc.IntegrityError):
             command.downgrade(config, "4e_0001_operational_timeline")
-        assert _revision(engine) == "4e_0002_delegated_work"
+        assert _revision(engine) == "4e_0003_delegated_work_runs"
         assert _row(engine, delegated_id)["kind"] == "delegated_work"
 
         with engine.begin() as connection:
