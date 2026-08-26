@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -10,8 +11,12 @@ import tempfile
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from threading import Thread
+from typing import Any, Iterator
 from uuid import NAMESPACE_URL, UUID, uuid5
 
 import pytest
@@ -33,6 +38,7 @@ from eva.adapters.subagents.tool_free_child import (
     ToolFreeChildOutcome,
     ToolFreeChildProfile,
 )
+from eva.bootstrap.delegated_work_provider import build_delegated_work_spec
 from eva.contracts.delegated_work import (
     DelegatedWorkGrant,
     DelegatedWorkResult,
@@ -290,6 +296,135 @@ def _process_spec(
     )
 
 
+def _product_process_spec(
+    label: str,
+    scope: TimelineScope,
+    episode: UUID,
+    binding: UUID,
+) -> DelegatedWorkSpec:
+    del scope
+    return build_delegated_work_spec(
+        work_id=f"work:{label}:research",
+        episode_id=str(episode),
+        generation=1,
+        parent_task_id=f"task:{label}:parent",
+        owner_principal_id=str(_id(label, "principal")),
+        principal_binding_id=str(binding),
+        task="Vat dit afgeschermde providerantwoord compact samen.",
+        created_at=datetime(2026, 8, 26, 12, 0, tzinfo=UTC),
+        deadline=datetime(2026, 8, 26, 12, 10, tzinfo=UTC),
+    )
+
+
+@contextmanager
+def _official_provider_server(
+    *, body_delay: float = 0,
+) -> Iterator[tuple[str, list[dict[str, Any]], threading.Event]]:
+    captured: list[dict[str, Any]] = []
+    received = threading.Event()
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, _format: str, *_args: object) -> None:
+            pass
+
+        def do_POST(self) -> None:  # noqa: N802
+            size = int(self.headers.get("Content-Length", "0"))
+            body = json.loads(self.rfile.read(size))
+            captured.append(
+                {
+                    "path": self.path,
+                    "body": body,
+                    "authorization": self.headers.get("Authorization"),
+                }
+            )
+            received.set()
+            if body_delay:
+                time.sleep(body_delay)
+            created = {
+                "id": "resp_vertical_1",
+                "object": "response",
+                "created_at": 1_777_111_200.0,
+                "status": "in_progress",
+                "model": "gpt-5.4-mini",
+                "output": [],
+                "parallel_tool_calls": False,
+                "tool_choice": "none",
+                "tools": [],
+            }
+            output = '{"summary":"officiele SDK-keten werkt","findings":["bewijs"]}'
+            completed = created | {
+                "status": "completed",
+                "output": [
+                    {
+                        "id": "msg_vertical_1",
+                        "type": "message",
+                        "status": "completed",
+                        "role": "assistant",
+                        "content": [
+                            {
+                                "type": "output_text",
+                                "text": output,
+                                "annotations": [],
+                                "logprobs": [],
+                            }
+                        ],
+                    }
+                ],
+                "usage": {
+                    "input_tokens": 31,
+                    "input_tokens_details": {"cached_tokens": 0},
+                    "output_tokens": 11,
+                    "output_tokens_details": {"reasoning_tokens": 0},
+                    "total_tokens": 42,
+                },
+            }
+            events = [
+                {"type": "response.created", "response": created},
+                {
+                    "type": "response.output_text.delta",
+                    "item_id": "msg_vertical_1",
+                    "output_index": 0,
+                    "content_index": 0,
+                    "delta": output,
+                    "logprobs": [],
+                },
+                {"type": "response.completed", "response": completed},
+            ]
+            encoded = (
+                "".join(
+                    f"event: {event['type']}\ndata: "
+                    f"{json.dumps(event, separators=(',', ':'))}\n\n"
+                    for event in events
+                )
+                + "data: [DONE]\n\n"
+            ).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/event-stream")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            try:
+                self.wfile.write(encoded)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+
+    class Server(ThreadingHTTPServer):
+        daemon_threads = True
+
+    server = Server(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield (
+            f"http://127.0.0.1:{server.server_port}/responses",
+            captured,
+            received,
+        )
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+
+
 def _process_environment(
     *,
     dsn_file: Path,
@@ -320,6 +455,31 @@ def _process_environment(
     )
     if after_claim_marker is not None:
         environment["EVA_TEST_AFTER_CLAIM_MARKER"] = str(after_claim_marker)
+    return environment
+
+
+def _official_process_environment(
+    *,
+    dsn_file: Path,
+    scope: TimelineScope,
+    count_file: Path,
+    endpoint: str,
+    lease_file: Path,
+) -> dict[str, str]:
+    environment = _process_environment(
+        dsn_file=dsn_file,
+        scope=scope,
+        count_file=count_file,
+        mode="official_sdk",
+    )
+    try:
+        import openai
+    except ImportError:
+        pytest.skip("the exact delegated provider environment is unavailable")
+    sdk_site_packages = str(Path(openai.__file__).resolve().parents[1])
+    environment["PYTHONPATH"] = f"{environment['PYTHONPATH']}:{sdk_site_packages}"
+    environment["EVA_TEST_PROVIDER_ENDPOINT"] = endpoint
+    environment["EVA_TEST_PROVIDER_LEASE_FILE"] = str(lease_file)
     return environment
 
 
@@ -1068,6 +1228,96 @@ def test_separate_process_executes_one_durable_pydantic_call(
     assert card.column == "review"
     assert spec.task not in card.model_dump_json()
     assert spec.work_id not in card.model_dump_json()
+
+
+def test_separate_process_executes_official_sdk_from_postgres_to_result(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "official-sdk-process-success"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _product_process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    lease_file = process_tmp_path / "provider-lease"
+    token = "official-sdk-secret-canary"
+    lease_file.write_text(
+        json.dumps({"access_token": token, "account_id": "account-test"})
+    )
+    lease_file.chmod(0o600)
+
+    with _official_provider_server() as (endpoint, captured, received):
+        environment = _official_process_environment(
+            dsn_file=dsn_file,
+            scope=scope,
+            count_file=process_tmp_path / "unused-provider-counter",
+            endpoint=endpoint,
+            lease_file=lease_file,
+        )
+        process = _start_process(environment)
+        assert process.pid != os.getpid()
+        assert all(spec.task not in argument for argument in process.args)
+        assert all(token not in argument for argument in process.args)
+        _closed_process(process)
+        assert received.is_set()
+
+    assert len(captured) == 1
+    assert captured[0]["path"] == "/responses"
+    assert captured[0]["authorization"] == f"Bearer {token}"
+    assert captured[0]["body"]["tool_choice"] == "none"
+    assert captured[0]["body"]["tools"] == []
+    loaded = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert loaded.state == "succeeded"
+    assert loaded.result is not None
+    assert "officiele SDK-keten" in loaded.result.output
+    assert loaded.usage is not None
+    assert loaded.usage.input_tokens == 31
+    assert loaded.usage.output_tokens == 11
+    assert token not in repr(loaded)
+
+
+def test_sigterm_during_official_sdk_call_is_ambiguous_and_never_replayed(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "official-sdk-process-sigterm"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _product_process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    lease_file = process_tmp_path / "provider-lease"
+    lease_file.write_text(
+        json.dumps({"access_token": "test-token", "account_id": "account-test"})
+    )
+    lease_file.chmod(0o600)
+
+    with _official_provider_server(body_delay=2) as (endpoint, captured, received):
+        environment = _official_process_environment(
+            dsn_file=dsn_file,
+            scope=scope,
+            count_file=process_tmp_path / "unused-provider-counter",
+            endpoint=endpoint,
+            lease_file=lease_file,
+        )
+        process = _start_process(environment)
+        assert received.wait(timeout=10)
+        process.terminate()
+        _closed_process(process)
+        loaded = store.load(
+            spec.work_id,
+            owner_principal_id=_id(label, "principal"),
+            principal_binding_id=binding,
+        )
+        assert loaded.state == "ambiguous"
+        assert loaded.error_code == "cancelled"
+
+        restarted = _start_process(environment)
+        _closed_process(restarted)
+    assert len(captured) == 1
 
 
 def test_two_separate_processes_share_one_call_start_fence(

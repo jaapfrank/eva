@@ -4,23 +4,42 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import os
 import time
 from datetime import UTC, datetime
 from pathlib import Path
 
 import sqlalchemy as sa
+import eva.bootstrap  # noqa: F401  # Load root before its model submodule.
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
 from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.model.openai_child_provider import (
+    OpenAIChildProvider,
+    OpenAIChildProviderSettings,
+)
 from eva.adapters.subagents.tool_free_child import (
     ClosedModelRegistry,
     PydanticToolFreeChildRunner,
     ToolFreeChildProfile,
 )
+from eva.bootstrap.delegated_work_provider import (
+    ENGINE_RELEASE_SHA256,
+    INPUT_PRICE_USD_MICROS_PER_MILLION,
+    MODEL_NAME,
+    MODEL_PROFILE_ID,
+    MODEL_PROFILE_RELEASE_SHA256,
+    OUTPUT_PRICE_USD_MICROS_PER_MILLION,
+    WORKER_INSTRUCTIONS,
+    WORKER_PROFILE_ID,
+    WORKER_PROFILE_RELEASE_SHA256,
+    WORKER_PROGRAM_SHA256,
+)
 from eva.bootstrap.delegated_work_service import (
     DelegatedWorkService,
     DelegatedWorkServiceSettings,
     run_delegated_work_service,
+    serve_delegated_work_service,
 )
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import DelegatedWorkWorker
@@ -139,6 +158,58 @@ def _run_paused_after_claim(runner: PydanticToolFreeChildRunner) -> None:
         engine.dispose()
 
 
+def _test_provider_credentials() -> tuple[str, str]:
+    value = json.loads(Path(_required("EVA_TEST_PROVIDER_LEASE_FILE")).read_text())
+    if not isinstance(value, dict) or set(value) != {"access_token", "account_id"}:
+        raise RuntimeError("test provider lease shape differs")
+    token = value["access_token"]
+    account_id = value["account_id"]
+    if not isinstance(token, str) or not token:
+        raise RuntimeError("test provider token is missing")
+    if not isinstance(account_id, str) or not account_id:
+        raise RuntimeError("test provider account is missing")
+    return token, account_id
+
+
+async def _run_official_sdk() -> None:
+    provider = OpenAIChildProvider(
+        OpenAIChildProviderSettings(
+            endpoint=_required("EVA_TEST_PROVIDER_ENDPOINT"),
+            model_name=MODEL_NAME,
+            timeout_seconds=30,
+        ),
+        credential_loader=_test_provider_credentials,
+    )
+    async with provider as model:
+        profile = ToolFreeChildProfile(
+            model_profile_id=MODEL_PROFILE_ID,
+            model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
+            worker_profile_id=WORKER_PROFILE_ID,
+            worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
+            instructions=WORKER_INSTRUCTIONS,
+            model=model,
+            input_cost_usd_micros_per_million_tokens=(
+                INPUT_PRICE_USD_MICROS_PER_MILLION
+            ),
+            output_cost_usd_micros_per_million_tokens=(
+                OUTPUT_PRICE_USD_MICROS_PER_MILLION
+            ),
+        )
+        runner = PydanticToolFreeChildRunner(
+            ClosedModelRegistry({MODEL_PROFILE_ID: profile}),
+            worker_program_sha256=WORKER_PROGRAM_SHA256,
+            engine_release_sha256=ENGINE_RELEASE_SHA256,
+            clock=_clock,
+        )
+        settings = DelegatedWorkServiceSettings.from_environment()
+        await serve_delegated_work_service(
+            runner,
+            settings=settings,
+            once=True,
+            clock=_clock,
+        )
+
+
 def main() -> int:
     forbidden = (
         "EVA_DATABASE_DSN",
@@ -150,8 +221,12 @@ def main() -> int:
     leaked = [name for name in forbidden if name in os.environ]
     if leaked:
         raise RuntimeError("parent process secrets reached delegated worker")
+    mode = _required("EVA_TEST_SUBAGENT_MODE")
+    if mode == "official_sdk":
+        asyncio.run(_run_official_sdk())
+        return 0
     model = _ProcessFixtureModel(
-        mode=_required("EVA_TEST_SUBAGENT_MODE"),
+        mode=mode,
         call_counter_path=Path(_required("EVA_TEST_CALL_COUNTER")),
     )
     profile = ToolFreeChildProfile(
@@ -171,7 +246,7 @@ def main() -> int:
         engine_release_sha256="88" * 32,
         clock=_clock,
     )
-    if os.environ["EVA_TEST_SUBAGENT_MODE"] == "pause_after_claim":
+    if mode == "pause_after_claim":
         _run_paused_after_claim(runner)
     else:
         run_delegated_work_service(runner, once=True, clock=_clock)
