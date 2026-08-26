@@ -1,0 +1,33 @@
+{
+  "receipt_contract": "EvaPortableObjectTargetKeyPreflightReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "f3a583b86c421393ce9a36039cb8512fb7ccf0c8",
+  "scope": "Synthetic sealed 4D fixture object and synthetic private target keyring only. No Eva1, live Eva, PostgreSQL, Hindsight, provider, connector, archive or encrypted user object was read or changed.",
+  "checks": [
+    {
+      "name": "target-key preflight plus object keyring",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827:src python3 -m pytest -q -s tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py",
+      "result": "7 passed"
+    },
+    {
+      "name": "object envelope and CAS regression",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827:src python3 -m pytest -q -s tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/objects/test_envelope.py tests/objects/test_cas.py",
+      "result": "39 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_object_verifier.py tests/operations/test_portable_object_verifier.py",
+      "result": "passed"
+    }
+  ],
+  "proven": [
+    "An active archived ObjectRef is accepted only when its original canonical row hash, fixed content-addressed path, envelope hash, metadata, binding and plaintext length all agree.",
+    "The target's separately provisioned keyring can decrypt the exact archived byte only for the matching tenant, installation and key reference; a wrong key is rejected.",
+    "A sealed historical object record remains verifiable after a later unrelated current export-schema extension."
+  ],
+  "not_proven": [
+    "No source-key transfer, CAS materialization, ObjectRef database restore, second-machine restore or deployment occurred.",
+    "The temporary PyNaCl test target is not a runtime installation and is removed after this proof.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations; this new object verifier adds none."
+  ]
+}

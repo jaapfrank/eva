@@ -78,6 +78,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   zit nooit in het archive. De eigenlijke bron→doel-sleuteloverdracht, CAS-write
   en tweede-machineproef blijven open stappen; zie
   `evidence/living-core/private-object-keyring-2026-08-27.json`.
+- Vóór een actief versleuteld object ooit hersteld mag worden, controleert de
+  doelinstallatie nu alleen-lezen de originele archiefhash, het vaste CAS-pad,
+  de versleutelde byte, metadata, binding en doelkey. Een verkeerde key of
+  gewijzigde byte stopt vóór een CAS- of databasewrite. Die controle blijft
+  werken als Eva later ongerelateerde exportvelden toevoegt; een geldig oud,
+  verzegeld archief wordt daardoor niet onleesbaar. Dit is nog **geen**
+  sleuteloverdracht, objectkopie, databaserecovery of tweede-machinebewijs; zie
+  `evidence/living-core/portable-object-target-key-preflight-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
