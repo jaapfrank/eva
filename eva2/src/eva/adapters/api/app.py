@@ -30,6 +30,7 @@ from eva.application.memory import (
     RecallCurrentFacts,
 )
 from eva.application.memory_audience import memory_audience_from_wire
+from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.advanced_tasks import (
     AdvancedTaskApproval,
@@ -688,6 +689,30 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
 
         return JSONResponse(
             cockpit_progress(),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/internal/v1/dashboard/people-memory")
+    def dashboard_people_memory() -> JSONResponse:
+        """Expose coarse family/memory states without content or identifiers."""
+
+        projection = getattr(runtime, "dashboard_people_memory", None)
+        if not callable(projection):
+            raise HTTPException(
+                status_code=503, detail="people and memory overview unavailable"
+            )
+        try:
+            overview = projection()
+        except Exception as error:
+            raise HTTPException(
+                status_code=503, detail="people and memory overview unavailable"
+            ) from error
+        if not isinstance(overview, PeopleMemoryOverview):
+            raise HTTPException(
+                status_code=503, detail="people and memory overview unavailable"
+            )
+        return JSONResponse(
+            overview.to_payload(),
             headers={"Cache-Control": "no-store"},
         )
 

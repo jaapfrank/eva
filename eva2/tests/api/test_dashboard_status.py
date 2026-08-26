@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
 from eva.application.conversation import load_current_identity_pack
+from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -25,6 +26,16 @@ class _Runtime:
             memory_projection="degraded",
             detail="database password=not-a-real-secret must not be exposed",
             model_provider="unavailable",
+        )
+
+
+class _PeopleMemoryRuntime(_Runtime):
+    def dashboard_people_memory(self) -> PeopleMemoryOverview:
+        return PeopleMemoryOverview(
+            dynamic_account="extra_account_linked",
+            group_sharing="expires_soon",
+            memory_flow="retrying",
+            hindsight="attention",
         )
 
 
@@ -51,6 +62,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "dashboard/status" in response.text
     assert "dashboard/identity" in response.text
     assert "dashboard/progress" in response.text
+    assert "dashboard/people-memory" in response.text
     for visible_module in (
         "Echte voortgang",
         "Werkbord",
@@ -71,14 +83,56 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "async function loadStatus" in response.text
     assert "async function loadIdentity" in response.text
     assert "async function loadProgress" in response.text
+    assert "async function loadPeopleMemory" in response.text
     assert "statusPayload" in response.text
     assert "identityPayload" in response.text
     assert "pack.state!=='current'" in response.text
     assert "progressPayload" in response.text
+    assert "peopleMemoryPayload" in response.text
+    assert "Object.keys(value).sort()" in response.text
     assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
     assert "connect-src 'self'" in response.headers["content-security-policy"]
     assert response.headers["x-content-type-options"] == "nosniff"
+
+
+def test_dashboard_people_memory_is_closed_read_only_and_non_identifying() -> None:
+    response = TestClient(create_app(_PeopleMemoryRuntime())).get(
+        "/internal/v1/dashboard/people-memory"
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json() == {
+        "contains_raw_content": False,
+        "contract": "EvaPeopleMemoryOverview/v1",
+        "control_plane": {"state": "selected_not_connected"},
+        "hindsight": {"state": "attention"},
+        "memory": {"state": "retrying"},
+        "people": {"dynamic_account": "extra_account_linked"},
+        "read_only": True,
+        "sharing": {"state": "expires_soon"},
+    }
+    for forbidden in (
+        "principal_id",
+        "telegram_user_id",
+        "group_chat_id",
+        "conversation_id",
+        "document_id",
+        '"content":',
+        "payload_sha256",
+        "last_error",
+    ):
+        assert forbidden not in response.text
+
+
+def test_dashboard_people_memory_fails_closed_without_a_projection() -> None:
+    response = TestClient(create_app(_Runtime())).get(
+        "/internal/v1/dashboard/people-memory"
+    )
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "people and memory overview unavailable"}
 
 
 def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> None:

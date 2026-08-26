@@ -56,6 +56,9 @@ from eva.adapters.postgres.conversation_actions import (
 )
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+from eva.adapters.postgres.people_memory_overview import (
+    PostgresPeopleMemoryOverview,
+)
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.telegram_group_consent import (
@@ -103,6 +106,10 @@ from eva.application.memory import (
     SemanticMemoryProviderError, SemanticMemoryProviderPort,
 )
 from eva.application.memory_audience import MemoryAudience
+from eva.application.people_memory_overview import (
+    PeopleMemoryOverview,
+    PeopleMemoryOverviewPort,
+)
 from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
@@ -469,6 +476,7 @@ class PostgresHindsightMemoryRuntime:
         runtime_tenant_id: str | None = None,
         runtime_installation_id: str | None = None,
         group_consent: TelegramGroupConsentStorePort | None = None,
+        people_memory_overview: PeopleMemoryOverviewPort | None = None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -493,6 +501,7 @@ class PostgresHindsightMemoryRuntime:
         self._runtime_tenant_id = runtime_tenant_id
         self._runtime_installation_id = runtime_installation_id
         self._group_consent = group_consent
+        self._people_memory_overview = people_memory_overview
 
     def admit_durable_goal(
         self,
@@ -609,6 +618,21 @@ class PostgresHindsightMemoryRuntime:
                     f"credentials_{model_status.state}",
                 )
         return RuntimeHealth(True, "ready", "ready", None, "ready")
+
+    def dashboard_people_memory(self) -> PeopleMemoryOverview:
+        """Return the privacy-safe cockpit projection for this fixed runtime scope."""
+
+        if self._people_memory_overview is None:
+            raise RuntimeError("people and memory cockpit projection is unavailable")
+        try:
+            self._memory.health()
+            hindsight_state = "ready"
+        except Exception:
+            hindsight_state = "attention"
+        return self._people_memory_overview.snapshot(
+            now=datetime.now(tz=UTC).replace(microsecond=0),
+            hindsight_state=hindsight_state,
+        )
 
     def recall(self, query: RecallCurrentFacts) -> PresenceMemory:
         return self._memory.recall_for_presence(query)
@@ -1534,6 +1558,11 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id,
         installation_id=settings.background_installation_id,
     )
+    people_memory_overview = PostgresPeopleMemoryOverview(
+        engine,
+        tenant_id=settings.background_tenant_id,
+        installation_id=settings.background_installation_id,
+    )
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -1843,6 +1872,7 @@ def create_runtime_app() -> FastAPI:
             runtime_tenant_id=settings.background_tenant_id,
             runtime_installation_id=settings.background_installation_id,
             group_consent=group_consent,
+            people_memory_overview=people_memory_overview,
         )
     )
 
