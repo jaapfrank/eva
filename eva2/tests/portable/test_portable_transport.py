@@ -261,3 +261,26 @@ def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -
         assert rejected.returncode == 2
         assert "passphrase file must be an owner-only" in rejected.stdout
         assert PASSPHRASE not in rejected.stdout
+
+        os.chmod(passphrase_file, 0o600)
+        linked_passphrase = private / "linked-passphrase"
+        linked_passphrase.symlink_to(passphrase_file)
+        linked = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "eva.operations.portable_transport_cli",
+                "seal",
+                "--source",
+                str(source),
+                "--destination",
+                str(tmp_path / "linked-rejected.eva2pt"),
+                "--passphrase-file",
+                str(linked_passphrase),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert linked.returncode == 2
+        assert "passphrase file must be an owner-only" in linked.stdout

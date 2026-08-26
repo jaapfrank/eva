@@ -44,13 +44,12 @@ def _parser() -> argparse.ArgumentParser:
 
 def _private_passphrase(path: Path) -> str:
     try:
-        absolute = path.resolve(strict=True)
+        absolute = path.absolute()
         metadata = absolute.lstat()
     except OSError as exc:
         raise PortableTransportError("passphrase file cannot be inspected") from exc
     if (
         not stat.S_ISREG(metadata.st_mode)
-        or stat.S_ISLNK(metadata.st_mode)
         or metadata.st_nlink != 1
         or metadata.st_uid != os.geteuid()
         or metadata.st_mode & 0o077
