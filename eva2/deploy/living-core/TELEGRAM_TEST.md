@@ -123,6 +123,24 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 11. Stuur vanuit A `/stop-sharing <GROEPS_ID>` en stuur weer vanuit A in de
     groep. Eva moet stil blijven voor A, ook na een herstart van de teststack;
     B mag alleen blijven werken zolang B's eigen toestemming nog actief is.
+12. Laat de draaiende teststack daarna zelf een **gesaneerde receipt** maken.
+    Kies een nieuwe bestandsnaam; de opdracht weigert stil overschrijven en
+    bewaart geen token, naam, account-ID, chat-ID, berichttekst of
+    Telegram-provider-ID.
+
+    ```bash
+    cd /home/administrator/project/Bottie-candidates/v2/eva2
+    sudo env PYTHONPATH=src:. python3 tools/capture_telegram_test_receipt.py \
+      --output /var/tmp/eva2-telegram-native-test-receipt-2026-08-26.json
+    ```
+
+    De receipt telt alleen Eva's eigen ledgeruitkomsten: toegelaten,
+    geweigerde, voorbereide, afgeleverde en onduidelijke Telegram-updates. Hij
+    controleert vooraf opnieuw dat uitsluitend de afgescheiden testcontainers,
+    netwerken, database en image actief zijn. Een `delivered`-telling bewijst
+    Telegrams provideracceptatie; vergelijk daarnaast zelf in de twee chats
+    dat A en B werkelijk de juiste zichtbare antwoorden kregen. De receipt is
+    geen bewijs van een volledig Eva-gesprek of van managed-B.
 
 De diagnosecore bewaart geen echte herinnering en voert geen echte Eva-taak
 uit. Deze proef bewijst dus Telegram-bezorging, accounttoelating en de
