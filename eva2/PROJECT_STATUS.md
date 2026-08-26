@@ -82,16 +82,22 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
-Checkpoint `aac1fda` maakt een **aparte Telegram-testdeur** klaar. De enige
-ondersteunde startopdracht weigert een verkeerd pad, een productie-achtig
-netwerk, een losse image-tag of een verkeerde testcore vóór er een container
-start. Twaalf gerichte controles zijn groen, waaronder een echte tijdelijke
-Dockerproef die zichzelf opruimt. Hierdoor kunnen we straks een nieuwe
-BotFather-testbot met twee testaccounts en één lege testgroep proberen zonder
-Eva A/B te gebruiken. Dit is voorbereiding, niet de Telegramproef zelf: er is
-nog geen nieuwe bot, testdatabase, testcore, bericht, groep of B-deploy
-gestart. Zie
-[`reviews/telegram-test-ingress-isolation-aac1fda.md`](reviews/telegram-test-ingress-isolation-aac1fda.md).
+Checkpoint `7017c25` maakt de **volledige aparte Telegram-testomgeving**
+beheersbaar klaar. Zij heeft een eigen lege PostgreSQL-database, volume en
+intern netwerk, plus een vaste diagnosecore die nadrukkelijk géén Eva-gesprek
+speelt. De startvolgorde is nu: eigen testondersteuning starten, die werkelijk
+controleren, pas dan het schema maken, opnieuw controleren en pas als laatste
+de Telegram-poller starten. Een fout vóór het schema doet geen migratie; een
+fout ná het starten stopt de poller weer en laat de supportomgeving staan om
+te onderzoeken. De DSN mag alleen naar
+`postgres-test:5432/eva2test` wijzen en het volume mag geen verborgen
+productiebind-mount zijn. **23 gerichte controles**, linting, compile en beide
+Compose-renders zijn groen; de onafhankelijke herreview is groen. Dit is nog
+steeds voorbereiding, niet de Telegramproef zelf: er is geen echte BotFather-
+bot, account, groep, bericht, PostgreSQL-run, Eva-gesprek of B-deploy gestart.
+Zie [`reviews/telegram-test-support-7017c25.md`](reviews/telegram-test-support-7017c25.md)
+en de korte operatoruitleg in
+[`deploy/living-core/TELEGRAM_TEST.md`](deploy/living-core/TELEGRAM_TEST.md).
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
