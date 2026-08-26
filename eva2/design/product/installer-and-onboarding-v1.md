@@ -110,6 +110,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   blijft terecht vóór de eerste SQL-query geweigerd; die is geen echte
   databaseback-up. Zie
   `evidence/living-core/portable-canonical-key-order-restore-2026-08-27.json`.
+- Een schone PostgreSQL-installatie is nu ook helemaal tot de actuele Eva-
+  schemaversie opgebouwd en heeft alle 39 hersteldoelen gecontroleerd. Een
+  volledig **leeg** archief wordt daarin transactioneel toegelaten. Dat bewijst
+  de verse installatie en de complete doelbasis, niet dat er al een echte
+  niet-lege 39-tabellenback-up is teruggezet. Een leeg archief laadt bovendien
+  geen objectcryptografie; die dependency blijft alleen bij echte versleutelde
+  objecten nodig. Zie
+  `evidence/living-core/portable-fresh-full-schema-empty-restore-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding

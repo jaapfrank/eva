@@ -1,0 +1,29 @@
+{
+  "receipt_contract": "EvaPortableFreshFullSchemaEmptyRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "d9c181b8e6784c4f7e85040e1735437407557da4",
+  "scope": "Disposable PostgreSQL 16.13 and an empty portable archive only. No Eva1, live Eva, Hindsight, provider, connector, user archive or user object was read or changed.",
+  "checks": [
+    {
+      "name": "fresh schema installation plus complete empty 39-table restore admission",
+      "command": "EVA2_TEST_POSTGRES_DSN='postgresql+psycopg://eva2:…@127.0.0.1:55439/eva2_test' PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore_full_schema.py",
+      "result": "1 passed"
+    },
+    {
+      "name": "portable restore and object regression",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827e:src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py tests/portable/test_portable_restore_object_boundary.py tests/portable/test_portable_restore_full_schema.py tests/portable/test_portable_p1_regressions.py tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py tests/objects/test_envelope.py tests/objects/test_cas.py",
+      "result": "94 passed, 5 skipped"
+    }
+  ],
+  "proven": [
+    "A newly installed PostgreSQL schema reached the exact current Eva migration head and all 39 canonical restore targets passed the serializable empty-target admission check.",
+    "A complete empty portable archive was accepted without importing optional object cryptography.",
+    "Encrypted-object code remains isolated: an archive without objects does not need to load the optional object-crypto dependency."
+  ],
+  "not_proven": [
+    "An empty archive does not prove a nonempty 39-table restore, a second-machine restore, source-key transfer or deployment.",
+    "The historical terminal reader fixture remains non-restorable by design because its synthetic internal IDs conflict; it was not changed or relabelled.",
+    "The temporary PostgreSQL container and temporary PyNaCl test target were removed after the proof.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations; this change adds none."
+  ]
+}
