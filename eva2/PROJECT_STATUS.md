@@ -55,7 +55,7 @@ de controleerbare live receipts staan in
 | Hoofduitkomst | Wat aantoonbaar staat | Status van het complete project |
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
-| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen | Echte gezinschat, spontane presence en conversationele voice nog open |
+| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; de eerste veilige voicegrens laat alleen een definitieve private transcriptie in dezelfde gesprekcore toe | Echte gezinschat, spontane presence en bellen met streaming audio/onderbreking nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. Een afgeschermde browser las één vaste pagina en voerde via Eva's duurzame logboek één vaste klik uit met onafhankelijke controle achteraf | Publieke websites, echte accounts, meekijken/overname, volledige skillcyclus en Eigenaarmodus nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets en één geïntegreerde 3D-cockpit met status, identiteit, Mijn kring en read-only Kanban bestaan | Eigenaar-authenticatie, bordbediening, installer, update/restore en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
@@ -151,6 +151,17 @@ bot, account, groep, bericht, PostgreSQL-run, Eva-gesprek of B-deploy gestart.
 Zie [`reviews/telegram-test-support-7017c25.md`](reviews/telegram-test-support-7017c25.md)
 en de korte operatoruitleg in
 [`deploy/living-core/TELEGRAM_TEST.md`](deploy/living-core/TELEGRAM_TEST.md).
+
+Checkpoint `57f36f0` maakt voice nu **een echte kernvoorbereiding**, geen
+losse toekomsttekening. Een servergebonden `VoiceSession` brengt dezelfde
+persoon, gesprek, identiteit, policy, privacy en deadline mee. Alleen een
+definitieve transcriptie kan daaruit naar Eva's bestaande private gesprekcore;
+ruwe audio en tussentekst komen niet in die grens. Een onderbreking stopt
+uitsluitend hoorbare output en een onaf antwoord, nooit stil een huisactie.
+Zeven directe grensgevallen plus de bestaande gesprek- en schemacontroles
+zijn samen **21/21 groen**. Dit is nog geen microfoon, voiceprovider,
+Telegram-call, Home Assistant-route, latencyresultaat of live voice; de
+onafhankelijke review is eveneens nog open.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**

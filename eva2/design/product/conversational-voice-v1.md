@@ -108,6 +108,30 @@ microfoon -> streaming audio -> VAD/STT -> Eva ConversationTurn
   gate bewijst dat een HA-native intent nooit een antwoord, tool of servicecall
   kan veroorzaken.
 
+## V01 staat nu in de kern, zonder te doen alsof bellen al werkt
+
+Checkpoint `57f36f0` levert de eerste echte voicegrens op:
+`src/eva/contracts/voice.py` bevat `VoiceSession`, `VoiceTurn`, `BargeIn` en
+de expliciete privacykeuze. `src/eva/application/voice.py` zet alleen een
+servergebonden **definitieve** gesproken beurt om naar Eva's bestaande private
+`ConversationTurn`. Daardoor wordt voice geen tweede geheugen of tweede
+gesprekskern.
+
+De gerichte tests weigeren ruwe audiobytes, partial transcripts, een onjuiste
+transcripthash, een andere persoon of gesprek, verlopen sessies en een
+barge-in buiten de sessie. Een barge-in heeft expliciet geen toestemming om
+een tool-effect te annuleren: hij mag alleen hoorbare output en een nog niet
+afgemaakte antwoordgeneratie stoppen. **21** contract-, gesprek- en
+schemachecks zijn groen. Er is nog geen microfoon, audio, provider, token,
+opslag, latencyclaim of onafhankelijke review; V01 blijft daarom op het
+aftekenbord open totdat de review is uitgevoerd.
+
+De types staan bewust nog niet in de permanente portable-wire-registry. Die
+registry is de exportgrens voor bestaande duurzame records; er bestaat nog
+geen V01-voiceconnector of migratie die zo'n extern/draagbaar record mag
+schrijven. V03/V04 promoveren de exact dezelfde shapes pas samen met die
+concrete route en opslagautoriteit.
+
 ## Snelheidsbudgetten
 
 Deze waarden zijn acceptatiedoelen, nog geen gemeten productclaims.
