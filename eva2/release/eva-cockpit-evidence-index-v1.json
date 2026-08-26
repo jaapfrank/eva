@@ -107,6 +107,10 @@
           "sha256": "d61920964aa66b2951cae448bf0ad3aea6b3dc21ac5b3e8030d7ec11ddfd7378"
         },
         {
+          "path": "tests/experiments/test_playwright_mcp_public_read.py",
+          "sha256": "9c3f24eb410ed015d9cd5aef5b7079da46e93a3a9e963c7032565ec3063aa983"
+        },
+        {
           "path": "tests/postgres/test_playwright_mcp_action_chain.py",
           "sha256": "9d94ec650a6875f4cbe10ac3c0593387a20eea714fb3cfa04e97efe5a65d356a"
         }
