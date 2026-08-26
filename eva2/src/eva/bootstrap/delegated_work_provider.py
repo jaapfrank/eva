@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import UTC, datetime
+import hashlib
 from importlib.metadata import PackageNotFoundError, version
 import json
 from pathlib import Path
@@ -22,6 +23,7 @@ from eva.adapters.subagents.tool_free_child import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.bootstrap.secrets import read_shared_runtime_file_bytes
+from eva.contracts.delegated_work import DelegatedWorkGrant, DelegatedWorkSpec
 
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
@@ -29,7 +31,7 @@ _MODEL_LEASE_FILE_MODE = 0o640
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 
 MODEL_PROFILE_ID = "model:codex:gpt-5.4-mini:v1"
-WORKER_PROFILE_ID = "worker:onderzoeker:v1"
+WORKER_PROFILE_ID = "worker:research:v1"
 MODEL_NAME = "gpt-5.4-mini"
 MODEL_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 MODEL_TIMEOUT_SECONDS = 30
@@ -72,16 +74,35 @@ WORKER_PROFILE_RELEASE_SHA256 = canonical_sha256(
         "worker_profile_id": WORKER_PROFILE_ID,
     }
 )
+_EVA_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+_EVA2_ROOT = Path(__file__).resolve().parents[3]
+
+
+def _source_hashes() -> dict[str, str]:
+    relative_paths = (
+        "adapters/model/openai_child_provider.py",
+        "adapters/postgres/delegated_work.py",
+        "adapters/subagents/tool_free_child.py",
+        "operations/delegated_work_worker.py",
+    )
+    return {
+        path: hashlib.sha256((_EVA_PACKAGE_ROOT / path).read_bytes()).hexdigest()
+        for path in relative_paths
+    }
+
+
 WORKER_PROGRAM_SHA256 = canonical_sha256(
     {
         "contract": "EvaDelegatedWorkerProgram/v1",
-        "provider_boundary": "openai_child_provider.py",
-        "runner_boundary": "tool_free_child.py",
+        "source_sha256": _source_hashes(),
     }
 )
 ENGINE_RELEASE_SHA256 = canonical_sha256(
     {
         "contract": "EvaDelegatedEngineRelease/v1",
+        "dependency_lock_sha256": hashlib.sha256(
+            (_EVA2_ROOT / "requirements-delegated-work.lock").read_bytes()
+        ).hexdigest(),
         "openai_sdk": OPENAI_SDK_VERSION,
         "pydantic_ai": PYDANTIC_AI_VERSION,
     }
@@ -101,6 +122,67 @@ def verify_delegated_provider_dependencies() -> None:
         raise RuntimeError("delegated provider dependency is unavailable") from error
     if installed != expected:
         raise RuntimeError("delegated provider dependency release differs")
+
+
+def build_delegated_work_spec(
+    *,
+    work_id: str,
+    episode_id: str,
+    generation: int,
+    parent_task_id: str,
+    owner_principal_id: str,
+    principal_binding_id: str,
+    task: str,
+    created_at: datetime,
+    deadline: datetime,
+) -> DelegatedWorkSpec:
+    """Build the one release-authorized product task; callers choose no model knobs."""
+
+    def timestamp(value: datetime) -> str:
+        if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
+            raise ValueError("delegated work time must be aware whole seconds")
+        return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    grant = DelegatedWorkGrant(
+        contract="DelegatedWorkGrant/v1",
+        schema_version=1,
+        context_refs=[],
+        capability_ids=[],
+        workspace_ref=None,
+        child_network_access=False,
+        maximum_model_runs=1,
+        maximum_completed_model_responses=1,
+        maximum_input_tokens=4_000,
+        maximum_output_tokens=500,
+        maximum_total_tokens=4_500,
+        maximum_cost_usd_micros=10_000,
+        timeout_seconds=MODEL_TIMEOUT_SECONDS,
+        maximum_claims_before_call_start=2,
+        delegation_depth=1,
+    )
+    return DelegatedWorkSpec(
+        contract="DelegatedWork/v1",
+        schema_version=1,
+        work_id=work_id,
+        episode_id=episode_id,
+        generation=generation,
+        parent_task_id=parent_task_id,
+        owner_principal_id=owner_principal_id,
+        principal_binding_id=principal_binding_id,
+        audience="private",
+        worker_name="onderzoeker",
+        worker_profile_id=WORKER_PROFILE_ID,
+        worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
+        task=task,
+        model_profile_id=MODEL_PROFILE_ID,
+        model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
+        worker_program_sha256=WORKER_PROGRAM_SHA256,
+        engine_release_sha256=ENGINE_RELEASE_SHA256,
+        output_schema_sha256=OUTPUT_SCHEMA_SHA256,
+        grant=grant.to_payload(),
+        created_at=timestamp(created_at),
+        deadline=timestamp(deadline),
+    )
 
 
 def _read_access_lease(auth_file: Path) -> tuple[str, str]:
@@ -186,6 +268,7 @@ __all__ = [
     "WORKER_PROFILE_ID",
     "WORKER_PROFILE_RELEASE_SHA256",
     "WORKER_PROGRAM_SHA256",
+    "build_delegated_work_spec",
     "open_delegated_work_runner",
     "verify_delegated_provider_dependencies",
 ]

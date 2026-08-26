@@ -41,6 +41,10 @@ class ChildProviderResponseTooLarge(RuntimeError):
     """The provider stream exceeded its release-owned byte boundary."""
 
 
+class ChildProviderProtocolError(RuntimeError):
+    """The provider stream ended without one trustworthy terminal receipt."""
+
+
 @dataclass(frozen=True, slots=True)
 class OpenAIChildProviderSettings:
     """Release-owned settings; task text never constructs this object."""
@@ -83,14 +87,22 @@ class _RotatingAccessToken:
 
 
 class _BoundedAsyncResponseStream(httpx2.AsyncByteStream):
-    """Stop reading a provider response after one release-owned byte cap."""
+    """Bound and validate a complete provider SSE before the SDK sees it."""
 
-    def __init__(self, stream: httpx2.AsyncByteStream, maximum_bytes: int) -> None:
+    def __init__(
+        self,
+        stream: httpx2.AsyncByteStream,
+        maximum_bytes: int,
+        *,
+        validate_terminal_sse: bool,
+    ) -> None:
         self._stream = stream
         self._maximum_bytes = maximum_bytes
+        self._validate_terminal_sse = validate_terminal_sse
 
     async def __aiter__(self):  # type: ignore[no-untyped-def]
         total = 0
+        buffered: list[bytes] = []
         async for chunk in self._stream:
             total += len(chunk)
             if total > self._maximum_bytes:
@@ -98,7 +110,12 @@ class _BoundedAsyncResponseStream(httpx2.AsyncByteStream):
                 raise ChildProviderResponseTooLarge(
                     "child model response exceeded its byte limit"
                 )
-            yield chunk
+            buffered.append(chunk)
+        content = b"".join(buffered)
+        if self._validate_terminal_sse:
+            _validate_terminal_sse(content)
+        if content:
+            yield content
 
     async def aclose(self) -> None:
         await self._stream.aclose()
@@ -166,6 +183,12 @@ class _LocalInputCountTransport(httpx2.AsyncBaseTransport):
             stream=_BoundedAsyncResponseStream(
                 cast(httpx2.AsyncByteStream, response.stream),
                 self._maximum_response_bytes,
+                validate_terminal_sse=(
+                    200 <= response.status_code < 300
+                    and response.headers.get("content-type", "")
+                    .lower()
+                    .startswith("text/event-stream")
+                ),
             ),
             request=request,
             extensions=response.extensions,
@@ -303,6 +326,59 @@ def _codex_compatible_request(request: httpx2.Request) -> httpx2.Request:
         content=encoded,
         extensions=request.extensions,
     )
+
+
+def _validate_terminal_sse(content: bytes) -> None:
+    """Require exactly one completed terminal event with coherent measured usage."""
+
+    try:
+        lines = content.decode("utf-8").splitlines()
+    except UnicodeDecodeError as error:
+        raise ChildProviderProtocolError(
+            "child model response is not UTF-8 SSE"
+        ) from error
+    terminal: list[dict[str, object]] = []
+    completed_seen = False
+    for line in lines:
+        if not line.startswith("data: ") or line == "data: [DONE]":
+            continue
+        try:
+            event = json.loads(line.removeprefix("data: "))
+        except json.JSONDecodeError as error:
+            raise ChildProviderProtocolError(
+                "child model response contains invalid SSE JSON"
+            ) from error
+        if not isinstance(event, dict):
+            raise ChildProviderProtocolError("child model SSE event is invalid")
+        kind = event.get("type")
+        if completed_seen:
+            raise ChildProviderProtocolError(
+                "child model returned an event after completion"
+            )
+        if kind in {
+            "response.cancelled",
+            "response.completed",
+            "response.failed",
+            "response.incomplete",
+        }:
+            terminal.append(event)
+            completed_seen = kind == "response.completed"
+    if len(terminal) != 1 or terminal[0].get("type") != "response.completed":
+        raise ChildProviderProtocolError(
+            "child model stream has no unique completed terminal event"
+        )
+    response = terminal[0].get("response")
+    if not isinstance(response, dict) or response.get("status") != "completed":
+        raise ChildProviderProtocolError("child model completion status is invalid")
+    usage = response.get("usage")
+    if not isinstance(usage, dict):
+        raise ChildProviderProtocolError("child model completion usage is missing")
+    values = tuple(usage.get(name) for name in ("input_tokens", "output_tokens", "total_tokens"))
+    if (
+        any(isinstance(value, bool) or not isinstance(value, int) or value < 0 for value in values)
+        or values[2] != values[0] + values[1]
+    ):
+        raise ChildProviderProtocolError("child model completion usage is invalid")
 
 
 class OpenAIChildProvider:

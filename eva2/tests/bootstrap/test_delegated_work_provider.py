@@ -6,6 +6,7 @@ import asyncio
 import hashlib
 import json
 import re
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -17,9 +18,11 @@ from eva.bootstrap.delegated_work_provider import (
     WORKER_PROFILE_ID,
     WORKER_PROFILE_RELEASE_SHA256,
     WORKER_PROGRAM_SHA256,
+    build_delegated_work_spec,
     open_delegated_work_runner,
     verify_delegated_provider_dependencies,
 )
+from eva.contracts.canonical_json import canonical_sha256
 from pydantic_ai.models.function import FunctionModel
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -27,7 +30,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 
 def test_release_profile_is_closed_and_hash_bound() -> None:
     assert MODEL_PROFILE_ID == "model:codex:gpt-5.4-mini:v1"
-    assert WORKER_PROFILE_ID == "worker:onderzoeker:v1"
+    assert WORKER_PROFILE_ID == "worker:research:v1"
     for value in (
         MODEL_PROFILE_RELEASE_SHA256,
         WORKER_PROFILE_RELEASE_SHA256,
@@ -37,27 +40,59 @@ def test_release_profile_is_closed_and_hash_bound() -> None:
         assert re.fullmatch(r"[0-9a-f]{64}", value)
 
 
-def test_isolated_worker_lock_is_exactly_the_reviewed_sdk_candidate() -> None:
-    candidate = (
-        EVA2_ROOT / "experiments/openai-sdk-v1/requirements.lock"
-    ).read_text(encoding="utf-8")
-    expected = candidate.replace(
-        "eva2/experiments/openai-sdk-v1/requirements.lock",
-        "eva2/requirements-delegated-work.lock",
-    ).replace(
-        "eva2/experiments/openai-sdk-v1/requirements.in",
-        "eva2/release/delegated-work-dependency-roots.in",
+def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
+    package_root = EVA2_ROOT / "src/eva"
+    sources = {
+        path: hashlib.sha256((package_root / path).read_bytes()).hexdigest()
+        for path in (
+            "adapters/model/openai_child_provider.py",
+            "adapters/postgres/delegated_work.py",
+            "adapters/subagents/tool_free_child.py",
+            "operations/delegated_work_worker.py",
+        )
+    }
+    assert WORKER_PROGRAM_SHA256 == canonical_sha256(
+        {"contract": "EvaDelegatedWorkerProgram/v1", "source_sha256": sources}
     )
+    lock_sha256 = hashlib.sha256(
+        (EVA2_ROOT / "requirements-delegated-work.lock").read_bytes()
+    ).hexdigest()
+    assert ENGINE_RELEASE_SHA256 == canonical_sha256(
+        {
+            "contract": "EvaDelegatedEngineRelease/v1",
+            "dependency_lock_sha256": lock_sha256,
+            "openai_sdk": "3.3.1",
+            "pydantic_ai": "2.32.1",
+        }
+    )
+
+
+def test_isolated_worker_lock_has_only_its_narrow_direct_roots() -> None:
     actual = (EVA2_ROOT / "requirements-delegated-work.lock").read_text(
         encoding="utf-8"
     )
-    assert actual == expected
     roots = (
         EVA2_ROOT / "release/delegated-work-dependency-roots.in"
     ).read_text(encoding="utf-8")
-    assert "openai==3.3.1" in roots
-    assert "pydantic-ai-slim==2.32.1" in roots
-    assert "openai==3.3.1 \\\n" in actual
+    assert {
+        line for line in roots.splitlines() if line and not line.startswith("#")
+    } == {
+        "openai==3.3.1",
+        "psycopg[binary]==3.3.4",
+        "pydantic==2.12.5",
+        "pydantic-ai-slim==2.32.1",
+        "SQLAlchemy==2.0.52",
+    }
+    for required in (
+        "openai==3.3.1 \\\n",
+        "psycopg==3.3.4 \\\n",
+        "psycopg-binary==3.3.4 \\\n",
+        "pydantic-ai-slim==2.32.1 \\\n",
+        "sqlalchemy==2.0.52 \\\n",
+    ):
+        assert required in actual
+    for forbidden in ("alembic==", "cryptography==", "dbos==", "fastapi==", "uvicorn=="):
+        assert forbidden not in actual
 
 
 def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -68,6 +103,32 @@ def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> Non
     installed["openai"] = "3.3.2"
     with pytest.raises(RuntimeError, match="release differs"):
         verify_delegated_provider_dependencies()
+
+
+def test_product_task_builder_matches_the_only_sealed_runner_authority() -> None:
+    created = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
+    spec = build_delegated_work_spec(
+        work_id="work:owner:research:1",
+        episode_id="11111111-1111-1111-1111-111111111111",
+        generation=7,
+        parent_task_id="task:telegram:42",
+        owner_principal_id="22222222-2222-2222-2222-222222222222",
+        principal_binding_id="33333333-3333-3333-3333-333333333333",
+        task="Onderzoek welke onderhouden voice-route het beste past.",
+        created_at=created,
+        deadline=created + timedelta(minutes=5),
+    )
+    assert spec.worker_profile_id == WORKER_PROFILE_ID
+    assert spec.worker_profile_release_sha256 == WORKER_PROFILE_RELEASE_SHA256
+    assert spec.model_profile_id == MODEL_PROFILE_ID
+    assert spec.model_profile_release_sha256 == MODEL_PROFILE_RELEASE_SHA256
+    assert spec.worker_program_sha256 == WORKER_PROGRAM_SHA256
+    assert spec.engine_release_sha256 == ENGINE_RELEASE_SHA256
+    assert spec.grant.context_refs == []
+    assert spec.grant.capability_ids == []
+    assert spec.grant.child_network_access is False
+    assert spec.grant.maximum_model_runs == 1
+    assert spec.grant.maximum_completed_model_responses == 1
 
 
 def test_bootstrap_reads_exact_shared_access_lease_contract(
