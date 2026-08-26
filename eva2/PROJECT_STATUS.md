@@ -112,6 +112,8 @@ een blokkade: de Squid-proxy heeft **3 HIGH** bevindingen met fixes; de
 Playwright-sidecar **1 CRITICAL + 22 HIGH** met fixes. Beide exacte digests
 zijn daarom afgewezen voor release. Zie
 [`browser-dependency-vulnerability-scan-2026-08-26.json`](evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json).
+Ook de nieuwst opgehaalde Playwright-digest gaf exact dezelfde telling; alleen
+naar `latest` wisselen is dus geen oplossing.
 Dit is nog geen volledige release-scan of productie-upgrade: een vervangende
 image moet opnieuw worden gepind, gescand en functioneel beproefd.
 

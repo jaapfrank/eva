@@ -20,7 +20,7 @@
         },
         {
           "path": "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
-          "sha256": "a56bf2c3d54506f42019dc161fb3107c8b0b0315086e25004f442f34ffea6527"
+          "sha256": "6da0030533c4a2493c214dfd8e3b52b4bafe69d4e8817e96f2c64504f5458f55"
         },
         {
           "path": "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
@@ -32,7 +32,7 @@
         },
         {
           "path": "experiments/playwright-mcp-public-read-v1/README.md",
-          "sha256": "4ab7c3d7690584bd4d8a026e5f74c92c7bd13eb843b82dcc90a6468d68a68f08"
+          "sha256": "b90eff7cd739e3e4879dedb5260860ca40a2344c6b9726ea5d213723089aea27"
         },
         {
           "path": "experiments/playwright-mcp-public-read-v1/profile.json",
@@ -364,7 +364,7 @@
         },
         {
           "path": "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
-          "sha256": "a56bf2c3d54506f42019dc161fb3107c8b0b0315086e25004f442f34ffea6527"
+          "sha256": "6da0030533c4a2493c214dfd8e3b52b4bafe69d4e8817e96f2c64504f5458f55"
         },
         {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
