@@ -82,7 +82,7 @@ class McpReadOnlyStreamableHttpAdapter:
         )
 
         deadline = time.monotonic() + self._import.timeout_milliseconds / 1000
-        session = _McpSession(
+        session = McpStreamableHttpSession(
             endpoint=self._import.endpoint,
             opener=self._opener,
             deadline=deadline,
@@ -127,7 +127,7 @@ class McpReadOnlyStreamableHttpAdapter:
         )
 
 
-class _McpSession:
+class McpStreamableHttpSession:
     def __init__(
         self,
         *,
@@ -136,13 +136,17 @@ class _McpSession:
         deadline: float,
         maximum_request_bytes: int,
         maximum_response_bytes: int,
+        response_progress_timeout_seconds: float = _RESPONSE_POLL_SECONDS,
     ) -> None:
+        if response_progress_timeout_seconds <= 0:
+            raise ValueError("MCP response progress timeout must be positive")
         self._endpoint = endpoint
         self._opener = opener
         self._deadline = deadline
         self._maximum_request_bytes = maximum_request_bytes
         self._maximum_response_bytes = maximum_response_bytes
         self._maximum_session_bytes = maximum_response_bytes * _SESSION_BODY_MULTIPLIER
+        self._response_progress_timeout_seconds = response_progress_timeout_seconds
         self._received_bytes = 0
         self._session_id: str | None = None
         self._protocol_version: str | None = None
@@ -241,7 +245,9 @@ class _McpSession:
             remaining = self._remaining_timeout()
             if socket_timeout_enforceable:
                 try:
-                    socket_reader.settimeout(min(remaining, _RESPONSE_POLL_SECONDS))
+                    socket_reader.settimeout(
+                        min(remaining, self._response_progress_timeout_seconds)
+                    )
                 except OSError:
                     # urllib may already have buffered a complete Content-Length
                     # response and closed the socket.  Remaining reads are then
@@ -401,4 +407,9 @@ def _validate_value_against_closed_object_schema(
     validate_json_value(value)
 
 
-__all__ = ["McpReadOnlyError", "McpReadOnlyResult", "McpReadOnlyStreamableHttpAdapter"]
+__all__ = [
+    "McpReadOnlyError",
+    "McpReadOnlyResult",
+    "McpReadOnlyStreamableHttpAdapter",
+    "McpStreamableHttpSession",
+]

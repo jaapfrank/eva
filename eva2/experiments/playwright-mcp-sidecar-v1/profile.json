@@ -1,0 +1,64 @@
+{
+  "contract": "EvaPlaywrightMcpCandidateProfile/v1",
+  "decision": "admit_disposable_isolated_page_read",
+  "fixture": {
+    "expectedSnapshotSha256": "f2062a0f983646e60a5f08e64fba7eecbcf8065ec795dda2085509b624fb6d9f",
+    "expectedTitle": "Eva browserproef R01",
+    "fileSha256": "f5d5a4a7c3d5ed2eda18d03ec7222b349c6b5574126091f592bcdf2db345cfaf",
+    "requiredVisibleTexts": [
+      "De browserhand heeft deze tekst werkelijk gezien.",
+      "Releaseversie: 2026.08.26"
+    ],
+    "url": "http://fixture.eva.test:8080/index.html"
+  },
+  "image": {
+    "amd64Digest": "sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "arm64Digest": "sha256:2f69a7a48fb9e5eea360f8f160192b11241e6e7d124389c103164f39e6fd2f8d",
+    "indexDigest": "sha256:18c0a9c934004fe9580cc79f1e8e6e6cde7c667348b215335e8a23fd3e509804",
+    "localAmd64ContentSizeBytes": 416700121,
+    "repository": "mcr.microsoft.com/playwright/mcp",
+    "user": "node"
+  },
+  "nonclaims": {
+    "arbitraryWebsites": false,
+    "changedAOrB": false,
+    "clicksOrDownloads": false,
+    "credentialsOrAccounts": false,
+    "durableBrowserLedger": false,
+    "formsOrUploads": false,
+    "installedInManagedB": false,
+    "livePublicInternet": false,
+    "persistentProfile": false,
+    "provedGeneralComputerUse": false,
+    "provedTelegramRoute": false,
+    "sharedFamilyUse": false
+  },
+  "package": {
+    "chromiumRevision": 1237,
+    "chromiumVersion": "152.0.7977.8",
+    "gitCommit": "4c5077651542f68525a0b51e97bab2a32abc9290",
+    "license": "Apache-2.0",
+    "name": "@playwright/mcp",
+    "npmIntegrity": "sha512-VpqD4a3vFyGQMY9sh3UJiO6wjcurggkljKfAyCHL0QWGY5m6Ehr3MNsAAHPDHO//n13g0PCjpHatAOiulrqdZQ==",
+    "npmShasum": "28a1027e09873623be2534b29153c49a200fba99",
+    "playwrightCoreVersion": "1.63.0-alpha-2026-08-05",
+    "playwrightVersion": "1.63.0-alpha-2026-08-05",
+    "tag": "v0.0.79",
+    "version": "0.0.79"
+  },
+  "sandboxProfileSha256": "efaf960ba2e02536c52ab0214c607be1dfb9576dba700e7b769f4670802cfe0d",
+  "server": {
+    "mcpProtocolVersion": "2025-06-18",
+    "name": "Playwright",
+    "version": "1.63.0-alpha-2026-08-05"
+  },
+  "tools": {
+    "browserNavigateSha256": "4bd2f88138e75bb639e57c781bacc3465723eff08879f84976b76d21a4a66295",
+    "browserSnapshotSha256": "b4df87ac5b5691cf8ac04cad340509c5fd93496996ae4a1d3499553ae6103b68",
+    "maximumCalls": 2,
+    "sequence": [
+      "browser_navigate",
+      "browser_snapshot"
+    ]
+  }
+}
