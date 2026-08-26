@@ -38,6 +38,8 @@ from eva.adapters.subagents.tool_free_child import (
     ToolFreeChildOutcome,
     ToolFreeChildProfile,
 )
+from eva.application.conversation import ConversationTurn
+from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 from eva.bootstrap.delegated_work_provider import (
     build_unadmitted_delegated_work_spec,
 )
@@ -888,6 +890,78 @@ def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
     ).state == "call_started"
+
+
+def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
+    delegated_engine: Engine,
+) -> None:
+    label = "owner-chat-control"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = _store(delegated_engine, scope)
+    commands = DelegatedWorkConversationCommands(
+        store,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        episode_id=episode,
+        generation=1,
+        clock=lambda: datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+
+    def turn(message_id: str, text: str) -> ConversationTurn:
+        return ConversationTurn.private(
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+            principal_id=str(owner),
+            conversation_id="telegram:owner-chat-control",
+            message_id=message_id,
+            text=text,
+            occurred_at="2026-08-26T12:00:00Z",
+        )
+
+    started = commands.handle(
+        turn(
+            "telegram:owner-chat-control:1",
+            "Laat een onderzoeker de onderhoudsstatus van onze dependencies samenvatten",
+        )
+    )
+    assert started is not None
+    assert "ingepland" in started.text
+    work_id = store.latest_active_work_id(
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    )
+    assert work_id is not None
+    stored = store.load(
+        work_id,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    )
+    assert stored.state == "admitted"
+    assert stored.spec.task == (
+        "de onderhoudsstatus van onze dependencies samenvatten"
+    )
+
+    status = commands.handle(
+        turn("telegram:owner-chat-control:2", "Hoe staat mijn onderzoek?")
+    )
+    assert status is not None
+    assert "1 wachtend" in status.text
+
+    stopped = commands.handle(
+        turn("telegram:owner-chat-control:3", "Stop mijn onderzoek")
+    )
+    assert stopped is not None
+    assert "Gestopt voordat" in stopped.text
+    assert store.load(
+        work_id,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    ).state == "stopped"
+    assert store.claim_next(
+        worker_id="worker:after-owner-chat-stop",
+        now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
+    ) is None
 
 
 def test_revocation_waits_for_atomic_call_start(
