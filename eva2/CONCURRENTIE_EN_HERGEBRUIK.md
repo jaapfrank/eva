@@ -174,7 +174,8 @@ Dit is inmiddels meer dan een lijstje links. De officiële OpenAI-SDK neemt in
 een gereviewde kandidaat al één handgeschreven transportroute over. Harness en
 de publieke Pydantic-runner voeren in een tweede kandidaat echte toolvrije
 subagents uit; 45 tests bewaken context, tools, calls, tokens en time-out. De
-providerloze lijn koppelt dit inmiddels aan duurzame opslag en het werkbord. De
+eerste providerloze lijn is daarna uitgebreid met duurzame opslag, commandostart,
+volgen, actieve stop, een aparte officiële-SDK-workerimage en het werkbord. De
 officiële MCP-SDK is juist na twee echte proeven afgewezen omdat zij voor Eva's
 smalle route meer packages en meer code opleverde. HA-MCP is gestart en diep
 vergeleken, maar een directe wissel bespaart nog te weinig code. Geen van deze

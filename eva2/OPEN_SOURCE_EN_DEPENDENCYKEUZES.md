@@ -77,8 +77,8 @@ Hergebruik betekent niet blind `latest` installeren.
   beproefde actuele kandidaat is `0.25.0`. Zijn
   subagentengine is lokaal echt beproefd. Zijn `PlaywrightBrowser` is handig,
   maar draait in Eva's Pythonproces en kan niet samen met Pydantic durable
-  execution. Daarom krijgt Microsoft Playwright MCP de eerste productgerichte
-  sidecarproef en houden we niet beide browserlagen.
+  execution. Daarom heeft Microsoft Playwright MCP de eerste productgerichte
+  lokale read- en actieproef doorlopen en houden we niet beide browserlagen.
 - Eva gebruikt nu een lokale DBOS-patch `2.30.0+eva.1` die retry na een
   onduidelijke databasecommit begrenst. De bronaudit van stock `2.31.0` vond
   wel een belangrijke upstreamfix voor dubbele workers, maar nog steeds geen
@@ -204,11 +204,12 @@ uitgeschakelde telemetry toe. 23 nieuwe tests houden de child privé,
 context-/tool-/workspacevrij en zonder child-netwerktools; samen met Harness is
 de map 45/45 groen. De vaste modelproviderverbinding is geen childtool.
 De directe runner loopt inmiddels via een eigen PostgreSQL-call-startfence,
-duurzame resultaatopslag en read-only Kanbanprojectie. Een echte provider,
-apart proces, harde kill, portable-v2-release, eigenaar-authenticatie, chatspawn
-en B-livebewijs zijn nog niet bewezen. De eerdere API-kandidaatherreview op
-`b7e9af7` is groen; de volledige verticale herreview staat in het nieuwe
-runtime-subagentreview.
+duurzame resultaatopslag en read-only Kanbanprojectie. De officiële-SDK-worker
+draait in een aparte kandidaatimage en Eva's commandolaag kan hem starten,
+volgen en actief stoppen. Open blijven een eigenaar-goedgekeurde externe
+providerproef via Telegram/B, harde processkill, portable-v2-release,
+eigenaar-authenticatie en productpromotie. De eerdere API-kandidaatherreview op
+`b7e9af7` en de volledige verticale herreview zijn groen.
 
 ## Hoe een GitHub-project wordt toegelaten
 
@@ -249,7 +250,7 @@ een concreet gat laat zien.
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
 | Pydantic AI `2.32.1` huidige lock / `2.34.0` proefkandidaat | `PROEF` | MIT, 19.500 sterren, 2.810 commits, actuele signed release en officiële realtime-, UI-, MCP- en durable-executionroutes | Echte Eva-route met IdentityPack, persoonsisolatie, usagebudget en uitgeschakelde/gesaneerde telemetry; alleen publieke API en geen tweede Agent-loop |
-| Pydantic AI `2.34.0` + Harness `0.25.0` | `GO: providerloze verticale kandidaat` | Harness voor interactieve fork/join is groen. De publieke Pydantic AI-run voor duurzaam werk loopt nu via PostgreSQL-handoff, lease, eenmalige call-start, resultaat en read-only Kanban | Dit is geen product-GO. Portable-v2-release, eigenaar-authenticatie, processandbox, harde kill, echte model-/prijsrelease, provider, chatspawn en B-livebewijs staan open |
+| Pydantic AI `2.34.0` + Harness `0.25.0` | `GO: geïsoleerde verticale kandidaat` | Harness voor interactieve fork/join is groen. De duurzame officiële-SDK-worker gebruikt PostgreSQL-handoff, lease, eenmalige call-start, resultaat, actieve stop, aparte kandidaatimage en read-only Kanban | Dit is geen product-GO. Portable-v2-release, eigenaar-authenticatie, harde processkill, eigenaar-goedgekeurde externe provider via Telegram/B en productpromotie staan open |
 | DBOS Transact `2.31.0` | `NO-GO stock / GO rebaseproef` | MIT, actuele officiële release met de belangrijke duplicate-loserfix #823 en nul nieuwe basispackages | Stock behoudt onbegrensde transactieretry en kan na verloren commitbevestiging de body herhalen; Eva's smalle patch moet op 2.31 worden gerebased |
 | Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
 | Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
@@ -363,12 +364,13 @@ een lijst GitHub-links.
   De gesloten 42-package-lock, 22 tests, Ruff, `pip check` en onafhankelijke
   review zijn groen. De publieke Pydantic AI-worker voegt 23 groene checks
   voor gesloten output, eigen usage, cancellation en foutredactie toe; de
-  onafhankelijke review op `b7e9af7` is groen. De providerloze PostgreSQL-
-  handoff, lease, eenmalige call-start, resultaatopslag, crashgrens en read-only
-  Kanban zijn daarna als één verticale kandidaat getest. Productpromotie blijft
-  open voor portable-v2, echte provider, processandbox/harde kill, chatspawn,
-  authenticatie en B-livebewijs; Pydantic Realtime en Playwright MCP zijn
-  aparte proeven.
+  onafhankelijke review op `b7e9af7` is groen. PostgreSQL-handoff, lease,
+  eenmalige call-start, resultaatopslag, aparte officiële-SDK-workerimage,
+  commandostart/-status/-stop, crashgrens en read-only Kanban zijn daarna als
+  één verticale kandidaat getest. Productpromotie blijft open voor portable-v2,
+  harde processkill, eigenaar-authenticatie en een eigenaar-goedgekeurde externe
+  providerproef via Telegram/B; Pydantic Realtime en de publieke browserroute
+  zijn aparte proeven.
 - [ ] `DF05` — Hindsight Control Plane, standaard observability en een
   dashboardframework leveren samen de beheerbasis zonder tweede waarheid.
 - [ ] `DF06` — Renovatevoorstel, Trivy-scan, SBOM, upgrade, rollback en

@@ -62,13 +62,13 @@ de controleerbare live receipts staan in
 
 ## Sinds 03:00 daadwerkelijk opgeleverd
 
-Git bevat in dit tijdvak 39 kleine checkpoints. Dat zijn niet 39 producten,
-maar vier gesloten, begrijpelijke uitkomsten:
+Tussen 03:00 en statuscheckpoint `8d93338` bevat Git 41 kleine checkpoints.
+Dat zijn niet 41 producten, maar vier gesloten, begrijpelijke uitkomsten:
 
-| Uitkomst | Eindcheckpoint | Wat jij ervan terugziet |
+| Uitkomst | Implementatie en zichtbare closure | Wat jij ervan terugziet |
 |---|---|---|
-| Kring en geheugen in de cockpit | `1c62778` | De centrale pagina toont privacyveilige actuele persoons-, deel- en geheugenstatus |
-| Subagent van opdracht tot werkbord | `f9373f1` plus cockpitbinding | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
+| Kring en geheugen in de cockpit | implementatie `1c62778`; bewijsbinding `c500f74` | De centrale pagina toont privacyveilige actuele persoons-, deel- en geheugenstatus |
+| Subagent van opdracht tot werkbord | implementatie `f9373f1`; cockpit-/bewijsbinding `db4cedd` | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
 | Afgeschermde browser-read | `27965d8` | Een echte Chromium las één vaste lokale pagina zonder host- of internetroute |
 | Duurzame browseractie | `72625e0` | Eén vaste klik liep via Eva's logboek en aparte servercontrole; twee providerfouten gaven geen blinde tweede klik |
 
@@ -143,11 +143,14 @@ Eva's unieke hoofdfeature.
   De lijn is nu verder dan het losse contract: een echte tijdelijke PostgreSQL
   neemt de handoff atomair aan, leaset en reclaimt, zet vóór uitvoering een
   eenmalige call-startfence, bewaart resultaat of ambiguïteit en projecteert de
-  taak als veldarme kaart in de vijfkoloms cockpit. Een providerloze Pydantic-
-  run gaat werkelijk door die hele keten; een herstart na `call_started`
-  veroorzaakt geen tweede run. Dit is technisch kandidaatbewijs, geen echte
-  provider, apart proces, Eva-chat, eigenaar-authenticatie, portable-v2-
-  schemarelease of B-livebewijs. B is niet gewijzigd. Zie
+  taak als veldarme kaart in de vijfkoloms cockpit. De eerste providerloze
+  Pydantic-run ging werkelijk door die hele keten; een herstart na
+  `call_started` veroorzaakte geen tweede run. Latere checkpoints hebben dit
+  inmiddels uitgebreid met de officiële-SDK-worker in een aparte
+  kandidaatimage en commandolaag voor starten, volgen en actief stoppen. Open
+  blijven een eigenaar-goedgekeurde externe providerproef via Telegram/B,
+  eigenaar-authenticatie, portable-v2-schemarelease en productpromotie. B is
+  niet gewijzigd. Zie
   `reviews/pydantic-tool-free-child-candidate-b7e9af7.md` en
   `reviews/delegated-work-database-admission-d510366.md`.
 
@@ -252,9 +255,11 @@ Eva's unieke hoofdfeature.
   neemt inmiddels interactieve fork/join over en Pydantic AI de reeds gekozen
   child-run. De providerloze proef slaat een taak duurzaam op, pakt haar één
   keer op, bewaart het resultaat en toont haar op het vijfkolomsbord in de
-  cockpit. Een herstart na het begin veroorzaakt geen tweede modelrun.
-  WB01-WB07 voegen nog een echt model in een apart proces, starten en stoppen
-  vanuit Eva-chat, eigenaar-authenticatie en bordbediening toe;
+  cockpit. De actuele kandidaat voegt daar de officiële-SDK-worker in een
+  aparte image en de commandolaag voor starten, volgen en actief stoppen aan
+  toe; een herstart na het begin veroorzaakt geen tweede modelrun.
+  WB01-WB07 voegen nog de eigenaar-goedgekeurde externe providerproef via
+  Telegram/B, eigenaar-authenticatie en bordbediening toe;
   React-Admin OSS plus `dnd-kit` kunnen die bediening presenteren.
   Er komt geen eigen subagentmotor, tweede taakdatabase of tweede Eva-brein.
 
@@ -330,13 +335,13 @@ Eva's unieke hoofdfeature.
   en de labels `complete`/`optimized_for_<metric>` worden nog niet repositorybreed
   machine-afgedwongen. Het nieuwe onderhoudscontract maakt die open grens en de
   benodigde checker/eindsnapshot expliciet.
-- Laatste afgeronde productcheckpoint: OpenBot `v0.0.4` en de actuele gepinde
+- Historisch productinventarischeckpoint: OpenBot `v0.0.4` en de actuele gepinde
   documentatie zijn onafhankelijk geïnventariseerd. OpenBot documenteert een
   veel breder computer-, browser-, takeover- en beheeroppervlak, maar levert via
   AG-UI een agent aan en bewijst geen Eva-achtige gezinsidentiteit, fysieke
   readback of huispresence. `OB00` is klaar; `AU01-AU08` maken de ontbrekende
   echte computerautonomie nu zichtbaar en afvinkbaar.
-- Laatste checkpoint: `0ca0c4b` trekt de driestappenketen van `5a1556e`
+- Historisch action-chaincheckpoint: `0ca0c4b` trekt de driestappenketen van `5a1556e`
   door vijf verse databaseprocessen. Het bewijst dat
   `a99563b` een effect alleen afrondt na een verse,
   onafhankelijke en inhoudelijk exacte doelmatch. Effect, stap,

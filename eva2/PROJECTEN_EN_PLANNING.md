@@ -105,8 +105,9 @@ lopen:
 Installer, benchmarkadapters en documentatiecheckers kunnen gedeeltelijk
 parallel worden gebouwd, maar hun eindbewijs wacht op de bevroren versie. De
 eindversie kan pas worden bevroren wanneer de blokkerende onderdelen niet meer
-veranderen. De eerste dependencyproeven voor voice, browser en subagents moeten
-binnen uren laten zien of de gekozen route past. Alleen een gemeten functioneel,
+veranderen. De eerste browser- en subagentdependencyproeven hebben inmiddels
+laten zien dat hun gekozen lokale kandidaatroutes passen; voice moet dat nog
+binnen uren aantonen. Alleen een gemeten functioneel,
 privacy-, latency- of beheerprobleem rechtvaardigt daarna eigen platformcode.
 Iedere noodzakelijke fix tijdens de officiële zevendaagse proef start die klok
 opnieuw.

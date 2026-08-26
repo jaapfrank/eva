@@ -93,7 +93,7 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Eerste gecontroleerde browseractie",
                 "state": "tested",
                 "proof": "1 vaste pagina gelezen en 1 vaste klik via Eva's logboek; 37 + 3 controles groen",
-                "meaning": "Een afzonderlijke servercontrole bewees de wijziging. Twee gestopte providerprocessen veroorzaakten geen blinde tweede klik.",
+                "meaning": "Een afzonderlijke servercontrole bewees de wijziging. Twee niet-nul ge\u00ebindigde providerfoutvensters veroorzaakten geen blinde tweede klik.",
                 "next": "Een afgeschermde publieke testsite met grant en live stop; daarna pas formulieren, downloads, accounts en Telegram/B.",
                 "evidence": _evidence("capability/browser"),
             },
