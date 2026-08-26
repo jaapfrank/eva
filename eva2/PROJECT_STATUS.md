@@ -116,6 +116,9 @@ lege testgroep, haalt alleen de exacte negatieve groeps-ID op en voegt die
 atomair alleen voor A en B toe. Zo test `/link` eerlijk een tweede account van
 dezelfde persoon, terwijl de groepsproef werkelijk twee personen test. Geen
 van beide opdrachten start een container, poller, migratie of gesprek. De
+roottool opent private token- en bindingsbestanden eerst en controleert daarna
+diezelfde inode; een symlink, hardlink, verkeerde eigenaar/mode of een te groot
+bestand wordt vóór de Telegram-call geweigerd. De
 exacte afvinkstappen staan in `deploy/living-core/TELEGRAM_TEST.md`. De exact
 gepinde PostgreSQL-testinput moet nog wel lokaal bij Docker beschikbaar zijn;
 de launcher vervangt die nooit stil door `latest` of een andere tag. Dit is

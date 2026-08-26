@@ -134,8 +134,8 @@ def test_group_admission_adds_only_the_requested_known_people(
     bindings_path.write_text(json.dumps(_bindings()), encoding="utf-8")
     monkeypatch.setattr(
         group_admission,
-        "_require_private_regular_file",
-        lambda *_args, **_kwargs: _private_stat(),
+        "_read_private_file",
+        lambda *_args, **_kwargs: (bindings_path.read_bytes(), _private_stat()),
     )
     written: dict[str, object] = {}
 
@@ -175,8 +175,8 @@ def test_group_admission_refuses_a_user_not_in_the_initial_private_binding(
     bindings_path.write_text(json.dumps(_bindings()), encoding="utf-8")
     monkeypatch.setattr(
         group_admission,
-        "_require_private_regular_file",
-        lambda *_args, **_kwargs: _private_stat(),
+        "_read_private_file",
+        lambda *_args, **_kwargs: (bindings_path.read_bytes(), _private_stat()),
     )
 
     with pytest.raises(RuntimeError, match="not trusted"):
@@ -185,3 +185,28 @@ def test_group_admission_refuses_a_user_not_in_the_initial_private_binding(
             group_chat_id="-100999",
             trusted_user_ids=(999,),
         )
+
+
+def test_private_read_rejects_a_symlink_without_following_its_target(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    target = tmp_path / "target"
+    target.write_text("not a token", encoding="utf-8")
+    link = tmp_path / "token-link"
+    link.symlink_to(target)
+    monkeypatch.setattr(group_admission.os, "geteuid", lambda: 65532)
+
+    with pytest.raises(RuntimeError, match="missing"):
+        group_admission._read_private_file(link, owner=65532, maximum_bytes=256)
+
+
+def test_private_read_refuses_more_than_its_fixed_byte_budget(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    source = tmp_path / "private"
+    source.write_bytes(b"x" * 257)
+    source.chmod(0o600)
+    monkeypatch.setattr(group_admission.os, "fstat", lambda _fd: _private_stat())
+
+    with pytest.raises(RuntimeError, match="byte limit"):
+        group_admission._read_private_file(source, owner=65532, maximum_bytes=256)

@@ -103,10 +103,12 @@ def admit_group(
         raise ValueError("at least one positive trusted Telegram user ID is required")
     if len(set(trusted_user_ids)) != len(trusted_user_ids):
         raise ValueError("trusted Telegram user IDs must be unique")
-    source_stat = _require_private_regular_file(bindings_path, owner=RUNTIME_OWNER)
+    raw, source_stat = _read_private_file(
+        bindings_path, owner=RUNTIME_OWNER, maximum_bytes=65_536
+    )
     try:
-        decoded = json.loads(bindings_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        decoded = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
         raise RuntimeError("test bindings file is unreadable") from error
     if (
         not isinstance(decoded, dict)
@@ -162,27 +164,49 @@ def admit_group(
     }
 
 
-def _require_private_regular_file(path: Path, *, owner: int) -> os.stat_result:
+def _read_private_file(
+    path: Path, *, owner: int, maximum_bytes: int
+) -> tuple[bytes, os.stat_result]:
+    """Read the exact verified inode, never a path checked before opening it."""
+
+    if maximum_bytes < 1:
+        raise ValueError("private test file byte limit must be positive")
+    flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW
     try:
-        details = os.lstat(path)
+        descriptor = os.open(path, flags)
     except OSError as error:
         raise RuntimeError("required private test file is missing") from error
-    if not stat.S_ISREG(details.st_mode) or stat.S_ISLNK(details.st_mode):
-        raise RuntimeError("required private test file is not a regular file")
-    if (
-        details.st_uid != owner
-        or stat.S_IMODE(details.st_mode) != 0o600
-        or details.st_nlink != 1
-    ):
-        raise RuntimeError("required private test file ownership or mode differs")
-    return details
+    try:
+        details = os.fstat(descriptor)
+        if not stat.S_ISREG(details.st_mode):
+            raise RuntimeError("required private test file is not a regular file")
+        if (
+            details.st_uid != owner
+            or stat.S_IMODE(details.st_mode) != 0o600
+            or details.st_nlink != 1
+        ):
+            raise RuntimeError("required private test file ownership or mode differs")
+        chunks: list[bytes] = []
+        remaining = maximum_bytes + 1
+        while remaining:
+            chunk = os.read(descriptor, min(65_536, remaining))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        data = b"".join(chunks)
+        if len(data) > maximum_bytes:
+            raise RuntimeError("required private test file exceeds its byte limit")
+        return data, details
+    finally:
+        os.close(descriptor)
 
 
 def _read_token() -> str:
-    _require_private_regular_file(TOKEN_PATH, owner=RUNTIME_OWNER)
+    raw, _ = _read_private_file(TOKEN_PATH, owner=RUNTIME_OWNER, maximum_bytes=256)
     try:
-        token = TOKEN_PATH.read_text(encoding="utf-8").strip()
-    except OSError as error:
+        token = raw.decode("utf-8").strip()
+    except UnicodeDecodeError as error:
         raise RuntimeError("testbot token file is unreadable") from error
     if not re.fullmatch(r"[0-9]{6,20}:[A-Za-z0-9_-]{20,}", token):
         raise RuntimeError("testbot token format differs")
