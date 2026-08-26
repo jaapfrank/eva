@@ -1,0 +1,78 @@
+{
+  "candidateId": "BROWSER-R01",
+  "contract": "EvaPlaywrightMcpTestReceipt/v1",
+  "inputs": [
+    {
+      "path": "experiments/playwright-mcp-sidecar-v1/README.md",
+      "sha256": "1f0701b622eff5d5b254181cf0e3bf9dafa32b5333e2d2638bcccc69549dd126"
+    },
+    {
+      "path": "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
+      "sha256": "f5d5a4a7c3d5ed2eda18d03ec7222b349c6b5574126091f592bcdf2db345cfaf"
+    },
+    {
+      "path": "experiments/playwright-mcp-sidecar-v1/profile.json",
+      "sha256": "346bf2dde297f445af0d1c4c22d8c10e4f92260aa213f2f93388f120862cd1d4"
+    },
+    {
+      "path": "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
+      "sha256": "86d25a89caea3a1183b6305b8da012262fde60b06ea2fae76362d510bfb0927e"
+    },
+    {
+      "path": "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
+      "sha256": "3bc7e7d6a7d00e6ab4a6456518faf1d30392fabc0500ef4a0fb63d66ef5203d7"
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp.py",
+      "sha256": "dbc06ce39e3ed89969ae95d3be2750f3bc70172151000fcf6fe5e45fc11edfe9"
+    },
+    {
+      "path": "src/eva/adapters/connectors/playwright_mcp.py",
+      "sha256": "67e987a8e0b98815f841aaf172e1f9f4427e1aa3d9e71fb75da06513b8a12318"
+    },
+    {
+      "path": "tests/connectors/test_playwright_mcp.py",
+      "sha256": "261f7eb8f41a1f5b0f3f2f254df1ef2350e4d4f62b40352e20031d5e232b5a12"
+    }
+  ],
+  "nonclaims": {
+    "arbitraryWebsites": false,
+    "changedAOrB": false,
+    "clicksOrDownloads": false,
+    "credentialsOrAccounts": false,
+    "durableBrowserLedger": false,
+    "formsOrUploads": false,
+    "installedInManagedB": false,
+    "livePublicInternet": false,
+    "persistentProfile": false,
+    "provedGeneralComputerUse": false,
+    "provedTelegramRoute": false,
+    "sharedFamilyUse": false
+  },
+  "observedAt": "2026-08-26",
+  "runtime": {
+    "browserImage": "sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "browserUser": "node",
+    "externalEgressBlocked": true,
+    "finalUrl": "http://fixture.eva.test:8080/index.html",
+    "fixtureGets": 1,
+    "internalNetwork": true,
+    "matchedVisibleTexts": 2,
+    "publishedPorts": 0,
+    "sandboxRequested": true,
+    "snapshotSha256": "f2062a0f983646e60a5f08e64fba7eecbcf8065ec795dda2085509b624fb6d9f",
+    "stopMilliseconds": 198,
+    "toolSequence": [
+      "browser_navigate",
+      "browser_snapshot"
+    ]
+  },
+  "sourceCommit": "6b4cc87d4a2286f2e9a857cf9195961c9894cb45",
+  "status": "tested_isolated_browser_read_not_live",
+  "tests": {
+    "existingMcpRegressionTests": 10,
+    "playwrightAdapterTests": 19,
+    "ruff": "green",
+    "smokeRuns": 1
+  }
+}
