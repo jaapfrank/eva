@@ -85,6 +85,20 @@ lokale full-duplexproef met onderbreking en meetreceipt blijft de volgende gate.
 
 ## Nieuwste afgeronde stap
 
+Checkpoint `d65350b` maakt de volgende echte gebruikersproef direct zichtbaar
+in Eva's cockpit. De kaart **Telegram met twee testaccounts** zegt nu precies
+wat waar is: de afgescheiden testbotroute, lege testdatabase en geschoonde
+receipt zijn klaar, maar er zijn nog nul echte testberichten. Zij legt ook in
+gewone taal de volgende handeling uit: beide eigen testaccounts sturen eerst
+privé `/start`, daarna volgt één lege testgroep met groeps-, intrek- en
+herstartproef. De voicekaart is tegelijk eerlijker gemaakt: 38 lokale
+audioblokken zijn streamend doorgegeven, maar deze WSL-host heeft geen
+bruikbare microfoon of speaker. De fysieke voiceproef staat dus nog open.
+13 gerichte cockpitchecks en linting zijn groen. De brede bewijscheck blijft
+apart rood doordat een al gewijzigde browser-proef niet meer bij haar oude
+vastgelegde hash past; die andere wijziging is niet aangepast of als groen
+geclaimd.
+
 Checkpoint `d8b8d2f` sluit een belangrijke **stopknop-kloof vóór een externe
 actie**. Eerder kon stoppen alleen vóór autorisatie; nu kan de eigenaar ook
 stoppen nadat Eva de actie al technisch heeft toegestaan, maar voordat een
