@@ -214,6 +214,9 @@ relayeerde 38 chunks en leverde daarna via dezelfde private `VoiceTurn/v1`
 route een antwoord-PCM-stroom. Dit is doelbewust nog geen full duplex,
 microfoon/speaker, barge-in of latencyclaim; het voorkomt alleen dat een
 toekomstige voice-route stiekem eerst een compleet geluidsbestand moet bouwen.
+De huidige WSL-bouwhost heeft bovendien geen bruikbaar audio-in- of
+audio-uitapparaat; een echte menselijk microfoon-/speakerproef vereist daarom
+een host met die hardware, niet nog een synthetische codeproef.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
