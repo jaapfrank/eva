@@ -1,0 +1,99 @@
+{
+  "candidateCommit": "c0317559e9ff5fd6eec590db78d4d143be8a5900",
+  "contract": "EvaRuntimeSubagentWorkboardTestReceipt/v1",
+  "environment": {
+    "candidatePydanticAI": "2.34.0",
+    "candidatePydanticAIHarness": "0.25.0",
+    "candidateRequirementsLockSha256": "f083fb1af5811aee9c866c957387e4638b5a5b43fa72efa888975b00f604a00d",
+    "postgresImage": "postgres:16.13",
+    "postgresServerVersionNum": 160013,
+    "productionLockPydanticAI": "2.32.1",
+    "pythonVersion": "3.12.3"
+  },
+  "executedOn": "2026-08-26",
+  "implementationCommit": "c0317559e9ff5fd6eec590db78d4d143be8a5900",
+  "nonClaims": [
+    "This receipt does not prove an external model provider, external network call or provider billing.",
+    "The child ran in the test process; this receipt does not prove a separate process, hard kill or process sandbox.",
+    "This receipt does not prove spawn, stop or continuation from Eva chat.",
+    "The cockpit route is local and read-only; owner authentication and board writes remain open.",
+    "Migration 4e_0003 is a post-freeze candidate and is not the managed-B schema authority or a portable-v2 release.",
+    "No managed-B service, production A service, secret, account or Home Assistant target was read or changed.",
+    "A disposable PostgreSQL result is test evidence, not a production-live receipt or user acceptance."
+  ],
+  "runs": [
+    {
+      "command": "PYTHONPATH=eva2/src:eva2 python -m pytest -q -s <subagent, workboard, cockpit, runtime, schema and Harness candidate tests> -k 'not dashboard_live_and_tested_claims_have_exact_reopenable_evidence'",
+      "deselected": 1,
+      "environmentBoundary": "Exact git archive of implementation commit c031755; no unrelated dirty-worktree files.",
+      "failed": 0,
+      "id": "clean-implementation-archive",
+      "passed": 94,
+      "skipped": 0,
+      "status": "passed"
+    },
+    {
+      "command": "PYTHONPATH=eva2/src:eva2 python -m pytest -q -s eva2/tests/subagents/test_tool_free_child.py eva2/tests/contract/test_workboard.py eva2/experiments/harness-subagents-v1/test_candidate.py",
+      "environmentBoundary": "Isolated Pydantic AI 2.34.0 and Harness 0.25.0 candidate environment; providerless function/test models only.",
+      "failed": 0,
+      "id": "candidate-subagent-and-workboard",
+      "passed": 54,
+      "skipped": 0,
+      "status": "passed"
+    },
+    {
+      "command": "PYTHONPATH=eva2/src:eva2 python -m pytest -q -s eva2/tests/subagents/test_tool_free_child.py eva2/tests/contract/test_workboard.py",
+      "environmentBoundary": "Separate temporary environment using Eva's production lock pydantic-ai-slim 2.32.1; providerless function model only.",
+      "failed": 0,
+      "id": "production-lock-compatibility",
+      "passed": 32,
+      "skipped": 0,
+      "status": "passed"
+    },
+    {
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable-postgresql-16.13-dsn> PYTHONPATH=eva2/src:eva2 python -m pytest -q -s eva2/tests/postgres/test_delegated_work_store.py",
+      "environmentBoundary": "Fresh disposable PostgreSQL 16.13 database. Includes real Pydantic function-model execution across the durable call fence, concurrency, RLS, revocation, crash and workboard projection. Downgraded to base after the run.",
+      "failed": 0,
+      "id": "durable-subagent-postgresql",
+      "passed": 13,
+      "skipped": 0,
+      "status": "passed",
+      "warnings": 1
+    },
+    {
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable-postgresql-16.13-dsn> PYTHONPATH=eva2/src:eva2 python -m pytest -q -s eva2/tests/postgres/test_delegated_work_migration.py",
+      "environmentBoundary": "Separate disposable PostgreSQL 16.13 database. Upgrade, failed nonempty downgrade, cleanup, downgrade and re-upgrade were exercised; downgraded to base after the run.",
+      "failed": 0,
+      "id": "delegated-work-migration",
+      "passed": 1,
+      "skipped": 0,
+      "status": "passed",
+      "warnings": 2
+    },
+    {
+      "command": "python -m pip check",
+      "environmentBoundary": "The isolated environment installed from the Harness 0.25.0 candidate requirements lock with SHA-256 f083fb1af5811aee9c866c957387e4638b5a5b43fa72efa888975b00f604a00d.",
+      "failed": 0,
+      "id": "candidate-dependency-consistency",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check <exact new and changed subagent/workboard candidate paths>",
+      "failed": 0,
+      "id": "candidate-static-check",
+      "status": "passed"
+    }
+  ],
+  "status": "passed",
+  "verifiedAdversarialCases": [
+    "Concurrent admission and claim create one winner.",
+    "A revoked principal binding blocks the child before call start, including the revocation race.",
+    "A crash before call start can be reclaimed; a crash after call start is never blindly replayed.",
+    "Result usage cannot exceed the sealed child grant and unknown usage never becomes zero.",
+    "Corrupt stored result bytes fail closed.",
+    "Cross-tenant and cross-installation work remains hidden by scope and row-level security.",
+    "The workboard returns at most 64 field-minimized cards and excludes raw task text, internal identifiers and raw results.",
+    "The browser and server both reject a result in a dishonest Kanban column.",
+    "A stopped card is visually distinct from an approved result."
+  ]
+}
