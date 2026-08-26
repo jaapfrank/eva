@@ -1,0 +1,17 @@
+# This route is deliberately separate from managed B. Never point a value here
+# at Eva A, managed B, their database, or their Telegram bot token.
+#
+# The image must be the immutable digest produced for this test. Do not use tags.
+EVA_TEST_LIVING_CORE_IMAGE=docker.io/example/eva2@sha256:0000000000000000000000000000000000000000000000000000000000000000
+EVA_TEST_LIVING_CORE_URL=http://eva-test-core:8080
+EVA_TEST_DATABASE_DSN_FILE_HOST=/run/eva2-test/secrets/database-dsn
+EVA_TEST_RUNTIME_TENANT_ID=aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa
+EVA_TEST_RUNTIME_INSTALLATION_ID=bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb
+EVA_TEST_TELEGRAM_BOT_TOKEN_FILE_HOST=/run/eva2-test/secrets/telegram-test-bot-token
+EVA_TEST_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST=/run/eva2-test/secrets/telegram-test-bindings.json
+EVA_TEST_TELEGRAM_PAIRING_SECRET_FILE_HOST=/run/eva2-test/secrets/telegram-test-pairing-secret
+EVA_TEST_NETWORK_NAME=eva2-telegram-test-example
+EVA_TEST_DOCKER_BINARY=docker
+
+# This separate route is intentionally for a real BotFather test bot.
+EVA_TEST_TELEGRAM_API_BASE_URL=https://api.telegram.org

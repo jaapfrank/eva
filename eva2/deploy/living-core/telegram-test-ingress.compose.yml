@@ -1,0 +1,54 @@
+services:
+  telegram-ingress-test:
+    profiles: ["telegram-native-test"]
+    image: ${EVA_TEST_LIVING_CORE_IMAGE:?set a separate immutable Eva test image}
+    pull_policy: never
+    restart: "no"
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=8m
+    command: ["python", "-m", "eva.operations.telegram_test_ingress"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_LIVING_CORE_URL: ${EVA_TEST_LIVING_CORE_URL:?set the separate Eva test core URL}
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_TEST_RUNTIME_INSTALLATION_ID:?set a test installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_TEST_RUNTIME_TENANT_ID:?set a test tenant identity}
+      EVA_TELEGRAM_API_BASE_URL: ${EVA_TEST_TELEGRAM_API_BASE_URL:-https://api.telegram.org}
+      EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
+      EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
+      EVA_TELEGRAM_PAIRING_SECRET_FILE: /run/secrets/telegram_pairing_secret
+    networks: [telegram-test]
+    labels:
+      io.eva2.test-route: telegram-native-test-v1
+    volumes:
+      - type: bind
+        source: ${EVA_TEST_DATABASE_DSN_FILE_HOST:?set a test-only database DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_TELEGRAM_BOT_TOKEN_FILE_HOST:?set a separate test-bot token file}
+        target: /run/secrets/telegram_bot_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a test-only Telegram binding file}
+        target: /run/secrets/telegram_principal_bindings
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_TELEGRAM_PAIRING_SECRET_FILE_HOST:?set a test-only Telegram pairing secret file}
+        target: /run/secrets/telegram_pairing_secret
+        read_only: true
+        bind:
+          create_host_path: false
+networks:
+  telegram-test:
+    name: ${EVA_TEST_NETWORK_NAME:?set a labelled external Telegram test network}
+    external: true
