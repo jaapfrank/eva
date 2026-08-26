@@ -14,6 +14,7 @@ from eva.contracts.planning import ModelAttempt
 from eva.operations.portable_restore import (
     PortableRestoreError,
     decode_ambiguous_model_attempt,
+    restore_column_preserving_records,
 )
 
 
@@ -98,3 +99,60 @@ def test_model_attempt_rejects_changed_redacted_grant() -> None:
     record["row_sha256"] = hashlib.sha256(canonical_json_bytes(record["row"])).hexdigest()
     with pytest.raises(PortableRestoreError, match="grant and row differ"):
         decode_ambiguous_model_attempt(record, table_specs=CANONICAL_EXPORT_SPECS)
+
+
+class _Result:
+    def __init__(self, value: object) -> None:
+        self._value = value
+
+    def fetchone(self) -> tuple[object]:
+        return (self._value,)
+
+
+class _EmptyTarget:
+    def __init__(self) -> None:
+        self.queries: list[tuple[str, tuple[object, ...] | None]] = []
+
+    def exec_driver_sql(
+        self, sql: str, params: tuple[object, ...] | None = None
+    ) -> _Result:
+        self.queries.append((sql, params))
+        if sql == "SHOW transaction_isolation":
+            return _Result("serializable")
+        if "pg_advisory_xact_lock" in sql or "to_regclass" in sql:
+            return _Result(True)
+        if sql.startswith("SELECT COUNT(*) FROM "):
+            return _Result(0)
+        if (
+            sql.startswith("SAVEPOINT ")
+            or sql.startswith("RELEASE SAVEPOINT")
+            or sql.startswith("INSERT INTO ")
+        ):
+            return _Result(None)
+        raise AssertionError(sql)
+
+
+def test_restore_writer_inserts_only_terminal_secretless_model_history() -> None:
+    records: dict[str, list[dict[str, Any]]] = {
+        str(spec["table"]): [] for spec in CANONICAL_EXPORT_SPECS
+    }
+    records["eva_core.model_attempts"] = [_record()]
+    target = _EmptyTarget()
+
+    assert (
+        restore_column_preserving_records(
+            target, records, table_specs=CANONICAL_EXPORT_SPECS
+        )
+        == 1
+    )
+
+    insert = next(query for query in target.queries if query[0].startswith("INSERT INTO "))
+    assert insert[0].startswith("INSERT INTO eva_core.model_attempts")
+    assert insert[1] is not None
+    assert "ambiguous" in insert[1]
+    bound_values = "\n".join(str(value) for value in insert[1])
+    assert "portable-restore-redacted:44444444-4444-4444-8444-444444444444" in bound_values
+    assert all(
+        "legacy-secret" not in str(value) and "provider-reference" not in str(value)
+        for value in insert[1]
+    )

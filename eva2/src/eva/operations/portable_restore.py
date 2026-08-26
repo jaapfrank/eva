@@ -619,6 +619,43 @@ def _prepare_reauthorization_required_connector_record(
     return restored, tuple(placeholders), tuple(bindings)
 
 
+def _prepare_ambiguous_model_attempt_record(
+    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
+    """Type one terminalized model-history row for the common restore writer."""
+
+    spec = _spec_for_table(table_specs, _MODEL_ATTEMPT_TABLE)
+    restored = decode_ambiguous_model_attempt(record, table_specs=table_specs)
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    if not isinstance(mappings, list):
+        raise PortableRestoreError("portable model attempt transform mappings are absent")
+    encodings: dict[str, str] = {}
+    for mapping in mappings:
+        source, property_name, encoding = (
+            mapping.get("source"), mapping.get("portableProperty"), mapping.get("encoding")
+        )
+        if not isinstance(source, Mapping) or not isinstance(property_name, str) or not isinstance(encoding, str):
+            raise PortableRestoreError("portable model attempt transform mapping is incomplete")
+        if source.get("kind") == "column":
+            column = source.get("column")
+            if not isinstance(column, str) or column in encodings:
+                raise PortableRestoreError("portable model attempt source column is invalid")
+            encodings[column] = encoding
+        elif source.get("kind") == "redactedContractColumn" and property_name == "credential_grant_payload":
+            encodings["credential_grant_payload"] = "canonicalJson"
+    columns = tuple(spec.get("database_column_order", ()))
+    if tuple(encodings) != columns:
+        raise PortableRestoreError("portable model attempt encodings differ from table pin")
+    placeholders: list[str] = []
+    bindings: list[Any] = []
+    for column in columns:
+        placeholder, value = _bind_value(restored[column], encodings[column])
+        placeholders.append(placeholder)
+        bindings.append(value)
+    return restored, tuple(placeholders), tuple(bindings)
+
+
 def _validate_record_sets(
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
@@ -660,6 +697,13 @@ def _validate_record_sets(
             if table == _CONNECTOR_BINDING_TABLE:
                 rows.append(
                     _prepare_reauthorization_required_connector_record(
+                        record, table_specs=table_specs
+                    )
+                )
+                continue
+            if table == _MODEL_ATTEMPT_TABLE:
+                rows.append(
+                    _prepare_ambiguous_model_attempt_record(
                         record, table_specs=table_specs
                     )
                 )
