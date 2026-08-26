@@ -146,6 +146,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "Vandaag kreeg Eva haar eerste echte onderzoeker" in response.text
     assert "40 + 28" in response.text
     assert "86,6 MB" in response.text
+    assert "Maximaal 1×" in response.text
     assert "Af · Subagentkandidaat" in response.text
     assert "Volgende poort · echte canary" in response.text
     assert "Nog niet live:" in response.text
@@ -259,7 +260,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
         == "Subagents vanuit Eva-chat"
     )
     assert "86,6 MB" in capability_by_id["runtime-subagents"]["proof"]
-    assert "niet blind opnieuw" in capability_by_id[
+    assert "dezelfde modeloproep niet blind opnieuw" in capability_by_id[
         "runtime-subagents"
     ]["meaning"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}

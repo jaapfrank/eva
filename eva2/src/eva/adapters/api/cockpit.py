@@ -84,8 +84,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Subagents vanuit Eva-chat",
                 "state": "tested",
                 "proof": "Starten, volgen en actief stoppen werkt; de aparte workerimage van 86,6 MB is onafhankelijk groen.",
-                "meaning": "Eva kan één begrensde onderzoeker aansturen. Na stop of crash verzint zij geen resultaat en start zij dezelfde provider-call niet blind opnieuw.",
-                "next": "Eén eigenaar-goedgekeurde externe providercanary via echt Telegram en de beheerde kandidaat uitvoeren.",
+                "meaning": "Eva kan één begrensde onderzoeker aansturen. Na stop of crash verzint zij geen resultaat en start zij dezelfde modeloproep niet blind opnieuw.",
+                "next": "Eén door de eigenaar goedgekeurde echte providerproef via Telegram en de beheerde kandidaat uitvoeren.",
                 "evidence": _evidence("capability/runtime-subagents"),
             },
             {
@@ -287,7 +287,7 @@ COCKPIT_HTML = """<!doctype html>
           <div class="section-head"><div><span class="kicker">Verticale slice gesloten</span><h2 id="vandaag-title">Vandaag kreeg Eva haar eerste echte onderzoeker</h2></div><p>Niet nog een ontwerpdocument: één kleine subagentroute is van Eva-opdracht tot stop, opslag, workerimage en onafhankelijke controle afgemaakt.</p></div>
           <div class="delivery-grid" aria-label="Bewijs van de subagentkandidaat">
             <article class="delivery-metric"><strong>40 + 28</strong><span>gerichte controles groen</span><small>Inclusief echte PostgreSQL-, proces- en stopraces.</small></article>
-            <article class="delivery-metric"><strong>1×</strong><span>provider-call fence</span><small>Twee workers of een herstart veroorzaken geen tweede blinde call.</small></article>
+            <article class="delivery-metric"><strong>Maximaal 1×</strong><span>dezelfde modeloproep</span><small>Twee workers of een herstart veroorzaken geen tweede blinde oproep.</small></article>
             <article class="delivery-metric"><strong>86,6 MB</strong><span>aparte workerimage</span><small>Niet-root, read-only en zonder browser-, web- of migratieplatform.</small></article>
             <article class="delivery-metric"><strong>GO</strong><span>onafhankelijke herreview</span><small>De gevonden stopraces zijn eerst hersteld en daarna opnieuw beproefd.</small></article>
           </div>
@@ -297,7 +297,7 @@ COCKPIT_HTML = """<!doctype html>
             <article class="journey-step"><b>3 · Onderzoeker werkt</b><span>Een kleine losse worker gebruikt de officiële SDK precies binnen die grenzen.</span></article>
             <article class="journey-step"><b>4 · Eva blijft eerlijk</b><span>Resultaat, actieve stop of verloren contact verschijnt als afzonderlijke toestand.</span></article>
           </div>
-          <p class="proof-boundary"><strong>Nog niet live:</strong> de eigenaar-goedgekeurde externe modelprovidercanary, echt Telegram en de beheerde B-kandidaat blijven de volgende poort.</p>
+          <p class="proof-boundary"><strong>Nog niet live:</strong> de door de eigenaar goedgekeurde eerste echte providerproef, echt Telegram en de beheerde B-kandidaat blijven de volgende poort.</p>
         </div>
       </section>
 
