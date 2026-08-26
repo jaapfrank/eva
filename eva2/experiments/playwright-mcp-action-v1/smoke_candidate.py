@@ -376,7 +376,7 @@ def main() -> None:
                 f"A02 proof failed: {test.stdout[-4_000:]}{test.stderr[-2_000:]}",
             )
             require(
-                "3 passed" in test.stdout, "A02 did not execute all three scenarios"
+                "4 passed" in test.stdout, "A02 did not execute all four scenarios"
             )
             print(
                 json.dumps(
@@ -390,7 +390,8 @@ def main() -> None:
                         "normalClickStateVerified": True,
                         "postgresImage": POSTGRES_IMAGE,
                         "publishedBrowserPorts": 0,
-                        "scenariosPassed": 3,
+                        "scenariosPassed": 4,
+                        "stopAfterAuthorizationNoClick": True,
                     },
                     sort_keys=True,
                     separators=(",", ":"),

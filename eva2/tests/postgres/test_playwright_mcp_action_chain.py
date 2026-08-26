@@ -28,6 +28,10 @@ from test_action_chain_read_authorizer import _verified_registry_release
 from eva.adapters.postgres.action_chain_effect_advances import (
     PostgresActionChainEffectAdvancer,
 )
+from eva.adapters.postgres.action_chain_effect_cancellations import (
+    PostgresActionChainEffectCanceller,
+)
+from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
 from eva.adapters.postgres.action_chain_effect_readback_results import (
     PostgresActionChainEffectReadbackResultStore,
 )
@@ -55,6 +59,9 @@ from eva.contracts.execution import (
 )
 from eva.operations.action_chain_effect_executor import (
     PostgresActionChainEffectExecutor,
+)
+from eva.operations.action_chain_effect_authorizer import (
+    PostgresActionChainEffectAuthorizer,
 )
 from eva.operations.action_chain_effect_readback_executor import (
     PostgresActionChainEffectReadbackExecutor,
@@ -487,6 +494,96 @@ def _oracle(effect_key: str) -> dict[str, object]:
     opener = urllib_request.build_opener(urllib_request.ProxyHandler({}))
     with opener.open(url, timeout=3) as response:
         return json.loads(response.read())
+
+
+def _owner() -> tuple[UUID, UUID]:
+    principal = _fact_values("static/principal-owner")[1]
+    binding = _fact_values("static/principal-binding")[1]
+    return principal["principal_id"], binding["principal_binding_id"]
+
+
+def test_owner_stop_after_browser_authorization_prevents_the_real_click(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The sealed Playwright worker must receive no call bytes after a stop."""
+
+    monkeypatch.setattr(
+        read_dispatcher_fixtures,
+        "_decision_and_plan",
+        _browser_decision_and_plan,
+    )
+    monkeypatch.setattr(
+        effect_fixtures,
+        "_effect_authority",
+        _browser_authority,
+    )
+    monkeypatch.setattr(
+        effect_fixtures,
+        "_seed_effect_authority",
+        _seed_browser_effect_authority,
+    )
+    scope, chain, catalog, effect_authority, prepared = _prepared_effect(
+        action_chain_engine
+    )
+    effect_id = UUID(prepared.intent.effect_intent_id)
+    registry = _registry(
+        action_chain_engine,
+        scope,
+        activation_id=effect_authority.capability_activation_id,
+        operation="browser.fixture.click",
+    )
+    authorized = PostgresActionChainEffectAuthorizer(
+        action_chain_engine, scope, provider_registry=registry
+    ).authorize_effect(
+        effect_id,
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    owner_principal_id, principal_binding_id = _owner()
+    cancelled = PostgresActionChainEffectCanceller(
+        action_chain_engine, scope
+    ).cancel_pre_dispatch(
+        effect_id,
+        owner_principal_id=owner_principal_id,
+        principal_binding_id=principal_binding_id,
+        now=NOW + timedelta(seconds=10),
+    )
+    assert authorized.disposition == "authorized"
+    assert cancelled.disposition == "cancelled"
+    assert cancelled.intent.state == "cancelled"
+
+    with pytest.raises(
+        ActionChainEffectConflict, match="prepared effect step is no longer running"
+    ):
+        PostgresActionChainEffectExecutor(
+            action_chain_engine,
+            scope,
+            provider_registry=registry,
+            clock=lambda: NOW + timedelta(seconds=11),
+        ).execute(
+            effect_id,
+            live_catalog=catalog,
+            now=NOW + timedelta(seconds=11),
+            timeout_seconds=10,
+        )
+    assert PostgresActionChainLedger(action_chain_engine, scope).load(
+        chain.plan_id
+    ).steps[1].state == "cancelled"
+    oracle = _oracle(prepared.intent.idempotency_key)
+    assert oracle["post_requests"] == oracle["transitions"] == 0
+    with action_chain_engine.connect() as connection:
+        call_starts = int(
+            connection.scalar(
+                sa.select(sa.func.count())
+                .select_from(operational_events)
+                .where(
+                    operational_events.c.event_type
+                    == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED"
+                )
+            )
+        )
+    assert call_starts == 0
 
 
 def test_real_browser_click_crosses_durable_ledger_and_server_readback(
