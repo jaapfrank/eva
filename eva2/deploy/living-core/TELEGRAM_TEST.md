@@ -58,7 +58,20 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 2. Maak de lege testgroep, voeg A, B en de testbot toe en stuur vanuit A één
    unieke marker, bijvoorbeeld `EVA2-TEST-GROUP-3fj7Qz8Nw2Ka`. De marker is
    geen wachtwoord en mag uitsluitend in deze lege groep staan.
-3. Maak de testconfiguratie op de Docker-host. De opdracht vraagt de token
+3. Stuur eerst vanuit A én B in een **privéchat** met de nieuwe testbot
+   `/start`. Haal daarna hun numerieke ID's op zonder een derde-partijbot of
+   zichtbare token. Deze opdracht start Eva niet en schrijft niets:
+
+   ```bash
+   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   PYTHONPATH=src:. python3 tools/discover_telegram_test_accounts.py
+   ```
+
+   Plak de nieuwe BotFather-testtoken alleen bij de verborgen prompt. De twee
+   getoonde positieve nummers zijn `<NUMERIEK_ID_VAN_ACCOUNT_A>` en
+   `<NUMERIEK_ID_VAN_ACCOUNT_B>` in de volgende stap. Zie je er meer dan twee,
+   maak dan een nieuwe testbot in plaats van bestaande privéupdates te raden.
+4. Maak de testconfiguratie op de Docker-host. De opdracht vraagt de token
    onzichtbaar op, maakt sterke testwachtwoorden en vertrouwt A en B als twee
    verschillende testpersonen. Plak de token niet in Telegram, een
    shellgeschiedenis of een document.
@@ -74,7 +87,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    De output bevat alleen een veilig vervolgcommando; geen token of wachtwoord.
    De opdracht weigert een bestaande `/run/eva2-test` te overschrijven en
    start geen container of Telegram-verbinding.
-4. Laat de voorbereidingsopdracht één keer veilig de exacte groeps-ID uit die
+5. Laat de voorbereidingsopdracht één keer veilig de exacte groeps-ID uit die
    marker lezen en voeg de groep alleen voor A en B toe. De commandoregel
    drukt noch de BotFather-token noch de markerinhoud terug. Dit start nog
    geen container of Telegram-poller.
@@ -86,7 +99,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
      --grant-to <NUMERIEK_ID_VAN_ACCOUNT_B>
    ```
 
-5. Start daarna uitsluitend de afgescheiden teststack:
+6. Start daarna uitsluitend de afgescheiden teststack:
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
@@ -97,17 +110,17 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
    De launcher weigert afwijkende images, productiepaden, volumes en secrets.
    Hij mag pas een Telegram-poller starten nadat de eigen lege database en
    diagnosecore gezond zijn.
-6. Start privégesprekken met A én B. Ieder ontvangt de vaste diagnosezin:
+7. Start privégesprekken met A én B. Ieder ontvangt de vaste diagnosezin:
    `Telegram-test ontvangen. Dit controleert de verbinding, niet Eva's gesprek.`
    Daarmee is alleen de echte Telegram-transportroute bewezen.
-7. Stuur in de groep eerst één onschuldig bericht vanuit A en één vanuit B.
+8. Stuur in de groep eerst één onschuldig bericht vanuit A en één vanuit B.
    Zonder toestemming mag de bot op beide **niet** reageren.
-8. Stuur vanuit A's privéchat `/share <GROEPS_ID>`. Stuur daarna vanuit A één
+9. Stuur vanuit A's privéchat `/share <GROEPS_ID>`. Stuur daarna vanuit A één
    groepsbericht: de vaste diagnosezin moet alleen daarop volgen. Een bericht
    van B blijft nog stil.
-9. Herhaal `/share <GROEPS_ID>` vanuit B's privéchat. Nu mag B's groepsbericht
+10. Herhaal `/share <GROEPS_ID>` vanuit B's privéchat. Nu mag B's groepsbericht
    ook de vaste diagnosezin krijgen.
-10. Stuur vanuit A `/stop-sharing <GROEPS_ID>` en stuur weer vanuit A in de
+11. Stuur vanuit A `/stop-sharing <GROEPS_ID>` en stuur weer vanuit A in de
     groep. Eva moet stil blijven voor A, ook na een herstart van de teststack;
     B mag alleen blijven werken zolang B's eigen toestemming nog actief is.
 
