@@ -1,0 +1,26 @@
+{
+  "receipt_contract": "EvaPrivateObjectKeyringReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "ae823ce912542993a3cde504b121e16a7a9118ca",
+  "scope": "Synthetic private keyring files only. No Eva1, PostgreSQL, Hindsight, provider, connector, archive or encrypted user object was read or changed.",
+  "checks": [
+    {
+      "name": "private keyring resolver",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/operations/test_object_keyring.py",
+      "result": "5 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/object_keyring.py tests/operations/test_object_keyring.py",
+      "result": "passed"
+    }
+  ],
+  "proven": [
+    "An object key is returned only for the exact tenant, installation and key reference in a runtime-owned private file.",
+    "Group or other permissions, symlinks, duplicate selectors, malformed key material and a wrong scope are refused."
+  ],
+  "not_proven": [
+    "No source-key transfer, object-CAS materialization, portable ObjectRef restore, second-machine restore or deployment occurred.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations."
+  ]
+}

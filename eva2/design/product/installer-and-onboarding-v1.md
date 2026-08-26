@@ -72,8 +72,12 @@ uitsluitend de buildconstraint `linux/amd64`.
   envelope, hash en metadata. De databasewriter weigert echter vóór de eerste
   doelquery zodra zo'n object nog niet via een aparte, geverifieerde CAS- én
   sleutelmigratie kan worden neergezet. Dat voorkomt een ogenschijnlijk groen
-  herstel met onleesbare bestanden. Die sleutelmigratie en de tweede-machineproef
-  blijven open stappen.
+  herstel met onleesbare bestanden. De ontvangende installatie kan nu wel één
+  lokale, private keyring lezen: alleen exact passende tenant-, installatie- en
+  sleutel-ID's uit een niet-gelinkt `0600`-bestand worden geaccepteerd. De key
+  zit nooit in het archive. De eigenlijke bron→doel-sleuteloverdracht, CAS-write
+  en tweede-machineproef blijven open stappen; zie
+  `evidence/living-core/private-object-keyring-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
