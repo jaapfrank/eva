@@ -127,6 +127,15 @@ gepinde PostgreSQL-testinput moet nog wel lokaal bij Docker beschikbaar zijn;
 de launcher vervangt die nooit stil door `latest` of een andere tag. Dit is
 testvoorbereiding, geen Telegram-liveclaim of B-wijziging.
 
+Checkpoint `d5b76a0` maakt de eerste handeling voor die echte proef ook
+laagdrempelig: A en B sturen ieder `/start` naar een verse wegwerpbot, waarna
+`tools/discover_telegram_test_accounts.py` hun twee numerieke account-ID's
+rechtstreeks en met verborgen tokeninvoer toont. De opdracht start Eva niet,
+schrijft geen secret en bewaart geen namen of berichtinhoud. Daarmee is geen
+externe ID-bot nodig. De volgende stap blijft bewust handmatig: de eigenaar
+start de afgescheiden stack met zijn eigen testtoken en voert de echte
+privé- en groepsberichten uit.
+
 Checkpoint `e11c136` maakt de **Telegram-testimage daadwerkelijk lokaal
 bruikbaar**. Hij bouwt uit een schone, vaste Git-commit en een bestaande,
 gepinde Eva-parent met exact dezelfde dependency-lock. De build heeft geen
