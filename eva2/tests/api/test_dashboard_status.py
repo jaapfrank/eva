@@ -268,12 +268,10 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
         "runtime-subagents"
     ]["meaning"]
     assert capability_by_id["browser"]["state"] == "tested"
-    assert "37 + 3" in capability_by_id["browser"]["proof"]
-    assert "afzonderlijke servercontrole" in capability_by_id["browser"]["meaning"]
-    assert "niet-nul ge\u00ebindigde providerfoutvensters" in capability_by_id[
-        "browser"
-    ]["meaning"]
-    assert "geen blinde tweede klik" in capability_by_id["browser"]["meaning"]
+    assert "openbare accountloze pagina" in capability_by_id["browser"]["proof"]
+    assert "directe egress was geblokkeerd" in capability_by_id["browser"]["meaning"]
+    assert "andere website kreeg 403" in capability_by_id["browser"]["meaning"]
+    assert "geen blinde tweede poging" in capability_by_id["browser"]["meaning"]
     assert capability_by_id["telegram-real-test"]["state"] == "selected"
     assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
         "proof"

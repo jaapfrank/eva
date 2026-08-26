@@ -4,7 +4,7 @@
     {
       "claimId": "capability/browser",
       "claimState": "tested",
-      "claimSummary": "Een echte afgeschermde Playwright/Chromium-container las precies één lokale pagina en voerde via Eva's duurzame logboek precies één vaste klik uit. Onafhankelijke serverreadback bewees de toestand; twee providerfoutvensters veroorzaakten geen blinde tweede klik. Een eigenaarstop na autorisatie maar vóór provider-I/O liet nul browsercalls en nul kliks achter.",
+      "claimSummary": "Een afgeschermde Playwright/Chromium-container las precies één lokale pagina en voerde via Eva's duurzame logboek precies één vaste klik uit. Een aparte openbare proef las alleen example.com via een allowlist-proxy: directe browser-egress was geblokkeerd en iana.org kreeg 403. Onafhankelijke serverreadback bewees de lokale wijziging; twee providerfoutvensters veroorzaakten geen blinde tweede klik. Een eigenaarstop na autorisatie maar vóór provider-I/O liet nul browsercalls en nul kliks achter.",
       "sources": [
         {
           "path": "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
@@ -19,8 +19,32 @@
           "sha256": "7138b86789a89ab3c35534ddbc457935b99785be97767b3f1a187fc28e64289d"
         },
         {
+          "path": "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
+          "sha256": "8a81a2bfdd98aa542a2a7444aaf1cdb10cfae2bc49b54de400131ca9b6bebb89"
+        },
+        {
           "path": "experiments/playwright-mcp-action-v1/smoke_candidate.py",
           "sha256": "2e8f85e83dabb3ce7e0649c454be95807ea47cd124e87a4bce28bec04cecfb52"
+        },
+        {
+          "path": "experiments/playwright-mcp-public-read-v1/README.md",
+          "sha256": "4c5158090d3e70a2ec201aa3ddfe1c8f3ccb86ed7d747e71aabe3c29a9fc62da"
+        },
+        {
+          "path": "experiments/playwright-mcp-public-read-v1/profile.json",
+          "sha256": "8870c5b41ceec71b28b454a348edaf6e837ba45c66b9fbb39de317a91fc93844"
+        },
+        {
+          "path": "experiments/playwright-mcp-public-read-v1/smoke_candidate.py",
+          "sha256": "4f6cb26ad45922ded127eeaaca73f3d7abf11efd7a4646d58323b07a015e4f69"
+        },
+        {
+          "path": "experiments/playwright-mcp-public-read-v1/smoke_client.py",
+          "sha256": "c69081e22890d8a7ad4b17a88403d87e2212478e3c48c4a19b417ddf9b5d2507"
+        },
+        {
+          "path": "experiments/playwright-mcp-public-read-v1/squid.conf",
+          "sha256": "40d5db98111bcd0a2dac921d729c304c86038c79dbcf4758cf1f27ef830c82d6"
         },
         {
           "path": "experiments/playwright-mcp-sidecar-v1/README.md",
@@ -146,11 +170,11 @@
         },
         {
           "path": "src/eva/adapters/api/cockpit.py",
-          "sha256": "5a260b07d3e8e78b5750edda098d45acaa29f97e89d6218db7331d6e34370a48"
+          "sha256": "88c3ca5e256fbc2a24a3dae2d980188036078c155b7b77ef6af150a900e90acb"
         },
         {
           "path": "tests/api/test_dashboard_status.py",
-          "sha256": "c71c0340e9036b71e73f713de0143c0e628f650d8508b264503d83ee2c88b408"
+          "sha256": "0abd9f57ebb8bed811659fce2592d9777a3903406f8a589acca3564240f68ced"
         }
       ]
     },

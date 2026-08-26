@@ -90,11 +90,11 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "id": "browser",
-                "title": "Eerste gecontroleerde browseractie",
+                "title": "Gecontroleerde browserhand",
                 "state": "tested",
-                "proof": "1 vaste pagina gelezen en 1 vaste klik via Eva's logboek; 37 + 3 controles groen",
-                "meaning": "Een afzonderlijke servercontrole bewees de wijziging. Twee niet-nul ge\u00ebindigde providerfoutvensters veroorzaakten geen blinde tweede klik.",
-                "next": "Een afgeschermde publieke testsite met grant en live stop; daarna pas formulieren, downloads, accounts en Telegram/B.",
+                "proof": "Lokale read + klik én 1 openbare accountloze pagina via allowlist; 37 + 3 controles groen",
+                "meaning": "De openbare leesproef had geen vrije internetbrowser: directe egress was geblokkeerd en een andere website kreeg 403. De lokale klik had afzonderlijke servercontrole en geen blinde tweede poging.",
+                "next": "Een tweede openbare testtaak met eigenaargrant en live stop; daarna pas formulieren, downloads, accounts en Telegram/B.",
                 "evidence": _evidence("capability/browser"),
             },
             {
@@ -178,7 +178,7 @@ def cockpit_progress() -> dict[str, Any]:
                 "version": "0.0.79",
                 "role": "Browsercomputer",
                 "state": "tested",
-                "decision": "Exacte MCR-image en Chromium-sandbox; één lokale read en één vaste actie via Eva's duurzame logboek zijn onafhankelijk groen.",
+                "decision": "Exacte MCR-image en Chromium-sandbox; lokale read/actie en één openbare accountloze read via allowlist zijn groen. Breder browserwerk blijft open.",
                 "evidence": _evidence("dependency/microsoft-playwright-mcp"),
             },
             {
