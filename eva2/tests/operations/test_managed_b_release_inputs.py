@@ -125,7 +125,7 @@ def test_release_inputs_bind_cockpit_claims_to_exact_evidence_sources() -> None:
     authority, _ = _authority()
     files = _files(authority)
     changed = copy.deepcopy(authority)
-    path = "reviews/harness-subagent-engine-55cf7cc.md"
+    path = "reviews/delegated-subagent-vertical-f9373f1.md"
     files[path] = (files[path][0] + b"\n", 0o644)
     row = next(item for item in changed["requiredInputs"] if item["path"] == path)
     row["sha256"] = hashlib.sha256(files[path][0]).hexdigest()
