@@ -94,10 +94,12 @@ privé `/start`, daarna volgt één lege testgroep met groeps-, intrek- en
 herstartproef. De voicekaart is tegelijk eerlijker gemaakt: 38 lokale
 audioblokken zijn streamend doorgegeven, maar deze WSL-host heeft geen
 bruikbare microfoon of speaker. De fysieke voiceproef staat dus nog open.
-13 gerichte cockpitchecks en linting zijn groen. De brede bewijscheck blijft
-apart rood doordat een al gewijzigde browser-proef niet meer bij haar oude
-vastgelegde hash past; die andere wijziging is niet aangepast of als groen
-geclaimd.
+14 gerichte cockpitchecks en linting zijn groen. De actuele bewijscheck is ook
+weer groen: de nieuwere browser-stopproef is met haar eigen receipt aan de
+cockpit gebonden en alle bronhashes sluiten exact. De **managed-B-release**
+check blijft bewust rood, omdat die alleen de oudere verzegelde kandidaat als
+release-input toelaat. Deze nieuwe cockpit- en browserstand is dus zichtbaar
+en getest, maar niet stil als B-release gepromoveerd.
 
 Checkpoint `d8b8d2f` sluit een belangrijke **stopknop-kloof vóór een externe
 actie**. Eerder kon stoppen alleen vóór autorisatie; nu kan de eigenaar ook
