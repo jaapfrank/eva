@@ -31,8 +31,10 @@ uitsluitend de buildconstraint `linux/amd64`.
   versleutelde objectpayloads kan meenemen. Een nieuwe, geteste transportlaag
   versleutelt nu de **hele** gevalideerde export als één bestand en herstelt
   hem pas na wachtwoord- én integriteitscontrole. Een verkeerd wachtwoord of
-  gewijzigde byte publiceert geen halve restore. Dit is nog geen complete
-  gebruikersproef of database-import op een tweede computer.
+  gewijzigde byte publiceert geen halve restore. Een kleine operator-CLI leest
+  het wachtwoord uitsluitend uit een owner-private `0600`-file, nooit uit een
+  argument of receipt. Dit is nog geen complete gebruikersproef of
+  database-import op een tweede computer.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.
