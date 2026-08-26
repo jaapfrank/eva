@@ -271,6 +271,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "verdachte pagina-instructie bleef gewone data" in capability_by_id[
         "browser"
     ]["meaning"]
+    assert "host én internet waren onbereikbaar" in capability_by_id["browser"][
+        "meaning"
+    ]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI"]["version"] == (

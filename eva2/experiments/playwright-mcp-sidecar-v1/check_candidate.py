@@ -20,7 +20,7 @@ RECEIPT_PATH = (
     REPOSITORY
     / "evidence"
     / "cockpit"
-    / "isolated-browser-read-6b4cc87-test-receipt.json"
+    / "isolated-browser-read-a7913a8-test-receipt.json"
 )
 
 
