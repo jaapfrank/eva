@@ -33,6 +33,8 @@ def _pcm(raw: object, *, name: str) -> None:
         raise SystemExit(f"{name} PCM format is invalid")
     if not isinstance(raw.get("bytes"), int) or raw["bytes"] <= 0:
         raise SystemExit(f"{name} PCM byte count is invalid")
+    if not isinstance(raw.get("chunks"), int) or raw["chunks"] <= 0:
+        raise SystemExit(f"{name} PCM chunk count is invalid")
     if not isinstance(raw.get("sha256"), str) or SHA256.fullmatch(raw["sha256"]) is None:
         raise SystemExit(f"{name} PCM hash is invalid")
 
@@ -44,7 +46,7 @@ def main() -> None:
     if raw.get("captureScriptSha256") != _sha256(CAPTURE):
         raise SystemExit("offline receipt does not bind the capture checker")
     if raw.get("network") != {
-        "name": "eva2-v02-offline-net-20260826",
+        "name": "eva2-v02-stream-net-20260826",
         "internal": True,
         "hostPublishedPorts": False,
         "internetGateway": False,
@@ -62,8 +64,8 @@ def main() -> None:
         if sidecar.get("hostMounts") is not False or sidecar.get("publishedHostPorts") is not False:
             raise SystemExit(f"{name} exposes host data or a host port")
     if containers.get("controller") != {
-        "image": "eva2-v02-wyoming-controller:81f18f4",
-        "sourceCommit": "81f18f4341e7b5356065bf884b454968a955c2e5",
+        "image": "eva2-v02-wyoming-controller:d28ee3a",
+        "sourceCommit": "d28ee3a09e9ee464c7f04ad83e0308f9f3738564",
         "readOnlyRoot": True,
         "allCapabilitiesDropped": True,
         "noNewPrivileges": True,
@@ -89,6 +91,13 @@ def main() -> None:
     if input_data.get("phraseSha256") != INPUT_PHRASE_SHA256:
         raise SystemExit("input phrase binding changed")
     _pcm(input_data.get("pcm"), name="input")
+    input_pcm = input_data["pcm"]
+    if input_data.get("streaming") != {
+        "mode": "piper_chunk_relay_to_whisper",
+        "completeInputAudioBuffered": False,
+        "chunksRelayedBeforeAudioStop": input_pcm["chunks"],
+    }:
+        raise SystemExit("streaming PCM relay binding changed")
     reply = pipeline.get("reply")
     if not isinstance(reply, dict) or reply.get("phraseSha256") != REPLY_PHRASE_SHA256:
         raise SystemExit("reply phrase binding changed")

@@ -24,8 +24,8 @@ WHISPER_IMAGE = (
     "rhasspy/wyoming-whisper@sha256:"
     "731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d"
 )
-CONTROLLER_IMAGE = "eva2-v02-wyoming-controller:81f18f4"
-SOURCE_COMMIT = "81f18f4341e7b5356065bf884b454968a955c2e5"
+CONTROLLER_IMAGE = "eva2-v02-wyoming-controller:d28ee3a"
+SOURCE_COMMIT = "d28ee3a09e9ee464c7f04ad83e0308f9f3738564"
 
 
 def _docker_json(*args: str) -> Any:
@@ -105,7 +105,7 @@ def _controller(container: dict[str, Any]) -> dict[str, object]:
         raise ValueError("controller exposes a host port")
     if len(mounts) != 1 or mounts[0].get("Type") != "volume" or mounts[0].get("Destination") != "/receipt":
         raise ValueError("controller must have exactly one named receipt volume")
-    if mounts[0].get("RW") is not True or mounts[0].get("Name") != "eva2-v02-offline-receipt-20260826":
+    if mounts[0].get("RW") is not True or mounts[0].get("Name") != "eva2-v02-stream-receipt-20260826":
         raise ValueError("controller receipt volume changed")
     if host.get("Tmpfs") != {"/tmp": "rw,nosuid,noexec,size=16m"}:
         raise ValueError("controller tmpfs changed")
@@ -144,7 +144,7 @@ def main() -> None:
     }
     if any(value is None for value in pipeline_excerpt.values()):
         raise SystemExit("pipeline receipt is missing a required binding")
-    network = _docker_json("network", "inspect", "eva2-v02-offline-net-20260826")
+    network = _docker_json("network", "inspect", "eva2-v02-stream-net-20260826")
     if not isinstance(network, list) or len(network) != 1 or network[0].get("Internal") is not True:
         raise SystemExit("voice network is not an internal Docker network")
     result = {
@@ -153,25 +153,25 @@ def main() -> None:
         "pipelineReceiptSha256": _sha256(args.pipeline_receipt),
         "pipeline": pipeline_excerpt,
         "network": {
-            "name": "eva2-v02-offline-net-20260826",
+            "name": "eva2-v02-stream-net-20260826",
             "internal": True,
             "hostPublishedPorts": False,
             "internetGateway": False,
         },
         "containers": {
             "piper": _sidecar(
-                container=_one_container("eva2-v02-offline-piper"),
+                container=_one_container("eva2-v02-stream-piper"),
                 image=PIPER_IMAGE,
-                volume="eva2-v02-offline-piper-20260826",
+                volume="eva2-v02-stream-piper-20260826",
                 destination="/data",
             ),
             "whisper": _sidecar(
-                container=_one_container("eva2-v02-offline-whisper"),
+                container=_one_container("eva2-v02-stream-whisper"),
                 image=WHISPER_IMAGE,
-                volume="eva2-v02-offline-whisper-20260826",
+                volume="eva2-v02-stream-whisper-20260826",
                 destination="/data",
             ),
-            "controller": _controller(_one_container("eva2-v02-offline-controller")),
+            "controller": _controller(_one_container("eva2-v02-stream-controller")),
         },
         "nonclaims": [
             "No microphone, speaker, real person, audio recording or hardware path was used.",

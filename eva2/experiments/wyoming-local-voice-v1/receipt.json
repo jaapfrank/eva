@@ -3,18 +3,24 @@
   "controller": {
     "pydantic": "2.12.5",
     "requirementsSha256": "1547d30b9eb441e4027aaf91663ce668385e6eec58f64648990e37422bcda97b",
-    "runnerSha256": "4589d3d9ec127f7cd1969694920d6cc9e83da3cdd182a67353e85c2816d49415",
+    "runnerSha256": "f2c2cab74a167c7b912d96769b0515d5f001bb868b152d64122e9d5090ade2ac",
     "wyoming": "1.10.0"
   },
   "input": {
     "pcm": {
-      "bytes": 73216,
+      "bytes": 76288,
       "channels": 1,
+      "chunks": 38,
       "rate": 22050,
-      "sha256": "9166c577e08aab44d70b343f0a0ad5bb48a039b9f587c8f4e6432fb808a8cc1e",
+      "sha256": "467640a68f0078bfc23a5342d7c7f0788e9f14bfb5705d71b05bc894472b8c1b",
       "width": 2
     },
     "phraseSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
+    "streaming": {
+      "chunksRelayedBeforeAudioStop": 38,
+      "completeInputAudioBuffered": false,
+      "mode": "piper_chunk_relay_to_whisper"
+    },
     "voice": "nl_NL-pim-medium"
   },
   "nonclaims": [
@@ -25,10 +31,11 @@
   ],
   "reply": {
     "pcm": {
-      "bytes": 101888,
+      "bytes": 104448,
       "channels": 1,
+      "chunks": 51,
       "rate": 22050,
-      "sha256": "8c2336aa0724bf226f56b327b49d8edf380040b1dbc6d8ac4a6d6d3956b62128",
+      "sha256": "8413aabd039ef2e1073f165f9453022dfdcfe20c2f2d92285ab794a6cd4fb09d",
       "width": 2
     },
     "phraseSha256": "82a7c6e0cade94072c48184837393691c2838111ddaff64e7f6e778a30b33d22"
