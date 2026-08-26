@@ -12,15 +12,13 @@ bestaande Eva-bot, gezinsgroep, B-secrets of productiedatabase.
    telefoons zijn handig, maar Telegram kan ook twee accounts op één toestel
    gebruiken.
 3. Eén lege testgroep met alleen A, B en de testbot.
-4. Een gepinde Eva-testimage die deze repositoryversie bevat. Een image-tag
-   zoals `latest` wordt geweigerd.
-5. De vijf afzonderlijke testbestanden uit
-   [`telegram-test.example`](telegram-test.example). De database-DSN moet
-   exact deze vorm hebben, met een echt testwachtwoord:
+4. Het numerieke Telegram-gebruikers-ID van account A. Dit is **niet** het
+   telefoonnummer en ook niet de gebruikersnaam. Haal het bijvoorbeeld op met
+   een bestaande, betrouwbare Telegram-ID-bot en noteer alleen het nummer.
 
- ```text
-   postgresql+psycopg://postgres:<wachtwoord>@postgres-test:5432/eva2test
-   ```
+Je maakt geen losse DSN, wachtwoorden, JSON-bestanden, volumes of
+netwerknamen. De voorbereidingsopdracht hieronder maakt die zelf, uitsluitend
+in `/run/eva2-test` en alleen voor deze wegwerpproef.
 
 ## De testimage staat lokaal klaar
 
@@ -50,13 +48,48 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
 ## Veilige proefvolgorde
 
-1. Start alleen een privégesprek met account A. De vaste diagnosezin bewijst
-   uitsluitend transport; zij is nog geen Eva-gesprek.
-2. Koppel account B via de normale koppelroute.
-3. Voeg A, B en de testbot toe aan de lege testgroep. Test toestemming geven,
+1. Maak in BotFather een nieuwe testbot. Gebruik nooit de token van Eva A/B.
+2. Maak de testconfiguratie op de Docker-host. De opdracht vraagt de token
+   onzichtbaar op, maakt sterke testwachtwoorden en vertrouwt aanvankelijk
+   alleen account A. Plak de token niet in Telegram, een shellgeschiedenis of
+   een document.
+
+   ```bash
+   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   sudo env PYTHONPATH=src:. python3 tools/prepare_telegram_test_config.py \
+     --owner-telegram-user-id <NUMERIEK_ID_VAN_ACCOUNT_A>
+   ```
+
+   De output bevat alleen een veilig vervolgcommando; geen token of wachtwoord.
+   De opdracht weigert een bestaande `/run/eva2-test` te overschrijven en
+   start geen container of Telegram-verbinding.
+3. Start daarna uitsluitend de afgescheiden teststack:
+
+   ```bash
+   cd /home/administrator/project/Bottie-candidates/v2/eva2
+   sudo env PYTHONPATH=src:. python3 -m eva.operations.telegram_test_launch \
+     --env-file /run/eva2-test/telegram-test.env
+   ```
+
+   De launcher weigert afwijkende images, productiepaden, volumes en secrets.
+   Hij mag pas een Telegram-poller starten nadat de eigen lege database en
+   diagnosecore gezond zijn.
+4. Start een privégesprek met account A. De vaste diagnosezin bewijst alleen
+   Telegram-transport; zij is nog geen Eva-gesprek.
+5. Koppel account B via de normale koppelroute.
+6. Voeg A, B en de testbot toe aan de lege testgroep. Test toestemming geven,
    een onschuldig groepsbericht en toestemming intrekken.
-4. Herstart de testopstelling en controleer dat een ingetrokken toestemming
+7. Herstart de testopstelling en controleer dat een ingetrokken toestemming
    ook daarna niet opnieuw toegang geeft.
+
+## Voor je de launcher uitvoert
+
+De launcher gebruikt uitsluitend de vastgezette Eva-testimage hierboven en de
+vastgezette PostgreSQL-testinput uit de gegenereerde configuratie. Beide moeten
+lokaal voor Docker beschikbaar zijn. De launcher trekt nooit stil `latest` of
+een willekeurige PostgreSQL-tag binnen. Ontbreekt de exact gepinde
+PostgreSQL-input, dan stopt de launch vóór een testbericht; laad dan eerst die
+goedgekeurde input opnieuw in plaats van een tag te vervangen.
 
 Noteer per stap tijd, Telegram-account, chat, verwacht resultaat en werkelijk
 resultaat. Sla geen token, wachtwoord of berichtinhoud in een review op.

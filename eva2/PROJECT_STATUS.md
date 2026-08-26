@@ -82,6 +82,21 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
+De Telegramproef heeft nu ook een **één-opdracht voorbereiding**: de operator
+geeft alleen account A's numerieke Telegram-ID op en voert de nieuwe
+`tools/prepare_telegram_test_config.py` als root uit. Die vraagt de aparte
+BotFather-testtoken onzichtbaar op, maakt de vijf private testbestanden met de
+juiste containereigenaren en schrijft een geheimevrije launcherconfiguratie.
+Zij overschrijft nooit een eerdere proef en start geen container, database of
+Telegramverbinding. Daardoor hoeft niemand meer zelf een DSN, wachtwoord,
+bindingsbestand, volume- of netwerknaam te verzinnen. Account B blijft bewust
+alleen via de echte koppelroute toe te voegen. De volgende stap is nu tastbaar:
+testbot + twee accounts + testgroep aanmaken, voorbereiden, starten en de vier
+gedragsstappen in `TELEGRAM_TEST.md` uitvoeren. De exact gepinde
+PostgreSQL-testinput moet nog wel lokaal bij Docker beschikbaar zijn; de
+launcher vervangt die nooit stil door `latest` of een andere tag. Dit is
+testvoorbereiding, geen Telegram-liveclaim of B-wijziging.
+
 Checkpoint `e11c136` maakt de **Telegram-testimage daadwerkelijk lokaal
 bruikbaar**. Hij bouwt uit een schone, vaste Git-commit en een bestaande,
 gepinde Eva-parent met exact dezelfde dependency-lock. De build heeft geen
