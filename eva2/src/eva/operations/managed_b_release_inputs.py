@@ -48,6 +48,7 @@ _EXPECTED_INPUT_PATHS = (
     "design/vertical/noor-4d-schema-export-freeze-v1.json",
     "evidence/4c/postgresql-durability-gate.json",
     "evidence/cockpit/delegated-subagent-vertical-f9373f1-test-receipt.json",
+    "evidence/cockpit/isolated-browser-read-6b4cc87-test-receipt.json",
     "evidence/cockpit/people-memory-1c62778-test-receipt.json",
     "evidence/cockpit/runtime-subagent-workboard-c031755-test-receipt.json",
     "evidence/public/eva-cockpit-sanitized-evidence-v1.json",
@@ -55,6 +56,12 @@ _EXPECTED_INPUT_PATHS = (
     "experiments/harness-subagents-v1/requirements.lock",
     "experiments/harness-subagents-v1/smoke_candidate.py",
     "experiments/harness-subagents-v1/test_candidate.py",
+    "experiments/playwright-mcp-sidecar-v1/README.md",
+    "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
+    "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
+    "experiments/playwright-mcp-sidecar-v1/profile.json",
+    "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
+    "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
     "migrations/env.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
@@ -96,6 +103,8 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/portable/v1/contracts/manifest.json",
     "src/eva/adapters/api/app.py",
     "src/eva/adapters/api/cockpit.py",
+    "src/eva/adapters/connectors/mcp.py",
+    "src/eva/adapters/connectors/playwright_mcp.py",
     "src/eva/adapters/model/openai_child_provider.py",
     "src/eva/adapters/postgres/current_catalog.py",
     "src/eva/adapters/postgres/delegated_work.py",
@@ -144,6 +153,8 @@ _EXPECTED_TEST_PATHS = (
     "tests/bootstrap/test_schema_install_deployment.py",
     "tests/bootstrap/test_telegram_ingress_deployment.py",
     "tests/connectors/test_home_assistant_live_adapters.py",
+    "tests/connectors/test_mcp.py",
+    "tests/connectors/test_playwright_mcp.py",
     "tests/connectors/test_telegram.py",
     "tests/contract/test_contract_corpus.py",
     "tests/contract/test_contract_invariants.py",
@@ -209,6 +220,19 @@ _COCKPIT_EVIDENCE_NONCLAIMS = (
     "Selected and open cockpit items are deliberately absent from this evidence index.",
 )
 _COCKPIT_EVIDENCE_SOURCES = {
+    "capability/browser": (
+        "evidence/cockpit/isolated-browser-read-6b4cc87-test-receipt.json",
+        "experiments/playwright-mcp-sidecar-v1/README.md",
+        "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
+        "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
+        "experiments/playwright-mcp-sidecar-v1/profile.json",
+        "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
+        "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
+        "src/eva/adapters/connectors/mcp.py",
+        "src/eva/adapters/connectors/playwright_mcp.py",
+        "tests/connectors/test_mcp.py",
+        "tests/connectors/test_playwright_mcp.py",
+    ),
     "capability/child-engine": (
         "evidence/cockpit/runtime-subagent-workboard-c031755-test-receipt.json",
         "experiments/harness-subagents-v1/requirements.lock",
@@ -269,6 +293,19 @@ _COCKPIT_EVIDENCE_SOURCES = {
         "experiments/harness-subagents-v1/smoke_candidate.py",
         "experiments/harness-subagents-v1/test_candidate.py",
         "reviews/runtime-subagent-workboard-c031755.md",
+    ),
+    "dependency/microsoft-playwright-mcp": (
+        "evidence/cockpit/isolated-browser-read-6b4cc87-test-receipt.json",
+        "experiments/playwright-mcp-sidecar-v1/README.md",
+        "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
+        "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
+        "experiments/playwright-mcp-sidecar-v1/profile.json",
+        "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
+        "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
+        "src/eva/adapters/connectors/mcp.py",
+        "src/eva/adapters/connectors/playwright_mcp.py",
+        "tests/connectors/test_mcp.py",
+        "tests/connectors/test_playwright_mcp.py",
     ),
 }
 _SANITIZED_COCKPIT_NONCLAIMS = (
@@ -339,6 +376,7 @@ _SANITIZED_CORE_CASES = (
     "X04",
 )
 _COCKPIT_EVIDENCE_STATES = {
+    "capability/browser": "tested",
     "capability/child-engine": "tested",
     "capability/cockpit": "tested",
     "capability/home-skill": "live",
@@ -352,6 +390,7 @@ _COCKPIT_EVIDENCE_STATES = {
     "dependency/hindsight": "live",
     "dependency/pydantic-ai": "tested",
     "dependency/pydantic-ai-harness": "tested",
+    "dependency/microsoft-playwright-mcp": "tested",
 }
 _EXPECTED_MIGRATIONS = (
     ("4b_0000_core_namespace", None, "migrations/versions/4b_0000_core_namespace.py"),

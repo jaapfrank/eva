@@ -90,11 +90,12 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "id": "browser",
-                "title": "Browsercomputer",
-                "state": "selected",
-                "proof": "Microsoft Playwright MCP 0.0.79 geselecteerd als geïsoleerde sidecar",
-                "meaning": "We bouwen geen eigen Chromium- of screenshotmotor.",
-                "next": "Exact pinnen en één credentialvrije read-only webtaak uitvoeren.",
+                "title": "Eerste afgeschermde browsertaak",
+                "state": "tested",
+                "proof": "Echte Playwright/Chromium-container opende 1 vaste pagina; 29 van 29 controles groen",
+                "meaning": "Eva gebruikte alleen navigeren en teruglezen; een verdachte pagina-instructie bleef gewone data en internet was onbereikbaar.",
+                "next": "Daarna pas klikken en downloaden via de duurzame ledger, gevolgd door een echte publieke site en Telegram/B.",
+                "evidence": _evidence("capability/browser"),
             },
             {
                 "id": "voice",
@@ -168,8 +169,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "name": "Microsoft Playwright MCP",
                 "version": "0.0.79",
                 "role": "Browsercomputer",
-                "state": "selected",
-                "decision": "Sidecar met vaste browserimage, sandbox en egressgrens.",
+                "state": "tested",
+                "decision": "Exacte MCR-image, Chromium-sandbox en intern netwerk zonder internet; alleen navigeren en teruglezen.",
+                "evidence": _evidence("dependency/microsoft-playwright-mcp"),
             },
             {
                 "name": "DBOS",
@@ -299,6 +301,22 @@ COCKPIT_HTML = """<!doctype html>
           </div>
           <p class="proof-boundary"><strong>Nog niet live:</strong> de door de eigenaar goedgekeurde eerste echte providerproef, echt Telegram en de beheerde B-kandidaat blijven de volgende poort.</p>
         </div>
+        <div class="delivery-stage">
+          <div class="section-head"><div><span class="kicker">Tweede verticale slice gesloten</span><h2 id="vandaag-browser-title">Eva heeft nu haar eerste echte browserhand</h2></div><p>Geen zelfgebouwde browser: de officiële Microsoft Playwright MCP-sidecar opende één exact toegestane pagina in een echte Chromium-container zonder route naar internet.</p></div>
+          <div class="delivery-grid" aria-label="Bewijs van de afgeschermde browserkandidaat">
+            <article class="delivery-metric"><strong>29 / 29</strong><span>adapter- en MCP-controles groen</span><small>Goede uitvoer én afwijkende tools, pagina's, hashes en deadlines zijn beproefd.</small></article>
+            <article class="delivery-metric"><strong>Precies 2</strong><span>browseroproepen</span><small>Alleen navigeren en de toegankelijke paginasnapshot teruglezen.</small></article>
+            <article class="delivery-metric"><strong>0 + 0</strong><span>internetroutes en publieke poorten</span><small>De browser kon de buitenwereld niet bereiken en exposeerde niets op de host.</small></article>
+            <article class="delivery-metric"><strong>198 ms</strong><span>gemeten noodstop</span><small>De tijdelijke browser stopte en alle proefcontainers en het netwerk werden opgeruimd.</small></article>
+          </div>
+          <div class="journey" aria-label="Hoe Eva haar eerste browserhand gebruikte">
+            <article class="journey-step"><b>1 · Eva krijgt één deur</b><span>Alleen de exact vastgelegde lokale pagina is toegestaan.</span></article>
+            <article class="journey-step"><b>2 · Chromium opent</b><span>De gepinde communitycontainer draait niet-root, read-only en met browser-sandbox.</span></article>
+            <article class="journey-step"><b>3 · Eva kijkt terug</b><span>URL, titel en zichtbare inhoud moeten byte-voor-byte bij het proefcontract passen.</span></article>
+            <article class="journey-step"><b>4 · De pagina commandeert niets</b><span>Een tekst die om extra tools vraagt blijft data; Eva doet geen derde oproep.</span></article>
+          </div>
+          <p class="proof-boundary"><strong>Nog niet live:</strong> publieke websites, klikken, downloads, formulieren, accounts, een duurzaam browserlogboek en de Telegram/B-route blijven bewust open.</p>
+        </div>
       </section>
 
       <section id="kring" class="content" aria-labelledby="kring-title">
@@ -331,8 +349,8 @@ COCKPIT_HTML = """<!doctype html>
         </div>
         <div class="dock roadmap" aria-label="Bewuste projectvolgorde">
           <article class="module connected"><strong>Af · Subagentkandidaat</strong><span>Chatcommando's, actieve stop, duurzame status, workerimage en onafhankelijke GO</span></article>
-          <article class="module connected"><strong>Volgende poort · echte canary</strong><span>Een externe provider via echt Telegram en de beheerde kandidaat, na toestemming van de eigenaar</span></article>
-          <article class="module pending"><strong>Daarna · Browsercomputer</strong><span>Eén afgeschermde webtaak van begin tot gecontroleerd eindresultaat</span></article>
+          <article class="module connected"><strong>Af · Eerste browserhand</strong><span>Gepinde Playwright-sidecar, echte Chromium, vaste pagina, geen internet en gecontroleerde teruglezing</span></article>
+          <article class="module pending"><strong>Volgende · Browseractie en herstel</strong><span>Klik of download via Eva's duurzame logboek, met stop en hervatten zonder blinde herhaling</span></article>
           <article class="module pending"><strong>Daarna · Voice & aanwezigheid</strong><span>Dezelfde Eva snel, onderbreekbaar en weer voelbaar in huis</span></article>
         </div>
       </section>
@@ -351,7 +369,7 @@ COCKPIT_HTML = """<!doctype html>
           <article class="module connected"><strong>Personen & geheugen</strong><span>Veilige actuele status aangesloten; inhoudelijk geheugenbeheer volgt later</span></article>
           <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
           <article class="module connected"><strong>Workers & subagents</strong><span>Chatstart, status, actieve stop en kleine workerimage getest; externe provider- en Telegramcanary volgen</span></article>
-          <article class="module pending"><strong>Skills & browser</strong><span>Sidecars nog niet gekoppeld</span></article>
+          <article class="module connected"><strong>Skills & browser</strong><span>Eerste geïsoleerde Playwright-pagina-read getest; klikken, downloaden en de live route zijn open</span></article>
           <article class="module pending"><strong>Voice & huis</strong><span>Live routes nog open</span></article>
           <article class="module pending"><strong>Kosten & budget</strong><span>Projectie nog open</span></article>
           <article class="module pending"><strong>Bewijs & benchmarks</strong><span>Scorebord nog open</span></article>
