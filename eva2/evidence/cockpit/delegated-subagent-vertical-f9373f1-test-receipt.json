@@ -1,0 +1,151 @@
+{
+  "contract": "EvaDelegatedSubagentVerticalTestReceipt/v1",
+  "implementationCommit": "f9373f19e1b19adad554264ea24543521ae741df",
+  "status": "passed",
+  "executedOn": "2026-08-26",
+  "scope": "local_candidate_only",
+  "dependencies": {
+    "directRoots": {
+      "openai": "3.3.1",
+      "psycopg[binary]": "3.3.4",
+      "pydantic": "2.12.5",
+      "pydantic-ai-slim": "2.32.1",
+      "SQLAlchemy": "2.0.52"
+    },
+    "directRootCount": 5,
+    "lockedWheelCount": 24,
+    "installedDistributionCountIncludingPip": 25,
+    "lockPath": "requirements-delegated-work.lock",
+    "lockSha256": "0f270ccc6b4086ce7f5a5300563a74dfa53569d51109fb60f21958fb0acaa6a5",
+    "rootsPath": "release/delegated-work-dependency-roots.in",
+    "rootsSha256": "7ad6c7df2472530bd1dcda15c35ad642a314ac63d88f2fb6c23e182309a4aa53"
+  },
+  "candidateImage": {
+    "id": "sha256:dd427e2bbd9011f621670be5969c547b5d1f30faecebaceced1db40bd3bc9364",
+    "base": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "architecture": "linux/amd64",
+    "sizeBytes": 86614322,
+    "user": "65532:65532",
+    "workingDirectory": "/opt/eva",
+    "command": [
+      "python",
+      "-m",
+      "eva.bootstrap.delegated_work_service"
+    ],
+    "healthCommand": [
+      "python",
+      "-m",
+      "eva.bootstrap.delegated_work_service",
+      "--check"
+    ],
+    "dockerfilePath": "deploy/delegated-work/Dockerfile",
+    "dockerfileSha256": "7bc6183fa4ec6ce177b9628b8a20904beea07621f2caa86caa8ac2484aba6ff5",
+    "buildSource": "clean Git archive of the implementation commit",
+    "buildNetwork": "none",
+    "pull": false,
+    "tagged": false,
+    "pushed": false
+  },
+  "sourceHashes": {
+    "migrations/versions/4e_0004_delegated_work_stop.py": "94113d3881dd6e946d079999d2541cb6ff5bf3148bde9e7ffc0fe91eb4903c9f",
+    "src/eva/adapters/model/openai_child_provider.py": "4660f07bf295e5ad9e9da260b2202f06bb7523f4f92b880ef5fbd61feb422a68",
+    "src/eva/adapters/postgres/delegated_work.py": "b284e1c7964b4f26c8c386de4fc5d57e38ca46bc2e65fc7bbf0f505d274a8622",
+    "src/eva/bootstrap/delegated_work_commands.py": "eba674cfd3d666e7e493c282be7e25883f346b8e31320fbef6fd3d288e6b01d4",
+    "src/eva/bootstrap/delegated_work_provider.py": "0f88b3ceb6bf1c22ee535c5c0c80ebab4df6f1bfabbd80bb930071b9b464efab",
+    "src/eva/bootstrap/delegated_work_service.py": "88b3176ff837c90cab0196bd4cadabf29ce75a1ffb9155cf6da01ff95858912b",
+    "src/eva/operations/delegated_work_worker.py": "f75f1f1873bcfd12c2d65411113e49d593369dbf907c9c5d2b3fb2ba819b6f90",
+    "tests/operations/test_delegated_work_image.py": "432e6dee5036b4dbae057329216db59cb6dae3a6017b7b925f9b172e9bef9af0",
+    "tests/postgres/test_delegated_work_migration.py": "950add9e6fed44f58814d75ab64dae288be0ecd27afa7f83e705bd5bba279f96",
+    "tests/postgres/test_delegated_work_store.py": "613f198c46efe487d70f4becf43da8e74ee03c6376b927817cd8bd278d890f5b"
+  },
+  "runs": [
+    {
+      "id": "component-and-provider-contracts",
+      "environmentBoundary": "Exact product dependency versions; local providers only.",
+      "passed": 40,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "fresh-postgresql-delegated-work",
+      "environmentBoundary": "Fresh disposable PostgreSQL 16.13. Includes chat start/status/stop, separate processes, official-SDK local Responses-SSE, crash/replay, stop-versus-success, stop-versus-failure, usage and owner isolation.",
+      "passed": 28,
+      "failed": 0,
+      "warnings": 1,
+      "status": "passed"
+    },
+    {
+      "id": "separate-migration-and-downgrade",
+      "environmentBoundary": "Separate fresh disposable PostgreSQL 16.13 database.",
+      "passed": 1,
+      "failed": 0,
+      "warnings": 2,
+      "status": "passed"
+    },
+    {
+      "id": "candidate-image-static-contract",
+      "environmentBoundary": "Dockerfile and schema installer tests.",
+      "passed": 4,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "candidate-image-offline-runtime",
+      "environmentBoundary": "Local untagged image, network disabled, read-only filesystem, UID/GID 65532, all Linux capabilities dropped, no-new-privileges, 1 CPU, 512 MiB, 128 processes and 256 file descriptors.",
+      "checks": [
+        "six runtime source hashes equal the clean implementation commit",
+        "pip check reports no broken requirements",
+        "OpenAI SDK, Pydantic AI, Psycopg and SQLAlchemy versions equal the sealed lock",
+        "Alembic, DBOS, FastAPI and Uvicorn are absent",
+        "runtime and Telegram-independent worker modules import without network"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "candidate-image-health",
+      "environmentBoundary": "Disposable PostgreSQL 16.13 at schema head 4e_0004, synthetic private DSN and synthetic shared model lease; no provider request. The real resident command became healthy, handled SIGTERM with exit code 0, emitted no logs and was removed.",
+      "status": "passed"
+    },
+    {
+      "id": "independent-stop-race-review",
+      "environmentBoundary": "Independent clean Git archive, independent disposable PostgreSQL 16.13 and reviewer-created race probes.",
+      "passed": 36,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "independent-candidate-image-audit",
+      "environmentBoundary": "Independent byte comparison of the local image, a fresh Git archive of the implementation commit, the exact lock and all 24 wheels; independent restricted healthcheck against the disposable PostgreSQL fixture.",
+      "checks": [
+        "769 non-wheel context files equal the independent clean Git archive",
+        "184 packaged source files equal the build context",
+        "24 locked requirements equal 24 wheels by name, version and hash",
+        "2910 wheel RECORD files plus the Greenlet header equal the image bytes",
+        "four base layers equal the pinned Python base prefix",
+        "zero delegated calls existed before and after healthcheck"
+      ],
+      "status": "passed"
+    }
+  ],
+  "verifiedOutcomes": [
+    "An exact private Telegram-v2 owner command can durably enqueue one bounded tool-free research task, read its workboard status and request stop.",
+    "A separate worker uses the official OpenAI SDK through one sealed provider profile and one durable call-start fence.",
+    "Two workers do not start the same model call twice and a restart after call-start does not replay it.",
+    "An owner stop during an active call survives restart, cancels the local SDK call cooperatively and prevents result delivery.",
+    "Stop versus success and stop versus failure share one lock order and one durable winner without deadlock.",
+    "The same stop message ID returns the same wording before and after worker completion.",
+    "A lost worker after a stored stop request is shown as contact lost and ambiguous, never as confirmed stopped.",
+    "The narrow worker image starts from the exact dependency lock and passes its real database and lease health preflight under bounded container settings.",
+    "The resident image command reaches Docker healthy state, stops gracefully with exit code 0, writes no runtime log content and leaves no worker container behind."
+  ],
+  "nonClaims": [
+    "No external OpenAI or Codex request, provider charge or provider-side cancellation was tested.",
+    "No real Telegram network message, managed-B deployment, production A change or user acceptance occurred.",
+    "The candidate image is local, untagged and unsigned; it has no source-commit label or repository digest, and no registry provenance, SBOM, vulnerability scan or multi-architecture build is claimed.",
+    "The main run observed an offline no-pull/no-cache build, but its redirected build log is empty; the precise build invocation is therefore not independently reopenable and no reproducible image ID is claimed.",
+    "The 24 wheel files were hash-checked against the lock, but approved artifact-proxy provenance is not yet proven.",
+    "The worker is tool-free and handles one task at a time; tool grants, parallel child trees and interactive Harness fork/join remain separate work.",
+    "SIGKILL after call-start remains an uncertain external outcome that Eva reports and never blindly repeats.",
+    "Managed B remains on its existing schema and image authority; 4e_0004 is a clean-candidate schema only."
+  ]
+}
