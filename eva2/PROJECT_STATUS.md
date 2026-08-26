@@ -82,6 +82,17 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
+Checkpoint `e11c136` maakt de **Telegram-testimage daadwerkelijk lokaal
+bruikbaar**. Hij bouwt uit een schone, vaste Git-commit en een bestaande,
+gepinde Eva-parent met exact dezelfde dependency-lock. De build heeft geen
+netwerk of package-installatie gebruikt; de gemaakte image importeert de
+Telegram-testmodules echt. Samen met checkpoint `7017c25` is de omgeving dus
+niet meer alleen een Compose-ontwerp: zij heeft nu een bruikbare testimage,
+een eigen lege PostgreSQL-database, volume en intern netwerk. De private
+BotFather-token, twee testaccounts en de lege testgroep ontbreken nog; zonder
+die drie doen we nadrukkelijk geen Telegram-liveclaim. Zie
+[`deploy/living-core/TELEGRAM_TEST.md`](deploy/living-core/TELEGRAM_TEST.md).
+
 Checkpoint `7017c25` maakt de **volledige aparte Telegram-testomgeving**
 beheersbaar klaar. Zij heeft een eigen lege PostgreSQL-database, volume en
 intern netwerk, plus een vaste diagnosecore die nadrukkelijk géén Eva-gesprek

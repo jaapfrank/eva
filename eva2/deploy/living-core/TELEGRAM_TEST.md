@@ -18,9 +18,35 @@ bestaande Eva-bot, gezinsgroep, B-secrets of productiedatabase.
    [`telegram-test.example`](telegram-test.example). De database-DSN moet
    exact deze vorm hebben, met een echt testwachtwoord:
 
-   ```text
+ ```text
    postgresql+psycopg://postgres:<wachtwoord>@postgres-test:5432/eva2test
    ```
+
+## De testimage staat lokaal klaar
+
+Voor commit `e11c136ada56367b31fee318dcda2b26641f41d8` is de testimage al
+lokaal gebouwd en gecontroleerd:
+
+```text
+eva2-telegram-test@sha256:12cd4341765796f92c1279ba79017d9b164fed5510ef9d11baceb87e0dc4c621
+```
+
+Zet precies deze waarde in `EVA_TEST_LIVING_CORE_IMAGE` in je private
+testconfiguratie. De image is alleen gemaakt uit die vaste Git-commit en een
+lokaal aanwezige, gepinde eerdere Eva-image met dezelfde dependency-lock. Er
+zijn tijdens de build geen packages gedownload of geïnstalleerd. Dit is een
+wegwerpimage voor de Telegramproef, geen nieuwe productie- of B-image.
+
+Bij een volgende bronwijziging bouw je opnieuw, zonder de vuile werkmap mee te
+nemen:
+
+```bash
+PYTHONPATH=src:. python3 tools/build_telegram_test_image.py <exacte-40-teken-gitcommit>
+```
+
+Kopieer uitsluitend de `image`-waarde uit de JSON-receipt naar de private
+testconfiguratie. De builder weigert een andere dependency-lock, een ontbrekende
+lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
 ## Veilige proefvolgorde
 

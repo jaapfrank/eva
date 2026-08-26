@@ -57,6 +57,12 @@ supportcontrole en stop van de poller na een foute eindcontrole.
   gebruikersacceptatie.
 - Eva A, managed B en hun data zijn niet gestart, aangepast of gedeployed.
 
-De volgende stap is daarom praktisch, niet nog een architectuurwijziging: een
-testimage bouwen, een nieuwe BotFather-testbot en twee testaccounts klaarzetten
-en de privé-, koppel- en groepsproef werkelijk uitvoeren.
+Sinds deze review is de eerste praktische stap uitgevoerd: de lokale,
+copy-only testimage is gebouwd op commit `e11c136` en importeert de
+Telegram-testmodules. Die build is zelf gecontroleerd met 26 gerichte tests
+voor testimage en testomgeving; deze review blijft echter gebonden aan
+`7017c25` en is geen onafhankelijke review van de imagebuild.
+
+De volgende stap is daarom praktisch: een nieuwe BotFather-testbot en twee
+testaccounts klaarzetten en de privé-, koppel- en groepsproef werkelijk
+uitvoeren.
