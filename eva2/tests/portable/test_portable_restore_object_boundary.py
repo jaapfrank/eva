@@ -8,6 +8,11 @@ from typing import Any
 
 import pytest
 
+pytest.importorskip(
+    "nacl",
+    reason="Object-CAS restore checks require the optional tranche-4d PyNaCl dependency",
+)
+
 from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
 from eva.operations.object_keyring import FileObjectKeyResolver
 from eva.operations.portable_object_materializer import materialize_verified_portable_objects
