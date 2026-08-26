@@ -15,7 +15,7 @@ from typing import Any
 
 from eva.adapters.objects.cas import CasError, FileSystemCAS
 from eva.adapters.objects.envelope import ObjectAuthenticationError, XChaCha20ObjectCipher
-from eva.application.objects import ObjectBinding, ObjectKeyResolver
+from eva.application.objects import EncryptedObjectCandidate, ObjectBinding, ObjectKeyResolver
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
 
 
@@ -57,6 +57,20 @@ class VerifiedPortableObject:
     envelope_byte_length: int
 
 
+@dataclass(frozen=True, slots=True)
+class VerifiedPortableObjectCandidate:
+    """Authenticated archive object, retained only for the restore hand-off.
+
+    The envelope and plaintext are deliberately never rendered in a receipt or
+    log. They remain in process memory only long enough for a target CAS write
+    to independently re-open and authenticate the same bytes.
+    """
+
+    record_row_sha256: str
+    candidate: EncryptedObjectCandidate
+    plaintext: bytes
+
+
 def _decode_archived_object_ref(record: Mapping[str, Any]) -> Mapping[str, Any]:
     """Check the self-authenticating archive record, independent of live DB schema.
 
@@ -96,12 +110,12 @@ def _decode_archived_object_ref(record: Mapping[str, Any]) -> Mapping[str, Any]:
     return row
 
 
-def verify_portable_object_bytes(
+def verify_portable_object_candidates(
     *,
     object_root: Path,
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     key_resolver: ObjectKeyResolver,
-) -> tuple[VerifiedPortableObject, ...]:
+) -> tuple[VerifiedPortableObjectCandidate, ...]:
     """Authenticate every active ObjectRef against archive CAS bytes.
 
     ``object_root`` is the ``objects`` directory from an already validated
@@ -117,7 +131,7 @@ def verify_portable_object_bytes(
         raise TypeError("portable object root must be a pathlib.Path")
     store = FileSystemCAS(object_root)
     cipher = XChaCha20ObjectCipher()
-    result: list[VerifiedPortableObject] = []
+    result: list[VerifiedPortableObjectCandidate] = []
     seen: set[str] = set()
     for record in records:
         row = _decode_archived_object_ref(record)
@@ -155,20 +169,56 @@ def verify_portable_object_bytes(
             or len(plaintext) != row["plaintext_byte_length"]
         ):
             raise PortableObjectVerificationError("portable object metadata differs")
+        row_sha256 = record["row_sha256"]
+        if not isinstance(row_sha256, str):  # guaranteed by _decode, kept local.
+            raise PortableObjectVerificationError("portable ObjectRef row hash is invalid")
         result.append(
-            VerifiedPortableObject(
-                object_id=binding.object_id,
-                ciphertext_sha256=digest,
-                plaintext_sha256=metadata.plaintext_sha256,
-                plaintext_byte_length=metadata.plaintext_byte_length,
-                envelope_byte_length=metadata.stored_envelope_byte_length,
+            VerifiedPortableObjectCandidate(
+                record_row_sha256=row_sha256,
+                candidate=EncryptedObjectCandidate(
+                    binding=binding,
+                    envelope=envelope,
+                    canonical_aad=metadata.canonical_aad,
+                    ciphertext_sha256=digest,
+                    plaintext_sha256=metadata.plaintext_sha256,
+                    plaintext_byte_length=metadata.plaintext_byte_length,
+                    stored_envelope_byte_length=metadata.stored_envelope_byte_length,
+                ),
+                plaintext=plaintext,
             )
         )
     return tuple(result)
 
 
+def verify_portable_object_bytes(
+    *,
+    object_root: Path,
+    records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
+    key_resolver: ObjectKeyResolver,
+) -> tuple[VerifiedPortableObject, ...]:
+    """Return only non-secret object summaries after the same authentication."""
+
+    verified = verify_portable_object_candidates(
+        object_root=object_root,
+        records_by_table=records_by_table,
+        key_resolver=key_resolver,
+    )
+    return tuple(
+        VerifiedPortableObject(
+            object_id=item.candidate.binding.object_id,
+            ciphertext_sha256=item.candidate.ciphertext_sha256,
+            plaintext_sha256=item.candidate.plaintext_sha256,
+            plaintext_byte_length=item.candidate.plaintext_byte_length,
+            envelope_byte_length=item.candidate.stored_envelope_byte_length,
+        )
+        for item in verified
+    )
+
+
 __all__ = [
     "PortableObjectVerificationError",
     "VerifiedPortableObject",
+    "VerifiedPortableObjectCandidate",
+    "verify_portable_object_candidates",
     "verify_portable_object_bytes",
 ]
