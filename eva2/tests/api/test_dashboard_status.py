@@ -143,7 +143,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "result-stopped" in response.text
     assert "lokale route · authenticatie nog open" in response.text
     assert "Nu · Subagents echt afmaken" in response.text
-    assert "Echte providerworker, Eva-chat en eigenaar-authenticatie volgen vóór de browser" in response.text
+    assert "Echte modelprovider, bediening via Eva-chat en eigenaar-authenticatie volgen" in response.text
     assert "Echte taken · geen demo-kaarten" not in response.text
     assert "Object.keys(value).sort()" in response.text
     assert "prefers-reduced-motion" in response.text
@@ -251,8 +251,12 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert capability_by_id["runtime-subagents"]["state"] == "tested"
     assert (
         capability_by_id["runtime-subagents"]["title"]
-        == "Providerloze subagentproef en werkbord"
+        == "Duurzame subagentproef en werkbord"
     )
+    assert "apart testproces" in capability_by_id["runtime-subagents"]["proof"]
+    assert "dezelfde modelrun niet opnieuw" in capability_by_id[
+        "runtime-subagents"
+    ]["meaning"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"

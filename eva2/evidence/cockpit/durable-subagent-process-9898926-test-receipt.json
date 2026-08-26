@@ -1,0 +1,99 @@
+{
+  "contract": "EvaDurableSubagentProcessTestReceipt/v1",
+  "implementationCommit": "9898926c3e70a80bedd0b31bdacf01e76cbc5bca",
+  "status": "passed",
+  "executedOn": "2026-08-26",
+  "environment": {
+    "pythonVersion": "3.12.3",
+    "productionPydanticAI": "2.32.1",
+    "candidatePydanticAI": "2.34.0",
+    "postgresImage": "postgres:16.13",
+    "processBoundary": "real separate local OS processes",
+    "providerBoundary": "providerless FunctionModel fixtures only"
+  },
+  "sourceHashes": {
+    "src/eva/adapters/postgres/delegated_work.py": "0d5f85248507321bd58b4c3702b3a8c9713852f4971c5b32e1b8f0da86c4ac18",
+    "src/eva/bootstrap/delegated_work_service.py": "e9a196c633bc62e468adbaf870224cd9f2c3f6eb906ccccce2b76f42142271bb",
+    "src/eva/operations/delegated_work_worker.py": "6b75c4bd66fa005f5ffb07c1ccd3ee7cb622b6788a04dfcfc7af9773f9e36570",
+    "tests/bootstrap/test_delegated_work_service.py": "fb2db4852895888fb754b171cb7c192c1db13d3be4d2d564a3c806ba16a36a41",
+    "tests/fixtures/subagents/delegated_work_service_fixture.py": "26562a8e810f467b09c7bffdda2690c1891b1dd4057afc5930611fdc68a3fa80",
+    "tests/postgres/test_delegated_work_store.py": "e90a74d41673a25eb78716498707cc930125cbd060ad4dbba0285d021a89d404"
+  },
+  "runs": [
+    {
+      "id": "clean-product-static-and-contract",
+      "command": "ruff check <six exact process-slice paths> && PYTHONPATH=eva2/src:eva2 pytest -q -s <service, tool-free child, delegated contract and workboard tests>",
+      "environmentBoundary": "Clean Git archive of implementation commit 9898926 using the exact product Pydantic AI 2.32.1 environment.",
+      "passed": 39,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "clean-product-postgresql-process",
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable-postgresql-16.13-dsn> PYTHONPATH=eva2/src:eva2 pytest -q -s eva2/tests/postgres/test_delegated_work_store.py",
+      "environmentBoundary": "Clean Git archive of implementation commit 9898926; fresh disposable PostgreSQL 16.13 in tmpfs; exact product Pydantic AI 2.32.1 environment; database downgraded and container removed after the run.",
+      "passed": 18,
+      "failed": 0,
+      "warnings": 1,
+      "status": "passed"
+    },
+    {
+      "id": "candidate-234-contract",
+      "command": "PYTHONPATH=eva2/src:eva2 pytest -q -s eva2/tests/bootstrap/test_delegated_work_service.py eva2/tests/subagents/test_tool_free_child.py",
+      "environmentBoundary": "Separate candidate environment with Pydantic AI 2.34.0; providerless only.",
+      "passed": 26,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "candidate-234-process",
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable-postgresql-16.13-dsn> PYTHONPATH=eva2/src:eva2 pytest -q -s eva2/tests/postgres/test_delegated_work_store.py -k '<five separate-process cases>'",
+      "environmentBoundary": "Fresh disposable PostgreSQL 16.13 with Pydantic AI 2.34.0; compatibility evidence only.",
+      "passed": 5,
+      "failed": 0,
+      "warnings": 1,
+      "status": "passed"
+    },
+    {
+      "id": "independent-technical-review",
+      "environmentBoundary": "Independent reviewer-created disposable PostgreSQL 16.13 route plus source and static inspection.",
+      "passed": 8,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "independent-release-review",
+      "environmentBoundary": "Independent product-lock contract/runner/service rerun plus source and static inspection.",
+      "passed": 30,
+      "failed": 0,
+      "status": "passed"
+    },
+    {
+      "id": "independent-product-review",
+      "environmentBoundary": "Independent non-PostgreSQL rerun and workboard wording/status inspection.",
+      "passed": 25,
+      "failed": 0,
+      "status": "passed"
+    }
+  ],
+  "verifiedOutcomes": [
+    "A providerless, tool-free Pydantic child runs in a real separate OS process.",
+    "Two concurrent worker processes cross one durable PostgreSQL call-start fence and produce one model call.",
+    "The child receives a minimal explicit environment; parent test DSN, inline DSN, OpenAI and Anthropic keys and a secret canary are absent.",
+    "A hard process death after durable claim but before call-start leaves claimed work reclaimable after lease expiry and produces one later model call.",
+    "SIGTERM during the model call becomes an honest ambiguous/stopped card and is not replayed.",
+    "SIGKILL after call-start is not replayed and becomes contact_lost after the lease expires.",
+    "Unsupported process signal handling fails service startup closed.",
+    "Raw task text, work identifiers and the DSN are absent from process arguments and process output."
+  ],
+  "nonClaims": [
+    "No external model provider, provider network cancellation, provider bill or price accounting was tested.",
+    "There is no production provider factory, long-running release entrypoint, Compose service or managed-B deployment.",
+    "The minimal environment is proven in the test launcher; no production launch manifest enforces it yet.",
+    "A separate process is not a sandbox; no egress, CPU, memory or per-task process isolation is proven.",
+    "A hard-killed external call is not recovered; Eva reports uncertainty and does not blindly repeat it.",
+    "No task can yet be started, followed or stopped from Eva chat.",
+    "Migration 4e_0003 remains a post-freeze candidate; managed B remains on the earlier schema authority.",
+    "This is source-tested evidence, not product-live proof or user acceptance."
+  ]
+}

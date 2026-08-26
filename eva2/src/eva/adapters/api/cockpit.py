@@ -81,11 +81,11 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "id": "runtime-subagents",
-                "title": "Providerloze subagentproef en werkbord",
+                "title": "Duurzame subagentproef en werkbord",
                 "state": "tested",
-                "proof": "Een proeftaak is opgeslagen, één keer opgepakt, uitgevoerd en op het bord gezet",
-                "meaning": "De volledige technische keten werkt providerloos; een echte provider, apart proces, Eva-chat en B-live zijn nog open.",
-                "next": "Eén echte providerworker in een apart proces starten en vanuit Eva-chat laten delegeren.",
+                "proof": "Een afgeschermde proeftaak draait in een apart testproces; twee workers starten samen maar één modelrun.",
+                "meaning": "Bij een normale processtop bewaart Eva dat er geen bevestigd resultaat is. Na een harde crash toont het bord zodra de korte werklease verloopt dat het contact weg is. In beide gevallen start Eva dezelfde modelrun niet opnieuw.",
+                "next": "Dezelfde route met één echte modelprovider en vanuit Eva's gewone privéchat starten, volgen en stoppen.",
                 "evidence": _evidence("capability/runtime-subagents"),
             },
             {
@@ -309,7 +309,7 @@ COCKPIT_HTML = """<!doctype html>
           </div>
         </div>
         <div class="dock roadmap" aria-label="Bewuste projectvolgorde">
-          <article class="module connected"><strong>Nu · Subagents echt afmaken</strong><span>Echte providerworker, Eva-chat en eigenaar-authenticatie volgen vóór de browser</span></article>
+          <article class="module connected"><strong>Nu · Subagents echt afmaken</strong><span>Echte modelprovider, bediening via Eva-chat en eigenaar-authenticatie volgen</span></article>
           <article class="module pending"><strong>Daarna · Browsercomputer</strong><span>Eén afgeschermde webtaak van begin tot gecontroleerd eindresultaat</span></article>
           <article class="module pending"><strong>Daarna · Voice & aanwezigheid</strong><span>Dezelfde Eva snel, onderbreekbaar en weer voelbaar in huis</span></article>
         </div>
@@ -328,7 +328,7 @@ COCKPIT_HTML = """<!doctype html>
           <article class="module pending"><strong>Gesprekken</strong><span>Nog niet aangesloten</span></article>
           <article class="module connected"><strong>Personen & geheugen</strong><span>Veilige actuele status aangesloten; inhoudelijk geheugenbeheer volgt later</span></article>
           <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
-          <article class="module connected"><strong>Workers & subagents</strong><span>Providerloze Pydantic-proef zichtbaar; echte provider en chat nog open</span></article>
+          <article class="module connected"><strong>Workers & subagents</strong><span>Providerloze Pydantic-proef draait in een apart testproces; echte provider en chatbediening zijn open</span></article>
           <article class="module pending"><strong>Skills & browser</strong><span>Sidecars nog niet gekoppeld</span></article>
           <article class="module pending"><strong>Voice & huis</strong><span>Live routes nog open</span></article>
           <article class="module pending"><strong>Kosten & budget</strong><span>Projectie nog open</span></article>
