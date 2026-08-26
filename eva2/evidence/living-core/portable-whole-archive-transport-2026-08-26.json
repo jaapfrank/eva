@@ -17,7 +17,7 @@
     "plaintext_format": "validated EvaPortableArchive/v1 packed as a regular-file-only tar stream"
   },
   "tests": {
-    "command": "four isolated PYTHONPATH=src python3 -m pytest -vv -s invocations, one per named transport test",
+    "command": "five isolated PYTHONPATH=src python3 -m pytest -vv -s invocations, one per named transport test",
     "operator_cli_module": "src/eva/operations/portable_transport_cli.py",
     "operator_cli_module_sha256": "b6bfe9af0fab5fe894d837b319a3b853981295a7dcda555311e96198a811ac26",
     "test_sha256": "e39802dc4f5d1b667f4ffe721f9645198a2fbeb82bc36afb9959861f68551a55",
