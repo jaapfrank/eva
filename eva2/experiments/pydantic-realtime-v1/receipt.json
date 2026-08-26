@@ -1,0 +1,57 @@
+{
+  "contract": "EvaDependencyCandidateReceipt/v1",
+  "candidateId": "DF03b-pydantic-realtime-v1",
+  "checkedAt": "2026-08-26T13:55:00Z",
+  "implementationGitCommit": "61c629c45615c175a9e5bf31181933ce359948e6",
+  "status": "tested",
+  "productionAuthority": false,
+  "managedBChanged": false,
+  "realProviderCalled": false,
+  "dependency": {
+    "name": "pydantic-ai-slim[openai-realtime]",
+    "version": "2.34.0",
+    "upstreamTagCommit": "bfa8e9187b86aad7ec583665ab2743fadea458b1",
+    "newDistributions": [
+      "certifi==2026.7.22",
+      "charset-normalizer==3.5.1",
+      "jiter==0.16.0",
+      "openai==3.3.1",
+      "regex==2026.7.19",
+      "requests==2.34.2",
+      "sniffio==1.3.1",
+      "tiktoken==0.14.0",
+      "urllib3==2.7.0"
+    ],
+    "existingDistributionsChanged": [
+      "pydantic-ai-slim 2.32.1->2.34.0",
+      "pydantic-graph 2.32.1->2.34.0"
+    ],
+    "productionDistributionCount": 38,
+    "candidateDistributionCount": 47,
+    "productionLockSha256": "89555d14acd8bceb8786dfa8539af29672899e8259e6a2b5352e27ef9219e8dc",
+    "candidateRootsSha256": "2e36464c5b3f084ceecb47ebbe8d4eb58392945d03ef51d71c61dc2e050482eb",
+    "candidateLockSha256": "6c9660163268bc4cc4d0e7c722f871c32ddb1ac4c7bb63cbaa059db2d236ecf2",
+    "hashRequiredInstall": "passed"
+  },
+  "sourceSha256": {
+    "experiments/pydantic-realtime-v1/check_candidate.py": "08aae5fbeb0fdc2971798af1ade39fc5f19f66e1611acd9840be31de1a0e0351"
+  },
+  "checks": {
+    "exactHashRequiredCandidateInstall": "passed",
+    "pipCheck": "passed",
+    "realtimeImport": "passed",
+    "agentRealtimeSessionFactory": "passed",
+    "interruptPlayedMsSignature": "passed",
+    "providerConnection": "not_attempted",
+    "audioCaptureOrPlayback": "not_attempted"
+  },
+  "openProof": [
+    "independent_review",
+    "sbom_license_vulnerability_scan",
+    "offline_amd64_arm64_wheelhouse_and_image",
+    "real_provider_connection_with_separate_voice_credential",
+    "real_microphone_speaker_streaming_and_barge_in",
+    "latency_receipts",
+    "managed_b_adoption_and_rollback"
+  ]
+}
