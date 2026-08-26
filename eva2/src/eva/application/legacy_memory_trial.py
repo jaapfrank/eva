@@ -72,8 +72,8 @@ class LegacyMemoryTrialSpec:
         ):
             if not _SHA256.fullmatch(value):
                 raise LegacyMemoryTrialError("trial hashes must be SHA-256 values")
-        _canonical_timestamp(self.imported_at)
-        _canonical_timestamp(self.retention_until)
+        _require_canonical_timestamp(self.imported_at)
+        _require_canonical_timestamp(self.retention_until)
         if self.retention_until < self.imported_at:
             raise LegacyMemoryTrialError("trial retention cannot precede import")
         if not self.retention_policy_id:
@@ -88,6 +88,11 @@ def _canonical_timestamp(value: str) -> str:
     if parsed.tzinfo is None:
         raise LegacyMemoryTrialError("legacy timestamp must include a timezone")
     return parsed.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _require_canonical_timestamp(value: str) -> None:
+    if _canonical_timestamp(value) != value:
+        raise LegacyMemoryTrialError("trial timestamp must be canonical UTC")
 
 
 def _stable_id(spec: LegacyMemoryTrialSpec, record: LegacyMemoryRecord, kind: str) -> str:

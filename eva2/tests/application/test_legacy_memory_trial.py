@@ -23,17 +23,18 @@ CATEGORY_SHA = hashlib.sha256(b"preference").hexdigest()
 
 
 def _spec(**changes: object) -> LegacyMemoryTrialSpec:
-    return LegacyMemoryTrialSpec(
-        tenant_id=TENANT_ID,
-        installation_id=INSTALLATION_ID,
-        target_principal_id=PRINCIPAL_ID,
-        provenance_evidence_id=EVIDENCE_ID,
-        legacy_source_sha256=SOURCE_SHA,
-        selected_person_label_sha256=PERSON_SHA,
-        imported_at="2026-08-26T12:00:00Z",
-        retention_until="2026-09-02T12:00:00Z",
+    values = {
+        "tenant_id": TENANT_ID,
+        "installation_id": INSTALLATION_ID,
+        "target_principal_id": PRINCIPAL_ID,
+        "provenance_evidence_id": EVIDENCE_ID,
+        "legacy_source_sha256": SOURCE_SHA,
+        "selected_person_label_sha256": PERSON_SHA,
+        "imported_at": "2026-08-26T12:00:00Z",
+        "retention_until": "2026-09-02T12:00:00Z",
         **changes,
-    )
+    }
+    return LegacyMemoryTrialSpec(**values)  # type: ignore[arg-type]
 
 
 def _record(**changes: object) -> LegacyMemoryRecord:
@@ -114,3 +115,17 @@ def test_trial_rejects_more_than_fifty_rows() -> None:
 
     with pytest.raises(LegacyMemoryTrialError, match="50"):
         build_legacy_memory_trial(records, _spec())
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    (
+        ("imported_at", "2026-08-26T12:00:00.001Z"),
+        ("retention_until", "2026-09-02T14:00:00+02:00"),
+    ),
+)
+def test_trial_rejects_noncanonical_import_and_retention_time(
+    field: str, value: str
+) -> None:
+    with pytest.raises(LegacyMemoryTrialError, match="canonical UTC"):
+        _spec(**{field: value})
