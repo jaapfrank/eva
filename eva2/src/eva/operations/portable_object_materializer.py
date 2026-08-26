@@ -21,11 +21,11 @@ from typing import Any
 from eva.adapters.objects.cas import CasError, FileSystemCAS
 from eva.adapters.objects.envelope import ObjectAuthenticationError, XChaCha20ObjectCipher
 from eva.application.objects import (
-    CasInstallStatus,
     DurableCandidateBindingCommit,
     ObjectKeyResolver,
     PreparedCandidateBinding,
 )
+from eva.application.portable_objects import MaterializedPortableObject
 from eva.application.portable_archive import canonical_json_bytes
 from eva.operations.portable_object_verifier import (
     PortableObjectVerificationError,
@@ -49,18 +49,6 @@ _JOURNAL_FIELDS = frozenset(
 
 class PortableObjectMaterializationError(RuntimeError):
     """A target CAS cannot safely receive the verified portable object."""
-
-
-@dataclass(frozen=True, slots=True)
-class MaterializedPortableObject:
-    """Non-secret result of one independently authenticated target CAS write."""
-
-    object_id: str
-    ciphertext_sha256: str
-    record_row_sha256: str
-    status: CasInstallStatus
-    target_object_root: Path
-    relative_path: Path
 
 
 @dataclass(frozen=True, slots=True)

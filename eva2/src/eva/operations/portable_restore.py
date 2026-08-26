@@ -19,7 +19,7 @@ from typing import Any
 from uuid import UUID
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
-from eva.adapters.objects.cas import FileSystemCAS
+from eva.application.portable_objects import MaterializedPortableObject
 from eva.contracts.execution import (
     CapabilityGrant,
     ConnectorBinding,
@@ -28,7 +28,6 @@ from eva.contracts.execution import (
     ReadAttempt,
 )
 from eva.contracts.planning import ModelAttempt
-from eva.operations.portable_object_materializer import MaterializedPortableObject
 
 
 _IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
@@ -130,12 +129,22 @@ def _materialized_object_index(
         if (
             item.target_object_root != object_store_root
             or item.status not in {"created", "already_same"}
-            or item.relative_path != FileSystemCAS.relative_path(item.ciphertext_sha256)
+            or item.relative_path != _object_relative_path(item.ciphertext_sha256)
             or key in result
         ):
             raise PortableRestoreError("materialized object proof is invalid")
         result[key] = item
     return result
+
+
+def _object_relative_path(ciphertext_sha256: str) -> Path:
+    if not isinstance(ciphertext_sha256, str) or _SHA256.fullmatch(ciphertext_sha256) is None:
+        raise PortableRestoreError("materialized object ciphertext is invalid")
+    return Path(
+        "sha256",
+        ciphertext_sha256[:2],
+        f"{ciphertext_sha256}.eva2xo",
+    )
 
 
 def _require_materialized_object_ref(
