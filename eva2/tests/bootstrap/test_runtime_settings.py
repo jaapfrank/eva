@@ -36,6 +36,8 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_DURABLE_GOAL_PROVIDER",
         "EVA_DURABLE_GOAL_RECIPIENTS",
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+        "EVA_DELEGATED_WORK_EPISODE_ID",
+        "EVA_DELEGATED_WORK_GENERATION",
     ):
         monkeypatch.delenv(name, raising=False)
     database = private_tmp_path / "database-dsn"
@@ -88,6 +90,39 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
 
     monkeypatch.setenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "not-a-uuid")
     with pytest.raises(RuntimeError, match="dashboard owner binding is invalid"):
+        RuntimeSettings.from_environment()
+
+
+def test_delegated_chat_commands_require_a_fixed_owner_episode(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "11111111-1111-1111-1111-111111111111")
+    monkeypatch.setenv(
+        "EVA_RUNTIME_INSTALLATION_ID", "22222222-2222-2222-2222-222222222222"
+    )
+    monkeypatch.setenv(
+        "EVA_RUNTIME_PRINCIPAL_ID", "33333333-3333-3333-3333-333333333333"
+    )
+    monkeypatch.setenv(
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+        "44444444-4444-4444-4444-444444444444",
+    )
+    monkeypatch.setenv(
+        "EVA_DELEGATED_WORK_EPISODE_ID",
+        "55555555-5555-5555-5555-555555555555",
+    )
+    monkeypatch.setenv("EVA_DELEGATED_WORK_GENERATION", "7")
+
+    settings = RuntimeSettings.from_environment()
+    assert settings.delegated_work_episode_id == (
+        "55555555-5555-5555-5555-555555555555"
+    )
+    assert settings.delegated_work_generation == 7
+
+    monkeypatch.delenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID")
+    with pytest.raises(RuntimeError, match="requires the owner binding"):
         RuntimeSettings.from_environment()
 
 

@@ -140,6 +140,7 @@ from eva.application.free_will import (
 )
 from eva.application.sensory import SensoryIngestionWorker
 from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
+from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
 
 @dataclass(frozen=True, slots=True)
@@ -161,6 +162,8 @@ class RuntimeSettings:
     background_installation_id: str | None = None
     background_principal_id: str | None = None
     dashboard_principal_binding_id: str | None = None
+    delegated_work_episode_id: str | None = None
+    delegated_work_generation: int = 1
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
     home_assistant_url: str | None = None
@@ -230,6 +233,15 @@ class RuntimeSettings:
         dashboard_principal_binding_id = (
             os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
         )
+        delegated_work_episode_id = (
+            os.environ.get("EVA_DELEGATED_WORK_EPISODE_ID", "").strip() or None
+        )
+        try:
+            delegated_work_generation = int(
+                os.environ.get("EVA_DELEGATED_WORK_GENERATION", "1")
+            )
+        except ValueError as error:
+            raise RuntimeError("Eva delegated work generation is invalid") from error
         if dashboard_principal_binding_id is not None:
             if background_principal_id is None:
                 raise RuntimeError(
@@ -242,6 +254,17 @@ class RuntimeSettings:
                 UUID(dashboard_principal_binding_id)
             except ValueError as error:
                 raise RuntimeError("Eva dashboard owner binding is invalid") from error
+        if delegated_work_episode_id is not None:
+            if dashboard_principal_binding_id is None:
+                raise RuntimeError(
+                    "Eva delegated work episode requires the owner binding"
+                )
+            try:
+                UUID(delegated_work_episode_id)
+            except ValueError as error:
+                raise RuntimeError("Eva delegated work episode is invalid") from error
+        if not 1 <= delegated_work_generation <= 2_147_483_647:
+            raise RuntimeError("Eva delegated work generation is invalid")
         try:
             cold_path_idle_seconds = float(
                 os.environ.get("EVA_COLD_PATH_IDLE_SECONDS", "300")
@@ -447,6 +470,8 @@ class RuntimeSettings:
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
+            delegated_work_episode_id=delegated_work_episode_id,
+            delegated_work_generation=delegated_work_generation,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             home_assistant_url=home_assistant_url,
@@ -499,6 +524,7 @@ class PostgresHindsightMemoryRuntime:
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
+        delegated_work_commands: DelegatedWorkConversationCommands | None = None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -531,6 +557,7 @@ class PostgresHindsightMemoryRuntime:
         self._delegated_work_store = delegated_work_store
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
+        self._delegated_work_commands = delegated_work_commands
 
     def admit_durable_goal(
         self,
@@ -717,6 +744,10 @@ class PostgresHindsightMemoryRuntime:
         committed = journal.committed_reply(turn)
         if committed is not None:
             return committed
+        if self._delegated_work_commands is not None:
+            command_reply = self._delegated_work_commands.handle(turn)
+            if command_reply is not None:
+                return journal.commit_reply(turn, command_reply)
         durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
         recent = tuple((*recent_messages, *durable_recent)[-12:])
         candidate = self._conversation.respond(turn, recent)
@@ -1889,6 +1920,7 @@ def create_runtime_app() -> FastAPI:
             deliver_one_proactive_expression,
         )
     delegated_work_store = None
+    delegated_work_commands = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
     if settings.dashboard_principal_binding_id is not None:
@@ -1906,6 +1938,14 @@ def create_runtime_app() -> FastAPI:
                 UUID(settings.background_installation_id),
             ),
         )
+        if settings.delegated_work_episode_id is not None:
+            delegated_work_commands = DelegatedWorkConversationCommands(
+                delegated_work_store,
+                owner_principal_id=dashboard_owner_principal_id,
+                principal_binding_id=dashboard_principal_binding_id,
+                episode_id=UUID(settings.delegated_work_episode_id),
+                generation=settings.delegated_work_generation,
+            )
     return create_app(
         PostgresHindsightMemoryRuntime(
             engine,
@@ -1938,6 +1978,7 @@ def create_runtime_app() -> FastAPI:
             delegated_work_store=delegated_work_store,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
+            delegated_work_commands=delegated_work_commands,
         )
     )
 
