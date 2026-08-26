@@ -11,7 +11,7 @@ from eva.operations.install_schema import (
 
 
 def test_delegated_work_migration_is_the_explicit_schema_head() -> None:
-    assert _HEAD_REVISION == "4e_0003_delegated_work_runs"
+    assert _HEAD_REVISION == "4e_0004_delegated_work_stop"
     assert _HEAD_REVISION in _KNOWN_FORWARD_REVISIONS
 
 

@@ -93,7 +93,7 @@ def delegated_engine() -> Engine:
             sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
         )
     receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-    assert receipt.final_revision == "4e_0003_delegated_work_runs"
+    assert receipt.final_revision == "4e_0004_delegated_work_stop"
     try:
         yield engine
     finally:
@@ -102,7 +102,10 @@ def delegated_engine() -> Engine:
         try:
             # The revision refuses to discard durable tasks. Test that invariant
             # before the explicit test-only cleanup used for base teardown.
-            with pytest.raises(Exception, match="must be empty before downgrade"):
+            with pytest.raises(
+                Exception,
+                match="must be empty before downgrade|stop requests must be empty",
+            ):
                 command.downgrade(config, "4e_0002_delegated_work")
             with engine.begin() as connection:
                 connection.exec_driver_sql("SET LOCAL ROLE eva_migrator")
@@ -878,7 +881,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
         principal_binding_id=binding,
     ) == spec.work_id
 
-    stopped = store.stop_before_call(
+    stopped = store.request_stop(
         spec.work_id,
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
@@ -887,7 +890,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     assert stopped.state == "stopped"
     assert stopped.call_id is None
     assert stopped.attention.state == "completed"
-    assert store.stop_before_call(
+    assert store.request_stop(
         spec.work_id,
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
@@ -911,7 +914,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     ) == spec.work_id
 
 
-def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
+def test_owner_stop_after_claim_prevents_call_and_active_call_records_request(
     delegated_engine: Engine,
 ) -> None:
     label = "owner-stop-race"
@@ -925,7 +928,7 @@ def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
         now=datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
     assert claim is not None
-    assert store.stop_before_call(
+    assert store.request_stop(
         claimed_spec.work_id,
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
@@ -948,18 +951,27 @@ def test_owner_stop_after_claim_prevents_call_but_after_call_is_honest(
         now=datetime(2026, 8, 26, 12, 0, 5, tzinfo=UTC),
     )
     assert call is not None
-    with pytest.raises(DelegatedWorkConflict, match="already started"):
-        store.stop_before_call(
-            started_spec.work_id,
-            owner_principal_id=_id(label, "principal"),
-            principal_binding_id=binding,
-            now=datetime(2026, 8, 26, 12, 0, 6, tzinfo=UTC),
-        )
-    assert store.load(
+    stopping = store.request_stop(
         started_spec.work_id,
         owner_principal_id=_id(label, "principal"),
         principal_binding_id=binding,
-    ).state == "call_started"
+        now=datetime(2026, 8, 26, 12, 0, 6, tzinfo=UTC),
+    )
+    assert stopping.state == "call_started"
+    assert stopping.stop_requested_at == datetime(2026, 8, 26, 12, 0, 6, tzinfo=UTC)
+    assert store.request_stop(
+        started_spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=datetime(2026, 8, 26, 12, 0, 7, tzinfo=UTC),
+    ) == stopping
+    loaded = store.load(
+        started_spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert loaded.state == "call_started"
+    assert loaded.stop_requested_at == stopping.stop_requested_at
 
 
 def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
@@ -1297,6 +1309,32 @@ class _SuccessfulRunner:
         )
 
 
+class _OwnerCancellableRunner:
+    def __init__(self) -> None:
+        self.started = asyncio.Event()
+        self.calls = 0
+
+    async def run(
+        self,
+        spec: DelegatedWorkSpec,
+        *,
+        call_id: str,
+        cancellation_event: object | None = None,
+    ) -> ToolFreeChildOutcome:
+        del spec, call_id
+        assert isinstance(cancellation_event, asyncio.Event)
+        self.calls += 1
+        self.started.set()
+        await asyncio.wait_for(cancellation_event.wait(), timeout=2)
+        return ToolFreeChildOutcome(
+            status="cancelled",
+            result=None,
+            usage=DelegatedWorkUsage.unmeasured(),
+            retryable=False,
+            error_fingerprint=hashlib.sha256(b"owner cancellation").hexdigest(),
+        )
+
+
 class _CountedFunctionModel(FunctionModel):
     def __init__(self) -> None:
         self.requests = 0
@@ -1369,6 +1407,74 @@ def test_worker_couples_one_durable_call_and_never_replays_it(
     assert card.column == "review"
     assert card.worker_health == "finished"
     assert card.overdue is False
+
+
+def test_owner_stop_cancels_active_worker_and_never_replays_it(
+    delegated_engine: Engine,
+) -> None:
+    label = "worker-owner-stop"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    store = _store(delegated_engine, scope)
+    spec = _spec(label, scope, episode, binding)
+    _admit(store, spec)
+    runner = _OwnerCancellableRunner()
+    now = datetime(2026, 8, 26, 12, 2, tzinfo=UTC)
+    worker = DelegatedWorkWorker(
+        store,
+        runner,
+        worker_id="worker:owner-stop",
+        release=_release(spec),
+        clock=lambda: now,
+    )
+
+    async def run_and_stop() -> str:
+        running = asyncio.create_task(worker.run_once())
+        await asyncio.wait_for(runner.started.wait(), timeout=2)
+        stopping = await asyncio.to_thread(
+            store.request_stop,
+            spec.work_id,
+            owner_principal_id=_id(label, "principal"),
+            principal_binding_id=binding,
+            now=now,
+        )
+        assert stopping.state == "call_started"
+        assert stopping.stop_requested_at == now
+        return await asyncio.wait_for(running, timeout=2)
+
+    assert asyncio.run(run_and_stop()) == "stopped"
+    assert runner.calls == 1
+    loaded = store.load(
+        spec.work_id,
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+    )
+    assert loaded.state == "stopped"
+    assert loaded.call_id is not None
+    assert loaded.stop_requested_at == now
+    assert loaded.completed_at == now
+    assert loaded.result is None
+    assert loaded.usage == DelegatedWorkUsage.unmeasured()
+    assert loaded.error_code is None
+    assert loaded.error_fingerprint is None
+    assert loaded.attention.state == "completed"
+
+    restarted = DelegatedWorkWorker(
+        _store(delegated_engine, scope),
+        runner,
+        worker_id="worker:owner-stop:restarted",
+        release=_release(spec),
+        clock=lambda: now,
+    )
+    assert asyncio.run(restarted.run_once()) == "idle"
+    assert runner.calls == 1
+    card = store.workboard(
+        owner_principal_id=_id(label, "principal"),
+        principal_binding_id=binding,
+        now=now,
+    ).cards[0]
+    assert card.column == "done"
+    assert card.worker_health == "stopped"
+    assert card.result_status == "stopped"
 
 
 def test_real_pydantic_runner_crosses_the_durable_fence_once(
@@ -1581,6 +1687,97 @@ def test_sigterm_during_official_sdk_call_is_ambiguous_and_never_replayed(
         )
         assert loaded.state == "ambiguous"
         assert loaded.error_code == "cancelled"
+
+        restarted = _start_process(environment)
+        _closed_process(restarted)
+    assert len(captured) == 1
+
+
+def test_owner_chat_stop_cancels_official_sdk_call_and_never_replays(
+    delegated_engine: Engine, process_tmp_path: Path
+) -> None:
+    label = "official-sdk-owner-stop"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = _store(delegated_engine, scope)
+    spec = _product_process_spec(label, scope, episode, binding)
+    _admit(store, spec)
+    dsn_file = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
+    lease_file = process_tmp_path / "provider-lease"
+    token = "owner-stop-token"
+    lease_file.write_text(
+        json.dumps({"access_token": token, "account_id": "account-owner-stop"})
+    )
+    lease_file.chmod(0o600)
+    now = datetime(2026, 8, 26, 12, 2, tzinfo=UTC)
+    commands = DelegatedWorkConversationCommands(
+        store,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        episode_id=episode,
+        generation=1,
+        clock=lambda: now,
+    )
+
+    with _official_provider_server(body_delay=2) as (endpoint, captured, received):
+        environment = _official_process_environment(
+            dsn_file=dsn_file,
+            scope=scope,
+            count_file=process_tmp_path / "unused-provider-counter",
+            endpoint=endpoint,
+            lease_file=lease_file,
+        )
+        process = _start_process(environment)
+        assert received.wait(timeout=10)
+        reply = commands.handle(
+            ConversationTurn.private(
+                tenant_id=str(scope.tenant_id),
+                installation_id=str(scope.installation_id),
+                principal_id=str(owner),
+                conversation_id="telegram:owner-stop",
+                message_id="telegram:owner-stop:1",
+                text="Stop mijn onderzoek",
+                occurred_at="2026-08-26T12:02:00Z",
+            ),
+            principal_binding_id=binding,
+        )
+        assert reply is not None
+        assert reply.text == (
+            "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
+            "en zijn resultaat wordt niet meer aan Eva geleverd."
+        )
+        _closed_process(process)
+
+        loaded = store.load(
+            spec.work_id,
+            owner_principal_id=owner,
+            principal_binding_id=binding,
+        )
+        assert loaded.state == "stopped"
+        assert loaded.call_id is not None
+        assert loaded.stop_requested_at == now
+        assert loaded.result is None
+        assert loaded.usage is not None
+        assert loaded.error_code is None
+        assert token not in repr(loaded)
+
+        replay = commands.handle(
+            ConversationTurn.private(
+                tenant_id=str(scope.tenant_id),
+                installation_id=str(scope.installation_id),
+                principal_id=str(owner),
+                conversation_id="telegram:owner-stop",
+                message_id="telegram:owner-stop:2",
+                text="Stop mijn onderzoek",
+                occurred_at="2026-08-26T12:02:01Z",
+            ),
+            principal_binding_id=binding,
+        )
+        assert replay is not None
+        assert replay.text == (
+            "Gestopt. De actieve modelcall is afgebroken en zijn resultaat wordt "
+            "niet meer aan Eva geleverd."
+        )
 
         restarted = _start_process(environment)
         _closed_process(restarted)

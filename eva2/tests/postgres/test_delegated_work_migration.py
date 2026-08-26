@@ -114,7 +114,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     try:
         receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-        assert receipt.final_revision == "4e_0003_delegated_work_runs"
+        assert receipt.final_revision == "4e_0004_delegated_work_stop"
         command.downgrade(config, "4e_0001_operational_timeline")
         assert _revision(engine) == "4e_0001_operational_timeline"
         assert "delegated_work" not in _kind_check(engine)
@@ -123,7 +123,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
         old_row = _row(engine, old_id)
 
         command.upgrade(config, "head")
-        assert _revision(engine) == "4e_0003_delegated_work_runs"
+        assert _revision(engine) == "4e_0004_delegated_work_stop"
         assert "delegated_work" in _kind_check(engine)
         assert _row(engine, old_id) == old_row
 
@@ -135,7 +135,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
 
         with pytest.raises(sa.exc.IntegrityError):
             command.downgrade(config, "4e_0001_operational_timeline")
-        assert _revision(engine) == "4e_0003_delegated_work_runs"
+        assert _revision(engine) == "4e_0004_delegated_work_stop"
         assert _row(engine, delegated_id)["kind"] == "delegated_work"
 
         with engine.begin() as connection:

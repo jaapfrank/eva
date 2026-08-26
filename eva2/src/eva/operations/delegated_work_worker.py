@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable
+from contextlib import suppress
 from datetime import UTC, datetime
 from typing import Literal, Protocol
 
 from eva.adapters.postgres.delegated_work import (
+    DelegatedWorkCall,
+    DelegatedWorkConflict,
     DelegatedWorkReleaseSelector,
     PostgresDelegatedWorkStore,
 )
@@ -26,7 +29,13 @@ class ChildRunner(Protocol):
 
 
 WorkerDisposition = Literal[
-    "idle", "succeeded", "failed", "ambiguous", "crashed_before_call", "crashed_after_call"
+    "idle",
+    "succeeded",
+    "failed",
+    "ambiguous",
+    "stopped",
+    "crashed_before_call",
+    "crashed_after_call",
 ]
 FaultPoint = Literal["after_claim", "after_call_started"]
 
@@ -79,14 +88,36 @@ class DelegatedWorkWorker:
         if fault_after == "after_call_started":
             return "crashed_after_call"
 
-        outcome = await self._runner.run(
-            call.spec,
-            call_id=call.call_id,
-            cancellation_event=cancellation_event,
+        active_cancellation = asyncio.Event()
+        cancellation_watcher = asyncio.create_task(
+            self._watch_cancellation(
+                call,
+                active_cancellation=active_cancellation,
+                process_cancellation=cancellation_event,
+            )
         )
+        try:
+            outcome = await self._runner.run(
+                call.spec,
+                call_id=call.call_id,
+                cancellation_event=active_cancellation,
+            )
+        finally:
+            cancellation_watcher.cancel()
+            with suppress(asyncio.CancelledError):
+                await cancellation_watcher
+        if await asyncio.to_thread(self._store.stop_requested, call):
+            self._store.record_stopped(call, usage=outcome.usage, now=self._now())
+            return "stopped"
         if outcome.result is not None:
             completed_at = _parse_timestamp(outcome.result.completed_at)
-            self._store.record_success(call, outcome.result, now=completed_at)
+            try:
+                self._store.record_success(call, outcome.result, now=completed_at)
+            except DelegatedWorkConflict:
+                if not await asyncio.to_thread(self._store.stop_requested, call):
+                    raise
+                self._store.record_stopped(call, usage=outcome.usage, now=self._now())
+                return "stopped"
             return "succeeded"
         assert outcome.error_fingerprint is not None
         ambiguous = outcome.status in {
@@ -96,15 +127,37 @@ class DelegatedWorkWorker:
             "provider_unavailable",
             "internal_error",
         }
-        self._store.record_failure(
-            call,
-            usage=outcome.usage,
-            error_code=outcome.status,
-            error_fingerprint=outcome.error_fingerprint,
-            ambiguous=ambiguous,
-            now=self._now(),
-        )
+        try:
+            self._store.record_failure(
+                call,
+                usage=outcome.usage,
+                error_code=outcome.status,
+                error_fingerprint=outcome.error_fingerprint,
+                ambiguous=ambiguous,
+                now=self._now(),
+            )
+        except DelegatedWorkConflict:
+            if not await asyncio.to_thread(self._store.stop_requested, call):
+                raise
+            self._store.record_stopped(call, usage=outcome.usage, now=self._now())
+            return "stopped"
         return "ambiguous" if ambiguous else "failed"
+
+    async def _watch_cancellation(
+        self,
+        call: DelegatedWorkCall,
+        *,
+        active_cancellation: asyncio.Event,
+        process_cancellation: asyncio.Event | None,
+    ) -> None:
+        while not active_cancellation.is_set():
+            if process_cancellation is not None and process_cancellation.is_set():
+                active_cancellation.set()
+                return
+            if await asyncio.to_thread(self._store.stop_requested, call):
+                active_cancellation.set()
+                return
+            await asyncio.sleep(0.05)
 
     def _now(self) -> datetime:
         value = self._clock()

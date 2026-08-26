@@ -4,7 +4,6 @@ from datetime import UTC, datetime
 from types import SimpleNamespace
 from uuid import UUID
 
-from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
 from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
@@ -38,11 +37,13 @@ class FakeStore:
     def latest_stoppable_work_id(self, **_values: object) -> str | None:
         return self.active_work_id
 
-    def stop_before_call(self, work_id: str, **values: object) -> SimpleNamespace:
-        if self.call_started:
-            raise DelegatedWorkConflict("call started")
+    def request_stop(self, work_id: str, **values: object) -> SimpleNamespace:
         self.stopped.append({"work_id": work_id} | values)
-        return SimpleNamespace(state="stopped")
+        return SimpleNamespace(
+            state="call_started" if self.call_started else "stopped",
+            stop_requested_at=NOW if self.call_started else None,
+            call_id="call:active" if self.call_started else None,
+        )
 
 
 def _turn(
@@ -145,7 +146,7 @@ def test_owner_gets_board_counts_and_can_stop_latest_work_before_call() -> None:
     ]
 
 
-def test_started_call_is_never_falsely_reported_as_stopped() -> None:
+def test_started_call_gets_a_durable_honest_stop_request() -> None:
     store = FakeStore()
     store.active_work_id = "work:eva-chat:started"
     store.call_started = True
@@ -155,8 +156,18 @@ def test_started_call_is_never_falsely_reported_as_stopped() -> None:
     )
 
     assert reply is not None
-    assert "niet dat hij gestopt is" in reply.text
-    assert store.stopped == []
+    assert reply.text == (
+        "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
+        "en zijn resultaat wordt niet meer aan Eva geleverd."
+    )
+    assert store.stopped == [
+        {
+            "work_id": "work:eva-chat:started",
+            "owner_principal_id": OWNER,
+            "principal_binding_id": BINDING,
+            "now": NOW,
+        }
+    ]
 
 
 def test_commands_are_private_to_the_exact_owner_and_ignore_normal_chat() -> None:

@@ -7,10 +7,7 @@ from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from uuid import NAMESPACE_URL, UUID, uuid5
 
-from eva.adapters.postgres.delegated_work import (
-    DelegatedWorkConflict,
-    PostgresDelegatedWorkStore,
-)
+from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
 from eva.application.conversation import ConversationTurn, GroundedReply
 from eva.bootstrap.delegated_work_provider import (
     build_unadmitted_delegated_work_spec,
@@ -143,18 +140,25 @@ class DelegatedWorkConversationCommands:
         )
         if work_id is None:
             return self._reply(turn, "Er loopt geen onderzoek dat ik kan stoppen.")
-        try:
-            self._store.stop_before_call(
-                work_id,
-                owner_principal_id=self._owner_principal_id,
-                principal_binding_id=self._principal_binding_id,
-                now=self._now(),
-            )
-        except DelegatedWorkConflict:
+        stopped = self._store.request_stop(
+            work_id,
+            owner_principal_id=self._owner_principal_id,
+            principal_binding_id=self._principal_binding_id,
+            now=self._now(),
+        )
+        if stopped.state == "call_started":
             return self._reply(
                 turn,
-                "De modelcall is al begonnen. Ik beweer daarom niet dat hij gestopt is; "
-                "op het werkbord staat de uitkomst voorlopig als onzeker als de worker uitvalt.",
+                "Ik heb het stopsignaal bewaard. De actieve onderzoeker wordt afgebroken "
+                "en zijn resultaat wordt niet meer aan Eva geleverd.",
+            )
+        if stopped.state != "stopped":
+            return self._reply(turn, "Deze onderzoekstaak was al afgerond.")
+        if stopped.call_id is not None:
+            return self._reply(
+                turn,
+                "Gestopt. De actieve modelcall is afgebroken en zijn resultaat wordt "
+                "niet meer aan Eva geleverd.",
             )
         return self._reply(
             turn,

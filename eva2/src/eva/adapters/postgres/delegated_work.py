@@ -98,6 +98,7 @@ class StoredDelegatedWork:
     created_at: datetime
     updated_at: datetime
     call_started_at: datetime | None
+    stop_requested_at: datetime | None
     completed_at: datetime | None
     retention_policy_id: str
     retention_until: datetime
@@ -720,7 +721,7 @@ class PostgresDelegatedWorkStore:
             )
             return self._load_locked(connection, work_id)
 
-    def stop_before_call(
+    def request_stop(
         self,
         work_id: str,
         *,
@@ -728,7 +729,7 @@ class PostgresDelegatedWorkStore:
         principal_binding_id: UUID,
         now: datetime,
     ) -> StoredDelegatedWork:
-        """Stop owner-bound work atomically, but never pretend an active call stopped."""
+        """Stop before a call or durably request cancellation of an active call."""
 
         now = _whole_second(now, label="stop time")
         with self._engine.begin() as connection:
@@ -786,10 +787,32 @@ class PostgresDelegatedWorkStore:
                 raise DelegatedWorkNotFound("delegated work is absent")
             if loaded.state == "stopped":
                 return loaded
-            if loaded.state != "admitted" or loaded.call_id is not None:
-                raise DelegatedWorkConflict(
-                    "delegated model call already started and cannot be safely stopped"
+            if loaded.state == "call_started":
+                if loaded.stop_requested_at is not None:
+                    return loaded
+                updated = connection.execute(
+                    sa.update(delegated_work_runs)
+                    .where(
+                        delegated_work_runs.c.tenant_id
+                        == self._scope_value.tenant_id,
+                        delegated_work_runs.c.installation_id
+                        == self._scope_value.installation_id,
+                        delegated_work_runs.c.work_id == work_id,
+                        delegated_work_runs.c.revision == loaded.revision,
+                        delegated_work_runs.c.state == "call_started",
+                        delegated_work_runs.c.stop_requested_at.is_(None),
+                    )
+                    .values(
+                        stop_requested_at=now,
+                        revision=loaded.revision + 1,
+                        updated_at=now,
+                    )
                 )
+                if updated.rowcount != 1:
+                    raise DelegatedWorkConflict("delegated stop request raced")
+                return self._load_locked(connection, work_id)
+            if loaded.state != "admitted" or loaded.call_id is not None:
+                return loaded
             stopped_attention = loaded.attention.model_copy(
                 update={
                     "state": "completed",
@@ -841,6 +864,54 @@ class PostgresDelegatedWorkStore:
             if work_update.rowcount != 1 or attention_update.rowcount != 1:
                 raise DelegatedWorkConflict("delegated stop raced")
             return self._load_locked(connection, work_id)
+
+    def stop_requested(self, call: DelegatedWorkCall) -> bool:
+        """Read the durable owner cancellation bit for exactly one fenced call."""
+
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                row = connection.execute(
+                    sa.select(
+                        delegated_work_runs.c.call_id,
+                        delegated_work_runs.c.spec_sha256,
+                        delegated_work_runs.c.stop_requested_at,
+                    ).where(
+                        delegated_work_runs.c.tenant_id
+                        == self._scope_value.tenant_id,
+                        delegated_work_runs.c.installation_id
+                        == self._scope_value.installation_id,
+                        delegated_work_runs.c.work_id == call.work_id,
+                    )
+                ).one_or_none()
+                if (
+                    row is None
+                    or row.call_id != call.call_id
+                    or bytes(row.spec_sha256).hex() != call.spec.sha256
+                ):
+                    raise DelegatedWorkConflict("delegated stop call authority differs")
+                return row.stop_requested_at is not None
+            finally:
+                transaction.rollback()
+
+    def record_stopped(
+        self,
+        call: DelegatedWorkCall,
+        *,
+        usage: DelegatedWorkUsage,
+        now: datetime,
+    ) -> StoredDelegatedWork:
+        _validate_usage(call.spec, usage, successful=False)
+        return self._record_terminal(
+            call,
+            state="stopped",
+            result=None,
+            usage=usage,
+            error_code=None,
+            error_fingerprint=None,
+            now=now,
+        )
 
     def latest_stoppable_work_id(
         self,
@@ -970,7 +1041,7 @@ class PostgresDelegatedWorkStore:
         self,
         call: DelegatedWorkCall,
         *,
-        state: Literal["succeeded", "failed", "ambiguous"],
+        state: Literal["succeeded", "failed", "ambiguous", "stopped"],
         result: DelegatedWorkResult | None,
         usage: DelegatedWorkUsage,
         error_code: str | None,
@@ -1008,6 +1079,10 @@ class PostgresDelegatedWorkStore:
                 raise DelegatedWorkConflict("delegated work already has another outcome")
             if loaded.call_id != call.call_id or loaded.spec != call.spec:
                 raise DelegatedWorkConflict("delegated call authority differs")
+            if state == "stopped" and loaded.stop_requested_at is None:
+                raise DelegatedWorkConflict("delegated stop was not requested")
+            if state != "stopped" and loaded.stop_requested_at is not None:
+                raise DelegatedWorkConflict("delegated owner stop already won")
             work_update = connection.execute(
                 sa.update(delegated_work_runs)
                 .where(
@@ -1308,6 +1383,7 @@ class PostgresDelegatedWorkStore:
             updated_at=row.updated_at,
             call_started_at=row.call_started_at,
             completed_at=row.completed_at,
+            stop_requested_at=row.stop_requested_at,
             retention_policy_id=row.retention_policy_id,
             retention_until=row.retention_until,
         )
@@ -1339,11 +1415,15 @@ class PostgresDelegatedWorkStore:
             column = "doing" if active else "attention"
             health = "active" if active else "contact_lost"
             result_status = "not_received" if active else "ambiguous"
-            reason = (
-                "De subagent werkt aan de afgesproken taak."
-                if active
-                else "De modelcall begon, maar de worker heeft geen bevestigde uitkomst bewaard."
-            )
+            if work.stop_requested_at is not None:
+                health = "active"
+                reason = "De stopopdracht is bewaard en wordt door de actieve worker uitgevoerd."
+            else:
+                reason = (
+                    "De subagent werkt aan de afgesproken taak."
+                    if active
+                    else "De modelcall begon, maar de worker heeft geen bevestigde uitkomst bewaard."
+                )
         elif state == "succeeded":
             column, health, result_status = "review", "finished", "awaiting_review"
             reason = "Het resultaat is ontvangen en wacht op controle."

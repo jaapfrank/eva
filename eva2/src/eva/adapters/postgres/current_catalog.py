@@ -80,6 +80,11 @@ delegated_work_runs = sa.Table(
         nullable=True,
     ),
     sa.Column(
+        "stop_requested_at",
+        postgresql.TIMESTAMP(timezone=True, precision=0),
+        nullable=True,
+    ),
+    sa.Column(
         "completed_at",
         postgresql.TIMESTAMP(timezone=True, precision=0),
         nullable=True,
@@ -171,6 +176,7 @@ delegated_work_runs = sa.Table(
     ),
     sa.CheckConstraint(
         "(state='admitted' AND call_id IS NULL AND call_started_at IS NULL "
+        "AND stop_requested_at IS NULL "
         "AND completed_at IS NULL AND result_payload IS NULL "
         "AND result_sha256 IS NULL AND usage_payload IS NULL "
         "AND usage_sha256 IS NULL AND error_code IS NULL "
@@ -181,31 +187,40 @@ delegated_work_runs = sa.Table(
         "AND usage_payload IS NULL AND usage_sha256 IS NULL "
         "AND error_code IS NULL AND error_fingerprint IS NULL) OR "
         "(state IN ('succeeded','verified') AND call_id IS NOT NULL "
-        "AND call_started_at IS NOT NULL AND completed_at IS NOT NULL "
+        "AND call_started_at IS NOT NULL AND stop_requested_at IS NULL "
+        "AND completed_at IS NOT NULL "
         "AND result_payload IS NOT NULL AND result_sha256 IS NOT NULL "
         "AND usage_payload IS NOT NULL AND usage_sha256 IS NOT NULL "
         "AND error_code IS NULL AND error_fingerprint IS NULL) OR "
         "(state IN ('failed','ambiguous') AND call_id IS NOT NULL "
-        "AND call_started_at IS NOT NULL AND completed_at IS NOT NULL "
+        "AND call_started_at IS NOT NULL AND stop_requested_at IS NULL "
+        "AND completed_at IS NOT NULL "
         "AND result_payload IS NULL AND result_sha256 IS NULL "
         "AND usage_payload IS NOT NULL AND usage_sha256 IS NOT NULL "
         "AND error_code IS NOT NULL AND error_fingerprint IS NOT NULL) OR "
         "(state='needs_help' AND call_id IS NULL AND call_started_at IS NULL "
+        "AND stop_requested_at IS NULL "
         "AND completed_at IS NOT NULL AND result_payload IS NULL "
         "AND result_sha256 IS NULL AND usage_payload IS NULL "
         "AND usage_sha256 IS NULL AND error_code IS NOT NULL "
         "AND error_fingerprint IS NOT NULL) OR "
         "(state='stopped' AND completed_at IS NOT NULL "
-        "AND call_id IS NULL AND call_started_at IS NULL "
         "AND result_payload IS NULL AND result_sha256 IS NULL "
-        "AND usage_payload IS NULL AND usage_sha256 IS NULL "
-        "AND error_code IS NULL AND error_fingerprint IS NULL)",
+        "AND error_code IS NULL AND error_fingerprint IS NULL "
+        "AND ((call_id IS NULL AND call_started_at IS NULL "
+        "AND stop_requested_at IS NULL "
+        "AND usage_payload IS NULL AND usage_sha256 IS NULL) "
+        "OR (call_id IS NOT NULL AND call_started_at IS NOT NULL "
+        "AND stop_requested_at IS NOT NULL "
+        "AND usage_payload IS NOT NULL AND usage_sha256 IS NOT NULL)))",
         name="ck_delegated_work_runs_state_payload",
     ),
     sa.CheckConstraint(
         "deadline >= created_at AND retention_until >= created_at "
         "AND updated_at >= created_at "
         "AND (call_started_at IS NULL OR call_started_at >= created_at) "
+        "AND (stop_requested_at IS NULL OR (call_started_at IS NOT NULL "
+        "AND stop_requested_at >= call_started_at)) "
         "AND (completed_at IS NULL OR completed_at >= created_at) "
         "AND (call_started_at IS NULL OR completed_at IS NULL "
         "OR completed_at >= call_started_at)",

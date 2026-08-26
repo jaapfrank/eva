@@ -36,8 +36,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4e_0001_operational_timeline",
     "4e_0002_delegated_work",
     "4e_0003_delegated_work_runs",
+    "4e_0004_delegated_work_stop",
 }
-_HEAD_REVISION = "4e_0003_delegated_work_runs"
+_HEAD_REVISION = "4e_0004_delegated_work_stop"
 
 
 @dataclass(frozen=True, slots=True)
