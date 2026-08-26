@@ -53,7 +53,7 @@ class CancelledActionChainEffect:
 
 
 @dataclass(frozen=True, slots=True)
-class _CancellationOwner:
+class ActionChainEffectOwner:
     principal_id: UUID
     principal_binding_id: UUID
     binding_verification_evidence_id: UUID
@@ -273,74 +273,15 @@ class PostgresActionChainEffectCanceller:
         generation: int,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
-    ) -> _CancellationOwner:
-        generation_exists = connection.scalar(
-            sa.select(episode_generations.c.episode_id)
-            .where(
-                episode_generations.c.tenant_id == self._scope_value.tenant_id,
-                episode_generations.c.installation_id == self._scope_value.installation_id,
-                episode_generations.c.episode_id == episode_id,
-                episode_generations.c.generation == generation,
-                episode_generations.c.state == "current",
-            )
-            .with_for_update(read=True)
-        )
-        episode_owner = connection.scalar(
-            sa.select(episodes.c.principal_id)
-            .where(
-                episodes.c.tenant_id == self._scope_value.tenant_id,
-                episodes.c.installation_id == self._scope_value.installation_id,
-                episodes.c.episode_id == episode_id,
-                episodes.c.current_generation == generation,
-                episodes.c.state.not_in(("completed", "cancelled")),
-            )
-            .with_for_update(read=True)
-        )
-        binding = connection.execute(
-            sa.select(
-                principal_bindings.c.principal_id,
-                principal_bindings.c.verification_evidence_id,
-                principal_bindings.c.external_subject_sha256,
-                principal_bindings.c.revision,
-                principal_bindings.c.verified_at,
-            )
-            .where(
-                principal_bindings.c.tenant_id == self._scope_value.tenant_id,
-                principal_bindings.c.principal_binding_id == principal_binding_id,
-                principal_bindings.c.principal_id == owner_principal_id,
-                principal_bindings.c.status == "verified",
-            )
-            .with_for_update(read=True)
-        ).one_or_none()
-        principal = connection.scalar(
-            sa.select(principals.c.principal_id)
-            .where(
-                principals.c.tenant_id == self._scope_value.tenant_id,
-                principals.c.principal_id == owner_principal_id,
-                principals.c.status == "active",
-            )
-            .with_for_update(read=True)
-        )
-        if (
-            not generation_exists
-            or episode_owner != owner_principal_id
-            or binding is None
-            or binding.principal_id != owner_principal_id
-            or binding.verification_evidence_id is None
-            or binding.external_subject_sha256 is None
-            or binding.verified_at is None
-            or principal != owner_principal_id
-        ):
-            raise ActionChainEffectCancellationConflict(
-                "effect cancellation owner authority is not current"
-            )
-        return _CancellationOwner(
-            principal_id=owner_principal_id,
+    ) -> ActionChainEffectOwner:
+        return validate_action_chain_effect_owner(
+            connection,
+            scope=self._scope_value,
+            episode_id=episode_id,
+            generation=generation,
+            owner_principal_id=owner_principal_id,
             principal_binding_id=principal_binding_id,
-            binding_verification_evidence_id=binding.verification_evidence_id,
-            binding_subject_sha256=bytes(binding.external_subject_sha256).hex(),
-            binding_revision=int(binding.revision),
-            binding_verified_at=binding.verified_at,
+            conflict=ActionChainEffectCancellationConflict,
         )
 
     def _scope(self, connection: sa.Connection) -> None:
@@ -351,6 +292,85 @@ class PostgresActionChainEffectCanceller:
             installation_id=str(self._scope_value.installation_id),
         )
 
+
+def validate_action_chain_effect_owner(
+    connection: sa.Connection,
+    *,
+    scope: TimelineScope,
+    episode_id: UUID,
+    generation: int,
+    owner_principal_id: UUID,
+    principal_binding_id: UUID,
+    conflict: type[ActionChainEffectConflict] = ActionChainEffectCancellationConflict,
+) -> ActionChainEffectOwner:
+    """Lock and validate the current owner for an effect-control request."""
+
+    generation_exists = connection.scalar(
+        sa.select(episode_generations.c.episode_id)
+        .where(
+            episode_generations.c.tenant_id == scope.tenant_id,
+            episode_generations.c.installation_id == scope.installation_id,
+            episode_generations.c.episode_id == episode_id,
+            episode_generations.c.generation == generation,
+            episode_generations.c.state == "current",
+        )
+        .with_for_update(read=True)
+    )
+    episode_owner = connection.scalar(
+        sa.select(episodes.c.principal_id)
+        .where(
+            episodes.c.tenant_id == scope.tenant_id,
+            episodes.c.installation_id == scope.installation_id,
+            episodes.c.episode_id == episode_id,
+            episodes.c.current_generation == generation,
+            episodes.c.state.not_in(("completed", "cancelled")),
+        )
+        .with_for_update(read=True)
+    )
+    binding = connection.execute(
+        sa.select(
+            principal_bindings.c.principal_id,
+            principal_bindings.c.verification_evidence_id,
+            principal_bindings.c.external_subject_sha256,
+            principal_bindings.c.revision,
+            principal_bindings.c.verified_at,
+        )
+        .where(
+            principal_bindings.c.tenant_id == scope.tenant_id,
+            principal_bindings.c.principal_binding_id == principal_binding_id,
+            principal_bindings.c.principal_id == owner_principal_id,
+            principal_bindings.c.status == "verified",
+        )
+        .with_for_update(read=True)
+    ).one_or_none()
+    principal = connection.scalar(
+        sa.select(principals.c.principal_id)
+        .where(
+            principals.c.tenant_id == scope.tenant_id,
+            principals.c.principal_id == owner_principal_id,
+            principals.c.status == "active",
+        )
+        .with_for_update(read=True)
+    )
+    if (
+        not generation_exists
+        or episode_owner != owner_principal_id
+        or binding is None
+        or binding.principal_id != owner_principal_id
+        or binding.verification_evidence_id is None
+        or binding.external_subject_sha256 is None
+        or binding.verified_at is None
+        or principal != owner_principal_id
+    ):
+        raise conflict("effect cancellation owner authority is not current")
+    return ActionChainEffectOwner(
+        principal_id=owner_principal_id,
+        principal_binding_id=principal_binding_id,
+        binding_verification_evidence_id=binding.verification_evidence_id,
+        binding_subject_sha256=bytes(binding.external_subject_sha256).hex(),
+        binding_revision=int(binding.revision),
+        binding_verified_at=binding.verified_at,
+    )
 
 def _intent(row: sa.Row) -> EffectIntent:
     try:
@@ -375,7 +395,9 @@ def _format_timestamp(value: datetime) -> str:
 
 
 __all__ = [
+    "ActionChainEffectOwner",
     "ActionChainEffectCancellationConflict",
     "CancelledActionChainEffect",
     "PostgresActionChainEffectCanceller",
+    "validate_action_chain_effect_owner",
 ]
