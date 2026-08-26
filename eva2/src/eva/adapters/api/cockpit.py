@@ -143,9 +143,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "benchmarks",
                 "title": "Vergelijkbare benchmarks",
                 "state": "selected",
-                "proof": "AgentBench, GAIA en OSWorld hebben een vast publicatiecontract",
-                "meaning": "LAB-36 blijft apart; openbare scores krijgen de officiële scorer.",
-                "next": "De eerste officiële run en gelijke vijf-frameworkproef uitvoeren.",
+                "proof": "GAIA's ontwikkelrunner is veilig aan Eva gekoppeld; 18 checks zijn groen, zonder score.",
+                "meaning": "Elke proeftaak krijgt een eigen privégesprek. Het officiële antwoord en de scorer blijven buiten Eva; LAB-36 blijft apart.",
+                "next": "De officiële dataset, scorer en een echte kandidaatmodelrun vastpinnen; daarna pas dezelfde vijf-agentproef uitvoeren.",
             },
         ],
         "dependencies": [

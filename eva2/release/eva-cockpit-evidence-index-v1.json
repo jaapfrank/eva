@@ -186,11 +186,11 @@
         },
         {
           "path": "src/eva/adapters/api/cockpit.py",
-          "sha256": "f3b37b839d8ae2b679b891fca4de3db29fa1a6d47d660f4fa4502cc585861419"
+          "sha256": "ffbe3c771576a6780875a586dceef6fd4261badbd106488462cb504ce5f9c7ac"
         },
         {
           "path": "tests/api/test_dashboard_status.py",
-          "sha256": "6023d27c96c50e56d757362ec0fb3bcce1ca4b76d532242275abe668b46e5846"
+          "sha256": "16938bab7e8bb3fcf30a6fe844d6d7484fa4910aa9f20d6451cd5c09c9c35519"
         }
       ]
     },

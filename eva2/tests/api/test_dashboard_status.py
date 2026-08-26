@@ -280,6 +280,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
     assert capability_by_id["voice"]["state"] == "selected"
     assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
+    assert capability_by_id["benchmarks"]["state"] == "selected"
+    assert "18 checks" in capability_by_id["benchmarks"]["proof"]
+    assert "zonder score" in capability_by_id["benchmarks"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI"]["version"] == (
