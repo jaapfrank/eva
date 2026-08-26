@@ -28,9 +28,11 @@ uitsluitend de buildconstraint `linux/amd64`.
   PostgreSQL/core op maar hergebruikte een bestaande externe Hindsight-service
   en modelautoriteit; zij bewijst geen volledige lege managed stack of adoptie.
 - Er is een canonieke, gesaneerde portable exportdirectory die reeds
-  versleutelde objectpayloads kan meenemen. Het exportpakket zelf is niet als
-  geheel versleuteld en er is nog geen complete door een gebruiker bewezen
-  import/restore naar een andere installatie.
+  versleutelde objectpayloads kan meenemen. Een nieuwe, geteste transportlaag
+  versleutelt nu de **hele** gevalideerde export als één bestand en herstelt
+  hem pas na wachtwoord- én integriteitscontrole. Een verkeerd wachtwoord of
+  gewijzigde byte publiceert geen halve restore. Dit is nog geen complete
+  gebruikersproef of database-import op een tweede computer.
 - Er is **geen** gebruiksvriendelijke productinstaller, lokale setupwizard of
   volledig connector-onboardingpad. De platformbasis markeert
   `installerExists` nog expliciet als `false`.

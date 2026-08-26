@@ -1,0 +1,32 @@
+{
+  "contract": "EvaPortableWholeArchiveTransportReceipt/v1",
+  "recorded_at": "2026-08-26T23:44:07+02:00",
+  "checkpoint": "69b24fc9ac79287ff82c38b4ee8fff904f09f3a3",
+  "scope": "isolated Eva2 portable archive transport; no Eva1, B, PostgreSQL, Hindsight, provider or secret was accessed",
+  "implementation": {
+    "module": "src/eva/operations/portable_transport.py",
+    "module_sha256": "6ccf65cf393fc7b62986fd98c16c6b2c078d5c33bb0621012ff4e8734e22e884",
+    "dependency": "cryptography==46.0.5",
+    "key_derivation": "scrypt N=32768 r=8 p=1, 32-byte salt and 32-byte key",
+    "cipher": "AES-256-GCM with a fresh 12-byte nonce and authenticated canonical header",
+    "plaintext_format": "validated EvaPortableArchive/v1 packed as a regular-file-only tar stream"
+  },
+  "tests": {
+    "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_transport.py",
+    "test_sha256": "078cec101d2c3f39e165ffdd23c49abf6d4b834cf1b0d82d853f5b25c6aa4c70",
+    "result": "3 passed",
+    "assertions": [
+      "a generic-reader-validated export round-trips byte-equivalently after whole-file encryption",
+      "a wrong passphrase publishes no restored directory",
+      "a modified ciphertext byte publishes no restored directory",
+      "linked source members are rejected before transport publication"
+    ]
+  },
+  "result": "tested",
+  "nonclaims": [
+    "This is not yet a database import or a full restore into a separate Eva2 installation.",
+    "This is not a fresh-install, user-wizard, A/B-update, rollback or uninstall proof.",
+    "Secrets are deliberately not part of the portable archive and must be entered again on the destination machine.",
+    "This did not read, copy, restart or modify the live Eva1 SQLite database or service."
+  ]
+}
