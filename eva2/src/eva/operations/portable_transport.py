@@ -338,6 +338,31 @@ def _private_staging(destination: Path) -> Iterator[Path]:
             shutil.rmtree(staging)
 
 
+@contextmanager
+def _reserved_empty_directory(destination: Path) -> Iterator[None]:
+    """Reserve an absent restore target so rename cannot replace another archive."""
+
+    try:
+        destination.mkdir(mode=0o700)
+    except FileExistsError as exc:
+        raise PortableTransportError("restored archive destination already exists") from exc
+    except OSError as exc:
+        raise PortableTransportError("restored archive destination cannot be reserved") from exc
+    try:
+        yield
+    finally:
+        try:
+            metadata = destination.lstat()
+            if stat.S_ISDIR(metadata.st_mode) and not destination.is_symlink():
+                destination.rmdir()
+        except FileNotFoundError:
+            pass
+        except OSError:
+            # A successful publication replaces this reservation with a non-empty
+            # archive.  Never delete anything we did not create as empty.
+            pass
+
+
 def _sha256_file(path: Path, *, label: str) -> str:
     metadata = _require_regular(path, label=label)
     digest = hashlib.sha256()
@@ -427,7 +452,12 @@ def seal_portable_archive(
             output.flush()
             os.fsync(output.fileno())
         transport_sha256 = _sha256_file(staged_transport, label="transport output")
-        os.replace(staged_transport, destination)
+        try:
+            os.link(staged_transport, destination, follow_symlinks=False)
+        except FileExistsError as exc:
+            raise PortableTransportError("transport destination appeared during sealing") from exc
+        except OSError as exc:
+            raise PortableTransportError("transport output cannot be published atomically") from exc
     return {
         "contract": "EvaPortableTransport/v1",
         "plaintext_sha256": plaintext_sha256,
@@ -541,16 +571,26 @@ def open_portable_transport(
     destination = destination.absolute()
     if destination.exists() or destination.is_symlink():
         raise PortableTransportError("restored archive destination already exists")
-    with _private_staging(destination) as staging:
-        packed = staging / "portable.tar"
-        _, plaintext_bytes, plaintext_sha256 = _decrypt_to_file(
-            source, packed, passphrase=passphrase
-        )
-        restored = staging / "restored"
-        restored.mkdir(mode=0o700)
-        _unpack_plaintext_tar(packed, restored)
-        validator(restored)
-        os.replace(restored, destination)
+    with _reserved_empty_directory(destination):
+        with _private_staging(destination) as staging:
+            packed = staging / "portable.tar"
+            _, plaintext_bytes, plaintext_sha256 = _decrypt_to_file(
+                source, packed, passphrase=passphrase
+            )
+            restored = staging / "restored"
+            restored.mkdir(mode=0o700)
+            _unpack_plaintext_tar(packed, restored)
+            validator(restored)
+            try:
+                if any(destination.iterdir()) or destination.is_symlink():
+                    raise PortableTransportError(
+                        "restored archive destination changed during restoration"
+                    )
+                os.replace(restored, destination)
+            except OSError as exc:
+                raise PortableTransportError(
+                    "restored archive cannot be published atomically"
+                ) from exc
     return {
         "contract": "EvaPortableTransport/v1",
         "plaintext_sha256": plaintext_sha256,
