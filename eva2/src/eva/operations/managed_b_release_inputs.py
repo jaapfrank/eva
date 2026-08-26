@@ -31,6 +31,11 @@ _MANIFEST_PATH = "schemas/contracts/manifest.json"
 _CORPUS_PATH = "schemas/contracts/contract-corpus-v1.json"
 _PROFILE_PATH = "schemas/contracts/canonical-json-profile-v1.json"
 _FOUR_D_FREEZE_PATH = "design/vertical/noor-4d-schema-export-freeze-v1.json"
+_PORTABLE_V1_CONTRACT_ROOT = "schemas/portable/v1/contracts"
+_PORTABLE_V1_MANIFEST_PATH = f"{_PORTABLE_V1_CONTRACT_ROOT}/manifest.json"
+_PORTABLE_V1_PROFILE_PATH = (
+    f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
+)
 _EXPECTED_INPUT_PATHS = (
     "alembic.ini",
     "deploy/living-core/Dockerfile",
@@ -63,7 +68,10 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/contracts/manifest.json",
     "schemas/portable/generic-reader-output-schema-manifest-v1.json",
     "schemas/portable/record-schema-manifest-v1.json",
+    "schemas/portable/v1/contracts/canonical-json-profile-v1.json",
+    "schemas/portable/v1/contracts/manifest.json",
     "src/eva/adapters/postgres/current_catalog.py",
+    "src/eva/adapters/postgres/portable_export.py",
     "src/eva/contracts/delegated_work.py",
     "src/eva/contracts/lifecycle.py",
     "src/eva/contracts/registry.py",
@@ -72,6 +80,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/operations/managed_b_offline_build.py",
     "src/eva/operations/managed_b_release_inputs.py",
     "src/eva/operations/managed_b_wheelhouse.py",
+    "src/eva/operations/portable_export.py",
     "tools/check_4d_freeze.py",
     "tools/generate_contract_schemas.py",
     "tools/prepare_managed_b_candidate_context.py",
@@ -114,7 +123,10 @@ _EXPECTED_TEST_PATHS = (
     "tests/operations/test_managed_b_wheelhouse.py",
     "tests/operations/test_prepare_managed_b_candidate_context.py",
     "tests/operations/test_telegram_binding_loader.py",
+    "tests/portable/test_portable_export_end_to_end.py",
+    "tests/portable/test_portable_p1_regressions.py",
     "tests/portable/test_portable_schema_resources.py",
+    "tests/portable/test_postgres_portable_export.py",
     "tests/postgres/test_4d_migration_admission.py",
     "tests/postgres/test_4d_migrations.py",
     "tests/postgres/test_action_chain_effect_advances.py",
@@ -434,6 +446,84 @@ def _validate_registry(
     }
 
 
+def _validate_portable_v1_contract_bundle(
+    files: ArchiveFiles, authority: Mapping[str, Any]
+) -> dict[str, object]:
+    """Bind the immutable 64-contract reader/exporter authority for archive v1."""
+
+    historical = authority.get("historical4d")
+    if not isinstance(historical, dict):
+        raise RuntimeError("managed B portable v1 authority is invalid")
+    expected_manifest_sha = _digest(
+        historical.get("manifestSha256"), label="portable v1 manifest"
+    )
+    expected_corpus_sha = _digest(
+        historical.get("corpusSha256"), label="portable v1 corpus"
+    )
+    expected_profile_sha = _digest(
+        authority.get("currentProfileSha256"), label="portable v1 profile"
+    )
+    expected_count = historical.get("contractCount")
+    if (
+        isinstance(expected_count, bool)
+        or not isinstance(expected_count, int)
+        or expected_count <= 0
+    ):
+        raise RuntimeError("managed B portable v1 contract count is invalid")
+
+    manifest_raw = _file(files, _PORTABLE_V1_MANIFEST_PATH, label="portable v1 manifest")
+    profile_raw = _file(files, _PORTABLE_V1_PROFILE_PATH, label="portable v1 profile")
+    if (
+        _sha256(manifest_raw) != expected_manifest_sha
+        or _sha256(profile_raw) != expected_profile_sha
+    ):
+        raise RuntimeError("managed B portable v1 contract authority differs")
+    manifest = _json(manifest_raw, label="portable v1 contract manifest")
+    schemas = manifest.get("schemas")
+    if (
+        manifest.get("manifest") != "EvaContractSchemaManifest/v1"
+        or manifest.get("contractCount") != expected_count
+        or manifest.get("corpusSha256") != expected_corpus_sha
+        or manifest.get("profileSha256") != expected_profile_sha
+        or not isinstance(schemas, dict)
+        or len(schemas) != expected_count
+    ):
+        raise RuntimeError("managed B portable v1 contract manifest differs")
+
+    expected_paths = {
+        _PORTABLE_V1_MANIFEST_PATH,
+        _PORTABLE_V1_PROFILE_PATH,
+    }
+    for contract, schema_digest in schemas.items():
+        if not isinstance(contract, str):
+            raise RuntimeError("managed B portable v1 contract name is invalid")
+        digest = _digest(schema_digest, label=f"portable v1 schema {contract}")
+        name = f"{contract.replace('/', '-')}.schema.json"
+        path = f"{_PORTABLE_V1_CONTRACT_ROOT}/{name}"
+        current_path = f"schemas/contracts/{name}"
+        schema_raw = _file(files, path, label=path)
+        schema = _json(schema_raw, label=path)
+        if (
+            _sha256(schema_raw) != digest
+            or schema_raw != _file(files, current_path, label=current_path)
+            or schema.get("properties", {}).get("contract", {}).get("const")
+            != contract
+        ):
+            raise RuntimeError(
+                f"managed B portable v1 contract schema differs: {contract}"
+            )
+        expected_paths.add(path)
+    actual_paths = {
+        path for path in files if path.startswith(f"{_PORTABLE_V1_CONTRACT_ROOT}/")
+    }
+    if actual_paths != expected_paths:
+        raise RuntimeError("managed B portable v1 contract file set differs")
+    return {
+        "portable_v1_contract_count": expected_count,
+        "portable_v1_manifest_sha256": expected_manifest_sha,
+    }
+
+
 def _assignment(module: ast.Module, name: str) -> object:
     found: list[object] = []
     for node in module.body:
@@ -595,12 +685,14 @@ def _validate_static_archive_inputs(
     if not isinstance(registry, dict):
         raise RuntimeError("managed B contract registry authority is invalid")
     registry_receipt = _validate_registry(files, registry)
+    portable_v1_receipt = _validate_portable_v1_contract_bundle(files, registry)
     migration_head = _validate_migrations(files, authority["migrationAuthority"])
     return {
         "authority_sha256": _sha256(authority_raw),
         "contract": "EvaManagedBReleaseInputReceipt/v1",
         "dependency_alignment": alignment,
         **registry_receipt,
+        **portable_v1_receipt,
         "migration_head": migration_head,
         "network_used": False,
         "nonclaims": list(_NONCLAIMS),

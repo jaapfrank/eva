@@ -37,6 +37,13 @@ def _files(authority: dict[str, object]) -> dict[str, tuple[bytes, int]]:
         f"schemas/contracts/{contract.replace('/', '-')}.schema.json"
         for contract in manifest["schemas"]
     )
+    portable_v1_manifest = json.loads(
+        (ROOT / "schemas/portable/v1/contracts/manifest.json").read_bytes()
+    )
+    paths.update(
+        f"schemas/portable/v1/contracts/{contract.replace('/', '-')}.schema.json"
+        for contract in portable_v1_manifest["schemas"]
+    )
     return {
         path: ((ROOT / path).read_bytes(), (ROOT / path).stat().st_mode & 0o777)
         for path in sorted(paths)
@@ -70,6 +77,10 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["dependency_alignment"]["expected_wheel_count"] == 39
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
+    assert receipt["portable_v1_contract_count"] == 64
+    assert receipt["portable_v1_manifest_sha256"] == (
+        "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
+    )
     assert receipt["migration_head"] == "4e_0002_delegated_work"
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
@@ -138,6 +149,44 @@ def test_release_inputs_refuse_current_manifest_or_corpus_drift() -> None:
     files[path] = (files[path][0] + b" ", 0o644)
 
     with pytest.raises(RuntimeError, match="pinned input differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_bind_portable_v1_separately_from_current_registry() -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+
+    assert hashlib.sha256(
+        files["schemas/portable/v1/contracts/manifest.json"][0]
+    ).hexdigest() == authority["contractRegistry"]["historical4d"]["manifestSha256"]
+    assert hashlib.sha256(files["schemas/contracts/manifest.json"][0]).hexdigest() == (
+        authority["contractRegistry"]["currentManifestSha256"]
+    )
+    _validate(files, raw)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ("missing_schema", "changed_schema", "extra_file", "changed_manifest"),
+)
+def test_release_inputs_refuse_portable_v1_bundle_drift(mutation: str) -> None:
+    authority, raw = _authority()
+    files = _files(authority)
+    schema_path = "schemas/portable/v1/contracts/AttentionWake-v1.schema.json"
+    if mutation == "missing_schema":
+        files.pop(schema_path)
+    elif mutation == "changed_schema":
+        files[schema_path] = (files[schema_path][0] + b" ", 0o644)
+    elif mutation == "extra_file":
+        files["schemas/portable/v1/contracts/unexpected.json"] = (b"{}\n", 0o644)
+    else:
+        manifest_path = "schemas/portable/v1/contracts/manifest.json"
+        files[manifest_path] = (files[manifest_path][0] + b" ", 0o644)
+
+    with pytest.raises(
+        RuntimeError,
+        match="portable/v1|portable v1",
+    ):
         _validate(files, raw)
 
 

@@ -22,6 +22,12 @@ from test_portable_export_end_to_end import _fixture_record_sets
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
 READER_PATH = EVA2_ROOT / "tools" / "read_eva_portable_archive.py"
+HISTORICAL_V1_MANIFEST_SHA256 = (
+    "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
+)
+CURRENT_MANIFEST_SHA256 = (
+    "b8124d2db419864db4f2213d5b455a59d7f836197822f90c17a38549f1864469"
+)
 
 
 def _reader_module():
@@ -43,6 +49,18 @@ def _terminal_records() -> dict[str, list[dict[str, object]]]:
     return _snapshot_records("terminal")
 
 
+def test_portable_v1_uses_its_historical_bundle_not_the_current_registry() -> None:
+    payloads = _schema_payloads(EVA2_ROOT / "schemas")
+
+    assert hashlib.sha256(
+        payloads["schemas/contracts/manifest.json"]
+    ).hexdigest() == HISTORICAL_V1_MANIFEST_SHA256
+    assert hashlib.sha256(
+        (EVA2_ROOT / "schemas" / "contracts" / "manifest.json").read_bytes()
+    ).hexdigest() == CURRENT_MANIFEST_SHA256
+    assert HISTORICAL_V1_MANIFEST_SHA256 != CURRENT_MANIFEST_SHA256
+
+
 @pytest.mark.parametrize(
     ("relative", "expected"),
     [
@@ -61,7 +79,7 @@ def test_producer_rejects_unpinned_contract_authority(
 ) -> None:
     schema_root = tmp_path / "schemas"
     shutil.copytree(EVA2_ROOT / "schemas", schema_root)
-    target = schema_root / relative
+    target = schema_root / "portable" / "v1" / relative
     value = json.loads(target.read_bytes())
     value["p1_tamper"] = True
     target.write_bytes(canonical_json_bytes(value) + b"\n")

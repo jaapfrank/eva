@@ -177,11 +177,23 @@ def _require_sha256(raw: bytes, expected: str, *, label: str) -> None:
 
 def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
     payloads: dict[str, bytes] = {}
-    with _root_descriptor(schema_root, label="schema") as root_descriptor:
+    v1_contract_root = schema_root / "portable" / "v1" / "contracts"
+    with (
+        _root_descriptor(schema_root, label="schema") as root_descriptor,
+        _root_descriptor(
+            v1_contract_root, label="portable v1 contract schema"
+        ) as v1_contract_descriptor,
+    ):
 
-        def include(local: str, archive: str, expected: str | None = None) -> bytes:
+        def include(
+            local: str,
+            archive: str,
+            expected: str | None = None,
+            *,
+            source_descriptor: int = root_descriptor,
+        ) -> bytes:
             raw = _read_regular_at(
-                root_descriptor,
+                source_descriptor,
                 local,
                 label=f"schema resource {local}",
                 maximum=16_777_216,
@@ -192,14 +204,16 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
             return raw
 
         contract_raw = include(
-            "contracts/manifest.json",
+            "manifest.json",
             "schemas/contracts/manifest.json",
             CONTRACT_MANIFEST_SHA256,
+            source_descriptor=v1_contract_descriptor,
         )
         profile_raw = include(
-            "contracts/canonical-json-profile-v1.json",
+            "canonical-json-profile-v1.json",
             "schemas/contracts/canonical-json-profile-v1.json",
             CANONICAL_PROFILE_SHA256,
+            source_descriptor=v1_contract_descriptor,
         )
         portable_raw = include(
             "portable/record-schema-manifest-v1.json",
@@ -219,9 +233,10 @@ def _schema_payloads(schema_root: Path) -> dict[str, bytes]:
         for contract, expected_hash in contract_manifest["schemas"].items():
             name = f"{contract.replace('/', '-')}.schema.json"
             include(
-                f"contracts/{name}",
+                name,
                 f"schemas/contracts/{name}",
                 expected_hash,
+                source_descriptor=v1_contract_descriptor,
             )
 
         portable_manifest = _canonical_object(portable_raw)

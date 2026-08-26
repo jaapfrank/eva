@@ -20,6 +20,13 @@ SNAPSHOT_BEGIN_SQL = (
     "BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY DEFERRABLE"
 )
 _IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
+_PORTABLE_V1_ATTENTION_KINDS = {
+    "ingress",
+    "continuation",
+    "deadline",
+    "external_signal",
+    "delivery_recovery",
+}
 
 
 class PrincipalBindingIsolationError(PortableArchiveError):
@@ -158,6 +165,25 @@ def validate_principal_binding_evidence_scope(
         if (evidence_id, installation_id) not in evidence:
             raise PrincipalBindingIsolationError(
                 "principal binding verification evidence is not in the same installation"
+            )
+
+
+def validate_portable_v1_attention_rows(
+    records: Mapping[str, Sequence[Mapping[str, Any]]],
+) -> None:
+    """Reject current attention rows that the sealed v1 archive cannot restore."""
+
+    for row in records.get("eva_core.attention_items", ()):
+        payload = row.get("payload")
+        if (
+            row.get("kind") not in _PORTABLE_V1_ATTENTION_KINDS
+            or not isinstance(payload, Mapping)
+            or payload.get("contract") != "AttentionWake/v1"
+            or payload.get("schema_version") != 1
+            or payload.get("kind") != row.get("kind")
+        ):
+            raise PortableArchiveError(
+                "portable v1 cannot export this attention kind or payload contract"
             )
 
 
@@ -373,6 +399,7 @@ class PostgresPortableSnapshot:
                 )
             result[table] = rows
         validate_principal_binding_evidence_scope(result)
+        validate_portable_v1_attention_rows(result)
         return result
 
     def build_record_sets(self) -> tuple[RecordSetBytes, ...]:

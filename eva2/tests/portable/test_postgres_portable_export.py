@@ -7,6 +7,7 @@ import pytest
 from eva.adapters.postgres.portable_export import (
     PostgresPortableSnapshot,
     SNAPSHOT_BEGIN_SQL,
+    validate_portable_v1_attention_rows,
 )
 from eva.application.portable_archive import PortableArchiveError
 
@@ -184,6 +185,41 @@ def test_default_catalog_reads_exactly_39_non_dbos_record_sets() -> None:
         == 42
     )
     assert all("dbos" not in sql.lower() for sql in statements)
+
+
+def test_portable_v1_attention_preflight_accepts_only_the_historical_contract() -> None:
+    historical = {
+        "kind": "continuation",
+        "payload": {
+            "contract": "AttentionWake/v1",
+            "schema_version": 1,
+            "kind": "continuation",
+        },
+    }
+
+    validate_portable_v1_attention_rows(
+        {"eva_core.attention_items": [historical]}
+    )
+
+    for changed in (
+        {**historical, "kind": "delegated_work"},
+        {
+            **historical,
+            "payload": {
+                **historical["payload"],
+                "contract": "AttentionWake/v2",
+                "schema_version": 2,
+            },
+        },
+        {
+            **historical,
+            "payload": {**historical["payload"], "kind": "deadline"},
+        },
+    ):
+        with pytest.raises(PortableArchiveError, match="portable v1 cannot export"):
+            validate_portable_v1_attention_rows(
+                {"eva_core.attention_items": [changed]}
+            )
 
 
 def test_snapshot_refuses_to_nest_inside_a_caller_transaction() -> None:
