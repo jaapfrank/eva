@@ -2,11 +2,17 @@ from __future__ import annotations
 
 from pathlib import Path
 import sqlite3
+import tempfile
 
 import pytest
 
 from eva.application.legacy_memory_trial import LegacyMemoryTrialError
-from tools.run_legacy_memory_trial import _active_records, _read_private_text, _trial_url
+from tools.run_legacy_memory_trial import (
+    _active_records,
+    _copy_readonly_sqlite_snapshot,
+    _read_private_text,
+    _trial_url,
+)
 
 
 def _private(path: Path, content: str, mode: int = 0o600) -> Path:
@@ -54,16 +60,49 @@ def test_active_records_are_read_only_selected_and_hashed(tmp_path: Path) -> Non
     assert records[0].person_label_sha256 != "owner"
 
 
+def test_snapshot_has_one_consistent_read_only_source_state(tmp_path: Path) -> None:
+    source = tmp_path / "live eva with spaces.db"
+    temporary = tempfile.TemporaryDirectory(prefix="eva2-legacy-snapshot-test-", dir="/var/tmp")
+    snapshot = Path(temporary.name) / "snapshot.db"
+    connection = sqlite3.connect(source)
+    try:
+        connection.execute(
+            "CREATE TABLE memories (id INTEGER, ts TEXT, person TEXT, content TEXT, category TEXT, archived INTEGER)"
+        )
+        connection.execute(
+            "INSERT INTO memories VALUES (1, '2026-08-01T12:00:00Z', 'owner', 'first', 'preference', 0)"
+        )
+        connection.commit()
+        _copy_readonly_sqlite_snapshot(source=source, destination=snapshot)
+        connection.execute(
+            "INSERT INTO memories VALUES (2, '2026-08-01T12:01:00Z', 'owner', 'later', 'preference', 0)"
+        )
+        connection.commit()
+    finally:
+        connection.close()
+
+    try:
+        records = _active_records(source=snapshot, person_label="owner", limit=25)
+
+        assert [record.legacy_memory_id for record in records] == [1]
+        assert snapshot.stat().st_mode & 0o777 == 0o600
+    finally:
+        temporary.cleanup()
+
+
 @pytest.mark.parametrize(
     "dsn",
     (
         "sqlite:///tmp/legacy.db",
         "postgresql+psycopg://localhost/eva2_live",
         "postgresql+psycopg://localhost/eva2_4b_disposable_trial",
+        "postgresql+psycopg://example.invalid/eva2_legacy_memory_trial_owner",
     ),
 )
 def test_trial_url_refuses_non_trial_databases(dsn: str) -> None:
-    with pytest.raises(LegacyMemoryTrialError, match="eva2_legacy_memory_trial"):
+    with pytest.raises(
+        LegacyMemoryTrialError, match="eva2_legacy_memory_trial|local PostgreSQL host"
+    ):
         _trial_url(dsn)
 
 

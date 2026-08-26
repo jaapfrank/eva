@@ -9,6 +9,7 @@ confirmation file.  It prints hashes and counts only, never old memory content.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
@@ -16,7 +17,8 @@ import os
 from pathlib import Path
 import sqlite3
 import stat
-from typing import Sequence
+import tempfile
+from typing import Iterator, Sequence
 
 import sqlalchemy as sa
 from sqlalchemy.engine import make_url
@@ -67,13 +69,67 @@ def _source_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _readonly_sqlite_uri(path: Path) -> str:
+    """Return a URI that cannot turn a missing source into a new database."""
+
+    return f"{path.resolve().as_uri()}?mode=ro"
+
+
+@contextmanager
+def _private_snapshot_directory() -> Iterator[Path]:
+    """Yield a local 0700 directory or refuse to materialize user memories."""
+
+    for base in (Path("/var/tmp"), Path("/tmp")):
+        if not base.is_dir():
+            continue
+        temporary = tempfile.TemporaryDirectory(
+            prefix="eva2-legacy-memory-trial-", dir=base
+        )
+        path = Path(temporary.name)
+        try:
+            if path.stat().st_mode & 0o077:
+                continue
+            yield path
+            return
+        finally:
+            temporary.cleanup()
+    raise LegacyMemoryTrialError("no private local directory for legacy memory snapshot")
+
+
+def _copy_readonly_sqlite_snapshot(*, source: Path, destination: Path) -> None:
+    """Take one consistent source snapshot without writing the live Eva1 DB.
+
+    SQLite's backup API includes committed WAL state in the copy.  Hashing and
+    selecting rows from that private copy avoids the otherwise unavoidable race
+    where a live writer changes Eva1 between the source hash and the SELECT.
+    """
+
+    _source_sha256(source)  # validates regular/non-symlink source before opening it.
+    if destination.exists():
+        raise LegacyMemoryTrialError("legacy snapshot destination already exists")
+    source_connection = sqlite3.connect(_readonly_sqlite_uri(source), uri=True)
+    destination_connection = sqlite3.connect(destination)
+    try:
+        source_connection.backup(destination_connection)
+        integrity = destination_connection.execute("PRAGMA integrity_check").fetchone()
+        if integrity != ("ok",):
+            raise LegacyMemoryTrialError("legacy SQLite snapshot integrity check failed")
+    except sqlite3.Error as error:
+        raise LegacyMemoryTrialError("legacy SQLite snapshot could not be created") from error
+    finally:
+        destination_connection.close()
+        source_connection.close()
+    destination.chmod(0o600)
+    if destination.stat().st_mode & 0o077:
+        raise LegacyMemoryTrialError("legacy SQLite snapshot is not private")
+
+
 def _active_records(
     *, source: Path, person_label: str, limit: int
 ) -> tuple[LegacyMemoryRecord, ...]:
     if not 1 <= limit <= 50:
         raise LegacyMemoryTrialError("legacy memory trial limit must be between 1 and 50")
-    source_uri = f"file:{source}?mode=ro"
-    connection = sqlite3.connect(source_uri, uri=True)
+    connection = sqlite3.connect(_readonly_sqlite_uri(source), uri=True)
     try:
         rows = connection.execute(
             """
@@ -117,6 +173,8 @@ def _trial_url(value: str) -> str:
         raise LegacyMemoryTrialError(
             "trial DSN must point to an eva2_legacy_memory_trial_ PostgreSQL database"
         )
+    if url.host not in {"localhost", "127.0.0.1", "::1"}:
+        raise LegacyMemoryTrialError("trial DSN must use a local PostgreSQL host")
     return value
 
 
@@ -130,8 +188,15 @@ def run_trial(args: argparse.Namespace) -> dict[str, object]:
     person_label = _read_private_text(Path(args.person_label_file), label="person label file")
     if _read_private_text(Path(args.confirmation_file), label="confirmation file") != _CONFIRMATION:
         raise LegacyMemoryTrialError("confirmation file does not authorize a legacy trial")
-    source_sha = _source_sha256(source)
-    records = _active_records(source=source, person_label=person_label, limit=args.limit)
+    # The temporary directory is mode 0700. It is removed on every normal or
+    # exceptional exit and contains the only short-lived plaintext copy.
+    with _private_snapshot_directory() as temporary:
+        snapshot = temporary / "legacy-eva1-snapshot.sqlite"
+        _copy_readonly_sqlite_snapshot(source=source, destination=snapshot)
+        source_sha = _source_sha256(snapshot)
+        records = _active_records(
+            source=snapshot, person_label=person_label, limit=args.limit
+        )
     now = datetime.now(timezone.utc).replace(microsecond=0)
     imported_at = _timestamp(now)
     retention_until = _timestamp(now + timedelta(days=args.retention_days))
