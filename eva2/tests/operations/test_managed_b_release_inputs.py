@@ -15,10 +15,15 @@ from eva.operations.managed_b_release_inputs import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
 def _canonical(value: object) -> bytes:
-    return json.dumps(
-        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
-    ).encode("utf-8") + b"\n"
+    return (
+        json.dumps(
+            value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+        + b"\n"
+    )
 
 
 def _authority() -> tuple[dict[str, object], bytes]:
@@ -64,7 +69,32 @@ def _replace_authority(
     return raw
 
 
-def test_release_inputs_bind_current_registry_historical_projection_and_migrations() -> None:
+def _replace_public_projection(
+    files: dict[str, tuple[bytes, int]],
+    authority: dict[str, object],
+    projection: dict[str, object],
+) -> bytes:
+    path = "evidence/public/eva-cockpit-sanitized-evidence-v1.json"
+    files[path] = (_canonical(projection), 0o644)
+    projection_sha256 = hashlib.sha256(files[path][0]).hexdigest()
+    index_path = "release/eva-cockpit-evidence-index-v1.json"
+    index = json.loads(files[index_path][0])
+    for entry in index["entries"]:
+        for source in entry["sources"]:
+            if source["path"] == path:
+                source["sha256"] = projection_sha256
+    files[index_path] = (_canonical(index), 0o644)
+    for changed_path in (path, index_path):
+        row = next(
+            item for item in authority["requiredInputs"] if item["path"] == changed_path
+        )
+        row["sha256"] = hashlib.sha256(files[changed_path][0]).hexdigest()
+    return _replace_authority(files, authority)
+
+
+def test_release_inputs_bind_current_registry_historical_projection_and_migrations() -> (
+    None
+):
     authority, raw = _authority()
 
     receipt = _validate(_files(authority), raw)
@@ -78,6 +108,8 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64
+    assert receipt["cockpit_evidence_claim_count"] == 11
+    assert receipt["core_live_case_count"] == 15
     assert receipt["portable_v1_manifest_sha256"] == (
         "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
     )
@@ -87,6 +119,68 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()
     assert receipt["network_used"] is False
     assert not ({"dsn", "password", "secret_value", "token"} & set(receipt))
+
+
+def test_release_inputs_bind_cockpit_claims_to_exact_evidence_sources() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    path = "reviews/harness-subagent-engine-55cf7cc.md"
+    files[path] = (files[path][0] + b"\n", 0o644)
+    row = next(item for item in changed["requiredInputs"] if item["path"] == path)
+    row["sha256"] = hashlib.sha256(files[path][0]).hexdigest()
+    raw = _replace_authority(files, changed)
+
+    with pytest.raises(RuntimeError, match="cockpit evidence source differs"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_a_relabelled_cockpit_claim() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    path = "release/eva-cockpit-evidence-index-v1.json"
+    index = json.loads(files[path][0])
+    index["entries"][0]["claimState"] = "live"
+    files[path] = (_canonical(index), 0o644)
+    row = next(item for item in changed["requiredInputs"] if item["path"] == path)
+    row["sha256"] = hashlib.sha256(files[path][0]).hexdigest()
+    raw = _replace_authority(files, changed)
+
+    with pytest.raises(RuntimeError, match="cockpit evidence entry is invalid"):
+        _validate(files, raw)
+
+
+def test_release_inputs_refuse_a_relabelled_sanitized_core_case() -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    path = "evidence/public/eva-cockpit-sanitized-evidence-v1.json"
+    projection = json.loads(files[path][0])
+    projection["coreCases"][0]["status"] = "passed"
+    raw = _replace_public_projection(files, changed, projection)
+
+    with pytest.raises(RuntimeError, match="sanitized core case is invalid"):
+        _validate(files, raw)
+
+
+@pytest.mark.parametrize(
+    "private_field",
+    ("reply", "entity_id", "corrected_name", "principal_id"),
+)
+def test_release_inputs_refuse_raw_fields_in_public_evidence(
+    private_field: str,
+) -> None:
+    authority, _ = _authority()
+    files = _files(authority)
+    changed = copy.deepcopy(authority)
+    path = "evidence/public/eva-cockpit-sanitized-evidence-v1.json"
+    projection = json.loads(files[path][0])
+    projection["claims"][0][private_field] = "must-not-enter-release"
+    raw = _replace_public_projection(files, changed, projection)
+
+    with pytest.raises(RuntimeError, match="sanitized cockpit claim fields differ"):
+        _validate(files, raw)
 
 
 def test_release_inputs_refuse_drift_in_an_original_historical_contract() -> None:
@@ -110,9 +204,7 @@ def test_release_inputs_refuse_a_missing_or_unapproved_current_addition() -> Non
     authority, _ = _authority()
     files = _files(authority)
     changed = copy.deepcopy(authority)
-    additions = changed["contractRegistry"]["historical4d"][
-        "allowedCurrentAdditions"
-    ]
+    additions = changed["contractRegistry"]["historical4d"]["allowedCurrentAdditions"]
     additions.pop("IdentityPackDraft/v1")
     raw = _replace_authority(files, changed)
 
@@ -122,9 +214,7 @@ def test_release_inputs_refuse_a_missing_or_unapproved_current_addition() -> Non
 
 def test_release_inputs_bind_exact_current_additions_without_resealing_v1() -> None:
     authority, raw = _authority()
-    additions = authority["contractRegistry"]["historical4d"][
-        "allowedCurrentAdditions"
-    ]
+    additions = authority["contractRegistry"]["historical4d"]["allowedCurrentAdditions"]
 
     assert set(additions) == {
         "AttentionWake/v2",
@@ -136,9 +226,12 @@ def test_release_inputs_bind_exact_current_additions_without_resealing_v1() -> N
         "McpReadOnlyToolImport/v1",
     }
     files = _files(authority)
-    assert hashlib.sha256(
-        files["schemas/contracts/AttentionWake-v1.schema.json"][0]
-    ).hexdigest() == "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc"
+    assert (
+        hashlib.sha256(
+            files["schemas/contracts/AttentionWake-v1.schema.json"][0]
+        ).hexdigest()
+        == "79d91bec82cf0c2f18fe3ed6c2bf95d714842a2ac499a2d1ea6aca11bc5a7cbc"
+    )
     _validate(files, raw)
 
 
@@ -156,11 +249,15 @@ def test_release_inputs_bind_portable_v1_separately_from_current_registry() -> N
     authority, raw = _authority()
     files = _files(authority)
 
-    assert hashlib.sha256(
-        files["schemas/portable/v1/contracts/manifest.json"][0]
-    ).hexdigest() == authority["contractRegistry"]["historical4d"]["manifestSha256"]
-    assert hashlib.sha256(files["schemas/contracts/manifest.json"][0]).hexdigest() == (
-        authority["contractRegistry"]["currentManifestSha256"]
+    assert (
+        hashlib.sha256(
+            files["schemas/portable/v1/contracts/manifest.json"][0]
+        ).hexdigest()
+        == authority["contractRegistry"]["historical4d"]["manifestSha256"]
+    )
+    assert (
+        hashlib.sha256(files["schemas/contracts/manifest.json"][0]).hexdigest()
+        == (authority["contractRegistry"]["currentManifestSha256"])
     )
     _validate(files, raw)
 
@@ -261,7 +358,9 @@ def test_release_inputs_refuse_semantically_resealed_dependency_drift() -> None:
         _validate(files, raw)
 
 
-def test_release_inputs_require_authority_from_same_archive_and_real_git_commit() -> None:
+def test_release_inputs_require_authority_from_same_archive_and_real_git_commit() -> (
+    None
+):
     authority, raw = _authority()
     files = _files(authority)
     changed = copy.deepcopy(authority)

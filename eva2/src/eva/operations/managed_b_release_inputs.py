@@ -31,6 +31,8 @@ _MANIFEST_PATH = "schemas/contracts/manifest.json"
 _CORPUS_PATH = "schemas/contracts/contract-corpus-v1.json"
 _PROFILE_PATH = "schemas/contracts/canonical-json-profile-v1.json"
 _FOUR_D_FREEZE_PATH = "design/vertical/noor-4d-schema-export-freeze-v1.json"
+_COCKPIT_EVIDENCE_PATH = "release/eva-cockpit-evidence-index-v1.json"
+_COCKPIT_PUBLIC_EVIDENCE_PATH = "evidence/public/eva-cockpit-sanitized-evidence-v1.json"
 _PORTABLE_V1_CONTRACT_ROOT = "schemas/portable/v1/contracts"
 _PORTABLE_V1_MANIFEST_PATH = f"{_PORTABLE_V1_CONTRACT_ROOT}/manifest.json"
 _PORTABLE_V1_PROFILE_PATH = (
@@ -43,11 +45,14 @@ _EXPECTED_INPUT_PATHS = (
     "deploy/living-core/runtime.env.example",
     "deploy/living-core/telegram-principal-bindings.example.json",
     "design/vertical/noor-4d-schema-export-freeze-v1.json",
+    "evidence/4c/postgresql-durability-gate.json",
+    "evidence/public/eva-cockpit-sanitized-evidence-v1.json",
     "migrations/env.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
     "release/build-policy.json",
     "release/design-source-bindings.json",
+    "release/eva-cockpit-evidence-index-v1.json",
     "release/formats/eva-build-inputs-v1.schema.json",
     "release/formats/eva-build-provenance-v1.schema.json",
     "release/formats/eva-release-manifest-v1.schema.json",
@@ -63,6 +68,12 @@ _EXPECTED_INPUT_PATHS = (
     "release/trust-root-slot.json",
     "requirements-4d.lock",
     "requirements.lock",
+    "reviews/action-chain-effect-advance-mc03c3e.md",
+    "reviews/dependency-candidate-selection-2f67277.md",
+    "reviews/harness-subagent-engine-55cf7cc.md",
+    "reviews/managed-b-readonly-backup-2026-08-24.md",
+    "reviews/managed-b-runtime-secret-preflight-6ead73f.md",
+    "reviews/pydantic-tool-free-child-candidate-b7e9af7.md",
     "schemas/contracts/canonical-json-profile-v1.json",
     "schemas/contracts/contract-corpus-v1.json",
     "schemas/contracts/manifest.json",
@@ -161,17 +172,160 @@ _NONCLAIMS = (
     "Artifact-proxy provenance, two-builder reproducibility, immutable Compose image binding, SBOM, vulnerability evidence, signatures, trust root, and full-stack restart remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
 )
+_COCKPIT_EVIDENCE_NONCLAIMS = (
+    "The cockpit index is a release-bound evidence projection, not a new live run.",
+    "A source receipt proves only the claim and nonclaims written in that receipt.",
+    "Selected and open cockpit items are deliberately absent from this evidence index.",
+)
+_COCKPIT_EVIDENCE_SOURCES = {
+    "capability/child-engine": (
+        "reviews/harness-subagent-engine-55cf7cc.md",
+        "reviews/pydantic-tool-free-child-candidate-b7e9af7.md",
+    ),
+    "capability/cockpit": (
+        "src/eva/adapters/api/cockpit.py",
+        "tests/api/test_dashboard_status.py",
+    ),
+    "capability/home-skill": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
+    "capability/installer": (
+        "reviews/managed-b-readonly-backup-2026-08-24.md",
+        "reviews/managed-b-runtime-secret-preflight-6ead73f.md",
+    ),
+    "capability/learning": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
+    "capability/living-core": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
+    "capability/personal-memory": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
+    "capability/safe-actions": ("reviews/action-chain-effect-advance-mc03c3e.md",),
+    "dependency/dbos": ("evidence/4c/postgresql-durability-gate.json",),
+    "dependency/hindsight": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
+    "dependency/pydantic-ai-harness": ("reviews/harness-subagent-engine-55cf7cc.md",),
+}
+_SANITIZED_COCKPIT_NONCLAIMS = (
+    "This projection excludes raw dialogue, prompts, replies, names, identifiers, entity metadata, memory content, secrets, and provider payloads.",
+    "Source receipt hashes allow private re-opening by the owner; raw receipts are not release inputs.",
+    "Historical live results do not prove the final image.",
+    "This projection is not a new live execution.",
+)
+_SANITIZED_COCKPIT_CLAIMS = {
+    "capability/home-skill": (
+        "live",
+        (
+            "automation_config_readback_verified",
+            "end_image_rerun_open",
+            "historical_b_live_execution",
+            "real_history_read",
+            "real_light_action_with_independent_readback",
+            "real_state_read",
+        ),
+    ),
+    "capability/learning": (
+        "tested",
+        (
+            "one_repository_improvement_committed",
+            "repeatable_skill_cycle_not_proven",
+        ),
+    ),
+    "capability/living-core": (
+        "live",
+        (
+            "15_unique_cases_passed_live_b",
+            "end_image_rerun_open",
+            "historical_b_live_execution",
+        ),
+    ),
+    "capability/personal-memory": (
+        "live",
+        (
+            "end_image_rerun_open",
+            "memory_isolation_passed_live_b",
+            "person_project_memory_passed_live_b",
+        ),
+    ),
+    "dependency/hindsight": (
+        "live",
+        (
+            "candidate_b_ready",
+            "real_model_turn_completed",
+            "telegram_inbound_gate_open",
+        ),
+    ),
+}
+_SANITIZED_CORE_CASES = (
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "M02",
+    "M03",
+    "M04",
+    "P02",
+    "R02",
+    "R03",
+    "T02",
+    "T04",
+    "X02",
+    "X03",
+    "X04",
+)
+_COCKPIT_EVIDENCE_STATES = {
+    "capability/child-engine": "tested",
+    "capability/cockpit": "tested",
+    "capability/home-skill": "live",
+    "capability/installer": "tested",
+    "capability/learning": "tested",
+    "capability/living-core": "live",
+    "capability/personal-memory": "live",
+    "capability/safe-actions": "tested",
+    "dependency/dbos": "tested",
+    "dependency/hindsight": "live",
+    "dependency/pydantic-ai-harness": "tested",
+}
 _EXPECTED_MIGRATIONS = (
     ("4b_0000_core_namespace", None, "migrations/versions/4b_0000_core_namespace.py"),
-    ("4b_0001_tenant_scope", "4b_0000_core_namespace", "migrations/versions/4b_0001_tenant_scope.py"),
-    ("4b_0002_episode_atomicity", "4b_0001_tenant_scope", "migrations/versions/4b_0002_episode_atomicity.py"),
-    ("4d_0003_core_continuity", "4b_0002_episode_atomicity", "migrations/versions/4d_0003_core_continuity.py"),
-    ("4d_0004_effect_authority", "4d_0003_core_continuity", "migrations/versions/4d_0004_effect_authority.py"),
-    ("4d_0005_evidence_objects", "4d_0004_effect_authority", "migrations/versions/4d_0005_evidence_objects.py"),
-    ("4d_0006_memory", "4d_0005_evidence_objects", "migrations/versions/4d_0006_memory.py"),
-    ("4d_0007_projection_telemetry", "4d_0006_memory", "migrations/versions/4d_0007_projection_telemetry.py"),
-    ("4e_0001_operational_timeline", "4d_0007_projection_telemetry", "migrations/versions/4e_0001_operational_timeline.py"),
-    ("4e_0002_delegated_work", "4e_0001_operational_timeline", "migrations/versions/4e_0002_delegated_work.py"),
+    (
+        "4b_0001_tenant_scope",
+        "4b_0000_core_namespace",
+        "migrations/versions/4b_0001_tenant_scope.py",
+    ),
+    (
+        "4b_0002_episode_atomicity",
+        "4b_0001_tenant_scope",
+        "migrations/versions/4b_0002_episode_atomicity.py",
+    ),
+    (
+        "4d_0003_core_continuity",
+        "4b_0002_episode_atomicity",
+        "migrations/versions/4d_0003_core_continuity.py",
+    ),
+    (
+        "4d_0004_effect_authority",
+        "4d_0003_core_continuity",
+        "migrations/versions/4d_0004_effect_authority.py",
+    ),
+    (
+        "4d_0005_evidence_objects",
+        "4d_0004_effect_authority",
+        "migrations/versions/4d_0005_evidence_objects.py",
+    ),
+    (
+        "4d_0006_memory",
+        "4d_0005_evidence_objects",
+        "migrations/versions/4d_0006_memory.py",
+    ),
+    (
+        "4d_0007_projection_telemetry",
+        "4d_0006_memory",
+        "migrations/versions/4d_0007_projection_telemetry.py",
+    ),
+    (
+        "4e_0001_operational_timeline",
+        "4d_0007_projection_telemetry",
+        "migrations/versions/4e_0001_operational_timeline.py",
+    ),
+    (
+        "4e_0002_delegated_work",
+        "4e_0001_operational_timeline",
+        "migrations/versions/4e_0002_delegated_work.py",
+    ),
 )
 
 
@@ -189,9 +343,12 @@ def _json(raw: bytes, *, label: str) -> dict[str, Any]:
         raise RuntimeError(f"managed B {label} is not canonical JSON") from error
     if not isinstance(value, dict):
         raise RuntimeError(f"managed B {label} must be an object")
-    canonical = json.dumps(
-        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
-    ).encode("utf-8") + b"\n"
+    canonical = (
+        json.dumps(
+            value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+        + b"\n"
+    )
     if raw != canonical:
         raise RuntimeError(f"managed B {label} is not canonical JSON")
     return value
@@ -270,9 +427,185 @@ def _pin_rows(
 
 
 def _projected_json(value: Mapping[str, Any]) -> bytes:
-    return json.dumps(
-        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
-    ).encode("utf-8") + b"\n"
+    return (
+        json.dumps(
+            value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+        + b"\n"
+    )
+
+
+def _validate_sanitized_cockpit_evidence(files: ArchiveFiles) -> tuple[int, str]:
+    """Validate the closed public projection without opening private receipts."""
+
+    raw = _file(
+        files,
+        _COCKPIT_PUBLIC_EVIDENCE_PATH,
+        label="sanitized cockpit evidence",
+    )
+    value = _json(raw, label="sanitized cockpit evidence")
+    _exact_keys(
+        value,
+        {
+            "claims",
+            "containsRawData",
+            "contract",
+            "coreCases",
+            "dataClassification",
+            "generatedOn",
+            "nonClaims",
+            "schemaVersion",
+        },
+        label="sanitized cockpit evidence",
+    )
+    if (
+        value.get("contract") != "EvaCockpitSanitizedEvidence/v1"
+        or value.get("schemaVersion") != 1
+        or value.get("dataClassification") != "sanitized_projection"
+        or value.get("containsRawData") is not False
+        or value.get("generatedOn") != "2026-08-26"
+        or value.get("nonClaims") != list(_SANITIZED_COCKPIT_NONCLAIMS)
+    ):
+        raise RuntimeError("managed B sanitized cockpit evidence header differs")
+
+    claims = value.get("claims")
+    if not isinstance(claims, list) or len(claims) != len(_SANITIZED_COCKPIT_CLAIMS):
+        raise RuntimeError("managed B sanitized cockpit claims are invalid")
+    actual_claims: list[str] = []
+    for claim in claims:
+        if not isinstance(claim, dict):
+            raise RuntimeError("managed B sanitized cockpit claim is invalid")
+        _exact_keys(
+            claim,
+            {"claimId", "facts", "sourceReceiptSha256", "state"},
+            label="sanitized cockpit claim",
+        )
+        claim_id = claim.get("claimId")
+        facts = claim.get("facts")
+        digests = claim.get("sourceReceiptSha256")
+        if (
+            not isinstance(claim_id, str)
+            or claim_id not in _SANITIZED_COCKPIT_CLAIMS
+            or claim.get("state") != _SANITIZED_COCKPIT_CLAIMS[claim_id][0]
+            or facts != list(_SANITIZED_COCKPIT_CLAIMS[claim_id][1])
+            or not isinstance(digests, list)
+            or not digests
+            or any(
+                not isinstance(digest, str) or not _SHA256.fullmatch(digest)
+                for digest in digests
+            )
+            or digests != sorted(set(digests))
+        ):
+            raise RuntimeError("managed B sanitized cockpit claim is invalid")
+        actual_claims.append(claim_id)
+    if actual_claims != sorted(_SANITIZED_COCKPIT_CLAIMS):
+        raise RuntimeError(
+            "managed B sanitized cockpit claims must be unique and sorted"
+        )
+
+    cases = value.get("coreCases")
+    if not isinstance(cases, list) or len(cases) != len(_SANITIZED_CORE_CASES):
+        raise RuntimeError("managed B sanitized core cases are invalid")
+    actual_cases: list[str] = []
+    for case in cases:
+        if not isinstance(case, dict):
+            raise RuntimeError("managed B sanitized core case is invalid")
+        _exact_keys(
+            case,
+            {"caseId", "criticalFailureCount", "sourceReceiptSha256", "status"},
+            label="sanitized core case",
+        )
+        case_id = case.get("caseId")
+        digests = case.get("sourceReceiptSha256")
+        if (
+            not isinstance(case_id, str)
+            or case_id not in _SANITIZED_CORE_CASES
+            or case.get("status") != "passed_live_b"
+            or case.get("criticalFailureCount") != 0
+            or not isinstance(digests, list)
+            or not digests
+            or any(
+                not isinstance(digest, str) or not _SHA256.fullmatch(digest)
+                for digest in digests
+            )
+            or digests != sorted(set(digests))
+        ):
+            raise RuntimeError("managed B sanitized core case is invalid")
+        actual_cases.append(case_id)
+    if tuple(actual_cases) != _SANITIZED_CORE_CASES:
+        raise RuntimeError("managed B sanitized core cases must be unique and sorted")
+    return len(actual_cases), _sha256(raw)
+
+
+def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
+    """Bind every live/tested cockpit label to exact, reopenable archive bytes."""
+
+    raw = _file(files, _COCKPIT_EVIDENCE_PATH, label="cockpit evidence index")
+    value = _json(raw, label="cockpit evidence index")
+    _exact_keys(
+        value,
+        {"contract", "entries", "nonClaims", "schemaVersion", "status", "updatedOn"},
+        label="cockpit evidence index",
+    )
+    entries = value.get("entries")
+    if (
+        value.get("contract") != "EvaCockpitEvidenceIndex/v1"
+        or value.get("schemaVersion") != 1
+        or value.get("status") != "release_bound_projection"
+        or value.get("updatedOn") != "2026-08-26"
+        or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
+        or not isinstance(entries, list)
+        or len(entries) != len(_COCKPIT_EVIDENCE_SOURCES)
+    ):
+        raise RuntimeError("managed B cockpit evidence index is invalid")
+    actual_claims: list[str] = []
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise RuntimeError("managed B cockpit evidence entry is invalid")
+        _exact_keys(
+            entry,
+            {"claimId", "claimState", "claimSummary", "sources"},
+            label="cockpit evidence entry",
+        )
+        claim_id = entry.get("claimId")
+        summary = entry.get("claimSummary")
+        rows = entry.get("sources")
+        if (
+            not isinstance(claim_id, str)
+            or claim_id not in _COCKPIT_EVIDENCE_SOURCES
+            or entry.get("claimState") != _COCKPIT_EVIDENCE_STATES[claim_id]
+            or not isinstance(summary, str)
+            or not 1 <= len(summary) <= 300
+            or not isinstance(rows, list)
+            or not rows
+        ):
+            raise RuntimeError("managed B cockpit evidence entry is invalid")
+        actual_claims.append(claim_id)
+        actual_sources: list[str] = []
+        for row in rows:
+            if not isinstance(row, dict):
+                raise RuntimeError("managed B cockpit evidence source is invalid")
+            _exact_keys(row, {"path", "sha256"}, label="cockpit evidence source")
+            path = _path(row.get("path"), label="cockpit evidence source")
+            if _sha256(_file(files, path, label=path)) != _digest(
+                row.get("sha256"), label="cockpit evidence source"
+            ):
+                raise RuntimeError("managed B cockpit evidence source differs")
+            actual_sources.append(path)
+        if tuple(actual_sources) != _COCKPIT_EVIDENCE_SOURCES[claim_id]:
+            raise RuntimeError("managed B cockpit evidence source set differs")
+    if actual_claims != sorted(_COCKPIT_EVIDENCE_SOURCES):
+        raise RuntimeError(
+            "managed B cockpit evidence claims must be unique and sorted"
+        )
+
+    core_live_cases, sanitized_sha256 = _validate_sanitized_cockpit_evidence(files)
+    return {
+        "cockpit_evidence_claim_count": len(actual_claims),
+        "cockpit_evidence_sha256": _sha256(raw),
+        "cockpit_sanitized_evidence_sha256": sanitized_sha256,
+        "core_live_case_count": core_live_cases,
+    }
 
 
 def _validate_registry(
@@ -295,9 +628,7 @@ def _validate_registry(
     expected_manifest = _digest(
         authority["currentManifestSha256"], label="current manifest"
     )
-    expected_corpus = _digest(
-        authority["currentCorpusSha256"], label="current corpus"
-    )
+    expected_corpus = _digest(authority["currentCorpusSha256"], label="current corpus")
     expected_profile = _digest(
         authority["currentProfileSha256"], label="current profile"
     )
@@ -332,8 +663,7 @@ def _validate_registry(
         schema = _json(schema_raw, label=path)
         if (
             _sha256(schema_raw) != digest
-            or schema.get("properties", {}).get("contract", {}).get("const")
-            != contract
+            or schema.get("properties", {}).get("contract", {}).get("const") != contract
         ):
             raise RuntimeError(f"managed B contract schema differs: {contract}")
     expected_schema_paths = {
@@ -408,9 +738,7 @@ def _validate_registry(
         if case is None or case.get("contract") != contract:
             raise RuntimeError("managed B historical 4D corpus projection differs")
     for case_id, case in case_by_id.items():
-        if case.get("encoding") != "utf8" or not isinstance(
-            case.get("wireUtf8"), str
-        ):
+        if case.get("encoding") != "utf8" or not isinstance(case.get("wireUtf8"), str):
             continue
         try:
             payload = json.loads(case["wireUtf8"])
@@ -420,7 +748,9 @@ def _validate_registry(
             removed_cases.add(case_id)
     projected_corpus = copy.deepcopy(corpus)
     projected_corpus["cases"] = [
-        case for case in projected_corpus["cases"] if case["caseId"] not in removed_cases
+        case
+        for case in projected_corpus["cases"]
+        if case["caseId"] not in removed_cases
     ]
     if _sha256(_projected_json(projected_corpus)) != historical_corpus_sha:
         raise RuntimeError("managed B historical 4D corpus projection differs")
@@ -474,7 +804,9 @@ def _validate_portable_v1_contract_bundle(
     ):
         raise RuntimeError("managed B portable v1 contract count is invalid")
 
-    manifest_raw = _file(files, _PORTABLE_V1_MANIFEST_PATH, label="portable v1 manifest")
+    manifest_raw = _file(
+        files, _PORTABLE_V1_MANIFEST_PATH, label="portable v1 manifest"
+    )
     profile_raw = _file(files, _PORTABLE_V1_PROFILE_PATH, label="portable v1 profile")
     if (
         _sha256(manifest_raw) != expected_manifest_sha
@@ -509,8 +841,7 @@ def _validate_portable_v1_contract_bundle(
         if (
             _sha256(schema_raw) != digest
             or schema_raw != _file(files, current_path, label=current_path)
-            or schema.get("properties", {}).get("contract", {}).get("const")
-            != contract
+            or schema.get("properties", {}).get("contract", {}).get("const") != contract
         ):
             raise RuntimeError(
                 f"managed B portable v1 contract schema differs: {contract}"
@@ -548,7 +879,9 @@ def _assignment(module: ast.Module, name: str) -> object:
             try:
                 found.append(ast.literal_eval(value))
             except (ValueError, TypeError) as error:
-                raise RuntimeError("managed B migration metadata is not literal") from error
+                raise RuntimeError(
+                    "managed B migration metadata is not literal"
+                ) from error
     if len(found) != 1:
         raise RuntimeError(f"managed B migration {name} is not unique")
     return found[0]
@@ -690,12 +1023,14 @@ def _validate_static_archive_inputs(
     registry_receipt = _validate_registry(files, registry)
     portable_v1_receipt = _validate_portable_v1_contract_bundle(files, registry)
     migration_head = _validate_migrations(files, authority["migrationAuthority"])
+    cockpit_evidence = _validate_cockpit_evidence(files)
     return {
         "authority_sha256": _sha256(authority_raw),
         "contract": "EvaManagedBReleaseInputReceipt/v1",
         "dependency_alignment": alignment,
         **registry_receipt,
         **portable_v1_receipt,
+        **cockpit_evidence,
         "migration_head": migration_head,
         "network_used": False,
         "nonclaims": list(_NONCLAIMS),

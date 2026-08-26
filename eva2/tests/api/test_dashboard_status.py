@@ -1,11 +1,20 @@
 from __future__ import annotations
 
+import hashlib
+import json
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
 from eva.application.conversation import load_current_identity_pack
 from eva.contracts.canonical_json import canonical_sha256
+
+
+ROOT = Path(__file__).resolve().parents[2]
+EVIDENCE_INDEX_PATH = ROOT / "release/eva-cockpit-evidence-index-v1.json"
+PUBLIC_EVIDENCE_PATH = ROOT / "evidence/public/eva-cockpit-sanitized-evidence-v1.json"
 
 
 class _Runtime:
@@ -64,6 +73,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
     assert "async function loadProgress" in response.text
     assert "statusPayload" in response.text
     assert "identityPayload" in response.text
+    assert "pack.state!=='current'" in response.text
     assert "progressPayload" in response.text
     assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
@@ -72,9 +82,7 @@ def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> No
 
 
 def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> None:
-    response = TestClient(create_app(_Runtime())).get(
-        "/internal/v1/dashboard/progress"
-    )
+    response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/progress")
 
     assert response.status_code == 200
     assert response.headers["cache-control"] == "no-store"
@@ -97,8 +105,79 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert capability_by_id["runtime-subagents"]["state"] == "open"
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "selected"
+    for item in [*payload["capabilities"], *payload["dependencies"]]:
+        if item["state"] in {"live", "tested"}:
+            assert item["evidence"].startswith(
+                "release/eva-cockpit-evidence-index-v1.json#"
+            )
     for secret_word in ("password", "token", "dsn", "prompt"):
         assert secret_word not in response.text.lower()
+
+
+def test_dashboard_live_and_tested_claims_have_exact_reopenable_evidence() -> None:
+    payload = (
+        TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/progress").json()
+    )
+    evidence = json.loads(EVIDENCE_INDEX_PATH.read_bytes())
+    entries = {entry["claimId"]: entry for entry in evidence["entries"]}
+    expected: dict[str, str] = {}
+    for prefix, items, id_key in (
+        ("capability", payload["capabilities"], "id"),
+        ("dependency", payload["dependencies"], "name"),
+    ):
+        for item in items:
+            if item["state"] not in {"live", "tested"}:
+                continue
+            slug = (
+                item[id_key]
+                if id_key == "id"
+                else item[id_key].lower().replace(" ", "-")
+            )
+            expected[f"{prefix}/{slug}"] = item["state"]
+    assert {claim_id: entry["claimState"] for claim_id, entry in entries.items()} == (
+        expected
+    )
+    for claim_id, entry in entries.items():
+        assert entry["sources"], claim_id
+        assert [source["path"] for source in entry["sources"]] == sorted(
+            source["path"] for source in entry["sources"]
+        )
+        for source in entry["sources"]:
+            path = ROOT / source["path"]
+            assert path.is_file(), (claim_id, source["path"])
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == source["sha256"]
+
+
+def test_dashboard_public_evidence_is_a_closed_sanitized_projection() -> None:
+    projection = json.loads(PUBLIC_EVIDENCE_PATH.read_bytes())
+
+    assert set(projection) == {
+        "claims",
+        "containsRawData",
+        "contract",
+        "coreCases",
+        "dataClassification",
+        "generatedOn",
+        "nonClaims",
+        "schemaVersion",
+    }
+    assert projection["contract"] == "EvaCockpitSanitizedEvidence/v1"
+    assert projection["dataClassification"] == "sanitized_projection"
+    assert projection["containsRawData"] is False
+    for claim in projection["claims"]:
+        assert set(claim) == {
+            "claimId",
+            "facts",
+            "sourceReceiptSha256",
+            "state",
+        }
+    for case in projection["coreCases"]:
+        assert set(case) == {
+            "caseId",
+            "criticalFailureCount",
+            "sourceReceiptSha256",
+            "status",
+        }
 
 
 def test_dashboard_identity_exposes_only_verified_operator_fields() -> None:
@@ -180,7 +259,9 @@ def _identity_draft() -> dict[str, object]:
     }
 
 
-def test_dashboard_identity_diff_previews_a_bound_staged_draft_without_storing_it() -> None:
+def test_dashboard_identity_diff_previews_a_bound_staged_draft_without_storing_it() -> (
+    None
+):
     identity = load_current_identity_pack()
 
     response = TestClient(create_app(_Runtime())).post(
