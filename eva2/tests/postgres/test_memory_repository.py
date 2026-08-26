@@ -32,6 +32,11 @@ from eva.application.memory import (
     RecallCurrentFacts,
     RememberFact,
 )
+from eva.application.legacy_memory_trial import (
+    LegacyMemoryRecord,
+    LegacyMemoryTrialSpec,
+    build_legacy_memory_trial,
+)
 from eva.application.memory_audience import MemoryAudience
 from eva.application.presence import PresenceTurn, build_presence_context
 from eva.contracts.canonical_json import canonical_sha256
@@ -464,3 +469,53 @@ def test_real_postgres_remember_correct_recall_and_restart(
             (FACT_1, "superseded", 2),
             (FACT_2, "active", 1),
         }
+
+
+def test_real_postgres_legacy_memory_trial_is_restricted_and_not_recalled(
+    memory_engine: Engine,
+) -> None:
+    tenant_id, installation_id, principal_id, evidence_id = _scope()
+    command = build_legacy_memory_trial(
+        (
+            LegacyMemoryRecord(
+                legacy_memory_id=77,
+                occurred_at="2026-06-12T13:12:22.222Z",
+                person_label_sha256="b" * 64,
+                content="Oude herinnering uitsluitend voor review.",
+                category_sha256="c" * 64,
+                archived=False,
+            ),
+        ),
+        LegacyMemoryTrialSpec(
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+            target_principal_id=principal_id,
+            provenance_evidence_id=evidence_id,
+            legacy_source_sha256="a" * 64,
+            selected_person_label_sha256="b" * 64,
+            imported_at=NOW,
+            retention_until=RETENTION,
+        ),
+    )[0]
+
+    with memory_engine.begin() as connection:
+        connection.execute(sa.text("SET CONSTRAINTS ALL DEFERRED"))
+        connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+        rows = PostgresNoor4DRepository(connection, tenant_id, installation_id)
+        for fact_id in BASE_FACTS:
+            assert rows.upsert_exact(_exact_fact(fact_id)).disposition == "inserted"
+        memory = MemoryAuthority(
+            PostgresMemoryRepository(connection, tenant_id, installation_id)
+        )
+        assert memory.remember(command).disposition == "inserted"
+        review_scope_query = replace(
+            _recall_query(tenant_id, installation_id, principal_id, text="oude"),
+            scope=command.scope,
+        )
+        assert memory.recall_for_presence(review_scope_query).confirmed_facts == ()
+        stored = connection.execute(
+            sa.text(
+                "SELECT source_kind, trust, privacy_class FROM eva_memory.source_events"
+            )
+        ).one()
+        assert stored == ("legacy_unverified", "legacy_unverified", "restricted")

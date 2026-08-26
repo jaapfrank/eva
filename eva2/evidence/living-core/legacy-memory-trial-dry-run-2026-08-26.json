@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "receipt_type": "Eva2LegacyMemoryTrialDryRun/v1",
+  "created_at": "2026-08-26T12:00:00Z",
+  "status": "succeeded_without_persistent_write",
+  "source": {
+    "kind": "old_eva_sqlite_automatic_backup",
+    "path_class": "private_local_backup",
+    "snapshot": "2026-08-26-00-44-42",
+    "sha256": "4748467c7e9eff465c290e2c0b6580be39341789c44aa50448c5f261101813f3",
+    "active_memory_count": 1212,
+    "archived_memory_count": 1975
+  },
+  "selection": {
+    "row_count": 25,
+    "maximum_allowed_rows": 50,
+    "legacy_person_label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_person_label_persisted": false,
+    "raw_memory_content_persisted": false
+  },
+  "conversion": {
+    "commands_sha256": "27ffa3d263ae85e60692ceba594f96a9dc4e96223455c8acfad45bde94669033",
+    "source_kind": "legacy_unverified",
+    "trust": "legacy_unverified",
+    "privacy_class": "restricted",
+    "scope_kind": "legacy_memory_trial",
+    "ordinary_conversation_recall": "excluded"
+  },
+  "writes": {
+    "old_eva": 0,
+    "eva2_postgresql": 0,
+    "hindsight": 0,
+    "artifacts_with_raw_memory": 0
+  },
+  "disposable_postgresql_check": {
+    "status": "passed",
+    "test": "test_real_postgres_legacy_memory_trial_is_restricted_and_not_recalled",
+    "assertions": [
+      "A legacy_unverified row can be durably written through Eva2's normal memory authority.",
+      "The stored source stays restricted and legacy_unverified.",
+      "A normal Eva2 recall returns no such row."
+    ],
+    "cleanup": "Temporary PostgreSQL container and database were removed after the test."
+  },
+  "nonclaims": [
+    "No old-Eva memory is active in Eva2.",
+    "No old-Eva person label has been mapped to an Eva2 person.",
+    "The conversion does not confirm the truth, consent, or current validity of a legacy memory.",
+    "The dry run does not modify old Eva, Eva2, Hindsight, Telegram, or a production database."
+  ],
+  "next_gate": "Owner confirms one legacy person-label to Eva2-principal mapping before a disposable PostgreSQL import trial."
+}
