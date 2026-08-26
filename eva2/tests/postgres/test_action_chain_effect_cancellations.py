@@ -27,6 +27,9 @@ from eva.adapters.postgres.scope import set_local_scope
 from eva.operations.action_chain_effect_authorizer import (
     PostgresActionChainEffectAuthorizer,
 )
+from eva.operations.action_chain_effect_dispatcher import (
+    PostgresActionChainEffectDispatcher,
+)
 
 from test_action_chain_effect_authorizer import (
     _prepared_effect,
@@ -157,7 +160,7 @@ def test_pre_dispatch_cancellation_rejects_another_owner(
     ).steps[1].state == "running"
 
 
-def test_cancellation_reports_already_dispatched_when_authorization_won(
+def test_cancellation_wins_after_authorization_before_provider_call(
     action_chain_engine: Engine,
 ) -> None:
     scope, chain, catalog, _authority, prepared = _prepared_effect(action_chain_engine)
@@ -179,11 +182,39 @@ def test_cancellation_reports_already_dispatched_when_authorization_won(
         principal_binding_id=principal_binding_id,
         now=NOW + timedelta(seconds=10),
     )
-    assert result.disposition == "already_dispatched"
+    assert result.disposition == "cancelled"
+    assert result.intent.state == "cancelled"
     assert _effect_counts(action_chain_engine, scope, chain.plan_id)["attempts"] == 1
+    reloaded = PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+    assert [step.state for step in reloaded.steps] == ["succeeded", "cancelled"]
+
+    with pytest.raises(ActionChainEffectConflict, match="prepared effect step is no longer running"):
+        PostgresActionChainEffectDispatcher(
+            action_chain_engine, scope, provider_registry=registry
+        ).claim_provider_call(
+            effect_intent_id,
+            live_catalog=catalog,
+            now=NOW + timedelta(seconds=11),
+        )
+    with action_chain_engine.begin() as connection:
+        connection.execute(sa.text("SET LOCAL ROLE eva_runtime"))
+        set_local_scope(
+            connection,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        provider_call_starts = connection.scalar(
+            sa.select(sa.func.count())
+            .select_from(operational_events)
+            .where(
+                operational_events.c.event_type
+                == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED"
+            )
+        )
+    assert provider_call_starts == 0
 
 
-def test_cancellation_and_authorization_have_one_winner(
+def test_cancellation_can_win_immediately_after_authorization(
     action_chain_engine: Engine,
 ) -> None:
     scope, chain, catalog, _authority, prepared = _prepared_effect(action_chain_engine)
@@ -224,9 +255,13 @@ def test_cancellation_and_authorization_have_one_winner(
     counts = _effect_counts(action_chain_engine, scope, chain.plan_id)
     assert (cancel_result, authorize_result) in {
         ("cancelled", "rejected_after_cancel"),
-        ("already_dispatched", "authorized"),
+        ("cancelled", "authorized"),
     }
-    assert counts["attempts"] == (0 if cancel_result == "cancelled" else 1)
+    assert counts["attempts"] == (0 if authorize_result == "rejected_after_cancel" else 1)
+    if cancel_result == "cancelled":
+        assert PostgresActionChainLedger(action_chain_engine, scope).load(
+            chain.plan_id
+        ).steps[1].state == "cancelled"
 
 
 def test_cancellation_rejects_tampered_owner_context(

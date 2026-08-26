@@ -132,7 +132,7 @@ class PostgresActionChainEffectDispatcher:
                     effect_intents.c.installation_id
                     == self._scope_value.installation_id,
                     effect_intents.c.effect_intent_id == effect_intent_id,
-                )
+                ).with_for_update()
             ).one()
             step_row = connection.execute(
                 sa.select(plan_steps)

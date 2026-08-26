@@ -600,7 +600,7 @@ def _effect_history_event_data(
     current_event_data: dict[str, Any],
     corrupt: type[RuntimeError],
 ) -> dict[str, Any]:
-    if intent.state != "verified":
+    if intent.state not in {"verified", "cancelled"}:
         return current_event_data
     operation_id = action_chain_step_operation_id(plan, logical_step_key)
     rows = connection.execute(
@@ -613,10 +613,20 @@ def _effect_history_event_data(
         .order_by(operational_events.c.sequence.desc())
         .limit(2)
     ).all()
+    expected_latest = (
+        "STATE_VERIFIED"
+        if intent.state == "verified"
+        else "ACTION_CHAIN_EFFECT_CANCELLED"
+    )
+    expected_previous = (
+        "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED"
+        if intent.state == "verified"
+        else "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
+    )
     if (
         len(rows) != 2
-        or rows[0].event_type != "STATE_VERIFIED"
-        or rows[1].event_type != "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED"
+        or rows[0].event_type != expected_latest
+        or rows[1].event_type != expected_previous
         or not isinstance(rows[1].payload.get("data"), dict)
     ):
         raise corrupt("verified effect provider history differs")

@@ -42,7 +42,7 @@ from eva.application.action_chain import (
     validate_action_chain_requests,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.execution import EffectIntent
+from eva.contracts.execution import EffectAttempt, EffectIntent
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelAttempt, ModelDecision, ValidatedPlan
 
@@ -973,7 +973,7 @@ def _validate_action_chain_effect_cancellation(
     root_current: dict[str, Any],
     corrupt: type[RuntimeError],
 ) -> dict[str, Any] | None:
-    """Accept exactly one owner-bound pre-authorization cancellation state."""
+    """Accept exactly one owner-bound cancellation before provider I/O."""
 
     cancelled_rows = [row for row in step_rows if row.state == "cancelled"]
     if not cancelled_rows:
@@ -1028,7 +1028,9 @@ def _validate_action_chain_effect_cancellation(
         "binding_subject_sha256",
         "binding_revision",
         "binding_verified_at",
+        "cancellation_stage",
         "contract",
+        "effect_attempt_id",
         "effect_intent_id",
         "effect_intent_payload_sha256",
         "logical_step_key",
@@ -1065,22 +1067,26 @@ def _validate_action_chain_effect_cancellation(
         _parse_timestamp(str(child_context["binding_verified_at"]))
     except (TypeError, ValueError) as error:
         raise corrupt("cancelled action-chain owner context is invalid") from error
-    blocked_history = connection.scalar(
+    provider_call_count = connection.scalar(
         sa.select(sa.func.count())
         .select_from(operational_events)
         .where(
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
             operational_events.c.thread_id == operation_id,
-            operational_events.c.event_type.in_(
-                (
-                    "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
-                    "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
-                )
-            ),
+            operational_events.c.event_type == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
         )
     )
-    external_count = sum(
+    attempts = connection.execute(
+        sa.select(effect_attempts)
+        .where(
+            effect_attempts.c.tenant_id == scope.tenant_id,
+            effect_attempts.c.installation_id == scope.installation_id,
+            effect_attempts.c.effect_intent_id == step_row.effect_intent_id,
+        )
+        .order_by(effect_attempts.c.ordinal)
+    ).all()
+    receipt_and_readback_count = sum(
         int(
             connection.scalar(
                 sa.select(sa.func.count())
@@ -1092,8 +1098,32 @@ def _validate_action_chain_effect_cancellation(
                 )
             )
         )
-        for table in (effect_attempts, effect_receipts, effect_readbacks)
+        for table in (effect_receipts, effect_readbacks)
     )
+    prepared_cancellation = (
+        child_context.get("cancellation_stage") == "prepared"
+        and child_context.get("effect_attempt_id") is None
+        and not attempts
+        and int(intent_row.revision) == 2
+    )
+    authorized_cancellation = False
+    if (
+        child_context.get("cancellation_stage") == "dispatch_authorized"
+        and len(attempts) == 1
+        and child_context.get("effect_attempt_id") == str(attempts[0].effect_attempt_id)
+        and int(intent_row.revision) == 3
+    ):
+        try:
+            authorized_attempt = EffectAttempt.model_validate(attempts[0].payload)
+        except ValueError as error:
+            raise corrupt("cancelled action-chain attempt is invalid") from error
+        authorized_cancellation = (
+            authorized_attempt.state == "dispatch_authorized"
+            and attempts[0].state == "dispatch_authorized"
+            and int(attempts[0].revision) == 1
+            and attempts[0].response_sha256 is None
+            and attempts[0].transport_evidence_id is None
+        )
     expected_root = {
         "attention": attention.model_dump(mode="json"),
         "attention_payload_sha256": canonical_sha256(attention),
@@ -1102,8 +1132,9 @@ def _validate_action_chain_effect_cancellation(
         "transition_context": child_context,
     }
     if (
-        blocked_history
-        or external_count
+        int(provider_call_count)
+        or receipt_and_readback_count
+        or not (prepared_cancellation or authorized_cancellation)
         or root_current != expected_root
     ):
         raise corrupt("cancelled action-chain authority or history differs")

@@ -110,6 +110,7 @@ class ReconstructedActionChainEffectState:
     attempt: EffectAttempt
     terminal: bool
     verified: bool = False
+    cancelled_before_call: bool = False
 
 
 def validate_action_chain_effect_history(
@@ -255,6 +256,20 @@ def validate_action_chain_effect_history(
             ):
                 raise corrupt("verified effect timeline binding differs")
         return
+    if state.cancelled_before_call:
+        _validate_cancelled_before_call_history(
+            connection,
+            scope,
+            operation_id=operation_id,
+            authorized_intent=state.intent,
+            intent_row=intent_row,
+            attempt_row=attempt_row,
+            expected_authorization_data=expected_authorization_data,
+            latest=latest,
+            checkpoint=checkpoint,
+            corrupt=corrupt,
+        )
+        return
     current_event_data = latest.payload.get("data")
     if not isinstance(current_event_data, dict):
         raise corrupt("authorized effect timeline data is invalid")
@@ -296,6 +311,51 @@ def validate_action_chain_effect_history(
         valid_timeline = False
     if not valid_timeline:
         raise corrupt("authorized effect timeline binding differs")
+
+
+def _validate_cancelled_before_call_history(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    operation_id: UUID,
+    authorized_intent: EffectIntent,
+    intent_row: sa.Row,
+    attempt_row: sa.Row,
+    expected_authorization_data: dict[str, object],
+    latest: sa.Row,
+    checkpoint: sa.Row,
+    corrupt: type[RuntimeError],
+) -> None:
+    """Prove owner cancellation happened after permit, before provider I/O."""
+
+    previous = connection.execute(
+        sa.select(operational_events).where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == operation_id,
+            operational_events.c.sequence == int(latest.sequence) - 1,
+        )
+    ).one_or_none()
+    try:
+        cancelled_intent = EffectIntent.model_validate(intent_row.payload)
+    except ValueError as error:
+        raise corrupt("cancelled effect intent is invalid") from error
+    if (
+        cancelled_intent
+        != authorized_intent.model_copy(update={"state": "cancelled"})
+        or intent_row.state != "cancelled"
+        or int(intent_row.revision) != 3
+        or intent_row.updated_at != latest.occurred_at
+        or previous is None
+        or previous.event_type != "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
+        or previous.occurred_at != attempt_row.created_at
+        or previous.payload.get("data") != expected_authorization_data
+        or latest.event_type != "ACTION_CHAIN_EFFECT_CANCELLED"
+        or checkpoint.phase != "action_chain_effect_cancelled"
+        or checkpoint.status != "completed"
+        or checkpoint.updated_at != latest.occurred_at
+    ):
+        raise corrupt("cancelled-before-call effect history differs")
 
 
 def validate_action_chain_effect_terminal(

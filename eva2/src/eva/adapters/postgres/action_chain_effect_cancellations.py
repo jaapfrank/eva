@@ -1,8 +1,9 @@
-"""Owner-bound cancellation before an action-chain effect is dispatched.
+"""Owner-bound cancellation before an action-chain effect reaches provider I/O.
 
 This is intentionally narrower than stopping a running browser.  It can only
-win while no provider attempt exists, so a successful cancellation proves that
-no provider-call-start marker or connector process could have been created.
+win while no provider-call-start marker exists.  Authorization may already
+have created one sealed attempt, but a successful cancellation still proves
+that no connector process or external provider call could have been created.
 """
 
 from __future__ import annotations
@@ -26,12 +27,13 @@ from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_checkpoints,
+    operational_events,
     transition_timeline_thread,
 )
 from eva.adapters.postgres.scope import set_local_scope
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.execution import EffectIntent
+from eva.contracts.execution import EffectAttempt, EffectIntent
 
 
 effect_intents = metadata.tables["eva_effects.effect_intents"]
@@ -63,7 +65,7 @@ class ActionChainEffectOwner:
 
 
 class PostgresActionChainEffectCanceller:
-    """Cancel a prepared effect under the same locks as dispatch authorization."""
+    """Cancel a prepared or authorized-but-not-started effect under dispatch locks."""
 
     def __init__(
         self,
@@ -87,7 +89,7 @@ class PostgresActionChainEffectCanceller:
         principal_binding_id: UUID,
         now: datetime,
     ) -> CancelledActionChainEffect:
-        """Cancel only before authorization creates the first provider attempt."""
+        """Cancel only before the irreversible provider-call-start marker."""
 
         _require_utc_second(now, "now")
         with self._engine.begin() as connection:
@@ -134,40 +136,62 @@ class PostgresActionChainEffectCanceller:
                 )
             if intent.state == "cancelled":
                 return CancelledActionChainEffect("already_cancelled", intent)
-            if (
-                intent.state != "prepared"
-                or intent_row.state != "prepared"
-                or int(intent_row.revision) != 1
-                or step_row.state != "running"
-            ):
-                return CancelledActionChainEffect("already_dispatched", intent)
-            attempt_count = connection.scalar(
-                sa.select(sa.func.count())
-                .select_from(effect_attempts)
+            attempts = connection.execute(
+                sa.select(effect_attempts)
                 .where(
                     effect_attempts.c.tenant_id == self._scope_value.tenant_id,
                     effect_attempts.c.installation_id == self._scope_value.installation_id,
                     effect_attempts.c.effect_intent_id == effect_intent_id,
                 )
+                .order_by(effect_attempts.c.ordinal)
+                .with_for_update()
+            ).all()
+            cancellation_stage = _cancellation_stage(
+                intent=intent,
+                intent_row=intent_row,
+                step_row=step_row,
+                attempts=attempts,
             )
-            if attempt_count:
+            if cancellation_stage is None:
+                return CancelledActionChainEffect("already_dispatched", intent)
+            operation_id = action_chain_step_operation_id(
+                chain.plan, step_row.logical_step_key
+            )
+            latest = connection.execute(
+                sa.select(operational_events)
+                .where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.thread_id == operation_id,
+                )
+                .order_by(operational_events.c.sequence.desc())
+                .limit(1)
+            ).one()
+            expected_event = (
+                "ACTION_CHAIN_EFFECT_INTENT_PREPARED"
+                if cancellation_stage == "prepared"
+                else "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED"
+            )
+            if latest.event_type != expected_event:
                 return CancelledActionChainEffect("already_dispatched", intent)
 
             cancelled = intent.model_copy(update={"state": "cancelled"})
+            expected_revision = int(intent_row.revision)
             intent_update = connection.execute(
                 sa.update(effect_intents)
                 .where(
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
                     effect_intents.c.installation_id == self._scope_value.installation_id,
                     effect_intents.c.effect_intent_id == effect_intent_id,
-                    effect_intents.c.state == "prepared",
-                    effect_intents.c.revision == 1,
+                    effect_intents.c.state == intent_row.state,
+                    effect_intents.c.revision == expected_revision,
                 )
                 .values(
                     state="cancelled",
                     payload=cancelled.model_dump(mode="json"),
                     payload_sha256=bytes.fromhex(canonical_sha256(cancelled)),
-                    revision=2,
+                    revision=expected_revision + 1,
                     updated_at=now,
                 )
             )
@@ -190,9 +214,6 @@ class PostgresActionChainEffectCanceller:
             if intent_update.rowcount != 1 or step_update.rowcount != 1:
                 raise ActionChainEffectCancellationConflict("effect cancellation raced")
 
-            operation_id = action_chain_step_operation_id(
-                chain.plan, step_row.logical_step_key
-            )
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
@@ -212,6 +233,12 @@ class PostgresActionChainEffectCanceller:
                     cancellation_owner.binding_verified_at
                 ),
                 "contract": "ActionChainEffectCancellation/v1",
+                "cancellation_stage": cancellation_stage,
+                "effect_attempt_id": (
+                    None
+                    if not attempts
+                    else str(attempts[0].effect_attempt_id)
+                ),
                 "effect_intent_id": str(effect_intent_id),
                 "effect_intent_payload_sha256": canonical_sha256(cancelled),
                 "logical_step_key": step_row.logical_step_key,
@@ -291,6 +318,45 @@ class PostgresActionChainEffectCanceller:
             tenant_id=str(self._scope_value.tenant_id),
             installation_id=str(self._scope_value.installation_id),
         )
+
+
+def _cancellation_stage(
+    *,
+    intent: EffectIntent,
+    intent_row: sa.Row,
+    step_row: sa.Row,
+    attempts: list[sa.Row],
+) -> Literal["prepared", "dispatch_authorized"] | None:
+    """Recognize the only two states before the external-call point of no return."""
+
+    if step_row.state != "running":
+        return None
+    if (
+        intent.state == "prepared"
+        and intent_row.state == "prepared"
+        and int(intent_row.revision) == 1
+        and not attempts
+    ):
+        return "prepared"
+    if (
+        intent.state == "dispatch_authorized"
+        and intent_row.state == "dispatch_authorized"
+        and int(intent_row.revision) == 2
+        and len(attempts) == 1
+    ):
+        try:
+            attempt = EffectAttempt.model_validate(attempts[0].payload)
+        except ValueError:
+            return None
+        if (
+            attempt.state == "dispatch_authorized"
+            and attempts[0].state == "dispatch_authorized"
+            and int(attempts[0].revision) == 1
+            and attempts[0].response_sha256 is None
+            and attempts[0].transport_evidence_id is None
+        ):
+            return "dispatch_authorized"
+    return None
 
 
 def validate_action_chain_effect_owner(

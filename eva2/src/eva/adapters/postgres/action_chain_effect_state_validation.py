@@ -49,6 +49,10 @@ def reconstruct_action_chain_effect_state(
         attempt=authorized_attempt,
         terminal=stored_attempt.state != "dispatch_authorized",
         verified=intent.state == "verified",
+        cancelled_before_call=(
+            stored_attempt.state == "dispatch_authorized"
+            and intent.state == "cancelled"
+        ),
     )
 
 
@@ -62,6 +66,23 @@ def _effect_state_matches(
     external_counts: tuple[int, int],
 ) -> bool:
     if stored_attempt.state == "dispatch_authorized":
+        if intent.state == "cancelled":
+            return (
+                intent_row.state == "cancelled"
+                and int(intent_row.revision) == 3
+                and stored_attempt == authorized_attempt
+                and attempt_row.state == "dispatch_authorized"
+                and _optional_hash(attempt_row.dispatch_permit_sha256)
+                == authorized_attempt.dispatch_permit_sha256
+                and attempt_row.response_sha256 is None
+                and attempt_row.error_class == "none"
+                and attempt_row.transport_evidence_id is None
+                and bytes(attempt_row.payload_sha256).hex()
+                == canonical_sha256(authorized_attempt)
+                and int(attempt_row.revision) == 1
+                and attempt_row.created_at == attempt_row.updated_at
+                and not any(external_counts)
+            )
         return (
             intent.state == "dispatch_authorized"
             and intent_row.state == "dispatch_authorized"
