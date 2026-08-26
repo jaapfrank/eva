@@ -94,6 +94,18 @@ races (stop eerst of autorisatie eerst), replay, manipulatie en rollback. De
 onafhankelijke review is nog open; daarom is dit **getest**, niet als live
 browser- of Telegramproef geclaimd.
 
+Dezelfde stopgrens is daarna in checkpoint `6d32d96` door de bestaande,
+volledig geïsoleerde Chromiumproef gelopen. Vier scenario's zijn groen: één
+vaste klik met onafhankelijke server-readback, crash vóór klik, crash ná klik
+en de nieuwe stop ná autorisatie. In dat laatste geval telde de onafhankelijke
+testserver nul POSTs en nul toestandsovergangen; de browserworker kreeg geen
+callmateriaal.
+De browser had één intern netwerk, nul gepubliceerde poorten en geen internet-
+egress. Receipt:
+[`browser-a02-stop-before-call-2026-08-26.json`](evidence/living-core/browser-a02-stop-before-call-2026-08-26.json).
+Dit is nog steeds geen publieke site, account, download, overname, Telegram of
+B-deploy; onafhankelijke review blijft open.
+
 De Telegramproef heeft nu ook een **één-opdracht voorbereiding**: de operator
 geeft alleen account A's numerieke Telegram-ID op en voert de nieuwe
 `tools/prepare_telegram_test_config.py` als root uit. Die vraagt de aparte
