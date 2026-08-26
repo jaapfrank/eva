@@ -1,0 +1,34 @@
+{
+  "receipt_contract": "EvaPortableObjectCasMaterializationReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "a516938e1eba7ef50ba1401d4c998eebac361f3a",
+  "scope": "Synthetic sealed 4D fixture object, synthetic private target keyring and temporary target CAS only. No Eva1, live Eva, PostgreSQL, Hindsight, provider, connector, user archive or user object was read or changed.",
+  "checks": [
+    {
+      "name": "object source, target keyring and target CAS materializer",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827b:src python3 -m pytest -q -s tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py",
+      "result": "10 passed"
+    },
+    {
+      "name": "object CAS and envelope regression",
+      "command": "PYTHONPATH=/tmp/eva2-pynacl-probe-20260827b:src python3 -m pytest -q -s tests/operations/test_object_keyring.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py tests/objects/test_envelope.py tests/objects/test_cas.py",
+      "result": "42 passed"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_object_verifier.py src/eva/operations/portable_object_materializer.py tests/operations/test_portable_object_verifier.py tests/operations/test_portable_object_materializer.py",
+      "result": "passed"
+    }
+  ],
+  "proven": [
+    "A verified encrypted archive byte can be copied once into a new private target CAS and independently authenticated there.",
+    "A process restart after its durable target-local journal entry and before final placement resumes the exact prepared byte instead of making another copy.",
+    "A wrong target key stops before a target directory, journal or object byte is created."
+  ],
+  "not_proven": [
+    "No ObjectRef database row, source-key transfer, second-machine restore or deployment occurred.",
+    "The target-local journal is a CAS recovery authority only; it is not PostgreSQL selection authority.",
+    "The temporary PyNaCl test target is not a runtime installation and is removed after this proof.",
+    "The repository-wide package-boundary checker remains red for pre-existing unrelated import violations; these new modules add none."
+  ]
+}

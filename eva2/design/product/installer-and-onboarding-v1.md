@@ -86,6 +86,14 @@ uitsluitend de buildconstraint `linux/amd64`.
   verzegeld archief wordt daardoor niet onleesbaar. Dit is nog **geen**
   sleuteloverdracht, objectkopie, databaserecovery of tweede-machinebewijs; zie
   `evidence/living-core/portable-object-target-key-preflight-2026-08-27.json`.
+- Na die controle kan de ontvangende installatie het object nu ook één keer
+  veilig in haar eigen private opslag zetten. Eerst wordt een klein, gefsynct
+  herstelbewijs lokaal bewaard; na een crash hervat Eva precies die tijdelijke
+  byte of leest zij de al geplaatste byte opnieuw terug. Een verkeerd object of
+  een verkeerde key maakt geen doelmap, database-entry of tweede kopie. De
+  opslagroute schrijft bewust nog **geen** `ObjectRef` in PostgreSQL: een aparte
+  databasekoppeling moet straks alleen een voltooid opslagbewijs toelaten. Zie
+  `evidence/living-core/portable-object-cas-materialization-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
