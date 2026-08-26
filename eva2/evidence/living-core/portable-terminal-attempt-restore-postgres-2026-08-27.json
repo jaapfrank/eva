@@ -1,0 +1,34 @@
+{
+  "receipt_contract": "EvaPortableTerminalAttemptRestoreReceipt/v1",
+  "recorded_at": "2026-08-27T00:00:00Z",
+  "git_checkpoint": "82ea058d350e6a7834e1c8f537617b482d45cf98",
+  "scope": "One synthetic redacted terminal ReadAttempt/v1 and one synthetic redacted terminal EffectAttempt/v1 in a new automatically removed local PostgreSQL 16.13-alpine container. No Eva1 file, service, provider, credential, Home Assistant, Telegram, Hindsight or managed-B environment was read or changed.",
+  "checks": [
+    {
+      "name": "portable restore unit suite",
+      "command": "PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore.py tests/portable/test_portable_restore_connector.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py tests/portable/test_portable_restore_object_boundary.py tests/portable/test_portable_restore_boundary.py",
+      "result": "23 passed, 3 skipped"
+    },
+    {
+      "name": "lint",
+      "command": "ruff check src/eva/operations/portable_restore.py tests/portable/test_portable_restore_model.py tests/portable/test_portable_restore_read.py tests/portable/test_portable_restore_effect.py",
+      "result": "passed"
+    },
+    {
+      "name": "actual PostgreSQL terminal read and effect restore",
+      "environment": "new automatically removed PostgreSQL 16.13-alpine container and new disposable database",
+      "command": "EVA2_TEST_POSTGRES_DSN=<temporary disposable DSN> PYTHONPATH=src python3 -m pytest -q -s tests/portable/test_portable_restore_read.py::test_terminal_read_history_writes_to_real_postgres tests/portable/test_portable_restore_effect.py::test_terminal_effect_history_writes_to_real_postgres",
+      "result": "2 passed"
+    }
+  ],
+  "proven": [
+    "A valid redacted terminal read attempt writes to PostgreSQL as observed and keeps its result hash.",
+    "A valid redacted terminal effect attempt writes to PostgreSQL as provider_accepted and keeps its result hash and terminal error class.",
+    "Both restored rows replace the old credential descriptor with a deterministic non-secret marker, so neither can call a historical provider.",
+    "The tests roll back their schema and the disposable PostgreSQL database and container were removed after the proof."
+  ],
+  "not_proven": [
+    "No real provider, connector, credential, full archive, object-CAS transfer, second-machine restore, update, rollback or deployment was used.",
+    "Object CAS plus installation-key migration remains required before any ObjectRef can be restored."
+  ]
+}
