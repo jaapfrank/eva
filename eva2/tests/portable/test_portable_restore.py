@@ -242,7 +242,7 @@ def test_column_preserving_restore_prevalidates_then_writes_to_empty_target() ->
     )
 
 
-def test_column_preserving_restore_rejects_redaction_before_target_is_touched() -> None:
+def test_restore_rejects_an_invalid_connector_redaction_before_target_is_touched() -> None:
     records = _empty_record_sets()
     connector_spec = _spec("eva_core.connector_bindings")
     row = {
@@ -261,7 +261,7 @@ def test_column_preserving_restore_rejects_redaction_before_target_is_touched() 
     ]
     target = _WritingRestoreTarget()
 
-    with pytest.raises(PortableRestoreError, match="re-authorisation"):
+    with pytest.raises(PortableRestoreError, match="connector redaction is invalid"):
         restore_column_preserving_records(
             target, records, table_specs=CANONICAL_EXPORT_SPECS
         )

@@ -18,10 +18,12 @@ from typing import Any
 from uuid import UUID
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
+from eva.contracts.execution import ConnectorBinding
 
 
 _IDENTIFIER = re.compile(r"^[a-z][a-z0-9_]*$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_CONNECTOR_BINDING_TABLE = "eva_core.connector_bindings"
 
 
 class PortableRestoreError(PortableArchiveError):
@@ -137,6 +139,163 @@ def decode_column_preserving_record(
         raise PortableRestoreError("portable primary key shape differs from table pin")
     if any(restored[column] != value for column, value in primary_key.items()):
         raise PortableRestoreError("portable primary key differs from restored row")
+    return restored
+
+
+def decode_reauthorization_required_connector_binding(
+    record: Mapping[str, Any],
+    *,
+    table_specs: tuple[Mapping[str, Any], ...],
+) -> dict[str, Any]:
+    """Replace a redacted connector with a provably unusable re-link record.
+
+    A portable connector record retains the binding's non-secret identity and
+    the hash of the old secret descriptor, but deliberately has no credential.
+    This decoder creates a new deterministic *sentinel* descriptor solely so
+    the existing closed ConnectorBinding/v1 schema can represent that state.
+    It is unrelated to the former descriptor and the database/payload status is
+    always ``reauthorization_required``. Existing action-chain validators only
+    dispatch a binding whose stored status is ``verified``.
+    """
+
+    table = _CONNECTOR_BINDING_TABLE
+    spec = _spec_for_table(table_specs, table)
+    if record.get("contract") != spec.get("record_contract"):
+        raise PortableRestoreError("portable connector record contract differs")
+    row = _portable_row(record, table=table)
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    expected_properties = (
+        tuple(transform.get("portablePropertyOrder", ()))
+        if isinstance(transform, Mapping)
+        else ()
+    )
+    if not isinstance(mappings, list) or tuple(row) != expected_properties:
+        raise PortableRestoreError("portable connector record properties differ")
+    if (
+        row.get("credential_reference") is not None
+        or row.get("credential_reauthorization_required") is not True
+        or row.get("restore_status") != "reauthorization_required"
+    ):
+        raise PortableRestoreError("portable connector redaction is invalid")
+    redacted_payload = row.get("payload")
+    if not isinstance(redacted_payload, dict):
+        raise PortableRestoreError("portable connector redacted payload is invalid")
+    redacted_payload_sha256 = row.get("redacted_payload_sha256")
+    if (
+        not isinstance(redacted_payload_sha256, str)
+        or not _SHA256.fullmatch(redacted_payload_sha256)
+        or hashlib.sha256(canonical_json_bytes(redacted_payload)).hexdigest()
+        != redacted_payload_sha256
+    ):
+        raise PortableRestoreError("portable connector redacted payload hash differs")
+    if (
+        redacted_payload.get("contract") != "EvaRedactedConnectorBinding/v1"
+        or redacted_payload.get("source_contract") != "ConnectorBinding/v1"
+        or redacted_payload.get("credential_reference") is not None
+        or redacted_payload.get("credential_reauthorization_required") is not True
+        or redacted_payload.get("credential_reference_sha256")
+        != row.get("credential_reference_sha256")
+    ):
+        raise PortableRestoreError("portable connector redaction contract differs")
+    source_payload_sha256 = row.get("source_payload_sha256")
+    if (
+        not isinstance(source_payload_sha256, str)
+        or not _SHA256.fullmatch(source_payload_sha256)
+    ):
+        raise PortableRestoreError("portable connector source payload hash differs")
+
+    binding_id = _canonical_uuid(row.get("binding_id"))
+    if binding_id is None:
+        raise PortableRestoreError("portable connector binding ID is absent")
+    sentinel_reference = f"portable-restore-redacted:{binding_id}"
+    payload = {
+        key: value
+        for key, value in redacted_payload.items()
+        if key
+        not in {
+            "source_contract",
+            "credential_reference_sha256",
+            "credential_reauthorization_required",
+        }
+    }
+    payload["contract"] = "ConnectorBinding/v1"
+    payload["credential_reference"] = sentinel_reference
+    payload["status"] = "reauthorization_required"
+    try:
+        restored_payload = ConnectorBinding.model_validate(payload).model_dump(mode="json")
+    except ValueError as error:
+        raise PortableRestoreError("portable connector payload cannot be re-linked") from error
+
+    # The redacted contract is still allowed to retain only the metadata that
+    # describes a connector.  Bind every such value back to its accompanying
+    # database column so a syntactically valid, but internally inconsistent,
+    # archive cannot silently change a connector's owner or capabilities.
+    payload_column_pairs = {
+        "tenant_id": "tenant_id",
+        "installation_id": "installation_id",
+        "binding_id": "binding_id",
+        "owner_principal_id": "owner_principal_id",
+        "provider_id": "provider_id",
+        "provider_account_id": "provider_account_id",
+        "provider_resource_id": "provider_resource_id",
+        "confirmed_operations": "confirmed_operations",
+        "confirmed_scopes": "confirmed_scopes",
+        "verification_evidence_ref": "verification_evidence_id",
+        "verified_at": "verified_at",
+    }
+    if any(
+        restored_payload[payload_name] != row[column_name]
+        for payload_name, column_name in payload_column_pairs.items()
+    ):
+        raise PortableRestoreError("portable connector payload and row differ")
+
+    expected_columns = tuple(spec.get("database_column_order", ()))
+    restored: dict[str, Any] = {}
+    for mapping in mappings:
+        if not isinstance(mapping, Mapping):
+            raise PortableRestoreError("portable connector transform mapping is invalid")
+        source = mapping.get("source")
+        property_name = mapping.get("portableProperty")
+        if not isinstance(source, Mapping) or not isinstance(property_name, str):
+            raise PortableRestoreError("portable connector transform mapping is incomplete")
+        source_kind = source.get("kind")
+        if source_kind == "column":
+            column = source.get("column")
+            if not isinstance(column, str):
+                raise PortableRestoreError("portable connector source column is invalid")
+            if column == "credential_reference":
+                restored[column] = sentinel_reference
+            elif column == "status":
+                restored[column] = "reauthorization_required"
+            elif column == "payload":
+                restored[column] = restored_payload
+            elif column == "payload_sha256":
+                restored[column] = hashlib.sha256(
+                    canonical_json_bytes(restored_payload)
+                ).hexdigest()
+            else:
+                restored[column] = row[property_name]
+        elif source_kind == "literal" and property_name == "credential_reference":
+            restored["credential_reference"] = sentinel_reference
+        elif source_kind == "redactedContractColumn" and property_name == "payload":
+            restored["payload"] = restored_payload
+        elif (
+            source_kind == "literal"
+            and property_name in {"credential_reauthorization_required", "restore_status"}
+        ) or source_kind in {"sha256Utf8Column", "sha256CanonicalPortableProperty"}:
+            continue
+        else:
+            raise PortableRestoreError("portable connector transform kind is unknown")
+    if tuple(restored) != expected_columns:
+        raise PortableRestoreError("re-linked connector columns differ from table pin")
+    primary_key = record.get("primary_key")
+    if not isinstance(primary_key, Mapping) or tuple(primary_key) != tuple(
+        spec.get("primary_key", ())
+    ):
+        raise PortableRestoreError("portable connector primary key shape differs")
+    if any(restored[column] != value for column, value in primary_key.items()):
+        raise PortableRestoreError("portable connector primary key differs")
     return restored
 
 
@@ -285,6 +444,59 @@ def _bind_value(value: Any, encoding: str) -> tuple[str, Any]:
     raise PortableRestoreError("portable column encoding is not sealed for restore")
 
 
+def _prepare_reauthorization_required_connector_record(
+    record: Mapping[str, Any],
+    *,
+    table_specs: tuple[Mapping[str, Any], ...],
+) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
+    """Type one safely re-linked connector row from its sealed redacted form."""
+
+    spec = _spec_for_table(table_specs, _CONNECTOR_BINDING_TABLE)
+    restored = decode_reauthorization_required_connector_binding(
+        record, table_specs=table_specs
+    )
+    transform = spec.get("transform_spec")
+    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
+    if not isinstance(mappings, list):
+        raise PortableRestoreError("portable connector transform mappings are absent")
+
+    encodings: dict[str, str] = {}
+    for mapping in mappings:
+        if not isinstance(mapping, Mapping):
+            raise PortableRestoreError("portable connector transform mapping is invalid")
+        property_name = mapping.get("portableProperty")
+        source = mapping.get("source")
+        encoding = mapping.get("encoding")
+        if (
+            not isinstance(property_name, str)
+            or not isinstance(source, Mapping)
+            or not isinstance(encoding, str)
+        ):
+            raise PortableRestoreError("portable connector transform mapping is incomplete")
+        if source.get("kind") == "column":
+            column = source.get("column")
+            if not isinstance(column, str) or column in encodings:
+                raise PortableRestoreError("portable connector source column is invalid")
+            encodings[column] = encoding
+        elif source.get("kind") == "literal" and property_name == "credential_reference":
+            # The sealed export uses JSON null for this property, but the
+            # restore inserts our non-secret sentinel into a text column.
+            encodings["credential_reference"] = "utf8Text"
+        elif source.get("kind") == "redactedContractColumn" and property_name == "payload":
+            encodings["payload"] = "canonicalJson"
+
+    columns = tuple(spec.get("database_column_order", ()))
+    if tuple(encodings) != columns:
+        raise PortableRestoreError("portable connector encodings differ from table pin")
+    placeholders: list[str] = []
+    bindings: list[Any] = []
+    for column in columns:
+        placeholder, value = _bind_value(restored[column], encodings[column])
+        placeholders.append(placeholder)
+        bindings.append(value)
+    return restored, tuple(placeholders), tuple(bindings)
+
+
 def _validate_record_sets(
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
@@ -323,6 +535,13 @@ def _validate_record_sets(
         for record in records:
             if not isinstance(record, Mapping):
                 raise PortableRestoreError("portable table record is not an object")
+            if table == _CONNECTOR_BINDING_TABLE:
+                rows.append(
+                    _prepare_reauthorization_required_connector_record(
+                        record, table_specs=table_specs
+                    )
+                )
+                continue
             restored = decode_column_preserving_record(
                 record, table=table, table_specs=table_specs
             )
@@ -360,10 +579,12 @@ def restore_column_preserving_records(
     encoding therefore leaves the target untouched. The savepoint also removes
     every inserted row when a later database constraint rejects the archive.
 
-    Normal Eva backups currently contain credential/connector redactions, so
-    they correctly fail here until the dedicated re-authorisation importer is
-    present. This narrow writer must never turn redacted history into a live
-    connector, credential, provider call or retry.
+    A redacted connector is the one intentionally supported exception: it is
+    restored only as ``reauthorization_required`` with a new unusable sentinel,
+    never as a live credential. Redacted provider-attempt records still stop
+    the full archive before the first target query until their separate,
+    terminal-history migration exists. This writer must never turn redacted
+    history into a credential, provider call or retry.
     """
 
     prepared = _validate_record_sets(records_by_table, table_specs=table_specs)
@@ -397,6 +618,7 @@ def restore_column_preserving_records(
 __all__ = [
     "PortableRestoreError",
     "decode_column_preserving_record",
+    "decode_reauthorization_required_connector_binding",
     "restore_column_preserving_records",
     "verify_empty_restore_target",
 ]
