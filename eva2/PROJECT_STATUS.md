@@ -82,13 +82,19 @@ stop. Voice of een ander groot capabilityproject start niet tussendoor.
 
 ## Nieuwste afgeronde stap
 
-Checkpoint `fedfb15` voegt één kleine veiligheidsrem toe: de geverifieerde
-eigenaar kan de laatste voorbereide actie annuleren **voordat** Eva haar voor
-uitvoering heeft vrijgegeven. In zeven tijdelijke PostgreSQL-proeven was er bij
-annuleren nul effectpoging en nul providerproces; bij een race met autorisatie
-won precies één van beide. De onafhankelijke review is groen. Dit is nog geen
-knop in Telegram of de cockpit en kan een al gestarte browser- of huisactie
-niet stoppen; die grens blijft zichtbaar open. Zie
+Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
+gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
+opslaan. Eva start die call niet opnieuw en wacht op het echte resultaat. Acht
+tijdelijke PostgreSQL-proeven zijn groen, inclusief de race met een
+providerresultaat, historische replay na bindingintrekking en zeventien
+vervalsingspogingen. De onafhankelijke review is groen. Dit is nadrukkelijk
+geen Telegramknop, proceskill, rollback, B-deploy of bewijs dat een externe
+klik is gestopt; Eva moet nog teruglezen wat er werkelijk gebeurde. Zie
+[`reviews/action-chain-effect-post-call-stop-request-8438fea.md`](reviews/action-chain-effect-post-call-stop-request-8438fea.md).
+
+De vorige rem, checkpoint `fedfb15`, blijft daarnaast geldig vóór call-start:
+een voorbereide actie kan dan volledig worden geannuleerd met nul provider-I/O.
+Zie
 [`reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md`](reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md).
 
 De planning telt geen seriële menselijke werkdagen meer op. De huidige raming
