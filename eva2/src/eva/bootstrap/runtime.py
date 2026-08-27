@@ -242,12 +242,17 @@ class RuntimeSettings:
         ).strip()
         dashboard_access_token = None
         if dashboard_access_token_file:
-            dashboard_access_token = validate_dashboard_access_token(
-                read_runtime_secret_file(
-                    dashboard_access_token_file,
-                    setting_name="EVA_DASHBOARD_ACCESS_TOKEN_FILE",
+            try:
+                dashboard_access_token = validate_dashboard_access_token(
+                    read_runtime_secret_file(
+                        dashboard_access_token_file,
+                        setting_name="EVA_DASHBOARD_ACCESS_TOKEN_FILE",
+                    )
                 )
-            )
+            except ValueError as error:
+                raise RuntimeError(
+                    "EVA_DASHBOARD_ACCESS_TOKEN_FILE has an invalid length or contents"
+                ) from error
         if dashboard_principal_binding_id is not None:
             if background_principal_id is None:
                 raise RuntimeError(
