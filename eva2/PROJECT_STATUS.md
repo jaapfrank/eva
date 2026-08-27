@@ -62,17 +62,19 @@ de controleerbare live receipts staan in
 
 ## Belangrijk: welke Eva heeft welk geheugen?
 
-De oude, oorspronkelijke **Eva1-codebasis** gebruikte een eigen SQLite-bestand
-en geen Hindsight. Dat is niet hetzelfde als de B-omgeving die nu draait.
-De draaiende `eva2-living-core-b` heeft een afzonderlijke
-`eva2-postgres-b-live` én `eva2-hindsight-memory-live`, ieder met een eigen
-volume; de core heeft beide routes geconfigureerd. De twee geheugenvolumes
-worden niet met een oude SQLite-route gedeeld.
+Er draaien twee verschillende routes die niet door elkaar mogen worden gehaald.
+De Eva die jij nu gebruikt is `eva.service` in
+`/home/administrator/project/Bottie`: zij heeft haar eigen SQLite-bestand en
+gebruikt **geen Hindsight**. Daarnaast draaien er afzonderlijke
+Eva2-B-containers: `eva2-postgres-b-live` en `eva2-hindsight-memory-live`
+hebben elk een eigen volume. Die kandidaatroute deelt geen geheugen met de
+live Eva-service.
 
-Dat bewijst niet vanzelf dat iedere historische herinnering al is overgezet of
-dat elk huidig gesprek Hindsight daadwerkelijk heeft beschreven. Voor zulke
-claims is per stroom een receipt nodig. De eerdere formulering “de live Eva
-gebruikt geen Hindsight” was daarom onjuist en is vervangen.
+Een actieve container is dus geen bewijs dat zij de gebruikersroute bedient,
+dat er oude herinneringen zijn overgezet of dat ieder gesprek Hindsight heeft
+beschreven. Zulke claims vereisen per stroom een receipt. De eerdere
+formulering verwarde de draaiende kandidaatcontainers met de live Eva-service;
+dat is gecorrigeerd.
 
 ## Nieuwste technisch afgesloten stap: identiteit voorstellen in de lokale installer
 
