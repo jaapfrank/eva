@@ -347,6 +347,13 @@ niet op en wordt daarom niet als een gestarte benchmark of groene stack
 gepresenteerd. Zie
 [`agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json).
 
+**Actuele beslissing:** de onafhankelijke review geeft groen voor de beperkte
+bouwwerkzaamheden — artifactretentie, controle tegen het manifest en de
+netwerkloze rebuild zijn `tested` en `reviewed`. De security-gate blijft rood;
+dus AgentBench zelf staat nog steeds op **niet starten**. De review laat precies
+zien wat wél klaar is en wat niet:
+[`agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md`](reviews/agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md).
+
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
