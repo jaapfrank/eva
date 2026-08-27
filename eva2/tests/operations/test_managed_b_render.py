@@ -188,6 +188,12 @@ def test_renderer_refuses_unresolved_graph_interpolation(
         "$$$${EVA_MISSING}",
         "$$$$${EVA_MISSING}",
         "$x${EVA_MISSING}",
+        "$${}",
+        "$${MISSING_CLOSE",
+        "$${POSTGRES_USER}",
+        "$${POSTGRES_DB:-fallback}",
+        "$${OUTER$${INNER}}",
+        "$${POSTGRES_DB}${EVA_MISSING}",
     ),
 )
 def test_renderer_refuses_every_non_exactly_escaped_interpolation(value: str) -> None:
@@ -199,7 +205,7 @@ def test_renderer_refuses_every_non_exactly_escaped_interpolation(value: str) ->
     (
         "$${POSTGRES_DB}",
         "test -n \"$${POSTGRES_DB}\" && echo ready",
-        "$${POSTGRES_USER}:$${POSTGRES_DB}",
+        "$${POSTGRES_DB}:$${POSTGRES_DB}",
     ),
 )
 def test_renderer_allows_only_exactly_escaped_container_variables(value: str) -> None:

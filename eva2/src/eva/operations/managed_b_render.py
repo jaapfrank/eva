@@ -24,6 +24,7 @@ from eva.operations.core_b_preflight import (
 ROOT = Path(__file__).resolve().parents[3]
 MANAGED_B_MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
 EXPECTED_SERVICES = MANAGED_SERVICE_NAMES
+_ALLOWED_ESCAPED_CONTAINER_INTERPOLATIONS = frozenset({"$${POSTGRES_DB}"})
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,23 +67,27 @@ def _canonical_json(value: object) -> bytes:
 
 def _contains_unresolved_interpolation(value: object) -> bool:
     if isinstance(value, str):
-        # Compose deliberately preserves exactly one $$-escaped shell
-        # variable for the container healthcheck (for example
-        # $${POSTGRES_DB}).  Every other ${...} spelling is unresolved host
-        # interpolation.  In particular, accepting an arbitrary run of
-        # dollars would let $$${NAME} hide a remaining interpolation.
+        # Compose deliberately preserves $${POSTGRES_DB} in the PostgreSQL
+        # container healthcheck.  It is the *only* escaped interpolation in
+        # the sealed managed manifest.  Every other ${...} spelling, including
+        # an empty, unfinished or nested form, must fail closed rather than
+        # being treated as a harmless shell expression.
         start = 0
         while True:
             interpolation = value.find("${", start)
             if interpolation < 0:
                 return False
+            closing = value.find("}", interpolation + 2)
             if (
                 interpolation == 0
                 or value[interpolation - 1] != "$"
                 or (interpolation >= 2 and value[interpolation - 2] == "$")
+                or closing < 0
+                or value[interpolation - 1 : closing + 1]
+                not in _ALLOWED_ESCAPED_CONTAINER_INTERPOLATIONS
             ):
                 return True
-            start = interpolation + 2
+            start = closing + 1
     if isinstance(value, dict):
         return any(
             _contains_unresolved_interpolation(key)
