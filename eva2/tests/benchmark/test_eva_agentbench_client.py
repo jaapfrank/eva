@@ -27,6 +27,7 @@ HISTORY = [
 def _environment(monkeypatch: pytest.MonkeyPatch, endpoint: str) -> None:
     monkeypatch.setenv("EVA_AGENTBENCH_TURN_ENDPOINT", endpoint)
     monkeypatch.setenv("EVA_AGENTBENCH_RUN_ID", "agentbench-dev-001")
+    monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "2")
     monkeypatch.setenv("EVA_AGENTBENCH_TENANT_ID", "benchmark-tenant")
     monkeypatch.setenv("EVA_AGENTBENCH_INSTALLATION_ID", "benchmark-installation")
     monkeypatch.setenv("EVA_AGENTBENCH_PRINCIPAL_PREFIX", "benchmark-principal")
@@ -105,6 +106,31 @@ def test_each_changed_transcript_gets_a_different_eva_conversation(
 
     assert received[0]["conversation_id"] != received[1]["conversation_id"]
     assert received[0]["principal_id"] != received[1]["principal_id"]
+
+
+def test_client_reserves_a_hard_turn_budget_before_calling_eva(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _core() as (endpoint, received):
+        _environment(monkeypatch, endpoint)
+        client = adapter.EvaAgentBenchClient(timeout_seconds=10)
+        client.inference(HISTORY)
+        client.inference(HISTORY)
+        with pytest.raises(adapter.AgentBenchEvaError, match="turn budget is exhausted"):
+            client.inference(HISTORY)
+
+    assert len(received) == 2
+
+
+@pytest.mark.parametrize("turn_limit", ["0", "9", "nope"])
+def test_rejects_an_invalid_turn_budget(
+    monkeypatch: pytest.MonkeyPatch, turn_limit: str
+) -> None:
+    _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+    monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", turn_limit)
+
+    with pytest.raises(adapter.AgentBenchEvaError, match="MAX_TURNS is invalid"):
+        adapter.EvaAgentBenchClient(timeout_seconds=10)
 
 
 def test_rejects_non_isolated_turn_endpoints(

@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import re
+from threading import Lock
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -31,6 +32,7 @@ MAX_MESSAGE_BYTES = 128 * 1024
 MAX_RESPONSE_BYTES = 256 * 1024
 _RUN_ID = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
 _LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+_MAX_TURNS = 8
 
 
 class AgentBenchEvaError(ValueError):
@@ -66,6 +68,17 @@ def _run_id() -> str:
     value = _required_environment("EVA_AGENTBENCH_RUN_ID")
     if not _RUN_ID.fullmatch(value):
         raise AgentBenchEvaError("EVA_AGENTBENCH_RUN_ID is invalid")
+    return value
+
+
+def _turn_limit() -> int:
+    raw = _required_environment("EVA_AGENTBENCH_MAX_TURNS")
+    try:
+        value = int(raw)
+    except ValueError as error:
+        raise AgentBenchEvaError("EVA_AGENTBENCH_MAX_TURNS is invalid") from error
+    if not 1 <= value <= _MAX_TURNS:
+        raise AgentBenchEvaError("EVA_AGENTBENCH_MAX_TURNS is invalid")
     return value
 
 
@@ -187,8 +200,17 @@ class EvaAgentBenchClient:
     def __init__(self, *, timeout_seconds: float = 120.0, **_unused: object) -> None:
         self.timeout_seconds = timeout_seconds
         self.model_name = "eva2-isolated-candidate"
+        self._turn_limit = _turn_limit()
+        self._turns_used = 0
+        self._turn_lock = Lock()
 
     def inference(self, history: list[dict[str, str]]) -> str:
+        with self._turn_lock:
+            if self._turns_used >= self._turn_limit:
+                raise AgentBenchEvaError("AgentBench Eva turn budget is exhausted")
+            # Reserve before network I/O: an interrupted request must not turn
+            # an explicit model budget into an unbounded retry loop.
+            self._turns_used += 1
         return answer_for_history(history, timeout_seconds=self.timeout_seconds)
 
 

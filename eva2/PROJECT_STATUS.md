@@ -400,6 +400,12 @@ omgeving wijkt bewust af van AgentBench' officiële Dockerdriver en een nepagent
 gaf het antwoord. Zie
 [`agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json`](evidence/living-core/agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json).
 
+De toekomstige echte Eva-adapter weigert nu bovendien iedere run zonder een
+expliciet maximum van 1–8 modelbeurten. Zij reserveert iedere beurt vóór de
+netwerkcall; een storing kan dus niet buiten die grens tot onbeperkt herhalen
+leiden. Twaalf gerichte checks zijn groen. Dit is een kostenrem, geen modelrun
+of score.
+
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
