@@ -62,6 +62,22 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+Eva controleert haar database nu niet meer alleen op een algemeen
+schema-verschil, maar ook op **alle 121 echte relaties tussen tabellen**. Dat
+is belangrijk omdat Eva bewust veel wederzijdse relaties heeft: de standaard
+migratiecontrole waarschuwde daardoor dat zij sommige relaties niet kon
+vergelijken. De nieuwe controle leest rechtstreeks uit PostgreSQL of iedere
+relatie nog naar de juiste tabel en kolommen wijst, met de juiste
+verwijderregel en herstelinstelling.
+
+In een nieuwe tijdelijke database was de volledige catalogus groen. Daarna is
+één belangrijke relatie tijdelijk weggehaald; Eva weigerde dat meteen. De
+transactie is teruggedraaid en de testdatabase is verwijderd. Dit is een
+kandidaatbewijs, geen wijziging aan Eva 1 of B. Receipt:
+[`candidate-foreign-key-catalog-drift-2026-08-27.json`](evidence/living-core/candidate-foreign-key-catalog-drift-2026-08-27.json).
+
+## Eerder deze run gesloten: niet-lege herstelroute
+
 Een niet-lege, volledig synthetische Eva-installatie is nu daadwerkelijk
 **verplaatst naar een tweede nieuwe database**. Identiteit, gesprek, bericht,
 geheugen en bewijs kwamen gecontroleerd terug; de exportrol zag daarbij alleen

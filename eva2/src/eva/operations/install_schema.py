@@ -12,6 +12,7 @@ import argparse
 import json
 import os
 import sys
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -20,6 +21,7 @@ from alembic import command
 from alembic.config import Config
 
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
+from eva.adapters.postgres.foreign_key_catalog import require_current_foreign_key_catalog
 from eva.bootstrap.secrets import read_runtime_secret_file
 
 _REVISION_4B0 = "4b_0000_core_namespace"
@@ -125,12 +127,23 @@ def install_schema(
         final_revision = _current_revision(engine)
         if final_revision != _HEAD_REVISION:
             raise RuntimeError("Eva schema installation did not reach head")
-        command.check(config)
+        # Alembic covers pending ordinary metadata operations.  Its own table
+        # sorter warns, and omits FK comparison, for Eva's intentional cycles;
+        # the direct catalog check immediately below closes that exact gap.
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message="Cannot correctly sort tables; there are unresolvable cycles.*",
+                category=sa.exc.SAWarning,
+            )
+            command.check(config)
+        with engine.connect() as connection:
+            require_current_foreign_key_catalog(connection)
         return SchemaInstallationReceipt(
             source_revision,
             final_revision,
             tuple(route),
-            "no_new_upgrade_operations_detected",
+            "no_new_upgrade_operations_and_exact_foreign_keys",
         )
     finally:
         engine.dispose()
