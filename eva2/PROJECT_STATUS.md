@@ -73,6 +73,20 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
+## Nieuwste technisch afgesloten stap: veilige hostcontrole vóór B-adoptie
+
+De kandidaat heeft nu één duidelijke `--host-only`-controle voor de dag dat we
+met jouw toestemming B gaan voorbereiden. Zij controleert alleen de private
+configuratiesnapshot en metadata van `/usr/bin/docker`, de private
+Docker-configmap, zeven secretbestanden en drie authoritydirectories. Zij leest
+geen secretinhoud en raakt Docker, containers, volumes, B of Eva1 niet aan.
+
+De uitvoer bevat alleen een configuratiehash en aantallen, dus geen paden,
+waarden of secrets. **70 gerichte checks zijn groen** en de onafhankelijke
+review gaf `GO`. De echte controle op jouw host is bewust nog niet uitgevoerd:
+die vereist eerst jouw expliciete toestemming en een aangewezen B-omgeving.
+Zie [`managed-b-host-only-preflight-0ed424f.md`](reviews/managed-b-host-only-preflight-0ed424f.md).
+
 ## Nieuwste gesloten stap: de releasekandidaat is opnieuw dichtgezet
 
 De kandidaat kan haar toekomstige beheerde startopstelling echt aan Compose
