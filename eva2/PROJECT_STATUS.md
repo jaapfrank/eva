@@ -1,6 +1,6 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-26
+Laatst bijgewerkt: 2026-08-27
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
@@ -59,6 +59,24 @@ de controleerbare live receipts staan in
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
+
+## Nieuwste gesloten stap
+
+De kandidaat-Eva 2 kan nu een **nieuwe, tijdelijke PostgreSQL-database
+aanmaken én daarna veilig opnieuw starten**. Dit was niet alleen een test op
+papier: de kandidaatimage draaide als een niet-root, alleen-lezen container op
+een privé Docker-netwerk. De eerste start zette alle schema-updates tot
+`4e_0004_delegated_work_stop`; de tweede start herkende die eindstand en voerde
+niets dubbel uit. Tijdens deze proef is een echte fout gevonden en opgelost:
+een normale `postgresql://`-verbinding vroeg nog om de oude `psycopg2`-driver,
+terwijl de kandidaat alleen de huidige `psycopg`-driver bevat. De runtime kiest
+nu centraal de aanwezige driver.
+
+Dit sluit een belangrijk stuk van **project 1: veilige eindruntime en
+B-release**. Het is nog geen B-deploy: Eva 1, B, bestaande volumes, Hindsight,
+Telegram, Home Assistant en echte secrets zijn niet geopend. Het complete,
+geschoonde bewijs staat in
+[`managed-b-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-candidate-schema-restart-2026-08-27.json).
 
 ## Nieuwste gesloten keuze
 
@@ -448,9 +466,11 @@ Eva's unieke hoofdfeature.
   en een echte wegwerp-PostgreSQL-16.13-proef zijn groen. De officiële
   Pydantic-provideradapter en echte usage-/budgetwiring blijven DF02-vervolgwerk.
 
-- Releaseproject P1.1: checkpoint `0bbfe3d` bindt de versiepassende statische
-  39-package-input nu onafhankelijk groen aan de huidige 4D-bron. Een fysieke
-  wheelhouse, imagebuild, start, B-adoptie of release is hiermee niet bewezen.
+- Releaseproject P1.1: de versiepassende 39-package-input is onafhankelijk
+  groen; checkpoint `124eed2` bewijst daarbovenop een fysieke, ongetagde
+  kandidaatimage met een eerste schema-installatie, driftcontrole en veilige
+  tweede start tegen een geheel nieuwe tijdelijke PostgreSQL-database. B-adoptie
+  of release is hiermee nog niet bewezen.
 
 - Gezinschat P2.1a: checkpoint `187f797` laat de normale Telegrambron een
   dynamisch gekoppeld account veilig herkennen, ook na procesherstart, zonder
