@@ -73,36 +73,40 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
-## Nieuwste gesloten stap: de beheerde startconfiguratie is echt gesloten gerenderd
+## Nieuwste gesloten stap: de releasekandidaat is opnieuw dichtgezet
 
-De kandidaat kan haar toekomstige beheerde startopstelling nu echt aan Compose
-voorleggen zonder iets te starten. De renderer maakte één verzegeld manifest
-met precies acht diensten: database, schema-installatie, beide
-toegangsleases, Hindsight, Eva-kern, doelworker en Telegram-ingang. Daarbij
-zijn drie fouten gevonden en gesloten: een verplichte geheugennaamruimte kon
-ontbreken, een veilige containervariabele werd ten onrechte afgekeurd en het
-schema-installatieprofiel ontbrak uit de renderopdracht.
+De kandidaat kan haar toekomstige beheerde startopstelling echt aan Compose
+voorleggen zonder iets te starten. De renderer maakt één verzegeld manifest met
+precies acht diensten: database, schema-installatie, beide toegangsleases,
+Hindsight, Eva-kern, doelworker en Telegram-ingang.
+
+Een onafhankelijke controle vond daarna een echte veiligheidsfout: een slim
+geschreven Compose-variabele kon de oude controle omzeilen. Dat is nu op commit
+`b67c6a9` dichtgezet. Alleen de ene letterlijke, veilige
+containervariabele `$${POSTGRES_DB}` is nog toegestaan; ontbrekende, geneste,
+verkeerd gespelde of extra-dollarvarianten worden vóór Compose geweigerd. De
+reviewer heeft de toegestane vorm en alle genoemde foute vormen opnieuw
+gecontroleerd en gaf `GO`.
 
 De proef gebruikte alleen tijdelijke nepbestanden en een nep-imageverwijzing.
 Dat bewijst de configuratieketen, niet een echte start of migratie. Voor een
 echte hostpreflight zijn jouw expliciete toestemming en de juiste bestanden
 voor UID 65532 nodig. Eva1, B, hun volumes en hun geheugen zijn niet geopend.
 Zie
-[`managed-b-synthetic-sealed-render-2026-08-27.json`](evidence/living-core/managed-b-synthetic-sealed-render-2026-08-27.json).
+[`managed-b-whitelist-render-2026-08-27.json`](evidence/living-core/managed-b-whitelist-render-2026-08-27.json).
 
-De rendererfix zit bovendien in een nieuwe lokale kandidaatimage. Die is met
-dezelfde vaste 39 packages zonder bouwnetwerk gemaakt en importeert als
-beperkte gebruiker op een alleen-lezen bestandssysteem. Zij installeerde daarna
-ook haar schema op een volledig nieuwe tijdelijke database, herstartte zonder
-extra migratie, weigerde een bewust verwijderde databasekoppeling en gaf met
-tijdelijke geheugen- en modeltestdoubles weer groen `alive` en `ready` terug.
-Dat bewijst de kandidaatroute, niet semantisch geheugen of een echte modelcall.
-Zie
-[`managed-b-render-fixed-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json)
+De fix zit bovendien in een nieuwe lokale kandidaatimage
+`sha256:14b2aa…`. Die is met dezelfde vaste 39 packages zonder bouwnetwerk
+gemaakt en importeert als beperkte gebruiker op een alleen-lezen
+bestandssysteem. Zij installeerde daarna ook haar schema op een volledig nieuwe
+tijdelijke database, herstartte zonder extra migratie, weigerde een bewust
+verwijderde databasekoppeling en gaf met tijdelijke geheugen- en
+modeltestdoubles weer groen `alive` en `ready` terug. Dat bewijst de
+kandidaatroute, niet semantisch geheugen of een echte modelcall. Zie
+[`managed-b-whitelist-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-whitelist-candidate-image-smoke-2026-08-27.json),
+[`managed-b-whitelist-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-whitelist-candidate-schema-restart-2026-08-27.json)
 en
-[`managed-b-render-fixed-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-schema-restart-2026-08-27.json)
-en
-[`managed-b-render-fixed-candidate-runtime-readiness-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-runtime-readiness-2026-08-27.json).
+[`managed-b-whitelist-candidate-runtime-readiness-2026-08-27.json`](evidence/living-core/managed-b-whitelist-candidate-runtime-readiness-2026-08-27.json).
 
 ## Eerder deze run gesloten: huidige kandidaat geeft echt “klaar” terug
 

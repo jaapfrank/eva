@@ -397,6 +397,55 @@ def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs()
     assert receipt["observed"]["readyz"]["model_provider"] == "ready"
 
 
+def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    evidence_root = root / "evidence/living-core"
+    image = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-image-smoke-2026-08-27.json").read_bytes()
+    )
+    schema = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-schema-restart-2026-08-27.json").read_bytes()
+    )
+    readiness = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-runtime-readiness-2026-08-27.json").read_bytes()
+    )
+    render = json.loads(
+        (evidence_root / "managed-b-whitelist-render-2026-08-27.json").read_bytes()
+    )
+
+    source_commit = "b67c6a94612b2c18680e976ce0d9e6845f151683"
+    candidate_image_id = "sha256:14b2aa301b82c5d29bc2f623c9a1488f88a07dd33cdcd9f7d791c8309695bd5c"
+    for receipt in (image, schema, readiness):
+        bound = receipt.get("inputs", receipt.get("image_source"))
+        assert bound["source_commit"] == source_commit
+        assert bound["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+        assert bound["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+        assert bound["wheel_count"] == alignment["expected_wheel_count"]
+        if "candidate_image_id" in bound:
+            assert bound["candidate_image_id"] == candidate_image_id
+
+    assert image["status"] == "passed_whitelist_candidate_image_smoke_not_deployed"
+    assert image["observed"]["candidate_image_id"] == candidate_image_id
+    assert schema["status"] == "passed_whitelist_candidate_schema_restart_and_drift_rejection_not_deployed"
+    assert schema["observed"]["second_start"]["route"] == []
+    assert schema["observed"]["drift_rejection"]["status"] == "failed_closed"
+    assert readiness["status"] == "passed_whitelist_candidate_runtime_readiness_not_deployed"
+    assert readiness["observed"]["readyz"]["ready"] is True
+    assert render["source_commit"] == source_commit
+    assert render["status"] == "passed_whitelist_render_not_deployed"
+    assert render["observed"]["service_names"] == [
+        "core",
+        "durable-goal-worker",
+        "hindsight",
+        "hindsight-access-lease",
+        "model-access-lease",
+        "postgres",
+        "schema-installer",
+        "telegram-ingress",
+    ]
+
+
 def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()

@@ -77,7 +77,7 @@ Statussen:
 
 | Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
 |---|---|---|---|---:|---:|---|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De actuele kandidaat installeert en herstart haar schema, blokkeert drift, en geeft via `/healthz` en `/readyz` groen terug met een nieuwe database en tijdelijke geheugen-/modeltestdoubles. De beheerde startconfiguratie rendert aantoonbaar alle acht diensten uit één synthetisch verzegeld plan | Geautoriseerde host-secretpreflight op UID 65532, onafhankelijke review, HA-secretrotatie, B-adoptie en de echte eindproef | 2-4 uur | 2-4 uur | 2-6 uur eigenaar en omschakelvenster |
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De actuele kandidaat (`b67c6a9`) weigert nu ook alle Compose-variabelen behalve de ene veilige containervariabele. Dezelfde kandidaatimage installeert en herstart haar schema, blokkeert drift, en geeft via `/healthz` en `/readyz` groen terug met een nieuwe database en tijdelijke geheugen-/modeltestdoubles. De beheerde startconfiguratie rendert aantoonbaar alle acht diensten uit één synthetisch verzegeld plan | Geautoriseerde host-secretpreflight op UID 65532, onafhankelijke review van de gehele releasekandidaat, HA-secretrotatie, B-adoptie en de echte eindproef | 2-4 uur | 2-4 uur | 2-6 uur eigenaar en omschakelvenster |
 | 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy bestaan. De normale Telegrambron herkent nu na herstart een dynamisch gekoppeld account. Een eventuele Eva1-geheugenproef kan eerst alleen aantallen en hashes voorvertonen uit een consistente private SQLite-snapshot; pas na expliciete bevestiging gaat hoogstens 50 gekoppelde regels naar een wegwerp-Eva2-database als niet-gespreksgeheugen | Op eind-B zetten en echte gezins-/groepstest uitvoeren. Voor de Eva1-proef is nog één bewuste oude-persoon→nieuwe-persoonkoppeling nodig | 2-4 uur | 2-4 uur | 45-90 min eigenaar plus accounts/testgroep |
 | 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill. HA-MCP is exact onderzocht, maar een directe swap verwijdert naar schatting slechts 174–192 regels | Eén kleine HA-MCP state→service→stateproef; alleen bij echte semantische pariteit en minimaal 300 regels nettowinst promoveren. Daarna Telegram→skill→readback→vervolg en crash live uitvoeren | 2-5 uur | 2-4 uur | 2-4 uur met veilige testskill/-entiteit |
 | 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Bestaande HA/Wyoming-/speakercomponenten hergebruiken voor één speaker, deurbel, quiet hours, cooldown, stop en herstel | 4-10 uur | 3-6 uur | Gedeelde 7-daagse huisproef |
@@ -141,18 +141,19 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
 ## De eerstvolgende twee zichtbare mijlpalen
 
 1. **P1.1 — één versiepassende releasekandidaat.** De actuele broncommit
-   `73648ea` heeft een hashvaste 39-package-wheelhouse, een netwerkloze,
+   `b67c6a9` heeft een hashvaste 39-package-wheelhouse, een netwerkloze,
    ongetagde imagebuild, niet-root/read-only runtime-import, schema-start,
    veilige tweede start en gecontroleerde schema-driftafwijzing. De
-   runtime-readiness met tijdelijke testdoubles is groen. Op commit `2810454`
-   rendert de beheerde startconfiguratie nu daadwerkelijk alle acht diensten
-   uit één synthetisch verzegeld plan en weigert zij drie eerder verborgen
-   configuratiefouten; dezelfde commit heeft een nieuwe offline, niet-root
-   geïmporteerde kandidaatimage die haar schema ook vers installeert, veilig
+   runtime-readiness met tijdelijke testdoubles is groen. De beheerde
+   startconfiguratie rendert daadwerkelijk alle acht diensten uit één
+   synthetisch verzegeld plan en accepteert na een onafhankelijk gevonden
+   fout nog uitsluitend de ene veilige containervariabele
+   `$${POSTGRES_DB}`. Dezelfde commit heeft een nieuwe offline, niet-root
+   geïmporteerde kandidaatimage die haar schema vers installeert, veilig
    herstart, drift weigert én groen klaar komt met tijdelijke database-,
    geheugen- en modeltestdoubles. Volgende stap: een geautoriseerde UID-65532
-   host-secretpreflight en onafhankelijke review; pas daarna kan B-adoptie
-   überhaupt worden overwogen. Dit verandert A of B niet.
+   host-secretpreflight en integrale release-review; pas daarna kan B-adoptie
+   überhaupt worden overwogen. Dit verandert Eva1 of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op
    checkpoint `187f797` een dynamisch gekoppeld account veilig en ook na
    herstart. Na de veilige B-adoptie demonstreert
