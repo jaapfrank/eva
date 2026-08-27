@@ -131,6 +131,7 @@ def test_cutover_saves_verified_predecessor_and_rollback_restores_it(private_tmp
     assert json.loads(current_path.read_bytes())["display_name"] == "Evi"
     assert current_path.stat().st_mode & 0o777 == 0o600
     assert rollback_path.stat().st_mode & 0o777 == 0o600
+    assert (private_tmp_path / ".current.json.identity.lock").stat().st_mode & 0o777 == 0o600
 
     restored = rollback_identity_successor(
         current_path=current_path, rollback_path=rollback_path, trust=trust

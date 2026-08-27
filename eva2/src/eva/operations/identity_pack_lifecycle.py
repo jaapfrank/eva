@@ -9,7 +9,9 @@ an environment variable and it never touches the default fixture identity.
 from __future__ import annotations
 
 import base64
+from contextlib import contextmanager
 from dataclasses import dataclass
+import fcntl
 import hashlib
 import os
 from pathlib import Path
@@ -198,6 +200,31 @@ def _atomic_write(path: Path, data: bytes) -> None:
         raise IdentityPackLifecycleError("identity pack write failed") from exc
 
 
+@contextmanager
+def _exclusive_lifecycle_lock(current_path: Path):
+    """Serialize activation and rollback for exactly one current-pack path."""
+
+    parent = current_path.parent
+    if parent.is_symlink() or not parent.is_dir():
+        raise IdentityPackLifecycleError("identity target directory is invalid")
+    lock_path = parent / f".{current_path.name}.identity.lock"
+    if lock_path.is_symlink():
+        raise IdentityPackLifecycleError("identity lifecycle lock must not be a symlink")
+    try:
+        descriptor = os.open(lock_path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
+        os.fchmod(descriptor, 0o600)
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+    except OSError as exc:
+        raise IdentityPackLifecycleError("identity lifecycle lock is unavailable") from exc
+    try:
+        yield
+    finally:
+        try:
+            fcntl.flock(descriptor, fcntl.LOCK_UN)
+        finally:
+            os.close(descriptor)
+
+
 def write_identity_candidate(path: Path, candidate: IdentityPack) -> str:
     """Write a new, not-yet-active signed candidate once and return its hash."""
 
@@ -223,22 +250,23 @@ def activate_identity_successor(
 
     if current_path == rollback_path or candidate_path in {current_path, rollback_path}:
         raise IdentityPackLifecycleError("identity lifecycle paths must be distinct")
-    base, base_raw = _load_verified(current_path, trust)
-    candidate, candidate_raw = _load_verified(candidate_path, trust)
-    validate_identity_successor(candidate, base, trust=trust)
-    _atomic_write(rollback_path, base_raw)
-    _atomic_write(current_path, candidate_raw)
-    current, current_raw = _load_verified(current_path, trust)
-    rollback, rollback_raw = _load_verified(rollback_path, trust)
-    if canonical_sha256(current) != canonical_sha256(candidate):
-        raise IdentityPackLifecycleError("identity cutover verification failed")
-    if canonical_sha256(rollback) != canonical_sha256(base):
-        raise IdentityPackLifecycleError("identity rollback copy verification failed")
-    return IdentityPackCutover(
-        previous_sha256=hashlib.sha256(base_raw).hexdigest(),
-        current_sha256=hashlib.sha256(current_raw).hexdigest(),
-        rollback_sha256=hashlib.sha256(rollback_raw).hexdigest(),
-    )
+    with _exclusive_lifecycle_lock(current_path):
+        base, base_raw = _load_verified(current_path, trust)
+        candidate, candidate_raw = _load_verified(candidate_path, trust)
+        validate_identity_successor(candidate, base, trust=trust)
+        _atomic_write(rollback_path, base_raw)
+        _atomic_write(current_path, candidate_raw)
+        current, current_raw = _load_verified(current_path, trust)
+        rollback, rollback_raw = _load_verified(rollback_path, trust)
+        if canonical_sha256(current) != canonical_sha256(candidate):
+            raise IdentityPackLifecycleError("identity cutover verification failed")
+        if canonical_sha256(rollback) != canonical_sha256(base):
+            raise IdentityPackLifecycleError("identity rollback copy verification failed")
+        return IdentityPackCutover(
+            previous_sha256=hashlib.sha256(base_raw).hexdigest(),
+            current_sha256=hashlib.sha256(current_raw).hexdigest(),
+            rollback_sha256=hashlib.sha256(rollback_raw).hexdigest(),
+        )
 
 
 def rollback_identity_successor(
@@ -249,23 +277,24 @@ def rollback_identity_successor(
 ) -> IdentityPackCutover:
     """Restore the previously verified identity; no unsigned fallback exists."""
 
-    current, current_raw = _load_verified(current_path, trust)
-    rollback, rollback_raw = _load_verified(rollback_path, trust)
-    if (
-        rollback.identity_id != current.identity_id
-        or rollback.issuer != current.issuer
-        or rollback.pack_version + 1 != current.pack_version
-    ):
-        raise IdentityPackLifecycleError("identity rollback is not the direct predecessor")
-    _atomic_write(current_path, rollback_raw)
-    restored, restored_raw = _load_verified(current_path, trust)
-    if canonical_sha256(restored) != canonical_sha256(rollback):
-        raise IdentityPackLifecycleError("identity rollback verification failed")
-    return IdentityPackCutover(
-        previous_sha256=hashlib.sha256(current_raw).hexdigest(),
-        current_sha256=hashlib.sha256(restored_raw).hexdigest(),
-        rollback_sha256=hashlib.sha256(rollback_raw).hexdigest(),
-    )
+    with _exclusive_lifecycle_lock(current_path):
+        current, current_raw = _load_verified(current_path, trust)
+        rollback, rollback_raw = _load_verified(rollback_path, trust)
+        if (
+            rollback.identity_id != current.identity_id
+            or rollback.issuer != current.issuer
+            or rollback.pack_version + 1 != current.pack_version
+        ):
+            raise IdentityPackLifecycleError("identity rollback is not the direct predecessor")
+        _atomic_write(current_path, rollback_raw)
+        restored, restored_raw = _load_verified(current_path, trust)
+        if canonical_sha256(restored) != canonical_sha256(rollback):
+            raise IdentityPackLifecycleError("identity rollback verification failed")
+        return IdentityPackCutover(
+            previous_sha256=hashlib.sha256(current_raw).hexdigest(),
+            current_sha256=hashlib.sha256(restored_raw).hexdigest(),
+            rollback_sha256=hashlib.sha256(rollback_raw).hexdigest(),
+        )
 
 
 __all__ = [
