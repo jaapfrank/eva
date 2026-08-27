@@ -202,7 +202,7 @@
                 },
                 {
                     "path": "src/eva/application/soul_markdown.py",
-                    "sha256": "c6d9283b3c434029234c12f3230105c63d8eb7ee4c06f63864202340a2dfaacc"
+                    "sha256": "375ea491194960f63f7b7fda47c968ebed806fb90e2b8257b52201fc05639073"
                 },
                 {
                     "path": "src/eva/bootstrap/action_chain_effect_controls.py",
@@ -218,7 +218,7 @@
                 },
                 {
                     "path": "tests/application/test_soul_markdown.py",
-                    "sha256": "71d995b5b733715b0448a055f715d401d4b7f19b34a1b276f645943214acdd7e"
+                    "sha256": "8dc167c4676c2a335eefe1b396937fd4aefc7146130fca3fbaa9c1fe86da7877"
                 },
                 {
                     "path": "tests/postgres/test_action_chain_effect_controls.py",
