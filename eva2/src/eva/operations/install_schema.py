@@ -9,6 +9,8 @@ owns the one supported fresh/forward route used by the full-stack installer.
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stdout
+import io
 import json
 import os
 import sys
@@ -92,6 +94,22 @@ def _current_revision(engine: sa.Engine) -> str | None:
         return value
 
 
+def _require_no_schema_drift(config: Config) -> None:
+    """Run Alembic's drift check without corrupting the JSON CLI protocol."""
+
+    # Alembic writes its successful human-oriented status line to stdout.  The
+    # installer is an operator/machine boundary and promises exactly one JSON
+    # receipt on stdout, so retain error propagation while discarding that line.
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            "ignore",
+            message="Cannot correctly sort tables; there are unresolvable cycles.*",
+            category=sa.exc.SAWarning,
+        )
+        with redirect_stdout(io.StringIO()):
+            command.check(config)
+
+
 def install_schema(
     database_dsn: str, *, alembic_ini: Path
 ) -> SchemaInstallationReceipt:
@@ -131,13 +149,7 @@ def install_schema(
         # Alembic covers pending ordinary metadata operations.  Its own table
         # sorter warns, and omits FK comparison, for Eva's intentional cycles;
         # the direct catalog check immediately below closes that exact gap.
-        with warnings.catch_warnings():
-            warnings.filterwarnings(
-                "ignore",
-                message="Cannot correctly sort tables; there are unresolvable cycles.*",
-                category=sa.exc.SAWarning,
-            )
-            command.check(config)
+        _require_no_schema_drift(config)
         with engine.connect() as connection:
             require_current_foreign_key_catalog(connection)
         return SchemaInstallationReceipt(

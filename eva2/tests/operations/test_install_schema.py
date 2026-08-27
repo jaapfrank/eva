@@ -8,6 +8,7 @@ from alembic.util import CommandError
 from eva.operations.install_schema import (
     _HEAD_REVISION,
     _KNOWN_FORWARD_REVISIONS,
+    _require_no_schema_drift,
     _secret,
     main,
 )
@@ -49,6 +50,19 @@ def test_secret_source_is_file_only_and_regular(
     monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(link))
     with pytest.raises(RuntimeError, match="non-symlink"):
         _secret(value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE")
+
+
+def test_schema_drift_check_keeps_stdout_for_one_json_cli_receipt(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    def successful_check(_config: object) -> None:
+        print("No new upgrade operations detected.")
+
+    monkeypatch.setattr("eva.operations.install_schema.command.check", successful_check)
+
+    _require_no_schema_drift(object())  # type: ignore[arg-type]
+
+    assert capsys.readouterr().out == ""
 
 
 def test_cli_reports_alembic_drift_as_a_sanitized_failure(
