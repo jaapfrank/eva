@@ -212,6 +212,13 @@ def _require_empty_memory_trial_target(
 
 
 def run_trial(args: argparse.Namespace) -> dict[str, object]:
+    """Prepare or write one explicitly selected, review-only memory slice.
+
+    ``--plan-only`` deliberately stops before PostgreSQL.  It permits the
+    owner to inspect the count and stable command hash before authorizing the
+    disposable-database write.  It never prints legacy memory content.
+    """
+
     source = Path(args.source_sqlite)
     if not source.is_absolute():
         source = Path.cwd() / source
@@ -244,54 +251,67 @@ def run_trial(args: argparse.Namespace) -> dict[str, object]:
         retention_until=retention_until,
     )
     commands = build_legacy_memory_trial(records, spec)
-    dsn = _trial_url(args.trial_dsn)
-    engine = sa.create_engine(dsn, pool_pre_ping=False)
-    try:
-        with engine.begin() as connection:
-            connection.execute(sa.text("SET CONSTRAINTS ALL DEFERRED"))
-            connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
-            set_local_scope(
-                connection,
-                tenant_id=spec.tenant_id,
-                installation_id=spec.installation_id,
-            )
-            _require_empty_memory_trial_target(connection, spec)
-            memory = MemoryAuthority(
-                PostgresMemoryRepository(connection, spec.tenant_id, spec.installation_id)
-            )
-            for command in commands:
-                memory.remember(command)
-            recalled = memory.recall_for_presence(
-                RecallCurrentFacts(
-                    recall_id="legacy:memory:trial:negative-recall",
-                    installation_id=spec.installation_id,
+    plan_only = bool(getattr(args, "plan_only", False))
+    ordinary_recall_count: int | None = None
+    if not plan_only:
+        trial_dsn = getattr(args, "trial_dsn", None)
+        if not isinstance(trial_dsn, str) or not trial_dsn:
+            raise LegacyMemoryTrialError("trial DSN is required unless --plan-only is used")
+        dsn = _trial_url(trial_dsn)
+        engine = sa.create_engine(dsn, pool_pre_ping=False)
+        try:
+            with engine.begin() as connection:
+                connection.execute(sa.text("SET CONSTRAINTS ALL DEFERRED"))
+                connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
+                set_local_scope(
+                    connection,
                     tenant_id=spec.tenant_id,
-                    principal_id=spec.target_principal_id,
-                    audience=MemoryAudience.private_person(
-                        principal_id=spec.target_principal_id
-                    ),
-                    conversation_id="legacy:memory:trial",
-                    project_id=None,
-                    query_purpose="reply",
-                    requested_valid_at=imported_at,
-                    scope=commands[0].scope,
-                    subject_ids=(spec.target_principal_id,),
-                    query_text="legacy memory trial",
+                    installation_id=spec.installation_id,
                 )
-            )
-            if recalled.confirmed_facts:
-                raise LegacyMemoryTrialError("restricted legacy trial entered normal recall")
-    finally:
-        engine.dispose()
+                _require_empty_memory_trial_target(connection, spec)
+                memory = MemoryAuthority(
+                    PostgresMemoryRepository(
+                        connection, spec.tenant_id, spec.installation_id
+                    )
+                )
+                for command in commands:
+                    memory.remember(command)
+                recalled = memory.recall_for_presence(
+                    RecallCurrentFacts(
+                        recall_id="legacy:memory:trial:negative-recall",
+                        installation_id=spec.installation_id,
+                        tenant_id=spec.tenant_id,
+                        principal_id=spec.target_principal_id,
+                        audience=MemoryAudience.private_person(
+                            principal_id=spec.target_principal_id
+                        ),
+                        conversation_id="legacy:memory:trial",
+                        project_id=None,
+                        query_purpose="reply",
+                        requested_valid_at=imported_at,
+                        scope=commands[0].scope,
+                        subject_ids=(spec.target_principal_id,),
+                        query_text="legacy memory trial",
+                    )
+                )
+                ordinary_recall_count = len(recalled.confirmed_facts)
+                if ordinary_recall_count:
+                    raise LegacyMemoryTrialError(
+                        "restricted legacy trial entered normal recall"
+                    )
+        finally:
+            engine.dispose()
     return {
         "contract": "Eva2LegacyMemoryTrialReceipt/v1",
+        "mode": "plan_only" if plan_only else "written_to_disposable_database",
         "source_sha256": source_sha,
         "selected_person_label_sha256": spec.selected_person_label_sha256,
-        "imported_count": len(commands),
+        "selected_count": len(commands),
+        "imported_count": 0 if plan_only else len(commands),
         "commands_sha256": canonical_sha256(
             [command.fact.model_dump(mode="json") for command in commands]
         ),
-        "ordinary_recall_count": 0,
+        "ordinary_recall_count": ordinary_recall_count,
         "trust": "legacy_unverified",
         "privacy_class": "restricted",
     }
@@ -302,13 +322,18 @@ def main(argv: Sequence[str] | None = None) -> None:
     parser.add_argument("--source-sqlite", required=True, type=Path)
     parser.add_argument("--person-label-file", required=True, type=Path)
     parser.add_argument("--confirmation-file", required=True, type=Path)
-    parser.add_argument("--trial-dsn", required=True)
+    parser.add_argument("--trial-dsn")
     parser.add_argument("--tenant-id", required=True)
     parser.add_argument("--installation-id", required=True)
     parser.add_argument("--target-principal-id", required=True)
     parser.add_argument("--provenance-evidence-id", required=True)
     parser.add_argument("--limit", type=int, default=25)
     parser.add_argument("--retention-days", type=int, default=7)
+    parser.add_argument(
+        "--plan-only",
+        action="store_true",
+        help="prepare and hash the selected slice without opening PostgreSQL",
+    )
     args = parser.parse_args(argv)
     if not 1 <= args.retention_days <= 30:
         parser.error("--retention-days must be between 1 and 30")

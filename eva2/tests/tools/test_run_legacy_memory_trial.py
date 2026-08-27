@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -12,6 +13,7 @@ from tools.run_legacy_memory_trial import (
     _copy_readonly_sqlite_snapshot,
     _read_private_text,
     _trial_url,
+    run_trial,
 )
 
 
@@ -110,3 +112,82 @@ def test_trial_url_accepts_only_named_disposable_database() -> None:
     assert _trial_url(
         "postgresql+psycopg://localhost/eva2_legacy_memory_trial_owner"
     ).endswith("eva2_legacy_memory_trial_owner")
+
+
+def test_plan_only_hashes_one_private_snapshot_without_opening_postgres(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "legacy.db"
+    connection = sqlite3.connect(source)
+    try:
+        connection.execute(
+            "CREATE TABLE memories (id INTEGER, ts TEXT, person TEXT, content TEXT, category TEXT, archived INTEGER)"
+        )
+        connection.execute(
+            "INSERT INTO memories VALUES (1, '2026-08-01T12:00:00Z', 'owner', 'kept', 'preference', 0)"
+        )
+        connection.commit()
+    finally:
+        connection.close()
+    label = _private(tmp_path / "label", "owner")
+    confirmation = _private(
+        tmp_path / "confirmation", "CONFIRM_LEGACY_MEMORY_TRIAL_V1"
+    )
+
+    receipt = run_trial(
+        argparse.Namespace(
+            source_sqlite=source,
+            person_label_file=label,
+            confirmation_file=confirmation,
+            trial_dsn=None,
+            tenant_id="66a4aad5-0550-5211-8b36-398eabe5b7be",
+            installation_id="0a44a85c-4bbb-5330-8803-60fab86e5a94",
+            target_principal_id="8d0ce6a5-da38-51a8-81a6-f2a99d1652d3",
+            provenance_evidence_id="52752881-f9e4-58e7-a398-8c4a982d6794",
+            limit=25,
+            retention_days=7,
+            plan_only=True,
+        )
+    )
+
+    assert receipt["mode"] == "plan_only"
+    assert receipt["selected_count"] == 1
+    assert receipt["imported_count"] == 0
+    assert receipt["ordinary_recall_count"] is None
+    assert len(str(receipt["commands_sha256"])) == 64
+
+
+def test_write_mode_requires_a_disposable_database_dsn(tmp_path: Path) -> None:
+    source = tmp_path / "legacy.db"
+    connection = sqlite3.connect(source)
+    try:
+        connection.execute(
+            "CREATE TABLE memories (id INTEGER, ts TEXT, person TEXT, content TEXT, category TEXT, archived INTEGER)"
+        )
+        connection.execute(
+            "INSERT INTO memories VALUES (1, '2026-08-01T12:00:00Z', 'owner', 'kept', 'preference', 0)"
+        )
+        connection.commit()
+    finally:
+        connection.close()
+    label = _private(tmp_path / "label", "owner")
+    confirmation = _private(
+        tmp_path / "confirmation", "CONFIRM_LEGACY_MEMORY_TRIAL_V1"
+    )
+
+    with pytest.raises(LegacyMemoryTrialError, match="DSN is required"):
+        run_trial(
+            argparse.Namespace(
+                source_sqlite=source,
+                person_label_file=label,
+                confirmation_file=confirmation,
+                trial_dsn=None,
+                tenant_id="66a4aad5-0550-5211-8b36-398eabe5b7be",
+                installation_id="0a44a85c-4bbb-5330-8803-60fab86e5a94",
+                target_principal_id="8d0ce6a5-da38-51a8-81a6-f2a99d1652d3",
+                provenance_evidence_id="52752881-f9e4-58e7-a398-8c4a982d6794",
+                limit=25,
+                retention_days=7,
+                plan_only=False,
+            )
+        )
