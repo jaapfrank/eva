@@ -92,6 +92,7 @@ from eva.application.conversation import (
     LivingConversation,
     RecentConversationMessage,
 )
+from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.application.advanced_tasks import (
     AdvancedTaskApproval,
     AdvancedTaskBlocked,
@@ -163,6 +164,8 @@ class RuntimeSettings:
     identity_description: str = (
         "Je bent een warme, nuchtere en capabele digitale huisgenoot."
     )
+    identity_pack_file: str | None = None
+    identity_pack_trust_file: str | None = None
     conversation_auth_file: str = "/run/eva/codex/auth.json"
     conversation_model: str = "gpt-5.4-mini"
     conversation_reasoning_effort: str = "medium"
@@ -219,6 +222,10 @@ class RuntimeSettings:
             "EVA_IDENTITY_DESCRIPTION",
             "Je bent een warme, nuchtere en capabele digitale huisgenoot.",
         ).strip()
+        identity_pack_file = os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip() or None
+        identity_pack_trust_file = (
+            os.environ.get("EVA_IDENTITY_PACK_TRUST_FILE", "").strip() or None
+        )
         conversation_auth_file = os.environ.get(
             "EVA_CONVERSATION_AUTH_FILE", "/run/eva/codex/auth.json"
         ).strip()
@@ -437,6 +444,10 @@ class RuntimeSettings:
             or not conversation_model
         ):
             raise RuntimeError("Eva identity configuration is incomplete")
+        if (identity_pack_file is None) != (identity_pack_trust_file is None):
+            raise RuntimeError(
+                "EVA_IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE must be set together"
+            )
         if conversation_reasoning_effort not in {"low", "medium", "high"}:
             raise RuntimeError("EVA_CONVERSATION_REASONING_EFFORT is invalid")
         if background_tenant_id is None or background_installation_id is None:
@@ -475,6 +486,8 @@ class RuntimeSettings:
             hindsight_recall_node_budget=hindsight_recall_node_budget,
             identity_name=identity_name,
             identity_description=identity_description,
+            identity_pack_file=identity_pack_file,
+            identity_pack_trust_file=identity_pack_trust_file,
             conversation_auth_file=conversation_auth_file,
             conversation_model=conversation_model,
             conversation_reasoning_effort=conversation_reasoning_effort,
@@ -1697,9 +1710,13 @@ def create_runtime_app() -> FastAPI:
         ),
         active_group_consent_resolver=group_consent,
     )
-    identity_pack_path = os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip()
     identity_pack = load_current_identity_pack(
-        None if not identity_pack_path else Path(identity_pack_path)
+        None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
+        trust=(
+            None
+            if settings.identity_pack_trust_file is None
+            else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))
+        ),
     )
     identity = IdentityProfile(
         name=settings.identity_name,

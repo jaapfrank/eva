@@ -38,6 +38,8 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
         "EVA_DASHBOARD_ACCESS_TOKEN",
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE",
+        "EVA_IDENTITY_PACK_FILE",
+        "EVA_IDENTITY_PACK_TRUST_FILE",
     ):
         monkeypatch.delenv(name, raising=False)
     database = private_tmp_path / "database-dsn"
@@ -64,6 +66,20 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     assert settings.database_dsn.endswith("@postgres/eva")
     assert settings.home_assistant_token == "test-token"
     assert settings.conversation_reasoning_effort == "medium"
+
+
+def test_runtime_requires_custom_identity_pack_and_trust_together(
+    monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_IDENTITY_PACK_FILE", "/run/eva/identity/current.json")
+    with pytest.raises(RuntimeError, match="IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.setenv("EVA_IDENTITY_PACK_TRUST_FILE", "/run/eva/identity/trust.json")
+    settings = RuntimeSettings.from_environment()
+    assert settings.identity_pack_file == "/run/eva/identity/current.json"
+    assert settings.identity_pack_trust_file == "/run/eva/identity/trust.json"
 
 
 def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
