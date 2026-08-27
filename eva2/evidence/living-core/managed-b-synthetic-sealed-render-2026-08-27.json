@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBSyntheticSealedRenderReceipt/v1",
+  "source_commit": "28104541f093d335729f0a1cf920914c97ca3036",
+  "observed": {
+    "compose_version": "2.40.3-desktop.1",
+    "manifest_sha256": "027395d94a37e348cb3f2cf740f4be537abd297b6d42f668f7f238043efc7bc5",
+    "project_name": "eva2-b-live",
+    "rendered_sha256": "fdb29c7b88474bd3eb5356480c2947ad2a52a59eaf72a2eff5d28a2d01da47b4",
+    "service_names": [
+      "core",
+      "durable-goal-worker",
+      "hindsight",
+      "hindsight-access-lease",
+      "model-access-lease",
+      "postgres",
+      "schema-installer",
+      "telegram-ingress"
+    ]
+  },
+  "closed_failures": [
+    "The preflight now rejects a missing mandatory Hindsight bank namespace before Compose is called.",
+    "The renderer keeps the intentionally escaped container healthcheck variable while still rejecting unresolved host interpolation.",
+    "The renderer includes the schema-install profile before requiring the exact eight-service graph."
+  ],
+  "constraints": {
+    "configuration": "A private temporary environment and only synthetic files were used; every generated file was mode 0600 and the temporary directories were mode 0700/2750 as applicable.",
+    "docker": "Compose ran only the read-only config command through a private temporary Docker CLI configuration. No compose up, create, start, pull, tag, push or volume operation was issued.",
+    "preflight_uid": 1000
+  },
+  "nonclaims": [
+    "The image reference was a synthetic content-addressed reference. This does not bind or deploy the current untagged candidate image.",
+    "The synthetic files were intentionally owned by the local test UID 1000. Production UID 65532 secret metadata still requires a separately authorized host preflight.",
+    "No Eva1 or managed-B service, configuration, volume, Hindsight data, PostgreSQL data, Telegram route, Home Assistant route or real secret was opened or changed.",
+    "This is not B adoption, production deployment, runtime readiness with real dependencies, rollback proof or user acceptance."
+  ],
+  "status": "passed_synthetic_sealed_render_not_deployed"
+}

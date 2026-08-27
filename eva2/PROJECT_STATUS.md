@@ -57,7 +57,7 @@ de controleerbare live receipts staan in
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper. De onderbreekcontroller geeft aantoonbaar tegelijk stopopdrachten aan speaker en onafgemaakte antwoordgeneratie | De echte model-/TTS-koppeling, gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence zijn nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. De beheerde startconfiguratie rendert nu ook als één verzegeld geheel met alle acht diensten en uitsluitend synthetische tijdelijke bestanden. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, een geautoriseerde preflight met echte hostmetadata, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie. Een aparte Python-3.9/CPU benchmarkimage met alle upstream-pakketten is nu echt gebouwd en netwerkloos gecontroleerd | AgentBench-taakservers, model-/kostenmandaat, officiële AgentBench/GAIA/OSWorld-scores en de volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Belangrijk: de live Eva en Eva2 delen geen geheugen
@@ -73,7 +73,24 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
-## Nieuwste gesloten stap: huidige kandidaat geeft echt “klaar” terug
+## Nieuwste gesloten stap: de beheerde startconfiguratie is echt gesloten gerenderd
+
+De kandidaat kan haar toekomstige beheerde startopstelling nu echt aan Compose
+voorleggen zonder iets te starten. De renderer maakte één verzegeld manifest
+met precies acht diensten: database, schema-installatie, beide
+toegangsleases, Hindsight, Eva-kern, doelworker en Telegram-ingang. Daarbij
+zijn drie fouten gevonden en gesloten: een verplichte geheugennaamruimte kon
+ontbreken, een veilige containervariabele werd ten onrechte afgekeurd en het
+schema-installatieprofiel ontbrak uit de renderopdracht.
+
+De proef gebruikte alleen tijdelijke nepbestanden en een nep-imageverwijzing.
+Dat bewijst de configuratieketen, niet een echte start of migratie. Voor een
+echte hostpreflight zijn jouw expliciete toestemming en de juiste bestanden
+voor UID 65532 nodig. Eva1, B, hun volumes en hun geheugen zijn niet geopend.
+Zie
+[`managed-b-synthetic-sealed-render-2026-08-27.json`](evidence/living-core/managed-b-synthetic-sealed-render-2026-08-27.json).
+
+## Eerder deze run gesloten: huidige kandidaat geeft echt “klaar” terug
 
 Dezelfde huidige kandidaatimage start nu ook haar volledige webkern op: Eva
 antwoordde met een groene `/healthz` én `/readyz`. Daarbij controleerde zij

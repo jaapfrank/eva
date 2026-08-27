@@ -57,7 +57,7 @@ Deze bouwblokken zijn waardevol, maar krijgen bewust niet de status `AF`:
 | Technisch bouwblok | Wat al is bewezen | Wat de live status nog blokkeert |
 |---|---|---|
 | Algemene skill- en actieketen | Eva onderscheidt bij iedere geschikte skill ontvangst, uitvoering, fout en gecontroleerde eindtoestand; de volledige action-chainreeks is 75/75 groen | Onafhankelijke review en dezelfde totaalroute via echt Telegram-B en één echte skill; Home Assistant is de eerste testadapter |
-| Ontwikkel- en herstelbasis | Productie A blijft staan, kandidaat B is gescheiden, back-ups bestaan en de actuele Eva2-kandidaat bouwt offline, start haar schema veilig opnieuw, blokkeert drift en geeft met tijdelijke dependency-doubles groene gezondheidschecks terug | Beheerde startconfiguratie, diepere secretcontrole, onafhankelijke review, adoptie en releasebeslissing |
+| Ontwikkel- en herstelbasis | Productie A blijft staan, kandidaat B is gescheiden, back-ups bestaan en de actuele Eva2-kandidaat bouwt offline, start haar schema veilig opnieuw, blokkeert drift en geeft met tijdelijke dependency-doubles groene gezondheidschecks terug. De beheerde Compose-configuratie rendert bovendien met precies acht verwachte diensten uit één synthetisch, verzegeld plan | Geautoriseerde host-secretpreflight op UID 65532, onafhankelijke review, adoptie en releasebeslissing |
 | Geïntegreerde cockpitbasis | Eén visuele 3D-pagina toont status, identiteit, Mijn kring, bewijs, dependencies en het duurzame read-only Kanbanbord; een kleine `SOUL.md` toont veilig alleen een identiteitsvoorstel | Eigenaar-authenticatie, ondertekenen/activeren van een voorstel, bordwrites, gesprekken, kosten, geheugenbediening en live B-deploy |
 | Eerste dependencyvervanging | De officiële OpenAI-SDK neemt in een gereviewde kandidaat één gewone modeltransportroute over; 18 SDK-tests en 63 gerichte regressies zijn groen | Echte provider- en snelheidspariteit, supply-chainbewijs, offline image en veilige productiepromotie |
 | Eerste dependencybesluiten | De MCP-SDK is gemeten afgewezen; HA-MCP bespaart bij een directe swap te weinig; Pydantic/Harness neemt de subagentmotor over. Microsoft Playwright MCP heeft nu één vaste lokale pagina gelezen én één vaste actie via Eva's duurzame logboek uitgevoerd. DBOS `2.31.0+eva.1` is hashgebonden gebouwd en doorliep de 15-case PostgreSQL-herstelreeks | Pydantic Realtime krijgt de volgende verticale proef. Voor de browser blijven publieke websites, accounts, overname en de live route open. DBOS-promotie wacht nog op release-inputs, candidate-image, onafhankelijke review en rollback |
@@ -77,7 +77,7 @@ Statussen:
 
 | Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
 |---|---|---|---|---:|---:|---|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De actuele kandidaat installeert en herstart haar schema, blokkeert drift, en geeft via `/healthz` en `/readyz` groen terug met een nieuwe database en tijdelijke geheugen-/modeltestdoubles | De beheerde startconfiguratie en secretpreflight exact aan deze image binden, diepere secretcontrole, onafhankelijke review, HA-secretrotatie, B-adoptie en de echte eindproef | 3-6 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De actuele kandidaat installeert en herstart haar schema, blokkeert drift, en geeft via `/healthz` en `/readyz` groen terug met een nieuwe database en tijdelijke geheugen-/modeltestdoubles. De beheerde startconfiguratie rendert aantoonbaar alle acht diensten uit één synthetisch verzegeld plan | Geautoriseerde host-secretpreflight op UID 65532, onafhankelijke review, HA-secretrotatie, B-adoptie en de echte eindproef | 2-4 uur | 2-4 uur | 2-6 uur eigenaar en omschakelvenster |
 | 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy bestaan. De normale Telegrambron herkent nu na herstart een dynamisch gekoppeld account. Een eventuele Eva1-geheugenproef kan eerst alleen aantallen en hashes voorvertonen uit een consistente private SQLite-snapshot; pas na expliciete bevestiging gaat hoogstens 50 gekoppelde regels naar een wegwerp-Eva2-database als niet-gespreksgeheugen | Op eind-B zetten en echte gezins-/groepstest uitvoeren. Voor de Eva1-proef is nog één bewuste oude-persoon→nieuwe-persoonkoppeling nodig | 2-4 uur | 2-4 uur | 45-90 min eigenaar plus accounts/testgroep |
 | 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill. HA-MCP is exact onderzocht, maar een directe swap verwijdert naar schatting slechts 174–192 regels | Eén kleine HA-MCP state→service→stateproef; alleen bij echte semantische pariteit en minimaal 300 regels nettowinst promoveren. Daarna Telegram→skill→readback→vervolg en crash live uitvoeren | 2-5 uur | 2-4 uur | 2-4 uur met veilige testskill/-entiteit |
 | 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Bestaande HA/Wyoming-/speakercomponenten hergebruiken voor één speaker, deurbel, quiet hours, cooldown, stop en herstel | 4-10 uur | 3-6 uur | Gedeelde 7-daagse huisproef |
@@ -141,13 +141,15 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
 ## De eerstvolgende twee zichtbare mijlpalen
 
 1. **P1.1 — één versiepassende releasekandidaat.** De actuele broncommit
-   `73648ea` heeft nu een hashvaste 39-package-wheelhouse, een netwerkloze,
+   `73648ea` heeft een hashvaste 39-package-wheelhouse, een netwerkloze,
    ongetagde imagebuild, niet-root/read-only runtime-import, schema-start,
-   veilige tweede start en gecontroleerde schema-driftafwijzing. De volgende
-   runtime-readiness met tijdelijke testdoubles is nu ook groen. De volgende
-   stap is de beheerde startconfiguratie en secretpreflight exact binden,
-   gevolgd door onafhankelijke review en pas daarna een eventuele B-adoptie.
-   Dit verandert A of B niet.
+   veilige tweede start en gecontroleerde schema-driftafwijzing. De
+   runtime-readiness met tijdelijke testdoubles is groen. Op commit `2810454`
+   rendert de beheerde startconfiguratie nu daadwerkelijk alle acht diensten
+   uit één synthetisch verzegeld plan en weigert zij drie eerder verborgen
+   configuratiefouten. Volgende stap: een geautoriseerde UID-65532
+   host-secretpreflight en onafhankelijke review; pas daarna kan B-adoptie
+   überhaupt worden overwogen. Dit verandert A of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op
    checkpoint `187f797` een dynamisch gekoppeld account veilig en ook na
    herstart. Na de veilige B-adoptie demonstreert
