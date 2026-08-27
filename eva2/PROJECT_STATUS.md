@@ -62,6 +62,22 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
+onderbreken**. De nieuwe controller geeft audioblokken alleen door aan de
+gekozen speaker/browser-uitvoerder en bewaart zelf geen audio. Alleen dezelfde
+persoon, sessie, gesproken beurt en antwoordgeneratie mogen de stop sturen.
+Een stop wacht bovendien tot de uitvoerder bevestigt dat Eva stil is; faalt
+die bevestiging, dan meldt Eva een fout in plaats van ten onrechte
+“onderbroken”. Lege of te grote audioblokken worden vóór afspelen geweigerd.
+
+De contract-, afspeel- en bestaande gesprekstests zijn samen **26/26 groen**
+op checkpoint `20490a0`. Dit is een echte, kleine V02-bouwsteen, maar geen
+microfoon-, speaker-, latency- of menselijke voiceproef: op deze WSL-host
+bestaat daarvoor geen bruikbare audiohardware. Eva 1, B, Telegram, Home
+Assistant en bestaand geheugen zijn niet geopend.
+
+## Eerder deze run gesloten: kandidaatimage en databasecontrole
+
 De **nieuwste kandidaatimage** is nu opnieuw gebouwd vanaf de actuele code en
 heeft haar eigen databasecontrole echt uitgevoerd. In een volledig nieuwe,
 tijdelijke PostgreSQL startte Eva als niet-root en met een alleen-lezen
@@ -366,8 +382,20 @@ route een antwoord-PCM-stroom. Dit is doelbewust nog geen full duplex,
 microfoon/speaker, barge-in of latencyclaim; het voorkomt alleen dat een
 toekomstige voice-route stiekem eerst een compleet geluidsbestand moet bouwen.
 De huidige WSL-bouwhost heeft bovendien geen bruikbaar audio-in- of
-audio-uitapparaat; een echte menselijk microfoon-/speakerproef vereist daarom
+audio-uitapparaat; een echte menselijke microfoon-/speakerproef vereist daarom
 een host met die hardware, niet nog een synthetische codeproef.
+
+Checkpoint `20490a0` voegt vervolgens de ontbrekende dunne
+**afspeel-/onderbreekgrens** toe. Zij gebruikt geen nieuwe STT-, TTS-, WebRTC-
+of geheugenimplementatie: een bestaande speaker-, browser- of
+provideruitvoerder wordt als kleine sink ingeplugd. De controller bewaart geen
+audio, accepteert alleen begrensde blokken, en stopt uitsluitend de exact
+gebonden onafgemaakte antwoordgeneratie. Een barge-in van een andere persoon,
+sessie, beurt of generatie faalt. De controller wacht op een daadwerkelijke
+stopbevestiging; een kapotte speaker levert een fout op en nooit een onterechte
+“onderbroken”-receipt. **26 gerichte voice-/gesprekstests zijn groen.** Dit
+sluit geen fysieke V02-proef: er zijn nog geen microfoon, speaker,
+full-duplex, providerverbinding, latencyclaim of onafhankelijke review.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**

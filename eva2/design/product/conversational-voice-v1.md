@@ -132,6 +132,18 @@ geen V01-voiceconnector of migratie die zo'n extern/draagbaar record mag
 schrijven. V03/V04 promoveren de exact dezelfde shapes pas samen met die
 concrete route en opslagautoriteit.
 
+Checkpoint `20490a0` sluit daarop de kleine afspeelgrens aan. De nieuwe
+`VoicePlaybackController` kent alleen de gebonden sessie, beurt,
+antwoordgeneratie en een ingeplugde `play`/`stop`-sink. Hij bewaart geen audio;
+hij geeft begrensde chunks door. Een geldige `BargeIn` annuleert alleen de nog
+lopende afspeelwrite en wacht vervolgens tot de sink expliciet stil bevestigt.
+Als die bevestiging faalt, krijgt de caller een fout en geen onterechte
+`interrupted`-receipt. Verkeerde persoon, beurt of generatie, lege chunks en
+te grote chunks worden geweigerd. De extra afspeeltests plus de bestaande
+voice- en gesprekstests zijn samen **26/26 groen**. Dit is geen speaker,
+microfoon, providerverbinding, full-duplex- of latencybewijs; V02 blijft dus
+open.
+
 De benodigde upstreamroute is ook echt afzonderlijk geïnstalleerd:
 `experiments/pydantic-realtime-v1/` bindt Pydantic AI
 `2.34.0[openai-realtime]` op upstreamcommit `bfa8e91…` aan een 47-package
