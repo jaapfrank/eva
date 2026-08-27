@@ -3,8 +3,9 @@
   "date": "2026-08-27",
   "environment": {
     "architecture": "amd64",
-    "image": "eva2/agentbench-fc@sha256:37e7e64b0ecf1f69eb73bdcc13889fd810ef350863570765250719bd6ef85184",
-    "imageSizeBytes": 347429431,
+    "image": "eva2/agentbench-fc@sha256:2d3bdfaab3f85a8d33f384440991829c24b4a9298c8a2e272c7f9d29905669de",
+    "imageSizeBytes": 382194821,
+    "imageTag": "eva2/agentbench-fc:python39-cpu-preflight-20260827",
     "os": "linux",
     "python": "3.9.25",
     "runtimeUser": "65532:65532"
@@ -13,7 +14,7 @@
     "baseImage": "python@sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b",
     "dockerfile": {
       "path": "benchmark/agentbench-fc-v1/Dockerfile",
-      "sha256": "6204cc1b42243274d5977ac88e26ed3a25eebf75676e50f79bf7706657f7aa70"
+      "sha256": "f28d1ac6e040925d1743b6ecdd4cd9ae2d0fa4c8375d01489af3474fdad263c9"
     },
     "requirements": {
       "path": "benchmark/agentbench-fc-v1/requirements.upstream.txt",
@@ -46,10 +47,11 @@
     "uvicorn": "0.22.0"
   },
   "verification": {
-    "build": "docker build --pull=false --tag eva2/agentbench-fc:python39-cpu-dev --file benchmark/agentbench-fc-v1/Dockerfile .",
+    "build": "docker build --pull=false --tag eva2/agentbench-fc:python39-cpu-preflight-20260827 --file benchmark/agentbench-fc-v1/Dockerfile .",
+    "git": "2.47.3",
     "networklessReadOnlyRun": true,
     "pipCheck": "passed",
-    "sourceCheckoutPreflight": "The separate preflight must still verify the clean host-mounted AgentBench source before a task run."
+    "sourceCheckoutPreflight": "Passed networkless and read-only against a separately mounted, clean upstream checkout: exact commit and requirements bytes were verified in the Python 3.9 container."
   },
   "nonClaims": [
     "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, model credential or live service was opened or changed.",

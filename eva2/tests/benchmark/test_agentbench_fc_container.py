@@ -21,6 +21,7 @@ def test_agentbench_fc_container_keeps_the_exact_upstream_requirements_cpu_only(
     assert "--extra-index-url https://download.pytorch.org/whl/cpu" in source
     assert "--only-binary=:all:" in source
     assert "pip check" in source
+    assert "apt-get install --yes --no-install-recommends git" in source
     assert "USER 65532:65532" in source
     assert "COPY AgentBench" not in source
 
@@ -38,9 +39,12 @@ def test_agentbench_fc_environment_receipt_binds_the_built_cpu_image() -> None:
     assert receipt["status"] == "environment_ready_no_tasks_started"
     assert receipt["environment"]["python"] == "3.9.25"
     assert receipt["environment"]["runtimeUser"] == "65532:65532"
+    assert receipt["environment"]["imageTag"] == (
+        "eva2/agentbench-fc:python39-cpu-preflight-20260827"
+    )
     assert receipt["environment"]["image"] == (
         "eva2/agentbench-fc@sha256:"
-        "37e7e64b0ecf1f69eb73bdcc13889fd810ef350863570765250719bd6ef85184"
+        "2d3bdfaab3f85a8d33f384440991829c24b4a9298c8a2e272c7f9d29905669de"
     )
     assert receipt["inputs"]["dockerfile"]["sha256"] == hashlib.sha256(
         DOCKERFILE.read_bytes()
@@ -49,3 +53,4 @@ def test_agentbench_fc_environment_receipt_binds_the_built_cpu_image() -> None:
         REQUIREMENTS.read_bytes()
     ).hexdigest()
     assert receipt["installedDirectPackages"]["torch"].endswith("+cpu")
+    assert receipt["verification"]["git"] == "2.47.3"

@@ -284,12 +284,18 @@ requirementslijst, maar draait op Python 3.9.25 met CPU-only Torch. Daarmee
 kwam niet opnieuw de meer dan zeven GB zware CUDA-keten mee die Eva niet nodig
 heeft voor deze benchmark.
 
-De image is echt gebouwd als
-`eva2/agentbench-fc@sha256:37e7e64b…`, bevat alle achttien upstream-pakketten
-en slaagt netwerkloos, alleen-lezen en als niet-root voor `pip check`. Er zit
-geen Eva-code, modelcredential, taakserver, dataset of score in. Dit maakt de
-officiële AgentBench-run mogelijk; het is nadrukkelijk nog geen uitgevoerde
-AgentBench-taak of vergelijkbare score. De heropenbare grens staat in
+De eerste image bleek nog geen bruikbare preflight te hebben: het
+controleprogramma gebruikte per ongeluk Python-3.10-syntax en de container
+mis­te `git` om de read-only upstreambron te verifiëren. Dat is nu hersteld
+in de lokale kandidaat `eva2/agentbench-fc:python39-cpu-preflight-20260827`.
+Zij controleert netwerkloos, alleen-lezen en als niet-root de exacte schone
+commit, requirements-hash, Python 3.9 en alle pakketten. Zij houdt de
+upstream-Pythonrequirements bytegelijk en voegt alleen één direct OS-pakket
+(`git`) plus zijn noodzakelijke apt-dependencies voor commitcontrole toe. Er
+zit geen Eva-code, modelcredential, taakserver, dataset of score in. Dit maakt
+de officiële AgentBench-run technisch voorbereid; het is
+nadrukkelijk nog geen uitgevoerde AgentBench-taak of vergelijkbare score. De
+heropenbare grens staat in
 [`agentbench-fc-environment-2026-08-27.json`](evidence/living-core/agentbench-fc-environment-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking

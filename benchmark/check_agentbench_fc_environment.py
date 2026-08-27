@@ -43,7 +43,10 @@ REQUIRED_DISTRIBUTIONS = (
 )
 
 
-@dataclass(frozen=True, slots=True)
+# AgentBench FC pins Python 3.9.  ``dataclass(slots=True)`` was introduced in
+# Python 3.10, so this preflight itself must stay compatible with the exact
+# interpreter it is meant to attest.
+@dataclass(frozen=True)
 class AgentBenchPreflight:
     actual_commit: str | None
     errors: tuple[str, ...]
@@ -67,7 +70,11 @@ class AgentBenchPreflight:
 
 def _git(root: Path, *arguments: str) -> str:
     completed = subprocess.run(
-        ["git", "-C", str(root), *arguments],
+        # The source checkout is intentionally mounted read-only and is owned
+        # by the host user, whereas the benchmark image runs as uid 65532.
+        # Scope Git's ownership exception to precisely that mount instead of
+        # writing a global config file or relaxing the container user.
+        ["git", "-c", f"safe.directory={root}", "-C", str(root), *arguments],
         check=True,
         capture_output=True,
         text=True,
