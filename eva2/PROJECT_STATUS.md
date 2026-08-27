@@ -62,6 +62,21 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+Een eventuele Eva1-geheugenproef kan nu eerst **zonder schrijven** worden
+voorbereid. Met `--plan-only` maakt Eva2 uitsluitend een private,
+read-only SQLite-snapshot, selecteert maximaal vijftig expliciet aan één
+persoon gekoppelde herinneringen en toont alleen aantallen en hashes. Er gaat
+in die stand niets naar PostgreSQL of Eva2-geheugen. De echte proef vereist
+daarna nog steeds een aparte bevestiging, een lokale wegwerpdatabase en een
+controle dat deze oude herinneringen niet in normaal gesprek terugkomen.
+
+De nieuwe voorvertoning en alle bestaande selectie-/privacygrenzen zijn
+**19/19 groen** op checkpoint `453253e`. Dit heeft de draaiende Eva1 niet
+geopend of gekopieerd. Jij houdt dus de keuze of en wanneer je een eigen
+snapshot aanwijst voor een beperkte proef.
+
+## Eerder deze run gesloten: veilige voice-onderbreking
+
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
 onderbreken**. De nieuwe controller geeft audioblokken alleen door aan de
 gekozen speaker/browser-uitvoerder en bewaart zelf geen audio. Alleen dezelfde
