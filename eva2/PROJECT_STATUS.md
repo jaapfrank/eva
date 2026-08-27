@@ -62,6 +62,20 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+Eva heeft nu een eerste **installatiecontrole vóór de wizard**. Die leest
+alleen de gepinde releasevoorwaarden en de grove lokale systeemversies. Zij
+downloadt niets, start geen Docker-container en leest geen secret, database of
+gebruikersdata. Pas als besturingssysteem, processor, Python, Docker én een
+eerder bewezen releaseplatform exact passen, mag een latere wizard starten.
+
+Op deze kandidaatmachine stopt zij terecht: Ubuntu, Python en Docker wijken af
+van de nog niet bewezen releasecombinatie. Dat is goed nieuws: Eva doet niet
+alsof je haar hier al veilig kunt installeren. De controle zelf is **8/8
+groen**; de echte wizard, ondertekende bundle en een fysieke fresh-install
+blijven open.
+
+## Eerder deze run gesloten: veilige Eva1-geheugenvoorvertoning
+
 Een eventuele Eva1-geheugenproef kan nu eerst **zonder schrijven** worden
 voorbereid. Met `--plan-only` maakt Eva2 uitsluitend een private,
 read-only SQLite-snapshot, selecteert maximaal vijftig expliciet aan één

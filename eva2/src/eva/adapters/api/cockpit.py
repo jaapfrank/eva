@@ -125,9 +125,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "installer",
                 "title": "Installeren en bijwerken",
                 "state": "tested",
-                "proof": "Read-only back-up en runtime-secretpreflight onafhankelijk gereviewd",
-                "meaning": "De gegevens- en secretbasis is beschermd; build, update, rollback en wizard blijven aparte open bewijzen.",
-                "next": "Installeren, koppelen, updaten en terugrollen vanuit één begeleide route.",
+                "proof": "Read-only back-up, runtime-secretpreflight en de nieuwe lokale installatiecontrole zijn getest",
+                "meaning": "Eva controleert eerst of deze computer echt bij de gepinde release past. Zonder bewezen platform installeert of wijzigt zij niets.",
+                "next": "Eén begeleide wizard bouwen voor installeren, koppelen, updaten en terugrollen.",
                 "evidence": _evidence("capability/installer"),
             },
             {
