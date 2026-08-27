@@ -6,6 +6,13 @@ Laatst bijgewerkt: 2026-08-27
 > `eva.service` in `/home/administrator/project/Bottie` met SQLite; Eva2-B met
 > PostgreSQL/Hindsight is een volledig afzonderlijke kandidaatroute.
 
+> Nieuw, 27 augustus 2026: de cockpit heeft nu een eigenaar-geauthenticeerde
+> lokale gesprekspagina. De browser levert alleen tekst; Eva bindt eigenaar,
+> privécontext, gesprek en bericht-ID server-side en schrijft het antwoord via
+> de bestaande kern. 51 API-/cockpittests zijn groen. Dit is nog geen live
+> modelgesprek, Telegram- of voiceproef; die vereisen de aparte runtime- en
+> gebruikersgates.
+
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 [`design/architecture/living-core-v1.md`](design/architecture/living-core-v1.md);

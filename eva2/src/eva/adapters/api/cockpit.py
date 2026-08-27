@@ -276,6 +276,7 @@ COCKPIT_HTML = """<!doctype html>
       <a class="nav-link" href="#kring"><span class="nav-icon"></span>Mijn kring</a>
       <a class="nav-link" href="#bewijs"><span class="nav-icon"></span>Echte voortgang</a>
       <p class="nav-label">Werk</p>
+      <a class="nav-link" href="/internal/v1/dashboard/conversation"><span class="nav-icon"></span>Gesprek</a>
       <a class="nav-link" href="#werkbord"><span class="nav-icon"></span>Werkbord</a>
       <a class="nav-link" href="#dependencies"><span class="nav-icon"></span>Skills & bouwstenen</a>
       <p class="nav-label">Beheer</p>
@@ -382,7 +383,7 @@ COCKPIT_HTML = """<!doctype html>
         <div class="dock">
           <article class="module connected"><strong>Overzicht</strong><span>Aangesloten</span></article>
           <article class="module connected"><strong>Identiteit</strong><span>Aangesloten</span></article>
-          <article class="module pending"><strong>Gesprekken</strong><span>Nog niet aangesloten</span></article>
+          <article class="module connected"><strong>Gesprekken</strong><span>Lokale eigenaarspagina gebruikt Eva's gebonden privégesprek; Telegram en voice blijven apart</span></article>
           <article class="module connected"><strong>Personen & geheugen</strong><span>Veilige actuele status aangesloten; inhoudelijk geheugenbeheer volgt later</span></article>
           <article class="module connected"><strong>Werkbord</strong><span>Duurzame read-only projectie aangesloten</span></article>
           <article class="module connected"><strong>Workers & subagents</strong><span>Chatstart, status, actieve stop en kleine workerimage getest; externe provider- en Telegramcanary volgen</span></article>

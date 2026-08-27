@@ -9,7 +9,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from uuid import NAMESPACE_URL, UUID, uuid5
+from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import sqlalchemy as sa
 from fastapi import FastAPI
@@ -721,6 +721,35 @@ class PostgresHindsightMemoryRuntime:
         if self._dashboard_effect_controller is None:
             raise RuntimeError("effect stop control is unavailable")
         return self._dashboard_effect_controller.stop(effect_intent_id)
+
+    def dashboard_turn(self, text: str) -> tuple[ConversationTurn, GroundedReply]:
+        """Create one private owner turn without trusting browser-supplied scope.
+
+        The dashboard is an owner interface, not a connector.  Its request never
+        supplies a tenant, installation, person, conversation, or message ID;
+        all of those are bound here to the configured runtime owner.
+        """
+
+        if (
+            self._runtime_tenant_id is None
+            or self._runtime_installation_id is None
+            or self._dashboard_owner_principal_id is None
+            or self._dashboard_principal_binding_id is None
+        ):
+            raise RuntimeError("owner conversation is unavailable")
+        if not isinstance(text, str) or not text.strip() or len(text.encode("utf-8")) > 4_096:
+            raise ValueError("owner conversation text is invalid")
+        principal_id = str(self._dashboard_owner_principal_id)
+        turn = ConversationTurn.private(
+            self._runtime_tenant_id,
+            self._runtime_installation_id,
+            principal_id,
+            f"dashboard:{self._dashboard_principal_binding_id}",
+            f"dashboard:{uuid4()}",
+            text.strip(),
+            datetime.now(tz=UTC).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        )
+        return turn, self.respond(turn)
 
     def recall(self, query: RecallCurrentFacts) -> PresenceMemory:
         return self._memory.recall_for_presence(query)

@@ -12,6 +12,7 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from eva.adapters.api.cockpit import COCKPIT_HTML, cockpit_progress
+from eva.adapters.api.dashboard_conversation import DASHBOARD_CONVERSATION_HTML
 from eva.adapters.api.dashboard_access import DashboardAccess
 
 from eva.application.conversation import (
@@ -735,6 +736,57 @@ def create_app(
                 "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
                 "X-Content-Type-Options": "nosniff",
             },
+        )
+
+    @app.get("/internal/v1/dashboard/conversation", response_class=HTMLResponse)
+    def dashboard_conversation(request: Request) -> HTMLResponse:
+        """Serve the owner-only page for the bound private conversation."""
+
+        dashboard_access.require(request)
+        return HTMLResponse(
+            DASHBOARD_CONVERSATION_HTML,
+            headers={
+                "Cache-Control": "no-store",
+                "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
+
+    @app.post("/internal/v1/dashboard/conversation/respond")
+    def dashboard_conversation_respond(
+        request: Request, payload: dict[str, Any], background_tasks: BackgroundTasks
+    ) -> JSONResponse:
+        """Submit one bound owner turn; browser input never sets its scope."""
+
+        dashboard_access.require(request)
+        if set(payload) != {"text"} or not isinstance(payload["text"], str):
+            raise HTTPException(status_code=422, detail="owner conversation is invalid")
+        respond_as_owner = getattr(runtime, "dashboard_turn", None)
+        if not callable(respond_as_owner):
+            raise HTTPException(status_code=503, detail="owner conversation unavailable")
+        try:
+            turn, reply = respond_as_owner(payload["text"])
+            if not isinstance(turn, ConversationTurn) or not isinstance(reply, GroundedReply):
+                raise ValueError("owner conversation result is invalid")
+        except ConversationConflict as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail="owner conversation is invalid") from error
+        except RuntimeError as error:
+            raise HTTPException(status_code=503, detail="owner conversation unavailable") from error
+        background_tasks.add_task(runtime.after_response, turn, reply)
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardGroundedReply/v1",
+                "conversation_id": reply.conversation_id,
+                "evidence_memory_ids": list(reply.evidence_memory_ids),
+                "generated_at": reply.generated_at,
+                "message_id": reply.message_id,
+                "provider": reply.provider,
+                "text": reply.text,
+                "text_sha256": reply.text_sha256,
+            },
+            headers={"Cache-Control": "no-store"},
         )
 
     @app.get("/internal/v1/dashboard/progress")

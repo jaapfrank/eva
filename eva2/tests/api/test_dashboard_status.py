@@ -9,7 +9,11 @@ from uuid import UUID, uuid4
 
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
-from eva.application.conversation import load_current_identity_pack
+from eva.application.conversation import (
+    ConversationTurn,
+    GroundedReply,
+    load_current_identity_pack,
+)
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.workboard import WorkBoard
@@ -95,6 +99,35 @@ class _EffectStopRuntime(_Runtime):
         )
 
 
+class _ConversationRuntime(_Runtime):
+    def __init__(self) -> None:
+        self.after: list[tuple[ConversationTurn, GroundedReply]] = []
+
+    def dashboard_turn(self, text: str) -> tuple[ConversationTurn, GroundedReply]:
+        if not text.strip():
+            raise ValueError("text is invalid")
+        turn = ConversationTurn.private(
+            "tenant:dashboard",
+            "installation:dashboard",
+            "person:owner",
+            "dashboard:owner",
+            "dashboard:message",
+            text,
+            "2026-08-27T12:00:00Z",
+        )
+        return turn, GroundedReply(
+            turn.conversation_id,
+            turn.message_id,
+            "Ik heb je bericht ontvangen.",
+            (),
+            "2026-08-27T12:00:01Z",
+            "test-model",
+        )
+
+    def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None:
+        self.after.append((turn, reply))
+
+
 def test_dashboard_status_is_read_only_and_non_secret() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/status")
 
@@ -177,6 +210,46 @@ def test_dashboard_access_rejects_short_or_malformed_credentials() -> None:
         )
         assert response.status_code == 401
         assert token not in response.text
+
+
+def test_owner_conversation_page_and_turn_are_token_gated() -> None:
+    token = "t" * 32
+    runtime = _ConversationRuntime()
+    client = TestClient(create_app(runtime, dashboard_access_token=token))
+
+    assert client.get("/internal/v1/dashboard/conversation").status_code == 401
+    assert (
+        client.post(
+            "/internal/v1/dashboard/conversation/respond", json={"text": "Hallo"}
+        ).status_code
+        == 401
+    )
+
+    headers = {"authorization": f"Bearer {token}"}
+    page = client.get("/internal/v1/dashboard/conversation", headers=headers)
+    assert page.status_code == 200
+    assert "Lokale eigenaarssessie" in page.text
+    assert "dashboard/conversation/respond" in page.text
+    assert "https://" not in page.text
+
+    response = client.post(
+        "/internal/v1/dashboard/conversation/respond",
+        headers=headers,
+        json={"text": "Hallo Eva"},
+    )
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json()["contract"] == "EvaDashboardGroundedReply/v1"
+    assert response.json()["text"] == "Ik heb je bericht ontvangen."
+    assert runtime.after[0][0].audience.kind == "private_person"
+    assert runtime.after[0][0].principal_id == "person:owner"
+
+    invalid = client.post(
+        "/internal/v1/dashboard/conversation/respond",
+        headers=headers,
+        json={"text": "", "tenant_id": "not-accepted"},
+    )
+    assert invalid.status_code == 422
 
 
 def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> None:
