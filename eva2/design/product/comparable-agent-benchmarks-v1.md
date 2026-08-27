@@ -95,7 +95,8 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   `../benchmark/requirements-gaia-benchmark-linux-amd64-py312.lock` installeert
   offline met hashes `datasets 5.0.1` en `pyarrow 25.0.1` plus hun transitive
   wheels. Hij schrijft het officiële antwoordpaar `task_id`/`model_answer`,
-  maar leest geen `Final answer`, roept geen scorer aan en kan dus geen score
+  maar leest geen `Final answer`, weigert een antwoord dat bestaand Eva-geheugen
+  noemt, roept geen scorer aan en kan dus geen score
   of leaderboardclaim maken. AgentBench- en OSWorld-adapters, de echte
   modelroute en een volledige CB02-closure blijven open.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
