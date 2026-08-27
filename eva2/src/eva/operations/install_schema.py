@@ -19,6 +19,7 @@ import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
 
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.bootstrap.secrets import read_runtime_secret_file
 
 _REVISION_4B0 = "4b_0000_core_namespace"
@@ -91,13 +92,15 @@ def _current_revision(engine: sa.Engine) -> str | None:
 def install_schema(
     database_dsn: str, *, alembic_ini: Path
 ) -> SchemaInstallationReceipt:
-    if not database_dsn.startswith(("postgresql://", "postgresql+psycopg://")):
-        raise RuntimeError("Eva schema installation requires PostgreSQL")
+    try:
+        sqlalchemy_dsn = sqlalchemy_postgres_dsn(database_dsn)
+    except ValueError as error:
+        raise RuntimeError("Eva schema installation requires PostgreSQL") from error
     if alembic_ini.is_symlink() or not alembic_ini.is_file():
         raise RuntimeError("Alembic configuration is unavailable")
     config = Config(str(alembic_ini))
-    config.set_main_option("sqlalchemy.url", database_dsn)
-    engine = sa.create_engine(database_dsn)
+    config.set_main_option("sqlalchemy.url", sqlalchemy_dsn.replace("%", "%%"))
+    engine = sa.create_engine(sqlalchemy_dsn)
     route: list[str] = []
     try:
         source_revision = _current_revision(engine)

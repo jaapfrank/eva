@@ -12,6 +12,7 @@ import sqlalchemy as sa
 
 from eva.adapters.connectors.durable_goal_http import HttpDurableGoalConnector
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.application.durable_goals import DurableGoalWorker
 from eva.bootstrap.secrets import read_runtime_secret_file
 
@@ -45,7 +46,7 @@ def main() -> int:
     poll_seconds = float(os.environ.get("EVA_DURABLE_GOAL_POLL_SECONDS", "2"))
     if not 0.2 <= poll_seconds <= 60:
         raise RuntimeError("EVA_DURABLE_GOAL_POLL_SECONDS is outside 0.2..60")
-    engine = sa.create_engine(database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     store = PostgresDurableGoalStore(
         engine, tenant_id=tenant_id, installation_id=installation_id
     )

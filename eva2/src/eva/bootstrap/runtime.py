@@ -54,6 +54,7 @@ from eva.adapters.postgres.conversation_actions import (
     PostgresPersonalProductReleaseStore,
     PostgresPersonalPrototypeStore,
 )
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.people_memory_overview import (
@@ -1619,7 +1620,9 @@ class PostgresHindsightMemoryRuntime:
 
 def create_runtime_app() -> FastAPI:
     settings = RuntimeSettings.from_environment()
-    engine = sa.create_engine(settings.database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(settings.database_dsn), pool_pre_ping=True
+    )
     if (
         settings.background_tenant_id is None
         or settings.background_installation_id is None

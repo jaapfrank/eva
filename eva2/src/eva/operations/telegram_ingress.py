@@ -19,6 +19,7 @@ from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
 )
 from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.application.telegram_ingress import (
@@ -149,7 +150,7 @@ def main() -> int:
     bindings = load_principal_bindings(
         _required_environment("EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE")
     )
-    engine = sa.create_engine(database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     provider = TelegramBotApiAdapter(
         bot_token=token,
         api_base_url=os.environ.get(
