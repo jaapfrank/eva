@@ -366,14 +366,16 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
     assert capability_by_id["voice"]["state"] == "selected"
     assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
-    assert "26 gerichte voice-/gesprekstests" in capability_by_id["voice"]["proof"]
+    assert "28 gerichte voice-/gesprekstests" in capability_by_id["voice"]["proof"]
+    assert "speaker als antwoordgenerator stoppen" in capability_by_id["voice"]["proof"]
     assert "softwarestop is gebouwd" in capability_by_id["voice"]["meaning"]
     assert "read-only voorvertoning" in capability_by_id["personal-memory"]["meaning"]
     assert "lokale installatiecontrole" in capability_by_id["installer"]["proof"]
     assert "tijdelijke loopback-wizard" in capability_by_id["installer"]["proof"]
     assert "installeert of wijzigt zij niets" in capability_by_id["installer"]["meaning"]
     assert capability_by_id["benchmarks"]["state"] == "selected"
-    assert "18 checks" in capability_by_id["benchmarks"]["proof"]
+    assert "AgentBench FC-CPU-omgeving" in capability_by_id["benchmarks"]["proof"]
+    assert "21 checks" in capability_by_id["benchmarks"]["proof"]
     assert "zonder score" in capability_by_id["benchmarks"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
