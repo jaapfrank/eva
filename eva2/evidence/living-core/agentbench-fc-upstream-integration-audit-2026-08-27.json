@@ -1,0 +1,33 @@
+{
+  "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+  "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+  "artifact": "EvaAgentBenchFcUpstreamIntegrationAudit/v1",
+  "date": "2026-08-27",
+  "errors": [],
+  "expectedAgentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+  "expectedAgentRLCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+  "missingHistoricEntrypoints": [
+    "src/start_task.py",
+    "src/server/task_controller.py",
+    "src/server/task_worker.py"
+  ],
+  "mutableUpstreamComponents": [
+    "agentrl_controller_image_latest",
+    "src/server/tasks/dbbench/Dockerfile:agentrl_worker_pypi",
+    "src/server/tasks/os_interaction/Dockerfile:agentrl_worker_pypi"
+  ],
+  "nonClaims": [
+    "No AgentBench task worker, controller, model call, dataset action, answer, scorer or score was started.",
+    "The AgentRL pin is a development-sidecar candidate only; it cannot make a public AgentBench leaderboard result comparable by itself.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant or live service was opened or changed."
+  ],
+  "sourceSha256": {
+    "agentrl/controller/Dockerfile": "11e6909a0b8744277d4c5f0529ee0d0324e3b4c815d63961494adc7acafcd0a8",
+    "agentrl/worker/pyproject.toml": "fba239e7f3bb5f8a542394b883c69472c5cc4b7839cd0246fa6b518afece5df7",
+    "agentrl/worker/src/agentrl/worker/__main__.py": "8c0f9e4f6490c026b3079f9a94fb1c51f9e8e31ae4a6468b44c3999b714923a1",
+    "extra/docker-compose.yml": "4ad5d62c627934a557d15b9339693dcf9a00c4cd7a46cf230a4c8630237845cd",
+    "src/server/tasks/dbbench/Dockerfile": "05646e1f7c6f5652128bd4bc7820c0e4103ad5619c02c7a9273a5161d1e6a55a",
+    "src/server/tasks/os_interaction/Dockerfile": "4e81f6e3039eb30057a1569398c7af3fc39fbf35ce1a3aa218f585eb7394e17c"
+  },
+  "status": "requires_pinned_agentrl_sidecars"
+}

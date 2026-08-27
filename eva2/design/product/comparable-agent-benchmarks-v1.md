@@ -123,6 +123,17 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   schone upstreamcommit, requirements-hash, Pythonversie en pakketten. Er is
   nog geen AgentBench-taakserver, score of developmentrun gestart. Receipt:
   `evidence/living-core/agentbench-fc-environment-2026-08-27.json`.
+  De volgende grens is nu ook feitelijk vastgesteld: de vastgezette
+  AgentBench-bron bevat zelf niet meer `src.start_task`, waar haar README nog
+  naar verwijst, plus twee historische controller-/worker-entrypoints. Haar
+  composebestand kiest bovendien een mutable
+  AgentRL-controllerimage en haar DB-/OS-workers installeren een mutable
+  `agentrl-worker` vanaf PyPI. De naastgelegde AgentRL-broncommit
+  `6a73409…` is daarom uitsluitend een development-kandidaat. Eerst moeten
+  controller en workers uit beide exact gepinde bronnen worden gebouwd, in een
+  aparte wegwerpstack. Pas daarna kan één developmenttaak starten; geen van
+  deze stappen levert al een leaderboardscore op. Controleerbaar auditbewijs:
+  `evidence/living-core/agentbench-fc-upstream-integration-audit-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie

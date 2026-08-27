@@ -292,11 +292,16 @@ Zij controleert netwerkloos, alleen-lezen en als niet-root de exacte schone
 commit, requirements-hash, Python 3.9 en alle pakketten. Zij houdt de
 upstream-Pythonrequirements bytegelijk en voegt alleen één direct OS-pakket
 (`git`) plus zijn noodzakelijke apt-dependencies voor commitcontrole toe. Er
-zit geen Eva-code, modelcredential, taakserver, dataset of score in. Dit maakt
-de officiële AgentBench-run technisch voorbereid; het is
-nadrukkelijk nog geen uitgevoerde AgentBench-taak of vergelijkbare score. De
-heropenbare grens staat in
-[`agentbench-fc-environment-2026-08-27.json`](evidence/living-core/agentbench-fc-environment-2026-08-27.json).
+zit geen Eva-code, modelcredential, taakserver, dataset of score in. Dit sluit
+alleen de Python- en bronpreflight; een officiële AgentBench-taak is nog niet
+technisch startklaar. De vastgezette AgentBenchbron mist `src.start_task`, waar
+haar README nog naar verwijst, plus twee historische controller-/worker-
+entrypoints en kiest nog een mutable AgentRL-controller plus mutable
+PyPI-workers. Daarom bouwen we eerst een afzonderlijke, uit beide exact
+gepinde bronnen opgebouwde developmentstack. Dat is geen score- of
+leaderboardclaim. De heropenbare grenzen staan in
+[`agentbench-fc-environment-2026-08-27.json`](evidence/living-core/agentbench-fc-environment-2026-08-27.json)
+en [`agentbench-fc-upstream-integration-audit-2026-08-27.json`](evidence/living-core/agentbench-fc-upstream-integration-audit-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
