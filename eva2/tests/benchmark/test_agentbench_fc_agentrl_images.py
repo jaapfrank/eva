@@ -115,6 +115,23 @@ GO125_PROTOCOL_PROBE_READBACK = (
     / "living-core"
     / "agentbench-fc-agentrl-go125-protocol-probe-list-workers-2026-08-27.json"
 )
+DBBENCH_DEV_CONFIG = ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-registration.yaml"
+DBBENCH_DEV_DOCKERFILE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-chainguard-offline.Dockerfile"
+)
+DBBENCH_DEV_INPUTS = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-inputs-amd64-py314.json"
+)
+DBBENCH_DEV_RECEIPT = (
+    ROOT / "eva2" / "evidence" / "living-core" / "agentbench-fc-dbbench-dev-registration-2026-08-27.json"
+)
+DBBENCH_DEV_READBACK = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-dbbench-dev-registration-list-workers-2026-08-27.json"
+)
 
 
 def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_tools() -> None:
@@ -387,6 +404,43 @@ def test_agentrl_go125_protocol_probe_has_no_sample_or_benchmark_claim() -> None
     assert readback["virtual-task"]["workers"]["1"]["status"] == "ALIVE"
     assert receipt["verification"]["temporaryContainersAndNetworkRemoved"] is True
     assert "No AgentBench task server" in receipt["openBoundary"]
+
+
+def test_dbbench_dev_task_registration_is_real_but_unscored_and_socket_free() -> None:
+    receipt = json.loads(DBBENCH_DEV_RECEIPT.read_text(encoding="utf-8"))
+    readback = json.loads(DBBENCH_DEV_READBACK.read_text(encoding="utf-8"))
+    config = DBBENCH_DEV_CONFIG.read_text(encoding="utf-8")
+    dockerfile = DBBENCH_DEV_DOCKERFILE.read_text(encoding="utf-8")
+    inputs = json.loads(DBBENCH_DEV_INPUTS.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcDbbenchDevRegistrationReceipt/v1"
+    assert receipt["status"] == "sealed_official_dbbench_dev_task_registration_proven"
+    assert receipt["inputs"]["dbbenchRegistrationConfig"]["sha256"] == hashlib.sha256(
+        DBBENCH_DEV_CONFIG.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["dbbenchWorkerDockerfile"]["sha256"] == hashlib.sha256(
+        DBBENCH_DEV_DOCKERFILE.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["dbbenchWorkerInputs"]["sha256"] == hashlib.sha256(
+        DBBENCH_DEV_INPUTS.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["devCaseCount"] == 60
+    assert receipt["observed"]["activeSamples"] == 0
+    assert readback["dbbench-dev-registration"]["workers"]["1"]["status"] == "ALIVE"
+    assert len(readback["dbbench-dev-registration"]["indices"]) == 60
+    assert "module: src.server.tasks.dbbench.DBBenchTask" in config
+    assert "env_driver: manual" in config
+    assert "docker.sock" not in dockerfile
+    assert "--no-index --no-deps" in dockerfile
+    assert inputs["contract"] == "EvaAgentBenchFcDbbenchDevWorkerInputs/v1"
+    assert {entry["filename"] for entry in inputs["artifacts"]} == {
+        "agentbench-dbbench-dev-d1e4a10.tar.gz",
+        "mysql-connector-python-9.3.0.tar.gz",
+        "mysql_connector_python-9.3.0-cp314-cp314-linux_x86_64.whl",
+    }
+    assert receipt["security"]["trivy"]["vulnerabilities"] == {"critical": 0, "high": 0}
+    assert receipt["verification"]["manualEnvironmentHasNoDockerSocket"] is True
+    assert "No sample" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:

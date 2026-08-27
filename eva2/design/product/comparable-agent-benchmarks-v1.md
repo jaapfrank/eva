@@ -176,9 +176,18 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   Go-1.25-modulecache is daarna op dezelfde manier verzegeld en 0/0 gescand.
   De twee nieuwe images hebben vervolgens alleen een lege ingebouwde
   `VirtualTask` met nul samples op een tijdelijk intern netwerk geregistreerd;
-  alle tijdelijke resources zijn verwijderd. Een AgentBench-taakserver of
-  benchmarkrun is daarmee uitdrukkelijk nog niet gestart. Receipt:
+  alle tijdelijke resources zijn verwijderd. Op dat checkpoint was nog geen
+  AgentBench-taakserver of benchmarkrun gestart. Receipt:
   `evidence/living-core/agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json`.
+  De volgende, echte upstream-taakgrens is inmiddels veilig gesloten: de
+  ongewijzigde DBBench-implementatie met haar officiële 60-case devset laadt
+  uit de vastgezette AgentBenchcommit en registreert als één levende worker.
+  Zij gebruikt voor deze registratie bewust een handmatige lege omgeving, dus
+  geen Docker-socket, MySQL, modelcall of sample. De afgesloten, netwerkloos
+  gebouwde worker is niet-root/read-only en de actuele scan is 0 kritisch/0
+  hoog. Dit is **geen devresultaat of score**; één model- en MySQL-run met de
+  officiële evaluator blijft CB03. Receipt:
+  `evidence/living-core/agentbench-fc-dbbench-dev-registration-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
