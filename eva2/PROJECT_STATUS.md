@@ -20,7 +20,9 @@ Laatst bijgewerkt: 2026-08-27
 > `eva.service`, Eva1-SQLite en de bestaande Eva2-B-containers zijn niet
 > gewijzigd. De tijdelijke pagina heeft expres geen bruikbare modeltoegang:
 > dit bewijst de server-, database-, migratie- en toegangsroute, maar nog geen
-> echt modelantwoord of geheugenwrite.
+> echt modelantwoord of geheugenwrite. Een echte verstuurpoging gaf gecontroleerd
+> HTTP 503; de tijdelijke database bleef daarna op nul gesprekken, berichten,
+> modelpogingen en episode-events.
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
