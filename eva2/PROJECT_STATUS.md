@@ -75,9 +75,10 @@ zien wat er zou veranderen, bijvoorbeeld Eva's naam of temperament. De preview
 is gebonden aan het op dat moment geverifieerde `IdentityPack` en werkt alleen
 via de bestaande kortlevende loopback-sessie.
 
-Dit bewaart niets, ondertekent niets en wijzigt Eva niet. Een ander tabblad,
-een verkeerde oorsprong of een ongeldige `SOUL.md` wordt geweigerd. De volgende
-stap blijft dus bewust een aparte eigenaarhandeling: offline ondertekenen,
+Dit bewaart niets, ondertekent niets en wijzigt Eva niet. Een verzoek zonder
+de korte lokale sessie, vanaf een verkeerde oorsprong of met een ongeldige
+`SOUL.md` wordt geweigerd. De volgende stap blijft dus bewust een aparte
+eigenaarhandeling: offline ondertekenen,
 activeren en zo nodig terugdraaien. Checkpoint `4422b5a` heeft **32/32**
 gerichte installer-, identiteit- en preflightcontroles groen. Eva1, B,
 Telegram, Home Assistant en secrets zijn niet geopend of gewijzigd.
