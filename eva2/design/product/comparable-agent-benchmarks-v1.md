@@ -139,11 +139,12 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   De worker installeert de naastgelegde AgentRL-bron, niet `agentrl-worker` van
   PyPI. De images dragen de exacte AgentRL-commit plus de hash van het schone
   Git-archief als provenance. AgentRL's editie-2023-proto's vereisen daarbij
-  precies Protocol Buffers 31.1 met gecontroleerde SHA-256. De controller
-  haalt bij bouwen nog `curl`/`unzip` via beweeglijke `apt-get update`, en de
-  transitive Pythonpackages van de worker hebben nog geen hashgecontroleerde
-  wheel-lock. Daarom is er nog geen controller-workercommunicatie, taak of
-  score toegestaan. Receipt:
+  precies Protocol Buffers 31.1 met gecontroleerde SHA-256. De worker is
+  daarna opnieuw gebouwd zonder netwerk uit een Python-3.10-lock met hashes en
+  een aparte, gecontroleerde set van 57 wheels; hij kan niet meer tijdens de
+  build naar PyPI uitwijken. Alleen de controller haalt bij bouwen nog
+  `curl`/`unzip` via beweeglijke `apt-get update`. Daarom is er nog geen
+  controller-workercommunicatie, taak of score toegestaan. Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.

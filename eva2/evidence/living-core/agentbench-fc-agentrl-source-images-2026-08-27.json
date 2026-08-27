@@ -14,7 +14,15 @@
     },
     "workerDockerfile": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
-      "sha256": "5dd30e8803793aa5f33f6ad2e12adbb00a17be943c05c9d81e9c4c32a4ff3c5d"
+      "sha256": "07e35850fbaa43639a093f1d5e3a66efdca9972a6ab70b75dcbed1f87c464d2f"
+    },
+    "workerRequirementsLock": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-requirements.lock",
+      "sha256": "ca657398711c05e5f162c81cde30bb4d978d2619a4cd4bd439e836bd378b088c"
+    },
+    "workerWheelhouseManifest": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-amd64-py310.json",
+      "sha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
     }
   },
   "images": {
@@ -29,13 +37,15 @@
       }
     },
     "worker": {
-      "image": "eva2/agentbench-agentrl-worker@sha256:3cf792cbbed2f8c2b7a1ba7616718dcae1a814eb7b01ba98232ee81eb5847339",
-      "imageTag": "eva2/agentbench-agentrl-worker:dev-20260827",
+      "image": "eva2/agentbench-agentrl-worker@sha256:8e453fd27971afb1d29e5a0ec388a671545a351afb10a4b620b3e0d112ec7489",
+      "imageTag": "eva2/agentbench-agentrl-worker:offline-20260827",
       "runtimeUser": "65532:65532",
-      "sizeBytes": 88343003,
+      "sizeBytes": 104587519,
       "labels": {
         "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
-        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+        "io.eva.agentrl-worker-lock-sha256": "ca657398711c05e5f162c81cde30bb4d978d2619a4cd4bd439e836bd378b088c",
+        "io.eva.agentrl-worker-wheelhouse-manifest-sha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
       }
     }
   },
@@ -43,13 +53,15 @@
     "controllerReadOnlyHelp": true,
     "networkless": true,
     "taskOrScoreStarted": false,
-    "workerReadOnlyHelp": true
+    "workerReadOnlyHelp": true,
+    "workerOfflineDependencyInstall": true,
+    "workerOfflineImageBuild": true
   },
-  "openBoundary": "The controller still resolves curl and unzip through apt-get update during its build, while the worker source uses version ranges for build and transitive Python dependencies. The image digests record one resolved snapshot, but an apt snapshot plus a hash-checked wheel lock and offline rebuild are required before controller/worker communication or any AgentBench development task.",
+  "openBoundary": "Only the controller still resolves curl and unzip through apt-get update during its build. Its apt snapshot must be sealed before controller/worker communication or any AgentBench development task.",
   "nonClaims": [
     "No AgentBench task, dataset, controller-to-worker session, model call, scorer, development result or public score was started.",
     "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
     "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
   ],
-  "status": "source_images_ready_transitive_lock_open"
+  "status": "worker_offline_rebuild_ready_controller_apt_open"
 }
