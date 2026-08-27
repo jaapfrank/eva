@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-08-27",
+  "checks": [
+    {
+      "name": "exact sealed offline candidate image from 7b6bf868 installs the full schema as non-root and read-only",
+      "result": "passed"
+    },
+    {
+      "name": "a second image run reaches the same schema head without repeating migration work",
+      "result": "passed"
+    },
+    {
+      "name": "removing fk_episodes_last_event makes the normal installer return one JSON failure and exit 2, without a traceback",
+      "result": "passed"
+    },
+    {
+      "expected_foreign_key_count": 121,
+      "name": "the image's direct foreign-key catalog check independently reports the same missing relationship and exits 2",
+      "result": "passed"
+    }
+  ],
+  "contract": "EvaCandidateImageSchemaDriftReceipt/v1",
+  "environment": {
+    "base_image": "python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "candidate_image_id": "sha256:d176162b940a39e6536b1e1593194ae1ad5015f8fa33b464dfb700978884d531",
+    "candidate_source_commit": "7b6bf8689c87c3fe6f1a4aa28bde471bfa80d9e7",
+    "context_tree_sha256": "b9610233a5344013bc6e24634f893d08e346aa5e21e97834c84c035dc05cdc0c",
+    "database": "one fresh disposable PostgreSQL 16.13 container with tmpfs data",
+    "network_used_during_build": false,
+    "runtime_network": "one private internal disposable Docker network",
+    "runtime_user": "65532:65532",
+    "runtime_writable_root": false
+  },
+  "nonclaims": [
+    "No Eva 1 database, B service, existing Docker volume, Hindsight data, Telegram route, Home Assistant route or real secret was opened.",
+    "This is an offline candidate-image and disposable-database proof, not a B deployment, production migration or end-to-end product acceptance.",
+    "The image was not tagged, pushed, signed, released or attached to Compose."
+  ],
+  "status": "passed"
+}

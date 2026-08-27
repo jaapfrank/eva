@@ -62,6 +62,25 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+De **nieuwste kandidaatimage** is nu opnieuw gebouwd vanaf de actuele code en
+heeft haar eigen databasecontrole echt uitgevoerd. In een volledig nieuwe,
+tijdelijke PostgreSQL startte Eva als niet-root en met een alleen-lezen
+besturingssysteem. De eerste start installeerde het hele schema; de tweede
+start deed geen schemawerk dubbel.
+
+Daarna is expres één databasekoppeling verwijderd. Eva stopte netjes met één
+leesbaar foutantwoord en exitcode 2 — geen stacktrace. Los daarvan vond Eva's
+eigen directe controle dezelfde ontbrekende koppeling terug binnen alle **121
+verwachte relaties**. Dit is precies het gedrag dat we willen voordat een
+kandidaat ooit bij B in de buurt komt. Receipt:
+[`candidate-image-schema-drift-2026-08-27.json`](evidence/living-core/candidate-image-schema-drift-2026-08-27.json).
+
+De image, database, netwerk en synthetische secret waren tijdelijke proefmiddelen
+en zijn na deze stap verwijderd. Eva 1, B, bestaande volumes, Hindsight,
+Telegram, Home Assistant en echte secrets zijn niet geopend.
+
+## Eerder deze run gesloten: alle databasekoppelingen
+
 Eva controleert haar database nu niet meer alleen op een algemeen
 schema-verschil, maar ook op **alle 121 echte relaties tussen tabellen**. Dat
 is belangrijk omdat Eva bewust veel wederzijdse relaties heeft: de standaard
