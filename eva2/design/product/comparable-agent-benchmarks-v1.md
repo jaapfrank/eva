@@ -165,6 +165,14 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   de reproduceerbaarheid van de controllerinvoer; de v2-kandidaat is niet met
   de worker geregistreerd en nog niet opnieuw gescand. Receipt:
   `evidence/living-core/agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json`.
+  Een nieuwe, kleine AgentRL-dependencypatch plus minimale gepinde
+  communitybases is vervolgens voor controller en worker gebouwd: beide
+  niet-root/read-only proeven en scans zijn 0 kritisch/0 hoog. De builders
+  mochten in deze verkenning nog afhankelijkheden downloaden; dit is daarom
+  alleen de bewezen upgradekandidaat, niet de vrijgegeven developmentstack.
+  Eerst worden de Python-lock/wheelhouse en de Go-modulecache opnieuw verzegeld
+  en netwerkloos herbouwd. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-security-upgrade-probes-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

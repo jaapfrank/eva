@@ -1,0 +1,60 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLSecurityUpgradeProbeReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "agentrlGitArchiveSha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+    "controllerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-chainguard-probe.Dockerfile",
+      "sha256": "fb862f8a1a2dc020892e95932d34ce71ace8b372250e61a9553ae53e42f34a5c"
+    },
+    "controllerSecurityPatch": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-security-upgrade-v1.patch",
+      "sha256": "30004f90adf4536b4425df48229af91a764c1d65b5f70b019c8b2d0f23aaa51b"
+    },
+    "workerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-chainguard-probe.Dockerfile",
+      "sha256": "cd70a82d18fa15befa0a078b5e5e03cfff47af74c532697ed086fcb47fb98475"
+    },
+    "baseImages": {
+      "controllerBuilder": "docker.io/library/golang:1.25-bookworm@sha256:3b4a11519ad929d1e1d261a12cff056f0c85b735253d7d861346b9c6f8b36437",
+      "controllerRuntime": "cgr.dev/chainguard/static@sha256:96d02f455d5a73b817c0602910748609cf8471b1cc9522f78c75cedb1f67d072",
+      "workerBuilder": "cgr.dev/chainguard/python@sha256:aa8fd2447b8b52922db57deb3894b622c3229387aaaec5934d64b85dbff6eb17",
+      "workerRuntime": "cgr.dev/chainguard/python@sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77"
+    },
+    "scanner": "ghcr.io/aquasecurity/trivy:0.74.0@sha256:ee940acbf1f58ebadb42d01434ce4609530bf1b52536afbd1eee66cd7123c5c9"
+  },
+  "images": {
+    "controller": {
+      "localImageId": "sha256:9659da7b70d2d98b1e707af89558a24b40a5c03afdb00cdad3e947bfac752e13",
+      "sizeBytes": 16166520
+    },
+    "worker": {
+      "localImageId": "sha256:0ba2a73babc4f1c2730f6663cd5f6280bd618dcffa3074c2164ee13f6524c59b",
+      "sizeBytes": 56956040
+    }
+  },
+  "verification": {
+    "controllerBuildFromCleanSourcePlusPatch": true,
+    "controllerReadOnlyNonRootNetworklessHelp": true,
+    "workerReadOnlyNonRootNetworklessHelp": true,
+    "controllerVulnerabilities": {"critical": 0, "high": 0},
+    "workerVulnerabilities": {"critical": 0, "high": 0}
+  },
+  "artifacts": {
+    "controllerScan": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-upgrade-probes-2026-08-27/controller-trivy.json",
+      "sha256": "ee4cdc814417be343302ba5368f92285d83746087c2144f809e72cfd538d2e2e"
+    },
+    "workerScan": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-upgrade-probes-2026-08-27/worker-trivy.json",
+      "sha256": "62dc306f9eec42084cdce43344e0f9e6f0dfc0069ce3da9f7a8241d01332aa69"
+    }
+  },
+  "status": "security_upgrade_probes_green_offline_dependency_closure_open",
+  "openBoundary": "The builds deliberately permitted dependency downloads in their disposable builder stage. The Python 3.14 lock and wheelhouse, Go module cache and controller/worker registration must still be sealed and rebuilt without network before any AgentBench development stack starts.",
+  "nonClaims": [
+    "No AgentBench task, dataset, model call, controller-worker evaluation session, scorer, benchmark result or public score was started.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ]
+}

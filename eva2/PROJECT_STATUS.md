@@ -354,6 +354,15 @@ dus AgentBench zelf staat nog steeds op **niet starten**. De review laat precies
 zien wat wél klaar is en wat niet:
 [`agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md`](reviews/agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md).
 
+Er is nu wel een concrete vervanger gevonden en echt beproefd: een beperkte
+AgentRL dependency-upgrade plus actuele, minimale communitybases. Controller
+en worker bouwen vanuit die kandidaat, starten als niet-root zonder netwerk en
+scannen beide op **0 kritisch / 0 hoog**. Dat is een grote veiligheidswinst,
+maar nog geen vrijbrief om te starten: hun builder mocht tijdens deze proef nog
+downloads doen. Eerst maken we daarvan één gepinde lock, wheelhouse en
+modulecache die ook zonder netwerk opnieuw bouwt. Zie
+[`agentbench-fc-agentrl-security-upgrade-probes-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-security-upgrade-probes-2026-08-27.json).
+
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig

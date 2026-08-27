@@ -56,6 +56,22 @@ CONTROLLER_V2_REPRO_RECEIPT = (
 CONTROLLER_V2_DOCKERFILE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-repro-v2.Dockerfile"
 )
+SECURITY_UPGRADE_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-security-upgrade-probes-2026-08-27.json"
+)
+SECURITY_UPGRADE_CONTROLLER = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-chainguard-probe.Dockerfile"
+)
+SECURITY_UPGRADE_CONTROLLER_PATCH = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-security-upgrade-v1.patch"
+)
+SECURITY_UPGRADE_WORKER = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-chainguard-probe.Dockerfile"
+)
 
 
 def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_tools() -> None:
@@ -222,6 +238,38 @@ def test_agentrl_controller_v2_repro_receipt_binds_only_its_own_candidate() -> N
     }
     assert "not re-registered" in receipt["openBoundary"]
     assert "not passed a fresh vulnerability scan" in receipt["openBoundary"]
+
+
+def test_agentrl_security_upgrade_probes_are_pinned_and_explicitly_incomplete() -> None:
+    receipt = json.loads(SECURITY_UPGRADE_RECEIPT.read_text(encoding="utf-8"))
+    controller = SECURITY_UPGRADE_CONTROLLER.read_text(encoding="utf-8")
+    worker = SECURITY_UPGRADE_WORKER.read_text(encoding="utf-8")
+
+    assert receipt["artifact"] == "EvaAgentBenchFcAgentRLSecurityUpgradeProbeReceipt/v1"
+    assert receipt["status"] == "security_upgrade_probes_green_offline_dependency_closure_open"
+    assert receipt["inputs"]["controllerDockerfile"]["sha256"] == hashlib.sha256(
+        SECURITY_UPGRADE_CONTROLLER.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["controllerSecurityPatch"]["sha256"] == hashlib.sha256(
+        SECURITY_UPGRADE_CONTROLLER_PATCH.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["workerDockerfile"]["sha256"] == hashlib.sha256(
+        SECURITY_UPGRADE_WORKER.read_bytes()
+    ).hexdigest()
+    assert ":latest" not in controller
+    assert ":latest" not in worker
+    assert "git apply /tmp/security-upgrade.patch" in controller
+    assert "cgr.dev/chainguard/static@sha256:" in controller
+    assert "cgr.dev/chainguard/python@sha256:" in worker
+    assert receipt["verification"]["controllerVulnerabilities"] == {"critical": 0, "high": 0}
+    assert receipt["verification"]["workerVulnerabilities"] == {"critical": 0, "high": 0}
+    assert receipt["artifacts"]["controllerScan"]["sha256"] == (
+        "ee4cdc814417be343302ba5368f92285d83746087c2144f809e72cfd538d2e2e"
+    )
+    assert receipt["artifacts"]["workerScan"]["sha256"] == (
+        "62dc306f9eec42084cdce43344e0f9e6f0dfc0069ce3da9f7a8241d01332aa69"
+    )
+    assert "must still be sealed" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:
