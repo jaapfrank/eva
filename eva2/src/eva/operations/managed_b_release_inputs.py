@@ -122,6 +122,7 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/portable/v1/contracts/manifest.json",
     "src/eva/adapters/api/app.py",
     "src/eva/adapters/api/cockpit.py",
+    "src/eva/adapters/api/installer_wizard.py",
     "src/eva/adapters/connectors/mcp.py",
     "src/eva/adapters/connectors/playwright_mcp.py",
     "src/eva/adapters/connectors/playwright_mcp_action.py",
@@ -162,6 +163,7 @@ _EXPECTED_INPUT_PATHS = (
 )
 _EXPECTED_TEST_PATHS = (
     "tests/api/test_dashboard_status.py",
+    "tests/api/test_installer_wizard.py",
     "tests/api/test_memory_api.py",
     "tests/application/test_action_chain.py",
     "tests/application/test_action_chain_effect_advances.py",

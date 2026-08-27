@@ -348,6 +348,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "softwarestop is gebouwd" in capability_by_id["voice"]["meaning"]
     assert "read-only voorvertoning" in capability_by_id["personal-memory"]["meaning"]
     assert "lokale installatiecontrole" in capability_by_id["installer"]["proof"]
+    assert "tijdelijke loopback-wizard" in capability_by_id["installer"]["proof"]
     assert "installeert of wijzigt zij niets" in capability_by_id["installer"]["meaning"]
     assert capability_by_id["benchmarks"]["state"] == "selected"
     assert "18 checks" in capability_by_id["benchmarks"]["proof"]

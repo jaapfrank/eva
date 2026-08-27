@@ -68,11 +68,16 @@ downloadt niets, start geen Docker-container en leest geen secret, database of
 gebruikersdata. Pas als besturingssysteem, processor, Python, Docker én een
 eerder bewezen releaseplatform exact passen, mag een latere wizard starten.
 
+Die tijdelijke lokale wizard bestaat nu ook: een eenmalige link opent alleen
+op de eigen computer, verwijdert haar toegangscode direct uit de URL en houdt
+daarna uitsluitend een kortlevende browser-sessie over. Zij toont nu alleen de
+preflight en heeft bewust geen secret-, connector- of installatieknoppen.
+
 Op deze kandidaatmachine stopt zij terecht: Ubuntu, Python en Docker wijken af
 van de nog niet bewezen releasecombinatie. Dat is goed nieuws: Eva doet niet
 alsof je haar hier al veilig kunt installeren. De controle zelf is **8/8
-groen**; de echte wizard, ondertekende bundle en een fysieke fresh-install
-blijven open.
+groen**; de daadwerkelijke wizardtoegang is 3/3 groen. De ondertekende bundle,
+connectorvragen en een fysieke fresh-install blijven open.
 
 ## Eerder deze run gesloten: veilige Eva1-geheugenvoorvertoning
 
