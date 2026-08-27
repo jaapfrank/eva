@@ -110,6 +110,15 @@ Dit is **geen** wijziging aan Eva1, geen automatische
 persoonlijkheidswissel en nog geen HSM- of dashboardbediening. De nieuwe
 onderteken-/wissel-/rollbackproef is **6/6 groen**.
 
+De veilige A/B-bedieningsroute is daarbij opnieuw als één geheel gecontroleerd:
+de operator kan een lege kandidaatinstallatie maken, een ondertekende release
+controleren en klaarzetten, pas daarna activeren en het verkeer openen. Een
+vervalst releasebestand wordt geweigerd zonder de andere sleuf te veranderen.
+Deze commando's waren door een eerdere CLI-wijziging niet bereikbaar; dat is
+hersteld en voortaan expliciet meegetest met de identiteitsroute. **53
+gerichte controles zijn groen.** Ook dit draait alleen op de Eva2-kandidaat:
+Eva1 is niet gestart, gewijzigd of gedeployd.
+
 De eerdere installatiecontrole vóór de wizard blijft eveneens klaar. Die leest
 alleen de gepinde releasevoorwaarden en de grove lokale systeemversies. Zij
 downloadt niets, start geen Docker-container en leest geen secret, database of

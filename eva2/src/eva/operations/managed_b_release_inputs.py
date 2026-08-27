@@ -213,6 +213,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/operations/test_managed_b_render.py",
     "tests/operations/test_managed_b_runtime_smoke.py",
     "tests/operations/test_managed_b_wheelhouse.py",
+    "tests/operations/test_operator_cli.py",
     "tests/operations/test_prepare_managed_b_candidate_context.py",
     "tests/operations/test_telegram_binding_loader.py",
     "tests/portable/test_portable_export_end_to_end.py",
