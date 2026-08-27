@@ -12,10 +12,12 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from eva.application.identity_verifier import IdentityPackTrustBinding
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.identity import IdentityPack, IdentityPackDraft
+from eva.operations.cli import main
 from eva.operations.identity_pack_lifecycle import (
     IdentityPackLifecycleError,
     activate_identity_successor,
     issue_identity_pack,
+    load_private_ed25519_seed,
     rollback_identity_successor,
     validate_identity_successor,
 )
@@ -156,3 +158,89 @@ def test_cutover_refuses_unsigned_or_non_successor_candidate(private_tmp_path: P
             trust=trust,
         )
     assert not rollback_path.exists()
+
+
+def test_owner_only_key_loader_rejects_world_readable_key(private_tmp_path: Path) -> None:
+    key_path = private_tmp_path / "key.bin"
+    key_path.write_bytes(b"k" * 32)
+    key_path.chmod(0o644)
+    with pytest.raises(IdentityPackLifecycleError, match="owner-only"):
+        load_private_ed25519_seed(key_path)
+
+
+def test_cli_issues_activates_and_rolls_back_without_printing_identity_data(
+    private_tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    base, key, trust = _base_and_key()
+    base_path = private_tmp_path / "current.json"
+    draft_path = private_tmp_path / "draft.json"
+    key_path = private_tmp_path / "key.bin"
+    trust_path = private_tmp_path / "trust.json"
+    candidate_path = private_tmp_path / "candidate.json"
+    rollback_path = private_tmp_path / "rollback.json"
+    base_path.write_bytes(canonical_json_bytes(base))
+    draft_path.write_bytes(canonical_json_bytes(_draft(base)))
+    key_path.write_bytes(key)
+    key_path.chmod(0o600)
+    trust_path.write_bytes(
+        canonical_json_bytes(
+            {
+                "contract": "IdentityPackTrustBinding/v1",
+                "expected_identity_id": trust.expected_identity_id,
+                "expected_issuer": trust.expected_issuer,
+                "public_key_base64url": base64.urlsafe_b64encode(trust.public_key_bytes)
+                .rstrip(b"=")
+                .decode("ascii"),
+                "public_key_sha256": trust.public_key_sha256,
+                "schema_version": 1,
+            }
+        )
+    )
+
+    assert main(
+        [
+            "identity-issue",
+            "--base",
+            str(base_path),
+            "--draft",
+            str(draft_path),
+            "--private-key-file",
+            str(key_path),
+            "--issued-at",
+            "2026-08-27T12:00:00Z",
+            "--output",
+            str(candidate_path),
+            "--trust-file",
+            str(trust_path),
+        ]
+    ) == 0
+    issued_output = capsys.readouterr().out
+    assert json.loads(issued_output)["status"] == "issued"
+    assert "Evi" not in issued_output
+    assert main(
+        [
+            "identity-activate",
+            "--current",
+            str(base_path),
+            "--candidate",
+            str(candidate_path),
+            "--rollback",
+            str(rollback_path),
+            "--trust-file",
+            str(trust_path),
+        ]
+    ) == 0
+    assert json.loads(capsys.readouterr().out)["status"] == "activated"
+    assert main(
+        [
+            "identity-rollback",
+            "--current",
+            str(base_path),
+            "--rollback",
+            str(rollback_path),
+            "--trust-file",
+            str(trust_path),
+        ]
+    ) == 0
+    assert json.loads(capsys.readouterr().out)["status"] == "rolled_back"
+    assert json.loads(base_path.read_bytes())["display_name"] == "Eva"

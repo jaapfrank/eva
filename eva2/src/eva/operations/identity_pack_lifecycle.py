@@ -136,6 +136,32 @@ def _read_regular_bounded(path: Path) -> bytes:
         raise IdentityPackLifecycleError("identity pack file is unavailable") from exc
 
 
+def load_private_ed25519_seed(path: Path) -> bytes:
+    """Read one owner-only raw Ed25519 seed for the offline signer.
+
+    The key file is intentionally not a runtime setting.  A future HSM adapter
+    can call :func:`issue_identity_pack` directly without materialising a file.
+    """
+
+    try:
+        metadata = path.lstat()
+    except OSError as exc:
+        raise IdentityPackLifecycleError("identity signing key is unavailable") from exc
+    if stat.S_ISLNK(metadata.st_mode) or not stat.S_ISREG(metadata.st_mode):
+        raise IdentityPackLifecycleError("identity signing key must be a regular non-symlink")
+    if metadata.st_uid != os.geteuid() or metadata.st_mode & 0o077:
+        raise IdentityPackLifecycleError("identity signing key must be owner-only")
+    try:
+        descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        with os.fdopen(descriptor, "rb", closefd=True) as handle:
+            seed = handle.read(33)
+    except OSError as exc:
+        raise IdentityPackLifecycleError("identity signing key is unavailable") from exc
+    if len(seed) != 32:
+        raise IdentityPackLifecycleError("identity signing key must be exactly 32 bytes")
+    return seed
+
+
 def _load_verified(path: Path, trust: IdentityPackTrustBinding) -> tuple[IdentityPack, bytes]:
     raw = _read_regular_bounded(path)
     if len(raw) > 65_536:
@@ -170,6 +196,16 @@ def _atomic_write(path: Path, data: bytes) -> None:
         except FileNotFoundError:
             pass
         raise IdentityPackLifecycleError("identity pack write failed") from exc
+
+
+def write_identity_candidate(path: Path, candidate: IdentityPack) -> str:
+    """Write a new, not-yet-active signed candidate once and return its hash."""
+
+    if path.exists() or path.is_symlink():
+        raise IdentityPackLifecycleError("identity candidate path already exists")
+    raw = canonical_json_bytes(candidate)
+    _atomic_write(path, raw)
+    return hashlib.sha256(raw).hexdigest()
 
 
 def activate_identity_successor(
@@ -237,6 +273,8 @@ __all__ = [
     "IdentityPackLifecycleError",
     "activate_identity_successor",
     "issue_identity_pack",
+    "load_private_ed25519_seed",
     "rollback_identity_successor",
     "validate_identity_successor",
+    "write_identity_candidate",
 ]

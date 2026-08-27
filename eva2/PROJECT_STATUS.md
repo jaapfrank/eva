@@ -100,13 +100,15 @@ hashgebonden cockpit-evidence zijn **55/55 groen**.
 
 De volgende identiteitsstap is nu technisch beproefd in de kandidaat: een
 eigenaar kan buiten Eva's runtime een goedgekeurd voorstel met een externe
-Ed25519-sleutel ondertekenen. Daarna wordt eerst de precieze oude identiteit
-bewaard en pas dan de nieuwe versie atomair actief gemaakt. Een ongetekend,
-verouderd of overslaand voorstel wordt geweigerd; rollback herstelt uitsluitend
-de direct voorgaande, ook ondertekende versie. De runtime bevat nooit die
-privésleutel. Dit is **geen** wijziging aan Eva1, geen automatische
-persoonlijkheidswissel en nog geen HSM- of eigenaarbediening. De nieuwe
-onderteken-/wissel-/rollbackproef is **4/4 groen**.
+Ed25519-sleutel ondertekenen. De operator-CLI kan de kandidaat vervolgens
+opslaan, activeren of terugdraaien zonder naam, inhoud of sleutel naar het
+scherm te schrijven. Daarna wordt eerst de precieze oude identiteit bewaard en
+pas dan de nieuwe versie atomair actief gemaakt. Een ongetekend, verouderd of
+overslaand voorstel wordt geweigerd; rollback herstelt uitsluitend de direct
+voorgaande, ook ondertekende versie. De runtime bevat nooit die privésleutel.
+Dit is **geen** wijziging aan Eva1, geen automatische
+persoonlijkheidswissel en nog geen HSM- of dashboardbediening. De nieuwe
+onderteken-/wissel-/rollbackproef is **6/6 groen**.
 
 De eerdere installatiecontrole vóór de wizard blijft eveneens klaar. Die leest
 alleen de gepinde releasevoorwaarden en de grove lokale systeemversies. Zij

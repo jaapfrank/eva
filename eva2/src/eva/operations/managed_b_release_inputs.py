@@ -147,6 +147,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/contracts/delegated_work.py",
     "src/eva/contracts/lifecycle.py",
     "src/eva/contracts/registry.py",
+    "src/eva/operations/cli.py",
     "src/eva/operations/delegated_work_worker.py",
     "src/eva/operations/durable_goal_worker.py",
     "src/eva/operations/identity_pack_lifecycle.py",
