@@ -58,14 +58,21 @@ de controleerbare live receipts staan in
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper. De onderbreekcontroller geeft aantoonbaar tegelijk stopopdrachten aan speaker en onafgemaakte antwoordgeneratie | De echte model-/TTS-koppeling, gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence zijn nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages én een compacte Lightpanda-kandidaat zijn door de strikte scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. De lokale installer kan nu een kleine `SOUL.md` laten plakken en uitsluitend het voorstelverschil tonen; opslaan, ondertekenen en activeren blijven apart. Een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, een geautoriseerde preflight met echte hostmetadata, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
-| Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie. De echte, vastgezette AgentBench DBBench-devtaak is nu veilig geladen en met haar 60 officiële devcases geregistreerd; daarbij zijn nul cases uitgevoerd. | Model-/kostenmandaat, de eerste echte AgentBench-devrun met MySQL, officiële AgentBench/GAIA/OSWorld-scores en de volledige gecontroleerde vijf-agentvergelijking zijn nog open |
+| Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De echte, vastgezette AgentBench DBBench-devtaak is veilig geladen met haar 60 officiële devcases. Eén case liep daarna volledig door een begrensde wegwerp-MySQL; DBBenchs ingebouwde antwoordvergelijking markeerde het bewust foute testantwoord ook werkelijk fout. | Model-/kostenmandaat, de eerste echte Eva-AgentBench-devrun, officiële AgentBench/GAIA/OSWorld-scores en de volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
-## Belangrijk: de live Eva en Eva2 delen geen geheugen
+## Belangrijk: welke Eva heeft welk geheugen?
 
-De Eva die nu draait (**Eva1**) bewaart haar herinneringen in haar eigen
-SQLite-bestand. Zij gebruikt **geen Hindsight**. PostgreSQL en Hindsight horen
-alleen bij de afzonderlijke Eva2-kandidaatroute; die route gebruikt geen
-live-Eva1-geheugenvolume en heeft Eva1 niet aangepast.
+De oude, oorspronkelijke **Eva1-codebasis** gebruikte een eigen SQLite-bestand
+en geen Hindsight. Dat is niet hetzelfde als de B-omgeving die nu draait.
+De draaiende `eva2-living-core-b` heeft een afzonderlijke
+`eva2-postgres-b-live` én `eva2-hindsight-memory-live`, ieder met een eigen
+volume; de core heeft beide routes geconfigureerd. De twee geheugenvolumes
+worden niet met een oude SQLite-route gedeeld.
+
+Dat bewijst niet vanzelf dat iedere historische herinnering al is overgezet of
+dat elk huidig gesprek Hindsight daadwerkelijk heeft beschreven. Voor zulke
+claims is per stroom een receipt nodig. De eerdere formulering “de live Eva
+gebruikt geen Hindsight” was daarom onjuist en is vervangen.
 
 ## Nieuwste technisch afgesloten stap: identiteit voorstellen in de lokale installer
 
@@ -380,6 +387,16 @@ modeloproep, evaluator of sample gestart. De actuele scan telt 0 kritisch en
 startlijn; de volgende aparte stap is één expliciet begrensde MySQL- en
 model-run met de officiële beoordelaar. Zie
 [`agentbench-fc-dbbench-dev-registration-2026-08-27.json`](evidence/living-core/agentbench-fc-dbbench-dev-registration-2026-08-27.json).
+
+De volgende technische grens is eveneens groen: één DBBench-devcase maakte in
+een tijdelijke, alleen-lezen MySQL met 1 GB geheugen en zonder open poorten
+echt haar tabellen, voerde een SQL-toolcall uit, vergeleek een antwoord en
+ruimde daarna op. Het testantwoord was bewust fout en DBBenchs ingebouwde
+antwoordvergelijking markeerde het ook als fout. De worker kreeg geen
+Docker-socket. Dit bewijst de uitvoerketen, niet Eva's kwaliteit: de tijdelijke
+omgeving wijkt bewust af van AgentBench' officiële Dockerdriver en een nepagent
+gaf het antwoord. Zie
+[`agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json`](evidence/living-core/agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 

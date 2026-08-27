@@ -188,6 +188,13 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   hoog. Dit is **geen devresultaat of score**; één model- en MySQL-run met de
   officiële evaluator blijft CB03. Receipt:
   `evidence/living-core/agentbench-fc-dbbench-dev-registration-2026-08-27.json`.
+  Eén daaropvolgende case doorliep ook werkelijk de upstream DBBench-task:
+  tijdelijke database, SQL-toolcall, ingebouwde antwoordvergelijking en opruimen. De
+  database was een begrensde, intern bereikbare 1-GB tmpfs-container; de worker
+  kreeg geen Docker-socket. Een nepagent gaf bewust een fout antwoord, dat de
+  ingebouwde DBBench-vergelijking ook fout markeerde. Dit bewijst uitsluitend de gesloten
+  ontwikkeluitvoerketen, niet Eva of een vergelijkbare score. Receipt:
+  `evidence/living-core/agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

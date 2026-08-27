@@ -1,0 +1,1 @@
+{"status":"completed","result":{"is_correct":false,"answer":["0"],"ground_truth":["March 19, 1998"],"std_sql":"SELECT Presentation of Credentials FROM \"US Ambassadors and Envoy Extraordinary to Colombia\" WHERE \"Termination of Mission\" = 'August 15, 2000';","type":"other"}}

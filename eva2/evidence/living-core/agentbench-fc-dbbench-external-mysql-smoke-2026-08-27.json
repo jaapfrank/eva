@@ -1,0 +1,68 @@
+{
+  "artifact": "EvaAgentBenchFcDbbenchExternalMysqlSmokeReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "dbbenchExternalConfig": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-external-mysql.yaml",
+      "sha256": "d264dc80a21cdb19b25010dde60f51cbdbf075aa6299f6b8e716a8f01c9fbf47"
+    },
+    "dbbenchExternalTaskAdapter": {
+      "path": "benchmark/agentbench-fc-v1/dbbench_external_task.py",
+      "sha256": "4ba16d2db40b08f6005e82219c7d28c9e5e537a86849cf9555bd1ea24b458331"
+    },
+    "dbbenchWorkerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-worker-external-mysql-v1.Dockerfile",
+      "sha256": "277258150aa00441989fecedd1d046c824dbb7931de1a5540e6d6407b7234f55"
+    },
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-external-mysql@sha256:5116cc21e5565146ca7d7b1a4e0a0e9dfb25b1658aeefa80cb2941b86bed89e4",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "workerInputsManifest": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-worker-inputs-amd64-py314.json",
+      "sha256": "1e4e8716e43eb1ed0530b1bb51dc13c8d512049fc7d0bc9bca987c7ce9ea5a67"
+    }
+  },
+  "observed": {
+    "answerWasCorrect": false,
+    "caseIndex": 0,
+    "result": {
+      "path": "evidence/living-core/agentbench-fc-dbbench-external-mysql-smoke-result-2026-08-27.json",
+      "sha256": "c9987c8e139e3a7d4d65c01d38fac1d3be5a871eb4d30ea196658839e46184a9"
+    },
+    "taskStatus": "completed",
+    "toolCalls": ["execute_sql", "commit_final_answer"]
+  },
+  "security": {
+    "database": {
+      "cpuLimit": 1,
+      "memoryBytes": 1073741824,
+      "network": "temporary internal only",
+      "pidsLimit": 128,
+      "readOnlyRootFilesystem": true,
+      "storage": "tmpfs only"
+    },
+    "sbom": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentbench-dbbench-external-mysql-final-build-2026-08-27/sbom.cdx.json",
+      "sha256": "4c537f962e4cc23e43f1c58ce45d558c5e68bb601b4cbae9d70e5497d4c09a9c"
+    },
+    "trivy": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentbench-dbbench-external-mysql-final-build-2026-08-27/trivy.json",
+      "sha256": "7a8e292e573d3e72cfc782c9cb88952fae77e2dee2f84bed111f6047216958da",
+      "vulnerabilities": {"critical": 0, "high": 0}
+    }
+  },
+  "verification": {
+    "databaseAndWorkerRemovedAfterRun": true,
+    "dockerBuildNetwork": "none",
+    "upstreamDbbenchTaskAndBuiltInAnswerComparisonUsed": true,
+    "workerHadNoDockerSocket": true,
+    "workerReadOnlyNonRoot": true
+  },
+  "status": "sealed_unscored_dbbench_external_mysql_smoke_proven",
+  "openBoundary": "The environment adapter is deliberately not AgentBench's official Docker configuration. A fake deterministic agent supplied one intentionally wrong answer, so this is a task-and-environment smoke proof only, not an Eva model run, development score or comparable AgentBench result.",
+  "nonClaims": [
+    "No model provider, Eva runtime endpoint, model credential, official AgentBench scorer or benchmark score was used.",
+    "No Eva1 SQLite memory, Eva2 PostgreSQL, Hindsight, Telegram, Home Assistant, user data, secret or live service was opened or changed."
+  ]
+}

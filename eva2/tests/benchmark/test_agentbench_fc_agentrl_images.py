@@ -119,6 +119,16 @@ DBBENCH_DEV_CONFIG = ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbben
 DBBENCH_DEV_DOCKERFILE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-chainguard-offline.Dockerfile"
 )
+DBBENCH_EXTERNAL_DOCKERFILE = (
+    ROOT
+    / "benchmark"
+    / "agentbench-fc-v1"
+    / "agentbench-dbbench-dev-worker-external-mysql-v1.Dockerfile"
+)
+DBBENCH_EXTERNAL_CONFIG = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-external-mysql.yaml"
+)
+DBBENCH_EXTERNAL_TASK = ROOT / "benchmark" / "agentbench-fc-v1" / "dbbench_external_task.py"
 DBBENCH_DEV_INPUTS = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-inputs-amd64-py314.json"
 )
@@ -131,6 +141,16 @@ DBBENCH_DEV_READBACK = (
     / "evidence"
     / "living-core"
     / "agentbench-fc-dbbench-dev-registration-list-workers-2026-08-27.json"
+)
+DBBENCH_EXTERNAL_SMOKE_RECEIPT = (
+    ROOT / "eva2" / "evidence" / "living-core" / "agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json"
+)
+DBBENCH_EXTERNAL_SMOKE_RESULT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-dbbench-external-mysql-smoke-result-2026-08-27.json"
 )
 
 
@@ -441,6 +461,51 @@ def test_dbbench_dev_task_registration_is_real_but_unscored_and_socket_free() ->
     assert receipt["security"]["trivy"]["vulnerabilities"] == {"critical": 0, "high": 0}
     assert receipt["verification"]["manualEnvironmentHasNoDockerSocket"] is True
     assert "No sample" in receipt["openBoundary"]
+
+
+def test_dbbench_external_mysql_smoke_adapter_cannot_be_mistaken_for_an_official_run() -> None:
+    adapter = DBBENCH_EXTERNAL_TASK.read_text(encoding="utf-8")
+    config = DBBENCH_EXTERNAL_CONFIG.read_text(encoding="utf-8")
+    dockerfile = DBBENCH_EXTERNAL_DOCKERFILE.read_text(encoding="utf-8")
+
+    assert "class ExternalMySqlDbBenchTask(DBBenchTask)" in adapter
+    assert "requested != [\"mysql\"] or not immutable" in adapter
+    assert "external DBBench task only accepts its fixed manual environment" in adapter
+    assert "Docker API authority" in adapter
+    assert "external_mysql_host: dbbench-mysql" in config
+    assert "db_password: dbbench-dev-only" in config
+    assert "env_driver: manual" in config
+    assert "must never be called" in config
+    assert "agentbench-dbbench-dev-registration.yaml" not in dockerfile
+    assert "agentbench-dbbench-dev-external-mysql.yaml" in dockerfile
+
+
+def test_dbbench_external_mysql_smoke_records_real_task_execution_but_no_eva_score() -> None:
+    receipt = json.loads(DBBENCH_EXTERNAL_SMOKE_RECEIPT.read_text(encoding="utf-8"))
+    result = json.loads(DBBENCH_EXTERNAL_SMOKE_RESULT.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcDbbenchExternalMysqlSmokeReceipt/v1"
+    assert receipt["status"] == "sealed_unscored_dbbench_external_mysql_smoke_proven"
+    assert receipt["inputs"]["dbbenchExternalConfig"]["sha256"] == hashlib.sha256(
+        DBBENCH_EXTERNAL_CONFIG.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["dbbenchExternalTaskAdapter"]["sha256"] == hashlib.sha256(
+        DBBENCH_EXTERNAL_TASK.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["dbbenchWorkerDockerfile"]["sha256"] == hashlib.sha256(
+        DBBENCH_EXTERNAL_DOCKERFILE.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["result"]["sha256"] == hashlib.sha256(
+        DBBENCH_EXTERNAL_SMOKE_RESULT.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["taskStatus"] == "completed"
+    assert receipt["observed"]["answerWasCorrect"] is False
+    assert result["status"] == "completed"
+    assert result["result"]["is_correct"] is False
+    assert receipt["security"]["database"]["memoryBytes"] == 1073741824
+    assert receipt["verification"]["workerHadNoDockerSocket"] is True
+    assert receipt["verification"]["upstreamDbbenchTaskAndBuiltInAnswerComparisonUsed"] is True
+    assert "not an Eva model run" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:
