@@ -19,6 +19,7 @@ from pathlib import Path
 import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
+from alembic.util import CommandError
 
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.foreign_key_catalog import require_current_foreign_key_catalog
@@ -164,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
             _secret(value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE"),
             alembic_ini=arguments.alembic_ini,
         )
-    except (OSError, RuntimeError, ValueError) as error:
+    except (CommandError, OSError, RuntimeError, ValueError) as error:
         print(_canonical({"error": str(error), "status": "failed"}))
         return 2
     print(

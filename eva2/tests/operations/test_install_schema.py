@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
+from alembic.util import CommandError
 from eva.operations.install_schema import (
     _HEAD_REVISION,
     _KNOWN_FORWARD_REVISIONS,
     _secret,
+    main,
 )
 
 
@@ -46,3 +49,24 @@ def test_secret_source_is_file_only_and_regular(
     monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(link))
     with pytest.raises(RuntimeError, match="non-symlink"):
         _secret(value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE")
+
+
+def test_cli_reports_alembic_drift_as_a_sanitized_failure(
+    monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    secret = private_tmp_path / "database-dsn"
+    secret.write_text("postgresql://example", encoding="utf-8")
+    secret.chmod(0o600)
+    monkeypatch.delenv("EVA_DATABASE_DSN", raising=False)
+    monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(secret))
+
+    def drift(*_arguments: object, **_keywords: object) -> object:
+        raise CommandError("new upgrade operations detected")
+
+    monkeypatch.setattr("eva.operations.install_schema.install_schema", drift)
+
+    assert main([]) == 2
+    assert json.loads(capsys.readouterr().out) == {
+        "error": "new upgrade operations detected",
+        "status": "failed",
+    }
