@@ -71,10 +71,13 @@ die bevestiging, dan meldt Eva een fout in plaats van ten onrechte
 “onderbroken”. Lege of te grote audioblokken worden vóór afspelen geweigerd.
 
 De contract-, afspeel- en bestaande gesprekstests zijn samen **26/26 groen**
-op checkpoint `20490a0`. Dit is een echte, kleine V02-bouwsteen, maar geen
-microfoon-, speaker-, latency- of menselijke voiceproef: op deze WSL-host
-bestaat daarvoor geen bruikbare audiohardware. Eva 1, B, Telegram, Home
-Assistant en bestaand geheugen zijn niet geopend.
+op checkpoint `20490a0`; samen met de release-inputcontroles zijn **52/52**
+gerichte checks groen. De volledige bronarchiefhash van de actuele
+kandidaatcommit sluit daarbij exact aan, zonder Docker of live systemen te
+openen. Dit is een echte, kleine V02-bouwsteen, maar geen microfoon-, speaker-,
+latency- of menselijke voiceproef: op deze WSL-host bestaat daarvoor geen
+bruikbare audiohardware. Eva 1, B, Telegram, Home Assistant en bestaand
+geheugen zijn niet geopend.
 
 ## Eerder deze run gesloten: kandidaatimage en databasecontrole
 
