@@ -11,6 +11,7 @@ import re
 import stat
 import subprocess
 from typing import NoReturn
+from uuid import UUID
 
 from eva.bootstrap.secrets import (
     MAX_RUNTIME_SECRET_BYTES,
@@ -56,6 +57,8 @@ REQUIRED_CONFIGURATION = (
     "EVA_POSTGRES_PASSWORD_FILE_HOST",
     "EVA_HOME_ASSISTANT_URL",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+    "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
+    "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
     "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
@@ -83,6 +86,7 @@ DERIVED_CONFIGURATION = ("EVA_B_CONFIGURATION_SHA256",)
 FORBIDDEN_INLINE_SECRETS = (
     "EVA_DATABASE_DSN",
     "EVA_HOME_ASSISTANT_TOKEN",
+    "EVA_DASHBOARD_ACCESS_TOKEN",
     "EVA_TELEGRAM_BOT_TOKEN",
     "EVA_STRIPE_SECRET_KEY",
     "EVA_STRIPE_WEBHOOK_SECRET",
@@ -339,6 +343,10 @@ def _validate_configuration(values: dict[str, str]) -> None:
         recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
     ):
         raise RuntimeError("Eva durable-goal recipients must be preserved")
+    try:
+        UUID(values["EVA_DASHBOARD_PRINCIPAL_BINDING_ID"])
+    except ValueError as error:
+        raise RuntimeError("EVA_DASHBOARD_PRINCIPAL_BINDING_ID is invalid") from error
 
     recall_budget = values.get("EVA_HINDSIGHT_RECALL_BUDGET", "low").casefold()
     if recall_budget not in {"low", "mid", "high"}:
@@ -383,6 +391,11 @@ def load_core_b_plan(
     _preflight_host_secret(
         values["EVA_HOME_ASSISTANT_TOKEN_FILE_HOST"],
         setting_name="EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+        owner_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST"],
+        setting_name="EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
         owner_uid=runtime_uid,
     )
     _preflight_host_secret(

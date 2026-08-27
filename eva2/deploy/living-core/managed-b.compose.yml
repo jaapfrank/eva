@@ -192,6 +192,8 @@ services:
       EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}
       EVA_CONVERSATION_REASONING_EFFORT: ${EVA_CONVERSATION_REASONING_EFFORT:-medium}
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DASHBOARD_ACCESS_TOKEN_FILE: /run/secrets/dashboard_access_token
+      EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
       EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
       EVA_DURABLE_GOAL_RECIPIENTS: ${EVA_DURABLE_GOAL_RECIPIENTS:?set the durable-goal recipients}
       EVA_FILE_BATCH_ROOT: /var/lib/eva/work
@@ -220,6 +222,12 @@ services:
       - type: bind
         source: ${EVA_HOME_ASSISTANT_TOKEN_FILE_HOST:?set a runtime-owned Home Assistant token file}
         target: /run/secrets/home_assistant_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST:?set a runtime-owned dashboard access token file}
+        target: /run/secrets/dashboard_access_token
         read_only: true
         bind:
           create_host_path: false

@@ -90,6 +90,10 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "EVA_RUNTIME_PRINCIPAL_ID": (
             "${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}"
         ),
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": (
+            "${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}"
+        ),
+        "EVA_DASHBOARD_ACCESS_TOKEN_FILE": "/run/secrets/dashboard_access_token",
     }.items() <= services["core"]["environment"].items()
 
 

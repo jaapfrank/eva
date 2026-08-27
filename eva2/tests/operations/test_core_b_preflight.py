@@ -39,6 +39,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     home_assistant_token = _private_secret(
         private_tmp_path / "home-assistant-token", "not-a-real-token\n"
     )
+    dashboard_access_token = _private_secret(
+        private_tmp_path / "dashboard-access-token", "t" * 32
+    )
     database_dsn = _private_secret(
         private_tmp_path / "database-dsn", "postgresql://not-a-real-dsn\n"
     )
@@ -79,6 +82,8 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_POSTGRES_PASSWORD_FILE_HOST": str(postgres_password),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
+        "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": str(dashboard_access_token),
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(telegram_token),
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": str(telegram_bindings),
         "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": str(telegram_pairing_secret),
@@ -359,6 +364,7 @@ def test_plan_rejects_execute_only_home_assistant_host_secret(
     "setting_name",
     (
         "EVA_DATABASE_DSN_FILE_HOST",
+        "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
         "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
@@ -373,6 +379,17 @@ def test_plan_rejects_insecure_mounted_runtime_secret(
     environment = _environment_file(private_tmp_path, values)
 
     with pytest.raises(RuntimeError, match=setting_name):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+def test_plan_rejects_an_invalid_dashboard_owner_binding(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    values["EVA_DASHBOARD_PRINCIPAL_BINDING_ID"] = "not-a-uuid"
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(RuntimeError, match="DASHBOARD_PRINCIPAL_BINDING_ID is invalid"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 
