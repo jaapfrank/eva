@@ -18,7 +18,7 @@
     },
     "controllerInputsProvenance": {
       "path": "benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64.json",
-      "sha256": "7f7ace994a28956a236f4c8a77a826dcfa1bb040c2eb04a5b7a0a14d5245db45"
+      "sha256": "c86e4b3802afb0ef26450129e77b0ea21b6873c3782f57747c4629af60d67c44"
     },
     "workerDockerfile": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
@@ -34,7 +34,7 @@
     },
     "workerWheelhouseProvenance": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-provenance-amd64-py310.json",
-      "sha256": "b4c6ca26db77cbae532cc4582d23b796e3a9cf20ccc2bc64a580e1090ac2ca25"
+      "sha256": "b7defb3f01ec9d2ad515a7756b7be8d81a1fe54bd1ee80031ca3809e40084b43"
     }
   },
   "images": {
@@ -73,7 +73,7 @@
   },
   "openBoundary": "This receipt records the original local source builds. The physical inputs were subsequently retained locally read-only, their rebuild recipes recorded, validators given negative regressions and both images rebuilt from those retained bytes; see agentbench-fc-agentrl-retained-rebuild-2026-08-27.json. That later scan is red, so independently reviewed community/base/dependency updates and a new clean scan remain required before any AgentBench development stack may start. No AgentBench task, dataset, model call, scorer, development result or score has started.",
   "nonClaims": [
-    "No AgentBench task, dataset, controller-to-worker session, model call, scorer, development result or public score was started.",
+    "No AgentBench task, dataset, evaluation session, model call, scorer, development result or public score was started. The separate protocol receipt records only an idle VirtualTask registration, never an AgentBench evaluation.",
     "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
     "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
   ],

@@ -18,6 +18,12 @@ WORKER_WHEELHOUSE = (
 CONTROLLER_PROVENANCE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-inputs-provenance-amd64.json"
 )
+CONTROLLER_INPUTS_V2 = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-build-inputs-amd64-v2.json"
+)
+CONTROLLER_PROVENANCE_V2 = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-inputs-provenance-amd64-v2.json"
+)
 WORKER_PROVENANCE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-wheelhouse-provenance-amd64-py310.json"
 )
@@ -39,6 +45,16 @@ RETAINED_REBUILD_RECEIPT = (
     / "evidence"
     / "living-core"
     / "agentbench-fc-agentrl-retained-rebuild-2026-08-27.json"
+)
+CONTROLLER_V2_REPRO_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json"
+)
+CONTROLLER_V2_DOCKERFILE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-repro-v2.Dockerfile"
 )
 
 
@@ -111,14 +127,22 @@ def test_agentrl_worker_lock_and_wheelhouse_are_hash_bound() -> None:
 
 def test_agentrl_artifact_provenance_binds_exact_manifests_and_rebuild_inputs() -> None:
     controller = json.loads(CONTROLLER_PROVENANCE.read_text(encoding="utf-8"))
+    controller_v2 = json.loads(CONTROLLER_PROVENANCE_V2.read_text(encoding="utf-8"))
     worker = json.loads(WORKER_PROVENANCE.read_text(encoding="utf-8"))
 
     assert controller["artifact"] == "EvaAgentBenchFcControllerInputsProvenance/v1"
-    assert controller["artifactManifest"]["sha256"] == hashlib.sha256(
-        CONTROLLER_INPUTS.read_bytes()
+    assert controller["status"] == "historical_provenance_incomplete_superseded_by_v2"
+    assert controller["replacement"]["path"] == (
+        "benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64-v2.json"
+    )
+    assert controller_v2["artifact"] == "EvaAgentBenchFcControllerInputsProvenance/v2"
+    assert controller_v2["artifactManifest"]["sha256"] == hashlib.sha256(
+        CONTROLLER_INPUTS_V2.read_bytes()
     ).hexdigest()
-    assert controller["protoc"]["releaseUrl"].endswith("protoc-31.1-linux-x86_64.zip")
-    assert controller["moduleCache"]["go"] == "1.24.5"
+    assert controller_v2["moduleCache"]["go"] == "1.24.5"
+    assert controller_v2["moduleCache"]["repeatedRebuildSha256"] == (
+        controller_v2["moduleCache"]["sha256"]
+    )
     assert worker["artifact"] == "EvaAgentBenchFcWorkerWheelhouseProvenance/v1"
     assert worker["artifactManifest"]["sha256"] == hashlib.sha256(
         WORKER_WHEELHOUSE.read_bytes()
@@ -126,6 +150,8 @@ def test_agentrl_artifact_provenance_binds_exact_manifests_and_rebuild_inputs() 
     assert worker["localBuildException"]["sourceDistribution"]["sha256"] == (
         "89a704cb389bf0a010a1fa050ce19342d23bf6371ebda1c21cfe8ff3ed488726"
     )
+    assert "--allow-unsafe" in worker["resolver"]["command"]
+    assert worker["materialization"]["ordinaryWheelCount"] == 56
 
 
 def test_agentrl_protocol_probe_records_an_idle_nonbenchmark_registration() -> None:
@@ -173,6 +199,29 @@ def test_agentrl_retained_rebuild_is_explicitly_blocked_by_its_vulnerability_gat
     }
     assert receipt["vulnerabilityGate"]["worker"]["critical"] == 9
     assert receipt["vulnerabilityGate"]["worker"]["high"] == 63
+
+
+def test_agentrl_controller_v2_repro_receipt_binds_only_its_own_candidate() -> None:
+    receipt = json.loads(CONTROLLER_V2_REPRO_RECEIPT.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcControllerReproReceipt/v2"
+    assert receipt["status"] == "reproducible_controller_build_proven_security_and_stack_gates_open"
+    assert receipt["inputs"]["controllerDockerfile"]["sha256"] == hashlib.sha256(
+        CONTROLLER_V2_DOCKERFILE.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["controllerInputsManifest"]["sha256"] == hashlib.sha256(
+        CONTROLLER_INPUTS_V2.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["controllerProvenance"]["sha256"] == hashlib.sha256(
+        CONTROLLER_PROVENANCE_V2.read_bytes()
+    ).hexdigest()
+    assert receipt["verification"] == {
+        "networklessNoCacheBuild": True,
+        "readOnlyNonRootHelp": True,
+        "twoIndependentModuleCacheRebuildsSameHash": True,
+    }
+    assert "not re-registered" in receipt["openBoundary"]
+    assert "not passed a fresh vulnerability scan" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:

@@ -148,17 +148,23 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   wheelhouse, modulecache en generatorbestanden stonden alleen tijdelijk
   lokaal. Duurzame alleen-lezen retentie, herkomst/herbouwrecepten,
   fail-closed negatieve artifacttests, SBOM/scan en onafhankelijke review
-  moeten eerst sluiten. De veilige controller→worker-registratie wordt apart
-  als protocolproef vastgelegd; er is geen AgentBench-taak, dataset, modelcall
-  of score toegestaan. Daarna blijft de volledige versiepassende
+  moeten eerst sluiten. De veilige controller→worker-registratie is apart als
+  protocolproef op de eerdere source-imagebytes vastgelegd; zij bewijst nog
+  niet de daarna opnieuw retained bytes. Er is geen AgentBench-taak, dataset,
+  modelcall of score toegestaan. Daarna blijft de volledige versiepassende
   developmentstack open.
   De artifactset is intussen lokaal alleen-lezen vastgelegd, met beide
-  fail-closed validators opnieuw netwerkloos gebouwd en met een lege
-  controller→worker-registratie beproefd. De bijbehorende SBOM/Trivy-gate is
+  fail-closed validators opnieuw netwerkloos gebouwd. De bijbehorende
+  SBOM/Trivy-gate is
   bewust rood: controller 4 kritisch/39 hoog, worker 9 kritisch/63 hoog.
   Daarom mag ook geen developmenttaak starten; eerst volgt een gerichte,
   opnieuw gepinde community- en basisimage-upgrade met een nieuwe scan. Zie
   `evidence/living-core/agentbench-fc-agentrl-retained-rebuild-2026-08-27.json`.
+  De controllerinvoer is sindsdien tweemaal onafhankelijk identiek herbouwd
+  en in een aparte v2-kandidaat zonder netwerk gebouwd. Dat herstelt uitsluitend
+  de reproduceerbaarheid van de controllerinvoer; de v2-kandidaat is niet met
+  de worker geregistreerd en nog niet opnieuw gescand. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

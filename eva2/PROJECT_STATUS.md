@@ -326,9 +326,11 @@ AgentBench-taak, dataset, modelcall, scorer of score gestart. Zie
 
 De fysieke bytes zijn daarna wel naar één lokale, alleen-lezen artifactset
 verplaatst, door beide nieuwe fail-closed validators gecontroleerd en daaruit
-opnieuw met `--network none --no-cache` gebouwd. Ook de minimale
-controller→worker-registratie is veilig bewezen met AgentRL's eigen lege
-`VirtualTask`: één levende worker, nul samples. De volgende harde gate is
+opnieuw met `--network none --no-cache` gebouwd. Een **eerdere, aparte**
+source-imageproef bewees de minimale controller→worker-registratie met
+AgentRL's eigen lege `VirtualTask`: één levende worker, nul samples. Die
+registratie gebruikte niet dezelfde image-digests als de retained rebuild en
+is dus geen bewijs voor de nieuwe bytes. De volgende harde gate is
 echter **rood**: de vernieuwde SBOM- en Trivy-scan telt 4 kritisch + 39 hoog
 voor de controller en 9 kritisch + 63 hoog voor de worker. Daarom start er
 geen AgentBench-taak voordat we de gepinde communitybron, basisimages en
@@ -336,6 +338,14 @@ dependencies gericht hebben bijgewerkt en opnieuw gescand. Dit is lokaal
 retentie- en no-go-bewijs, geen off-host back-up, productionrelease of score.
 Zie
 [`agentbench-fc-agentrl-retained-rebuild-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-retained-rebuild-2026-08-27.json).
+
+De controllerinvoer is daarna nog eens vanaf nul **twee keer identiek**
+opgebouwd en als een afzonderlijke v2-kandidaat netwerkloos en niet-root
+gebouwd. Daarmee is de herbouwroute van die controller nu eerlijk en
+herhaalbaar vastgelegd. Dit lost de rode scan van de oude controller/worker-pair
+niet op en wordt daarom niet als een gestarte benchmark of groene stack
+gepresenteerd. Zie
+[`agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
