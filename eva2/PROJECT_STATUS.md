@@ -198,6 +198,15 @@ bewaart alleen jouw stopopdracht, start niets opnieuw en markeert de uitkomst
 als nog te controleren. De route is aan dezelfde vaste eigenaarbinding als het
 dashboard gekoppeld, niet aan een los browser-ID of een algemene openbare API.
 
+Checkpoint `0bdddc6` sluit daar een belangrijk vervolg op: als de al gestarte
+actie later toch aantoonbaar gelukt is, bewaart Eva nog steeds het resultaat en
+de onafhankelijke controle. Maar zij maakt **geen volgende stap** uit die
+uitkomst vrij. De keten blijft wachten tot de eigenaar een nieuw besluit neemt.
+Zo wordt een stop geen leugen over wat al gebeurd kan zijn, maar ook geen
+stilzwijgende toestemming om daarna door te werken. Achttien wegwerp-
+PostgreSQL-proeven en onafhankelijke review zijn groen. Dit is nog geen
+proceskill, Telegramknop, browserproef of B-deploy.
+
 Twee nieuwe echte PostgreSQL-16.13-proeven zijn groen: één vóór call-start en
 één ná call-start. De actieve 3D-pagina blijft vooralsnog read-only; een
 zichtbare knop, Telegram-bediening en een echte browser-/huisproef blijven
