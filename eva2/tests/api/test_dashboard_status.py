@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,7 @@ from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.workboard import WorkBoard
 from fastapi.testclient import TestClient
+import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE_INDEX_PATH = ROOT / "release/eva-cockpit-evidence-index-v1.json"
@@ -95,6 +97,64 @@ def test_dashboard_status_is_read_only_and_non_secret() -> None:
         },
     }
     assert "not-a-real-secret" not in response.text
+
+
+def test_configured_dashboard_token_gates_every_cockpit_read_route() -> None:
+    token = "t" * 32
+    client = TestClient(create_app(_Runtime(), dashboard_access_token=token))
+    routes = (
+        "/internal/v1/dashboard",
+        "/internal/v1/dashboard/status",
+        "/internal/v1/dashboard/identity",
+        "/internal/v1/dashboard/progress",
+        "/internal/v1/dashboard/people-memory",
+        "/internal/v1/dashboard/workboard",
+    )
+
+    for route in routes:
+        response = client.get(route)
+        assert response.status_code == 401
+        assert response.headers["cache-control"] == "no-store"
+        assert response.headers["www-authenticate"].startswith("Basic ")
+        assert token not in response.text
+
+    preview = client.post("/internal/v1/dashboard/identity/diff", json={})
+    assert preview.status_code == 401
+    assert token not in preview.text
+
+    bearer = client.get(
+        "/internal/v1/dashboard/status",
+        headers={"authorization": f"Bearer {token}"},
+    )
+    assert bearer.status_code == 200
+
+    basic_value = base64.b64encode(f"eva-owner:{token}".encode()).decode()
+    basic = client.get(
+        "/internal/v1/dashboard/status",
+        headers={"authorization": f"Basic {basic_value}"},
+    )
+    assert basic.status_code == 200
+    assert token not in basic.text
+
+    assert client.get("/healthz").status_code == 200
+
+
+def test_dashboard_access_rejects_short_or_malformed_credentials() -> None:
+    with pytest.raises(ValueError, match="invalid length"):
+        create_app(_Runtime(), dashboard_access_token="too-short")
+
+    token = "t" * 32
+    client = TestClient(create_app(_Runtime(), dashboard_access_token=token))
+    for header in (
+        "Bearer wrong",
+        "Basic not-base64",
+        "Basic " + base64.b64encode(f"other-owner:{token}".encode()).decode(),
+    ):
+        response = client.get(
+            "/internal/v1/dashboard/status", headers={"authorization": header}
+        )
+        assert response.status_code == 401
+        assert token not in response.text
 
 
 def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> None:

@@ -36,6 +36,8 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_DURABLE_GOAL_PROVIDER",
         "EVA_DURABLE_GOAL_RECIPIENTS",
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+        "EVA_DASHBOARD_ACCESS_TOKEN",
+        "EVA_DASHBOARD_ACCESS_TOKEN_FILE",
     ):
         monkeypatch.delenv(name, raising=False)
     database = private_tmp_path / "database-dsn"
@@ -80,6 +82,10 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
         "44444444-4444-4444-4444-444444444444",
     )
+    dashboard_token = private_tmp_path / "dashboard-token"
+    dashboard_token.write_text("t" * 32)
+    dashboard_token.chmod(0o600)
+    monkeypatch.setenv("EVA_DASHBOARD_ACCESS_TOKEN_FILE", str(dashboard_token))
 
     settings = RuntimeSettings.from_environment()
     assert settings.dashboard_principal_binding_id == (
@@ -88,6 +94,38 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
 
     monkeypatch.setenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "not-a-uuid")
     with pytest.raises(RuntimeError, match="dashboard owner binding is invalid"):
+        RuntimeSettings.from_environment()
+
+
+def test_dashboard_access_token_is_file_only_and_required_for_owner_binding(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_DASHBOARD_ACCESS_TOKEN", "t" * 32)
+    with pytest.raises(RuntimeError, match="DASHBOARD_ACCESS_TOKEN is forbidden"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.delenv("EVA_DASHBOARD_ACCESS_TOKEN")
+    monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "11111111-1111-1111-1111-111111111111")
+    monkeypatch.setenv(
+        "EVA_RUNTIME_INSTALLATION_ID", "22222222-2222-2222-8222-222222222222"
+    )
+    monkeypatch.setenv(
+        "EVA_RUNTIME_PRINCIPAL_ID", "33333333-3333-3333-8333-333333333333"
+    )
+    monkeypatch.setenv(
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+        "44444444-4444-4444-8444-444444444444",
+    )
+    with pytest.raises(RuntimeError, match="requires a dashboard access token file"):
+        RuntimeSettings.from_environment()
+
+    token = private_tmp_path / "dashboard-token"
+    token.write_text("t" * 31)
+    token.chmod(0o600)
+    monkeypatch.setenv("EVA_DASHBOARD_ACCESS_TOKEN_FILE", str(token))
+    with pytest.raises(RuntimeError, match="invalid length"):
         RuntimeSettings.from_environment()
 
 

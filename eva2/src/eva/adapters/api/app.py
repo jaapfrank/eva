@@ -11,6 +11,7 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from eva.adapters.api.cockpit import COCKPIT_HTML, cockpit_progress
+from eva.adapters.api.dashboard_access import DashboardAccess
 
 from eva.application.conversation import (
     ConversationConflict,
@@ -560,7 +561,9 @@ def _bounded_string_fields(
     return values
 
 
-def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
+def create_app(
+    runtime: MemoryRecallRuntime, *, dashboard_access_token: str | None = None
+) -> FastAPI:
     start_background = getattr(runtime, "start_background_work", None)
     stop_background = getattr(runtime, "stop_background_work", None)
 
@@ -575,6 +578,7 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
                 stop_background()
 
     app = FastAPI(title="Eva Living Core", version="0.1.0", lifespan=lifespan)
+    dashboard_access = DashboardAccess(dashboard_access_token)
 
     @app.get("/healthz")
     def health() -> dict[str, str]:
@@ -604,9 +608,10 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         return payload
 
     @app.get("/internal/v1/dashboard/status")
-    def dashboard_status() -> JSONResponse:
+    def dashboard_status(request: Request) -> JSONResponse:
         """Expose non-secret, read-only runtime status for the operator UI."""
 
+        dashboard_access.require(request)
         result = runtime.health()
         return JSONResponse(
             {
@@ -621,9 +626,10 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         )
 
     @app.get("/internal/v1/dashboard/identity")
-    def dashboard_identity() -> JSONResponse:
+    def dashboard_identity(request: Request) -> JSONResponse:
         """Expose the verified active identity without a mutation surface."""
 
+        dashboard_access.require(request)
         identity = current_dashboard_identity()
         return JSONResponse(
             {
@@ -648,9 +654,10 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         )
 
     @app.post("/internal/v1/dashboard/identity/diff")
-    def dashboard_identity_diff(payload: dict[str, Any]) -> JSONResponse:
+    def dashboard_identity_diff(request: Request, payload: dict[str, Any]) -> JSONResponse:
         """Preview a staged IdentityPack presentation change without storing it."""
 
+        dashboard_access.require(request)
         identity = current_dashboard_identity()
         try:
             draft = IdentityPackDraft.model_validate(payload)
@@ -672,9 +679,10 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         )
 
     @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
-    def dashboard() -> HTMLResponse:
+    def dashboard(request: Request) -> HTMLResponse:
         """Serve Eva's central local, read-only operator cockpit."""
 
+        dashboard_access.require(request)
         return HTMLResponse(
             COCKPIT_HTML,
             headers={
@@ -685,18 +693,20 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         )
 
     @app.get("/internal/v1/dashboard/progress")
-    def dashboard_progress() -> JSONResponse:
+    def dashboard_progress(request: Request) -> JSONResponse:
         """Expose the maintained proof ladder without implying live runtime state."""
 
+        dashboard_access.require(request)
         return JSONResponse(
             cockpit_progress(),
             headers={"Cache-Control": "no-store"},
         )
 
     @app.get("/internal/v1/dashboard/people-memory")
-    def dashboard_people_memory() -> JSONResponse:
+    def dashboard_people_memory(request: Request) -> JSONResponse:
         """Expose coarse family/memory states without content or identifiers."""
 
+        dashboard_access.require(request)
         projection = getattr(runtime, "dashboard_people_memory", None)
         if not callable(projection):
             raise HTTPException(
@@ -718,9 +728,10 @@ def create_app(runtime: MemoryRecallRuntime) -> FastAPI:
         )
 
     @app.get("/internal/v1/dashboard/workboard")
-    def dashboard_workboard() -> JSONResponse:
+    def dashboard_workboard(request: Request) -> JSONResponse:
         """Expose a fixed local operator's field-minimized work cards."""
 
+        dashboard_access.require(request)
         projection = getattr(runtime, "dashboard_workboard", None)
         if not callable(projection):
             raise HTTPException(status_code=503, detail="workboard unavailable")

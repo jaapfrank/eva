@@ -54,3 +54,26 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 Elke slice krijgt gerichte tests, een onafhankelijke review en een Git-checkpoint.
 De dashboardroute draait uitsluitend in B totdat haar autorisatie- en
 privacyproeven groen zijn.
+
+## Toegang vóór bediening
+
+De cockpit kan vanaf checkpoint `D00a` achter één expliciete eigenaarstoegang
+staan. De runtime accepteert uitsluitend
+`EVA_DASHBOARD_ACCESS_TOKEN_FILE`: een private, reguliere, niet-gelinkte file
+van de runtimegebruiker. Een inline omgevingsvariabele wordt geweigerd. Zodra
+een dashboard-eigenaarbinding is geconfigureerd, is die file verplicht; de
+runtime start dan niet per ongeluk met een zichtbaar werkbord zonder login.
+
+De browser gebruikt gewone HTTP Basic-authenticatie met gebruiker `eva-owner`,
+zodat de browser ook de daaropvolgende cockpit-API-calls beschermt zonder het
+token in HTML, JavaScript, local storage, cookie of URL te zetten. Beheerde
+tools mogen daarnaast dezelfde token via `Authorization: Bearer …` sturen.
+De server vergelijkt tokens constant-time, antwoordt bij elke mislukking alleen
+met `401`, `no-store` en een algemene challenge, en laat healthchecks buiten
+deze gebruikersroute.
+
+Dit sluit alleen de eerste **leesgrens**. De huidige lokale ontwikkelcockpit
+blijft expliciet read-only zolang zij zonder toegangstoken is gestart. B krijgt
+pas dashboardbediening nadat de ownerbinding, tokenfile-mount, loopback/TLS-
+route, CSRF-/originproef en dezelfde chatgebonden service voor iedere write
+apart zijn bewezen.

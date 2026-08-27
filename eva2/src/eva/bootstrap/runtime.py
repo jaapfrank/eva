@@ -140,6 +140,7 @@ from eva.application.free_will import (
 )
 from eva.application.sensory import SensoryIngestionWorker
 from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
+from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 
 
 @dataclass(frozen=True, slots=True)
@@ -161,6 +162,7 @@ class RuntimeSettings:
     background_installation_id: str | None = None
     background_principal_id: str | None = None
     dashboard_principal_binding_id: str | None = None
+    dashboard_access_token: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
     home_assistant_url: str | None = None
@@ -230,6 +232,22 @@ class RuntimeSettings:
         dashboard_principal_binding_id = (
             os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
         )
+        if "EVA_DASHBOARD_ACCESS_TOKEN" in os.environ:
+            raise RuntimeError(
+                "EVA_DASHBOARD_ACCESS_TOKEN is forbidden; use "
+                "EVA_DASHBOARD_ACCESS_TOKEN_FILE"
+            )
+        dashboard_access_token_file = os.environ.get(
+            "EVA_DASHBOARD_ACCESS_TOKEN_FILE", ""
+        ).strip()
+        dashboard_access_token = None
+        if dashboard_access_token_file:
+            dashboard_access_token = validate_dashboard_access_token(
+                read_runtime_secret_file(
+                    dashboard_access_token_file,
+                    setting_name="EVA_DASHBOARD_ACCESS_TOKEN_FILE",
+                )
+            )
         if dashboard_principal_binding_id is not None:
             if background_principal_id is None:
                 raise RuntimeError(
@@ -242,6 +260,10 @@ class RuntimeSettings:
                 UUID(dashboard_principal_binding_id)
             except ValueError as error:
                 raise RuntimeError("Eva dashboard owner binding is invalid") from error
+            if dashboard_access_token is None:
+                raise RuntimeError(
+                    "Eva dashboard owner binding requires a dashboard access token file"
+                )
         try:
             cold_path_idle_seconds = float(
                 os.environ.get("EVA_COLD_PATH_IDLE_SECONDS", "300")
@@ -447,6 +469,7 @@ class RuntimeSettings:
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
+            dashboard_access_token=dashboard_access_token,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             home_assistant_url=home_assistant_url,
@@ -1938,7 +1961,8 @@ def create_runtime_app() -> FastAPI:
             delegated_work_store=delegated_work_store,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
-        )
+        ),
+        dashboard_access_token=settings.dashboard_access_token,
     )
 
 
