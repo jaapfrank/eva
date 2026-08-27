@@ -632,7 +632,7 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         value.get("contract") != "EvaCockpitEvidenceIndex/v1"
         or value.get("schemaVersion") != 1
         or value.get("status") != "release_bound_projection"
-        or value.get("updatedOn") != "2026-08-26"
+            or value.get("updatedOn") != "2026-08-27"
         or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
         or not isinstance(entries, list)
         or len(entries) != len(_COCKPIT_EVIDENCE_STATES)

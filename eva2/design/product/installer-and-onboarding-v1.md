@@ -241,6 +241,9 @@ stil half-geconfigureerd.
   connector blijft afzonderlijk staged/ready/blocked en auditbaar.
 - [ ] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
+  De read-only lokale voorstelweergave is gesloten op checkpoint `4422b5a`;
+  opslag, ondertekening, activatie en rollback blijven de afzonderlijke
+  eigenaargrens van deze gate.
 - [ ] IN04 — Telegram-, Home Assistant- en één e-mailproviderwizard met
   least-privilege scopes, echte read-only proeven en capability-permissions,
   plus een ingang naar AC01 voor een niet-vooraf-ingebakken kanaal.

@@ -57,7 +57,7 @@ de controleerbare live receipts staan in
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper. De onderbreekcontroller geeft aantoonbaar tegelijk stopopdrachten aan speaker en onafgemaakte antwoordgeneratie | De echte model-/TTS-koppeling, gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence zijn nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages én een compacte Lightpanda-kandidaat zijn door de strikte scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. De beheerde startconfiguratie rendert nu ook als één verzegeld geheel met alle acht diensten en uitsluitend synthetische tijdelijke bestanden. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, een geautoriseerde preflight met echte hostmetadata, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. De lokale installer kan nu een kleine `SOUL.md` laten plakken en uitsluitend het voorstelverschil tonen; opslaan, ondertekenen en activeren blijven apart. Een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, een geautoriseerde preflight met echte hostmetadata, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie. Een aparte Python-3.9/CPU benchmarkimage met alle upstream-pakketten is nu echt gebouwd en netwerkloos gecontroleerd | AgentBench-taakservers, model-/kostenmandaat, officiële AgentBench/GAIA/OSWorld-scores en de volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Belangrijk: de live Eva en Eva2 delen geen geheugen
@@ -66,6 +66,21 @@ De Eva die nu draait (**Eva1**) bewaart haar herinneringen in haar eigen
 SQLite-bestand. Zij gebruikt **geen Hindsight**. PostgreSQL en Hindsight horen
 alleen bij de afzonderlijke Eva2-kandidaatroute; die route gebruikt geen
 live-Eva1-geheugenvolume en heeft Eva1 niet aangepast.
+
+## Nieuwste technisch afgesloten stap: identiteit voorstellen in de lokale installer
+
+De lokale installer heeft nu een zichtbare, veilige eerste identiteitsstap.
+Na de eenmalige lokale link kan iemand een kleine `SOUL.md` plakken en direct
+zien wat er zou veranderen, bijvoorbeeld Eva's naam of temperament. De preview
+is gebonden aan het op dat moment geverifieerde `IdentityPack` en werkt alleen
+via de bestaande kortlevende loopback-sessie.
+
+Dit bewaart niets, ondertekent niets en wijzigt Eva niet. Een ander tabblad,
+een verkeerde oorsprong of een ongeldige `SOUL.md` wordt geweigerd. De volgende
+stap blijft dus bewust een aparte eigenaarhandeling: offline ondertekenen,
+activeren en zo nodig terugdraaien. Checkpoint `4422b5a` heeft **32/32**
+gerichte installer-, identiteit- en preflightcontroles groen. Eva1, B,
+Telegram, Home Assistant en secrets zijn niet geopend of gewijzigd.
 
 De enige mogelijke brug is een bewust beperkte proef: eerst een read-only
 voorvertoning met aantallen en hashes, daarna — alleen na jouw expliciete
