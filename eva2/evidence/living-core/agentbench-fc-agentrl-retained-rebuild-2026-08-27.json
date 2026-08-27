@@ -1,0 +1,77 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLRetainedRebuildReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "sourceArchive": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-source/agentrl-6a73409d31ba695d383b978a8ad3ef400d90c054.tar",
+      "sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+    },
+    "controllerInputs": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-controller-inputs-amd64",
+      "manifest": "benchmark/agentbench-fc-v1/agentrl-controller-build-inputs-amd64.json",
+      "manifestSha256": "e639dec05ffab8847744feb309e9c7b803f55e0805cbecec3a52d80bcbae6698"
+    },
+    "workerWheelhouse": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-worker-wheelhouse-amd64-py310",
+      "manifest": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-amd64-py310.json",
+      "manifestSha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
+    }
+  },
+  "images": {
+    "controller": {
+      "digest": "eva2/agentbench-agentrl-controller@sha256:f114e1383f6a07ebbd15f74b8dda471e1bc80c75e740bdf7b30ab664858e14e5",
+      "sizeBytes": 24151149
+    },
+    "worker": {
+      "digest": "eva2/agentbench-agentrl-worker@sha256:2f458ca6665ca9cb0442597849223447ce6427635a8e58a1ead49ef407a93d80",
+      "sizeBytes": 104587457
+    }
+  },
+  "verification": {
+    "controllerInputValidatorReadOnly": true,
+    "controllerReadOnlyHelp": true,
+    "networklessNoCacheRebuild": true,
+    "workerReadOnlyHelp": true,
+    "workerRequirementsCheck": true,
+    "workerWheelhouseValidatorReadOnly": true
+  },
+  "vulnerabilityGate": {
+    "allowed": false,
+    "reason": "The pinned development images contain unresolved HIGH and CRITICAL findings; no AgentBench task or score may start.",
+    "scanner": {
+      "image": "ghcr.io/aquasecurity/trivy:0.74.0@sha256:ee940acbf1f58ebadb42d01434ce4609530bf1b52536afbd1eee66cd7123c5c9",
+      "version": "0.74.0"
+    },
+    "controller": {
+      "critical": 4,
+      "high": 39,
+      "rawReport": {
+        "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/controller-trivy.json",
+        "sha256": "c652b6e8fbcc77e43403cc97b758cbf0bfbf09c808af951b2b36fa7e9fa3d461"
+      },
+      "sbom": {
+        "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/controller-sbom.cdx.json",
+        "sha256": "45c874164383c2570ff0b0611fe51ed3a46e4aa552bd085c3d39c2f237f2e6ed"
+      }
+    },
+    "worker": {
+      "critical": 9,
+      "high": 63,
+      "rawReport": {
+        "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/worker-trivy.json",
+        "sha256": "2b3474623cf6c38821971c28200157ef935416c6c55f835743924b3fa68593b4"
+      },
+      "sbom": {
+        "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/worker-sbom.cdx.json",
+        "sha256": "8ee8cff10c14f1ec167c4ee10dc9699ad51fb09a20432465d21735aa99e74380"
+      }
+    }
+  },
+  "nonClaims": [
+    "The retained artifacts are local to this host; this is not off-host backup, a release artifact or a production promotion.",
+    "No AgentBench task, dataset, model call, scorer, development result or public score was started.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ],
+  "status": "retained_offline_rebuild_proven_vulnerability_gate_failed"
+}

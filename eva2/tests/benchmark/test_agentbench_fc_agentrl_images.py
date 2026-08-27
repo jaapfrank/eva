@@ -15,12 +15,30 @@ WORKER_LOCK = ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-requirem
 WORKER_WHEELHOUSE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-wheelhouse-amd64-py310.json"
 )
+CONTROLLER_PROVENANCE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-inputs-provenance-amd64.json"
+)
+WORKER_PROVENANCE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-wheelhouse-provenance-amd64-py310.json"
+)
+PROBE_CONFIG = ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-protocol-probe.yaml"
 RECEIPT = (
     ROOT
     / "eva2"
     / "evidence"
     / "living-core"
     / "agentbench-fc-agentrl-source-images-2026-08-27.json"
+)
+PROBE_RECEIPT = ROOT / "eva2" / "evidence" / "living-core" / "agentbench-fc-protocol-probe-2026-08-27.json"
+PROBE_READBACK = (
+    ROOT / "eva2" / "evidence" / "living-core" / "agentbench-fc-protocol-probe-list-workers-2026-08-27.json"
+)
+RETAINED_REBUILD_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-retained-rebuild-2026-08-27.json"
 )
 
 
@@ -91,11 +109,77 @@ def test_agentrl_worker_lock_and_wheelhouse_are_hash_bound() -> None:
     )["sha256"] == "75e579ee5f0c9db18569da11eb27ebd9144958ddec308a12910575f241b85f12"
 
 
+def test_agentrl_artifact_provenance_binds_exact_manifests_and_rebuild_inputs() -> None:
+    controller = json.loads(CONTROLLER_PROVENANCE.read_text(encoding="utf-8"))
+    worker = json.loads(WORKER_PROVENANCE.read_text(encoding="utf-8"))
+
+    assert controller["artifact"] == "EvaAgentBenchFcControllerInputsProvenance/v1"
+    assert controller["artifactManifest"]["sha256"] == hashlib.sha256(
+        CONTROLLER_INPUTS.read_bytes()
+    ).hexdigest()
+    assert controller["protoc"]["releaseUrl"].endswith("protoc-31.1-linux-x86_64.zip")
+    assert controller["moduleCache"]["go"] == "1.24.5"
+    assert worker["artifact"] == "EvaAgentBenchFcWorkerWheelhouseProvenance/v1"
+    assert worker["artifactManifest"]["sha256"] == hashlib.sha256(
+        WORKER_WHEELHOUSE.read_bytes()
+    ).hexdigest()
+    assert worker["localBuildException"]["sourceDistribution"]["sha256"] == (
+        "89a704cb389bf0a010a1fa050ce19342d23bf6371ebda1c21cfe8ff3ed488726"
+    )
+
+
+def test_agentrl_protocol_probe_records_an_idle_nonbenchmark_registration() -> None:
+    receipt = json.loads(PROBE_RECEIPT.read_text(encoding="utf-8"))
+    readback = json.loads(PROBE_READBACK.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcProtocolProbeReceipt/v1"
+    assert receipt["status"] == "protocol_registration_proven"
+    assert receipt["inputs"]["probeConfig"]["sha256"] == hashlib.sha256(
+        PROBE_CONFIG.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["listWorkers"]["sha256"] == hashlib.sha256(
+        PROBE_READBACK.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["activeSamples"] == 0
+    assert receipt["observed"]["registeredWorkerCount"] == 1
+    assert readback["virtual-task"]["workers"]["1"]["current"] == 0
+    assert receipt["verification"]["controllerWorkerRegistration"] is True
+
+
+def test_agentrl_retained_rebuild_is_explicitly_blocked_by_its_vulnerability_gate() -> None:
+    receipt = json.loads(RETAINED_REBUILD_RECEIPT.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcAgentRLRetainedRebuildReceipt/v1"
+    assert receipt["status"] == "retained_offline_rebuild_proven_vulnerability_gate_failed"
+    assert receipt["inputs"]["controllerInputs"]["manifestSha256"] == hashlib.sha256(
+        CONTROLLER_INPUTS.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["workerWheelhouse"]["manifestSha256"] == hashlib.sha256(
+        WORKER_WHEELHOUSE.read_bytes()
+    ).hexdigest()
+    assert receipt["verification"]["networklessNoCacheRebuild"] is True
+    assert receipt["vulnerabilityGate"]["allowed"] is False
+    assert receipt["vulnerabilityGate"]["controller"] == {
+        "critical": 4,
+        "high": 39,
+        "rawReport": {
+            "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/controller-trivy.json",
+            "sha256": "c652b6e8fbcc77e43403cc97b758cbf0bfbf09c808af951b2b36fa7e9fa3d461",
+        },
+        "sbom": {
+            "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/security-scan-2026-08-27/controller-sbom.cdx.json",
+            "sha256": "45c874164383c2570ff0b0611fe51ed3a46e4aa552bd085c3d39c2f237f2e6ed",
+        },
+    }
+    assert receipt["vulnerabilityGate"]["worker"]["critical"] == 9
+    assert receipt["vulnerabilityGate"]["worker"]["high"] == 63
+
+
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:
     receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
 
     assert receipt["artifact"] == "EvaAgentBenchFcAgentRLSourceImagesReceipt/v1"
-    assert receipt["status"] == "offline_source_images_ready_stack_wiring_open"
+    assert receipt["status"] == "local_source_builds_superseded_by_retained_rebuild_security_no_go"
     assert receipt["inputs"]["agentbenchCommit"] == "d1e4a10db08c87075c78972e48ecc182be03e2d5"
     assert receipt["inputs"]["agentrlCommit"] == "6a73409d31ba695d383b978a8ad3ef400d90c054"
     assert receipt["inputs"]["agentrlGitArchive"]["sha256"] == (
@@ -107,6 +191,9 @@ def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() ->
     assert receipt["inputs"]["controllerBuildInputs"]["sha256"] == hashlib.sha256(
         CONTROLLER_INPUTS.read_bytes()
     ).hexdigest()
+    assert receipt["inputs"]["controllerInputsProvenance"]["sha256"] == hashlib.sha256(
+        CONTROLLER_PROVENANCE.read_bytes()
+    ).hexdigest()
     assert receipt["inputs"]["workerDockerfile"]["sha256"] == hashlib.sha256(
         WORKER.read_bytes()
     ).hexdigest()
@@ -115,6 +202,9 @@ def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() ->
     ).hexdigest()
     assert receipt["inputs"]["workerWheelhouseManifest"]["sha256"] == hashlib.sha256(
         WORKER_WHEELHOUSE.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["workerWheelhouseProvenance"]["sha256"] == hashlib.sha256(
+        WORKER_PROVENANCE.read_bytes()
     ).hexdigest()
     assert receipt["verification"]["controllerReadOnlyHelp"] is True
     assert receipt["verification"]["workerReadOnlyHelp"] is True
@@ -132,4 +222,5 @@ def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() ->
         "4abfff3108ce315dc34b7b0d3474c8a6431534a219d37b2369e4d08f71765b57"
     )
     assert receipt["verification"]["controllerOfflineImageBuild"] is True
-    assert receipt["openBoundary"].startswith("Both disposable source images were rebuilt")
+    assert receipt["openBoundary"].startswith("This receipt records the original local source builds")
+    assert "retained-rebuild" in receipt["openBoundary"]

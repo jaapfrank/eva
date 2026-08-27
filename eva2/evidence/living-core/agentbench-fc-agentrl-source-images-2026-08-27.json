@@ -14,7 +14,11 @@
     },
     "controllerBuildInputs": {
       "path": "benchmark/agentbench-fc-v1/agentrl-controller-build-inputs-amd64.json",
-      "sha256": "c06e2fc4b974eef508eed3c04bba5b0acc6df7cad996c53533e3c75f7258bf7b"
+      "sha256": "e639dec05ffab8847744feb309e9c7b803f55e0805cbecec3a52d80bcbae6698"
+    },
+    "controllerInputsProvenance": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64.json",
+      "sha256": "7f7ace994a28956a236f4c8a77a826dcfa1bb040c2eb04a5b7a0a14d5245db45"
     },
     "workerDockerfile": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
@@ -27,6 +31,10 @@
     "workerWheelhouseManifest": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-amd64-py310.json",
       "sha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
+    },
+    "workerWheelhouseProvenance": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-provenance-amd64-py310.json",
+      "sha256": "b4c6ca26db77cbae532cc4582d23b796e3a9cf20ccc2bc64a580e1090ac2ca25"
     }
   },
   "images": {
@@ -63,11 +71,11 @@
     "workerOfflineDependencyInstall": true,
     "workerOfflineImageBuild": true
   },
-  "openBoundary": "Both disposable source images were rebuilt with --network none from separately sealed inputs. The next open boundary is the missing, version-compatible AgentBench controller/worker wiring: no controller-to-worker session, task, dataset, model call, scorer, development result or score has started.",
+  "openBoundary": "This receipt records the original local source builds. The physical inputs were subsequently retained locally read-only, their rebuild recipes recorded, validators given negative regressions and both images rebuilt from those retained bytes; see agentbench-fc-agentrl-retained-rebuild-2026-08-27.json. That later scan is red, so independently reviewed community/base/dependency updates and a new clean scan remain required before any AgentBench development stack may start. No AgentBench task, dataset, model call, scorer, development result or score has started.",
   "nonClaims": [
     "No AgentBench task, dataset, controller-to-worker session, model call, scorer, development result or public score was started.",
     "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
     "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
   ],
-  "status": "offline_source_images_ready_stack_wiring_open"
+  "status": "local_source_builds_superseded_by_retained_rebuild_security_no_go"
 }

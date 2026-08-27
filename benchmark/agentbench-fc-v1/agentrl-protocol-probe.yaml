@@ -1,0 +1,7 @@
+# A no-sample AgentRL protocol probe.  It uses AgentRL's own VirtualTask only
+# to register one worker at the controller.  Do not use this as an AgentBench
+# task configuration: it has no AgentBench data, evaluator, model, or score.
+protocol-probe:
+  module: agentrl.worker.task.VirtualTask
+  parameters:
+    concurrency: 1

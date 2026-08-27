@@ -144,8 +144,21 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   een aparte, gecontroleerde set van 57 wheels; de controller op dezelfde
   manier uit een geverifieerde Go-modulecache, protoc en de twee generators.
   De build kan dus niet naar PyPI, apt, GitHub of een Go-moduleproxy uitwijken.
-  De ontbrekende versiepassende AgentBench-controller/workerbedrading blijft
-  de volgende open grens; er is geen communicatie, taak of score toegestaan.
+  Dit is nog lokaal buildbewijs, geen herhaalbare stack: de fysieke
+  wheelhouse, modulecache en generatorbestanden stonden alleen tijdelijk
+  lokaal. Duurzame alleen-lezen retentie, herkomst/herbouwrecepten,
+  fail-closed negatieve artifacttests, SBOM/scan en onafhankelijke review
+  moeten eerst sluiten. De veilige controller→worker-registratie wordt apart
+  als protocolproef vastgelegd; er is geen AgentBench-taak, dataset, modelcall
+  of score toegestaan. Daarna blijft de volledige versiepassende
+  developmentstack open.
+  De artifactset is intussen lokaal alleen-lezen vastgelegd, met beide
+  fail-closed validators opnieuw netwerkloos gebouwd en met een lege
+  controller→worker-registratie beproefd. De bijbehorende SBOM/Trivy-gate is
+  bewust rood: controller 4 kritisch/39 hoog, worker 9 kritisch/63 hoog.
+  Daarom mag ook geen developmenttaak starten; eerst volgt een gerichte,
+  opnieuw gepinde community- en basisimage-upgrade met een nieuwe scan. Zie
+  `evidence/living-core/agentbench-fc-agentrl-retained-rebuild-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

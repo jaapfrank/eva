@@ -314,10 +314,28 @@ Git-archief waaruit zij zijn gebouwd. De worker bouwt zonder netwerk uit een
 Python-3.10-lock met hashes en een apart verzegeld wheelhouse (57 wheels); de
 controller bouwt zonder netwerk uit een geverifieerde Go-modulecache, protoc en
 beide protobufgenerators. Geen van beide kan tijdens de build stil packages
-ophalen. De volgende open stap is alleen de ontbrekende,
+ophalen. Dit bewijst nog **geen herhaalbare developmentstack**: de fysieke
+wheelhouse, modulecache en generatorbestanden stonden bij deze proef alleen in
+tijdelijke lokale mappen. Eerst moeten die bytes duurzaam alleen-lezen worden
+bewaard, hun herkomst en herbouwrecept worden vastgelegd, een checker moet ook
+ontbrekende, extra en gewijzigde bestanden weigeren en de scan/SBOM plus
+onafhankelijke review moeten groen zijn. Pas daarna sluiten we de
 versiepassende AgentBench-controller/workerbedrading. Er is nadrukkelijk geen
-controller-naar-worker-sessie, taak, modelcall of score gestart. Zie
+AgentBench-taak, dataset, modelcall, scorer of score gestart. Zie
 [`agentbench-fc-agentrl-source-images-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json).
+
+De fysieke bytes zijn daarna wel naar één lokale, alleen-lezen artifactset
+verplaatst, door beide nieuwe fail-closed validators gecontroleerd en daaruit
+opnieuw met `--network none --no-cache` gebouwd. Ook de minimale
+controller→worker-registratie is veilig bewezen met AgentRL's eigen lege
+`VirtualTask`: één levende worker, nul samples. De volgende harde gate is
+echter **rood**: de vernieuwde SBOM- en Trivy-scan telt 4 kritisch + 39 hoog
+voor de controller en 9 kritisch + 63 hoog voor de worker. Daarom start er
+geen AgentBench-taak voordat we de gepinde communitybron, basisimages en
+dependencies gericht hebben bijgewerkt en opnieuw gescand. Dit is lokaal
+retentie- en no-go-bewijs, geen off-host back-up, productionrelease of score.
+Zie
+[`agentbench-fc-agentrl-retained-rebuild-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-retained-rebuild-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 

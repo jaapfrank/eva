@@ -46,11 +46,18 @@ def _lock_hashes(lock: bytes) -> set[str]:
     return hashes
 
 
-def _wheel_artifacts(wheelhouse: Path, lock_hashes: set[str]) -> list[dict[str, object]]:
+def _wheel_artifacts(
+    wheelhouse: Path, lock_hashes: set[str], *, require_read_only: bool
+) -> list[dict[str, object]]:
     try:
+        root = wheelhouse.lstat()
         entries = list(os.scandir(wheelhouse))
     except FileNotFoundError as error:
         raise RuntimeError("worker wheelhouse is absent") from error
+    if not stat.S_ISDIR(root.st_mode) or stat.S_ISLNK(root.st_mode):
+        raise RuntimeError("worker wheelhouse is not a safe directory")
+    if require_read_only and root.st_mode & 0o222:
+        raise RuntimeError("worker wheelhouse is not read-only")
     artifacts: list[dict[str, object]] = []
     for entry in sorted(entries, key=lambda item: item.name):
         path = Path(entry.path)
@@ -62,6 +69,8 @@ def _wheel_artifacts(wheelhouse: Path, lock_hashes: set[str]) -> list[dict[str, 
             or not 0 < metadata.st_size <= MAX_ARTIFACT_BYTES
         ):
             raise RuntimeError(f"unsafe worker wheelhouse entry: {entry.name}")
+        if require_read_only and metadata.st_mode & 0o222:
+            raise RuntimeError(f"worker wheelhouse artifact is not read-only: {entry.name}")
         digest = _sha256(path.read_bytes())
         if digest not in lock_hashes:
             raise RuntimeError(f"worker wheel is not admitted by the exact lock: {entry.name}")
@@ -73,9 +82,11 @@ def _wheel_artifacts(wheelhouse: Path, lock_hashes: set[str]) -> list[dict[str, 
     return artifacts
 
 
-def _manifest(wheelhouse: Path) -> dict[str, object]:
+def _manifest(wheelhouse: Path, *, require_read_only: bool = False) -> dict[str, object]:
     lock = LOCK.read_bytes()
-    artifacts = _wheel_artifacts(wheelhouse, _lock_hashes(lock))
+    artifacts = _wheel_artifacts(
+        wheelhouse, _lock_hashes(lock), require_read_only=require_read_only
+    )
     return {
         "agentrlCommit": AGENTRL_COMMIT,
         "artifacts": artifacts,
@@ -109,8 +120,10 @@ def _read_manifest(path: Path) -> dict[str, Any]:
     return value
 
 
-def validate(wheelhouse: Path, manifest_path: Path) -> dict[str, object]:
-    expected = _manifest(wheelhouse)
+def validate(
+    wheelhouse: Path, manifest_path: Path, *, require_read_only: bool = False
+) -> dict[str, object]:
+    expected = _manifest(wheelhouse, require_read_only=require_read_only)
     actual = _read_manifest(manifest_path)
     if actual != expected:
         raise RuntimeError("worker wheelhouse manifest differs from local inputs")
@@ -123,13 +136,23 @@ def main() -> None:
     target = parser.add_mutually_exclusive_group(required=True)
     target.add_argument("--write-manifest", type=Path)
     target.add_argument("--manifest", type=Path)
+    parser.add_argument(
+        "--require-read-only",
+        action="store_true",
+        help="refuse a writable materialized wheelhouse",
+    )
     arguments = parser.parse_args()
 
     if arguments.write_manifest is not None:
-        arguments.write_manifest.write_bytes(_canonical(_manifest(arguments.wheelhouse)) + b"\n")
+        arguments.write_manifest.write_bytes(
+            _canonical(_manifest(arguments.wheelhouse, require_read_only=arguments.require_read_only))
+            + b"\n"
+        )
         return
     assert arguments.manifest is not None
-    checked = validate(arguments.wheelhouse, arguments.manifest)
+    checked = validate(
+        arguments.wheelhouse, arguments.manifest, require_read_only=arguments.require_read_only
+    )
     print(json.dumps(checked, sort_keys=True))
 
 
