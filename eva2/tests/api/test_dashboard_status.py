@@ -4,6 +4,8 @@ import base64
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from uuid import UUID, uuid4
 
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
@@ -83,6 +85,16 @@ class _WorkboardRuntime(_Runtime):
         )
 
 
+class _EffectStopRuntime(_Runtime):
+    def dashboard_stop_effect(self, effect_intent_id: UUID) -> SimpleNamespace:
+        return SimpleNamespace(
+            effect_intent_id=effect_intent_id,
+            disposition="stop_requested_after_call_start",
+            message="De actie kan al onderweg zijn; Eva start niets nieuws.",
+            readback_required=True,
+        )
+
+
 def test_dashboard_status_is_read_only_and_non_secret() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/status")
 
@@ -127,6 +139,10 @@ def test_configured_dashboard_token_gates_every_cockpit_read_route() -> None:
     )
     assert soul_preview.status_code == 401
     assert token not in soul_preview.text
+
+    effect_stop = client.post("/internal/v1/dashboard/effects/stop", json={})
+    assert effect_stop.status_code == 401
+    assert token not in effect_stop.text
 
     bearer = client.get(
         "/internal/v1/dashboard/status",
@@ -614,3 +630,28 @@ def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source
     assert response.status_code == 422
     assert response.json() == {"detail": "SOUL.md import is invalid"}
     assert source not in response.text
+
+
+def test_dashboard_effect_stop_is_authenticated_and_honest_about_call_start() -> None:
+    effect_intent_id = uuid4()
+    response = TestClient(create_app(_EffectStopRuntime())).post(
+        "/internal/v1/dashboard/effects/stop",
+        json={"effect_intent_id": str(effect_intent_id)},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json() == {
+        "contract": "EvaDashboardEffectStop/v1",
+        "effect_intent_id": str(effect_intent_id),
+        "disposition": "stop_requested_after_call_start",
+        "message": "De actie kan al onderweg zijn; Eva start niets nieuws.",
+        "readback_required": True,
+    }
+
+    invalid = TestClient(create_app(_EffectStopRuntime())).post(
+        "/internal/v1/dashboard/effects/stop",
+        json={"effect_intent_id": "not-an-id", "extra": True},
+    )
+    assert invalid.status_code == 422
+    assert invalid.json() == {"detail": "effect stop request is invalid"}

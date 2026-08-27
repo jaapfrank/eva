@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Protocol
+from uuid import UUID
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -139,6 +140,7 @@ _DURABLE_GOAL_WAKE_KEYS = {
     "provider",
     "resource",
 }
+_DASHBOARD_EFFECT_STOP_KEYS = {"effect_intent_id"}
 _HOME_ASSISTANT_LIGHT_KEYS = {
     "entity_id",
     "installation_id",
@@ -786,6 +788,51 @@ def create_app(
             raise HTTPException(status_code=503, detail="workboard unavailable")
         return JSONResponse(
             workboard.model_dump(mode="json"),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/dashboard/effects/stop")
+    def dashboard_stop_effect(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
+        """Persist one owner stop request; never claim an external undo."""
+
+        dashboard_access.require(request)
+        if set(payload) != _DASHBOARD_EFFECT_STOP_KEYS:
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        raw_effect_intent_id = payload["effect_intent_id"]
+        if not isinstance(raw_effect_intent_id, str):
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        try:
+            effect_intent_id = UUID(raw_effect_intent_id)
+        except ValueError:
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        stop = getattr(runtime, "dashboard_stop_effect", None)
+        if not callable(stop):
+            raise HTTPException(status_code=503, detail="effect stop unavailable")
+        try:
+            result = stop(effect_intent_id)
+            if str(result.effect_intent_id) != str(effect_intent_id):
+                raise ValueError("effect stop result crossed the requested intent")
+            disposition = result.disposition
+            message = result.message
+            readback_required = result.readback_required
+            if (
+                not isinstance(disposition, str)
+                or not isinstance(message, str)
+                or not isinstance(readback_required, bool)
+            ):
+                raise ValueError("effect stop result is invalid")
+        except Exception as error:
+            raise HTTPException(status_code=503, detail="effect stop unavailable") from error
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardEffectStop/v1",
+                "effect_intent_id": str(effect_intent_id),
+                "disposition": disposition,
+                "message": message,
+                "readback_required": readback_required,
+            },
             headers={"Cache-Control": "no-store"},
         )
 

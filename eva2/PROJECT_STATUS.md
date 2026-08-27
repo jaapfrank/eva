@@ -75,6 +75,18 @@ gespreksherinnering.
 
 ## Nieuwste gesloten stap
 
+De kandidaat heeft nu een **echte, beveiligde stoproute voor één lopende
+actie**. Vóór Eva iets naar buiten stuurt wordt de actie echt geannuleerd. Is
+de externe call al gestart, dan zegt Eva niet dat die is teruggedraaid: zij
+bewaart alleen jouw stopopdracht, start niets opnieuw en markeert de uitkomst
+als nog te controleren. De route is aan dezelfde vaste eigenaarbinding als het
+dashboard gekoppeld, niet aan een los browser-ID of een algemene openbare API.
+
+Twee nieuwe echte PostgreSQL-16.13-proeven zijn groen: één vóór call-start en
+één ná call-start. De actieve 3D-pagina blijft vooralsnog read-only; een
+zichtbare knop, Telegram-bediening en een echte browser-/huisproef blijven
+open. Eva 1 is niet geopend of gewijzigd.
+
 Een mens kan nu een kleine **`SOUL.md` als veilig identiteitsvoorstel** aan Eva
 geven. De cockpit toont uitsluitend het verschil met de huidige, ondertekende
 identiteit: bijvoorbeeld een andere roepnaam, taal, voornaamwoorden, humor of
