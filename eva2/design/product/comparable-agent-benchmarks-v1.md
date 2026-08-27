@@ -170,9 +170,12 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   niet-root/read-only proeven en scans zijn 0 kritisch/0 hoog. De builders
   mochten in deze verkenning nog afhankelijkheden downloaden; dit is daarom
   alleen de bewezen upgradekandidaat, niet de vrijgegeven developmentstack.
-  Eerst worden de Python-lock/wheelhouse en de Go-modulecache opnieuw verzegeld
-  en netwerkloos herbouwd. Receipt:
-  `evidence/living-core/agentbench-fc-agentrl-security-upgrade-probes-2026-08-27.json`.
+  De Python-worker is daarna daadwerkelijk verzegeld en netwerkloos herbouwd:
+  55 hashes, inclusief de reproducibele lokale `etcd3`- en AgentRL-workerwheels,
+  leveren een nieuwe 0-kritisch/0-hoog workerimage. Alleen de bijgewerkte
+  Go-modulecache en de daaropvolgende controller/worker-koppeling blijven nog
+  open. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-worker-wheelhouse-py314-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

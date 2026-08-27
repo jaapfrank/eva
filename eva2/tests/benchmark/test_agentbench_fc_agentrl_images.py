@@ -72,6 +72,22 @@ SECURITY_UPGRADE_CONTROLLER_PATCH = (
 SECURITY_UPGRADE_WORKER = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-chainguard-probe.Dockerfile"
 )
+OFFLINE_WORKER_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-worker-wheelhouse-py314-2026-08-27.json"
+)
+OFFLINE_WORKER_DOCKERFILE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-chainguard-offline.Dockerfile"
+)
+OFFLINE_WORKER_LOCK = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-requirements-py314.lock"
+)
+OFFLINE_WORKER_WHEELHOUSE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-wheelhouse-amd64-py314.json"
+)
 
 
 def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_tools() -> None:
@@ -270,6 +286,36 @@ def test_agentrl_security_upgrade_probes_are_pinned_and_explicitly_incomplete() 
         "62dc306f9eec42084cdce43344e0f9e6f0dfc0069ce3da9f7a8241d01332aa69"
     )
     assert "must still be sealed" in receipt["openBoundary"]
+
+
+def test_agentrl_offline_worker_wheelhouse_binds_exact_new_inputs() -> None:
+    receipt = json.loads(OFFLINE_WORKER_RECEIPT.read_text(encoding="utf-8"))
+    dockerfile = OFFLINE_WORKER_DOCKERFILE.read_text(encoding="utf-8")
+    manifest = json.loads(OFFLINE_WORKER_WHEELHOUSE.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcAgentRLWorkerWheelhouseReceipt/v1"
+    assert receipt["status"] == "sealed_worker_wheelhouse_and_offline_image_proven"
+    assert receipt["inputs"]["workerDockerfile"]["sha256"] == hashlib.sha256(
+        OFFLINE_WORKER_DOCKERFILE.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["workerRequirementsLock"]["sha256"] == hashlib.sha256(
+        OFFLINE_WORKER_LOCK.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["wheelhouseManifest"]["sha256"] == hashlib.sha256(
+        OFFLINE_WORKER_WHEELHOUSE.read_bytes()
+    ).hexdigest()
+    assert manifest["contract"] == "EvaAgentBenchFcWorkerWheelhouse/v2"
+    assert len(manifest["artifacts"]) == 55
+    assert {item["filename"] for item in manifest["localBuildArtifacts"]} == {
+        "agentrl_worker-0.4.1.dev8+g6a73409-py3-none-any.whl",
+        "etcd3-0.12.0-py2.py3-none-any.whl",
+    }
+    assert "--no-index --no-deps" in dockerfile
+    assert "wheelhouse/*.whl" in dockerfile
+    assert ":latest" not in dockerfile
+    assert receipt["verification"]["dockerBuildNetwork"] == "none"
+    assert receipt["verification"]["trivyVulnerabilities"] == {"critical": 0, "high": 0}
+    assert "controller's upgraded Go module cache" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:

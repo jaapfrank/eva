@@ -99,6 +99,59 @@ def test_worker_wheelhouse_validator_refuses_symlink_manifest_and_lock_drift(
         tool.validate(wheelhouse, manifest)
 
 
+def _worker_py314_fixture(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    tool = _load_tool("check_agentbench_fc_worker_wheelhouse_py314.py")
+    wheelhouse = tmp_path / "wheelhouse"
+    wheelhouse.mkdir(parents=True)
+    upstream = wheelhouse / "alpha-1.0-py3-none-any.whl"
+    local = wheelhouse / "local-1.0-py3-none-any.whl"
+    upstream.write_bytes(b"upstream-wheel")
+    local.write_bytes(b"locally-built-wheel")
+    upstream_digest = hashlib.sha256(upstream.read_bytes()).hexdigest()
+    local_digest = hashlib.sha256(local.read_bytes()).hexdigest()
+    lock = tmp_path / "requirements.lock"
+    lock.write_text(f"alpha==1.0 --hash=sha256:{upstream_digest}\n", encoding="utf-8")
+    requirements_in = tmp_path / "requirements.in"
+    requirements_in.write_text("alpha==1.0\n", encoding="utf-8")
+    monkeypatch.setattr(tool, "LOCK", lock)
+    monkeypatch.setattr(tool, "INPUT", requirements_in)
+    monkeypatch.setattr(
+        tool,
+        "LOCAL_BUILT_WHEELS",
+        {"local-1.0-py3-none-any.whl": {"sha256": local_digest, "source": {}}},
+    )
+    manifest = tmp_path / "wheelhouse.json"
+    manifest.write_bytes(_canonical(tool._manifest(wheelhouse)))
+    return tool, wheelhouse, local, manifest
+
+
+def test_python314_worker_wheelhouse_admits_only_exact_local_builds(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    tool, wheelhouse, _, manifest = _worker_py314_fixture(tmp_path, monkeypatch)
+
+    assert [item["filename"] for item in tool.validate(wheelhouse, manifest)["artifacts"]] == [
+        "alpha-1.0-py3-none-any.whl",
+        "local-1.0-py3-none-any.whl",
+    ]
+
+
+@pytest.mark.parametrize("mutation", ["missing", "tampered", "extra"])
+def test_python314_worker_wheelhouse_refuses_local_build_drift(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mutation: str
+) -> None:
+    tool, wheelhouse, local, manifest = _worker_py314_fixture(tmp_path, monkeypatch)
+    if mutation == "missing":
+        local.unlink()
+    elif mutation == "tampered":
+        local.write_bytes(b"different")
+    else:
+        (wheelhouse / "extra-1.0-py3-none-any.whl").write_bytes(b"extra")
+
+    with pytest.raises(RuntimeError):
+        tool.validate(wheelhouse, manifest)
+
+
 def _controller_fixture(tmp_path: Path):
     tool = _load_tool("check_agentbench_fc_controller_inputs.py")
     inputs = tmp_path / "inputs"

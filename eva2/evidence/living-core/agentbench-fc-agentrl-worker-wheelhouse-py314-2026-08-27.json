@@ -1,0 +1,63 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLWorkerWheelhouseReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "agentrlGitArchiveSha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+    "workerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-chainguard-offline.Dockerfile",
+      "sha256": "646303b2b3f8a113c6549d5b7b8c87269c8c2c454d21680dbbe1151475314ea3"
+    },
+    "workerRequirementsLock": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-requirements-py314.lock",
+      "sha256": "bdbc651e2d704b7bca0bf6e864a1ec304cd07ffe1a248898d2ddcad404a2c41b"
+    },
+    "wheelhouseManifest": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-amd64-py314.json",
+      "sha256": "b0eaa18efc4e5866206d4855dc2f810ea9bc29603a9536e9b4e42bd9a872787c"
+    },
+    "bases": {
+      "builder": "cgr.dev/chainguard/python@sha256:aa8fd2447b8b52922db57deb3894b622c3229387aaaec5934d64b85dbff6eb17",
+      "runtime": "cgr.dev/chainguard/python@sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77"
+    },
+    "scanner": "ghcr.io/aquasecurity/trivy:0.74.0@sha256:ee940acbf1f58ebadb42d01434ce4609530bf1b52536afbd1eee66cd7123c5c9"
+  },
+  "sealedArtifacts": {
+    "wheelhouse": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-worker-wheelhouse-amd64-py314",
+      "wheelCount": 55,
+      "readOnly": true
+    },
+    "etcd3Source": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-worker-wheelhouse-amd64-py314-sources/etcd3-0.12.0.tar.gz",
+      "sha256": "89a704cb389bf0a010a1fa050ce19342d23bf6371ebda1c21cfe8ff3ed488726",
+      "readOnly": true
+    },
+    "scan": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-worker-offline-build-2026-08-27/trivy.json",
+      "sha256": "83beeaec2cbac86df0b48ed19f38093f7fbca54d919a53fcbbd3218a2f359d4f"
+    },
+    "sbom": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-worker-offline-build-2026-08-27/sbom.cdx.json",
+      "sha256": "2cdf6a838c48be37ef44ea98b7116139aa50f59377f0424245306d81c6e01f49"
+    }
+  },
+  "image": {
+    "localImageId": "sha256:9619b34b82e36e8b8f9149069a8748663895ae2c3c9e653186c56a385361f3a5",
+    "sizeBytes": 62358905
+  },
+  "verification": {
+    "etcd3SourceDateEpochZeroTwoIndependentBuildsSameHash": true,
+    "agentrlWorkerSourceDateEpochZeroTwoIndependentBuildsSameHash": true,
+    "dockerBuildNetwork": "none",
+    "dockerBuildCache": "disabled",
+    "readOnlyNonRootNetworklessHelp": true,
+    "trivyVulnerabilities": {"critical": 0, "high": 0}
+  },
+  "status": "sealed_worker_wheelhouse_and_offline_image_proven",
+  "openBoundary": "Only the worker dependency closure is now sealed. The controller's upgraded Go module cache, controller/worker registration, AgentBench task servers, model calls and all benchmark scoring remain closed.",
+  "nonClaims": [
+    "No AgentBench task, dataset, model call, controller-worker evaluation session, scorer, benchmark result or public score was started.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ]
+}
