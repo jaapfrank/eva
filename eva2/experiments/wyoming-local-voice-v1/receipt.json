@@ -8,16 +8,16 @@
   },
   "input": {
     "pcm": {
-      "bytes": 71680,
+      "bytes": 78336,
       "channels": 1,
-      "chunks": 35,
+      "chunks": 39,
       "rate": 22050,
-      "sha256": "9b0c40a2a75b50a889cfc33572b32a9d58d3f66ee7ee242779cdf6a556b4a8e0",
+      "sha256": "00ea3c0ed27816e0d810736908bc78abb2f0c6363bb79f2279e803eeebec6da2",
       "width": 2
     },
     "phraseSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
     "streaming": {
-      "chunksRelayedBeforeAudioStop": 35,
+      "chunksRelayedBeforeAudioStop": 39,
       "completeInputAudioBuffered": false,
       "mode": "piper_chunk_relay_to_whisper"
     },
@@ -40,7 +40,7 @@
       "channels": 1,
       "chunks": 3,
       "rate": 22050,
-      "sha256": "e050443301c936cb71bad3f273f09479fb56962e6f6b82126911b40462132cb7",
+      "sha256": "68802369fcbc1ac7feff6d32cc85ce6f5e644444e139847969b6315e07c2bc5b",
       "width": 2
     },
     "phraseSha256": "82a7c6e0cade94072c48184837393691c2838111ddaff64e7f6e778a30b33d22"

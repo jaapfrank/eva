@@ -55,7 +55,14 @@ proef: Piper, Whisper en de controller draaien dan op één Docker-netwerk met
 heeft een vaste `python:3.12-slim` amd64-basisdigest en installeert uitsluitend
 de hashgebonden experimentlock. Zij is geen Eva-productimage.
 
+`offline-isolation-v2-receipt.json`,
+`capture_offline_isolation_v2.py` en `verify_offline_isolation_v2.py` leggen
+de gecorrigeerde actuele proef vast. Zij binden de pipeline-receipt aan de
+capturebron, een intern Docker-netwerk zonder hostpoorten of internetgateway,
+read-only model- en tokenizercaches en uitsluitend de twee noodzakelijke kleine
+`tmpfs`-mappen. De controller heeft geen hostmount en mag alleen zijn eigen
+wegwerpreceipt schrijven. Ook deze proof is uitsluitend synthetisch en lokaal.
+
 `capture_offline_isolation.py` en `verify_offline_isolation.py` blijven voor
 het historische record aanwezig, maar mogen niet als actuele offlineproof worden
-gebruikt totdat ze tegen de vernieuwde tokenizer- en `tmpfs`-preflight zijn
-opnieuw uitgevoerd.
+gebruikt.

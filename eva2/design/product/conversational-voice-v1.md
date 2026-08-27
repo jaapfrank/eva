@@ -166,12 +166,15 @@ vervolgens twee verborgen dependencygrenzen: de oude Whisper-cache miste de
 tokenizer die de actuele upstream bij het laden gebruikt, en Piper plus Whisper
 hebben ieder een kleine tijdelijke schrijfruimte nodig. Daarom is checkpoint
 `8af6a15` alleen nog een historisch inspectierecord, geen actuele offlineclaim.
-De vernieuwde proef gebruikt een exact gepinde `openai/whisper-tiny`-
-tokenizercache naast het read-only `base-int8`-model en laat uitsluitend een
-begrensde `tmpfs` toe. Zij bewees ook dat de controller na drie lokale
-TTS-blokken de onafgemaakte stream sluit zonder de rest te bufferen. Dit is nog
-steeds geen microfoonbarge-in, full-duplex, latency- of menselijke voiceproef;
-V02 blijft onafgevinkt.
+De vernieuwde proef
+`offline-isolation-v2-receipt.json` gebruikt een exact gepinde
+`openai/whisper-tiny`-tokenizercache naast het read-only `base-int8`-model en
+laat uitsluitend een begrensde `tmpfs` toe. Zij bewijst met een intern
+Docker-netwerk zonder hostpoorten of internetgateway dat alle drie processen
+onder die voorwaarden starten en de synthetische keten afmaken. Zij bewees ook
+dat de controller na drie lokale TTS-blokken de onafgemaakte stream sluit zonder
+de rest te bufferen. Dit is nog steeds geen microfoonbarge-in, full-duplex,
+latency- of menselijke voiceproef; V02 blijft onafgevinkt.
 
 ## Snelheidsbudgetten
 
@@ -204,8 +207,9 @@ vooraf vastgelegd en niet achteraf weggefilterd.
   onderbreken en gescheiden latencyreceipts; nog geen Telegram of HA.
   `73561ce`/`d28ee3a` sluiten de synthetische Piper→Faster-Whisper→V01→Piper-
   keten inclusief chunk-relay; echte microfoon/speaker, twee richtingen tegelijk,
-  interrupt en latency blijven open. `8af6a15` sluit de cacheherstart op het
-  interne netwerk.
+  interrupt en latency blijven open. `8af6a15` is alleen een historisch record;
+  `offline-isolation-v2-receipt.json` sluit de gecorrigeerde no-egress-
+  sidecarproef met vaste tokenizercache en noodzakelijke `tmpfs`-ruimte.
 - [ ] V03 — Home Assistant Assist/Wyoming-route tegen Eva's bestaande
   gesprekcore, met dezelfde persoon/context en zonder tweede intentbrein.
 - [ ] V04 — Telegram Mini App `Bel Eva`: server-side initdataverificatie,
