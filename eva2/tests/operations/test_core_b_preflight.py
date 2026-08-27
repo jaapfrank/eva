@@ -101,6 +101,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_STACK_WORK_VOLUME": "eva2-living-work-b",
         "EVA_STACK_POSTGRES_VOLUME": "eva2-postgres-b-live",
         "EVA_STACK_HINDSIGHT_VOLUME": "eva2-hindsight-memory",
+        "EVA_HINDSIGHT_BANK_NAMESPACE": "eva2",
         "EVA_CODEX_AUTH_DIR": str(codex_authority),
         "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
         "EVA_HINDSIGHT_ACCESS_DIR": str(hindsight_lease),
@@ -165,6 +166,19 @@ def test_plan_refuses_its_derived_configuration_hash_in_the_snapshot(
 
     with pytest.raises(RuntimeError, match="derived and forbidden"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+def test_plan_refuses_the_compose_required_hindsight_bank_namespace(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    values.pop("EVA_HINDSIGHT_BANK_NAMESPACE")
+
+    with pytest.raises(RuntimeError, match="EVA_HINDSIGHT_BANK_NAMESPACE is required"):
+        load_core_b_plan(
+            _environment_file(private_tmp_path, values).as_posix(),
+            runtime_uid=os.geteuid(),
+        )
 
 
 def test_managed_service_labels_require_the_entire_sealed_graph(

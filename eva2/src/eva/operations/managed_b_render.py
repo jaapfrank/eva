@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 from typing import Any
@@ -66,7 +67,11 @@ def _canonical_json(value: object) -> bytes:
 
 def _contains_unresolved_interpolation(value: object) -> bool:
     if isinstance(value, str):
-        return "${" in value
+        # Compose deliberately preserves $$-escaped shell variables for the
+        # container healthcheck (for example $${POSTGRES_DB}).  Only an
+        # unescaped ${...} here means the sealed host configuration leaked
+        # through unresolved.
+        return re.search(r"(?<!\$)\$\{", value) is not None
     if isinstance(value, dict):
         return any(
             _contains_unresolved_interpolation(key)
@@ -177,6 +182,8 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
         rendered_raw = _run(
             [
                 *prefix,
+                "--profile",
+                "schema-install",
                 "--project-name",
                 plan.value("EVA_B_COMPOSE_PROJECT"),
                 "--env-file",

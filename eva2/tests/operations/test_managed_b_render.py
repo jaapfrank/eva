@@ -12,6 +12,7 @@ from eva.operations.core_b_preflight import CoreBPlan
 from eva.operations.managed_b_render import (
     EXPECTED_SERVICES,
     MANAGED_B_MANIFEST,
+    _contains_unresolved_interpolation,
     _write_all,
     main,
     render_managed_b,
@@ -110,6 +111,8 @@ def test_renderer_binds_template_snapshot_and_compose_graph(
         "--context",
         "eva2-b-local",
         "compose",
+        "--profile",
+        "schema-install",
         "--project-name",
         "eva2-b-live",
         "--env-file",
@@ -174,6 +177,11 @@ def test_renderer_refuses_unresolved_graph_interpolation(
 
     with pytest.raises(RuntimeError, match="unresolved interpolation"):
         render_managed_b(plan)
+
+
+def test_renderer_allows_a_compose_escaped_container_variable() -> None:
+    assert not _contains_unresolved_interpolation("$${POSTGRES_DB}")
+    assert _contains_unresolved_interpolation("${EVA_MISSING}")
 
 
 def test_renderer_refuses_service_with_wrong_configuration_label(
