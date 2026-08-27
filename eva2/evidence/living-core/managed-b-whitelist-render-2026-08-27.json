@@ -18,7 +18,7 @@
       "telegram-ingress"
     ]
   },
-  "closed_failure": "Only the literal escaped container variable $${POSTGRES_DB} is allowed; raw, malformed, nested, different-name and multi-dollar interpolations are rejected before Compose runs.",
+  "closed_failure": "Only the literal escaped container variable $${POSTGRES_DB} is allowed; raw, malformed, nested, different-name and multi-dollar interpolations are rejected after the read-only Compose config render and before any create, start or apply operation.",
   "constraints": {
     "configuration": "Only synthetic temporary files were used.",
     "docker": "Compose ran only its read-only config command. No compose up, create, start, pull, tag, push or volume operation was issued."

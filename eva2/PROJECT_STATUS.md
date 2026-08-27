@@ -84,7 +84,8 @@ Een onafhankelijke controle vond daarna een echte veiligheidsfout: een slim
 geschreven Compose-variabele kon de oude controle omzeilen. Dat is nu op commit
 `b67c6a9` dichtgezet. Alleen de ene letterlijke, veilige
 containervariabele `$${POSTGRES_DB}` is nog toegestaan; ontbrekende, geneste,
-verkeerd gespelde of extra-dollarvarianten worden vóór Compose geweigerd. De
+verkeerd gespelde of extra-dollarvarianten worden na de uitsluitend lezende
+Compose-configrender en vóór elke create/start/apply-stap geweigerd. De
 reviewer heeft de toegestane vorm en alle genoemde foute vormen opnieuw
 gecontroleerd en gaf `GO`.
 

@@ -434,6 +434,12 @@ def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> 
     assert readiness["observed"]["readyz"]["ready"] is True
     assert render["source_commit"] == source_commit
     assert render["status"] == "passed_whitelist_render_not_deployed"
+    assert render["closed_failure"] == (
+        "Only the literal escaped container variable $${POSTGRES_DB} is allowed; raw, "
+        "malformed, nested, different-name and multi-dollar interpolations are rejected "
+        "after the read-only Compose config render and before any create, start or apply "
+        "operation."
+    )
     assert render["observed"]["service_names"] == [
         "core",
         "durable-goal-worker",
