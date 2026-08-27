@@ -60,6 +60,19 @@ de controleerbare live receipts staan in
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan. Een niet-lege synthetische installatie is veilig naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
+## Belangrijk: de live Eva en Eva2 delen geen geheugen
+
+De Eva die nu draait (**Eva1**) bewaart haar herinneringen in haar eigen
+SQLite-bestand. Zij gebruikt **geen Hindsight**. PostgreSQL en Hindsight horen
+alleen bij de afzonderlijke Eva2-kandidaatroute; die route gebruikt geen
+live-Eva1-geheugenvolume en heeft Eva1 niet aangepast.
+
+De enige mogelijke brug is een bewust beperkte proef: eerst een read-only
+voorvertoning met aantallen en hashes, daarna — alleen na jouw expliciete
+persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
+wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
+gespreksherinnering.
+
 ## Nieuwste gesloten stap
 
 Eva heeft nu een eerste **installatiecontrole vóór de wizard**. Die leest
