@@ -147,7 +147,8 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
    runtime-readiness met tijdelijke testdoubles is groen. Op commit `2810454`
    rendert de beheerde startconfiguratie nu daadwerkelijk alle acht diensten
    uit één synthetisch verzegeld plan en weigert zij drie eerder verborgen
-   configuratiefouten. Volgende stap: een geautoriseerde UID-65532
+   configuratiefouten; dezelfde commit heeft een nieuwe offline, niet-root
+   geïmporteerde kandidaatimage. Volgende stap: een geautoriseerde UID-65532
    host-secretpreflight en onafhankelijke review; pas daarna kan B-adoptie
    überhaupt worden overwogen. Dit verandert A of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op

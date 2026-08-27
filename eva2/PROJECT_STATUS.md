@@ -90,6 +90,13 @@ voor UID 65532 nodig. Eva1, B, hun volumes en hun geheugen zijn niet geopend.
 Zie
 [`managed-b-synthetic-sealed-render-2026-08-27.json`](evidence/living-core/managed-b-synthetic-sealed-render-2026-08-27.json).
 
+De rendererfix zit bovendien in een nieuwe lokale kandidaatimage. Die is met
+dezelfde vaste 39 packages zonder bouwnetwerk gemaakt en importeert als
+beperkte gebruiker op een alleen-lezen bestandssysteem. De schema- en
+readinessproef van deze nieuwe image zijn bewust nog niet herhaald; dat staat
+dus niet mooier opgeschreven dan het is. Zie
+[`managed-b-render-fixed-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json).
+
 ## Eerder deze run gesloten: huidige kandidaat geeft echt “klaar” terug
 
 Dezelfde huidige kandidaatimage start nu ook haar volledige webkern op: Eva

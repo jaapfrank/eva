@@ -291,6 +291,31 @@ def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inpu
     assert any("release readiness" in claim for claim in receipt["nonclaims"])
 
 
+def test_render_fixed_candidate_image_receipt_stays_bound_to_the_sealed_wheels() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBRenderFixedCandidateImageSmokeReceipt/v1"
+    assert receipt["status"] == "passed_render_fixed_candidate_image_smoke_not_deployed"
+    assert receipt["network"] == {"candidate_build": "none", "runtime_smoke": "none"}
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+        "requirements_lock_sha256"
+    ]
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+        "wheelhouse_tree_sha256"
+    ]
+    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["inputs"]["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
+    assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
+    assert receipt["observed"]["candidate_image_size_bytes"] > 0
+
+
 def test_current_candidate_schema_restart_receipt_stays_bound_to_sealed_inputs() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
