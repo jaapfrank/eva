@@ -472,6 +472,69 @@ def _require_existing_request(
         raise ActionChainEffectStopRequestConflict("stored stop request differs")
 
 
+def has_valid_post_call_stop_request(
+    connection: sa.Connection,
+    *,
+    scope: TimelineScope,
+    chain: StoredActionChain,
+    step_row: sa.Row,
+    effect_intent_id: UUID,
+    attempt: EffectAttempt,
+) -> bool:
+    """Return whether a fully bound owner stop request blocks chain progress.
+
+    A request after the call-start fence cannot erase the provider outcome or
+    physical readback.  It must, however, prevent that outcome from silently
+    unlocking another step in the same autonomous chain.
+    """
+
+    if attempt.effect_intent_id != str(effect_intent_id):
+        raise ActionChainEffectStopRequestConflict("effect attempt differs")
+    thread_id = _stop_thread_id(attempt)
+    checkpoint = connection.execute(
+        sa.select(operational_checkpoints)
+        .where(
+            operational_checkpoints.c.tenant_id == scope.tenant_id,
+            operational_checkpoints.c.installation_id == scope.installation_id,
+            operational_checkpoints.c.thread_id == thread_id,
+        )
+        .with_for_update()
+    ).one_or_none()
+    if checkpoint is None:
+        return False
+    event = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == thread_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(1)
+    ).one_or_none()
+    data = None if event is None else event.payload.get("data")
+    try:
+        owner_principal_id = UUID(str(data["owner_principal_id"]))
+        principal_binding_id = UUID(str(data["principal_binding_id"]))
+    except (KeyError, TypeError, ValueError) as error:
+        raise ActionChainEffectStopRequestConflict(
+            "stored stop request differs"
+        ) from error
+    _require_existing_request(
+        connection,
+        scope=scope,
+        thread_id=thread_id,
+        checkpoint=checkpoint,
+        chain=chain,
+        step_row=step_row,
+        effect_intent_id=effect_intent_id,
+        effect_attempt_id=UUID(attempt.effect_attempt_id),
+        owner_principal_id=owner_principal_id,
+        principal_binding_id=principal_binding_id,
+    )
+    return True
+
+
 def _intent(row: sa.Row) -> EffectIntent:
     try:
         return EffectIntent.model_validate(row.payload)
@@ -544,4 +607,5 @@ __all__ = [
     "ActionChainEffectStopRequestConflict",
     "PostgresActionChainEffectStopRequester",
     "RequestedActionChainEffectStop",
+    "has_valid_post_call_stop_request",
 ]
