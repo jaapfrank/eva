@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBCandidateImageSmokeReceipt/v1",
+  "inputs": {
+    "base_image_archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "base_image_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "context_tree_sha256": "92b133c78a9b8e6813d6b2f9e32b18ca98acc76e619237ad16aebac949aed978",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "source_archive_sha256": "dfa6c9e8e330f86778e81e989250271381172f90594aa81942241d0ec3c0d8bd",
+    "source_commit": "286095cba394019d1a80631b5e67c5789e5539be",
+    "wheel_count": 39,
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "network": {
+    "candidate_build": "none",
+    "runtime_smoke": "none",
+    "wheel_acquisition": "network was used before sealing the exact wheelhouse; its provenance is not claimed"
+  },
+  "nonclaims": [
+    "This is one local candidate build, not two-builder reproducibility evidence.",
+    "The untagged image was not pushed, signed, released or attached to Compose.",
+    "No B configuration, container, volume, secret, database or live service was opened or changed.",
+    "This does not prove schema migration, runtime startup, restart, drift detection, Telegram, Home Assistant, update, rollback or release readiness."
+  ],
+  "observed": {
+    "candidate_image_id": "sha256:6cae80b27485b8ac533c1f1024ee72f9fa1a8b70136cab99ae397b4e0e232526",
+    "candidate_image_size_bytes": 104578369,
+    "runtime_smoke": "runtime-import-ok as uid 65532 with read-only filesystem, no network, no mounts and no secrets"
+  },
+  "status": "passed_current_local_candidate_build_and_nonroot_smoke_not_deployed"
+}

@@ -260,6 +260,37 @@ def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> 
     assert any("release readiness" in claim for claim in receipt["nonclaims"])
 
 
+def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-current-candidate-image-smoke-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBCandidateImageSmokeReceipt/v1"
+    assert receipt["status"] == "passed_current_local_candidate_build_and_nonroot_smoke_not_deployed"
+    assert receipt["network"] == {
+        "candidate_build": "none",
+        "runtime_smoke": "none",
+        "wheel_acquisition": "network was used before sealing the exact wheelhouse; its provenance is not claimed",
+    }
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+        "requirements_lock_sha256"
+    ]
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+        "wheelhouse_tree_sha256"
+    ]
+    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["inputs"]["source_commit"] == "286095cba394019d1a80631b5e67c5789e5539be"
+    assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
+    assert receipt["observed"]["candidate_image_size_bytes"] > 0
+    assert "uid 65532" in receipt["observed"]["runtime_smoke"]
+    assert any("release readiness" in claim for claim in receipt["nonclaims"])
+
+
 def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()
