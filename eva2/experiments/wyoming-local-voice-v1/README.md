@@ -25,26 +25,29 @@ worden niet in de receipt bewaard.
 | Whisper amd64-image | `rhasspy/wyoming-whisper@sha256:731299c56df053dd67978127a44e417c83f0d900fdaad1bd7ab8aad82f84106d` |
 | STT-model | `base-int8`, taal `nl` |
 
-De eerste modeldownload krijgt een nieuwe, wegwerp-Dockervolume. Daarna bewijst
-`offline-isolation-receipt.json` één echte herstart met die caches: Piper,
-Faster-Whisper en de controller draaien in een Docker-netwerk met `--internal`,
-zonder gateway of hostpoort. De twee modelvolumes en de roots van de sidecars
-zijn alleen-lezen; de controller heeft geen hostmount, alle Linux-capabilities
-verwijderd en alleen een tijdelijke receiptvolume. Dit bewijs geldt alleen voor
-de gepinde images, de gekozen Nederlandse stem en `base-int8`, niet voor iedere
-toekomstige modelupgrade. De proef gebruikt nooit Eva B, een productiedatabase,
-secrets of hostaudio.
+De eerste modeldownload krijgt een nieuwe, wegwerp-Dockervolume. De historische
+`offline-isolation-receipt.json` is alleen nog een inspecteerbaar record, geen
+geldige huidige offlineclaim: een herhaalde start ontdekte dat de oude cache
+geen tokenizer bevatte en dat Piper en Whisper ieder een begrensde tijdelijke
+map nodig hebben. De huidige proef sluit daarom pas de netwerkgrens nadat de
+exacte tokenizercache, read-only modelcaches en tijdelijke `tmpfs`-mappen
+opnieuw zijn vastgelegd. Dit geldt alleen voor de gepinde images, stem en
+`base-int8`, niet voor een toekomstige upgrade. De proef gebruikt nooit Eva B,
+een productiedatabase, secrets of hostaudio.
 
 Een groene receipt betekent uitsluitend: een synthetische lokale stem leverde
 PCM, lokale STT leverde de verzegelde korte eindzin, Eva accepteerde die via
-haar V01-grens, en Piper leverde weer PCM voor een vaste antwoordzin. Zij
-bewijst geen menselijk gesprek, microfoon/speaker, modelantwoord, toolactie,
-volledige duplex, onderbreking, latency of herkenningskwaliteit.
+haar V01-grens, en Piper begon een vaste antwoordzin. Na precies drie
+teruggespeelde PCM-blokken sloot de controller die lokale TTS-stream zonder de
+rest te bufferen. Zij bewijst geen menselijk gesprek, microfoon/speaker,
+modelantwoord, toolactie, volledige duplex, microfoonbarge-in, latency of
+herkenningskwaliteit.
 
 `verify_receipt.py` hercontroleert zonder Docker of netwerk de exacte
-controllerlock, runnerhash, sidecar-pins, eindtekstbinding en de private
-`VoiceTurn/v1`-grens. Audiohashes worden alleen op vorm gecontroleerd, omdat
-Piper-audio geen stabiele golden fixture is.
+controllerlock, runnerhash, sidecar-pins, eindtekstbinding, private
+`VoiceTurn/v1`-grens en de lokale onderbreking na maximaal drie audioblokken.
+Audiohashes worden alleen op vorm gecontroleerd, omdat Piper-audio geen stabiele
+golden fixture is.
 
 `Dockerfile.controller` is uitsluitend de wegwerpcontroller voor de volgende
 proef: Piper, Whisper en de controller draaien dan op één Docker-netwerk met
@@ -52,7 +55,7 @@ proef: Piper, Whisper en de controller draaien dan op één Docker-netwerk met
 heeft een vaste `python:3.12-slim` amd64-basisdigest en installeert uitsluitend
 de hashgebonden experimentlock. Zij is geen Eva-productimage.
 
-`capture_offline_isolation.py` weigert bij de echte proef een niet-intern
-netwerk, gepubliceerde poorten, hostmounts, schrijvende modelvolumes of een
-verzwakte controller. `verify_offline_isolation.py` hercontroleert daarna de
-committed offline-receipt zonder Docker of netwerk.
+`capture_offline_isolation.py` en `verify_offline_isolation.py` blijven voor
+het historische record aanwezig, maar mogen niet als actuele offlineproof worden
+gebruikt totdat ze tegen de vernieuwde tokenizer- en `tmpfs`-preflight zijn
+opnieuw uitgevoerd.

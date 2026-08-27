@@ -41,6 +41,8 @@ def _pcm(raw: object, *, name: str) -> None:
         raise SystemExit(f"{name} PCM format changed")
     if not isinstance(raw.get("bytes"), int) or raw["bytes"] <= 0:
         raise SystemExit(f"{name} PCM byte count is invalid")
+    if not isinstance(raw.get("chunks"), int) or raw["chunks"] <= 0:
+        raise SystemExit(f"{name} PCM chunk count is invalid")
     if not isinstance(raw.get("sha256"), str) or SHA256.fullmatch(raw["sha256"]) is None:
         raise SystemExit(f"{name} PCM hash is invalid")
 
@@ -86,7 +88,13 @@ def main() -> None:
     reply = raw.get("reply")
     if not isinstance(reply, dict) or reply.get("phraseSha256") != REPLY_PHRASE_SHA256:
         raise SystemExit("sealed reply phrase binding changed")
-    _pcm(reply.get("pcm"), name="reply")
+    delivery = reply.get("delivery")
+    if delivery != {"interrupted": True, "receivedAudioStop": False}:
+        raise SystemExit("local interrupted playback boundary changed")
+    reply_pcm = reply.get("pcm")
+    _pcm(reply_pcm, name="reply")
+    if not isinstance(reply_pcm, dict) or reply_pcm["chunks"] > 3:
+        raise SystemExit("local interrupted playback consumed too many chunks")
     print("V02 local Wyoming receipt is structurally and source-bound valid.")
 
 

@@ -1,6 +1,6 @@
 # Eva Conversational Voice v1
 
-Bijgewerkt: 26 augustus 2026.
+Bijgewerkt: 27 augustus 2026.
 
 ## Productuitkomst
 
@@ -161,12 +161,17 @@ Dit is nuttig omdat de route nu niet alleen op papier bestaat: audioformaat,
 officiële Wyoming-protocolgrens, Nederlandse STT, Eva's privacygrens en lokale
 TTS zijn samen geraakt. Maar het is nadrukkelijk **geen** gesprek met een mens:
 geen microfoon of speaker, geen modelantwoord, tool, opslag, barge-in,
-full-duplexstream of latencyclaim. Checkpoint `8af6a15` herstart dezelfde
-Piper-, Faster-Whisper- en controllerpins inmiddels vanuit hun voorgewarmde
-caches op een `--internal` Docker-netwerk, zonder gateway, hostpoort of
-hostmount. Dat sluit alleen de cache-/netwerkgrens voor deze exacte stem en
-`base-int8`; het maakt V02 nog geen menselijk gesprek. Daarom blijft V02
-onafgevinkt.
+full-duplexstream of latencyclaim. Een herhaalde `--internal`-start vond
+vervolgens twee verborgen dependencygrenzen: de oude Whisper-cache miste de
+tokenizer die de actuele upstream bij het laden gebruikt, en Piper plus Whisper
+hebben ieder een kleine tijdelijke schrijfruimte nodig. Daarom is checkpoint
+`8af6a15` alleen nog een historisch inspectierecord, geen actuele offlineclaim.
+De vernieuwde proef gebruikt een exact gepinde `openai/whisper-tiny`-
+tokenizercache naast het read-only `base-int8`-model en laat uitsluitend een
+begrensde `tmpfs` toe. Zij bewees ook dat de controller na drie lokale
+TTS-blokken de onafgemaakte stream sluit zonder de rest te bufferen. Dit is nog
+steeds geen microfoonbarge-in, full-duplex, latency- of menselijke voiceproef;
+V02 blijft onafgevinkt.
 
 ## Snelheidsbudgetten
 

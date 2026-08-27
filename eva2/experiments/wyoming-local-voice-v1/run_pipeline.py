@@ -83,6 +83,24 @@ class PcmDigest:
         }
 
 
+@dataclass(frozen=True, slots=True)
+class PcmPlayback:
+    """The bounded local speaker delivery, without retaining audio bytes."""
+
+    pcm: PcmDigest
+    received_audio_stop: bool
+    interrupted: bool
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "pcm": self.pcm.to_payload(),
+            "delivery": {
+                "receivedAudioStop": self.received_audio_stop,
+                "interrupted": self.interrupted,
+            },
+        }
+
+
 class _PcmHasher(Protocol):
     def update(self, data: bytes, /) -> None: ...
 
@@ -132,8 +150,24 @@ def _finished_digest(
     )
 
 
-async def _synthesize(*, host: str, port: int, text: str) -> PcmDigest:
-    """Read one bounded TTS stream while retaining only its digest."""
+async def _synthesize(
+    *,
+    host: str,
+    port: int,
+    text: str,
+    interrupt_after_chunks: int | None = None,
+) -> PcmPlayback:
+    """Stream bounded TTS to playback and close promptly on a local barge-in.
+
+    The controller retains only a digest of chunks already handed to the local
+    playback sink.  It deliberately closes the sidecar connection instead of
+    consuming the rest of a reply after a barge-in.  This is a media-delivery
+    boundary only: it neither cancels an Eva tool effect nor declares a
+    real-time latency result.
+    """
+
+    if interrupt_after_chunks is not None and interrupt_after_chunks < 1:
+        raise ValueError("local playback interruption must follow at least one chunk")
 
     audio_format: AudioStart | None = None
     digest: _PcmHasher | None = None
@@ -163,18 +197,36 @@ async def _synthesize(*, host: str, port: int, text: str) -> PcmDigest:
                     byte_count=byte_count,
                     chunk_count=chunk_count,
                 )
+                if (
+                    interrupt_after_chunks is not None
+                    and chunk_count >= interrupt_after_chunks
+                ):
+                    return PcmPlayback(
+                        pcm=_finished_digest(
+                            audio_format=audio_format,
+                            digest=digest,
+                            byte_count=byte_count,
+                            chunk_count=chunk_count,
+                        ),
+                        received_audio_stop=False,
+                        interrupted=True,
+                    )
             elif AudioStop.is_type(event.type):
-                break
+                if audio_format is None or digest is None:
+                    raise RuntimeError("Piper ended before audio-start")
+                return PcmPlayback(
+                    pcm=_finished_digest(
+                        audio_format=audio_format,
+                        digest=digest,
+                        byte_count=byte_count,
+                        chunk_count=chunk_count,
+                    ),
+                    received_audio_stop=True,
+                    interrupted=False,
+                )
             else:
                 raise RuntimeError(f"unexpected Piper event: {event.type}")
-    if audio_format is None or digest is None:
-        raise RuntimeError("Piper ended before audio-start")
-    return _finished_digest(
-        audio_format=audio_format,
-        digest=digest,
-        byte_count=byte_count,
-        chunk_count=chunk_count,
-    )
+    raise RuntimeError("Piper closed before audio-stop")
 
 
 async def _stream_synthesize_to_transcribe(
@@ -320,8 +372,11 @@ async def _run(args: argparse.Namespace) -> dict[str, object]:
     if _normalized(transcript) != _normalized(INPUT_TEXT):
         raise RuntimeError("local STT did not preserve the sealed synthetic phrase")
     admitted = _admit(transcript)
-    reply_pcm = await _synthesize(
-        host=args.piper_host, port=args.piper_port, text=REPLY_TEXT
+    reply_playback = await _synthesize(
+        host=args.piper_host,
+        port=args.piper_port,
+        text=REPLY_TEXT,
+        interrupt_after_chunks=args.barge_in_after_reply_chunks,
     )
     return {
         "candidate": "V02-wyoming-local-voice-v1",
@@ -358,13 +413,14 @@ async def _run(args: argparse.Namespace) -> dict[str, object]:
         },
         "reply": {
             "phraseSha256": _sha256(REPLY_TEXT),
-            "pcm": reply_pcm.to_payload(),
+            **reply_playback.to_payload(),
         },
         "nonclaims": [
             "No microphone, speaker, real person, audio recording or hardware path was used.",
             "No speech-provider credential, LLM reply, tool call, persistence or production route was used.",
             "This run alone does not prove that a model-cache restart is fully offline.",
-            "This is not full-duplex voice, a barge-in proof, a latency measurement or a semantic accuracy benchmark.",
+            "This is not full-duplex voice, microphone barge-in, a latency measurement or a semantic accuracy benchmark.",
+            "The local synthetic playback interruption proves only that the controller closes an unfinished TTS stream without buffering its remainder.",
         ],
     }
 
@@ -376,6 +432,12 @@ def main() -> None:
     parser.add_argument("--whisper-host", default="127.0.0.1")
     parser.add_argument("--whisper-port", type=int, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
+    parser.add_argument(
+        "--barge-in-after-reply-chunks",
+        type=int,
+        default=3,
+        help="close local TTS delivery after this many output chunks",
+    )
     args = parser.parse_args()
     result = asyncio.run(_run(args))
     args.receipt.write_text(

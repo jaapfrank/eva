@@ -3,21 +3,21 @@
   "controller": {
     "pydantic": "2.12.5",
     "requirementsSha256": "1547d30b9eb441e4027aaf91663ce668385e6eec58f64648990e37422bcda97b",
-    "runnerSha256": "f2c2cab74a167c7b912d96769b0515d5f001bb868b152d64122e9d5090ade2ac",
+    "runnerSha256": "5a3748396ba10a673a6606e92639c8d93448e49b1752607e6651d354791cc301",
     "wyoming": "1.10.0"
   },
   "input": {
     "pcm": {
-      "bytes": 76288,
+      "bytes": 71680,
       "channels": 1,
-      "chunks": 38,
+      "chunks": 35,
       "rate": 22050,
-      "sha256": "467640a68f0078bfc23a5342d7c7f0788e9f14bfb5705d71b05bc894472b8c1b",
+      "sha256": "9b0c40a2a75b50a889cfc33572b32a9d58d3f66ee7ee242779cdf6a556b4a8e0",
       "width": 2
     },
     "phraseSha256": "aeb87444df7cbb93a2737b13fc9b6c9f5ca2833ad505aa443b7bc981d1881bfd",
     "streaming": {
-      "chunksRelayedBeforeAudioStop": 38,
+      "chunksRelayedBeforeAudioStop": 35,
       "completeInputAudioBuffered": false,
       "mode": "piper_chunk_relay_to_whisper"
     },
@@ -27,15 +27,20 @@
     "No microphone, speaker, real person, audio recording or hardware path was used.",
     "No speech-provider credential, LLM reply, tool call, persistence or production route was used.",
     "This run alone does not prove that a model-cache restart is fully offline.",
-    "This is not full-duplex voice, a barge-in proof, a latency measurement or a semantic accuracy benchmark."
+    "This is not full-duplex voice, microphone barge-in, a latency measurement or a semantic accuracy benchmark.",
+    "The local synthetic playback interruption proves only that the controller closes an unfinished TTS stream without buffering its remainder."
   ],
   "reply": {
+    "delivery": {
+      "interrupted": true,
+      "receivedAudioStop": false
+    },
     "pcm": {
-      "bytes": 104448,
+      "bytes": 6144,
       "channels": 1,
-      "chunks": 51,
+      "chunks": 3,
       "rate": 22050,
-      "sha256": "8413aabd039ef2e1073f165f9453022dfdcfe20c2f2d92285ab794a6cd4fb09d",
+      "sha256": "e050443301c936cb71bad3f273f09479fb56962e6f6b82126911b40462132cb7",
       "width": 2
     },
     "phraseSha256": "82a7c6e0cade94072c48184837393691c2838111ddaff64e7f6e778a30b33d22"

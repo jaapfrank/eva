@@ -9,7 +9,13 @@ ENV PYTHONPATH=/app/src \
 WORKDIR /app
 
 COPY experiments/wyoming-local-voice-v1/requirements.lock /tmp/requirements.lock
-RUN python -m pip install --no-cache-dir --require-hashes -r /tmp/requirements.lock
+# The experiment receives a separately prepared wheelhouse as a BuildKit named
+# context.  A voice image must not silently fetch PyPI packages while it is
+# being rebuilt; the lock is necessary but not sufficient for that guarantee.
+COPY --from=wheelhouse / /wheelhouse
+RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: \
+    --find-links=/wheelhouse --require-hashes -r /tmp/requirements.lock \
+    && rm -rf /wheelhouse
 
 COPY src/eva /app/src/eva
 COPY experiments/wyoming-local-voice-v1 /app/experiments/wyoming-local-voice-v1
