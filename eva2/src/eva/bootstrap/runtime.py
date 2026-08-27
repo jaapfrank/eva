@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from typing import TYPE_CHECKING
 from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import sqlalchemy as sa
@@ -16,7 +17,6 @@ from fastapi import FastAPI
 from sqlalchemy.engine import Engine
 
 from eva.adapters.api.app import RuntimeHealth, create_app
-from eva.adapters.model.conversation import CodexConversationModel
 from eva.adapters.connectors.home_assistant import (
     HomeAssistantConfig,
     HomeAssistantToolAdapter,
@@ -80,6 +80,9 @@ from eva.adapters.projection.hindsight import (
     HindsightMemoryEngine,
     HindsightProjectionConfig,
 )
+
+if TYPE_CHECKING:
+    from eva.adapters.model.conversation import CodexConversationModel
 from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
@@ -1663,6 +1666,8 @@ class PostgresHindsightMemoryRuntime:
 
 
 def create_runtime_app() -> FastAPI:
+    from eva.adapters.model.conversation import CodexConversationModel
+
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
         sqlalchemy_postgres_dsn(settings.database_dsn), pool_pre_ping=True
