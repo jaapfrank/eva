@@ -622,13 +622,17 @@ Eva's unieke hoofdfeature.
   nog geen score uitgevoerd. De eerste CB02-deelroute is nu wel echt
   uitvoerbaar: `benchmark/run_gaia_development.py` voert een klein, expliciet
   begrensd deel van een door de eigenaar geautoriseerde lokale GAIA-metadata-
-  snapshot uit. De agent ziet alleen taak-ID, vraag en optioneel lokaal
-  bijbestand; nooit GAIA's `Final answer`. Het antwoordbestand heeft precies
-  het officiële `task_id`/`model_answer`-formaat, maar de adapter roept geen
-  scorer aan en schrijft altijd `officialScore: null`. Tien gerichte
-  adapter-/manifestchecks en linting zijn groen. Dit is een echte
-  developmentroute, nog geen download, modelcall, officiële score of
-  leaderboardinzending. De gated GAIA-toegang, model-/kostenmandaat,
+  snapshot uit. De adapter ondersteunt de oudere JSONL-export en de huidige
+  Parquet-export. Voor Parquet vraagt zij alleen taak-ID, vraag en bijpad op;
+  GAIA's `Final answer` wordt niet eens geladen. Een aparte, hash-gebonden
+  Linux/amd64 CPython-3.12-lock installeerde `datasets 5.0.1` en `pyarrow
+  25.0.1` met alle 35 wheels offline. Een echte lokale Parquet-proef met een
+  verborgen antwoordkolom én 12 gerichte adapterchecks zijn groen: de agent en
+  het antwoordartifact bevatten dat antwoord niet. Het antwoordbestand heeft
+  precies het officiële `task_id`/`model_answer`-formaat, maar de adapter roept
+  geen scorer aan en schrijft altijd `officialScore: null`. Dit is een echte
+  developmentroute, nog geen gated datasetdownload, modelcall, officiële score
+  of leaderboardinzending. De gated GAIA-toegang, model-/kostenmandaat,
   AgentBench-/OSWorld-adapters en CB02-CB07 blijven open.
 - Eigenaarmodus OM00: Hermes' actuele officiële `Godmode` blijkt een optionele
   jailbreak-/safety-bypassskill, geen autonome superstand. Eva krijgt in plaats

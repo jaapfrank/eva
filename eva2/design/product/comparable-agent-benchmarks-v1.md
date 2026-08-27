@@ -1,6 +1,6 @@
 # Eva 2 — extern vergelijkbare agentbenchmarks
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 27 augustus 2026.
 
 ## Eerlijke conclusie
 
@@ -88,12 +88,16 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
   De GAIA-developmentadapter is hiervoor als eerste deel gereed:
   `../benchmark/run_gaia_development.py` leest uitsluitend een door de eigenaar
-  geautoriseerde lokale metadata-JSONL en geeft de agent alleen `task_id`,
-  `Question` en optioneel bestaand lokaal bestand. Hij schrijft het officiële
-  antwoordpaar `task_id`/`model_answer`, maar leest geen `Final answer`, roept
-  geen scorer aan en kan dus geen score of leaderboardclaim maken. AgentBench-
-  en OSWorld-adapters, de echte modelroute en een volledige CB02-closure blijven
-  open.
+  geautoriseerde lokale metadata-JSONL of actuele Parquet-export en geeft de
+  agent alleen `task_id`, `Question` en optioneel bestaand lokaal bestand. De
+  Parquet-route vraagt Arrow expliciet om alleen die drie kolommen; `Final
+  answer` wordt dus niet geladen. De geïsoleerde benchmark-lock
+  `../benchmark/requirements-gaia-benchmark-linux-amd64-py312.lock` installeert
+  offline met hashes `datasets 5.0.1` en `pyarrow 25.0.1` plus hun transitive
+  wheels. Hij schrijft het officiële antwoordpaar `task_id`/`model_answer`,
+  maar leest geen `Final answer`, roept geen scorer aan en kan dus geen score
+  of leaderboardclaim maken. AgentBench- en OSWorld-adapters, de echte
+  modelroute en een volledige CB02-closure blijven open.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie
