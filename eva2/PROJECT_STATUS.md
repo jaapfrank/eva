@@ -57,7 +57,7 @@ de controleerbare live receipts staan in
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan nu veilig als alleen-lezen identiteitsvoorstel worden bekeken; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, bordbediening, productinstaller, ondertekenen/activeren van identiteit, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Belangrijk: de live Eva en Eva2 delen geen geheugen
@@ -97,6 +97,16 @@ Deze stap activeert Eva dus niet stil met een andere persoonlijkheid. Namen,
 waarden of grenzen veranderen pas na de nog open onderteken-, activatie- en
 rollbackstappen. De preview, afwijzing van onbekende onderdelen en de
 hashgebonden cockpit-evidence zijn **55/55 groen**.
+
+De volgende identiteitsstap is nu technisch beproefd in de kandidaat: een
+eigenaar kan buiten Eva's runtime een goedgekeurd voorstel met een externe
+Ed25519-sleutel ondertekenen. Daarna wordt eerst de precieze oude identiteit
+bewaard en pas dan de nieuwe versie atomair actief gemaakt. Een ongetekend,
+verouderd of overslaand voorstel wordt geweigerd; rollback herstelt uitsluitend
+de direct voorgaande, ook ondertekende versie. De runtime bevat nooit die
+privésleutel. Dit is **geen** wijziging aan Eva1, geen automatische
+persoonlijkheidswissel en nog geen HSM- of eigenaarbediening. De nieuwe
+onderteken-/wissel-/rollbackproef is **4/4 groen**.
 
 De eerdere installatiecontrole vóór de wizard blijft eveneens klaar. Die leest
 alleen de gepinde releasevoorwaarden en de grove lokale systeemversies. Zij
