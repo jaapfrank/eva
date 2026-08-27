@@ -108,7 +108,7 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64
-    assert receipt["cockpit_evidence_claim_count"] == 15
+    assert receipt["cockpit_evidence_claim_count"] == 16
     assert receipt["core_live_case_count"] == 15
     assert receipt["portable_v1_manifest_sha256"] == (
         "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
