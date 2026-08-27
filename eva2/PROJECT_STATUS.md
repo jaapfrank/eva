@@ -73,20 +73,25 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
-## Nieuwste gesloten stap: actuele offline kandidaatimage
+## Nieuwste gesloten stap: huidige kandidaat start en herstart veilig
 
-De huidige Eva2-bron is nu ook echt als een **eigen, tijdelijke image**
-gebouwd. Dit gebeurde vanaf exact commit `286095c`, met de vaste 39 packages,
-zonder bouwnetwerk, zonder tag en zonder verbinding met de draaiende Eva.
-Daarna importeerde de image Eva's runtime als de beperkte gebruiker `65532`,
-met een alleen-lezen bestandssysteem, zonder netwerk, mounts of secrets.
+De huidige Eva2-kandidaat is nu meer dan alleen een image die importeert. Vanaf
+exact commit `73648ea` bouwde zij met de vaste 39 packages zonder bouwnetwerk
+tot een ongetagde image. In een volledig nieuwe, tijdelijke PostgreSQL 16.13-
+database installeerde zij haar hele schema als beperkte gebruiker `65532` op
+een alleen-lezen bestandssysteem. Een tweede start herhaalde geen schemawerk.
 
-Dit sluit een zichtbaar gat: het eerdere imagebewijs hoorde bij oude
-broncommits. De nieuwe receipt staat in
-[`managed-b-current-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-current-candidate-image-smoke-2026-08-27.json).
-Het is nog geen release: op deze actuele versie moeten schema-installatie,
-veilige tweede start, driftcontrole, secret-nonleak en onafhankelijke review
-nog volgen. Eva1, B, hun volumes en hun geheugen zijn niet geopend.
+Daarna is expres één verplichte databasekoppeling verwijderd. De installer
+stopte gecontroleerd met foutcode 2; hij deed niet alsof de database nog goed
+was. Beide geslaagde starts geven precies één machineleesbare JSON-receipt
+terug, en de tijdelijke databaseverbinding kwam niet in uitvoer of logs voor.
+Zie
+[`managed-b-current-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-current-candidate-schema-restart-2026-08-27.json).
+
+Dit is nog geen release: de volledige runtime met haar tijdelijke Hindsight-
+en model-plaatsvervangers, de beheerde startconfiguratie, onafhankelijke review
+en rollback ontbreken nog op diezelfde bron. Eva1, B, hun volumes en hun
+geheugen zijn niet geopend.
 
 ## Eerder deze run gesloten: veiligere workflowdependency-kandidaat
 
