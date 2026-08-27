@@ -303,6 +303,20 @@ leaderboardclaim. De heropenbare grenzen staan in
 [`agentbench-fc-environment-2026-08-27.json`](evidence/living-core/agentbench-fc-environment-2026-08-27.json)
 en [`agentbench-fc-upstream-integration-audit-2026-08-27.json`](evidence/living-core/agentbench-fc-upstream-integration-audit-2026-08-27.json).
 
+De eerste twee losse communityimages zijn nu wel echt uit die vaste
+AgentRL-bron gebouwd: een kleine controller en een worker die **uit broncode**
+installeert, dus niet via de beweeglijke upstream-PyPI-regel. Beide draaien als
+niet-root en beantwoorden netwerkloos alleen hun eigen `--help`. Tijdens die
+proef bleek bovendien dat AgentRL's actuele bron Protocol Buffers edition 2023
+vereist; de exacte compiler `31.1` is daarom met SHA-256 vastgezet. Deze twee
+images dragen nu zelf de exacte AgentRL-commit én de hash van het schone
+Git-archief waaruit zij zijn gebouwd. Dit is een bruikbare bronbuild, maar nog
+geen werkende benchmarkstack: de controller gebruikt tijdens bouwen nog
+beweeglijke `apt-get update`-packages en de worker heeft voor zijn transitive
+Pythonpackages nog geen hashgecontroleerde wheel-lock. Er is nadrukkelijk geen
+controller-naar-worker-sessie, taak, modelcall of score gestart. Zie
+[`agentbench-fc-agentrl-source-images-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json).
+
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig

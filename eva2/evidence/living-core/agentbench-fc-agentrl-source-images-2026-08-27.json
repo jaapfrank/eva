@@ -1,0 +1,55 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLSourceImagesReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "agentrlGitArchive": {
+      "format": "git archive --format=tar --prefix=agentrl/ 6a73409d31ba695d383b978a8ad3ef400d90c054",
+      "sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+    },
+    "controllerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-pinned.Dockerfile",
+      "sha256": "2f48be98078a89650c03901c2d4f2d7757b19e14ce8da5385a04c332cc4526df"
+    },
+    "workerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
+      "sha256": "5dd30e8803793aa5f33f6ad2e12adbb00a17be943c05c9d81e9c4c32a4ff3c5d"
+    }
+  },
+  "images": {
+    "controller": {
+      "image": "eva2/agentbench-agentrl-controller@sha256:025f15f8b8abf9d5205cb06977c875d5f645695364d6a0c58909980c602852bd",
+      "imageTag": "eva2/agentbench-agentrl-controller:dev-20260827",
+      "runtimeUser": "65532:65532",
+      "sizeBytes": 24150702,
+      "labels": {
+        "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+      }
+    },
+    "worker": {
+      "image": "eva2/agentbench-agentrl-worker@sha256:3cf792cbbed2f8c2b7a1ba7616718dcae1a814eb7b01ba98232ee81eb5847339",
+      "imageTag": "eva2/agentbench-agentrl-worker:dev-20260827",
+      "runtimeUser": "65532:65532",
+      "sizeBytes": 88343003,
+      "labels": {
+        "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+      }
+    }
+  },
+  "verification": {
+    "controllerReadOnlyHelp": true,
+    "networkless": true,
+    "taskOrScoreStarted": false,
+    "workerReadOnlyHelp": true
+  },
+  "openBoundary": "The controller still resolves curl and unzip through apt-get update during its build, while the worker source uses version ranges for build and transitive Python dependencies. The image digests record one resolved snapshot, but an apt snapshot plus a hash-checked wheel lock and offline rebuild are required before controller/worker communication or any AgentBench development task.",
+  "nonClaims": [
+    "No AgentBench task, dataset, controller-to-worker session, model call, scorer, development result or public score was started.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
+    "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
+  ],
+  "status": "source_images_ready_transitive_lock_open"
+}
