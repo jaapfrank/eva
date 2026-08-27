@@ -13,6 +13,15 @@ Laatst bijgewerkt: 2026-08-27
 > modelgesprek, Telegram- of voiceproef; die vereisen de aparte runtime- en
 > gebruikersgates.
 
+> Runtimecontrole, 27 augustus 2026: dezelfde pagina draait nu ook werkelijk
+> in een nieuwe tijdelijke Eva2-container op een nieuwe tijdelijke PostgreSQL
+> 16.13-database, na een echte volledige Alembic-migratie. `/healthz` en de
+> eigenaar-geauthenticeerde pagina antwoordden beide met HTTP 200. Eva1,
+> `eva.service`, Eva1-SQLite en de bestaande Eva2-B-containers zijn niet
+> gewijzigd. De tijdelijke pagina heeft expres geen bruikbare modeltoegang:
+> dit bewijst de server-, database-, migratie- en toegangsroute, maar nog geen
+> echt modelantwoord of geheugenwrite.
+
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 [`design/architecture/living-core-v1.md`](design/architecture/living-core-v1.md);
