@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBCurrentCandidateRuntimeReadinessReceipt/v1",
+  "image_source": {
+    "candidate_image_id": "sha256:8831b09f0b55d5e35c782b0afb159619cb7e5930d04d8c57dc4c070533878f55",
+    "context_tree_sha256": "d83a47d1974485c26cc5ea218291b3c0f2af187199924991d9cab4df420f49a4",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "source_archive_sha256": "d5295415af2547aaec8a4e9c84d648c86be8f98af1219aa59540e0425065ceba",
+    "source_commit": "73648ea9b8d2022f639ce21c4a088f71b99cf4aa",
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "observed": {
+    "healthz": {"status": "alive"},
+    "readyz": {"database": "ready", "detail": null, "memory_projection": "ready", "model_provider": "ready", "ready": true},
+    "schema": "fresh database installed through the current image before runtime startup",
+    "secret_output_check": "Neither synthetic database DSN nor synthetic model token occurred in captured output."
+  },
+  "runtime_constraints": {
+    "candidate": "non-root uid:gid 65532:65532, read-only filesystem, all capabilities dropped and no-new-privileges",
+    "database": "new disposable PostgreSQL 16.13 on a private internal Docker network",
+    "database_dsn_file_metadata": "65532:65532:0400",
+    "model_lease_file_metadata": "1000:65532:0640"
+  },
+  "nonclaims": [
+    "Hindsight was a minimal temporary health stub; this does not prove semantic memory behavior.",
+    "The model lease was synthetic and no model request was made.",
+    "No Eva1, managed-B service, existing volume, real secret, Telegram route or Home Assistant route was opened.",
+    "The image was not tagged, pushed, signed, released or attached to Compose. This is not a production deployment or end-to-end product acceptance."
+  ],
+  "status": "passed_current_candidate_runtime_readiness_not_deployed"
+}

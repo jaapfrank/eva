@@ -73,7 +73,21 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
-## Nieuwste gesloten stap: huidige kandidaat start en herstart veilig
+## Nieuwste gesloten stap: huidige kandidaat geeft echt “klaar” terug
+
+Dezelfde huidige kandidaatimage start nu ook haar volledige webkern op: Eva
+antwoordde met een groene `/healthz` én `/readyz`. Daarbij controleerde zij
+werkelijk een nieuwe tijdelijke database, de geheugenpoort en de modellease.
+De databaseverbinding en modellease waren private tijdelijke bestanden; geen
+van beide kwam terug in de uitvoer.
+
+Voor deze proef waren Hindsight en het model bewust kleine testdoubles. Dat
+bewijst dat Eva veilig klaar kan komen zonder echte data of modelcall, niet dat
+haar geheugen of gesprek al live zijn beproefd. Zie
+[`managed-b-current-candidate-runtime-readiness-2026-08-27.json`](evidence/living-core/managed-b-current-candidate-runtime-readiness-2026-08-27.json).
+Eva1, B, hun volumes en hun geheugen zijn niet geopend.
+
+## Eerder deze run gesloten: huidige kandidaat start en herstart veilig
 
 De huidige Eva2-kandidaat is nu meer dan alleen een image die importeert. Vanaf
 exact commit `73648ea` bouwde zij met de vaste 39 packages zonder bouwnetwerk
