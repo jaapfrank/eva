@@ -118,6 +118,15 @@ uitsluitend de buildconstraint `linux/amd64`.
   geen objectcryptografie; die dependency blijft alleen bij echte versleutelde
   objecten nodig. Zie
   `evidence/living-core/portable-fresh-full-schema-empty-restore-2026-08-27.json`.
+- Dezelfde route is nu ook met een **niet-leeg**, volledig synthetisch
+  bronarchief doorlopen naar een tweede nieuwe PostgreSQL-database. Identiteit,
+  gesprek, bericht, geheugen en bewijs kwamen terug; de portable exportrol zag
+  uitsluitend de juiste tenant en installatie. De tijdelijke databases zijn na
+  afloop verwijderd. Dit is nog geen tweede fysieke machine of herinvoer van
+  secrets/connectors. Alembic gaf bij de driftcontrole haar bekende waarschuwing
+  over cyclische foreign keys; de drie herstelchecks waren groen, maar die
+  waarschuwing blijft onderhoudswerk. Zie
+  `evidence/living-core/portable-nonempty-cross-database-restore-2026-08-27.json`.
 - De export zelf weigert voortaan een moment waarop Eva nog externe werk kan
   uitvoeren: een gereserveerde of geautoriseerde model-/read-/effectcall,
   actieve planstap, geclaimde aandachtstaak of nog niet afgeleverde melding
