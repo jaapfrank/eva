@@ -24,6 +24,17 @@ Laatst bijgewerkt: 2026-08-27
 > HTTP 503; de tijdelijke database bleef daarna op nul gesprekken, berichten,
 > modelpogingen en episode-events.
 
+> Echte gesprekstest, 27 augustus 2026: Eva2 gebruikt nu voor een tijdelijke,
+> geïsoleerde proef Eva1's bestaande Codex OAuth-koppeling via een access-only
+> lease. De refresh-token blijft in Eva1; Eva2 krijgt alleen de actuele
+> access-token en account-ID in haar tijdelijke container. Twee toolvrije
+> eigenaarberichten kregen echte antwoorden via `chatgpt-codex:gpt-5.4-mini`.
+> In Eva2's tijdelijke PostgreSQL staan daarvan vier duurzame ingress-events en
+> twee `REPLY_COMMITTED`-events. Eva1, `eva.service`, Eva1-SQLite en de
+> Eva2-B-database zijn niet gewijzigd. Dit bewijst echte tekstgesprekken via
+> de hergebruikte Codex-koppeling, nog geen Telegram, voice, huisactie of
+> langdurige geheugenkwaliteit.
+
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
 [`design/architecture/living-core-v1.md`](design/architecture/living-core-v1.md);
