@@ -7,7 +7,6 @@ import hashlib
 import json
 import os
 from pathlib import Path
-import re
 import subprocess
 import tempfile
 from typing import Any
@@ -67,11 +66,23 @@ def _canonical_json(value: object) -> bytes:
 
 def _contains_unresolved_interpolation(value: object) -> bool:
     if isinstance(value, str):
-        # Compose deliberately preserves $$-escaped shell variables for the
-        # container healthcheck (for example $${POSTGRES_DB}).  Only an
-        # unescaped ${...} here means the sealed host configuration leaked
-        # through unresolved.
-        return re.search(r"(?<!\$)\$\{", value) is not None
+        # Compose deliberately preserves exactly one $$-escaped shell
+        # variable for the container healthcheck (for example
+        # $${POSTGRES_DB}).  Every other ${...} spelling is unresolved host
+        # interpolation.  In particular, accepting an arbitrary run of
+        # dollars would let $$${NAME} hide a remaining interpolation.
+        start = 0
+        while True:
+            interpolation = value.find("${", start)
+            if interpolation < 0:
+                return False
+            if (
+                interpolation == 0
+                or value[interpolation - 1] != "$"
+                or (interpolation >= 2 and value[interpolation - 2] == "$")
+            ):
+                return True
+            start = interpolation + 2
     if isinstance(value, dict):
         return any(
             _contains_unresolved_interpolation(key)

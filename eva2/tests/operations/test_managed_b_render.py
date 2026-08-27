@@ -179,9 +179,31 @@ def test_renderer_refuses_unresolved_graph_interpolation(
         render_managed_b(plan)
 
 
-def test_renderer_allows_a_compose_escaped_container_variable() -> None:
-    assert not _contains_unresolved_interpolation("$${POSTGRES_DB}")
-    assert _contains_unresolved_interpolation("${EVA_MISSING}")
+@pytest.mark.parametrize(
+    "value",
+    (
+        "${EVA_MISSING}",
+        "prefix-${EVA_MISSING}",
+        "$$${EVA_MISSING}",
+        "$$$${EVA_MISSING}",
+        "$$$$${EVA_MISSING}",
+        "$x${EVA_MISSING}",
+    ),
+)
+def test_renderer_refuses_every_non_exactly_escaped_interpolation(value: str) -> None:
+    assert _contains_unresolved_interpolation(value)
+
+
+@pytest.mark.parametrize(
+    "value",
+    (
+        "$${POSTGRES_DB}",
+        "test -n \"$${POSTGRES_DB}\" && echo ready",
+        "$${POSTGRES_USER}:$${POSTGRES_DB}",
+    ),
+)
+def test_renderer_allows_only_exactly_escaped_container_variables(value: str) -> None:
+    assert not _contains_unresolved_interpolation(value)
 
 
 def test_renderer_refuses_service_with_wrong_configuration_label(
