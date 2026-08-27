@@ -98,7 +98,18 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   maar leest geen `Final answer`, weigert een antwoord dat bestaand Eva-geheugen
   noemt, roept geen scorer aan en kan dus geen score
   of leaderboardclaim maken. AgentBench- en OSWorld-adapters, de echte
-  modelroute en een volledige CB02-closure blijven open.
+  modelroute en een volledige CB02-closure blijven open. De AgentBench-kant
+  heeft nu wel een even kleine kandidaatadapter:
+  `../benchmark/eva_agentbench_client.py` past rechtstreeks in de upstream
+  `AgentClient`-sleuf op commit
+  `d1e4a10db08c87075c78972e48ecc182be03e2d5`. Elke door AgentBench gevraagde
+  beurt wordt als een nieuwe, hashgebonden Eva-context gestuurd met uitsluitend
+  de complete door AgentBench aangeleverde gesprekshistorie. Daardoor kan geen
+  gewone Eva-herinnering tussen samples terechtkomen. De bijbehorende
+  `../benchmark/eva-agentbench-client.yaml` bevat alleen de class- en
+  timeoutconfiguratie, geen model- of secretinstellingen. Acht lokale
+  contractproeven zijn groen; er is nog geen AgentBench-taakserver, image,
+  score of developmentrun gestart.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie
