@@ -8,8 +8,10 @@ from types import SimpleNamespace
 
 import pytest
 
+from eva.operations import core_b_preflight
 from eva.operations.core_b_preflight import (
     REQUIRED_CONFIGURATION,
+    host_metadata_preflight_receipt,
     load_core_b_plan as _load_core_b_plan,
     observe_current_b,
     observe_managed_b_services,
@@ -542,6 +544,62 @@ def test_plan_rejects_unmanaged_current_b(private_tmp_path: Path) -> None:
 
     with pytest.raises(RuntimeError, match="current B container is unmanaged"):
         verify_current_management(plan, {})
+
+
+def test_host_only_receipt_has_no_secret_or_docker_observation(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, values).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+
+    receipt = host_metadata_preflight_receipt(plan)
+
+    assert receipt == {
+        "apply_supported": False,
+        "checked": {
+            "docker_observed": False,
+            "host_directories": 3,
+            "host_secret_file_metadata": 7,
+            "secret_contents_read": False,
+        },
+        "configuration_sha256": plan.snapshot_sha256,
+        "contract": "EvaManagedBHostMetadataPreflightReceipt/v1",
+        "next_step": "read-only sealed Compose render and independent manifest/adoption review",
+        "status": "passed_host_metadata_only",
+    }
+    rendered = json.dumps(receipt, sort_keys=True)
+    assert str(private_tmp_path) not in rendered
+    assert "not-a-real-token" not in rendered
+    assert "not-a-real-dsn" not in rendered
+    assert "not-a-real-postgres-password" not in rendered
+
+
+def test_host_only_cli_never_observes_docker_or_b(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    plan = load_core_b_plan(
+        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        runtime_uid=os.geteuid(),
+    )
+    monkeypatch.setattr(
+        core_b_preflight,
+        "load_core_b_plan",
+        lambda _environment_file: plan,
+    )
+    monkeypatch.setattr(
+        core_b_preflight,
+        "observe_current_b",
+        lambda _plan: pytest.fail("host-only mode must not observe Docker or B"),
+    )
+
+    assert core_b_preflight.main(["--host-only", "/private/eva2-b-runtime.env"]) == 0
+
+    assert json.loads(capsys.readouterr().out) == host_metadata_preflight_receipt(plan)
 
 
 def test_plan_rejects_true_and_wrapper_instead_of_system_docker(

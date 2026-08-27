@@ -50,6 +50,20 @@ controleert vervolgens dat het huidige B exact door een later gereviewd
 `eva2-explicit-b-manifest-v1` is beheerd en weigert de huidige unmanaged B dus
 fail-closed. De secretinhoud wordt daarbij niet gelezen.
 
+Vóór B als beheerd systeem bestaat kan de operator eerst uitsluitend de
+hostvoorwaarde controleren. Deze variant leest geen Dockercontext, container,
+volume, secretinhoud of live Eva; zij controleert alleen de private
+configuratiesnapshot en metadata van de zeven secretbestanden en drie
+authoritydirectories. De JSON-uitvoer bevat uitsluitend aantallen en de
+configuratiehash.
+
+```bash
+./deploy/living-core/preflight-core-b.sh --host-only /absolute/path/to/eva2-b-runtime.env
+```
+
+Pas na expliciete toestemming voor de beheerde omgeving gebruikt de gewone
+variant ook de read-only Docker- en labelcontrole:
+
 ```bash
 ./deploy/living-core/preflight-core-b.sh /absolute/path/to/eva2-b-runtime.env
 ```
