@@ -34,7 +34,9 @@ def _environment(monkeypatch: pytest.MonkeyPatch, endpoint: str) -> None:
 
 
 @contextmanager
-def _core(*, correct_reply_hash: bool = True) -> Iterator[tuple[str, list[dict[str, object]]]]:
+def _core(
+    *, correct_reply_hash: bool = True, evidence_memory_ids: list[str] | None = None
+) -> Iterator[tuple[str, list[dict[str, object]]]]:
     received: list[dict[str, object]] = []
 
     class Handler(BaseHTTPRequestHandler):
@@ -48,7 +50,9 @@ def _core(*, correct_reply_hash: bool = True) -> Iterator[tuple[str, list[dict[s
                 {
                     "contract": "EvaInternalGroundedReply/v1",
                     "conversation_id": received[-1]["conversation_id"],
-                    "evidence_memory_ids": [],
+                    "evidence_memory_ids": (
+                        [] if evidence_memory_ids is None else evidence_memory_ids
+                    ),
                     "generated_at": "2026-08-26T12:00:00Z",
                     "message_id": received[-1]["message_id"],
                     "provider": "test",
@@ -142,6 +146,17 @@ def test_rejects_a_reply_that_is_not_bound_to_its_text_hash(
         with pytest.raises(adapter.GaiaEvaAgentError, match="answer is invalid"):
             adapter.answer_for_task(
                 {"attachment_path": None, "question": "Een vraag", "task_id": "task-hash"}
+            )
+
+
+def test_rejects_a_reply_that_uses_existing_memory(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with _core(evidence_memory_ids=["memory:unrelated"]) as (endpoint, _received):
+        _environment(monkeypatch, endpoint)
+        with pytest.raises(adapter.GaiaEvaAgentError, match="answer is invalid"):
+            adapter.answer_for_task(
+                {"attachment_path": None, "question": "Een vraag", "task_id": "task-memory"}
             )
 
 

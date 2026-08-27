@@ -1,0 +1,15 @@
+# This is deliberately not a scored AgentBench configuration.  It loads the
+# untouched upstream DBBench task implementation and its official 60-case dev
+# data solely to prove task registration.  `manual` prevents any Docker socket,
+# MySQL container, model call, or sample execution during that proof.
+dbbench-dev-registration:
+  module: src.server.tasks.dbbench.DBBenchTask
+  parameters:
+    name: dbbench-dev-registration
+    data_file: data/dbbench/dev.jsonl
+    concurrency: 1
+    max_round: 1
+    env_driver: manual
+    env_options:
+      urls:
+        mysql: manual://not-started

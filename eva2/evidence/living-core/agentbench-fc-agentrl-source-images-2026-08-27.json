@@ -1,0 +1,81 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLSourceImagesReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "agentrlGitArchive": {
+      "format": "git archive --format=tar --prefix=agentrl/ 6a73409d31ba695d383b978a8ad3ef400d90c054",
+      "sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+    },
+    "controllerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-pinned.Dockerfile",
+      "sha256": "b475094f716e076cfa3ce8fcf19221c8cd66eec8358b888a2b894572a0acf26e"
+    },
+    "controllerBuildInputs": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-build-inputs-amd64.json",
+      "sha256": "e639dec05ffab8847744feb309e9c7b803f55e0805cbecec3a52d80bcbae6698"
+    },
+    "controllerInputsProvenance": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-inputs-provenance-amd64.json",
+      "sha256": "c86e4b3802afb0ef26450129e77b0ea21b6873c3782f57747c4629af60d67c44"
+    },
+    "workerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
+      "sha256": "07e35850fbaa43639a093f1d5e3a66efdca9972a6ab70b75dcbed1f87c464d2f"
+    },
+    "workerRequirementsLock": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-requirements.lock",
+      "sha256": "ca657398711c05e5f162c81cde30bb4d978d2619a4cd4bd439e836bd378b088c"
+    },
+    "workerWheelhouseManifest": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-amd64-py310.json",
+      "sha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
+    },
+    "workerWheelhouseProvenance": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-worker-wheelhouse-provenance-amd64-py310.json",
+      "sha256": "b7defb3f01ec9d2ad515a7756b7be8d81a1fe54bd1ee80031ca3809e40084b43"
+    }
+  },
+  "images": {
+    "controller": {
+      "image": "eva2/agentbench-agentrl-controller@sha256:b4f7d6b1269e26bc47d0c205ba08ac2f7d92a9a484549a7ef9c561bebdf1d415",
+      "imageTag": "eva2/agentbench-agentrl-controller:offline-20260827",
+      "runtimeUser": "65532:65532",
+      "sizeBytes": 24151149,
+      "labels": {
+        "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+        "io.eva.agentrl-controller-gomodcache-sha256": "4abfff3108ce315dc34b7b0d3474c8a6431534a219d37b2369e4d08f71765b57"
+      }
+    },
+    "worker": {
+      "image": "eva2/agentbench-agentrl-worker@sha256:8e453fd27971afb1d29e5a0ec388a671545a351afb10a4b620b3e0d112ec7489",
+      "imageTag": "eva2/agentbench-agentrl-worker:offline-20260827",
+      "runtimeUser": "65532:65532",
+      "sizeBytes": 104587519,
+      "labels": {
+        "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+        "io.eva.agentrl-worker-lock-sha256": "ca657398711c05e5f162c81cde30bb4d978d2619a4cd4bd439e836bd378b088c",
+        "io.eva.agentrl-worker-wheelhouse-manifest-sha256": "4213492c14ee85fd9aac556877cdae2e70df3751cee5a4996ff478415129616c"
+      }
+    }
+  },
+  "verification": {
+    "controllerReadOnlyHelp": true,
+    "controllerOfflineImageBuild": true,
+    "networkless": true,
+    "taskOrScoreStarted": false,
+    "workerReadOnlyHelp": true,
+    "workerOfflineDependencyInstall": true,
+    "workerOfflineImageBuild": true
+  },
+  "openBoundary": "This receipt records the original local source builds. The physical inputs were subsequently retained locally read-only, their rebuild recipes recorded, validators given negative regressions and both images rebuilt from those retained bytes; see agentbench-fc-agentrl-retained-rebuild-2026-08-27.json. That later scan is red, so independently reviewed community/base/dependency updates and a new clean scan remain required before any AgentBench development stack may start. No AgentBench task, dataset, model call, scorer, development result or score has started.",
+  "nonClaims": [
+    "No AgentBench task, dataset, evaluation session, model call, scorer, development result or public score was started. The separate protocol receipt records only an idle VirtualTask registration, never an AgentBench evaluation.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
+    "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
+  ],
+  "status": "local_source_builds_superseded_by_retained_rebuild_security_no_go"
+}

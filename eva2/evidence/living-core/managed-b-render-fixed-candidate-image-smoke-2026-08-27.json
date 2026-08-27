@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBRenderFixedCandidateImageSmokeReceipt/v1",
+  "inputs": {
+    "base_image_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "source_archive_sha256": "2acbc8b3ba7b85b07cc95d84142bb36eed8a0d6923d7205e1f8000071597ce6a",
+    "source_commit": "28104541f093d335729f0a1cf920914c97ca3036",
+    "wheel_count": 39,
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "network": {
+    "candidate_build": "none",
+    "runtime_smoke": "none"
+  },
+  "observed": {
+    "candidate_image_id": "sha256:73f785f095bf2012a1e25847c0123f7c72259e67dd005a4d6c74a18431299c95",
+    "candidate_image_size_bytes": 104579192,
+    "context_tree_sha256": "46f1f9a47123ca92ba207b7316b48e1b947a0c60bc520c183cbdb6901c9ff624",
+    "runtime_smoke": "runtime import succeeded as UID 65532 on a read-only filesystem with no network, mounts or secrets"
+  },
+  "nonclaims": [
+    "This candidate contains the managed-render fixes, but it has not yet repeated schema installation or full readiness after this source commit.",
+    "The image is untagged, unsigned, unpublished and unattached to Compose.",
+    "No Eva1 or managed-B service, configuration, volume, Hindsight data, PostgreSQL data, Telegram route, Home Assistant route or real secret was opened or changed.",
+    "This is not a production deployment, B adoption, update, rollback proof or user acceptance."
+  ],
+  "status": "passed_render_fixed_candidate_image_smoke_not_deployed"
+}

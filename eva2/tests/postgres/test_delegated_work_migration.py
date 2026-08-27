@@ -10,6 +10,10 @@ import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
 from eva.adapters.postgres.current_catalog import metadata
+from eva.adapters.postgres.foreign_key_catalog import (
+    ForeignKeyCatalogDrift,
+    require_current_foreign_key_catalog,
+)
 from eva.operations.install_schema import install_schema
 from sqlalchemy.engine import make_url
 
@@ -115,6 +119,28 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
     try:
         receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
         assert receipt.final_revision == "4e_0004_delegated_work_stop"
+        assert (
+            receipt.drift_check
+            == "no_new_upgrade_operations_and_exact_foreign_keys"
+        )
+        with engine.connect() as connection:
+            require_current_foreign_key_catalog(connection)
+        with engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                connection.execute(
+                    sa.text(
+                        "ALTER TABLE eva_core.episodes "
+                        "DROP CONSTRAINT fk_episodes_last_event"
+                    )
+                )
+                with pytest.raises(
+                    ForeignKeyCatalogDrift,
+                    match="fk_episodes_last_event",
+                ):
+                    require_current_foreign_key_catalog(connection)
+            finally:
+                transaction.rollback()
         command.downgrade(config, "4e_0001_operational_timeline")
         assert _revision(engine) == "4e_0001_operational_timeline"
         assert "delegated_work" not in _kind_check(engine)
@@ -152,7 +178,8 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
         assert _row(engine, old_id) == old_row
 
         command.upgrade(config, "head")
-        command.check(config)
+        with engine.connect() as connection:
+            require_current_foreign_key_catalog(connection)
     finally:
         try:
             command.downgrade(config, "base")

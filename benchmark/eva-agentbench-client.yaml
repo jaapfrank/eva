@@ -1,0 +1,7 @@
+# Add this file to the exact checked-out AgentBench repository, then run its
+# own assigner with PYTHONPATH also containing this repository's benchmark/.
+# Credentials stay with the isolated Eva candidate; no key is stored here.
+eva2-isolated-candidate:
+  module: eva_agentbench_client.EvaAgentBenchClient
+  parameters:
+    timeout_seconds: 120

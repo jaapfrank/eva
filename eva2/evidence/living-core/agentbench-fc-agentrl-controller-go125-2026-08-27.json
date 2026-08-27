@@ -1,0 +1,58 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLControllerGo125Receipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "agentrlGitArchiveSha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+    "controllerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-chainguard-offline.Dockerfile",
+      "sha256": "0d5860090c3e475ddda3988f34da481777e973e5ef63e3a4f532bfb33e14a921"
+    },
+    "controllerInputsManifest": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-build-inputs-amd64-go125.json",
+      "sha256": "bd8abaf6d06d37b0a8288e9f4889ec9db34d588d97e4bbfdc5dcab0f044b5c8d"
+    },
+    "controllerSecurityPatch": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-security-upgrade-v1.patch",
+      "sha256": "30004f90adf4536b4425df48229af91a764c1d65b5f70b019c8b2d0f23aaa51b"
+    },
+    "bases": {
+      "builder": "docker.io/library/golang:1.25-bookworm@sha256:3b4a11519ad929d1e1d261a12cff056f0c85b735253d7d861346b9c6f8b36437",
+      "runtime": "cgr.dev/chainguard/static@sha256:96d02f455d5a73b817c0602910748609cf8471b1cc9522f78c75cedb1f67d072"
+    },
+    "scanner": "ghcr.io/aquasecurity/trivy:0.74.0@sha256:ee940acbf1f58ebadb42d01434ce4609530bf1b52536afbd1eee66cd7123c5c9"
+  },
+  "sealedArtifacts": {
+    "controllerInputs": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-controller-inputs-amd64-go125",
+      "readOnly": true
+    },
+    "scan": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-controller-offline-build-2026-08-27/trivy.json",
+      "sha256": "fcbbce1066d33f4244cb5ed1608788ea87f97fe9b588f7ff78371b3d416a6182"
+    },
+    "sbom": {
+      "path": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentrl-controller-offline-build-2026-08-27/sbom.cdx.json",
+      "sha256": "40b99d0a5a32180aa0c55989f2dc685863c065c39bb2ab16ebed5c23d824cef9"
+    }
+  },
+  "image": {
+    "localImageId": "sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "sizeBytes": 16166511
+  },
+  "verification": {
+    "goModuleCacheTwoIndependentBuildsSameHash": true,
+    "protocGenGoTwoIndependentBuildsSameHash": true,
+    "protocGenGoGrpcTwoIndependentBuildsSameHash": true,
+    "dockerBuildNetwork": "none",
+    "dockerBuildCache": "disabled",
+    "readOnlyNonRootNetworklessHelp": true,
+    "trivyVulnerabilities": {"critical": 0, "high": 0}
+  },
+  "status": "sealed_controller_inputs_and_offline_image_proven",
+  "openBoundary": "The worker is separately sealed, but the two new images have not yet been registered with each other. AgentBench task servers, model calls, scorer runs and public benchmark scores remain closed.",
+  "nonClaims": [
+    "No AgentBench task, dataset, model call, controller-worker evaluation session, scorer, benchmark result or public score was started.",
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ]
+}

@@ -17,7 +17,7 @@ def cockpit_progress() -> dict[str, Any]:
     return {
         "contract": "EvaCockpitProgress/v1",
         "read_only": True,
-        "updated_on": "2026-08-26",
+        "updated_on": "2026-08-27",
         "legend": [
             {"id": "live", "label": "Live beproefd op eerdere B"},
             {"id": "tested", "label": "Gebouwd en getest"},
@@ -48,8 +48,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Mensen en geheugen",
                 "state": "live",
                 "proof": "Persoons- en projectgeheugen blijft na herstart gescheiden",
-                "meaning": "Hindsight is het langetermijngeheugen; PostgreSQL bewaakt identiteit en toestemming.",
-                "next": "Echte gezins- en groepstest plus het geheugenbeheerscherm koppelen.",
+                "meaning": "Hindsight is het langetermijngeheugen; PostgreSQL bewaakt identiteit en toestemming. Een eventuele Eva1-overname begint nu met een read-only voorvertoning van aantallen en hashes, niet met kopiëren.",
+                "next": "Echte gezins- en groepstest plus het geheugenbeheerscherm koppelen. Kies pas daarna bewust of een beperkte Eva1-proef gewenst is.",
                 "evidence": _evidence("capability/personal-memory"),
             },
             {
@@ -109,8 +109,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "voice",
                 "title": "Onderbreekbare voice",
                 "state": "selected",
-                "proof": "Lokale spraakketen stuurde 38 audioblokken door vóór einde invoer; deze WSL-host heeft geen bruikbare audiohardware.",
-                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen. Dat is nog geen echte microfoon-, speaker- of onderbreekproef.",
+                "proof": "Lokale spraakketen stuurde 38 audioblokken door vóór einde invoer; 28 gerichte voice-/gesprekstests bewaken dat zowel speaker als antwoordgenerator stoppen. Deze WSL-host heeft geen bruikbare audiohardware.",
+                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen. De softwarestop is gebouwd, maar dit is nog geen echte microfoon-, speaker- of onderbreekproef.",
                 "next": "Dezelfde keten op een host met microfoon en speaker draaien, onderbreken testen en de echte spreektijd meten.",
             },
             {
@@ -125,9 +125,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "installer",
                 "title": "Installeren en bijwerken",
                 "state": "tested",
-                "proof": "Read-only back-up en runtime-secretpreflight onafhankelijk gereviewd",
-                "meaning": "De gegevens- en secretbasis is beschermd; build, update, rollback en wizard blijven aparte open bewijzen.",
-                "next": "Installeren, koppelen, updaten en terugrollen vanuit één begeleide route.",
+                "proof": "Read-only back-up, runtime-secretpreflight, lokale installatiecontrole en tijdelijke loopback-wizard zijn getest",
+                "meaning": "Eva controleert eerst of deze computer echt bij de gepinde release past. De wizard gebruikt daarna éénmalige lokale toegang; zonder bewezen platform installeert of wijzigt zij niets.",
+                "next": "Eén begeleide wizard bouwen voor installeren, koppelen, updaten en terugrollen.",
                 "evidence": _evidence("capability/installer"),
             },
             {
@@ -143,9 +143,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "benchmarks",
                 "title": "Vergelijkbare benchmarks",
                 "state": "selected",
-                "proof": "GAIA's ontwikkelrunner is veilig aan Eva gekoppeld; 18 checks zijn groen, zonder score.",
-                "meaning": "Elke proeftaak krijgt een eigen privégesprek. Het officiële antwoord en de scorer blijven buiten Eva; LAB-36 blijft apart.",
-                "next": "De officiële dataset, scorer en een echte kandidaatmodelrun vastpinnen; daarna pas dezelfde vijf-agentproef uitvoeren.",
+                "proof": "GAIA's ontwikkelrunner én een aparte AgentBench FC-CPU-omgeving zijn gecontroleerd; samen 21 checks groen, zonder score.",
+                "meaning": "Elke proeftaak krijgt een eigen privégesprek. De officiële antwoorden en scorers blijven buiten Eva; LAB-36 blijft apart.",
+                "next": "De AgentBench-taakservers veilig isoleren en daarna dataset, scorer en een echte kandidaatmodelrun vastpinnen; pas dan dezelfde vijf-agentproef uitvoeren.",
             },
         ],
         "dependencies": [

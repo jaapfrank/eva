@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaLightpandaBrowserSidecarEvaluationReceipt/v1",
+  "candidate": {
+    "asset": "lightpanda_0.3.7_amd64.deb",
+    "asset_sha256": "ac22bec7cf8093efc048764dd00d499d6bebb2eb088bc1de7e22eca8c3ce265d",
+    "asset_size_bytes": 31303488,
+    "base_image": "debian@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+    "base_image_size_bytes": 28239780,
+    "candidate_image_id": "sha256:1dbdf0139fa94e20f6eda749675f237f15667e1047e03fba7fc9db768f6ea69a",
+    "candidate_image_size_bytes": 74272892,
+    "release_tag": "0.3.7",
+    "source_commit": "5b0835f5a17fbb6fd45b56e091a14dded2e887b0",
+    "upstream": "lightpanda-io/browser"
+  },
+  "functional_probe": {
+    "command": "lightpanda version",
+    "network": "none",
+    "result": "0.3.7",
+    "runtime": "non-root uid:gid 65532:65532, read-only root filesystem, all Linux capabilities dropped, no-new-privileges and tmpfs /tmp"
+  },
+  "vulnerability_scan": {
+    "archive_sha256": "e97e33e33e2cfb8d481cb0cf85739d8155f4e14117ee637d0ffc005129289c3c",
+    "db_metadata_sha256": "dbab874fe8905cea75b0e699c86c737dff45697a2306f4ce3c3d1ec7ff0fb88c",
+    "db_sha256": "3287a72ed3e7dfe9452bf45bd03d50bcc249927c66ab6918ab5654ee1531e54a",
+    "findings": {
+      "critical": 4,
+      "high": 26
+    },
+    "network": "none during the candidate scan",
+    "result_sha256": "d593c57cc4fc408583d565f46a357e89a93d167cce2196fceb0d9429f27a75dc",
+    "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+  },
+  "decision": {
+    "state": "rejected_not_promoted",
+    "reason": "The strict zero HIGH/CRITICAL gate failed. In addition, the OCI-package scan does not establish vulnerability coverage for Lightpanda's embedded V8 and other native executable components."
+  },
+  "nonclaims": [
+    "No Eva1, B, Telegram route, Home Assistant route, account, secret, volume or database was opened or changed.",
+    "The candidate did not receive an MCP tool grant, a model grant or internet access during its functional probe.",
+    "This is not browser compatibility, screenshot, download, account, human takeover, production deployment or release approval."
+  ]
+}

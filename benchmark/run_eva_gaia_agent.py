@@ -158,6 +158,7 @@ def answer_for_task(payload: object, *, timeout_seconds: float = 120.0) -> str:
         response_payload.get("contract") != "EvaInternalGroundedReply/v1"
         or response_payload.get("conversation_id") != turn["conversation_id"]
         or response_payload.get("message_id") != turn["message_id"]
+        or response_payload.get("evidence_memory_ids") != []
         or not isinstance(answer, str)
         or not answer.strip()
         or len(answer) > 100_000

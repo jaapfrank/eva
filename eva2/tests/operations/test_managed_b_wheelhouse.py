@@ -260,6 +260,198 @@ def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> 
     assert any("release readiness" in claim for claim in receipt["nonclaims"])
 
 
+def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-current-candidate-image-smoke-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBCandidateImageSmokeReceipt/v1"
+    assert receipt["status"] == "passed_current_local_candidate_build_and_nonroot_smoke_not_deployed"
+    assert receipt["network"] == {
+        "candidate_build": "none",
+        "runtime_smoke": "none",
+        "wheel_acquisition": "network was used before sealing the exact wheelhouse; its provenance is not claimed",
+    }
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+        "requirements_lock_sha256"
+    ]
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+        "wheelhouse_tree_sha256"
+    ]
+    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["inputs"]["source_commit"] == "286095cba394019d1a80631b5e67c5789e5539be"
+    assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
+    assert receipt["observed"]["candidate_image_size_bytes"] > 0
+    assert "uid 65532" in receipt["observed"]["runtime_smoke"]
+    assert any("release readiness" in claim for claim in receipt["nonclaims"])
+
+
+def test_render_fixed_candidate_image_receipt_stays_bound_to_the_sealed_wheels() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBRenderFixedCandidateImageSmokeReceipt/v1"
+    assert receipt["status"] == "passed_render_fixed_candidate_image_smoke_not_deployed"
+    assert receipt["network"] == {"candidate_build": "none", "runtime_smoke": "none"}
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+        "requirements_lock_sha256"
+    ]
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+        "wheelhouse_tree_sha256"
+    ]
+    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["inputs"]["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
+    assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
+    assert receipt["observed"]["candidate_image_size_bytes"] > 0
+
+
+def test_current_candidate_schema_restart_receipt_stays_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-current-candidate-schema-restart-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBCurrentCandidateSchemaRestartReceipt/v1"
+    assert receipt["status"] == (
+        "passed_current_candidate_schema_restart_and_drift_rejection_not_deployed"
+    )
+    image = receipt["image_source"]
+    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    assert image["source_commit"] == "73648ea9b8d2022f639ce21c4a088f71b99cf4aa"
+    assert receipt["observed"]["first_start"]["status"] == "passed"
+    assert receipt["observed"]["second_start"]["route"] == []
+    assert receipt["observed"]["drift_rejection"] == {
+        "exit_code": 2,
+        "missing_constraint": "fk_episodes_last_event",
+        "status": "failed_closed",
+    }
+    assert "JSON receipt" in receipt["observed"]["stdout_protocol"]
+
+
+def test_render_fixed_candidate_schema_restart_stays_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-render-fixed-candidate-schema-restart-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBRenderFixedCandidateSchemaRestartReceipt/v1"
+    assert receipt["status"] == (
+        "passed_render_fixed_candidate_schema_restart_and_drift_rejection_not_deployed"
+    )
+    image = receipt["image_source"]
+    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    assert image["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
+    assert receipt["observed"]["first_start"]["status"] == "passed"
+    assert receipt["observed"]["second_start"]["route"] == []
+    assert receipt["observed"]["drift_rejection"] == {
+        "exit_code": 2,
+        "missing_constraint": "fk_episodes_last_event",
+        "status": "failed_closed",
+    }
+
+
+def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-render-fixed-candidate-runtime-readiness-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBRenderFixedCandidateRuntimeReadinessReceipt/v1"
+    assert receipt["status"] == "passed_render_fixed_candidate_runtime_readiness_not_deployed"
+    image = receipt["image_source"]
+    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    assert image["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
+    assert receipt["observed"]["healthz"] == {"status": "alive"}
+    assert receipt["observed"]["readyz"]["ready"] is True
+    assert receipt["observed"]["readyz"]["database"] == "ready"
+    assert receipt["observed"]["readyz"]["memory_projection"] == "ready"
+    assert receipt["observed"]["readyz"]["model_provider"] == "ready"
+
+
+def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    evidence_root = root / "evidence/living-core"
+    image = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-image-smoke-2026-08-27.json").read_bytes()
+    )
+    schema = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-schema-restart-2026-08-27.json").read_bytes()
+    )
+    readiness = json.loads(
+        (evidence_root / "managed-b-whitelist-candidate-runtime-readiness-2026-08-27.json").read_bytes()
+    )
+    render = json.loads(
+        (evidence_root / "managed-b-whitelist-render-2026-08-27.json").read_bytes()
+    )
+
+    source_commit = "b67c6a94612b2c18680e976ce0d9e6845f151683"
+    candidate_image_id = "sha256:14b2aa301b82c5d29bc2f623c9a1488f88a07dd33cdcd9f7d791c8309695bd5c"
+    for receipt in (image, schema, readiness):
+        bound = receipt.get("inputs", receipt.get("image_source"))
+        assert bound["source_commit"] == source_commit
+        assert bound["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+        assert bound["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+        assert bound["wheel_count"] == alignment["expected_wheel_count"]
+        if "candidate_image_id" in bound:
+            assert bound["candidate_image_id"] == candidate_image_id
+
+    assert image["status"] == "passed_whitelist_candidate_image_smoke_not_deployed"
+    assert image["observed"]["candidate_image_id"] == candidate_image_id
+    assert schema["status"] == "passed_whitelist_candidate_schema_restart_and_drift_rejection_not_deployed"
+    assert schema["observed"]["second_start"]["route"] == []
+    assert schema["observed"]["drift_rejection"]["status"] == "failed_closed"
+    assert readiness["status"] == "passed_whitelist_candidate_runtime_readiness_not_deployed"
+    assert readiness["observed"]["readyz"]["ready"] is True
+    assert render["source_commit"] == source_commit
+    assert render["status"] == "passed_whitelist_render_not_deployed"
+    assert render["closed_failure"] == (
+        "Only the literal escaped container variable $${POSTGRES_DB} is allowed; raw, "
+        "malformed, nested, different-name and multi-dollar interpolations are rejected "
+        "after the read-only Compose config render and before any create, start or apply "
+        "operation."
+    )
+    assert render["observed"]["service_names"] == [
+        "core",
+        "durable-goal-worker",
+        "hindsight",
+        "hindsight-access-lease",
+        "model-access-lease",
+        "postgres",
+        "schema-installer",
+        "telegram-ingress",
+    ]
+
+
 def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()

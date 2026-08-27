@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Run a bounded GAIA development slice without reading or scoring gold answers.
 
-This adapter deliberately accepts the official GAIA JSONL metadata only after
-the owner has downloaded it under the dataset's access conditions.  It sends an
-agent just the task id, question and an optional local attachment path.  The
-official ``Final answer`` field is never sent to the agent, copied to an
-artifact or used for scoring here.
+This adapter deliberately accepts an owner-provided local GAIA metadata file
+only after the owner has downloaded it under the dataset's access conditions.
+It accepts the legacy JSONL export and the current Parquet export.  The Parquet
+reader asks Arrow for exactly ``task_id``, ``Question`` and ``file_path``;
+``Final answer`` is therefore never loaded into this process.  In either form,
+the agent receives only the task id, question and an optional local attachment
+path.  The official ``Final answer`` field is never sent to the agent, copied
+to an artifact or used for scoring here.
 
 The resulting ``answers.jsonl`` has the exact field pair accepted by GAIA's
 official leaderboard: ``task_id`` and ``model_answer``.  It is a development
@@ -83,7 +86,30 @@ def _safe_attachment(root: Path, value: object, *, line: int) -> str | None:
     return str(candidate)
 
 
-def _tasks(metadata_path: Path, attachment_root: Path, maximum: int) -> list[dict[str, str | None]]:
+def _task_from_row(
+    row: object, *, attachment_root: Path, line: int, seen: set[str]
+) -> dict[str, str | None]:
+    if not isinstance(row, dict):
+        raise RunError(f"metadata line {line} is not an object")
+    task_id = row.get("task_id")
+    question = row.get("Question")
+    if not isinstance(task_id, str) or not task_id or len(task_id) > 200:
+        raise RunError(f"metadata line {line} task_id is invalid")
+    if task_id in seen:
+        raise RunError(f"metadata line {line} task_id is duplicated")
+    if not isinstance(question, str) or not question or len(question) > MAX_QUESTION_CHARS:
+        raise RunError(f"metadata line {line} Question is invalid")
+    seen.add(task_id)
+    return {
+        "task_id": task_id,
+        "question": question,
+        "attachment_path": _safe_attachment(attachment_root, row.get("file_path"), line=line),
+    }
+
+
+def _jsonl_tasks(
+    metadata_path: Path, attachment_root: Path, maximum: int
+) -> list[dict[str, str | None]]:
     _safe_regular_file(metadata_path, name="metadata", maximum_bytes=MAX_METADATA_BYTES)
     try:
         raw_lines = metadata_path.read_text(encoding="utf-8").splitlines()
@@ -98,31 +124,52 @@ def _tasks(metadata_path: Path, attachment_root: Path, maximum: int) -> list[dic
             row = json.loads(raw_line)
         except json.JSONDecodeError as error:
             raise RunError(f"metadata line {line_number} is invalid JSON") from error
-        if not isinstance(row, dict):
-            raise RunError(f"metadata line {line_number} is not an object")
-        task_id = row.get("task_id")
-        question = row.get("Question")
-        if not isinstance(task_id, str) or not task_id or len(task_id) > 200:
-            raise RunError(f"metadata line {line_number} task_id is invalid")
-        if task_id in seen:
-            raise RunError(f"metadata line {line_number} task_id is duplicated")
-        if not isinstance(question, str) or not question or len(question) > MAX_QUESTION_CHARS:
-            raise RunError(f"metadata line {line_number} Question is invalid")
-        seen.add(task_id)
-        tasks.append(
-            {
-                "task_id": task_id,
-                "question": question,
-                "attachment_path": _safe_attachment(
-                    attachment_root, row.get("file_path"), line=line_number
-                ),
-            }
-        )
+        tasks.append(_task_from_row(row, attachment_root=attachment_root, line=line_number, seen=seen))
         if len(tasks) == maximum:
             break
     if not tasks:
         raise RunError("metadata contains no tasks")
     return tasks
+
+
+def _parquet_tasks(
+    metadata_path: Path, attachment_root: Path, maximum: int
+) -> list[dict[str, str | None]]:
+    """Read only the public task columns from a locally authorized Parquet export."""
+
+    _safe_regular_file(metadata_path, name="metadata", maximum_bytes=MAX_METADATA_BYTES)
+    try:
+        from pyarrow import parquet
+    except ImportError as error:
+        raise RunError("Parquet metadata requires the isolated GAIA benchmark environment") from error
+    try:
+        table = parquet.read_table(
+            metadata_path,
+            columns=["task_id", "Question", "file_path"],
+            memory_map=True,
+        )
+        rows = table.to_pylist()
+    except Exception as error:
+        raise RunError("Parquet metadata is unreadable") from error
+    if len(rows) > MAX_DEVELOPMENT_TASKS:
+        raise RunError("Parquet metadata has too many development tasks")
+    tasks: list[dict[str, str | None]] = []
+    seen: set[str] = set()
+    for line_number, row in enumerate(rows, start=1):
+        tasks.append(_task_from_row(row, attachment_root=attachment_root, line=line_number, seen=seen))
+        if len(tasks) == maximum:
+            break
+    if not tasks:
+        raise RunError("metadata contains no tasks")
+    return tasks
+
+
+def _tasks(metadata_path: Path, attachment_root: Path, maximum: int) -> list[dict[str, str | None]]:
+    if metadata_path.suffix == ".jsonl":
+        return _jsonl_tasks(metadata_path, attachment_root, maximum)
+    if metadata_path.suffix == ".parquet":
+        return _parquet_tasks(metadata_path, attachment_root, maximum)
+    raise RunError("metadata must use the .jsonl or .parquet format")
 
 
 def _new_staging_directory(target: Path) -> Path:
@@ -255,7 +302,9 @@ def run(
 
 def _arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--metadata-jsonl", type=Path, required=True)
+    metadata = parser.add_mutually_exclusive_group(required=True)
+    metadata.add_argument("--metadata-jsonl", type=Path)
+    metadata.add_argument("--metadata-parquet", type=Path)
     parser.add_argument("--attachments-root", type=Path, required=True)
     parser.add_argument("--output-directory", type=Path, required=True)
     parser.add_argument("--max-tasks", type=int, required=True)
@@ -280,7 +329,7 @@ def main() -> int:
         command = command[1:]
     try:
         receipt = run(
-            metadata_path=arguments.metadata_jsonl,
+            metadata_path=arguments.metadata_jsonl or arguments.metadata_parquet,
             attachment_root=arguments.attachments_root,
             output_directory=arguments.output_directory,
             maximum_tasks=arguments.max_tasks,

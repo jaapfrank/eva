@@ -9,16 +9,22 @@ owns the one supported fresh/forward route used by the full-stack installer.
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stdout
+import io
 import json
 import os
 import sys
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 
 import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
+from alembic.util import CommandError
 
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
+from eva.adapters.postgres.foreign_key_catalog import require_current_foreign_key_catalog
 from eva.bootstrap.secrets import read_runtime_secret_file
 
 _REVISION_4B0 = "4b_0000_core_namespace"
@@ -88,16 +94,40 @@ def _current_revision(engine: sa.Engine) -> str | None:
         return value
 
 
+def _require_no_schema_drift(config: Config) -> None:
+    """Run Alembic's drift check without corrupting the JSON CLI protocol."""
+
+    # Alembic writes its successful human-oriented status line to stdout.  The
+    # installer is an operator/machine boundary and promises exactly one JSON
+    # receipt on stdout, so retain error propagation while discarding that line.
+    captured = io.StringIO()
+    previous_stdout = config.stdout
+    try:
+        config.stdout = captured
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message="Cannot correctly sort tables; there are unresolvable cycles.*",
+                category=sa.exc.SAWarning,
+            )
+            with redirect_stdout(captured):
+                command.check(config)
+    finally:
+        config.stdout = previous_stdout
+
+
 def install_schema(
     database_dsn: str, *, alembic_ini: Path
 ) -> SchemaInstallationReceipt:
-    if not database_dsn.startswith(("postgresql://", "postgresql+psycopg://")):
-        raise RuntimeError("Eva schema installation requires PostgreSQL")
+    try:
+        sqlalchemy_dsn = sqlalchemy_postgres_dsn(database_dsn)
+    except ValueError as error:
+        raise RuntimeError("Eva schema installation requires PostgreSQL") from error
     if alembic_ini.is_symlink() or not alembic_ini.is_file():
         raise RuntimeError("Alembic configuration is unavailable")
     config = Config(str(alembic_ini))
-    config.set_main_option("sqlalchemy.url", database_dsn)
-    engine = sa.create_engine(database_dsn)
+    config.set_main_option("sqlalchemy.url", sqlalchemy_dsn.replace("%", "%%"))
+    engine = sa.create_engine(sqlalchemy_dsn)
     route: list[str] = []
     try:
         source_revision = _current_revision(engine)
@@ -122,12 +152,17 @@ def install_schema(
         final_revision = _current_revision(engine)
         if final_revision != _HEAD_REVISION:
             raise RuntimeError("Eva schema installation did not reach head")
-        command.check(config)
+        # Alembic covers pending ordinary metadata operations.  Its own table
+        # sorter warns, and omits FK comparison, for Eva's intentional cycles;
+        # the direct catalog check immediately below closes that exact gap.
+        _require_no_schema_drift(config)
+        with engine.connect() as connection:
+            require_current_foreign_key_catalog(connection)
         return SchemaInstallationReceipt(
             source_revision,
             final_revision,
             tuple(route),
-            "no_new_upgrade_operations_detected",
+            "no_new_upgrade_operations_and_exact_foreign_keys",
         )
     finally:
         engine.dispose()
@@ -148,7 +183,7 @@ def main(argv: list[str] | None = None) -> int:
             _secret(value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE"),
             alembic_ini=arguments.alembic_ini,
         )
-    except (OSError, RuntimeError, ValueError) as error:
+    except (CommandError, OSError, RuntimeError, ValueError) as error:
         print(_canonical({"error": str(error), "status": "failed"}))
         return 2
     print(

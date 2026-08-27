@@ -54,6 +54,7 @@ from eva.adapters.postgres.conversation_actions import (
     PostgresPersonalProductReleaseStore,
     PostgresPersonalPrototypeStore,
 )
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.people_memory_overview import (
@@ -66,6 +67,10 @@ from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
 )
 from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.bootstrap.action_chain_effect_controls import (
+    DashboardActionChainEffectController,
+    DashboardActionChainEffectStop,
+)
 from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
 from eva.adapters.postgres.commerce import (
     PostgresPaidOrderStore,
@@ -525,6 +530,7 @@ class PostgresHindsightMemoryRuntime:
         group_consent: TelegramGroupConsentStorePort | None = None,
         people_memory_overview: PeopleMemoryOverviewPort | None = None,
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
+        dashboard_effect_controller: DashboardActionChainEffectController | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
     ) -> None:
@@ -557,6 +563,7 @@ class PostgresHindsightMemoryRuntime:
         if (delegated_work_store is None) != (dashboard_principal_binding_id is None):
             raise ValueError("delegated work dashboard binding is incomplete")
         self._delegated_work_store = delegated_work_store
+        self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
 
@@ -705,6 +712,15 @@ class PostgresHindsightMemoryRuntime:
             principal_binding_id=self._dashboard_principal_binding_id,
             now=datetime.now(tz=UTC).replace(microsecond=0),
         )
+
+    def dashboard_stop_effect(
+        self, effect_intent_id: UUID
+    ) -> DashboardActionChainEffectStop:
+        """Submit one owner-bound stop command through the durable effect ledger."""
+
+        if self._dashboard_effect_controller is None:
+            raise RuntimeError("effect stop control is unavailable")
+        return self._dashboard_effect_controller.stop(effect_intent_id)
 
     def recall(self, query: RecallCurrentFacts) -> PresenceMemory:
         return self._memory.recall_for_presence(query)
@@ -1619,7 +1635,9 @@ class PostgresHindsightMemoryRuntime:
 
 def create_runtime_app() -> FastAPI:
     settings = RuntimeSettings.from_environment()
-    engine = sa.create_engine(settings.database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(
+        sqlalchemy_postgres_dsn(settings.database_dsn), pool_pre_ping=True
+    )
     if (
         settings.background_tenant_id is None
         or settings.background_installation_id is None
@@ -1917,6 +1935,7 @@ def create_runtime_app() -> FastAPI:
             deliver_one_proactive_expression,
         )
     delegated_work_store = None
+    dashboard_effect_controller = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
     if settings.dashboard_principal_binding_id is not None:
@@ -1933,6 +1952,15 @@ def create_runtime_app() -> FastAPI:
                 UUID(settings.background_tenant_id),
                 UUID(settings.background_installation_id),
             ),
+        )
+        dashboard_effect_controller = DashboardActionChainEffectController(
+            engine,
+            TimelineScope(
+                UUID(settings.background_tenant_id),
+                UUID(settings.background_installation_id),
+            ),
+            owner_principal_id=dashboard_owner_principal_id,
+            principal_binding_id=dashboard_principal_binding_id,
         )
     return create_app(
         PostgresHindsightMemoryRuntime(
@@ -1964,6 +1992,7 @@ def create_runtime_app() -> FastAPI:
             group_consent=group_consent,
             people_memory_overview=people_memory_overview,
             delegated_work_store=delegated_work_store,
+            dashboard_effect_controller=dashboard_effect_controller,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
         ),

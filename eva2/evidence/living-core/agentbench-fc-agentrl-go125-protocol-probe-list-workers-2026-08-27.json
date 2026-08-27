@@ -1,0 +1,1 @@
+{"virtual-task":{"indices":[0,1,2,3,4,5,6,7,8,9],"workers":{"1":{"address":"http://eva2-agentrl-go125-worker-probe-20260827:5021/api","capacity":1,"current":0,"id":1,"last_visit":"2026-08-27 16:13:40","locked":false,"stale":false,"status":"ALIVE"}}}}

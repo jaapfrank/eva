@@ -14,6 +14,10 @@ from eva.adapters.postgres.action_chain_effect_advance_validation import (
     effect_completion_context,
     project_stored_action_chain_effect_proof,
 )
+from eva.adapters.postgres.action_chain_effect_stop_requests import (
+    ActionChainEffectStopRequestConflict,
+    has_valid_post_call_stop_request,
+)
 from eva.adapters.postgres.action_chain_leases import (
     _locked_attention,
     write_action_chain_attention,
@@ -39,7 +43,7 @@ from eva.application.effect_verification import (
     EffectVerificationProjection,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.execution import EffectIntent
+from eva.contracts.execution import EffectAttempt, EffectIntent
 
 
 effect_attempts = metadata.tables["eva_effects.effect_attempts"]
@@ -165,6 +169,23 @@ class PostgresActionChainEffectAdvancer:
                 raise ActionChainEffectAdvanceConflict(
                     "effect provider attempt cardinality differs"
                 )
+            try:
+                attempt = EffectAttempt.model_validate(attempt_rows[0].payload)
+                if has_valid_post_call_stop_request(
+                    connection,
+                    scope=self._scope_value,
+                    chain=chain,
+                    step_row=step_row,
+                    effect_intent_id=effect_intent_id,
+                    attempt=attempt,
+                ):
+                    raise ActionChainEffectAdvanceConflict(
+                        "owner stopped the chain after provider call start"
+                    )
+            except ActionChainEffectStopRequestConflict as error:
+                raise ActionChainEffectAdvanceConflict(
+                    "effect stop request is invalid"
+                ) from error
             action = next(
                 (
                     item

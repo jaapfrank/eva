@@ -12,6 +12,7 @@ from eva.operations.core_b_preflight import CoreBPlan
 from eva.operations.managed_b_render import (
     EXPECTED_SERVICES,
     MANAGED_B_MANIFEST,
+    _contains_unresolved_interpolation,
     _write_all,
     main,
     render_managed_b,
@@ -110,6 +111,8 @@ def test_renderer_binds_template_snapshot_and_compose_graph(
         "--context",
         "eva2-b-local",
         "compose",
+        "--profile",
+        "schema-install",
         "--project-name",
         "eva2-b-live",
         "--env-file",
@@ -174,6 +177,39 @@ def test_renderer_refuses_unresolved_graph_interpolation(
 
     with pytest.raises(RuntimeError, match="unresolved interpolation"):
         render_managed_b(plan)
+
+
+@pytest.mark.parametrize(
+    "value",
+    (
+        "${EVA_MISSING}",
+        "prefix-${EVA_MISSING}",
+        "$$${EVA_MISSING}",
+        "$$$${EVA_MISSING}",
+        "$$$$${EVA_MISSING}",
+        "$x${EVA_MISSING}",
+        "$${}",
+        "$${MISSING_CLOSE",
+        "$${POSTGRES_USER}",
+        "$${POSTGRES_DB:-fallback}",
+        "$${OUTER$${INNER}}",
+        "$${POSTGRES_DB}${EVA_MISSING}",
+    ),
+)
+def test_renderer_refuses_every_non_exactly_escaped_interpolation(value: str) -> None:
+    assert _contains_unresolved_interpolation(value)
+
+
+@pytest.mark.parametrize(
+    "value",
+    (
+        "$${POSTGRES_DB}",
+        "test -n \"$${POSTGRES_DB}\" && echo ready",
+        "$${POSTGRES_DB}:$${POSTGRES_DB}",
+    ),
+)
+def test_renderer_allows_only_exactly_escaped_container_variables(value: str) -> None:
+    assert not _contains_unresolved_interpolation(value)
 
 
 def test_renderer_refuses_service_with_wrong_configuration_label(

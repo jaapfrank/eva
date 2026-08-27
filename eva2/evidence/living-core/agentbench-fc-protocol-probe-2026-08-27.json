@@ -1,0 +1,34 @@
+{
+  "artifact": "EvaAgentBenchFcProtocolProbeReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller@sha256:b4f7d6b1269e26bc47d0c205ba08ac2f7d92a9a484549a7ef9c561bebdf1d415",
+    "probeConfig": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-protocol-probe.yaml",
+      "sha256": "e956704474775b09e31027a1783c5e18aee4fff7f09871dc97bf4caa06a9c8d5"
+    },
+    "workerImage": "eva2/agentbench-agentrl-worker@sha256:8e453fd27971afb1d29e5a0ec388a671545a351afb10a4b620b3e0d112ec7489"
+  },
+  "observed": {
+    "activeSamples": 0,
+    "listWorkers": {
+      "path": "evidence/living-core/agentbench-fc-protocol-probe-list-workers-2026-08-27.json",
+      "sha256": "d3ee8c553ca1874f26744821570ee9e40f2614dbb445c1c967c57e6ed0f5387f"
+    },
+    "registeredTask": "virtual-task",
+    "registeredWorkerCount": 1,
+    "workerStatus": "ALIVE"
+  },
+  "verification": {
+    "controllerWorkerRegistration": true,
+    "temporaryContainersRemoved": true,
+    "workerReadOnly": true
+  },
+  "nonClaims": [
+    "The probe used AgentRL's built-in VirtualTask only; it did not start an AgentBench environment or sample.",
+    "No AgentBench dataset, task evaluation, model call, scorer, development result, public score, Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ],
+  "status": "protocol_registration_proven"
+}

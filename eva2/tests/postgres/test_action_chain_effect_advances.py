@@ -20,11 +20,17 @@ from eva.adapters.postgres.action_chain_effect_advances import (
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
     effect_readback_thread_id,
 )
+from eva.adapters.postgres.action_chain_effect_stop_requests import (
+    PostgresActionChainEffectStopRequester,
+)
 from eva.adapters.postgres.action_chain_effect_readback_results import (
     PostgresActionChainEffectReadbackResultStore,
 )
 from eva.adapters.postgres.action_chain_effect_readbacks import (
     PostgresActionChainEffectReadbackPreparer,
+)
+from eva.adapters.postgres.action_chain_effect_results import (
+    PostgresActionChainEffectResultStore,
 )
 from eva.adapters.postgres.action_chain_ledger import (
     ActionChainCorrupt,
@@ -41,6 +47,9 @@ from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector_rpc import ConnectorInvokeSuccess
 from eva.operations.action_chain_effect_executor import (
     PostgresActionChainEffectExecutor,
+)
+from eva.operations.action_chain_effect_dispatcher import (
+    PostgresActionChainEffectDispatcher,
 )
 from eva.operations.action_chain_effect_readback_dispatcher import (
     PostgresActionChainEffectReadbackDispatcher,
@@ -60,7 +69,7 @@ from test_action_chain_effect_readbacks import (
     READBACK_WORKER_PROGRAM,
     _seed_readback_authority,
 )
-from test_action_chain_ledger import NOW, _decision_and_plan
+from test_action_chain_ledger import NOW, _decision_and_plan, _fact_values
 from test_action_chain_read_authorizer import (
     _provider_registry as _read_provider_registry,
 )
@@ -268,6 +277,118 @@ def test_matching_physical_readback_verifies_effect_and_replays_after_restart(
     assert next_claim is not None
     assert next_claim.plan_step_id == chain.steps[2].plan_step_id
     PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+
+
+def test_owner_stop_after_call_retains_readback_but_never_releases_followup(
+    action_chain_engine: Engine,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A late stop keeps the facts but prevents a new autonomous action."""
+
+    _use_followup_plan(monkeypatch)
+    scope, chain, catalog, _authority, prepared_effect = _prepared_effect(
+        action_chain_engine
+    )
+    effect_intent_id = UUID(prepared_effect.intent.effect_intent_id)
+    claimed = PostgresActionChainEffectDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=_effect_provider_registry(
+            action_chain_engine, scope, prepared_effect.intent
+        ),
+    ).claim_provider_call(
+        effect_intent_id,
+        live_catalog=catalog,
+        now=NOW + timedelta(seconds=9),
+    )
+    assert claimed.disposition == "claimed"
+    principal = _fact_values("static/principal-owner")[1]
+    binding = _fact_values("static/principal-binding")[1]
+    stopped = PostgresActionChainEffectStopRequester(
+        action_chain_engine, scope
+    ).request_stop(
+        effect_intent_id,
+        owner_principal_id=principal["principal_id"],
+        principal_binding_id=binding["principal_binding_id"],
+        now=NOW + timedelta(seconds=10),
+    )
+    assert stopped.disposition == "stop_requested"
+    accepted = PostgresActionChainEffectResultStore(
+        action_chain_engine, scope
+    ).record(
+        claimed,
+        result=_effect_result(
+            claimed,
+            {
+                "kind": "effect_response",
+                "provider_resource_id": "ha:entity:input_boolean.eva_test",
+                "provider_receipt_sha256": canonical_sha256({"accepted": True}),
+                "provider_time": "2026-08-20T12:00:10Z",
+            },
+        ),
+        observed_at=NOW + timedelta(seconds=9),
+        recorded_at=NOW + timedelta(seconds=11),
+    )
+    assert accepted.attempt.state == "provider_accepted"
+    authority = _seed_readback_authority(action_chain_engine, scope)
+    prepared_readback = PostgresActionChainEffectReadbackPreparer(
+        action_chain_engine, scope
+    ).prepare(
+        effect_intent_id,
+        authority=authority,
+        now=NOW + timedelta(seconds=12),
+    )
+    read_intent_id = UUID(prepared_readback.intent.read_intent_id)
+    readback_claim = PostgresActionChainEffectReadbackDispatcher(
+        action_chain_engine,
+        scope,
+        provider_registry=_read_provider_registry(
+            action_chain_engine,
+            scope,
+            prepared_readback.intent,
+            capability_activation_id=authority.capability_activation_id,
+            worker_program=READBACK_WORKER_PROGRAM,
+        ),
+    ).claim_provider_call(read_intent_id, now=NOW + timedelta(seconds=14))
+    assert readback_claim.disposition == "claimed"
+    assert readback_claim.invoke is not None
+    assert readback_claim.connector_manifest is not None
+    observed = PostgresActionChainReadResultStore(action_chain_engine, scope).record(
+        readback_claim,
+        result=_success(readback_claim.invoke, readback_claim.connector_manifest),
+        observed_at=NOW + timedelta(seconds=14),
+        recorded_at=NOW + timedelta(seconds=16),
+    )
+    assert observed.attempt.state == "observed"
+    readback = PostgresActionChainEffectReadbackResultStore(
+        action_chain_engine, scope
+    ).record(read_intent_id)
+    assert readback.disposition == "recorded"
+
+    with pytest.raises(
+        ActionChainEffectAdvanceConflict,
+        match="owner stopped the chain after provider call start",
+    ):
+        PostgresActionChainEffectAdvancer(action_chain_engine, scope).advance(
+            effect_intent_id,
+            now=NOW + timedelta(seconds=17),
+        )
+
+    loaded = PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
+    assert [step.state for step in loaded.steps] == ["succeeded", "running", "pending"]
+    assert (
+        PostgresActionChainLeases(action_chain_engine, scope).claim_next(
+            worker_id="worker:must-not-run-after-owner-stop",
+            now=NOW + timedelta(seconds=18),
+            lease_seconds=10,
+        )
+        is None
+    )
+    assert _completion_counts(
+        action_chain_engine,
+        scope=scope,
+        read_intent_id=read_intent_id,
+    )["dependency_releases"] == 0
 
 
 def test_committed_effect_recovers_across_every_readback_process_boundary(

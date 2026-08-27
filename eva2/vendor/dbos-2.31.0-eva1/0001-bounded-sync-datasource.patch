@@ -1,0 +1,306 @@
+diff --git a/dbos/_datasource.py b/dbos/_datasource.py
+index 126d74e..bc213b0 100644
+--- a/dbos/_datasource.py
++++ b/dbos/_datasource.py
+@@ -30,7 +30,7 @@ from sqlalchemy.orm import Session, sessionmaker
+ from dbos._app_db import RecordedResult
+ from dbos._context import DBOSContextEnsure, get_local_dbos_context
+ from dbos._dbos import IsolationLevel
+-from dbos._error import DBOSException, DBOSWorkflowConflictIDError
++from dbos._error import DBOSBaseException, DBOSException, DBOSWorkflowConflictIDError
+ from dbos._schemas import SCHEMA_PLACEHOLDER
+ from dbos._schemas.datasource_database import DatasourceSchema
+ from dbos._serialization import (
+@@ -52,6 +52,7 @@ _MAX_RETRY_WAIT_SECONDS = 2.0
+ # concluding the winner is gone and finishing the workflow itself.
+ _DUPLICATE_CHECKPOINT_WAIT_SECONDS = 1.0
+ _DUPLICATE_CHECKPOINT_POLL_SECONDS = 0.01
++_DEFAULT_MAX_TRANSACTION_ATTEMPTS = 3
+ 
+ P = ParamSpec("P")
+ R = TypeVar("R")
+@@ -65,6 +66,21 @@ class _StepAlreadyRecorded(Exception):
+     """
+ 
+ 
++class _TransactionRecoveryRequired(DBOSBaseException):
++    """Leave an ambiguous datasource step pending for supervised recovery.
++
++    ``BaseException`` control flow is intentional: DBOS must not checkpoint a
++    guessed error in either datasource or system storage while commit outcome is
++    unknown. A recovered workflow starts with the datasource output pre-check.
++    """
++
++
++def _validate_max_transaction_attempts(value: int) -> int:
++    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
++        raise DBOSException("max_transaction_attempts must be an integer >= 1")
++    return value
++
++
+ def _is_retriable_db_error(
+     error: Exception,
+     is_serialization_error: Callable[[Exception], bool],
+@@ -171,7 +187,6 @@ class DatasourceOptions(TypedDict, total=False):
+ 
+ 
+ class AsyncSQLAlchemyDatasource(ABC):
+-
+     def __init__(
+         self,
+         *,
+@@ -255,9 +270,9 @@ class AsyncSQLAlchemyDatasource(ABC):
+ 
+     def sql_session(self) -> AsyncSession:
+         ctx = get_local_dbos_context()
+-        assert (
+-            ctx is not None and ctx.async_ds_session is not None
+-        ), "sql_session() must be called within an async datasource transaction"
++        assert ctx is not None and ctx.async_ds_session is not None, (
++            "sql_session() must be called within an async datasource transaction"
++        )
+         return ctx.async_ds_session
+ 
+     async def _check_execution(
+@@ -529,7 +544,6 @@ class AsyncSQLAlchemyDatasource(ABC):
+ 
+ 
+ class SQLAlchemyDatasource(ABC):
+-
+     def __init__(
+         self,
+         *,
+@@ -560,6 +574,7 @@ class SQLAlchemyDatasource(ABC):
+         self._engine_kwargs = engine_kwargs
+         self.sessionmaker = sessionmaker(bind=self.engine)
+         self.serializer = serializer
++        self._max_transaction_attempts = _DEFAULT_MAX_TRANSACTION_ATTEMPTS
+ 
+     @staticmethod
+     def create(
+@@ -568,6 +583,8 @@ class SQLAlchemyDatasource(ABC):
+         engine: Optional[sa.Engine] = None,
+         schema: Optional[str] = None,
+         serializer: Optional[Serializer] = None,
++        run_migrations: bool = True,
++        max_transaction_attempts: int = _DEFAULT_MAX_TRANSACTION_ATTEMPTS,
+     ) -> "SQLAlchemyDatasource ":
+         if serializer is None:
+             serializer = DBOSDefaultSerializer
+@@ -593,7 +610,13 @@ class SQLAlchemyDatasource(ABC):
+                 schema=schema,
+                 serializer=serializer,
+             )
+-        instance.run_migrations()
++        instance._max_transaction_attempts = _validate_max_transaction_attempts(
++            max_transaction_attempts
++        )
++        if run_migrations:
++            instance.run_migrations()
++        else:
++            instance._verify_schema()
+         return instance
+ 
+     @abstractmethod
+@@ -611,11 +634,25 @@ class SQLAlchemyDatasource(ABC):
+         """Return True if the error is a retryable serialization/concurrency error."""
+         pass
+ 
++    def _verify_schema(self) -> None:
++        """Verify the pre-migrated datasource table with a read-only statement."""
++        with self.engine.connect() as conn:
++            conn.execute(
++                sa.select(
++                    DatasourceSchema.datasource_outputs.c.workflow_id,
++                    DatasourceSchema.datasource_outputs.c.step_id,
++                    DatasourceSchema.datasource_outputs.c.output,
++                    DatasourceSchema.datasource_outputs.c.error,
++                    DatasourceSchema.datasource_outputs.c.serialization,
++                    DatasourceSchema.datasource_outputs.c.created_at,
++                ).limit(0)
++            )
++
+     def sql_session(self) -> Session:
+         ctx = get_local_dbos_context()
+-        assert (
+-            ctx is not None and ctx.sync_ds_session is not None
+-        ), "sql_session() must be called within a sync datasource transaction"
++        assert ctx is not None and ctx.sync_ds_session is not None, (
++            "sql_session() must be called within a sync datasource transaction"
++        )
+         return ctx.sync_ds_session
+ 
+     def _check_execution(
+@@ -639,7 +676,7 @@ class SQLAlchemyDatasource(ABC):
+     ) -> Optional[RecordedResult]:
+         # Retry the OAOO pre-check read on transient connection and serialization errors.
+         retry_wait_seconds = _INITIAL_RETRY_WAIT_SECONDS
+-        while True:
++        for attempt in range(self._max_transaction_attempts):
+             try:
+                 return self._check_execution(workflow_id, step_id)
+             except DBAPIError as dbapi_error:
+@@ -647,11 +684,18 @@ class SQLAlchemyDatasource(ABC):
+                     dbapi_error, self._is_serialization_error
+                 ):
+                     raise
++                if attempt + 1 >= self._max_transaction_attempts:
++                    raise _TransactionRecoveryRequired(
++                        f"Datasource result pre-check exhausted "
++                        f"{self._max_transaction_attempts} attempts for workflow "
++                        f"{workflow_id}, step {step_id}"
++                    ) from dbapi_error
+                 time.sleep(retry_wait_seconds)
+                 retry_wait_seconds = min(
+                     retry_wait_seconds * _RETRY_BACKOFF_FACTOR,
+                     _MAX_RETRY_WAIT_SECONDS,
+                 )
++        raise AssertionError("unreachable datasource pre-check retry state")
+ 
+     def _record_error(
+         self,
+@@ -743,38 +787,40 @@ class SQLAlchemyDatasource(ABC):
+             retry_wait_seconds = _INITIAL_RETRY_WAIT_SECONDS
+             try:
+                 with DBOSContextEnsure() as exec_ctx:
+-                    while True:
+-                        with self.sessionmaker() as session:
+-                            exec_ctx.start_sync_ds_transaction(session)
+-                            try:
+-                                with session.begin():
+-                                    session.connection(
+-                                        execution_options={
+-                                            "isolation_level": isolation_level
+-                                        }
+-                                    )
+-                                    output = func(*args, **kwargs)
+-                                    if in_wf:
+-                                        serialized, serialization = serialize_value(
+-                                            output, None, self.serializer
+-                                        )
+-                                        self._record_result(
+-                                            session,
+-                                            workflow_id,
+-                                            step_id,
+-                                            serialized,
+-                                            None,
+-                                            serialization,
++                    for attempt in range(self._max_transaction_attempts):
++                        try:
++                            with self.sessionmaker() as session:
++                                exec_ctx.start_sync_ds_transaction(session)
++                                try:
++                                    with session.begin():
++                                        session.connection(
++                                            execution_options={
++                                                "isolation_level": isolation_level
++                                            }
+                                         )
+-                                        # From here the commit may land.
+-                                        commit_possible = True
+-                                break
+-                            except _StepAlreadyRecorded:
+-                                raise  # the recorded result wins; don't record an error over it
+-                            except Exception as e:
+-                                if _is_retriable_db_error(
+-                                    e, self._is_serialization_error
+-                                ):
++                                        output = func(*args, **kwargs)
++                                        if in_wf:
++                                            serialized, serialization = serialize_value(
++                                                output, None, self.serializer
++                                            )
++                                            self._record_result(
++                                                session,
++                                                workflow_id,
++                                                step_id,
++                                                serialized,
++                                                None,
++                                                serialization,
++                                            )
++                                            # From here the commit may land.
++                                            commit_possible = True
++                                finally:
++                                    exec_ctx.end_sync_ds_transaction()
++                            break
++                        except _StepAlreadyRecorded:
++                            raise  # the recorded result wins; don't record an error over it
++                        except Exception as e:
++                            if self._is_serialization_error(e):
++                                if attempt + 1 < self._max_transaction_attempts:
+                                     inner_ctx = get_local_dbos_context()
+                                     span = (
+                                         inner_ctx.get_current_dbos_span()
+@@ -784,7 +830,11 @@ class SQLAlchemyDatasource(ABC):
+                                     if span:
+                                         span.add_event(
+                                             "Transaction Failure",
+-                                            {"retry_wait_seconds": retry_wait_seconds},
++                                            {
++                                                "retry_wait_seconds": retry_wait_seconds,
++                                                "attempt": attempt + 1,
++                                                "max_attempts": self._max_transaction_attempts,
++                                            },
+                                         )
+                                     time.sleep(retry_wait_seconds)
+                                     retry_wait_seconds = min(
+@@ -792,19 +842,48 @@ class SQLAlchemyDatasource(ABC):
+                                         _MAX_RETRY_WAIT_SECONDS,
+                                     )
+                                     continue
+-                                if in_wf:
+-                                    serialized_e, serialization = serialize_exception(
+-                                        e, None, self.serializer
++                            elif (
++                                in_wf
++                                and isinstance(e, DBAPIError)
++                                and retriable_postgres_exception(e)
++                            ):
++                                # A connection error can be raised after PostgreSQL committed
++                                # but before the client observed the acknowledgement. Never run
++                                # the body again in this invocation. Reconcile on a fresh
++                                # connection; if no durable result can be adopted, leave the
++                                # workflow pending so supervised recovery performs the normal
++                                # pre-check before any later execution.
++                                try:
++                                    recorded = self._check_execution_with_retry(
++                                        workflow_id, step_id
+                                     )
+-                                    self._record_error(
+-                                        workflow_id,
+-                                        step_id,
+-                                        serialized_e,
+-                                        serialization,
++                                except DBOSBaseException:
++                                    raise
++                                except Exception as reconcile_error:
++                                    raise _TransactionRecoveryRequired(
++                                        f"Could not reconcile ambiguous datasource "
++                                        f"commit for workflow {workflow_id}, step {step_id}"
++                                    ) from reconcile_error
++                                if recorded is not None:
++                                    return cast(
++                                        R,
++                                        _replay_recorded(recorded, self.serializer),
+                                     )
+-                                raise
+-                            finally:
+-                                exec_ctx.end_sync_ds_transaction()
++                                raise _TransactionRecoveryRequired(
++                                    f"Datasource commit outcome requires supervised "
++                                    f"recovery for workflow {workflow_id}, step {step_id}"
++                                ) from e
++                            if in_wf:
++                                serialized_e, serialization = serialize_exception(
++                                    e, None, self.serializer
++                                )
++                                self._record_error(
++                                    workflow_id,
++                                    step_id,
++                                    serialized_e,
++                                    serialization,
++                                )
++                            raise
+             except _StepAlreadyRecorded:
+                 conflicted = True
+ 

@@ -74,6 +74,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_STACK_WORK_VOLUME",
     "EVA_STACK_POSTGRES_VOLUME",
     "EVA_STACK_HINDSIGHT_VOLUME",
+    "EVA_HINDSIGHT_BANK_NAMESPACE",
     "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
     "EVA_HINDSIGHT_ACCESS_DIR",
@@ -90,6 +91,21 @@ FORBIDDEN_INLINE_SECRETS = (
     "EVA_TELEGRAM_BOT_TOKEN",
     "EVA_STRIPE_SECRET_KEY",
     "EVA_STRIPE_WEBHOOK_SECRET",
+)
+
+HOST_SECRET_SETTING_NAMES = (
+    "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
+    "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
+    "EVA_DATABASE_DSN_FILE_HOST",
+    "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
+    "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
+    "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
+    "EVA_POSTGRES_PASSWORD_FILE_HOST",
+)
+HOST_DIRECTORY_SETTING_NAMES = (
+    "EVA_CODEX_AUTH_DIR",
+    "EVA_MODEL_ACCESS_LEASE_DIR",
+    "EVA_HINDSIGHT_ACCESS_DIR",
 )
 
 
@@ -451,6 +467,33 @@ def load_core_b_plan(
     )
 
 
+def host_metadata_preflight_receipt(plan: CoreBPlan) -> dict[str, object]:
+    """Return a secret-free receipt after only host metadata was checked.
+
+    ``load_core_b_plan`` has already checked the exact private configuration
+    snapshot, every required secret file's metadata and every required authority
+    directory.  This receipt deliberately does *not* inspect Docker, B, a
+    container, a volume or a secret's contents.  It exists so an operator can
+    close the host-file prerequisite before a managed B graph exists.
+    """
+
+    return {
+        "apply_supported": False,
+        "checked": {
+            "authority_directories": len(HOST_DIRECTORY_SETTING_NAMES),
+            "docker_binary_metadata": True,
+            "docker_config_directory_metadata": True,
+            "docker_observed": False,
+            "host_secret_file_metadata": len(HOST_SECRET_SETTING_NAMES),
+            "secret_contents_read": False,
+        },
+        "configuration_sha256": plan.snapshot_sha256,
+        "contract": "EvaManagedBHostMetadataPreflightReceipt/v1",
+        "next_step": "read-only sealed Compose render and independent manifest/adoption review",
+        "status": "passed_host_metadata_only",
+    }
+
+
 def verify_docker_endpoint(
     plan: CoreBPlan,
     observed_context: str,
@@ -678,30 +721,35 @@ def _refuse(message: str) -> NoReturn:
     raise SystemExit(f"core-B plan refused: {message}")
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(
         description="Read-only preflight; this command cannot recreate containers."
     )
+    parser.add_argument(
+        "--host-only",
+        action="store_true",
+        help="check only the private configuration and host-file metadata; never read Docker or B",
+    )
     parser.add_argument("environment_file")
-    arguments = parser.parse_args()
+    arguments = parser.parse_args(argv)
     try:
         plan = load_core_b_plan(arguments.environment_file)
-        observe_current_b(plan)
-    except RuntimeError as error:
-        _refuse(str(error))
-    print(
-        json.dumps(
-            {
+        if arguments.host_only:
+            receipt = host_metadata_preflight_receipt(plan)
+        else:
+            observe_current_b(plan)
+            receipt = {
                 "apply_supported": False,
                 "configuration_sha256": plan.snapshot_sha256,
                 "current_b_managed": True,
                 "next_step": "independent manifest/adoption review",
-            },
-            sort_keys=True,
-        )
-    )
+                "status": "passed_current_managed_b_observation",
+            }
+    except RuntimeError as error:
+        _refuse(str(error))
+    print(json.dumps(receipt, sort_keys=True))
     return 0
 
 

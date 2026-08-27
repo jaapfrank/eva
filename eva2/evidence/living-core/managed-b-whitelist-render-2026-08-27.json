@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBWhitelistRenderReceipt/v1",
+  "source_commit": "b67c6a94612b2c18680e976ce0d9e6845f151683",
+  "observed": {
+    "compose_version": "2.40.3-desktop.1",
+    "manifest_sha256": "027395d94a37e348cb3f2cf740f4be537abd297b6d42f668f7f238043efc7bc5",
+    "project_name": "eva2-synthetic-render",
+    "rendered_sha256": "11d1edb53af1a6123fe2407cac15c771e4a5813014f2438920ed5d93e3cd6310",
+    "service_names": [
+      "core",
+      "durable-goal-worker",
+      "hindsight",
+      "hindsight-access-lease",
+      "model-access-lease",
+      "postgres",
+      "schema-installer",
+      "telegram-ingress"
+    ]
+  },
+  "closed_failure": "Only the literal escaped container variable $${POSTGRES_DB} is allowed; raw, malformed, nested, different-name and multi-dollar interpolations are rejected after the read-only Compose config render and before any create, start or apply operation.",
+  "constraints": {
+    "configuration": "Only synthetic temporary files were used.",
+    "docker": "Compose ran only its read-only config command. No compose up, create, start, pull, tag, push or volume operation was issued."
+  },
+  "nonclaims": [
+    "The rendered image reference and files were synthetic; this does not start or bind the candidate image.",
+    "No Eva1 or managed-B service, configuration, volume, Hindsight data, PostgreSQL data, Telegram route, Home Assistant route or real secret was opened or changed.",
+    "This is not B adoption, production deployment, runtime readiness with real dependencies, rollback proof or user acceptance."
+  ],
+  "status": "passed_whitelist_render_not_deployed"
+}

@@ -1,0 +1,37 @@
+{
+  "artifact": "EvaAgentBenchFcAgentRLGo125ProtocolProbeReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "workerImage": "eva2/agentbench-agentrl-worker-chainguard-offline@sha256:9619b34b82e36e8b8f9149069a8748663895ae2c3c9e653186c56a385361f3a5",
+    "probeConfig": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-protocol-probe.yaml",
+      "sha256": "e956704474775b09e31027a1783c5e18aee4fff7f09871dc97bf4caa06a9c8d5"
+    }
+  },
+  "observed": {
+    "activeSamples": 0,
+    "listWorkers": {
+      "path": "evidence/living-core/agentbench-fc-agentrl-go125-protocol-probe-list-workers-2026-08-27.json",
+      "sha256": "3d4e3da9dbefa96d8570b844856257dbdb46151ca43cffbd74965be40d317f7c"
+    },
+    "registeredTask": "virtual-task",
+    "registeredWorkerCount": 1,
+    "workerStatus": "ALIVE"
+  },
+  "verification": {
+    "controllerWorkerRegistration": true,
+    "internalDockerNetwork": true,
+    "controllerReadOnlyNonRoot": true,
+    "workerReadOnlyNonRoot": true,
+    "temporaryContainersAndNetworkRemoved": true
+  },
+  "status": "sealed_candidate_protocol_registration_proven",
+  "openBoundary": "This proves only idle protocol registration. No AgentBench task server, public/dev task, model provider, evaluator, score or benchmark report has started.",
+  "nonClaims": [
+    "The probe used AgentRL's built-in VirtualTask only and created no sample.",
+    "No AgentBench dataset, task evaluation, model call, scorer, development result, public score, Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ]
+}

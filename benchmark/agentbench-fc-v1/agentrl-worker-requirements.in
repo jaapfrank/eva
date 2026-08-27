@@ -1,0 +1,26 @@
+# Development-only lock input for the AgentRL worker at commit
+# 6a73409d31ba695d383b978a8ad3ef400d90c054. The runtime dependencies below
+# mirror worker/pyproject.toml exactly; the build requirements are required by
+# its protobuf-generating setuptools hook. The worker source itself is always
+# supplied by the separately hash-bound Git archive, never by PyPI.
+aiodocker
+aiohttp
+aiohttp_socks
+anthropic
+etcd3
+fastapi
+grpcio~=1.73
+grpcio-tools~=1.73
+httpx[socks]
+kubernetes-asyncio
+openai>=1.0
+protobuf>=6.0
+pydantic~=2.0
+pysocks
+pytz
+pyyaml~=6.0
+redis[hiredis]
+setuptools>=80
+setuptools-scm>=8
+urllib3
+uvicorn

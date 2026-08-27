@@ -4,6 +4,8 @@ import base64
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from uuid import UUID, uuid4
 
 import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
@@ -83,6 +85,16 @@ class _WorkboardRuntime(_Runtime):
         )
 
 
+class _EffectStopRuntime(_Runtime):
+    def dashboard_stop_effect(self, effect_intent_id: UUID) -> SimpleNamespace:
+        return SimpleNamespace(
+            effect_intent_id=effect_intent_id,
+            disposition="stop_requested_after_call_start",
+            message="De actie kan al onderweg zijn; Eva start niets nieuws.",
+            readback_required=True,
+        )
+
+
 def test_dashboard_status_is_read_only_and_non_secret() -> None:
     response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/status")
 
@@ -121,6 +133,16 @@ def test_configured_dashboard_token_gates_every_cockpit_read_route() -> None:
     preview = client.post("/internal/v1/dashboard/identity/diff", json={})
     assert preview.status_code == 401
     assert token not in preview.text
+
+    soul_preview = client.post(
+        "/internal/v1/dashboard/identity/soul-import/diff", json={}
+    )
+    assert soul_preview.status_code == 401
+    assert token not in soul_preview.text
+
+    effect_stop = client.post("/internal/v1/dashboard/effects/stop", json={})
+    assert effect_stop.status_code == 401
+    assert token not in effect_stop.text
 
     bearer = client.get(
         "/internal/v1/dashboard/status",
@@ -305,7 +327,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     payload = response.json()
     assert payload["contract"] == "EvaCockpitProgress/v1"
     assert payload["read_only"] is True
-    assert payload["updated_on"] == "2026-08-26"
+    assert payload["updated_on"] == "2026-08-27"
     assert {item["id"] for item in payload["legend"]} == {
         "live",
         "tested",
@@ -344,8 +366,16 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
     assert capability_by_id["voice"]["state"] == "selected"
     assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
+    assert "28 gerichte voice-/gesprekstests" in capability_by_id["voice"]["proof"]
+    assert "speaker als antwoordgenerator stoppen" in capability_by_id["voice"]["proof"]
+    assert "softwarestop is gebouwd" in capability_by_id["voice"]["meaning"]
+    assert "read-only voorvertoning" in capability_by_id["personal-memory"]["meaning"]
+    assert "lokale installatiecontrole" in capability_by_id["installer"]["proof"]
+    assert "tijdelijke loopback-wizard" in capability_by_id["installer"]["proof"]
+    assert "installeert of wijzigt zij niets" in capability_by_id["installer"]["meaning"]
     assert capability_by_id["benchmarks"]["state"] == "selected"
-    assert "18 checks" in capability_by_id["benchmarks"]["proof"]
+    assert "AgentBench FC-CPU-omgeving" in capability_by_id["benchmarks"]["proof"]
+    assert "21 checks" in capability_by_id["benchmarks"]["proof"]
     assert "zonder score" in capability_by_id["benchmarks"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
@@ -561,3 +591,69 @@ def test_dashboard_identity_diff_rejects_an_unbound_or_unsupported_draft() -> No
         response = client.post("/internal/v1/dashboard/identity/diff", json=draft)
         assert response.status_code == 422
         assert response.json() == {"detail": "identity draft is invalid"}
+
+
+def test_dashboard_soul_import_previews_without_storing_or_activating_identity() -> None:
+    identity = load_current_identity_pack()
+    markdown = "# Eva\n\n## Naam\nEvi\n\n## Humor\ndroog wanneer het helpt\n"
+
+    response = TestClient(create_app(_Runtime())).post(
+        "/internal/v1/dashboard/identity/soul-import/diff",
+        json={"draft_id": "identity-draft:soul:dashboard:001", "soul_markdown": markdown},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json() == {
+        "contract": "EvaSoulMarkdownImportPreview/v1",
+        "draft_id": "identity-draft:soul:dashboard:001",
+        "read_only": True,
+        "source_sha256": hashlib.sha256(markdown.encode()).hexdigest(),
+        "base_pack_sha256": canonical_sha256(identity),
+        "changes": [
+            {"field": "display_name", "before": "Eva", "after": "Evi"},
+            {"field": "humour", "before": identity.humour, "after": "droog wanneer het helpt"},
+        ],
+        "non_claims": [
+            "SOUL.md is not opgeslagen of geactiveerd.",
+            "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
+        ],
+    }
+    assert load_current_identity_pack() == identity
+
+
+def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source() -> None:
+    source = "## Tools\nbrowser\n"
+    response = TestClient(create_app(_Runtime())).post(
+        "/internal/v1/dashboard/identity/soul-import/diff",
+        json={"draft_id": "identity-draft:soul:dashboard:002", "soul_markdown": source},
+    )
+
+    assert response.status_code == 422
+    assert response.json() == {"detail": "SOUL.md import is invalid"}
+    assert source not in response.text
+
+
+def test_dashboard_effect_stop_is_authenticated_and_honest_about_call_start() -> None:
+    effect_intent_id = uuid4()
+    response = TestClient(create_app(_EffectStopRuntime())).post(
+        "/internal/v1/dashboard/effects/stop",
+        json={"effect_intent_id": str(effect_intent_id)},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json() == {
+        "contract": "EvaDashboardEffectStop/v1",
+        "effect_intent_id": str(effect_intent_id),
+        "disposition": "stop_requested_after_call_start",
+        "message": "De actie kan al onderweg zijn; Eva start niets nieuws.",
+        "readback_required": True,
+    }
+
+    invalid = TestClient(create_app(_EffectStopRuntime())).post(
+        "/internal/v1/dashboard/effects/stop",
+        json={"effect_intent_id": "not-an-id", "extra": True},
+    )
+    assert invalid.status_code == 422
+    assert invalid.json() == {"detail": "effect stop request is invalid"}

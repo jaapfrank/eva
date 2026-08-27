@@ -50,7 +50,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
 | Subagents | Harness `0.25.0` voor korte parentgestuurde fork/join; publieke Pydantic AI `Agent.run()` voor één reeds duurzaam gekozen child | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Harness retourneert publiek alleen tekst en verliest voor een databaseworker getypeerde output/usage/cancellation; geen eigen spawn-, model-, budget-, time-out- of child-contextengine bouwen |
 | Voice | Pydantic AI Realtime `2.34.0` met upstream-extra `openai-realtime` | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | De aparte 47-package kandidaat is hashgeïnstalleerd en exposeert `interrupt(played_ms)` met `websockets==17.0.1`; geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen. Echte audio/providercall en promotie blijven open |
-| Browser | Microsoft Playwright MCP `0.0.79` heeft de eerste lokale read- en actieproef doorlopen; Harness `PlaywrightBrowser` blijft alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces |
+| Browser | Microsoft Playwright MCP `0.0.79` heeft de eerste lokale read- en actieproef doorlopen; Harness `PlaywrightBrowser` blijft alleen een wegwerpvergelijking | URL-/account-/bestandsgrant, live stop, artifacts en eindcontrole | Geen Chromium-, profiel-, screenshot- of downloadengine bouwen; de browser blijft buiten Eva's kernproces. Lightpanda `0.3.7` bouwt en start als compacte kandidaat, maar is afgewezen: de actuele strikte scan vond 4 kritisch en 26 hoog, terwijl ingebedde native componenten nog geen volledige SBOM-dekking hebben |
 | Open-ended webwerk | Geen extra V1-stack; Browser Use alleen als latere vergelijking | Zelfde Eva-grenzen; expliciet model-, stap- en kostenbudget | Nu niet toevoegen; alleen heropenen wanneer een benoemde taak Playwright MCP aantoonbaar niet haalt |
 | Extra chatkanalen | Gepinde OpenClaw Gateway/plugin of officiële provider-SDK | Account→persoon, groepsconsent, deliveryledger en geheugenisolatie | WhatsApp niet zelf vanaf de draad bouwen |
 | Geheugenbeheer | Hindsight `0.9.1` | Eva's persoon-/groep-/projectbinding, consent en correcties | Geen tweede geheugenproduct installeren alleen voor een dashboard |
@@ -372,9 +372,11 @@ een lijst GitHub-links.
   pariteit, latency, crash, upgrade en rollback staan open.
 - [ ] `DF03` — stock DBOS `2.31.0` is brongebonden vergeleken en afgewezen als
   drop-in: het bevat de gewenste upstream duplicate-loserfix, maar niet Eva's
-  begrensde retry/no-DDL/commit-ambiguïteitsgaranties. Volgende proef is exact
-  `2.31.0+eva.1`, inclusief schema 107→108, upgrade, downgrade en foutinjectie;
-  er worden nu geen workerregels verwijderd.
+  begrensde retry/no-DDL/commit-ambiguïteitsgaranties. De exacte
+  `2.31.0+eva.1`-wheel is lokaal hashgebonden herbouwd en doorliep 15
+  PostgreSQL-crash-/herstelscenario's plus 15 catalogusattestaties. Over blijft
+  schema 107→108, upgrade, downgrade, candidate-image, onafhankelijke review
+  en rollback; er worden nu geen workerregels verwijderd.
 - [ ] `DF04` — Harness `0.25.0` voert in de actuele kandidaat
   echte providerloze child-runs uit met een aparte context, nul childtools,
   vooraf getelde inputtokens, begrensde calls en een coöperatieve async-time-out.

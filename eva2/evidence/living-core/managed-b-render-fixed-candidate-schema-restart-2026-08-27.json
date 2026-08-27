@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBRenderFixedCandidateSchemaRestartReceipt/v1",
+  "image_source": {
+    "candidate_image_id": "sha256:73f785f095bf2012a1e25847c0123f7c72259e67dd005a4d6c74a18431299c95",
+    "candidate_image_size_bytes": 104579192,
+    "context_tree_sha256": "46f1f9a47123ca92ba207b7316b48e1b947a0c60bc520c183cbdb6901c9ff624",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "source_archive_sha256": "2acbc8b3ba7b85b07cc95d84142bb36eed8a0d6923d7205e1f8000071597ce6a",
+    "source_commit": "28104541f093d335729f0a1cf920914c97ca3036",
+    "wheel_count": 39,
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "database": {
+    "kind": "fresh disposable PostgreSQL 16.13",
+    "network": "private Docker network with internal flag",
+    "persistent_volume_used": false
+  },
+  "runtime_constraints": {
+    "candidate_container": "read-only, non-root uid:gid 65532:65532, all Linux capabilities dropped, no-new-privileges and tmpfs /tmp",
+    "database_dsn_file_metadata": "65532:65532:0400 in a newly created temporary Docker volume"
+  },
+  "observed": {
+    "first_start": {
+      "contract": "EvaSchemaInstallationReceipt/v1",
+      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys",
+      "final_revision": "4e_0004_delegated_work_stop",
+      "route": [
+        "base_to_4b_0000_core_namespace",
+        "migrator_role_to_4b_0002_episode_atomicity",
+        "online_empty_admission_or_forward_upgrade_to_head"
+      ],
+      "source_revision": null,
+      "status": "passed"
+    },
+    "second_start": {
+      "contract": "EvaSchemaInstallationReceipt/v1",
+      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys",
+      "final_revision": "4e_0004_delegated_work_stop",
+      "route": [],
+      "source_revision": "4e_0004_delegated_work_stop",
+      "status": "passed"
+    },
+    "drift_rejection": {
+      "exit_code": 2,
+      "missing_constraint": "fk_episodes_last_event",
+      "status": "failed_closed"
+    },
+    "secret_output_check": "The synthetic PostgreSQL password did not occur in captured stdout or stderr.",
+    "stdout_protocol": "Each successful installer run emitted exactly one JSON line on stdout."
+  },
+  "nonclaims": [
+    "The temporary Docker network, PostgreSQL container and secret volume were removed after the run.",
+    "This container-local temporary-volume check does not replace the separately authorized host-file preflight for UID 65532.",
+    "No Eva1 or managed-B service, configuration, volume, Hindsight data, PostgreSQL data, Telegram route, Home Assistant route or real secret was opened or changed.",
+    "This is not a production deployment, B adoption, full runtime readiness with real dependencies, update, rollback proof or user acceptance."
+  ],
+  "status": "passed_render_fixed_candidate_schema_restart_and_drift_rejection_not_deployed"
+}

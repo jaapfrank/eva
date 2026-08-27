@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Protocol
+from uuid import UUID
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -22,6 +23,11 @@ from eva.application.conversation import (
     load_current_identity_pack,
 )
 from eva.application.identity_drafts import identity_presentation_diff
+from eva.application.soul_markdown import (
+    SoulMarkdownError,
+    soul_markdown_sha256,
+    soul_markdown_to_draft,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPackDraft
 from eva.application.memory import (
@@ -134,6 +140,7 @@ _DURABLE_GOAL_WAKE_KEYS = {
     "provider",
     "resource",
 }
+_DASHBOARD_EFFECT_STOP_KEYS = {"effect_intent_id"}
 _HOME_ASSISTANT_LIGHT_KEYS = {
     "entity_id",
     "installation_id",
@@ -678,6 +685,44 @@ def create_app(
             headers={"Cache-Control": "no-store"},
         )
 
+    @app.post("/internal/v1/dashboard/identity/soul-import/diff")
+    def dashboard_identity_soul_import_diff(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
+        """Preview a small human SOUL.md without retaining or activating it."""
+
+        dashboard_access.require(request)
+        if set(payload) != {"draft_id", "soul_markdown"}:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        draft_id = payload["draft_id"]
+        markdown = payload["soul_markdown"]
+        if not isinstance(draft_id, str) or not isinstance(markdown, str):
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        identity = current_dashboard_identity()
+        try:
+            draft = soul_markdown_to_draft(markdown, draft_id=draft_id, base=identity)
+            differences = identity_presentation_diff(draft, identity)
+        except SoulMarkdownError:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        return JSONResponse(
+            {
+                "contract": "EvaSoulMarkdownImportPreview/v1",
+                "draft_id": draft.draft_id,
+                "read_only": True,
+                "source_sha256": soul_markdown_sha256(markdown),
+                "base_pack_sha256": canonical_sha256(identity),
+                "changes": [
+                    {"field": item.field, "before": item.before, "after": item.after}
+                    for item in differences
+                ],
+                "non_claims": [
+                    "SOUL.md is not opgeslagen of geactiveerd.",
+                    "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
+                ],
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
     @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
     def dashboard(request: Request) -> HTMLResponse:
         """Serve Eva's central local, read-only operator cockpit."""
@@ -743,6 +788,51 @@ def create_app(
             raise HTTPException(status_code=503, detail="workboard unavailable")
         return JSONResponse(
             workboard.model_dump(mode="json"),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/dashboard/effects/stop")
+    def dashboard_stop_effect(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
+        """Persist one owner stop request; never claim an external undo."""
+
+        dashboard_access.require(request)
+        if set(payload) != _DASHBOARD_EFFECT_STOP_KEYS:
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        raw_effect_intent_id = payload["effect_intent_id"]
+        if not isinstance(raw_effect_intent_id, str):
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        try:
+            effect_intent_id = UUID(raw_effect_intent_id)
+        except ValueError:
+            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+        stop = getattr(runtime, "dashboard_stop_effect", None)
+        if not callable(stop):
+            raise HTTPException(status_code=503, detail="effect stop unavailable")
+        try:
+            result = stop(effect_intent_id)
+            if str(result.effect_intent_id) != str(effect_intent_id):
+                raise ValueError("effect stop result crossed the requested intent")
+            disposition = result.disposition
+            message = result.message
+            readback_required = result.readback_required
+            if (
+                not isinstance(disposition, str)
+                or not isinstance(message, str)
+                or not isinstance(readback_required, bool)
+            ):
+                raise ValueError("effect stop result is invalid")
+        except Exception as error:
+            raise HTTPException(status_code=503, detail="effect stop unavailable") from error
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardEffectStop/v1",
+                "effect_intent_id": str(effect_intent_id),
+                "disposition": disposition,
+                "message": message,
+                "readback_required": readback_required,
+            },
             headers={"Cache-Control": "no-store"},
         )
 

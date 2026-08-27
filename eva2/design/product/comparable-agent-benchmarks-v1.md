@@ -1,6 +1,6 @@
 # Eva 2 — extern vergelijkbare agentbenchmarks
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 27 augustus 2026.
 
 ## Eerlijke conclusie
 
@@ -88,16 +88,115 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
   De GAIA-developmentadapter is hiervoor als eerste deel gereed:
   `../benchmark/run_gaia_development.py` leest uitsluitend een door de eigenaar
-  geautoriseerde lokale metadata-JSONL en geeft de agent alleen `task_id`,
-  `Question` en optioneel bestaand lokaal bestand. Hij schrijft het officiële
-  antwoordpaar `task_id`/`model_answer`, maar leest geen `Final answer`, roept
-  geen scorer aan en kan dus geen score of leaderboardclaim maken. AgentBench-
-  en OSWorld-adapters en een volledige CB02-closure blijven open. De bijpassende
-  Eva-childadapter `../benchmark/run_eva_gaia_agent.py` is nu ook getest: hij
-  geeft iedere taak een eigen private benchmarkpersoon en -gesprek, accepteert
-  alleen een loopback-Eva-turnroute en controleert antwoordcontract,
-  beurt-ID en antwoordhash. Een echte kandidaatmodelroute, officiële dataset,
-  scorer en score blijven nadrukkelijk afzonderlijk open.
+  geautoriseerde lokale metadata-JSONL of actuele Parquet-export en geeft de
+  agent alleen `task_id`, `Question` en optioneel bestaand lokaal bestand. De
+  Parquet-route vraagt Arrow expliciet om alleen die drie kolommen; `Final
+  answer` wordt dus niet geladen. De geïsoleerde benchmark-lock
+  `../benchmark/requirements-gaia-benchmark-linux-amd64-py312.lock` installeert
+  offline met hashes `datasets 5.0.1` en `pyarrow 25.0.1` plus hun transitive
+  wheels. Hij schrijft het officiële antwoordpaar `task_id`/`model_answer`,
+  maar leest geen `Final answer`, weigert een antwoord dat bestaand Eva-geheugen
+  noemt, roept geen scorer aan en kan dus geen score
+  of leaderboardclaim maken. AgentBench- en OSWorld-adapters, de echte
+  modelroute en een volledige CB02-closure blijven open. De AgentBench-kant
+  heeft nu wel een even kleine kandidaatadapter:
+  `../benchmark/eva_agentbench_client.py` past rechtstreeks in de upstream
+  `AgentClient`-sleuf op commit
+  `d1e4a10db08c87075c78972e48ecc182be03e2d5`. Elke door AgentBench gevraagde
+  beurt wordt als een nieuwe, hashgebonden Eva-context gestuurd met uitsluitend
+  de complete door AgentBench aangeleverde gesprekshistorie. Daardoor kan geen
+  gewone Eva-herinnering tussen samples terechtkomen. De bijbehorende
+  `../benchmark/eva-agentbench-client.yaml` bevat alleen de class- en
+  timeoutconfiguratie, geen model- of secretinstellingen. Acht lokale
+  contractproeven zijn groen. `../benchmark/check_agentbench_fc_environment.py`
+  controleert vóór de run exact deze broncommit, de requirements-hash, een
+  schone checkout, Python 3.9 en alle upstream-Pythonpackages; het script
+  installeert of start niets. De gewone kandidaatmachine blijft terecht rood
+  omdat die Python 3.12 gebruikt. De nieuwe lokale kandidaat
+  `eva2/agentbench-fc:python39-cpu-preflight-20260827` materialiseert precies
+  Python 3.9.25 plus alle vereiste pakketten. De eerste image kon haar eigen
+  preflight niet uitvoeren: die gebruikte per ongeluk Python-3.10-syntax en
+  miste `git` om de gemounte bron te verifiëren. De vervanger houdt de
+  upstream-Pythonrequirements bytegelijk, voegt één direct OS-pakket (`git`)
+  plus zijn noodzakelijke apt-dependencies voor die broncontrole toe, en
+  controleert nu netwerkloos en alleen-lezen de exacte,
+  schone upstreamcommit, requirements-hash, Pythonversie en pakketten. Er is
+  nog geen AgentBench-taakserver, score of developmentrun gestart. Receipt:
+  `evidence/living-core/agentbench-fc-environment-2026-08-27.json`.
+  De volgende grens is nu ook feitelijk vastgesteld: de vastgezette
+  AgentBench-bron bevat zelf niet meer `src.start_task`, waar haar README nog
+  naar verwijst, plus twee historische controller-/worker-entrypoints. Haar
+  composebestand kiest bovendien een mutable
+  AgentRL-controllerimage en haar DB-/OS-workers installeren een mutable
+  `agentrl-worker` vanaf PyPI. De naastgelegde AgentRL-broncommit
+  `6a73409…` is daarom uitsluitend een development-kandidaat. Eerst moeten
+  controller en workers uit beide exact gepinde bronnen worden gebouwd, in een
+  aparte wegwerpstack. Pas daarna kan één developmenttaak starten; geen van
+  deze stappen levert al een leaderboardscore op. Controleerbaar auditbewijs:
+  `evidence/living-core/agentbench-fc-upstream-integration-audit-2026-08-27.json`.
+  De eerste losse bronimages zijn nu daadwerkelijk gebouwd: controller en
+  worker draaien allebei als niet-root netwerkloos met alleen hun `--help`.
+  De worker installeert de naastgelegde AgentRL-bron, niet `agentrl-worker` van
+  PyPI. De images dragen de exacte AgentRL-commit plus de hash van het schone
+  Git-archief als provenance. AgentRL's editie-2023-proto's vereisen daarbij
+  precies Protocol Buffers 31.1 met gecontroleerde SHA-256. De worker is
+  daarna opnieuw gebouwd zonder netwerk uit een Python-3.10-lock met hashes en
+  een aparte, gecontroleerde set van 57 wheels; de controller op dezelfde
+  manier uit een geverifieerde Go-modulecache, protoc en de twee generators.
+  De build kan dus niet naar PyPI, apt, GitHub of een Go-moduleproxy uitwijken.
+  Dit is nog lokaal buildbewijs, geen herhaalbare stack: de fysieke
+  wheelhouse, modulecache en generatorbestanden stonden alleen tijdelijk
+  lokaal. Duurzame alleen-lezen retentie, herkomst/herbouwrecepten,
+  fail-closed negatieve artifacttests, SBOM/scan en onafhankelijke review
+  moeten eerst sluiten. De veilige controller→worker-registratie is apart als
+  protocolproef op de eerdere source-imagebytes vastgelegd; zij bewijst nog
+  niet de daarna opnieuw retained bytes. Er is geen AgentBench-taak, dataset,
+  modelcall of score toegestaan. Daarna blijft de volledige versiepassende
+  developmentstack open.
+  De artifactset is intussen lokaal alleen-lezen vastgelegd, met beide
+  fail-closed validators opnieuw netwerkloos gebouwd. De bijbehorende
+  SBOM/Trivy-gate is
+  bewust rood: controller 4 kritisch/39 hoog, worker 9 kritisch/63 hoog.
+  Daarom mag ook geen developmenttaak starten; eerst volgt een gerichte,
+  opnieuw gepinde community- en basisimage-upgrade met een nieuwe scan. Zie
+  `evidence/living-core/agentbench-fc-agentrl-retained-rebuild-2026-08-27.json`.
+  De controllerinvoer is sindsdien tweemaal onafhankelijk identiek herbouwd
+  en in een aparte v2-kandidaat zonder netwerk gebouwd. Dat herstelt uitsluitend
+  de reproduceerbaarheid van de controllerinvoer; de v2-kandidaat is niet met
+  de worker geregistreerd en nog niet opnieuw gescand. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-controller-repro-v2-2026-08-27.json`.
+  Een nieuwe, kleine AgentRL-dependencypatch plus minimale gepinde
+  communitybases is vervolgens voor controller en worker gebouwd: beide
+  niet-root/read-only proeven en scans zijn 0 kritisch/0 hoog. De builders
+  mochten in deze verkenning nog afhankelijkheden downloaden; dit is daarom
+  alleen de bewezen upgradekandidaat, niet de vrijgegeven developmentstack.
+  De Python-worker is daarna daadwerkelijk verzegeld en netwerkloos herbouwd:
+  55 hashes, inclusief de reproducibele lokale `etcd3`- en AgentRL-workerwheels,
+  leveren een nieuwe 0-kritisch/0-hoog workerimage. Alleen de bijgewerkte
+  Go-1.25-modulecache is daarna op dezelfde manier verzegeld en 0/0 gescand.
+  De twee nieuwe images hebben vervolgens alleen een lege ingebouwde
+  `VirtualTask` met nul samples op een tijdelijk intern netwerk geregistreerd;
+  alle tijdelijke resources zijn verwijderd. Op dat checkpoint was nog geen
+  AgentBench-taakserver of benchmarkrun gestart. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json`.
+  De volgende, echte upstream-taakgrens is inmiddels veilig gesloten: de
+  ongewijzigde DBBench-implementatie met haar officiële 60-case devset laadt
+  uit de vastgezette AgentBenchcommit en registreert als één levende worker.
+  Zij gebruikt voor deze registratie bewust een handmatige lege omgeving, dus
+  geen Docker-socket, MySQL, modelcall of sample. De afgesloten, netwerkloos
+  gebouwde worker is niet-root/read-only en de actuele scan is 0 kritisch/0
+  hoog. Dit is **geen devresultaat of score**; één model- en MySQL-run met de
+  officiële evaluator blijft CB03. Receipt:
+  `evidence/living-core/agentbench-fc-dbbench-dev-registration-2026-08-27.json`.
+  Eén daaropvolgende case doorliep ook werkelijk de upstream DBBench-task:
+  tijdelijke database, SQL-toolcall, ingebouwde antwoordvergelijking en opruimen. De
+  database was een begrensde, intern bereikbare 1-GB tmpfs-container; de worker
+  kreeg geen Docker-socket. Een nepagent gaf bewust een fout antwoord, dat de
+  ingebouwde DBBench-vergelijking ook fout markeerde. Dit bewijst uitsluitend de gesloten
+  ontwikkeluitvoerketen, niet Eva of een vergelijkbare score. Receipt:
+  `evidence/living-core/agentbench-fc-dbbench-external-mysql-smoke-2026-08-27.json`.
+  Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie

@@ -154,7 +154,11 @@ def postgres_4c_gate() -> Iterator[Postgres4CGate]:
         connection.execute(sa.text("SET LOCAL ROLE eva_migrator"))
         config.attributes["connection"] = connection
         try:
-            command.upgrade(config, "head")
+            # This is the DBOS 4C gate.  Later 4D/4E tables deliberately have
+            # stricter authority columns and are covered by their own gates;
+            # upgrading to ``head`` here makes a 4C seed accidentally depend
+            # on those later schemas.
+            command.upgrade(config, "4b_0002_episode_atomicity")
         finally:
             config.attributes.pop("connection", None)
 

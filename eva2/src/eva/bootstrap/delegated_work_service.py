@@ -24,6 +24,7 @@ from eva.adapters.postgres.delegated_work import (
     DelegatedWorkReleaseSelector,
     PostgresDelegatedWorkStore,
 )
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
@@ -225,7 +226,7 @@ async def serve_delegated_work_service(
         selected.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",
     )
-    engine = sa.create_engine(database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
         worker = DelegatedWorkWorker(
             PostgresDelegatedWorkStore(
@@ -279,7 +280,7 @@ def check_openai_delegated_work(
         selected.service.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",
     )
-    engine = sa.create_engine(database_dsn, pool_pre_ping=True)
+    engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
         with engine.connect() as connection:
             revision = connection.scalar(

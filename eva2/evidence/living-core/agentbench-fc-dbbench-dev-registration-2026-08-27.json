@@ -1,0 +1,59 @@
+{
+  "artifact": "EvaAgentBenchFcDbbenchDevRegistrationReceipt/v1",
+  "date": "2026-08-27",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "dbbenchRegistrationConfig": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-registration.yaml",
+      "sha256": "d97d41d50676e3bcb9a6ea6c1e3ecdc6d57b846a039015ca5be6f62d1e4e9e7c"
+    },
+    "dbbenchWorkerDockerfile": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-worker-chainguard-offline.Dockerfile",
+      "sha256": "a0854c1b2452be96eda2b19749652fc71f304ca3ce0725d2dadb409582937666"
+    },
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:37f14c5b849255e9a4f062539da2049417d38e0382edfa93a5524088d78f66de",
+    "dbbenchWorkerInputs": {
+      "path": "benchmark/agentbench-fc-v1/agentbench-dbbench-dev-worker-inputs-amd64-py314.json",
+      "sha256": "1e4e8716e43eb1ed0530b1bb51dc13c8d512049fc7d0bc9bca987c7ce9ea5a67"
+    }
+  },
+  "observed": {
+    "activeSamples": 0,
+    "devCaseCount": 60,
+    "listWorkers": {
+      "path": "evidence/living-core/agentbench-fc-dbbench-dev-registration-list-workers-2026-08-27.json",
+      "sha256": "9f4bdf5ea06efa21d2a882e7f0bc2f488e5e60694fbdf194295ff1dceb825e0b"
+    },
+    "registeredTask": "dbbench-dev-registration",
+    "registeredWorkerCount": 1,
+    "workerStatus": "ALIVE"
+  },
+  "security": {
+    "sbom": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentbench-dbbench-dev-worker-offline-build-2026-08-27/sbom.cdx.json",
+      "sha256": "2442f061426d49f8b9f1d664b7dd0696ef67907fb59697e1986901379c8b70f6"
+    },
+    "trivy": {
+      "localReadOnlyPath": "/home/administrator/project/.eva2-artifacts/agentbench-fc/agentbench-dbbench-dev-worker-offline-build-2026-08-27/trivy.json",
+      "sha256": "0b57d759f2ca29cb9a40aa98c0e728a244931930f476634cf5ec2fe82e01d761",
+      "vulnerabilities": {"critical": 0, "high": 0}
+    }
+  },
+  "verification": {
+    "controllerReadOnlyNonRoot": true,
+    "dbbenchTaskLoadedFromPinnedUpstreamSource": true,
+    "dockerBuildNetwork": "none",
+    "internalDockerNetwork": true,
+    "manualEnvironmentHasNoDockerSocket": true,
+    "temporaryContainersAndNetworkRemoved": true,
+    "workerReadOnlyNonRoot": true
+  },
+  "status": "sealed_official_dbbench_dev_task_registration_proven",
+  "openBoundary": "This proves idle registration of the pinned upstream DBBench task with its official 60-case dev data only. No sample, MySQL environment, model provider, evaluator, development result, official scorer or AgentBench score has started.",
+  "nonClaims": [
+    "The registration used AgentRL's manual environment, so it did not mount a Docker socket or create a MySQL container.",
+    "No Eva runtime, Eva1 SQLite memory, Eva2 PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed."
+  ]
+}

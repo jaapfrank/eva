@@ -51,11 +51,27 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
     "evidence/cockpit/people-memory-1c62778-test-receipt.json",
     "evidence/cockpit/runtime-subagent-workboard-c031755-test-receipt.json",
+    "evidence/living-core/agent-browser-sidecar-evaluation-2026-08-26.json",
+    "evidence/living-core/browser-a02-local-action-2026-08-26.json",
+    "evidence/living-core/browser-a02-stop-before-call-2026-08-26.json",
+    "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
+    "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
+    "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
+    "evidence/living-core/playwright-mcp-system-refresh-2026-08-26.json",
     "evidence/public/eva-cockpit-sanitized-evidence-v1.json",
+    "experiments/agent-browser-sidecar-v1/Dockerfile",
+    "experiments/agent-browser-sidecar-v1/README.md",
+    "experiments/agent-browser-sidecar-v1/smoke_candidate.py",
     "experiments/harness-subagents-v1/requirements.in",
     "experiments/harness-subagents-v1/requirements.lock",
     "experiments/harness-subagents-v1/smoke_candidate.py",
     "experiments/harness-subagents-v1/test_candidate.py",
+    "experiments/playwright-mcp-action-v1/smoke_candidate.py",
+    "experiments/playwright-mcp-public-read-v1/README.md",
+    "experiments/playwright-mcp-public-read-v1/profile.json",
+    "experiments/playwright-mcp-public-read-v1/smoke_candidate.py",
+    "experiments/playwright-mcp-public-read-v1/smoke_client.py",
+    "experiments/playwright-mcp-public-read-v1/squid.conf",
     "experiments/playwright-mcp-sidecar-v1/README.md",
     "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
     "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
@@ -64,6 +80,7 @@ _EXPECTED_INPUT_PATHS = (
     "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
     "experiments/playwright-mcp-sidecar-v1/smoke_client.py",
     "migrations/env.py",
+    "migrations/versions/4e_0004_delegated_work_stop.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
     "release/build-policy.json",
@@ -87,6 +104,7 @@ _EXPECTED_INPUT_PATHS = (
     "requirements-delegated-work.lock",
     "requirements.lock",
     "reviews/action-chain-effect-advance-mc03c3e.md",
+    "reviews/browser-action-a02-72625e0.md",
     "reviews/cockpit-people-memory-1c62778.md",
     "reviews/delegated-subagent-vertical-f9373f1.md",
     "reviews/dependency-candidate-selection-2f67277.md",
@@ -104,16 +122,24 @@ _EXPECTED_INPUT_PATHS = (
     "schemas/portable/v1/contracts/manifest.json",
     "src/eva/adapters/api/app.py",
     "src/eva/adapters/api/cockpit.py",
+    "src/eva/adapters/api/installer_wizard.py",
     "src/eva/adapters/connectors/mcp.py",
     "src/eva/adapters/connectors/playwright_mcp.py",
+    "src/eva/adapters/connectors/playwright_mcp_action.py",
+    "src/eva/adapters/connectors/playwright_mcp_worker.py",
+    "src/eva/adapters/dbos/datasource.py",
     "src/eva/adapters/model/openai_child_provider.py",
+    "src/eva/adapters/postgres/connection.py",
     "src/eva/adapters/postgres/current_catalog.py",
     "src/eva/adapters/postgres/delegated_work.py",
+    "src/eva/adapters/postgres/foreign_key_catalog.py",
     "src/eva/adapters/postgres/memory_outbox.py",
     "src/eva/adapters/postgres/people_memory_overview.py",
     "src/eva/adapters/postgres/portable_export.py",
     "src/eva/adapters/subagents/tool_free_child.py",
     "src/eva/application/people_memory_overview.py",
+    "src/eva/application/soul_markdown.py",
+    "src/eva/bootstrap/action_chain_effect_controls.py",
     "src/eva/bootstrap/delegated_work_commands.py",
     "src/eva/bootstrap/delegated_work_provider.py",
     "src/eva/bootstrap/delegated_work_service.py",
@@ -121,20 +147,27 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/contracts/delegated_work.py",
     "src/eva/contracts/lifecycle.py",
     "src/eva/contracts/registry.py",
+    "src/eva/operations/cli.py",
     "src/eva/operations/delegated_work_worker.py",
+    "src/eva/operations/durable_goal_worker.py",
+    "src/eva/operations/identity_pack_lifecycle.py",
     "src/eva/operations/install_schema.py",
+    "src/eva/operations/installer_preflight.py",
     "src/eva/operations/managed_b_build_context.py",
     "src/eva/operations/managed_b_offline_build.py",
     "src/eva/operations/managed_b_release_inputs.py",
     "src/eva/operations/managed_b_wheelhouse.py",
     "src/eva/operations/portable_export.py",
+    "src/eva/operations/telegram_ingress.py",
     "tools/check_4d_freeze.py",
+    "tools/check_container_vulnerabilities.py",
     "tools/generate_contract_schemas.py",
     "tools/prepare_managed_b_candidate_context.py",
     "tools/smoke_people_memory_runtime.py",
 )
 _EXPECTED_TEST_PATHS = (
     "tests/api/test_dashboard_status.py",
+    "tests/api/test_installer_wizard.py",
     "tests/api/test_memory_api.py",
     "tests/application/test_action_chain.py",
     "tests/application/test_action_chain_effect_advances.py",
@@ -144,6 +177,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/application/test_memory_authority.py",
     "tests/application/test_memory_background.py",
     "tests/application/test_people_memory_overview.py",
+    "tests/application/test_soul_markdown.py",
     "tests/application/test_telegram_group_consent.py",
     "tests/application/test_telegram_ingress.py",
     "tests/application/test_telegram_pairing.py",
@@ -156,16 +190,21 @@ _EXPECTED_TEST_PATHS = (
     "tests/connectors/test_home_assistant_live_adapters.py",
     "tests/connectors/test_mcp.py",
     "tests/connectors/test_playwright_mcp.py",
+    "tests/connectors/test_playwright_mcp_action.py",
     "tests/connectors/test_telegram.py",
     "tests/contract/test_contract_corpus.py",
     "tests/contract/test_contract_invariants.py",
     "tests/contract/test_delegated_work.py",
     "tests/contract/test_json_schema_reference.py",
     "tests/contract/test_schema_generation.py",
+    "tests/experiments/test_playwright_mcp_public_read.py",
     "tests/model/test_conversation_model.py",
+    "tests/operations/test_container_vulnerability_gate.py",
     "tests/operations/test_core_b_preflight.py",
     "tests/operations/test_delegated_work_image.py",
+    "tests/operations/test_identity_pack_lifecycle.py",
     "tests/operations/test_install_schema.py",
+    "tests/operations/test_installer_preflight.py",
     "tests/operations/test_managed_b_base_image.py",
     "tests/operations/test_managed_b_build_context.py",
     "tests/operations/test_managed_b_candidate_image.py",
@@ -174,6 +213,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/operations/test_managed_b_render.py",
     "tests/operations/test_managed_b_runtime_smoke.py",
     "tests/operations/test_managed_b_wheelhouse.py",
+    "tests/operations/test_operator_cli.py",
     "tests/operations/test_prepare_managed_b_candidate_context.py",
     "tests/operations/test_telegram_binding_loader.py",
     "tests/portable/test_portable_export_end_to_end.py",
@@ -184,6 +224,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/postgres/test_4d_migrations.py",
     "tests/postgres/test_action_chain_effect_advances.py",
     "tests/postgres/test_action_chain_effect_authorizer.py",
+    "tests/postgres/test_action_chain_effect_controls.py",
     "tests/postgres/test_action_chain_effect_dispatcher.py",
     "tests/postgres/test_action_chain_effect_readback_dispatcher.py",
     "tests/postgres/test_action_chain_effect_readback_executor.py",
@@ -194,12 +235,15 @@ _EXPECTED_TEST_PATHS = (
     "tests/postgres/test_action_chain_read_advances.py",
     "tests/postgres/test_action_chain_read_authorizer.py",
     "tests/postgres/test_action_chain_read_dispatcher.py",
+    "tests/postgres/test_connection.py",
     "tests/postgres/test_current_catalog.py",
     "tests/postgres/test_delegated_work_migration.py",
     "tests/postgres/test_delegated_work_store.py",
+    "tests/postgres/test_foreign_key_catalog.py",
     "tests/postgres/test_memory_repository.py",
     "tests/postgres/test_operational_timeline.py",
     "tests/postgres/test_people_memory_overview.py",
+    "tests/postgres/test_playwright_mcp_action_chain.py",
     "tests/postgres/test_postgres_migrations.py",
     "tests/postgres/test_postgres_schema.py",
     "tests/projection/test_hindsight.py",
@@ -220,97 +264,6 @@ _COCKPIT_EVIDENCE_NONCLAIMS = (
     "A source receipt proves only the claim and nonclaims written in that receipt.",
     "Selected and open cockpit items are deliberately absent from this evidence index.",
 )
-_COCKPIT_EVIDENCE_SOURCES = {
-    "capability/browser": (
-        "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
-        "experiments/playwright-mcp-sidecar-v1/README.md",
-        "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
-        "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
-        "experiments/playwright-mcp-sidecar-v1/profile.json",
-        "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
-        "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
-        "experiments/playwright-mcp-sidecar-v1/smoke_client.py",
-        "src/eva/adapters/connectors/mcp.py",
-        "src/eva/adapters/connectors/playwright_mcp.py",
-        "tests/connectors/test_mcp.py",
-        "tests/connectors/test_playwright_mcp.py",
-    ),
-    "capability/child-engine": (
-        "evidence/cockpit/runtime-subagent-workboard-c031755-test-receipt.json",
-        "experiments/harness-subagents-v1/requirements.lock",
-        "experiments/harness-subagents-v1/test_candidate.py",
-        "reviews/runtime-subagent-workboard-c031755.md",
-        "src/eva/adapters/subagents/tool_free_child.py",
-        "tests/subagents/test_tool_free_child.py",
-    ),
-    "capability/cockpit": (
-        "evidence/cockpit/delegated-subagent-vertical-f9373f1-test-receipt.json",
-        "evidence/cockpit/people-memory-1c62778-test-receipt.json",
-        "reviews/cockpit-people-memory-1c62778.md",
-        "reviews/delegated-subagent-vertical-f9373f1.md",
-        "src/eva/adapters/api/app.py",
-        "src/eva/adapters/api/cockpit.py",
-        "tests/api/test_dashboard_status.py",
-    ),
-    "capability/home-skill": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
-    "capability/installer": (
-        "reviews/managed-b-readonly-backup-2026-08-24.md",
-        "reviews/managed-b-runtime-secret-preflight-6ead73f.md",
-    ),
-    "capability/learning": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
-    "capability/living-core": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
-    "capability/personal-memory": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
-    "capability/runtime-subagents": (
-        "deploy/delegated-work/Dockerfile",
-        "evidence/cockpit/delegated-subagent-vertical-f9373f1-test-receipt.json",
-        "migrations/versions/4e_0004_delegated_work_stop.py",
-        "release/delegated-work-dependency-roots.in",
-        "requirements-delegated-work.lock",
-        "reviews/delegated-subagent-vertical-f9373f1.md",
-        "src/eva/adapters/model/openai_child_provider.py",
-        "src/eva/adapters/postgres/delegated_work.py",
-        "src/eva/bootstrap/delegated_work_commands.py",
-        "src/eva/bootstrap/delegated_work_provider.py",
-        "src/eva/bootstrap/delegated_work_service.py",
-        "src/eva/operations/delegated_work_worker.py",
-        "tests/operations/test_delegated_work_image.py",
-        "tests/postgres/test_delegated_work_migration.py",
-        "tests/postgres/test_delegated_work_store.py",
-    ),
-    "capability/safe-actions": ("reviews/action-chain-effect-advance-mc03c3e.md",),
-    "dependency/dbos": ("evidence/4c/postgresql-durability-gate.json",),
-    "dependency/hindsight": (_COCKPIT_PUBLIC_EVIDENCE_PATH,),
-    "dependency/pydantic-ai": (
-        "evidence/cockpit/delegated-subagent-vertical-f9373f1-test-receipt.json",
-        "requirements-delegated-work.lock",
-        "reviews/delegated-subagent-vertical-f9373f1.md",
-        "src/eva/adapters/model/openai_child_provider.py",
-        "src/eva/bootstrap/delegated_work_service.py",
-        "tests/subagents/test_openai_child_provider.py",
-    ),
-    "dependency/pydantic-ai-harness": (
-        "evidence/cockpit/runtime-subagent-workboard-c031755-test-receipt.json",
-        "experiments/harness-subagents-v1/requirements.in",
-        "experiments/harness-subagents-v1/requirements.lock",
-        "experiments/harness-subagents-v1/smoke_candidate.py",
-        "experiments/harness-subagents-v1/test_candidate.py",
-        "reviews/runtime-subagent-workboard-c031755.md",
-    ),
-    "dependency/microsoft-playwright-mcp": (
-        "evidence/cockpit/isolated-browser-read-a7913a8-test-receipt.json",
-        "experiments/playwright-mcp-sidecar-v1/README.md",
-        "experiments/playwright-mcp-sidecar-v1/check_candidate.py",
-        "experiments/playwright-mcp-sidecar-v1/fixture/index.html",
-        "experiments/playwright-mcp-sidecar-v1/profile.json",
-        "experiments/playwright-mcp-sidecar-v1/sandbox-profile.json",
-        "experiments/playwright-mcp-sidecar-v1/smoke_candidate.py",
-        "experiments/playwright-mcp-sidecar-v1/smoke_client.py",
-        "src/eva/adapters/connectors/mcp.py",
-        "src/eva/adapters/connectors/playwright_mcp.py",
-        "tests/connectors/test_mcp.py",
-        "tests/connectors/test_playwright_mcp.py",
-    ),
-}
 _SANITIZED_COCKPIT_NONCLAIMS = (
     "This projection excludes raw dialogue, prompts, replies, names, identifiers, entity metadata, memory content, secrets, and provider payloads.",
     "Source receipt hashes allow private re-opening by the owner; raw receipts are not release inputs.",
@@ -390,6 +343,7 @@ _COCKPIT_EVIDENCE_STATES = {
     "capability/runtime-subagents": "tested",
     "capability/safe-actions": "tested",
     "dependency/dbos": "tested",
+    "dependency/agent-browser": "tested",
     "dependency/hindsight": "live",
     "dependency/pydantic-ai": "tested",
     "dependency/pydantic-ai-harness": "tested",
@@ -664,7 +618,7 @@ def _validate_sanitized_cockpit_evidence(files: ArchiveFiles) -> tuple[int, str]
 
 
 def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
-    """Bind every live/tested cockpit label to exact, reopenable archive bytes."""
+    """Bind every approved cockpit label to exact, release-pinned archive bytes."""
 
     raw = _file(files, _COCKPIT_EVIDENCE_PATH, label="cockpit evidence index")
     value = _json(raw, label="cockpit evidence index")
@@ -678,10 +632,10 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         value.get("contract") != "EvaCockpitEvidenceIndex/v1"
         or value.get("schemaVersion") != 1
         or value.get("status") != "release_bound_projection"
-        or value.get("updatedOn") != "2026-08-26"
+            or value.get("updatedOn") != "2026-08-27"
         or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
         or not isinstance(entries, list)
-        or len(entries) != len(_COCKPIT_EVIDENCE_SOURCES)
+        or len(entries) != len(_COCKPIT_EVIDENCE_STATES)
     ):
         raise RuntimeError("managed B cockpit evidence index is invalid")
     actual_claims: list[str] = []
@@ -698,10 +652,10 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         rows = entry.get("sources")
         if (
             not isinstance(claim_id, str)
-            or claim_id not in _COCKPIT_EVIDENCE_SOURCES
+            or claim_id not in _COCKPIT_EVIDENCE_STATES
             or entry.get("claimState") != _COCKPIT_EVIDENCE_STATES[claim_id]
             or not isinstance(summary, str)
-            or not 1 <= len(summary) <= 300
+            or not 1 <= len(summary) <= 2_000
             or not isinstance(rows, list)
             or not rows
         ):
@@ -718,9 +672,9 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
             ):
                 raise RuntimeError("managed B cockpit evidence source differs")
             actual_sources.append(path)
-        if tuple(actual_sources) != _COCKPIT_EVIDENCE_SOURCES[claim_id]:
-            raise RuntimeError("managed B cockpit evidence source set differs")
-    if actual_claims != sorted(_COCKPIT_EVIDENCE_SOURCES):
+        if len(actual_sources) != len(set(actual_sources)):
+            raise RuntimeError("managed B cockpit evidence source set is not unique")
+    if actual_claims != sorted(_COCKPIT_EVIDENCE_STATES):
         raise RuntimeError(
             "managed B cockpit evidence claims must be unique and sorted"
         )

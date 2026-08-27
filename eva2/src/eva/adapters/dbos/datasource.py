@@ -11,6 +11,8 @@ from typing import Any
 from dbos import DBOSPortableJSONSerializer, SQLAlchemyDatasource
 import dbos._datasource as dbos_datasource_module
 
+from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
+
 
 PATCHED_DBOS_VERSION = "2.30.0+eva.1"
 DBOS_SCHEMA = "dbos"
@@ -90,7 +92,12 @@ class EvaDBOSDatasource:
             raise DBOSDatasourceAttestationError(
                 "4C DBOS system state must use PostgreSQL"
             )
-        engine = dbos_datasource_module.sa.create_engine(candidate, pool_pre_ping=False)
+        engine = dbos_datasource_module.sa.create_engine(
+            sqlalchemy_postgres_dsn(
+                candidate.render_as_string(hide_password=False)
+            ),
+            pool_pre_ping=False,
+        )
         try:
             candidate_identity = _postgres_database_identity(engine)
         except BaseException as exc:

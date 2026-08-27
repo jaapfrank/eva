@@ -1,0 +1,40 @@
+{
+  "contract": "EvaPinnedDependencyPatch/v1",
+  "distribution": "dbos",
+  "upstream_version": "2.31.0",
+  "patched_version": "2.31.0+eva.1",
+  "upstream": {
+    "repository": "https://github.com/dbos-inc/dbos-transact-py",
+    "tag": "2.31.0",
+    "tag_url": "https://github.com/dbos-inc/dbos-transact-py/tree/2.31.0",
+    "signed_commit": "a51254c6c5ab2f1f217444778d306d4c967b1ba8",
+    "license": {
+      "spdx": "MIT",
+      "source_url": "https://raw.githubusercontent.com/dbos-inc/dbos-transact-py/2.31.0/LICENSE"
+    }
+  },
+  "upstream_wheel": {
+    "filename": "dbos-2.31.0-py3-none-any.whl",
+    "size_bytes": 278387,
+    "sha256": "2a84930349ced724cfe2fa00b98b3ac80287ed28f65ee316139b37dae702fb37"
+  },
+  "output_wheel": {
+    "filename": "dbos-2.31.0+eva.1-py3-none-any.whl",
+    "sha256": "82215857d3e1fe1484da0dc8dee7e1a6a2ee9d98998597a8f031289532be433c"
+  },
+  "patch": {
+    "filename": "0001-bounded-sync-datasource.patch",
+    "sha256": "3aee5331d404bc0c634153fa6929c41d914db612d30d22ed7ea0e66cf6398777",
+    "members": [
+      {
+        "path": "dbos/_datasource.py",
+        "upstream_sha256": "d738b3d6406335bede8e0f1b3028af41a88ed4342fa6a478de23a161e057ca23",
+        "patched_sha256": "a0e9ebf721513f42f3af6e16a48534a438f2571f57f5665ccbc27feaa0fb9674"
+      }
+    ]
+  },
+  "scope": {
+    "supported": "SQLAlchemyDatasource (synchronous) on PostgreSQL",
+    "unsupported": "AsyncSQLAlchemyDatasource remains upstream 2.31.0 behavior and is not exposed by Eva"
+  }
+}
