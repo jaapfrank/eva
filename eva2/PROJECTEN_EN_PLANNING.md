@@ -77,7 +77,7 @@ Statussen:
 
 | Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
 |---|---|---|---|---:|---:|---|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De nieuwste offline kandidaatimage startte twee keer veilig tegen een nieuwe tijdelijke PostgreSQL-database; de tweede start herhaalde geen schemawerk. De image controleerde alle 121 database-relaties, en stopte daarna netjes toen één relatie expres ontbrak. De normale PostgreSQL-DSN gebruikt de aanwezige driver; een eerdere kandidaat gaf al een groene `/healthz` én `/readyz` webkerncheck | HA-secret roteren, de volledige beheerde startconfiguratie aan dezelfde image binden, B gecontroleerd adopteren en daarna de echte eindproef uitvoeren | 3-6 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. Een eerdere offline kandidaatimage startte twee keer veilig tegen een nieuwe tijdelijke PostgreSQL-database; de tweede start herhaalde geen schemawerk. De image controleerde alle 121 database-relaties, en stopte daarna netjes toen één relatie expres ontbrak. De normale PostgreSQL-DSN gebruikt de aanwezige driver; een eerdere kandidaat gaf al een groene `/healthz` én `/readyz` webkerncheck | Dezelfde proeven op één actuele vastgezette commit herhalen, HA-secret roteren, de volledige beheerde startconfiguratie aan die image binden, B gecontroleerd adopteren en daarna de echte eindproef uitvoeren | 3-6 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
 | 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy bestaan. De normale Telegrambron herkent nu na herstart een dynamisch gekoppeld account. Een eventuele Eva1-geheugenproef kan eerst alleen aantallen en hashes voorvertonen uit een consistente private SQLite-snapshot; pas na expliciete bevestiging gaat hoogstens 50 gekoppelde regels naar een wegwerp-Eva2-database als niet-gespreksgeheugen | Op eind-B zetten en echte gezins-/groepstest uitvoeren. Voor de Eva1-proef is nog één bewuste oude-persoon→nieuwe-persoonkoppeling nodig | 2-4 uur | 2-4 uur | 45-90 min eigenaar plus accounts/testgroep |
 | 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill. HA-MCP is exact onderzocht, maar een directe swap verwijdert naar schatting slechts 174–192 regels | Eén kleine HA-MCP state→service→stateproef; alleen bij echte semantische pariteit en minimaal 300 regels nettowinst promoveren. Daarna Telegram→skill→readback→vervolg en crash live uitvoeren | 2-5 uur | 2-4 uur | 2-4 uur met veilige testskill/-entiteit |
 | 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Bestaande HA/Wyoming-/speakercomponenten hergebruiken voor één speaker, deurbel, quiet hours, cooldown, stop en herstel | 4-10 uur | 3-6 uur | Gedeelde 7-daagse huisproef |
@@ -140,10 +140,13 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
 
 ## De eerstvolgende twee zichtbare mijlpalen
 
-1. **P1.1 — één versiepassende releasekandidaat.** De statische 39-package-
-   bouwinput is nu onafhankelijk groen op checkpoint `0bbfe3d`. De fysieke
-   wheelhouse, imagebuild, start, herstart, schemadrift en secret-nonleakproef
-   volgen nog. Dit verandert A of B niet.
+1. **P1.1 — één versiepassende releasekandidaat.** Een fysieke 39-package-
+   wheelhouse is al offline geïnstalleerd en een kandidaatimage is netwerkloos,
+   niet-root en read-only gestart. Dat bewijs hoort echter bij oudere
+   broncommits (`3233ec6` en `617e4c9`), dus het is geen vrijbrief voor de
+   huidige code. De volgende stap is dezelfde wheelhouse, imagebuild, start,
+   herstart, schemadrift en secret-nonleakproef op één actuele, vastgezette
+   commit herhalen. Dit verandert A of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op
    checkpoint `187f797` een dynamisch gekoppeld account veilig en ook na
    herstart. Na de veilige B-adoptie demonstreert

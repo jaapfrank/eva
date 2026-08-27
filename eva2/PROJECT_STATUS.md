@@ -203,10 +203,10 @@ latency- of menselijke voiceproef: op deze WSL-host bestaat daarvoor geen
 bruikbare audiohardware. Eva 1, B, Telegram, Home Assistant en bestaand
 geheugen zijn niet geopend.
 
-## Eerder deze run gesloten: kandidaatimage en databasecontrole
+## Eerder bewijs: kandidaatimage en databasecontrole
 
-De **nieuwste kandidaatimage** is nu opnieuw gebouwd vanaf de actuele code en
-heeft haar eigen databasecontrole echt uitgevoerd. In een volledig nieuwe,
+Een eerdere kandidaatimage is gebouwd vanaf de toen actuele code en heeft haar
+eigen databasecontrole echt uitgevoerd. In een volledig nieuwe,
 tijdelijke PostgreSQL startte Eva als niet-root en met een alleen-lezen
 besturingssysteem. De eerste start installeerde het hele schema; de tweede
 start deed geen schemawerk dubbel.
@@ -219,8 +219,10 @@ kandidaat ooit bij B in de buurt komt. Receipt:
 [`candidate-image-schema-drift-2026-08-27.json`](evidence/living-core/candidate-image-schema-drift-2026-08-27.json).
 
 De image, database, netwerk en synthetische secret waren tijdelijke proefmiddelen
-en zijn na deze stap verwijderd. Eva 1, B, bestaande volumes, Hindsight,
-Telegram, Home Assistant en echte secrets zijn niet geopend.
+en zijn na deze stap verwijderd. Sindsdien veranderde de kandidaatcode; deze
+proef moet daarom op één actuele, vastgezette commit opnieuw voordat zij voor
+P1.1 of een release meetelt. Eva 1, B, bestaande volumes, Hindsight, Telegram,
+Home Assistant en echte secrets zijn niet geopend.
 
 ## Eerder deze run gesloten: alle databasekoppelingen
 
@@ -686,10 +688,11 @@ Eva's unieke hoofdfeature.
   Pydantic-provideradapter en echte usage-/budgetwiring blijven DF02-vervolgwerk.
 
 - Releaseproject P1.1: de versiepassende 39-package-input is onafhankelijk
-  groen; checkpoint `124eed2` bewijst daarbovenop een fysieke, ongetagde
-  kandidaatimage met een eerste schema-installatie, driftcontrole en veilige
-  tweede start tegen een geheel nieuwe tijdelijke PostgreSQL-database. Daarna
-  gaf kandidaatcode `ea7f9aa` via Eva's eigen `/healthz` en `/readyz` een
+  groen; checkpoint `124eed2` bewijst daarbovenop op een eerdere broncommit
+  een fysieke, ongetagde kandidaatimage met een eerste schema-installatie,
+  driftcontrole en veilige tweede start tegen een geheel nieuwe tijdelijke
+  PostgreSQL-database. Daarna gaf kandidaatcode `ea7f9aa` via Eva's eigen
+  `/healthz` en `/readyz` een
   groene runtimecheck; het bewijsrecord staat op `541355d`. Hindsight en de
   modellease waren tijdelijke testdoubles. B-adoptie of release is hiermee nog
   niet bewezen.
