@@ -135,14 +135,16 @@ concrete route en opslagautoriteit.
 Checkpoint `20490a0` sluit daarop de kleine afspeelgrens aan. De nieuwe
 `VoicePlaybackController` kent alleen de gebonden sessie, beurt,
 antwoordgeneratie en een ingeplugde `play`/`stop`-sink. Hij bewaart geen audio;
-hij geeft begrensde chunks door. Een geldige `BargeIn` annuleert alleen de nog
-lopende afspeelwrite en wacht vervolgens tot de sink expliciet stil bevestigt.
-Als die bevestiging faalt, krijgt de caller een fout en geen onterechte
-`interrupted`-receipt. Verkeerde persoon, beurt of generatie, lege chunks en
-te grote chunks worden geweigerd. De extra afspeeltests plus de bestaande
-voice- en gesprekstests zijn samen **26/26 groen**. Dit is geen speaker,
-microfoon, providerverbinding, full-duplex- of latencybewijs; V02 blijft dus
-open.
+hij geeft begrensde chunks door. Een geldige `BargeIn` start tegelijk de
+speakerstop én de stop van uitsluitend de nog lopende antwoordgeneratie. De
+speaker hoeft dus niet op een trage modelprovider te wachten. Mislukt één van
+beide stops, dan krijgt de caller een fout en nooit een onterechte
+`interrupted`-receipt. De generatie-stop krijgt geen toolgrant en kan geen
+huisactie terugdraaien of herhalen. Verkeerde persoon, beurt of generatie,
+lege chunks en te grote chunks worden geweigerd. De extra afspeeltests plus de
+bestaande voice- en gesprekstests zijn samen **28/28 groen**. Dit is geen
+speaker, microfoon, providerverbinding, full-duplex- of latencybewijs; V02
+blijft dus open.
 
 De benodigde upstreamroute is ook echt afzonderlijk geïnstalleerd:
 `experiments/pydantic-realtime-v1/` bindt Pydantic AI

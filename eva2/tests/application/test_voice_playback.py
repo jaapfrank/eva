@@ -100,6 +100,29 @@ class _FailingStopSink(_Sink):
         raise OSError("synthetic speaker disconnect")
 
 
+class _ReplyGenerationCanceller:
+    def __init__(self, *, block: bool = False, fail: bool = False) -> None:
+        self.calls: list[tuple[str, str, int]] = []
+        self.started = asyncio.Event()
+        self.release = asyncio.Event()
+        self.block = block
+        self.fail = fail
+
+    async def cancel_reply_generation(
+        self,
+        *,
+        session: VoiceSession,
+        voice_turn_id: str,
+        reply_generation: int,
+    ) -> None:
+        self.calls.append((session.session_id, voice_turn_id, reply_generation))
+        self.started.set()
+        if self.block:
+            await self.release.wait()
+        if self.fail:
+            raise OSError("synthetic model stream disconnect")
+
+
 async def _chunks(*values: bytes) -> AsyncIterator[bytes]:
     for value in values:
         yield value
@@ -109,7 +132,11 @@ def test_playback_forwards_transient_chunks_without_storing_audio() -> None:
     async def run() -> None:
         sink = _Sink()
         controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
         )
 
         receipt = await controller.deliver(_chunks(b"one", b"two!"))
@@ -128,8 +155,13 @@ def test_playback_forwards_transient_chunks_without_storing_audio() -> None:
 def test_valid_barge_in_cancels_unfinished_playback_and_stops_sink() -> None:
     async def run() -> None:
         sink = _Sink(block_first_write=True)
+        canceller = _ReplyGenerationCanceller()
         controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=canceller,
         )
         delivery = asyncio.create_task(controller.deliver(_chunks(b"one", b"two")))
         await sink.first_write_started.wait()
@@ -143,6 +175,7 @@ def test_valid_barge_in_cancels_unfinished_playback_and_stops_sink() -> None:
         assert receipt.interrupt_to_sink_stop_ms is not None
         assert sink.played_lengths == []
         assert sink.stop_calls == 1
+        assert canceller.calls == [("voice-session:001", "voice-turn:001", 4)]
 
     asyncio.run(run())
 
@@ -150,8 +183,13 @@ def test_valid_barge_in_cancels_unfinished_playback_and_stops_sink() -> None:
 def test_interrupted_delivery_waits_until_the_sink_confirms_stop() -> None:
     async def run() -> None:
         sink = _Sink(block_first_write=True, block_stop=True)
+        canceller = _ReplyGenerationCanceller()
         controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=canceller,
         )
         delivery = asyncio.create_task(controller.deliver(_chunks(b"one", b"two")))
         await sink.first_write_started.wait()
@@ -164,6 +202,7 @@ def test_interrupted_delivery_waits_until_the_sink_confirms_stop() -> None:
         sink.release_stop.set()
         await interruption
         assert (await delivery).status == "interrupted"
+        assert canceller.calls == [("voice-session:001", "voice-turn:001", 4)]
 
     asyncio.run(run())
 
@@ -172,7 +211,11 @@ def test_sink_stop_failure_never_returns_an_interrupted_success_receipt() -> Non
     async def run() -> None:
         sink = _FailingStopSink(block_first_write=True)
         controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
         )
         delivery = asyncio.create_task(controller.deliver(_chunks(b"one")))
         await sink.first_write_started.wait()
@@ -182,6 +225,60 @@ def test_sink_stop_failure_never_returns_an_interrupted_success_receipt() -> Non
         with pytest.raises(RuntimeError, match="did not stop"):
             await delivery
         assert sink.stop_calls == 1
+
+    asyncio.run(run())
+
+
+def test_generation_cancel_failure_never_returns_an_interrupted_success_receipt() -> (
+    None
+):
+    async def run() -> None:
+        sink = _Sink(block_first_write=True)
+        controller = VoicePlaybackController(
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(fail=True),
+        )
+        delivery = asyncio.create_task(controller.deliver(_chunks(b"one")))
+        await sink.first_write_started.wait()
+
+        with pytest.raises(RuntimeError, match="reply generation did not stop"):
+            await controller.interrupt(_barge_in())
+        with pytest.raises(RuntimeError, match="reply generation did not stop"):
+            await delivery
+        assert sink.stop_calls == 1
+
+    asyncio.run(run())
+
+
+def test_speaker_stop_starts_without_waiting_for_generation_cancellation() -> None:
+    async def run() -> None:
+        sink = _Sink(block_first_write=True)
+        canceller = _ReplyGenerationCanceller(block=True)
+        controller = VoicePlaybackController(
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=canceller,
+        )
+        delivery = asyncio.create_task(controller.deliver(_chunks(b"one")))
+        await sink.first_write_started.wait()
+
+        interruption = asyncio.create_task(controller.interrupt(_barge_in()))
+        await canceller.started.wait()
+        for _ in range(10):
+            if sink.stop_calls == 1:
+                break
+            await asyncio.sleep(0)
+        assert sink.stop_calls == 1
+        assert not interruption.done()
+
+        canceller.release.set()
+        await interruption
+        assert (await delivery).status == "interrupted"
 
     asyncio.run(run())
 
@@ -200,7 +297,11 @@ def test_barge_in_cannot_stop_another_person_turn_or_generation(
     async def run() -> None:
         sink = _Sink(block_first_write=True)
         controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
         )
         delivery = asyncio.create_task(controller.deliver(_chunks(b"one")))
         await sink.first_write_started.wait()
@@ -219,7 +320,11 @@ def test_playback_rejects_empty_or_oversized_chunks_before_sink_write() -> None:
     async def run() -> None:
         sink = _Sink()
         empty_controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
         )
         with pytest.raises(ValueError, match="non-empty"):
             await empty_controller.deliver(_chunks(b""))
@@ -227,7 +332,11 @@ def test_playback_rejects_empty_or_oversized_chunks_before_sink_write() -> None:
             await empty_controller.interrupt(_barge_in())
 
         oversized_controller = VoicePlaybackController(
-            session=_session(), voice_turn_id="voice-turn:001", reply_generation=4, sink=sink
+            session=_session(),
+            voice_turn_id="voice-turn:001",
+            reply_generation=4,
+            sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
         )
         oversized = VoicePlaybackController._MAX_CHUNK_BYTES + 1
         with pytest.raises(ValueError, match="fixed bound"):
@@ -247,4 +356,5 @@ def test_playback_requires_a_non_empty_voice_turn_id(voice_turn_id: str) -> None
             voice_turn_id=voice_turn_id,
             reply_generation=4,
             sink=_Sink(),
+            reply_canceller=_ReplyGenerationCanceller(),
         )

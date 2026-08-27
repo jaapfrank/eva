@@ -52,6 +52,24 @@ class VoicePlaybackSink(Protocol):
     async def stop(self) -> None: ...
 
 
+class VoiceReplyGenerationCanceller(Protocol):
+    """Stop only the local, not-yet-finished reply generation.
+
+    This is deliberately narrower than an action-chain canceller.  A media
+    adapter may use it to cancel its model/TTS stream, but it receives neither
+    a tool grant nor an effect attempt and therefore cannot undo or repeat an
+    external action.
+    """
+
+    async def cancel_reply_generation(
+        self,
+        *,
+        session: VoiceSession,
+        voice_turn_id: str,
+        reply_generation: int,
+    ) -> None: ...
+
+
 @dataclass(frozen=True, slots=True)
 class VoicePlaybackReceipt:
     """Non-audio outcome of one answer delivery attempt."""
@@ -82,6 +100,7 @@ class VoicePlaybackController:
         voice_turn_id: str,
         reply_generation: int,
         sink: VoicePlaybackSink,
+        reply_canceller: VoiceReplyGenerationCanceller,
     ) -> None:
         if not voice_turn_id or not voice_turn_id.strip():
             raise ValueError("voice turn id must be non-empty")
@@ -91,6 +110,7 @@ class VoicePlaybackController:
         self._voice_turn_id = voice_turn_id
         self._reply_generation = reply_generation
         self._sink = sink
+        self._reply_canceller = reply_canceller
         self._lock = asyncio.Lock()
         self._state: Literal[
             "ready", "streaming", "completed", "interrupted", "failed"
@@ -162,19 +182,42 @@ class VoicePlaybackController:
             current_play = self._current_play
             if current_play is not None and not current_play.done():
                 current_play.cancel()
+        # Start both cancellation paths before awaiting either one.  Speaker
+        # silence must not wait for a slow model provider, and a silently
+        # continuing model/TTS stream must never be reported as interrupted.
+        sink_stop = asyncio.create_task(self._sink.stop())
+        reply_cancel = asyncio.create_task(
+            self._reply_canceller.cancel_reply_generation(
+                session=self._session,
+                voice_turn_id=self._voice_turn_id,
+                reply_generation=self._reply_generation,
+            )
+        )
+        sink_error: Exception | None = None
+        reply_error: Exception | None = None
         try:
-            await self._sink.stop()
+            await sink_stop
         except Exception as error:
-            failure = RuntimeError("voice playback sink did not stop")
+            sink_error = error
+        sink_stop_ms = (time.monotonic_ns() - started) // 1_000_000
+        try:
+            await reply_cancel
+        except Exception as error:
+            reply_error = error
+
+        if sink_error is not None or reply_error is not None:
+            failure = RuntimeError(
+                "voice playback sink did not stop"
+                if sink_error is not None
+                else "voice reply generation did not stop"
+            )
             async with self._lock:
                 self._state = "failed"
                 self._interruption_error = failure
                 self._interruption_finished.set()
-            raise failure from error
+            raise failure from (sink_error or reply_error)
         async with self._lock:
-            self._interrupt_to_sink_stop_ms = (
-                time.monotonic_ns() - started
-            ) // 1_000_000
+            self._interrupt_to_sink_stop_ms = sink_stop_ms
             self._interruption_finished.set()
 
     async def _play_chunk(self, chunk: bytes) -> bool:
@@ -213,6 +256,7 @@ class VoicePlaybackController:
 __all__ = [
     "VoicePlaybackController",
     "VoicePlaybackReceipt",
+    "VoiceReplyGenerationCanceller",
     "VoicePlaybackSink",
     "admit_final_voice_turn",
 ]

@@ -55,7 +55,7 @@ de controleerbare live receipts staan in
 | Hoofduitkomst | Wat aantoonbaar staat | Status van het complete project |
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
-| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
+| Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper. Een onderbreking stopt nu aantoonbaar zowel speakeruitvoer als de onafgemaakte antwoordgeneratie | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie; de exacte broncommit en requirements-hash zijn gecontroleerd | Deze host heeft nog geen gescheiden Python 3.9 plus elf AgentBench-pakketten; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn daardoor nog open |
@@ -151,21 +151,21 @@ De nieuwe voorvertoning en alle bestaande selectie-/privacygrenzen zijn
 geopend of gekopieerd. Jij houdt dus de keuze of en wanneer je een eigen
 snapshot aanwijst voor een beperkte proef.
 
-## Eerder deze run gesloten: veilige voice-onderbreking
+## Nieuwste gesloten stap: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
-onderbreken**. De nieuwe controller geeft audioblokken alleen door aan de
-gekozen speaker/browser-uitvoerder en bewaart zelf geen audio. Alleen dezelfde
-persoon, sessie, gesproken beurt en antwoordgeneratie mogen de stop sturen.
-Een stop wacht bovendien tot de uitvoerder bevestigt dat Eva stil is; faalt
-die bevestiging, dan meldt Eva een fout in plaats van ten onrechte
-“onderbroken”. Lege of te grote audioblokken worden vóór afspelen geweigerd.
+onderbreken**. De controller geeft audioblokken alleen door aan de gekozen
+speaker/browser-uitvoerder en bewaart zelf geen audio. Alleen dezelfde persoon,
+sessie, gesproken beurt en antwoordgeneratie mogen de stop sturen. De speaker
+wordt stilgezet én de nog lopende model-/TTS-generatie krijgt tegelijk een
+stopopdracht; een trage provider mag de speakerstop niet ophouden. Die
+generatie-stop heeft geen toegang tot huisacties en kan dus niets terugdraaien
+of opnieuw uitvoeren. Faalt de speakerstop of de generatiestop, dan meldt Eva
+een fout in plaats van ten onrechte “onderbroken”. Lege of te grote audioblokken
+worden vóór afspelen geweigerd.
 
-De contract-, afspeel- en bestaande gesprekstests zijn samen **26/26 groen**
-op checkpoint `20490a0`; samen met de release-inputcontroles zijn **52/52**
-gerichte checks groen. De volledige bronarchiefhash van de actuele
-kandidaatcommit sluit daarbij exact aan, zonder Docker of live systemen te
-openen. Dit is een echte, kleine V02-bouwsteen, maar geen microfoon-, speaker-,
+De contract-, afspeel- en bestaande gesprekstests zijn samen **28/28 groen**.
+Dit is een echte, kleine V02-bouwsteen, maar geen microfoon-, speaker-,
 latency- of menselijke voiceproef: op deze WSL-host bestaat daarvoor geen
 bruikbare audiohardware. Eva 1, B, Telegram, Home Assistant en bestaand
 geheugen zijn niet geopend.
