@@ -77,7 +77,7 @@ Statussen:
 
 | Project | Status | Wat is al af? | Wat moet nog gebeuren? | Bouwen + tests | Integratie + review | Extern/live |
 |---|---|---|---|---:|---:|---|
-| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De versiepassende statische 39-package-input is onafhankelijk groen | Fysieke wheelhouse en kandidaatimage op die set bouwen/starten, HA-secret roteren en B gecontroleerd adopteren | 4-8 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
+| 1. Veilige eindruntime en B-release | `IN BOUW` | A/B-scheiding, back-ups, offline imagebouw en file-secrets bestaan. De fysieke set van 39 gepinde packages is één keer zonder netwerk in de exacte Python-3.12.14-basis geïnstalleerd; DBOS-patch en PyNaCl laden correct | Dezelfde gesloten set aan een actuele bronarchive en kandidaatimage binden, starten/herstarten, HA-secret roteren en B gecontroleerd adopteren | 3-7 uur | 3-6 uur | 2-6 uur eigenaar en omschakelvenster |
 | 2. Gezinschat en geheugen | `IN BOUW` | Persoonsgeheugen, projectisolatie, accountbinding en groepsprivacy bestaan. De normale Telegrambron herkent nu na herstart een dynamisch gekoppeld account. Een eventuele Eva1-geheugenproef maakt eerst een consistente private SQLite-snapshot en importeert hoogstens 50 expliciet gekoppelde regels als niet-gespreksgeheugen | Op eind-B zetten en echte gezins-/groepstest uitvoeren. Voor de Eva1-proef is nog één bewuste oude-persoon→nieuwe-persoonkoppeling nodig | 2-4 uur | 2-4 uur | 45-90 min eigenaar plus accounts/testgroep |
 | 3. Algemene skilluitvoering en bewijs | `TECHNISCH AF` | De providerneutrale lees→actie→teruglees→vervolgketen is lokaal 75/75 groen; Home Assistant is de eerste live skill. HA-MCP is exact onderzocht, maar een directe swap verwijdert naar schatting slechts 174–192 regels | Eén kleine HA-MCP state→service→stateproef; alleen bij echte semantische pariteit en minimaal 300 regels nettowinst promoveren. Daarna Telegram→skill→readback→vervolg en crash live uitvoeren | 2-5 uur | 2-4 uur | 2-4 uur met veilige testskill/-entiteit |
 | 4. Spontane huisaanwezigheid | `IN BOUW` | Oude Eva bewijst de beleving; Eva 2 heeft events, stiltekeuze en duurzame aandacht als bouwstenen | Bestaande HA/Wyoming-/speakercomponenten hergebruiken voor één speaker, deurbel, quiet hours, cooldown, stop en herstel | 4-10 uur | 3-6 uur | Gedeelde 7-daagse huisproef |
@@ -140,10 +140,11 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
 
 ## De eerstvolgende twee zichtbare mijlpalen
 
-1. **P1.1 — één versiepassende releasekandidaat.** De statische 39-package-
-   bouwinput is nu onafhankelijk groen op checkpoint `0bbfe3d`. De fysieke
-   wheelhouse, imagebuild, start, herstart, schemadrift en secret-nonleakproef
-   volgen nog. Dit verandert A of B niet.
+1. **P1.1 — één versiepassende releasekandidaat.** De fysieke 39-package-
+   wheelhouse is op checkpoint `52af782` in de gepinde Python-3.12.14-basis
+   zonder netwerk geïnstalleerd; DBOS-patch en PyNaCl zijn daarbij echt
+   geïmporteerd. Bronarchive-closure, imagebuild, start, herstart,
+   schemadrift en secret-nonleakproef volgen nog. Dit verandert A of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op
    checkpoint `187f797` een dynamisch gekoppeld account veilig en ook na
    herstart. Na de veilige B-adoptie demonstreert

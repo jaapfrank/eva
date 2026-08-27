@@ -19,7 +19,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )
-ARTIFACT_SHA256 = "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+ARTIFACT_SHA256 = "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
 
 
 def _canonical_bytes(value: object) -> bytes:

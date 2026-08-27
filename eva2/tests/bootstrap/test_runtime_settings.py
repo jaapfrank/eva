@@ -413,7 +413,8 @@ def test_runtime_composes_the_real_people_memory_projection_fail_closed() -> Non
                 raise RuntimeError("private Hindsight detail canary")
 
     class Overview:
-        calls: list[str] = []
+        def __init__(self) -> None:
+            self.calls: list[str] = []
 
         def snapshot(
             self, *, now: datetime, hindsight_state: str

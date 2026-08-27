@@ -46,7 +46,7 @@
     "adapters.connectors": {
       "path": "src/eva/adapters/connectors",
       "allowedLocalImports": ["eva.adapters.connectors", "eva.application", "eva.contracts"],
-      "allowedExternalImports": ["connector_sdk"]
+      "allowedExternalImports": ["connector_sdk", "websockets"]
     },
     "adapters.credentials": {
       "path": "src/eva/adapters/credentials",

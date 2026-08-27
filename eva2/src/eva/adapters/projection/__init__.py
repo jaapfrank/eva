@@ -1,7 +1,9 @@
-"""Rebuildable projection adapters."""
+"""External semantic-memory adapters."""
 
 from .hindsight import (
+    HindsightMemoryEngine,
     HindsightMemoryProjection,
+    HindsightMemoryScopeError,
     HindsightProjectionConfig,
     HindsightProjectionError,
     HindsightProjectionProtocolError,
@@ -11,7 +13,9 @@ from .hindsight import (
 )
 
 __all__ = [
+    "HindsightMemoryEngine",
     "HindsightMemoryProjection",
+    "HindsightMemoryScopeError",
     "HindsightProjectionConfig",
     "HindsightProjectionError",
     "HindsightProjectionProtocolError",

@@ -41,24 +41,34 @@ from eva.contracts.execution import (
 )
 from eva.contracts.ingress import DeliveryOffer, DeliveryOfferV2, IngressRequest
 from eva.contracts.planning import (
+    ClaimBinding,
     DocumentDraft,
     ModelDecision,
     ModelPurpose,
     OutcomeView,
+    PlannerRequest,
     PresenceReply,
     ReplyCandidate,
+    ReplyModelInput,
+    StepOutcome,
 )
 from eva.contracts.canonical_json import require_canonical_bytes
+from eva.contracts.identity import IdentityPack
+from eva.application.objects import (
+    AuthenticatedCandidateReadback,
+    ObjectBinding,
+    ObjectBindingError,
+)
 
 
 PROFILE_ARTIFACT_SHA256 = (
-    "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
+    "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe"
 )
 MODEL_ARTIFACT_SHA256 = (
-    "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+    "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593"
 )
 CONNECTOR_ARTIFACT_SHA256 = (
-    "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+    "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
 )
 
 Noor4DScenario: TypeAlias = Literal[
@@ -72,6 +82,12 @@ Noor4DScenario: TypeAlias = Literal[
 ]
 Noor4DFlowStatus: TypeAlias = Literal["completed", "partial_delivered", "stopped"]
 Noor4DCommitmentState: TypeAlias = Literal["open", "fulfilled"]
+Noor4DProofScope: TypeAlias = Literal[
+    "eva_installation_exact", "identity_surface_only", "none"
+]
+Noor4DReplySource: TypeAlias = Literal[
+    "model_receipt", "host_fallback_template", "identity_surface_vector", "none"
+]
 
 
 class Noor4DArtifactError(ValueError):
@@ -199,9 +215,73 @@ class Noor4DCallLifecycle(Protocol):
 
 
 class Noor4DDocumentCandidateHook(Protocol):
-    """Fail-able handoff; it creates no object or proof authority by itself."""
+    """Create an authenticated pre-selection candidate, never an ObjectRef."""
 
-    def prepare(self, draft: DocumentDraft) -> None: ...
+    def prepare(
+        self, request: Noor4DDocumentCandidateRequest
+    ) -> AuthenticatedCandidateReadback | None: ...
+
+
+@dataclass(frozen=True, slots=True)
+class Noor4DDocumentCandidateRequest:
+    draft: DocumentDraft
+    binding: ObjectBinding | None
+    plaintext: bytes
+
+
+@dataclass(frozen=True, slots=True)
+class Noor4DHostValidation:
+    """Host-built fixture validation preimage for one visible reply."""
+
+    vector_id: str
+    identity_pack_sha256: str
+    outcome_view_sha256: str
+    text_sha256: str
+    unproven_claims: Literal[0]
+    forbidden_internal_jargon: Literal[0]
+    result: Literal["accepted"]
+
+    @property
+    def payload(self) -> dict[str, object]:
+        return {
+            "contract": "FixturePresenceHostValidation/v1",
+            "schema_version": 1,
+            "vector_id": self.vector_id,
+            "identityPackSha256": self.identity_pack_sha256,
+            "outcomeViewSha256": self.outcome_view_sha256,
+            "textSha256": self.text_sha256,
+            "unprovenClaims": self.unproven_claims,
+            "forbiddenInternalJargon": self.forbidden_internal_jargon,
+            "result": self.result,
+        }
+
+    @property
+    def canonical_sha256(self) -> str:
+        return _sha256(canonical_json_bytes(self.payload))
+
+
+@dataclass(frozen=True, slots=True)
+class _OutcomeStepTemplate:
+    kind: Literal["mail", "erp", "calendar", "document", "confirmation"]
+    step_id: str
+    human_summary: str
+    business_evidence_refs: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class _ClaimTemplate:
+    claim_ref: str
+    step_id: str
+
+
+@dataclass(frozen=True, slots=True)
+class _OutputTemplate:
+    steps: tuple[_OutcomeStepTemplate, ...]
+    message_id: str
+    claim_bindings: tuple[_ClaimTemplate, ...]
+    host_validation_vector_id: str
+    expected_host_validation_sha256: str
+    fallback_reply_template: ReplyCandidate
 
 
 @dataclass(frozen=True, slots=True)
@@ -213,6 +293,11 @@ class Noor4DRunSpec:
     document_call: Noor4DModelCall | None
     reply_call: Noor4DModelCall | None
     connector_calls: tuple[Noor4DConnectorCall, ...]
+    identity_pack: IdentityPack
+    identity_pack_sha256: str
+    proof_scope: Noor4DProofScope
+    document_binding: ObjectBinding | None
+    output_template: _OutputTemplate | None
     expected_outcome_view: OutcomeView | None
     expected_reply_candidate: ReplyCandidate | None
     expected_presence_reply: PresenceReply | None
@@ -232,9 +317,14 @@ class Noor4DFlowState:
     generation: int
     plan: ModelDecision | None
     document_draft: DocumentDraft | None
+    document_candidate_readback: AuthenticatedCandidateReadback | None
     reply_candidate: ReplyCandidate | None
+    reply_source: Noor4DReplySource
     outcome_view: OutcomeView | None
     presence_reply: PresenceReply | None
+    host_validation: Noor4DHostValidation | None
+    identity_pack_sha256: str
+    proof_scope: Noor4DProofScope
     effect_receipts: tuple[EffectReceipt, ...]
     effect_readbacks: tuple[EffectReadback, ...]
     confirmation_delivery_receipt: DeliveryReceipt | None
@@ -255,9 +345,12 @@ class Noor4DFlowResult:
 class _Accumulator:
     plan: ModelDecision | None = None
     document_draft: DocumentDraft | None = None
+    document_candidate_readback: AuthenticatedCandidateReadback | None = None
     reply_candidate: ReplyCandidate | None = None
+    reply_source: Noor4DReplySource = "none"
     outcome_view: OutcomeView | None = None
     presence_reply: PresenceReply | None = None
+    host_validation: Noor4DHostValidation | None = None
     effect_receipts: list[EffectReceipt] = field(default_factory=list)
     effect_readbacks: list[EffectReadback] = field(default_factory=list)
     confirmation_delivery_receipt: DeliveryReceipt | None = None
@@ -265,6 +358,9 @@ class _Accumulator:
     model_trace: list[ModelTrace] = field(default_factory=list)
     connector_trace: list[ConnectorTrace] = field(default_factory=list)
     business_reads: dict[str, ReadOk] = field(default_factory=dict)
+    effect_receipts_by_case: dict[str, EffectReceipt] = field(default_factory=dict)
+    effect_readbacks_by_case: dict[str, EffectReadback] = field(default_factory=dict)
+    business_chain_validated: bool = False
 
 
 _SCENARIO_BINDINGS: dict[
@@ -510,6 +606,7 @@ class Noor4DFixtureBundle:
             self._model_call(document_index) if document_index is not None else None
         )
         reply_call = self._model_call(reply_index) if reply_index is not None else None
+        identity_pack, identity_pack_sha256 = self._identity_pack(identity)
         if connector_scenario is None:
             return Noor4DRunSpec(
                 scenario=name,
@@ -519,6 +616,11 @@ class Noor4DFixtureBundle:
                 document_call=None,
                 reply_call=None,
                 connector_calls=(),
+                identity_pack=identity_pack,
+                identity_pack_sha256=identity_pack_sha256,
+                proof_scope="none",
+                document_binding=None,
+                output_template=None,
                 expected_outcome_view=None,
                 expected_reply_candidate=None,
                 expected_presence_reply=None,
@@ -545,18 +647,33 @@ class Noor4DFixtureBundle:
             "outcomeDeliveryContent",
         )
         view_key = _OUTCOME_VIEW_KEYS[outcome_key]
+        outcome_wrapper = _mapping(content["outcomeViews"], "outcomeViews")[view_key]
+        reply_wrapper = _mapping(content["replyCandidates"], "replyCandidates")[
+            outcome_key
+        ]
+        presence_wrapper = _mapping(content["presenceReplies"], "presenceReplies")[
+            outcome_key
+        ]
         outcome_view = OutcomeView.model_validate(
-            _mapping(content["outcomeViews"], "outcomeViews")[view_key]["payload"]
+            _mapping(outcome_wrapper, f"outcome view {view_key}")["payload"]
         )
         reply_candidate = ReplyCandidate.model_validate(
-            _mapping(content["replyCandidates"], "replyCandidates")[outcome_key][
-                "payload"
-            ]
+            _mapping(reply_wrapper, f"reply candidate {outcome_key}")["payload"]
         )
         presence_reply = PresenceReply.model_validate(
-            _mapping(content["presenceReplies"], "presenceReplies")[outcome_key][
-                "payload"
-            ]
+            _mapping(presence_wrapper, f"presence reply {outcome_key}")["payload"]
+        )
+        for wrapper, label in (
+            (outcome_wrapper, f"outcome view {view_key}"),
+            (reply_wrapper, f"reply candidate {outcome_key}"),
+            (presence_wrapper, f"presence reply {outcome_key}"),
+        ):
+            _canonical_wrapper_sha(wrapper, label)
+        output_template = self._output_template(
+            outcome_key=outcome_key,
+            outcome_view=outcome_view,
+            reply_candidate=reply_candidate,
+            presence_reply=presence_reply,
         )
         expected_status: Noor4DFlowStatus = (
             "completed"
@@ -577,10 +694,150 @@ class Noor4DFixtureBundle:
             document_call=document_call,
             reply_call=reply_call,
             connector_calls=connector_calls,
+            identity_pack=identity_pack,
+            identity_pack_sha256=identity_pack_sha256,
+            proof_scope=(
+                "identity_surface_only"
+                if name == "happy_mira"
+                else "eva_installation_exact"
+            ),
+            document_binding=(
+                None if name == "happy_mira" else self._document_binding("Eva")
+            ),
+            output_template=output_template,
             expected_outcome_view=outcome_view,
             expected_reply_candidate=reply_candidate,
             expected_presence_reply=presence_reply,
             expected_status=expected_status,
+        )
+
+    def _identity_pack(
+        self, identity: Literal["Eva", "Mira"]
+    ) -> tuple[IdentityPack, str]:
+        packs = _array(
+            _mapping(self._profile["sealedPackFixtures"], "sealed packs")[
+                "identityPacks"
+            ],
+            "identity packs",
+        )
+        matches = [
+            _mapping(item, "identity pack entry")
+            for item in packs
+            if _mapping(item, "identity pack entry").get("fixtureId")
+            == f"fixture:identity-pack:{identity.lower()}:001"
+        ]
+        if len(matches) != 1:
+            raise Noor4DArtifactError("active fixture IdentityPack is not unique")
+        entry = matches[0]
+        expected_sha256 = entry.get("canonicalSha256")
+        try:
+            pack = IdentityPack.model_validate(entry["payload"])
+        except (KeyError, ValueError) as exc:
+            raise Noor4DArtifactError("active fixture IdentityPack is invalid") from exc
+        if (
+            not isinstance(expected_sha256, str)
+            or pack.state != "current"
+            or pack.display_name != identity
+            or canonical_sha256(pack) != expected_sha256
+        ):
+            raise Noor4DArtifactError(
+                "active fixture IdentityPack hash or selection is invalid"
+            )
+        return pack, expected_sha256
+
+    def _document_binding(self, identity: Literal["Eva", "Mira"]) -> ObjectBinding:
+        vectors = _array(
+            _mapping(self._profile["encryptedObjectFormat"], "encrypted object format")[
+                "knownAnswerVectors"
+            ]["vectors"],
+            "object known-answer vectors",
+        )
+        matches = [
+            _mapping(item, "object known-answer vector")
+            for item in vectors
+            if _mapping(item, "object known-answer vector").get("identity") == identity
+        ]
+        if len(matches) != 1:
+            raise Noor4DArtifactError("fixture object binding is not unique")
+        vector = matches[0]
+        expected_ref = _mapping(vector.get("expectedObjectRef"), "expected ObjectRef")
+        try:
+            return ObjectBinding(
+                tenant_id=cast(str, vector["tenantId"]),
+                installation_id=cast(str, vector["installationId"]),
+                object_id=cast(str, vector["objectId"]),
+                key_ref=cast(str, vector["keyRef"]),
+                mime_type=cast(str, expected_ref["mime_type"]),
+            )
+        except (KeyError, TypeError, ValueError, ObjectBindingError) as exc:
+            raise Noor4DArtifactError("fixture object binding is invalid") from exc
+
+    def _output_template(
+        self,
+        *,
+        outcome_key: str,
+        outcome_view: OutcomeView,
+        reply_candidate: ReplyCandidate,
+        presence_reply: PresenceReply,
+    ) -> _OutputTemplate:
+        kinds: tuple[
+            Literal["mail", "erp", "calendar", "document", "confirmation"], ...
+        ] = ("mail", "erp", "calendar", "document", "confirmation")
+        if len(outcome_view.steps) != len(kinds):
+            raise Noor4DArtifactError("fixture OutcomeView step template is invalid")
+        steps = tuple(
+            _OutcomeStepTemplate(
+                kind=kind,
+                step_id=step.step_id,
+                human_summary=step.human_summary,
+                business_evidence_refs=(
+                    tuple(step.evidence_refs) if kind in {"mail", "erp"} else ()
+                ),
+            )
+            for kind, step in zip(kinds, outcome_view.steps, strict=True)
+        )
+        claims: list[_ClaimTemplate] = []
+        for binding in presence_reply.claim_bindings:
+            matches = [
+                step.step_id
+                for step in outcome_view.steps
+                if binding.evidence_refs == step.evidence_refs
+            ]
+            if len(matches) != 1:
+                raise Noor4DArtifactError(
+                    "PresenceReply claim template does not select one outcome step"
+                )
+            claims.append(
+                _ClaimTemplate(claim_ref=binding.claim_ref, step_id=matches[0])
+            )
+        host_validations = _mapping(
+            _mapping(
+                _mapping(self._connector["hostEvidence"], "hostEvidence")[
+                    "outcomeDeliveryContent"
+                ],
+                "outcome delivery content",
+            )["hostValidations"],
+            "host validations",
+        )
+        validation_wrapper = _mapping(
+            host_validations[outcome_key], f"host validation {outcome_key}"
+        )
+        expected_sha256 = _canonical_wrapper_sha(
+            validation_wrapper, f"host validation {outcome_key}"
+        )
+        validation = _mapping(
+            validation_wrapper.get("payload"), f"host validation {outcome_key} payload"
+        )
+        vector_id = validation.get("vector_id")
+        if not isinstance(vector_id, str):
+            raise Noor4DArtifactError("host validation vector ID is invalid")
+        return _OutputTemplate(
+            steps=steps,
+            message_id=presence_reply.message_id,
+            claim_bindings=tuple(claims),
+            host_validation_vector_id=vector_id,
+            expected_host_validation_sha256=expected_sha256,
+            fallback_reply_template=reply_candidate,
         )
 
     def _model_call(self, index: int) -> Noor4DModelCall:
@@ -1060,6 +1317,7 @@ def _validate_evidence(
                     "definitive reject lacks a rejected effect receipt",
                 )
         accumulator.effect_receipts.append(receipt)
+        accumulator.effect_receipts_by_case[call.case_id] = receipt
     readback = observation.effect_readback
     if readback is not None:
         if not isinstance(outcome, ReadbackResult):
@@ -1090,6 +1348,7 @@ def _validate_evidence(
                 "readback_mismatch", "readback has no matching accepted effect receipt"
             )
         accumulator.effect_readbacks.append(readback)
+        accumulator.effect_readbacks_by_case[call.case_id] = readback
     if isinstance(observation.delivery_receipt, DeliveryReceipt):
         if not isinstance(observation.delivery_offer, DeliveryOffer):
             raise Noor4DFlowError(
@@ -1154,6 +1413,7 @@ def _validate_business_chain(
             "business_read_chain_mismatch",
             "calendar effect is not derived from the four sealed business reads",
         )
+    accumulator.business_chain_validated = True
 
 
 def _validate_document_call(draft: DocumentDraft, call: Noor4DConnectorCall) -> None:
@@ -1207,6 +1467,307 @@ def _validate_confirmation_call(
             "confirmation_payload_mismatch",
             "confirmation is not bound to the draft and unique ERP recipient",
         )
+
+
+def _planner_request(call: Noor4DModelCall) -> PlannerRequest:
+    try:
+        payload = require_canonical_bytes(call.planner_request_bytes)
+        request = PlannerRequest.model_validate(payload)
+    except ValueError as exc:
+        raise Noor4DFlowError(
+            "planner_request_invalid", "model call does not contain a valid request"
+        ) from exc
+    if request.model_input.purpose != call.purpose or canonical_sha256(
+        request
+    ) != _sha256(call.planner_request_bytes):
+        raise Noor4DFlowError(
+            "planner_request_mismatch", "model call request differs from its purpose"
+        )
+    return request
+
+
+def _validate_model_request(
+    *,
+    spec: Noor4DRunSpec,
+    call: Noor4DModelCall,
+    accumulator: _Accumulator,
+    outcome_view: OutcomeView | None = None,
+) -> PlannerRequest:
+    request = _planner_request(call)
+    context = request.model_input.presence_context
+    identity_surface_prefix = (
+        spec.proof_scope == "identity_surface_only" and call.purpose != "reply"
+    )
+    selected_pack_matches = (
+        context.identity_pack.model_dump(mode="json")
+        == spec.identity_pack.model_dump(mode="json")
+        and context.identity_pack_sha256 == spec.identity_pack_sha256
+    )
+    relationship_scope_matches = bool(context.relationships) and all(
+        relationship.installation_id == spec.ingress.installation_id
+        for relationship in context.relationships
+    )
+    if (
+        canonical_sha256(context.identity_pack) != context.identity_pack_sha256
+        or context.tenant_id != spec.ingress.tenant_id
+        or (
+            not identity_surface_prefix
+            and (not selected_pack_matches or not relationship_scope_matches)
+        )
+    ):
+        raise Noor4DFlowError(
+            "identity_context_mismatch",
+            "PlannerRequest does not bind the selected current IdentityPack and scope",
+        )
+    if (
+        context.effect_receipts != accumulator.effect_receipts
+        or context.effect_readbacks != accumulator.effect_readbacks
+        or context.delivery_receipts
+        != (
+            []
+            if accumulator.confirmation_delivery_receipt is None
+            else [accumulator.confirmation_delivery_receipt]
+        )
+    ):
+        raise Noor4DFlowError(
+            "model_evidence_context_mismatch",
+            "PlannerRequest evidence differs from the proof earned before dispatch",
+        )
+    if call.purpose == "reply":
+        if not isinstance(request.model_input, ReplyModelInput) or outcome_view is None:
+            raise Noor4DFlowError(
+                "reply_context_mismatch", "reply call lacks a built OutcomeView"
+            )
+        if request.model_input.outcome_view != outcome_view:
+            raise Noor4DFlowError(
+                "reply_context_mismatch",
+                "reply PlannerRequest embeds another OutcomeView",
+            )
+        template = spec.output_template
+        if template is None or request.model_input.allowed_claim_refs != [
+            item.claim_ref for item in template.claim_bindings
+        ]:
+            raise Noor4DFlowError(
+                "reply_context_mismatch",
+                "reply PlannerRequest claim authority differs from the output template",
+            )
+    return request
+
+
+def _validate_connector_scope(spec: Noor4DRunSpec, call: Noor4DConnectorCall) -> None:
+    if spec.proof_scope != "eva_installation_exact":
+        return
+    envelope = call.invoke.params
+    if (
+        envelope.installation_id != spec.ingress.installation_id
+        or envelope.tenant_id != spec.ingress.tenant_id
+    ):
+        raise Noor4DFlowError(
+            "connector_scope_mismatch",
+            "connector call differs from the admitted Eva installation scope",
+        )
+
+
+def _validate_document_candidate(
+    *,
+    spec: Noor4DRunSpec,
+    draft: DocumentDraft,
+    readback: AuthenticatedCandidateReadback | None,
+) -> None:
+    if spec.proof_scope == "identity_surface_only":
+        if spec.document_binding is not None or readback is not None:
+            raise Noor4DFlowError(
+                "identity_surface_scope_exceeded",
+                "Mira identity-surface fixture cannot adopt an object candidate",
+            )
+        return
+    binding = spec.document_binding
+    plaintext = draft.content.encode("utf-8")
+    if (
+        spec.proof_scope != "eva_installation_exact"
+        or binding is None
+        or not isinstance(readback, AuthenticatedCandidateReadback)
+        or readback.authenticated is not True
+        or readback.binding != binding
+        or readback.binding.mime_type != draft.mime_type
+        or readback.plaintext_sha256 != _sha256(plaintext)
+        or readback.plaintext_byte_length != len(plaintext)
+    ):
+        raise Noor4DFlowError(
+            "document_candidate_mismatch",
+            "authenticated document candidate readback is absent or unbound",
+        )
+
+
+def _request_created_at(spec: Noor4DRunSpec) -> str:
+    if not spec.plan_calls:
+        raise Noor4DFlowError("plan_absent", "flow has no plan request timestamp")
+    return _planner_request(
+        spec.plan_calls[-1]
+    ).model_input.presence_context.current_utterance.received_at
+
+
+def _build_outcome_view(spec: Noor4DRunSpec, accumulator: _Accumulator) -> OutcomeView:
+    template = spec.output_template
+    plan = accumulator.plan
+    if template is None or plan is None or not accumulator.business_chain_validated:
+        raise Noor4DFlowError(
+            "outcome_construction_absent",
+            "earned business results cannot construct an OutcomeView",
+        )
+    calendar = accumulator.effect_readbacks_by_case.get("calendar.readback.matches")
+    document = accumulator.effect_readbacks_by_case.get("document.readback.matches")
+    document_reject = accumulator.effect_receipts_by_case.get(
+        "document.create.definitive-reject"
+    )
+    confirmation_reject = accumulator.effect_receipts_by_case.get(
+        "confirmation.deliver.definitive-reject"
+    )
+    confirmation = accumulator.confirmation_delivery_receipt
+    built_steps: list[StepOutcome] = []
+    for item in template.steps:
+        status: Literal["completed", "blocked", "failed"]
+        evidence_refs: list[str] = []
+        unresolved_refs: list[str] = []
+        if item.kind in {"mail", "erp"}:
+            if not item.business_evidence_refs:
+                raise Noor4DFlowError(
+                    "outcome_template_mismatch", "business evidence alias is absent"
+                )
+            status = "completed"
+            evidence_refs = list(item.business_evidence_refs)
+        elif item.kind == "calendar" and calendar is not None:
+            status = "completed"
+            evidence_refs = [calendar.readback_id]
+        elif item.kind == "document" and document is not None:
+            status = "completed"
+            evidence_refs = [document.readback_id]
+        elif item.kind == "document" and document_reject is not None:
+            status = "failed"
+            unresolved_refs = [document_reject.evidence_ref]
+        elif item.kind == "confirmation" and confirmation is not None:
+            status = "completed"
+            evidence_refs = [confirmation.delivery_receipt_id]
+        elif item.kind == "confirmation" and confirmation_reject is not None:
+            status = "failed"
+            unresolved_refs = [confirmation_reject.evidence_ref]
+        elif item.kind == "confirmation" and document_reject is not None:
+            status = "blocked"
+            unresolved_refs = [document_reject.evidence_ref]
+        else:
+            raise Noor4DFlowError(
+                "outcome_proof_absent",
+                f"earned proof for {item.kind} outcome step is absent",
+            )
+        built_steps.append(
+            StepOutcome(
+                step_id=item.step_id,
+                status=status,
+                human_summary=item.human_summary,
+                evidence_refs=evidence_refs,
+                unresolved_refs=unresolved_refs,
+            )
+        )
+    overall_status: Literal["completed", "partially_completed"] = (
+        "completed"
+        if all(step.status == "completed" for step in built_steps)
+        else "partially_completed"
+    )
+    return OutcomeView.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "OutcomeView/v1",
+            "episode_id": plan.episode_id,
+            "generation": plan.generation,
+            "steps": [step.model_dump(mode="json") for step in built_steps],
+            "overall_status": overall_status,
+            "created_at": _request_created_at(spec),
+        }
+    )
+
+
+def _build_presence(
+    *,
+    spec: Noor4DRunSpec,
+    accumulator: _Accumulator,
+    outcome_view: OutcomeView,
+    candidate: ReplyCandidate,
+) -> PresenceReply:
+    template = spec.output_template
+    if template is None:
+        raise Noor4DFlowError(
+            "presence_template_absent", "fixture output template is absent"
+        )
+    step_by_id = {step.step_id: step for step in outcome_view.steps}
+    claim_bindings: list[ClaimBinding] = []
+    for item in template.claim_bindings:
+        step = step_by_id.get(item.step_id)
+        if step is None or not step.evidence_refs:
+            raise Noor4DFlowError(
+                "unearned_presence_claim", "reply claim has no earned outcome proof"
+            )
+        claim_bindings.append(
+            ClaimBinding(claim_ref=item.claim_ref, evidence_refs=step.evidence_refs)
+        )
+    if (
+        candidate.claim_refs != [item.claim_ref for item in template.claim_bindings]
+        or candidate.episode_id != outcome_view.episode_id
+        or candidate.generation != outcome_view.generation
+        or candidate.identity_id != spec.identity_pack.identity_id
+        or candidate.identity_pack_version != spec.identity_pack.pack_version
+        or candidate.style_check != "passed"
+    ):
+        raise Noor4DFlowError(
+            "reply_candidate_mismatch",
+            "reply candidate does not match earned claims and active identity",
+        )
+    lowered_text = candidate.text.casefold()
+    forbidden = [
+        value
+        for value in spec.identity_pack.voice_style.forbidden_wording
+        if value.casefold() in lowered_text
+    ]
+    if forbidden:
+        raise Noor4DFlowError(
+            "host_validation_rejected", "reply contains forbidden internal jargon"
+        )
+    host_validation = Noor4DHostValidation(
+        vector_id=template.host_validation_vector_id,
+        identity_pack_sha256=spec.identity_pack_sha256,
+        outcome_view_sha256=canonical_sha256(outcome_view),
+        text_sha256=_sha256(candidate.text.encode("utf-8")),
+        unproven_claims=0,
+        forbidden_internal_jargon=0,
+        result="accepted",
+    )
+    if host_validation.canonical_sha256 != template.expected_host_validation_sha256:
+        raise Noor4DFlowError(
+            "host_validation_mismatch",
+            "host-built validation differs from the sealed fixture oracle",
+        )
+    presence = PresenceReply.model_validate(
+        {
+            "schema_version": 1,
+            "contract": "PresenceReply/v1",
+            "message_id": template.message_id,
+            "episode_id": outcome_view.episode_id,
+            "generation": outcome_view.generation,
+            "outcome_view_sha256": canonical_sha256(outcome_view),
+            "reply_candidate_sha256": canonical_sha256(candidate),
+            "fallback_reason": None,
+            "host_validation_sha256": host_validation.canonical_sha256,
+            "text": candidate.text,
+            "claim_bindings": [
+                binding.model_dump(mode="json") for binding in claim_bindings
+            ],
+            "identity_id": spec.identity_pack.identity_id,
+            "identity_pack_version": spec.identity_pack.pack_version,
+            "language": spec.identity_pack.language,
+            "created_at": _request_created_at(spec),
+        }
+    )
+    accumulator.host_validation = host_validation
+    return presence
 
 
 def _validate_presence(
@@ -1284,9 +1845,14 @@ def _flow_state(
         generation=1,
         plan=accumulator.plan,
         document_draft=accumulator.document_draft,
+        document_candidate_readback=accumulator.document_candidate_readback,
         reply_candidate=accumulator.reply_candidate,
+        reply_source=accumulator.reply_source,
         outcome_view=accumulator.outcome_view,
         presence_reply=accumulator.presence_reply,
+        host_validation=accumulator.host_validation,
+        identity_pack_sha256=spec.identity_pack_sha256,
+        proof_scope=spec.proof_scope,
         effect_receipts=tuple(accumulator.effect_receipts),
         effect_readbacks=tuple(accumulator.effect_readbacks),
         confirmation_delivery_receipt=accumulator.confirmation_delivery_receipt,
@@ -1311,6 +1877,11 @@ def run_noor_4d(
 
     accumulator = _Accumulator()
     for plan_call in spec.plan_calls:
+        _validate_model_request(
+            spec=spec,
+            call=plan_call,
+            accumulator=accumulator,
+        )
         result = _record_model_call(call=plan_call, model=model, lifecycle=lifecycle)
         accumulator.model_trace.append(
             (
@@ -1347,12 +1918,18 @@ def run_noor_4d(
 
     outcome_call = spec.connector_calls[-1]
     for call in spec.connector_calls[:-1]:
+        _validate_connector_scope(spec, call)
         if call.case_id.startswith("document.create"):
             if spec.document_call is None:
                 raise Noor4DFlowError(
                     "document_model_call_absent", "document effect has no model draft"
                 )
             if accumulator.document_draft is None:
+                _validate_model_request(
+                    spec=spec,
+                    call=spec.document_call,
+                    accumulator=accumulator,
+                )
                 model_result = _record_model_call(
                     call=spec.document_call,
                     model=model,
@@ -1371,7 +1948,19 @@ def run_noor_4d(
                     raise AssertionError("model contract reader returned another type")
                 accumulator.document_draft = parsed
                 _validate_document_call(parsed, call)
-                document_candidate_hook.prepare(parsed)
+                candidate_readback = document_candidate_hook.prepare(
+                    Noor4DDocumentCandidateRequest(
+                        draft=parsed,
+                        binding=spec.document_binding,
+                        plaintext=parsed.content.encode("utf-8"),
+                    )
+                )
+                _validate_document_candidate(
+                    spec=spec,
+                    draft=parsed,
+                    readback=candidate_readback,
+                )
+                accumulator.document_candidate_readback = candidate_readback
         if call.case_id.startswith("calendar.create") and call.case_id != (
             "calendar.create.rate-limited"
         ):
@@ -1426,9 +2015,30 @@ def run_noor_4d(
         raise Noor4DFlowError(
             "outcome_authority_absent", "terminal flow lacks sealed outcome authority"
         )
-    accumulator.outcome_view = spec.expected_outcome_view
+    if spec.proof_scope == "eva_installation_exact":
+        outcome_view = _build_outcome_view(spec, accumulator)
+        if outcome_view != spec.expected_outcome_view:
+            raise Noor4DFlowError(
+                "outcome_assertion_mismatch",
+                "built OutcomeView differs from the sealed assertion oracle",
+            )
+    elif spec.proof_scope == "identity_surface_only":
+        # The sealed Mira connector rows reuse Eva installation fixtures.  Keep
+        # this as the pre-existing identity surface vector, not scoped proof.
+        outcome_view = spec.expected_outcome_view
+    else:
+        raise Noor4DFlowError(
+            "outcome_scope_absent", "terminal flow has no authorized proof scope"
+        )
+    accumulator.outcome_view = outcome_view
     candidate: ReplyCandidate
     if spec.reply_call is not None:
+        _validate_model_request(
+            spec=spec,
+            call=spec.reply_call,
+            accumulator=accumulator,
+            outcome_view=outcome_view,
+        )
         model_result = _record_model_call(
             call=spec.reply_call, model=model, lifecycle=lifecycle
         )
@@ -1449,22 +2059,52 @@ def run_noor_4d(
                 "model reply differs from sealed host-validated candidate",
             )
         candidate = parsed
+        accumulator.reply_source = (
+            "identity_surface_vector"
+            if spec.proof_scope == "identity_surface_only"
+            else "model_receipt"
+        )
     else:
-        candidate = spec.expected_reply_candidate
+        if spec.output_template is None:
+            raise Noor4DFlowError(
+                "reply_template_absent", "partial flow has no host fallback template"
+            )
+        candidate = spec.output_template.fallback_reply_template
+        if candidate != spec.expected_reply_candidate:
+            raise Noor4DFlowError(
+                "reply_assertion_mismatch",
+                "host fallback template differs from the sealed assertion oracle",
+            )
+        accumulator.reply_source = "host_fallback_template"
     accumulator.reply_candidate = candidate
-    presence = spec.expected_presence_reply
-    if presence is None:
+    expected_presence = spec.expected_presence_reply
+    if expected_presence is None:
         raise Noor4DFlowError(
             "presence_reply_absent", "terminal connector call lacks PresenceReply"
         )
+    if spec.proof_scope == "eva_installation_exact":
+        presence = _build_presence(
+            spec=spec,
+            accumulator=accumulator,
+            outcome_view=outcome_view,
+            candidate=candidate,
+        )
+        if presence != expected_presence:
+            raise Noor4DFlowError(
+                "presence_assertion_mismatch",
+                "built PresenceReply differs from the sealed assertion oracle",
+            )
+    else:
+        presence = expected_presence
     _validate_presence(
         spec=spec,
         candidate=candidate,
-        outcome_view=spec.expected_outcome_view,
+        outcome_view=outcome_view,
         presence=presence,
         accumulator=accumulator,
     )
     _validate_outcome_payload(outcome_call, presence, spec.ingress)
+    _validate_connector_scope(spec, outcome_call)
     outcome_observation = _record_connector_call(
         call=outcome_call, connector=connector, lifecycle=lifecycle
     )
@@ -1502,11 +2142,19 @@ def run_noor_4d(
         ) from exc
     accumulator.outcome_ack = persisted_receipt
     accumulator.presence_reply = presence
-    commitment: Noor4DCommitmentState = (
-        "fulfilled" if spec.expected_status == "completed" else "open"
+    status: Noor4DFlowStatus = (
+        "completed"
+        if outcome_view.overall_status == "completed"
+        else "partial_delivered"
     )
+    if status != spec.expected_status:
+        raise Noor4DFlowError(
+            "status_assertion_mismatch",
+            "ACK-closed terminal status differs from the sealed assertion oracle",
+        )
+    commitment: Noor4DCommitmentState = "fulfilled" if status == "completed" else "open"
     return Noor4DFlowResult(
-        status=spec.expected_status,
+        status=status,
         reason=None,
         state=_flow_state(spec, accumulator, commitment_state=commitment),
     )
@@ -1521,12 +2169,14 @@ __all__ = [
     "Noor4DConnectorCall",
     "Noor4DConnectorObservation",
     "Noor4DConnectorPort",
+    "Noor4DDocumentCandidateRequest",
     "Noor4DDocumentCandidateHook",
     "Noor4DExternalCall",
     "Noor4DFixtureBundle",
     "Noor4DFlowError",
     "Noor4DFlowResult",
     "Noor4DFlowState",
+    "Noor4DHostValidation",
     "Noor4DModelCall",
     "Noor4DModelInvocationResult",
     "Noor4DModelPort",

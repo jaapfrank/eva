@@ -92,8 +92,12 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   `Question` en optioneel bestaand lokaal bestand. Hij schrijft het officiële
   antwoordpaar `task_id`/`model_answer`, maar leest geen `Final answer`, roept
   geen scorer aan en kan dus geen score of leaderboardclaim maken. AgentBench-
-  en OSWorld-adapters, de echte modelroute en een volledige CB02-closure blijven
-  open.
+  en OSWorld-adapters en een volledige CB02-closure blijven open. De bijpassende
+  Eva-childadapter `../benchmark/run_eva_gaia_agent.py` is nu ook getest: hij
+  geeft iedere taak een eigen private benchmarkpersoon en -gesprek, accepteert
+  alleen een loopback-Eva-turnroute en controleert antwoordcontract,
+  beurt-ID en antwoordhash. Een echte kandidaatmodelroute, officiële dataset,
+  scorer en score blijven nadrukkelijk afzonderlijk open.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie

@@ -1,6 +1,17 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-26
+Laatst bijgewerkt: 2026-08-27
+
+> Werkmapmelding, 27 augustus 2026 11:00 CEST: deze IDE-werkmap heeft eigen
+> niet-gecommitte wijzigingen en is daarom niet automatisch overschreven door de
+> schone kandidaatbranch. De kandidaat leverde na 02:44 onder meer de gesloten
+> registratie van de 60 officiële AgentBench DBBench-devcases (`28a25ae`) en
+> één begrensde MySQL-uitvoerproef zonder model, score of live-Eva-toegang
+> (`7745d13`). De volgende kandidaatstap (`dcc3be7`) weigert bovendien een
+> benchmarkrun zonder expliciet maximum van 1–8 modelbeurten. Dat werk is nog
+> niet stil in deze werkmap gemengd. De live
+> gebruikersroute blijft `eva.service` met SQLite; de losse Eva2-B-containers
+> met PostgreSQL/Hindsight zijn een afzonderlijke kandidaatroute.
 
 Dit is het korte meekijkdocument. Ik werk het bij na een afgeronde verticale
 stap en uiterlijk bij de volgende uurupdate. De technische waarheid blijft in
@@ -56,24 +67,92 @@ de controleerbare live receipts staan in
 |---|---|---|
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
-| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan | Eigenaar-authenticatie, bordbediening, installer, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
+| Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De browserroute is functioneel maar niet releasbaar: een verse scan vond 8 CRITICAL + 69 HIGH; twee onderhoudskandidaten werden maximaal 7 + 47 en zijn afgewezen. Een beter onderhouden basis, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
+| Beheerbaar product | A/B, back-ups, file-secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates, een eerste gerichte kwetsbaarheidsscan, versleuteld portable transport én herstel van een klein echt gesprek- en geheugenset naar een verse database bestaan. De cockpit kan nu achter één private eigenaarstoken draaien; de kandidaatconfiguratie vereist daarvoor een private tokenfile. De 39 vastgezette runtimepackages zijn bovendien echt en zonder netwerk in de gepinde Pythonbasis geïnstalleerd. | Kandidaatimage uit een gesloten bronarchive, echte B-proef, bordbediening, installer, echte update/restore op een tweede computer, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Nieuwste gesloten keuze
 
-De Hindsight Control Plane is **niet** toegelaten als Eva's geheugenbeheer.
-Niet omdat we liever zelf een dashboard bouwen, maar omdat de echte,
-geïsoleerde proef aantoonde dat deze upstream-UI een algemene schrijfinterface
-is: zij kan banken aanmaken en verwijderen, geheugen wissen en configuratie
-wijzigen. De ene gedeelde toegangssleutel van de UI weet niets van een persoon,
-groep of toestemming binnen Eva.
+De Hindsight Control Plane is **wel kandidaat als eigenaar-weergave**, maar
+niet als directe geheugenwaarheid. De echte, geïsoleerde proef toonde dat deze
+upstream-UI een algemene schrijfinterface is: zij kan banken aanmaken en
+verwijderen, geheugen wissen en configuratie wijzigen. De ene gedeelde
+toegangssleutel van de UI weet niets van een persoon, groep of toestemming
+binnen Eva.
 
 De proef draaide met een nieuwe tijdelijke volume, zonder Eva-data, secrets of
 bestaande volumes, en is daarna volledig verwijderd. Hindsight `0.9.1` blijft
-wel Eva's langetermijngeheugen. Alleen de algemene beheersite valt af. Hierdoor
-bouwen we niet door op een mooie maar ongeschikte dependency. Receipt:
+wel Eva's langetermijngeheugen. We bouwen dus wel door op de UI, maar starten
+met een eigenaar-only, read-only route. Correcties of verwijderen lopen later
+via Eva's eigen auditroute. Receipt:
 [`hindsight-control-plane-isolation-2026-08-26.json`](evidence/living-core/hindsight-control-plane-isolation-2026-08-26.json).
+
+## Actuele geheugenovergang uit de live Eva
+
+De bron is nu zonder gok vastgesteld: de **nu draaiende oude Eva** is
+`eva.service` in `/home/administrator/project/Bottie` en gebruikt haar eigen
+SQLite-bestand `data/eva.db`. Zij gebruikt geen Hindsight. De aparte
+Hindsight-containers horen bij Eva2's kandidaatroute en zijn dus niet als
+oude-Eva-geheugen gebruikt.
+
+### Laatste live controle — 26 augustus 2026
+
+Deze controle was alleen-lezen: de live service, haar SQLite-bestand en haar
+volumes zijn niet gewijzigd of herstart. De bestaande Eva-service antwoordde
+op `/`, `/api/overview`, `/api/workstatus` en `/api/capabilities` met HTTP 200;
+`/api/health` antwoordde ook met HTTP 200 in 0,8 seconde. Dit bewijst dat de
+lokale webroute op dat moment leefde. Het is **geen** nieuwe Telegram-,
+Home-Assistant-, gesprek- of A/B-liveproef.
+
+De live bron telt 3.187 geheugenregels: 1.212 actief en 1.975 gearchiveerd.
+Alleen de actieve regels komen in aanmerking voor een test. Zij zijn verdeeld
+over 21 oude persoonlabels, die Eva2 nog niet betrouwbaar aan haar nieuwe
+personen kan koppelen. Daarom is er **nog niets gekopieerd**: een blinde
+volledige import zou herinneringen van verschillende mensen bij één Eva2-profiel
+kunnen zetten.
+
+Op 27 augustus is die bron opnieuw uitsluitend-lezen gecontroleerd. Behalve de
+3.187 geheugenregels bevat zij 19 personen, 3.108 berichtregels, 5 doelen, 10
+aspiraties en 36 herinneringen. Er is geen tekst, naam of Telegram-ID gelezen
+of vastgelegd. De controle bevestigt dat dit echt Eva1-SQLite-geheugen is en
+geen Hindsight-volume; de compacte receipt staat in
+[`live-eva1-memory-source-audit-2026-08-27.json`](evidence/living-core/live-eva1-memory-source-audit-2026-08-27.json).
+
+De volgende kleine stap is een tijdelijke proef met één door de eigenaar
+bevestigd persoonlabel en een beperkt aantal regels. Iedere overgenomen regel
+krijgt `legacy_unverified`: zij wordt zichtbaar voor review, maar is geen
+bevestigd feit, start geen oude taak en kan niet zonder de nieuwe
+privacy-/consentgrens in een gesprek belanden. Oude Eva, haar SQLite-bestand en
+haar backups blijven uitsluitend gelezen; de proef gebruikt een lege tijdelijke
+Eva2-database en wordt na de test verwijderd.
+
+De omzetter zelf en een eerste echte droogloop zijn nu groen: 25 actieve regels
+uit de vaste backup van 26 augustus zijn in het geheugen omgezet en daarna
+direct uit het proces verdwenen. De proef maakte nul bestanden of database-rijen
+met herinneringstekst. De bron- en resultaat-hashes, de 50-regellimiet en de
+uitsluiting van gewone gesprek-recall staan in
+[`legacy-memory-trial-dry-run-2026-08-26.json`](evidence/living-core/legacy-memory-trial-dry-run-2026-08-26.json).
+Dezelfde route is ook één keer in een lege, tijdelijke PostgreSQL-database
+geschreven en teruggelezen: de regel bleef `restricted` en kwam niet in een
+normale Eva2-recall terug. Die database en container zijn na de proef verwijderd.
+Er is dus technisch voortgang, maar nog geen echte Eva2-geheugenimport: daarvoor
+ontbreekt uitsluitend de bewuste koppeling van één oud persoonlabel aan één
+nieuw Eva2-profiel.
+
+De proefdatabase moet bovendien vanaf nu voor die Eva2-installatie nog helemaal
+leeg zijn in haar geheugenlaag. Een tweede import in dezelfde tijdelijke
+database wordt vóór de write geweigerd; zo kunnen twee oude persoonlabels of
+bronsnapshots niet stil bij elkaar belanden. De echte PostgreSQL-proef hiervoor
+is groen met 18 tests (`9c41b78`); live Eva1 bleef onaangeraakt.
+
+De proefroute neemt voortaan eerst één consistente, alleen-lezen SQLite-snapshot
+van Eva1. Daardoor horen bronhash en geselecteerde regels altijd bij precies
+dezelfde stand, ook wanneer de live Eva ondertussen een nieuw bericht opslaat.
+De kortlevende snapshot mag alleen in een private lokale map bestaan, de
+testdatabase moet localhost zijn en beide worden automatisch opgeruimd. Dit is
+met een synthetische bron en een nieuwe PostgreSQL 16.13-database getest; Eva1
+is niet gelezen of gewijzigd. Receipt:
+[`legacy-memory-trial-private-snapshot-2026-08-27.json`](evidence/living-core/legacy-memory-trial-private-snapshot-2026-08-27.json).
 
 ## Sinds 03:00 daadwerkelijk opgeleverd
 
@@ -86,7 +165,8 @@ Dat zijn niet 41 producten, maar vier gesloten, begrijpelijke uitkomsten:
 | Subagent van opdracht tot werkbord | implementatie `f9373f1`; cockpit-/bewijsbinding `db4cedd` | Starten, volgen, actief stoppen, aparte workerimage en duurzame Kanbankaart zijn technisch groen |
 | Afgeschermde browser-read | `27965d8` | Een echte Chromium las één vaste lokale pagina zonder host- of internetroute |
 | Duurzame browseractie | `72625e0` | Eén vaste klik liep via Eva's logboek en aparte servercontrole; twee providerfouten gaven geen blinde tweede klik |
-| Veilige openbare browser-read | kandidaat, receipt 2026-08-26 | Chromium las `example.com` zonder account; directe browser-egress was geblokkeerd en de proxy weigerde `iana.org`. De gebruikte proxy- en browserdigest zijn vervolgens afgekeurd voor release door 3 HIGH respectievelijk 1 CRITICAL + 22 HIGH bevindingen met fixes |
+| Veilige openbare browser-read | kandidaat, receipts 2026-08-26 | Chromium las `example.com` zonder account; directe browser-egress was geblokkeerd en de proxy weigerde `iana.org`. Een verse scan blokkeerde de browserdigest met 8 CRITICAL + 69 HIGH; de beste onderhoudskandidaat werkte functioneel maar bleef 7 CRITICAL + 47 HIGH en is niet gepromoveerd |
+| Onderhouden browserprovider vergeleken | `agent-browser` 0.35.1, receipt 2026-08-26 | Leest en klikt in dezelfde gesloten actiecel, blokkeert vreemde domeinen en internet, maar is met 8 CRITICAL + 55 HIGH nog niet veilig genoeg voor Eva |
 
 De subagentuitkomst was te breed als één werkblok: motor, opslag, chatbediening,
 stop, workerimage, Kanban en bewijs liepen achter elkaar voordat de zichtbare
@@ -99,7 +179,175 @@ V01-voicegrens parallel: dezelfde kern voorbereiden, geen mediafunctie
 erbij verzinnen. De eerste V02-ingress relayt nu echt audiochunks; de volledige
 lokale full-duplexproef met onderbreking en meetreceipt blijft de volgende gate.
 
-## Nieuwste afgeronde stap
+## Laatste afgeronde stap
+
+Eva2 kan een al gecontroleerde, gesaneerde backup nu als **één versleuteld
+bestand** meenemen en weer als precies dezelfde backup uitpakken. Dat gebruikt
+de al gepinde `cryptography`-bibliotheek; er is geen eigen crypto-pakket
+gemaakt. Vijf concrete controles zijn groen: heen-en-terug geeft dezelfde
+backup terug, een fout wachtwoord faalt, één gewijzigde byte faalt en een
+bestaand bestand of bestaande restoremap wordt nooit overschreven. De live Eva
+1, haar SQLite-bestand en haar service zijn hierbij niet gelezen of gewijzigd.
+De operatorroute leest een wachtwoord alleen uit een private `0600`-file,
+weigert ook symlinkpaden en geeft het niet terug in haar uitvoer.
+Receipt:
+[`portable-whole-archive-transport-2026-08-26.json`](evidence/living-core/portable-whole-archive-transport-2026-08-26.json).
+
+Wat dit **nog niet** is: een knop voor een gewone gebruiker, een import in een
+tweede Eva2-database, een volledige restore op een tweede computer of een
+update. Dat zijn de volgende losse delen van project 10.
+
+De importanalyse heeft daarbij een harde maar gewenste grens bevestigd:
+connector- en credentialvelden in de portable export zijn expres geredigeerd.
+Een generieke SQL-import is daardoor niet alleen onvolledig maar ook verboden;
+hij zou een oude koppeling vals gezond kunnen laten lijken. De restore-adapter
+zet gewone gegevens terug, elke koppeling op “opnieuw koppelen” en houdt oude
+externe acties gesloten tot een nieuwe, beperkte autorisatie met readback
+bestaat.
+
+De eerste decoder én writer daarvoor zijn nu groen: alleen kolompreserverende
+records met de exacte contract-, row-hash- en primary-keybinding worden
+toegelaten. De hele set wordt vóór de eerste databasewrite gecontroleerd; een
+databasefout draait de eigen savepoint terug. De writer is één keer echt in een
+lege PostgreSQL 16.13-installatie uitgevoerd en teruggelezen. Een geredigeerde
+connector komt nu alleen terug als onbruikbaar “opnieuw koppelen”: geen oud
+secret, geen automatische retry en een echte PostgreSQL-proef bewijst dat de
+actieketen vóór intent of providerwerk stopt. Oude modeloproepen kunnen nu
+alleen als `ambiguous` auditgeschiedenis terugkomen; oude, al afgemaakte
+readpogingen houden hun resultaat maar krijgen een onbruikbare
+credentialmarkering. Beide omzettingen zijn contract- en writergetest; een
+uitvoerbare oude read wordt vóór elke targetquery geweigerd. De aparte echte
+PostgreSQL-proef voor modelgeschiedenis is nu groen: een nieuwe PostgreSQL
+16.13-container schreef de rij werkelijk als `ambiguous`, zonder oude
+providerreferentie of secret, en is daarna verwijderd. De gelijkwaardige echte
+PostgreSQL-proef voor read- en effectgeschiedenis is nu ook groen: een
+afgeronde read bleef `observed`, een afgerond effect bleef `provider_accepted`,
+en beide hielden alleen een onbruikbare credentialmarkering. Ook die tijdelijke
+container is verwijderd. Alleen de echte opnieuw-koppelstap volgt nog.
+Het archief bevat actieve versleutelde objectbestanden al inclusief hash-,
+envelope- en metadata-controle. De
+databasewriter weigert ze echter vóór de eerste doelquery totdat een aparte,
+geverifieerde CAS- én sleutelmigratie bestaat; zo ontstaat nooit een ogenschijnlijk
+groen herstel met onleesbare bestanden. Oude
+effectpogingen die al geaccepteerd, afgewezen of onzeker zijn geëindigd,
+houden nu eveneens uitsluitend hun auditstatus en krijgen geen bruikbare oude
+credential mee. Daardoor mag een overstap nooit een oud huis- of ander effect
+automatisch herhalen. Daarom is dit nog geen volledige restore. Receipts:
+[`portable-column-restore-disposable-postgres-2026-08-27.json`](evidence/living-core/portable-column-restore-disposable-postgres-2026-08-27.json)
+en
+[`portable-connector-reauthorization-restore-2026-08-27.json`](evidence/living-core/portable-connector-reauthorization-restore-2026-08-27.json),
+[`portable-model-terminal-restore-postgres-2026-08-27.json`](evidence/living-core/portable-model-terminal-restore-postgres-2026-08-27.json)
+en
+[`portable-terminal-attempt-restore-postgres-2026-08-27.json`](evidence/living-core/portable-terminal-attempt-restore-postgres-2026-08-27.json).
+
+De ontvangende Eva2-installatie kan nu ten minste veilig een eigen
+object-keyring lezen: alleen één private, niet-gelinkte `0600`-file met exact
+dezelfde tenant-, installatie- en sleutel-ID geeft een sleutel terug. Een
+verkeerde scope, groepsrechten of dubbele record stopt gesloten. Dit is de
+ontbrekende sleutelbron, **niet** al een sleuteloverdracht of objectrestore;
+geen sleutel staat in het portable archive. Receipt:
+[`private-object-keyring-2026-08-27.json`](evidence/living-core/private-object-keyring-2026-08-27.json).
+
+Daarbovenop controleert Eva nu eerst een actief versleuteld object uit een oud
+archief zonder iets te schrijven: de originele archiefhash, het vaste
+opslagpad, de versleutelde byte, de metadata én precies de doelkey moeten
+kloppen. Een verkeerde key of gewijzigde byte stopt vóór CAS- of
+databaseherstel. Dit maakt een later toegevoegd databaseveld niet fataal voor
+een al verzegeld archief. De proef gebruikte uitsluitend een synthetisch object
+en synthetische doelkey; Eva1 en de draaiende Eva zijn niet gelezen of gewijzigd.
+Het is nog **geen** sleuteloverdracht, objectkopie, databaseherstel of tweede
+computer. Receipt:
+[`portable-object-target-key-preflight-2026-08-27.json`](evidence/living-core/portable-object-target-key-preflight-2026-08-27.json).
+
+Het volgende deel is ook klaar: na die voorafcontrole kan Eva een versleuteld
+archiefobject één keer in nieuwe, private doelopslag plaatsen en daar opnieuw
+openen. Valt het proces uit tussen tijdelijke kopie en eindplaatsing, dan
+hervat zij juist diezelfde kopie vanuit een klein lokaal herstelbewijs. Een
+verkeerde sleutel maakt zelfs geen doelmap. Dit is nog geen `ObjectRef`-regel
+in PostgreSQL en dus ook geen complete restore, maar de opslaghelft is nu echt
+bewezen met een synthetisch object; Eva1 en de live Eva bleven onaangeraakt.
+Receipt:
+[`portable-object-cas-materialization-2026-08-27.json`](evidence/living-core/portable-object-cas-materialization-2026-08-27.json).
+
+Ook de databasekant accepteert nu zo'n object alleen wanneer dat exacte object
+al aantoonbaar in de ingestelde doelopslag staat. Zonder bewijs stopt Eva vóór
+de eerste databasequery; met bewijs is één echte `ObjectRef`-regel in tijdelijke
+PostgreSQL opgeslagen en teruggelezen. Een bewijs voor een andere doelmap telt
+niet. Daarmee is de object-overdracht van archiefbyte naar opgeslagen regel
+echt gesloten, maar een volledige herstelproef met alle 39 tabellen en een
+tweede computer blijft afzonderlijk open. Receipt:
+[`portable-objectref-cas-bound-postgres-restore-2026-08-27.json`](evidence/living-core/portable-objectref-cas-bound-postgres-restore-2026-08-27.json).
+
+Een herstelbestand gebruikt alfabetisch geordende JSON. Eva accepteert dat nu
+correct, zonder ook maar één onbekend veld toe te laten: de vaste veldenset,
+de primaire sleutel en de archiefhash moeten nog steeds exact kloppen. De
+kolomvolgorde komt uitsluitend uit het verzegelde contract. Een oude
+reader-fixture met onderling botsende test-ID's wordt nog altijd vóór SQL
+geweigerd — terecht, want dat is geen echte databasebackup. Receipt:
+[`portable-canonical-key-order-restore-2026-08-27.json`](evidence/living-core/portable-canonical-key-order-restore-2026-08-27.json).
+
+Een verse Eva-database kan nu helemaal worden opgebouwd en controleert alle 39
+hersteldoelen voordat er iets wordt geschreven. Zowel een volledig leeg archief
+als één kleine, **niet-lege** bron zijn echt van een eerste nieuwe PostgreSQL
+naar een tweede nieuwe PostgreSQL hersteld. Die niet-lege proef bevat elf
+records: tenant, installatie, identiteit, beleid, één synthetische persoon,
+één gesprek met gebruikersbericht, bewijs, brongebeurtenis en één geheugenfeit
+met actuele aanwijzer. Het feit is via Eva's gewone geheugenroute geschreven;
+het bericht gebruikt Eva's echte `TurnEnvelope/v1`-contract. Beide zijn na
+herstel teruggelezen. Het archief bevat alle 39 tabellen; de overige 28 zijn
+leeg. Dit bewijst de hele export→archiefcontrole→verse database→restore-route
+voor een kleine set gewone kern-, gesprek- én geheugengegevens. Het is nog
+niet een volledige 39-tabellenpraktijkbackup, een objectoverdracht of een
+herstel op een andere fysieke computer. Zonder
+versleutelde objecten hoeft die route bovendien geen objectcryptografie te
+laden. Receipts:
+[`portable-fresh-full-schema-empty-restore-2026-08-27.json`](evidence/living-core/portable-fresh-full-schema-empty-restore-2026-08-27.json)
+en
+[`portable-nonempty-full-schema-restore-2026-08-27.json`](evidence/living-core/portable-nonempty-full-schema-restore-2026-08-27.json).
+
+De doelbasis wordt nu al vóór elke write gecontroleerd: de transactie moet
+serialiseerbaar zijn, één herstel-lock vasthouden en nul rijen in alle 39
+canonieke Eva-tabellen zien. Daardoor kan deze route niet stil in een bestaande
+of actieve Eva-installatie schrijven.
+
+Ook vóór een export geldt nu een harde rustgrens: zolang een modelcall,
+read/effect, delivery, actieve planstap of geclaimde worker nog uitvoerbaar is,
+maakt Eva geen portable backup. Een herstelbestand kan daardoor geen oude
+provideractie opnieuw starten. Wachtende doelen blijven wel bewaard. De echte
+39-tabellen-PostgreSQL-proef is groen; zie
+[`portable-quiescent-external-work-2026-08-27.json`](evidence/living-core/portable-quiescent-external-work-2026-08-27.json).
+
+De browserdependency-proef is nu als een echte keuze afgerond, niet als een
+open eindje. De huidige Microsoft Playwright MCP-image werkte in Eva's
+afgesloten lokale browsercel: één pagina, geen hosttoegang, geen vrije
+internetroute en een stop binnen 245 ms. Een verse Trivy-scan vond echter
+**8 CRITICAL + 69 HIGH** bevindingen.
+
+Daarom zijn ook de twee voor de hand liggende dependency-verbeteringen echt
+getest. Eerst werd een netwerkloze kandidaat gebouwd die Microsofts MCP-server
+en Chromium ongemoeid liet maar ongebruikte `npm`/`npx` verwijderde: **7
+CRITICAL + 61 HIGH**. Daarna kreeg de actuele officiële image de drie
+beschikbare Debian-beveiligingsupdates én dezelfde verwijdering. Die tweede,
+functioneel gelijke kandidaat haalde **7 CRITICAL + 47 HIGH**. Dat is echte
+verbetering, maar geen veilige release. Beide kandidaten zijn afgewezen voor
+promotie en niets aan Eva 1, de Eva2-runtime of een live container gewijzigd.
+
+De hashgebonden receipt met image, tests en advisoriesnapshot staat in
+[`playwright-mcp-runtime-trim-2026-08-26.json`](evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json).
+De betere tweede kandidaat staat in
+[`playwright-mcp-system-refresh-2026-08-26.json`](evidence/living-core/playwright-mcp-system-refresh-2026-08-26.json).
+De volgende stap was dus niet nog een kleine aanpassing aan dit beeld, maar een
+beter onderhouden browserprovider kiezen en daar dezelfde scan en praktijkproef
+tegen draaien. Dat is nu gedaan met Vercels `agent-browser` 0.35.1. Deze
+communityprovider draaide echt als niet-root in dezelfde gesloten actiecel:
+één allowlisted pagina, één klik, precies één serverontvangen POST en
+onafhankelijke readback. Een vreemd domein werd geweigerd; de container had
+geen host-mount, poort of internetroute. De upstream-MCP-core bevat echter ook
+JavaScript-evaluatie en een verse offline scan vond **8 CRITICAL + 55 HIGH**.
+Daarom is ook deze kandidaat afgewezen voor promotie. De concrete receipt staat
+in [`agent-browser-sidecar-evaluation-2026-08-26.json`](evidence/living-core/agent-browser-sidecar-evaluation-2026-08-26.json).
+
+## Eerdere afgeronde browserstap
 
 De browser kan nu ook één **echte openbare maar volledig accountloze pagina**
 lezen, zonder een vrije internetbrowser van Eva te maken. De nieuwe kandidaat
@@ -276,22 +524,43 @@ tekst toe tot Eva's bestaande private gesprekcore en maken een vaste
 antwoordzin als PCM. De receipt is gebonden aan locks, code, sidecar-digests,
 teksthashes en PCM-hashes en hercontroleert lokaal groen. Dit is geen menselijk
 voicegesprek: microfoon, speaker, full duplex, onderbreken, modelantwoord,
-tool, latency en onafhankelijke review zijn nog open. Checkpoint `8af6a15`
-herstelt de gepinde Piper-, Faster-Whisper- en controllerroute wel al uit
-voorverwarmde caches op één intern Docker-netwerk zonder gateway, hostpoort of
-hostmount. Zie [`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
+tool, latency en onafhankelijke review zijn nog open. Checkpoint `8af6a15` is
+nu alleen nog een historisch inspectierecord: een herhaalde start vond een
+ontbrekende Whisper-tokenizer en ontbrekende tijdelijke schrijfruimte voor
+beide sidecars. Die oude offlineclaim telt dus niet meer. Zie
+[`experiments/wyoming-local-voice-v1/`](experiments/wyoming-local-voice-v1/).
 
 Checkpoint `d28ee3a` maakt diezelfde lokale ingangsroute daarna daadwerkelijk
 **streamend**: iedere Piper-PCM-chunk wordt direct naar Whisper doorgestuurd
 vóór Piper `audio-stop` stuurt. De controller houdt alleen teller, formaat en
 SHA-256 bij, nooit het volledige invoeraudiobestand. De echte geïsoleerde run
-relayeerde 38 chunks en leverde daarna via dezelfde private `VoiceTurn/v1`
-route een antwoord-PCM-stroom. Dit is doelbewust nog geen full duplex,
-microfoon/speaker, barge-in of latencyclaim; het voorkomt alleen dat een
-toekomstige voice-route stiekem eerst een compleet geluidsbestand moet bouwen.
+relayeerde 39 chunks en leverde daarna via dezelfde private `VoiceTurn/v1`
+route een antwoord-PCM-stroom. De vernieuwde proef sloot die lokale TTS-stroom
+na drie teruggespeelde blokken zonder de rest te bufferen. Dit is doelbewust
+nog geen full duplex, microfoon/speaker, microfoonbarge-in of latencyclaim; het
+voorkomt alleen dat een toekomstige voice-route stiekem eerst een compleet
+geluidsbestand moet bouwen.
 De huidige WSL-bouwhost heeft bovendien geen bruikbaar audio-in- of
 audio-uitapparaat; een echte menselijk microfoon-/speakerproef vereist daarom
 een host met die hardware, niet nog een synthetische codeproef.
+
+De vernieuwde proef gebruikt een exact vastgelegde
+`openai/whisper-tiny`-tokenizercache naast het read-only `base-int8`-model en
+alleen begrensde `tmpfs`-ruimte voor de tijdelijke sidecarbestanden.
+
+Daarna liep de Piper → streaming Whisper → `VoiceTurn/v1` → Piper-keten op een
+intern Docker-netwerk zonder gateway, hostpoort, hostmount, productie-
+database, Telegram of Home Assistant. De controller is uitsluitend uit een
+tijdelijke, hashgecontroleerde wheelhouse gebouwd met `--no-index`.
+`offline-isolation-v2-receipt.json` bindt die geslaagde proef aan de exacte
+read-only model- en tokenizercaches, kleine noodzakelijke `tmpfs`-mappen en
+alle drie de geïsoleerde containers. De receipt bewaart alleen hashes, formaten
+en tellers; de tijdelijke containers, image, gekopieerde caches en wheelhouse
+worden na deze vastlegging verwijderd.
+
+Dit sluit nog steeds **niet** het echte voiceproduct: er was geen mens,
+microfoon, speaker, modelantwoord, tool, full duplex, barge-in of
+latencymeting. Die claims blijven terecht open.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
 gestarte providercall kan de geverifieerde eigenaar één duurzaam **stopverzoek**
@@ -392,7 +661,11 @@ Eva's unieke hoofdfeature.
   3/3 disposable PostgreSQL-/Chromiumscenario's groen. Dit is technisch lokaal
   bewijs, geen publieke website, download, account, Telegram/B, browser-SIGKILL
   of algemene computerbediening; zie
-  `reviews/browser-action-a02-72625e0.md`.
+  `reviews/browser-action-a02-72625e0.md`. Op 26 augustus is dezelfde vaste
+  proef opnieuw met uitsluitend lokale gepinde images uitgevoerd: alle vier
+  scenario's waren groen, zonder internetroute of gepubliceerde browserpoort.
+  De tijdelijke containers en netwerken zijn daarna verwijderd; zie
+  [`playwright-mcp-action-rebuild-2026-08-26.json`](evidence/living-core/playwright-mcp-action-rebuild-2026-08-26.json).
 - Browser-/workflowbesluit DF03/DF04: Harness PlaywrightBrowser blijft alleen
   een wegwerpvergelijking omdat hij in Eva's proces zit en niet met duurzame
   Pydantic-replay samengaat. Stock DBOS `2.31.0` is na bronaudit
@@ -480,9 +753,13 @@ Eva's unieke hoofdfeature.
   bijbestand; nooit GAIA's `Final answer`. Het antwoordbestand heeft precies
   het officiële `task_id`/`model_answer`-formaat, maar de adapter roept geen
   scorer aan en schrijft altijd `officialScore: null`. Tien gerichte
-  adapter-/manifestchecks en linting zijn groen. Dit is een echte
-  developmentroute, nog geen download, modelcall, officiële score of
-  leaderboardinzending. De gated GAIA-toegang, model-/kostenmandaat,
+  adapter-/manifestchecks waren groen. De nieuwe Eva-childadapter sluit hier
+  direct op aan: een taak krijgt een eigen private benchmarkpersoon en gesprek;
+  de adapter accepteert alleen een Eva-turnroute op loopback en weigert
+  een antwoord dat niet aan exact die beurt en hash is gebonden. Zeventien
+  gerichte benchmarkchecks zijn groen. Dit is een echte developmentroute, nog
+  geen download, modelcall, officiële score of leaderboardinzending. De gated
+  GAIA-toegang, model-/kostenmandaat,
   AgentBench-/OSWorld-adapters en CB02-CB07 blijven open.
 - Eigenaarmodus OM00: Hermes' actuele officiële `Godmode` blijkt een optionele
   jailbreak-/safety-bypassskill, geen autonome superstand. Eva krijgt in plaats

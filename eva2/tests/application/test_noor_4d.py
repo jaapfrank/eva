@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
+import tempfile
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
@@ -14,6 +16,9 @@ from eva.adapters.connectors.process import (
     run_connector_process,
 )
 from eva.adapters.model import FixtureModelAdapter
+from eva.adapters.objects.cas import FileSystemCAS
+from eva.adapters.objects.envelope import XChaCha20ObjectCipher
+from eva.adapters.objects.fixture_keys import FixtureObjectKeyResolver
 from eva.adapters.objects.p256 import P256AckVerifier
 from eva.application.noor_4d import (
     Noor4DArtifactError,
@@ -21,6 +26,7 @@ from eva.application.noor_4d import (
     Noor4DConnectorCall,
     Noor4DConnectorObservation,
     Noor4DConnectorPort,
+    Noor4DDocumentCandidateRequest,
     Noor4DDocumentCandidateHook,
     Noor4DExternalCall,
     Noor4DFixtureBundle,
@@ -28,6 +34,12 @@ from eva.application.noor_4d import (
     Noor4DModelInvocationResult,
     Noor4DModelPort,
     run_noor_4d,
+)
+from eva.application.objects import (
+    AuthenticatedCandidateReadback,
+    DurableCandidateBindingCommit,
+    ObjectApplicationService,
+    PreparedCandidateBinding,
 )
 from eva.contracts import canonical_json_bytes, canonical_sha256
 from eva.contracts.execution import (
@@ -49,7 +61,7 @@ CONNECTOR_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )
 ACK_KEY_PATH = REPOSITORY_ROOT / "design/fixtures/noor-client-ack-key-v1.json"
-CONNECTOR_SHA256 = "a17451b03978a7018f7fe8b7143981ce7d9a1c596abc7ada261cc77c211534e5"
+CONNECTOR_SHA256 = "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
 
 
 @pytest.fixture(scope="module")
@@ -87,12 +99,73 @@ class RecordingLifecycle(Noor4DCallLifecycle):
         self.events.append(("result", call.call_id))
 
 
-class RecordingDocumentHook(Noor4DDocumentCandidateHook):
+class AuthenticatedDocumentHook(Noor4DDocumentCandidateHook):
+    """Test-process CAS proof only; it claims no DB selection or ObjectRef."""
+
     def __init__(self) -> None:
         self.drafts: list[DocumentDraft] = []
+        self.readbacks: list[AuthenticatedCandidateReadback] = []
+        self._temporary_directory = tempfile.TemporaryDirectory()
+        self._root = Path(self._temporary_directory.name)
+        self._resolver = FixtureObjectKeyResolver.from_sealed_profile(PROFILE_PATH)
+        self._service = ObjectApplicationService(
+            cipher=XChaCha20ObjectCipher(),
+            store=FileSystemCAS(self._root / "objects"),
+        )
 
-    def prepare(self, draft: DocumentDraft) -> None:
-        self.drafts.append(draft)
+    def _commit(
+        self, binding: PreparedCandidateBinding
+    ) -> DurableCandidateBindingCommit:
+        receipt_bytes = canonical_json_bytes(
+            {
+                "committedAt": "2026-08-20T12:00:00Z",
+                "preparedBindingSha256": binding.canonical_sha256,
+            }
+        )
+        receipt_path = self._root / "candidate-binding-commit.json"
+        with receipt_path.open("xb") as handle:
+            handle.write(receipt_bytes)
+            handle.flush()
+            os.fsync(handle.fileno())
+        directory_fd = os.open(self._root, os.O_RDONLY)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+        return DurableCandidateBindingCommit(
+            prepared_binding_sha256=binding.canonical_sha256,
+            committed_at="2026-08-20T12:00:00Z",
+            commit_receipt_sha256=canonical_sha256(
+                {
+                    "committedAt": "2026-08-20T12:00:00Z",
+                    "preparedBindingSha256": binding.canonical_sha256,
+                }
+            ),
+        )
+
+    def prepare(
+        self, request: Noor4DDocumentCandidateRequest
+    ) -> AuthenticatedCandidateReadback | None:
+        self.drafts.append(request.draft)
+        if request.binding is None:
+            return None
+        readback = self._service.create_candidate_and_authenticate(
+            request.binding,
+            request.plaintext,
+            key_resolver=self._resolver,
+            binding_committer=self._commit,
+        )
+        self.readbacks.append(readback)
+        return readback
+
+
+class WrongPlaintextDocumentHook(AuthenticatedDocumentHook):
+    def prepare(
+        self, request: Noor4DDocumentCandidateRequest
+    ) -> AuthenticatedCandidateReadback | None:
+        readback = super().prepare(request)
+        assert readback is not None
+        return replace(readback, plaintext_sha256="0" * 64)
 
 
 class FixtureModelPort(Noor4DModelPort):
@@ -297,9 +370,10 @@ def _run_spec(
     model: Noor4DModelPort,
     *,
     connector: Noor4DConnectorPort | None = None,
+    hook: Noor4DDocumentCandidateHook | None = None,
 ):
     lifecycle = RecordingLifecycle()
-    hook = RecordingDocumentHook()
+    actual_hook = hook or AuthenticatedDocumentHook()
     verifier, claimer, claims = _ack_ports()
     actual_connector = connector or RealFixtureConnectorPort()
     result = run_noor_4d(
@@ -307,11 +381,11 @@ def _run_spec(
         model=model,
         connector=actual_connector,
         lifecycle=lifecycle,
-        document_candidate_hook=hook,
+        document_candidate_hook=actual_hook,
         ack_signature_verifier=verifier,
         ack_challenge_claimer=claimer,
     )
-    return result, actual_connector, lifecycle, hook, claims
+    return result, actual_connector, lifecycle, actual_hook, claims
 
 
 def _call_ids(lifecycle: RecordingLifecycle) -> list[str]:
@@ -337,10 +411,10 @@ def test_bundle_is_content_addressed_and_rejects_one_changed_byte() -> None:
         connector_artifact_bytes=connector,
     )
     assert loaded.profile_sha256 == (
-        "86972d7c8e7685a18593786ae57949e97a481603e4b8dec7869f8aa11f04aaf6"
+        "17279a5064790398693573af1e2baf7988a496c716f5e37a7c8880763817b7fe"
     )
     assert loaded.model_sha256 == (
-        "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+        "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593"
     )
     assert loaded.connector_sha256 == CONNECTOR_SHA256
 
@@ -390,11 +464,35 @@ def test_happy_eva_and_mira_execute_real_interleaved_flow_and_close_only_on_ack(
     assert result.state.outcome_ack is not None
     assert result.state.outcome_ack.wire_sha256 == wire_sha256
     assert result.state.commitment_state == "fulfilled"
+    assert result.state.proof_scope == (
+        "eva_installation_exact" if scenario == "happy_eva" else "identity_surface_only"
+    )
+    assert result.state.reply_source == (
+        "model_receipt" if scenario == "happy_eva" else "identity_surface_vector"
+    )
     assert len(result.state.effect_receipts) == 4
     assert len(result.state.effect_readbacks) == 3
     assert result.state.confirmation_delivery_receipt is not None
     assert len(claims) == 1
     assert len(hook.drafts) == 1
+    if scenario == "happy_eva":
+        assert result.state.document_candidate_readback is not None
+        assert result.state.document_candidate_readback.authenticated
+        assert result.state.document_candidate_readback.plaintext_sha256 == (
+            "c40d2ea8bb612e2fe7843e2585c7ea122a39227ec6848f847b3e09a3002dfe68"
+        )
+        assert result.state.document_candidate_readback.plaintext_byte_length == 122
+        assert not hasattr(result.state.document_candidate_readback, "object_ref")
+        assert result.state.host_validation is not None
+        assert result.state.host_validation.result == "accepted"
+        assert canonical_sha256(result.state.outcome_view) == (
+            result.state.host_validation.outcome_view_sha256
+        )
+        assert len(hook.readbacks) == 1
+    else:
+        assert result.state.document_candidate_readback is None
+        assert result.state.host_validation is None
+        assert hook.readbacks == []
     assert isinstance(connector, RealFixtureConnectorPort)
     assert connector.calls == [
         "mail.search.happy",
@@ -533,6 +631,7 @@ def test_definitive_rejects_keep_only_proven_partial_result_and_do_not_resend(
     assert result.state.presence_reply is not None
     assert result.state.presence_reply.text == status_text
     assert result.state.reply_candidate is not None
+    assert result.state.reply_source == "host_fallback_template"
     assert result.state.presence_reply.reply_candidate_sha256 == canonical_sha256(
         result.state.reply_candidate
     )
@@ -599,7 +698,7 @@ def test_unbound_model_result_is_not_recorded_by_lifecycle(
         "model_rate_limit" if model_port_type is AlteredHttpModelPort else "happy_eva"
     )
     lifecycle = RecordingLifecycle()
-    hook = RecordingDocumentHook()
+    hook = AuthenticatedDocumentHook()
     connector = RealFixtureConnectorPort()
     verifier, claimer, _ = _ack_ports()
 
@@ -625,7 +724,7 @@ def test_unbound_connector_result_is_not_recorded_by_lifecycle(
     bundle: Noor4DFixtureBundle, model_adapter: FixtureModelAdapter
 ) -> None:
     lifecycle = RecordingLifecycle()
-    hook = RecordingDocumentHook()
+    hook = AuthenticatedDocumentHook()
     connector = WrongFirstResultPort()
     verifier, claimer, _ = _ack_ports()
 
@@ -677,3 +776,72 @@ def test_wrong_non_null_outcome_request_ref_stops_before_outcome_dispatch(
         )
 
     assert connector.calls == [call.case_id for call in spec.connector_calls[:-1]]
+
+
+def test_expected_outcome_is_assertion_only_and_cannot_drive_reply_context(
+    bundle: Noor4DFixtureBundle, model_adapter: FixtureModelAdapter
+) -> None:
+    spec = bundle.scenario("happy_eva")
+    assert spec.expected_outcome_view is not None
+    first = spec.expected_outcome_view.steps[0]
+    mutated_expected = spec.expected_outcome_view.model_copy(
+        update={
+            "steps": [
+                first.model_copy(update={"human_summary": "Verkeerde verwachting."}),
+                *spec.expected_outcome_view.steps[1:],
+            ]
+        }
+    )
+    connector = RealFixtureConnectorPort()
+
+    with pytest.raises(Noor4DFlowError, match="built OutcomeView"):
+        _run_spec(
+            replace(spec, expected_outcome_view=mutated_expected),
+            FixtureModelPort(model_adapter),
+            connector=connector,
+        )
+
+    assert connector.calls == [call.case_id for call in spec.connector_calls[:-1]]
+
+
+def test_expected_presence_is_assertion_only_and_cannot_drive_outcome_dispatch(
+    bundle: Noor4DFixtureBundle, model_adapter: FixtureModelAdapter
+) -> None:
+    spec = bundle.scenario("happy_eva")
+    assert spec.expected_presence_reply is not None
+    mutated_expected = spec.expected_presence_reply.model_copy(
+        update={"message_id": "fixture:message:wrong:001"}
+    )
+    connector = RealFixtureConnectorPort()
+
+    with pytest.raises(Noor4DFlowError, match="built PresenceReply"):
+        _run_spec(
+            replace(spec, expected_presence_reply=mutated_expected),
+            FixtureModelPort(model_adapter),
+            connector=connector,
+        )
+
+    assert connector.calls == [call.case_id for call in spec.connector_calls[:-1]]
+
+
+def test_unbound_authenticated_object_candidate_stops_before_document_dispatch(
+    bundle: Noor4DFixtureBundle, model_adapter: FixtureModelAdapter
+) -> None:
+    connector = RealFixtureConnectorPort()
+
+    with pytest.raises(Noor4DFlowError, match="candidate readback"):
+        _run_spec(
+            bundle.scenario("happy_eva"),
+            FixtureModelPort(model_adapter),
+            connector=connector,
+            hook=WrongPlaintextDocumentHook(),
+        )
+
+    assert connector.calls == [
+        "mail.search.happy",
+        "mail.read.happy",
+        "erp.lookup.unique",
+        "calendar.availability.happy",
+        "calendar.create.happy",
+        "calendar.readback.matches",
+    ]

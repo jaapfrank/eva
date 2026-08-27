@@ -55,6 +55,8 @@ const EXCLUSIONS = Object.freeze([
   { path: '*.pid', readPolicy: 'never-read', reason: 'runtime process state' },
   { path: '__pycache__/', readPolicy: 'never-read', reason: 'generated Python bytecode' },
   { path: '*.py[cod]', readPolicy: 'never-read', reason: 'generated Python bytecode' },
+  { path: '.ruff_cache/', readPolicy: 'never-read', reason: 'generated Python lint cache' },
+  { path: '.pytest_cache/', readPolicy: 'never-read', reason: 'generated Python test cache' },
   { path: '.venv/', readPolicy: 'never-scan-or-hash', reason: 'local Python dependencies' },
   { path: 'venv/', readPolicy: 'never-scan-or-hash', reason: 'local Python dependencies' },
   { path: '.env', readPolicy: 'never-read', reason: 'private environment configuration' },
@@ -151,7 +153,8 @@ function parsedGitignorePatterns(contents) {
 function validateGitignoreContract(root, repositoryPaths = null) {
   if (repositoryPaths) {
     const ignoreFiles = [...repositoryPaths].filter((file) => (
-      file === '.gitignore' || file.endsWith('/.gitignore')
+      (file === '.gitignore' || file.endsWith('/.gitignore'))
+      && fs.existsSync(path.join(root, file))
     ));
     if (ignoreFiles.length !== 1 || ignoreFiles[0] !== '.gitignore') {
       const found = ignoreFiles.length ? ignoreFiles.sort().join(',') : 'geen';
@@ -212,6 +215,39 @@ const ROLE_RULES = Object.freeze([
   { id: 'root-config', role: 'repository-config', test: (file) => ROOT_FILES.has(file) },
   { id: 'benchmark', role: 'benchmark', test: (file) => file.startsWith('benchmark/') },
   { id: 'deployment', role: 'deployment', test: (file) => file.startsWith('deploy/') },
+  { id: 'design', role: 'documentation', test: (file) => file.startsWith('design/') },
+  { id: 'experiments', role: 'experimental', test: (file) => file.startsWith('experiments/') },
+  { id: 'transition', role: 'documentation', test: (file) => file.startsWith('transition/') },
+  {
+    id: 'eva2-verification', role: 'verification',
+    test: (file) => file.startsWith('eva2/tests/') || file.startsWith('eva2/evidence/'),
+  },
+  {
+    id: 'eva2-documentation', role: 'documentation',
+    test: (file) => file === 'eva2/README.md' || file.startsWith('eva2/design/'),
+  },
+  {
+    id: 'eva2-deployment', role: 'deployment',
+    test: (file) => file.startsWith('eva2/deploy/') || file.startsWith('eva2/migrations/'),
+  },
+  {
+    id: 'eva2-verification-runtime', role: 'verification-runtime',
+    test: (file) => file.startsWith('eva2/tools/'),
+  },
+  {
+    id: 'eva2-runtime', role: 'product-runtime',
+    test: (file) => ['eva2/src/', 'eva2/connector_sdk/', 'eva2/connectors/']
+      .some((prefix) => file.startsWith(prefix)),
+  },
+  {
+    id: 'eva2-build-contract', role: 'repository-config',
+    test: (file) => [
+      'eva2/forge/', 'eva2/release/', 'eva2/schemas/', 'eva2/vendor/',
+    ].some((prefix) => file.startsWith(prefix)) || [
+      'eva2/alembic.ini', 'eva2/pyproject.toml', 'eva2/requirements-4d.lock',
+      'eva2/requirements.lock',
+    ].includes(file),
+  },
   {
     id: 'generated-doc', role: 'generated',
     test: (file) => SELF_OUTPUTS.has(file) || /^docs\/.+\.generated\.(?:json|md)$/u.test(file),

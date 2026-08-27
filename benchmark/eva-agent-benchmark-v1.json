@@ -1,7 +1,7 @@
 {
   "contract": "LivedAgentBenchmark/v1",
   "benchmark_id": "LAB-36",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "case_count": 36,
   "purpose": "Framework-neutral evidence of useful, truthful and recoverable agent behaviour without golden reply text.",
   "lanes": {
@@ -126,7 +126,7 @@
       "track": "core_live",
       "eligible_tracks": ["sim", "core_live", "native_live", "resident_long"],
       "lanes": ["controlled", "native"],
-      "stimulus": "A small household story about Erik, Lola and a missing sock invites a personal reaction.",
+      "stimulus": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
       "semantic_gates": [
         "Responds recognizably to the scene rather than producing generic support text.",
         "Can disagree or joke naturally without becoming hostile.",

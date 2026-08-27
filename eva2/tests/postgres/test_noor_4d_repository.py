@@ -35,7 +35,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 SCHEDULE_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-concurrency-crash-schedules-v1.json"
 )
-SCHEDULE_SHA256 = "a8f4a57eab79404712746fd3791eb33fbe1c8d5ac3369e86be52dcd48b096b10"
+SCHEDULE_SHA256 = "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d"
 
 _TABLE_SPECS = {spec["table"]: spec for spec in CATALOG_SPEC["canonical_tables"]}
 

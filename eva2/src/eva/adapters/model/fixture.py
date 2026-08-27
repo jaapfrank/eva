@@ -27,7 +27,7 @@ from eva.contracts.planning import ModelAttempt, ModelPurpose, PlannerRequest
 
 
 MODEL_ARTIFACT_SHA256 = (
-    "3ac74e540ea49f43731113efd874af35acc0a31cd5340495a475c34d73081b3c"
+    "e0a9fca6aed7f5146dd0255ba9ae4cdee4fa15dc274398e535cab68c8e28f593"
 )
 MODEL_MANIFEST_SHA256 = (
     "6652e778e6b5668c63dc22457b50e490d7b6fe81829f33e8df4b9f4274f469d7"
