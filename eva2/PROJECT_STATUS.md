@@ -62,6 +62,22 @@ de controleerbare live receipts staan in
 
 ## Nieuwste gesloten stap
 
+Een niet-lege, volledig synthetische Eva-installatie is nu daadwerkelijk
+**verplaatst naar een tweede nieuwe database**. Identiteit, gesprek, bericht,
+geheugen en bewijs kwamen gecontroleerd terug; de exportrol zag daarbij alleen
+de bedoelde persoon/installation. Daarmee is “backup maken” niet langer alleen
+een leeg-archiefproefje. De bron en het doel waren tijdelijke databases en zijn
+na afloop verwijderd.
+
+Dit is nog geen installatie op een tweede fysieke computer: de wizard,
+secretherinvoer, connector opnieuw koppelen en gebruikersacceptatie blijven
+open. De migratiecontrole gaf een bekende waarschuwing over cyclische database-
+relaties. De restore zelf was groen, maar die waarschuwing blijft zichtbaar als
+onderhoudspunt. Bewijs:
+[`portable-nonempty-cross-database-restore-2026-08-27.json`](evidence/living-core/portable-nonempty-cross-database-restore-2026-08-27.json).
+
+## Eerder deze run gesloten: kandidaat-runtime
+
 De kandidaat-Eva 2 kan nu een **nieuwe, tijdelijke PostgreSQL-database
 aanmaken, veilig opnieuw starten én haar eigen webkern openen**. Dit was niet
 alleen een test op papier: de kandidaatimage draaide als een niet-root,
