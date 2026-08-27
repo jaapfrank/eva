@@ -132,7 +132,8 @@ geen V01-voiceconnector of migratie die zo'n extern/draagbaar record mag
 schrijven. V03/V04 promoveren de exact dezelfde shapes pas samen met die
 concrete route en opslagautoriteit.
 
-Checkpoint `20490a0` sluit daarop de kleine afspeelgrens aan. De nieuwe
+Checkpoint `20490a0`, hersteld in `585eabf`, sluit daarop de kleine afspeelgrens
+aan. De nieuwe
 `VoicePlaybackController` kent alleen de gebonden sessie, beurt,
 antwoordgeneratie en ingeplugde `play`/`stop`- en generatiestopgrenzen. Hij
 bewaart geen audio; hij geeft begrensde chunks door. Een geldige `BargeIn`

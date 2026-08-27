@@ -499,13 +499,15 @@ een host met die hardware, niet nog een synthetische codeproef.
 Checkpoint `20490a0` voegt vervolgens de ontbrekende dunne
 **afspeel-/onderbreekgrens** toe. Zij gebruikt geen nieuwe STT-, TTS-, WebRTC-
 of geheugenimplementatie: een bestaande speaker-, browser- of
-provideruitvoerder wordt als kleine sink ingeplugd. De controller bewaart geen
-audio, accepteert alleen begrensde blokken, en stopt uitsluitend de exact
-gebonden onafgemaakte antwoordgeneratie. Een barge-in van een andere persoon,
-sessie, beurt of generatie faalt. De controller wacht op een daadwerkelijke
-stopbevestiging; een kapotte speaker levert een fout op en nooit een onterechte
-“onderbroken”-receipt. **26 gerichte voice-/gesprekstests zijn groen.** Dit
-sluit geen fysieke V02-proef: er zijn nog geen microfoon, speaker,
+provideruitvoerder wordt als kleine sink ingeplugd. Checkpoint `585eabf`
+herstelt daarna een echte leemte: een geldige onderbreking stopt nu naast de
+speaker ook de exact gebonden, nog lopende antwoordgeneratie. Beide stops
+starten tegelijk, zodat een trage modelprovider de speakerstop niet ophoudt.
+Een barge-in van een andere persoon, sessie, beurt of generatie faalt. Een
+kapotte speaker of mislukte generatiestop levert een fout op en nooit een
+onterechte “onderbroken”-receipt. **28 gerichte voice-/gesprekstests zijn
+groen.** De concrete Pydantic-/TTS-adapter moet deze stopgrens nog aansluiten;
+dit sluit dus geen fysieke V02-proef: er zijn nog geen microfoon, speaker,
 full-duplex, providerverbinding, latencyclaim of onafhankelijke review.
 
 Checkpoint `8438fea` sluit de volgende, eerlijke veiligheidsrem: na een al
