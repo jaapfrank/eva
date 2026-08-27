@@ -63,20 +63,27 @@ de controleerbare live receipts staan in
 ## Nieuwste gesloten stap
 
 De kandidaat-Eva 2 kan nu een **nieuwe, tijdelijke PostgreSQL-database
-aanmaken én daarna veilig opnieuw starten**. Dit was niet alleen een test op
-papier: de kandidaatimage draaide als een niet-root, alleen-lezen container op
-een privé Docker-netwerk. De eerste start zette alle schema-updates tot
-`4e_0004_delegated_work_stop`; de tweede start herkende die eindstand en voerde
-niets dubbel uit. Tijdens deze proef is een echte fout gevonden en opgelost:
-een normale `postgresql://`-verbinding vroeg nog om de oude `psycopg2`-driver,
-terwijl de kandidaat alleen de huidige `psycopg`-driver bevat. De runtime kiest
-nu centraal de aanwezige driver.
+aanmaken, veilig opnieuw starten én haar eigen webkern openen**. Dit was niet
+alleen een test op papier: de kandidaatimage draaide als een niet-root,
+alleen-lezen container op een privé Docker-netwerk. De eerste start zette alle
+schema-updates tot `4e_0004_delegated_work_stop`; de tweede start herkende die
+eindstand en voerde niets dubbel uit. Daarna antwoordde Eva's eigen `/healthz`
+en `/readyz` groen: database, geheugenverbinding en modellease waren gereed.
+
+Tijdens deze proef is een echte fout gevonden en opgelost: een normale
+`postgresql://`-verbinding vroeg nog om de oude `psycopg2`-driver, terwijl de
+kandidaat alleen de huidige `psycopg`-driver bevat. De runtime kiest nu centraal
+de aanwezige driver. Voor de laatste webkerncheck waren Hindsight en de
+modellease bewust lokale testdoubles; er is geen echt geheugen gelezen en geen
+modeloproep gedaan.
 
 Dit sluit een belangrijk stuk van **project 1: veilige eindruntime en
 B-release**. Het is nog geen B-deploy: Eva 1, B, bestaande volumes, Hindsight,
 Telegram, Home Assistant en echte secrets zijn niet geopend. Het complete,
 geschoonde bewijs staat in
-[`managed-b-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-candidate-schema-restart-2026-08-27.json).
+[`managed-b-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-candidate-schema-restart-2026-08-27.json)
+en
+[`managed-b-candidate-runtime-readiness-2026-08-27.json`](evidence/living-core/managed-b-candidate-runtime-readiness-2026-08-27.json).
 
 ## Nieuwste gesloten keuze
 
@@ -469,8 +476,11 @@ Eva's unieke hoofdfeature.
 - Releaseproject P1.1: de versiepassende 39-package-input is onafhankelijk
   groen; checkpoint `124eed2` bewijst daarbovenop een fysieke, ongetagde
   kandidaatimage met een eerste schema-installatie, driftcontrole en veilige
-  tweede start tegen een geheel nieuwe tijdelijke PostgreSQL-database. B-adoptie
-  of release is hiermee nog niet bewezen.
+  tweede start tegen een geheel nieuwe tijdelijke PostgreSQL-database. Daarna
+  gaf kandidaatcode `ea7f9aa` via Eva's eigen `/healthz` en `/readyz` een
+  groene runtimecheck; het bewijsrecord staat op `541355d`. Hindsight en de
+  modellease waren tijdelijke testdoubles. B-adoptie of release is hiermee nog
+  niet bewezen.
 
 - Gezinschat P2.1a: checkpoint `187f797` laat de normale Telegrambron een
   dynamisch gekoppeld account veilig herkennen, ook na procesherstart, zonder
