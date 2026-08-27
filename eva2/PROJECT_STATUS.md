@@ -57,7 +57,7 @@ de controleerbare live receipts staan in
 | Betrouwbare kern | Core-live 15/15, native historisch 9/9, echte HA-basis, duurzaam geheugen en 75/75 algemene action-chaintests | Sterke kern, maar nog niet gezamenlijk live op één eindimage |
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper | Echte gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
-| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit, voorstelgestuurde dependency-updates en een eerste gerichte kwetsbaarheidsscan bestaan. Een niet-lege synthetische installatie is veilig naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
+| Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan nu veilig als alleen-lezen identiteitsvoorstel worden bekeken; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, bordbediening, productinstaller, ondertekenen/activeren van identiteit, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
 | Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; Eva had een kleine gesprekswinst en sterk bewijs voor generieke resultaatcontrole via haar eerste HA-skill | Prompts, tools en context verschilden; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Belangrijk: de live Eva en Eva2 delen geen geheugen
@@ -75,7 +75,18 @@ gespreksherinnering.
 
 ## Nieuwste gesloten stap
 
-Eva heeft nu een eerste **installatiecontrole vóór de wizard**. Die leest
+Een mens kan nu een kleine **`SOUL.md` als veilig identiteitsvoorstel** aan Eva
+geven. De cockpit toont uitsluitend het verschil met de huidige, ondertekende
+identiteit: bijvoorbeeld een andere roepnaam, taal, voornaamwoorden, humor of
+temperament. Het bestand wordt niet opgeslagen en kan geen prompt, tool,
+beleid, geheugen of permissie wijzigen.
+
+Deze stap activeert Eva dus niet stil met een andere persoonlijkheid. Namen,
+waarden of grenzen veranderen pas na de nog open onderteken-, activatie- en
+rollbackstappen. De preview, afwijzing van onbekende onderdelen en de
+hashgebonden cockpit-evidence zijn **55/55 groen**.
+
+De eerdere installatiecontrole vóór de wizard blijft eveneens klaar. Die leest
 alleen de gepinde releasevoorwaarden en de grove lokale systeemversies. Zij
 downloadt niets, start geen Docker-container en leest geen secret, database of
 gebruikersdata. Pas als besturingssysteem, processor, Python, Docker én een

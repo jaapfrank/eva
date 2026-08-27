@@ -122,6 +122,12 @@ def test_configured_dashboard_token_gates_every_cockpit_read_route() -> None:
     assert preview.status_code == 401
     assert token not in preview.text
 
+    soul_preview = client.post(
+        "/internal/v1/dashboard/identity/soul-import/diff", json={}
+    )
+    assert soul_preview.status_code == 401
+    assert token not in soul_preview.text
+
     bearer = client.get(
         "/internal/v1/dashboard/status",
         headers={"authorization": f"Bearer {token}"},
@@ -567,3 +573,44 @@ def test_dashboard_identity_diff_rejects_an_unbound_or_unsupported_draft() -> No
         response = client.post("/internal/v1/dashboard/identity/diff", json=draft)
         assert response.status_code == 422
         assert response.json() == {"detail": "identity draft is invalid"}
+
+
+def test_dashboard_soul_import_previews_without_storing_or_activating_identity() -> None:
+    identity = load_current_identity_pack()
+    markdown = "# Eva\n\n## Naam\nEvi\n\n## Humor\ndroog wanneer het helpt\n"
+
+    response = TestClient(create_app(_Runtime())).post(
+        "/internal/v1/dashboard/identity/soul-import/diff",
+        json={"draft_id": "identity-draft:soul:dashboard:001", "soul_markdown": markdown},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json() == {
+        "contract": "EvaSoulMarkdownImportPreview/v1",
+        "draft_id": "identity-draft:soul:dashboard:001",
+        "read_only": True,
+        "source_sha256": hashlib.sha256(markdown.encode()).hexdigest(),
+        "base_pack_sha256": canonical_sha256(identity),
+        "changes": [
+            {"field": "display_name", "before": "Eva", "after": "Evi"},
+            {"field": "humour", "before": identity.humour, "after": "droog wanneer het helpt"},
+        ],
+        "non_claims": [
+            "SOUL.md is not opgeslagen of geactiveerd.",
+            "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
+        ],
+    }
+    assert load_current_identity_pack() == identity
+
+
+def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source() -> None:
+    source = "## Tools\nbrowser\n"
+    response = TestClient(create_app(_Runtime())).post(
+        "/internal/v1/dashboard/identity/soul-import/diff",
+        json={"draft_id": "identity-draft:soul:dashboard:002", "soul_markdown": source},
+    )
+
+    assert response.status_code == 422
+    assert response.json() == {"detail": "SOUL.md import is invalid"}
+    assert source not in response.text

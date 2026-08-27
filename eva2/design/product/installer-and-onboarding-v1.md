@@ -146,7 +146,10 @@ uitsluitend de buildconstraint `linux/amd64`.
 
 ## `SOUL.md`, `MEMORY.md` en Eva's echte autoriteiten
 
-Er bestaan nu geen letterlijke `SOUL.md`- of `MEMORY.md`-runtimebestanden.
+Er bestaan geen vrij wijzigbare `SOUL.md`- of `MEMORY.md`-runtimebestanden.
+De lokale cockpit kan wel al een kleine `SOUL.md` als uitsluitend read-only
+voorstel omzetten naar een gebonden staged IdentityPack-diff. Zij bewaart of
+activeert dat voorstel niet.
 
 | Bekend patroon | Eva-equivalent | Waarom |
 |---|---|---|

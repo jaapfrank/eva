@@ -22,6 +22,11 @@ from eva.application.conversation import (
     load_current_identity_pack,
 )
 from eva.application.identity_drafts import identity_presentation_diff
+from eva.application.soul_markdown import (
+    SoulMarkdownError,
+    soul_markdown_sha256,
+    soul_markdown_to_draft,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPackDraft
 from eva.application.memory import (
@@ -673,6 +678,44 @@ def create_app(
                 "changes": [
                     {"field": item.field, "before": item.before, "after": item.after}
                     for item in differences
+                ],
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/dashboard/identity/soul-import/diff")
+    def dashboard_identity_soul_import_diff(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
+        """Preview a small human SOUL.md without retaining or activating it."""
+
+        dashboard_access.require(request)
+        if set(payload) != {"draft_id", "soul_markdown"}:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        draft_id = payload["draft_id"]
+        markdown = payload["soul_markdown"]
+        if not isinstance(draft_id, str) or not isinstance(markdown, str):
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        identity = current_dashboard_identity()
+        try:
+            draft = soul_markdown_to_draft(markdown, draft_id=draft_id, base=identity)
+            differences = identity_presentation_diff(draft, identity)
+        except SoulMarkdownError:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        return JSONResponse(
+            {
+                "contract": "EvaSoulMarkdownImportPreview/v1",
+                "draft_id": draft.draft_id,
+                "read_only": True,
+                "source_sha256": soul_markdown_sha256(markdown),
+                "base_pack_sha256": canonical_sha256(identity),
+                "changes": [
+                    {"field": item.field, "before": item.before, "after": item.after}
+                    for item in differences
+                ],
+                "non_claims": [
+                    "SOUL.md is not opgeslagen of geactiveerd.",
+                    "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
                 ],
             },
             headers={"Cache-Control": "no-store"},
