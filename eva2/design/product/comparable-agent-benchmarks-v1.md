@@ -110,11 +110,15 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   timeoutconfiguratie, geen model- of secretinstellingen. Acht lokale
   contractproeven zijn groen. `../benchmark/check_agentbench_fc_environment.py`
   controleert vóór de run exact deze broncommit, de requirements-hash, een
-  schone checkout, Python 3.9 en alle upstream-Pythonpackages; de script
-  installeert of start niets. Op de huidige kandidaatmachine is die preflight
-  terecht rood: de host gebruikt Python 3.12 en mist elf vereiste packages.
-  Er is dus nog geen AgentBench-taakserver, image, score of developmentrun
-  gestart.
+  schone checkout, Python 3.9 en alle upstream-Pythonpackages; het script
+  installeert of start niets. De gewone kandidaatmachine blijft terecht rood
+  omdat die Python 3.12 gebruikt. De aparte image
+  `eva2/agentbench-fc@sha256:37e7e64b…` materialiseert nu wel precies Python
+  3.9.25 plus alle vereiste pakketten; haar ongewijzigde upstreamvereisten en
+  CPU-only Torch zijn buildtijd gecontroleerd en zij slaagt vervolgens
+  netwerkloos, alleen-lezen en als niet-root voor `pip check`. Er is nog geen
+  AgentBench-taakserver, score of developmentrun gestart. Receipt:
+  `evidence/living-core/agentbench-fc-environment-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle
   drie suites, zonder leaderboardclaim.
 - [ ] CB04 — GAIA met officiële datasetrevision en scorer; publieke validatie

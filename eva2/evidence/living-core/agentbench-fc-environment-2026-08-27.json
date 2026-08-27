@@ -1,0 +1,60 @@
+{
+  "artifact": "EvaAgentBenchFcEnvironmentReceipt/v1",
+  "date": "2026-08-27",
+  "environment": {
+    "architecture": "amd64",
+    "image": "eva2/agentbench-fc@sha256:37e7e64b0ecf1f69eb73bdcc13889fd810ef350863570765250719bd6ef85184",
+    "imageSizeBytes": 347429431,
+    "os": "linux",
+    "python": "3.9.25",
+    "runtimeUser": "65532:65532"
+  },
+  "inputs": {
+    "baseImage": "python@sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b",
+    "dockerfile": {
+      "path": "benchmark/agentbench-fc-v1/Dockerfile",
+      "sha256": "6204cc1b42243274d5977ac88e26ed3a25eebf75676e50f79bf7706657f7aa70"
+    },
+    "requirements": {
+      "path": "benchmark/agentbench-fc-v1/requirements.upstream.txt",
+      "sha256": "2a2ecd2cc0e25ef7155a088604213682d95912c94adfdab9a865ee4b4f0e5da2"
+    },
+    "upstream": {
+      "commit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+      "repository": "https://github.com/THUDM/AgentBench"
+    }
+  },
+  "installedDirectPackages": {
+    "PyYAML": "6.0.3",
+    "SPARQLWrapper": "2.0.0",
+    "accelerate": "0.23.0",
+    "aiohttp": "3.8.6",
+    "anthropic": "0.4.1",
+    "docker": "6.1.2",
+    "fastapi": "0.101.1",
+    "fschat": "0.2.36",
+    "jsonlines": "3.1.0",
+    "mysql-connector-python": "8.0.33",
+    "networkx": "2.8.8",
+    "numpy": "1.23.5",
+    "pydantic": "1.10.26",
+    "requests": "2.28.2",
+    "torch": "2.8.0+cpu",
+    "tqdm": "4.65.2",
+    "transformers": "4.34.1",
+    "urllib3": "1.26.20",
+    "uvicorn": "0.22.0"
+  },
+  "verification": {
+    "build": "docker build --pull=false --tag eva2/agentbench-fc:python39-cpu-dev --file benchmark/agentbench-fc-v1/Dockerfile .",
+    "networklessReadOnlyRun": true,
+    "pipCheck": "passed",
+    "sourceCheckoutPreflight": "The separate preflight must still verify the clean host-mounted AgentBench source before a task run."
+  },
+  "nonClaims": [
+    "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, model credential or live service was opened or changed.",
+    "No AgentBench task server, task image, dataset, model call, answer, scorer, development run or score was started.",
+    "This image is a materialized dependency environment, not a release image or a completed comparable benchmark."
+  ],
+  "status": "environment_ready_no_tasks_started"
+}

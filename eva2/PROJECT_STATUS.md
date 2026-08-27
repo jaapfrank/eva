@@ -58,7 +58,7 @@ de controleerbare live receipts staan in
 | Menselijke gezinsassistent | Tekst, persoonsgeheugen, accountbinding en groepsprivacy hebben stevige bouwstenen; lokale Piper-audio gaat nu chunk voor chunk via Whisper naar dezelfde Eva-kern en terug naar Piper. De onderbreekcontroller geeft aantoonbaar tegelijk stopopdrachten aan speaker en onafgemaakte antwoordgeneratie | De echte model-/TTS-koppeling, gezinschat, microfoon/speaker, tegelijk spreken/luisteren, onderbreken en spontane presence zijn nog open |
 | Zelfstandig handelen | Doelen, bewijs en crashherstel bestaan. Een subagent kan begrensd vanuit Eva worden gestart en gestopt. De browser las één lokale én één openbare, accountloze pagina via een strikte allowlist-proxy; één vaste lokale klik heeft onafhankelijke controle achteraf | De twee gebruikte browserimages zijn door een eerste scan afgekeurd; vervanging, herhaalde scan, echte accounts, meekijken/overname, bredere webtaken, volledige skillcyclus en Eigenaarmodus zijn nog open |
 | Beheerbaar product | A/B, back-ups, offline image, secrets, een geïntegreerde 3D-cockpit en voorstelgestuurde dependency-updates bestaan. Een kleine `SOUL.md` kan veilig worden voorvertoond, buiten Eva's runtime ondertekend en als kandidaat worden gewisseld met directe rollback; een niet-lege synthetische installatie is naar een tweede nieuwe database hersteld | Eigenaar-authenticatie, de echte privésleutel-/HSM-koppeling, bordbediening, productinstaller, tweede fysieke machine, secret-/connectorherkoppeling, echte update/restore, herstelde browserimages, volledige release-scan en releasefreeze nog open |
-| Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie; de exacte broncommit en requirements-hash zijn gecontroleerd | Deze host heeft nog geen gescheiden Python 3.9 plus elf AgentBench-pakketten; officiële AgentBench/GAIA/OSWorld- en volledige gecontroleerde vijf-agentvergelijking zijn daardoor nog open |
+| Eerlijk vergelijkbaar worden | Drie met dezelfde vragen uitgevoerde ontwikkelcases en LAB-36-bewijs bestaan; de GAIA-kandidaat leest geen verborgen antwoordkolom en weigert bestaand Eva-geheugen in een benchmarkantwoord. De AgentBench-kandidaat geeft iedere beurt een eigen, hashgebonden Eva-context met uitsluitend de officiële gesprekshistorie. Een aparte Python-3.9/CPU benchmarkimage met alle upstream-pakketten is nu echt gebouwd en netwerkloos gecontroleerd | AgentBench-taakservers, model-/kostenmandaat, officiële AgentBench/GAIA/OSWorld-scores en de volledige gecontroleerde vijf-agentvergelijking zijn nog open |
 
 ## Belangrijk: de live Eva en Eva2 delen geen geheugen
 
@@ -151,7 +151,23 @@ De nieuwe voorvertoning en alle bestaande selectie-/privacygrenzen zijn
 geopend of gekopieerd. Jij houdt dus de keuze of en wanneer je een eigen
 snapshot aanwijst voor een beperkte proef.
 
-## Nieuwste gesloten stap: veilige voice-onderbreking
+## Nieuwste gesloten stap: AgentBench-omgeving zonder Eva of CUDA
+
+De kandidaat heeft nu een eigen **AgentBench FC-omgeving** buiten Eva. Zij
+gebruikt exact de upstreambroncommit en de bytegelijke upstream
+requirementslijst, maar draait op Python 3.9.25 met CPU-only Torch. Daarmee
+kwam niet opnieuw de meer dan zeven GB zware CUDA-keten mee die Eva niet nodig
+heeft voor deze benchmark.
+
+De image is echt gebouwd als
+`eva2/agentbench-fc@sha256:37e7e64b…`, bevat alle achttien upstream-pakketten
+en slaagt netwerkloos, alleen-lezen en als niet-root voor `pip check`. Er zit
+geen Eva-code, modelcredential, taakserver, dataset of score in. Dit maakt de
+officiële AgentBench-run mogelijk; het is nadrukkelijk nog geen uitgevoerde
+AgentBench-taak of vergelijkbare score. De heropenbare grens staat in
+[`agentbench-fc-environment-2026-08-27.json`](evidence/living-core/agentbench-fc-environment-2026-08-27.json).
+
+## Eerder deze run gesloten: veilige voice-onderbreking
 
 Eva kan haar antwoord nu via één kleine, vervangbare afspeelgrens **veilig
 onderbreken**. De controller geeft audioblokken alleen door aan de gekozen
