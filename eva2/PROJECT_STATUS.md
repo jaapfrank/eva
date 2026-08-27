@@ -73,7 +73,23 @@ persoon→persoon-koppeling — hoogstens vijftig oude regels naar een nieuwe
 wegwerp-Eva2-database. Dat is geen migratie naar de live route en geen normale
 gespreksherinnering.
 
-## Nieuwste gesloten stap
+## Nieuwste gesloten stap: veiligere workflowdependency-kandidaat
+
+DBOS is de bestaande open-source motor die Eva gebruikt om een taak na een
+crash terug te vinden. De nieuwere communityversie **2.31** lost een relevante
+fout met dubbele workers op. Eva kan die versie echter niet blind installeren:
+zij moet ook na een mislukte databaseverbinding geen taak dubbel uitvoeren en
+mag bij opstart nooit stiekem het databaseschema veranderen.
+
+Daarom is er nu een kleine, hashgebonden kandidaat `2.31.0+eva.1`. De
+kandidaat is opnieuw uit de officiële wheel gebouwd en deed op een volledig
+lege, tijdelijke PostgreSQL 16.13-database vijftien echte crash- en
+herstelproeven plus vijftien controles van de database-indeling. Alles was
+groen. De actuele Eva2-release blijft voorlopig op `2.30.0+eva.1`: eerst
+moeten kandidaatimage, rollback en onafhankelijke review nog groen zijn.
+Eva1, B, bestaande volumes en secrets zijn niet geopend of gewijzigd.
+
+## Eerder deze run gesloten: veilige stop voor één actie
 
 De kandidaat heeft nu een **echte, beveiligde stoproute voor één lopende
 actie**. Vóór Eva iets naar buiten stuurt wordt de actie echt geannuleerd. Is
