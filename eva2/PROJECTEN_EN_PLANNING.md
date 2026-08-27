@@ -148,7 +148,9 @@ duurproef worden niet kunstmatig honderd keer korter gerekend.
    rendert de beheerde startconfiguratie nu daadwerkelijk alle acht diensten
    uit één synthetisch verzegeld plan en weigert zij drie eerder verborgen
    configuratiefouten; dezelfde commit heeft een nieuwe offline, niet-root
-   geïmporteerde kandidaatimage. Volgende stap: een geautoriseerde UID-65532
+   geïmporteerde kandidaatimage die haar schema ook vers installeert, veilig
+   herstart en drift weigert. Volgende stap: de volledige readinessherhaling,
+   een geautoriseerde UID-65532
    host-secretpreflight en onafhankelijke review; pas daarna kan B-adoptie
    überhaupt worden overwogen. Dit verandert A of B niet.
 2. **P2.1 — echte Eva 2-gezinschat.** De normale Telegrambron herkent nu op

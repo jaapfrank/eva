@@ -92,10 +92,14 @@ Zie
 
 De rendererfix zit bovendien in een nieuwe lokale kandidaatimage. Die is met
 dezelfde vaste 39 packages zonder bouwnetwerk gemaakt en importeert als
-beperkte gebruiker op een alleen-lezen bestandssysteem. De schema- en
-readinessproef van deze nieuwe image zijn bewust nog niet herhaald; dat staat
-dus niet mooier opgeschreven dan het is. Zie
-[`managed-b-render-fixed-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json).
+beperkte gebruiker op een alleen-lezen bestandssysteem. Zij installeerde daarna
+ook haar schema op een volledig nieuwe tijdelijke database, herstartte zonder
+extra migratie en weigerde een bewust verwijderde databasekoppeling. De
+volledige readinessproef is nog niet herhaald; dat staat dus niet mooier
+opgeschreven dan het is. Zie
+[`managed-b-render-fixed-candidate-image-smoke-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json)
+en
+[`managed-b-render-fixed-candidate-schema-restart-2026-08-27.json`](evidence/living-core/managed-b-render-fixed-candidate-schema-restart-2026-08-27.json).
 
 ## Eerder deze run gesloten: huidige kandidaat geeft echt “klaar” terug
 
