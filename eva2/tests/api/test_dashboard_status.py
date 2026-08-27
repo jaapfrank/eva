@@ -305,7 +305,7 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     payload = response.json()
     assert payload["contract"] == "EvaCockpitProgress/v1"
     assert payload["read_only"] is True
-    assert payload["updated_on"] == "2026-08-26"
+    assert payload["updated_on"] == "2026-08-27"
     assert {item["id"] for item in payload["legend"]} == {
         "live",
         "tested",
@@ -344,6 +344,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
     assert capability_by_id["voice"]["state"] == "selected"
     assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
+    assert "26 gerichte voice-/gesprekstests" in capability_by_id["voice"]["proof"]
+    assert "softwarestop is gebouwd" in capability_by_id["voice"]["meaning"]
+    assert "read-only voorvertoning" in capability_by_id["personal-memory"]["meaning"]
     assert capability_by_id["benchmarks"]["state"] == "selected"
     assert "18 checks" in capability_by_id["benchmarks"]["proof"]
     assert "zonder score" in capability_by_id["benchmarks"]["proof"]

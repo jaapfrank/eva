@@ -17,7 +17,7 @@ def cockpit_progress() -> dict[str, Any]:
     return {
         "contract": "EvaCockpitProgress/v1",
         "read_only": True,
-        "updated_on": "2026-08-26",
+        "updated_on": "2026-08-27",
         "legend": [
             {"id": "live", "label": "Live beproefd op eerdere B"},
             {"id": "tested", "label": "Gebouwd en getest"},
@@ -48,8 +48,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "title": "Mensen en geheugen",
                 "state": "live",
                 "proof": "Persoons- en projectgeheugen blijft na herstart gescheiden",
-                "meaning": "Hindsight is het langetermijngeheugen; PostgreSQL bewaakt identiteit en toestemming.",
-                "next": "Echte gezins- en groepstest plus het geheugenbeheerscherm koppelen.",
+                "meaning": "Hindsight is het langetermijngeheugen; PostgreSQL bewaakt identiteit en toestemming. Een eventuele Eva1-overname begint nu met een read-only voorvertoning van aantallen en hashes, niet met kopiëren.",
+                "next": "Echte gezins- en groepstest plus het geheugenbeheerscherm koppelen. Kies pas daarna bewust of een beperkte Eva1-proef gewenst is.",
                 "evidence": _evidence("capability/personal-memory"),
             },
             {
@@ -109,8 +109,8 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "voice",
                 "title": "Onderbreekbare voice",
                 "state": "selected",
-                "proof": "Lokale spraakketen stuurde 38 audioblokken door vóór einde invoer; deze WSL-host heeft geen bruikbare audiohardware.",
-                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen. Dat is nog geen echte microfoon-, speaker- of onderbreekproef.",
+                "proof": "Lokale spraakketen stuurde 38 audioblokken door vóór einde invoer; 26 gerichte voice-/gesprekstests bewaken de nieuwe afspeelstop. Deze WSL-host heeft geen bruikbare audiohardware.",
+                "meaning": "Dezelfde Eva moet luisteren, streamen en direct kunnen stoppen. De softwarestop is gebouwd, maar dit is nog geen echte microfoon-, speaker- of onderbreekproef.",
                 "next": "Dezelfde keten op een host met microfoon en speaker draaien, onderbreken testen en de echte spreektijd meten.",
             },
             {
