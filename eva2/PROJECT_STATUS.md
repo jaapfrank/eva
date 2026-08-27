@@ -361,9 +361,10 @@ scannen beide op **0 kritisch / 0 hoog**. Dat is een grote veiligheidswinst,
 maar nog geen vrijbrief om te starten. De Python-worker is inmiddels wel
 afgemaakt: 55 exacte wheels, waaronder twee tweemaal bytegelijk lokaal gebouwde
 wheels, bouwen een nieuwe workerimage zonder netwerk en scannen nog steeds
-0/0. Alleen de bijgewerkte Go-modulecache van de controller moet nog zo worden
-verzegeld; daarna volgt pas een nieuwe controller/worker-koppeling. Zie
-[`agentbench-fc-agentrl-worker-wheelhouse-py314-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-worker-wheelhouse-py314-2026-08-27.json).
+0/0. De bijgewerkte Go-1.25-cache van de controller is nu op dezelfde manier
+verzegeld en groen. De volgende, nog gesloten stap is de eerste nieuwe
+controller/worker-koppeling; er is nog geen AgentBench-taak gestart. Zie
+[`agentbench-fc-agentrl-controller-go125-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-controller-go125-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 

@@ -176,6 +176,30 @@ def test_controller_input_validator_accepts_exact_local_bytes(tmp_path: Path) ->
     assert [entry["filename"] for entry in checked["artifacts"]] == sorted(entries)
 
 
+def test_go125_controller_input_validator_binds_patch_and_exact_toolchain(tmp_path: Path) -> None:
+    tool = _load_tool("check_agentbench_fc_controller_inputs_go125.py")
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    for name in (
+        "gomodcache.tar",
+        "protoc-31.1-linux-x86_64.zip",
+        "protoc-gen-go",
+        "protoc-gen-go-grpc",
+    ):
+        (inputs / name).write_bytes(name.encode("utf-8"))
+    manifest = tmp_path / "inputs.json"
+    manifest.write_bytes(_canonical(tool.build_manifest(inputs)))
+
+    checked = tool.validate(inputs, manifest)
+    assert checked["contract"] == "EvaAgentBenchFcControllerBuildInputs/v3"
+    assert checked["target"]["goToolchainVersion"] == "1.25.14"
+    assert checked["securityPatch"]["sha256"] == tool.SECURITY_PATCH_SHA256
+
+    (inputs / "extra").write_bytes(b"extra")
+    with pytest.raises(RuntimeError, match="incomplete or contain an extra"):
+        tool.validate(inputs, manifest)
+
+
 @pytest.mark.parametrize("mutation", ["missing", "extra", "tampered"])
 def test_controller_input_validator_refuses_changed_artifact_set(
     tmp_path: Path, mutation: str

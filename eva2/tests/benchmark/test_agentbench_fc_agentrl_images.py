@@ -88,6 +88,19 @@ OFFLINE_WORKER_LOCK = (
 OFFLINE_WORKER_WHEELHOUSE = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-worker-wheelhouse-amd64-py314.json"
 )
+OFFLINE_CONTROLLER_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-controller-go125-2026-08-27.json"
+)
+OFFLINE_CONTROLLER_DOCKERFILE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-chainguard-offline.Dockerfile"
+)
+OFFLINE_CONTROLLER_INPUTS = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-build-inputs-amd64-go125.json"
+)
 
 
 def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_tools() -> None:
@@ -316,6 +329,30 @@ def test_agentrl_offline_worker_wheelhouse_binds_exact_new_inputs() -> None:
     assert receipt["verification"]["dockerBuildNetwork"] == "none"
     assert receipt["verification"]["trivyVulnerabilities"] == {"critical": 0, "high": 0}
     assert "controller's upgraded Go module cache" in receipt["openBoundary"]
+
+
+def test_agentrl_offline_go125_controller_binds_exact_new_inputs() -> None:
+    receipt = json.loads(OFFLINE_CONTROLLER_RECEIPT.read_text(encoding="utf-8"))
+    dockerfile = OFFLINE_CONTROLLER_DOCKERFILE.read_text(encoding="utf-8")
+    manifest = json.loads(OFFLINE_CONTROLLER_INPUTS.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcAgentRLControllerGo125Receipt/v1"
+    assert receipt["status"] == "sealed_controller_inputs_and_offline_image_proven"
+    assert receipt["inputs"]["controllerDockerfile"]["sha256"] == hashlib.sha256(
+        OFFLINE_CONTROLLER_DOCKERFILE.read_bytes()
+    ).hexdigest()
+    assert receipt["inputs"]["controllerInputsManifest"]["sha256"] == hashlib.sha256(
+        OFFLINE_CONTROLLER_INPUTS.read_bytes()
+    ).hexdigest()
+    assert manifest["contract"] == "EvaAgentBenchFcControllerBuildInputs/v3"
+    assert manifest["target"]["goToolchainVersion"] == "1.25.14"
+    assert "GOPROXY=off" in dockerfile
+    assert "go mod download" not in dockerfile
+    assert "git apply /tmp/security-upgrade.patch" in dockerfile
+    assert "cgr.dev/chainguard/static@sha256:" in dockerfile
+    assert receipt["verification"]["dockerBuildNetwork"] == "none"
+    assert receipt["verification"]["trivyVulnerabilities"] == {"critical": 0, "high": 0}
+    assert "not yet been registered" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:
