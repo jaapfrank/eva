@@ -174,8 +174,11 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
   55 hashes, inclusief de reproducibele lokale `etcd3`- en AgentRL-workerwheels,
   leveren een nieuwe 0-kritisch/0-hoog workerimage. Alleen de bijgewerkte
   Go-1.25-modulecache is daarna op dezelfde manier verzegeld en 0/0 gescand.
-  Alleen de daaropvolgende controller/worker-koppeling blijft nog open. Receipt:
-  `evidence/living-core/agentbench-fc-agentrl-controller-go125-2026-08-27.json`.
+  De twee nieuwe images hebben vervolgens alleen een lege ingebouwde
+  `VirtualTask` met nul samples op een tijdelijk intern netwerk geregistreerd;
+  alle tijdelijke resources zijn verwijderd. Een AgentBench-taakserver of
+  benchmarkrun is daarmee uitdrukkelijk nog niet gestart. Receipt:
+  `evidence/living-core/agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json`.
   Receipt:
   `evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json`.
 - [ ] CB03 — Gepinde development-/smokeruns op publieke of devtaken voor alle

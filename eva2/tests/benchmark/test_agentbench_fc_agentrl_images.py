@@ -101,6 +101,20 @@ OFFLINE_CONTROLLER_DOCKERFILE = (
 OFFLINE_CONTROLLER_INPUTS = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-build-inputs-amd64-go125.json"
 )
+GO125_PROTOCOL_PROBE_RECEIPT = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json"
+)
+GO125_PROTOCOL_PROBE_READBACK = (
+    ROOT
+    / "eva2"
+    / "evidence"
+    / "living-core"
+    / "agentbench-fc-agentrl-go125-protocol-probe-list-workers-2026-08-27.json"
+)
 
 
 def test_agentrl_controller_build_has_pinned_primary_inputs_and_declares_build_tools() -> None:
@@ -353,6 +367,26 @@ def test_agentrl_offline_go125_controller_binds_exact_new_inputs() -> None:
     assert receipt["verification"]["dockerBuildNetwork"] == "none"
     assert receipt["verification"]["trivyVulnerabilities"] == {"critical": 0, "high": 0}
     assert "not yet been registered" in receipt["openBoundary"]
+
+
+def test_agentrl_go125_protocol_probe_has_no_sample_or_benchmark_claim() -> None:
+    receipt = json.loads(GO125_PROTOCOL_PROBE_RECEIPT.read_text(encoding="utf-8"))
+    readback = json.loads(GO125_PROTOCOL_PROBE_READBACK.read_text(encoding="utf-8"))
+
+    assert receipt["artifact"] == "EvaAgentBenchFcAgentRLGo125ProtocolProbeReceipt/v1"
+    assert receipt["status"] == "sealed_candidate_protocol_registration_proven"
+    assert receipt["inputs"]["probeConfig"]["sha256"] == hashlib.sha256(
+        PROBE_CONFIG.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["listWorkers"]["sha256"] == hashlib.sha256(
+        GO125_PROTOCOL_PROBE_READBACK.read_bytes()
+    ).hexdigest()
+    assert receipt["observed"]["activeSamples"] == 0
+    assert receipt["observed"]["registeredWorkerCount"] == 1
+    assert readback["virtual-task"]["workers"]["1"]["current"] == 0
+    assert readback["virtual-task"]["workers"]["1"]["status"] == "ALIVE"
+    assert receipt["verification"]["temporaryContainersAndNetworkRemoved"] is True
+    assert "No AgentBench task server" in receipt["openBoundary"]
 
 
 def test_agentrl_source_images_receipt_binds_current_source_and_image_bytes() -> None:

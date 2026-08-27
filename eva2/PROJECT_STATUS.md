@@ -362,9 +362,12 @@ maar nog geen vrijbrief om te starten. De Python-worker is inmiddels wel
 afgemaakt: 55 exacte wheels, waaronder twee tweemaal bytegelijk lokaal gebouwde
 wheels, bouwen een nieuwe workerimage zonder netwerk en scannen nog steeds
 0/0. De bijgewerkte Go-1.25-cache van de controller is nu op dezelfde manier
-verzegeld en groen. De volgende, nog gesloten stap is de eerste nieuwe
-controller/worker-koppeling; er is nog geen AgentBench-taak gestart. Zie
-[`agentbench-fc-agentrl-controller-go125-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-controller-go125-2026-08-27.json).
+verzegeld en groen. De twee nieuwe images hebben daarna op één tijdelijk intern
+netwerk één lege `VirtualTask` geregistreerd: de worker was `ALIVE` en er waren
+nul actieve samples. Alles is na die proef verwijderd. Dat bewijst alleen de
+koppeling, niet AgentBench zelf; een eerste begrensde officiële devtaak blijft
+de volgende stap. Zie
+[`agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-go125-protocol-probe-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
 
