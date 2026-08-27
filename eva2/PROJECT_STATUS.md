@@ -614,8 +614,12 @@ Eva's unieke hoofdfeature.
   een wegwerpvergelijking omdat hij in Eva's proces zit en niet met duurzame
   Pydantic-replay samengaat. Stock DBOS `2.31.0` is na bronaudit
   `NO-GO`: upstream lost een belangrijke dubbele-workerfout op, maar mist nog
-  Eva's begrensde retry/no-DDL/commit-ambiguïteitsgrens. Alleen een smalle
-  `2.31.0+eva.1`-rebase wordt beproefd; er worden nu nul workerregels op basis
+  Eva's begrensde retry/no-DDL/commit-ambiguïteitsgrens. De hashgebonden
+  `2.31.0+eva.1`-rebase is nu lokaal opnieuw gebouwd en doorliep 15 echte
+  PostgreSQL 16.13-crash-/herstelscenario's plus 15 catalogusattestaties op
+  een lege tijdelijke database. Zij is nog geen runtimepromotie: de huidige
+  release blijft `2.30.0+eva.1` totdat lock, candidate-image, onafhankelijke
+  review en rollback samen groen zijn. Er zijn nog nul workerregels op basis
   van DBOS verwijderd.
 
 - MCP-dependencybesluit DF02c: de officiële MCP Python SDK `2.1.1` is met een

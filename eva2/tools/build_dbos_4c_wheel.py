@@ -76,11 +76,17 @@ def _write_deterministic_wheel(root: Path, output: Path) -> None:
             )
 
 
-def build(upstream_wheel: Path, output_directory: Path) -> Path:
-    manifest: dict[str, Any] = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+def build(
+    upstream_wheel: Path,
+    output_directory: Path,
+    *,
+    patch_root: Path = PATCH_ROOT,
+) -> Path:
+    manifest_path = patch_root / "manifest.json"
+    manifest: dict[str, Any] = json.loads(manifest_path.read_text(encoding="utf-8"))
     upstream = manifest["upstream_wheel"]
     patch_spec = manifest["patch"]
-    patch_path = PATCH_ROOT / patch_spec["filename"]
+    patch_path = patch_root / patch_spec["filename"]
 
     if upstream_wheel.name != upstream["filename"]:
         raise SystemExit(f"unexpected upstream filename: {upstream_wheel.name}")
@@ -105,8 +111,8 @@ def build(upstream_wheel: Path, output_directory: Path) -> Path:
         )
         _require_hash(source_path, member["patched_sha256"], "patched source member")
 
-        old_dist_info = unpacked / "dbos-2.30.0.dist-info"
-        new_dist_info = unpacked / "dbos-2.30.0+eva.1.dist-info"
+        old_dist_info = unpacked / f"dbos-{manifest['upstream_version']}.dist-info"
+        new_dist_info = unpacked / f"dbos-{manifest['patched_version']}.dist-info"
         old_dist_info.rename(new_dist_info)
         _replace_metadata_version(
             new_dist_info / "METADATA",
@@ -129,9 +135,19 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("upstream_wheel", type=Path)
     parser.add_argument("output_directory", type=Path)
+    parser.add_argument(
+        "--patch-root",
+        type=Path,
+        default=PATCH_ROOT,
+        help="directory containing a pinned DBOS patch manifest (default: 4C fork)",
+    )
     arguments = parser.parse_args()
     print(
-        build(arguments.upstream_wheel.resolve(), arguments.output_directory.resolve())
+        build(
+            arguments.upstream_wheel.resolve(),
+            arguments.output_directory.resolve(),
+            patch_root=arguments.patch_root.resolve(),
+        )
     )
 
 

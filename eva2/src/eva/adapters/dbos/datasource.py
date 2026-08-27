@@ -93,7 +93,10 @@ class EvaDBOSDatasource:
                 "4C DBOS system state must use PostgreSQL"
             )
         engine = dbos_datasource_module.sa.create_engine(
-            sqlalchemy_postgres_dsn(str(candidate)), pool_pre_ping=False
+            sqlalchemy_postgres_dsn(
+                candidate.render_as_string(hide_password=False)
+            ),
+            pool_pre_ping=False,
         )
         try:
             candidate_identity = _postgres_database_identity(engine)

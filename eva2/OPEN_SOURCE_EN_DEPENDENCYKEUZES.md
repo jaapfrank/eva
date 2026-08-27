@@ -370,9 +370,11 @@ een lijst GitHub-links.
   pariteit, latency, crash, upgrade en rollback staan open.
 - [ ] `DF03` — stock DBOS `2.31.0` is brongebonden vergeleken en afgewezen als
   drop-in: het bevat de gewenste upstream duplicate-loserfix, maar niet Eva's
-  begrensde retry/no-DDL/commit-ambiguïteitsgaranties. Volgende proef is exact
-  `2.31.0+eva.1`, inclusief schema 107→108, upgrade, downgrade en foutinjectie;
-  er worden nu geen workerregels verwijderd.
+  begrensde retry/no-DDL/commit-ambiguïteitsgaranties. De exacte
+  `2.31.0+eva.1`-wheel is lokaal hashgebonden herbouwd en doorliep 15
+  PostgreSQL-crash-/herstelscenario's plus 15 catalogusattestaties. Over blijft
+  schema 107→108, upgrade, downgrade, candidate-image, onafhankelijke review
+  en rollback; er worden nu geen workerregels verwijderd.
 - [ ] `DF04` — Harness `0.25.0` voert in de actuele kandidaat
   echte providerloze child-runs uit met een aparte context, nul childtools,
   vooraf getelde inputtokens, begrensde calls en een coöperatieve async-time-out.
