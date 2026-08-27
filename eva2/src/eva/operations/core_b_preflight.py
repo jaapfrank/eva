@@ -480,8 +480,10 @@ def host_metadata_preflight_receipt(plan: CoreBPlan) -> dict[str, object]:
     return {
         "apply_supported": False,
         "checked": {
+            "authority_directories": len(HOST_DIRECTORY_SETTING_NAMES),
+            "docker_binary_metadata": True,
+            "docker_config_directory_metadata": True,
             "docker_observed": False,
-            "host_directories": len(HOST_DIRECTORY_SETTING_NAMES),
             "host_secret_file_metadata": len(HOST_SECRET_SETTING_NAMES),
             "secret_contents_read": False,
         },

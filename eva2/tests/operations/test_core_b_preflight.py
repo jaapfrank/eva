@@ -560,8 +560,10 @@ def test_host_only_receipt_has_no_secret_or_docker_observation(
     assert receipt == {
         "apply_supported": False,
         "checked": {
+            "authority_directories": 3,
+            "docker_binary_metadata": True,
+            "docker_config_directory_metadata": True,
             "docker_observed": False,
-            "host_directories": 3,
             "host_secret_file_metadata": 7,
             "secret_contents_read": False,
         },

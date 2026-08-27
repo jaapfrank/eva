@@ -52,10 +52,11 @@ fail-closed. De secretinhoud wordt daarbij niet gelezen.
 
 Vóór B als beheerd systeem bestaat kan de operator eerst uitsluitend de
 hostvoorwaarde controleren. Deze variant leest geen Dockercontext, container,
-volume, secretinhoud of live Eva; zij controleert alleen de private
-configuratiesnapshot en metadata van de zeven secretbestanden en drie
-authoritydirectories. De JSON-uitvoer bevat uitsluitend aantallen en de
-configuratiehash.
+volume, secretinhoud of live Eva. Zij controleert de private
+configuratiesnapshot, metadata van `/usr/bin/docker`, de private
+Docker-configmap, zeven secretbestanden en drie authoritydirectories. De
+JSON-uitvoer bevat alleen vaste statusvelden, aantallen en de
+configuratiehash—geen paden, configuratiewaarden of secrets.
 
 ```bash
 ./deploy/living-core/preflight-core-b.sh --host-only /absolute/path/to/eva2-b-runtime.env
