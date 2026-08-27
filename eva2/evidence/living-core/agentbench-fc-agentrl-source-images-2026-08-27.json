@@ -10,7 +10,11 @@
     },
     "controllerDockerfile": {
       "path": "benchmark/agentbench-fc-v1/agentrl-controller-pinned.Dockerfile",
-      "sha256": "2f48be98078a89650c03901c2d4f2d7757b19e14ce8da5385a04c332cc4526df"
+      "sha256": "b475094f716e076cfa3ce8fcf19221c8cd66eec8358b888a2b894572a0acf26e"
+    },
+    "controllerBuildInputs": {
+      "path": "benchmark/agentbench-fc-v1/agentrl-controller-build-inputs-amd64.json",
+      "sha256": "c06e2fc4b974eef508eed3c04bba5b0acc6df7cad996c53533e3c75f7258bf7b"
     },
     "workerDockerfile": {
       "path": "benchmark/agentbench-fc-v1/agentrl-worker-pinned.Dockerfile",
@@ -27,13 +31,14 @@
   },
   "images": {
     "controller": {
-      "image": "eva2/agentbench-agentrl-controller@sha256:025f15f8b8abf9d5205cb06977c875d5f645695364d6a0c58909980c602852bd",
-      "imageTag": "eva2/agentbench-agentrl-controller:dev-20260827",
+      "image": "eva2/agentbench-agentrl-controller@sha256:b4f7d6b1269e26bc47d0c205ba08ac2f7d92a9a484549a7ef9c561bebdf1d415",
+      "imageTag": "eva2/agentbench-agentrl-controller:offline-20260827",
       "runtimeUser": "65532:65532",
-      "sizeBytes": 24150702,
+      "sizeBytes": 24151149,
       "labels": {
         "org.opencontainers.image.revision": "6a73409d31ba695d383b978a8ad3ef400d90c054",
-        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee"
+        "org.opencontainers.image.source-archive-sha256": "76a50942687e5646ad401adbb579e70fafb0761175e61019cc2c72cd0b7ce2ee",
+        "io.eva.agentrl-controller-gomodcache-sha256": "4abfff3108ce315dc34b7b0d3474c8a6431534a219d37b2369e4d08f71765b57"
       }
     },
     "worker": {
@@ -51,17 +56,18 @@
   },
   "verification": {
     "controllerReadOnlyHelp": true,
+    "controllerOfflineImageBuild": true,
     "networkless": true,
     "taskOrScoreStarted": false,
     "workerReadOnlyHelp": true,
     "workerOfflineDependencyInstall": true,
     "workerOfflineImageBuild": true
   },
-  "openBoundary": "Only the controller still resolves curl and unzip through apt-get update during its build. Its apt snapshot must be sealed before controller/worker communication or any AgentBench development task.",
+  "openBoundary": "Both disposable source images were rebuilt with --network none from separately sealed inputs. The next open boundary is the missing, version-compatible AgentBench controller/worker wiring: no controller-to-worker session, task, dataset, model call, scorer, development result or score has started.",
   "nonClaims": [
     "No AgentBench task, dataset, controller-to-worker session, model call, scorer, development result or public score was started.",
     "No Eva runtime, Eva1 SQLite memory, PostgreSQL, Hindsight, Telegram, Home Assistant, secret or live service was opened or changed.",
     "The images are disposable AgentBench development candidates, not Eva production images or a benchmark result."
   ],
-  "status": "worker_offline_rebuild_ready_controller_apt_open"
+  "status": "offline_source_images_ready_stack_wiring_open"
 }

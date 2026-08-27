@@ -310,13 +310,13 @@ niet-root en beantwoorden netwerkloos alleen hun eigen `--help`. Tijdens die
 proef bleek bovendien dat AgentRL's actuele bron Protocol Buffers edition 2023
 vereist; de exacte compiler `31.1` is daarom met SHA-256 vastgezet. Deze twee
 images dragen nu zelf de exacte AgentRL-commit én de hash van het schone
-Git-archief waaruit zij zijn gebouwd. De worker is nu bovendien opnieuw
-gebouwd zonder netwerk uit een Python-3.10-lock met hashes en een apart
-verzegeld wheelhouse (57 wheels). Hij kan dus niet stil opnieuw packages van
-PyPI halen. De controller gebruikt tijdens bouwen nog beweeglijke
-`apt-get update`-packages; daarom is de stack nog niet startklaar. Er is
-nadrukkelijk geen controller-naar-worker-sessie, taak, modelcall of score
-gestart. Zie
+Git-archief waaruit zij zijn gebouwd. De worker bouwt zonder netwerk uit een
+Python-3.10-lock met hashes en een apart verzegeld wheelhouse (57 wheels); de
+controller bouwt zonder netwerk uit een geverifieerde Go-modulecache, protoc en
+beide protobufgenerators. Geen van beide kan tijdens de build stil packages
+ophalen. De volgende open stap is alleen de ontbrekende,
+versiepassende AgentBench-controller/workerbedrading. Er is nadrukkelijk geen
+controller-naar-worker-sessie, taak, modelcall of score gestart. Zie
 [`agentbench-fc-agentrl-source-images-2026-08-27.json`](evidence/living-core/agentbench-fc-agentrl-source-images-2026-08-27.json).
 
 ## Eerder deze run gesloten: veilige voice-onderbreking
