@@ -23,6 +23,7 @@ _HEADINGS = {
     "taal": "language",
     "humor": "humour",
     "temperament": "temperament",
+    "stem": "voice_style",
 }
 
 
@@ -43,7 +44,7 @@ def _value_list(value: str, *, heading: str) -> list[str]:
     return result
 
 
-def _presentation(markdown: str) -> dict[str, object | None]:
+def _presentation(markdown: str, *, base: IdentityPack) -> dict[str, object | None]:
     if not isinstance(markdown, str):
         raise SoulMarkdownError("SOUL.md is geen tekst")
     if "\x00" in markdown or len(markdown.encode("utf-8")) > MAX_SOUL_BYTES:
@@ -77,18 +78,32 @@ def _presentation(markdown: str) -> dict[str, object | None]:
             raise SoulMarkdownError("SOUL.md heeft geen geldige waarde per onderdeel")
         if current == "pronouns":
             changes[current] = _value_list(line, heading="voornaamwoorden")
-        elif current == "temperament":
-            changes[current] = _value_list(line, heading="temperament")
+        elif current in {"temperament", "voice_style"}:
+            heading = "temperament" if current == "temperament" else "stem"
+            changes[current] = _value_list(line, heading=heading)
         else:
             changes[current] = line
 
     if not changes:
         raise SoulMarkdownError("SOUL.md bevat geen toegestane identiteitwijziging")
+    voice_style = None
+    if "voice_style" in changes:
+        qualities = changes["voice_style"]
+        assert isinstance(qualities, list)
+        voice_style = {
+            **base.voice_style.model_dump(mode="json"),
+            "name": "warm_jonge_vlotte_huisgenoot",
+            "qualities": qualities,
+            "forbidden_wording": [
+                *base.voice_style.forbidden_wording,
+                *([] if "scherp" in base.voice_style.forbidden_wording else ["scherp"]),
+            ],
+        }
     return {
         "display_name": changes.get("display_name"),
         "pronouns": changes.get("pronouns"),
         "language": changes.get("language"),
-        "voice_style": None,
+        "voice_style": voice_style,
         "temperament": changes.get("temperament"),
         "humour": changes.get("humour"),
         "channel_presentations": None,
@@ -111,7 +126,7 @@ def soul_markdown_to_draft(
                 "base_pack_sha256": canonical_sha256(base),
                 "parent_draft_sha256": None,
                 "state": "staged",
-                "presentation": _presentation(markdown),
+                "presentation": _presentation(markdown, base=base),
             }
         )
         if not identity_presentation_diff(draft, base):

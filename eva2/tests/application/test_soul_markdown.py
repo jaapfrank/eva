@@ -25,6 +25,25 @@ def test_soul_markdown_creates_only_a_bound_staged_presentation_draft() -> None:
     assert base.display_name == "Eva"
 
 
+def test_soul_markdown_can_propose_a_closed_voice_style() -> None:
+    base = load_current_identity_pack()
+    draft = soul_markdown_to_draft(
+        "# Eva\n\n## Stem\nwarm, jong, vlot en natuurlijk\n",
+        draft_id="identity-draft:soul:voice:001",
+        base=base,
+    )
+
+    assert draft.presentation.voice_style is not None
+    assert draft.presentation.voice_style.name == "warm_jonge_vlotte_huisgenoot"
+    assert draft.presentation.voice_style.qualities == [
+        "warm",
+        "jong",
+        "vlot en natuurlijk",
+    ]
+    assert "scherp" in draft.presentation.voice_style.forbidden_wording
+    assert base.voice_style.name == "warm_practical_curious"
+
+
 @pytest.mark.parametrize(
     "markdown",
     (
