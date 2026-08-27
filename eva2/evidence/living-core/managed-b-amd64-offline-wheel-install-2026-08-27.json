@@ -1,0 +1,46 @@
+{
+  "base_image": {
+    "platform": "linux/amd64",
+    "python_version": "3.12.14",
+    "reference": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134"
+  },
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBOfflineWheelInstallReceipt/v1",
+  "execution": {
+    "container_filesystem": "read_only",
+    "installer_pip_version": "26.0.1",
+    "network": "none",
+    "runtime_filesystems": [
+      "tmpfs:/tmp:noexec,nosuid",
+      "tmpfs:/work:exec,nosuid"
+    ]
+  },
+  "inputs": {
+    "installer_pip_wheel_sha256": "bdb1b08f4274833d62c1aa29e20907365a2ceb950410df15fc9521bad440122b",
+    "patched_dbos_wheel_sha256": "e20ca9a038eb2ae195b40484f3fa43c34e3f4c48797cabe6e5e387f01875b464",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "nonclaims": [
+    "This is one local, offline installation check; it is not independent two-builder reproducibility evidence.",
+    "Wheel acquisition and artifact-proxy provenance are not proven by this receipt.",
+    "No Docker build context, Eva image, Compose graph, B configuration, container, volume, secret, database, service or deployment was created or opened.",
+    "This does not prove source-archive closure, schema migration, runtime startup, Telegram, Home Assistant or release readiness."
+  ],
+  "observed": {
+    "dbos_distribution_version": "2.30.0+eva.1",
+    "patched_dbos_datasource_sha256": "af7032940190792f98a4a923f1c3632b245518068d98680bac7206940f4f8b5f",
+    "pynacl_distribution_version": "1.6.2",
+    "pynacl_aead_sizes": {
+      "key": 32,
+      "nonce": 24,
+      "tag": 16
+    },
+    "runtime_distribution_count": 39,
+    "runtime_has_pip": false,
+    "runtime_has_wheel": false,
+    "wheel_count": 39
+  },
+  "source_commit": "3233ec6fe2af249fc6918534a7e9ca3ddcd13d7a",
+  "status": "passed_offline_dependency_install_not_release"
+}

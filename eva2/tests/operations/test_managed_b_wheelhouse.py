@@ -230,6 +230,36 @@ def test_committed_v2_manifest_is_the_exact_version_matched_4d_delta() -> None:
     )
 
 
+def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-amd64-offline-wheel-install-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBOfflineWheelInstallReceipt/v1"
+    assert receipt["status"] == "passed_offline_dependency_install_not_release"
+    assert receipt["execution"]["network"] == "none"
+    assert receipt["base_image"]["platform"] == "linux/amd64"
+    assert receipt["base_image"]["python_version"] == "3.12.14"
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+        "requirements_lock_sha256"
+    ]
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+        "wheelhouse_tree_sha256"
+    ]
+    assert receipt["observed"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["observed"]["runtime_distribution_count"] == 39
+    assert receipt["observed"]["runtime_has_pip"] is False
+    assert receipt["observed"]["runtime_has_wheel"] is False
+    assert receipt["observed"]["dbos_distribution_version"] == "2.30.0+eva.1"
+    assert receipt["observed"]["pynacl_distribution_version"] == "1.6.2"
+    assert any("release readiness" in claim for claim in receipt["nonclaims"])
+
+
 def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()
