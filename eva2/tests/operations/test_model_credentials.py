@@ -68,6 +68,30 @@ def test_access_lease_excludes_refresh_authority(private_tmp_path: Path) -> None
     assert "refresh_token" not in json.dumps(consumer)
 
 
+def test_access_lease_accepts_eva1_flat_oauth_authority(
+    private_tmp_path: Path,
+) -> None:
+    source = private_tmp_path / "owner" / "auth.json"
+    source.parent.mkdir()
+    source.write_text(
+        json.dumps(
+            {
+                "access_token": "access-from-eva1",
+                "account_id": "account-one",
+                "refresh_token": "must-never-leave-owner",
+                "expires_at": 123,
+            }
+        )
+    )
+    source.chmod(0o600)
+
+    lease = json.loads(build_access_lease(source))
+
+    assert lease["access_token"] == "access-from-eva1"
+    assert lease["account_id"] == "account-one"
+    assert "refresh_token" not in lease
+
+
 def test_access_lease_follows_atomic_owner_rotation(private_tmp_path: Path) -> None:
     source = private_tmp_path / "owner" / "auth.json"
     target = private_tmp_path / "consumer" / "auth.json"

@@ -93,7 +93,12 @@ def build_access_lease(source: Path) -> bytes:
         raise ModelCredentialLeaseError(
             "model credential source is unavailable"
         ) from error
+    # Eva's original Node runtime keeps its OAuth authority flat, whereas the
+    # Codex consumer format nests it under ``tokens``.  Both are owner-only
+    # sources; the published lease always strips refresh authority.
     tokens = value.get("tokens") if isinstance(value, dict) else None
+    if not isinstance(tokens, dict) and isinstance(value, dict):
+        tokens = value
     if not isinstance(tokens, dict):
         raise ModelCredentialLeaseError("model credential source has no token set")
     access_token = tokens.get("access_token")
