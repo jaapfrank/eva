@@ -100,14 +100,20 @@ def _require_no_schema_drift(config: Config) -> None:
     # Alembic writes its successful human-oriented status line to stdout.  The
     # installer is an operator/machine boundary and promises exactly one JSON
     # receipt on stdout, so retain error propagation while discarding that line.
-    with warnings.catch_warnings():
-        warnings.filterwarnings(
-            "ignore",
-            message="Cannot correctly sort tables; there are unresolvable cycles.*",
-            category=sa.exc.SAWarning,
-        )
-        with redirect_stdout(io.StringIO()):
-            command.check(config)
+    captured = io.StringIO()
+    previous_stdout = config.stdout
+    try:
+        config.stdout = captured
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message="Cannot correctly sort tables; there are unresolvable cycles.*",
+                category=sa.exc.SAWarning,
+            )
+            with redirect_stdout(captured):
+                command.check(config)
+    finally:
+        config.stdout = previous_stdout
 
 
 def install_schema(

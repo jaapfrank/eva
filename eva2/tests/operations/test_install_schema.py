@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+from alembic.config import Config
 from alembic.util import CommandError
 from eva.operations.install_schema import (
     _HEAD_REVISION,
@@ -55,12 +56,12 @@ def test_secret_source_is_file_only_and_regular(
 def test_schema_drift_check_keeps_stdout_for_one_json_cli_receipt(
     monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    def successful_check(_config: object) -> None:
-        print("No new upgrade operations detected.")
+    def successful_check(config: Config) -> None:
+        config.print_stdout("No new upgrade operations detected.")
 
     monkeypatch.setattr("eva.operations.install_schema.command.check", successful_check)
 
-    _require_no_schema_drift(object())  # type: ignore[arg-type]
+    _require_no_schema_drift(Config())
 
     assert capsys.readouterr().out == ""
 
