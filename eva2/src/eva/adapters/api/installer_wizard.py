@@ -17,6 +17,15 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
+from eva.application.conversation import load_current_identity_pack
+from eva.application.identity_drafts import identity_presentation_diff
+from eva.application.soul_markdown import (
+    SoulMarkdownError,
+    soul_markdown_sha256,
+    soul_markdown_to_draft,
+)
+from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.identity import IdentityPack
 from eva.operations.installer_preflight import (
     InstallerPreflightError,
     inspect_host,
@@ -76,6 +85,14 @@ def _loopback_request(request: Request) -> None:
             raise HTTPException(status_code=400, detail="installer client is invalid")
 
 
+def _same_origin_or_absent(request: Request) -> None:
+    """Reject a cross-origin write, even when the result is only a preview."""
+
+    origin = request.headers.get("origin")
+    if origin is not None and origin != f"{request.url.scheme}://{request.headers.get('host')}":
+        raise HTTPException(status_code=403, detail="installer origin denied")
+
+
 def _safe_receipt(value: dict[str, object]) -> dict[str, object]:
     expected = {"contract", "read_only", "status", "platform_lock_claim_state", "host", "checks", "next", "non_claims"}
     if set(value) != expected or value.get("contract") != "EvaInstallerPreflight/v1" or value.get("read_only") is not True:
@@ -85,7 +102,7 @@ def _safe_receipt(value: dict[str, object]) -> dict[str, object]:
     return value
 
 
-def _page(receipt: dict[str, object]) -> str:
+def _page(receipt: dict[str, object], identity: IdentityPack) -> str:
     status = html.escape(str(receipt["status"]))
     rows = "".join(
         f"<li class=\"{html.escape(str(item.get('state')))}\"><strong>{html.escape(str(item.get('id')))}</strong> {html.escape(str(item.get('detail')))}</li>"
@@ -93,11 +110,17 @@ def _page(receipt: dict[str, object]) -> str:
         if isinstance(item, dict)
     )
     next_step = html.escape(str(receipt["next"]))
-    return f"""<!doctype html><html lang=\"nl\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Eva installeren</title><style>body{{font:16px system-ui;margin:0;background:#07111c;color:#edf6ff;display:grid;min-height:100vh;place-items:center}}main{{max-width:720px;padding:2rem}}section{{background:#102337;border:1px solid #31516d;border-radius:18px;padding:1.5rem}}.blocked{{color:#ffca78}}.passed{{color:#86f4ba}}small{{color:#aec4d7}}li{{margin:.7rem 0}}</style><main><p><small>EVA · lokale installatiecontrole · alleen-lezen</small></p><h1>Voordat Eva iets installeert</h1><section><h2 class=\"{status}\">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>Deze pagina heeft geen connector-, secret- of installatieknop. Zij toont alleen waarom Eva wel of niet verder mag.</small></p></section></main></html>"""
+    name = html.escape(identity.display_name)
+    return f"""<!doctype html><html lang=\"nl\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Eva installeren</title><style>body{{font:16px system-ui;margin:0;background:#07111c;color:#edf6ff;display:grid;min-height:100vh;place-items:center}}main{{max-width:720px;padding:2rem}}section{{background:#102337;border:1px solid #31516d;border-radius:18px;padding:1.5rem;margin:1rem 0}}.blocked{{color:#ffca78}}.passed{{color:#86f4ba}}small{{color:#aec4d7}}li{{margin:.7rem 0}}textarea{{box-sizing:border-box;width:100%;min-height:9rem;background:#07111c;color:#edf6ff;border:1px solid #52718d;border-radius:8px;padding:.8rem;font:14px ui-monospace,monospace}}button{{margin-top:.7rem;background:#2b8a61;color:white;border:0;border-radius:8px;padding:.65rem .9rem;font-weight:700}}#soul-result{{white-space:pre-wrap}}</style><main><p><small>EVA · lokale installatiecontrole · alleen-lezen</small></p><h1>Voordat Eva iets installeert</h1><section><h2 class=\"{status}\">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>Deze pagina heeft geen connector-, secret- of installatieknop. Zij toont alleen waarom Eva wel of niet verder mag.</small></p></section><section><h2>Hoe {name} zich aan jou voorstelt</h2><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet alleen een voorstelverschil. Niets wordt bewaard, ondertekend of actief gemaakt.</p><textarea id=\"soul\" maxlength=\"8192\" spellcheck=\"false\" placeholder=\"# Eva\\n\\n## Naam\\nEva\\n\\n## Temperament\\nwarm, nieuwsgierig\"></textarea><button type=\"button\" id=\"soul-preview\">Toon voorstel</button><p id=\"soul-result\" role=\"status\"></p></section></main><script>const result=document.getElementById('soul-result');document.getElementById('soul-preview').addEventListener('click',async()=>{{result.textContent='Voorstel controleren…';const response=await fetch('/internal/v1/identity/soul-import/diff',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify({{draft_id:'installer-preview',soul_markdown:document.getElementById('soul').value}})}});if(!response.ok){{result.textContent='Dit voorstel is niet geldig. Eva heeft niets bewaard of gewijzigd.';return}}const preview=await response.json();result.textContent=preview.changes.map(change=>`${{change.field}}:\n  was: ${{JSON.stringify(change.before)}}\n  wordt: ${{JSON.stringify(change.after)}}`).join('\n\n')}}</script></html>"""
 
 
-def create_installer_wizard(receipt: dict[str, object], bootstrap: InstallerBootstrap) -> FastAPI:
+def create_installer_wizard(
+    receipt: dict[str, object],
+    bootstrap: InstallerBootstrap,
+    identity: IdentityPack | None = None,
+) -> FastAPI:
     receipt = _safe_receipt(receipt)
+    identity = identity or load_current_identity_pack()
     app = FastAPI(title="Eva local installer", docs_url=None, redoc_url=None, openapi_url=None)
 
     @app.exception_handler(HTTPException)
@@ -116,9 +139,7 @@ def create_installer_wizard(receipt: dict[str, object], bootstrap: InstallerBoot
     @app.post("/internal/v1/bootstrap")
     async def exchange(request: Request) -> Response:
         _loopback_request(request)
-        origin = request.headers.get("origin")
-        if origin is not None and origin != f"{request.url.scheme}://{request.headers.get('host')}":
-            raise HTTPException(status_code=403, detail="installer origin denied")
+        _same_origin_or_absent(request)
         try:
             payload = await request.json()
         except (json.JSONDecodeError, UnicodeDecodeError):
@@ -134,13 +155,53 @@ def create_installer_wizard(receipt: dict[str, object], bootstrap: InstallerBoot
     def home(request: Request) -> HTMLResponse:
         _loopback_request(request)
         bootstrap.require_session(request)
-        return HTMLResponse(_page(receipt), headers=_SECURITY_HEADERS)
+        return HTMLResponse(_page(receipt, identity), headers=_SECURITY_HEADERS)
 
     @app.get("/internal/v1/preflight")
     def report(request: Request) -> JSONResponse:
         _loopback_request(request)
         bootstrap.require_session(request)
         return JSONResponse(receipt, headers=_SECURITY_HEADERS)
+
+    @app.post("/internal/v1/identity/soul-import/diff")
+    async def soul_import_diff(request: Request) -> JSONResponse:
+        """Preview a human identity proposal without retaining or activating it."""
+
+        _loopback_request(request)
+        bootstrap.require_session(request)
+        _same_origin_or_absent(request)
+        try:
+            payload = await request.json()
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        if not isinstance(payload, dict) or set(payload) != {"draft_id", "soul_markdown"}:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        draft_id, markdown = payload["draft_id"], payload["soul_markdown"]
+        if not isinstance(draft_id, str) or not isinstance(markdown, str):
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        try:
+            draft = soul_markdown_to_draft(markdown, draft_id=draft_id, base=identity)
+            changes = identity_presentation_diff(draft, identity)
+        except SoulMarkdownError:
+            raise HTTPException(status_code=422, detail="SOUL.md import is invalid")
+        return JSONResponse(
+            {
+                "contract": "EvaInstallerSoulMarkdownPreview/v1",
+                "read_only": True,
+                "draft_id": draft.draft_id,
+                "source_sha256": soul_markdown_sha256(markdown),
+                "base_pack_sha256": canonical_sha256(identity),
+                "changes": [
+                    {"field": item.field, "before": item.before, "after": item.after}
+                    for item in changes
+                ],
+                "non_claims": [
+                    "SOUL.md is niet opgeslagen of geactiveerd.",
+                    "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
+                ],
+            },
+            headers=_SECURITY_HEADERS,
+        )
 
     return app
 

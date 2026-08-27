@@ -82,3 +82,39 @@ def test_wizard_accepts_ipv6_loopback() -> None:
     )
 
     assert client.get("/bootstrap").status_code == 200
+
+
+def test_wizard_previews_soul_markdown_without_storing_or_activating_it() -> None:
+    bootstrap = InstallerBootstrap(token="s" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(bootstrap)
+    assert client.post("/internal/v1/bootstrap", json={"token": "s" * 43}).status_code == 204
+
+    preview = client.post(
+        "/internal/v1/identity/soul-import/diff",
+        json={"draft_id": "installer-preview", "soul_markdown": "# Eva\n\n## Naam\nNoor\n\n## Temperament\nwarm, nieuwsgierig"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+
+    assert preview.status_code == 200
+    assert preview.headers["cache-control"] == "no-store"
+    assert preview.json()["contract"] == "EvaInstallerSoulMarkdownPreview/v1"
+    assert preview.json()["read_only"] is True
+    assert preview.json()["changes"] == [
+        {"field": "display_name", "before": "Eva", "after": "Noor"},
+        {
+            "field": "temperament",
+            "before": ["warm", "curious", "slightly_stubborn"],
+            "after": ["warm", "nieuwsgierig"],
+        },
+    ]
+    assert preview.json()["non_claims"] == [
+        "SOUL.md is niet opgeslagen of geactiveerd.",
+        "SOUL.md kan geen prompt, tool, policy, geheugen of permissie wijzigen.",
+    ]
+
+    denied = client.post(
+        "/internal/v1/identity/soul-import/diff",
+        json={"draft_id": "installer-preview", "soul_markdown": "## Naam\nNoor"},
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert denied.status_code == 403
