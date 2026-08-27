@@ -373,6 +373,30 @@ def test_render_fixed_candidate_schema_restart_stays_bound_to_sealed_inputs() ->
     }
 
 
+def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs() -> None:
+    root = Path(__file__).resolve().parents[2]
+    receipt = json.loads(
+        (
+            root
+            / "evidence/living-core/managed-b-render-fixed-candidate-runtime-readiness-2026-08-27.json"
+        ).read_bytes()
+    )
+    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+
+    assert receipt["contract"] == "EvaManagedBRenderFixedCandidateRuntimeReadinessReceipt/v1"
+    assert receipt["status"] == "passed_render_fixed_candidate_runtime_readiness_not_deployed"
+    image = receipt["image_source"]
+    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
+    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
+    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    assert image["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
+    assert receipt["observed"]["healthz"] == {"status": "alive"}
+    assert receipt["observed"]["readyz"]["ready"] is True
+    assert receipt["observed"]["readyz"]["database"] == "ready"
+    assert receipt["observed"]["readyz"]["memory_projection"] == "ready"
+    assert receipt["observed"]["readyz"]["model_provider"] == "ready"
+
+
 def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()

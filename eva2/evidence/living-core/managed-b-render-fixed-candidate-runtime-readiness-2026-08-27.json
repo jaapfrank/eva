@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-08-27",
+  "contract": "EvaManagedBRenderFixedCandidateRuntimeReadinessReceipt/v1",
+  "image_source": {
+    "candidate_image_id": "sha256:73f785f095bf2012a1e25847c0123f7c72259e67dd005a4d6c74a18431299c95",
+    "candidate_image_size_bytes": 104579192,
+    "context_tree_sha256": "46f1f9a47123ca92ba207b7316b48e1b947a0c60bc520c183cbdb6901c9ff624",
+    "requirements_4d_lock_sha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "source_archive_sha256": "2acbc8b3ba7b85b07cc95d84142bb36eed8a0d6923d7205e1f8000071597ce6a",
+    "source_commit": "28104541f093d335729f0a1cf920914c97ca3036",
+    "wheel_count": 39,
+    "wheelhouse_tree_sha256": "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+  },
+  "observed": {
+    "healthz": {"status": "alive"},
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "schema": "fresh database installed through the render-fixed candidate image before runtime startup",
+    "secret_output_check": "Neither the synthetic database password nor the synthetic model token occurred in captured output."
+  },
+  "runtime_constraints": {
+    "candidate": "non-root uid:gid 65532:65532, read-only filesystem, all capabilities dropped and no-new-privileges",
+    "database": "new disposable PostgreSQL 16.13 on a private internal Docker network",
+    "database_dsn_file_metadata": "65532:65532:0400 in a new temporary Docker volume",
+    "model_lease_file_metadata": "1000:65532:0640 in a new temporary Docker volume"
+  },
+  "nonclaims": [
+    "Hindsight was a minimal temporary health stub; this does not prove semantic memory behavior.",
+    "The model lease was synthetic and no model request was made.",
+    "The temporary Docker network, PostgreSQL container, Hindsight stub and both temporary volumes were removed after the run.",
+    "No Eva1 or managed-B service, configuration, existing volume, real secret, Telegram route or Home Assistant route was opened or changed.",
+    "The image was not tagged, pushed, signed, released or attached to Compose. This is not a production deployment, B adoption, update, rollback proof or end-to-end product acceptance."
+  ],
+  "status": "passed_render_fixed_candidate_runtime_readiness_not_deployed"
+}
