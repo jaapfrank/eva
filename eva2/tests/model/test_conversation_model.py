@@ -374,6 +374,46 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     )
 
 
+def test_recent_durable_conversation_is_not_denied_as_missing_memory(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    captured: list[dict[str, Any]] = []
+
+    def request(body: dict[str, Any]) -> tuple[str, None]:
+        captured.append(body)
+        return "amberkleurige maan", None
+
+    monkeypatch.setattr(model, "_request", request)
+    result = model.generate(
+        ConversationTurn.private(
+            "tenant",
+            "installation",
+            "jaap",
+            "conversation",
+            "message-after-restart",
+            "Welke twee woorden moest je onthouden?",
+            NOW,
+        ),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        _memory(),
+        (
+            RecentConversationMessage(
+                "Jaap",
+                "Onthoud voor deze herstartproef: amberkleurige maan.",
+                "2026-08-23T13:59:00Z",
+            ),
+        ),
+    )
+
+    assert result.text == "amberkleurige maan"
+    instructions = captured[0]["instructions"]
+    assert "duurzame gesprekjournal" in instructions
+    assert "een herstart van core of databasecontainer overleven" in instructions
+    assert "niet kunt onthouden" in instructions
+    assert "amberkleurige maan" in instructions
+
+
 def test_document_work_action_is_model_chosen_but_episode_bound(
     model_server: tuple[str, list[dict[str, Any]]], tmp_path: Path
 ) -> None:
