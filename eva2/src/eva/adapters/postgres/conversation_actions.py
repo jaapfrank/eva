@@ -303,6 +303,7 @@ class PostgresConversationActions:
         home_assistant_admin: _HomeAssistantInventoryPort | None = None,
         home_assistant_hacs: _HomeAssistantPackagePort | None = None,
         home_assistant_effects_enabled: bool = True,
+        home_assistant_effect_allowlist: frozenset[tuple[str, str]] | None = None,
         research: CurrentResearchPort | None = None,
         file_batch: TextBatchPort | None = None,
         validated_file_edit: ValidatedTextEditPort | None = None,
@@ -317,6 +318,7 @@ class PostgresConversationActions:
         if not isinstance(home_assistant_effects_enabled, bool):
             raise TypeError("Home Assistant effect policy must be boolean")
         self._home_assistant_effects_enabled = home_assistant_effects_enabled
+        self._home_assistant_effect_allowlist = home_assistant_effect_allowlist
         self._home_assistant_reads = (
             None
             if home_assistant is None
@@ -2208,6 +2210,11 @@ class PostgresConversationActions:
             or not entity_id.startswith(f"{domain}.")
         ):
             raise ValueError("Home Assistant binary command is invalid")
+        if (
+            self._home_assistant_effect_allowlist is not None
+            and (entity_id, service) not in self._home_assistant_effect_allowlist
+        ):
+            raise RuntimeError("Home Assistant effect is outside the configured allowlist")
         expected_state = "on" if service == "turn_on" else "off"
         request = ToolRequest(
             thread_id=thread_id,

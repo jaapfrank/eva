@@ -364,6 +364,23 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_FANOUT_ALLOW_INSECURE_HTTP must be true or false")
     if values["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] not in {"true", "false"}:
         raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED must be true or false")
+    effect_allowlist = tuple(
+        value.strip()
+        for value in values.get("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", "").split(",")
+        if value.strip()
+    )
+    for value in effect_allowlist:
+        entity_id, separator, service = value.partition(":")
+        if (
+            separator != ":"
+            or re.fullmatch(r"(?:light|switch)\.[a-z0-9_]+", entity_id) is None
+            or service not in {"turn_on", "turn_off"}
+        ):
+            raise RuntimeError("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is invalid")
+    if values["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] == "true" and not effect_allowlist:
+        raise RuntimeError(
+            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
+        )
     if not any(
         recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
     ):

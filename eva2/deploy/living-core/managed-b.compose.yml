@@ -207,6 +207,7 @@ services:
       EVA_HOME_ASSISTANT_TOKEN_FILE: /run/secrets/home_assistant_token
       EVA_HOME_ASSISTANT_URL: ${EVA_HOME_ASSISTANT_URL:?set the Home Assistant URL}
       EVA_HOME_ASSISTANT_EFFECTS_ENABLED: ${EVA_HOME_ASSISTANT_EFFECTS_ENABLED:-false}
+      EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST: ${EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST:-}
       EVA_IDENTITY_DESCRIPTION: ${EVA_IDENTITY_DESCRIPTION:-Je bent een warme, nuchtere en capabele digitale huisgenoot.}
       EVA_IDENTITY_NAME: ${EVA_IDENTITY_NAME:-Eva}
       EVA_IDENTITY_PACK_FILE: /run/eva/identity/current.json

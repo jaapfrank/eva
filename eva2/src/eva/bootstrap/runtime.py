@@ -186,6 +186,7 @@ class RuntimeSettings:
     home_assistant_url: str | None = None
     home_assistant_token: str | None = None
     home_assistant_effects_enabled: bool = False
+    home_assistant_effect_allowlist: tuple[str, ...] = ()
     home_assistant_event_domains: tuple[str, ...] = ("light",)
     agentmail_inbox_id: str | None = None
     agentmail_api_key_file: str | None = None
@@ -326,6 +327,28 @@ class RuntimeSettings:
         if home_assistant_effects not in {"false", "true"}:
             raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid")
         home_assistant_effects_enabled = home_assistant_effects == "true"
+        raw_effect_allowlist = os.environ.get(
+            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", ""
+        ).strip()
+        home_assistant_effect_allowlist = tuple(
+            sorted({value.strip() for value in raw_effect_allowlist.split(",") if value.strip()})
+        )
+        for value in home_assistant_effect_allowlist:
+            entity_id, separator, service = value.partition(":")
+            domain, dot, object_id = entity_id.partition(".")
+            if (
+                separator != ":"
+                or domain not in {"light", "switch"}
+                or dot != "."
+                or not object_id
+                or any(character not in "abcdefghijklmnopqrstuvwxyz0123456789_" for character in object_id)
+                or service not in {"turn_on", "turn_off"}
+            ):
+                raise RuntimeError("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is invalid")
+        if home_assistant_effects_enabled and not home_assistant_effect_allowlist:
+            raise RuntimeError(
+                "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
+            )
         home_assistant_event_domains = tuple(
             sorted(
                 {
@@ -515,6 +538,7 @@ class RuntimeSettings:
             home_assistant_url=home_assistant_url,
             home_assistant_token=home_assistant_token,
             home_assistant_effects_enabled=home_assistant_effects_enabled,
+            home_assistant_effect_allowlist=home_assistant_effect_allowlist,
             home_assistant_event_domains=home_assistant_event_domains,
             agentmail_inbox_id=agentmail_inbox_id,
             agentmail_api_key_file=agentmail_api_key_file,
@@ -1902,6 +1926,10 @@ def create_runtime_app() -> FastAPI:
         home_assistant_admin,
         home_assistant_hacs,
         home_assistant_effects_enabled=settings.home_assistant_effects_enabled,
+        home_assistant_effect_allowlist=frozenset(
+            tuple(value.split(":", 1))
+            for value in settings.home_assistant_effect_allowlist
+        ),
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,

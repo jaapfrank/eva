@@ -22,6 +22,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_HOME_ASSISTANT_TOKEN",
         "EVA_HOME_ASSISTANT_TOKEN_FILE",
         "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
+        "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
         "EVA_TELEGRAM_PROACTIVE_CHAT_ID",
         "EVA_TELEGRAM_BOT_TOKEN",
         "EVA_TELEGRAM_BOT_TOKEN_FILE",
@@ -70,11 +71,37 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     assert settings.conversation_reasoning_effort == "medium"
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
+    monkeypatch.setenv(
+        "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
+        "light.dimmable_light_1:turn_off",
+    )
     assert RuntimeSettings.from_environment().home_assistant_effects_enabled is True
+    assert RuntimeSettings.from_environment().home_assistant_effect_allowlist == (
+        "light.dimmable_light_1:turn_off",
+    )
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
     with pytest.raises(RuntimeError, match="EFFECTS_ENABLED"):
         RuntimeSettings.from_environment()
+
+
+def test_runtime_requires_a_strict_effect_allowlist(
+    monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
+    with pytest.raises(RuntimeError, match="EFFECT_ALLOWLIST is required"):
+        RuntimeSettings.from_environment()
+
+    for invalid in (
+        "light.dimmable_light_1:toggle",
+        "cover.garage:turn_off",
+        "light.Bad:turn_off",
+        "light.dimmable_light_1",
+    ):
+        monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", invalid)
+        with pytest.raises(RuntimeError, match="EFFECT_ALLOWLIST is invalid"):
+            RuntimeSettings.from_environment()
 
 
 def test_runtime_requires_custom_identity_pack_and_trust_together(

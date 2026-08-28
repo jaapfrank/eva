@@ -103,6 +103,42 @@ def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> 
         )
 
 
+def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service() -> None:
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=object(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=True,
+        home_assistant_effect_allowlist=frozenset(
+            {("light.dimmable_light_1", "turn_off")}
+        ),
+    )
+
+    import asyncio
+
+    with pytest.raises(RuntimeError, match="outside the configured allowlist"):
+        asyncio.run(
+            actions.execute_home_assistant_light(
+                tenant_id="tenant",
+                installation_id="installation",
+                thread_id="thread",
+                operation_id="operation",
+                entity_id="light.other",
+                service="turn_off",
+            )
+        )
+    with pytest.raises(RuntimeError, match="outside the configured allowlist"):
+        asyncio.run(
+            actions.execute_home_assistant_light(
+                tenant_id="tenant",
+                installation_id="installation",
+                thread_id="thread",
+                operation_id="operation",
+                entity_id="light.dimmable_light_1",
+                service="turn_on",
+            )
+        )
+
+
 def test_validated_file_edit_action_requires_its_bounded_adapter() -> None:
     unavailable = PostgresConversationActions(sa.create_engine("sqlite://"))
     available = PostgresConversationActions(
