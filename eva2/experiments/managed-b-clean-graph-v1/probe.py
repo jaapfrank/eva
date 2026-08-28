@@ -770,7 +770,8 @@ def main(
         )
         _copy_private(IDENTITY_PACK, identity_dir / "current.json", uid=65532, gid=65532)
         _copy_private(IDENTITY_TRUST, identity_dir / "trust.json", uid=65532, gid=65532)
-        _copy_private(SOURCE_AUTH, codex_dir / "auth.json", uid=1000, gid=1000)
+        if not retain_slot:
+            _copy_private(SOURCE_AUTH, codex_dir / "auth.json", uid=1000, gid=1000)
 
         values = {
             "EVA_B_CONFIGURATION_SHA256": hashlib.sha256(run_id.encode()).hexdigest(),
@@ -826,7 +827,9 @@ def main(
                 if clone_current_route
                 else f"probe-{run_id}"
             ),
-            "EVA_CODEX_AUTH_DIR": codex_dir.as_posix(),
+            "EVA_CODEX_AUTH_DIR": (
+                SOURCE_AUTH.parent.as_posix() if retain_slot else codex_dir.as_posix()
+            ),
             "EVA_MODEL_ACCESS_LEASE_DIR": model_lease.as_posix(),
             "EVA_HINDSIGHT_ACCESS_DIR": hindsight_lease.as_posix(),
         }
