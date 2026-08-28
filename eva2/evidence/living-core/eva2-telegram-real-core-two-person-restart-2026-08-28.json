@@ -1,0 +1,87 @@
+{
+  "contract": "Eva2TelegramRealCoreTwoPersonRestartReceipt/v1",
+  "issuedAt": "2026-08-28T12:08:48Z",
+  "sourceCommit": "3237bef1c8d0078d7174b4bf49d8347a4e532cb1",
+  "runtime": {
+    "conversationCoreImage": "sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
+    "hindsightImage": "sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "telegramIngressImage": "sha256:12cd4341765796f92c1279ba79017d9b164fed5510ef9d11baceb87e0dc4c621",
+    "postgresImage": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "conversationCore": {
+      "health": "healthy",
+      "readOnlyRoot": true,
+      "uidGid": "65532:65532",
+      "publishedPorts": 0,
+      "startedAt": "2026-08-28T12:07:18.527458463Z"
+    },
+    "hindsight": {
+      "health": "healthy",
+      "readOnlyRoot": true,
+      "publishedPorts": 0,
+      "startedAt": "2026-08-28T12:06:43.426583767Z"
+    },
+    "postgres": {
+      "health": "healthy",
+      "publishedPorts": 0,
+      "startedAt": "2026-08-28T12:06:37.531336482Z"
+    },
+    "telegramIngress": {
+      "state": "running",
+      "readOnlyRoot": true,
+      "uidGid": "65532:65532",
+      "publishedPorts": 0
+    }
+  },
+  "authority": {
+    "identitySha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+    "identityTrustSha256": "a1149f21d86b652c8d7a76528e6d31e9340e34f8cbbbffec0db272f1659ed0bf",
+    "conversationLeaseSha256": "f5b9fec3c57099a84fde09ad54f33f43f58dbf3a3c1982abb3030c6526d60dd7",
+    "conversationLeaseKeys": ["access_token", "account_id", "contract", "source_sha256"],
+    "hindsightLeaseSha256": "0319bac01aacf0704de36c4567b6798ea31d5dac3e8efc2d1dc4813e8b1fef72",
+    "hindsightTokenKeys": ["access_token", "account_id"],
+    "refreshTokenPresent": false
+  },
+  "test": {
+    "persons": 2,
+    "turnsPerPerson": 3,
+    "modelProvider": "chatgpt-codex:gpt-5.4-mini",
+    "beforeRestartExact": true,
+    "postgresRestarted": true,
+    "hindsightRestarted": true,
+    "conversationCoreRestarted": true,
+    "afterRestart": [
+      {
+        "person": "a",
+        "expectedTextSha256": "c74f09482ebae0d6cb42e0771582cb18eba8edbecf8bbf301946ce67ebaab7b8",
+        "replyTextSha256": "c74f09482ebae0d6cb42e0771582cb18eba8edbecf8bbf301946ce67ebaab7b8",
+        "exact": true,
+        "otherPersonTextPresent": false
+      },
+      {
+        "person": "b",
+        "expectedTextSha256": "38266f386fa6058fc1eb0cdf6e64db6715b11952b03b867c47dc6bc498ca551a",
+        "replyTextSha256": "38266f386fa6058fc1eb0cdf6e64db6715b11952b03b867c47dc6bc498ca551a",
+        "exact": true,
+        "otherPersonTextPresent": false
+      }
+    ],
+    "journal": {
+      "personA": {"completedCheckpoints": 3, "ingressCommitted": 3, "replyCommitted": 3, "memoryRetainQueued": 3},
+      "personB": {"completedCheckpoints": 3, "ingressCommitted": 3, "replyCommitted": 3, "memoryRetainQueued": 3}
+    }
+  },
+  "liveSafety": {
+    "eva1SystemdState": "active/running",
+    "eva1HttpRoutes200": 5,
+    "existingEva2Healthz": 200,
+    "existingEva2Readyz": 200,
+    "eva1DatabaseModifiedByTest": false,
+    "existingEva2DatabaseModifiedByTest": false
+  },
+  "nonclaims": [
+    "The two-person restart probe used the same real core as the disposable Telegram ingress, but its six turns were injected over the private internal HTTP boundary rather than sent by human Telegram accounts.",
+    "Human Telegram private-chat completion remains open until Jaap and Lola answer the instructions already delivered by the disposable test bot.",
+    "This receipt is not a managed-B promotion, voice proof, Home Assistant effect proof or public benchmark score."
+  ],
+  "status": "passed"
+}
