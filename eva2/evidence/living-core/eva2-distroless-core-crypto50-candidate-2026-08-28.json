@@ -1,0 +1,105 @@
+{
+  "contract": "Eva2DistrolessCoreCrypto50CandidateReceipt/v1",
+  "issuedAt": "2026-08-28T15:08:00+02:00",
+  "sourceCommit": "3f6fab743fb2870ffbf0f1aaaa4c8737e6d784ff",
+  "inputs": {
+    "provenConversationCoreImage": "eva2/candidate-ha-natural@sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
+    "pythonRuntimeLibraryImage": "docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "distrolessBaseImage": "gcr.io/distroless/cc-debian12@sha256:9dac0a79194e45a7da0158a9c6da57b217585af0786db3845d1f0ec1a0dd182f",
+    "dockerfileSha256": "dfe9b5cf6059fc96473b69daab74bdf275a5ef3941b09e66076dfc971755b9db",
+    "cryptographyWheel": {
+      "filename": "cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a",
+      "installedVersion": "50.0.1"
+    },
+    "copiedSystemLibraries": [
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8",
+        "sourcePackage": "libffi8=3.4.8-2",
+        "sha256": "922024ec5a23f7de1095b1cff2f6cbfb377b5d58cd51fd0ec2e8fe35427653e2"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libz.so.1",
+        "sourcePackage": "zlib1g=1:1.3.dfsg+really1.3.1-1+b1",
+        "sha256": "85590dd58edf5445e18bc7193e5ebc01ac5841f1ae187e97705a662e90c6421e"
+      }
+    ]
+  },
+  "candidate": {
+    "localImage": "eva2/distroless-core-crypto50-candidate:20260828",
+    "imageId": "sha256:2ec1399520a9ccf0942137b45777409e30d0ad6678cebb339ef9a42af50eadff",
+    "createdAt": "2026-08-28T14:54:41.273607692+02:00",
+    "platform": "linux/amd64",
+    "dockerReportedSizeBytes": 83329835,
+    "runtimeUser": "65532:65532",
+    "imports": ["cryptography", "psycopg", "sqlalchemy", "uvicorn", "eva"],
+    "importsPassed": true
+  },
+  "vulnerabilityScans": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "databaseUpdatedAt": "2026-08-28T10:01:48.845104336Z",
+    "network": "none",
+    "severityScope": "all HIGH and CRITICAL findings, including findings without a known fix",
+    "originalConversationCore": {"critical": 5, "high": 32},
+    "distrolessBeforeCryptographyUpdate": {
+      "imageId": "sha256:6168df942f26ceb86b41e87f38905eb17566cdc23fd138322cbaef23ac00070a",
+      "critical": 0,
+      "high": 3,
+      "allThreeFindingsBelongedToCryptography4605": true,
+      "resultSha256": "ada06b8a4090617e56d9ef385485d38bbb3765b58a05ee78a15fcc166c5ba5ee"
+    },
+    "finalCandidate": {
+      "critical": 0,
+      "high": 0,
+      "archiveScannerImageId": "sha256:cab3557d1deecb620def361b90976355464e7f8de547c42dfb195f98e2b68e7b",
+      "resultSha256": "0132c60b1027905357b89a113e01057941808acfaff13e3730f84b473403fe3a"
+    }
+  },
+  "verification": {
+    "experimentContractTests": {"passed": 4, "failed": 0},
+    "cryptographySensitiveTestsWithCryptography5001": {
+      "passed": 34,
+      "failed": 0,
+      "areas": ["identity verification", "identity lifecycle", "model credentials", "object keyring", "portable encrypted transport"]
+    },
+    "runtime": {
+      "health": "healthy",
+      "modelProvider": "chatgpt-codex:gpt-5.4-mini",
+      "jaapOwnContextExact": true,
+      "jaapOtherPersonContextPresent": false,
+      "jaapReplySha256": "1d8c532fc8d15ec16e5ae1acfe9f3db28b67d0f17ab986aa61e8fc5a43deabda",
+      "lolaOwnContextExact": true,
+      "lolaOtherPersonContextPresent": false,
+      "lolaReplySha256": "3317c1d389872e37a706e8404c872b9b8ca6e541ea4db521e1225b6bfa5660a3"
+    }
+  },
+  "rejectedAlternatives": [
+    "The first distroless variant lacked libffi and could not start the Python runtime.",
+    "The separately scanned Chainguard base was 0/0 but its Python 3.14 OpenSSL ABI was incompatible with the copied proven Python 3.12 runtime."
+  ],
+  "shutdown": {
+    "candidateCore": "stopped",
+    "disposableHindsight": "stopped",
+    "disposablePostgres": "stopped",
+    "containersAndDatabaseRetainedForInspection": true
+  },
+  "liveSafety": {
+    "eva1Health": "ok",
+    "existingEva2Ready": "ok",
+    "eva1Modified": false,
+    "existingEva2DatabaseModified": false,
+    "homeAssistantModified": false
+  },
+  "decision": {
+    "coreCandidate": "passed",
+    "managedBPromotionAllowed": false,
+    "reason": "The product lock and offline wheelhouse are not yet updated, and the required Hindsight image still has 5 CRITICAL and 106 HIGH findings."
+  },
+  "nonclaims": [
+    "A 0/0 package scan is not proof that software has no exploitable defect.",
+    "Trivy may not attribute individually copied shared libraries to their original Debian packages; their exact source image, versions and hashes are therefore recorded separately.",
+    "This experiment does not change the product dependency lock, the live Eva1 route, the existing live Eva2 route or managed B.",
+    "The Hindsight memory image remains rejected for promotion."
+  ],
+  "status": "passed_candidate_only"
+}

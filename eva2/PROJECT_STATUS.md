@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 14:41 CEST
+Laatst bijgewerkt: 28 augustus 2026, 15:08 CEST
 
 ## Heel kort
 
@@ -61,6 +61,8 @@ installatie zijn nog niet klaar.
 - De vorige code draait als veilige rollback en ziet evenmin de volledige login.
 - Een kleine gesprek- en geheugenset kan veilig naar een lege database worden
   hersteld.
+- De kleinere nieuwe Eva2-kern werkte echt met Jaap en Lola, hield hun
+  gesprekken gescheiden en heeft in de strenge scan 0 kritisch en 0 hoog.
 
 ## Wat nog niet klaar is
 
@@ -74,8 +76,8 @@ installatie zijn nog niet klaar.
   speaker is nog niet getest.
 - De browserimages zijn nog niet veilig genoeg voor algemeen gebruik.
 - De huidige werkende Eva2- en Hindsight-images zijn nog geen releasebasis.
-  De strenge scan vond respectievelijk 5 kritisch/32 hoog en 5 kritisch/106
-  hoog. Eerst moeten schonere, opnieuw geteste images komen.
+  Voor de Eva2-kern is nu een schone vervanger gevonden. Hindsight blokkeert
+  nog met 5 kritisch en 106 hoog.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -113,6 +115,7 @@ installatie zijn nog niet klaar.
 - [Twee echte modelgesprekken blijven apart na volledige teststackherstart](evidence/living-core/eva2-telegram-real-core-two-person-restart-2026-08-28.json)
 - [Jaap en Lola privé via Telegram, apart gebleven na volledige herstart](evidence/living-core/eva2-telegram-human-private-two-person-restart-2026-08-28.json)
 - [Releaseblokkerende scan van de echte gesprekimages](evidence/living-core/eva2-telegram-conversation-images-vulnerability-scan-2026-08-28.json)
+- [Kleinere Eva2-kern: echte gesprekken en scan 0/0](evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

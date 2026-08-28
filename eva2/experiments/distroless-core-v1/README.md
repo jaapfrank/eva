@@ -1,0 +1,27 @@
+# Distroless Eva2-coreproef
+
+Deze proef verandert Eva's code en Pythonruntime niet. Zij kopieert die uit de
+reeds functioneel bewezen gesprekimage naar één minimale, digest-gepinde
+distroless Debian 12-basis. Van de 39 vastgezette runtimepackages vervangt zij
+alleen `cryptography`; de andere packages blijven uit de bewezen image komen.
+
+De proef is alleen een rebasekandidaat. Een groene import, runtimeproef en scan
+zijn nodig voordat zij ergens als vervanger mag worden genoemd. De eerdere
+gesprekimage blijft de bron; er wordt niets uit een vuile werkmap gekopieerd en
+de build gebruikt geen netwerk.
+
+De eerste distroless-start miste `libffi`; de databaseclient heeft daarnaast
+`zlib` nodig. De distrolessvariant kopieert daarom uitsluitend `libffi.so.8`
+en `libz.so.1` uit de gebonden Pythonbasis. Geen van beide packages staat in
+de HIGH/CRITICAL-uitvoer van die apart gescande basis. De uiteindelijke
+receipt bindt ook de hashes van deze bestanden, omdat een scanner losse
+gekopieerde bibliotheken niet altijd aan hun oorspronkelijke package koppelt.
+De Chainguardvergelijking was 0/0 als losse basis, maar bleek
+ABI-incompatibel met Python 3.12's OpenSSL-module en is functioneel afgewezen.
+
+De resterende drie Pythonbevindingen komen allemaal uit `cryptography 46.0.5`.
+De kandidaat installeert daarom uitsluitend de officiële abi3-wheel van
+`cryptography 50.0.1`, gebonden aan SHA-256
+`51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a`.
+Dit blijft een dependencyproef. De productlock blijft ongewijzigd totdat ook
+de vaste wheelhouse-, release-input- en rollbackstappen zijn gesloten.

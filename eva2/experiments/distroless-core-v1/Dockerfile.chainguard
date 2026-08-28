@@ -1,0 +1,24 @@
+# This local-only tag is accepted only when it resolves to image ID/digest
+# sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4.
+FROM eva2/candidate-ha-natural:e347b0d AS proven_core
+
+FROM cgr.dev/chainguard/python@sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/opt/eva/src:/opt/eva \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PATH=/usr/local/bin:/usr/bin
+
+WORKDIR /opt/eva
+COPY --from=proven_core /usr/local /usr/local
+COPY --from=proven_core /opt/eva /opt/eva
+
+USER 65532:65532
+EXPOSE 8080
+
+HEALTHCHECK --interval=10s --timeout=3s --retries=6 \
+  CMD ["/usr/local/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).read()"]
+
+ENTRYPOINT ["/usr/local/bin/python"]
+CMD ["-m", "uvicorn", "eva.bootstrap.runtime:create_runtime_app", "--factory", "--host", "0.0.0.0", "--port", "8080", "--no-access-log"]
