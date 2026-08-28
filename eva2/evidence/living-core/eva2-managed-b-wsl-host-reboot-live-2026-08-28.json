@@ -1,0 +1,51 @@
+{
+  "contract": "Eva2ManagedBWslHostRebootLiveReceipt/v1",
+  "issuedAt": "2026-08-28T19:31:00+02:00",
+  "status": "pre_reboot_ready",
+  "source": {
+    "commitBeforeReboot": "33f5059",
+    "platform": "wsl",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2",
+    "bootIdBefore": "e88b5184-48fa-4503-8bf5-c1f0146f3011"
+  },
+  "preReboot": {
+    "dockerEnabled": true,
+    "eva1Enabled": true,
+    "eva1Active": true,
+    "eva1RestartCount": 0,
+    "activeEva2Route": "http://127.0.0.1:44710",
+    "fallbackEva2Route": "http://127.0.0.1:44708",
+    "activeRouteReady": true,
+    "fallbackRouteReady": true,
+    "managedContainers": {
+      "postgres": "healthy",
+      "hindsightPostgres": "healthy",
+      "modelAccessLease": "running",
+      "hindsightAccessLease": "running",
+      "hindsight": "healthy",
+      "core": "healthy"
+    },
+    "managedContainerRestartPolicy": "unless-stopped",
+    "persistentVolumes": [
+      "eva2-managed-b-slot3-operational",
+      "eva2-managed-b-slot3-memory",
+      "eva2-managed-b-slot3-work"
+    ],
+    "hindsightMemoryUnits": 262,
+    "hindsightMentalModels": 18,
+    "systemdJobsRunning": 0
+  },
+  "requiredPostRebootProof": [
+    "The WSL boot ID must differ from bootIdBefore.",
+    "Docker, Eva1, the active managed Eva2 route and the retained fallback must return without manual container recreation.",
+    "Both PostgreSQL databases, both access leases, Hindsight and the core must return without a restart loop.",
+    "The active route must answer through Eva1's real /eva2 client and retain its pre-reboot context.",
+    "Hindsight counts and the owner dashboard access boundary must remain intact.",
+    "Eva1 must answer all five health routes and keep its configured /eva2 route on port 44710."
+  ],
+  "nonClaims": [
+    "This pre-reboot record is not itself reboot proof.",
+    "No external Telegram message or Home Assistant effect is part of this test.",
+    "A Windows hardware reboot and the seven-day practice run remain separate gates."
+  ]
+}
