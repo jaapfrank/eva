@@ -1,0 +1,3 @@
+# The retained rollback containers bind this access-only consumer directory.
+# It is intentionally empty at boot; the lease publisher creates auth.json.
+d /tmp/eva2-hindsight-consumer-live 0700 1000 1000 -

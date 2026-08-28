@@ -1,0 +1,42 @@
+[Unit]
+Description=Verify Eva2 managed-B after an externally initiated host reboot
+Wants=network-online.target
+After=network-online.target docker.service eva.service
+Requires=docker.service eva.service
+ConditionPathExists=/var/lib/eva2/reboot-proof/armed.json
+ConditionPathExists=!/var/lib/eva2/reboot-proof/receipt.json
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+ExecStart=/usr/bin/python3 /usr/local/libexec/eva2-managed-b-reboot-probe verify --state /var/lib/eva2/reboot-proof/armed.json --output /var/lib/eva2/reboot-proof/receipt.json --startup-wait-seconds 180
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ReadWritePaths=/var/lib/eva2/reboot-proof
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+IPAddressDeny=any
+IPAddressAllow=localhost
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RemoveIPC=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+SystemCallFilter=~@clock @cpu-emulation @debug @module @mount @obsolete @privileged @raw-io @reboot @resources @swap
+
+[Install]
+WantedBy=multi-user.target

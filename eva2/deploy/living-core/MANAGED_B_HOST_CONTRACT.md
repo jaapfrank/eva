@@ -88,3 +88,27 @@ databases gestart, het schema geïnstalleerd, een echte Codex-beurt uitgevoerd
 en database, Hindsight en core samen herstart. Dit bewijst de kandidaatgrafiek,
 niet de productieadoptie. Een gecontroleerde data-overdracht, A/B-omschakeling
 en terugrol op de echte B blijven afzonderlijke gates.
+
+## Herstartbewijs zonder zelfonderbreking
+
+Een actieve Codex- of Eva-sessie mag nooit haar eigen WSL- of hostherstart
+aanroepen. `tools/managed_b_reboot_probe.py arm` maakt vóór een door de
+operator gestarte herstart één private `0600`-snapshot met de Windows-,
+WSL-kernel- en systemd-identiteit en een synthetisch duurzaam gesprek. Het
+programma bevat zelf geen reboot- of terminate-opdracht.
+
+Na de externe herstart voert `eva2-managed-b-postboot-proof.service` de
+`verify`-helft uit. Die maakt alleen een nieuwe receipt wanneer de gevraagde
+herstartsoort werkelijk is veranderd, Eva1 en beide Eva2-routes gezond zijn,
+alle zes beheerde containers én de vier rollbackcontainers stabiel zijn,
+Hindsight geen rijen verloor, het
+eigenaar-dashboard 401/200 afdwingt en Eva de twee synthetische woorden exact
+teruggeeft. Een systemd-herstart, een WSL-kernelherstart en een echte Windows-
+hostreboot krijgen drie verschillende labels; standaard telt uitsluitend de
+laatste. Token, synthetisch account en testwoorden komen niet in de receipt.
+
+De oude rollback-Hindsight gebruikt nog één bindmount onder `/tmp`. Daarom
+installeert de host exact `eva2-hindsight-rollback.tmpfiles`; systemd maakt de
+lege map vóór Docker met eigenaar `1000:1000` en mode `0700`. De publisher
+vult daarna alleen de access-lease. Zonder deze regel lijkt de rollbackcore na
+een WSL-herstart gezond terwijl `/readyz` terecht rood blijft.
