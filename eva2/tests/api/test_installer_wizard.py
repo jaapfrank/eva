@@ -12,6 +12,7 @@ from eva.application.conversation import load_current_identity_pack
 from eva.application.soul_markdown import soul_markdown_to_draft
 from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
 
 
 def _receipt(*, status: str = "blocked") -> dict[str, object]:
@@ -39,12 +40,14 @@ def _client(
     *,
     receipt: dict[str, object] | None = None,
     identity_lifecycle: InstallerIdentityLifecycle | None = None,
+    profile_workflow: InstallerProfileWorkflow | None = None,
 ) -> TestClient:
     return TestClient(
         create_installer_wizard(
             receipt or _receipt(),
             bootstrap,
             identity_lifecycle=identity_lifecycle,
+            profile_workflow=profile_workflow,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -101,7 +104,7 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     page = client.get("/")
     assert page.status_code == 200
     assert "Voordat Eva iets installeert" in page.text
-    assert "geen connector-, secret- of installatieknop" in page.text
+    assert "nog geen connector- of secretknop" in page.text
     assert "Nog niet bewezen" in page.text
 
     report = client.get("/internal/v1/preflight")
@@ -120,6 +123,10 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
         "candidate_sha256": None,
         "updated_at": None,
     }
+    profile_status = client.get("/internal/v1/onboarding/profile/status")
+    assert profile_status.status_code == 200
+    assert profile_status.json()["phase"] == "unavailable"
+    assert profile_status.json()["enabled"] is False
 
 
 def test_wizard_rejects_reused_wrong_or_cross_origin_bootstrap() -> None:
@@ -505,3 +512,164 @@ def test_wizard_resumes_identity_workflow_after_server_and_session_restart(
     )
     assert rolled_back.status_code == 200
     assert lifecycle.status().phase == "rolled_back"
+
+
+def test_wizard_resumes_non_secret_profile_after_server_and_session_restart(
+    private_tmp_path: Path,
+) -> None:
+    workspace = private_tmp_path / "profile-workspace"
+    workspace.mkdir(mode=0o700)
+    first_workflow = InstallerProfileWorkflow(
+        workspace=workspace,
+        clock=lambda: "2026-08-29T02:20:00Z",
+    )
+    first_bootstrap = InstallerBootstrap(
+        token="p" * 43, created_at=1.0, clock=lambda: 1.0
+    )
+    first = _client(
+        first_bootstrap,
+        receipt=_receipt(status="ready"),
+        profile_workflow=first_workflow,
+    )
+    assert (
+        first.post("/internal/v1/bootstrap", json={"token": "p" * 43}).status_code
+        == 204
+    )
+    page = first.get("/")
+    assert "Basis van deze installatie" in page.text
+    assert "window.__evaProfileEnabled=true" in page.text
+
+    cross_origin = first.post(
+        "/internal/v1/onboarding/profile/stage",
+        json={
+            "installation_name": "Eva thuis",
+            "owner_label": "Jaap",
+            "language": "nl-NL",
+            "time_zone": "Europe/Amsterdam",
+        },
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert cross_origin.status_code == 403
+    invalid = first.post(
+        "/internal/v1/onboarding/profile/stage",
+        json={
+            "installation_name": "Eva thuis",
+            "owner_label": "Jaap\nroot",
+            "language": "nl-NL",
+            "time_zone": "Europe/Amsterdam",
+        },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert invalid.status_code == 422
+    assert list(workspace.iterdir()) == []
+
+    staged = first.post(
+        "/internal/v1/onboarding/profile/stage",
+        json={
+            "installation_name": "Eva thuis",
+            "owner_label": "Jaap",
+            "language": "nl-NL",
+            "time_zone": "Europe/Amsterdam",
+        },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert staged.status_code == 200
+    assert staged.json()["phase"] == "staged"
+    assert staged.json()["active"] is False
+
+    second_workflow = InstallerProfileWorkflow(
+        workspace=workspace,
+        clock=lambda: "2026-08-29T02:21:00Z",
+    )
+    second_bootstrap = InstallerBootstrap(
+        token="q" * 43, created_at=2.0, clock=lambda: 2.0
+    )
+    second = _client(
+        second_bootstrap,
+        receipt=_receipt(status="ready"),
+        profile_workflow=second_workflow,
+    )
+    assert (
+        second.post("/internal/v1/bootstrap", json={"token": "q" * 43}).status_code
+        == 204
+    )
+    resumed = second.get("/internal/v1/onboarding/profile/status")
+    assert resumed.status_code == 200
+    assert resumed.json()["phase"] == "staged"
+    assert resumed.json()["profile"] == {
+        "installation_name": "Eva thuis",
+        "owner_label": "Jaap",
+        "language": "nl-NL",
+        "time_zone": "Europe/Amsterdam",
+    }
+    denied = second.post(
+        "/internal/v1/onboarding/profile/confirm",
+        json={
+            "profile_sha256": resumed.json()["profile_sha256"],
+            "confirmation": "ja",
+        },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert denied.status_code == 409
+    confirmed = second.post(
+        "/internal/v1/onboarding/profile/confirm",
+        json={
+            "profile_sha256": resumed.json()["profile_sha256"],
+            "confirmation": "BEVESTIGEN",
+        },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert confirmed.status_code == 200
+    assert confirmed.json()["phase"] == "ready"
+    assert confirmed.json()["active"] is False
+
+    third_bootstrap = InstallerBootstrap(
+        token="z" * 43, created_at=3.0, clock=lambda: 3.0
+    )
+    third = _client(
+        third_bootstrap,
+        receipt=_receipt(status="ready"),
+        profile_workflow=InstallerProfileWorkflow(workspace=workspace),
+    )
+    assert (
+        third.post("/internal/v1/bootstrap", json={"token": "z" * 43}).status_code
+        == 204
+    )
+    ready = third.get("/internal/v1/onboarding/profile/status")
+    assert ready.status_code == 200
+    assert ready.json()["phase"] == "ready"
+    assert ready.json()["revision"] == 2
+    assert ready.json()["non_claims"] == [
+        "Deze keuzes maken nog geen installatie of eigenaaraccount.",
+        "Deze route bewaart geen connectorsecret en activeert geen dienst.",
+    ]
+
+
+def test_wizard_blocks_profile_writes_when_platform_preflight_is_blocked(
+    private_tmp_path: Path,
+) -> None:
+    workspace = private_tmp_path / "blocked-profile"
+    workspace.mkdir(mode=0o700)
+    bootstrap = InstallerBootstrap(token="k" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        profile_workflow=InstallerProfileWorkflow(workspace=workspace),
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "k" * 43}).status_code
+        == 204
+    )
+    assert "window.__evaProfileEnabled=false" in client.get("/").text
+
+    denied = client.post(
+        "/internal/v1/onboarding/profile/stage",
+        json={
+            "installation_name": "Eva thuis",
+            "owner_label": "Jaap",
+            "language": "nl-NL",
+            "time_zone": "Europe/Amsterdam",
+        },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert denied.status_code == 409
+    assert list(workspace.iterdir()) == []

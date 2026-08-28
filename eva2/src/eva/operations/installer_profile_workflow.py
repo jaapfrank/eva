@@ -39,6 +39,10 @@ class InstallerProfileWorkflowError(ValueError):
     """Raised when the private installer profile cannot be trusted."""
 
 
+class InstallerProfileInputError(InstallerProfileWorkflowError):
+    """Raised when a human-supplied profile field is invalid."""
+
+
 ProfilePhase = Literal["empty", "staged", "ready"]
 
 
@@ -100,7 +104,7 @@ def _bounded_text(value: object, *, label: str, maximum: int) -> str:
         or value != value.strip()
         or any(unicodedata.category(character).startswith("C") for character in value)
     ):
-        raise InstallerProfileWorkflowError(f"{label} is invalid")
+        raise InstallerProfileInputError(f"{label} is invalid")
     return value
 
 
@@ -113,14 +117,14 @@ def _profile(
 ) -> InstallerProfile:
     checked_language = _bounded_text(language, label="language", maximum=35)
     if _LANGUAGE_RE.fullmatch(checked_language) is None:
-        raise InstallerProfileWorkflowError("language is invalid")
+        raise InstallerProfileInputError("language is invalid")
     checked_zone = _bounded_text(time_zone, label="time zone", maximum=80)
     try:
         zone = ZoneInfo(checked_zone)
     except (ZoneInfoNotFoundError, ValueError) as exc:
-        raise InstallerProfileWorkflowError("time zone is invalid") from exc
+        raise InstallerProfileInputError("time zone is invalid") from exc
     if zone.key != checked_zone:
-        raise InstallerProfileWorkflowError("time zone is not canonical")
+        raise InstallerProfileInputError("time zone is not canonical")
     return InstallerProfile(
         installation_name=_bounded_text(
             installation_name, label="installation name", maximum=80
@@ -457,4 +461,5 @@ __all__ = [
     "InstallerProfileTransition",
     "InstallerProfileWorkflow",
     "InstallerProfileWorkflowError",
+    "InstallerProfileInputError",
 ]

@@ -18,6 +18,11 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
 from eva.adapters.api.installer_identity_ui import INSTALLER_IDENTITY_SCRIPT
+from eva.adapters.api.installer_profile_api import (
+    INSTALLER_PROFILE_SCRIPT,
+    INSTALLER_PROFILE_SECTION,
+    register_installer_profile_routes,
+)
 from eva.application.conversation import load_current_identity_pack
 from eva.application.identity_drafts import identity_presentation_diff
 from eva.application.soul_markdown import (
@@ -38,6 +43,10 @@ from eva.operations.installer_preflight import (
     inspect_host,
     load_platform_lock,
     preflight,
+)
+from eva.operations.installer_profile_workflow import (
+    InstallerProfileWorkflow,
+    InstallerProfileWorkflowError,
 )
 
 
@@ -156,6 +165,7 @@ def _page(
     *,
     identity_writable: bool,
     identity_workflow: InstallerIdentityWorkflowStatus | None = None,
+    profile_enabled: bool = False,
 ) -> str:
     status = html.escape(str(receipt["status"]))
     rows = "".join(
@@ -182,6 +192,7 @@ def _page(
         "<", "\\u003c"
     )
     writable_json = "true" if identity_writable else "false"
+    profile_enabled_json = "true" if profile_enabled else "false"
     return (
         f"""<!doctype html>
 <html lang="nl">
@@ -200,11 +211,14 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
 <main>
 <p><small>EVA · lokale installatiecontrole</small></p>
 <h1>Voordat Eva iets installeert</h1>
-<section><h2 class="{status}">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>Deze pagina heeft geen connector-, secret- of installatieknop. Zij toont alleen waarom Eva wel of niet verder mag.</small></p></section>
+<section><h2 class="{status}">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>De wizard start hier nog geen dienst en heeft nog geen connector- of secretknop.</small></p></section>
+{INSTALLER_PROFILE_SECTION}
 <section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
 </main>
-<script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};</script>
+<script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};window.__evaProfileEnabled={profile_enabled_json};</script>
 <script>"""
+        + INSTALLER_PROFILE_SCRIPT
+        + "</script>\n<script>"
         + INSTALLER_IDENTITY_SCRIPT
         + "</script>\n</html>"
     )
@@ -215,6 +229,7 @@ def create_installer_wizard(
     bootstrap: InstallerBootstrap,
     identity: IdentityPack | None = None,
     identity_lifecycle: InstallerIdentityLifecycle | None = None,
+    profile_workflow: InstallerProfileWorkflow | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -227,6 +242,7 @@ def create_installer_wizard(
     else:
         identity = identity or load_current_identity_pack()
     identity_writable = identity_lifecycle is not None and receipt["status"] == "ready"
+    profile_enabled = profile_workflow is not None and receipt["status"] == "ready"
     app = FastAPI(
         title="Eva local installer", docs_url=None, redoc_url=None, openapi_url=None
     )
@@ -312,9 +328,27 @@ def create_installer_wizard(
                 identity_workflow=(
                     identity_workflow_status() if identity_writable else None
                 ),
+                profile_enabled=profile_enabled,
             ),
             headers=_SECURITY_HEADERS,
         )
+
+    def require_installer_read(request: Request) -> None:
+        _loopback_request(request)
+        bootstrap.require_session(request)
+
+    def require_installer_write(request: Request) -> None:
+        require_installer_read(request)
+        _same_origin_or_absent(request)
+
+    register_installer_profile_routes(
+        app,
+        workflow=profile_workflow,
+        enabled=profile_enabled,
+        require_read=require_installer_read,
+        require_write=require_installer_write,
+        security_headers=_SECURITY_HEADERS,
+    )
 
     @app.get("/internal/v1/preflight")
     def report(request: Request) -> JSONResponse:
@@ -625,6 +659,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--identity-trust", type=Path)
     parser.add_argument("--identity-private-key", type=Path)
     parser.add_argument("--identity-workspace", type=Path)
+    parser.add_argument("--profile-workspace", type=Path)
     args = parser.parse_args(argv)
     if not 1024 <= args.port <= 65535:
         parser.error("installer port must be between 1024 and 65535")
@@ -644,6 +679,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"status": "failed", "error": str(error)}, sort_keys=True))
         return 2
     identity_lifecycle = None
+    profile_workflow = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -663,6 +699,21 @@ def main(argv: list[str] | None = None) -> int:
                 )
             )
             return 2
+    if args.profile_workspace is not None:
+        try:
+            if not args.profile_workspace.exists():
+                args.profile_workspace.mkdir(mode=0o700)
+            profile_workflow = InstallerProfileWorkflow(
+                workspace=args.profile_workspace
+            )
+        except (InstallerProfileWorkflowError, OSError):
+            print(
+                json.dumps(
+                    {"status": "failed", "error": "profile workspace is invalid"},
+                    sort_keys=True,
+                )
+            )
+            return 2
     bootstrap = InstallerBootstrap.create()
     print(f"Open lokaal: http://{args.host}:{args.port}/bootstrap#{bootstrap.token}")
     uvicorn.run(
@@ -670,6 +721,7 @@ def main(argv: list[str] | None = None) -> int:
             receipt,
             bootstrap,
             identity_lifecycle=identity_lifecycle,
+            profile_workflow=profile_workflow,
         ),
         host=args.host,
         port=args.port,
