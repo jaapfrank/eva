@@ -1,0 +1,55 @@
+{
+  "contract": "Eva2HomeTargetClarificationLiveReceipt/v1",
+  "capturedAt": "2026-08-28T12:22:53+02:00",
+  "source": {
+    "commit": "3e65cebdf416a5b660b78fb9d63828b8004d34d0",
+    "sourceArchiveSha256": "4bc6472c0fe7696be7f7b0fb4c9c618cbf33d48e7c0c138068efe381cdd32bac",
+    "wheelCount": 39,
+    "buildNetwork": "none"
+  },
+  "runtime": {
+    "container": "eva2-candidate-794ff73-core",
+    "imageId": "sha256:911717be9b4df34872eedca82e9d2c15cca6270a86b809123dac9dd59938db60",
+    "health": "healthy",
+    "ready": true,
+    "readOnlyRootFilesystem": true,
+    "runtimeUid": 65532,
+    "runtimeGid": 65532,
+    "homeAssistantEffectsEnabled": false
+  },
+  "verification": {
+    "questionClass": "ambiguous natural Home Assistant light name",
+    "firstResponseStatus": 200,
+    "answer": "Welke lamp bedoel je precies?",
+    "answerSha256": "40d0ed19cdec2d95bd76c394f2f2fdc9e7850792fda2c3627f55395b926e3bfe",
+    "modelCalls": 1,
+    "homeAssistantReadEvents": 0,
+    "effectIntentsSinceRequest": 0,
+    "coreStopStartPerformed": true,
+    "replayResponseStatus": 200,
+    "replayElapsedMilliseconds": 50,
+    "replayAnswerSha256": "40d0ed19cdec2d95bd76c394f2f2fdc9e7850792fda2c3627f55395b926e3bfe",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "testsPassed": 89,
+    "ruff": "passed",
+    "compile": "passed"
+  },
+  "privacy": {
+    "homeAssistantTokenRecorded": false,
+    "homeAssistantUrlRecorded": false,
+    "entityIdsRecorded": false,
+    "databaseDsnRecorded": false
+  },
+  "nonClaims": [
+    "This proves a natural clarification for one ambiguous light name, not arbitrary ambiguity handling for every connector.",
+    "No Home Assistant read or effect was performed for the ambiguous request.",
+    "Home Assistant effects remain disabled."
+  ],
+  "status": "passed"
+}

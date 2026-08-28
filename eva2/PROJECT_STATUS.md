@@ -29,6 +29,8 @@ installatie zijn nog niet klaar.
   antwoord: `De spotjes overkapping staan uit.`
 - Die huisvraag werd na een herstart in 51 ms uit het logboek teruggegeven,
   zonder Home Assistant nog een keer te lezen.
+- Bij een vage huisnaam vraagt Eva nu gewoon welke lamp je bedoelt. Ze gokt
+  niet en leest of bedient het huis dan niet.
 - Huisbediening staat standaard uit. Eva2 kan nu dus niets per ongeluk
   aanzetten, uitzetten of automatiseren.
 - Er is een private back-up van Eva1 gemaakt en gecontroleerd.
@@ -47,8 +49,6 @@ installatie zijn nog niet klaar.
 
 ## Wat nog niet klaar is
 
-- Een vage huisnaam levert nog een technische fout op. Eva moet dan gewoon
-  vragen welke lamp je bedoelt.
 - Huisbediening met echte aan/uit-acties staat nog uit.
 - De volledige Telegramproef met twee personen en een groep is nog niet groen.
 - Eva1-geheugen is nog niet naar Eva2 gekopieerd. Eerst moet duidelijk zijn
@@ -66,10 +66,9 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Bij meerdere passende lampen een normale verduidelijkingsvraag geven.
-2. De echte Telegramroute met gezinscontext verder sluiten.
-3. De beheerde B-start en rollback op dezelfde actuele image bewijzen.
-4. Daarna pas begrensde huisbediening met onafhankelijke controle aanzetten.
+1. De echte Telegramroute met gezinscontext verder sluiten.
+2. De beheerde B-start en rollback op dezelfde actuele image bewijzen.
+3. Daarna pas begrensde huisbediening met onafhankelijke controle aanzetten.
 
 ## Belangrijk verschil
 
@@ -83,6 +82,7 @@ installatie zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
+- [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Live `/eva2`-koppeling en Eva1-back-up](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json)
 
