@@ -1,0 +1,39 @@
+{
+  "contract": "Eva2TelegramPrivatePrincipalIsolationReceipt/v1",
+  "createdAt": "2026-08-28T12:37:32+02:00",
+  "eva1Source": {
+    "commit": "2bb2ac3bf221793da75c9f8cc26f0f59beaeb045",
+    "clientSha256": "ec0033d603b1e03d1a0ecf5b7f39ec0751cafb44b13c902bec144e7caf4d7685",
+    "testSha256": "bba41fac9ddfbbdae934c12244dd5360e72200c7cf573fd2abf0bfb8026ef0bb"
+  },
+  "tests": {
+    "passed": 6,
+    "syntax": "passed"
+  },
+  "live": {
+    "activeEva2Port": 44702,
+    "distinctPrivateAccounts": 2,
+    "distinctPrincipalBindings": 2,
+    "eva1HttpStatusCount200": 5,
+    "eva1Service": "active",
+    "eva2Ready": true,
+    "eva2RestartCount": 0,
+    "groupWithoutConsent": "rejected_before_eva2_request",
+    "replies": [
+      "dit is apart account zeven.",
+      "dit is apart account acht."
+    ]
+  },
+  "privacy": {
+    "privatePrincipalDerivation": "one stable Eva2 principal per positive Telegram account ID",
+    "sharedTestPrincipalRemoved": true,
+    "unconsentedGroupsAccepted": false
+  },
+  "nonClaims": [
+    "The live calls used the same client function as Telegram but did not send external Telegram messages.",
+    "This does not prove a real two-person group conversation or group consent flow.",
+    "Multiple Telegram accounts are not yet deliberately linked to one Eva2 person.",
+    "No Home Assistant effect was enabled or executed."
+  ],
+  "status": "passed"
+}

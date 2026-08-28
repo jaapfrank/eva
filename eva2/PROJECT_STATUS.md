@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 12:34 CEST
+Laatst bijgewerkt: 28 augustus 2026, 12:37 CEST
 
 ## Heel kort
 
@@ -18,6 +18,9 @@ installatie zijn nog niet klaar.
 
 - Eva1 draait nog gewoon en blijft de standaard.
 - Een bericht met `/eva2` gaat naar de aparte Eva2-kandidaat.
+- Twee verschillende privéaccounts krijgen nu ieder hun eigen Eva2-profiel.
+- Een Telegramgroep zonder gekoppelde toestemming wordt geweigerd en kan dus
+  niet per ongeluk in iemands privégeheugen belanden.
 - Eva2 geeft echte modelantwoorden via de bestaande Codex-login van Eva1.
 - Eva2 klinkt volgens haar ingestelde jonge, warme, nieuwsgierige en eigenwijze
   persoonlijkheid.
@@ -86,6 +89,7 @@ installatie zijn nog niet klaar.
 
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
 - [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)
+- [Aparte privéprofielen voor Telegramaccounts](evidence/living-core/eva2-telegram-private-principal-isolation-2026-08-28.json)
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Live `/eva2`-koppeling en Eva1-back-up](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json)
