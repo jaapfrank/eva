@@ -37,6 +37,29 @@ def soul_markdown_sha256(markdown: str) -> str:
     return hashlib.sha256(markdown.encode("utf-8")).hexdigest()
 
 
+def identity_to_soul_markdown(identity: IdentityPack) -> str:
+    """Export only the small presentation subset accepted by this importer."""
+
+    sections = (
+        ("Naam", identity.display_name),
+        ("Voornaamwoorden", ", ".join(identity.pronouns)),
+        ("Taal", identity.language),
+        ("Humor", identity.humour),
+        ("Temperament", ", ".join(identity.temperament)),
+        ("Stem", ", ".join(identity.voice_style.qualities)),
+    )
+    lines = [f"# {identity.display_name}"]
+    for heading, value in sections:
+        lines.extend(("", f"## {heading}", value))
+    markdown = "\n".join((*lines, ""))
+    if (
+        len(markdown.encode("utf-8")) > MAX_SOUL_BYTES
+        or len(markdown.splitlines()) > MAX_SOUL_LINES
+    ):
+        raise SoulMarkdownError("IdentityPack past niet in een kleine SOUL.md-export")
+    return markdown
+
+
 def _value_list(value: str, *, heading: str) -> list[str]:
     result = [item.strip() for item in value.split(",")]
     if not result or any(not item for item in result):
@@ -135,12 +158,15 @@ def soul_markdown_to_draft(
     except (TypeError, ValueError) as error:
         if isinstance(error, SoulMarkdownError):
             raise
-        raise SoulMarkdownError("SOUL.md past niet bij een veilige identiteitswijziging") from error
+        raise SoulMarkdownError(
+            "SOUL.md past niet bij een veilige identiteitswijziging"
+        ) from error
 
 
 __all__ = [
     "MAX_SOUL_BYTES",
     "SoulMarkdownError",
+    "identity_to_soul_markdown",
     "soul_markdown_sha256",
     "soul_markdown_to_draft",
 ]

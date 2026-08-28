@@ -260,6 +260,12 @@ def test_wizard_stages_signs_activates_and_rolls_back_without_exposing_key(
         == 204
     )
     assert "1. Bewaar voorstel" in client.get("/").text
+    exported = client.get("/internal/v1/identity/soul-export")
+    assert exported.status_code == 200
+    assert exported.headers["content-disposition"] == 'attachment; filename="SOUL.md"'
+    assert "## Naam\nEvi" in exported.text
+    assert "identity:installer" not in exported.text
+    assert "signature" not in exported.text
     markdown = (
         "# Noor\n\n## Naam\nNoor\n\n## Humor\nlicht en speels\n\n"
         "## Temperament\nwarm, nieuwsgierig, eigenwijs"
