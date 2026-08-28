@@ -91,6 +91,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_DATABASE_DSN_FILE_HOST": str(database_dsn),
         "EVA_POSTGRES_PASSWORD_FILE_HOST": str(postgres_password),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
+        "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "false",
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": str(dashboard_access_token),
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",

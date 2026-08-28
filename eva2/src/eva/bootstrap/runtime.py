@@ -178,6 +178,7 @@ class RuntimeSettings:
     personal_interest_lease_seconds: int = 90
     home_assistant_url: str | None = None
     home_assistant_token: str | None = None
+    home_assistant_effects_enabled: bool = False
     home_assistant_event_domains: tuple[str, ...] = ("light",)
     agentmail_inbox_id: str | None = None
     agentmail_api_key_file: str | None = None
@@ -312,6 +313,12 @@ class RuntimeSettings:
             )
             or None
         )
+        home_assistant_effects = os.environ.get(
+            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "false"
+        ).strip().casefold()
+        if home_assistant_effects not in {"false", "true"}:
+            raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid")
+        home_assistant_effects_enabled = home_assistant_effects == "true"
         home_assistant_event_domains = tuple(
             sorted(
                 {
@@ -500,6 +507,7 @@ class RuntimeSettings:
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             home_assistant_url=home_assistant_url,
             home_assistant_token=home_assistant_token,
+            home_assistant_effects_enabled=home_assistant_effects_enabled,
             home_assistant_event_domains=home_assistant_event_domains,
             agentmail_inbox_id=agentmail_inbox_id,
             agentmail_api_key_file=agentmail_api_key_file,
@@ -1748,6 +1756,7 @@ def create_runtime_app() -> FastAPI:
     home_assistant_automations = (
         None
         if settings.home_assistant_url is None
+        or not settings.home_assistant_effects_enabled
         else HomeAssistantAutomationAdapter(
             HomeAssistantAutomationConfig(
                 settings.home_assistant_url,
@@ -1758,6 +1767,7 @@ def create_runtime_app() -> FastAPI:
     home_assistant_admin = (
         None
         if settings.home_assistant_url is None
+        or not settings.home_assistant_effects_enabled
         else HomeAssistantAdminAdapter(
             base_url=settings.home_assistant_url,
             token=settings.home_assistant_token or "",
@@ -1766,6 +1776,7 @@ def create_runtime_app() -> FastAPI:
     home_assistant_hacs = (
         None
         if settings.home_assistant_url is None
+        or not settings.home_assistant_effects_enabled
         else HomeAssistantHacsAdapter(
             base_url=settings.home_assistant_url,
             token=settings.home_assistant_token or "",
@@ -1854,6 +1865,7 @@ def create_runtime_app() -> FastAPI:
         home_assistant_automations,
         home_assistant_admin,
         home_assistant_hacs,
+        home_assistant_effects_enabled=settings.home_assistant_effects_enabled,
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,

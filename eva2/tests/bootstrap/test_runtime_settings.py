@@ -21,6 +21,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_HOME_ASSISTANT_URL",
         "EVA_HOME_ASSISTANT_TOKEN",
         "EVA_HOME_ASSISTANT_TOKEN_FILE",
+        "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
         "EVA_TELEGRAM_PROACTIVE_CHAT_ID",
         "EVA_TELEGRAM_BOT_TOKEN",
         "EVA_TELEGRAM_BOT_TOKEN_FILE",
@@ -65,7 +66,15 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     settings = RuntimeSettings.from_environment()
     assert settings.database_dsn.endswith("@postgres/eva")
     assert settings.home_assistant_token == "test-token"
+    assert settings.home_assistant_effects_enabled is False
     assert settings.conversation_reasoning_effort == "medium"
+
+    monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
+    assert RuntimeSettings.from_environment().home_assistant_effects_enabled is True
+
+    monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
+    with pytest.raises(RuntimeError, match="EFFECTS_ENABLED"):
+        RuntimeSettings.from_environment()
 
 
 def test_runtime_requires_custom_identity_pack_and_trust_together(

@@ -302,6 +302,7 @@ class PostgresConversationActions:
         home_assistant_automations: AsyncToolPort | None = None,
         home_assistant_admin: _HomeAssistantInventoryPort | None = None,
         home_assistant_hacs: _HomeAssistantPackagePort | None = None,
+        home_assistant_effects_enabled: bool = True,
         research: CurrentResearchPort | None = None,
         file_batch: TextBatchPort | None = None,
         validated_file_edit: ValidatedTextEditPort | None = None,
@@ -313,6 +314,9 @@ class PostgresConversationActions:
     ) -> None:
         self._engine = engine
         self._home_assistant = home_assistant
+        if not isinstance(home_assistant_effects_enabled, bool):
+            raise TypeError("Home Assistant effect policy must be boolean")
+        self._home_assistant_effects_enabled = home_assistant_effects_enabled
         self._home_assistant_reads = (
             None
             if home_assistant is None
@@ -343,7 +347,7 @@ class PostgresConversationActions:
     @property
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
-        if self._home_assistant is not None:
+        if self._home_assistant is not None and self._home_assistant_effects_enabled:
             actions.append(_HOME_ASSISTANT_ACTION)
             actions.append(_HOME_ASSISTANT_SWITCH_ACTION)
         if self._home_assistant_reads is not None:
@@ -2196,6 +2200,8 @@ class PostgresConversationActions:
     ) -> VerifiedToolResult:
         if self._home_assistant is None:
             raise RuntimeError("Home Assistant is not configured")
+        if not self._home_assistant_effects_enabled:
+            raise RuntimeError("Home Assistant effects are disabled")
         if (
             domain not in {"light", "switch"}
             or service not in {"turn_on", "turn_off"}
@@ -2315,6 +2321,8 @@ class PostgresConversationActions:
     ) -> ConversationActionReceipt:
         if self._home_assistant is None:
             raise ConversationConflict("Home Assistant action is unavailable")
+        if not self._home_assistant_effects_enabled:
+            raise ConversationConflict("Home Assistant effects are disabled")
         arguments = self._validated_home_assistant_arguments(call.arguments)
         domain = "switch" if call.name == _HOME_ASSISTANT_SWITCH_ACTION else "light"
 

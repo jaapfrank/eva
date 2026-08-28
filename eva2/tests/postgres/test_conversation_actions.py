@@ -40,6 +40,35 @@ from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 NOW = datetime(2026, 8, 23, 14, 0, tzinfo=UTC)
 
 
+def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> None:
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=object(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=False,
+    )
+    assert "read_home_assistant_state" in actions.action_names
+    assert "read_home_assistant_history" in actions.action_names
+    assert "set_home_assistant_light" not in actions.action_names
+    assert "set_home_assistant_switch" not in actions.action_names
+    with pytest.raises(Exception, match="effects are disabled"):
+        actions.execute(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message",
+                "zet de lamp aan",
+                "2026-08-23T14:00:00Z",
+            ),
+            ConversationActionCall(
+                "call",
+                "set_home_assistant_light",
+                {"state": "on", "target": "woonkamer"},
+            ),
+        )
+
+
 def test_validated_file_edit_action_requires_its_bounded_adapter() -> None:
     unavailable = PostgresConversationActions(sa.create_engine("sqlite://"))
     available = PostgresConversationActions(

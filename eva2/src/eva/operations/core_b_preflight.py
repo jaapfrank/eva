@@ -58,6 +58,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_DATABASE_DSN_FILE_HOST",
     "EVA_POSTGRES_PASSWORD_FILE_HOST",
     "EVA_HOME_ASSISTANT_URL",
+    "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
     "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
     "EVA_IDENTITY_PACK_FILE_HOST",
@@ -361,6 +362,8 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("Eva fan-out capability must preserve 1..8 recipients")
     if values["EVA_FANOUT_ALLOW_INSECURE_HTTP"] not in {"true", "false"}:
         raise RuntimeError("EVA_FANOUT_ALLOW_INSECURE_HTTP must be true or false")
+    if values["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] not in {"true", "false"}:
+        raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED must be true or false")
     if not any(
         recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
     ):
