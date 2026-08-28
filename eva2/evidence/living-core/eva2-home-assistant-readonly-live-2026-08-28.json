@@ -1,0 +1,68 @@
+{
+  "contract": "Eva2HomeAssistantReadOnlyLiveReceipt/v1",
+  "capturedAt": "2026-08-28T12:14:38+02:00",
+  "source": {
+    "commit": "97a16ad2bf680b09a3dca8fd9526efb89fca52d9",
+    "sourceArchiveSha256": "95aaea7bc0a01fe969e80a8fbe8ad317d8caaebd5d2340d39fcd417619a9bbc7",
+    "wheelCount": 39,
+    "buildNetwork": "none"
+  },
+  "runtime": {
+    "container": "eva2-candidate-794ff73-core",
+    "imageId": "sha256:008362ea3871fec0f0ded81e395d0b81e771c2fbb9530c0bb6855c413ae01195",
+    "health": "healthy",
+    "ready": true,
+    "readOnlyRootFilesystem": true,
+    "runtimeUid": 65532,
+    "runtimeGid": 65532,
+    "restartPolicy": "unless-stopped",
+    "homeAssistantEffectsEnabled": false
+  },
+  "verification": {
+    "targetWasResolvedByNaturalName": true,
+    "answer": "De spotjes overkapping staan uit.",
+    "answerSha256": "2700daba7cb6fbae79489581328027ea5cfc1764288cc75ca04935405d802df5",
+    "firstResponseStatus": 200,
+    "operationalEvents": {
+      "READ_REQUEST_ADMITTED": 1,
+      "READ_OBSERVED": 1
+    },
+    "effectIntentsSinceRequest": 0,
+    "coreStopStartPerformed": true,
+    "replayResponseStatus": 200,
+    "replayElapsedMilliseconds": 51,
+    "replayAnswerSha256": "2700daba7cb6fbae79489581328027ea5cfc1764288cc75ca04935405d802df5",
+    "replayCreatedAdditionalRead": false,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "tests": {
+      "isolatedRuntimeAndActionTests": 44,
+      "hostPreflightAndReleaseTests": 98,
+      "disposablePostgresRestartTests": 2,
+      "totalPassed": 144
+    }
+  },
+  "startupAudit": {
+    "failedCandidatesPreservedStopped": 2,
+    "firstFailure": "image default user could not prepare private tmpfs paths",
+    "secondFailure": "minimal existing init capabilities were omitted",
+    "resolution": "the successful container reproduces the prior five init-only capabilities and drops to uid/gid 65532 before starting uvicorn"
+  },
+  "privacy": {
+    "homeAssistantTokenRecorded": false,
+    "homeAssistantUrlRecorded": false,
+    "entityIdRecorded": false,
+    "databaseDsnRecorded": false
+  },
+  "nonClaims": [
+    "This proves one real read-only Home Assistant state question, not a released write-capable house assistant.",
+    "Home Assistant effects remain disabled and require a separate reviewed gate before any live write trial.",
+    "This is a live Eva2 candidate behind the explicit /eva2 route, not promotion over Eva1 or managed-B release acceptance."
+  ],
+  "status": "passed"
+}

@@ -1,6 +1,24 @@
 # Eva 2 — actuele voortgang
 
 Laatst bijgewerkt: 2026-08-28
+> Werkende huisvraag via live `/eva2`, 28 augustus 2026 12:14 CEST: Eva2
+> gebruikt nu de echte Home Assistant-koppeling uitsluitend voor lezen. De
+> standaard runtime biedt geen lamp-, schakel- of automationeffecten aan en
+> weigert ook een directe effectomweg. Deze grens doorstond 144 gerichte
+> runtime-, actie-, beheer-, release- en echte PostgreSQL-herstartproeven.
+>
+> De schone commit `97a16ad` is met 39 hashgebonden wheels en zonder
+> bouwnetwerk tot een nieuwe kandidaatimage gemaakt. Via exact dezelfde
+> `/eva2`-functie als Telegram vroeg Eva naar één natuurlijk genoemde lamp en
+> antwoordde zij op basis van een echte Home Assistant-read: `De spotjes
+> overkapping staan uit.` PostgreSQL bevat daarvoor precies één
+> `READ_REQUEST_ADMITTED` en één `READ_OBSERVED`, en nul nieuwe effectintents.
+> Na een volledige core-stop/start kwam exact hetzelfde antwoord in 51 ms uit
+> het duurzame logboek terug zonder tweede huislezing. De vorige werkende
+> image en twee mislukte opstartpogingen staan gestopt en intact voor audit en
+> rollback; Eva1 bleef op alle vijf lokale routes groen. Receipt:
+> [`eva2-home-assistant-readonly-live-2026-08-28.json`](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json).
+
 > Eerlijke geheugencontinuïteit live, 28 augustus 2026 11:51 CEST: de eerste
 > volledige stop/startproef vond een echte gespreksfout. Eva zei vóór de
 > herstart ten onrechte dat zij de testwoorden niet blijvend kon opslaan, maar
