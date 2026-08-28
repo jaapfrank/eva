@@ -1,0 +1,85 @@
+{
+  "contract": "Eva2HomeAssistantBoundedEffectLiveReceipt/v1",
+  "capturedAt": "2026-08-28T13:11:59+02:00",
+  "source": {
+    "commit": "b718552003b85fa3482e518a60d08af771338586",
+    "sourceArchiveSha256": "46a315f31927ac790da997d5a1e1ac613a2baf6d0761d7b859b7751f3e529ff4",
+    "wheelCount": 39,
+    "buildNetwork": "none"
+  },
+  "runtime": {
+    "container": "eva2-candidate-b718552-core",
+    "imageId": "sha256:85117b0f40203ad75131165ee9f667e24fd985c33f029fc27adc9a1fded4ba7b",
+    "health": "healthy",
+    "restartCount": 0,
+    "readOnlyRootFilesystem": true,
+    "memoryLimitBytes": 805306368,
+    "activeCanaryPort": 44704,
+    "previousCanaryPort": 44703,
+    "effectsEnabled": true,
+    "effectAllowlistEntryCount": 1,
+    "effectAllowlistSha256": "ef18de1b9141820b722c43bff814ff504a9c982591063227dcc39ab8b73e451c",
+    "startupCommandSha256": "f7e97d805d81055371eea5e4f47377b24c9f3878a6870df0b46b43cc73ab1667"
+  },
+  "verification": {
+    "friendlyTarget": "Spotjes overkapping",
+    "stateBefore": "off",
+    "forbiddenTurnOnHttpStatus": 409,
+    "forbiddenOtherTargetHttpStatus": 409,
+    "forbiddenResponseSha256": "c0bba8639c491511b6aa83c0e10fd8d9cfcf7ded09237e4ff2912f228f344bb3",
+    "directAllowedTurnOffHttpStatus": 200,
+    "directAllowedResult": "verified",
+    "stateAfterDirectEffect": "off",
+    "directEventTypesBeforeRestart": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "directReplayAfterCoreRestartHttpStatus": 200,
+    "directReplayElapsedMilliseconds": 27,
+    "directReplayWasSemanticallyEqual": true,
+    "directEventTypesAfterReplay": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "naturalTelegramClientCommand": "Zet de spotjes overkapping uit.",
+    "firstNaturalAttemptHttpStatus": 503,
+    "sameMessageIdRetryHttpStatus": 200,
+    "naturalReply": "De spotjes overkapping zijn uitgezet.",
+    "naturalReplySha256": "ff156076ad22c7441ff1095c02c942b51d2399c878b88b493977a45ea90a8071",
+    "naturalActionEventTypes": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "naturalReplayAfterCoreRestartElapsedMilliseconds": 80,
+    "naturalReplayCreatedAdditionalEffect": false,
+    "stateAfterNaturalEffectAndReplay": "off",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "targetedTestsPassed": 154
+  },
+  "privacy": {
+    "homeAssistantTokenRecorded": false,
+    "homeAssistantUrlRecorded": false,
+    "databaseDsnRecorded": false,
+    "telegramAccountIdRecorded": false,
+    "entityIdRecorded": false
+  },
+  "nonClaims": [
+    "This proves one already-off light can be turned off through the real Eva2 conversation route and independently read back.",
+    "It does not authorize another entity, turning anything on, arbitrary Home Assistant services, locks, covers, automations, or broad house control.",
+    "The first natural-language attempt returned HTTP 503; retrying the same message ID completed without duplicate effect events.",
+    "This is an explicit /eva2 canary capability, not promotion over Eva1 or full managed-B release acceptance."
+  ],
+  "status": "passed"
+}

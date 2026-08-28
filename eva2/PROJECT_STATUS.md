@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 12:54 CEST
+Laatst bijgewerkt: 28 augustus 2026, 13:12 CEST
 
 ## Heel kort
 
@@ -8,9 +8,10 @@ Eva2 werkt nu echt als aparte proef naast Eva1.
 
 Je kunt via `/eva2` met haar praten. Ze gebruikt een echte Codex-koppeling,
 heeft haar eigen persoonlijkheid, bewaart het lopende gesprek in PostgreSQL en
-kan de actuele toestand van Home Assistant lezen.
+kan Home Assistant lezen. Eén al uitgeschakelde lamp kan ze nu ook veilig
+uitzetten en daarna apart controleren.
 
-Eva2 is nog geen volledige vervanger voor Eva1. Schrijven naar het huis,
+Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening,
 gezinsgroepen, volledige voice, algemene browserbediening en de definitieve
 installatie zijn nog niet klaar.
 
@@ -31,35 +32,28 @@ installatie zijn nog niet klaar.
 - Een gesprek blijft bewaard na een herstart van Eva2 en PostgreSQL.
 - Eva2 draait in een eigen container met een eigen PostgreSQL-database.
 - Hindsight is aangesloten als langetermijngeheugen van de kandidaat.
-- Eva2 kan Home Assistant echt lezen.
-- De vraag `Staan de spotjes overkapping nu aan of uit?` kreeg het echte
-  antwoord: `De spotjes overkapping staan uit.`
-- Die huisvraag werd na een herstart in 51 ms uit het logboek teruggegeven,
-  zonder Home Assistant nog een keer te lezen.
+- Eva2 kan Home Assistant echt lezen. Op de vraag naar de spotjes overkapping
+  antwoordde ze terecht dat die uit stonden.
 - Bij een vage huisnaam vraagt Eva nu gewoon welke lamp je bedoelt. Ze gokt
   niet en leest of bedient het huis dan niet.
-- Huisbediening staat standaard uit. Eva2 kan nu dus niets per ongeluk
-  aanzetten, uitzetten of automatiseren.
+- Via een gewoon `/eva2`-bericht kan ze die spotjes uitzetten en apart
+  controleren of ze echt uit staan.
+- Alleen die ene lamp en alleen `uitzetten` zijn toegestaan. Aanzetten, een
+  andere lamp kiezen of automatiseren wordt vóór Home Assistant geweigerd.
+- Na een echte herstart gaf dezelfde opdracht binnen 0,1 seconde het bewaarde
+  resultaat terug, zonder de lamp nogmaals te bedienen.
 - De actuele Eva2-image kan nu veilig worden klaargezet en omgeschakeld.
 - De echte omschakeling heen, terug en opnieuw heen bleef groen. Bij een fout
   zet de operator automatisch de vorige route terug.
 - Er is een private back-up van Eva1 gemaakt en gecontroleerd.
 - Het vorige Eva2-slot blijft beschikbaar als directe rollback.
-- Een kleine echte gesprek- en geheugenset kan naar een lege nieuwe database
-  worden hersteld.
-- Versleutelde back-ups, objectherstel en herstelcontrole zijn technisch
-  beproefd.
-- Een subagent kan begrensd worden gestart, gevolgd en gestopt.
-- Een browser kan in een afgesloten proef een vaste pagina lezen en één vaste
-  klik uitvoeren.
-- Lokale spraak kan via Piper en Whisper door Eva's gesprekcore lopen.
-- De installer kan een `SOUL.md` laten zien als veilig voorstel, zonder hem
-  meteen te activeren.
-- De AgentBench-omgeving en 60 officiële DBBench-devcases zijn veilig geladen.
+- Een kleine gesprek- en geheugenset kan veilig naar een lege database worden
+  hersteld.
 
 ## Wat nog niet klaar is
 
-- Huisbediening met echte aan/uit-acties staat nog uit.
+- Brede huisbediening staat nog uit. Nu werkt alleen één veilig begrensde
+  `uitzetten`-actie; andere lampen en `aanzetten` zijn nog geblokkeerd.
 - De volledige Telegramproef met twee personen en een groep is nog niet groen.
 - Eva1-geheugen is nog niet naar Eva2 gekopieerd. Eerst moet duidelijk zijn
   welk oud persoonlabel bij welk nieuw profiel hoort.
@@ -76,7 +70,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Begrensde huisbediening met onafhankelijke controle aansluiten.
+1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
+   en herstartveiligheid kwijt te raken.
 2. De echte Telegramgroeptest later met twee gezinsleden uitvoeren.
 3. De reboot- en langere praktijktest uitvoeren.
 
@@ -92,6 +87,7 @@ installatie zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
+- [Echte begrensde huisactie met aparte controle](evidence/living-core/eva2-home-assistant-bounded-effect-live-2026-08-28.json)
 - [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)
 - [Aparte privéprofielen voor Telegramaccounts](evidence/living-core/eva2-telegram-private-principal-isolation-2026-08-28.json)
 - [Persoonsgebonden toestemming voor Telegramgroepen](evidence/living-core/eva2-telegram-group-consent-live-2026-08-28.json)
