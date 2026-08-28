@@ -1,0 +1,97 @@
+{
+  "contract": "Eva2DistrolessHindsightPgvectorCandidateReceipt/v1",
+  "issuedAt": "2026-08-28T16:02:02+02:00",
+  "sourceCommit": "f847291183bd978f674686e7c23c789cec439132",
+  "inputs": {
+    "hindsightUpstream": "ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "hindsightDistrolessBase": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+    "pythonRuntimeLibraryImage": "docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "pgvectorSourceCommit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
+    "pgvectorVersion": "0.8.6",
+    "postgresBuilder": "cgr.dev/chainguard/postgres@sha256:8e9b080f89604bab8fcfe48d02569f5d9f0a822013ad0f55667d70019e8ea594",
+    "postgresRuntime": "cgr.dev/chainguard/postgres@sha256:75f633a8213629eef75f31a80b69756eb007ba1cafaa005d7cc47e5a09221c2d",
+    "hindsightDockerfileSha256": "1b56dd21f1d47440bdbcf5fafcee228ebd232c316112b9841f1db2df6675407c",
+    "pgvectorDockerfileSha256": "97831d461e14560064222eb3f10305b2c5c7d12825e22e8873090f0cbaed4189"
+  },
+  "hindsightPythonUpdates": [
+    {"package": "aiohttp", "from": "3.14.1", "to": "3.14.3", "wheelSha256": "53e7b4ce82b54a8bcc71b3b67a5cbd177ca1d7f592cbc92cd38b7349f73482db"},
+    {"package": "cryptography", "from": "49.0.0", "to": "50.0.1", "wheelSha256": "51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a"},
+    {"package": "jaraco.context", "from": "6.0.1", "to": "6.1.0", "wheelSha256": "a43b5ed85815223d0d3cfdb6d7ca0d2bc8946f28f30b6f3216bda070f68badda"}
+  ],
+  "candidates": {
+    "hindsightApi": {
+      "localImage": "eva2/distroless-hindsight-api-clean:20260828",
+      "imageId": "sha256:f52dafb0e23b9f61dfe9a4f4e7b34c15e721fae26f15d024be38e1694ede0167",
+      "dockerReportedSizeBytes": 809044799,
+      "runtimeUser": "1000:1000",
+      "controlPlaneIncluded": false
+    },
+    "postgresPgvector": {
+      "localImage": "eva2/chainguard-pgvector18-candidate:20260828",
+      "imageId": "sha256:6a7cb2fc7fdd7ac36e71517c0f0bd9d09f6ab5dc312988a5445190a01b47aecd",
+      "dockerReportedSizeBytes": 143613897,
+      "serverVersion": "18.6",
+      "extensionVersion": "0.8.6",
+      "runtimeProcessUid": 70
+    }
+  },
+  "vulnerabilityScans": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "databaseUpdatedAt": "2026-08-28T10:01:48.845104336Z",
+    "network": "none",
+    "severityScope": "all HIGH and CRITICAL findings, including findings without a known fix",
+    "rejectedUpstreamHindsight": {"critical": 5, "high": 106},
+    "apiOnlyBeforePythonUpdates": {"critical": 0, "high": 3},
+    "rejectedPgvectorPg16Trixie": {"critical": 14, "high": 95},
+    "finalHindsightApi": {"critical": 0, "high": 0, "resultSha256": "72759cd5bc0c62ce8ef878fb3746a17f4c79483e0d3ea988ca94629fbdf2f404"},
+    "finalPostgresPgvector": {"critical": 0, "high": 0, "resultSha256": "c55389a4e24edbcb17d176b0a782aa6ceff9d740866ca4d80f4bdcaae2ced487"}
+  },
+  "verification": {
+    "experimentContractTests": {"passed": 4, "failed": 0},
+    "hindsightHealth": "healthy",
+    "evaAdapter": "HindsightMemoryEngine",
+    "syntheticPrivatePersonMemoryRetained": true,
+    "syntheticPrivatePersonMemoryRecalled": true,
+    "databaseAndApiRestarted": true,
+    "sameScopedMemoryRecalledAfterRestart": true,
+    "publishedHostPorts": 0,
+    "hindsightReadOnlyRootFilesystem": true,
+    "postgresDataStorage": "new synthetic Docker volume"
+  },
+  "shutdown": {
+    "candidateCore": "stopped",
+    "candidateHindsight": "stopped",
+    "candidatePostgresPgvector": "stopped",
+    "rejectedPgvectorPg16": "stopped",
+    "containersAndSyntheticVolumesRetainedForInspection": true
+  },
+  "rejectedAlternatives": [
+    "The upstream Hindsight image included the unused Node.js control plane and scanned 5 CRITICAL / 106 HIGH.",
+    "A Debian 12 distroless base could not run the upstream Hindsight Python because its GLIBC was too old.",
+    "Hindsight's embedded pg0 route did not provide a releasable external database boundary.",
+    "Plain PostgreSQL lacked the required vector extension.",
+    "The standard pgvector PostgreSQL 16 trixie image worked but scanned 14 CRITICAL / 95 HIGH."
+  ],
+  "liveSafety": {
+    "eva1RootHttpStatusAfterProbe": 200,
+    "eva1HealthHttpStatusAfterProbe": 200,
+    "existingEva2HealthHttpStatusAfterProbe": 200,
+    "existingEva2ReadyHttpStatusAfterProbe": 200,
+    "eva1Modified": false,
+    "existingEva2Modified": false,
+    "existingEva2DatabaseModified": false,
+    "homeAssistantModified": false
+  },
+  "decision": {
+    "candidatePassed": true,
+    "managedBPromotionAllowed": false,
+    "reason": "The pgvector build still downloads exact pinned Wolfi build packages; retained APK inputs, an offline rebuild, release wiring and rollback proof remain open."
+  },
+  "nonclaims": [
+    "A 0/0 package scan is not proof that software has no exploitable defect.",
+    "Trivy may not attribute individually copied shared libraries to their original packages; their exact source images remain pinned in the Dockerfile.",
+    "The synthetic memory proves the API/database/restart path, not long-term memory quality for real family conversations.",
+    "This candidate does not replace the live Eva1 route, current /eva2 route, managed B or product lock."
+  ],
+  "status": "passed_candidate_only"
+}

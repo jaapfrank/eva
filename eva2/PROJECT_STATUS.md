@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 15:08 CEST
+Laatst bijgewerkt: 28 augustus 2026, 16:02 CEST
 
 ## Heel kort
 
@@ -63,6 +63,9 @@ installatie zijn nog niet klaar.
   hersteld.
 - De kleinere nieuwe Eva2-kern werkte echt met Jaap en Lola, hield hun
   gesprekken gescheiden en heeft in de strenge scan 0 kritisch en 0 hoog.
+- Ook Hindsight en zijn nieuwe PostgreSQL/pgvector-database hebben nu schone
+  kandidaten met 0 kritisch en 0 hoog. Eva vond een testherinnering terug na
+  een volledige herstart van beide.
 
 ## Wat nog niet klaar is
 
@@ -75,9 +78,9 @@ installatie zijn nog niet klaar.
 - Full-duplex praten, luisteren en onderbreken met een echte microfoon en
   speaker is nog niet getest.
 - De browserimages zijn nog niet veilig genoeg voor algemeen gebruik.
-- De huidige werkende Eva2- en Hindsight-images zijn nog geen releasebasis.
-  Voor de Eva2-kern is nu een schone vervanger gevonden. Hindsight blokkeert
-  nog met 5 kritisch en 106 hoog.
+- De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
+  De databasebouw moet eerst met lokaal bewaarde bouwpakketten zonder internet
+  worden herhaald en daarna veilig in de beheerde B-route worden gezet.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -116,6 +119,7 @@ installatie zijn nog niet klaar.
 - [Jaap en Lola privé via Telegram, apart gebleven na volledige herstart](evidence/living-core/eva2-telegram-human-private-two-person-restart-2026-08-28.json)
 - [Releaseblokkerende scan van de echte gesprekimages](evidence/living-core/eva2-telegram-conversation-images-vulnerability-scan-2026-08-28.json)
 - [Kleinere Eva2-kern: echte gesprekken en scan 0/0](evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json)
+- [Schone Hindsight-API en PostgreSQL/pgvector: geheugenherstart en scans 0/0](evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

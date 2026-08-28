@@ -1,0 +1,16 @@
+FROM cgr.dev/chainguard/postgres@sha256:8e9b080f89604bab8fcfe48d02569f5d9f0a822013ad0f55667d70019e8ea594 AS builder
+
+USER 0
+RUN apk update \
+    && apk add --no-cache build-base=1-r9 clang-19=19.1.7-r27 llvm-19=19.1.7-r27 postgresql-18-dev=18.6-r0
+COPY . /src
+WORKDIR /src
+RUN test "$(git rev-parse HEAD)" = "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c" \
+    && test -z "$(git status --porcelain)" \
+    && make OPTFLAGS="" \
+    && make install DESTDIR=/out
+
+FROM cgr.dev/chainguard/postgres@sha256:75f633a8213629eef75f31a80b69756eb007ba1cafaa005d7cc47e5a09221c2d
+
+COPY --from=builder /out/usr/lib/postgresql18 /usr/lib/postgresql18
+COPY --from=builder /out/usr/share/postgresql18/extension /usr/share/postgresql18/extension
