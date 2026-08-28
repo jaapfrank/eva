@@ -34,6 +34,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationClarificationRequired,
     ConversationConflict,
     ConversationTurn,
 )
@@ -2341,6 +2342,31 @@ class PostgresConversationActions:
             )
             resolved = await resolver(arguments["target"])
             service = "turn_on" if arguments["state"] == "on" else "turn_off"
+            if (
+                self._home_assistant_effect_allowlist is not None
+                and (resolved["entity_id"], service)
+                not in self._home_assistant_effect_allowlist
+            ):
+                allowed_services = {
+                    allowed_service
+                    for allowed_entity, allowed_service in self._home_assistant_effect_allowlist
+                    if allowed_entity == resolved["entity_id"]
+                }
+                friendly_name = resolved["friendly_name"]
+                if allowed_services == {"turn_off"}:
+                    prompt = (
+                        f"Ik mag {friendly_name} nu alleen uitzetten, niet aanzetten."
+                    )
+                elif allowed_services == {"turn_on"}:
+                    prompt = (
+                        f"Ik mag {friendly_name} nu alleen aanzetten, niet uitzetten."
+                    )
+                else:
+                    prompt = (
+                        f"{friendly_name} mag ik nog niet bedienen. Alleen vooraf veilig "
+                        "vrijgegeven huisacties zijn nu beschikbaar."
+                    )
+                raise ConversationClarificationRequired(prompt)
             executor = (
                 self.execute_home_assistant_switch
                 if domain == "switch"

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from datetime import UTC, datetime, timedelta
 import hashlib
 from types import SimpleNamespace
@@ -113,8 +114,6 @@ def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service()
         ),
     )
 
-    import asyncio
-
     with pytest.raises(RuntimeError, match="outside the configured allowlist"):
         asyncio.run(
             actions.execute_home_assistant_light(
@@ -125,6 +124,46 @@ def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service()
                 entity_id="light.other",
                 service="turn_off",
             )
+        )
+
+
+def test_home_assistant_effect_policy_answers_a_forbidden_request_naturally() -> None:
+    class HomeAssistant:
+        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
+            assert target == "spotjes overkapping"
+            return {
+                "entity_id": "light.dimmable_light_1",
+                "friendly_name": "Spotjes overkapping",
+                "state": "off",
+            }
+
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=True,
+        home_assistant_effect_allowlist=frozenset(
+            {("light.dimmable_light_1", "turn_off")}
+        ),
+    )
+    with pytest.raises(
+        ConversationClarificationRequired,
+        match="Ik mag Spotjes overkapping nu alleen uitzetten, niet aanzetten",
+    ):
+        actions.execute(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:forbidden-on",
+                "Zet de spotjes overkapping aan.",
+                "2026-08-28T13:15:00Z",
+            ),
+            ConversationActionCall(
+                "call:forbidden-on",
+                "set_home_assistant_light",
+                {"state": "on", "target": "spotjes overkapping"},
+            ),
         )
     with pytest.raises(RuntimeError, match="outside the configured allowlist"):
         asyncio.run(
