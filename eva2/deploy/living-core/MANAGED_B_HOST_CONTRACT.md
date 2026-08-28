@@ -14,7 +14,10 @@ De operationele waarheid en Hindsight hebben dus ieder een eigen PostgreSQL-
 database en volume. Hindsight gebruikt geen ingebouwde database meer.
 De embeddingprovider blijft bij adoptie `local`: het bestaande geheugen bevat
 384-dimensionale vectoren en mag niet stil worden verwijderd of met een ander
-model opnieuw worden geïnterpreteerd.
+model opnieuw worden geïnterpreteerd. De twee lokale modelcaches zijn onderdeel
+van de gepinde image; Hugging Face en Transformers staan voor die caches
+expliciet offline en sturen geen telemetrie. De minimale image gebruikt
+expliciet UTC en hoeft daardoor geen hosttijdzonebestand te raden.
 
 Home Assistant is een expliciete core-overlay als fysieke readback is
 ingeschakeld. AgentMail, Stripe, proactieve Telegram, browser/gateway en skills

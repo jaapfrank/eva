@@ -92,6 +92,12 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
     assert services["hindsight"]["environment"][
         "HINDSIGHT_API_EMBEDDINGS_PROVIDER"
     ] == "local"
+    assert {
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "HF_HUB_OFFLINE": "1",
+        "TZ": "UTC",
+        "TRANSFORMERS_OFFLINE": "1",
+    }.items() <= services["hindsight"]["environment"].items()
     for service_name in (
         "schema-installer",
         "model-access-lease",

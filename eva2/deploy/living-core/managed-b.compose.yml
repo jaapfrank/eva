@@ -193,6 +193,11 @@ services:
     read_only: true
     cap_drop: ["ALL"]
     environment:
+      # Both local model repositories are already sealed into the image.  Keep
+      # Hugging Face/Transformers offline so a cold start neither reaches the
+      # network nor tries to annotate the read-only baked cache.
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      HF_HUB_OFFLINE: "1"
       HINDSIGHT_API_DATABASE_URL_FILE: /run/secrets/hindsight_database_dsn
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
@@ -203,6 +208,8 @@ services:
       HINDSIGHT_API_EMBEDDINGS_PROVIDER: local
       HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW: "32"
       HINDSIGHT_API_WORKER_ID: eva2-hindsight-memory
+      TZ: UTC
+      TRANSFORMERS_OFFLINE: "1"
     volumes:
       - type: bind
         source: ${EVA_HINDSIGHT_ACCESS_DIR:?set the runtime-owned Hindsight access directory}

@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2ManagedBHindsightOfflineCleanStartLiveReceipt/v1",
+  "issuedAt": "2026-08-28T19:26:47+02:00",
+  "status": "passed_live",
+  "source": {
+    "baseCommit": "dbeb499042bfa480c4dba429551c5ddfb7cc1d6c",
+    "managedManifestSha256": "98e2e25b40ed10a765180988bafaa9c940e8a35cd2739c0fd6bfdd463a045928",
+    "managedManifestTestSha256": "ee74e59c5d14b950df38ce39e75e0434e3f479fa3bd90db8130fa8ff89b9fb79"
+  },
+  "configuration": {
+    "HF_HUB_DISABLE_TELEMETRY": "1",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "TZ": "UTC"
+  },
+  "verification": {
+    "selectedTestsPassed": 82,
+    "selectedTestsFailed": 0,
+    "ruffPassed": true,
+    "composeRenderPassed": true,
+    "hindsightImage": "eva2/distroless-hindsight-api-file-secret@sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "hindsightReadOnlyRootFilesystem": true,
+    "hindsightHealthy": true,
+    "hindsightRestartCount": 0,
+    "healthyAfterSeconds": 22,
+    "startupLogPatternsAbsent": [
+      "read-only file system",
+      "could not cache",
+      "can not find any timezone",
+      "UserWarning",
+      "Traceback",
+      "error"
+    ],
+    "memoryUnitsAfterRestart": 262,
+    "mentalModelsAfterRestart": 18,
+    "coreReady": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "realConversation": {
+      "route": "Eva1 /eva2 client to loopback 44710",
+      "expectedExactAnswer": "eerlijk",
+      "actualExactAnswer": "eerlijk",
+      "passed": true
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "eva1RestartCount": 0
+  },
+  "observations": [
+    "The first recreate closed the read-only model-cache warning and exposed only a missing timezone configuration warning.",
+    "The second recreate with explicit UTC closed both warning classes while preserving the existing image, local model choice, database and memory."
+  ],
+  "nonClaims": [
+    "No Hindsight image, embedding model, embedding dimension or database format changed.",
+    "No external Telegram message or Home Assistant effect was sent.",
+    "This does not yet prove a host reboot or the seven-day practice run."
+  ]
+}

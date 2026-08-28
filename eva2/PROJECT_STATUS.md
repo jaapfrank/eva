@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 19:20 CEST
+Laatst bijgewerkt: 28 augustus 2026, 19:27 CEST
 
 ## Heel kort
 
@@ -136,6 +136,11 @@ installatie zijn nog niet klaar.
   binnen 13 seconden weer groen, zonder herstartlus. Gesprekscontext gaf exact
   `eerlijk` terug, Home Assistant meldde opnieuw dat de spotjes uit staan en
   dashboardtoegang bleef 200/401. De route staat weer op poort `44710`.
+- Hindsight gebruikt zijn ingebouwde lokale modellen nu expliciet zonder
+  internet of telemetrie en met UTC. Na een nieuwe start op het alleen-lezen
+  systeem bleven de oude cache- en tijdzonewaarschuwingen weg. Alle 262
+  geheugenstukken en 18 persoonsmodellen waren er nog en Eva gaf via de echte
+  `/eva2`-route opnieuw exact `eerlijk` terug.
 
 ## Wat nog niet klaar is
 
@@ -161,10 +166,6 @@ installatie zijn nog niet klaar.
 - Eva1 moest bij de derde geplande servicewissel na twintig seconden hard
   stoppen. Daarna waren alle vijf controles groen en de tijdelijke traagheid
   verdween, maar dit blijft een zichtbaar onderhoudspunt.
-- Bij deze cold start probeerde Hindsight één ontbrekend cachekenmerk op zijn
-  alleen-lezen bestandssysteem te noteren. Dat gaf een logwaarschuwing maar geen
-  fout: 262 geheugenunits, 16 persoonsmodellen en de API bleven beschikbaar.
-  De offline-cache-instelling moet vóór de echte hostreboot nog stiller worden.
 - Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
@@ -214,6 +215,7 @@ installatie zijn nog niet klaar.
 - [Vernieuwbare Codex-toegang zonder refresh-login in de Eva2-kern](evidence/living-core/eva2-managed-b-rotating-model-lease-live-2026-08-28.json)
 - [Geen schijnafspraak zonder echte duurzame-doelprovider](evidence/living-core/eva2-managed-b-durable-goal-admission-gate-live-2026-08-28.json)
 - [Volledige beheerde cold start achter de A/B-terugval](evidence/living-core/eva2-managed-b-full-cold-start-fallback-live-2026-08-28.json)
+- [Schone offline Hindsight-start zonder cache- of tijdzonewaarschuwingen](evidence/living-core/eva2-managed-b-hindsight-offline-clean-start-live-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
