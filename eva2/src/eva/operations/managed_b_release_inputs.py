@@ -56,6 +56,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/browser-a02-stop-before-call-2026-08-26.json",
     "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
     "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
+    "evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json",
     "evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json",
     "evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json",
     "evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json",
@@ -284,7 +285,7 @@ _NONCLAIMS = (
     "The active amd64 dependency inputs are version-matched to requirements-4d.lock; the stock 38-wheel authority remains historical and is not a fallback build input.",
     "The 4D installer environment, exact installer command, post-install attestations, physical 39-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
-    "The clean nine-service start and a logical clone of the current /eva2 data passed with a new offline-built 0/0-scanned immutable core; production cutover, rollback and resident acceptance remain open gates.",
+    "The immutable 0/0-scanned core now serves the explicit /eva2 canary after a green forward/rollback/forward switch; full nine-service managed-B cutover, reboot and resident acceptance remain open gates.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (
     "The cockpit index is a release-bound evidence projection, not a new live run.",

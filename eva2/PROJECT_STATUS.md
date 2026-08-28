@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 17:47 CEST
+Laatst bijgewerkt: 28 augustus 2026, 17:55 CEST
 
 ## Heel kort
 
@@ -98,6 +98,12 @@ installatie zijn nog niet klaar.
   nieuwe image opnieuw naar verse databases gekopieerd. Het echte modelantwoord,
   geheugen en de gezamenlijke stop/start bleven groen; alle proefmiddelen zijn
   daarna verwijderd.
+- De nieuwe vaste image bedient nu werkelijk `/eva2` op poort `44708`. De
+  route ging gecontroleerd heen, terug en opnieuw heen; Eva1 bleef steeds
+  gezond met nul herstarts en de vorige route op `44706` draait nog intact.
+- Via Eva1's echte `/eva2`-client antwoordde de nieuwe route exact zoals
+  gevraagd. Na een eigen herstart wist zij het testwoord nog en zij las veilig
+  uit Home Assistant dat de spotjes overkapping uit staan.
 
 ## Wat nog niet klaar is
 
@@ -117,7 +123,8 @@ installatie zijn nog niet klaar.
   productie-omschakeling en directe terugrol zijn nog niet uitgevoerd.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
-- Eva2 is nog niet als beheerde B-versie gepromoveerd.
+- De nieuwe kernimage is live als `/eva2`-canary. De volledige beheerde
+  negen-diensten-B met de aparte PostgreSQL 18-volumes is nog niet de actieve route.
 - De volledige rollback-, reboot- en zevendaagse praktijktest moet nog.
 - Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
@@ -127,8 +134,8 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. De echte B-route gecontroleerd klaarzetten, omschakelen en terugrollen
-   terwijl de huidige `/eva2`-route intact beschikbaar blijft.
+2. De bewezen aparte PostgreSQL 18-databases en volledige negen-dienstengrafiek
+   achter dezelfde A/B-route zetten zonder de huidige rollback te verliezen.
 3. Daarna de reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
@@ -161,6 +168,7 @@ installatie zijn nog niet klaar.
 - [Schone beheerde B-grafiek met twee databases, echte Codex-beurt en herstart](evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json)
 - [Werkelijke `/eva2`-data en Hindsight veilig gekopieerd en herstart](evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json)
 - [Nieuwe vaste kernimage: offline build, scan 0/0 en herhaalde echte data-overgang](evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json)
+- [Nieuwe vaste kernimage live op `/eva2`, inclusief heen/terug/heen en echte HA-read](evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
