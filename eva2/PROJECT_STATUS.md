@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 14:09 CEST
+Laatst bijgewerkt: 28 augustus 2026, 14:23 CEST
 
 ## Heel kort
 
@@ -65,6 +65,9 @@ installatie zijn nog niet klaar.
 - Full-duplex praten, luisteren en onderbreken met een echte microfoon en
   speaker is nog niet getest.
 - De browserimages zijn nog niet veilig genoeg voor algemeen gebruik.
+- De huidige werkende Eva2- en Hindsight-images zijn nog geen releasebasis.
+  De strenge scan vond respectievelijk 5 kritisch/32 hoog en 5 kritisch/106
+  hoog. Eerst moeten schonere, opnieuw geteste images komen.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -100,6 +103,7 @@ installatie zijn nog niet klaar.
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Twee echte modelgesprekken blijven apart na volledige teststackherstart](evidence/living-core/eva2-telegram-real-core-two-person-restart-2026-08-28.json)
+- [Releaseblokkerende scan van de echte gesprekimages](evidence/living-core/eva2-telegram-conversation-images-vulnerability-scan-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
