@@ -12,6 +12,7 @@ from eva.application.conversation import load_current_identity_pack
 from eva.application.soul_markdown import soul_markdown_to_draft
 from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
 
 
@@ -41,6 +42,7 @@ def _client(
     receipt: dict[str, object] | None = None,
     identity_lifecycle: InstallerIdentityLifecycle | None = None,
     profile_workflow: InstallerProfileWorkflow | None = None,
+    capability_workflow: InstallerCapabilityWorkflow | None = None,
 ) -> TestClient:
     return TestClient(
         create_installer_wizard(
@@ -48,6 +50,7 @@ def _client(
             bootstrap,
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
+            capability_workflow=capability_workflow,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -127,6 +130,12 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     assert profile_status.status_code == 200
     assert profile_status.json()["phase"] == "unavailable"
     assert profile_status.json()["enabled"] is False
+    capability_status = client.get("/internal/v1/onboarding/capabilities/status")
+    assert capability_status.status_code == 200
+    assert capability_status.json()["enabled"] is False
+    assert {item["state"] for item in capability_status.json()["steps"]} == {
+        "unavailable"
+    }
 
 
 def test_wizard_rejects_reused_wrong_or_cross_origin_bootstrap() -> None:
@@ -669,6 +678,144 @@ def test_wizard_blocks_profile_writes_when_platform_preflight_is_blocked(
             "language": "nl-NL",
             "time_zone": "Europe/Amsterdam",
         },
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert denied.status_code == 409
+    assert list(workspace.iterdir()) == []
+
+
+def test_wizard_retains_capability_choices_but_cannot_claim_provider_ready(
+    private_tmp_path: Path,
+) -> None:
+    workspace = private_tmp_path / "capability-workspace"
+    workspace.mkdir(mode=0o700)
+    first_workflow = InstallerCapabilityWorkflow(
+        workspace=workspace,
+        clock=lambda: "2026-08-29T03:20:00Z",
+    )
+    first_bootstrap = InstallerBootstrap(
+        token="c" * 43, created_at=1.0, clock=lambda: 1.0
+    )
+    first = _client(
+        first_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=first_workflow,
+    )
+    assert (
+        first.post("/internal/v1/bootstrap", json={"token": "c" * 43}).status_code
+        == 204
+    )
+    page = first.get("/")
+    assert "Wat wil je koppelen?" in page.text
+    assert "window.__evaCapabilityEnabled=true" in page.text
+
+    origin = {"origin": "http://127.0.0.1"}
+    cross_origin = first.post(
+        "/internal/v1/onboarding/capabilities/select",
+        json={"step_id": "telegram", "wanted": True},
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert cross_origin.status_code == 403
+    fake_ready = first.post(
+        "/internal/v1/onboarding/capabilities/select",
+        json={"step_id": "telegram", "wanted": True, "state": "ready"},
+        headers=origin,
+    )
+    assert fake_ready.status_code == 422
+    assert (
+        first.post(
+            "/internal/v1/onboarding/capabilities/verify",
+            json={"step_id": "telegram", "state": "ready"},
+            headers=origin,
+        ).status_code
+        == 404
+    )
+
+    for step_id, wanted in (
+        ("model_provider", True),
+        ("telegram", True),
+        ("email", False),
+    ):
+        selected = first.post(
+            "/internal/v1/onboarding/capabilities/select",
+            json={"step_id": step_id, "wanted": wanted},
+            headers=origin,
+        )
+        assert selected.status_code == 200
+        assert selected.json()["provider_verified"] is False
+        assert selected.json()["evidence_sha256"] is None
+
+    second_bootstrap = InstallerBootstrap(
+        token="d" * 43, created_at=2.0, clock=lambda: 2.0
+    )
+    second = _client(
+        second_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=InstallerCapabilityWorkflow(workspace=workspace),
+    )
+    assert (
+        second.post("/internal/v1/bootstrap", json={"token": "d" * 43}).status_code
+        == 204
+    )
+    resumed = second.get("/internal/v1/onboarding/capabilities/status")
+    assert resumed.status_code == 200
+    states = {item["step_id"]: item["state"] for item in resumed.json()["steps"]}
+    assert states == {
+        "model_provider": "selected",
+        "telegram": "selected",
+        "home_assistant": "pending",
+        "email": "skipped",
+        "adaptive_connector": "pending",
+        "budgets": "pending",
+    }
+    assert resumed.json()["revision"] == 3
+    assert resumed.json()["non_claims"][1].startswith("Alleen een afzonderlijke")
+
+    operator = InstallerCapabilityWorkflow(
+        workspace=workspace,
+        clock=lambda: "2026-08-29T03:21:00Z",
+    )
+    operator.record_verification(
+        step_id="telegram",
+        outcome="ready",
+        evidence_sha256="e" * 64,
+    )
+    third_bootstrap = InstallerBootstrap(
+        token="f" * 43, created_at=3.0, clock=lambda: 3.0
+    )
+    third = _client(
+        third_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=InstallerCapabilityWorkflow(workspace=workspace),
+    )
+    assert (
+        third.post("/internal/v1/bootstrap", json={"token": "f" * 43}).status_code
+        == 204
+    )
+    verified = third.get("/internal/v1/onboarding/capabilities/status").json()
+    telegram = next(item for item in verified["steps"] if item["step_id"] == "telegram")
+    assert telegram["state"] == "ready"
+    assert telegram["evidence_sha256"] == "e" * 64
+
+
+def test_wizard_blocks_capability_choices_when_platform_preflight_is_blocked(
+    private_tmp_path: Path,
+) -> None:
+    workspace = private_tmp_path / "blocked-capabilities"
+    workspace.mkdir(mode=0o700)
+    bootstrap = InstallerBootstrap(token="m" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        capability_workflow=InstallerCapabilityWorkflow(workspace=workspace),
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "m" * 43}).status_code
+        == 204
+    )
+    assert "window.__evaCapabilityEnabled=false" in client.get("/").text
+    denied = client.post(
+        "/internal/v1/onboarding/capabilities/select",
+        json={"step_id": "telegram", "wanted": True},
         headers={"origin": "http://127.0.0.1"},
     )
     assert denied.status_code == 409
