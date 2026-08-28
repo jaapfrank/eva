@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 19:27 CEST
+Laatst bijgewerkt: 29 augustus 2026, 00:38 CEST
 
 ## Heel kort
 
@@ -141,6 +141,14 @@ installatie zijn nog niet klaar.
   systeem bleven de oude cache- en tijdzonewaarschuwingen weg. Alle 262
   geheugenstukken en 18 persoonsmodellen waren er nog en Eva gaf via de echte
   `/eva2`-route opnieuw exact `eerlijk` terug.
+- De WSL-herstart vond een echte terugvalfout: de oude terugvalcontainer leek
+  gezond, maar zijn tijdelijke geheugenmap was verdwenen. Die map wordt nu bij
+  iedere start veilig opnieuw gemaakt. De actieve én de terugvalroute zijn
+  weer groen; alle tien betrokken containers hebben nul herstarts.
+- De computerrebootcontrole is geïnstalleerd en privé klaargezet. Zij kan niet
+  zelf rebooten, onderscheidt Windows-, WSL- en alleen-systemd-herstarts en
+  schrijft pas bewijs nadat Eva1, Eva2, geheugen, dashboard en terugval echt
+  terug zijn. Een proef zonder reboot werd terecht geweigerd zonder receipt.
 
 ## Wat nog niet klaar is
 
@@ -161,8 +169,9 @@ installatie zijn nog niet klaar.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
   `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
   de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
-  een nep-/ingetrokken token of naast Eva1 dubbel pollen. Daarna moeten ook een
-  computerreboot en de zevendaagse praktijktest volgen.
+  een nep-/ingetrokken token of naast Eva1 dubbel pollen. De rebootcontrole
+  staat klaar, maar de echte externe Windows-reboot en de zevendaagse
+  praktijktest moeten nog volgen.
 - Eva1 moest bij de derde geplande servicewissel na twintig seconden hard
   stoppen. Daarna waren alle vijf controles groen en de tijdelijke traagheid
   verdween, maar dit blijft een zichtbaar onderhoudspunt.
@@ -174,8 +183,9 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. De rebootproef uitvoeren en controleren dat Eva1, `/eva2`, beide databases,
-   geheugen, dashboard en terugval vanzelf goed terugkomen.
+2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
+   bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
+   dashboard en terugval.
 3. Daarna de langere praktijktest starten en de tijdelijke 503- en
    Eva1-stopwaarnemingen actief bewaken.
 
@@ -216,6 +226,7 @@ installatie zijn nog niet klaar.
 - [Geen schijnafspraak zonder echte duurzame-doelprovider](evidence/living-core/eva2-managed-b-durable-goal-admission-gate-live-2026-08-28.json)
 - [Volledige beheerde cold start achter de A/B-terugval](evidence/living-core/eva2-managed-b-full-cold-start-fallback-live-2026-08-28.json)
 - [Schone offline Hindsight-start zonder cache- of tijdzonewaarschuwingen](evidence/living-core/eva2-managed-b-hindsight-offline-clean-start-live-2026-08-28.json)
+- [Externe rebootcontrole klaargezet en kapotte terugval hersteld](evidence/living-core/eva2-managed-b-external-reboot-arm-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

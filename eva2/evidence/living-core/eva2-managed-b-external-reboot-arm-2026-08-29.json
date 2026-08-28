@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2ManagedBExternalRebootArmReceipt/v1",
+  "issuedAt": "2026-08-29T00:38:52+02:00",
+  "status": "armed_waiting_external_windows_reboot",
+  "source": {
+    "commit": "918470a699113f480b15a6822be8c68dce61c69f",
+    "probeSha256": "113ec470b789cfce901a5ec12a8e51019281b305e2b474a62691547b8eabae86",
+    "serviceSha256": "2df7ff3053fc1a96b6c2d54c0e23233c720492c519a52833c327023356c3fb54",
+    "tmpfilesSha256": "0459b25e0cd988af676e5e1ea22ef82b7b173cdae3ab5e8215e9bf781b9a49d2"
+  },
+  "installed": {
+    "probeMatchesSource": true,
+    "serviceMatchesSource": true,
+    "tmpfilesMatchesSource": true,
+    "postbootServiceEnabled": true,
+    "postbootServiceActiveBeforeReboot": false,
+    "privateArmStateMode": "0600",
+    "privateArmStateSha256": "0d1e2e4204a3b70e473d2aead2ff071c8bd0808ee58544408e3eb118e32ea0da",
+    "requestedRestart": "windows_host_reboot",
+    "receiptExistsBeforeReboot": false
+  },
+  "rollbackDefectAndRepair": {
+    "observed": "The retained rollback core was Docker-healthy while /readyz returned 503 because its legacy Hindsight lease bind source below /tmp had disappeared during WSL restart.",
+    "repair": "A root-owned systemd-tmpfiles rule now recreates only that empty 1000:1000/0700 access-consumer directory before Docker. The existing access publisher and Hindsight rollback containers then started against their unchanged persistent volume.",
+    "activeRouteReady": true,
+    "rollbackRouteReady": true
+  },
+  "livePreReboot": {
+    "relevantContainerCount": 10,
+    "allContainersRunning": true,
+    "maximumContainerRestartCount": 0,
+    "eva1RestartCount": 0,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "dashboardUnauthorizedHttpStatus": 401,
+    "dashboardAuthorizedHttpStatus": 200,
+    "dashboardContract": "EvaWorkBoard/v1",
+    "hindsightMemoryUnitsObservedAfterArming": 268,
+    "hindsightMentalModelsObservedAfterArming": 18
+  },
+  "verification": {
+    "focusedTestsPassed": 12,
+    "ruff": "passed",
+    "pythonCompile": "passed",
+    "systemdUnitVerification": "passed",
+    "systemdSecurityExposure": "1.7 OK",
+    "sameBootVerifyExitCode": 1,
+    "sameBootReceiptWritten": false
+  },
+  "privacy": {
+    "dashboardTokenInReceipt": false,
+    "syntheticAccountInReceipt": false,
+    "syntheticMarkerInReceipt": false,
+    "modelCredentialInReceipt": false
+  },
+  "nonclaims": [
+    "No Windows host reboot has happened after arming, so the final postboot receipt does not exist yet.",
+    "The checker contains no reboot, shutdown or WSL termination command; an external operator action is required for the final gate.",
+    "This receipt proves safe preparation, live pre-reboot health and restoration of the retained rollback route, not the full reboot or seven-day acceptance gate."
+  ]
+}
