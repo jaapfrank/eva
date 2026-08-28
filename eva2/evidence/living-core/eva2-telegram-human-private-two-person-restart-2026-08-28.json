@@ -1,0 +1,110 @@
+{
+  "contract": "Eva2TelegramHumanPrivateTwoPersonRestartReceipt/v1",
+  "issuedAt": "2026-08-28T12:41:27Z",
+  "sourceCommit": "5a784866604940c715badea3cf4df7549f0b1115",
+  "people": {
+    "personA": "Jaap",
+    "personB": "Lola",
+    "separatePrincipals": true
+  },
+  "runtime": {
+    "conversationCoreImage": "eva2/candidate-ha-natural@sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
+    "hindsightImage": "ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "telegramIngressImage": "eva2-telegram-test@sha256:12cd4341765796f92c1279ba79017d9b164fed5510ef9d11baceb87e0dc4c621",
+    "postgresImage": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "afterRestart": {
+      "postgres": "healthy",
+      "hindsight": "healthy",
+      "conversationCore": "healthy",
+      "telegramIngress": "running"
+    },
+    "publishedPorts": 0
+  },
+  "sealedInputs": {
+    "preparerSha256": "8d766a0c9cdee1ee8bb1802989a0ac97c21a9594cf18af8bb0be9150394f51e4",
+    "composeSha256": "7e66b0e5b530d4d22443032a71224adad4a538c9d800c159be7eadbc08fb3c75",
+    "modelAccessSha256": "f5b9fec3c57099a84fde09ad54f33f43f58dbf3a3c1982abb3030c6526d60dd7",
+    "hindsightAccessSha256": "0319bac01aacf0704de36c4567b6798ea31d5dac3e8efc2d1dc4813e8b1fef72",
+    "identitySha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+    "identityTrustSha256": "a1149f21d86b652c8d7a76528e6d31e9340e34f8cbbbffec0db272f1659ed0bf",
+    "refreshTokenPresent": false,
+    "composeRender": "passed"
+  },
+  "humanTelegramTurnsBeforeRestart": {
+    "total": 5,
+    "jaap": {
+      "turns": 3,
+      "replies": 3,
+      "ownTestWordsReplyCount": 3,
+      "otherPersonsTestWordsReplyCount": 0,
+      "expectedTextSha256": "be62495e3991f125872c4b88c4be405328b84495983c8a898e6e8ae78784fb58"
+    },
+    "lola": {
+      "turns": 2,
+      "replies": 2,
+      "ownTestWordsReplyCount": 1,
+      "otherPersonsTestWordsReplyCount": 0,
+      "expectedTextSha256": "6895d5cb7a77729a3a6a807b91466e80e466d0442eed416670d6851da4d98cd9"
+    },
+    "telegramProviderAcceptedReplies": 5
+  },
+  "fullRestart": {
+    "telegramIngressStoppedBeforeDatabaseRestart": true,
+    "postgresRestarted": true,
+    "hindsightRestarted": true,
+    "conversationCoreRestarted": true,
+    "telegramIngressRestartedAfterReadiness": true
+  },
+  "postRestartReadbackThroughProductionTelegramAdapter": {
+    "jaap": {
+      "exact": true,
+      "ownTestWordsPresent": true,
+      "otherPersonsTestWordsPresent": false,
+      "replySha256": "1d8c532fc8d15ec16e5ae1acfe9f3db28b67d0f17ab986aa61e8fc5a43deabda"
+    },
+    "lola": {
+      "exact": true,
+      "ownTestWordsPresent": true,
+      "otherPersonsTestWordsPresent": false,
+      "replySha256": "3317c1d389872e37a706e8404c872b9b8ca6e541ea4db521e1225b6bfa5660a3"
+    },
+    "modelProvider": "chatgpt-codex:gpt-5.4-mini",
+    "telegramMessagesSentForReadback": 0
+  },
+  "telegramLedger": {
+    "completedInboundCheckpoints": 22,
+    "replyDeliveredEvents": 16,
+    "deliveryAmbiguousEvents": 0
+  },
+  "operatorNotification": {
+    "message": "Revoke the disposable test-bot token through BotFather.",
+    "telegramProviderAccepted": 2,
+    "tokenRevocationConfirmed": false
+  },
+  "testShutdown": {
+    "telegramIngress": "stopped",
+    "conversationCore": "stopped",
+    "hindsight": "stopped",
+    "postgres": "stopped",
+    "databaseAndContainersRetainedForInspection": true,
+    "deleted": false
+  },
+  "liveSafety": {
+    "eva1Health": "ok",
+    "existingEva2Ready": "ok",
+    "eva1ModifiedByTest": false,
+    "existingEva2DatabaseModifiedByTest": false,
+    "homeAssistantModifiedByTest": false
+  },
+  "releaseGate": {
+    "promotionAllowed": false,
+    "reason": "The functional core and Hindsight images remain blocked by the separate HIGH/CRITICAL vulnerability scan."
+  },
+  "nonclaims": [
+    "The two post-restart readback questions used the exact production Telegram HTTP adapter and principal bindings but were injected inside the isolated ingress container; they were not sent as additional human Telegram messages.",
+    "Two earlier diagnostic requests used the separate canary endpoint and therefore created isolated raw Telegram principals. They sent no Telegram reply and are excluded from the Jaap/Lola result.",
+    "Provider acceptance proves delivery to Telegram, not that a person read every reply.",
+    "This is not managed-B promotion, a voice proof, a Home Assistant effect proof or a public benchmark score."
+  ],
+  "status": "passed"
+}

@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 14:23 CEST
+Laatst bijgewerkt: 28 augustus 2026, 14:41 CEST
 
 ## Heel kort
 
@@ -28,6 +28,11 @@ installatie zijn nog niet klaar.
   daarvan naar het model.
 - De echte proef met Jaap, Lola en een aparte testgroep is groen. Hun
   toestemming bleef ook na een echte pollerherstart netjes gescheiden.
+- Jaap en Lola hebben daarna ieder privé met de echte Eva2-core gepraat. Na
+  een volledige herstart wist Eva voor allebei exact het eigen testwoord en
+  niet dat van de ander. Alle vijf menselijke antwoorden bereikten Telegram.
+- De vier wegwerp-testcontainers zijn daarna netjes gestopt. De testdatabase
+  en containers zijn niet verwijderd, zodat het bewijs controleerbaar blijft.
 - Eva2 gebruikt Eva1's Codex-login, maar ziet alleen een automatisch vernieuwde toegangssleutel en nooit de volledige login.
 - Eva2 klinkt volgens haar ingestelde jonge, warme, nieuwsgierige en eigenwijze
   persoonlijkheid.
@@ -61,8 +66,8 @@ installatie zijn nog niet klaar.
 
 - Brede huisbediening staat nog uit. Nu werkt alleen één veilig begrensde
   `uitzetten`-actie; andere lampen en `aanzetten` zijn nog geblokkeerd.
-- De testbot praat nu met een echte, aparte Eva2-gesprekcore. De persoonlijke
-  tweegesprekstest met Jaap en Lola loopt nog.
+- Het token van de wegwerp-testbot moet nog door Jaap via BotFather worden
+  ingetrokken. Die instructie is naar beide testaccounts verstuurd.
 - Eva1-geheugen is nog niet naar Eva2 gekopieerd. Eerst moet duidelijk zijn
   welk oud persoonlabel bij welk nieuw profiel hoort.
 - Full-duplex praten, luisteren en onderbreken met een echte microfoon en
@@ -83,7 +88,7 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. Jaap en Lola ieder privé met de echte Eva2-core laten praten.
+2. De kwetsbare testimages vervangen door schonere, opnieuw gescande images.
 3. De reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
@@ -106,6 +111,7 @@ installatie zijn nog niet klaar.
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Twee echte modelgesprekken blijven apart na volledige teststackherstart](evidence/living-core/eva2-telegram-real-core-two-person-restart-2026-08-28.json)
+- [Jaap en Lola privé via Telegram, apart gebleven na volledige herstart](evidence/living-core/eva2-telegram-human-private-two-person-restart-2026-08-28.json)
 - [Releaseblokkerende scan van de echte gesprekimages](evidence/living-core/eva2-telegram-conversation-images-vulnerability-scan-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
