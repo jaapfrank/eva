@@ -1,0 +1,58 @@
+{
+  "contract": "Eva2TelegramGroupConsentLiveReceipt/v1",
+  "createdAt": "2026-08-28T12:53:59+02:00",
+  "source": {
+    "eva1Commit": "4cffee2f031b8b399193885d0ac053311f250db2",
+    "eva2Commit": "45b20b0681dad313a96111ed9c790b6e41a2c4be",
+    "eva2GitArchiveSha256": "cdc137a553d04e004de3e8067edbbd58285fc34c9701f4b722acd7c79c79ea08"
+  },
+  "image": {
+    "buildNetwork": "none",
+    "digest": "sha256:c5cce09644a2afff3f85df3402af54464d021ed2b04d7b172726826c7aafb01d",
+    "wheelCount": 39
+  },
+  "tests": {
+    "eva1ClientPassed": 6,
+    "eva2RegressionPassed": 104,
+    "postgresPassed": 1,
+    "postgresVersion": "16.13",
+    "ruff": "passed",
+    "compile": "passed",
+    "totalPassed": 111
+  },
+  "live": {
+    "activePort": 44703,
+    "activeReady": true,
+    "activeRestartCount": 0,
+    "dropinSha256": "67561bb873e8346d4d3a8ea6f55270a525e26ee4824bebddb4b38d5cd48ee450",
+    "eva1HttpStatusCount200": 5,
+    "previousPort": 44702,
+    "previousSlotHealthy": true,
+    "oldestCoreSlot": "stopped_retained",
+    "syntheticFlow": [
+      "group_text_withheld_before_consent",
+      "private_consent_granted_for_one_day",
+      "same_person_group_reply_model_generated",
+      "second_person_group_text_withheld",
+      "private_consent_revoked",
+      "same_person_group_text_withheld_after_revoke"
+    ],
+    "privateReply": "de nieuwe gezinsroute werkt."
+  },
+  "privacy": {
+    "observationTtlHours": 24,
+    "defaultShareDays": 7,
+    "maximumShareDays": 31,
+    "preConsentMessageTextStored": false,
+    "rawGroupHistoryForwarded": false,
+    "scope": "one_person_one_group",
+    "serverDerivesPrincipal": true
+  },
+  "nonClaims": [
+    "No external Telegram message was sent for this receipt.",
+    "The end-to-end flow used synthetic Telegram identifiers through the live Eva1 client and live Eva2 runtime.",
+    "A real two-person household group acceptance test is still open.",
+    "No Home Assistant effect was enabled or executed."
+  ],
+  "status": "passed"
+}
