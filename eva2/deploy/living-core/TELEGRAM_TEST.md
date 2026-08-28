@@ -146,6 +146,32 @@ De diagnosecore bewaart geen echte herinnering en voert geen echte Eva-taak
 uit. Deze proef bewijst dus Telegram-bezorging, accounttoelating en de
 groepsconsentgrens; zij bewijst nog geen volledige Eva-conversatie.
 
+## Daarna pas: dezelfde testbot met de echte gesprekcore
+
+De echte gesprekcore is een afzonderlijke overlay. Kopieer haar modeltoegang
+of identiteit niet met de hand. De voorbereider leest één access-only
+modelbestand, één access-only Hindsight-bestand en de ondertekende identiteit,
+weigert ieder refresh-token en maakt één private snapshot onder
+`/run/eva2-test/conversation-secrets`. Beide images moeten op een exacte
+SHA-256-digest staan. De opdracht start niets en toont geen tokenwaarde:
+
+```bash
+sudo env PYTHONPATH=src:<PAD_NAAR_DE_GEPINDE_RUNTIMEPACKAGES> \
+  python3 tools/prepare_telegram_conversation_test.py \
+  --model-access-file <ACCESS_ONLY_MODELFILE> \
+  --hindsight-access-file <ACCESS_ONLY_HINDSIGHT_AUTH_JSON> \
+  --identity-file <ONDERTEKEND_IDENTITYPACK> \
+  --identity-trust-file <IDENTITY_TRUSTBINDING> \
+  --core-image <EXACTE_EVA2_IMAGE_DIGEST> \
+  --hindsight-image <EXACTE_HINDSIGHT_IMAGE_DIGEST>
+```
+
+Render daarna de support-, ingress- en gesprekmanifesten samen met zowel
+`/run/eva2-test/telegram-test.env` als
+`/run/eva2-test/telegram-conversation-test.env`. Een functioneel groene proef
+is nog geen release: beide exacte gesprekimages moeten daarnaast groen zijn in
+de netwerkloze kwetsbaarheidspoort.
+
 ## Afzonderlijke proef: twee accounts van één persoon
 
 Laat `--member` en de groepstappen weg wanneer B jouw tweede eigen account is.

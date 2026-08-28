@@ -34,6 +34,9 @@ installatie zijn nog niet klaar.
 - Een gesprek blijft bewaard na een herstart van Eva2 en PostgreSQL.
 - Twee aparte proefpersonen onthielden ieder hun eigen testwoorden. Na een
   herstart van Eva2, PostgreSQL én Hindsight kwamen beide exact en zonder lek terug.
+- De toegangs- en identiteitsbestanden voor deze echte gesprekstest worden nu
+  eenmalig veilig gekopieerd. Een refresh-token of ongeldige identiteit wordt
+  geweigerd en de volledige Compose-opstelling rendert groen.
 - Eva2 draait in een eigen container met een eigen PostgreSQL-database.
 - Hindsight is aangesloten als langetermijngeheugen van de kandidaat.
 - Eva2 kan Home Assistant echt lezen. Op de vraag naar de spotjes overkapping
