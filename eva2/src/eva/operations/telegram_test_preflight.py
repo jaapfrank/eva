@@ -11,10 +11,8 @@ import re
 import stat
 import subprocess
 from typing import Any, NoReturn
+import urllib.parse
 from uuid import UUID
-
-from sqlalchemy.engine import make_url
-from sqlalchemy.exc import ArgumentError
 
 
 TEST_SECRET_ROOT = Path("/run/eva2-test/secrets")
@@ -440,18 +438,22 @@ def _require_test_database_dsn(plan: TelegramTestPlan) -> None:
         if value != value.strip() + ("\n" if value.endswith("\n") else ""):
             raise ValueError("format")
         dsn = value.strip()
-        url = make_url(dsn)
-    except (OSError, UnicodeDecodeError, ValueError, ArgumentError):
+        if "://" not in dsn:
+            raise ValueError("scheme")
+        url = urllib.parse.urlsplit(dsn)
+        port = url.port
+    except (OSError, UnicodeDecodeError, ValueError):
         raise RuntimeError("Telegram test database DSN is invalid") from None
     if (
-        url.drivername != "postgresql+psycopg"
+        url.scheme != "postgresql+psycopg"
         or url.username != "postgres"
         or not isinstance(url.password, str)
         or not url.password
-        or url.host != "postgres-test"
-        or url.port != 5432
-        or url.database != "eva2test"
+        or url.hostname != "postgres-test"
+        or port != 5432
+        or url.path != "/eva2test"
         or url.query
+        or url.fragment
     ):
         raise RuntimeError("Telegram test database DSN is not the isolated test route")
 

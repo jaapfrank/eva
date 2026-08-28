@@ -4,6 +4,10 @@ services:
     image: ${EVA_TEST_LIVING_CORE_IMAGE:?set a separate immutable Eva test image}
     pull_policy: never
     restart: "no"
+    # The image healthcheck probes the HTTP core on port 8080. This service is
+    # a polling worker and deliberately exposes no HTTP listener.
+    healthcheck:
+      disable: true
     read_only: true
     user: "65532:65532"
     cap_drop: ["ALL"]

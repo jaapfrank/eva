@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
 import json
@@ -19,23 +20,45 @@ import os
 from pathlib import Path
 import re
 import stat
+import subprocess
 from typing import Iterable, NoReturn
-from uuid import NAMESPACE_URL, uuid5
+from uuid import UUID
 
-import sqlalchemy as sa
-
-from eva.adapters.postgres.operational_timeline import (
-    CheckpointState,
-    PostgresOperationalTimeline,
-    TimelineEvent,
-    TimelineScope,
-)
-from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.telegram_test_preflight import (
+    TEST_INGRESS_COMMAND,
+    TEST_RUN_LABEL,
+    TEST_RUN_VALUE,
     TelegramTestPlan,
     load_telegram_test_plan,
     preflight_telegram_test,
 )
+
+
+@dataclass(frozen=True, slots=True)
+class _CheckpointState:
+    thread_id: str
+    checkpoint_id: str
+    operation_id: str | None
+    phase: str
+    status: str
+    retry_count: int
+    last_error_fingerprint: str | None
+    deadline: datetime | None
+    revision: int
+    updated_at: datetime
+
+
+@dataclass(frozen=True, slots=True)
+class _TimelineEvent:
+    event_id: UUID
+    thread_id: str
+    sequence: int
+    checkpoint_id: str
+    operation_id: str | None
+    event_type: str
+    payload: dict[str, object]
+    payload_sha256: str
+    occurred_at: datetime
 
 
 THREAD_PATTERN = re.compile(r"telegram-inbound:[0-9]+\Z")
@@ -54,18 +77,54 @@ EVENT_TYPES = frozenset(
 )
 MAX_THREADS = 256
 
+_CONTAINER_READER = r"""
+import json
+import os
+from uuid import NAMESPACE_URL, uuid5
+
+import sqlalchemy as sa
+
+from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, TimelineScope
+from eva.bootstrap.secrets import read_runtime_secret_file
+
+dsn = read_runtime_secret_file(
+    os.environ["EVA_DATABASE_DSN_FILE"], setting_name="EVA_DATABASE_DSN_FILE"
+)
+tenant = os.environ["EVA_RUNTIME_TENANT_ID"]
+installation = os.environ["EVA_RUNTIME_INSTALLATION_ID"]
+scope = TimelineScope(
+    uuid5(NAMESPACE_URL, f"eva2:{tenant}"),
+    uuid5(NAMESPACE_URL, f"eva2:{tenant}:{installation}"),
+)
+engine = sa.create_engine(dsn, pool_pre_ping=True)
+try:
+    timeline = PostgresOperationalTimeline(engine, scope)
+    checkpoints = timeline.list_checkpoints(thread_prefix="telegram-inbound:", limit=256)
+    result = []
+    for index, checkpoint in enumerate(checkpoints, start=1):
+        events = timeline.events(checkpoint.thread_id)
+        result.append(
+            {
+                "index": index,
+                "status": checkpoint.status,
+                "events": [
+                    {
+                        "sequence": event.sequence,
+                        "event_type": event.event_type,
+                        "payload_sha256": event.payload_sha256,
+                    }
+                    for event in events
+                ],
+            }
+        )
+    print(json.dumps(result, sort_keys=True, separators=(",", ":")))
+finally:
+    engine.dispose()
+"""
+
 
 def _utc_now() -> str:
     return datetime.now(tz=UTC).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _scope(plan: TelegramTestPlan) -> TimelineScope:
-    tenant = plan.value("EVA_TEST_RUNTIME_TENANT_ID")
-    installation = plan.value("EVA_TEST_RUNTIME_INSTALLATION_ID")
-    return TimelineScope(
-        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant}"),
-        installation_id=uuid5(NAMESPACE_URL, f"eva2:{tenant}:{installation}"),
-    )
 
 
 def _scope_sha256(plan: TelegramTestPlan) -> str:
@@ -87,8 +146,8 @@ def _counts(values: Iterable[str]) -> dict[str, int]:
 def build_receipt(
     *,
     plan: TelegramTestPlan,
-    checkpoints: tuple[CheckpointState, ...],
-    events_by_thread: dict[str, tuple[TimelineEvent, ...]],
+    checkpoints: tuple[object, ...],
+    events_by_thread: dict[str, tuple[object, ...]],
     observed_at: str,
 ) -> dict[str, object]:
     """Summarize validated ledger facts without copying user-controlled data."""
@@ -152,28 +211,123 @@ def capture_receipt(*, plan: TelegramTestPlan) -> dict[str, object]:
     """Preflight the running isolated stack, then read its scoped ledger."""
 
     preflight_telegram_test(plan, ingress_running=True)
-    dsn = read_runtime_secret_file(
-        plan.value("EVA_TEST_DATABASE_DSN_FILE_HOST"),
-        setting_name="EVA_TEST_DATABASE_DSN_FILE_HOST",
-    )
-    engine = sa.create_engine(dsn, pool_pre_ping=True)
-    try:
-        timeline = PostgresOperationalTimeline(engine, _scope(plan))
-        checkpoints = timeline.list_checkpoints(
-            thread_prefix="telegram-inbound:", limit=MAX_THREADS
-        )
-        events = {
-            checkpoint.thread_id: timeline.events(checkpoint.thread_id)
-            for checkpoint in checkpoints
-        }
-    finally:
-        engine.dispose()
+    checkpoints, events = _read_ledger_inside_ingress(plan)
     return build_receipt(
         plan=plan,
         checkpoints=checkpoints,
         events_by_thread=events,
         observed_at=_utc_now(),
     )
+
+
+def _read_ledger_inside_ingress(
+    plan: TelegramTestPlan,
+) -> tuple[tuple[_CheckpointState, ...], dict[str, tuple[_TimelineEvent, ...]]]:
+    """Read through the already isolated worker; never publish the DB port."""
+
+    docker = plan.value("EVA_TEST_DOCKER_BINARY")
+    try:
+        listed = subprocess.run(
+            [
+                docker,
+                "ps",
+                "--filter",
+                f"label={TEST_RUN_LABEL}={TEST_RUN_VALUE}",
+                "--format",
+                "{{.ID}}",
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        candidates = tuple(value for value in listed.stdout.splitlines() if value)
+        ingress: list[str] = []
+        for container_id in candidates:
+            inspected = subprocess.run(
+                [docker, "container", "inspect", container_id],
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            decoded = json.loads(inspected.stdout)
+            if (
+                isinstance(decoded, list)
+                and len(decoded) == 1
+                and isinstance(decoded[0], dict)
+                and decoded[0].get("Config", {}).get("Cmd") == TEST_INGRESS_COMMAND
+            ):
+                ingress.append(container_id)
+        if len(ingress) != 1:
+            raise RuntimeError("Telegram test ingress identity differs")
+        completed = subprocess.run(
+            [docker, "exec", "-i", ingress[0], "python", "-"],
+            input=_CONTAINER_READER,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        raw = json.loads(completed.stdout)
+    except (OSError, subprocess.SubprocessError, json.JSONDecodeError) as error:
+        raise RuntimeError("Telegram test ledger could not be read internally") from error
+    if not isinstance(raw, list) or len(raw) > MAX_THREADS:
+        raise RuntimeError("Telegram test ledger summary differs")
+    now = datetime.now(tz=UTC).replace(microsecond=0)
+    checkpoints: list[_CheckpointState] = []
+    events_by_thread: dict[str, tuple[_TimelineEvent, ...]] = {}
+    for expected_index, item in enumerate(raw, start=1):
+        if (
+            not isinstance(item, dict)
+            or set(item) != {"events", "index", "status"}
+            or item.get("index") != expected_index
+            or item.get("status") not in {
+                "active", "waiting_for_proof", "completed", "failed", "needs_help"
+            }
+            or not isinstance(item.get("events"), list)
+        ):
+            raise RuntimeError("Telegram test ledger summary differs")
+        thread_id = f"telegram-inbound:{expected_index}"
+        checkpoint = _CheckpointState(
+            thread_id=thread_id,
+            checkpoint_id=f"{thread_id}:sanitized",
+            operation_id=None,
+            phase="sanitized",
+            status=item["status"],
+            retry_count=0,
+            last_error_fingerprint=None,
+            deadline=None,
+            revision=max(1, len(item["events"])),
+            updated_at=now,
+        )
+        safe_events: list[_TimelineEvent] = []
+        for expected_sequence, event in enumerate(item["events"], start=1):
+            if (
+                not isinstance(event, dict)
+                or set(event) != {"event_type", "payload_sha256", "sequence"}
+                or event.get("sequence") != expected_sequence
+                or event.get("event_type") not in EVENT_TYPES
+                or not isinstance(event.get("payload_sha256"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}", event["payload_sha256"])
+            ):
+                raise RuntimeError("Telegram test ledger summary differs")
+            safe_events.append(
+                _TimelineEvent(
+                    event_id=UUID(int=expected_index * 1000 + expected_sequence),
+                    thread_id=thread_id,
+                    sequence=expected_sequence,
+                    checkpoint_id=f"{thread_id}:{expected_sequence}",
+                    operation_id=None,
+                    event_type=event["event_type"],
+                    payload={},
+                    payload_sha256=event["payload_sha256"],
+                    occurred_at=now,
+                )
+            )
+        checkpoints.append(checkpoint)
+        events_by_thread[thread_id] = tuple(safe_events)
+    return tuple(checkpoints), events_by_thread
 
 
 def _write_new_receipt(path: Path, receipt: dict[str, object]) -> None:

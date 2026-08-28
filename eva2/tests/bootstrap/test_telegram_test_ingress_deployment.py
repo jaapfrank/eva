@@ -239,6 +239,7 @@ def test_telegram_test_ingress_requires_test_namespaced_inputs() -> None:
         "cap_drop",
         "command",
         "environment",
+        "healthcheck",
         "image",
         "labels",
         "networks",
@@ -252,6 +253,7 @@ def test_telegram_test_ingress_requires_test_namespaced_inputs() -> None:
         "volumes",
     }
     assert service["restart"] == "no"
+    assert service["healthcheck"] == {"disable": True}
     assert service["read_only"] is True
     assert service["user"] == "65532:65532"
     assert service["cap_drop"] == ["ALL"]

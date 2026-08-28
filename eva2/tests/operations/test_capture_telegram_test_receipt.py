@@ -11,6 +11,7 @@ import pytest
 
 from eva.adapters.postgres.operational_timeline import CheckpointState, TimelineEvent
 from eva.operations.telegram_test_preflight import TelegramTestPlan
+import tools.capture_telegram_test_receipt as capture
 from tools.capture_telegram_test_receipt import build_receipt, _write_new_receipt
 
 
@@ -129,3 +130,43 @@ def test_receipt_writer_is_new_private_json_only() -> None:
             _write_new_receipt(destination, {"contract": "different"})
         with pytest.raises(RuntimeError, match=".json"):
             _write_new_receipt(root / "telegram-proof.txt", {"contract": "different"})
+
+
+def test_capture_reads_the_ledger_inside_the_isolated_ingress(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    plan = _plan()
+    monkeypatch.setattr(capture, "preflight_telegram_test", lambda *_args, **_kwargs: None)
+    observed: dict[str, object] = {}
+    checkpoint = _checkpoint()
+
+    def read_ledger(actual: TelegramTestPlan):
+        observed["plan"] = actual
+        return (
+            (checkpoint,),
+            {
+                checkpoint.thread_id: (
+                    _event(
+                        sequence=1,
+                        event_type="TELEGRAM_INGRESS_ADMITTED",
+                        payload={},
+                    ),
+                    _event(
+                        sequence=2,
+                        event_type="TELEGRAM_REPLY_DELIVERED",
+                        payload={},
+                    ),
+                )
+            },
+        )
+
+    monkeypatch.setattr(
+        capture,
+        "_read_ledger_inside_ingress",
+        read_ledger,
+    )
+
+    receipt = capture.capture_receipt(plan=plan)
+
+    assert receipt["ledger"]["delivered_reply_count"] == 1
+    assert observed == {"plan": plan}

@@ -139,11 +139,12 @@ def admit_group(
         permitted = set(binding["allowed_chat_ids"])
         if group_chat_id not in permitted:
             permitted.add(group_chat_id)
-            binding["allowed_chat_ids"] = [
-                private_chat_id,
-                *sorted(permitted - {private_chat_id}),
-            ]
             changed += 1
+        # TelegramPrincipalBinding requires the complete set to be in one
+        # canonical lexical order.  Keeping the private chat artificially
+        # first makes a valid negative group ID fail at ingress startup.  Do
+        # this on replay too, so an older prepared file repairs atomically.
+        binding["allowed_chat_ids"] = sorted(permitted)
     if found != requested:
         raise RuntimeError("one or more requested test accounts are not trusted")
     rendered = (

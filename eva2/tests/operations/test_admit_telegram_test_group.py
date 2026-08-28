@@ -8,6 +8,7 @@ import stat
 import pytest
 
 import tools.admit_telegram_test_group as group_admission
+from eva.application.telegram_ingress import TelegramPrincipalBinding
 
 
 def _private_stat() -> os.stat_result:
@@ -156,16 +157,22 @@ def test_group_admission_adds_only_the_requested_known_people(
     assert receipt["newly_granted_account_count"] == 2
     assert written["bindings"] == [
         {
-            "allowed_chat_ids": ["123", "-100999"],
+            "allowed_chat_ids": ["-100999", "123"],
             "principal_id": "test:owner",
             "telegram_user_id": 123,
         },
         {
-            "allowed_chat_ids": ["456", "-100999"],
+            "allowed_chat_ids": ["-100999", "456"],
             "principal_id": "test:member",
             "telegram_user_id": 456,
         },
     ]
+    for item in written["bindings"]:
+        TelegramPrincipalBinding(
+            telegram_user_id=item["telegram_user_id"],
+            principal_id=item["principal_id"],
+            allowed_chat_ids=tuple(item["allowed_chat_ids"]),
+        )
 
 
 def test_group_admission_refuses_a_user_not_in_the_initial_private_binding(
@@ -185,6 +192,35 @@ def test_group_admission_refuses_a_user_not_in_the_initial_private_binding(
             group_chat_id="-100999",
             trusted_user_ids=(999,),
         )
+
+
+def test_group_admission_replay_repairs_the_old_private_first_order(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    bindings = _bindings()
+    bindings["bindings"][0]["allowed_chat_ids"] = ["123", "-100999"]
+    bindings_path = tmp_path / "telegram-test-bindings.json"
+    bindings_path.write_text(json.dumps(bindings), encoding="utf-8")
+    monkeypatch.setattr(
+        group_admission,
+        "_read_private_file",
+        lambda *_args, **_kwargs: (bindings_path.read_bytes(), _private_stat()),
+    )
+    written: dict[str, object] = {}
+    monkeypatch.setattr(
+        group_admission,
+        "_replace_private_file",
+        lambda _path, data, *, source_stat: written.update(json.loads(data)),
+    )
+
+    receipt = group_admission.admit_group(
+        bindings_path=bindings_path,
+        group_chat_id="-100999",
+        trusted_user_ids=(123,),
+    )
+
+    assert receipt["newly_granted_account_count"] == 0
+    assert written["bindings"][0]["allowed_chat_ids"] == ["-100999", "123"]
 
 
 def test_private_read_rejects_a_symlink_without_following_its_target(
