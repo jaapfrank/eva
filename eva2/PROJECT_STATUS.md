@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 19:06 CEST
+Laatst bijgewerkt: 28 augustus 2026, 19:15 CEST
 
 ## Heel kort
 
@@ -124,6 +124,12 @@ installatie zijn nog niet klaar.
   korte apparaat-/bewegingsgebeurtenissen. Er ging geen gebruikersgesprek of
   modelantwoord verloren; dit is daarom eerlijk geen volledig gatloze
   verhuizing van de oude sensorgeschiedenis.
+- De beheerde kern bood nog ten onrechte een duurzame-doeltool met een
+  proefprovider aan, terwijl de echte worker niet draaide. Dat is nu live
+  dichtgezet: workerbedrading en gesprekstoelating zijn apart. Eva neemt pas
+  weer zo'n afspraak aan nadat een echte provider afzonderlijk is vrijgegeven.
+  109 gerichte controles zijn groen; na de kernwissel antwoordde Eva via de
+  echte `/eva2`-client exact `eerlijk` en er bleven nul wachtende doelen.
 
 ## Wat nog niet klaar is
 
@@ -142,8 +148,10 @@ installatie zijn nog niet klaar.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
-  `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart;
-  daarna moeten ook een computerreboot en de zevendaagse praktijktest volgen.
+  `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
+  de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
+  een nep-/ingetrokken token of naast Eva1 dubbel pollen. Daarna moeten ook een
+  computerreboot en de zevendaagse praktijktest volgen.
 - Eva1 moest bij de derde geplande servicewissel na twintig seconden hard
   stoppen. Daarna waren alle vijf controles groen en de tijdelijke traagheid
   verdween, maar dit blijft een zichtbaar onderhoudspunt.
@@ -194,6 +202,7 @@ installatie zijn nog niet klaar.
 - [Blijvend tweede slot met eigen PostgreSQL 18-volumes en gezamenlijke herstart](evidence/living-core/eva2-managed-b-retained-slot-2026-08-28.json)
 - [Beheerde PostgreSQL 18-route live met eigenaar-dashboard, terugrol en herstart](evidence/living-core/eva2-managed-b-dashboard-cutover-live-2026-08-28.json)
 - [Vernieuwbare Codex-toegang zonder refresh-login in de Eva2-kern](evidence/living-core/eva2-managed-b-rotating-model-lease-live-2026-08-28.json)
+- [Geen schijnafspraak zonder echte duurzame-doelprovider](evidence/living-core/eva2-managed-b-durable-goal-admission-gate-live-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

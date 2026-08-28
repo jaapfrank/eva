@@ -20,6 +20,13 @@ Home Assistant is een expliciete core-overlay als fysieke readback is
 ingeschakeld. AgentMail, Stripe, proactieve Telegram, browser/gateway en skills
 komen niet automatisch mee bij deze eerste adoptie.
 
+De providerconfiguratie van de duurzame-doelenworker activeert de gesprekstool
+niet automatisch. Alleen wanneer dezelfde echte provider en ontvangers apart
+als `EVA_DURABLE_GOAL_ADMISSION_PROVIDER` en
+`EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS` zijn vrijgegeven, mag de kern zo'n
+afspraak aannemen. Een voorbereide proefprovider blijft daardoor onzichtbaar
+voor gebruikersgesprekken.
+
 Gebruik nooit `stack.compose.yml` of `hindsight.compose.yml` als bron voor de
 adoptie: zij bevatten onveilige `secrets:file`-routes en overlappende,
 incompatibele Hindsight-definities.

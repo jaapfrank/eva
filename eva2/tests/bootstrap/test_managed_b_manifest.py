@@ -118,10 +118,10 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
     ]
     assert {
         "EVA_DURABLE_GOAL_PROVIDER": (
-            "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
+            "${EVA_DURABLE_GOAL_ADMISSION_PROVIDER:-}"
         ),
         "EVA_DURABLE_GOAL_RECIPIENTS": (
-            "${EVA_DURABLE_GOAL_RECIPIENTS:?set the durable-goal recipients}"
+            "${EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS:-}"
         ),
         "EVA_FANOUT_ALLOW_INSECURE_HTTP": (
             "${EVA_FANOUT_ALLOW_INSECURE_HTTP:?set the sealed fanout transport policy}"
@@ -145,6 +145,9 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "EVA_IDENTITY_PACK_FILE": "/run/eva/identity/current.json",
         "EVA_IDENTITY_PACK_TRUST_FILE": "/run/eva/identity/trust.json",
     }.items() <= services["core"]["environment"].items()
+    assert services["durable-goal-worker"]["environment"][
+        "EVA_DURABLE_GOAL_PROVIDER"
+    ] == "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
 
     core_binds = {volume["target"]: volume for volume in _private_binds(services["core"])}
     assert core_binds["/run/eva/identity/current.json"]["source"] == (

@@ -816,6 +816,11 @@ def main(
                 else "22222222-2222-2222-8222-222222222222"
             ),
             "EVA_RUNTIME_PRINCIPAL_ID": "33333333-3333-3333-8333-333333333333",
+            # The retained canary has no real durable-goal provider.  Keep the
+            # worker wiring renderable, but do not advertise an unusable
+            # conversation capability.
+            "EVA_DURABLE_GOAL_ADMISSION_PROVIDER": "",
+            "EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS": "",
             "EVA_DURABLE_GOAL_PROVIDER": "probe",
             "EVA_DURABLE_GOAL_PROVIDER_URL": "http://127.0.0.1:9",
             "EVA_DURABLE_GOAL_RECIPIENTS": "probe",

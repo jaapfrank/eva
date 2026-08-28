@@ -267,8 +267,11 @@ services:
       EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}
       EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
       EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}
-      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}
-      EVA_DURABLE_GOAL_RECIPIENTS: ${EVA_DURABLE_GOAL_RECIPIENTS:?set the durable-goal recipients}
+      # Admission is separate from the worker's provider configuration.  A
+      # prepared but inactive/dummy worker must never make the conversation
+      # core promise durable work that nobody can execute.
+      EVA_DURABLE_GOAL_PROVIDER: ${EVA_DURABLE_GOAL_ADMISSION_PROVIDER:-}
+      EVA_DURABLE_GOAL_RECIPIENTS: ${EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS:-}
       EVA_FILE_BATCH_ROOT: /var/lib/eva/work
       EVA_FANOUT_ALLOW_INSECURE_HTTP: ${EVA_FANOUT_ALLOW_INSECURE_HTTP:?set the sealed fanout transport policy}
       EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON: ${EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON:?set the sealed fanout endpoint map}
