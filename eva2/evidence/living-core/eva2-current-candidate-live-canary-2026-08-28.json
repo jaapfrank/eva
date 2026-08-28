@@ -1,0 +1,66 @@
+{
+  "backup": {
+    "integrity": "ok",
+    "method": "sqlite-online-backup",
+    "mode": "0600",
+    "sha256": "bd010575a0b0411dfa6a238e61329a20065f332c1644110f4ad518c74f7d6b63",
+    "sizeBytes": 257335296
+  },
+  "candidate": {
+    "coreContainer": "eva2-candidate-794ff73-core",
+    "coreProcessGid": 65532,
+    "coreProcessUid": 65532,
+    "databaseContainer": "eva2-candidate-794ff73-pg",
+    "databaseImage": "postgres:16.13-alpine",
+    "identitySha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+    "imageId": "sha256:d648d47b3b61a1b2827a6b0613854cf50d7a64d14f708a108a888f78e0e34251",
+    "imageTag": "eva2-living-core:git-be70ec4-candidate",
+    "readyHttpStatus": 200,
+    "restartPolicy": "unless-stopped",
+    "sourceCommit": "be70ec46e1ad75aef6bdc100cea2b2773dc39c40",
+    "trustSha256": "a1149f21d86b652c8d7a76528e6d31e9340e34f8cbbbffec0db272f1659ed0bf"
+  },
+  "contract": "Eva2CurrentCandidateLiveCanaryReceipt/v1",
+  "cutover": {
+    "canaryEndpoint": "http://127.0.0.1:44701",
+    "configSha256": "c8c45ed834e409f6eebe6a88b1292fea80bb51a42f2cb844a69799bbb493ccca",
+    "eva1Commit": "46e2bb1d99daa272b0c1fdb65d7ec65855c26a58",
+    "eva1MainPidAfter": 4177692,
+    "eva1MainPidBefore": 2730596,
+    "eva1Routes": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "loadedBySystemd": true,
+    "ordinaryEva1RoutingUnchanged": true
+  },
+  "issuedAt": "2026-08-28T11:42:44+02:00",
+  "recovery": {
+    "automaticFirstAttemptRollback": true,
+    "missingTrackedRuntimeSourceRestoredFromEva1Head": true,
+    "restoredSourceSha256": "f9065eb6af9f882ff1cf7d268080051c67e1db8c0b4df625a511fe1d734e0951",
+    "secondAttemptHealthy": true
+  },
+  "result": {
+    "clientContract": "EvaInternalGroundedReply/v1",
+    "clientRouteTestsPassed": 4,
+    "externalTelegramMessageSent": false,
+    "replySha256": "3c3df0b9467725f14f42d5ac4d460d26734044310c71f7c244ffbd748225af9f",
+    "replyText": "Eva2 is verbonden.",
+    "status": "live-canary"
+  },
+  "scope": {
+    "eva1DatabaseWrittenByCutover": false,
+    "homeAssistantClaim": false,
+    "productionPromotionClaim": false,
+    "telegramDeliveryClaim": false,
+    "voiceClaim": false
+  },
+  "sourceDatabaseAtBackup": {
+    "sha256": "dc0ddcc61437384f0687a1895e65bf7e73358e794b95119d45225e54eeb26abf",
+    "sizeBytes": 257310720
+  }
+}

@@ -1,6 +1,24 @@
 # Eva 2 — actuele voortgang
 
 Laatst bijgewerkt: 2026-08-28
+> Live `/eva2`-koppeling, 28 augustus 2026 11:42 CEST: gewone berichten
+> blijven bij de bestaande `eva.service`, maar een expliciet Telegrambericht
+> met `/eva2` gaat nu naar de nieuwe, afzonderlijk herstartbare Eva2-kandidaat
+> op loopbackpoort 44701. De werkelijk geladen systemd-configuratie, vijf
+> Eva1-HTTP-routes en Eva2 `/readyz` zijn groen. Dezelfde clientfunctie die de
+> Telegramroute gebruikt kreeg via de live koppeling exact `Eva2 is verbonden.`
+> terug; daarbij is geen extern Telegrambericht verstuurd. Vier gerichte
+> routeringstests zijn eveneens groen.
+>
+> Vóór de koppeling is een consistente, private SQLite-back-up van Eva1
+> gemaakt en met `quick_check=ok` gecontroleerd. De eerste herstart bracht een
+> al bestaande ontbrekende, door Git gevolgde Eva1-runtimebron aan het licht:
+> de oude service leefde sinds 23 augustus nog vanuit procesgeheugen. De
+> koppeling viel automatisch terug. Het bestand is daarna bytegelijk uit
+> Eva1's eigen commit hersteld; Eva1 gaf opnieuw vijfmaal HTTP 200. Pas daarna
+> is de koppeling opnieuw uitgevoerd en groen geworden. Receipt:
+> [`eva2-current-candidate-live-canary-2026-08-28.json`](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json).
+
 > Permanente B-identiteitsgrens, 28 augustus 2026: de beheerde Eva2-B-
 > configuratie kan niet meer zonder een afzonderlijk, private IdentityPack én
 > de bijbehorende publieke trustbinding worden gerenderd. De hostpreflight
