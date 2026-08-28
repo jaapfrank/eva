@@ -61,6 +61,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json",
     "evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json",
     "evidence/living-core/eva2-installer-identity-lifecycle-loopback-2026-08-29.json",
+    "evidence/living-core/eva2-installer-identity-resume-loopback-2026-08-29.json",
     "evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json",
@@ -665,7 +666,7 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         value.get("contract") != "EvaCockpitEvidenceIndex/v1"
         or value.get("schemaVersion") != 1
         or value.get("status") != "release_bound_projection"
-        or value.get("updatedOn") != "2026-08-27"
+        or value.get("updatedOn") != "2026-08-29"
         or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
         or not isinstance(entries, list)
         or len(entries) != len(_COCKPIT_EVIDENCE_STATES)

@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 01:02 CEST
+Laatst bijgewerkt: 29 augustus 2026, 01:28 CEST
 
 ## Heel kort
 
@@ -156,6 +156,10 @@ installatie zijn nog niet klaar.
   voorvertonen, privé bewaren, ondertekenen, activeren en direct terugzetten.
   Een echte lokale HTTP-proef doorliep alle stappen. De privésleutel kwam niet
   in de browser of Eva-runtime en na rollback was de installatiesessie ongeldig.
+- Die identiteitsstappen overleven nu ook een gesloten browser en herstart van
+  de installer. Vier nieuwe serverprocessen hervatten achtereenvolgens bewaren,
+  ondertekenen, activeren en terugzetten. Een halve activatie of rollback wordt
+  herkend en niet dubbel uitgevoerd.
 
 ## Wat nog niet klaar is
 
@@ -236,6 +240,7 @@ installatie zijn nog niet klaar.
 - [Externe rebootcontrole klaargezet en kapotte terugval hersteld](evidence/living-core/eva2-managed-b-external-reboot-arm-2026-08-29.json)
 - [Actuele releasebestanden en cockpitbewijs opnieuw verzegeld](evidence/living-core/eva2-managed-b-release-input-reseal-2026-08-29.json)
 - [SOUL.md via de lokale wizard ondertekend, geactiveerd en teruggezet](evidence/living-core/eva2-installer-identity-lifecycle-loopback-2026-08-29.json)
+- [Installer hervat dezelfde identiteitswijziging na iedere serverherstart](evidence/living-core/eva2-installer-identity-resume-loopback-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

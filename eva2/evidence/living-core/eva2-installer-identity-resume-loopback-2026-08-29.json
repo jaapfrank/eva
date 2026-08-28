@@ -1,0 +1,61 @@
+{
+  "contract": "EvaInstallerIdentityResumeLoopbackReceipt/v1",
+  "issuedAt": "2026-08-29T01:27:23+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "05421a0b330efbf26405933318bca4af5e2a1e5d",
+    "workflowCommit": "8ac4e66",
+    "resumeUiCommit": "05421a0",
+    "installerIdentityUiSha256": "f7a8ae9dd017b15df02b8e953d5bc1bd6c3d218c60d1a255450ae344b026bd38",
+    "installerWizardSha256": "d8076a9e6a2bfc4a4da387a999f450a035500fc48c8a8fb6c68ceccebef5aade",
+    "installerIdentityStorageSha256": "68284790a52c95b7bd12b61f9950efaa75927c9bb35b119ad834b6cf72cc257f",
+    "installerIdentityLifecycleSha256": "ca4ba035dc9acc15bb7fed6c5a9152ed1d07ecbfe6f01f08abcacee6f6083916",
+    "installerWizardTestSha256": "773a0067f8da417c5ebaa04322c17db6df53b88599cc4f4aae30fa9e603e5406",
+    "installerIdentityLifecycleTestSha256": "6f465a5379d0bfae0eaa3977452d0a35353f49e09e4000a88f11c91bc513279b"
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "serverProcesses": 4,
+    "phases": [
+      "empty",
+      "staged",
+      "issued",
+      "active",
+      "rolled_back"
+    ],
+    "transitionStatuses": [
+      "staged",
+      "issued",
+      "activated",
+      "rolled_back"
+    ],
+    "newServerAndSessionBeforeEveryResume": true,
+    "sessionInvalidatedAfterRollback": true,
+    "temporaryAuthorityRemovedAfterRun": true
+  },
+  "crashWindows": {
+    "activationCompletedBeforeWorkflowWrite": "recovered_and_marked_active_without_second_cutover",
+    "rollbackCompletedBeforeWorkflowWrite": "recovered_and_marked_rolled_back_without_second_cutover"
+  },
+  "security": {
+    "loopbackOnly": true,
+    "sameOriginWrites": true,
+    "privateKeyReturned": false,
+    "retainedArtifactsOwnerOnly": true,
+    "tamperedWorkflowRejected": true,
+    "symlinkedWorkflowLockRejected": true
+  },
+  "verification": {
+    "focusedInstallerIdentityTestsPassed": 39,
+    "resumeApiAndStorageTestsPassed": 14,
+    "browserScriptPhasesSyntaxChecked": 4,
+    "ruff": "passed",
+    "gitDiffCheck": "passed",
+    "codeBudget": "two_product_slices_each_below_600_net_lines"
+  },
+  "nonclaims": [
+    "The run used a disposable synthetic identity authority and did not change Eva1, the active Eva2 identity, either live route or any production secret.",
+    "This proves restart-safe identity onboarding on the local loopback installer, not a complete consumer installer, connector onboarding or fresh-machine installation.",
+    "The external managed-machine reboot receipt remains a separate gate and was not simulated or claimed by this run."
+  ]
+}

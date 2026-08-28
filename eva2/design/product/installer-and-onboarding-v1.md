@@ -240,13 +240,19 @@ stil half-geconfigureerd.
   launcher opent een loopback-wizard zonder handmatige YAML/JSON/env-edit.
 - [ ] IN02 — Wizardstatus en hervatten na herstart; iedere vraag, keuze en
   connector blijft afzonderlijk staged/ready/blocked en auditbaar.
+  De identiteitsdeelroute is nu duurzaam: stage, ondertekening, activatie en
+  rollback worden na een nieuwe server én nieuwe browsersessie exact hervat.
+  Ook een procesuitval tussen de echte bestandswissel en de statuswrite wordt
+  zonder tweede wissel hersteld. De overige installervragen en connectoren
+  hebben deze statusmachine nog niet; daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
   loopback-HTTP-proef export, preview, private opslag, ondertekening, activatie
-  en directe rollback. Een herstart gebruikt dezelfde content-addressed draft
-  en kandidaat; oude, gewijzigde of onbevestigde invoer wordt geweigerd. Dit
-  is nog geen volledige consumenteninstaller of productiewijziging.
+  en directe rollback. Vier opeenvolgende echte loopback-serverprocessen
+  gebruikten dezelfde content-addressed draft en kandidaat; oude, gewijzigde
+  of onbevestigde invoer wordt geweigerd. Dit is nog geen volledige
+  consumenteninstaller of productiewijziging.
 - [ ] IN04 — Telegram-, Home Assistant- en één e-mailproviderwizard met
   least-privilege scopes, echte read-only proeven en capability-permissions,
   plus een ingang naar AC01 voor een niet-vooraf-ingebakken kanaal.
