@@ -1,0 +1,17 @@
+# This retained local builder tag is accepted only when it resolves to image ID
+# sha256:50b3a19d4773a82e603acdf1bcf677d35305f92ed2a40e6d45c2ea6fa979a641.
+FROM eva2/pgvector-builder-deps-retained:20260828 AS builder
+
+USER 0
+COPY offline-artifacts/pgvector-v0.8.6.tar /tmp/pgvector-v0.8.6.tar
+RUN echo '7ac69065fe02ad51b0b357a5a46df28201288500f2bbe05502e8bbd7a0552016  /tmp/pgvector-v0.8.6.tar' | sha256sum -c - \
+    && mkdir /src \
+    && tar -xf /tmp/pgvector-v0.8.6.tar -C /src --strip-components=1 \
+    && cd /src \
+    && make OPTFLAGS="" \
+    && make install DESTDIR=/out
+
+FROM cgr.dev/chainguard/postgres@sha256:75f633a8213629eef75f31a80b69756eb007ba1cafaa005d7cc47e5a09221c2d
+
+COPY --from=builder /out/usr/lib/postgresql18 /usr/lib/postgresql18
+COPY --from=builder /out/usr/share/postgresql18/extension /usr/share/postgresql18/extension

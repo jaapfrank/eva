@@ -13,7 +13,12 @@ De praktijkproef schreef via Eva's bestaande `HindsightMemoryEngine` een
 synthetische, persoonsgebonden herinnering. Eva vond haar terug vóór en na een
 herstart van zowel Hindsight als PostgreSQL.
 
-Dit is nog een kandidaat en geen release. De pgvector-build haalt de exact
-vastgezette Wolfi-bouwpakketten tijdens de build op. Voor promotie moeten die
-bytes eerst duurzaam worden bewaard en moet dezelfde build volledig offline
-worden herhaald. De live Eva1- en `/eva2`-routes zijn niet gewijzigd.
+Een tweede pgvector-build gebruikte daarna een exact vastgezette lokale
+builderimage en een gehashte bronarchive. Docker draaide met `--network none`.
+De extensionbestanden waren bytegelijk aan de eerste build en de nieuwe image
+werkte opnieuw met PostgreSQL 18.6 en pgvector 0.8.6.
+
+Dit is nog een kandidaat en geen release. De lokale builderimage heeft nog
+geen off-host back-up en kan nog niet vanuit een complete set bewaarde losse
+APK-bestanden worden gereconstrueerd. De live Eva1- en `/eva2`-routes zijn niet
+gewijzigd.

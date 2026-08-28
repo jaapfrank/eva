@@ -53,3 +53,14 @@ def test_pgvector_final_image_contains_only_runtime_extension_paths() -> None:
     assert "/out/usr/share/postgresql18/extension" in final
     assert "apk add" not in final
     assert "COPY . /src" not in final
+
+
+def test_pgvector_offline_build_uses_exact_retained_inputs() -> None:
+    dockerfile = (ROOT / "Dockerfile.pgvector-offline").read_text(encoding="utf-8")
+
+    assert "sha256:50b3a19d4773a82e603acdf1bcf677d35305f92ed2a40e6d45c2ea6fa979a641" in dockerfile
+    assert "7ac69065fe02ad51b0b357a5a46df28201288500f2bbe05502e8bbd7a0552016" in dockerfile
+    assert "apk update" not in dockerfile
+    assert "apk add" not in dockerfile
+    assert "curl" not in dockerfile
+    assert "wget" not in dockerfile

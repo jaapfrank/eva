@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 16:02 CEST
+Laatst bijgewerkt: 28 augustus 2026, 16:12 CEST
 
 ## Heel kort
 
@@ -66,6 +66,8 @@ installatie zijn nog niet klaar.
 - Ook Hindsight en zijn nieuwe PostgreSQL/pgvector-database hebben nu schone
   kandidaten met 0 kritisch en 0 hoog. Eva vond een testherinnering terug na
   een volledige herstart van beide.
+- De pgvector-database is daarna nogmaals volledig zonder internet gebouwd.
+  De bestanden waren bytegelijk aan de eerste build en de scan bleef 0/0.
 
 ## Wat nog niet klaar is
 
@@ -79,8 +81,8 @@ installatie zijn nog niet klaar.
   speaker is nog niet getest.
 - De browserimages zijn nog niet veilig genoeg voor algemeen gebruik.
 - De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
-  De databasebouw moet eerst met lokaal bewaarde bouwpakketten zonder internet
-  worden herhaald en daarna veilig in de beheerde B-route worden gezet.
+  De lokale bouwimage moet nog buiten deze computer worden bewaard en uit losse
+  bouwpakketten herbouwbaar worden. Daarna volgt de beheerde B-route.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -120,6 +122,7 @@ installatie zijn nog niet klaar.
 - [Releaseblokkerende scan van de echte gesprekimages](evidence/living-core/eva2-telegram-conversation-images-vulnerability-scan-2026-08-28.json)
 - [Kleinere Eva2-kern: echte gesprekken en scan 0/0](evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json)
 - [Schone Hindsight-API en PostgreSQL/pgvector: geheugenherstart en scans 0/0](evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json)
+- [Pgvector opnieuw zonder internet gebouwd en bytegelijk gecontroleerd](evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

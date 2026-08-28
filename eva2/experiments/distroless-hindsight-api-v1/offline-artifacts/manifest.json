@@ -1,0 +1,19 @@
+{
+  "contract": "Eva2PgvectorOfflineBuildInputs/v1",
+  "builderImage": {
+    "localTag": "eva2/pgvector-builder-deps-retained:20260828",
+    "imageId": "sha256:50b3a19d4773a82e603acdf1bcf677d35305f92ed2a40e6d45c2ea6fa979a641",
+    "dockerReportedSizeBytes": 593838279
+  },
+  "sourceArchive": {
+    "filename": "pgvector-v0.8.6.tar",
+    "sourceCommit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
+    "sha256": "7ac69065fe02ad51b0b357a5a46df28201288500f2bbe05502e8bbd7a0552016",
+    "sizeBytes": 839680
+  },
+  "limitations": [
+    "The retained builder image exists only on this host.",
+    "The individual APK files are not yet a complete retained set and are not release inputs.",
+    "Off-host backup and a rebuild of the builder image from retained APK bytes remain open."
+  ]
+}

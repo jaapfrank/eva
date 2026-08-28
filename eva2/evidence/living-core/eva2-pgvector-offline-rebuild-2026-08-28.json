@@ -1,0 +1,65 @@
+{
+  "contract": "Eva2PgvectorOfflineRebuildReceipt/v1",
+  "issuedAt": "2026-08-28T16:12:24+02:00",
+  "sourceCommit": "ae06ad51509ad1c522ca526bd0bd5391ebe5e221",
+  "inputs": {
+    "retainedBuilder": {
+      "localTag": "eva2/pgvector-builder-deps-retained:20260828",
+      "imageId": "sha256:50b3a19d4773a82e603acdf1bcf677d35305f92ed2a40e6d45c2ea6fa979a641",
+      "dockerReportedSizeBytes": 593838279
+    },
+    "sourceArchive": {
+      "sourceCommit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
+      "sha256": "7ac69065fe02ad51b0b357a5a46df28201288500f2bbe05502e8bbd7a0552016",
+      "sizeBytes": 839680
+    },
+    "runtimeBase": "cgr.dev/chainguard/postgres@sha256:75f633a8213629eef75f31a80b69756eb007ba1cafaa005d7cc47e5a09221c2d",
+    "dockerfileSha256": "8979afdf7dddc359f24b8740bbdbfce2aaa41d86bdba82840a7831651369dcc9",
+    "manifestSha256": "dad1bcac10c01dd36e7b9fd9000981af8729f5324bce4e94fa8abb2f455a5562"
+  },
+  "build": {
+    "network": "none",
+    "noCache": true,
+    "localImage": "eva2/chainguard-pgvector18-offline-candidate:20260828",
+    "imageId": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "dockerReportedSizeBytes": 143613890
+  },
+  "byteComparisonWithOnlineCandidate": {
+    "vectorSoSha256": "ef446f57945d7fdc5f8372dc12d276305e524002e774813ec4f43948289ff0aa",
+    "normalizedExtensionTreeSha256": "d536c3889b3f298d639e61d35d0649891dfef672b4144d10477edcb3a401b059",
+    "onlineAndOfflineEqual": true
+  },
+  "runtimeVerification": {
+    "networkInternal": true,
+    "publishedHostPorts": 0,
+    "serverVersion": "18.6",
+    "vectorExtensionCreated": true,
+    "vectorVersion": "0.8.6",
+    "containerStoppedAfterProbe": true,
+    "syntheticVolumeRetainedForInspection": true
+  },
+  "vulnerabilityScan": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "databaseUpdatedAt": "2026-08-28T10:01:48.845104336Z",
+    "network": "none",
+    "critical": 0,
+    "high": 0,
+    "resultSha256": "0feb30d30a4ba67dbbb8132ae81c48858dba527c08f0d56e539cc9c767aaa961"
+  },
+  "discardedInput": {
+    "description": "An interrupted attempt to retain individual APK files produced an incomplete set.",
+    "usedByBuild": false,
+    "removed": true
+  },
+  "decision": {
+    "offlineCandidatePassed": true,
+    "managedBPromotionAllowed": false,
+    "reason": "The retained builder is local-only; off-host retention, reconstruction from complete APK bytes, release wiring and rollback proof remain open."
+  },
+  "nonclaims": [
+    "A networkless rebuild from a retained local builder does not prove that the builder can be reconstructed after loss of this host.",
+    "A 0/0 package scan is not proof that software has no exploitable defect.",
+    "This experiment does not modify Eva1, the current /eva2 route, managed B, Home Assistant or their data."
+  ],
+  "status": "passed_candidate_only"
+}
