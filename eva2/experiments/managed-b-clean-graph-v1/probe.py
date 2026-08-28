@@ -72,9 +72,6 @@ CURRENT_ROUTE_HA_URL = Path(
     "/var/lib/eva2/candidate-794ff73/config/home-assistant-url"
 )
 CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
-RETAINED_PROJECT = "eva2-managed-b-slot2"
-RETAINED_CORE = "eva2-managed-b-slot2-core"
-RETAINED_PORT = 44709
 RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
@@ -590,6 +587,7 @@ def main(
     clone_current_route: bool = False,
     core_image: str = CORE_IMAGE,
     retain_slot: bool = False,
+    retained_slot_number: int = 2,
 ) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
@@ -607,11 +605,32 @@ def main(
             )
         )
         return 2
-    run_id = "slot2" if retain_slot else uuid4().hex[:12]
-    project = RETAINED_PROJECT if retain_slot else f"eva2-clean-b-{run_id}"
-    core_name = RETAINED_CORE if retain_slot else f"eva2-clean-b-core-{run_id}"
-    staging = RETAINED_STAGING if retain_slot else STAGING_PARENT / f"managed-b-clean-probe-{run_id}"
-    port = RETAINED_PORT if retain_slot else _available_port()
+    if retain_slot and retained_slot_number not in {2, 3}:
+        print(
+            json.dumps(
+                {"error": "retained slot number must be 2 or 3", "status": "failed"},
+                sort_keys=True,
+            )
+        )
+        return 2
+    retained_name = f"slot{retained_slot_number}"
+    run_id = retained_name if retain_slot else uuid4().hex[:12]
+    project = (
+        f"eva2-managed-b-{retained_name}"
+        if retain_slot
+        else f"eva2-clean-b-{run_id}"
+    )
+    core_name = (
+        f"eva2-managed-b-{retained_name}-core"
+        if retain_slot
+        else f"eva2-clean-b-core-{run_id}"
+    )
+    staging = (
+        STAGING_PARENT / f"managed-b-{retained_name}"
+        if retain_slot
+        else STAGING_PARENT / f"managed-b-clean-probe-{run_id}"
+    )
+    port = 44707 + retained_slot_number if retain_slot else _available_port()
     operational_password = secrets.token_urlsafe(32)
     memory_password = secrets.token_urlsafe(32)
     environment_file = staging / "candidate.env"
@@ -1091,7 +1110,7 @@ def main(
             and staging.parent == STAGING_PARENT
             and (
                 staging.name.startswith("managed-b-clean-probe-")
-                or staging == RETAINED_STAGING
+                or staging in {RETAINED_STAGING, STAGING_PARENT / "managed-b-slot3"}
             )
         ):
             shutil.rmtree(staging, ignore_errors=True)
@@ -1122,11 +1141,13 @@ if __name__ == "__main__":
     parser.add_argument("--clone-current-route", action="store_true")
     parser.add_argument("--core-image", default=CORE_IMAGE)
     parser.add_argument("--retain-slot", action="store_true")
+    parser.add_argument("--retained-slot-number", type=int, choices=(2, 3), default=2)
     arguments = parser.parse_args()
     sys.exit(
         main(
             clone_current_route=arguments.clone_current_route,
             core_image=arguments.core_image,
             retain_slot=arguments.retain_slot,
+            retained_slot_number=arguments.retained_slot_number,
         )
     )
