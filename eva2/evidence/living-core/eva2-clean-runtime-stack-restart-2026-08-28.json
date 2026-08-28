@@ -1,0 +1,71 @@
+{
+  "contract": "Eva2CleanRuntimeStackRestartReceipt/v1",
+  "issuedAt": "2026-08-28T16:19:00+02:00",
+  "sourceCommit": "fb4c9ec",
+  "images": {
+    "core": "sha256:2ec1399520a9ccf0942137b45777409e30d0ad6678cebb339ef9a42af50eadff",
+    "hindsightApi": "sha256:f52dafb0e23b9f61dfe9a4f4e7b34c15e721fae26f15d024be38e1694ede0167",
+    "operationalPostgres": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "memoryPostgresPgvector": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+  },
+  "freshDatabases": {
+    "operational": {
+      "serverVersion": "18.6",
+      "schemaHead": "4e_0004_delegated_work_stop",
+      "newSyntheticVolume": true
+    },
+    "semanticMemory": {
+      "serverVersion": "18.6",
+      "pgvectorVersion": "0.8.6",
+      "newSyntheticVolume": true
+    }
+  },
+  "verification": {
+    "fullSchemaInstalled": true,
+    "coreReadyBeforeRestart": true,
+    "realCodexModelReplyBeforeRestart": true,
+    "firstReplyExact": true,
+    "hindsightRecalledPersonScopedTestWordBeforeRestart": true,
+    "allFourContainersStoppedAndStarted": true,
+    "coreReadyAfterRestart": true,
+    "hindsightRecalledSamePersonScopedTestWordAfterRestart": true,
+    "realCodexModelReplyAfterRestart": true,
+    "secondReplyUsedExactRecalledTestWord": true,
+    "publishedHostPorts": 0
+  },
+  "runtimeBoundaries": {
+    "coreUid": 65532,
+    "hindsightUid": 1000,
+    "postgresUid": 70,
+    "coreReadOnlyRootFilesystem": true,
+    "hindsightReadOnlyRootFilesystem": true,
+    "modelAccess": "existing access-only Codex lease",
+    "temporaryDatabaseSecretRemovedAfterProbe": true
+  },
+  "shutdown": {
+    "core": "stopped",
+    "hindsight": "stopped",
+    "operationalPostgres": "stopped",
+    "memoryPostgresPgvector": "stopped",
+    "containersAndSyntheticVolumesRetainedForInspection": true
+  },
+  "liveSafety": {
+    "eva1HealthHttpStatusAfterProbe": 200,
+    "existingEva2HealthHttpStatusAfterProbe": 200,
+    "existingEva2ReadyHttpStatusAfterProbe": 200,
+    "eva1Modified": false,
+    "existingEva2Modified": false,
+    "homeAssistantModified": false
+  },
+  "decision": {
+    "cleanStackCandidatePassed": true,
+    "managedBPromotionAllowed": false,
+    "reason": "The sealed managed-B graph still models embedded Hindsight storage. It must gain a separately isolated Hindsight PostgreSQL service and rollback proof before adoption."
+  },
+  "nonclaims": [
+    "This synthetic two-turn probe is not a family acceptance test or a seven-day run.",
+    "The internal turn endpoint did not add rows to the operational messages table; continuity in this probe was proven through Hindsight, not claimed as a PostgreSQL conversation-journal test.",
+    "The clean images are local candidates and have not replaced managed B or the current /eva2 user route."
+  ],
+  "status": "passed_candidate_only"
+}

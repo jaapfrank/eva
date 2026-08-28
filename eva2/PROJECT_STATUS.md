@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 16:12 CEST
+Laatst bijgewerkt: 28 augustus 2026, 16:19 CEST
 
 ## Heel kort
 
@@ -68,6 +68,9 @@ installatie zijn nog niet klaar.
   een volledige herstart van beide.
 - De pgvector-database is daarna nogmaals volledig zonder internet gebouwd.
   De bestanden waren bytegelijk aan de eerste build en de scan bleef 0/0.
+- De schone kern, Hindsight en twee verse PostgreSQL 18-databases draaiden
+  daarna samen. Een echt modelantwoord en het geheugen bleven werken nadat de
+  hele proefstack was gestopt en gestart.
 
 ## Wat nog niet klaar is
 
@@ -83,6 +86,8 @@ installatie zijn nog niet klaar.
 - De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
   De lokale bouwimage moet nog buiten deze computer worden bewaard en uit losse
   bouwpakketten herbouwbaar worden. Daarna volgt de beheerde B-route.
+- Het huidige B-startbestand kent nog geen aparte database voor Hindsight. Die
+  negende dienst moet eerst veilig worden toegevoegd en terugrolbaar getest.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -123,6 +128,7 @@ installatie zijn nog niet klaar.
 - [Kleinere Eva2-kern: echte gesprekken en scan 0/0](evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json)
 - [Schone Hindsight-API en PostgreSQL/pgvector: geheugenherstart en scans 0/0](evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json)
 - [Pgvector opnieuw zonder internet gebouwd en bytegelijk gecontroleerd](evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json)
+- [Alle schone runtimeonderdelen samen, inclusief echte model- en geheugenherstart](evidence/living-core/eva2-clean-runtime-stack-restart-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
