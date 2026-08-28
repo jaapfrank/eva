@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 01:28 CEST
+Laatst bijgewerkt: 29 augustus 2026, 01:43 CEST
 
 ## Heel kort
 
@@ -160,6 +160,9 @@ installatie zijn nog niet klaar.
   de installer. Vier nieuwe serverprocessen hervatten achtereenvolgens bewaren,
   ondertekenen, activeren en terugzetten. Een halve activatie of rollback wordt
   herkend en niet dubbel uitgevoerd.
+- De wizard bewaart nu ook installatienaam, eigenaarlabel, taal en tijdzone.
+  Drie echte serverprocessen hervatten dezelfde keuzes en bevestigen ze apart.
+  Dit maakt nog geen account, secret, container of actieve installatie.
 
 ## Wat nog niet klaar is
 
@@ -241,6 +244,7 @@ installatie zijn nog niet klaar.
 - [Actuele releasebestanden en cockpitbewijs opnieuw verzegeld](evidence/living-core/eva2-managed-b-release-input-reseal-2026-08-29.json)
 - [SOUL.md via de lokale wizard ondertekend, geactiveerd en teruggezet](evidence/living-core/eva2-installer-identity-lifecycle-loopback-2026-08-29.json)
 - [Installer hervat dezelfde identiteitswijziging na iedere serverherstart](evidence/living-core/eva2-installer-identity-resume-loopback-2026-08-29.json)
+- [Installer hervat de eerste vier niet-geheime installatiekeuzes](evidence/living-core/eva2-installer-profile-resume-loopback-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

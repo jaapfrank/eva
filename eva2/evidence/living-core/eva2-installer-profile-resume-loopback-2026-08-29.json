@@ -1,0 +1,49 @@
+{
+  "contract": "EvaInstallerProfileResumeLoopbackReceipt/v1",
+  "issuedAt": "2026-08-29T01:43:09+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "21fd5425971c7479c77d359d0f0ced94498656ce",
+    "installerProfileApiSha256": "bdfce6ee13783cac0fa0e950afcedcf62469a1c0eee9c8e844cc1787a590e195",
+    "installerWizardSha256": "cfcc6334175ead88c009a33688a3fce27117749d24410d5c7f157ead3342d082",
+    "installerProfileWorkflowSha256": "d15d5ee6dc9b441da81cf8240694439aef3ec749784c61aa0ab0948b156d6ff7",
+    "installerWizardTestSha256": "3a48954f6ab9bceda6b51e786f85ef67de742b05c9af2bede45be97b155aa921",
+    "installerProfileWorkflowTestSha256": "b94cc79f09df3c8c139c5d66e5820d209925acfd7d4418593e9cae45f7bf7172"
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "serverProcesses": 3,
+    "phases": [
+      "empty",
+      "staged",
+      "ready"
+    ],
+    "newServerAndSessionBeforeEveryResume": true,
+    "finalRevision": 2,
+    "profileHashReturned": true,
+    "temporaryWorkspaceRemovedAfterRun": true
+  },
+  "security": {
+    "loopbackOnly": true,
+    "sameOriginWrites": true,
+    "ownerOnlyCanonicalState": true,
+    "runtimeChanges": 0,
+    "secretsAccepted": false,
+    "tamperedStateRejected": true,
+    "symlinkedLockRejected": true
+  },
+  "verification": {
+    "focusedProfileAndWizardTestsPassed": 20,
+    "profileStorageTestsPassed": 9,
+    "broadInstallerDashboardReleaseTestsPassed": 120,
+    "browserScriptsSyntaxChecked": 2,
+    "ruff": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "nonclaims": [
+    "The retained owner label is display text only; this run did not create or authenticate an owner account.",
+    "The confirmed profile was not applied to Eva1, Eva2, a database, container, connector, secret or live route.",
+    "This proves only the first non-secret installer question and does not complete connector onboarding, fresh installation, update or restore.",
+    "The external managed-machine reboot receipt remains a separate gate and was not simulated or claimed by this run."
+  ]
+}

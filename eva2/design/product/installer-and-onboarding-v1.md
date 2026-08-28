@@ -243,8 +243,12 @@ stil half-geconfigureerd.
   De identiteitsdeelroute is nu duurzaam: stage, ondertekening, activatie en
   rollback worden na een nieuwe server én nieuwe browsersessie exact hervat.
   Ook een procesuitval tussen de echte bestandswissel en de statuswrite wordt
-  zonder tweede wissel hersteld. De overige installervragen en connectoren
-  hebben deze statusmachine nog niet; daarom blijft IN02 als geheel open.
+  zonder tweede wissel hersteld. Installatienaam, eigenaarlabel, taal en
+  tijdzone hebben nu eveneens een private `staged`→`ready`-route met twee
+  canonieke auditgebeurtenissen. Drie echte loopback-serverprocessen hervatten
+  dezelfde keuzes. Het eigenaarlabel is nog geen accountbinding; de overige
+  vragen en connectoren hebben deze statusmachine nog niet. Daarom blijft IN02
+  als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
