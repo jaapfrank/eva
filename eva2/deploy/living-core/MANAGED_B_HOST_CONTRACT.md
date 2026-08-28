@@ -18,6 +18,10 @@ model opnieuw worden geïnterpreteerd. De twee lokale modelcaches zijn onderdeel
 van de gepinde image; Hugging Face en Transformers staan voor die caches
 expliciet offline en sturen geen telemetrie. De minimale image gebruikt
 expliciet UTC en hoeft daardoor geen hosttijdzonebestand te raden.
+Hindsight blokkeert zijn lokale opstart niet op de ingebouwde, mogelijk vijf
+minuten durende externe LLM-proef. De provider wordt na readiness met een
+aparte begrensde geheugenhandeling gecontroleerd; een externe storing houdt zo
+de lokale geheugen-API en bestaande herinneringen niet onbereikbaar.
 
 Home Assistant is een expliciete core-overlay als fysieke readback is
 ingeschakeld. AgentMail, Stripe, proactieve Telegram, browser/gateway en skills

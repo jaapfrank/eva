@@ -203,6 +203,10 @@ services:
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
       HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
       HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      # Provider connectivity is checked by an explicit bounded operation after
+      # readiness. Do not let Hindsight's upstream five-minute verification
+      # call hold the local database and memory API hostage during a cold boot.
+      HINDSIGHT_API_SKIP_LLM_VERIFICATION: "true"
       # Existing Eva2 memories use Hindsight's local 384-dimensional vectors.
       # Changing provider here would make the restored memory database unusable.
       HINDSIGHT_API_EMBEDDINGS_PROVIDER: local
