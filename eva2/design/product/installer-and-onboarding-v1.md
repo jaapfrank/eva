@@ -147,9 +147,10 @@ uitsluitend de buildconstraint `linux/amd64`.
 ## `SOUL.md`, `MEMORY.md` en Eva's echte autoriteiten
 
 Er bestaan geen vrij wijzigbare `SOUL.md`- of `MEMORY.md`-runtimebestanden.
-De lokale cockpit kan wel al een kleine `SOUL.md` als uitsluitend read-only
-voorstel omzetten naar een gebonden staged IdentityPack-diff. Zij bewaart of
-activeert dat voorstel niet.
+De lokale wizard kan een kleine `SOUL.md` exporteren, als voorstel omzetten
+naar een gebonden staged IdentityPack-diff, privé bewaren, buiten de
+Eva-runtime ondertekenen en na een aparte bevestiging atomair activeren of
+één versie terugzetten. De privésleutel komt nooit in de browser of runtime.
 
 | Bekend patroon | Eva-equivalent | Waarom |
 |---|---|---|
@@ -239,11 +240,13 @@ stil half-geconfigureerd.
   launcher opent een loopback-wizard zonder handmatige YAML/JSON/env-edit.
 - [ ] IN02 — Wizardstatus en hervatten na herstart; iedere vraag, keuze en
   connector blijft afzonderlijk staged/ready/blocked en auditbaar.
-- [ ] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
+- [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
-  De read-only lokale voorstelweergave is gesloten op checkpoint `4422b5a`;
-  opslag, ondertekening, activatie en rollback blijven de afzonderlijke
-  eigenaargrens van deze gate.
+  Na de eerdere read-only voorstelweergave doorliep een echte lokale
+  loopback-HTTP-proef export, preview, private opslag, ondertekening, activatie
+  en directe rollback. Een herstart gebruikt dezelfde content-addressed draft
+  en kandidaat; oude, gewijzigde of onbevestigde invoer wordt geweigerd. Dit
+  is nog geen volledige consumenteninstaller of productiewijziging.
 - [ ] IN04 — Telegram-, Home Assistant- en één e-mailproviderwizard met
   least-privilege scopes, echte read-only proeven en capability-permissions,
   plus een ingang naar AC01 voor een niet-vooraf-ingebakken kanaal.

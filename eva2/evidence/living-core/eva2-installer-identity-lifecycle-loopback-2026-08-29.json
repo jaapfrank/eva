@@ -1,0 +1,57 @@
+{
+  "contract": "EvaInstallerIdentityLifecycleLoopbackReceipt/v1",
+  "issuedAt": "2026-08-29T01:02:13+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "dc4cc1285ce5e59b6c312133efe9c1d1114dcaa9",
+    "soulMarkdownSha256": "ba5cc2773ebd8835648cb7fb29ee04765817459bba534d6c4cb8bfb1c8498c73",
+    "wizardSha256": "60665e57f175846b3ca213aa66e4e110a6956f0ae41618d610e542de40a0b5c5",
+    "lifecycleSha256": "79286482bc10f5791fc04a39de7d344de344e3d32040749e1b97c7a184784d67",
+    "soulMarkdownTestSha256": "a04ac27882d8cc405b6d299ed580cef4aa28fafa181ad64944c02d63a3e8b06b",
+    "wizardTestSha256": "05cf7214daf539c3b365c4f4dbf7532e2b065e7798797adb548242a7d70b3943",
+    "lifecycleTestSha256": "1dccdd071839cbac31a19c90555bc67713eed4928eeb93a5d436259228452964"
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "steps": [
+      "export",
+      "preview",
+      "stage",
+      "issue",
+      "activate",
+      "rollback"
+    ],
+    "transitionStatuses": [
+      "staged",
+      "issued",
+      "activated",
+      "rolled_back"
+    ],
+    "identityChangedAfterActivation": true,
+    "directPredecessorRestored": true,
+    "sessionInvalidatedAfterRollback": true,
+    "temporaryAuthorityRemovedAfterRun": true
+  },
+  "security": {
+    "loopbackOnly": true,
+    "sameOriginWrites": true,
+    "serverSideSessionExpiry": true,
+    "privateKeyReturnedToBrowser": false,
+    "privateKeyLoadedByEvaRuntime": false,
+    "soulExportContainsSignatureOrInternalIdentityIds": false,
+    "allRetainedTestArtifactsOwnerOnly": true,
+    "staleOrTamperedDraftsRejected": true,
+    "unconfirmedActivationRejected": true
+  },
+  "verification": {
+    "focusedTestsPassed": 28,
+    "broadInstallerDashboardReleaseTestsPassed": 122,
+    "ruff": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "nonclaims": [
+    "The run used a disposable synthetic identity authority and did not change Eva1, the active Eva2 identity or either live route.",
+    "This proves the local identity-onboarding vertical, not a complete consumer installer, connector onboarding, fresh-machine installation or production identity cutover.",
+    "The private Ed25519 key stays in the explicitly configured local installer authority; it is never submitted by the browser or mounted into the Eva runtime."
+  ]
+}
