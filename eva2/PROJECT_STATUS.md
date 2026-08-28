@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 12:23 CEST
+Laatst bijgewerkt: 28 augustus 2026, 12:34 CEST
 
 ## Heel kort
 
@@ -33,8 +33,11 @@ installatie zijn nog niet klaar.
   niet en leest of bedient het huis dan niet.
 - Huisbediening staat standaard uit. Eva2 kan nu dus niets per ongeluk
   aanzetten, uitzetten of automatiseren.
+- De actuele Eva2-image kan nu veilig worden klaargezet en omgeschakeld.
+- De echte omschakeling heen, terug en opnieuw heen bleef groen. Bij een fout
+  zet de operator automatisch de vorige route terug.
 - Er is een private back-up van Eva1 gemaakt en gecontroleerd.
-- De vorige Eva2-images zijn gestopt maar bewaard als rollback.
+- Het vorige Eva2-slot blijft beschikbaar als directe rollback.
 - Een kleine echte gesprek- en geheugenset kan naar een lege nieuwe database
   worden hersteld.
 - Versleutelde back-ups, objectherstel en herstelcontrole zijn technisch
@@ -67,8 +70,8 @@ installatie zijn nog niet klaar.
 ## Waar ik nu aan werk
 
 1. De echte Telegramroute met gezinscontext verder sluiten.
-2. De beheerde B-start en rollback op dezelfde actuele image bewijzen.
-3. Daarna pas begrensde huisbediening met onafhankelijke controle aanzetten.
+2. Daarna pas begrensde huisbediening met onafhankelijke controle aanzetten.
+3. De reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
 
@@ -82,6 +85,7 @@ installatie zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
+- [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Live `/eva2`-koppeling en Eva1-back-up](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json)

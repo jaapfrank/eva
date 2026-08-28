@@ -1,0 +1,56 @@
+{
+  "contract": "Eva2AtomicCanaryCutoverLiveReceipt/v1",
+  "createdAt": "2026-08-28T12:34:20+02:00",
+  "source": {
+    "commit": "b3bb2d3e656a4a6ea5e390f07ca1e8dd9cd04a05",
+    "gitArchiveSha256": "d22ce024e14515ba1e930d80952f0d5f3f7eba73b3c4049426a87bf7379f55ac"
+  },
+  "image": {
+    "buildNetwork": "none",
+    "digest": "sha256:d36b66114f86706551da4188d4e2ad2654247332a6bcfe0a386ec3c44d5c3d67",
+    "runtimeImport": "passed",
+    "wheelCount": 39
+  },
+  "tests": {
+    "passed": 42,
+    "ruff": "passed",
+    "compile": "passed",
+    "scope": [
+      "atomic canary cutover",
+      "existing A/B slots",
+      "operator CLI",
+      "managed-B release inputs"
+    ]
+  },
+  "live": {
+    "activePort": 44702,
+    "dropinSha256": "6fbd38f2832bedd3d004092dc1fcee0f6584a18244953794aa9bdabbb4ef21dc",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "forwardSwitch": "passed",
+    "modelReplyViaEva1TelegramClient": "Eva2 draait op het nieuwe veilige slot.",
+    "previousPort": 44701,
+    "previousSlotRetained": true,
+    "ready": true,
+    "restartCount": 0,
+    "rollbackRoundTrip": "passed"
+  },
+  "safety": {
+    "automaticExactConfigRollbackOnFailedPostSwitchHealth": "tested",
+    "homeAssistantEffectsEnabled": false,
+    "rejectsNonLoopbackTargets": true,
+    "requiresReadyTargetBeforeWrite": true
+  },
+  "nonClaims": [
+    "No Home Assistant effect was enabled or executed.",
+    "No Eva1 SQLite row was changed by this cutover.",
+    "The model reply used the same client function as Telegram, but no external Telegram message was sent for this receipt.",
+    "This does not complete the two-person group test, physical-host restore, voice, browser release, or seven-day acceptance run."
+  ],
+  "status": "passed"
+}
