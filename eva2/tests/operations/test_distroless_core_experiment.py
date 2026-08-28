@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXPERIMENT = ROOT / "experiments/distroless-core-v1"
-SOURCE_ID = "53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4"
+SOURCE_ID = "b545dfaba03995a81b9eafe08d62ab0eb06e5eb3766e7c649043238a44e8e135"
 PYTHON_BASE = "09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
 DISTROLESS_BASE = "9dac0a79194e45a7da0158a9c6da57b217585af0786db3845d1f0ec1a0dd182f"
 CRYPTOGRAPHY_WHEEL = "51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a"

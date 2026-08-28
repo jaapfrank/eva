@@ -61,6 +61,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json",
+    "evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json",
     "evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json",
     "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
     "evidence/living-core/playwright-mcp-system-refresh-2026-08-26.json",
@@ -283,7 +284,7 @@ _NONCLAIMS = (
     "The active amd64 dependency inputs are version-matched to requirements-4d.lock; the stock 38-wheel authority remains historical and is not a fallback build input.",
     "The 4D installer environment, exact installer command, post-install attestations, physical 39-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
-    "The clean nine-service start and a logical clone of the current /eva2 operational and Hindsight data passed locally; a new immutable core image, production cutover, rollback and resident acceptance remain open gates.",
+    "The clean nine-service start and a logical clone of the current /eva2 data passed with a new offline-built 0/0-scanned immutable core; production cutover, rollback and resident acceptance remain open gates.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (
     "The cockpit index is a release-bound evidence projection, not a new live run.",

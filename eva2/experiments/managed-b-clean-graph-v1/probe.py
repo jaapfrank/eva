@@ -540,12 +540,15 @@ def _compose(project: str, environment: Path, *arguments: str) -> list[str]:
     ]
 
 
-def _live_status(url: str) -> int:
-    try:
-        with request.urlopen(url, timeout=15) as response:
-            return response.status
-    except (OSError, error.URLError):
-        return 0
+def _live_status(url: str, *, attempts: int = 3) -> int:
+    for attempt in range(attempts):
+        try:
+            with request.urlopen(url, timeout=15) as response:
+                return response.status
+        except (OSError, error.URLError):
+            if attempt + 1 < attempts:
+                time.sleep(1)
+    return 0
 
 
 def _wait_healthy(container: str, *, timeout: int = 90) -> None:
@@ -565,9 +568,20 @@ def _wait_healthy(container: str, *, timeout: int = 90) -> None:
     raise ProbeError("candidate database did not become healthy")
 
 
-def main(*, clone_current_route: bool = False) -> int:
+def _immutable_core_image(value: str) -> str:
+    if not re.fullmatch(r"[a-z0-9][a-z0-9._/-]*@sha256:[0-9a-f]{64}", value):
+        raise ProbeError("candidate core image must be an immutable local digest reference")
+    return value
+
+
+def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
+        return 2
+    try:
+        core_image = _immutable_core_image(core_image)
+    except ProbeError as exc:
+        print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
     run_id = uuid4().hex[:12]
     project = f"eva2-clean-b-{run_id}"
@@ -589,6 +603,7 @@ def main(*, clone_current_route: bool = False) -> int:
         ),
         "issuedAt": datetime.now(UTC).isoformat(),
         "manifestSha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+        "coreImage": core_image,
         "status": "failed",
     }
     initial_live = {
@@ -661,7 +676,7 @@ def main(*, clone_current_route: bool = False) -> int:
 
         values = {
             "EVA_B_CONFIGURATION_SHA256": hashlib.sha256(run_id.encode()).hexdigest(),
-            "EVA_LIVING_CORE_IMAGE": CORE_IMAGE,
+            "EVA_LIVING_CORE_IMAGE": core_image,
             "EVA_POSTGRES_IMAGE": POSTGRES_IMAGE,
             "EVA_HINDSIGHT_POSTGRES_IMAGE": POSTGRES_IMAGE,
             "EVA_HINDSIGHT_IMAGE": HINDSIGHT_IMAGE,
@@ -954,5 +969,11 @@ def main(*, clone_current_route: bool = False) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--clone-current-route", action="store_true")
+    parser.add_argument("--core-image", default=CORE_IMAGE)
     arguments = parser.parse_args()
-    sys.exit(main(clone_current_route=arguments.clone_current_route))
+    sys.exit(
+        main(
+            clone_current_route=arguments.clone_current_route,
+            core_image=arguments.core_image,
+        )
+    )

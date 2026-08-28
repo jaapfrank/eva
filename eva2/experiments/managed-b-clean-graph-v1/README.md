@@ -24,3 +24,12 @@ Beide dumps zijn privé en worden samen met alle kandidaatmiddelen verwijderd.
 sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py \
   --clone-current-route
 ```
+
+Een nieuw gebouwde core kan alleen als expliciete lokale digest worden
+beproefd. Een tag of `latest` wordt geweigerd:
+
+```bash
+sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py \
+  --clone-current-route \
+  --core-image eva2/candidate@sha256:<64 hextekens>
+```

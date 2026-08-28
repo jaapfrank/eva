@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 17:33 CEST
+Laatst bijgewerkt: 28 augustus 2026, 17:47 CEST
 
 ## Heel kort
 
@@ -91,6 +91,13 @@ installatie zijn nog niet klaar.
   beheerde startbestand houdt die keuze nu vast.
 - De overgang maakt de vier vaste, streng beperkte Eva-databaserollen alleen
   op een volledig lege doeldatabase. Een bestaande database wordt geweigerd.
+- De nieuwe herstelcode zit nu ook in één vaste, kleine Eva2-image. Die image
+  is volledig zonder downloads gebouwd, draait als beperkte gebruiker en de
+  strenge scan vond 0 kritisch en 0 hoog.
+- De echte `/eva2`-data en alle bestaande Hindsight-data zijn met precies die
+  nieuwe image opnieuw naar verse databases gekopieerd. Het echte modelantwoord,
+  geheugen en de gezamenlijke stop/start bleven groen; alle proefmiddelen zijn
+  daarna verwijderd.
 
 ## Wat nog niet klaar is
 
@@ -106,9 +113,8 @@ installatie zijn nog niet klaar.
 - De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
   De lokale bouwimage moet nog buiten deze computer worden bewaard en uit losse
   bouwpakketten herbouwbaar worden. Daarna volgt de beheerde B-route.
-- De echte data-overdracht naar wegwerpvolumes is groen. Er moet nog een nieuwe
-  vastgezette kernimage worden gebouwd en gescand voordat de echte B-route mag
-  omschakelen en terugrollen.
+- De echte data-overdracht én de nieuwe vastgezette kernimage zijn groen. De
+  productie-omschakeling en directe terugrol zijn nog niet uitgevoerd.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -121,8 +127,8 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. Een nieuwe vastgezette kernimage bouwen en scannen, daarna de echte B-route
-   gecontroleerd omschakelen terwijl de vorige route intact blijft.
+2. De echte B-route gecontroleerd klaarzetten, omschakelen en terugrollen
+   terwijl de huidige `/eva2`-route intact beschikbaar blijft.
 3. Daarna de reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
@@ -154,6 +160,7 @@ installatie zijn nog niet klaar.
 - [Hindsight-databasewachtwoord veilig uit een privébestand](evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json)
 - [Schone beheerde B-grafiek met twee databases, echte Codex-beurt en herstart](evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json)
 - [Werkelijke `/eva2`-data en Hindsight veilig gekopieerd en herstart](evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json)
+- [Nieuwe vaste kernimage: offline build, scan 0/0 en herhaalde echte data-overgang](evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

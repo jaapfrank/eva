@@ -64,7 +64,9 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"--no-privileges"' in source
     assert '"down", "--volumes", "--remove-orphans"' in source
     assert "--clone-current-route" in source
+    assert "--core-image" in source
+    assert "candidate core image must be an immutable local digest reference" in source
+    assert "attempts: int = 3" in source
     assert "docker stop eva2-candidate" not in source
     assert "docker rm eva2-candidate" not in source
     assert "docker volume rm eva2-candidate" not in source
-
