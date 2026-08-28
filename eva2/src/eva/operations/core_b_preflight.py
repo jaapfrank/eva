@@ -73,6 +73,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_DASHBOARD_TENANT_ID",
     "EVA_DASHBOARD_INSTALLATION_ID",
     "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+    "EVA_DASHBOARD_RELEASE_SHA256",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
     "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
@@ -307,6 +308,12 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_STACK_BIND_ADDRESS must be exactly 127.0.0.1")
     if not re.fullmatch(r".+@sha256:[0-9a-f]{64}", values["EVA_LIVING_CORE_IMAGE"]):
         raise RuntimeError("EVA_LIVING_CORE_IMAGE must use an exact sha256 digest")
+    if not re.fullmatch(r"[0-9a-f]{64}", values["EVA_DASHBOARD_RELEASE_SHA256"]):
+        raise RuntimeError("EVA_DASHBOARD_RELEASE_SHA256 must be a lowercase sha256")
+    if values["EVA_DASHBOARD_RELEASE_SHA256"] != values["EVA_LIVING_CORE_IMAGE"].rsplit(
+        "sha256:", 1
+    )[-1]:
+        raise RuntimeError("EVA_DASHBOARD_RELEASE_SHA256 must match the Living Core image")
     for image_setting in (
         "EVA_POSTGRES_IMAGE",
         "EVA_HINDSIGHT_POSTGRES_IMAGE",

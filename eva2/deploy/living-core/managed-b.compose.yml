@@ -84,10 +84,22 @@ services:
     command: ["-m", "eva.operations.install_schema"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DASHBOARD_ACCESS_TOKEN_FILE: /run/secrets/dashboard_access_token
+      EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}
+      EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
+      EVA_DASHBOARD_RELEASE_SHA256: ${EVA_DASHBOARD_RELEASE_SHA256:?set the immutable dashboard release sha256}
+      EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}
+      EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
     volumes:
       - type: bind
         source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
         target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST:?set a runtime-owned dashboard access token file}
+        target: /run/secrets/dashboard_access_token
         read_only: true
         bind:
           create_host_path: false

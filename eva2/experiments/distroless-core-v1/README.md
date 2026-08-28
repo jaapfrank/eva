@@ -7,10 +7,11 @@ alleen `cryptography`; de andere packages blijven uit de bewezen image komen.
 
 De proef is alleen een rebasekandidaat. Een groene import, runtimeproef en scan
 zijn nodig voordat zij ergens als vervanger mag worden genoemd. De bronimage is
-aan checkpoint `ceaaa7d81ef93be7a49d8bd53ce88d872ff94f77` en image-ID
-`sha256:b545dfaba03995a81b9eafe08d62ab0eb06e5eb3766e7c649043238a44e8e135`
-gebonden; er wordt niets uit een vuile werkmap gekopieerd en de build gebruikt
-geen netwerk.
+via de verplichte buildarg `PROVEN_CORE_IMAGE` aan een lokaal gecontroleerde
+bronimage gebonden. De standaardwaarde blijft het historische checkpoint
+`ceaaa7d81ef93be7a49d8bd53ce88d872ff94f77`; een nieuwe kandidaat moet de
+exacte bronimage en image-ID in haar receipt vastleggen. Er wordt niets uit een
+vuile werkmap gekopieerd en de build gebruikt geen netwerk.
 
 De eerste distroless-start miste `libffi`; de databaseclient heeft daarnaast
 `zlib` nodig. De distrolessvariant kopieert daarom uitsluitend `libffi.so.8`

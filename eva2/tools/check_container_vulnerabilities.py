@@ -95,6 +95,8 @@ def trivy_command(*, image: str, archive: Path, cache_dir: Path) -> list[str]:
         "--entrypoint",
         "trivy",
         TRIVY_IMAGE,
+        "--cache-dir",
+        "/cache",
         "image",
         "--skip-db-update",
         "--input",

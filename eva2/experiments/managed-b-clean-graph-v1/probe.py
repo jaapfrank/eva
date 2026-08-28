@@ -781,6 +781,7 @@ def main(
             "EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111",
             "EVA_DASHBOARD_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222",
             "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
+            "EVA_DASHBOARD_RELEASE_SHA256": core_image.rsplit("sha256:", 1)[-1],
             "EVA_IDENTITY_PACK_FILE_HOST": (identity_dir / "current.json").as_posix(),
             "EVA_IDENTITY_PACK_TRUST_FILE_HOST": (identity_dir / "trust.json").as_posix(),
             "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": (secrets_dir / "telegram-token").as_posix(),
@@ -884,6 +885,22 @@ def main(
             _run(_compose(project, environment_file, "up", "-d", "hindsight"))
         phase = "schema-install"
         _run(_compose(project, environment_file, "--profile", "schema-install", "run", "--rm", "schema-installer"))
+        phase = "dashboard-authority-install"
+        _run(
+            _compose(
+                project,
+                environment_file,
+                "--profile",
+                "schema-install",
+                "run",
+                "--rm",
+                "--entrypoint",
+                "/usr/local/bin/python",
+                "schema-installer",
+                "-m",
+                "eva.operations.initialize_dashboard_authority",
+            )
+        )
         phase = "core-start"
         _run(_compose(project, environment_file, "up", "-d", "core"))
         phase = "core-ready-before-restart"

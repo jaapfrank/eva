@@ -1,7 +1,5 @@
-# This local-only tag is accepted only when it resolves to image ID/digest
-# sha256:b545dfaba03995a81b9eafe08d62ab0eb06e5eb3766e7c649043238a44e8e135.
-# Its source is the clean managed-B checkpoint ceaaa7d81ef93be7a49d8bd53ce88d872ff94f77.
-FROM eva2/managed-current-core:ceaaa7d AS proven_core
+ARG PROVEN_CORE_IMAGE=eva2/managed-current-core:ceaaa7d
+FROM ${PROVEN_CORE_IMAGE} AS proven_core
 
 FROM docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217 AS current_runtime_libs
 
