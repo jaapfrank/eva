@@ -8,17 +8,22 @@ never returns identity contents or private-key material.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
+import fcntl
 import hashlib
 import hmac
 import os
 from pathlib import Path
 import re
 import stat
-from typing import Callable
+from typing import Callable, Literal
 
-from eva.application.identity_drafts import identity_presentation_diff
+from eva.application.identity_drafts import (
+    identity_presentation_diff,
+    validate_identity_draft_base,
+)
 from eva.application.identity_verifier import (
     IdentityPackTrustBinding,
     load_identity_pack_trust_binding,
@@ -40,10 +45,14 @@ from eva.operations.identity_pack_lifecycle import (
     validate_identity_successor,
     write_identity_candidate,
 )
+from eva.operations.installer_identity_storage import (
+    atomic_write_private,
+    read_private_artifact,
+    write_private_once,
+)
 
 
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
-_MAX_ARTIFACT_BYTES = 65_536
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,6 +81,19 @@ class InstallerIdentityTransition:
     rollback_sha256: str
 
 
+IdentityWorkflowPhase = Literal["empty", "staged", "issued", "active", "rolled_back"]
+
+
+@dataclass(frozen=True, slots=True)
+class InstallerIdentityWorkflowStatus:
+    phase: IdentityWorkflowPhase
+    base_pack_sha256: str
+    current_pack_sha256: str
+    draft_sha256: str | None
+    candidate_sha256: str | None
+    updated_at: str | None
+
+
 def _sha256(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
@@ -80,70 +102,6 @@ def _require_sha256(value: object, *, label: str) -> str:
     if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
         raise IdentityPackLifecycleError(f"{label} must be a canonical SHA-256")
     return value
-
-
-def _read_private_artifact(path: Path, *, label: str) -> bytes:
-    try:
-        metadata = path.lstat()
-    except OSError as exc:
-        raise IdentityPackLifecycleError(f"{label} is unavailable") from exc
-    if (
-        stat.S_ISLNK(metadata.st_mode)
-        or not stat.S_ISREG(metadata.st_mode)
-        or metadata.st_uid != os.geteuid()
-        or metadata.st_mode & 0o077
-        or metadata.st_nlink != 1
-        or metadata.st_size > _MAX_ARTIFACT_BYTES
-    ):
-        raise IdentityPackLifecycleError(f"{label} is not a private regular file")
-    try:
-        descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
-        with os.fdopen(descriptor, "rb", closefd=True) as handle:
-            raw = handle.read(_MAX_ARTIFACT_BYTES + 1)
-    except OSError as exc:
-        raise IdentityPackLifecycleError(f"{label} is unavailable") from exc
-    if len(raw) > _MAX_ARTIFACT_BYTES:
-        raise IdentityPackLifecycleError(f"{label} is too large")
-    return raw
-
-
-def _write_private_once(path: Path, raw: bytes) -> bool:
-    """Write exact bytes once; an identical retained artifact is idempotent."""
-
-    try:
-        descriptor = os.open(
-            path,
-            os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
-            0o600,
-        )
-    except FileExistsError:
-        retained = _read_private_artifact(path, label="installer identity artifact")
-        if not hmac.compare_digest(retained, raw):
-            raise IdentityPackLifecycleError("installer identity artifact conflicts")
-        return True
-    except OSError as exc:
-        raise IdentityPackLifecycleError(
-            "installer identity artifact write failed"
-        ) from exc
-    try:
-        with os.fdopen(descriptor, "wb", closefd=True) as handle:
-            handle.write(raw)
-            handle.flush()
-            os.fsync(handle.fileno())
-        directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
-        try:
-            os.fsync(directory)
-        finally:
-            os.close(directory)
-    except OSError as exc:
-        try:
-            path.unlink()
-        except OSError:
-            pass
-        raise IdentityPackLifecycleError(
-            "installer identity artifact write failed"
-        ) from exc
-    return False
 
 
 def _utc_now() -> str:
@@ -198,7 +156,7 @@ class InstallerIdentityLifecycle:
             ) from exc
 
     def current_identity(self) -> IdentityPack:
-        raw = _read_private_artifact(self.current_path, label="current identity pack")
+        raw = read_private_artifact(self.current_path, label="current identity pack")
         try:
             return verify_identity_pack_bytes(raw, trust=self._trust())
         except ValueError as exc:
@@ -219,8 +177,141 @@ class InstallerIdentityLifecycle:
     def rollback_path(self) -> Path:
         return self.workspace / "rollback.json"
 
+    @property
+    def workflow_path(self) -> Path:
+        return self.workspace / "workflow.json"
+
+    @contextmanager
+    def _workflow_lock(self):
+        path = self.workspace / ".workflow.lock"
+        descriptor: int | None = None
+        try:
+            descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
+            metadata = os.fstat(descriptor)
+            if (
+                not stat.S_ISREG(metadata.st_mode)
+                or metadata.st_uid != os.geteuid()
+                or metadata.st_mode & 0o077
+                or metadata.st_nlink != 1
+            ):
+                raise OSError("workflow lock is not a private regular file")
+            os.fchmod(descriptor, 0o600)
+            fcntl.flock(descriptor, fcntl.LOCK_EX)
+        except OSError as exc:
+            if descriptor is not None:
+                try:
+                    os.close(descriptor)
+                except OSError:
+                    pass
+            raise IdentityPackLifecycleError(
+                "installer identity workflow lock is unavailable"
+            ) from exc
+        assert descriptor is not None
+        try:
+            yield
+        finally:
+            try:
+                fcntl.flock(descriptor, fcntl.LOCK_UN)
+            finally:
+                os.close(descriptor)
+
+    def _load_workflow(self) -> InstallerIdentityWorkflowStatus | None:
+        if not self.workflow_path.exists() and not self.workflow_path.is_symlink():
+            return None
+        raw = read_private_artifact(
+            self.workflow_path, label="installer identity workflow"
+        )
+        try:
+            payload = require_canonical_bytes(raw)
+        except ValueError as exc:
+            raise IdentityPackLifecycleError(
+                "installer identity workflow is invalid"
+            ) from exc
+        if (
+            set(payload)
+            != {
+                "base_pack_sha256",
+                "candidate_sha256",
+                "contract",
+                "current_pack_sha256",
+                "draft_sha256",
+                "phase",
+                "updated_at",
+            }
+            or payload.get("contract") != "EvaInstallerIdentityWorkflow/v1"
+        ):
+            raise IdentityPackLifecycleError("installer identity workflow is invalid")
+        phase = payload.get("phase")
+        if phase not in {"staged", "issued", "active", "rolled_back"}:
+            raise IdentityPackLifecycleError(
+                "installer identity workflow phase is invalid"
+            )
+        base_sha = _require_sha256(
+            payload.get("base_pack_sha256"), label="workflow base identity hash"
+        )
+        current_sha = _require_sha256(
+            payload.get("current_pack_sha256"),
+            label="workflow current identity hash",
+        )
+        draft_sha = _require_sha256(
+            payload.get("draft_sha256"), label="workflow identity draft hash"
+        )
+        candidate_value = payload.get("candidate_sha256")
+        candidate_sha = (
+            None
+            if candidate_value is None
+            else _require_sha256(
+                candidate_value, label="workflow identity candidate hash"
+            )
+        )
+        updated_at = payload.get("updated_at")
+        if not isinstance(updated_at, str) or not 1 <= len(updated_at) <= 64:
+            raise IdentityPackLifecycleError(
+                "installer identity workflow timestamp is invalid"
+            )
+        if (phase == "staged") != (candidate_sha is None):
+            raise IdentityPackLifecycleError(
+                "installer identity workflow candidate state is invalid"
+            )
+        return InstallerIdentityWorkflowStatus(
+            phase=phase,
+            base_pack_sha256=base_sha,
+            current_pack_sha256=current_sha,
+            draft_sha256=draft_sha,
+            candidate_sha256=candidate_sha,
+            updated_at=updated_at,
+        )
+
+    def _write_workflow(
+        self,
+        *,
+        phase: Literal["staged", "issued", "active", "rolled_back"],
+        base_pack_sha256: str,
+        current_pack_sha256: str,
+        draft_sha256: str,
+        candidate_sha256: str | None,
+    ) -> InstallerIdentityWorkflowStatus:
+        raw = canonical_json_bytes(
+            {
+                "base_pack_sha256": base_pack_sha256,
+                "candidate_sha256": candidate_sha256,
+                "contract": "EvaInstallerIdentityWorkflow/v1",
+                "current_pack_sha256": current_pack_sha256,
+                "draft_sha256": draft_sha256,
+                "phase": phase,
+                "updated_at": self.clock(),
+            }
+        )
+        atomic_write_private(self.workflow_path, raw)
+        workflow = self._load_workflow()
+        if workflow is None:
+            raise IdentityPackLifecycleError(
+                "installer identity workflow was not retained"
+            )
+        return workflow
+
     def _load_rollback(self) -> tuple[IdentityPack, bytes]:
-        raw = _read_private_artifact(self.rollback_path, label="identity rollback pack")
+        raw = read_private_artifact(self.rollback_path, label="identity rollback pack")
         try:
             return verify_identity_pack_bytes(raw, trust=self._trust()), raw
         except ValueError as exc:
@@ -230,7 +321,7 @@ class InstallerIdentityLifecycle:
 
     def _load_draft(self, draft_sha256: object) -> IdentityPackDraft:
         digest = _require_sha256(draft_sha256, label="identity draft hash")
-        raw = _read_private_artifact(
+        raw = read_private_artifact(
             self._draft_path(digest), label="staged identity draft"
         )
         if not hmac.compare_digest(_sha256(raw), digest):
@@ -247,7 +338,7 @@ class InstallerIdentityLifecycle:
     ) -> tuple[IdentityPack, Path, bytes]:
         digest = _require_sha256(candidate_sha256, label="identity candidate hash")
         path = self._candidate_path(digest)
-        raw = _read_private_artifact(path, label="signed identity candidate")
+        raw = read_private_artifact(path, label="signed identity candidate")
         if not hmac.compare_digest(_sha256(raw), digest):
             raise IdentityPackLifecycleError("signed identity candidate hash differs")
         try:
@@ -258,7 +349,101 @@ class InstallerIdentityLifecycle:
             ) from exc
         return candidate, path, raw
 
+    def status(self) -> InstallerIdentityWorkflowStatus:
+        with self._workflow_lock():
+            current = self.current_identity()
+            current_sha = canonical_sha256(current)
+            workflow = self._load_workflow()
+            if workflow is None:
+                return InstallerIdentityWorkflowStatus(
+                    phase="empty",
+                    base_pack_sha256=current_sha,
+                    current_pack_sha256=current_sha,
+                    draft_sha256=None,
+                    candidate_sha256=None,
+                    updated_at=None,
+                )
+            assert workflow.draft_sha256 is not None
+            draft = self._load_draft(workflow.draft_sha256)
+            candidate: IdentityPack | None = None
+            base: IdentityPack
+            if workflow.candidate_sha256 is None:
+                if current_sha != workflow.base_pack_sha256:
+                    raise IdentityPackLifecycleError(
+                        "current identity differs from staged workflow"
+                    )
+                base = current
+            else:
+                candidate, _path, _raw = self._load_candidate(workflow.candidate_sha256)
+                if current_sha == workflow.base_pack_sha256:
+                    base = current
+                elif current_sha == workflow.candidate_sha256:
+                    base, base_raw = self._load_rollback()
+                    if _sha256(base_raw) != workflow.base_pack_sha256:
+                        raise IdentityPackLifecycleError(
+                            "identity rollback differs from workflow base"
+                        )
+                else:
+                    raise IdentityPackLifecycleError(
+                        "current identity differs from resumable workflow"
+                    )
+            if candidate is not None:
+                validate_identity_successor(candidate, base, trust=self._trust())
+            try:
+                validate_identity_draft_base(draft, base)
+            except ValueError as exc:
+                raise IdentityPackLifecycleError(
+                    "staged identity draft differs from workflow base"
+                ) from exc
+            expected_retained_current = (
+                workflow.candidate_sha256
+                if workflow.phase == "active"
+                else workflow.base_pack_sha256
+            )
+            if workflow.current_pack_sha256 != expected_retained_current:
+                raise IdentityPackLifecycleError(
+                    "installer identity workflow retained current hash differs"
+                )
+            allowed_actual = {
+                "staged": {workflow.base_pack_sha256},
+                "issued": {
+                    workflow.base_pack_sha256,
+                    workflow.candidate_sha256,
+                },
+                "active": {
+                    workflow.base_pack_sha256,
+                    workflow.candidate_sha256,
+                },
+                "rolled_back": {workflow.base_pack_sha256},
+            }[workflow.phase]
+            if current_sha not in allowed_actual:
+                raise IdentityPackLifecycleError(
+                    "current identity cannot resume retained workflow phase"
+                )
+            return InstallerIdentityWorkflowStatus(
+                phase=workflow.phase,
+                base_pack_sha256=workflow.base_pack_sha256,
+                current_pack_sha256=current_sha,
+                draft_sha256=workflow.draft_sha256,
+                candidate_sha256=workflow.candidate_sha256,
+                updated_at=workflow.updated_at,
+            )
+
     def stage(
+        self,
+        *,
+        markdown: str,
+        draft_id: str,
+        expected_base_sha256: object,
+    ) -> InstallerIdentityStage:
+        with self._workflow_lock():
+            return self._stage(
+                markdown=markdown,
+                draft_id=draft_id,
+                expected_base_sha256=expected_base_sha256,
+            )
+
+    def _stage(
         self,
         *,
         markdown: str,
@@ -275,8 +460,15 @@ class InstallerIdentityLifecycle:
         draft = soul_markdown_to_draft(markdown, draft_id=draft_id, base=base)
         raw = canonical_json_bytes(draft)
         digest = _sha256(raw)
-        already_staged = _write_private_once(self._draft_path(digest), raw)
+        already_staged = write_private_once(self._draft_path(digest), raw)
         changes = identity_presentation_diff(draft, base)
+        self._write_workflow(
+            phase="staged",
+            base_pack_sha256=actual_base,
+            current_pack_sha256=actual_base,
+            draft_sha256=digest,
+            candidate_sha256=None,
+        )
         return InstallerIdentityStage(
             draft_sha256=digest,
             source_sha256=soul_markdown_sha256(markdown),
@@ -288,6 +480,15 @@ class InstallerIdentityLifecycle:
     def issue(
         self, *, draft_sha256: object, expected_base_sha256: object
     ) -> InstallerIdentityCandidate:
+        with self._workflow_lock():
+            return self._issue(
+                draft_sha256=draft_sha256,
+                expected_base_sha256=expected_base_sha256,
+            )
+
+    def _issue(
+        self, *, draft_sha256: object, expected_base_sha256: object
+    ) -> InstallerIdentityCandidate:
         expected = _require_sha256(
             expected_base_sha256, label="expected identity base hash"
         )
@@ -296,6 +497,16 @@ class InstallerIdentityLifecycle:
         if not hmac.compare_digest(actual_base, expected):
             raise IdentityPackLifecycleError("current identity changed after preview")
         draft_digest = _require_sha256(draft_sha256, label="identity draft hash")
+        workflow = self._load_workflow()
+        if (
+            workflow is None
+            or workflow.phase not in {"staged", "issued"}
+            or workflow.base_pack_sha256 != actual_base
+            or workflow.draft_sha256 != draft_digest
+        ):
+            raise IdentityPackLifecycleError(
+                "identity draft is not the current staged workflow"
+            )
         draft = self._load_draft(draft_digest)
         issue_intent_path = self._issue_intent_path(draft_digest)
         issued_at = self.clock()
@@ -310,7 +521,7 @@ class InstallerIdentityLifecycle:
             already_issued = True
             try:
                 retained_intent = require_canonical_bytes(
-                    _read_private_artifact(
+                    read_private_artifact(
                         issue_intent_path, label="identity issue intent"
                     )
                 )
@@ -329,7 +540,7 @@ class InstallerIdentityLifecycle:
             issued_at = retained_intent["issued_at"]
         else:
             already_issued = False
-            _write_private_once(issue_intent_path, issue_intent)
+            write_private_once(issue_intent_path, issue_intent)
         seed = load_private_ed25519_seed(self.private_key_path)
         candidate = issue_identity_pack(
             draft,
@@ -353,6 +564,13 @@ class InstallerIdentityLifecycle:
             # candidate write; the retained timestamp keeps the signature and
             # candidate hash deterministic across that restart.
             already_issued = False
+        self._write_workflow(
+            phase="issued",
+            base_pack_sha256=actual_base,
+            current_pack_sha256=actual_base,
+            draft_sha256=draft_digest,
+            candidate_sha256=candidate_sha,
+        )
         return InstallerIdentityCandidate(
             draft_sha256=draft_digest,
             candidate_sha256=candidate_sha,
@@ -364,12 +582,32 @@ class InstallerIdentityLifecycle:
     def activate(
         self, *, candidate_sha256: object, expected_current_sha256: object
     ) -> InstallerIdentityTransition:
+        with self._workflow_lock():
+            return self._activate(
+                candidate_sha256=candidate_sha256,
+                expected_current_sha256=expected_current_sha256,
+            )
+
+    def _activate(
+        self, *, candidate_sha256: object, expected_current_sha256: object
+    ) -> InstallerIdentityTransition:
         candidate_digest = _require_sha256(
             candidate_sha256, label="identity candidate hash"
         )
         expected = _require_sha256(
             expected_current_sha256, label="expected current identity hash"
         )
+        workflow = self._load_workflow()
+        if (
+            workflow is None
+            or workflow.phase not in {"issued", "active"}
+            or workflow.base_pack_sha256 != expected
+            or workflow.candidate_sha256 != candidate_digest
+            or workflow.draft_sha256 is None
+        ):
+            raise IdentityPackLifecycleError(
+                "identity candidate is not the resumable issued workflow"
+            )
         candidate, candidate_path, _raw = self._load_candidate(candidate_digest)
         current = self.current_identity()
         current_sha = canonical_sha256(current)
@@ -384,60 +622,96 @@ class InstallerIdentityLifecycle:
                     "identity rollback is not the active direct predecessor"
                 )
             rollback_sha = _sha256(rollback_raw)
-            return InstallerIdentityTransition(
+            transition = InstallerIdentityTransition(
                 status="already_active",
                 previous_sha256=rollback_sha,
                 current_sha256=current_sha,
                 rollback_sha256=rollback_sha,
             )
-        if not hmac.compare_digest(current_sha, expected):
-            raise IdentityPackLifecycleError(
-                "current identity changed before activation"
+        else:
+            if not hmac.compare_digest(current_sha, expected):
+                raise IdentityPackLifecycleError(
+                    "current identity changed before activation"
+                )
+            validate_identity_successor(candidate, current, trust=self._trust())
+            cutover = activate_identity_successor(
+                current_path=self.current_path,
+                candidate_path=candidate_path,
+                rollback_path=self.rollback_path,
+                trust=self._trust(),
             )
-        validate_identity_successor(candidate, current, trust=self._trust())
-        cutover = activate_identity_successor(
-            current_path=self.current_path,
-            candidate_path=candidate_path,
-            rollback_path=self.rollback_path,
-            trust=self._trust(),
+            transition = InstallerIdentityTransition(
+                status="activated",
+                previous_sha256=cutover.previous_sha256,
+                current_sha256=cutover.current_sha256,
+                rollback_sha256=cutover.rollback_sha256,
+            )
+        self._write_workflow(
+            phase="active",
+            base_pack_sha256=workflow.base_pack_sha256,
+            current_pack_sha256=candidate_digest,
+            draft_sha256=workflow.draft_sha256,
+            candidate_sha256=candidate_digest,
         )
-        return InstallerIdentityTransition(
-            status="activated",
-            previous_sha256=cutover.previous_sha256,
-            current_sha256=cutover.current_sha256,
-            rollback_sha256=cutover.rollback_sha256,
-        )
+        return transition
 
     def rollback(
+        self, *, expected_current_sha256: object
+    ) -> InstallerIdentityTransition:
+        with self._workflow_lock():
+            return self._rollback(expected_current_sha256=expected_current_sha256)
+
+    def _rollback(
         self, *, expected_current_sha256: object
     ) -> InstallerIdentityTransition:
         expected = _require_sha256(
             expected_current_sha256, label="expected current identity hash"
         )
+        workflow = self._load_workflow()
+        if (
+            workflow is None
+            or workflow.phase not in {"active", "rolled_back"}
+            or workflow.candidate_sha256 != expected
+            or workflow.draft_sha256 is None
+        ):
+            raise IdentityPackLifecycleError(
+                "identity rollback is not the resumable active workflow"
+            )
         current = self.current_identity()
         current_sha = canonical_sha256(current)
         _rollback, rollback_raw = self._load_rollback()
         rollback_sha = _sha256(rollback_raw)
         if hmac.compare_digest(current_sha, rollback_sha):
-            return InstallerIdentityTransition(
+            transition = InstallerIdentityTransition(
                 status="already_rolled_back",
                 previous_sha256=expected,
                 current_sha256=current_sha,
                 rollback_sha256=rollback_sha,
             )
-        if not hmac.compare_digest(current_sha, expected):
-            raise IdentityPackLifecycleError("current identity changed before rollback")
-        cutover = rollback_identity_successor(
-            current_path=self.current_path,
-            rollback_path=self.rollback_path,
-            trust=self._trust(),
+        else:
+            if not hmac.compare_digest(current_sha, expected):
+                raise IdentityPackLifecycleError(
+                    "current identity changed before rollback"
+                )
+            cutover = rollback_identity_successor(
+                current_path=self.current_path,
+                rollback_path=self.rollback_path,
+                trust=self._trust(),
+            )
+            transition = InstallerIdentityTransition(
+                status="rolled_back",
+                previous_sha256=cutover.previous_sha256,
+                current_sha256=cutover.current_sha256,
+                rollback_sha256=cutover.rollback_sha256,
+            )
+        self._write_workflow(
+            phase="rolled_back",
+            base_pack_sha256=workflow.base_pack_sha256,
+            current_pack_sha256=workflow.base_pack_sha256,
+            draft_sha256=workflow.draft_sha256,
+            candidate_sha256=workflow.candidate_sha256,
         )
-        return InstallerIdentityTransition(
-            status="rolled_back",
-            previous_sha256=cutover.previous_sha256,
-            current_sha256=cutover.current_sha256,
-            rollback_sha256=cutover.rollback_sha256,
-        )
+        return transition
 
 
 __all__ = [
@@ -445,4 +719,5 @@ __all__ = [
     "InstallerIdentityLifecycle",
     "InstallerIdentityStage",
     "InstallerIdentityTransition",
+    "InstallerIdentityWorkflowStatus",
 ]
