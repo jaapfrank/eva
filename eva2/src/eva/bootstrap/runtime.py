@@ -66,6 +66,9 @@ from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
 )
+from eva.adapters.postgres.telegram_group_observation import (
+    PostgresTelegramGroupObservationStore,
+)
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.bootstrap.action_chain_effect_controls import (
     DashboardActionChainEffectController,
@@ -122,6 +125,10 @@ from eva.application.people_memory_overview import (
 )
 from eva.contracts.workboard import WorkBoard
 from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
+from eva.application.telegram_canary import (
+    TelegramCanaryAdmission,
+    TelegramCanaryBridge,
+)
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.mail import MailInboxPage, MailMessage
@@ -552,6 +559,7 @@ class PostgresHindsightMemoryRuntime:
         runtime_tenant_id: str | None = None,
         runtime_installation_id: str | None = None,
         group_consent: TelegramGroupConsentStorePort | None = None,
+        telegram_canary: TelegramCanaryBridge | None = None,
         people_memory_overview: PeopleMemoryOverviewPort | None = None,
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
         dashboard_effect_controller: DashboardActionChainEffectController | None = None,
@@ -581,6 +589,7 @@ class PostgresHindsightMemoryRuntime:
         self._runtime_tenant_id = runtime_tenant_id
         self._runtime_installation_id = runtime_installation_id
         self._group_consent = group_consent
+        self._telegram_canary = telegram_canary
         self._people_memory_overview = people_memory_overview
         if (delegated_work_store is None) != (dashboard_owner_principal_id is None):
             raise ValueError("delegated work dashboard owner is incomplete")
@@ -590,6 +599,25 @@ class PostgresHindsightMemoryRuntime:
         self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
+
+    def admit_telegram_canary(
+        self,
+        *,
+        telegram_user_id: int,
+        chat_id: str,
+        text: str,
+        operation_id: str,
+        now: datetime,
+    ) -> TelegramCanaryAdmission:
+        if self._telegram_canary is None:
+            raise RuntimeError("Telegram canary bridge is unavailable")
+        return self._telegram_canary.admit(
+            telegram_user_id=telegram_user_id,
+            chat_id=chat_id,
+            text=text,
+            operation_id=operation_id,
+            now=now,
+        )
 
     def admit_durable_goal(
         self,
@@ -1703,6 +1731,14 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id,
         installation_id=settings.background_installation_id,
     )
+    telegram_canary = TelegramCanaryBridge(
+        observations=PostgresTelegramGroupObservationStore(
+            engine,
+            tenant_id=settings.background_tenant_id,
+            installation_id=settings.background_installation_id,
+        ),
+        group_consent=group_consent,
+    )
     people_memory_overview = PostgresPeopleMemoryOverview(
         engine,
         tenant_id=settings.background_tenant_id,
@@ -2053,6 +2089,7 @@ def create_runtime_app() -> FastAPI:
             runtime_tenant_id=settings.background_tenant_id,
             runtime_installation_id=settings.background_installation_id,
             group_consent=group_consent,
+            telegram_canary=telegram_canary,
             people_memory_overview=people_memory_overview,
             delegated_work_store=delegated_work_store,
             dashboard_effect_controller=dashboard_effect_controller,

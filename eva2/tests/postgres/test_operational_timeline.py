@@ -31,6 +31,9 @@ from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
 from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
 )
+from eva.adapters.postgres.telegram_group_observation import (
+    PostgresTelegramGroupObservationStore,
+)
 from eva.adapters.postgres.home_assistant_reads import (
     PostgresHomeAssistantConversationReads,
 )
@@ -1352,6 +1355,51 @@ def test_telegram_group_consent_is_durable_person_scoped_and_revocable(
             "telegram-group-consent:person:jaap:-100123"
         )
     ] == ["TELEGRAM_GROUP_CONSENT_GRANTED", "TELEGRAM_GROUP_CONSENT_REVOKED"]
+
+
+def test_telegram_group_observation_is_durable_bounded_and_contains_no_text(
+    timeline_engine: Engine,
+) -> None:
+    store = PostgresTelegramGroupObservationStore(
+        timeline_engine,
+        tenant_id="telegram-observation-tenant",
+        installation_id="telegram-observation-home",
+    )
+    store.observe(
+        principal_id="telegram:7",
+        group_chat_id="-100127",
+        operation_id="telegram-group-observation:telegram-canary:-100127:1",
+        now=NOW,
+        expires_at=NOW + timedelta(hours=24),
+    )
+    restarted = PostgresTelegramGroupObservationStore(
+        timeline_engine,
+        tenant_id="telegram-observation-tenant",
+        installation_id="telegram-observation-home",
+    )
+    assert restarted.recently_observed(
+        principal_id="telegram:7", group_chat_id="-100127", now=NOW
+    )
+    assert not restarted.recently_observed(
+        principal_id="telegram:8", group_chat_id="-100127", now=NOW
+    )
+    assert not restarted.recently_observed(
+        principal_id="telegram:7",
+        group_chat_id="-100127",
+        now=NOW + timedelta(hours=24, seconds=1),
+    )
+    events = restarted._timeline.events(  # noqa: SLF001
+        "telegram-group-observation:telegram:7:-100127"
+    )
+    assert [event.event_type for event in events] == [
+        "TELEGRAM_GROUP_MEMBERSHIP_OBSERVED"
+    ]
+    assert set(events[0].payload["data"]) == {
+        "expires_at",
+        "group_chat_id",
+        "observed_at",
+        "principal_id",
+    }
 
 
 def test_telegram_group_consent_replay_never_renews_a_private_decision(

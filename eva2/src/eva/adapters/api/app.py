@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
+import hashlib
 from typing import Any, Protocol
 from uuid import UUID
 
@@ -37,7 +38,11 @@ from eva.application.memory import (
     PresenceMemory,
     RecallCurrentFacts,
 )
-from eva.application.memory_audience import memory_audience_from_wire
+from eva.application.memory_audience import (
+    memory_audience_from_wire,
+    memory_audience_to_wire,
+)
+from eva.application.telegram_canary import TelegramCanaryAdmission
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.workboard import WorkBoard
 from eva.application.mail import MailInboxPage, MailMessage
@@ -100,6 +105,17 @@ _RETAIN_KEYS = {
     "source_ref",
     "tenant_id",
     "trust",
+}
+
+_TELEGRAM_CANARY_KEYS = {
+    "chat_id",
+    "installation_id",
+    "message_id",
+    "occurred_at",
+    "recent_messages",
+    "telegram_user_id",
+    "tenant_id",
+    "text",
 }
 _RETAIN_OPTIONAL_KEYS = {"project_id"}
 
@@ -317,6 +333,16 @@ class MemoryRecallRuntime(Protocol):
     ) -> GroundedReply: ...
 
     def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None: ...
+
+    def admit_telegram_canary(
+        self,
+        *,
+        telegram_user_id: int,
+        chat_id: str,
+        text: str,
+        operation_id: str,
+        now: datetime,
+    ) -> TelegramCanaryAdmission: ...
 
     def latest_personal_prototype(
         self, tenant_id: str, installation_id: str, principal_id: str
@@ -983,6 +1009,97 @@ def create_app(
             raise HTTPException(
                 status_code=503,
                 detail="Eva's conversation model is tijdelijk unavailable",
+            ) from error
+        background_tasks.add_task(runtime.after_response, turn, reply)
+        return {
+            "contract": "EvaInternalGroundedReply/v1",
+            "conversation_id": reply.conversation_id,
+            "evidence_memory_ids": list(reply.evidence_memory_ids),
+            "generated_at": reply.generated_at,
+            "message_id": reply.message_id,
+            "provider": reply.provider,
+            "text": reply.text,
+            "text_sha256": reply.text_sha256,
+        }
+
+    @app.post("/internal/v1/telegram/canary/respond")
+    def respond_telegram_canary(
+        payload: dict[str, Any], background_tasks: BackgroundTasks
+    ) -> dict[str, Any]:
+        try:
+            if set(payload) != _TELEGRAM_CANARY_KEYS:
+                raise ValueError("Telegram canary request differs")
+            telegram_user_id = payload["telegram_user_id"]
+            chat_id = payload["chat_id"]
+            message_id = payload["message_id"]
+            occurred_at = payload["occurred_at"]
+            text = payload["text"]
+            if (
+                not isinstance(telegram_user_id, int)
+                or isinstance(telegram_user_id, bool)
+                or telegram_user_id < 1
+                or not isinstance(chat_id, str)
+                or not isinstance(message_id, int)
+                or isinstance(message_id, bool)
+                or message_id < 1
+                or not isinstance(occurred_at, str)
+                or not isinstance(text, str)
+            ):
+                raise ValueError("Telegram canary request is invalid")
+            now = datetime.strptime(occurred_at, "%Y-%m-%dT%H:%M:%SZ").replace(
+                tzinfo=UTC
+            )
+            operation_id = f"telegram-canary:{chat_id}:{message_id}"
+            admission = runtime.admit_telegram_canary(
+                telegram_user_id=telegram_user_id,
+                chat_id=chat_id,
+                text=text,
+                operation_id=operation_id,
+                now=now,
+            )
+            conversation_id = f"telegram:{chat_id}"
+            durable_message_id = f"telegram:{chat_id}:{message_id}"
+            if admission.local_reply is not None:
+                local_text = admission.local_reply
+                return {
+                    "contract": "EvaInternalGroundedReply/v1",
+                    "conversation_id": conversation_id,
+                    "evidence_memory_ids": [],
+                    "generated_at": occurred_at,
+                    "message_id": durable_message_id,
+                    "provider": "telegram-canary-local",
+                    "text": local_text,
+                    "text_sha256": hashlib.sha256(local_text.encode()).hexdigest(),
+                }
+            assert admission.audience is not None
+            recent_messages = (
+                payload["recent_messages"]
+                if admission.audience.kind == "private_person"
+                else []
+            )
+            turn, recent = _turn_from_wire(
+                {
+                    "audience": memory_audience_to_wire(admission.audience),
+                    "conversation_id": conversation_id,
+                    "installation_id": payload["installation_id"],
+                    "message_id": durable_message_id,
+                    "occurred_at": occurred_at,
+                    "principal_id": admission.principal_id,
+                    "recent_messages": recent_messages,
+                    "tenant_id": payload["tenant_id"],
+                    "text": text,
+                }
+            )
+            runtime.admit_turn_audience(turn)
+            reply = runtime.respond(turn, recent)
+        except ConversationConflict as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+        except (KeyError, TypeError, ValueError) as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+        except RuntimeError as error:
+            raise HTTPException(
+                status_code=503,
+                detail="Eva's Telegram canary is tijdelijk unavailable",
             ) from error
         background_tasks.add_task(runtime.after_response, turn, reply)
         return {
