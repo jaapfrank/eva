@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 13:32 CEST
+Laatst bijgewerkt: 28 augustus 2026, 14:07 CEST
 
 ## Heel kort
 
@@ -26,6 +26,8 @@ installatie zijn nog niet klaar.
   Intrekken sluit alleen die persoon direct weer af.
 - Vóór toestemming bewaart Eva geen groepsberichttekst en stuurt zij niets
   daarvan naar het model.
+- De echte proef met Jaap, Lola en een aparte testgroep is groen. Hun
+  toestemming bleef ook na een echte pollerherstart netjes gescheiden.
 - Eva2 gebruikt Eva1's Codex-login, maar ziet alleen een automatisch vernieuwde toegangssleutel en nooit de volledige login.
 - Eva2 klinkt volgens haar ingestelde jonge, warme, nieuwsgierige en eigenwijze
   persoonlijkheid.
@@ -54,7 +56,8 @@ installatie zijn nog niet klaar.
 
 - Brede huisbediening staat nog uit. Nu werkt alleen één veilig begrensde
   `uitzetten`-actie; andere lampen en `aanzetten` zijn nog geblokkeerd.
-- De volledige Telegramproef met twee personen en een groep is nog niet groen.
+- De testbot praat nu met een echte, aparte Eva2-gesprekcore. De persoonlijke
+  tweegesprekstest met Jaap en Lola loopt nog.
 - Eva1-geheugen is nog niet naar Eva2 gekopieerd. Eerst moet duidelijk zijn
   welk oud persoonlabel bij welk nieuw profiel hoort.
 - Full-duplex praten, luisteren en onderbreken met een echte microfoon en
@@ -72,7 +75,7 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. De echte Telegramgroeptest later met twee gezinsleden uitvoeren.
+2. Jaap en Lola ieder privé met de echte Eva2-core laten praten.
 3. De reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
@@ -91,6 +94,7 @@ installatie zijn nog niet klaar.
 - [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)
 - [Aparte privéprofielen voor Telegramaccounts](evidence/living-core/eva2-telegram-private-principal-isolation-2026-08-28.json)
 - [Persoonsgebonden toestemming voor Telegramgroepen](evidence/living-core/eva2-telegram-group-consent-live-2026-08-28.json)
+- [Echte Telegramproef met twee personen, intrekken en herstart](evidence/living-core/eva2-telegram-native-two-person-group-live-2026-08-28.json)
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
