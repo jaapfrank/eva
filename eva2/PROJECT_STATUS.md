@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 13:21 CEST
+Laatst bijgewerkt: 28 augustus 2026, 13:30 CEST
 
 ## Heel kort
 
@@ -26,7 +26,7 @@ installatie zijn nog niet klaar.
   Intrekken sluit alleen die persoon direct weer af.
 - Vóór toestemming bewaart Eva geen groepsberichttekst en stuurt zij niets
   daarvan naar het model.
-- Eva2 geeft echte modelantwoorden via de bestaande Codex-login van Eva1.
+- Eva2 gebruikt Eva1's Codex-login, maar ziet alleen een automatisch vernieuwde toegangssleutel en nooit de volledige login.
 - Eva2 klinkt volgens haar ingestelde jonge, warme, nieuwsgierige en eigenwijze
   persoonlijkheid.
 - Een gesprek blijft bewaard na een herstart van Eva2 en PostgreSQL.
@@ -93,7 +93,7 @@ installatie zijn nog niet klaar.
 - [Persoonsgebonden toestemming voor Telegramgroepen](evidence/living-core/eva2-telegram-group-consent-live-2026-08-28.json)
 - [Normale vraag bij een onduidelijke lampnaam](evidence/living-core/eva2-home-target-clarification-live-2026-08-28.json)
 - [Gesprek blijft bestaan na herstart](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json)
-- [Live `/eva2`-koppeling en Eva1-back-up](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json)
+- [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

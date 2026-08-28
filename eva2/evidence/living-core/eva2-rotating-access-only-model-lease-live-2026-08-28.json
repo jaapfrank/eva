@@ -1,0 +1,76 @@
+{
+  "contract": "Eva2RotatingAccessOnlyModelLeaseLiveReceipt/v1",
+  "capturedAt": "2026-08-28T13:30:17+02:00",
+  "sourceCommit": "e347b0dd303622475000c734368f7efd0cff38b3",
+  "imageId": "sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
+  "publisher": {
+    "container": "eva2-candidate-model-lease",
+    "runtimeUser": "1000:65532",
+    "networkMode": "none",
+    "readOnlyRootFilesystem": true,
+    "restartPolicy": "unless-stopped",
+    "health": "healthy",
+    "ownsFullEva1AuthMount": true,
+    "publishIntervalSeconds": 2
+  },
+  "lease": {
+    "contract": "EvaModelAccessLease/v1",
+    "keys": [
+      "access_token",
+      "account_id",
+      "contract",
+      "source_sha256"
+    ],
+    "ownerUid": 1000,
+    "readerGid": 65532,
+    "mode": "0640",
+    "singleLink": true,
+    "sourceHashMatches": true,
+    "containsRefreshAuthority": false
+  },
+  "core": {
+    "container": "eva2-candidate-lease-core",
+    "loopbackPort": 44706,
+    "processUser": "65532",
+    "health": "healthy",
+    "ownsFullEva1AuthMount": false,
+    "leaseMountReadOnly": true,
+    "modelReplyBeforeRecovery": "lease gescheiden.",
+    "modelReplyAfterLeaseRecreation": "lease opnieuw gelezen.",
+    "modelReplyAfterPublisherAndCoreRestart": "veilig opnieuw gestart."
+  },
+  "recovery": {
+    "publisherStoppedBeforeLeaseRemoval": true,
+    "accessOnlyLeaseRemoved": true,
+    "fullEva1AuthUnchanged": true,
+    "leaseRecreatedAfterPublisherRestart": true,
+    "recreatedBytesMatched": true,
+    "publisherHealthyAfterRestart": true,
+    "coreReadyAfterRestart": true,
+    "freshModelCallAfterRestartPassed": true
+  },
+  "cutover": {
+    "status": "switched",
+    "sourcePort": 44705,
+    "targetPort": 44706,
+    "targetReady": true,
+    "loadedCanaryUrl": "http://127.0.0.1:44706",
+    "previousCoreKeptAsRollback": true
+  },
+  "eva1": {
+    "immediatePostRestartObservation": {
+      "rootRoute": "timeout_once",
+      "timeoutSeconds": 5
+    },
+    "subsequentHealthRounds": 3,
+    "subsequentRequests": 15,
+    "subsequentHttp200": 15,
+    "serviceActive": true,
+    "serviceRestartCount": 0
+  },
+  "nonClaims": [
+    "The disposable Telegram bot was not used for these synthetic model calls.",
+    "The refresh owner remains available to the isolated publisher and is not copied into Eva2 core.",
+    "This is not a host reboot or a long-duration acceptance run."
+  ]
+}
