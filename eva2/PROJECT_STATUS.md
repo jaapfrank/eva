@@ -104,6 +104,15 @@ installatie zijn nog niet klaar.
 - Via Eva1's echte `/eva2`-client antwoordde de nieuwe route exact zoals
   gevraagd. Na een eigen herstart wist zij het testwoord nog en zij las veilig
   uit Home Assistant dat de spotjes overkapping uit staan.
+- Er staat nu ook een blijvend tweede proefslot op poort `44709`, met eigen
+  PostgreSQL 18-volumes voor Eva en Hindsight. De echte data is alleen-lezen
+  gekopieerd, Codex antwoordde, en de hele kern/geheugen/databasestack bleef na
+  stop/start groen. De actieve `/eva2`-route is nog niet omgezet.
+- Die proef vond een echte configuratiekloof: de historische gespreksscope en
+  de UUID-gebonden dashboardscope deelden één instelling. De kern heeft nu
+  aparte instellingen voor beide; 71 gerichte controles en een echte import
+  met de gescheiden scopes zijn groen. Een nieuwe immutable image en herhaalde
+  slotproef volgen nog vóór omschakeling.
 
 ## Wat nog niet klaar is
 
@@ -125,6 +134,8 @@ installatie zijn nog niet klaar.
   bijwerken met één eenvoudige wizard.
 - De nieuwe kernimage is live als `/eva2`-canary. De volledige beheerde
   negen-diensten-B met de aparte PostgreSQL 18-volumes is nog niet de actieve route.
+- De code voor gescheiden gesprek- en dashboardscopes is groen, maar zit nog
+  niet in een opnieuw gebouwde en gescande immutable kernimage.
 - De volledige rollback-, reboot- en zevendaagse praktijktest moet nog.
 - Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
@@ -135,7 +146,8 @@ installatie zijn nog niet klaar.
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
 2. De bewezen aparte PostgreSQL 18-databases en volledige negen-dienstengrafiek
-   achter dezelfde A/B-route zetten zonder de huidige rollback te verliezen.
+   met de gescheiden scopes opnieuw bouwen en achter dezelfde A/B-route zetten
+   zonder de huidige rollback te verliezen.
 3. Daarna de reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
@@ -169,6 +181,7 @@ installatie zijn nog niet klaar.
 - [Werkelijke `/eva2`-data en Hindsight veilig gekopieerd en herstart](evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json)
 - [Nieuwe vaste kernimage: offline build, scan 0/0 en herhaalde echte data-overgang](evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json)
 - [Nieuwe vaste kernimage live op `/eva2`, inclusief heen/terug/heen en echte HA-read](evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json)
+- [Blijvend tweede slot met eigen PostgreSQL 18-volumes en gezamenlijke herstart](evidence/living-core/eva2-managed-b-retained-slot-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

@@ -70,6 +70,8 @@ REQUIRED_CONFIGURATION = (
     "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
     "EVA_IDENTITY_PACK_FILE_HOST",
     "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
+    "EVA_DASHBOARD_TENANT_ID",
+    "EVA_DASHBOARD_INSTALLATION_ID",
     "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
@@ -402,10 +404,15 @@ def _validate_configuration(values: dict[str, str]) -> None:
         recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
     ):
         raise RuntimeError("Eva durable-goal recipients must be preserved")
-    try:
-        UUID(values["EVA_DASHBOARD_PRINCIPAL_BINDING_ID"])
-    except ValueError as error:
-        raise RuntimeError("EVA_DASHBOARD_PRINCIPAL_BINDING_ID is invalid") from error
+    for setting in (
+        "EVA_DASHBOARD_TENANT_ID",
+        "EVA_DASHBOARD_INSTALLATION_ID",
+        "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
+    ):
+        try:
+            UUID(values[setting])
+        except ValueError as error:
+            raise RuntimeError(f"{setting} is invalid") from error
 
     recall_budget = values.get("EVA_HINDSIGHT_RECALL_BUDGET", "low").casefold()
     if recall_budget not in {"low", "mid", "high"}:

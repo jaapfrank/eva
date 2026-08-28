@@ -37,6 +37,8 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_FANOUT_ALLOW_INSECURE_HTTP",
         "EVA_DURABLE_GOAL_PROVIDER",
         "EVA_DURABLE_GOAL_RECIPIENTS",
+        "EVA_DASHBOARD_TENANT_ID",
+        "EVA_DASHBOARD_INSTALLATION_ID",
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
         "EVA_DASHBOARD_ACCESS_TOKEN",
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE",
@@ -142,6 +144,21 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
     settings = RuntimeSettings.from_environment()
     assert settings.dashboard_principal_binding_id == (
         "44444444-4444-4444-4444-444444444444"
+    )
+
+    monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "legacy-tenant")
+    monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "legacy-installation")
+    monkeypatch.setenv(
+        "EVA_DASHBOARD_TENANT_ID", "11111111-1111-1111-1111-111111111111"
+    )
+    monkeypatch.setenv(
+        "EVA_DASHBOARD_INSTALLATION_ID",
+        "22222222-2222-2222-2222-222222222222",
+    )
+    settings = RuntimeSettings.from_environment()
+    assert settings.background_tenant_id == "legacy-tenant"
+    assert settings.dashboard_tenant_id == (
+        "11111111-1111-1111-1111-111111111111"
     )
 
     monkeypatch.setenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "not-a-uuid")

@@ -54,10 +54,10 @@ def test_count_parser_is_closed_and_digest_is_order_independent() -> None:
 def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     source = PROBE_PATH.read_text(encoding="utf-8")
 
-    assert 'CURRENT_ROUTE_CORE = "eva2-candidate-lease-core"' in source
+    assert 'CURRENT_ROUTE_CORE = "eva2-managed-current-canary-core"' in source
     assert 'CURRENT_ROUTE_POSTGRES = "eva2-candidate-794ff73-pg"' in source
     assert 'CURRENT_ROUTE_HINDSIGHT = "eva2-hindsight-memory-live"' in source
-    assert 'CURRENT_ROUTE_PORT = "44706"' in source
+    assert 'CURRENT_ROUTE_PORT = "44708"' in source
     assert "--format=custom" in source
     assert '"--exit-on-error"' in source
     assert '"--no-owner"' in source
@@ -67,6 +67,17 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert "--core-image" in source
     assert "candidate core image must be an immutable local digest reference" in source
     assert "attempts: int = 3" in source
+    assert "--retain-slot" in source
+    assert 'RETAINED_PROJECT = "eva2-managed-b-slot2"' in source
+    assert 'RETAINED_PORT = 44709' in source
+    assert "plaintextDumpsRetained" in source
+    assert "CURRENT_ROUTE_HINDSIGHT_NAMESPACE" in source
+    assert "retained managed-B Docker volume already exists" in source
+    assert '"requiresScopeMigrationBeforeActivation": False' in source
+    assert '"sourceRuntimeScope": "legacy-live-test"' in source
+    assert '"EVA_DASHBOARD_TENANT_ID"' in source
+    assert '"EVA_DASHBOARD_INSTALLATION_ID"' in source
+    assert 'if environment_file.exists() and not keep_retained:' in source
     assert "docker stop eva2-candidate" not in source
     assert "docker rm eva2-candidate" not in source
     assert "docker volume rm eva2-candidate" not in source

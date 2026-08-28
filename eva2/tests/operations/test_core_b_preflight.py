@@ -112,6 +112,8 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": "",
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": str(dashboard_access_token),
+        "EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111",
+        "EVA_DASHBOARD_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222",
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
         "EVA_IDENTITY_PACK_FILE_HOST": str(identity_pack),
         "EVA_IDENTITY_PACK_TRUST_FILE_HOST": str(identity_trust),

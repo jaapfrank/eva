@@ -132,6 +132,12 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "EVA_RUNTIME_PRINCIPAL_ID": (
             "${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}"
         ),
+        "EVA_DASHBOARD_TENANT_ID": (
+            "${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}"
+        ),
+        "EVA_DASHBOARD_INSTALLATION_ID": (
+            "${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}"
+        ),
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": (
             "${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}"
         ),

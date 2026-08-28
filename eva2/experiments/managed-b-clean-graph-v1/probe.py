@@ -59,12 +59,23 @@ EXPECTED_SERVICES = {
     "schema-installer",
     "telegram-ingress",
 }
-CURRENT_ROUTE_CORE = "eva2-candidate-lease-core"
+CURRENT_ROUTE_CORE = "eva2-managed-current-canary-core"
 CURRENT_ROUTE_POSTGRES = "eva2-candidate-794ff73-pg"
 CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-candidate-794ff73-pg"
 CURRENT_ROUTE_HINDSIGHT = "eva2-hindsight-memory-live"
 CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-hindsight-memory-live"
-CURRENT_ROUTE_PORT = "44706"
+CURRENT_ROUTE_PORT = "44708"
+CURRENT_ROUTE_HA_TOKEN = Path(
+    "/var/lib/eva2/candidate-794ff73/secrets/home-assistant-token"
+)
+CURRENT_ROUTE_HA_URL = Path(
+    "/var/lib/eva2/candidate-794ff73/config/home-assistant-url"
+)
+CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
+RETAINED_PROJECT = "eva2-managed-b-slot2"
+RETAINED_CORE = "eva2-managed-b-slot2-core"
+RETAINED_PORT = 44709
+RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
        (xpath('/row/c/text()', query_to_xml(
@@ -574,7 +585,12 @@ def _immutable_core_image(value: str) -> str:
     return value
 
 
-def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> int:
+def main(
+    *,
+    clone_current_route: bool = False,
+    core_image: str = CORE_IMAGE,
+    retain_slot: bool = False,
+) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
         return 2
@@ -583,17 +599,26 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
     except ProbeError as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
-    run_id = uuid4().hex[:12]
-    project = f"eva2-clean-b-{run_id}"
-    core_name = f"eva2-clean-b-core-{run_id}"
-    staging = STAGING_PARENT / f"managed-b-clean-probe-{run_id}"
-    port = _available_port()
+    if retain_slot and not clone_current_route:
+        print(
+            json.dumps(
+                {"error": "retained slot requires a current-route clone", "status": "failed"},
+                sort_keys=True,
+            )
+        )
+        return 2
+    run_id = "slot2" if retain_slot else uuid4().hex[:12]
+    project = RETAINED_PROJECT if retain_slot else f"eva2-clean-b-{run_id}"
+    core_name = RETAINED_CORE if retain_slot else f"eva2-clean-b-core-{run_id}"
+    staging = RETAINED_STAGING if retain_slot else STAGING_PARENT / f"managed-b-clean-probe-{run_id}"
+    port = RETAINED_PORT if retain_slot else _available_port()
     operational_password = secrets.token_urlsafe(32)
     memory_password = secrets.token_urlsafe(32)
     environment_file = staging / "candidate.env"
     operational_dump = staging / "operational.dump"
     hindsight_dump = staging / "hindsight.dump"
     cleaned = False
+    keep_retained = False
     phase = "prepare"
     result: dict[str, Any] = {
         "contract": (
@@ -608,9 +633,44 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
     }
     initial_live = {
         "eva1": _live_status("http://127.0.0.1:3210/api/health"),
-        "currentEva2": _live_status("http://127.0.0.1:44706/readyz"),
+        "currentEva2": _live_status(
+            f"http://127.0.0.1:{CURRENT_ROUTE_PORT}/readyz"
+        ),
     }
     try:
+        if retain_slot:
+            if staging.exists() or _live_status(f"http://127.0.0.1:{port}/readyz"):
+                raise ProbeError("retained managed-B slot already exists")
+            existing = _run(
+                [
+                    "/usr/bin/docker",
+                    "ps",
+                    "--all",
+                    "--quiet",
+                    "--filter",
+                    f"label=com.docker.compose.project={project}",
+                ]
+            ).strip()
+            if existing:
+                raise ProbeError("retained managed-B Docker project already exists")
+            retained_volumes = {
+                f"{project}-operational",
+                f"{project}-memory",
+                f"{project}-work",
+            }
+            existing_volumes = set(
+                _run(
+                    [
+                        "/usr/bin/docker",
+                        "volume",
+                        "ls",
+                        "--format",
+                        "{{.Name}}",
+                    ]
+                ).splitlines()
+            )
+            if retained_volumes & existing_volumes:
+                raise ProbeError("retained managed-B Docker volume already exists")
         staging.mkdir(mode=0o700)
         secrets_dir = staging / "secrets"
         identity_dir = staging / "identity"
@@ -655,7 +715,26 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
             uid=1000,
             gid=1000,
         )
-        _write_private(secrets_dir / "home-assistant-token", b"probe-only", uid=65532, gid=65532)
+        if retain_slot:
+            _copy_private(
+                CURRENT_ROUTE_HA_TOKEN,
+                secrets_dir / "home-assistant-token",
+                uid=65532,
+                gid=65532,
+            )
+            home_assistant_url = CURRENT_ROUTE_HA_URL.read_text(
+                encoding="utf-8"
+            ).strip()
+            if not re.fullmatch(r"https?://[^\s]{1,2048}", home_assistant_url):
+                raise ProbeError("current Home Assistant URL is invalid")
+        else:
+            _write_private(
+                secrets_dir / "home-assistant-token",
+                b"probe-only",
+                uid=65532,
+                gid=65532,
+            )
+            home_assistant_url = "http://127.0.0.1:9"
         _write_private(
             secrets_dir / "dashboard-token",
             secrets.token_urlsafe(32).encode(),
@@ -692,18 +771,29 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
             "EVA_DATABASE_DSN_FILE_HOST": operational_dsn_file.as_posix(),
             "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST": memory_password_file.as_posix(),
             "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST": memory_dsn_file.as_posix(),
-            "EVA_HOME_ASSISTANT_URL": "http://127.0.0.1:9",
-            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "false",
+            "EVA_HOME_ASSISTANT_URL": home_assistant_url,
+            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "true" if retain_slot else "false",
+            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": (
+                "light.dimmable_light_1:turn_off" if retain_slot else ""
+            ),
             "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": (secrets_dir / "home-assistant-token").as_posix(),
             "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": (secrets_dir / "dashboard-token").as_posix(),
+            "EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111",
+            "EVA_DASHBOARD_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222",
             "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
             "EVA_IDENTITY_PACK_FILE_HOST": (identity_dir / "current.json").as_posix(),
             "EVA_IDENTITY_PACK_TRUST_FILE_HOST": (identity_dir / "trust.json").as_posix(),
             "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": (secrets_dir / "telegram-token").as_posix(),
             "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": (secrets_dir / "telegram-bindings").as_posix(),
             "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": (secrets_dir / "telegram-pairing").as_posix(),
-            "EVA_RUNTIME_TENANT_ID": "11111111-1111-1111-8111-111111111111",
-            "EVA_RUNTIME_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222",
+            "EVA_RUNTIME_TENANT_ID": (
+                "live-test-tenant" if retain_slot else "11111111-1111-1111-8111-111111111111"
+            ),
+            "EVA_RUNTIME_INSTALLATION_ID": (
+                "live-test-installation"
+                if retain_slot
+                else "22222222-2222-2222-8222-222222222222"
+            ),
             "EVA_RUNTIME_PRINCIPAL_ID": "33333333-3333-3333-8333-333333333333",
             "EVA_DURABLE_GOAL_PROVIDER": "probe",
             "EVA_DURABLE_GOAL_PROVIDER_URL": "http://127.0.0.1:9",
@@ -711,7 +801,11 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
             "EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON": '{"probe":"https://example.invalid"}',
             "EVA_FANOUT_ALLOW_INSECURE_HTTP": "false",
             "EVA_FILE_BATCH_ROOT": "/var/lib/eva/work",
-            "EVA_HINDSIGHT_BANK_NAMESPACE": f"probe-{run_id}",
+            "EVA_HINDSIGHT_BANK_NAMESPACE": (
+                CURRENT_ROUTE_HINDSIGHT_NAMESPACE
+                if clone_current_route
+                else f"probe-{run_id}"
+            ),
             "EVA_CODEX_AUTH_DIR": codex_dir.as_posix(),
             "EVA_MODEL_ACCESS_LEASE_DIR": model_lease.as_posix(),
             "EVA_HINDSIGHT_ACCESS_DIR": hindsight_lease.as_posix(),
@@ -822,11 +916,19 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
                 "principal_id": "33333333-3333-3333-8333-333333333333",
             },
             "conversation_id": f"managed-b-probe:{run_id}",
-            "installation_id": "22222222-2222-2222-8222-222222222222",
+            "installation_id": (
+                "live-test-installation"
+                if retain_slot
+                else "22222222-2222-2222-8222-222222222222"
+            ),
             "message_id": f"managed-b-probe:{run_id}:1",
             "occurred_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "principal_id": "33333333-3333-3333-8333-333333333333",
-            "tenant_id": "11111111-1111-1111-8111-111111111111",
+            "tenant_id": (
+                "live-test-tenant"
+                if retain_slot
+                else "11111111-1111-1111-8111-111111111111"
+            ),
             "text": "Antwoord alleen met: beheerd",
         }
         reply = _http_json(
@@ -917,6 +1019,20 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
                 "semanticHindsightDataSurvivedJointRestart": True,
                 "plaintextRetainedAfterProbe": False,
             }
+            if retain_slot:
+                operational_dump.unlink()
+                hindsight_dump.unlink()
+                result["retainedSlot"] = {
+                    "coreContainer": core_name,
+                    "candidateRuntimeScope": "legacy-live-test-compatible",
+                    "environmentFile": environment_file.as_posix(),
+                    "port": port,
+                    "project": project,
+                    "plaintextDumpsRetained": False,
+                    "requiresScopeMigrationBeforeActivation": False,
+                    "sourceRuntimeScope": "legacy-live-test",
+                    "status": "ready_not_active",
+                }
     except Exception as exc:
         result["error"] = (
             str(exc)
@@ -924,7 +1040,7 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
             else f"unexpected {type(exc).__name__}: {_sanitize_diagnostic(str(exc))}"
         )
         result["failedPhase"] = phase
-        if environment_file.exists():
+        if environment_file.exists() and not keep_retained:
             try:
                 state = _run(
                     _compose(project, environment_file, "ps", "--all", "--format", "json")
@@ -946,34 +1062,54 @@ def main(*, clone_current_route: bool = False, core_image: str = CORE_IMAGE) -> 
             except ProbeError:
                 result["diagnosticCapture"] = "unavailable"
     finally:
-        if environment_file.exists():
+        keep_retained = retain_slot and result.get("status") == "passed"
+        if environment_file.exists() and not keep_retained:
             try:
                 _run(_compose(project, environment_file, "down", "--volumes", "--remove-orphans"))
                 cleaned = True
             except ProbeError:
                 cleaned = False
-        if staging.parent == STAGING_PARENT and staging.name.startswith("managed-b-clean-probe-"):
+        if (
+            not keep_retained
+            and staging.parent == STAGING_PARENT
+            and (
+                staging.name.startswith("managed-b-clean-probe-")
+                or staging == RETAINED_STAGING
+            )
+        ):
             shutil.rmtree(staging, ignore_errors=True)
-        result["temporaryResourcesRemoved"] = cleaned and not staging.exists()
+        result["temporaryResourcesRemoved"] = (
+            False if keep_retained else cleaned and not staging.exists()
+        )
+        result["retainedSlotReady"] = keep_retained
         result["liveSafetyAfter"] = {
             "eva1": _live_status("http://127.0.0.1:3210/api/health"),
-            "currentEva2": _live_status("http://127.0.0.1:44706/readyz"),
+            "currentEva2": _live_status(
+                f"http://127.0.0.1:{CURRENT_ROUTE_PORT}/readyz"
+            ),
         }
         operational_password = ""
         memory_password = ""
 
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
-    return 0 if result["status"] == "passed" and result["temporaryResourcesRemoved"] else 2
+    completed = result["status"] == "passed" and (
+        result["retainedSlotReady"]
+        if retain_slot
+        else result["temporaryResourcesRemoved"]
+    )
+    return 0 if completed else 2
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--clone-current-route", action="store_true")
     parser.add_argument("--core-image", default=CORE_IMAGE)
+    parser.add_argument("--retain-slot", action="store_true")
     arguments = parser.parse_args()
     sys.exit(
         main(
             clone_current_route=arguments.clone_current_route,
             core_image=arguments.core_image,
+            retain_slot=arguments.retain_slot,
         )
     )

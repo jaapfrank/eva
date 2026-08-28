@@ -179,6 +179,8 @@ class RuntimeSettings:
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
+    dashboard_tenant_id: str | None = None
+    dashboard_installation_id: str | None = None
     dashboard_principal_binding_id: str | None = None
     dashboard_access_token: str | None = None
     cold_path_idle_seconds: float = 300.0
@@ -256,6 +258,14 @@ class RuntimeSettings:
         dashboard_principal_binding_id = (
             os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
         )
+        dashboard_tenant_id = (
+            os.environ.get("EVA_DASHBOARD_TENANT_ID", "").strip()
+            or background_tenant_id
+        )
+        dashboard_installation_id = (
+            os.environ.get("EVA_DASHBOARD_INSTALLATION_ID", "").strip()
+            or background_installation_id
+        )
         if "EVA_DASHBOARD_ACCESS_TOKEN" in os.environ:
             raise RuntimeError(
                 "EVA_DASHBOARD_ACCESS_TOKEN is forbidden; use "
@@ -283,8 +293,8 @@ class RuntimeSettings:
                     "Eva dashboard owner binding requires a runtime principal"
                 )
             try:
-                UUID(background_tenant_id or "")
-                UUID(background_installation_id or "")
+                UUID(dashboard_tenant_id or "")
+                UUID(dashboard_installation_id or "")
                 UUID(background_principal_id)
                 UUID(dashboard_principal_binding_id)
             except ValueError as error:
@@ -531,6 +541,8 @@ class RuntimeSettings:
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
+            dashboard_tenant_id=dashboard_tenant_id,
+            dashboard_installation_id=dashboard_installation_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
             dashboard_access_token=dashboard_access_token,
             cold_path_idle_seconds=cold_path_idle_seconds,
@@ -2066,8 +2078,8 @@ def create_runtime_app() -> FastAPI:
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
     if settings.dashboard_principal_binding_id is not None:
-        assert settings.background_tenant_id is not None
-        assert settings.background_installation_id is not None
+        assert settings.dashboard_tenant_id is not None
+        assert settings.dashboard_installation_id is not None
         assert settings.background_principal_id is not None
         dashboard_owner_principal_id = UUID(settings.background_principal_id)
         dashboard_principal_binding_id = UUID(
@@ -2076,15 +2088,15 @@ def create_runtime_app() -> FastAPI:
         delegated_work_store = PostgresDelegatedWorkStore(
             engine,
             TimelineScope(
-                UUID(settings.background_tenant_id),
-                UUID(settings.background_installation_id),
+                UUID(settings.dashboard_tenant_id),
+                UUID(settings.dashboard_installation_id),
             ),
         )
         dashboard_effect_controller = DashboardActionChainEffectController(
             engine,
             TimelineScope(
-                UUID(settings.background_tenant_id),
-                UUID(settings.background_installation_id),
+                UUID(settings.dashboard_tenant_id),
+                UUID(settings.dashboard_installation_id),
             ),
             owner_principal_id=dashboard_owner_principal_id,
             principal_binding_id=dashboard_principal_binding_id,
