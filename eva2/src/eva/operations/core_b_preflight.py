@@ -13,6 +13,8 @@ import subprocess
 from typing import NoReturn
 from uuid import UUID
 
+from eva.application.conversation import load_current_identity_pack
+from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.bootstrap.secrets import (
     MAX_RUNTIME_SECRET_BYTES,
     read_private_runtime_file_bytes,
@@ -58,6 +60,8 @@ REQUIRED_CONFIGURATION = (
     "EVA_HOME_ASSISTANT_URL",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
     "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
+    "EVA_IDENTITY_PACK_FILE_HOST",
+    "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
     "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
@@ -96,6 +100,8 @@ FORBIDDEN_INLINE_SECRETS = (
 HOST_SECRET_SETTING_NAMES = (
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
     "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
+    "EVA_IDENTITY_PACK_FILE_HOST",
+    "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
     "EVA_DATABASE_DSN_FILE_HOST",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
@@ -419,6 +425,25 @@ def load_core_b_plan(
         setting_name="EVA_DATABASE_DSN_FILE_HOST",
         owner_uid=runtime_uid,
     )
+    _preflight_host_secret(
+        values["EVA_IDENTITY_PACK_FILE_HOST"],
+        setting_name="EVA_IDENTITY_PACK_FILE_HOST",
+        owner_uid=runtime_uid,
+    )
+    _preflight_host_secret(
+        values["EVA_IDENTITY_PACK_TRUST_FILE_HOST"],
+        setting_name="EVA_IDENTITY_PACK_TRUST_FILE_HOST",
+        owner_uid=runtime_uid,
+    )
+    try:
+        identity_trust = load_identity_pack_trust_binding(
+            Path(values["EVA_IDENTITY_PACK_TRUST_FILE_HOST"])
+        )
+        load_current_identity_pack(
+            Path(values["EVA_IDENTITY_PACK_FILE_HOST"]), trust=identity_trust
+        )
+    except ValueError as error:
+        raise RuntimeError("Eva managed B IdentityPack binding is invalid") from error
     _preflight_host_secret(
         values["EVA_TELEGRAM_BOT_TOKEN_FILE_HOST"],
         setting_name="EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",

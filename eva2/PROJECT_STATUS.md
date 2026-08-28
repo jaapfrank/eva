@@ -1,6 +1,18 @@
 # Eva 2 — actuele voortgang
 
 Laatst bijgewerkt: 2026-08-28
+> Permanente B-identiteitsgrens, 28 augustus 2026: de beheerde Eva2-B-
+> configuratie kan niet meer zonder een afzonderlijk, private IdentityPack én
+> de bijbehorende publieke trustbinding worden gerenderd. De hostpreflight
+> controleert vóór Docker beide bestanden op eigenaar, rechten, linkmisbruik,
+> scope en cryptografische ondertekening; een gewijzigde identiteit stopt dus
+> vóór create, start of migratie. Ook de nieuwe gesprekspagina en deze
+> preflightbron zijn nu onderdeel van de verzegelde release-inputset. In totaal
+> zijn 155 gerichte render-, preflight-, release-, settings-, cockpit- en
+> identiteitstests groen. Dit maakt de bewezen warme Eva-identiteit duurzaam
+> configureerbaar voor B, maar schakelt de live `/eva2`-route nog niet om: de
+> tijdelijke bewijsidentiteit gebruikt expres geen bewaarde productiesleutel.
+
 > Echte identiteits- en continuïteitsproef, 28 augustus 2026: een nieuwe
 > tijdelijke Eva2-runtime startte met de ondertekende warme, jonge, vlotte en
 > eigenwijze identiteit, een volledig gemigreerde lege PostgreSQL-database,

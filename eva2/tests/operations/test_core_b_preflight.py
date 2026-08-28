@@ -59,6 +59,14 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     postgres_password = _private_secret(
         private_tmp_path / "postgres-password", "not-a-real-postgres-password\n"
     )
+    identity_pack = _private_secret(
+        private_tmp_path / "identity-pack.json",
+        (ROOT / "src/eva/application/default_identity_pack.json").read_text(),
+    )
+    identity_trust = _private_secret(
+        private_tmp_path / "identity-trust.json",
+        (ROOT / "src/eva/application/default_identity_pack_trust.json").read_text(),
+    )
     codex_authority = private_tmp_path / "codex-auth"
     codex_authority.mkdir(mode=0o700, exist_ok=True)
     codex_authority.chmod(0o700)
@@ -86,6 +94,8 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": str(dashboard_access_token),
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
+        "EVA_IDENTITY_PACK_FILE_HOST": str(identity_pack),
+        "EVA_IDENTITY_PACK_TRUST_FILE_HOST": str(identity_trust),
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(telegram_token),
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": str(telegram_bindings),
         "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": str(telegram_pairing_secret),
@@ -381,6 +391,8 @@ def test_plan_rejects_execute_only_home_assistant_host_secret(
     (
         "EVA_DATABASE_DSN_FILE_HOST",
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST",
+        "EVA_IDENTITY_PACK_FILE_HOST",
+        "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
         "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
@@ -406,6 +418,19 @@ def test_plan_rejects_an_invalid_dashboard_owner_binding(
     environment = _environment_file(private_tmp_path, values)
 
     with pytest.raises(RuntimeError, match="DASHBOARD_PRINCIPAL_BINDING_ID is invalid"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+
+def test_plan_rejects_identity_bytes_outside_the_bound_trust(
+    private_tmp_path: Path,
+) -> None:
+    values = _configuration(private_tmp_path)
+    identity_path = Path(values["EVA_IDENTITY_PACK_FILE_HOST"])
+    identity_path.write_text('{"contract":"IdentityPack/v1"}\n', encoding="utf-8")
+    identity_path.chmod(0o600)
+    environment = _environment_file(private_tmp_path, values)
+
+    with pytest.raises(RuntimeError, match="IdentityPack binding is invalid"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 
@@ -457,6 +482,8 @@ def test_plan_rejects_postgres_password_outside_exact_root_contract(
         "EVA_CODEX_AUTH_DIR",
         "EVA_MODEL_ACCESS_LEASE_DIR",
         "EVA_HINDSIGHT_ACCESS_DIR",
+        "EVA_IDENTITY_PACK_FILE_HOST",
+        "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
     ),
 )
 def test_plan_refuses_capability_loss(
@@ -564,7 +591,7 @@ def test_host_only_receipt_has_no_secret_or_docker_observation(
             "docker_binary_metadata": True,
             "docker_config_directory_metadata": True,
             "docker_observed": False,
-            "host_secret_file_metadata": 7,
+            "host_secret_file_metadata": 9,
             "secret_contents_read": False,
         },
         "configuration_sha256": plan.snapshot_sha256,

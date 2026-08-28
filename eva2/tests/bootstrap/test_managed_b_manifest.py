@@ -94,7 +94,17 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
             "${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}"
         ),
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE": "/run/secrets/dashboard_access_token",
+        "EVA_IDENTITY_PACK_FILE": "/run/eva/identity/current.json",
+        "EVA_IDENTITY_PACK_TRUST_FILE": "/run/eva/identity/trust.json",
     }.items() <= services["core"]["environment"].items()
+
+    core_binds = {volume["target"]: volume for volume in _private_binds(services["core"])}
+    assert core_binds["/run/eva/identity/current.json"]["source"] == (
+        "${EVA_IDENTITY_PACK_FILE_HOST:?set a verified current IdentityPack file}"
+    )
+    assert core_binds["/run/eva/identity/trust.json"]["source"] == (
+        "${EVA_IDENTITY_PACK_TRUST_FILE_HOST:?set the IdentityPack public trust binding}"
+    )
 
 
 def test_managed_b_dependency_order_and_sealed_volumes() -> None:

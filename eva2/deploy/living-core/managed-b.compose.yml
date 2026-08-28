@@ -208,6 +208,8 @@ services:
       EVA_HOME_ASSISTANT_URL: ${EVA_HOME_ASSISTANT_URL:?set the Home Assistant URL}
       EVA_IDENTITY_DESCRIPTION: ${EVA_IDENTITY_DESCRIPTION:-Je bent een warme, nuchtere en capabele digitale huisgenoot.}
       EVA_IDENTITY_NAME: ${EVA_IDENTITY_NAME:-Eva}
+      EVA_IDENTITY_PACK_FILE: /run/eva/identity/current.json
+      EVA_IDENTITY_PACK_TRUST_FILE: /run/eva/identity/trust.json
       EVA_PERSONAL_INTEREST_LEASE_SECONDS: ${EVA_PERSONAL_INTEREST_LEASE_SECONDS:-90}
       EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
       EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
@@ -228,6 +230,18 @@ services:
       - type: bind
         source: ${EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST:?set a runtime-owned dashboard access token file}
         target: /run/secrets/dashboard_access_token
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_IDENTITY_PACK_FILE_HOST:?set a verified current IdentityPack file}
+        target: /run/eva/identity/current.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_IDENTITY_PACK_TRUST_FILE_HOST:?set the IdentityPack public trust binding}
+        target: /run/eva/identity/trust.json
         read_only: true
         bind:
           create_host_path: false
