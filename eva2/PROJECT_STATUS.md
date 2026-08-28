@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 17:55 CEST
+Laatst bijgewerkt: 28 augustus 2026, 19:06 CEST
 
 ## Heel kort
 
@@ -104,15 +104,26 @@ installatie zijn nog niet klaar.
 - Via Eva1's echte `/eva2`-client antwoordde de nieuwe route exact zoals
   gevraagd. Na een eigen herstart wist zij het testwoord nog en zij las veilig
   uit Home Assistant dat de spotjes overkapping uit staan.
-- Er staat nu ook een blijvend tweede proefslot op poort `44709`, met eigen
-  PostgreSQL 18-volumes voor Eva en Hindsight. De echte data is alleen-lezen
-  gekopieerd, Codex antwoordde, en de hele kern/geheugen/databasestack bleef na
-  stop/start groen. De actieve `/eva2`-route is nog niet omgezet.
-- Die proef vond een echte configuratiekloof: de historische gespreksscope en
-  de UUID-gebonden dashboardscope deelden één instelling. De kern heeft nu
-  aparte instellingen voor beide; 71 gerichte controles en een echte import
-  met de gescheiden scopes zijn groen. Een nieuwe immutable image en herhaalde
-  slotproef volgen nog vóór omschakeling.
+- De beheerde kern, beide toegangsleases, Hindsight en twee aparte PostgreSQL
+  18-databases zijn nu de actieve `/eva2`-route op poort `44710`. De vorige
+  route op `44708` draait nog als directe terugval.
+- De nieuwe kernimage is zonder internet gebouwd en opnieuw gescand: 0 kritisch
+  en 0 hoog. Gesprekken en het dashboard hebben ieder hun juiste, aparte scope.
+- Het eigenaar-dashboard heeft nu een echte geverifieerde binding. Met de
+  private toegang geeft het werkbord HTTP 200; zonder toegang geeft het 401.
+- De route ging echt heen, terug en opnieuw heen. Na een eigen herstart wist
+  Eva exact `groene gloed` terug en las zij in Home Assistant dat de spotjes
+  overkapping uit staan.
+- De eerste modelpoging direct na omschakeling gaf tijdelijk 503. Dezelfde
+  duurzaam opgeslagen beurt is daarna één keer afgemaakt, zonder dubbele
+  ingress of dubbel antwoord.
+- De afgeschermde lease-maker volgt nu Eva1's actuele private Codex-bron. De
+  kern ziet alleen de korte toegangssleutel; de eenmalige kopie met de volledige
+  login is uit het actieve slot verwijderd. Een nieuw modelantwoord was groen.
+- Tussen de momentopname en de eerste omschakeling zag alleen de oude route tien
+  korte apparaat-/bewegingsgebeurtenissen. Er ging geen gebruikersgesprek of
+  modelantwoord verloren; dit is daarom eerlijk geen volledig gatloze
+  verhuizing van de oude sensorgeschiedenis.
 
 ## Wat nog niet klaar is
 
@@ -125,18 +136,17 @@ installatie zijn nog niet klaar.
 - Full-duplex praten, luisteren en onderbreken met een echte microfoon en
   speaker is nog niet getest.
 - De browserimages zijn nog niet veilig genoeg voor algemeen gebruik.
-- De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
-  De lokale bouwimage moet nog buiten deze computer worden bewaard en uit losse
-  bouwpakketten herbouwbaar worden. Daarna volgt de beheerde B-route.
-- De echte data-overdracht én de nieuwe vastgezette kernimage zijn groen. De
-  productie-omschakeling en directe terugrol zijn nog niet uitgevoerd.
+- De schone kern-, Hindsight- en database-images staan alleen op deze computer.
+  De bouwpakketten en images moeten nog veilig buiten deze computer worden
+  bewaard en opnieuw herbouwbaar worden bewezen.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
-- De nieuwe kernimage is live als `/eva2`-canary. De volledige beheerde
-  negen-diensten-B met de aparte PostgreSQL 18-volumes is nog niet de actieve route.
-- De code voor gescheiden gesprek- en dashboardscopes is groen, maar zit nog
-  niet in een opnieuw gebouwde en gescande immutable kernimage.
-- De volledige rollback-, reboot- en zevendaagse praktijktest moet nog.
+- De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
+  `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart;
+  daarna moeten ook een computerreboot en de zevendaagse praktijktest volgen.
+- Eva1 moest bij de derde geplande servicewissel na twintig seconden hard
+  stoppen. Daarna waren alle vijf controles groen en de tijdelijke traagheid
+  verdween, maar dit blijft een zichtbaar onderhoudspunt.
 - Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
@@ -145,10 +155,10 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. De bewezen aparte PostgreSQL 18-databases en volledige negen-dienstengrafiek
-   met de gescheiden scopes opnieuw bouwen en achter dezelfde A/B-route zetten
-   zonder de huidige rollback te verliezen.
-3. Daarna de reboot- en langere praktijktest uitvoeren.
+2. De rebootproef uitvoeren en controleren dat Eva1, `/eva2`, beide databases,
+   geheugen, dashboard en terugval vanzelf goed terugkomen.
+3. Daarna de langere praktijktest starten en de tijdelijke 503- en
+   Eva1-stopwaarnemingen actief bewaken.
 
 ## Belangrijk verschil
 
@@ -182,6 +192,8 @@ installatie zijn nog niet klaar.
 - [Nieuwe vaste kernimage: offline build, scan 0/0 en herhaalde echte data-overgang](evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json)
 - [Nieuwe vaste kernimage live op `/eva2`, inclusief heen/terug/heen en echte HA-read](evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json)
 - [Blijvend tweede slot met eigen PostgreSQL 18-volumes en gezamenlijke herstart](evidence/living-core/eva2-managed-b-retained-slot-2026-08-28.json)
+- [Beheerde PostgreSQL 18-route live met eigenaar-dashboard, terugrol en herstart](evidence/living-core/eva2-managed-b-dashboard-cutover-live-2026-08-28.json)
+- [Vernieuwbare Codex-toegang zonder refresh-login in de Eva2-kern](evidence/living-core/eva2-managed-b-rotating-model-lease-live-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
