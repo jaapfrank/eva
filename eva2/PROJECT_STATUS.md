@@ -1,6 +1,20 @@
 # Eva 2 — actuele voortgang
 
-Laatst bijgewerkt: 2026-08-27
+Laatst bijgewerkt: 2026-08-28
+> Echte identiteits- en continuïteitsproef, 28 augustus 2026: een nieuwe
+> tijdelijke Eva2-runtime startte met de ondertekende warme, jonge, vlotte en
+> eigenwijze identiteit, een volledig gemigreerde lege PostgreSQL-database,
+> Hindsight en een access-only lease uit Eva1's bestaande Codex-koppeling. Alle
+> drie runtimecontroles waren groen. Eva antwoordde daadwerkelijk via
+> `chatgpt-codex:gpt-5.4-mini`. Twee opeenvolgende eigenaarberichten hielden
+> hetzelfde servergebonden gesprek-ID, kregen verschillende bericht-ID's en op
+> de controlevraag antwoordde Eva exact `paarse paraplu`, zoals uitsluitend in
+> het direct voorgaande bericht gevraagd. PostgreSQL bevat vier duurzame
+> `INGRESS_COMMITTED`- en vier `REPLY_COMMITTED`-events. Eva1, haar service en
+> SQLite zijn niet gewijzigd. Dit bewijst lokale tekstchat met identiteit en
+> korte gesprekscontinuïteit; Telegram, voice, huisacties en langdurig geheugen
+> blijven aparte productgates.
+
 > 27 augustus 2026: alle afgesloten kandidaatstappen zijn nu in deze
 > Eva2-werkmap geïntegreerd. De live gebruikersroute blijft uitsluitend
 > `eva.service` in `/home/administrator/project/Bottie` met SQLite; Eva2-B met

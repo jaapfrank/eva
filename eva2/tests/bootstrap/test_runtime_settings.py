@@ -509,3 +509,39 @@ def test_runtime_workboard_uses_only_its_fixed_owner_and_binding() -> None:
 
     assert runtime.dashboard_workboard().cards == []
     assert store.calls == [(owner, binding)]
+
+
+def test_dashboard_owner_turns_keep_one_server_bound_conversation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = UUID("33333333-3333-3333-3333-333333333333")
+    binding = UUID("44444444-4444-4444-8444-444444444444")
+    seen = []
+
+    def respond(runtime: PostgresHindsightMemoryRuntime, turn: object) -> object:
+        _ = runtime
+        seen.append(turn)
+        return object()
+
+    monkeypatch.setattr(PostgresHindsightMemoryRuntime, "respond", respond)
+    runtime = PostgresHindsightMemoryRuntime(
+        object(),  # type: ignore[arg-type]
+        object(),  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        runtime_tenant_id="tenant:dashboard",
+        runtime_installation_id="installation:dashboard",
+        delegated_work_store=object(),  # type: ignore[arg-type]
+        dashboard_owner_principal_id=owner,
+        dashboard_principal_binding_id=binding,
+    )
+
+    first, _ = runtime.dashboard_turn("Eerste bericht")
+    second, _ = runtime.dashboard_turn("Tweede bericht")
+
+    assert first.conversation_id == second.conversation_id == f"dashboard:{binding}"
+    assert first.message_id != second.message_id
+    assert seen == [first, second]
