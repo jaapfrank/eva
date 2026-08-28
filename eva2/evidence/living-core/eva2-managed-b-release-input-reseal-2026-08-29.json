@@ -1,0 +1,32 @@
+{
+  "contract": "Eva2ManagedBReleaseInputResealReceipt/v1",
+  "issuedAt": "2026-08-29T00:44:14+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "3d96f77b547e48f8704b5ba24b08c7ac9f5298c3",
+    "releaseAuthoritySha256": "4c2b5c58ebef503a766ccecbf7299854d23f4a1524758fcaab3738338655d998",
+    "cockpitEvidenceIndexSha256": "50afd69df4f654a684396d2335f55f53a0f87c3d796fe5393fc6fc318d67e307"
+  },
+  "finding": {
+    "initialFocusedFailures": 22,
+    "cause": "Previously tested manifest, runtime, image-build and validation changes had not yet been resealed in the managed release authority and cockpit evidence index.",
+    "runtimeFailureObserved": false
+  },
+  "repair": {
+    "releaseAuthoritySha256FieldsUpdated": 14,
+    "cockpitSourceSha256FieldsUpdated": 4,
+    "nonSha256FieldsChanged": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 86,
+    "ruff": "passed",
+    "gitDiffCheck": "passed",
+    "releaseAuthorityPinMismatches": 0,
+    "cockpitSourcePinMismatches": 0
+  },
+  "nonclaims": [
+    "This receipt records a hash-only reseal after the underlying changes and their semantic validators were already green.",
+    "No image was rebuilt, no service was restarted, no route was switched and no reboot was performed for this reseal.",
+    "The external Windows reboot and seven-day acceptance gates remain open."
+  ]
+}

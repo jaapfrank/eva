@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 00:38 CEST
+Laatst bijgewerkt: 29 augustus 2026, 00:44 CEST
 
 ## Heel kort
 
@@ -149,6 +149,9 @@ installatie zijn nog niet klaar.
   zelf rebooten, onderscheidt Windows-, WSL- en alleen-systemd-herstarts en
   schrijft pas bewijs nadat Eva1, Eva2, geheugen, dashboard en terugval echt
   terug zijn. Een proef zonder reboot werd terecht geweigerd zonder receipt.
+- Eerdere geldige wijzigingen hadden hun releasezegel nog niet meegekregen.
+  Veertien releasebestanden en vier cockpitbronnen zijn nu opnieuw aan hun
+  actuele inhoud gebonden. Alle 86 gerichte controles zijn groen.
 
 ## Wat nog niet klaar is
 
@@ -227,6 +230,7 @@ installatie zijn nog niet klaar.
 - [Volledige beheerde cold start achter de A/B-terugval](evidence/living-core/eva2-managed-b-full-cold-start-fallback-live-2026-08-28.json)
 - [Schone offline Hindsight-start zonder cache- of tijdzonewaarschuwingen](evidence/living-core/eva2-managed-b-hindsight-offline-clean-start-live-2026-08-28.json)
 - [Externe rebootcontrole klaargezet en kapotte terugval hersteld](evidence/living-core/eva2-managed-b-external-reboot-arm-2026-08-29.json)
+- [Actuele releasebestanden en cockpitbewijs opnieuw verzegeld](evidence/living-core/eva2-managed-b-release-input-reseal-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
