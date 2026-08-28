@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 12:20 CEST
+Laatst bijgewerkt: 28 augustus 2026, 12:23 CEST
 
 ## Heel kort
 
