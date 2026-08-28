@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 16:27 CEST
+Laatst bijgewerkt: 28 augustus 2026, 17:01 CEST
 
 ## Heel kort
 
@@ -74,6 +74,15 @@ installatie zijn nog niet klaar.
 - Hindsight kan zijn databasewachtwoord nu uit één privébestand lezen. Het
   staat niet meer in de Docker-instellingen; onveilige bestanden worden
   geweigerd. De aangepaste image werkte echt en de scan bleef 0/0.
+- Het beheerde B-startbestand gebruikt nu negen diensten en geeft Eva en
+  Hindsight ieder een eigen PostgreSQL-database. Alle images zijn exact
+  vastgezet en worden tijdens starten nooit stil opgehaald.
+- Die hele nieuwe startopstelling draaide echt met verse volumes. Het schema
+  werd geïnstalleerd, Codex antwoordde exact `beheerd` en na het stoppen en
+  starten van beide databases, Hindsight en de kern was Eva weer klaar.
+- Tijdens de proef zijn twee echte oude-manifestfouten gevonden en hersteld:
+  Python werd dubbel gestart en het webcommando ontbrak in de nieuwe image.
+  De uiteindelijke 82 releasecontroles en de volledige praktijkproef zijn groen.
 
 ## Wat nog niet klaar is
 
@@ -89,8 +98,8 @@ installatie zijn nog niet klaar.
 - De schone kern-, Hindsight- en database-images zijn nog geen releasebasis.
   De lokale bouwimage moet nog buiten deze computer worden bewaard en uit losse
   bouwpakketten herbouwbaar worden. Daarna volgt de beheerde B-route.
-- Het huidige B-startbestand kent nog geen aparte database voor Hindsight. Die
-  negende dienst moet eerst veilig worden toegevoegd en terugrolbaar getest.
+- De nieuwe negen-dienstengrafiek is nog niet over de echte B-data gezet. Eerst
+  volgen back-upcontrole, data-overdracht, A/B-omschakeling en echte terugrol.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Eva2 is nog niet als beheerde B-versie gepromoveerd.
@@ -103,8 +112,9 @@ installatie zijn nog niet klaar.
 
 1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
    en herstartveiligheid kwijt te raken.
-2. De kwetsbare testimages vervangen door schonere, opnieuw gescande images.
-3. De reboot- en langere praktijktest uitvoeren.
+2. De schone negen-dienstengrafiek gecontroleerd als nieuwe B-kandidaat
+   klaarzetten en de oude B volledig terugrolbaar houden.
+3. Daarna de reboot- en langere praktijktest uitvoeren.
 
 ## Belangrijk verschil
 
@@ -133,6 +143,7 @@ installatie zijn nog niet klaar.
 - [Pgvector opnieuw zonder internet gebouwd en bytegelijk gecontroleerd](evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json)
 - [Alle schone runtimeonderdelen samen, inclusief echte model- en geheugenherstart](evidence/living-core/eva2-clean-runtime-stack-restart-2026-08-28.json)
 - [Hindsight-databasewachtwoord veilig uit een privébestand](evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json)
+- [Schone beheerde B-grafiek met twee databases, echte Codex-beurt en herstart](evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

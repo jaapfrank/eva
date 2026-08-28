@@ -47,6 +47,10 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     database_dsn = _private_secret(
         private_tmp_path / "database-dsn", "postgresql://not-a-real-dsn\n"
     )
+    hindsight_database_dsn = _private_secret(
+        private_tmp_path / "hindsight-database-dsn",
+        "postgresql://not-a-real-hindsight-dsn\n",
+    )
     telegram_token = _private_secret(
         private_tmp_path / "telegram-token", "not-a-real-telegram-token\n"
     )
@@ -58,6 +62,10 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     )
     postgres_password = _private_secret(
         private_tmp_path / "postgres-password", "not-a-real-postgres-password\n"
+    )
+    hindsight_postgres_password = _private_secret(
+        private_tmp_path / "hindsight-postgres-password",
+        "not-a-real-hindsight-postgres-password\n",
     )
     identity_pack = _private_secret(
         private_tmp_path / "identity-pack.json",
@@ -88,8 +96,17 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_STACK_CORE_CONTAINER": "eva2-living-core-b",
         "EVA_STACK_BIND_ADDRESS": "127.0.0.1",
         "EVA_LIVING_CORE_IMAGE": "eva2-living-core@sha256:" + ("a" * 64),
+        "EVA_POSTGRES_IMAGE": "eva2-postgres@sha256:" + ("b" * 64),
+        "EVA_HINDSIGHT_POSTGRES_IMAGE": (
+            "eva2-hindsight-postgres@sha256:" + ("c" * 64)
+        ),
+        "EVA_HINDSIGHT_IMAGE": "eva2-hindsight@sha256:" + ("d" * 64),
         "EVA_DATABASE_DSN_FILE_HOST": str(database_dsn),
         "EVA_POSTGRES_PASSWORD_FILE_HOST": str(postgres_password),
+        "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST": str(hindsight_database_dsn),
+        "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST": str(
+            hindsight_postgres_password
+        ),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
         "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "false",
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": "",
@@ -114,7 +131,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_FILE_BATCH_ROOT": "/var/lib/eva/work",
         "EVA_STACK_WORK_VOLUME": "eva2-living-work-b",
         "EVA_STACK_POSTGRES_VOLUME": "eva2-postgres-b-live",
-        "EVA_STACK_HINDSIGHT_VOLUME": "eva2-hindsight-memory",
+        "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME": (
+            "eva2-hindsight-postgres-b-live"
+        ),
         "EVA_HINDSIGHT_BANK_NAMESPACE": "eva2",
         "EVA_CODEX_AUTH_DIR": str(codex_authority),
         "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
@@ -210,6 +229,7 @@ def test_managed_service_labels_require_the_entire_sealed_graph(
         name: dict(labels)
         for name in (
             "postgres",
+            "hindsight-postgres",
             "schema-installer",
             "model-access-lease",
             "hindsight-access-lease",
@@ -223,7 +243,7 @@ def test_managed_service_labels_require_the_entire_sealed_graph(
     verify_managed_service_labels(plan, services)
 
     services.pop("telegram-ingress")
-    with pytest.raises(RuntimeError, match="exact eight-service graph"):
+    with pytest.raises(RuntimeError, match="exact nine-service graph"):
         verify_managed_service_labels(plan, services)
 
 
@@ -242,6 +262,7 @@ def test_managed_service_labels_reject_a_service_from_another_snapshot(
         name: dict(labels)
         for name in (
             "postgres",
+            "hindsight-postgres",
             "schema-installer",
             "model-access-lease",
             "hindsight-access-lease",
@@ -272,6 +293,7 @@ def test_steady_managed_service_labels_exclude_profiled_schema_installer(
         name: dict(labels)
         for name in (
             "postgres",
+            "hindsight-postgres",
             "model-access-lease",
             "hindsight-access-lease",
             "hindsight",
@@ -284,7 +306,7 @@ def test_steady_managed_service_labels_exclude_profiled_schema_installer(
     verify_steady_managed_service_labels(plan, services)
 
     services["schema-installer"] = dict(labels)
-    with pytest.raises(RuntimeError, match="exact seven-service steady graph"):
+    with pytest.raises(RuntimeError, match="exact eight-service steady graph"):
         verify_steady_managed_service_labels(plan, services)
 
 
@@ -504,8 +526,13 @@ def test_plan_rejects_postgres_password_outside_exact_root_contract(
         "EVA_FILE_BATCH_ROOT",
         "EVA_STACK_WORK_VOLUME",
         "EVA_STACK_POSTGRES_VOLUME",
-        "EVA_STACK_HINDSIGHT_VOLUME",
+        "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME",
         "EVA_POSTGRES_PASSWORD_FILE_HOST",
+        "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST",
+        "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST",
+        "EVA_POSTGRES_IMAGE",
+        "EVA_HINDSIGHT_POSTGRES_IMAGE",
+        "EVA_HINDSIGHT_IMAGE",
         "EVA_CODEX_AUTH_DIR",
         "EVA_MODEL_ACCESS_LEASE_DIR",
         "EVA_HINDSIGHT_ACCESS_DIR",
@@ -565,8 +592,11 @@ def test_plan_rejects_unpinned_volume_and_unsafe_contract_directories(
         )
 
     values = _configuration(private_tmp_path)
-    values["EVA_STACK_HINDSIGHT_VOLUME"] = "/unsafe-volume"
-    with pytest.raises(RuntimeError, match="EVA_STACK_HINDSIGHT_VOLUME is invalid"):
+    values["EVA_STACK_HINDSIGHT_POSTGRES_VOLUME"] = "another-memory-volume"
+    with pytest.raises(
+        RuntimeError,
+        match="must be exactly eva2-hindsight-postgres-b-live",
+    ):
         load_core_b_plan(
             _environment_file(private_tmp_path, values).as_posix(),
             runtime_uid=os.geteuid(),
@@ -618,7 +648,7 @@ def test_host_only_receipt_has_no_secret_or_docker_observation(
             "docker_binary_metadata": True,
             "docker_config_directory_metadata": True,
             "docker_observed": False,
-            "host_secret_file_metadata": 9,
+            "host_secret_file_metadata": 11,
             "secret_contents_read": False,
         },
         "configuration_sha256": plan.snapshot_sha256,
@@ -731,7 +761,7 @@ def test_container_read_uses_verified_host_after_context_config_swap(
     ]
 
 
-def test_managed_service_observation_reads_seven_steady_labeled_containers(
+def test_managed_service_observation_reads_eight_steady_labeled_containers(
     monkeypatch: pytest.MonkeyPatch,
     private_tmp_path: Path,
 ) -> None:
@@ -742,6 +772,7 @@ def test_managed_service_observation_reads_seven_steady_labeled_containers(
     commands: list[list[str]] = []
     names = (
         "postgres",
+        "hindsight-postgres",
         "model-access-lease",
         "hindsight-access-lease",
         "hindsight",
@@ -760,7 +791,9 @@ def test_managed_service_observation_reads_seven_steady_labeled_containers(
                 )
             )
         if len(commands) == 2:
-            return SimpleNamespace(stdout="\n".join(f"container-{index}" for index in range(7)))
+            return SimpleNamespace(
+                stdout="\n".join(f"container-{index}" for index in range(8))
+            )
         return SimpleNamespace(
             stdout="\n".join(
                 json.dumps(
@@ -789,7 +822,7 @@ def test_managed_service_observation_reads_seven_steady_labeled_containers(
         "--format",
         "{{.ID}}",
     ]
-    assert commands[2][-12:] == [
+    assert commands[2][-13:] == [
         "inspect",
         "--type",
         "container",
@@ -802,6 +835,7 @@ def test_managed_service_observation_reads_seven_steady_labeled_containers(
         "container-4",
         "container-5",
         "container-6",
+        "container-7",
     ]
 
 
@@ -826,7 +860,9 @@ def test_managed_service_observation_rejects_another_compose_project(
                 )
             )
         if calls == 2:
-            return SimpleNamespace(stdout="\n".join(f"container-{index}" for index in range(7)))
+            return SimpleNamespace(
+                stdout="\n".join(f"container-{index}" for index in range(8))
+            )
         return SimpleNamespace(
             stdout="\n".join(
                 json.dumps(
@@ -837,7 +873,7 @@ def test_managed_service_observation_rejects_another_compose_project(
                         "io.eva2.managed-by": "eva2-explicit-b-manifest-v1",
                     }
                 )
-                for index in range(7)
+                for index in range(8)
             )
         )
 

@@ -29,6 +29,7 @@ COMPOSE_SERVICE_LABEL = "com.docker.compose.service"
 MANAGED_SERVICE_NAMES = frozenset(
     {
         "postgres",
+        "hindsight-postgres",
         "schema-installer",
         "model-access-lease",
         "hindsight-access-lease",
@@ -42,6 +43,7 @@ STEADY_MANAGED_SERVICE_NAMES = MANAGED_SERVICE_NAMES - {"schema-installer"}
 ENVIRONMENT_NAME = "explicit B deployment environment"
 MANAGED_WORK_VOLUME = "eva2-living-work-b"
 MANAGED_POSTGRES_VOLUME = "eva2-postgres-b-live"
+MANAGED_HINDSIGHT_POSTGRES_VOLUME = "eva2-hindsight-postgres-b-live"
 MODEL_AUTHORITY_UID = 1000
 MODEL_AUTHORITY_GID = 1000
 
@@ -55,8 +57,13 @@ REQUIRED_CONFIGURATION = (
     "EVA_STACK_CORE_CONTAINER",
     "EVA_STACK_BIND_ADDRESS",
     "EVA_LIVING_CORE_IMAGE",
+    "EVA_POSTGRES_IMAGE",
+    "EVA_HINDSIGHT_POSTGRES_IMAGE",
+    "EVA_HINDSIGHT_IMAGE",
     "EVA_DATABASE_DSN_FILE_HOST",
     "EVA_POSTGRES_PASSWORD_FILE_HOST",
+    "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST",
+    "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST",
     "EVA_HOME_ASSISTANT_URL",
     "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
     "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST",
@@ -78,7 +85,7 @@ REQUIRED_CONFIGURATION = (
     "EVA_FILE_BATCH_ROOT",
     "EVA_STACK_WORK_VOLUME",
     "EVA_STACK_POSTGRES_VOLUME",
-    "EVA_STACK_HINDSIGHT_VOLUME",
+    "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME",
     "EVA_HINDSIGHT_BANK_NAMESPACE",
     "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
@@ -91,6 +98,7 @@ DERIVED_CONFIGURATION = ("EVA_B_CONFIGURATION_SHA256",)
 
 FORBIDDEN_INLINE_SECRETS = (
     "EVA_DATABASE_DSN",
+    "HINDSIGHT_API_DATABASE_URL",
     "EVA_HOME_ASSISTANT_TOKEN",
     "EVA_DASHBOARD_ACCESS_TOKEN",
     "EVA_TELEGRAM_BOT_TOKEN",
@@ -104,10 +112,12 @@ HOST_SECRET_SETTING_NAMES = (
     "EVA_IDENTITY_PACK_FILE_HOST",
     "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
     "EVA_DATABASE_DSN_FILE_HOST",
+    "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST",
     "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
     "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
     "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
     "EVA_POSTGRES_PASSWORD_FILE_HOST",
+    "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST",
 )
 HOST_DIRECTORY_SETTING_NAMES = (
     "EVA_CODEX_AUTH_DIR",
@@ -295,6 +305,13 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_STACK_BIND_ADDRESS must be exactly 127.0.0.1")
     if not re.fullmatch(r".+@sha256:[0-9a-f]{64}", values["EVA_LIVING_CORE_IMAGE"]):
         raise RuntimeError("EVA_LIVING_CORE_IMAGE must use an exact sha256 digest")
+    for image_setting in (
+        "EVA_POSTGRES_IMAGE",
+        "EVA_HINDSIGHT_POSTGRES_IMAGE",
+        "EVA_HINDSIGHT_IMAGE",
+    ):
+        if not re.fullmatch(r".+@sha256:[0-9a-f]{64}", values[image_setting]):
+            raise RuntimeError(f"{image_setting} must use an exact sha256 digest")
     if values["EVA_FILE_BATCH_ROOT"] != "/var/lib/eva/work":
         raise RuntimeError("EVA_FILE_BATCH_ROOT must preserve /var/lib/eva/work")
     if values["EVA_STACK_WORK_VOLUME"] != MANAGED_WORK_VOLUME:
@@ -304,11 +321,11 @@ def _validate_configuration(values: dict[str, str]) -> None:
             "EVA_STACK_POSTGRES_VOLUME must be exactly "
             f"{MANAGED_POSTGRES_VOLUME}"
         )
-    if not re.fullmatch(
-        r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}",
-        values["EVA_STACK_HINDSIGHT_VOLUME"],
-    ):
-        raise RuntimeError("EVA_STACK_HINDSIGHT_VOLUME is invalid")
+    if values["EVA_STACK_HINDSIGHT_POSTGRES_VOLUME"] != MANAGED_HINDSIGHT_POSTGRES_VOLUME:
+        raise RuntimeError(
+            "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME must be exactly "
+            f"{MANAGED_HINDSIGHT_POSTGRES_VOLUME}"
+        )
     docker_binary = _require_absolute(
         values["EVA_B_DOCKER_BINARY"], "EVA_B_DOCKER_BINARY"
     )
@@ -446,6 +463,11 @@ def load_core_b_plan(
         owner_uid=runtime_uid,
     )
     _preflight_host_secret(
+        values["EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST"],
+        setting_name="EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST",
+        owner_uid=MODEL_AUTHORITY_UID,
+    )
+    _preflight_host_secret(
         values["EVA_IDENTITY_PACK_FILE_HOST"],
         setting_name="EVA_IDENTITY_PACK_FILE_HOST",
         owner_uid=runtime_uid,
@@ -482,6 +504,12 @@ def load_core_b_plan(
     _preflight_host_secret(
         values["EVA_POSTGRES_PASSWORD_FILE_HOST"],
         setting_name="EVA_POSTGRES_PASSWORD_FILE_HOST",
+        owner_uid=postgres_password_owner_uid,
+        required_mode=0o600,
+    )
+    _preflight_host_secret(
+        values["EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST"],
+        setting_name="EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST",
         owner_uid=postgres_password_owner_uid,
         required_mode=0o600,
     )
@@ -577,7 +605,7 @@ def verify_managed_service_labels(
         plan,
         labels_by_service,
         expected_services=MANAGED_SERVICE_NAMES,
-        graph_name="exact eight-service graph",
+        graph_name="exact nine-service graph",
     )
 
 
@@ -585,13 +613,13 @@ def verify_steady_managed_service_labels(
     plan: CoreBPlan,
     labels_by_service: object,
 ) -> None:
-    """Require the seven continuously running services after schema setup."""
+    """Require the eight continuously running services after schema setup."""
 
     _verify_service_labels(
         plan,
         labels_by_service,
         expected_services=STEADY_MANAGED_SERVICE_NAMES,
-        graph_name="exact seven-service steady graph",
+        graph_name="exact eight-service steady graph",
     )
 
 
@@ -730,7 +758,7 @@ def observe_managed_b_services(plan: CoreBPlan) -> None:
     )
     identifiers = tuple(value for value in container_ids.splitlines() if value)
     if len(identifiers) != len(STEADY_MANAGED_SERVICE_NAMES):
-        raise RuntimeError("managed B does not expose exactly seven labeled containers")
+        raise RuntimeError("managed B does not expose exactly eight labeled containers")
     labels_raw = _docker_host_output(
         plan,
         observed_daemon,

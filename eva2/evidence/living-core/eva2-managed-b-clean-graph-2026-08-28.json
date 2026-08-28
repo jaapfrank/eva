@@ -1,0 +1,89 @@
+{
+  "contract": "Eva2ManagedBCleanGraphEvidence/v1",
+  "issuedAt": "2026-08-28T17:01:13+02:00",
+  "sourceBaseCommit": "e01b9d2f87842839b1210c32a184eed1d26710fd",
+  "inputs": {
+    "manifestSha256": "e000378d754a34995b78e69f1f2848ba5573eb301798739a3151393e04d90881",
+    "probeSha256AtSuccessfulRun": "36da2bec2df8aca4776256a7de1d603770b872016fe2580bb2b08c3313e619e2",
+    "coreImage": "sha256:2ec1399520a9ccf0942137b45777409e30d0ad6678cebb339ef9a42af50eadff",
+    "hindsightImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "postgresPgvectorImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+  },
+  "render": {
+    "serviceCount": 9,
+    "services": [
+      "core",
+      "durable-goal-worker",
+      "hindsight",
+      "hindsight-access-lease",
+      "hindsight-postgres",
+      "model-access-lease",
+      "postgres",
+      "schema-installer",
+      "telegram-ingress"
+    ],
+    "allRuntimeImagesImmutable": true,
+    "pullPolicyNeverForCandidateImages": true,
+    "inlineHindsightDatabaseUrlAbsent": true
+  },
+  "runtime": {
+    "freshOperationalPostgres": "18.6",
+    "freshHindsightPostgres": "18.6",
+    "pgvector": "0.8.6",
+    "separateDatabaseVolumes": true,
+    "fullEvaSchemaInstalled": true,
+    "coreReadyBeforeRestart": true,
+    "realCodexReplyExact": "beheerd",
+    "jointStopStart": [
+      "postgres",
+      "hindsight-postgres",
+      "hindsight",
+      "core"
+    ],
+    "coreReadyAfterRestart": true,
+    "publishedAddress": "127.0.0.1",
+    "temporaryPort": 47053
+  },
+  "security": {
+    "hindsightDatabaseDsnSource": "private UID-1000 mode-0600 file",
+    "hindsightDatabaseDsnInDockerConfiguration": false,
+    "operationalAndMemoryPasswordsSeparate": true,
+    "productionTelegramBotUsed": false,
+    "homeAssistantCalled": false
+  },
+  "defectsFoundAndClosed": [
+    "The old manifest repeated the Python executable even though the distroless image already used Python as its entrypoint.",
+    "An explicit Compose entrypoint suppressed the image command, so the core web command is now sealed explicitly.",
+    "The probe initially used binary dashboard-token bytes although the runtime correctly requires UTF-8 text.",
+    "The probe initially emitted a non-canonical timestamp and the runtime correctly rejected the turn."
+  ],
+  "verification": {
+    "managedManifestRenderAndPreflightTestsPassed": 82,
+    "managedManifestRenderAndPreflightTestsFailed": 0,
+    "probeStatus": "passed",
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
+    "temporaryVolumesRemoved": true,
+    "temporarySecretDirectoryRemoved": true
+  },
+  "liveSafety": {
+    "eva1ServiceRestarts": 0,
+    "eva1HealthAfterProbeHttpStatus": 200,
+    "currentEva2HealthAfterProbeHttpStatus": 200,
+    "currentEva2ReadyAfterProbeHttpStatus": 200,
+    "eva1Modified": false,
+    "currentEva2Modified": false,
+    "existingBModified": false
+  },
+  "decision": {
+    "cleanManagedGraphCandidatePassed": true,
+    "productionBPromotionAllowed": false,
+    "remainingGate": "Validate backup and data transition, then prove atomic A/B cutover and rollback against the real managed B target."
+  },
+  "nonclaims": [
+    "This disposable graph did not start the durable-goal worker or Telegram ingress processes even though both were part of the sealed render.",
+    "This did not migrate or replace existing B data.",
+    "This did not perform a production cutover, reboot test, seven-day run, browser task, voice task or Home Assistant effect."
+  ],
+  "status": "passed_candidate_only"
+}

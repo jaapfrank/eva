@@ -43,6 +43,7 @@ def test_managed_b_has_exactly_one_telegram_first_service_graph() -> None:
 
     assert set(services) == {
         "postgres",
+        "hindsight-postgres",
         "schema-installer",
         "model-access-lease",
         "hindsight-access-lease",
@@ -69,11 +70,49 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
             }
             assert volume["bind"] == {"create_host_path": False}
 
-    assert services["core"]["container_name"] == "eva2-living-core-b"
+    assert services["core"]["container_name"] == (
+        "${EVA_STACK_CORE_CONTAINER:?set the sealed core container name}"
+    )
     assert services["core"]["user"] == "65532:65532"
     assert services["postgres"]["environment"]["POSTGRES_INITDB_ARGS"] == (
         "--auth-host=scram-sha-256"
     )
+    assert services["hindsight-postgres"]["environment"][
+        "POSTGRES_INITDB_ARGS"
+    ] == "--auth-host=scram-sha-256"
+    assert services["postgres"]["pull_policy"] == "never"
+    assert services["hindsight-postgres"]["pull_policy"] == "never"
+    assert services["hindsight"]["pull_policy"] == "never"
+    assert services["hindsight"]["user"] == "1000:1000"
+    assert services["hindsight"]["read_only"] is True
+    assert services["hindsight"]["cap_drop"] == ["ALL"]
+    assert services["hindsight"]["environment"][
+        "HINDSIGHT_API_DATABASE_URL_FILE"
+    ] == "/run/secrets/hindsight_database_dsn"
+    for service_name in (
+        "schema-installer",
+        "model-access-lease",
+        "hindsight-access-lease",
+        "core",
+        "durable-goal-worker",
+        "telegram-ingress",
+    ):
+        assert services[service_name]["entrypoint"] == ["/usr/local/bin/python"]
+    assert services["schema-installer"]["command"] == [
+        "-m",
+        "eva.operations.install_schema",
+    ]
+    assert services["core"]["command"] == [
+        "-m",
+        "uvicorn",
+        "eva.bootstrap.runtime:create_runtime_app",
+        "--factory",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8080",
+        "--no-access-log",
+    ]
     assert {
         "EVA_DURABLE_GOAL_PROVIDER": (
             "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
@@ -115,7 +154,8 @@ def test_managed_b_dependency_order_and_sealed_volumes() -> None:
         "postgres": {"condition": "service_healthy"}
     }
     assert services["hindsight"]["depends_on"] == {
-        "hindsight-access-lease": {"condition": "service_started"}
+        "hindsight-access-lease": {"condition": "service_started"},
+        "hindsight-postgres": {"condition": "service_healthy"},
     }
     assert services["core"]["depends_on"] == {
         "postgres": {"condition": "service_healthy"},
@@ -133,8 +173,11 @@ def test_managed_b_dependency_order_and_sealed_volumes() -> None:
             "name": "${EVA_STACK_POSTGRES_VOLUME:?set the sealed PostgreSQL volume name}",
             "labels": {"eva2.component": "operational-truth"},
         },
-        "hindsight-data": {
-            "name": "${EVA_STACK_HINDSIGHT_VOLUME:?set the sealed Hindsight volume name}",
+        "hindsight-postgres-data": {
+            "name": (
+                "${EVA_STACK_HINDSIGHT_POSTGRES_VOLUME:?set the sealed "
+                "Hindsight PostgreSQL volume name}"
+            ),
             "labels": {"eva2.component": "semantic-memory"},
         },
         "work-data": {
@@ -142,3 +185,28 @@ def test_managed_b_dependency_order_and_sealed_volumes() -> None:
             "labels": {"eva2.component": "bounded-workspace"},
         },
     }
+
+
+def test_managed_b_keeps_hindsight_database_credentials_out_of_environment() -> None:
+    services = _manifest()["services"]
+    hindsight = services["hindsight"]
+    hindsight_database = services["hindsight-postgres"]
+
+    assert "HINDSIGHT_API_DATABASE_URL" not in hindsight["environment"]
+    hindsight_binds = {
+        volume["target"]: volume for volume in _private_binds(hindsight)
+    }
+    assert hindsight_binds["/run/secrets/hindsight_database_dsn"] == {
+        "type": "bind",
+        "source": (
+            "${EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST:?set a "
+            "Hindsight-runtime-owned PostgreSQL DSN file}"
+        ),
+        "target": "/run/secrets/hindsight_database_dsn",
+        "read_only": True,
+        "bind": {"create_host_path": False},
+    }
+    assert hindsight_database["environment"]["POSTGRES_PASSWORD_FILE"] == (
+        "/run/eva2/hindsight-postgres-password"
+    )
+    assert "hindsight-data" not in _manifest()["volumes"]

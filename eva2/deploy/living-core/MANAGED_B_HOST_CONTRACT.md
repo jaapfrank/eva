@@ -8,7 +8,10 @@ de volledige manifestset en live gates bewijst.
 
 De toekomstige Telegram-first B bestaat uit één zelfstandige manifestset:
 
-`schema-installer → model-access-lease + hindsight-access-lease → hindsight → core → durable-goal-worker + telegram-ingress`
+`postgres + hindsight-postgres → schema-installer + model-access-lease + hindsight-access-lease → hindsight → core → durable-goal-worker + telegram-ingress`
+
+De operationele waarheid en Hindsight hebben dus ieder een eigen PostgreSQL-
+database en volume. Hindsight gebruikt geen ingebouwde database meer.
 
 Home Assistant is een expliciete core-overlay als fysieke readback is
 ingeschakeld. AgentMail, Stripe, proactieve Telegram, browser/gateway en skills
@@ -23,13 +26,16 @@ incompatibele Hindsight-definities.
 | Onderdeel | Contract |
 |---|---|
 | B-envbestand | Absolute reguliere niet-symlink, maximaal 64 KiB, operator-eigendom en zonder group/other-rechten. |
-| DSN, Home Assistant-token, dashboardtoegangstoken, Telegram-token, Telegram-bindings en Telegram-koppelsecret | Afzonderlijke reguliere niet-symlink files, UID `65532`, owner-readable, geen group/other-rechten, read-only bind met `create_host_path: false`; de preflight controleert alleen deze metadata, nooit bytes. |
+| Eva-DSN, Home Assistant-token, dashboardtoegangstoken, Telegram-token, Telegram-bindings en Telegram-koppelsecret | Afzonderlijke reguliere niet-symlink files, UID `65532`, owner-readable, geen group/other-rechten, read-only bind met `create_host_path: false`; de preflight controleert alleen deze metadata, nooit bytes. |
+| Hindsight-DSN | Reguliere niet-symlink file, UID `1000`, owner-readable, geen group/other-rechten. Alleen `HINDSIGHT_API_DATABASE_URL_FILE` staat in Docker-configuratie; een inline database-URL is verboden. |
+| PostgreSQL-wachtwoorden | Twee afzonderlijke root-owned `0600`-files: één voor Eva en één voor Hindsight. |
 | Codex-authority | Directory `1000:1000`/`0700`; `auth.json` privé en read-only gemount. Eva leest deze bron nooit rechtstreeks. |
 | Eva-modellease | Directory `1000:65532`/`02750`; lease één link, `1000:65532`/`0640`. |
 | Hindsight-lease | Directory `1000:1000`/`0700`; lease één link, `1000:1000`/`0600`. |
-| Volumes | PostgreSQL en workspace hebben exact gepinde namen; de Hindsight-naam is een verplichte, verzegelde B-configuratiewaarde en wordt pas bij adoptie read-only tegen de bestaande data/back-up gecontroleerd. Nooit `down -v`. |
+| Volumes | Eva-PostgreSQL, Hindsight-PostgreSQL en workspace hebben exact gepinde namen. Een echte adoptie controleert eerst de bestaande data en back-up. Nooit `down -v` bij productie. |
+| Images | Core, beide PostgreSQL-diensten en Hindsight gebruiken uitsluitend lokaal aanwezige `repository@sha256`-verwijzingen met `pull_policy: never`. |
 
-De preflight vereist nu ook de gepinde `EVA_STACK_WORK_VOLUME`,
+De preflight vereist ook de gepinde volumes, alle drie image-digests,
 `EVA_CODEX_AUTH_DIR` en `EVA_HINDSIGHT_ACCESS_DIR`.
 
 ## Verzegenen vóór renderen
@@ -60,6 +66,8 @@ geprovisioneerd root-owned `0600`-bestand direct en read-only; Docker
 gepinde upstream-image uit met een verse én herstartte tijdelijke volume en
 bewijst dat de initiële waarde werkt en een bestaande database niet reset.
 
-Dit is alleen de PostgreSQL-component. Een volledige managed-stackclaim blijft
-geblokkeerd totdat de zelfstandige manifestset en een adoptierun zijn
-gereviewd en echt uitgevoerd.
+De tijdelijke kandidaatproef heeft de negen-dienstengrafiek gerenderd, beide
+databases gestart, het schema geïnstalleerd, een echte Codex-beurt uitgevoerd
+en database, Hindsight en core samen herstart. Dit bewijst de kandidaatgrafiek,
+niet de productieadoptie. Een gecontroleerde data-overdracht, A/B-omschakeling
+en terugrol op de echte B blijven afzonderlijke gates.

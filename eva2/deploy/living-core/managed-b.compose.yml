@@ -2,8 +2,8 @@
 # contract only: it does not authorize adoption, recreate, or traffic cutover.
 services:
   postgres:
-    image: docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60
-    pull_policy: missing
+    image: ${EVA_POSTGRES_IMAGE:?set the immutable scanned PostgreSQL/pgvector image reference}
+    pull_policy: never
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${EVA_STACK_POSTGRES_DATABASE:-eva2}
@@ -35,6 +35,40 @@ services:
       io.eva2.managed-by: eva2-explicit-b-manifest-v1
       io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
 
+  hindsight-postgres:
+    image: ${EVA_HINDSIGHT_POSTGRES_IMAGE:?set the immutable scanned Hindsight PostgreSQL/pgvector image reference}
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${EVA_STACK_HINDSIGHT_POSTGRES_DATABASE:-hindsight}
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_PASSWORD_FILE: /run/eva2/hindsight-postgres-password
+      POSTGRES_USER: postgres
+    volumes:
+      - type: bind
+        source: ${EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST:?set a root-owned mode-0600 Hindsight PostgreSQL password file}
+        target: /run/eva2/hindsight-postgres-password
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: hindsight-postgres-data
+        target: /var/lib/postgresql/data
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          pg_isready -U postgres -d "$${POSTGRES_DB}" &&
+          psql -U postgres -d "$${POSTGRES_DB}" -Atc 'SELECT 1' | grep -qx 1
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
   schema-installer:
     profiles: ["schema-install"]
     image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
@@ -46,7 +80,8 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=16m
-    command: ["python", "-m", "eva.operations.install_schema"]
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.operations.install_schema"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
     volumes:
@@ -70,8 +105,8 @@ services:
     restart: unless-stopped
     healthcheck:
       disable: true
+    entrypoint: ["/usr/local/bin/python"]
     command:
-      - python
       - -m
       - eva.operations.model_credentials
       - --source
@@ -106,8 +141,8 @@ services:
     restart: unless-stopped
     healthcheck:
       disable: true
+    entrypoint: ["/usr/local/bin/python"]
     command:
-      - python
       - -m
       - eva.operations.model_credentials
       - --format
@@ -138,11 +173,15 @@ services:
       io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
 
   hindsight:
-    image: ghcr.io/vectorize-io/hindsight@sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b
-    pull_policy: missing
+    image: ${EVA_HINDSIGHT_IMAGE:?set the immutable scanned Hindsight API image reference}
+    pull_policy: never
     restart: unless-stopped
     init: true
+    user: "1000:1000"
+    read_only: true
+    cap_drop: ["ALL"]
     environment:
+      HINDSIGHT_API_DATABASE_URL_FILE: /run/secrets/hindsight_database_dsn
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
       HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
@@ -157,12 +196,19 @@ services:
         read_only: true
         bind:
           create_host_path: false
-      - type: volume
-        source: hindsight-data
-        target: /home/hindsight/.pg0
+      - type: bind
+        source: ${EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST:?set a Hindsight-runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/hindsight_database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
     depends_on:
       hindsight-access-lease:
         condition: service_started
+      hindsight-postgres:
+        condition: service_healthy
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=64m
     security_opt: ["no-new-privileges:true"]
     healthcheck:
       test:
@@ -183,9 +229,20 @@ services:
   core:
     image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
     pull_policy: never
-    container_name: eva2-living-core-b
+    container_name: ${EVA_STACK_CORE_CONTAINER:?set the sealed core container name}
     user: "65532:65532"
     restart: unless-stopped
+    entrypoint: ["/usr/local/bin/python"]
+    command:
+      - -m
+      - uvicorn
+      - eva.bootstrap.runtime:create_runtime_app
+      - --factory
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8080"
+      - --no-access-log
     environment:
       EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
       EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
@@ -286,7 +343,8 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=8m
-    command: ["python", "-m", "eva.operations.durable_goal_worker"]
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.operations.durable_goal_worker"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP: ${EVA_DURABLE_GOAL_ALLOW_INSECURE_HTTP:-false}
@@ -320,7 +378,8 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=8m
-    command: ["python", "-m", "eva.operations.telegram_ingress"]
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.operations.telegram_ingress"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_LIVING_CORE_URL: http://core:8080
@@ -366,8 +425,8 @@ volumes:
     name: ${EVA_STACK_POSTGRES_VOLUME:?set the sealed PostgreSQL volume name}
     labels:
       eva2.component: operational-truth
-  hindsight-data:
-    name: ${EVA_STACK_HINDSIGHT_VOLUME:?set the sealed Hindsight volume name}
+  hindsight-postgres-data:
+    name: ${EVA_STACK_HINDSIGHT_POSTGRES_VOLUME:?set the sealed Hindsight PostgreSQL volume name}
     labels:
       eva2.component: semantic-memory
   work-data:
