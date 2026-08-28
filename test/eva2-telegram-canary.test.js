@@ -38,7 +38,7 @@ test('een gewone vervolgzin wordt binnen een actieve sessie exact naar B gestuur
   let captured;
   const result = await askEva2Canary({
     baseUrl: 'http://127.0.0.1:44674',
-    chatId: 42,
+    chatId: 7,
     messageId: 9002,
     fromId: 7,
     text: 'Doe maar',
@@ -50,8 +50,8 @@ test('een gewone vervolgzin wordt binnen een actieve sessie exact naar B gestuur
         ok: true,
         json: async () => ({
           contract: 'EvaInternalGroundedReply/v1',
-          conversation_id: 'telegram:42',
-          message_id: 'telegram:42:9002',
+          conversation_id: 'telegram:7',
+          message_id: 'telegram:7:9002',
           text: 'Ik pak de bedoelde verwarming uit ons gesprek.',
         }),
       };
@@ -65,7 +65,7 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
   let captured;
   const result = await askEva2Canary({
     baseUrl: 'http://127.0.0.1:44674',
-    chatId: 42,
+    chatId: 7,
     messageId: 9001,
     fromId: 7,
     text: '/eva2 Vertel eens eerlijk wat je denkt',
@@ -81,8 +81,8 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
         ok: true,
         json: async () => ({
           contract: 'EvaInternalGroundedReply/v1',
-          conversation_id: 'telegram:42',
-          message_id: 'telegram:42:9001',
+          conversation_id: 'telegram:7',
+          message_id: 'telegram:7:9001',
           text: 'Eerlijk? Ik denk dat je vooral duidelijkheid zoekt.',
         }),
       };
@@ -91,12 +91,56 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
 
   assert.equal(captured.url, 'http://127.0.0.1:44674/internal/v1/turns/respond');
   assert.equal(captured.body.text, 'Vertel eens eerlijk wat je denkt');
-  assert.equal(captured.body.conversation_id, 'telegram:42');
+  assert.equal(captured.body.conversation_id, 'telegram:7');
   assert.deepEqual(captured.body.audience, {
-    audience_id: 'person:live-test-jaap',
+    audience_id: 'person:telegram:7',
     kind: 'private_person',
-    principal_id: 'live-test-jaap',
+    principal_id: 'telegram:7',
   });
+  assert.equal(captured.body.principal_id, 'telegram:7');
   assert.equal(captured.body.recent_messages[0].text, 'We hadden het over een koersvlag.');
   assert.equal(result.text, 'Eerlijk? Ik denk dat je vooral duidelijkheid zoekt.');
+});
+
+test('B-canary weigert groepen tot groepsconsent persoonsgebonden is', async () => {
+  await assert.rejects(
+    askEva2Canary({
+      baseUrl: 'http://127.0.0.1:44674',
+      chatId: -42,
+      messageId: 9003,
+      fromId: 7,
+      text: '/eva2 Dit hoort bij onze groep',
+      telegramDate: 1787486400,
+      fetchImpl: async () => assert.fail('groep mag Eva2 niet bereiken'),
+    }),
+    /alleen een gekoppeld privégesprek/u,
+  );
+});
+
+test('ieder privéaccount krijgt een eigen Eva2-principal', async () => {
+  const principals = [];
+  for (const fromId of [7, 8]) {
+    await askEva2Canary({
+      baseUrl: 'http://127.0.0.1:44674',
+      chatId: fromId,
+      messageId: 9100 + fromId,
+      fromId,
+      text: '/eva2 Hallo',
+      telegramDate: 1787486400 + fromId,
+      fetchImpl: async (_url, options) => {
+        const body = JSON.parse(options.body);
+        principals.push(body.principal_id);
+        return {
+          ok: true,
+          json: async () => ({
+            contract: 'EvaInternalGroundedReply/v1',
+            conversation_id: `telegram:${fromId}`,
+            message_id: `telegram:${fromId}:${9100 + fromId}`,
+            text: 'Hoi!',
+          }),
+        };
+      },
+    });
+  }
+  assert.deepEqual(principals, ['telegram:7', 'telegram:8']);
 });

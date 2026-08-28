@@ -47,6 +47,17 @@ function canonicalTelegramTimestamp(unixSeconds) {
   return new Date(seconds * 1000).toISOString().replace('.000Z', 'Z');
 }
 
+function privateTelegramPrincipal({ chatId, fromId }) {
+  const chat = Number(chatId);
+  const sender = Number(fromId);
+  if (!Number.isSafeInteger(chat) || chat < 1
+    || !Number.isSafeInteger(sender) || sender < 1
+    || chat !== sender) {
+    throw new Error('Eva B-canary ondersteunt alleen een gekoppeld privégesprek');
+  }
+  return `telegram:${sender}`;
+}
+
 export async function askEva2Canary({
   baseUrl,
   chatId,
@@ -66,20 +77,21 @@ export async function askEva2Canary({
   if (prompt === null) return null;
   if (!prompt) throw new Error('Zet je vraag achter /eva2');
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');
+  const principalId = privateTelegramPrincipal({ chatId, fromId });
   const response = await fetchImpl(`${baseUrl}/internal/v1/turns/respond`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       audience: {
-        audience_id: 'person:live-test-jaap',
+        audience_id: `person:${principalId}`,
         kind: 'private_person',
-        principal_id: 'live-test-jaap',
+        principal_id: principalId,
       },
       conversation_id: `telegram:${chatId}`,
       installation_id: 'live-test-installation',
       message_id: `telegram:${chatId}:${messageId}`,
       occurred_at: canonicalTelegramTimestamp(telegramDate),
-      principal_id: 'live-test-jaap',
+      principal_id: principalId,
       recent_messages: recentMessages,
       tenant_id: 'live-test-tenant',
       text: prompt,
