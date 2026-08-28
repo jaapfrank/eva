@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 16:19 CEST
+Laatst bijgewerkt: 28 augustus 2026, 16:27 CEST
 
 ## Heel kort
 
@@ -71,6 +71,9 @@ installatie zijn nog niet klaar.
 - De schone kern, Hindsight en twee verse PostgreSQL 18-databases draaiden
   daarna samen. Een echt modelantwoord en het geheugen bleven werken nadat de
   hele proefstack was gestopt en gestart.
+- Hindsight kan zijn databasewachtwoord nu uit één privébestand lezen. Het
+  staat niet meer in de Docker-instellingen; onveilige bestanden worden
+  geweigerd. De aangepaste image werkte echt en de scan bleef 0/0.
 
 ## Wat nog niet klaar is
 
@@ -129,6 +132,7 @@ installatie zijn nog niet klaar.
 - [Schone Hindsight-API en PostgreSQL/pgvector: geheugenherstart en scans 0/0](evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json)
 - [Pgvector opnieuw zonder internet gebouwd en bytegelijk gecontroleerd](evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json)
 - [Alle schone runtimeonderdelen samen, inclusief echte model- en geheugenherstart](evidence/living-core/eva2-clean-runtime-stack-restart-2026-08-28.json)
+- [Hindsight-databasewachtwoord veilig uit een privébestand](evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

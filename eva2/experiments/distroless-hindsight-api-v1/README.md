@@ -22,3 +22,9 @@ Dit is nog een kandidaat en geen release. De lokale builderimage heeft nog
 geen off-host back-up en kan nog niet vanuit een complete set bewaarde losse
 APK-bestanden worden gereconstrueerd. De live Eva1- en `/eva2`-routes zijn niet
 gewijzigd.
+
+De vervolgcandidate `Dockerfile.file-secret` verwijdert de database-DSN uit de
+containeromgeving. Een kleine startgrens accepteert alleen één absoluut,
+privé, niet-gelinkt bestand van runtime-UID 1000. Ontbrekende, inline,
+groepsleesbare, symlink- en hardlinkvarianten worden geweigerd. De echte API
+startte hiermee, vond het eerder bewaarde testwoord terug en scannde 0/0.
