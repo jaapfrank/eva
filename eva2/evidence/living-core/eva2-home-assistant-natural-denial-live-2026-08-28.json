@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2HomeAssistantNaturalDenialLiveReceipt/v1",
+  "capturedAt": "2026-08-28T13:21:08+02:00",
+  "sourceCommit": "e347b0dd303622475000c734368f7efd0cff38b3",
+  "sourceArchiveSha256": "081e560480f9229ca7ec4a3987ffff401fccd86b7bbdcde1f8d0570cd56d3595",
+  "imageId": "sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
+  "runtime": {
+    "container": "eva2-candidate-e347b0d-core",
+    "loopbackPort": 44705,
+    "readyBeforeCutover": true,
+    "healthyAfterRestart": true,
+    "restartCountAfterManualRestart": 0
+  },
+  "route": {
+    "client": "Eva1 askEva2Canary",
+    "externalTelegramMessageSent": false,
+    "syntheticPrivatePrincipal": true,
+    "requestSha256": "ea42a9397a1b57a4a06c2f8db4efc20df9e8cf7d929c239522fa0a0fd8e64a9c",
+    "reply": "Ik mag Spotjes overkapping nu alleen uitzetten, niet aanzetten.",
+    "replySha256": "4c9b8a8f9f5e182c44764810004d92b9739e1509aaf9f1988ae5dd05b82cd1c5"
+  },
+  "effectBoundary": {
+    "friendlyTarget": "Spotjes overkapping",
+    "entityIdRecorded": false,
+    "requestedService": "turn_on",
+    "allowedService": "turn_off",
+    "effectEventCountBeforeRestart": 0,
+    "effectEventCountAfterRestartReplay": 0,
+    "independentStateBeforeCutover": "off",
+    "independentStateAfterRestartReplay": "off"
+  },
+  "restartReplay": {
+    "sameMessageReplayed": true,
+    "replyMatchedExactly": true,
+    "elapsedMilliseconds": 56,
+    "providerEffectRepeated": false
+  },
+  "cutover": {
+    "status": "switched",
+    "sourcePort": 44704,
+    "targetPort": 44705,
+    "targetReady": true,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "loadedCanaryUrl": "http://127.0.0.1:44705"
+  },
+  "verification": {
+    "targetedTestsPassed": 28,
+    "ruffPassed": true,
+    "naturalDenialPassed": true,
+    "noHomeAssistantEffectPassed": true,
+    "restartReplayPassed": true,
+    "eva1UnaffectedPassed": true
+  },
+  "nonClaims": [
+    "No external Telegram update was received or sent.",
+    "No Home Assistant service call was made for the forbidden request.",
+    "No broader Home Assistant authority was granted.",
+    "This is not the two-person Telegram group acceptance test."
+  ]
+}

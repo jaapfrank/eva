@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 13:12 CEST
+Laatst bijgewerkt: 28 augustus 2026, 13:21 CEST
 
 ## Heel kort
 
@@ -38,8 +38,8 @@ installatie zijn nog niet klaar.
   niet en leest of bedient het huis dan niet.
 - Via een gewoon `/eva2`-bericht kan ze die spotjes uitzetten en apart
   controleren of ze echt uit staan.
-- Alleen die ene lamp en alleen `uitzetten` zijn toegestaan. Aanzetten, een
-  andere lamp kiezen of automatiseren wordt vóór Home Assistant geweigerd.
+- Alleen die ene lamp en alleen `uitzetten` zijn toegestaan. Bij `aanzetten`
+  legt Eva normaal uit wat ze niet mag en schrijft ze nul huisacties.
 - Na een echte herstart gaf dezelfde opdracht binnen 0,1 seconde het bewaarde
   resultaat terug, zonder de lamp nogmaals te bedienen.
 - De actuele Eva2-image kan nu veilig worden klaargezet en omgeschakeld.
@@ -87,7 +87,7 @@ installatie zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
-- [Echte begrensde huisactie met aparte controle](evidence/living-core/eva2-home-assistant-bounded-effect-live-2026-08-28.json)
+- [Echte begrensde huisactie](evidence/living-core/eva2-home-assistant-bounded-effect-live-2026-08-28.json) en [natuurlijke weigering zonder huisactie](evidence/living-core/eva2-home-assistant-natural-denial-live-2026-08-28.json)
 - [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)
 - [Aparte privéprofielen voor Telegramaccounts](evidence/living-core/eva2-telegram-private-principal-isolation-2026-08-28.json)
 - [Persoonsgebonden toestemming voor Telegramgroepen](evidence/living-core/eva2-telegram-group-consent-live-2026-08-28.json)
