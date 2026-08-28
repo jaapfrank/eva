@@ -47,15 +47,17 @@ function canonicalTelegramTimestamp(unixSeconds) {
   return new Date(seconds * 1000).toISOString().replace('.000Z', 'Z');
 }
 
-function privateTelegramPrincipal({ chatId, fromId }) {
+function telegramCanaryIdentity({ chatId, fromId }) {
   const chat = Number(chatId);
   const sender = Number(fromId);
-  if (!Number.isSafeInteger(chat) || chat < 1
-    || !Number.isSafeInteger(sender) || sender < 1
-    || chat !== sender) {
-    throw new Error('Eva B-canary ondersteunt alleen een gekoppeld privégesprek');
+  if (!Number.isSafeInteger(chat) || chat === 0
+    || !Number.isSafeInteger(sender) || sender < 1) {
+    throw new Error('Eva B-canary mist een geldige Telegram-identiteit');
   }
-  return `telegram:${sender}`;
+  if (chat > 0 && chat !== sender) {
+    throw new Error('Eva B-canary privéchat hoort niet bij de afzender');
+  }
+  return Object.freeze({ chat: String(chat), sender });
 }
 
 export async function askEva2Canary({
@@ -77,22 +79,17 @@ export async function askEva2Canary({
   if (prompt === null) return null;
   if (!prompt) throw new Error('Zet je vraag achter /eva2');
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');
-  const principalId = privateTelegramPrincipal({ chatId, fromId });
-  const response = await fetchImpl(`${baseUrl}/internal/v1/turns/respond`, {
+  const identity = telegramCanaryIdentity({ chatId, fromId });
+  const response = await fetchImpl(`${baseUrl}/internal/v1/telegram/canary/respond`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      audience: {
-        audience_id: `person:${principalId}`,
-        kind: 'private_person',
-        principal_id: principalId,
-      },
-      conversation_id: `telegram:${chatId}`,
+      chat_id: identity.chat,
       installation_id: 'live-test-installation',
-      message_id: `telegram:${chatId}:${messageId}`,
+      message_id: Number(messageId),
       occurred_at: canonicalTelegramTimestamp(telegramDate),
-      principal_id: principalId,
       recent_messages: recentMessages,
+      telegram_user_id: identity.sender,
       tenant_id: 'live-test-tenant',
       text: prompt,
     }),
