@@ -295,6 +295,110 @@ def test_telegram_test_ingress_requires_test_namespaced_inputs() -> None:
     }
 
 
+def test_real_conversation_test_stack_is_isolated_and_access_only() -> None:
+    document = yaml.safe_load(
+        (DEPLOY / "telegram-test-conversation.compose.yml").read_text(
+            encoding="utf-8"
+        )
+    )
+    services = document["services"]
+    assert set(services) == {
+        "telegram-conversation-core-test",
+        "telegram-conversation-hindsight-test",
+    }
+    core = services["telegram-conversation-core-test"]
+    hindsight = services["telegram-conversation-hindsight-test"]
+
+    for service in (core, hindsight):
+        assert service["profiles"] == ["telegram-conversation-test"]
+        assert service["pull_policy"] == "never"
+        assert service["restart"] == "no"
+        assert service["read_only"] is True
+        assert service["security_opt"] == ["no-new-privileges:true"]
+        assert "ports" not in service
+        assert "privileged" not in service
+        assert service["labels"] == {
+            "io.eva2.test-route": "telegram-native-real-conversation-v1",
+            "io.eva2.test-run": "telegram-native-test-v1",
+        }
+
+    assert core["user"] == "65532:65532"
+    assert core["cap_drop"] == ["ALL"]
+    assert core["networks"] == {
+        "telegram-test": {"aliases": ["eva-test-core"]},
+        "telegram-test-db": {},
+    }
+    assert core["environment"]["EVA_HINDSIGHT_URL"] == (
+        "http://hindsight-test:8888"
+    )
+    assert "EVA_HOME_ASSISTANT_URL" not in core["environment"]
+    assert "EVA_HOME_ASSISTANT_TOKEN" not in core["environment"]
+    assert "EVA_HOME_ASSISTANT_TOKEN_FILE" not in core["environment"]
+    assert len(core["volumes"]) == 4
+    assert {mount["target"] for mount in core["volumes"]} == {
+        "/run/identity/current.json",
+        "/run/identity/trust.json",
+        "/run/secrets/database_dsn",
+        "/run/secrets/model_access",
+    }
+    assert all(mount["read_only"] is True for mount in core["volumes"])
+    assert all(
+        mount["bind"] == {"create_host_path": False}
+        for mount in core["volumes"]
+    )
+
+    assert hindsight["networks"] == {
+        "telegram-test": {"aliases": ["hindsight-test"]}
+    }
+    assert hindsight["environment"]["HINDSIGHT_ENABLE_CP"] == "false"
+    assert hindsight["environment"]["HINDSIGHT_API_LLM_PROVIDER"] == (
+        "openai-codex"
+    )
+    assert len(hindsight["volumes"]) == 2
+    access = next(
+        mount
+        for mount in hindsight["volumes"]
+        if mount["target"] == "/home/hindsight/.codex"
+    )
+    assert access["read_only"] is True
+    assert access["bind"] == {"create_host_path": False}
+
+    assert document["networks"] == {
+        "telegram-test": {
+            "name": "${EVA_TEST_NETWORK_NAME:?set the labelled external Telegram test network}",
+            "external": True,
+        },
+        "telegram-test-db": {
+            "name": "${EVA_TEST_DATABASE_NETWORK_NAME:?set the labelled external Telegram test database network}",
+            "external": True,
+        },
+    }
+    volume = document["volumes"]["telegram-conversation-hindsight-data"]
+    assert volume["labels"] == {
+        "io.eva2.test-route": "telegram-native-real-conversation-v1",
+        "io.eva2.test-run": "telegram-native-test-v1",
+    }
+
+
+def test_real_conversation_test_example_contains_only_the_overlay_keys() -> None:
+    values = {
+        line.split("=", 1)[0]
+        for line in (
+            DEPLOY / "telegram-conversation-test.example"
+        ).read_text(encoding="utf-8").splitlines()
+        if line
+    }
+    assert values == {
+        "EVA_TEST_CONVERSATION_CORE_IMAGE",
+        "EVA_TEST_CONVERSATION_HINDSIGHT_VOLUME_NAME",
+        "EVA_TEST_CONVERSATION_MODEL_ACCESS_FILE_HOST",
+        "EVA_TEST_HINDSIGHT_ACCESS_DIR_HOST",
+        "EVA_TEST_HINDSIGHT_IMAGE",
+        "EVA_TEST_IDENTITY_PACK_FILE_HOST",
+        "EVA_TEST_IDENTITY_TRUST_FILE_HOST",
+    }
+
+
 def test_telegram_test_environment_rejects_managed_paths_and_escape(tmp_path: Path) -> None:
     source = (DEPLOY / "telegram-test.example").read_text(encoding="utf-8")
     environment_file = tmp_path / "telegram-test.env"

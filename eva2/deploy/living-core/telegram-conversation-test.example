@@ -1,0 +1,7 @@
+EVA_TEST_CONVERSATION_CORE_IMAGE=eva2/conversation-test@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+EVA_TEST_CONVERSATION_HINDSIGHT_VOLUME_NAME=eva2-telegram-test-conversation-hindsight-example
+EVA_TEST_CONVERSATION_MODEL_ACCESS_FILE_HOST=/run/eva2-test/conversation-secrets/model-access.json
+EVA_TEST_HINDSIGHT_ACCESS_DIR_HOST=/run/eva2-test/conversation-secrets/hindsight-access
+EVA_TEST_HINDSIGHT_IMAGE=ghcr.io/vectorize-io/hindsight@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+EVA_TEST_IDENTITY_PACK_FILE_HOST=/run/eva2-test/conversation-secrets/identity.json
+EVA_TEST_IDENTITY_TRUST_FILE_HOST=/run/eva2-test/conversation-secrets/identity-trust.json

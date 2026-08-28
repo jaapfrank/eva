@@ -1,0 +1,131 @@
+services:
+  telegram-conversation-hindsight-test:
+    profiles: ["telegram-conversation-test"]
+    image: ${EVA_TEST_HINDSIGHT_IMAGE:?set an immutable local Hindsight test image}
+    pull_policy: never
+    restart: "no"
+    init: true
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=64m
+    environment:
+      HINDSIGHT_ENABLE_CP: "false"
+      HINDSIGHT_API_LLM_PROVIDER: openai-codex
+      HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
+      HINDSIGHT_API_LLM_REASONING_EFFORT: low
+      HINDSIGHT_API_EMBEDDINGS_PROVIDER: local
+      HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW: "32"
+      HINDSIGHT_API_WORKER_ID: eva2-telegram-conversation-test
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import json,urllib.request;
+          assert json.load(urllib.request.urlopen('http://127.0.0.1:8888/health',timeout=2))['status']=='healthy'
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 20s
+    networks:
+      telegram-test:
+        aliases: [hindsight-test]
+    labels:
+      io.eva2.test-route: telegram-native-real-conversation-v1
+      io.eva2.test-run: telegram-native-test-v1
+    volumes:
+      - type: bind
+        source: ${EVA_TEST_HINDSIGHT_ACCESS_DIR_HOST:?set an access-only Hindsight auth directory}
+        target: /home/hindsight/.codex
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: volume
+        source: telegram-conversation-hindsight-data
+        target: /home/hindsight/.pg0
+
+  telegram-conversation-core-test:
+    profiles: ["telegram-conversation-test"]
+    image: ${EVA_TEST_CONVERSATION_CORE_IMAGE:?set an immutable local Eva2 conversation image}
+    pull_policy: never
+    restart: "no"
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    environment:
+      EVA_CONVERSATION_AUTH_FILE: /run/secrets/model_access
+      EVA_CONVERSATION_REASONING_EFFORT: medium
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_HINDSIGHT_BANK_NAMESPACE: eva2telegramtest
+      EVA_HINDSIGHT_URL: http://hindsight-test:8888
+      EVA_IDENTITY_PACK_FILE: /run/identity/current.json
+      EVA_IDENTITY_PACK_TRUST_FILE: /run/identity/trust.json
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_TEST_RUNTIME_INSTALLATION_ID:?set the test installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_TEST_RUNTIME_TENANT_ID:?set the test tenant identity}
+    depends_on:
+      telegram-conversation-hindsight-test:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=2).read()
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    networks:
+      telegram-test:
+        aliases: [eva-test-core]
+      telegram-test-db: {}
+    labels:
+      io.eva2.test-route: telegram-native-real-conversation-v1
+      io.eva2.test-run: telegram-native-test-v1
+    volumes:
+      - type: bind
+        source: ${EVA_TEST_DATABASE_DSN_FILE_HOST:?set the isolated test database DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_CONVERSATION_MODEL_ACCESS_FILE_HOST:?set an access-only conversation model file}
+        target: /run/secrets/model_access
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_IDENTITY_PACK_FILE_HOST:?set a signed IdentityPack file}
+        target: /run/identity/current.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TEST_IDENTITY_TRUST_FILE_HOST:?set the IdentityPack trust file}
+        target: /run/identity/trust.json
+        read_only: true
+        bind:
+          create_host_path: false
+
+networks:
+  telegram-test:
+    name: ${EVA_TEST_NETWORK_NAME:?set the labelled external Telegram test network}
+    external: true
+  telegram-test-db:
+    name: ${EVA_TEST_DATABASE_NETWORK_NAME:?set the labelled external Telegram test database network}
+    external: true
+
+volumes:
+  telegram-conversation-hindsight-data:
+    name: ${EVA_TEST_CONVERSATION_HINDSIGHT_VOLUME_NAME:?set a dedicated test Hindsight volume}
+    labels:
+      io.eva2.test-route: telegram-native-real-conversation-v1
+      io.eva2.test-run: telegram-native-test-v1
