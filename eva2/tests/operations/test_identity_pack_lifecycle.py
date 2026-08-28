@@ -9,13 +9,18 @@ import pytest
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
-from eva.application.identity_verifier import IdentityPackTrustBinding
+from eva.application.identity_verifier import (
+    IdentityPackTrustBinding,
+    load_identity_pack_trust_binding,
+    verify_identity_pack_bytes,
+)
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.identity import IdentityPack, IdentityPackDraft
 from eva.operations.cli import main
 from eva.operations.identity_pack_lifecycle import (
     IdentityPackLifecycleError,
     activate_identity_successor,
+    bootstrap_identity_authority,
     issue_identity_pack,
     load_private_ed25519_seed,
     rollback_identity_successor,
@@ -169,6 +174,53 @@ def test_owner_only_key_loader_rejects_world_readable_key(private_tmp_path: Path
         load_private_ed25519_seed(key_path)
 
 
+def test_fresh_identity_bootstrap_is_private_signed_and_non_overwriting(
+    private_tmp_path: Path,
+) -> None:
+    template, _old_key, _old_trust = _base_and_key()
+    authority = private_tmp_path / "authority"
+
+    result = bootstrap_identity_authority(
+        output_directory=authority,
+        template=template,
+        draft=_draft(template),
+        identity_id="identity:eva:home",
+        issuer="issuer:eva2:owner",
+        issued_at="2026-08-28T12:00:00Z",
+    )
+
+    assert authority.stat().st_mode & 0o777 == 0o700
+    assert {path.name for path in authority.iterdir()} == {
+        "current.json",
+        "private-key.bin",
+        "trust.json",
+    }
+    assert all(path.stat().st_mode & 0o777 == 0o600 for path in authority.iterdir())
+    trust = load_identity_pack_trust_binding(authority / "trust.json")
+    current = verify_identity_pack_bytes(
+        (authority / "current.json").read_bytes(), trust=trust
+    )
+    assert current.identity_id == "identity:eva:home"
+    assert current.issuer == "issuer:eva2:owner"
+    assert current.display_name == "Evi"
+    assert current.pack_version == result.pack_version == 1
+    assert hashlib.sha256((authority / "current.json").read_bytes()).hexdigest() == (
+        result.current_sha256
+    )
+    assert hashlib.sha256((authority / "trust.json").read_bytes()).hexdigest() == (
+        result.trust_sha256
+    )
+    with pytest.raises(IdentityPackLifecycleError, match="already exists"):
+        bootstrap_identity_authority(
+            output_directory=authority,
+            template=template,
+            draft=_draft(template),
+            identity_id="identity:eva:other",
+            issuer="issuer:eva2:other",
+            issued_at="2026-08-28T12:01:00Z",
+        )
+
+
 def test_cli_issues_activates_and_rolls_back_without_printing_identity_data(
     private_tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -245,3 +297,56 @@ def test_cli_issues_activates_and_rolls_back_without_printing_identity_data(
     ) == 0
     assert json.loads(capsys.readouterr().out)["status"] == "rolled_back"
     assert json.loads(base_path.read_bytes())["display_name"] == "Eva"
+
+
+def test_cli_bootstraps_without_printing_identity_or_key(
+    private_tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    base, _key, trust = _base_and_key()
+    base_path = private_tmp_path / "template.json"
+    draft_path = private_tmp_path / "draft.json"
+    trust_path = private_tmp_path / "template-trust.json"
+    authority = private_tmp_path / "new-authority"
+    base_path.write_bytes(canonical_json_bytes(base))
+    draft_path.write_bytes(canonical_json_bytes(_draft(base)))
+    trust_path.write_bytes(
+        canonical_json_bytes(
+            {
+                "contract": "IdentityPackTrustBinding/v1",
+                "expected_identity_id": trust.expected_identity_id,
+                "expected_issuer": trust.expected_issuer,
+                "public_key_base64url": base64.urlsafe_b64encode(
+                    trust.public_key_bytes
+                )
+                .rstrip(b"=")
+                .decode("ascii"),
+                "public_key_sha256": trust.public_key_sha256,
+                "schema_version": 1,
+            }
+        )
+    )
+
+    assert main(
+        [
+            "identity-bootstrap",
+            "--template",
+            str(base_path),
+            "--template-trust-file",
+            str(trust_path),
+            "--draft",
+            str(draft_path),
+            "--identity-id",
+            "identity:eva:home",
+            "--issuer",
+            "issuer:eva2:owner",
+            "--issued-at",
+            "2026-08-28T12:00:00Z",
+            "--output-directory",
+            str(authority),
+        ]
+    ) == 0
+    output = capsys.readouterr().out
+    assert json.loads(output)["status"] == "bootstrapped"
+    assert "identity:eva:home" not in output
+    assert "issuer:eva2:owner" not in output
+    assert (authority / "private-key.bin").read_bytes() not in output.encode()

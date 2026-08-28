@@ -22,6 +22,7 @@ from eva.operations.ab_slots import (
 from eva.operations.identity_pack_lifecycle import (
     IdentityPackLifecycleError,
     activate_identity_successor,
+    bootstrap_identity_authority,
     issue_identity_pack,
     load_private_ed25519_seed,
     rollback_identity_successor,
@@ -98,6 +99,17 @@ def _parser() -> argparse.ArgumentParser:
     identity_issue.add_argument("--issued-at", required=True)
     identity_issue.add_argument("--output", type=Path, required=True)
     identity_issue.add_argument("--trust-file", type=Path, required=True)
+    identity_bootstrap = commands.add_parser(
+        "identity-bootstrap",
+        help="create one fresh offline identity signer and signed current pack",
+    )
+    identity_bootstrap.add_argument("--template", type=Path, required=True)
+    identity_bootstrap.add_argument("--template-trust-file", type=Path, required=True)
+    identity_bootstrap.add_argument("--draft", type=Path, required=True)
+    identity_bootstrap.add_argument("--identity-id", required=True)
+    identity_bootstrap.add_argument("--issuer", required=True)
+    identity_bootstrap.add_argument("--issued-at", required=True)
+    identity_bootstrap.add_argument("--output-directory", type=Path, required=True)
     identity_activate = commands.add_parser(
         "identity-activate", help="atomically activate one signed identity candidate"
     )
@@ -149,6 +161,25 @@ def _identity_issue(arguments: argparse.Namespace) -> dict[str, object]:
         "candidate_sha256": write_identity_candidate(arguments.output, candidate),
         "pack_version": candidate.pack_version,
         "status": "issued",
+    }
+
+
+def _identity_bootstrap(arguments: argparse.Namespace) -> dict[str, object]:
+    trust = load_identity_pack_trust_binding(arguments.template_trust_file)
+    template = load_current_identity_pack(arguments.template, trust=trust)
+    result = bootstrap_identity_authority(
+        output_directory=arguments.output_directory,
+        template=template,
+        draft=_identity_draft(arguments.draft),
+        identity_id=arguments.identity_id,
+        issuer=arguments.issuer,
+        issued_at=arguments.issued_at,
+    )
+    return {
+        "current_sha256": result.current_sha256,
+        "pack_version": result.pack_version,
+        "status": "bootstrapped",
+        "trust_sha256": result.trust_sha256,
     }
 
 
@@ -255,6 +286,7 @@ def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     identity_commands = {
         "identity-issue": _identity_issue,
+        "identity-bootstrap": _identity_bootstrap,
         "identity-activate": _identity_activate,
         "identity-rollback": _identity_rollback,
     }

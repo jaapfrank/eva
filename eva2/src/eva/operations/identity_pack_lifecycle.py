@@ -18,6 +18,7 @@ from pathlib import Path
 import stat
 import tempfile
 
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from eva.application.identity_drafts import (
@@ -43,6 +44,37 @@ class IdentityPackCutover:
     previous_sha256: str
     current_sha256: str
     rollback_sha256: str
+
+
+@dataclass(frozen=True, slots=True)
+class IdentityAuthorityBootstrap:
+    """Non-secret hashes produced by one fresh offline identity authority."""
+
+    current_sha256: str
+    trust_sha256: str
+    pack_version: int
+
+
+def _signed_identity_pack(
+    payload: dict[str, object], *, private_key: Ed25519PrivateKey
+) -> IdentityPack:
+    payload["signature"] = "A" * 86
+    payload["source_sha256"] = "0" * 64
+    source_payload = dict(payload)
+    source_payload.pop("source_sha256")
+    source_payload.pop("signature")
+    payload["source_sha256"] = hashlib.sha256(
+        canonical_json_bytes(source_payload)
+    ).hexdigest()
+    signing_payload = dict(payload)
+    signing_payload.pop("signature")
+    payload["signature"] = base64.urlsafe_b64encode(
+        private_key.sign(canonical_json_bytes(signing_payload))
+    ).rstrip(b"=").decode("ascii")
+    try:
+        return IdentityPack.model_validate(payload)
+    except ValueError as exc:
+        raise IdentityPackLifecycleError("issued identity pack is invalid") from exc
 
 
 def issue_identity_pack(
@@ -76,25 +108,108 @@ def issue_identity_pack(
             "pack_version": base.pack_version + 1,
             "state": "current",
             "issued_at": issued_at,
-            "signature": "A" * 86,
-            "source_sha256": "0" * 64,
         }
     )
-    source_payload = dict(payload)
-    source_payload.pop("source_sha256")
-    source_payload.pop("signature")
-    payload["source_sha256"] = hashlib.sha256(
-        canonical_json_bytes(source_payload)
-    ).hexdigest()
-    signing_payload = dict(payload)
-    signing_payload.pop("signature")
-    payload["signature"] = base64.urlsafe_b64encode(
-        private_key.sign(canonical_json_bytes(signing_payload))
-    ).rstrip(b"=").decode("ascii")
+    return _signed_identity_pack(payload, private_key=private_key)
+
+
+def bootstrap_identity_authority(
+    *,
+    output_directory: Path,
+    template: IdentityPack,
+    draft: IdentityPackDraft,
+    identity_id: str,
+    issuer: str,
+    issued_at: str,
+) -> IdentityAuthorityBootstrap:
+    """Create one fresh signer, trust binding and signed pack without overwrite.
+
+    The new directory is owner-only and contains ``private-key.bin``,
+    ``current.json`` and ``trust.json``.  The caller must copy only the latter
+    two into runtime-owned storage; the signing seed must never be mounted.
+    """
+
+    validate_identity_draft_base(draft, template)
+    if not identity_presentation_diff(draft, template):
+        raise IdentityPackLifecycleError("identity draft has no effective change")
+    if output_directory.exists() or output_directory.is_symlink():
+        raise IdentityPackLifecycleError("identity authority directory already exists")
+    if output_directory.parent.is_symlink() or not output_directory.parent.is_dir():
+        raise IdentityPackLifecycleError("identity authority parent is invalid")
+
+    private_key = Ed25519PrivateKey.generate()
+    private_key_bytes = private_key.private_bytes(
+        serialization.Encoding.Raw,
+        serialization.PrivateFormat.Raw,
+        serialization.NoEncryption(),
+    )
+    public_key_bytes = private_key.public_key().public_bytes(
+        serialization.Encoding.Raw, serialization.PublicFormat.Raw
+    )
+    payload = template.model_dump(mode="json")
+    payload.update(draft.presentation.model_dump(mode="json", exclude_none=True))
+    payload.update(
+        {
+            "identity_id": identity_id,
+            "issuer": issuer,
+            "pack_version": 1,
+            "state": "current",
+            "issued_at": issued_at,
+        }
+    )
+    current = canonical_json_bytes(
+        _signed_identity_pack(payload, private_key=private_key)
+    )
+    trust = canonical_json_bytes(
+        {
+            "contract": "IdentityPackTrustBinding/v1",
+            "expected_identity_id": identity_id,
+            "expected_issuer": issuer,
+            "public_key_base64url": base64.urlsafe_b64encode(public_key_bytes)
+            .rstrip(b"=")
+            .decode("ascii"),
+            "public_key_sha256": hashlib.sha256(public_key_bytes).hexdigest(),
+            "schema_version": 1,
+        }
+    )
+    created: list[Path] = []
     try:
-        return IdentityPack.model_validate(payload)
-    except ValueError as exc:
-        raise IdentityPackLifecycleError("issued identity pack is invalid") from exc
+        output_directory.mkdir(mode=0o700)
+        for name, raw in (
+            ("private-key.bin", private_key_bytes),
+            ("current.json", current),
+            ("trust.json", trust),
+        ):
+            path = output_directory / name
+            descriptor = os.open(
+                path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600
+            )
+            created.append(path)
+            with os.fdopen(descriptor, "wb", closefd=True) as handle:
+                handle.write(raw)
+                handle.flush()
+                os.fsync(handle.fileno())
+        directory = os.open(output_directory, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    except OSError as exc:
+        for path in reversed(created):
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
+        try:
+            output_directory.rmdir()
+        except OSError:
+            pass
+        raise IdentityPackLifecycleError("identity authority write failed") from exc
+    return IdentityAuthorityBootstrap(
+        current_sha256=hashlib.sha256(current).hexdigest(),
+        trust_sha256=hashlib.sha256(trust).hexdigest(),
+        pack_version=1,
+    )
 
 
 def validate_identity_successor(
@@ -298,9 +413,11 @@ def rollback_identity_successor(
 
 
 __all__ = [
+    "IdentityAuthorityBootstrap",
     "IdentityPackCutover",
     "IdentityPackLifecycleError",
     "activate_identity_successor",
+    "bootstrap_identity_authority",
     "issue_identity_pack",
     "load_private_ed25519_seed",
     "rollback_identity_successor",
