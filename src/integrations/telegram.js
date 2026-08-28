@@ -63,6 +63,11 @@ import { redactSecrets, redactSensitiveText } from '../security/redaction.js';
 import { registerRuntimePrincipalValidator } from '../mind/runtimecontroller.js';
 import { householdMembers } from '../mind/household.js';
 import { turnUnderstandingAuthorityRecord } from '../turnauthority.js';
+import {
+  askEva2Canary,
+  eva2CanaryContinuation,
+  eva2CanaryPrompt,
+} from './eva2canary.js';
 
 const execFile = promisify(execFileCb);
 let bot = null;
@@ -2547,6 +2552,52 @@ export async function startTelegram() {
     const stop = typing(ctx);
     stamp('prep_ms', tPrep);
     try {
+      const eva2Prior = recentTelegramMessages({
+        chatId: ctx.chat.id,
+        beforeMessageId: ctx.message.message_id,
+        limit: 40,
+      });
+      const eva2Continuation = eva2CanaryContinuation({
+        text: ctx.message.text,
+        telegramDate: ctx.message.date,
+        fromId: ctx.from.id,
+        priorMessages: eva2Prior,
+      });
+      if (eva2CanaryPrompt(ctx.message.text) !== null || eva2Continuation) {
+        const tCanary = performance.now();
+        try {
+          const answer = await askEva2Canary({
+            baseUrl: config.eva2CanaryUrl,
+            chatId: ctx.chat.id,
+            messageId: ctx.message.message_id,
+            fromId: ctx.from.id,
+            text: ctx.message.text,
+            telegramDate: ctx.message.date,
+            continuation: eva2Continuation,
+            recentMessages: eva2Prior.slice(-12).map((row) => ({
+              occurred_at: new Date(row.ts).toISOString().replace(/\.\d{3}Z$/u, 'Z'),
+              role: row.role === 'assistant' ? config.assistantName : (row.sender || naam),
+              text: String(row.content || '').trim(),
+            })).filter((row) => row.text),
+          });
+          await sendTelegramText(ctx.chat.id, answer.text, {
+            replyToMessageId: ctx.message.message_id,
+            dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary'),
+          });
+          latency.eva2_canary = true;
+          stamp('eva2_canary_ms', tCanary);
+        } catch (error) {
+          await sendTelegramText(
+            ctx.chat.id,
+            `De Eva B-test kon nu niet antwoorden: ${errMsg(error).slice(0, 160)}`,
+            {
+              replyToMessageId: ctx.message.message_id,
+              dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary-error'),
+            },
+          );
+        }
+        return;
+      }
       if (await resumePreparedTelegramTurn(ctx, naam)) {
         latency.resumed_prepared_reply = true;
         return;

@@ -489,6 +489,7 @@ export const config = deepFreeze({
     .map((value) => value.trim())
     .filter(Boolean)
     .map(Number),
+  eva2CanaryUrl: (env.EVA2_CANARY_URL || '').replace(/\/$/, ''),
 
   webPort: numberSetting('WEB_PORT', 3210),
   webHost: env.WEB_HOST || '127.0.0.1',
