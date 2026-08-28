@@ -1640,7 +1640,12 @@ class CodexConversationModel:
             try:
                 with self._credential_lock:
                     self._rejected_token_sha256 = None
-                return parser(response)
+                try:
+                    return parser(response)
+                except (TimeoutError, socket.timeout, urllib.error.URLError) as error:
+                    raise ConversationModelError(
+                        "conversation provider is unavailable"
+                    ) from error
             finally:
                 response.close()
         if last_auth is not None:

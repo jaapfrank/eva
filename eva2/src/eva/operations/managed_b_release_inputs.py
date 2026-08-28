@@ -129,6 +129,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/adapters/connectors/playwright_mcp_action.py",
     "src/eva/adapters/connectors/playwright_mcp_worker.py",
     "src/eva/adapters/dbos/datasource.py",
+    "src/eva/adapters/model/conversation.py",
     "src/eva/adapters/model/openai_child_provider.py",
     "src/eva/adapters/postgres/connection.py",
     "src/eva/adapters/postgres/current_catalog.py",

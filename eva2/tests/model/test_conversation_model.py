@@ -588,6 +588,32 @@ def test_provider_rejection_latches_until_the_access_lease_rotates(
         server.server_close()
 
 
+def test_stream_read_timeout_is_a_bounded_provider_error(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    class TimedOutStream:
+        def __iter__(self) -> "TimedOutStream":
+            return self
+
+        def __next__(self) -> bytes:
+            raise TimeoutError("synthetic stream read timeout")
+
+        def close(self) -> None:
+            pass
+
+    auth_file = tmp_path / "lease.json"
+    _write_access_lease(auth_file)
+    model = CodexConversationModel(auth_file=auth_file)
+    monkeypatch.setattr(
+        conversation_module.urllib.request,
+        "urlopen",
+        lambda *_args, **_kwargs: TimedOutStream(),
+    )
+
+    with pytest.raises(ConversationModelError, match="provider is unavailable"):
+        model._request({})
+
+
 def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
