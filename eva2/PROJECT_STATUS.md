@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 13:30 CEST
+Laatst bijgewerkt: 28 augustus 2026, 13:32 CEST
 
 ## Heel kort
 
@@ -46,7 +46,7 @@ installatie zijn nog niet klaar.
 - De echte omschakeling heen, terug en opnieuw heen bleef groen. Bij een fout
   zet de operator automatisch de vorige route terug.
 - Er is een private back-up van Eva1 gemaakt en gecontroleerd.
-- Het vorige Eva2-slot blijft beschikbaar als directe rollback.
+- De vorige code draait als veilige rollback en ziet evenmin de volledige login.
 - Een kleine gesprek- en geheugenset kan veilig naar een lege database worden
   hersteld.
 

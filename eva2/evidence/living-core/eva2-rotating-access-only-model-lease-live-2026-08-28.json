@@ -1,6 +1,6 @@
 {
   "contract": "Eva2RotatingAccessOnlyModelLeaseLiveReceipt/v1",
-  "capturedAt": "2026-08-28T13:30:17+02:00",
+  "capturedAt": "2026-08-28T13:32:36+02:00",
   "sourceCommit": "e347b0dd303622475000c734368f7efd0cff38b3",
   "imageId": "sha256:53a6ee32b6730ca1d9ed7a51adf0ea2d34c2897dc103254e4334c81c30a2d4d4",
   "publisher": {
@@ -55,7 +55,24 @@
     "targetPort": 44706,
     "targetReady": true,
     "loadedCanaryUrl": "http://127.0.0.1:44706",
-    "previousCoreKeptAsRollback": true
+    "previousCoreKeptAsRollback": false,
+    "previousCoreSupersededBySecureRollback": true
+  },
+  "secureRollback": {
+    "container": "eva2-candidate-secure-rollback-core",
+    "sourceCommit": "b718552003b85fa3482e518a60d08af771338586",
+    "loopbackPort": 44707,
+    "health": "healthy",
+    "ownsFullEva1AuthMount": false,
+    "leaseMountReadOnly": true,
+    "modelReply": "veilige rollback klaar."
+  },
+  "legacyCandidateCleanup": {
+    "containersStopped": 4,
+    "containersRemoved": 0,
+    "imagesRemoved": 0,
+    "dataRemoved": false,
+    "reason": "The stopped candidates mounted the full Eva1 auth owner instead of the access-only lease."
   },
   "eva1": {
     "immediatePostRestartObservation": {
@@ -70,7 +87,7 @@
   },
   "nonClaims": [
     "The disposable Telegram bot was not used for these synthetic model calls.",
-    "The refresh owner remains available to the isolated publisher and is not copied into Eva2 core.",
+    "The refresh owner remains available to the isolated publisher and is not copied into the live or rollback Eva2 core.",
     "This is not a host reboot or a long-duration acceptance run."
   ]
 }
