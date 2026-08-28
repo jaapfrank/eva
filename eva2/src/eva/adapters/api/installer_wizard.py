@@ -17,6 +17,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
+from eva.adapters.api.installer_identity_ui import INSTALLER_IDENTITY_SCRIPT
 from eva.application.conversation import load_current_identity_pack
 from eva.application.identity_drafts import identity_presentation_diff
 from eva.application.soul_markdown import (
@@ -28,7 +29,10 @@ from eva.application.soul_markdown import (
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPack
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
-from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_identity_lifecycle import (
+    InstallerIdentityLifecycle,
+    InstallerIdentityWorkflowStatus,
+)
 from eva.operations.installer_preflight import (
     InstallerPreflightError,
     inspect_host,
@@ -151,6 +155,7 @@ def _page(
     identity: IdentityPack,
     *,
     identity_writable: bool,
+    identity_workflow: InstallerIdentityWorkflowStatus | None = None,
 ) -> str:
     status = html.escape(str(receipt["status"]))
     rows = "".join(
@@ -161,11 +166,48 @@ def _page(
     next_step = html.escape(str(receipt["next"]))
     name = html.escape(identity.display_name)
     if identity_writable:
-        controls = """<p><small>Je voorstel wordt pas actief na vier zichtbare stappen. De privésleutel blijft buiten de browser en buiten Eva.</small></p><div id="identity-actions"><button type="button" id="soul-stage" disabled>1. Bewaar voorstel</button> <button type="button" id="soul-issue" disabled>2. Onderteken</button> <button type="button" id="soul-activate" disabled>3. Activeer</button> <button type="button" id="soul-rollback" disabled>Vorige identiteit terugzetten</button></div>"""
+        controls = """<p><small>Je voorstel wordt pas actief na vier zichtbare stappen. De privésleutel blijft buiten de browser en buiten Eva.</small></p><div id="identity-actions"><button type="button" id="soul-stage" disabled>1. Bewaar voorstel</button> <button type="button" id="soul-issue" disabled>2. Onderteken</button> <button type="button" id="soul-activate" disabled>3. Activeer</button> <button type="button" id="soul-rollback" disabled>Vorige identiteit terugzetten</button> <button type="button" id="soul-new-proposal" hidden>Nieuwe wijziging voorbereiden</button></div>"""
     else:
         controls = """<p><small>Deze installer is niet met een private identiteit-authority gestart of de platformcontrole is nog geblokkeerd. Je kunt daarom alleen voorvertonen.</small></p>"""
-    writable = "true" if identity_writable else "false"
-    return f"""<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eva installeren</title><style>body{{font:16px system-ui;margin:0;background:#07111c;color:#edf6ff;display:grid;min-height:100vh;place-items:center}}main{{max-width:720px;padding:2rem}}section{{background:#102337;border:1px solid #31516d;border-radius:18px;padding:1.5rem;margin:1rem 0}}.blocked{{color:#ffca78}}.passed{{color:#86f4ba}}small{{color:#aec4d7}}li{{margin:.7rem 0}}textarea{{box-sizing:border-box;width:100%;min-height:9rem;background:#07111c;color:#edf6ff;border:1px solid #52718d;border-radius:8px;padding:.8rem;font:14px ui-monospace,monospace}}button{{margin-top:.7rem;background:#2b8a61;color:white;border:0;border-radius:8px;padding:.65rem .9rem;font-weight:700}}button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}</style><main><p><small>EVA · lokale installatiecontrole</small></p><h1>Voordat Eva iets installeert</h1><section><h2 class="{status}">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>Deze pagina heeft geen connector-, secret- of installatieknop. Zij toont alleen waarom Eva wel of niet verder mag.</small></p></section><section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva\n\n## Naam\nEva\n\n## Temperament\nwarm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section></main><script>const writable={writable};const result=document.getElementById('soul-result');const soul=document.getElementById('soul');const stageButton=document.getElementById('soul-stage');const issueButton=document.getElementById('soul-issue');const activateButton=document.getElementById('soul-activate');const rollbackButton=document.getElementById('soul-rollback');let state={{}};async function post(path,payload){{const response=await fetch(path,{{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(payload)}});if(!response.ok)throw new Error('geweigerd');return response.json()}}document.getElementById('soul-preview').addEventListener('click',async()=>{{try{{result.textContent='Voorstel controleren…';const preview=await post('/internal/v1/identity/soul-import/diff',{{draft_id:'installer-preview',soul_markdown:soul.value}});state={{base:preview.base_pack_sha256}};result.textContent=preview.changes.map(change=>`${{change.field}}:\n  was: ${{JSON.stringify(change.before)}}\n  wordt: ${{JSON.stringify(change.after)}}`).join('\n\n');if(writable)stageButton.disabled=false}}catch{{result.textContent='Dit voorstel is niet geldig. Eva heeft niets bewaard of gewijzigd.'}}}});if(writable){{stageButton.addEventListener('click',async()=>{{try{{const staged=await post('/internal/v1/identity/soul-import/stage',{{draft_id:'installer-preview',soul_markdown:soul.value,expected_base_sha256:state.base}});state={{...state,draft:staged.draft_sha256}};result.textContent='Voorstel veilig bewaard. Het is nog niet ondertekend of actief.';issueButton.disabled=false;stageButton.disabled=true;soul.disabled=true}}catch{{result.textContent='Bewaren is geweigerd; de identiteit is niet gewijzigd.'}}}});issueButton.addEventListener('click',async()=>{{try{{const issued=await post('/internal/v1/identity/staged/issue',{{draft_sha256:state.draft,expected_base_sha256:state.base,confirmation:'ONDERTEKENEN'}});state={{...state,candidate:issued.candidate_sha256}};result.textContent='Voorstel ondertekend. Het is nog niet actief.';activateButton.disabled=false;issueButton.disabled=true}}catch{{result.textContent='Ondertekenen is geweigerd; de identiteit is niet gewijzigd.'}}}});activateButton.addEventListener('click',async()=>{{if(!confirm('Wil je deze ondertekende identiteit nu echt activeren?'))return;try{{const activated=await post('/internal/v1/identity/candidate/activate',{{candidate_sha256:state.candidate,expected_current_sha256:state.base,confirmation:'ACTIVEREN'}});state={{...state,active:activated.current_sha256}};result.textContent='De nieuwe identiteit is actief. Je kunt haar hier direct weer terugzetten.';rollbackButton.disabled=false;activateButton.disabled=true}}catch{{result.textContent='Activeren is geweigerd; de huidige identiteit bleef behouden.'}}}});rollbackButton.addEventListener('click',async()=>{{if(!confirm('Wil je de direct vorige identiteit terugzetten?'))return;try{{await post('/internal/v1/identity/rollback',{{expected_current_sha256:state.active,confirmation:'TERUGZETTEN'}});result.textContent='De direct vorige identiteit is teruggezet.';rollbackButton.disabled=true}}catch{{result.textContent='Terugzetten is geweigerd; Eva doet geen stille gok.'}}}})}};</script></html>"""
+    resume_payload = None
+    if identity_workflow is not None:
+        resume_payload = {
+            "phase": identity_workflow.phase,
+            "base_pack_sha256": identity_workflow.base_pack_sha256,
+            "current_pack_sha256": identity_workflow.current_pack_sha256,
+            "draft_sha256": identity_workflow.draft_sha256,
+            "candidate_sha256": identity_workflow.candidate_sha256,
+        }
+    resume_json = json.dumps(resume_payload, separators=(",", ":")).replace(
+        "<", "\\u003c"
+    )
+    writable_json = "true" if identity_writable else "false"
+    return (
+        f"""<!doctype html>
+<html lang="nl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eva installeren</title>
+<style>
+body{{font:16px system-ui;margin:0;background:#07111c;color:#edf6ff;display:grid;min-height:100vh;place-items:center}}
+main{{max-width:720px;padding:2rem}}
+section{{background:#102337;border:1px solid #31516d;border-radius:18px;padding:1.5rem;margin:1rem 0}}
+.blocked{{color:#ffca78}}.passed{{color:#86f4ba}}small{{color:#aec4d7}}li{{margin:.7rem 0}}
+textarea{{box-sizing:border-box;width:100%;min-height:9rem;background:#07111c;color:#edf6ff;border:1px solid #52718d;border-radius:8px;padding:.8rem;font:14px ui-monospace,monospace}}
+button{{margin-top:.7rem;background:#2b8a61;color:white;border:0;border-radius:8px;padding:.65rem .9rem;font-weight:700}}
+button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
+</style>
+<main>
+<p><small>EVA · lokale installatiecontrole</small></p>
+<h1>Voordat Eva iets installeert</h1>
+<section><h2 class="{status}">{status}</h2><p>{next_step}</p><ul>{rows}</ul><p><small>Deze pagina heeft geen connector-, secret- of installatieknop. Zij toont alleen waarom Eva wel of niet verder mag.</small></p></section>
+<section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
+</main>
+<script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};</script>
+<script>"""
+        + INSTALLER_IDENTITY_SCRIPT
+        + "</script>\n</html>"
+    )
 
 
 def create_installer_wizard(
@@ -206,6 +248,16 @@ def create_installer_wizard(
                 status_code=409, detail="installer identity changes are not enabled"
             )
         return identity_lifecycle
+
+    def identity_workflow_status() -> InstallerIdentityWorkflowStatus | None:
+        if identity_lifecycle is None:
+            return None
+        try:
+            return identity_lifecycle.status()
+        except IdentityPackLifecycleError as error:
+            raise HTTPException(
+                status_code=503, detail="installer identity workflow unavailable"
+            ) from error
 
     @app.exception_handler(HTTPException)
     async def installer_error(_request: Request, error: HTTPException) -> JSONResponse:
@@ -257,6 +309,9 @@ def create_installer_wizard(
                 receipt,
                 current_identity(),
                 identity_writable=identity_writable,
+                identity_workflow=(
+                    identity_workflow_status() if identity_writable else None
+                ),
             ),
             headers=_SECURITY_HEADERS,
         )
@@ -266,6 +321,35 @@ def create_installer_wizard(
         _loopback_request(request)
         bootstrap.require_session(request)
         return JSONResponse(receipt, headers=_SECURITY_HEADERS)
+
+    @app.get("/internal/v1/identity/status")
+    def identity_status(request: Request) -> JSONResponse:
+        _loopback_request(request)
+        bootstrap.require_session(request)
+        workflow = identity_workflow_status()
+        if workflow is None:
+            payload: dict[str, object] = {
+                "contract": "EvaInstallerIdentityWorkflowStatus/v1",
+                "enabled": False,
+                "phase": "unavailable",
+                "base_pack_sha256": None,
+                "current_pack_sha256": None,
+                "draft_sha256": None,
+                "candidate_sha256": None,
+                "updated_at": None,
+            }
+        else:
+            payload = {
+                "contract": "EvaInstallerIdentityWorkflowStatus/v1",
+                "enabled": identity_writable,
+                "phase": workflow.phase,
+                "base_pack_sha256": workflow.base_pack_sha256,
+                "current_pack_sha256": workflow.current_pack_sha256,
+                "draft_sha256": workflow.draft_sha256,
+                "candidate_sha256": workflow.candidate_sha256,
+                "updated_at": workflow.updated_at,
+            }
+        return JSONResponse(payload, headers=_SECURITY_HEADERS)
 
     @app.get("/internal/v1/identity/soul-export")
     def soul_export(request: Request) -> PlainTextResponse:

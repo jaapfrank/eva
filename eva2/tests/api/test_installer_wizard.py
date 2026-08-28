@@ -108,6 +108,18 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     assert report.status_code == 200
     assert report.json()["status"] == "blocked"
     assert report.headers["content-security-policy"].startswith("default-src 'none'")
+    identity_status = client.get("/internal/v1/identity/status")
+    assert identity_status.status_code == 200
+    assert identity_status.json() == {
+        "contract": "EvaInstallerIdentityWorkflowStatus/v1",
+        "enabled": False,
+        "phase": "unavailable",
+        "base_pack_sha256": None,
+        "current_pack_sha256": None,
+        "draft_sha256": None,
+        "candidate_sha256": None,
+        "updated_at": None,
+    }
 
 
 def test_wizard_rejects_reused_wrong_or_cross_origin_bootstrap() -> None:
@@ -358,3 +370,138 @@ def test_wizard_stages_signs_activates_and_rolls_back_without_exposing_key(
     ).encode()
     assert (lifecycle.private_key_path.read_bytes()) not in combined_output
     assert b"Noor" not in combined_output
+
+
+def test_wizard_resumes_identity_workflow_after_server_and_session_restart(
+    private_tmp_path: Path,
+) -> None:
+    lifecycle = _identity_lifecycle(private_tmp_path)
+    origin = {"origin": "http://127.0.0.1"}
+    first_bootstrap = InstallerBootstrap(
+        token="r" * 43, created_at=1.0, clock=lambda: 1.0
+    )
+    first = _client(
+        first_bootstrap,
+        receipt=_receipt(status="ready"),
+        identity_lifecycle=lifecycle,
+    )
+    assert (
+        first.post("/internal/v1/bootstrap", json={"token": "r" * 43}).status_code
+        == 204
+    )
+    base_sha = first.get("/internal/v1/identity/status").json()["base_pack_sha256"]
+    staged = first.post(
+        "/internal/v1/identity/soul-import/stage",
+        json={
+            "draft_id": "installer-resume",
+            "soul_markdown": "## Naam\nNoor",
+            "expected_base_sha256": base_sha,
+        },
+        headers=origin,
+    )
+    assert staged.status_code == 200
+
+    second_bootstrap = InstallerBootstrap(
+        token="s" * 43, created_at=2.0, clock=lambda: 2.0
+    )
+    second = _client(
+        second_bootstrap,
+        receipt=_receipt(status="ready"),
+        identity_lifecycle=InstallerIdentityLifecycle(
+            current_path=lifecycle.current_path,
+            trust_path=lifecycle.trust_path,
+            private_key_path=lifecycle.private_key_path,
+            workspace=lifecycle.workspace,
+            clock=lambda: "2026-08-29T01:12:00Z",
+        ),
+    )
+    assert (
+        second.post("/internal/v1/bootstrap", json={"token": "s" * 43}).status_code
+        == 204
+    )
+    staged_status = second.get("/internal/v1/identity/status").json()
+    assert staged_status["phase"] == "staged"
+    assert staged_status["draft_sha256"] == staged.json()["draft_sha256"]
+    staged_page = second.get("/")
+    assert "Voorstel teruggevonden. Je kunt nu ondertekenen." in staged_page.text
+    assert "issueButton.disabled = false" in staged_page.text
+    issued = second.post(
+        "/internal/v1/identity/staged/issue",
+        json={
+            "draft_sha256": staged_status["draft_sha256"],
+            "expected_base_sha256": staged_status["base_pack_sha256"],
+            "confirmation": "ONDERTEKENEN",
+        },
+        headers=origin,
+    )
+    assert issued.status_code == 200
+
+    third_bootstrap = InstallerBootstrap(
+        token="v" * 43, created_at=3.0, clock=lambda: 3.0
+    )
+    third = _client(
+        third_bootstrap,
+        receipt=_receipt(status="ready"),
+        identity_lifecycle=InstallerIdentityLifecycle(
+            current_path=lifecycle.current_path,
+            trust_path=lifecycle.trust_path,
+            private_key_path=lifecycle.private_key_path,
+            workspace=lifecycle.workspace,
+            clock=lambda: "2026-08-29T01:13:00Z",
+        ),
+    )
+    assert (
+        third.post("/internal/v1/bootstrap", json={"token": "v" * 43}).status_code
+        == 204
+    )
+    issued_status = third.get("/internal/v1/identity/status").json()
+    assert issued_status["phase"] == "issued"
+    issued_page = third.get("/")
+    assert (
+        "Ondertekend voorstel teruggevonden. Je kunt nu activeren." in issued_page.text
+    )
+    assert "activateButton.disabled = false" in issued_page.text
+    activated = third.post(
+        "/internal/v1/identity/candidate/activate",
+        json={
+            "candidate_sha256": issued_status["candidate_sha256"],
+            "expected_current_sha256": issued_status["base_pack_sha256"],
+            "confirmation": "ACTIVEREN",
+        },
+        headers=origin,
+    )
+    assert activated.status_code == 200
+
+    fourth_bootstrap = InstallerBootstrap(
+        token="x" * 43, created_at=4.0, clock=lambda: 4.0
+    )
+    fourth = _client(
+        fourth_bootstrap,
+        receipt=_receipt(status="ready"),
+        identity_lifecycle=InstallerIdentityLifecycle(
+            current_path=lifecycle.current_path,
+            trust_path=lifecycle.trust_path,
+            private_key_path=lifecycle.private_key_path,
+            workspace=lifecycle.workspace,
+            clock=lambda: "2026-08-29T01:14:00Z",
+        ),
+    )
+    assert (
+        fourth.post("/internal/v1/bootstrap", json={"token": "x" * 43}).status_code
+        == 204
+    )
+    active_status = fourth.get("/internal/v1/identity/status").json()
+    assert active_status["phase"] == "active"
+    active_page = fourth.get("/")
+    assert "De nieuwe identiteit is actief." in active_page.text
+    assert "rollbackButton.disabled = false" in active_page.text
+    rolled_back = fourth.post(
+        "/internal/v1/identity/rollback",
+        json={
+            "expected_current_sha256": active_status["candidate_sha256"],
+            "confirmation": "TERUGZETTEN",
+        },
+        headers=origin,
+    )
+    assert rolled_back.status_code == 200
+    assert lifecycle.status().phase == "rolled_back"

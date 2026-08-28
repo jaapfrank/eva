@@ -144,6 +144,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/adapters/api/app.py",
     "src/eva/adapters/api/cockpit.py",
     "src/eva/adapters/api/dashboard_conversation.py",
+    "src/eva/adapters/api/installer_identity_ui.py",
     "src/eva/adapters/api/installer_wizard.py",
     "src/eva/adapters/connectors/mcp.py",
     "src/eva/adapters/connectors/playwright_mcp.py",
@@ -179,6 +180,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/operations/identity_pack_lifecycle.py",
     "src/eva/operations/install_schema.py",
     "src/eva/operations/installer_identity_lifecycle.py",
+    "src/eva/operations/installer_identity_storage.py",
     "src/eva/operations/installer_preflight.py",
     "src/eva/operations/managed_b_build_context.py",
     "src/eva/operations/managed_b_offline_build.py",
@@ -663,7 +665,7 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         value.get("contract") != "EvaCockpitEvidenceIndex/v1"
         or value.get("schemaVersion") != 1
         or value.get("status") != "release_bound_projection"
-            or value.get("updatedOn") != "2026-08-27"
+        or value.get("updatedOn") != "2026-08-27"
         or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
         or not isinstance(entries, list)
         or len(entries) != len(_COCKPIT_EVIDENCE_STATES)
