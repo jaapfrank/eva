@@ -1,6 +1,24 @@
 # Eva 2 — actuele voortgang
 
 Laatst bijgewerkt: 2026-08-28
+> Eerlijke geheugencontinuïteit live, 28 augustus 2026 11:51 CEST: de eerste
+> volledige stop/startproef vond een echte gespreksfout. Eva zei vóór de
+> herstart ten onrechte dat zij de testwoorden niet blijvend kon opslaan, maar
+> gaf ze na het stoppen en starten van zowel haar PostgreSQL-container als haar
+> core wel exact terug. Haar duurzame gesprekjournal werkte dus; haar uitleg
+> daarover niet.
+>
+> Dat onderscheid staat nu expliciet in de gesprekcore: zichtbare recente
+> berichten mogen een core- of databasecontainerherstart overleven en heten
+> eerlijke continuïteit binnen dat gesprek; alleen bevestigde feiten heten
+> langetermijnherinneringen buiten het gesprek. De correctie heeft 60 gerichte
+> model-, transport- en release-inputcontroles doorstaan, is vanaf de schone
+> commit `c464b91` zonder bouwnetwerk tot een nieuwe image gemaakt en draait nu
+> op de live `/eva2`-route. Eva antwoordde exact `opgeslagen`, overleefde daarna
+> een echte coreherstart en gaf exact `koperen wolk` terug. De vorige image
+> staat gestopt maar intact als directe rollback. Eva1 bleef gezond. Receipt:
+> [`eva2-durable-conversation-restart-2026-08-28.json`](evidence/living-core/eva2-durable-conversation-restart-2026-08-28.json).
+
 > Live `/eva2`-koppeling, 28 augustus 2026 11:42 CEST: gewone berichten
 > blijven bij de bestaande `eva.service`, maar een expliciet Telegrambericht
 > met `/eva2` gaat nu naar de nieuwe, afzonderlijk herstartbare Eva2-kandidaat

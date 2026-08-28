@@ -1,0 +1,54 @@
+{
+  "build": {
+    "baseImageDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "imageId": "sha256:5d712142aee053928d2eec2c940ed140e5cec89948c81ccd0e4b0b6613b6bc07",
+    "imageTag": "eva2-living-core:git-c464b91-candidate",
+    "networkUsed": false,
+    "requirementsSha256": "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708",
+    "sourceArchiveSha256": "32f1a2bfcdced6e0f3f5944e561663e97d43551fc79aabef5b7663bdf262d9af",
+    "sourceCommit": "c464b91e19de2661b9f1157631e731c540d999e5",
+    "wheelCount": 39,
+    "wheelTreeSha256": "d25706502d703592ad3092c7dde163f3b7902c5dba9de11f6a914b3acd6e4593"
+  },
+  "contract": "Eva2DurableConversationRestartReceipt/v1",
+  "defect": {
+    "actualContinuityAfterCoreAndDatabaseRestart": true,
+    "falsePreRestartReplySha256": "a7cca350e2860ab1129a77084d1114352921ce492c1e3092a91f71b1a2d866e2",
+    "finding": "model_denied_persistence_that_the_durable_conversation_journal_provided"
+  },
+  "issuedAt": "2026-08-28T11:51:28+02:00",
+  "live": {
+    "candidateReadyHttpStatus": 200,
+    "currentContainer": "eva2-candidate-794ff73-core",
+    "currentHealth": "healthy",
+    "currentRestartPolicy": "unless-stopped",
+    "eva1HealthHttpStatus": 200,
+    "explicitEva2RouteOnly": true,
+    "rollbackContainer": "eva2-candidate-794ff73-core-rollback-be70ec4",
+    "rollbackImageId": "sha256:d648d47b3b61a1b2827a6b0613854cf50d7a64d14f708a108a888f78e0e34251",
+    "rollbackPreserved": true
+  },
+  "result": {
+    "coreRestartedAfterWrite": true,
+    "externalTelegramMessageSent": false,
+    "postRestartReplySha256": "74b4d16c299b535825f3a200abfc757c531791a4a1ff5ee3dff39e5ec637f24a",
+    "postRestartReplyText": "koperen wolk",
+    "preRestartReplySha256": "ef011005457547038118d886fbc469905c211301b440d6134bfb4c6c3dc429ec",
+    "preRestartReplyText": "opgeslagen",
+    "status": "passed"
+  },
+  "semantics": {
+    "confirmedLongTermMemoryClaim": false,
+    "durableConversationContinuityClaim": true,
+    "instruction": "distinguish_recent_durable_journal_from_confirmed_long_term_memory"
+  },
+  "tests": {
+    "passed": 60,
+    "skipped": 1,
+    "suites": [
+      "tests/model/test_conversation_model.py",
+      "tests/model/test_openai_responses_transport.py",
+      "tests/operations/test_managed_b_release_inputs.py"
+    ]
+  }
+}
