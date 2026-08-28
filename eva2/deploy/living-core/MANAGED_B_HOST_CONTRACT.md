@@ -12,6 +12,9 @@ De toekomstige Telegram-first B bestaat uit één zelfstandige manifestset:
 
 De operationele waarheid en Hindsight hebben dus ieder een eigen PostgreSQL-
 database en volume. Hindsight gebruikt geen ingebouwde database meer.
+De embeddingprovider blijft bij adoptie `local`: het bestaande geheugen bevat
+384-dimensionale vectoren en mag niet stil worden verwijderd of met een ander
+model opnieuw worden geïnterpreteerd.
 
 Home Assistant is een expliciete core-overlay als fysieke readback is
 ingeschakeld. AgentMail, Stripe, proactieve Telegram, browser/gateway en skills

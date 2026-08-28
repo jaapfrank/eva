@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""Run the sealed clean managed-B graph against disposable local state.
+"""Run the sealed managed-B graph against disposable local state.
 
-This probe never addresses the live Compose project, live volumes, Eva1, or the
-current /eva2 candidate.  It prints one secret-free JSON result and removes its
-own uniquely named containers, network, volumes, and private staging directory.
+The default probe uses fresh state.  ``--clone-current-route`` reads consistent
+logical snapshots from the exact current /eva2 PostgreSQL and embedded
+Hindsight databases, restores them only into unique disposable volumes, and
+never stops or writes either source.  Both modes print one secret-free JSON
+result and remove their private temporary state.
 """
 
 from __future__ import annotations
 
+import argparse
+import ast
 from datetime import UTC, datetime
 import hashlib
 import json
@@ -55,6 +59,36 @@ EXPECTED_SERVICES = {
     "schema-installer",
     "telegram-ingress",
 }
+CURRENT_ROUTE_CORE = "eva2-candidate-lease-core"
+CURRENT_ROUTE_POSTGRES = "eva2-candidate-794ff73-pg"
+CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-candidate-794ff73-pg"
+CURRENT_ROUTE_HINDSIGHT = "eva2-hindsight-memory-live"
+CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-hindsight-memory-live"
+CURRENT_ROUTE_PORT = "44706"
+_COUNT_SQL = """
+SELECT stats.schemaname || '.' || stats.relname || '=' ||
+       (xpath('/row/c/text()', query_to_xml(
+           format(
+               'SELECT count(*) AS c FROM %I.%I',
+               stats.schemaname,
+               stats.relname
+           ),
+           false, true, ''
+       )))[1]::text
+FROM pg_stat_user_tables AS stats
+JOIN pg_class AS relation ON relation.oid = stats.relid
+WHERE relation.relkind IN ('r', 'p')
+ORDER BY stats.schemaname, stats.relname
+"""
+_PRESERVED_HINDSIGHT_TABLES = {
+    "public.banks",
+    "public.documents",
+    "public.entities",
+    "public.memory_links",
+    "public.memory_units",
+    "public.mental_models",
+    "public.observation_history",
+}
 
 
 class ProbeError(RuntimeError):
@@ -101,6 +135,314 @@ def _run(command: list[str], *, timeout: int = 180) -> str:
     except (OSError, subprocess.SubprocessError) as exc:
         raise ProbeError(f"command failed: {command[-1]}") from exc
     return completed.stdout
+
+
+def _run_binary_to_private_file(
+    command: list[str], path: Path, *, timeout: int = 300
+) -> None:
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    try:
+        with os.fdopen(descriptor, "wb", closefd=False) as output:
+            completed = subprocess.run(
+                command,
+                check=False,
+                stdout=output,
+                stderr=subprocess.PIPE,
+                timeout=timeout,
+                env={"HOME": "/root", "LC_ALL": "C", "PATH": os.environ["PATH"]},
+            )
+            output.flush()
+            os.fsync(output.fileno())
+        if completed.returncode != 0:
+            diagnostic = _sanitize_diagnostic(
+                completed.stderr.decode("utf-8", errors="replace")[-2000:]
+            )
+            raise ProbeError(f"database snapshot failed: {diagnostic or 'no diagnostic'}")
+        os.fchmod(descriptor, 0o600)
+    except (OSError, subprocess.SubprocessError) as exc:
+        path.unlink(missing_ok=True)
+        if isinstance(exc, ProbeError):
+            raise
+        raise ProbeError("database snapshot failed") from exc
+    finally:
+        os.close(descriptor)
+
+
+def _restore_private_dump(
+    container: str,
+    database: str,
+    path: Path,
+    *,
+    preserve_authority: bool = False,
+    timeout: int = 300,
+) -> None:
+    authority_arguments = [] if preserve_authority else ["--no-owner", "--no-privileges"]
+    try:
+        with path.open("rb") as source:
+            completed = subprocess.run(
+                [
+                    "/usr/bin/docker",
+                    "exec",
+                    "-i",
+                    "-u",
+                    "postgres",
+                    container,
+                    "/usr/bin/pg_restore",
+                    "--exit-on-error",
+                    *authority_arguments,
+                    "-U",
+                    "postgres",
+                    "-d",
+                    database,
+                ],
+                check=False,
+                stdin=source,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=timeout,
+                env={"HOME": "/root", "LC_ALL": "C", "PATH": os.environ["PATH"]},
+            )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ProbeError("database restoration failed") from exc
+    if completed.returncode != 0:
+        diagnostic = _sanitize_diagnostic(
+            completed.stderr.decode("utf-8", errors="replace")[-2000:]
+        )
+        raise ProbeError(f"database restoration failed: {diagnostic or 'no diagnostic'}")
+
+
+def _prepare_logical_restore_roles(container: str, database: str) -> None:
+    source = ROOT / "src" / "eva" / "operations" / "install_schema.py"
+    tree = ast.parse(source.read_text(encoding="utf-8"), filename=source.as_posix())
+    values: dict[str, str] = {}
+    for node in tree.body:
+        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+            continue
+        target = node.targets[0]
+        if isinstance(target, ast.Name) and target.id in {
+            "_LOGICAL_RESTORE_EMPTY_GUARD_SQL",
+            "_LOGICAL_RESTORE_ROLE_SQL",
+        }:
+            value = ast.literal_eval(node.value)
+            if isinstance(value, str):
+                values[target.id] = value
+    if set(values) != {
+        "_LOGICAL_RESTORE_EMPTY_GUARD_SQL",
+        "_LOGICAL_RESTORE_ROLE_SQL",
+    }:
+        raise ProbeError("logical restore role authority is unavailable")
+    preparation_sql = (
+        values["_LOGICAL_RESTORE_EMPTY_GUARD_SQL"]
+        + values["_LOGICAL_RESTORE_ROLE_SQL"]
+    )
+
+    _run(
+        [
+            "/usr/bin/docker",
+            "exec",
+            "-u",
+            "postgres",
+            container,
+            "/usr/bin/psql",
+            "-X",
+            "-v",
+            "ON_ERROR_STOP=1",
+            "-U",
+            "postgres",
+            "-d",
+            database,
+            "-c",
+            preparation_sql,
+        ]
+    )
+
+
+def _parse_counts(output: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for line in output.splitlines():
+        name, separator, raw_count = line.partition("=")
+        if not separator or not name or name in counts or not raw_count.isdigit():
+            raise ProbeError("database count output was invalid")
+        counts[name] = int(raw_count)
+    if not counts:
+        raise ProbeError("database count output was empty")
+    return counts
+
+
+def _operational_counts(container: str, database: str | None = None) -> dict[str, int]:
+    if database is None:
+        output = _run(
+            [
+                "/usr/bin/docker",
+                "exec",
+                "-u",
+                "postgres",
+                container,
+                "sh",
+                "-lc",
+                'exec psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" '
+                '-d "$POSTGRES_DB" -Atc "$1"',
+                "count",
+                _COUNT_SQL,
+            ]
+        )
+    else:
+        output = _run(
+            [
+                "/usr/bin/docker",
+                "exec",
+                "-u",
+                "postgres",
+                container,
+                "/usr/bin/psql",
+                "-X",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "postgres",
+                "-d",
+                database,
+                "-Atc",
+                _COUNT_SQL,
+            ]
+        )
+    return _parse_counts(output)
+
+
+def _embedded_hindsight_counts(container: str) -> dict[str, int]:
+    program = """
+import json, os, subprocess, sys
+from pathlib import Path
+cfg = json.loads(Path('/home/hindsight/.pg0/instances/hindsight/instance.json').read_text())
+env = dict(os.environ, PGPASSWORD=cfg['password'])
+psql = str(Path(cfg['installation_dir']) / cfg['version'] / 'bin' / 'psql')
+subprocess.run([psql, '-X', '-v', 'ON_ERROR_STOP=1', '-h', '127.0.0.1',
+                '-U', cfg['username'], '-d', cfg['database'], '-Atc', sys.argv[1]],
+               check=True, env=env)
+"""
+    return _parse_counts(
+        _run(
+            [
+                "/usr/bin/docker",
+                "exec",
+                container,
+                "/app/api/.venv/bin/python3",
+                "-c",
+                program,
+                _COUNT_SQL,
+            ]
+        )
+    )
+
+
+def _count_digest(counts: dict[str, int]) -> str:
+    payload = json.dumps(counts, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _validate_count_window(
+    before: dict[str, int], restored: dict[str, int], after: dict[str, int]
+) -> None:
+    if set(before) != set(after) or set(before) != set(restored):
+        raise ProbeError("restored database table set differs from its live source")
+    for table, restored_count in restored.items():
+        lower = min(before[table], after[table])
+        upper = max(before[table], after[table])
+        if not lower <= restored_count <= upper:
+            raise ProbeError(
+                "restored database row count differs from the dump window: "
+                f"{table} source={before[table]}..{after[table]} "
+                f"restored={restored_count}"
+            )
+
+
+def _require_current_route_sources() -> None:
+    inspected = {
+        name: json.loads(_run(["/usr/bin/docker", "inspect", name]))[0]
+        for name in (
+            CURRENT_ROUTE_CORE,
+            CURRENT_ROUTE_POSTGRES,
+            CURRENT_ROUTE_HINDSIGHT,
+        )
+    }
+    if inspected[CURRENT_ROUTE_CORE]["State"].get("Running") is not True:
+        raise ProbeError("current Eva2 route core is not running")
+    port_bindings = inspected[CURRENT_ROUTE_CORE]["NetworkSettings"]["Ports"].get(
+        "8080/tcp"
+    ) or []
+    if not any(
+        binding.get("HostIp") == "127.0.0.1"
+        and binding.get("HostPort") == CURRENT_ROUTE_PORT
+        for binding in port_bindings
+    ):
+        raise ProbeError("current Eva2 route no longer owns its sealed loopback port")
+    expected_mounts = {
+        CURRENT_ROUTE_POSTGRES: (
+            CURRENT_ROUTE_POSTGRES_VOLUME,
+            "/var/lib/postgresql/data",
+        ),
+        CURRENT_ROUTE_HINDSIGHT: (
+            CURRENT_ROUTE_HINDSIGHT_VOLUME,
+            "/home/hindsight/.pg0",
+        ),
+    }
+    for name, expected in expected_mounts.items():
+        mounts = {
+            (mount.get("Name"), mount.get("Destination"))
+            for mount in inspected[name].get("Mounts", [])
+            if mount.get("Type") == "volume"
+        }
+        if expected not in mounts or inspected[name]["State"].get("Running") is not True:
+            raise ProbeError("current Eva2 data source no longer matches its sealed volume")
+
+
+def _snapshot_current_route(
+    operational_dump: Path, hindsight_dump: Path
+) -> tuple[dict[str, int], dict[str, int], dict[str, int], dict[str, int]]:
+    _require_current_route_sources()
+    operational_before = _operational_counts(CURRENT_ROUTE_POSTGRES)
+    hindsight_before = _embedded_hindsight_counts(CURRENT_ROUTE_HINDSIGHT)
+    _run_binary_to_private_file(
+        [
+            "/usr/bin/docker",
+            "exec",
+            "-u",
+            "postgres",
+            CURRENT_ROUTE_POSTGRES,
+            "sh",
+            "-lc",
+            'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" '
+            "--format=custom",
+        ],
+        operational_dump,
+    )
+    program = """
+import json, os
+from pathlib import Path
+cfg = json.loads(Path('/home/hindsight/.pg0/instances/hindsight/instance.json').read_text())
+env = dict(os.environ, PGPASSWORD=cfg['password'])
+pg_dump = str(Path(cfg['installation_dir']) / cfg['version'] / 'bin' / 'pg_dump')
+os.execvpe(pg_dump, [pg_dump, '-h', '127.0.0.1', '-U', cfg['username'],
+                    '-d', cfg['database'], '--format=custom', '--no-owner',
+                    '--no-privileges'], env)
+"""
+    _run_binary_to_private_file(
+        [
+            "/usr/bin/docker",
+            "exec",
+            CURRENT_ROUTE_HINDSIGHT,
+            "/app/api/.venv/bin/python3",
+            "-c",
+            program,
+        ],
+        hindsight_dump,
+    )
+    return (
+        operational_before,
+        _operational_counts(CURRENT_ROUTE_POSTGRES),
+        hindsight_before,
+        _embedded_hindsight_counts(CURRENT_ROUTE_HINDSIGHT),
+    )
 
 
 def _write_private(path: Path, value: bytes, *, uid: int, gid: int) -> None:
@@ -206,7 +548,24 @@ def _live_status(url: str) -> int:
         return 0
 
 
-def main() -> int:
+def _wait_healthy(container: str, *, timeout: int = 90) -> None:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        inspected = json.loads(_run(["/usr/bin/docker", "inspect", container]))[0]
+        state = inspected.get("State", {})
+        health = state.get("Health", {}).get("Status")
+        if state.get("Running") is True and health in {None, "healthy"}:
+            return
+        if state.get("Running") is not True and state.get("Status") in {
+            "dead",
+            "exited",
+        }:
+            raise ProbeError("candidate database exited before becoming healthy")
+        time.sleep(1)
+    raise ProbeError("candidate database did not become healthy")
+
+
+def main(*, clone_current_route: bool = False) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
         return 2
@@ -218,10 +577,16 @@ def main() -> int:
     operational_password = secrets.token_urlsafe(32)
     memory_password = secrets.token_urlsafe(32)
     environment_file = staging / "candidate.env"
+    operational_dump = staging / "operational.dump"
+    hindsight_dump = staging / "hindsight.dump"
     cleaned = False
     phase = "prepare"
     result: dict[str, Any] = {
-        "contract": "Eva2ManagedBCleanGraphProbeReceipt/v1",
+        "contract": (
+            "Eva2ManagedBCurrentDataTransitionProbeReceipt/v1"
+            if clone_current_route
+            else "Eva2ManagedBCleanGraphProbeReceipt/v1"
+        ),
         "issuedAt": datetime.now(UTC).isoformat(),
         "manifestSha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
         "status": "failed",
@@ -343,6 +708,15 @@ def main() -> int:
             gid=0,
         )
 
+        source_counts: tuple[
+            dict[str, int], dict[str, int], dict[str, int], dict[str, int]
+        ] | None = None
+        if clone_current_route:
+            phase = "current-route-snapshot"
+            source_counts = _snapshot_current_route(
+                operational_dump, hindsight_dump
+            )
+
         phase = "render"
         rendered = json.loads(_run(_compose(project, environment_file, "--profile", "schema-install", "config", "--format", "json")))
         if set(rendered.get("services", {})) != EXPECTED_SERVICES:
@@ -352,7 +726,53 @@ def main() -> int:
             raise ProbeError("render exposed an inline Hindsight DSN")
 
         phase = "support-start"
-        _run(_compose(project, environment_file, "up", "-d", "postgres", "hindsight-postgres", "model-access-lease", "hindsight-access-lease", "hindsight"))
+        support_services = [
+            "postgres",
+            "hindsight-postgres",
+            "model-access-lease",
+            "hindsight-access-lease",
+        ]
+        if not clone_current_route:
+            support_services.append("hindsight")
+        _run(_compose(project, environment_file, "up", "-d", *support_services))
+
+        restored_operational: dict[str, int] | None = None
+        restored_hindsight: dict[str, int] | None = None
+        if clone_current_route:
+            phase = "candidate-database-ready"
+            operational_id = _run(
+                _compose(project, environment_file, "ps", "-q", "postgres")
+            ).strip()
+            memory_id = _run(
+                _compose(project, environment_file, "ps", "-q", "hindsight-postgres")
+            ).strip()
+            if not operational_id or not memory_id:
+                raise ProbeError("candidate database container was not created")
+            _wait_healthy(operational_id)
+            _wait_healthy(memory_id)
+            phase = "current-route-restore"
+            _prepare_logical_restore_roles(operational_id, "eva2")
+            _restore_private_dump(
+                operational_id,
+                "eva2",
+                operational_dump,
+                preserve_authority=True,
+            )
+            _restore_private_dump(memory_id, "hindsight", hindsight_dump)
+            restored_operational = _operational_counts(operational_id, "eva2")
+            restored_hindsight = _operational_counts(memory_id, "hindsight")
+            assert source_counts is not None
+            operational_before, operational_after, hindsight_before, hindsight_after = (
+                source_counts
+            )
+            _validate_count_window(
+                operational_before, restored_operational, operational_after
+            )
+            _validate_count_window(
+                hindsight_before, restored_hindsight, hindsight_after
+            )
+            phase = "restored-hindsight-start"
+            _run(_compose(project, environment_file, "up", "-d", "hindsight"))
         phase = "schema-install"
         _run(_compose(project, environment_file, "--profile", "schema-install", "run", "--rm", "schema-installer"))
         phase = "core-start"
@@ -407,6 +827,20 @@ def main() -> int:
         phase = "core-ready-after-restart"
         _wait_ready(port)
 
+        if clone_current_route:
+            memory_id = _run(
+                _compose(project, environment_file, "ps", "-q", "hindsight-postgres")
+            ).strip()
+            memory_after_restart = _operational_counts(memory_id, "hindsight")
+            assert restored_hindsight is not None
+            for table in _PRESERVED_HINDSIGHT_TABLES:
+                if table not in restored_hindsight or (
+                    memory_after_restart.get(table, -1) < restored_hindsight[table]
+                ):
+                    raise ProbeError(
+                        "restored Hindsight semantic data decreased after restart"
+                    )
+
         hindsight_id = _run(_compose(project, environment_file, "ps", "-q", "hindsight")).strip()
         inspected = json.loads(_run(["/usr/bin/docker", "inspect", hindsight_id]))[0]
         configured_names = {item.partition("=")[0] for item in inspected["Config"]["Env"]}
@@ -431,8 +865,49 @@ def main() -> int:
                 "liveSafetyBefore": initial_live,
             }
         )
+        if clone_current_route:
+            assert source_counts is not None
+            assert restored_operational is not None
+            assert restored_hindsight is not None
+            operational_before, operational_after, hindsight_before, hindsight_after = (
+                source_counts
+            )
+            result["dataTransition"] = {
+                "sourceRoutePort": int(CURRENT_ROUTE_PORT),
+                "sourceOperationalVolume": CURRENT_ROUTE_POSTGRES_VOLUME,
+                "sourceHindsightVolume": CURRENT_ROUTE_HINDSIGHT_VOLUME,
+                "sourceDatabasesReadOnly": True,
+                "operationalTableCount": len(restored_operational),
+                "hindsightTableCount": len(restored_hindsight),
+                "operationalCountDigest": _count_digest(restored_operational),
+                "hindsightCountDigest": _count_digest(restored_hindsight),
+                "operationalDumpSha256": hashlib.sha256(
+                    operational_dump.read_bytes()
+                ).hexdigest(),
+                "hindsightDumpSha256": hashlib.sha256(
+                    hindsight_dump.read_bytes()
+                ).hexdigest(),
+                "operationalDumpBytes": operational_dump.stat().st_size,
+                "hindsightDumpBytes": hindsight_dump.stat().st_size,
+                "restoredWithinOperationalSnapshotWindow": True,
+                "restoredWithinHindsightSnapshotWindow": True,
+                "sourceOperationalWindowDigests": [
+                    _count_digest(operational_before),
+                    _count_digest(operational_after),
+                ],
+                "sourceHindsightWindowDigests": [
+                    _count_digest(hindsight_before),
+                    _count_digest(hindsight_after),
+                ],
+                "semanticHindsightDataSurvivedJointRestart": True,
+                "plaintextRetainedAfterProbe": False,
+            }
     except Exception as exc:
-        result["error"] = str(exc) if isinstance(exc, ProbeError) else "probe failed"
+        result["error"] = (
+            str(exc)
+            if isinstance(exc, ProbeError)
+            else f"unexpected {type(exc).__name__}: {_sanitize_diagnostic(str(exc))}"
+        )
         result["failedPhase"] = phase
         if environment_file.exists():
             try:
@@ -440,18 +915,19 @@ def main() -> int:
                     _compose(project, environment_file, "ps", "--all", "--format", "json")
                 )
                 result["candidateState"] = _sanitize_diagnostic(state)
-                logs = _run(
-                    _compose(
-                        project,
-                        environment_file,
-                        "logs",
-                        "--no-color",
-                        "--tail",
-                        "40",
-                        "core",
+                for service in ("core", "hindsight"):
+                    logs = _run(
+                        _compose(
+                            project,
+                            environment_file,
+                            "logs",
+                            "--no-color",
+                            "--tail",
+                            "40",
+                            service,
+                        )
                     )
-                )
-                result["coreDiagnostic"] = _sanitize_diagnostic(logs)
+                    result[f"{service}Diagnostic"] = _sanitize_diagnostic(logs)
             except ProbeError:
                 result["diagnosticCapture"] = "unavailable"
     finally:
@@ -476,4 +952,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--clone-current-route", action="store_true")
+    arguments = parser.parse_args()
+    sys.exit(main(clone_current_route=arguments.clone_current_route))

@@ -186,7 +186,9 @@ services:
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
       HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
       HINDSIGHT_API_LLM_REASONING_EFFORT: low
-      HINDSIGHT_API_EMBEDDINGS_PROVIDER: openai-codex
+      # Existing Eva2 memories use Hindsight's local 384-dimensional vectors.
+      # Changing provider here would make the restored memory database unusable.
+      HINDSIGHT_API_EMBEDDINGS_PROVIDER: local
       HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW: "32"
       HINDSIGHT_API_WORKER_ID: eva2-hindsight-memory
     volumes:

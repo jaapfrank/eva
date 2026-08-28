@@ -1,0 +1,95 @@
+{
+  "contract": "Eva2ManagedBCurrentDataTransitionEvidence/v1",
+  "issuedAt": "2026-08-28T17:30:10+02:00",
+  "sourceBaseCommit": "153adf4f7024dd647a1b969f1434ee9da0015516",
+  "inputs": {
+    "manifestSha256": "6c199c2cb7cbfbd8dc3dd444a09fee336fc90ad92545906f0e27963bd00aa149",
+    "probeSha256": "b07b517ca9759c9ba9b17e6e7d6591e6fdcd11e7ca6e5145185c95066db28692",
+    "logicalRestoreSourceSha256": "fd620e9619877763b2b9567b10308e8166242c107ebc98895bc2e023a0abcf24",
+    "coreImage": "sha256:2ec1399520a9ccf0942137b45777409e30d0ad6678cebb339ef9a42af50eadff",
+    "hindsightImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "postgresPgvectorImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1"
+  },
+  "sourceSelection": {
+    "servedRoute": "http://127.0.0.1:44706",
+    "coreContainer": "eva2-candidate-lease-core",
+    "operationalContainer": "eva2-candidate-794ff73-pg",
+    "operationalVolume": "eva2-candidate-794ff73-pg",
+    "hindsightContainer": "eva2-hindsight-memory-live",
+    "hindsightVolume": "eva2-hindsight-memory-live",
+    "oldNamedBWasNotUsedAsPrimarySource": true,
+    "sourceContainersStopped": false,
+    "sourceDatabasesWritten": false
+  },
+  "logicalTransition": {
+    "sourceOperationalPostgres": "16.13",
+    "sourceHindsightPostgres": "18.1",
+    "targetPostgres": "18.6",
+    "targetPgvector": "0.8.6",
+    "operationalTableCount": 48,
+    "hindsightTableCount": 23,
+    "operationalCountDigest": "1e86126932d2ab0897f99773652d6352ecdc659aa52bb4b940441b4b7d82a45c",
+    "hindsightCountDigest": "5a5cd1a54621ab144710451f36ad82af176b45244fc046c21a235e68293b4a09",
+    "operationalDumpBytes": 737049,
+    "operationalDumpSha256": "76a6af1b87da6bf5caea9374a8cfded123bcd80d5349de8f588f89046cced03b",
+    "hindsightDumpBytes": 1368156,
+    "hindsightDumpSha256": "52631e814a7744349c2a88545d8356a2c9d24375caf6a28999c288d1009e86a3",
+    "restoreExitStatus": "passed",
+    "objectOwnersAndAclsPreserved": true,
+    "fixedEvaClusterRolesPreparedOnEmptyTargetOnly": true,
+    "embeddingProvider": "local",
+    "embeddingDimension": 384,
+    "memoryUnitsObserved": 258,
+    "mentalModelsObserved": 14,
+    "semanticHindsightDataSurvivedJointRestart": true
+  },
+  "runtime": {
+    "renderedServiceCount": 9,
+    "separateOperationalAndMemoryDatabases": true,
+    "hindsightDatabaseFileSecret": true,
+    "inlineHindsightDatabaseUrlAbsent": true,
+    "coreReadyBeforeRestart": true,
+    "realCodexReplyExact": "beheerd",
+    "jointStopStart": [
+      "postgres",
+      "hindsight-postgres",
+      "hindsight",
+      "core"
+    ],
+    "coreReadyAfterRestart": true
+  },
+  "defectsFoundAndClosed": [
+    "The actual /eva2 route used a newer candidate database, not the older container merely named B.",
+    "The managed manifest selected 1536-dimensional Codex embeddings while the existing memory used local 384-dimensional embeddings.",
+    "A database-local dump preserved Eva objects but PostgreSQL cluster roles required a separate empty-target bootstrap.",
+    "Hindsight's BM25 materialized view is rebuilt during logical restore and must not be treated as source user-table loss."
+  ],
+  "cleanup": {
+    "temporaryDumpsRemoved": true,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
+    "temporaryVolumesRemoved": true,
+    "temporarySecretDirectoryRemoved": true,
+    "plaintextRetained": false
+  },
+  "liveSafety": {
+    "eva1HealthAfterProbeHttpStatus": 200,
+    "eva1ServiceRestarts": 0,
+    "currentEva2HealthAfterProbeHttpStatus": 200,
+    "currentEva2ReadyAfterProbeHttpStatus": 200,
+    "eva1Modified": false,
+    "currentEva2Modified": false,
+    "oldBModified": false
+  },
+  "decision": {
+    "currentDataTransitionCandidatePassed": true,
+    "productionCutoverAllowed": false,
+    "remainingGate": "Build and scan a new immutable core image containing the restore-role command, then prove staged real-B cutover and rollback with a final snapshot window."
+  },
+  "nonclaims": [
+    "The fixed-role preparation SQL came from the current worktree; the tested older core image does not yet contain the new operator command.",
+    "No production B container or volume was replaced.",
+    "No Telegram ingress, durable-goal worker, Home Assistant effect, reboot or resident acceptance run was performed."
+  ],
+  "status": "passed_candidate_only"
+}

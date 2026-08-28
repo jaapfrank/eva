@@ -17,6 +17,7 @@ from eva.operations.managed_b_release_inputs import (
     _EXPECTED_INPUT_PATHS,
     _EXPECTED_MIGRATIONS,
     _EXPECTED_TEST_PATHS,
+    _NONCLAIMS,
 )
 
 
@@ -55,18 +56,7 @@ def main() -> int:
     ]
     if set(revisions) != {revision for revision, _, _ in _EXPECTED_MIGRATIONS}:
         raise RuntimeError("managed-B migration authority differs before reseal")
-    authority["nonClaims"] = [
-        claim
-        for claim in authority["nonClaims"]
-        if "full-stack restart remain" not in claim
-    ]
-    candidate_nonclaim = (
-        "The clean nine-service candidate render, fresh two-database start, "
-        "real model turn and joint restart passed locally; production B data "
-        "transition, cutover, rollback and resident acceptance remain open gates."
-    )
-    if candidate_nonclaim not in authority["nonClaims"]:
-        authority["nonClaims"].append(candidate_nonclaim)
+    authority["nonClaims"] = list(_NONCLAIMS)
     payload = (
         json.dumps(
             authority,

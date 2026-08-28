@@ -55,6 +55,76 @@ class SchemaInstallationReceipt:
     drift_check: str
 
 
+@dataclass(frozen=True, slots=True)
+class LogicalRestoreRoleReceipt:
+    roles: tuple[str, ...]
+    target_was_empty: bool
+
+
+_LOGICAL_RESTORE_ROLES = (
+    "eva_backup",
+    "eva_dbos",
+    "eva_migrator",
+    "eva_runtime",
+)
+_LOGICAL_RESTORE_ROLE_SQL = """
+DO $roles$
+DECLARE
+    role_name text;
+BEGIN
+    FOREACH role_name IN ARRAY ARRAY[
+        'eva_migrator', 'eva_runtime', 'eva_dbos', 'eva_backup'
+    ]
+    LOOP
+        IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = role_name) THEN
+            EXECUTE format(
+                'CREATE ROLE %I NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE '
+                'NOINHERIT NOREPLICATION NOBYPASSRLS',
+                role_name
+            );
+        END IF;
+        IF EXISTS (
+            SELECT 1
+            FROM pg_roles
+            WHERE rolname = role_name
+              AND (
+                  rolcanlogin OR rolsuper OR rolcreatedb OR rolcreaterole
+                  OR rolinherit OR rolreplication OR rolbypassrls
+              )
+        ) THEN
+            RAISE EXCEPTION 'unsafe pre-existing Eva database role: %', role_name;
+        END IF;
+    END LOOP;
+END
+$roles$;
+"""
+_LOGICAL_RESTORE_EMPTY_GUARD_SQL = """
+DO $restore_target$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM pg_catalog.pg_tables
+        WHERE schemaname NOT IN ('pg_catalog', 'information_schema')
+    ) OR EXISTS (
+        SELECT 1
+        FROM pg_catalog.pg_namespace
+        WHERE nspname <> 'public'
+          AND nspname <> 'information_schema'
+          AND nspname NOT LIKE 'pg_%'
+    ) THEN
+        RAISE EXCEPTION 'logical restore roles require a completely empty target database';
+    END IF;
+END
+$restore_target$;
+"""
+
+
+def logical_restore_preparation_sql() -> str:
+    """Return the exact atomic empty-target guard and fixed-role bootstrap."""
+
+    return _LOGICAL_RESTORE_EMPTY_GUARD_SQL + _LOGICAL_RESTORE_ROLE_SQL
+
+
 def _canonical(value: object) -> str:
     return json.dumps(
         value,
@@ -168,21 +238,71 @@ def install_schema(
         engine.dispose()
 
 
+def prepare_logical_restore_roles(database_dsn: str) -> LogicalRestoreRoleReceipt:
+    """Create only Eva's fixed cluster roles on a completely empty target.
+
+    A logical PostgreSQL dump carries object owners and ACLs but not the
+    cluster-global roles referenced by those records.  This pre-restore step is
+    deliberately unusable on an existing Eva database.
+    """
+
+    try:
+        sqlalchemy_dsn = sqlalchemy_postgres_dsn(database_dsn)
+    except ValueError as error:
+        raise RuntimeError("Eva logical restore preparation requires PostgreSQL") from error
+    engine = sa.create_engine(sqlalchemy_dsn)
+    try:
+        with engine.begin() as connection:
+            connection.exec_driver_sql(logical_restore_preparation_sql())
+            roles = tuple(
+                connection.execute(
+                    sa.text(
+                        "SELECT rolname FROM pg_catalog.pg_roles "
+                        "WHERE rolname = ANY(:roles) "
+                        "AND NOT rolcanlogin AND NOT rolsuper AND NOT rolcreatedb "
+                        "AND NOT rolcreaterole AND NOT rolinherit "
+                        "AND NOT rolreplication AND NOT rolbypassrls "
+                        "ORDER BY rolname"
+                    ),
+                    {"roles": list(_LOGICAL_RESTORE_ROLES)},
+                ).scalars()
+            )
+            if roles != _LOGICAL_RESTORE_ROLES:
+                raise RuntimeError("logical restore Eva database roles differ")
+        return LogicalRestoreRoleReceipt(roles=roles, target_was_empty=True)
+    finally:
+        engine.dispose()
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="eva-install-schema")
     parser.add_argument(
         "--alembic-ini", type=Path, default=Path("/opt/eva/alembic.ini")
     )
+    parser.add_argument("--prepare-logical-restore-roles", action="store_true")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
-        receipt = install_schema(
-            _secret(value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE"),
-            alembic_ini=arguments.alembic_ini,
+        database_dsn = _secret(
+            value_name="EVA_DATABASE_DSN", file_name="EVA_DATABASE_DSN_FILE"
         )
+        if arguments.prepare_logical_restore_roles:
+            role_receipt = prepare_logical_restore_roles(database_dsn)
+            print(
+                _canonical(
+                    {
+                        "contract": "EvaLogicalRestoreRoleReceipt/v1",
+                        "roles": list(role_receipt.roles),
+                        "status": "passed",
+                        "target_was_empty": role_receipt.target_was_empty,
+                    }
+                )
+            )
+            return 0
+        receipt = install_schema(database_dsn, alembic_ini=arguments.alembic_ini)
     except (CommandError, OSError, RuntimeError, ValueError) as error:
         print(_canonical({"error": str(error), "status": "failed"}))
         return 2
@@ -205,4 +325,11 @@ if __name__ == "__main__":
     sys.exit(main())
 
 
-__all__ = ["SchemaInstallationReceipt", "install_schema", "main"]
+__all__ = [
+    "LogicalRestoreRoleReceipt",
+    "SchemaInstallationReceipt",
+    "install_schema",
+    "logical_restore_preparation_sql",
+    "main",
+    "prepare_logical_restore_roles",
+]

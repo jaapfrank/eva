@@ -89,6 +89,9 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
     assert services["hindsight"]["environment"][
         "HINDSIGHT_API_DATABASE_URL_FILE"
     ] == "/run/secrets/hindsight_database_dsn"
+    assert services["hindsight"]["environment"][
+        "HINDSIGHT_API_EMBEDDINGS_PROVIDER"
+    ] == "local"
     for service_name in (
         "schema-installer",
         "model-access-lease",
