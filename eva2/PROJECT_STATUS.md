@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 01:43 CEST
+Laatst bijgewerkt: 29 augustus 2026, 01:51 CEST
 
 ## Heel kort
 
@@ -163,6 +163,9 @@ installatie zijn nog niet klaar.
 - De wizard bewaart nu ook installatienaam, eigenaarlabel, taal en tijdzone.
   Drie echte serverprocessen hervatten dezelfde keuzes en bevestigen ze apart.
   Dit maakt nog geen account, secret, container of actieve installatie.
+- Model, Telegram, Home Assistant, e-mail, een later ander kanaal en budgetten
+  hebben nu ieder een eigen hervatbare status. Een keuze heet nooit automatisch
+  klaar: alleen een aparte controle met bewijs mag dat later vastleggen.
 
 ## Wat nog niet klaar is
 
@@ -245,6 +248,7 @@ installatie zijn nog niet klaar.
 - [SOUL.md via de lokale wizard ondertekend, geactiveerd en teruggezet](evidence/living-core/eva2-installer-identity-lifecycle-loopback-2026-08-29.json)
 - [Installer hervat dezelfde identiteitswijziging na iedere serverherstart](evidence/living-core/eva2-installer-identity-resume-loopback-2026-08-29.json)
 - [Installer hervat de eerste vier niet-geheime installatiekeuzes](evidence/living-core/eva2-installer-profile-resume-loopback-2026-08-29.json)
+- [Connectorneutrale installerstatus zonder schijnbaar groene koppelingen](evidence/living-core/eva2-installer-capability-status-loopback-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

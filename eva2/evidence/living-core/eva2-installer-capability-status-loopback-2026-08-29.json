@@ -1,0 +1,55 @@
+{
+  "contract": "EvaInstallerCapabilityStatusLoopbackReceipt/v1",
+  "issuedAt": "2026-08-29T01:51:20+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "df7e6fe12416480da7cd10e75443818cc6056f43",
+    "installerCapabilityApiSha256": "01a2408080e19a5a08f4ecff87a271689f552f3161ab3f4da1a6ee0ee1084ec9",
+    "installerWizardSha256": "26f9fbd78a208490a4a52763f43f0e7fc3b6c9c04599ae0cb4dc63dc887cda4a",
+    "installerCapabilityWorkflowSha256": "f6cec8becbd1a9c0db89d75ecb453d1c4d0f42685953164a8955d505841a355b",
+    "installerWizardTestSha256": "9ea598ddbce767a2b6e0da7e97bf9f9bb11a7f4d32620eefc4484994f6c59bf6",
+    "installerCapabilityWorkflowTestSha256": "95870042ea6da5ebc3f02587e56edaef58f9a226ad8c058775cc9519f3a0c0c6"
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "serverProcesses": 3,
+    "newServerAndSessionBeforeEveryResume": true,
+    "browserChoices": [
+      "model_provider:selected",
+      "telegram:selected",
+      "email:skipped"
+    ],
+    "finalRevision": 4,
+    "temporaryWorkspaceRemovedAfterRun": true
+  },
+  "authoritySeparation": {
+    "browserVerificationRouteExists": false,
+    "forgedReadyRejected": true,
+    "operatorReceiptBoundReady": true,
+    "evidenceSha256Required": true,
+    "secretsAccepted": false,
+    "runtimeChanges": 0
+  },
+  "security": {
+    "loopbackOnly": true,
+    "sameOriginWrites": true,
+    "ownerOnlyCanonicalState": true,
+    "hashChainedAuditEvents": true,
+    "tamperedEventRejected": true,
+    "symlinkedLockRejected": true
+  },
+  "verification": {
+    "focusedCapabilityAndWizardTestsPassed": 21,
+    "capabilityWorkflowTestsPassed": 8,
+    "broadInstallerDashboardReleaseTestsPassed": 130,
+    "browserScriptSyntaxChecked": true,
+    "ruff": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "nonclaims": [
+    "selected means only that the user wants a capability; it is not a provider connection or readiness claim.",
+    "The ready transition used a synthetic receipt hash and did not contact a model, Telegram, Home Assistant, email or another provider.",
+    "This run accepted no secret and changed no Eva1, Eva2, container, database, connector or live route.",
+    "Actual secret intake, provider readback, connector activation, revocation and disconnect remain separate gates."
+  ]
+}

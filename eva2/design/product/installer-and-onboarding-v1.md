@@ -247,8 +247,12 @@ stil half-geconfigureerd.
   tijdzone hebben nu eveneens een private `staged`→`ready`-route met twee
   canonieke auditgebeurtenissen. Drie echte loopback-serverprocessen hervatten
   dezelfde keuzes. Het eigenaarlabel is nog geen accountbinding; de overige
-  vragen en connectoren hebben deze statusmachine nog niet. Daarom blijft IN02
-  als geheel open.
+  vragen hebben deze statusmachine nog niet. Model, Telegram, Home Assistant,
+  e-mail, een adaptief kanaal en budgetten hebben nu wel ieder een eigen
+  `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
+  De browser kan alleen kiezen of overslaan; uitsluitend een aparte
+  providercontrole met receipthash mag `ready` of `blocked` schrijven. De echte
+  secret- en providerflows ontbreken nog. Daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
