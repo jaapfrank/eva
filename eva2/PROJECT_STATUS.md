@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 28 augustus 2026, 19:15 CEST
+Laatst bijgewerkt: 28 augustus 2026, 19:20 CEST
 
 ## Heel kort
 
@@ -130,6 +130,12 @@ installatie zijn nog niet klaar.
   weer zo'n afspraak aan nadat een echte provider afzonderlijk is vrijgegeven.
   109 gerichte controles zijn groen; na de kernwissel antwoordde Eva via de
   echte `/eva2`-client exact `eerlijk` en er bleven nul wachtende doelen.
+- De hele actieve beheerde runtime is daarna achter de gezonde terugvalroute
+  koud gestopt: kern, beide toegangsleases, Hindsight en beide databases waren
+  werkelijk uit. Zij zijn expres in een ongunstige volgorde gestart en waren
+  binnen 13 seconden weer groen, zonder herstartlus. Gesprekscontext gaf exact
+  `eerlijk` terug, Home Assistant meldde opnieuw dat de spotjes uit staan en
+  dashboardtoegang bleef 200/401. De route staat weer op poort `44710`.
 
 ## Wat nog niet klaar is
 
@@ -155,6 +161,10 @@ installatie zijn nog niet klaar.
 - Eva1 moest bij de derde geplande servicewissel na twintig seconden hard
   stoppen. Daarna waren alle vijf controles groen en de tijdelijke traagheid
   verdween, maar dit blijft een zichtbaar onderhoudspunt.
+- Bij deze cold start probeerde Hindsight één ontbrekend cachekenmerk op zijn
+  alleen-lezen bestandssysteem te noteren. Dat gaf een logwaarschuwing maar geen
+  fout: 262 geheugenunits, 16 persoonsmodellen en de API bleven beschikbaar.
+  De offline-cache-instelling moet vóór de echte hostreboot nog stiller worden.
 - Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
@@ -203,6 +213,7 @@ installatie zijn nog niet klaar.
 - [Beheerde PostgreSQL 18-route live met eigenaar-dashboard, terugrol en herstart](evidence/living-core/eva2-managed-b-dashboard-cutover-live-2026-08-28.json)
 - [Vernieuwbare Codex-toegang zonder refresh-login in de Eva2-kern](evidence/living-core/eva2-managed-b-rotating-model-lease-live-2026-08-28.json)
 - [Geen schijnafspraak zonder echte duurzame-doelprovider](evidence/living-core/eva2-managed-b-durable-goal-admission-gate-live-2026-08-28.json)
+- [Volledige beheerde cold start achter de A/B-terugval](evidence/living-core/eva2-managed-b-full-cold-start-fallback-live-2026-08-28.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
