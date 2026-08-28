@@ -26,6 +26,17 @@ class ConversationConflict(RuntimeError):
     """A replay reused a durable message identity for different content."""
 
 
+class ConversationClarificationRequired(RuntimeError):
+    """A safe action needs one ordinary follow-up answer from the user."""
+
+    def __init__(self, prompt: str) -> None:
+        prompt = prompt.strip()
+        if not prompt or len(prompt) > 240:
+            raise ValueError("conversation clarification prompt is invalid")
+        self.prompt = prompt
+        super().__init__(prompt)
+
+
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 
 
@@ -618,7 +629,20 @@ class LivingConversation:
         if generated.action_call is not None:
             if self._actions is None or completed is not None:
                 raise RuntimeError("conversation model requested an unavailable action")
-            completed = self._actions.execute(turn, generated.action_call)
+            try:
+                completed = self._actions.execute(turn, generated.action_call)
+            except ConversationClarificationRequired as clarification:
+                return GroundedReply(
+                    conversation_id=turn.conversation_id,
+                    message_id=turn.message_id,
+                    text=clarification.prompt,
+                    evidence_memory_ids=tuple(
+                        item.fact_id for item in memory.recall.selected
+                    ),
+                    generated_at=turn.occurred_at,
+                    provider=generated.provider,
+                    model_usage=ConversationModelUsage.aggregate(tuple(usages)),
+                )
             generated = self._model.generate(
                 turn,
                 self._identity,
@@ -689,6 +713,7 @@ __all__ = [
     "ConversationActionCall",
     "ConversationActionPort",
     "ConversationActionReceipt",
+    "ConversationClarificationRequired",
     "ConversationConflict",
     "ConversationObservationBinding",
     "ConversationTurn",

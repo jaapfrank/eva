@@ -3,6 +3,7 @@ from __future__ import annotations
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationClarificationRequired,
     ConversationModelResult,
     ConversationObservationBinding,
     ConversationTurn,
@@ -486,6 +487,57 @@ def test_model_chosen_interest_is_committed_before_eva_claims_it() -> None:
 
     assert order == ["pending", "chosen", "committed", "expressed"]
     assert reply.text.startswith("Ik kies slim koken")
+
+
+def test_action_clarification_becomes_one_normal_reply_without_second_model_call() -> None:
+    call = ConversationActionCall(
+        "call:light:ambiguous",
+        "read_home_assistant_state",
+        {"entity_kind": "light", "target": "licht in de overkapping"},
+    )
+    model_calls = 0
+
+    class Actions:
+        action_names = ("read_home_assistant_state",)
+
+        def active_context(self, turn):  # type: ignore[no-untyped-def]
+            return ()
+
+        def pending(self, turn):  # type: ignore[no-untyped-def]
+            return None
+
+        def execute(self, turn, proposed):  # type: ignore[no-untyped-def]
+            assert proposed == call
+            raise ConversationClarificationRequired("Welke lamp bedoel je precies?")
+
+    class ActionModel(_Model):
+        def generate(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            nonlocal model_calls
+            model_calls += 1
+            assert kwargs["available_actions"] == ("read_home_assistant_state",)
+            return ConversationModelResult(None, "model", call)
+
+    conversation = LivingConversation(
+        _Memory(),
+        ActionModel(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        Actions(),
+    )
+    reply = conversation.respond(
+        ConversationTurn.private(
+            "tenant",
+            "installation",
+            "jaap",
+            "telegram:jaap",
+            "telegram:light:ambiguous",
+            "Staat het licht in de overkapping aan?",
+            NOW,
+        )
+    )
+
+    assert reply.text == "Welke lamp bedoel je precies?"
+    assert reply.provider == "model"
+    assert model_calls == 1
 
 
 def test_pending_durable_interest_resumes_without_choosing_again() -> None:

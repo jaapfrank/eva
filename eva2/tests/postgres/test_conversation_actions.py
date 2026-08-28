@@ -18,6 +18,7 @@ from eva.adapters.postgres.operational_timeline import TimelineEvent
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationClarificationRequired,
     ConversationObservationBinding,
     ConversationTurn,
 )
@@ -38,6 +39,39 @@ from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 
 
 NOW = datetime(2026, 8, 23, 14, 0, tzinfo=UTC)
+
+
+def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> None:
+    class HomeAssistant:
+        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
+            assert target == "licht in de overkapping"
+            raise ValueError("Home Assistant light target is unknown or ambiguous")
+
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=False,
+    )
+    with pytest.raises(
+        ConversationClarificationRequired,
+        match=r"Welke lamp bedoel je precies\?",
+    ):
+        actions.execute(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:ambiguous-light",
+                "Staat het licht in de overkapping aan?",
+                "2026-08-23T14:00:00Z",
+            ),
+            ConversationActionCall(
+                "call:ambiguous-light",
+                "read_home_assistant_state",
+                {"entity_kind": "light", "target": "licht in de overkapping"},
+            ),
+        )
 
 
 def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> None:

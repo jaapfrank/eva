@@ -19,6 +19,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationClarificationRequired,
     ConversationConflict,
     ConversationTurn,
 )
@@ -112,7 +113,18 @@ class PostgresHomeAssistantConversationReads:
             resolved_one = await resolver(arguments["target"])
             await self._read(turn, call, arguments, resolved_one)
 
-        asyncio.run(run())
+        try:
+            asyncio.run(run())
+        except ValueError as error:
+            expected = (
+                f"Home Assistant {arguments['entity_kind']} target is unknown or ambiguous"
+            )
+            if str(error) != expected:
+                raise
+            subject = "lamp" if arguments["entity_kind"] == "light" else "apparaat"
+            raise ConversationClarificationRequired(
+                f"Welke {subject} bedoel je precies?"
+            ) from error
         return self._receipt(
             turn, self._timeline(turn).events(self.thread_id(turn, call.name))
         )
