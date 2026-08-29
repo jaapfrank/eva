@@ -21,7 +21,7 @@ class CliProbe:
 
     def read_only_probe(self, *, secret: memoryview, timeout_seconds: float):
         self.calls += 1
-        assert bytes(secret) == b"8837420871:synthetic_token_value_1234567890ABCDE"
+        assert bytes(secret) == b"7000000001:Eva2SyntheticTokenValue_1234567890ABCDE"
         assert timeout_seconds == 3.0
         if not self.ready:
             raise InstallerProviderProbeError("unauthorized")
@@ -40,7 +40,7 @@ def _workspaces(root: Path) -> tuple[Path, Path, Path]:
     workflow.select(step_id="telegram", wanted=True)
     InstallerSecretStore(workspace=secrets).store(
         slot_id="telegram",
-        secret="8837420871:synthetic_token_value_1234567890ABCDE",
+        secret="7000000001:Eva2SyntheticTokenValue_1234567890ABCDE",
     )
     return capability, secrets, evidence
 

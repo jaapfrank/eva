@@ -17,7 +17,7 @@ from eva.operations.installer_provider_verification import InstallerProviderVeri
 from eva.operations.installer_secret_store import InstallerSecretStore
 
 
-TOKEN = "8837420871:synthetic_token_value_1234567890ABCDE"
+TOKEN = "7000000001:Eva2SyntheticTokenValue_1234567890ABCDE"
 
 
 class TelegramFixtureHandler(BaseHTTPRequestHandler):
@@ -25,7 +25,7 @@ class TelegramFixtureHandler(BaseHTTPRequestHandler):
     response_type = "application/json"
     response_payload: object = {
         "ok": True,
-        "result": {"id": 8837420871, "is_bot": True, "username": "eva2_fixture_bot"},
+        "result": {"id": 7000000001, "is_bot": True, "username": "eva2_fixture_bot"},
     }
     requests: list[dict[str, object]] = []
 
