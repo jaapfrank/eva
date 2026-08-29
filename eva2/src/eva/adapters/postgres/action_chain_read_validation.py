@@ -13,6 +13,9 @@ import sqlalchemy as sa
 from eva.adapters.postgres.action_chain_read_result_validation import (
     validate_action_chain_read_terminal,
 )
+from eva.adapters.postgres.action_chain_validation_common import (
+    validate_prepared_claim,
+)
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
@@ -21,7 +24,6 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.action_chain import (
     action_chain_step_operation_id,
-    action_chain_thread_id,
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope
@@ -37,7 +39,6 @@ from eva.contracts.execution import (
     ReadAttempt,
     ReadIntent,
 )
-from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelDecision, ValidatedPlan
 
 
@@ -98,9 +99,10 @@ def validate_action_chain_read(
         "resource_type": intent.resource_scope.resource_type,
         "resource_id": intent.resource_scope.resource_id,
     }
-    claim_sha256, prepared_at = _prepared_claim(
+    claim_sha256, prepared_at = validate_prepared_claim(
         connection,
         scope,
+        kind="read",
         plan=plan,
         plan_id=plan_id,
         plan_step_id=stored.plan_step_id,
@@ -589,105 +591,6 @@ def validate_authorized_action_chain_read(
     return attempt
 
 
-def _prepared_claim(
-    connection: sa.Connection,
-    scope: TimelineScope,
-    *,
-    plan: ValidatedPlan,
-    plan_id: UUID,
-    plan_step_id: UUID,
-    logical_step_key: str,
-    corrupt: type[RuntimeError],
-) -> tuple[str, datetime]:
-    root_thread_id = action_chain_thread_id(plan)
-    child_thread_id = action_chain_step_operation_id(plan, logical_step_key)
-    child_prepared = connection.execute(
-        sa.select(operational_events).where(
-            operational_events.c.tenant_id == scope.tenant_id,
-            operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.thread_id == child_thread_id,
-            operational_events.c.event_type == "ACTION_CHAIN_READ_INTENT_PREPARED",
-        )
-    ).one_or_none()
-    if child_prepared is None:
-        raise corrupt("prepared read child event is absent")
-    prepared = connection.execute(
-        sa.select(operational_events).where(
-            operational_events.c.tenant_id == scope.tenant_id,
-            operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.thread_id == root_thread_id,
-            operational_events.c.event_type == "ACTION_CHAIN_READ_INTENT_PREPARED",
-            operational_events.c.occurred_at == child_prepared.occurred_at,
-        )
-    ).one_or_none()
-    if prepared is None:
-        raise corrupt("prepared read root event is absent")
-    claimed = connection.execute(
-        sa.select(operational_events).where(
-            operational_events.c.tenant_id == scope.tenant_id,
-            operational_events.c.installation_id == scope.installation_id,
-            operational_events.c.thread_id == root_thread_id,
-            operational_events.c.sequence == int(prepared.sequence) - 1,
-        )
-    ).one_or_none()
-    rows = (prepared, claimed)
-    if (
-        claimed is None
-        or prepared.event_type != "ACTION_CHAIN_READ_INTENT_PREPARED"
-        or claimed.event_type != "ACTION_CHAIN_CONTINUATION_CLAIMED"
-        or int(prepared.sequence) != int(claimed.sequence) + 1
-        or prepared.occurred_at != child_prepared.occurred_at
-    ):
-        raise corrupt("prepared read lease timeline differs")
-    for event in rows:
-        if (
-            event.operation_id != root_thread_id
-            or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
-            or set(event.payload) != {"checkpoint", "data"}
-        ):
-            raise corrupt("prepared read lease event differs")
-    claimed_data = claimed.payload.get("data")
-    if not isinstance(claimed_data, dict):
-        raise corrupt("prepared read claim data is absent")
-    attention_payload = claimed_data.get("attention")
-    if not isinstance(attention_payload, dict):
-        raise corrupt("prepared read claim attention is absent")
-    try:
-        attention = AttentionWake.model_validate(attention_payload)
-    except ValueError as error:
-        raise corrupt("prepared read claim attention is invalid") from error
-    expected_attention_id = uuid5(plan_id, "continuation:1")
-    if (
-        set(claimed_data)
-        != {
-            "attention",
-            "attention_payload_sha256",
-            "attention_revision",
-            "plan_id",
-        }
-        or attention.attention_id != str(expected_attention_id)
-        or attention.state != "claimed"
-        or attention.lease_owner is None
-        or attention.lease_expires_at is None
-        or claimed_data.get("attention_payload_sha256") != canonical_sha256(attention)
-        or claimed_data.get("attention_revision") != claimed.sequence
-        or claimed_data.get("plan_id") != str(plan_id)
-    ):
-        raise corrupt("prepared read claim binding differs")
-    return (
-        canonical_sha256(
-            {
-                "attention_id": str(expected_attention_id),
-                "attention_revision": claimed_data["attention_revision"],
-                "lease_expires_at": attention.lease_expires_at,
-                "logical_step_key": logical_step_key,
-                "plan_id": str(plan_id),
-                "plan_step_id": str(plan_step_id),
-                "worker_id": attention.lease_owner,
-            }
-        ),
-        prepared.occurred_at,
-    )
 
 
 def _worker_process_sha256(worker_id: str, *, corrupt: type[RuntimeError]) -> str:
