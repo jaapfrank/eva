@@ -1,0 +1,61 @@
+{
+  "contract": "EvaPerformanceComplexityPc01LegacyMemoryTrialOperatorBoundary/v1",
+  "recordedAt": "2026-08-29T19:27:22Z",
+  "sourceCommit": "9df0163da8224c069d1d55c9cf59cd64a902afd7",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "movedFromProductRuntime": "src/eva/application/legacy_memory_trial.py",
+    "movedToOperatorTools": "tools/legacy_memory_trial.py",
+    "productConsumersBeforeMove": 0,
+    "operatorAndTestConsumersUpdated": 5,
+    "netProductPhysicalLines": -223
+  },
+  "verification": {
+    "privateLocalUnitTests": {
+      "passed": 19,
+      "failed": 0,
+      "temporaryRoot": "/var/tmp",
+      "logSha256": "920c692767e930c932a32499bf05d7ae8ae6e04d4f3298e50fa2d075b168299d"
+    },
+    "realPostgresOperatorTrial": {
+      "passed": 1,
+      "failed": 0,
+      "logSha256": "a58ea0b4167eeae289537e7edc477cbfd6f4e31d26a4d8143fd07f60357f4f38"
+    },
+    "realPostgresRestrictedRecallTrial": {
+      "passed": 1,
+      "failed": 0,
+      "logSha256": "8c43d9573f3d8a995400e5580cba928a76e9fa39d07b043faddb4a0e69820107"
+    },
+    "temporaryPostgresContainerRemoved": true,
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 226,
+      "productPhysicalLines": 82072,
+      "productManifestSha256": "1bedd6f3eefc44b0b0b42aae5748f03eb3c1e3c0b44cd8440306665679e96502"
+    },
+    "after": {
+      "productFileCount": 225,
+      "productPhysicalLines": 81849,
+      "productManifestSha256": "0241962030f4c7462270e0785cf5bad31a70398d43ad51006206a930804b0bfa",
+      "livingCorePhysicalLines": 81256,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 6849,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No Eva1 memory was imported or changed in this step.",
+    "The one-time owner-confirmed trial remains an operator tool and is not a normal runtime capability.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
