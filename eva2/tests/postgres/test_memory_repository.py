@@ -32,7 +32,7 @@ from eva.application.memory import (
     RecallCurrentFacts,
     RememberFact,
 )
-from eva.application.legacy_memory_trial import (
+from tools.legacy_memory_trial import (
     LegacyMemoryRecord,
     LegacyMemoryTrialSpec,
     build_legacy_memory_trial,

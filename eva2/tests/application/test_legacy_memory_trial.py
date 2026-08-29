@@ -4,7 +4,7 @@ import hashlib
 
 import pytest
 
-from eva.application.legacy_memory_trial import (
+from tools.legacy_memory_trial import (
     LegacyMemoryRecord,
     LegacyMemoryTrialError,
     LegacyMemoryTrialSpec,

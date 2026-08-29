@@ -7,7 +7,7 @@ import tempfile
 
 import pytest
 
-from eva.application.legacy_memory_trial import LegacyMemoryTrialError
+from tools.legacy_memory_trial import LegacyMemoryTrialError
 from tools.run_legacy_memory_trial import (
     _active_records,
     _copy_readonly_sqlite_snapshot,

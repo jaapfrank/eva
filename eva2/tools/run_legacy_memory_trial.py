@@ -28,7 +28,7 @@ if __package__:
 else:
     from postgres_memory_repository import PostgresMemoryRepository
 from eva.adapters.postgres.scope import set_local_scope
-from eva.application.legacy_memory_trial import (
+from tools.legacy_memory_trial import (
     LegacyMemoryRecord,
     LegacyMemoryTrialError,
     LegacyMemoryTrialSpec,
