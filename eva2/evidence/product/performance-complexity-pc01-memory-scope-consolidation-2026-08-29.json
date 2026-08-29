@@ -1,0 +1,58 @@
+{
+  "contract": "PerformanceComplexityPc01MemoryScopeConsolidation/v1",
+  "issuedAt": "2026-08-29T16:34:50+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "c9188e234d6d7cc25dbcd30bd3903a853e68a2f5",
+    "branch": "recovery/v2-containment",
+    "productManifestSha256": "50e9d4b09cb7e2a2e0aaf7b0a6c5af10f929d1479285a5d70e969f8d3d725968"
+  },
+  "change": {
+    "summary": "Conversation journal, memory outbox, and physical memory budget now inherit the existing fail-closed PostgreSQL role and tenant scope boundary.",
+    "storesConsolidated": 3,
+    "productFilesChanged": 3,
+    "productLinesAdded": 12,
+    "productLinesDeleted": 37,
+    "netProductLines": -25,
+    "databaseSchemaChanged": false,
+    "normalScopeContractChanged": false,
+    "safetyTightening": "A transaction that already carries a different tenant or installation scope is rejected instead of overwritten."
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88713,
+    "productPhysicalLinesAfter": 88688,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13688,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "fastJournalTestsPassed": 6,
+    "postgresVersion": "16.13",
+    "postgresTimelineAndMemoryBudgetTestsPassed": 38,
+    "postgresPeopleAndMemoryOutboxTestsPassed": 8,
+    "testsPassed": 52,
+    "testsFailed": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1RoutesHttp200": 5,
+    "liveEva2ReadyHttp200": true
+  },
+  "logs": {
+    "ruffSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "fastJournalTestsSha256": "e1e00987eaf93891fbd077fb662a1639a6ced95ab99532bfd10ed31397899015",
+    "postgresTimelineAndMemoryBudgetTestsSha256": "b53eeb28fb1ec9582a7dee6df100ca2ec3bacccc2603226d94ddfab1d0736aca",
+    "postgresPeopleAndMemoryOutboxTestsSha256": "a0f66737f3f25934812235eb6bc481e0ac1c83726a27a3b102285bde6f0d98cf",
+    "pc01SourceMeasurementSha256": "f5f074351dbced30ddbfcb4f403e54e9e9ab57371feff55b12c1132862efa478",
+    "liveRoutesSha256": "27769b678b01dcfc2093ea82d6fdf4cdeb8608686cba2085949f98746bb3a215"
+  },
+  "nonClaims": [
+    "The 75000-line PC01 gate remains red.",
+    "This checkpoint does not change memory content, quotas, retention, or erasure semantics.",
+    "This checkpoint does not deploy a new Eva2 image or alter a live database.",
+    "The full release, reboot, and seven-day acceptance gates remain open."
+  ],
+  "nextRequiredAction": "Remove or replace at least 13688 more measured product lines without weakening the source boundary or proven capabilities."
+}
