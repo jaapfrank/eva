@@ -1,0 +1,80 @@
+{
+  "boundaries": {
+    "configurationReturned": false,
+    "crossOriginConfigurationDenied": true,
+    "providerPayloadReturned": false,
+    "providerScopesBound": true,
+    "secondProviderCallAfterRestart": false,
+    "secretReturned": false
+  },
+  "contract": "EvaInstallerEndpointWizardReceipt/v1",
+  "issuedAt": "2026-08-29T02:25:15+00:00",
+  "loopbackRun": {
+    "configurationBoundReceipts": 2,
+    "configuredProviderRequests": 2,
+    "providerKinds": [
+      "home_assistant",
+      "agentmail"
+    ],
+    "scopeManifests": 2,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_on_127.0.0.1",
+    "wizardServerProcesses": 2
+  },
+  "nonclaims": [
+    "The proof used synthetic access and loopback contract servers; it contacted neither a real Home Assistant nor AgentMail.",
+    "This proves browser configuration, verification and restart continuity, not a complete installation or live provider account.",
+    "Real provider credentials, provider-granted least privilege and a complete installation remain separate gates."
+  ],
+  "source": {
+    "commit": "3ff521beb9705ed6764187f8649a263c175d3502",
+    "files": [
+      {
+        "path": "src/eva/adapters/api/installer_provider_api.py",
+        "sha256": "0f8f0dc608242267a07eb6031f04e0e03068a6afc03998ed7164504c7e6e6c53"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard.py",
+        "sha256": "10790ffbe547139201b1f773f352c864d6802b20780b9d4a5da863c5c973e586"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard_cli.py",
+        "sha256": "d5953a4cb8f75571eacdc9ed8587e12d8acebbff65b82332d7bc05a6386ee8f1"
+      },
+      {
+        "path": "src/eva/adapters/connectors/installer_agentmail_probe.py",
+        "sha256": "6158dd1caa55d08112fa20a78dcbdad7234f00318a097783f461764896005bf8"
+      },
+      {
+        "path": "src/eva/adapters/connectors/installer_home_assistant_probe.py",
+        "sha256": "d6cf79bcea4dccad7dee3f6b07dbc28608d843540b3be5281f404764acc4a028"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_configuration.py",
+        "sha256": "36ede65a6baf119d49a79abc8aa899a27afcc4d151f1300b09eb23d3854935a4"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "5ebb17766a778f8ab47dc10bbae6a1895911559b0806297ddc1b6688b1f35a34"
+      },
+      {
+        "path": "tests/api/test_installer_provider_api.py",
+        "sha256": "e5567d7ea514b3f60dac74f95c74c614f88e6721fd9244ded89aa37a5d60cbee"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_configuration.py",
+        "sha256": "5a1a04739a577b184be997a7116ec9164c232ac0f04067faa94fd7ed6577f6e9"
+      },
+      {
+        "path": "tools/prove_installer_endpoint_wizard.py",
+        "sha256": "1bdf339e4a69c8bd677ac29f235147ee0121ed4a0c2586a855f329c696839a0c"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerTestsPassed": 173,
+    "focusedTestsPassed": 52,
+    "networkUsedOutsideLoopback": false
+  }
+}

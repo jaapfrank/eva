@@ -323,9 +323,14 @@ stil half-geconfigureerd.
   nu ook vervangen, verwijderen en na een onderbroken bestandswissel
   herstellen. Vier echte loopback-serverstarts bewezen bovendien dat een
   vertraagde oude providercontrole de nieuwe generatie niet klaar kan zetten
-  en dat secretbytes niet in browser of bewijs belanden. Expliciete
-  providerscopes, echte providerreadback en tokenvernieuwing ontbreken nog,
-  dus IN05 blijft open.
+  en dat secretbytes niet in browser of bewijs belanden. Voor model, Telegram,
+  Home Assistant en AgentMail toont de wizard nu bovendien Eva's ene minimale
+  verificatiehandeling in gewone taal. De vaste scope-ID's en hun manifesthash
+  staan in ieder providerbewijs; echte loopbackcalls bewezen alle vier zonder
+  mutatie, tools, berichtlezing of payloadretentie. Dit is Eva's gebruiksgrens,
+  geen bewijs dat iedere provider ook werkelijk een even smalle credential kan
+  uitgeven. Provider-granted least privilege, echte providerreadback en
+  tokenvernieuwing ontbreken nog, dus IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
