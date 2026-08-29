@@ -1,0 +1,27 @@
+{
+  "contract": "EvaPerformanceComplexityPc01LocalTuyaReceiptConsolidation/v1",
+  "recordedAt": "2026-08-29T17:14:23Z",
+  "sourceCommit": "192694a867b49854c9627d615ef79251f7c2bf44",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedValidation": ["LocalTuya package receipt", "LocalTuya repository receipt"],
+    "preservedBoundaries": ["event types", "scope fields", "argument validators", "error messages"],
+    "netProductPhysicalLines": -8
+  },
+  "verification": {
+    "conversationActionTests": {"passed": 30, "failed": 0, "logSha256": "9aea11cdc39864cf891e19ac5c9a39253a114ab85fb8b98d508e8abf15d8e7cb"},
+    "ruff": {"passed": true, "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"}
+  },
+  "pc01SourceMeasurement": {
+    "before": {"productFileCount": 228, "productPhysicalLines": 83401, "productManifestSha256": "7dc0e15583e10cdc9ca3c8413dcf94215f775eecc476bc02648de348bb79dfcb"},
+    "after": {"productFileCount": 228, "productPhysicalLines": 83393, "productManifestSha256": "56a281cc023e3bcc8232aa4446c46f0753402d3175bb46cd7954f60b604b95cb", "livingCorePhysicalLines": 82800, "unclassifiedSourcePaths": 0},
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8393,
+    "violations": ["product_physical_lines_budget_exceeded"]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No LocalTuya permission, action, event, scope or external call was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
