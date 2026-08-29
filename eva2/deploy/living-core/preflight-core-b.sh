@@ -29,10 +29,10 @@ if [ "$mode" = host_only ]; then
     exec env -i \
         LC_ALL=C \
         PYTHONPATH="$eva2_root/src:$eva2_root" \
-        /usr/bin/python3 -m eva.operations.core_b_preflight --host-only "$environment_file"
+        /usr/bin/python3 -m tools.core_b_preflight --host-only "$environment_file"
 fi
 
 exec env -i \
     LC_ALL=C \
     PYTHONPATH="$eva2_root/src:$eva2_root" \
-    /usr/bin/python3 -m eva.operations.core_b_preflight "$environment_file"
+    /usr/bin/python3 -m tools.core_b_preflight "$environment_file"

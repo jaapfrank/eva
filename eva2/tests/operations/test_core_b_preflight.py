@@ -10,8 +10,8 @@ import pytest
 
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
-from eva.operations import core_b_preflight
-from eva.operations.core_b_preflight import (
+from tools import core_b_preflight
+from tools.core_b_preflight import (
     REQUIRED_CONFIGURATION,
     host_metadata_preflight_receipt,
     load_core_b_plan as _load_core_b_plan,
@@ -796,7 +796,7 @@ def test_container_read_uses_verified_host_after_context_config_swap(
             )
         )
 
-    monkeypatch.setattr("eva.operations.core_b_preflight.subprocess.run", fake_run)
+    monkeypatch.setattr("tools.core_b_preflight.subprocess.run", fake_run)
 
     observe_current_b(plan)
 
@@ -870,7 +870,7 @@ def test_managed_service_observation_reads_eight_steady_labeled_containers(
             )
         )
 
-    monkeypatch.setattr("eva.operations.core_b_preflight.subprocess.run", fake_run)
+    monkeypatch.setattr("tools.core_b_preflight.subprocess.run", fake_run)
 
     observe_managed_b_services(plan)
 
@@ -941,7 +941,7 @@ def test_managed_service_observation_rejects_another_compose_project(
             )
         )
 
-    monkeypatch.setattr("eva.operations.core_b_preflight.subprocess.run", fake_run)
+    monkeypatch.setattr("tools.core_b_preflight.subprocess.run", fake_run)
 
     with pytest.raises(RuntimeError, match="different Compose project"):
         observe_managed_b_services(plan)

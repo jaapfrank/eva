@@ -8,7 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from eva.operations.core_b_preflight import CoreBPlan
+from tools.core_b_preflight import CoreBPlan
 from tools.managed_b_render import (
     EXPECTED_SERVICES,
     MANAGED_B_MANIFEST,

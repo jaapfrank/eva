@@ -11,7 +11,7 @@ import subprocess
 import tempfile
 from typing import Any
 
-from eva.operations.core_b_preflight import (
+from tools.core_b_preflight import (
     MANAGEMENT_LABEL,
     MANAGEMENT_VALUE,
     MANAGED_SERVICE_NAMES,
