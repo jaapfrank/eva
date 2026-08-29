@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import json
 from threading import Lock
 from typing import Callable, Mapping
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
+from eva.adapters.api.installer_request_json import read_small_json_request
 from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflow,
     InstallerCapabilityWorkflowError,
@@ -159,24 +159,7 @@ INSTALLER_SECRET_SCRIPT = r"""
 
 
 async def _small_json(request: Request) -> object:
-    length = request.headers.get("content-length")
-    if length is not None:
-        try:
-            if int(length) > _MAX_JSON_BYTES:
-                raise HTTPException(
-                    status_code=413, detail="secret request is too large"
-                )
-        except ValueError:
-            raise HTTPException(status_code=422, detail="secret request is invalid")
-    raw = bytearray()
-    async for chunk in request.stream():
-        if len(raw) + len(chunk) > _MAX_JSON_BYTES:
-            raise HTTPException(status_code=413, detail="secret request is too large")
-        raw.extend(chunk)
-    try:
-        return json.loads(raw)
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        raise HTTPException(status_code=422, detail="secret request is invalid")
+    return await read_small_json_request(request, _MAX_JSON_BYTES, "secret")
 
 
 def _payload(
