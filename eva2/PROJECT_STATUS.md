@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 19:24 CEST
+Laatst bijgewerkt: 29 augustus 2026, 19:27 CEST
 
 ## Heel kort
 
@@ -192,6 +192,9 @@ praktijktest zijn nog niet klaar.
 - De duurzame toelating van die twee LocalTuya-stappen en de eindcontrole van
   huisacties en automatiseringen gebruiken nu ook ieder één gedeelde route.
   Dezelfde 30 tests zijn groen; dit scheelde nog vijf productregels.
+- De ongebruikte aparte switch-wrapper is verwijderd. Licht en switch gaan
+  intern nu direct door dezelfde bestaande veiligheidsroute; 61 gesprek- en
+  API-tests zijn groen en dit scheelde nog 30 productregels.
 
 ## Wat nog niet klaar is
 
@@ -206,8 +209,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.445 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 83.388 productregels en mag er maximaal 75.000 hebben.
+  7.475 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 83.358 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -281,6 +284,7 @@ praktijktest zijn nog niet klaar.
 - [Offline releasehulpen uit de runtime: 1.758 productregels minder](evidence/product/performance-complexity-pc01-candidate-release-tool-separation-2026-08-29.json)
 - [Gedeelde LocalTuya-receiptcontrole](evidence/product/performance-complexity-pc01-localtuya-receipt-consolidation-2026-08-29.json)
 - [Gedeelde LocalTuya-toelating en Home Assistant-eindcontrole](evidence/product/performance-complexity-pc01-localtuya-admission-ha-proof-consolidation-2026-08-29.json)
+- [Ongebruikte Home Assistant-switch-wrapper verwijderd](evidence/product/performance-complexity-pc01-home-assistant-binary-wrapper-removal-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)

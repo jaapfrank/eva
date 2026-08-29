@@ -1,0 +1,48 @@
+{
+  "contract": "EvaPerformanceComplexityPc01HomeAssistantBinaryWrapperRemoval/v1",
+  "recordedAt": "2026-08-29T17:26:42Z",
+  "sourceCommit": "b6de14e77ced2c381754365633f991fcbe4a96ee",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "removedUnusedInterface": "execute_home_assistant_switch",
+    "remainingExternalInterface": "execute_home_assistant_light",
+    "sharedRuntimePath": "_execute_home_assistant_binary",
+    "netProductPhysicalLines": -30
+  },
+  "verification": {
+    "remainingSwitchWrapperReferences": 0,
+    "conversationAndApiTests": {
+      "passed": 61,
+      "failed": 0,
+      "logSha256": "a019caf0685d9a48522defbab341ee37776c4668446fc34e6ff55307d25d4887"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83388,
+      "productManifestSha256": "09f7627bee3e5ddc0f48419692ab60034879f536749ca27bb879b487bd9c168d"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83358,
+      "productManifestSha256": "efb4f3e786ec6aec7e8c9f5bf66c25f2480b7c51c3009226dd0ce5670d6e7229",
+      "livingCorePhysicalLines": 82765,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8358,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No Home Assistant permission, entity, service, validation or external call was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
