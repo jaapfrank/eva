@@ -29,7 +29,7 @@ import time
 from typing import Any, Protocol
 from urllib import error, request
 
-from eva.operations.eva2_canary_cutover import (
+from tools.eva2_canary_cutover import (
     EVA1_PATHS,
     _atomic_dropin,
     _read_exact_dropin,

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.operations.eva2_canary_cutover import (
+from tools.eva2_canary_cutover import (
     CanaryCutoverError,
     EVA1_PATHS,
     canonical_dropin,
