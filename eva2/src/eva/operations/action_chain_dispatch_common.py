@@ -19,7 +19,11 @@ from eva.adapters.postgres.action_chain_ledger import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope
-from eva.contracts.timestamps import parse_utc_timestamp
+from eva.contracts.timestamps import (
+    format_utc_timestamp,
+    parse_utc_timestamp,
+    require_utc_second,
+)
 from eva.contracts.execution import (
     CapabilityGrant,
     CapabilityManifest,
@@ -64,6 +68,105 @@ class ResolvedDispatchAuthorization(NamedTuple):
     binding: ConnectorBinding
     existing: Any
     created_at: datetime
+
+
+def utc_now_second() -> datetime:
+    return datetime.now(UTC).replace(microsecond=0)
+
+
+def require_connector_execution_inputs(now: datetime, timeout_seconds: float) -> None:
+    require_utc_second(now, "now")
+    if not isinstance(timeout_seconds, (int, float)) or isinstance(
+        timeout_seconds, bool
+    ):
+        raise TypeError("connector timeout must be numeric")
+    if timeout_seconds <= 0 or timeout_seconds > 30:
+        raise ValueError("connector timeout must be between 0 and 30 seconds")
+
+
+def execute_claimed_connector(
+    claim: Any,
+    *,
+    results: Any,
+    now: datetime,
+    timeout_seconds: float,
+    clock: Callable[[], datetime],
+    claim_label: str,
+    recording_subject: str,
+    runner: Callable[..., Any],
+) -> Any:
+    """Execute one first claim and atomically retain its provider result."""
+
+    if (
+        claim.process_spec is None
+        or claim.connector_manifest is None
+        or claim.initialize is None
+        or claim.invoke is None
+    ):
+        raise RuntimeError(f"first {claim_label} claim lacks call material")
+    deadline = parse_utc_timestamp(claim.attempt.deadline)
+    remaining_seconds = (deadline - now).total_seconds()
+    if remaining_seconds <= 0:
+        raise RuntimeError(f"claimed {claim_label} has no remaining deadline")
+    result = runner(
+        spec=claim.process_spec,
+        manifest=claim.connector_manifest,
+        initialize=claim.initialize,
+        invoke=claim.invoke,
+        observed_at=format_utc_timestamp(now),
+        timeout_seconds=min(timeout_seconds, remaining_seconds),
+    )
+    recorded_at = clock()
+    require_utc_second(recorded_at, "clock result")
+    if recorded_at < now:
+        raise RuntimeError(f"{recording_subject} recording precedes the call")
+    return results.record(
+        claim,
+        result=result,
+        observed_at=now,
+        recorded_at=recorded_at,
+    )
+
+
+def execute_connector_once(
+    operation_id: UUID,
+    *,
+    results: Any,
+    claim_provider: Callable[[], Any],
+    conflict: type[Exception],
+    now: datetime,
+    timeout_seconds: float,
+    clock: Callable[[], datetime],
+    claim_label: str,
+    recording_subject: str,
+    runner: Callable[..., Any],
+) -> tuple[Literal["executed", "already_started"], Any, Any | None]:
+    """Resolve replay/races and execute only the first durable provider claim."""
+
+    require_connector_execution_inputs(now, timeout_seconds)
+    existing = results.load_terminal(operation_id)
+    if existing is not None:
+        return "already_started", existing.attempt, existing
+    try:
+        claim = claim_provider()
+    except conflict:
+        raced_result = results.load_terminal(operation_id)
+        if raced_result is None:
+            raise
+        return "already_started", raced_result.attempt, raced_result
+    if claim.disposition == "already_started":
+        return "already_started", claim.attempt, None
+    stored = execute_claimed_connector(
+        claim,
+        results=results,
+        now=now,
+        timeout_seconds=timeout_seconds,
+        clock=clock,
+        claim_label=claim_label,
+        recording_subject=recording_subject,
+        runner=runner,
+    )
+    return "executed", stored.attempt, stored
 
 
 def resolve_dispatch_authorization(
