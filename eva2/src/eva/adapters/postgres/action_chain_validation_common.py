@@ -123,3 +123,38 @@ def validate_prepared_claim(
         ),
         prepared.occurred_at,
     )
+
+
+def validated_released_step_ids(
+    *,
+    source_step_id: UUID,
+    by_id: dict[UUID, sa.Row],
+    context: dict[str, object],
+    event_time: datetime,
+    kind: Literal["read", "effect"],
+    corrupt: type[RuntimeError],
+) -> tuple[UUID, ...]:
+    raw = context.get("released_step_ids")
+    if not isinstance(raw, list):
+        raise corrupt(f"{kind} advance released-step set is invalid")
+    try:
+        released = tuple(UUID(str(item)) for item in raw)
+    except (TypeError, ValueError) as error:
+        raise corrupt(f"{kind} advance released-step identity is invalid") from error
+    if raw != [str(item) for item in sorted(released, key=str)] or len(
+        set(released)
+    ) != len(released):
+        raise corrupt(f"{kind} advance released-step order differs")
+    succeeded = {step_id for step_id, row in by_id.items() if row.state == "succeeded"}
+    if any(
+        step_id not in by_id
+        or source_step_id not in by_id[step_id].dependency_step_ids
+        or not set(by_id[step_id].dependency_step_ids).issubset(succeeded)
+        or any(
+            by_id[dependency].updated_at > event_time
+            for dependency in by_id[step_id].dependency_step_ids
+        )
+        for step_id in released
+    ):
+        raise corrupt(f"{kind} advance released an ineligible dependency")
+    return released

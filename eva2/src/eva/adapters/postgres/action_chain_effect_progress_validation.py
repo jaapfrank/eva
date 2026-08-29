@@ -3,13 +3,15 @@
 from __future__ import annotations
 from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
 
-from datetime import datetime
 from typing import Any, Sequence
 from uuid import UUID
 
 import sqlalchemy as sa
 
 from eva.adapters.postgres.operational_timeline import TimelineScope, operational_events
+from eva.adapters.postgres.action_chain_validation_common import (
+    validated_released_step_ids,
+)
 from eva.application.action_chain import (
     action_chain_step_operation_id,
     action_chain_thread_id,
@@ -90,11 +92,12 @@ def validate_action_chain_effect_advances(
             or context.get("effect_outcome_ref") != row.outcome_ref
         ):
             raise corrupt("effect advance proof timeline differs")
-        released = _released_ids(
-            source=row,
+        released = validated_released_step_ids(
+            source_step_id=row.plan_step_id,
             by_id=by_id,
             context=context,
             event_time=event.occurred_at,
+            kind="effect",
             corrupt=corrupt,
         )
         released_union.update(released)
@@ -172,40 +175,6 @@ def _event_context(
     ):
         raise corrupt("effect advance attention binding differs")
     return dict(context)
-
-
-def _released_ids(
-    *,
-    source: sa.Row,
-    by_id: dict[UUID, sa.Row],
-    context: dict[str, object],
-    event_time: datetime,
-    corrupt: type[RuntimeError],
-) -> tuple[UUID, ...]:
-    raw = context.get("released_step_ids")
-    if not isinstance(raw, list):
-        raise corrupt("effect advance released-step set is invalid")
-    try:
-        released = tuple(UUID(str(item)) for item in raw)
-    except (TypeError, ValueError) as error:
-        raise corrupt("effect advance released-step identity is invalid") from error
-    if raw != [str(item) for item in sorted(released, key=str)] or len(
-        set(released)
-    ) != len(released):
-        raise corrupt("effect advance released-step order differs")
-    succeeded = {key for key, row in by_id.items() if row.state == "succeeded"}
-    if any(
-        item not in by_id
-        or source.plan_step_id not in by_id[item].dependency_step_ids
-        or not set(by_id[item].dependency_step_ids).issubset(succeeded)
-        or any(
-            by_id[dependency].updated_at > event_time
-            for dependency in by_id[item].dependency_step_ids
-        )
-        for item in released
-    ):
-        raise corrupt("effect advance released an ineligible dependency")
-    return released
 
 
 __all__ = ["validate_action_chain_effect_advances"]

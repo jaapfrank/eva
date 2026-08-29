@@ -14,6 +14,9 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_events,
 )
+from eva.adapters.postgres.action_chain_validation_common import (
+    validated_released_step_ids,
+)
 from eva.application.action_chain import action_chain_thread_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import ReadAttempt, ReadObservation
@@ -85,11 +88,12 @@ def validate_action_chain_read_advances(
             event_time=event.occurred_at,
             corrupt=corrupt,
         )
-        released_ids = _validated_released_ids(
-            read_row=read_row,
+        released_ids = validated_released_step_ids(
+            source_step_id=read_row.plan_step_id,
             by_id=by_id,
             context=context,
             event_time=event.occurred_at,
+            kind="read",
             corrupt=corrupt,
         )
         for released_id in released_ids:
@@ -247,40 +251,6 @@ def _validate_read_proof(
         or attempt_row.updated_at > event_time
     ):
         raise corrupt("read advance proof binding differs")
-
-
-def _validated_released_ids(
-    *,
-    read_row: sa.Row,
-    by_id: dict[UUID, sa.Row],
-    context: dict[str, object],
-    event_time: datetime,
-    corrupt: type[RuntimeError],
-) -> tuple[UUID, ...]:
-    raw = context.get("released_step_ids")
-    if not isinstance(raw, list):
-        raise corrupt("read advance released-step set is invalid")
-    try:
-        released_ids = tuple(UUID(str(item)) for item in raw)
-    except (TypeError, ValueError) as error:
-        raise corrupt("read advance released-step identity is invalid") from error
-    if raw != [str(item) for item in sorted(released_ids, key=str)] or len(
-        set(released_ids)
-    ) != len(released_ids):
-        raise corrupt("read advance released-step order differs")
-    succeeded = {step_id for step_id, row in by_id.items() if row.state == "succeeded"}
-    if any(
-        released_id not in by_id
-        or read_row.plan_step_id not in by_id[released_id].dependency_step_ids
-        or not set(by_id[released_id].dependency_step_ids).issubset(succeeded)
-        or any(
-            by_id[dependency].updated_at > event_time
-            for dependency in by_id[released_id].dependency_step_ids
-        )
-        for released_id in released_ids
-    ):
-        raise corrupt("read advance released an ineligible dependency")
-    return released_ids
 
 
 __all__ = ["validate_action_chain_read_advances"]
