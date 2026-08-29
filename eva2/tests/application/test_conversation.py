@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from threading import Event
+
 import pytest
 
 from eva.application.conversation import (
@@ -13,6 +15,7 @@ from eva.application.conversation import (
     LivingConversation,
     MemorySearchPlan,
     load_current_identity_pack,
+    stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import (
@@ -405,6 +408,40 @@ def test_memory_intent_is_model_planned_without_question_mark() -> None:
     ]
 
 
+def test_tool_free_draft_waits_for_parallel_planner_before_publication() -> None:
+    draft_started = Event()
+
+    class ParallelModel(_Model):
+        def expand_memory_query(self, turn, recent_messages):  # type: ignore[no-untyped-def]
+            assert draft_started.wait(1)
+            return MemorySearchPlan(False, None)
+
+        def generate(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            draft_started.set()
+            return super().generate(*args, **kwargs)
+
+    conversation = LivingConversation(
+        _Memory(),
+        ParallelModel(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+    )
+    deltas: list[str] = []
+    with stream_conversation_text(deltas.append):
+        reply = conversation.respond(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:parallel",
+                "Hoi Eva",
+                NOW,
+            )
+        )
+
+    assert deltas == [reply.text]
+
+
 def test_semantic_planner_offers_only_selected_available_actions() -> None:
     offered: list[tuple[str, ...]] = []
 
@@ -452,7 +489,7 @@ def test_semantic_planner_offers_only_selected_available_actions() -> None:
         )
     )
 
-    assert offered == [("read_home_assistant_state",)]
+    assert offered == [(), ("read_home_assistant_state",)]
 
 
 def test_memory_search_plan_limits_selected_actions() -> None:

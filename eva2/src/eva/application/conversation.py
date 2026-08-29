@@ -615,17 +615,27 @@ class LivingConversation:
                 if callable(action_selector)
                 else self._actions.action_names
             )
+        self_context = () if self._actions is None else self._actions.active_context(turn)
         memory_query = getattr(self._model, "expand_memory_query", None)
         plan: MemorySearchPlan | None = None
+        draft = None
         if callable(memory_query):
-            with ThreadPoolExecutor(max_workers=2) as executor:
+            with ThreadPoolExecutor(max_workers=3) as executor:
                 memory_future = executor.submit(recall, turn.text)
                 plan_future = executor.submit(memory_query, turn, recent_messages)
+                draft_future = executor.submit(
+                    lambda: self._model.generate(
+                        turn, self._identity, memory_future.result(), recent_messages,
+                        completed_action=completed, self_context=self_context))
                 memory = memory_future.result()
                 try:
                     plan = plan_future.result()
                 except RuntimeError:
                     plan = None
+                try:
+                    draft = draft_future.result()
+                except RuntimeError:
+                    draft = None
             if (
                 isinstance(plan, MemorySearchPlan)
                 and plan.needs_semantic_memory
@@ -643,19 +653,16 @@ class LivingConversation:
             )
         else:
             memory = recall(turn.text)
-        self_context = (
-            () if self._actions is None else self._actions.active_context(turn)
-        )
-        generated = self._model.generate(
-            turn,
-            self._identity,
-            memory,
-            recent_messages,
-            available_actions=(available_names),
-            completed_action=completed,
-            self_context=self_context,
-        )
-        usages = [generated.usage]
+        if draft is not None and (plan is None or (
+            not plan.needs_semantic_memory and not plan.selected_action_names)):
+            generated = draft
+            publish_conversation_text(generated.text, tools_disabled=True)
+        else:
+            generated = self._model.generate(
+                turn, self._identity, memory, recent_messages,
+                available_actions=available_names, completed_action=completed,
+                self_context=self_context)
+        usages = ([draft.usage] if draft is not None and generated is not draft else []) + [generated.usage]
         timings = [generated.timing]
         if generated.action_call is not None:
             if self._actions is None or completed is not None:
