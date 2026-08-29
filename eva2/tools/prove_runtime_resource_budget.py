@@ -10,8 +10,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from pathlib import Path
+import re
 import stat
-import subprocess
 import tempfile
 import threading
 from typing import Iterator
@@ -58,6 +58,7 @@ SOURCE_PATHS = (
     "tests/operations/test_installer_runtime_budget.py",
     "tools/prove_runtime_resource_budget.py",
 )
+_SHA256 = re.compile(r"[0-9a-f]{40,64}")
 
 
 def _stream(*, text: str, input_tokens: int, output_tokens: int) -> bytes:
@@ -241,16 +242,6 @@ def _journal(engine: sa.Engine) -> PostgresConversationJournal:
     )
 
 
-def _source_commit() -> str:
-    return subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=ROOT,
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.strip()
-
-
 def _source_files() -> list[dict[str, str]]:
     return [
         {
@@ -261,9 +252,16 @@ def _source_files() -> list[dict[str, str]]:
     ]
 
 
-def prove(database_dsn: str, *, focused_tests_passed: int) -> dict[str, object]:
+def prove(
+    database_dsn: str,
+    *,
+    focused_tests_passed: int,
+    source_commit: str,
+) -> dict[str, object]:
     if focused_tests_passed < 1:
         raise ValueError("focused test count is invalid")
+    if _SHA256.fullmatch(source_commit) is None:
+        raise ValueError("source commit is invalid")
     with tempfile.TemporaryDirectory(
         prefix="eva2-runtime-budget-proof-", dir="/tmp"
     ) as temporary:
@@ -459,7 +457,7 @@ def prove(database_dsn: str, *, focused_tests_passed: int) -> dict[str, object]:
             "matching_request_count": matching_provider_requests,
             "request_count": provider_requests,
         },
-        "source_commit": _source_commit(),
+        "source_commit": source_commit,
         "source_files": _source_files(),
         "tests": {"focused_passed": focused_tests_passed},
     }
@@ -481,13 +479,18 @@ def main() -> int:
     parser.add_argument("--database-dsn-file", type=Path, required=True)
     parser.add_argument("--focused-tests-passed", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-commit", required=True)
     args = parser.parse_args()
     if args.output.exists():
         raise SystemExit("output already exists")
     database_dsn = args.database_dsn_file.read_text().strip()
     if not database_dsn.startswith("postgresql"):
         raise SystemExit("proof database DSN is invalid")
-    receipt = prove(database_dsn, focused_tests_passed=args.focused_tests_passed)
+    receipt = prove(
+        database_dsn,
+        focused_tests_passed=args.focused_tests_passed,
+        source_commit=args.source_commit,
+    )
     args.output.write_bytes(canonical_json_bytes(receipt))
     print(hashlib.sha256(args.output.read_bytes()).hexdigest())
     return 0
