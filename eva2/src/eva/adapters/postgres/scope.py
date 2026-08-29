@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Protocol
 from uuid import UUID
 
 import sqlalchemy as sa
@@ -11,6 +12,26 @@ from eva.application.episode_repository import (
     TransactionRequired,
     TransactionScopeMismatch,
 )
+
+
+class _ScopedIds(Protocol):
+    tenant_id: UUID
+    installation_id: UUID
+
+
+class PostgresScopedRole:
+    """Share the fail-closed role and tenant setup used by PostgreSQL stores."""
+
+    _role: str
+    _scope_value: _ScopedIds
+
+    def _scope(self, connection: Connection) -> None:
+        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
+        set_local_scope(
+            connection,
+            tenant_id=str(self._scope_value.tenant_id),
+            installation_id=str(self._scope_value.installation_id),
+        )
 
 
 def set_local_scope(

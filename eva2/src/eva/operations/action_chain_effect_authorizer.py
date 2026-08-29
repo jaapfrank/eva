@@ -27,7 +27,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -63,7 +63,7 @@ class AuthorizedActionChainEffect:
     attempt: EffectAttempt
 
 
-class PostgresActionChainEffectAuthorizer:
+class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
     """Revalidate live authority and commit one effect dispatch permit."""
 
     def __init__(
@@ -396,15 +396,6 @@ class PostgresActionChainEffectAuthorizer:
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainEffect("authorized", attempt)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _require_utc_second(value: datetime, field: str) -> None:
     if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):

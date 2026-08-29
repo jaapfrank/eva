@@ -23,7 +23,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_events,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector_rpc import ConnectorInvokeSuccess
 from eva.contracts.evidence import EvidenceEnvelopeV2
@@ -58,7 +58,7 @@ class StoredActionChainEffectReadback:
     readback: EffectReadback
 
 
-class PostgresActionChainEffectReadbackResultStore:
+class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
     """Materialize immutable EffectReadback/v1 without another provider call."""
 
     def __init__(
@@ -259,15 +259,6 @@ class PostgresActionChainEffectReadbackResultStore:
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return StoredActionChainEffectReadback("recorded", readback)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _parse_timestamp(value: str) -> datetime:
     return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)

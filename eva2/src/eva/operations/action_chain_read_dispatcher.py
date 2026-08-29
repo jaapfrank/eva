@@ -28,7 +28,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -77,7 +77,7 @@ class ClaimedActionChainReadCall:
     invoke: ConnectorInvokeRequest | None
 
 
-class PostgresActionChainReadDispatcher:
+class PostgresActionChainReadDispatcher(PostgresScopedRole):
     """Commit a one-way call-start marker before any provider process can run."""
 
     def __init__(
@@ -336,15 +336,6 @@ class PostgresActionChainReadDispatcher:
                 initialize,
                 invoke,
             )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def require_action_chain_read_registry_event(
     data: object,

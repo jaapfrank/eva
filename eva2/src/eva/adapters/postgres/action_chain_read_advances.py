@@ -26,7 +26,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_events,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_thread_id
 from eva.contracts.execution import ReadAttempt, ReadObservation
 
@@ -43,7 +43,7 @@ class AdvancedActionChainRead:
     outcome_ref: str
 
 
-class PostgresActionChainReadAdvancer:
+class PostgresActionChainReadAdvancer(PostgresScopedRole):
     """Release dependencies only after one reload-valid observed read."""
 
     def __init__(
@@ -338,15 +338,6 @@ class PostgresActionChainReadAdvancer:
             released_ids,
             str(outcome_ref),
         )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _require_utc_second(value: datetime, field: str) -> None:
     if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):

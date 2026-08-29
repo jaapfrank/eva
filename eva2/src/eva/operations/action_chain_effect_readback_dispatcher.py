@@ -31,7 +31,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.connector import ConnectorManifest
 from eva.contracts.connector_rpc import (
     ConnectorInitializeRequest,
@@ -70,7 +70,7 @@ class ClaimedActionChainEffectReadbackCall:
     invoke: ConnectorInvokeRequest | None
 
 
-class PostgresActionChainEffectReadbackDispatcher:
+class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
     """Commit one call-start marker before releasing readback call material."""
 
     def __init__(
@@ -320,15 +320,6 @@ class PostgresActionChainEffectReadbackDispatcher:
                 initialize,
                 invoke,
             )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):

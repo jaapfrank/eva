@@ -30,7 +30,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import ReadAttempt, ReadIntent
 from eva.operations.action_chain_provider_registry import SealedReadProviderRegistry
@@ -54,7 +54,7 @@ class AuthorizedActionChainEffectReadback:
     attempt: ReadAttempt
 
 
-class PostgresActionChainEffectReadbackAuthorizer:
+class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
     """Revalidate independent read authority and persist one dispatch fence."""
 
     def __init__(
@@ -307,15 +307,6 @@ class PostgresActionChainEffectReadbackAuthorizer:
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainEffectReadback("authorized", attempt)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def prepared_effect_readback_request_payload(
     connection: sa.Connection,

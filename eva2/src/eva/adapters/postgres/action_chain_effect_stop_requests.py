@@ -33,7 +33,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     operational_events,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
@@ -60,7 +60,7 @@ class RequestedActionChainEffectStop:
     thread_id: str
 
 
-class PostgresActionChainEffectStopRequester:
+class PostgresActionChainEffectStopRequester(PostgresScopedRole):
     """Append one owner-bound stop request only after provider call-start."""
 
     def __init__(
@@ -215,15 +215,6 @@ class PostgresActionChainEffectStopRequester:
                 UUID(attempt.effect_attempt_id),
                 thread_id,
             )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _call_start_event(
     connection: sa.Connection,

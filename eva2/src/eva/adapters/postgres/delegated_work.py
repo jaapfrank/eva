@@ -13,7 +13,7 @@ from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs, metadata
 from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import (
     DelegatedWorkResult,
@@ -128,7 +128,7 @@ class DelegatedWorkCall:
     spec: DelegatedWorkSpec
 
 
-class PostgresDelegatedWorkStore:
+class PostgresDelegatedWorkStore(PostgresScopedRole):
     """Keep handoff, lease, call fence and result in one scoped authority."""
 
     def __init__(
@@ -1511,15 +1511,6 @@ class PostgresDelegatedWorkStore:
             "reason": reason,
             "changed": changed,
         }
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _bounded_text(value: str, *, maximum: int, label: str) -> str:
     if not isinstance(value, str) or not value or len(value) > 512:

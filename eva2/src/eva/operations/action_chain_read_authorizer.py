@@ -33,7 +33,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -62,7 +62,7 @@ class AuthorizedActionChainRead:
     attempt: ReadAttempt
 
 
-class PostgresActionChainReadAuthorizer:
+class PostgresActionChainReadAuthorizer(PostgresScopedRole):
     """Resolve host authority and commit one fence before provider I/O."""
 
     def __init__(
@@ -330,15 +330,6 @@ class PostgresActionChainReadAuthorizer:
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainRead("authorized", attempt)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def validate_action_chain_read_profile(
     profile: ReadProviderProfile,

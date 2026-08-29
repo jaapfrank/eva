@@ -32,7 +32,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     operational_events,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -107,7 +107,7 @@ class ActionChainAdmission:
     chain: StoredActionChain
 
 
-class PostgresActionChainLedger:
+class PostgresActionChainLedger(PostgresScopedRole):
     """Own one atomic admission transaction; execute no external capability."""
 
     def __init__(
@@ -372,14 +372,6 @@ class PostgresActionChainLedger:
         if not connection.in_transaction() or connection.in_nested_transaction():
             raise ActionChainConflict("action-chain reload requires a root transaction")
         return self._load(connection, plan_id)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
 
     def _validate_model_attempt(
         self,

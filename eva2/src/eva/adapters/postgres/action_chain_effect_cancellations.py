@@ -30,7 +30,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
@@ -64,7 +64,7 @@ class ActionChainEffectOwner:
     binding_verified_at: datetime
 
 
-class PostgresActionChainEffectCanceller:
+class PostgresActionChainEffectCanceller(PostgresScopedRole):
     """Cancel a prepared or authorized-but-not-started effect under dispatch locks."""
 
     def __init__(
@@ -310,15 +310,6 @@ class PostgresActionChainEffectCanceller:
             principal_binding_id=principal_binding_id,
             conflict=ActionChainEffectCancellationConflict,
         )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql(f"SET LOCAL ROLE {self._role}")
-        set_local_scope(
-            connection,
-            tenant_id=str(self._scope_value.tenant_id),
-            installation_id=str(self._scope_value.installation_id),
-        )
-
 
 def _cancellation_stage(
     *,
