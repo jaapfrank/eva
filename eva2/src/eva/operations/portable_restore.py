@@ -20,6 +20,7 @@ from uuid import UUID
 
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
 from eva.application.portable_objects import MaterializedPortableObject
+from eva.operations.portable_restore_authority import authorize_portable_restore
 from eva.contracts.execution import (
     CapabilityGrant,
     ConnectorBinding,
@@ -1274,6 +1275,8 @@ def restore_column_preserving_records(
     connection: Any,
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
     *,
+    archive_manifest_raw: bytes,
+    restore_authority_raw: bytes,
     table_specs: tuple[Mapping[str, Any], ...],
     materialized_objects: Sequence[MaterializedPortableObject] | None = None,
     object_store_root: Path | None = None,
@@ -1289,7 +1292,16 @@ def restore_column_preserving_records(
     redacted model, completed read, or completed effect attempt restores with
     a new unusable credential descriptor. These exceptions preserve audit
     history, never a working secret, provider call, or retry.
+
+    The private restore authority is checked before record decoding and before
+    the first database query.  A completed erasure clears its archive list, so
+    an older backup cannot silently bring forgotten content back.
     """
+
+    authorize_portable_restore(
+        archive_manifest_raw=archive_manifest_raw,
+        restore_authority_raw=restore_authority_raw,
+    )
 
     prepared = _validate_record_sets(
         records_by_table,

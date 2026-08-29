@@ -14,6 +14,12 @@ from eva.operations.portable_restore import (
     restore_column_preserving_records,
     verify_empty_restore_target,
 )
+from eva.operations.portable_restore_authority import PortableRestoreAuthorityError
+from tests.portable.restore_authority_fixture import (
+    ARCHIVE_MANIFEST_RAW,
+    RESTORE_AUTHORITY_ARGUMENTS,
+    restore_authority_for_archive,
+)
 
 
 def _spec(table: str) -> Mapping[str, Any]:
@@ -218,7 +224,10 @@ def test_column_preserving_restore_prevalidates_then_writes_to_empty_target() ->
 
     assert (
         restore_column_preserving_records(
-            target, records, table_specs=CANONICAL_EXPORT_SPECS
+            target,
+            records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
+            table_specs=CANONICAL_EXPORT_SPECS,
         )
         == 1
     )
@@ -242,6 +251,23 @@ def test_column_preserving_restore_prevalidates_then_writes_to_empty_target() ->
     )
 
 
+def test_latest_erasure_generation_blocks_old_archive_before_target_access() -> None:
+    target = _WritingRestoreTarget()
+
+    with pytest.raises(PortableRestoreAuthorityError, match="not authorized"):
+        restore_column_preserving_records(
+            target,
+            _empty_record_sets(),
+            archive_manifest_raw=ARCHIVE_MANIFEST_RAW,
+            restore_authority_raw=restore_authority_for_archive(
+                ARCHIVE_MANIFEST_RAW, admit=False, generation=2
+            ),
+            table_specs=CANONICAL_EXPORT_SPECS,
+        )
+
+    assert target.queries == []
+
+
 def test_restore_rejects_an_invalid_connector_redaction_before_target_is_touched() -> None:
     records = _empty_record_sets()
     connector_spec = _spec("eva_core.connector_bindings")
@@ -263,7 +289,10 @@ def test_restore_rejects_an_invalid_connector_redaction_before_target_is_touched
 
     with pytest.raises(PortableRestoreError, match="connector redaction is invalid"):
         restore_column_preserving_records(
-            target, records, table_specs=CANONICAL_EXPORT_SPECS
+            target,
+            records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
+            table_specs=CANONICAL_EXPORT_SPECS,
         )
 
     assert target.queries == []
@@ -276,7 +305,10 @@ def test_column_preserving_restore_rolls_back_its_savepoint_on_target_failure() 
 
     with pytest.raises(RuntimeError, match="synthetic target failure"):
         restore_column_preserving_records(
-            target, records, table_specs=CANONICAL_EXPORT_SPECS
+            target,
+            records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
+            table_specs=CANONICAL_EXPORT_SPECS,
         )
 
     queries = [sql for sql, _ in target.queries]

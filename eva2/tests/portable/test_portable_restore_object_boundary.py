@@ -21,6 +21,7 @@ from eva.operations.portable_restore import (
     restore_column_preserving_records,
 )
 from test_portable_export_end_to_end import _fixture_record_sets
+from tests.portable.restore_authority_fixture import RESTORE_AUTHORITY_ARGUMENTS
 
 
 POSTGRES_DSN = os.getenv("EVA2_TEST_POSTGRES_DSN")
@@ -127,7 +128,10 @@ def test_object_rows_need_a_verified_cas_materializer_before_any_target_write() 
         PortableRestoreError, match="verified object CAS materialization"
     ):
         restore_column_preserving_records(
-            _NeverTarget(), records, table_specs=CANONICAL_EXPORT_SPECS
+            _NeverTarget(),
+            records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
+            table_specs=CANONICAL_EXPORT_SPECS,
         )
 
 
@@ -158,6 +162,7 @@ def test_object_row_is_inserted_only_after_its_exact_target_cas_proof(
         restore_column_preserving_records(
             target,
             records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
             table_specs=CANONICAL_EXPORT_SPECS,
             materialized_objects=materialized,
             object_store_root=target_root,
@@ -196,6 +201,7 @@ def test_object_proof_for_another_target_root_is_rejected_before_database_access
         restore_column_preserving_records(
             _NeverTarget(),
             records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
             table_specs=CANONICAL_EXPORT_SPECS,
             materialized_objects=materialized,
             object_store_root=private_tmp_path / "another-target",
@@ -230,6 +236,7 @@ def test_internally_inconsistent_historical_fixture_stops_before_target_database
         restore_column_preserving_records(
             _NeverTarget(),
             records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
             table_specs=CANONICAL_EXPORT_SPECS,
             materialized_objects=materialized,
             object_store_root=target_root,
@@ -282,6 +289,7 @@ def test_object_ref_writes_to_real_postgres_only_after_target_cas_materializatio
                     restore_column_preserving_records(
                         connection,
                         {"eva_evidence.object_refs": [record]},
+                        **RESTORE_AUTHORITY_ARGUMENTS,
                         table_specs=(spec,),
                         materialized_objects=materialized,
                         object_store_root=target_root,

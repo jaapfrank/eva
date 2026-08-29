@@ -16,6 +16,7 @@ from eva.operations.portable_restore import (
     decode_terminal_read_attempt,
     restore_column_preserving_records,
 )
+from tests.portable.restore_authority_fixture import RESTORE_AUTHORITY_ARGUMENTS
 
 
 POSTGRES_DSN = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
@@ -204,7 +205,10 @@ def test_restore_writer_inserts_only_the_safe_terminal_read_history() -> None:
 
     assert (
         restore_column_preserving_records(
-            target, records, table_specs=CANONICAL_EXPORT_SPECS
+            target,
+            records,
+            **RESTORE_AUTHORITY_ARGUMENTS,
+            table_specs=CANONICAL_EXPORT_SPECS,
         )
         == 1
     )
@@ -254,7 +258,10 @@ def test_terminal_read_history_writes_to_real_postgres() -> None:
 
                 assert (
                     restore_column_preserving_records(
-                        connection, records, table_specs=(spec,)
+                        connection,
+                        records,
+                        **RESTORE_AUTHORITY_ARGUMENTS,
+                        table_specs=(spec,),
                     )
                     == 1
                 )

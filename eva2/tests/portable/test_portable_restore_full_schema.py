@@ -28,6 +28,10 @@ from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 from eva.operations.install_schema import install_schema
 from eva.operations.portable_export import export_portable_archive
 from eva.operations.portable_restore import restore_column_preserving_records
+from tests.portable.restore_authority_fixture import (
+    RESTORE_AUTHORITY_ARGUMENTS,
+    restore_authority_for_archive,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -307,7 +311,10 @@ def test_fresh_full_schema_admits_the_complete_empty_portable_archive() -> None:
             try:
                 assert (
                     restore_column_preserving_records(
-                        connection, records, table_specs=CANONICAL_EXPORT_SPECS
+                        connection,
+                        records,
+                        **RESTORE_AUTHORITY_ARGUMENTS,
+                        table_specs=CANONICAL_EXPORT_SPECS,
                     )
                     == 0
                 )
@@ -415,6 +422,10 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
                 object_blob_root=None,
             )
         assert hashlib.sha256((archive / "archive.json").read_bytes()).hexdigest() == export_receipt["archive_json_sha256"]
+        archive_manifest_raw = (archive / "archive.json").read_bytes()
+        restore_authority_raw = restore_authority_for_archive(
+            archive_manifest_raw, generation=0
+        )
         records = _archive_records(archive)
         nonempty = {table: len(rows) for table, rows in records.items() if rows}
         assert nonempty == {
@@ -439,7 +450,11 @@ def test_nonempty_portable_archive_restores_from_one_fresh_database_to_another(
             try:
                 assert (
                     restore_column_preserving_records(
-                        connection, records, table_specs=CANONICAL_EXPORT_SPECS
+                        connection,
+                        records,
+                        archive_manifest_raw=archive_manifest_raw,
+                        restore_authority_raw=restore_authority_raw,
+                        table_specs=CANONICAL_EXPORT_SPECS,
                     )
                     == sum(nonempty.values())
                 )

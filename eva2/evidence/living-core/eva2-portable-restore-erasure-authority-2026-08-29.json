@@ -1,0 +1,50 @@
+{
+  "contract": "EvaPortableRestoreErasureAuthorityEvidence/v1",
+  "createdAt": "2026-08-29T08:42:08+02:00",
+  "status": "tested",
+  "sourceBaseCommit": "c435420cae4c31d578760940dd2d0c1481367c2a",
+  "sourceInputs": {
+    "portableRestoreAuthoritySha256": "6ad45c130a63687a287b0ebb23274bef9472f5fedc553d0612896677a38f487b",
+    "portableRestoreSha256": "53f445503d1b8bd8f1c13abc8fbd8fc047001d9b755e5de972e8b47cc2720c2d"
+  },
+  "behavior": {
+    "authorityCheckedBeforeDatabaseQuery": true,
+    "authorityFileRequirements": {
+      "absolutePath": true,
+      "groupOrOtherPermissionsRejected": true,
+      "ownerBound": true,
+      "regularSingleLinkFile": true,
+      "symlinkRejected": true
+    },
+    "exactArchiveManifestHashRequired": true,
+    "oldArchiveRejectedAfterErasureGeneration": true,
+    "oldArchiveRejectedEvenWhenAccidentallyAllowlisted": true,
+    "sourceInstallationBound": true
+  },
+  "checks": [
+    {
+      "result": "29 passed, 6 skipped for unavailable optional PostgreSQL/PyNaCl environments",
+      "target": "portable authority, connector, model, read, effect, object and full-schema restore regressions"
+    },
+    {
+      "result": "2 passed",
+      "target": "fresh empty and non-empty source-to-target restore on disposable PostgreSQL 16.13 databases"
+    },
+    {
+      "result": "passed",
+      "target": "Ruff and git diff whitespace checks"
+    }
+  ],
+  "disposablePostgres": {
+    "databaseCount": 3,
+    "image": "postgres:16.13",
+    "personalData": false,
+    "removedAfterProof": true
+  },
+  "nonClaims": [
+    "No live Eva1 or Eva2 service, database, archive, volume or user memory was opened, restored, deleted or changed.",
+    "This candidate blocks restoration of an archive that is absent from the latest private authority generation; it does not delete external backup files.",
+    "Advancing the private authority atomically from the owner erase workflow and admitting a new post-erasure backup are still separate open integration steps.",
+    "This is not yet deployed on the live /eva2 route or promoted as a managed-B release."
+  ]
+}
