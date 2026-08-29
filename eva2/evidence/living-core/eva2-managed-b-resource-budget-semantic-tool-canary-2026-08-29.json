@@ -1,0 +1,60 @@
+{
+  "build": {
+    "buildLogSha256": "2a9778466561be86cbbb2d2073703633bc0556230ac51eeea72316105cc40ca1",
+    "network": "none",
+    "sourceArchiveSha256": "971f08d435afbf3cf19e65185265ea5267830d2d1e44f6a34771706a720b916e",
+    "sourceCommit": "022afbaa038eea8dc80f5c82e629b57e6eb05afa"
+  },
+  "canary": {
+    "coreReadyAfterDatabaseAndServiceRestart": true,
+    "coreReadyBeforeRestart": true,
+    "hindsightDatabaseFileSecret": true,
+    "inlineHindsightDatabaseUrlAbsent": true,
+    "liveSafetyAfter": {
+      "currentEva2": 200,
+      "eva1": 200
+    },
+    "pgvectorVersion": "0.8.6",
+    "postgresVersion": "18.6",
+    "publishedAddress": "127.0.0.1",
+    "rawReceiptSha256": "c63e6f642fee2772afed31fa297913fa9ba0c2c44311fb691d708db406af0ecc",
+    "realCodexReplyExact": true,
+    "renderedServiceCount": 9,
+    "separateOperationalAndMemoryDatabases": true,
+    "status": "passed",
+    "temporaryResourcesRemoved": true
+  },
+  "contract": "Eva2ManagedBResourceBudgetSemanticToolCanaryReceipt/v1",
+  "image": {
+    "id": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "readOnlyNetworklessImport": true,
+    "sizeBytes": 85607601,
+    "user": "65532:65532"
+  },
+  "issuedAt": "2026-08-29T07:42:03.626356+00:00",
+  "manifestSha256": "fddf74f5435fb71e0f8656e4281e678ecd1b389cdb233b283a31c9989e6f6cb5",
+  "observedFailures": [
+    "The first source-refresh candidate refused startup because the managed graph did not mount its required scoped runtime resource budget.",
+    "After that mount was added, the ordinary model turn was rejected before completion because the runtime offered its complete action catalog in every turn and exceeded the sealed input budget."
+  ],
+  "scan": {
+    "critical": 0,
+    "databaseMetadataSha256": "1935af6de5ed7c5a1fba311d4d9ef1554f9b2e576a8c0b94794fc3102af687c7",
+    "databaseUpdatedAt": "2026-08-29T01:03:02.314831694Z",
+    "high": 0,
+    "network": "none",
+    "reportSha256": "310cd0aca4d5114c726e1d11e84661f5362777e7600ab52b54b057e5c9382568",
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+  },
+  "sourceChecks": {
+    "src/eva/adapters/model/conversation.py": "8af5aefc35b85f87aac890cadd3ebb7d38ee4eda6f36b78a0c42a2993f0995eb",
+    "src/eva/application/conversation.py": "44f016a44b1f3fd8f3d1e744d90ed584491e930dd426b2025cbaa9d6130d9f7f",
+    "src/eva/operations/core_b_preflight.py": "690a7e98bdf7037d005b8088924dda540965d40c024dffe503fb747ae97908d5"
+  },
+  "tests": {
+    "conversationAndSemanticToolSelection": 54,
+    "managedRuntimeAndRelease": 124,
+    "total": 178
+  },
+  "verdict": "candidate-only-not-live"
+}

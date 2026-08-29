@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 09:14 CEST
+Laatst bijgewerkt: 29 augustus 2026, 09:45 CEST
 
 ## Heel kort
 
@@ -277,6 +277,16 @@ installatie zijn nog niet klaar.
   Debian 12-build werd terecht afgekeurd op één HIGH-bevinding. De vervanger
   importeert als beperkte gebruiker op een alleen-lezen systeem en de verse
   scan van 29 augustus telt 0 kritisch en 0 hoog. Zij is nog niet live gezet.
+- De volledige wegwerp-B vond daarna twee echte integratiefouten: het verplichte
+  resourcebudget ontbrak in het startbestand en Eva stuurde bij ieder gesprek
+  blind alle tools mee. Beide zijn hersteld. De bestaande semantische planner
+  kiest nu maximaal vier passende tools voor de actuele beurt; een gewone
+  tekstvraag krijgt er nul.
+- De nieuwe image vanaf commit `022afba` is zonder bouwnetwerk gemaakt en met
+  de verse database opnieuw 0 kritisch/0 hoog gescand. Negen wegwerpdiensten
+  gaven een echt exact Codex-antwoord en kwamen na een volledige database- en
+  serviceherstart weer groen terug. Alle proefmiddelen zijn verwijderd. Deze
+  image is nog niet naar de live `/eva2`-route omgeschakeld.
 
 ## Wat nog niet klaar is
 
@@ -303,9 +313,10 @@ installatie zijn nog niet klaar.
   De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Ook de wachtende
   geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Een
   oude back-up wordt bij herstel nu geblokkeerd en de wisknop werkt die grens
-  eerst bij. De nieuwe kernimage is gebouwd en 0/0 gescand. De private map moet
-  nog voor een inactief slot worden gemaakt en via A/B worden beproefd. Losse
-  applicatiecaches en procedurekandidaten ontbreken nog. Ook
+  eerst bij. De nieuwe kernimage is gebouwd, 0/0 gescand en in een volledige
+  wegwerp-B groen herstart. De private map moet nog voor een bewaard inactief
+  slot worden gemaakt en via A/B worden beproefd. Losse applicatiecaches en
+  procedurekandidaten ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
@@ -327,8 +338,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De private wis-/back-upmap voor een inactief slot maken en de nieuwe 0/0-
-   kernimage via de terugvalroute beproeven; daarna caches en procedures wissen.
+1. Een bewaard inactief slot met de nieuwe 0/0-kernimage maken en via de
+   terugvalroute beproeven; daarna caches en procedures wissen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -399,6 +410,7 @@ installatie zijn nog niet klaar.
 - [Oude back-up na wissen geweigerd vóór iedere databasevraag](evidence/living-core/eva2-portable-restore-erasure-authority-2026-08-29.json)
 - [Wisknop maakt oude back-ups eerst ongeldig, ook bij crash en gelijktijdige wisacties](evidence/living-core/eva2-owner-erasure-restore-authority-fail-closed-2026-08-29.json)
 - [Nieuwe Debian 13-kernimage: beperkte start en verse scan 0 kritisch/0 hoog](evidence/living-core/eva2-owner-erasure-debian13-candidate-image-2026-08-29.json)
+- [Resourcebudget, semantische toolkeuze en volledige negen-dienstencanary](evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json)
 - [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
