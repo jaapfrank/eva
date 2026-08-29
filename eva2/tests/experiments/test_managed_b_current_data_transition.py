@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import importlib.util
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import threading
 
 import pytest
 
@@ -84,6 +86,8 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"EVA_DASHBOARD_INSTALLATION_ID"' in source
     assert '"EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST"' in source
     assert '"EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST"' in source
+    assert "CURRENT_ROUTE_DASHBOARD_TOKEN" in source
+    assert "dashboard-authority-readback" in source
     assert "if environment_file.exists() and not keep_retained:" in source
     assert "and staging_created" in source
     assert "docker stop eva2-candidate" not in source
@@ -115,3 +119,34 @@ def test_existing_retained_slot_is_never_removed(
     assert status == 2
     assert marker.read_text(encoding="utf-8") == "keep"
     assert "retained managed-B slot already exists" in capsys.readouterr().out
+
+
+def test_dashboard_readback_requires_bound_owner_and_rejects_anonymous(
+    tmp_path: Path,
+) -> None:
+    token = "d" * 32
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, _format: str, *_args: object) -> None:
+            return
+
+        def do_GET(self) -> None:  # noqa: N802
+            if self.headers.get("Authorization") == f"Bearer {token}":
+                self.send_response(200)
+            else:
+                self.send_response(401)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    token_file = tmp_path / "dashboard-token"
+    token_file.write_text(token, encoding="utf-8")
+    try:
+        probe._verify_dashboard_access(server.server_address[1], token_file)
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+    assert not thread.is_alive()

@@ -68,6 +68,9 @@ CURRENT_ROUTE_PORT = "44710"
 CURRENT_ROUTE_HA_TOKEN = Path(
     "/var/lib/eva2/managed-b-slot3/secrets/home-assistant-token"
 )
+CURRENT_ROUTE_DASHBOARD_TOKEN = Path(
+    "/var/lib/eva2/managed-b-slot3/secrets/dashboard-token"
+)
 CURRENT_ROUTE_ENVIRONMENT = Path("/var/lib/eva2/managed-b-slot3/candidate.env")
 CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
 _COUNT_SQL = """
@@ -555,6 +558,34 @@ def _wait_ready(port: int, *, timeout: int = 60) -> None:
     raise ProbeError("candidate core did not become reachable")
 
 
+def _verify_dashboard_access(port: int, token_file: Path) -> None:
+    token = token_file.read_text(encoding="utf-8").strip()
+    if len(token) < 32 or any(character.isspace() for character in token):
+        raise ProbeError("candidate dashboard token is invalid")
+    url = f"http://127.0.0.1:{port}/internal/v1/dashboard/workboard"
+    authenticated = request.Request(
+        url,
+        headers={"Authorization": f"Bearer {token}"},
+        method="GET",
+    )
+    try:
+        with request.urlopen(authenticated, timeout=10) as response:
+            if response.status != 200:
+                raise ProbeError("candidate dashboard rejected its bound owner")
+    except error.URLError as exc:
+        raise ProbeError("candidate dashboard owner route is unavailable") from exc
+    try:
+        with request.urlopen(request.Request(url, method="GET"), timeout=10):
+            pass
+    except error.HTTPError as exc:
+        if exc.code == 401:
+            return
+        raise ProbeError("candidate dashboard anonymous status differs") from exc
+    except error.URLError as exc:
+        raise ProbeError("candidate dashboard anonymous route is unavailable") from exc
+    raise ProbeError("candidate dashboard accepted an anonymous request")
+
+
 def _compose(project: str, environment: Path, *arguments: str) -> list[str]:
     return [
         "/usr/bin/docker",
@@ -778,12 +809,20 @@ def main(
                 gid=65532,
             )
             home_assistant_url = "http://127.0.0.1:9"
-        _write_private(
-            secrets_dir / "dashboard-token",
-            secrets.token_urlsafe(32).encode(),
-            uid=65532,
-            gid=65532,
-        )
+        if clone_current_route:
+            _copy_private(
+                CURRENT_ROUTE_DASHBOARD_TOKEN,
+                secrets_dir / "dashboard-token",
+                uid=65532,
+                gid=65532,
+            )
+        else:
+            _write_private(
+                secrets_dir / "dashboard-token",
+                secrets.token_urlsafe(32).encode(),
+                uid=65532,
+                gid=65532,
+            )
         _write_private(
             secrets_dir / "telegram-token", b"probe-only", uid=65532, gid=65532
         )
@@ -1036,26 +1075,29 @@ def main(
                 "schema-installer",
             )
         )
-        phase = "dashboard-authority-install"
-        _run(
-            _compose(
-                project,
-                environment_file,
-                "--profile",
-                "schema-install",
-                "run",
-                "--rm",
-                "--entrypoint",
-                "/usr/local/bin/python",
-                "schema-installer",
-                "-m",
-                "eva.operations.initialize_dashboard_authority",
+        if not clone_current_route:
+            phase = "dashboard-authority-install"
+            _run(
+                _compose(
+                    project,
+                    environment_file,
+                    "--profile",
+                    "schema-install",
+                    "run",
+                    "--rm",
+                    "--entrypoint",
+                    "/usr/local/bin/python",
+                    "schema-installer",
+                    "-m",
+                    "eva.operations.initialize_dashboard_authority",
+                )
             )
-        )
         phase = "core-start"
         _run(_compose(project, environment_file, "up", "-d", "core"))
         phase = "core-ready-before-restart"
         _wait_ready(port)
+        phase = "dashboard-authority-readback"
+        _verify_dashboard_access(port, secrets_dir / "dashboard-token")
 
         vector_version = _run(
             _compose(
@@ -1169,6 +1211,8 @@ def main(
                 "postgresVersion": "18.6",
                 "pgvectorVersion": vector_version,
                 "coreReadyBeforeRestart": True,
+                "dashboardOwnerAuthenticated": True,
+                "dashboardAnonymousRejected": True,
                 "realCodexReplyExact": True,
                 "coreReadyAfterDatabaseAndServiceRestart": True,
                 "publishedAddress": "127.0.0.1",
