@@ -1,0 +1,69 @@
+{
+  "boundaries": {
+    "browserProviderRouteExists": false,
+    "inboxMetadataRetained": false,
+    "messageContentRead": false,
+    "mutationAttempted": false,
+    "providerPayloadRetained": false,
+    "secretReturned": false
+  },
+  "contract": "EvaInstallerAgentMailReadOnlyVerificationReceipt/v1",
+  "issuedAt": "2026-08-29T01:05:40+00:00",
+  "loopbackRun": {
+    "operatorCliInvocations": 3,
+    "providerRequests": 2,
+    "restartAttemptProviderRequests": 0,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_on_127.0.0.1"
+  },
+  "networkBoundary": {
+    "method": "GET",
+    "officialOrigin": "https://api.agentmail.to/v0",
+    "pathTemplate": "/v0/inboxes/:inbox_id",
+    "redirectFollowed": false
+  },
+  "nonclaims": [
+    "The proof used a synthetic AgentMail key, inbox and loopback contract server; it did not contact AgentMail or a live mailbox.",
+    "The inbox check proves authenticated read-only access to one selected inbox; it does not prove message listing, sending, deletion, attachments or production scope quality.",
+    "No Eva1, Eva2 runtime, container, database, live route, external provider or real credential was read or changed."
+  ],
+  "source": {
+    "commit": "e08bd1ae0e3062c4e1ba21ddd81fccc0d8fa4da1",
+    "files": [
+      {
+        "path": "src/eva/adapters/connectors/installer_agentmail_probe.py",
+        "sha256": "6158dd1caa55d08112fa20a78dcbdad7234f00318a097783f461764896005bf8"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "4e2aaa285ed543236708d64b36c1764b410255089affba6c214fbe12f398733e"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification_cli.py",
+        "sha256": "a362db3cd43facdad8864fe6ca4e03dddfa5bcc8d38b4a6903cbb1ff1a2fbc02"
+      },
+      {
+        "path": "tests/connectors/test_installer_agentmail_probe.py",
+        "sha256": "c803b848e784269eb91a97ae9c64b60172f37bb91507d9cba94005c48fc2b949"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification.py",
+        "sha256": "8586fae0a5ebed88780f7c6d1e279cadab1f0807c1d360e94a57fa3f05b3d6f2"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification_cli.py",
+        "sha256": "d4b34ed3f5af0aa61c22d653e846d94d3074a6668c86d915709210e48803c7cc"
+      },
+      {
+        "path": "tools/prove_installer_agentmail_verification.py",
+        "sha256": "e87d97d0478d74485e1f7f61f18011132491c6086719396f0aaca56df925bec8"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerReleaseTestsPassed": 168,
+    "focusedTestsPassed": 60,
+    "networkUsedOutsideLoopback": false
+  }
+}
