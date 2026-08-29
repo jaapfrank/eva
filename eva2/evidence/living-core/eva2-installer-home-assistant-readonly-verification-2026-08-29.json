@@ -1,0 +1,78 @@
+{
+  "contract": "EvaInstallerHomeAssistantReadOnlyVerificationReceipt/v1",
+  "issuedAt": "2026-08-29T02:33:05+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "8db35da1defdf50e0c9ebc2ec05900b4072cbc2d",
+    "files": [
+      {
+        "path": "src/eva/adapters/connectors/installer_home_assistant_probe.py",
+        "sha256": "d6cf79bcea4dccad7dee3f6b07dbc28608d843540b3be5281f404764acc4a028"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "fffe0204375376333a02f41f23b73d058d50e5240195ab9fc4b9cee4a03cf149"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification_cli.py",
+        "sha256": "f7e7d51e2c9a2550e9389ab814286bff0633c21f1aa0932f2b76508ed3a9cc85"
+      },
+      {
+        "path": "tests/connectors/test_installer_home_assistant_probe.py",
+        "sha256": "6a14dcf2f448d0ab3801c4b10bcfb620ff26601cb460021b60436d4cf9aaf98c"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification.py",
+        "sha256": "5ac36a75786ef87b6f7851c370bc935a69bf29808324b6dc640d1610cbfb7846"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification_cli.py",
+        "sha256": "6195a1a6077b4307313ac2c69a785c2d561ac1832e3c32e527c4a9ec091c1dde"
+      }
+    ]
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "successfulOperatorCliInvocations": 1,
+    "restartOperatorCliInvocations": 1,
+    "providerRequests": 7,
+    "successfulReadOnlyApiRoot": 1,
+    "blockedReadOnlyApiRoot": 6,
+    "restartAttemptProviderRequests": 0,
+    "temporaryWorkspacesRemovedAfterRun": true
+  },
+  "networkBoundary": {
+    "method": "GET",
+    "path": "/api/",
+    "allResolvedAddressesMustBeLocal": true,
+    "resolvedAddressPinnedForConnection": true,
+    "publicAddressRejected": true,
+    "redirectFollowed": false,
+    "entityDataRead": false,
+    "mutationAttempted": false
+  },
+  "secretBoundary": {
+    "browserProviderRouteExists": false,
+    "authorizationHeaderSentOnlyAfterLocalAddressCheck": true,
+    "providerPayloadRetained": false,
+    "secretReturned": false,
+    "secretHashRetained": false,
+    "secretLengthRetained": false,
+    "successfulCapabilityState": "ready",
+    "rejectedCapabilityState": "blocked",
+    "runtimeChanges": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 33,
+    "broadInstallerDashboardReleaseTestsPassed": 186,
+    "ruff": "passed",
+    "cliHelpChecked": true,
+    "gitDiffCheck": "passed"
+  },
+  "nonclaims": [
+    "The proof used a synthetic Home Assistant token and local contract servers; it did not contact or verify the household Home Assistant instance.",
+    "The API-root check proves only authenticated read-only reachability; it does not prove entity access, device control, event streaming or least-privilege scope quality.",
+    "The current installer verifier accepts a local IP or a hostname whose complete resolution remains local; consumer-friendly URL discovery and confirmation remain open.",
+    "No Eva1, Eva2, container, database, live route, external provider, device or real credential was read or changed."
+  ]
+}

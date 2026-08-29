@@ -252,9 +252,9 @@ stil half-geconfigureerd.
   `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
   De browser kan alleen kiezen of overslaan; uitsluitend een aparte
   providercontrole met receipthash mag `ready` of `blocked` schrijven. De
-  eenmalige secretflow en de eerste Telegram-`getMe`-verifier bestaan nu; de
-  echte providerproef en de overige connectorflows ontbreken nog. Daarom
-  blijft IN02 als geheel open.
+  eenmalige secretflow plus de eerste Telegram- en Home Assistant-verifiers
+  bestaan nu; de echte providerproeven en de overige connectorflows ontbreken
+  nog. Daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
@@ -270,6 +270,12 @@ stil half-geconfigureerd.
   HTTPS-origin accepteert. Een echte lokale HTTP-contractproef bewees succes,
   weigering en geen tweede providercall na `ready`. Zij gebruikte uitsluitend
   synthetische gegevens en is dus nog geen echte Telegram-providerproef.
+  Home Assistant heeft nu dezelfde operatorgrens voor uitsluitend `GET /api/`.
+  De adapter weigert publieke of gemengd publiek/lokaal opgeloste adressen en
+  verbindt met het eenmaal gecontroleerde lokale adres. Succes, autorisatiefout,
+  ongeldige inhoud, redirect en herstart zonder tweede call zijn via echte
+  loopback-HTTP getest. Ook dit gebruikte alleen synthetische gegevens en is
+  nog geen proef tegen het echte huis.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
