@@ -379,6 +379,22 @@ class PostgresConversationActions:
         self._durable_goal_provider = durable_goal_provider
         self._durable_goal_recipients = durable_goal_recipients
 
+    def _advanced_task_store(
+        self, turn: ConversationTurn
+    ) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            self._engine,
+            tenant_id=turn.tenant_id,
+            installation_id=turn.installation_id,
+        )
+
+    def _durable_goal_store(self, turn: ConversationTurn) -> PostgresDurableGoalStore:
+        return PostgresDurableGoalStore(
+            self._engine,
+            tenant_id=turn.tenant_id,
+            installation_id=turn.installation_id,
+        )
+
     @property
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
@@ -667,11 +683,9 @@ class PostgresConversationActions:
             if len(context) == 2:
                 break
         if self._home_assistant_hacs is not None:
-            plan = PostgresAdvancedTaskStore(
-                self._engine,
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-            ).latest(requested_by=turn.principal_id)
+            plan = self._advanced_task_store(turn).latest(
+                requested_by=turn.principal_id
+            )
             if plan is not None:
                 repositories = ", ".join(
                     f"{item.full_name} {item.available_version or 'onbekend'} "
@@ -685,11 +699,9 @@ class PostgresConversationActions:
                     "migreert nog geen apparaat."
                 )
         if self._durable_goal_provider is not None:
-            goals = PostgresDurableGoalStore(
-                self._engine,
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-            ).waiting(observed_before=self._timestamp(turn), limit=32)
+            goals = self._durable_goal_store(turn).waiting(
+                observed_before=self._timestamp(turn), limit=32
+            )
             owned = [goal for goal in goals if goal.owner_id == turn.principal_id]
             for goal in owned[-3:]:
                 context.append(
@@ -2590,11 +2602,9 @@ class PostgresConversationActions:
     ) -> ConversationActionReceipt | None:
         if self._durable_goal_provider is None:
             return None
-        state = PostgresDurableGoalStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        ).state(self._durable_goal_id(turn), turn.principal_id)
+        state = self._durable_goal_store(turn).state(
+            self._durable_goal_id(turn), turn.principal_id
+        )
         if state is None:
             return None
         call = ConversationActionCall(
@@ -2658,11 +2668,7 @@ class PostgresConversationActions:
             ),
             created_at=created_at,
         )
-        store = PostgresDurableGoalStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
+        store = self._durable_goal_store(turn)
         store.admit(goal)
         store.schedule_wake(goal)
         state = store.state(goal.goal_id, goal.owner_id)
@@ -2684,11 +2690,7 @@ class PostgresConversationActions:
             word in turn.text.casefold() for word in ("annuleer", "stop", "hoeft niet")
         ):
             raise ConversationConflict("durable goal cancellation was not explicit")
-        store = PostgresDurableGoalStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
+        store = self._durable_goal_store(turn)
         owned = [
             goal
             for goal in store.waiting(observed_before=self._timestamp(turn), limit=32)
@@ -2910,11 +2912,7 @@ class PostgresConversationActions:
             operation_id=operation_id,
             requested_by=turn.principal_id,
         )
-        PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        ).retain(plan)
+        self._advanced_task_store(turn).retain(plan)
         data: dict[str, JsonValue] = {
             "action_call_id": call.call_id,
             "action_name": call.name,
@@ -3010,11 +3008,7 @@ class PostgresConversationActions:
             raise ConversationConflict(
                 "LocalTuya package installation requires an explicit versioned request"
             )
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
+        store = self._advanced_task_store(turn)
         plan = store.latest(requested_by=turn.principal_id)
         if plan is None:
             raise ConversationConflict("Maak eerst een actueel Tuya-migratieplan")
@@ -3070,11 +3064,7 @@ class PostgresConversationActions:
             raise ConversationConflict(
                 "LocalTuya repository registration requires an explicit source and version"
             )
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
+        store = self._advanced_task_store(turn)
         plan = store.latest(requested_by=turn.principal_id)
         if plan is None:
             raise ConversationConflict("Maak eerst een actueel Tuya-migratieplan")
@@ -3186,11 +3176,7 @@ class PostgresConversationActions:
         approval_sha256 = admission.get("approval_sha256")
         if not isinstance(plan_id, str) or not isinstance(approval_sha256, str):
             raise ConversationConflict(f"LocalTuya {kind} resume is malformed")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
+        store = self._advanced_task_store(turn)
         approval = (
             store.package_approval(
                 plan_id=plan_id, approval_sha256=approval_sha256
