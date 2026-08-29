@@ -23,7 +23,7 @@ from eva.adapters.postgres.action_chain_effect_readback_validation import (
 from eva.adapters.postgres.action_chain_effect_stop_requests import (
     PostgresActionChainEffectStopRequester,
 )
-from eva.adapters.postgres.action_chain_effect_readback_results import (
+from tests.support.postgres_action_chain_effect_readback_results import (
     PostgresActionChainEffectReadbackResultStore,
 )
 from eva.adapters.postgres.action_chain_effect_readbacks import (

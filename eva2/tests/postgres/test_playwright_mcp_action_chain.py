@@ -32,7 +32,7 @@ from eva.adapters.postgres.action_chain_effect_cancellations import (
     PostgresActionChainEffectCanceller,
 )
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
-from eva.adapters.postgres.action_chain_effect_readback_results import (
+from tests.support.postgres_action_chain_effect_readback_results import (
     PostgresActionChainEffectReadbackResultStore,
 )
 from eva.adapters.postgres.action_chain_effect_readbacks import (

@@ -9,7 +9,7 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
-from eva.adapters.postgres.action_chain_effect_readback_results import (
+from tests.support.postgres_action_chain_effect_readback_results import (
     ActionChainEffectReadbackResultConflict,
     PostgresActionChainEffectReadbackResultStore,
 )
