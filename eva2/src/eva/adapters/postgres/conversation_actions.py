@@ -8,7 +8,7 @@ from datetime import UTC, datetime, timedelta
 import hashlib
 import re
 import time
-from typing import Any, Callable, Protocol
+from typing import Any, Callable, Protocol, cast
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
@@ -57,6 +57,7 @@ from eva.application.durable_goals import (
     GoalWakeCondition,
 )
 from eva.application.advanced_tasks import (
+    AdvancedTaskPlan,
     AdvancedTaskPackageApproval,
     AdvancedTaskRepositoryApproval,
     AdvancedTaskError,
@@ -2978,6 +2979,52 @@ class PostgresConversationActions:
                 ) from None
         return self._tuya_plan_receipt(turn, timeline.events(thread_id))
 
+    def _admit_localtuya_conversation(
+        self,
+        turn: ConversationTurn,
+        call: ConversationActionCall,
+        approval_sha256: str,
+        arguments: dict[str, str],
+        plan: AdvancedTaskPlan,
+        kind: str,
+        occurred_at: datetime,
+    ) -> tuple[TimelineEvent, ...]:
+        thread_id = (
+            self._localtuya_package_thread_id(turn)
+            if kind == "package"
+            else self._localtuya_repository_thread_id(turn)
+        )
+        phase = "package_install" if kind == "package" else "repository_registration"
+        data: dict[str, JsonValue] = {
+            "action_call_id": call.call_id,
+            "action_name": call.name,
+            "approval_sha256": approval_sha256,
+            "arguments": arguments,
+            "conversation_id": turn.conversation_id,
+            "plan_id": plan.plan_id,
+            "principal_id": turn.principal_id,
+            "source_message_id": turn.message_id,
+        }
+        timeline = self._timeline(turn)
+        try:
+            timeline.create_thread(
+                thread_id=thread_id,
+                checkpoint_id=f"{thread_id}:admitted",
+                occurred_at=occurred_at,
+                data=data,
+                event_type=f"ADVANCED_{kind.upper()}_CONVERSATION_ADMITTED",
+                phase=f"{phase}_admitted",
+                status="waiting_for_proof",
+                operation_id=plan.operation_id,
+            )
+        except CheckpointConflict:
+            events = timeline.events(thread_id)
+            if not events or self._event_data(events[0]) != data:
+                raise ConversationConflict(
+                    f"LocalTuya {kind} request replay differs"
+                ) from None
+        return timeline.events(thread_id)
+
     def _execute_localtuya_package(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt:
@@ -3028,37 +3075,13 @@ class PostgresConversationActions:
             approved_at=now,
         )
         thread_id = self._localtuya_package_thread_id(turn)
-        data: dict[str, JsonValue] = {
-            "action_call_id": call.call_id,
-            "action_name": call.name,
-            "approval_sha256": approval.sha256,
-            "arguments": arguments,
-            "conversation_id": turn.conversation_id,
-            "plan_id": plan.plan_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        timeline = self._timeline(turn)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{thread_id}:admitted",
-                occurred_at=now,
-                data=data,
-                event_type="ADVANCED_PACKAGE_CONVERSATION_ADMITTED",
-                phase="package_install_admitted",
-                status="waiting_for_proof",
-                operation_id=plan.operation_id,
-            )
-        except CheckpointConflict:
-            events = timeline.events(thread_id)
-            if not events or self._event_data(events[0]) != data:
-                raise ConversationConflict(
-                    "LocalTuya package request replay differs"
-                ) from None
-        events = timeline.events(thread_id)
+        events = self._admit_localtuya_conversation(
+            turn, call, approval.sha256, arguments, plan, "package", now
+        )
         self._resume_localtuya_package(turn, events)
-        return self._localtuya_package_receipt(turn, timeline.events(thread_id))
+        return self._localtuya_package_receipt(
+            turn, self._timeline(turn).events(thread_id)
+        )
 
     def _execute_localtuya_repository(
         self, turn: ConversationTurn, call: ConversationActionCall
@@ -3099,73 +3122,33 @@ class PostgresConversationActions:
             approved_at=now,
         )
         thread_id = self._localtuya_repository_thread_id(turn)
-        data: dict[str, JsonValue] = {
-            "action_call_id": call.call_id,
-            "action_name": call.name,
-            "approval_sha256": approval.sha256,
-            "arguments": arguments,
-            "conversation_id": turn.conversation_id,
-            "plan_id": plan.plan_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        timeline = self._timeline(turn)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{thread_id}:admitted",
-                occurred_at=now,
-                data=data,
-                event_type="ADVANCED_REPOSITORY_CONVERSATION_ADMITTED",
-                phase="repository_registration_admitted",
-                status="waiting_for_proof",
-                operation_id=plan.operation_id,
-            )
-        except CheckpointConflict:
-            events = timeline.events(thread_id)
-            if not events or self._event_data(events[0]) != data:
-                raise ConversationConflict(
-                    "LocalTuya repository request replay differs"
-                ) from None
-        events = timeline.events(thread_id)
+        events = self._admit_localtuya_conversation(
+            turn, call, approval.sha256, arguments, plan, "repository", now
+        )
         self._resume_localtuya_repository(turn, events)
-        return self._localtuya_repository_receipt(turn, timeline.events(thread_id))
+        return self._localtuya_repository_receipt(
+            turn, self._timeline(turn).events(thread_id)
+        )
 
     def _resume_localtuya_repository(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> None:
-        if self._home_assistant_hacs is None or not events:
-            raise ConversationConflict("LocalTuya repository resume is unavailable")
-        if events[-1].event_type == "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED":
+        if events and events[-1].event_type == "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED":
             return
-        admission = self._event_data(events[0])
-        plan_id = admission.get("plan_id")
-        approval_sha256 = admission.get("approval_sha256")
-        if not isinstance(plan_id, str) or not isinstance(approval_sha256, str):
-            raise ConversationConflict("LocalTuya repository resume is malformed")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
+        store, approval, now = self._localtuya_resume_context(
+            turn, events, "repository"
         )
-        approval = store.repository_approval(
-            plan_id=plan_id, approval_sha256=approval_sha256
-        )
-        if store.status(plan_id) == "needs_help":
-            raise ConversationConflict(
-                "LocalTuya repository registration needs owner help"
-            )
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        if now >= approval.expires_at:
-            raise ConversationConflict("LocalTuya repository approval expired")
-        if not store.repository_registration_started(plan_id):
+        approval = cast(AdvancedTaskRepositoryApproval, approval)
+        if not store.repository_registration_started(approval.plan_id):
             if self._home_assistant_admin is None:
                 raise ConversationConflict(
                     "LocalTuya repository preflight is unavailable"
                 )
             inventory = asyncio.run(self._home_assistant_admin.inventory())
             try:
-                require_current_repository_preflight(store.load(plan_id), inventory)
+                require_current_repository_preflight(
+                    store.load(approval.plan_id), inventory
+                )
             except AdvancedTaskError as error:
                 raise ConversationConflict(str(error)) from error
         store.prepare_repository_registration(approval, occurred_at=now)
@@ -3178,7 +3161,7 @@ class PostgresConversationActions:
                 repository,
                 occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
             )
-            plan = store.load(plan_id)
+            plan = store.load(approval.plan_id)
             if self._home_assistant_admin is not None:
                 inventory = asyncio.run(self._home_assistant_admin.inventory())
                 refreshed = TuyaToLocalTuyaPlanner().build(
@@ -3187,7 +3170,7 @@ class PostgresConversationActions:
                     requested_by=plan.requested_by,
                 )
                 store.refresh(refreshed)
-                plan = store.load(plan_id)
+                plan = store.load(approval.plan_id)
         except Exception as error:
             store.record_repository_failure(
                 approval,
@@ -3219,35 +3202,58 @@ class PostgresConversationActions:
             operation_id=state.operation_id,
         )
 
-    def _resume_localtuya_package(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> None:
+    def _localtuya_resume_context(
+        self,
+        turn: ConversationTurn,
+        events: tuple[TimelineEvent, ...],
+        kind: str,
+    ) -> tuple[
+        PostgresAdvancedTaskStore,
+        AdvancedTaskPackageApproval | AdvancedTaskRepositoryApproval,
+        datetime,
+    ]:
         if self._home_assistant_hacs is None or not events:
-            raise ConversationConflict("LocalTuya package resume is unavailable")
+            raise ConversationConflict(f"LocalTuya {kind} resume is unavailable")
         admission = self._event_data(events[0])
         plan_id = admission.get("plan_id")
         approval_sha256 = admission.get("approval_sha256")
         if not isinstance(plan_id, str) or not isinstance(approval_sha256, str):
-            raise ConversationConflict("LocalTuya package resume is malformed")
+            raise ConversationConflict(f"LocalTuya {kind} resume is malformed")
         store = PostgresAdvancedTaskStore(
             self._engine,
             tenant_id=turn.tenant_id,
             installation_id=turn.installation_id,
         )
-        approval = store.package_approval(
-            plan_id=plan_id, approval_sha256=approval_sha256
+        approval = (
+            store.package_approval(
+                plan_id=plan_id, approval_sha256=approval_sha256
+            )
+            if kind == "package"
+            else store.repository_approval(
+                plan_id=plan_id, approval_sha256=approval_sha256
+            )
         )
         if store.status(plan_id) == "needs_help":
-            raise ConversationConflict("LocalTuya package install needs owner help")
+            action = "package install" if kind == "package" else "repository registration"
+            raise ConversationConflict(f"LocalTuya {action} needs owner help")
         now = datetime.now(tz=UTC).replace(microsecond=0)
         if now >= approval.expires_at:
-            raise ConversationConflict("LocalTuya package approval expired")
-        if not store.package_install_started(plan_id):
+            raise ConversationConflict(f"LocalTuya {kind} approval expired")
+        return store, approval, now
+
+    def _resume_localtuya_package(
+        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
+    ) -> None:
+        store, approval, now = self._localtuya_resume_context(
+            turn, events, "package"
+        )
+        approval = cast(AdvancedTaskPackageApproval, approval)
+        if not store.package_install_started(approval.plan_id):
             if self._home_assistant_admin is None:
                 raise ConversationConflict("LocalTuya package preflight is unavailable")
             inventory = asyncio.run(self._home_assistant_admin.inventory())
             try:
-                require_current_package_preflight(store.load(plan_id), inventory)
+                require_current_package_preflight(store.load(approval.plan_id), inventory)
             except AdvancedTaskError as error:
                 raise ConversationConflict(str(error)) from error
         store.prepare_package_install(approval, occurred_at=now)
@@ -3273,7 +3279,7 @@ class PostgresConversationActions:
             "approval_sha256": approval.sha256,
             "disposition": disposition,
             "installed_version": repository.installed_version,
-            "plan_id": plan_id,
+            "plan_id": approval.plan_id,
             "repository_id": repository.repository_id,
             "repository_sha256": repository.sha256,
         }
@@ -3397,22 +3403,7 @@ class PostgresConversationActions:
         call_id = context.get("action_call_id")
         if not isinstance(call_id, str) or not call_id:
             raise ConversationConflict("Home Assistant action call ID is invalid")
-        last = events[-1]
-        status_by_event = {
-            "STATE_VERIFIED": "verified",
-            "STATE_VERIFICATION_TIMED_OUT": "timed_out",
-            "STATE_VERIFICATION_CONFLICT": "failed",
-            "TOOL_REJECTED": "rejected",
-            "RECOVERY_FAILED": "failed",
-            "RECOVERY_NEEDS_HELP": "needs_help",
-        }
-        status = status_by_event.get(last.event_type)
-        if status is None:
-            raise ConversationConflict("Home Assistant action has no terminal receipt")
-        final_data = self._event_data(last)
-        proof = final_data.get("proof")
-        if proof is not None and not isinstance(proof, dict):
-            raise ConversationConflict("Home Assistant action proof is malformed")
+        status, proof = self._home_assistant_terminal_proof(events, "action")
         return ConversationActionReceipt(
             ConversationActionCall(call_id, str(action_name), arguments),
             {
@@ -3475,23 +3466,7 @@ class PostgresConversationActions:
             or not isinstance(verified_config, dict)
         ):
             raise ConversationConflict("Home Assistant automation identity is invalid")
-        status_by_event = {
-            "STATE_VERIFIED": "verified",
-            "STATE_VERIFICATION_TIMED_OUT": "timed_out",
-            "STATE_VERIFICATION_CONFLICT": "failed",
-            "TOOL_REJECTED": "rejected",
-            "RECOVERY_FAILED": "failed",
-            "RECOVERY_NEEDS_HELP": "needs_help",
-        }
-        status = status_by_event.get(events[-1].event_type)
-        if status is None:
-            raise ConversationConflict(
-                "Home Assistant automation has no terminal receipt"
-            )
-        final_data = self._event_data(events[-1])
-        proof = final_data.get("proof")
-        if proof is not None and not isinstance(proof, dict):
-            raise ConversationConflict("Home Assistant automation proof is malformed")
+        status, proof = self._home_assistant_terminal_proof(events, "automation")
         return ConversationActionReceipt(
             ConversationActionCall(call_id, str(action_name), action_arguments),
             {
@@ -3505,6 +3480,26 @@ class PostgresConversationActions:
                 "verified_config": verified_config,
             },
         )
+
+    def _home_assistant_terminal_proof(
+        self, events: tuple[TimelineEvent, ...], kind: str
+    ) -> tuple[str, dict[str, JsonValue] | None]:
+        status = {
+            "STATE_VERIFIED": "verified",
+            "STATE_VERIFICATION_TIMED_OUT": "timed_out",
+            "STATE_VERIFICATION_CONFLICT": "failed",
+            "TOOL_REJECTED": "rejected",
+            "RECOVERY_FAILED": "failed",
+            "RECOVERY_NEEDS_HELP": "needs_help",
+        }.get(events[-1].event_type)
+        if status is None:
+            raise ConversationConflict(
+                f"Home Assistant {kind} has no terminal receipt"
+            )
+        proof = self._event_data(events[-1]).get("proof")
+        if proof is not None and not isinstance(proof, dict):
+            raise ConversationConflict(f"Home Assistant {kind} proof is malformed")
+        return status, proof
 
     def _localtuya_package_receipt(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
