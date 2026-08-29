@@ -27,6 +27,7 @@ from eva.adapters.postgres.home_assistant_reads import (
 )
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
+    CheckpointState,
     PostgresOperationalTimeline,
     TimelineEvent,
     TimelineScope,
@@ -4411,6 +4412,87 @@ class _PostgresPersonalClaimStore:
             occurred_at=now,
         )
 
+    @staticmethod
+    def _latest_event(
+        events: tuple[TimelineEvent, ...], event_type: str
+    ) -> TimelineEvent | None:
+        return next(
+            (event for event in reversed(events) if event.event_type == event_type),
+            None,
+        )
+
+    def _completed_events(
+        self, *, tenant_id: str, installation_id: str, now: datetime
+    ) -> tuple[CheckpointState, tuple[TimelineEvent, ...]] | None:
+        timeline = self._actions._timeline_for(tenant_id, installation_id)
+        states = timeline.list_checkpoints(
+            thread_prefix=self._PREFIX,
+            phases=(f"{self._stage}_completed",),
+            statuses=("active",),
+            updated_before=now,
+        )
+        if not states:
+            return None
+        return states[0], timeline.events(states[0].thread_id)
+
+    def _latest_artifact_events(
+        self,
+        *,
+        tenant_id: str,
+        installation_id: str,
+        principal_id: str,
+        now: datetime,
+        intent_id: str | None = None,
+        limit: int = 32,
+    ) -> tuple[str, tuple[TimelineEvent, ...]] | None:
+        phases = (
+            (
+                "prototype_completed",
+                "prototype_projected",
+                "release_claimed",
+                "release_completed",
+                "release_ready",
+            )
+            if self._stage == "prototype"
+            else ("release_completed", "release_ready")
+        )
+        statuses = (
+            ("active", "waiting_for_proof", "completed", "failed", "needs_help")
+            if self._stage == "prototype"
+            else ("active", "completed")
+        )
+        timeline = self._actions._timeline_for(tenant_id, installation_id)
+        states = timeline.list_checkpoints(
+            thread_prefix=self._PREFIX,
+            phases=phases,
+            statuses=statuses,
+            updated_before=now,
+            limit=limit,
+        )
+        for state in states:
+            events = timeline.events(state.thread_id)
+            adopted = next(
+                (
+                    event
+                    for event in events
+                    if event.event_type == "PERSONAL_INTENT_ADOPTED"
+                ),
+                None,
+            )
+            if adopted is None:
+                continue
+            data = PostgresConversationActions._event_data(adopted)
+            if data.get("principal_id") != principal_id:
+                continue
+            candidate_id = data.get("intent_id")
+            if intent_id is not None and candidate_id != intent_id:
+                continue
+            if not isinstance(candidate_id, str) or not candidate_id:
+                label = "product release" if self._stage == "release" else self._stage
+                raise ConversationConflict(f"{label} intent ID is malformed")
+            return candidate_id, events
+        return None
+
 
 class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
     """Lease and finish personal exploration through durable checkpoints."""
@@ -4420,27 +4502,17 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
     ) -> CompletedPersonalExploration | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("exploration_completed",),
-            statuses=("active",),
-            updated_before=now,
+        candidate = self._completed_events(
+            tenant_id=tenant_id, installation_id=installation_id, now=now
         )
-        if not states:
+        if candidate is None:
             return None
-        state = states[0]
-        events = timeline.events(state.thread_id)
+        state, events = candidate
         claim = self._claim_from_events(
             tenant_id, installation_id, events, state.revision
         )
-        completed = next(
-            (
-                event
-                for event in reversed(events)
-                if event.event_type == "PERSONAL_EXPLORATION_COMPLETED"
-            ),
-            None,
+        completed = self._latest_event(
+            events, "PERSONAL_EXPLORATION_COMPLETED"
         )
         if completed is None:
             raise ConversationConflict("completed exploration has no result event")
@@ -4540,30 +4612,20 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
     ) -> CompletedPersonalPrototype | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("prototype_completed",),
-            statuses=("active",),
-            updated_before=now,
+        candidate = self._completed_events(
+            tenant_id=tenant_id, installation_id=installation_id, now=now
         )
-        if not states:
+        if candidate is None:
             return None
-        state = states[0]
-        events = timeline.events(state.thread_id)
+        state, events = candidate
         claim = PersonalPrototypeClaim(
             self._exploration_from_events(
                 tenant_id, installation_id, events, state.revision
             ),
             state.revision,
         )
-        prototype_event = next(
-            (
-                event
-                for event in reversed(events)
-                if event.event_type == "PERSONAL_PROTOTYPE_COMPLETED"
-            ),
-            None,
+        prototype_event = self._latest_event(
+            events, "PERSONAL_PROTOTYPE_COMPLETED"
         )
         if prototype_event is None:
             raise ConversationConflict("completed prototype has no artifact event")
@@ -4608,49 +4670,26 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
         principal_id: str,
         now: datetime,
     ) -> PersonalPrototypeArtifact | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("prototype_completed", "prototype_projected"),
-            statuses=("active", "completed"),
-            updated_before=now,
-            limit=32,
+        candidate = self._latest_artifact_events(
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+            principal_id=principal_id,
+            now=now,
         )
-        for state in states:
-            events = timeline.events(state.thread_id)
-            adopted = next(
-                (
-                    event
-                    for event in events
-                    if event.event_type == "PERSONAL_INTENT_ADOPTED"
-                ),
-                None,
-            )
-            if adopted is None:
-                continue
-            adopted_data = PostgresConversationActions._event_data(adopted)
-            if adopted_data.get("principal_id") != principal_id:
-                continue
-            prototype_event = next(
-                (
-                    event
-                    for event in reversed(events)
-                    if event.event_type == "PERSONAL_PROTOTYPE_COMPLETED"
-                ),
-                None,
-            )
-            if prototype_event is None:
-                continue
-            intent_id = adopted_data.get("intent_id")
-            if not isinstance(intent_id, str) or not intent_id:
-                raise ConversationConflict("prototype intent ID is malformed")
-            return PersonalPrototypeArtifact(
-                intent_id,
-                self._prototype_from_data(
-                    PostgresConversationActions._event_data(prototype_event)
-                ),
-            )
-        return None
+        if candidate is None:
+            return None
+        intent_id, events = candidate
+        prototype_event = self._latest_event(
+            events, "PERSONAL_PROTOTYPE_COMPLETED"
+        )
+        if prototype_event is None:
+            return None
+        return PersonalPrototypeArtifact(
+            intent_id,
+            self._prototype_from_data(
+                PostgresConversationActions._event_data(prototype_event)
+            ),
+        )
 
     @staticmethod
     def _exploration_from_events(
@@ -4662,13 +4701,8 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
         interest = PostgresPersonalInterestStore._claim_from_events(
             tenant_id, installation_id, events, revision
         )
-        result_event = next(
-            (
-                event
-                for event in reversed(events)
-                if event.event_type == "PERSONAL_EXPLORATION_COMPLETED"
-            ),
-            None,
+        result_event = _PostgresPersonalClaimStore._latest_event(
+            events, "PERSONAL_EXPLORATION_COMPLETED"
         )
         if result_event is None:
             raise ConversationConflict("prototype lacks completed exploration")
@@ -4713,17 +4747,12 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
     ) -> CompletedPersonalProductRelease | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("release_completed",),
-            statuses=("active",),
-            updated_before=now,
+        candidate = self._completed_events(
+            tenant_id=tenant_id, installation_id=installation_id, now=now
         )
-        if not states:
+        if candidate is None:
             return None
-        state = states[0]
-        events = timeline.events(state.thread_id)
+        state, events = candidate
         claim = PersonalProductReleaseClaim(
             self._completed_prototype(
                 tenant_id, installation_id, events, state.revision
@@ -4779,39 +4808,21 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
         principal_id: str,
         now: datetime,
     ) -> PersonalProductReleaseArtifact | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("release_completed", "release_ready"),
-            statuses=("active", "completed"),
-            updated_before=now,
-            limit=32,
+        candidate = self._latest_artifact_events(
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+            principal_id=principal_id,
+            now=now,
         )
-        for state in states:
-            events = timeline.events(state.thread_id)
-            adopted = next(
-                (
-                    event
-                    for event in events
-                    if event.event_type == "PERSONAL_INTENT_ADOPTED"
-                ),
-                None,
-            )
-            if adopted is None:
-                continue
-            adopted_data = PostgresConversationActions._event_data(adopted)
-            if adopted_data.get("principal_id") != principal_id:
-                continue
-            intent_id = adopted_data.get("intent_id")
-            if not isinstance(intent_id, str) or not intent_id:
-                raise ConversationConflict("product release intent ID is malformed")
-            return PersonalProductReleaseArtifact(
-                intent_id,
-                self._release_from_data(
-                    PostgresConversationActions._event_data(self._release_event(events))
-                ),
-            )
-        return None
+        if candidate is None:
+            return None
+        intent_id, events = candidate
+        return PersonalProductReleaseArtifact(
+            intent_id,
+            self._release_from_data(
+                PostgresConversationActions._event_data(self._release_event(events))
+            ),
+        )
 
     def exact(
         self,
@@ -4823,39 +4834,23 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
         release_sha256: str,
         now: datetime,
     ) -> PersonalProductReleaseArtifact:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        states = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("release_completed", "release_ready"),
-            statuses=("active", "completed"),
-            updated_before=now,
+        candidate = self._latest_artifact_events(
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+            principal_id=principal_id,
+            now=now,
+            intent_id=intent_id,
             limit=128,
         )
-        for state in states:
-            events = timeline.events(state.thread_id)
-            adopted = next(
-                (
-                    event
-                    for event in events
-                    if event.event_type == "PERSONAL_INTENT_ADOPTED"
-                ),
-                None,
-            )
-            if adopted is None:
-                continue
-            adopted_data = PostgresConversationActions._event_data(adopted)
-            if (
-                adopted_data.get("principal_id") != principal_id
-                or adopted_data.get("intent_id") != intent_id
-            ):
-                continue
-            release = self._release_from_data(
-                PostgresConversationActions._event_data(self._release_event(events))
-            )
-            if release.content_sha256 != release_sha256:
-                raise ConversationConflict("paid release content hash differs")
-            return PersonalProductReleaseArtifact(intent_id, release)
-        raise ConversationConflict("paid product release does not exist")
+        if candidate is None:
+            raise ConversationConflict("paid product release does not exist")
+        _, events = candidate
+        release = self._release_from_data(
+            PostgresConversationActions._event_data(self._release_event(events))
+        )
+        if release.content_sha256 != release_sha256:
+            raise ConversationConflict("paid release content hash differs")
+        return PersonalProductReleaseArtifact(intent_id, release)
 
     @staticmethod
     def _completed_prototype(
@@ -4867,13 +4862,8 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
         exploration = PostgresPersonalPrototypeStore._exploration_from_events(
             tenant_id, installation_id, events, revision
         )
-        prototype_event = next(
-            (
-                event
-                for event in reversed(events)
-                if event.event_type == "PERSONAL_PROTOTYPE_COMPLETED"
-            ),
-            None,
+        prototype_event = _PostgresPersonalClaimStore._latest_event(
+            events, "PERSONAL_PROTOTYPE_COMPLETED"
         )
         if prototype_event is None:
             raise ConversationConflict("product release lacks completed prototype")
@@ -4887,13 +4877,8 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
 
     @staticmethod
     def _release_event(events: tuple[TimelineEvent, ...]) -> TimelineEvent:
-        event = next(
-            (
-                item
-                for item in reversed(events)
-                if item.event_type == "PERSONAL_PRODUCT_RELEASE_COMPLETED"
-            ),
-            None,
+        event = _PostgresPersonalClaimStore._latest_event(
+            events, "PERSONAL_PRODUCT_RELEASE_COMPLETED"
         )
         if event is None:
             raise ConversationConflict("completed product release has no bundle event")

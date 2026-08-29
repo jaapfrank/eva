@@ -818,6 +818,206 @@ def _completed_prototype() -> CompletedPersonalPrototype:
     )
 
 
+def _personal_event(
+    sequence: int, event_type: str, data: dict[str, object]
+) -> TimelineEvent:
+    return TimelineEvent(
+        event_id=UUID(int=10_000 + sequence),
+        thread_id="intent:personal-interest:income",
+        sequence=sequence,
+        checkpoint_id=f"intent:personal-interest:income:{sequence}",
+        operation_id="personal-interest:income",
+        event_type=event_type,
+        payload={"data": data},  # type: ignore[arg-type]
+        payload_sha256="0" * 64,
+        occurred_at=NOW,
+    )
+
+
+def _personal_work_events(principal_id: str = "jaap") -> tuple[TimelineEvent, ...]:
+    prototype = _completed_prototype().prototype
+    release = PersonalProductRelease(
+        PersonalProductListing(
+            "Slimme planner",
+            "Een direct bruikbare planner voor thuis.",
+            499,
+            ("planner", "thuis", "template"),
+            "model",
+        ),
+        "slimme-planner.zip",
+        b"zip-bytes",
+    )
+    exploration_text = "Maak een planner."
+    return (
+        _personal_event(
+            1,
+            "PERSONAL_INTENT_ADOPTED",
+            {
+                "conversation_id": "conversation",
+                "intent_id": "personal-interest:income",
+                "motivation": "Ik wil zelf waarde maken.",
+                "next_exploration": "Welke template is bruikbaar?",
+                "principal_id": principal_id,
+                "source_message_id": "message",
+                "title": "Slimme thuistemplates",
+            },
+        ),
+        _personal_event(
+            2,
+            "PERSONAL_EXPLORATION_COMPLETED",
+            {
+                "exploration_sha256": hashlib.sha256(
+                    exploration_text.encode("utf-8")
+                ).hexdigest(),
+                "exploration_text": exploration_text,
+                "provider": "model",
+            },
+        ),
+        _personal_event(
+            3,
+            "PERSONAL_PROTOTYPE_COMPLETED",
+            {
+                "content": prototype.content,
+                "content_sha256": prototype.content_sha256,
+                "filename": prototype.filename,
+                "media_type": prototype.media_type,
+                "provider": prototype.provider,
+                "title": prototype.title,
+                "utf8_byte_length": len(prototype.content.encode("utf-8")),
+            },
+        ),
+        _personal_event(
+            4,
+            "PERSONAL_PRODUCT_RELEASE_COMPLETED",
+            {
+                "byte_length": len(release.content),
+                "content_base64": release.content_base64,
+                "content_sha256": release.content_sha256,
+                "description": release.listing.description,
+                "filename": release.filename,
+                "headline": release.listing.headline,
+                "price_eur_cents": release.listing.price_eur_cents,
+                "provider": release.listing.provider,
+                "publication_status": "unpublished_release_candidate",
+                "tags": list(release.listing.tags),
+            },
+        ),
+    )
+
+
+@pytest.mark.parametrize(
+    ("store_type", "stage", "completed_type"),
+    (
+        (PostgresPersonalInterestStore, "exploration", CompletedPersonalExploration),
+        (PostgresPersonalPrototypeStore, "prototype", CompletedPersonalPrototype),
+        (
+            PostgresPersonalProductReleaseStore,
+            "release",
+            CompletedPersonalProductRelease,
+        ),
+    ),
+)
+def test_personal_completed_work_uses_the_exact_shared_checkpoint_selection(
+    store_type: type, stage: str, completed_type: type
+) -> None:
+    captured: dict[str, object] = {}
+    events = _personal_work_events()
+
+    class Timeline:
+        def list_checkpoints(self, **kwargs):  # type: ignore[no-untyped-def]
+            captured.update(kwargs)
+            return (SimpleNamespace(thread_id=events[0].thread_id, revision=8),)
+
+        def events(self, thread_id):  # type: ignore[no-untyped-def]
+            assert thread_id == events[0].thread_id
+            return events
+
+    class Actions:
+        def _timeline_for(self, tenant_id, installation_id):  # type: ignore[no-untyped-def]
+            assert (tenant_id, installation_id) == ("tenant", "installation")
+            return Timeline()
+
+    store = object.__new__(store_type)
+    store._actions = Actions()
+    completed = store.completed_unprojected(
+        tenant_id="tenant", installation_id="installation", now=NOW
+    )
+
+    assert isinstance(completed, completed_type)
+    assert completed.revision == 8
+    assert captured["phases"] == (f"{stage}_completed",)
+    assert captured["statuses"] == ("active",)
+    assert captured["updated_before"] == NOW
+    assert "limit" not in captured
+
+
+def test_personal_latest_artifacts_share_selection_without_cross_principal_leak() -> None:
+    jaap_events = _personal_work_events()
+    lola_events = _personal_work_events("lola")
+    states = (
+        SimpleNamespace(thread_id="intent:personal-interest:lola"),
+        SimpleNamespace(thread_id=jaap_events[0].thread_id),
+    )
+    calls: list[dict[str, object]] = []
+
+    class Timeline:
+        def list_checkpoints(self, **kwargs):  # type: ignore[no-untyped-def]
+            calls.append(kwargs)
+            return states
+
+        def events(self, thread_id):  # type: ignore[no-untyped-def]
+            return lola_events if thread_id == states[0].thread_id else jaap_events
+
+    class Actions:
+        def _timeline_for(self, tenant_id, installation_id):  # type: ignore[no-untyped-def]
+            assert (tenant_id, installation_id) == ("tenant", "installation")
+            return Timeline()
+
+    prototype_store = object.__new__(PostgresPersonalPrototypeStore)
+    prototype_store._actions = Actions()
+    release_store = object.__new__(PostgresPersonalProductReleaseStore)
+    release_store._actions = Actions()
+
+    prototype = prototype_store.latest(
+        tenant_id="tenant",
+        installation_id="installation",
+        principal_id="jaap",
+        now=NOW,
+    )
+    release = release_store.latest(
+        tenant_id="tenant",
+        installation_id="installation",
+        principal_id="jaap",
+        now=NOW,
+    )
+    assert prototype is not None and prototype.intent_id == "personal-interest:income"
+    assert release is not None and release.intent_id == "personal-interest:income"
+    assert release_store.exact(
+        tenant_id="tenant",
+        installation_id="installation",
+        principal_id="jaap",
+        intent_id=release.intent_id,
+        release_sha256=release.release.content_sha256,
+        now=NOW,
+    ) == release
+    assert calls[0]["phases"] == (
+        "prototype_completed",
+        "prototype_projected",
+        "release_claimed",
+        "release_completed",
+        "release_ready",
+    )
+    assert calls[0]["statuses"] == (
+        "active",
+        "waiting_for_proof",
+        "completed",
+        "failed",
+        "needs_help",
+    )
+    assert calls[1]["phases"] == ("release_completed", "release_ready")
+    assert calls[2]["limit"] == 128
+
+
 @pytest.mark.parametrize(
     ("store_type", "stage", "source_method", "claim_type", "event_type"),
     (
