@@ -257,11 +257,13 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/operations/portable_restore_authority.py",
     "src/eva/operations/telegram_ingress.py",
     "tests/portable/restore_authority_fixture.py",
+    "tools/__init__.py",
     "tools/check_4d_freeze.py",
     "tools/check_container_vulnerabilities.py",
     "tools/check_performance_complexity_pc01.py",
     "tools/generate_contract_schemas.py",
     "tools/managed_b_reboot_probe.py",
+    "tools/postgres_memory_repository.py",
     "tools/prepare_managed_b_candidate_context.py",
     "tools/prove_daily_reflection_budget.py",
     "tools/prove_installer_agentmail_verification.py",
@@ -274,6 +276,7 @@ _EXPECTED_INPUT_PATHS = (
     "tools/prove_installer_telegram_verification.py",
     "tools/prove_memory_storage_budget.py",
     "tools/prove_runtime_resource_budget.py",
+    "tools/run_legacy_memory_trial.py",
     "tools/smoke_people_memory_runtime.py",
 )
 _EXPECTED_TEST_PATHS = (

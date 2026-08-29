@@ -1,4 +1,4 @@
-"""Caller-transaction PostgreSQL authority for Experience and current memory."""
+"""Operator-only PostgreSQL repository for the legacy memory trial."""
 
 from __future__ import annotations
 

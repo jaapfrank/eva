@@ -14,7 +14,7 @@ import pytest
 
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
-from eva.adapters.postgres.memory import PostgresMemoryRepository
+from tools.postgres_memory_repository import PostgresMemoryRepository
 from tests.support.noor_4d_repository import (
     ExactNoor4DRow,
     PostgresNoor4DRepository,

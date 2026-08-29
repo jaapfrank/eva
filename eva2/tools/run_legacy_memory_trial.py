@@ -23,7 +23,10 @@ from typing import Iterator, Sequence
 import sqlalchemy as sa
 from sqlalchemy.engine import make_url
 
-from eva.adapters.postgres.memory import PostgresMemoryRepository
+if __package__:
+    from .postgres_memory_repository import PostgresMemoryRepository
+else:
+    from postgres_memory_repository import PostgresMemoryRepository
 from eva.adapters.postgres.scope import set_local_scope
 from eva.application.legacy_memory_trial import (
     LegacyMemoryRecord,
