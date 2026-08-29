@@ -1,0 +1,44 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T14:05:32+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "0d27be700d7972aa76cca0e6876ec341e757c88d",
+    "timestampContractSha256": "5da25c05e3f05797c6faa80a301cfecbdaa5846a2894a3e5904f3f0a499cbb4a",
+    "sharedDispatchSha256": "a66e3921af2df86c3ffe22a1a0865e79e1ccbaddbe572a3f591214ab89c3465c"
+  },
+  "change": {
+    "description": "Read and effect authority now share provider-neutral grant and envelope construction; thirty-one exact timestamp parsers and twenty-four exact UTC guards use one canonical contract helper.",
+    "productFilesChanged": 37,
+    "productLinesAdded": 279,
+    "productLinesDeleted": 375,
+    "netProductPhysicalLines": -96,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 235,
+    "productPhysicalLinesBefore": 89275,
+    "productPhysicalLinesAfter": 89179,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 14179,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "timestampAndApplicationTestsPassed": 43,
+    "postgresActionChain16_13TestsPassed": 95,
+    "postgresActionChain16_13DurationSeconds": 440.10,
+    "testsFailed": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva2ReadyHttp": 200
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "This consolidation does not change effect idempotency, read request IDs, provider-call counts or timeline states.",
+    "The historical slot-4 OCI baseline remains unavailable locally, so the full PC01 image attestation was not rerun."
+  ],
+  "nextRequiredAction": "Continue with the larger duplicated validator and attempt-persistence paths while preserving all action-chain replay and physical-readback tests."
+}
