@@ -1,0 +1,56 @@
+{
+  "candidate": {
+    "coreImageId": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "coreReadyAfterDatabaseAndServiceRestart": true,
+    "dashboardAnonymousRejected": true,
+    "dashboardOwnerAuthenticated": true,
+    "environmentSha256": "f816fa326ca98cf1e1de92ff80290f0fa91d71898eeaaa9b0e6e4fbdb37ff1c0",
+    "port": 44711,
+    "project": "eva2-managed-b-slot4",
+    "realCodexReplyExact": true,
+    "runningRuntimeServices": 6,
+    "status": "ready_not_active",
+    "telegramIngressRunning": false,
+    "workerRunning": false
+  },
+  "contract": "Eva2ManagedBRetainedSlotReceipt/v1",
+  "dataTransition": {
+    "hindsightCountDigest": "239f3a53b0c225b99e32ffc789705f878b45269e99354bde44d6aa8de6fa0cf5",
+    "hindsightDumpBytes": 1498974,
+    "hindsightDumpSha256": "b255ac757e3d5e0ee8357596ed104a2e7953e4bf7ee0694883a0d255a08d0800",
+    "hindsightTableCount": 23,
+    "operationalCountDigest": "5d9eb8942687daa050fe421f1e9f21a2263968f7f87a96d53c8945492f811191",
+    "operationalDumpBytes": 1034899,
+    "operationalDumpSha256": "ff3289565aca1f6b801a9f6ef3a8acab634ee5c317cf70c102fe6d295a2c2a87",
+    "operationalTableCount": 48,
+    "plaintextDumpsRetained": false,
+    "restoredWithinHindsightSnapshotWindow": true,
+    "restoredWithinOperationalSnapshotWindow": true,
+    "semanticHindsightDataSurvivedJointRestart": true,
+    "sourceDatabasesReadOnly": true,
+    "sourcePort": 44710
+  },
+  "issuedAt": "2026-08-29T07:54:33.359252+00:00",
+  "liveSafety": {
+    "eva1HttpStatus": 200,
+    "eva1NRestarts": 0,
+    "eva1Service": "active",
+    "explicitEva2RoutePort": 44710,
+    "explicitEva2RouteStatus": 200,
+    "slot2RollbackContainersPreserved": 6,
+    "trafficSwitched": false
+  },
+  "nonClaims": [
+    "Slot 4 is not the active /eva2 route.",
+    "The operational source count changed inside the live snapshot window, so this receipt does not claim a gap-free final cutover copy.",
+    "Telegram ingress and the durable goal worker are intentionally not running in slot 4."
+  ],
+  "rawReceiptSha256": "43f81aecbc010b6fe792fa9970f7208bf821ae7b3f9bf8c6d522bd3195ce4d29",
+  "source": {
+    "hindsightVolume": "eva2-managed-b-slot3-memory",
+    "operationalVolume": "eva2-managed-b-slot3-operational",
+    "port": 44710,
+    "readOnly": true
+  },
+  "status": "passed"
+}

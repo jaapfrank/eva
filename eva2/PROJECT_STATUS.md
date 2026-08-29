@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 09:45 CEST
+Laatst bijgewerkt: 29 augustus 2026, 09:58 CEST
 
 ## Heel kort
 
@@ -287,6 +287,10 @@ installatie zijn nog niet klaar.
   gaven een echt exact Codex-antwoord en kwamen na een volledige database- en
   serviceherstart weer groen terug. Alle proefmiddelen zijn verwijderd. Deze
   image is nog niet naar de live `/eva2`-route omgeschakeld.
+- Diezelfde image draait nu ook als bewaard slot 4 op poort `44711`. Beide
+  databases zijn vanuit alleen-lezen snapshots van het actieve slot 3 gevuld.
+  Codex, geheugen, dashboardtoegang en de gezamenlijke herstart zijn groen;
+  Telegram en de doelworker staan bewust uit. `/eva2` wijst nog naar `44710`.
 
 ## Wat nog niet klaar is
 
@@ -314,9 +318,10 @@ installatie zijn nog niet klaar.
   geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Een
   oude back-up wordt bij herstel nu geblokkeerd en de wisknop werkt die grens
   eerst bij. De nieuwe kernimage is gebouwd, 0/0 gescand en in een volledige
-  wegwerp-B groen herstart. De private map moet nog voor een bewaard inactief
-  slot worden gemaakt en via A/B worden beproefd. Losse applicatiecaches en
-  procedurekandidaten ontbreken nog. Ook
+  wegwerp-B groen herstart. Een bewaard inactief slot 4 is eveneens groen. De
+  laatste brontelling veranderde tijdens de live snapshot; daarom volgt vóór
+  A/B-omschakeling nog een korte stilgezette eindsynchronisatie. Losse
+  applicatiecaches en procedurekandidaten ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
@@ -338,8 +343,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Een bewaard inactief slot met de nieuwe 0/0-kernimage maken en via de
-   terugvalroute beproeven; daarna caches en procedures wissen.
+1. Een korte, terugrolbare eindsynchronisatie maken zodat slot 4 bij de
+   A/B-omschakeling geen laatste slot-3-gebeurtenissen mist.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -411,6 +416,7 @@ installatie zijn nog niet klaar.
 - [Wisknop maakt oude back-ups eerst ongeldig, ook bij crash en gelijktijdige wisacties](evidence/living-core/eva2-owner-erasure-restore-authority-fail-closed-2026-08-29.json)
 - [Nieuwe Debian 13-kernimage: beperkte start en verse scan 0 kritisch/0 hoog](evidence/living-core/eva2-owner-erasure-debian13-candidate-image-2026-08-29.json)
 - [Resourcebudget, semantische toolkeuze en volledige negen-dienstencanary](evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json)
+- [Bewaard slot 4 met echte data, dashboardreadback en gezamenlijke herstart](evidence/living-core/eva2-managed-b-retained-slot4-2026-08-29.json)
 - [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
