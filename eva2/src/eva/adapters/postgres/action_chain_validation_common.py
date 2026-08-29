@@ -158,3 +158,31 @@ def validated_released_step_ids(
     ):
         raise corrupt(f"{kind} advance released an ineligible dependency")
     return released
+
+
+def latest_prepared_child_data(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    plan: ValidatedPlan,
+    logical_step_key: str,
+    *,
+    kind: Literal["read", "effect"],
+    corrupt: type[RuntimeError],
+) -> dict[str, object]:
+    operation_id = action_chain_step_operation_id(plan, logical_step_key)
+    row = connection.execute(
+        sa.select(operational_events)
+        .where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.thread_id == operation_id,
+        )
+        .order_by(operational_events.c.sequence.desc())
+        .limit(1)
+    ).one()
+    data = row.payload.get("data")
+    if row.event_type != f"ACTION_CHAIN_{kind.upper()}_INTENT_PREPARED" or not isinstance(
+        data, dict
+    ):
+        raise corrupt(f"prepared {kind} timeline differs")
+    return data

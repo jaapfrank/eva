@@ -29,8 +29,10 @@ from eva.adapters.postgres.action_chain_ledger import (
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
-    operational_events,
     transition_timeline_thread,
+)
+from eva.adapters.postgres.action_chain_validation_common import (
+    latest_prepared_child_data,
 )
 from eva.application.action_chain import (
     ActionChainValidationError,
@@ -162,8 +164,13 @@ class PostgresActionChainEffectPreparer(PostgresActionChainStore):
             if stored_step.state == "running":
                 if step_row.effect_intent_id != expected_intent_id:
                     raise ActionChainEffectConflict("prepared effect identity differs")
-                event_data = self._latest_child_data(
-                    connection, chain, stored_step.logical_step_key
+                event_data = latest_prepared_child_data(
+                    connection,
+                    self._scope_value,
+                    chain.plan,
+                    stored_step.logical_step_key,
+                    kind="effect",
+                    corrupt=ActionChainEffectConflict,
                 )
                 if event_data.get("claim_token_sha256") != claim.token_sha256:
                     raise ActionChainEffectConflict(
@@ -485,32 +492,6 @@ class PostgresActionChainEffectPreparer(PostgresActionChainStore):
         ):
             raise ActionChainEffectConflict("concrete effect authority differs")
         return activation, manifest
-
-    def _latest_child_data(
-        self,
-        connection: sa.Connection,
-        chain: StoredActionChain,
-        logical_step_key: str,
-    ) -> dict[str, object]:
-        operation_id = action_chain_step_operation_id(chain.plan, logical_step_key)
-        row = connection.execute(
-            sa.select(operational_events)
-            .where(
-                operational_events.c.tenant_id == self._scope_value.tenant_id,
-                operational_events.c.installation_id
-                == self._scope_value.installation_id,
-                operational_events.c.thread_id == operation_id,
-            )
-            .order_by(operational_events.c.sequence.desc())
-            .limit(1)
-        ).one()
-        data = row.payload.get("data")
-        if row.event_type != "ACTION_CHAIN_EFFECT_INTENT_PREPARED" or not isinstance(
-            data, dict
-        ):
-            raise ActionChainEffectConflict("prepared effect timeline differs")
-        return data
-
 
 __all__ = [
     "ActionChainEffectConflict",
