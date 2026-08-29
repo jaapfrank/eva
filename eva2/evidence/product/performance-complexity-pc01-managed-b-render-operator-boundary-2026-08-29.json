@@ -1,0 +1,40 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ManagedBRenderOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:12:36+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "351a4479073522a2f96d9db95652ea19abd3465f",
+    "changedSourceManifestSha256": "20840449231fdef573f91286827572f1f08925b864e73529d66d68f0e0e45b9c"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/managed_b_render.py",
+    "newPath": "tools/managed_b_render.py",
+    "physicalLinesMovedOutOfProductRoots": 258,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 1,
+    "remainingOldImports": 0,
+    "newOperatorSourceAddedToReleaseInputs": true
+  },
+  "verification": {
+    "rendererTestsPassed": 24,
+    "combinedRendererAndFailClosedReleaseTestsPassed": 62,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "requiredInputsAfterPin": 240,
+    "combinedTestAndAttestationLogsSha256": "f7ba77fb5126376ec941b0af9e94fb78d5f076afe6693638728e5f668c46538e"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 218,
+    "productPhysicalLines": 77732,
+    "livingCorePhysicalLines": 77139,
+    "productManifestSha256": "e5ffa8c7d8b0466671243632cedb1112dca689c4f54bae7d6ecdb2d10b58563d",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 2732,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 13101,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "This performed only the non-mutating renderer tests and did not start or change Docker services.",
+    "The renderer remains required managed-release operator code and is now explicitly pinned as such.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}
