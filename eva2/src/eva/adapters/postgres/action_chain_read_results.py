@@ -11,10 +11,8 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
     StoredActionChain,
     plan_steps,
     read_intents,
@@ -30,7 +28,9 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
+from eva.adapters.postgres.action_chain_result_common import (
+    PostgresActionChainResultStore,
+)
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorManifest
@@ -49,7 +49,6 @@ from eva.operations.action_chain_read_results import (
 
 read_attempts = metadata.tables["eva_effects.read_attempts"]
 read_observations = metadata.tables["eva_effects.read_observations"]
-evidence_envelopes = metadata.tables["eva_evidence.evidence_envelopes"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -60,22 +59,11 @@ class StoredActionChainReadResult:
     observation: ReadObservation | None
 
 
-class PostgresActionChainReadResultStore(PostgresScopedRole):
+class PostgresActionChainReadResultStore(PostgresActionChainResultStore):
     """Move a call-started attempt to one immutable terminal projection."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain read results require PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
+    _result_kind = "read"
+    _conflict_type = ActionChainReadConflict
 
     def load_terminal(
         self,
@@ -207,7 +195,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
             if latest.event_type != "ACTION_CHAIN_READ_PROVIDER_CALL_STARTED":
                 raise ActionChainReadConflict("read result has no call-start marker")
             call_started_at = _parse_timestamp(
-                str(_event_data(latest.payload).get("provider_call_started_at"))
+                str(self._event_data(latest.payload).get("provider_call_started_at"))
             )
             if not call_started_at <= observed_at <= recorded_at:
                 raise ActionChainReadConflict(
@@ -224,7 +212,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 recorded_at=recorded_at,
                 retention_until=chain.retention_until,
             )
-            self._insert_evidence(connection, chain, projected)
+            self._insert_evidence(connection, chain, projected.evidence)
             if projected.observation is not None:
                 self._insert_observation(connection, chain, projected.observation)
             terminal_payload = projected.attempt.model_dump(mode="json")
@@ -265,7 +253,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 .with_for_update()
             ).one()
             event_type, phase, status = _terminal_timeline(projected.attempt.state)
-            data = _event_data(latest.payload)
+            data = self._event_data(latest.payload)
             data.update(
                 _terminal_event_data(
                     projected,
@@ -301,40 +289,6 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 projected.evidence,
                 projected.observation,
             )
-
-    def _insert_evidence(
-        self,
-        connection: sa.Connection,
-        chain: StoredActionChain,
-        projected: ProjectedActionChainReadResult,
-    ) -> None:
-        evidence = projected.evidence
-        payload = evidence.model_dump(mode="json")
-        connection.execute(
-            sa.insert(evidence_envelopes).values(
-                tenant_id=self._scope_value.tenant_id,
-                installation_id=self._scope_value.installation_id,
-                evidence_id=UUID(evidence.evidence_id),
-                aggregate_type=evidence.aggregate_type,
-                aggregate_id=evidence.aggregate_id,
-                sequence=evidence.sequence,
-                idempotency_key=evidence.idempotency_key,
-                producer=evidence.producer,
-                subject_contract=evidence.subject_contract,
-                subject_id=evidence.subject_id,
-                subject_payload_sha256=bytes.fromhex(evidence.subject_payload_sha256),
-                object_ref_id=None,
-                object_sha256=None,
-                predecessor_sha256=None,
-                provenance_refs=[],
-                captured_at=_parse_timestamp(evidence.captured_at),
-                privacy_class=evidence.privacy_class,
-                retention_policy_id=chain.retention_policy_id,
-                retention_until=chain.retention_until,
-                payload=payload,
-                payload_sha256=bytes.fromhex(canonical_sha256(evidence)),
-            )
-        )
 
     def _insert_observation(
         self,
@@ -391,7 +345,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
             .order_by(operational_events.c.occurred_at.desc())
             .limit(1)
         ).one()
-        data = _event_data(event.payload)
+        data = self._event_data(event.payload)
         if (
             data.get("provider_result_sha256") != canonical_sha256(result)
             or data.get("provider_result_observed_at") != _format_timestamp(observed_at)
@@ -428,18 +382,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 .order_by(operational_events.c.occurred_at.desc())
                 .limit(1)
             ).one()
-        data = _event_data(event.payload)
-        evidence = EvidenceEnvelopeV2.model_validate(
-            connection.scalar(
-                sa.select(evidence_envelopes.c.payload).where(
-                    evidence_envelopes.c.tenant_id == self._scope_value.tenant_id,
-                    evidence_envelopes.c.installation_id
-                    == self._scope_value.installation_id,
-                    evidence_envelopes.c.evidence_id
-                    == UUID(str(data["provider_evidence_id"])),
-                )
-            )
-        )
+        data = self._event_data(event.payload)
+        evidence = self._load_evidence(connection, data)
         observation_payload = connection.scalar(
             sa.select(read_observations.c.payload).where(
                 read_observations.c.tenant_id == self._scope_value.tenant_id,
@@ -553,12 +497,6 @@ def _attempt(row: sa.Row) -> ReadAttempt:
     if canonical_sha256(attempt) != bytes(row.payload_sha256).hex():
         raise ActionChainReadConflict("stored read attempt hash differs")
     return attempt
-
-
-def _event_data(payload: object) -> dict[str, object]:
-    if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
-        raise ActionChainReadConflict("read result timeline payload differs")
-    return dict(payload["data"])
 
 
 __all__ = ["PostgresActionChainReadResultStore", "StoredActionChainReadResult"]
