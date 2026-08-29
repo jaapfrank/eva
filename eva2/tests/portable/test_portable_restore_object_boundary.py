@@ -14,7 +14,7 @@ pytest.importorskip(
 )
 
 from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
-from eva.operations.object_keyring import FileObjectKeyResolver
+from tools.object_keyring import FileObjectKeyResolver
 from tools.portable_object_materializer import materialize_verified_portable_objects
 from tools.portable_restore import (
     PortableRestoreError,

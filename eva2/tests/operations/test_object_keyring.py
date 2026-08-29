@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from eva.application.objects import ObjectBinding
-from eva.operations.object_keyring import FileObjectKeyResolver, ObjectKeyringError
+from tools.object_keyring import FileObjectKeyResolver, ObjectKeyringError
 
 
 TENANT = "11111111-1111-4111-8111-111111111111"

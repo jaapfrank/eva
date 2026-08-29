@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.operations.object_keyring import FileObjectKeyResolver
+from tools.object_keyring import FileObjectKeyResolver
 from tools.portable_object_verifier import (
     PortableObjectVerificationError,
     verify_portable_object_bytes,
