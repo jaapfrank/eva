@@ -1,0 +1,75 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ConversationToolSchemaConsolidation/v1",
+  "recordedAt": "2026-08-29T15:13:36Z",
+  "sourceCommit": "2f0d4a7a3c7bd6c9d49267d3e9acdd7adbde2b3c",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "path": "src/eva/adapters/model/conversation.py",
+    "toolCount": 19,
+    "propertyCount": 60,
+    "sharedBuilders": [
+      "_tool",
+      "_schema"
+    ],
+    "catalogCanonicalSha256Before": "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b",
+    "catalogCanonicalSha256After": "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b",
+    "unchangedTopLevelAstNodesOutsideCatalog": 69,
+    "netProductPhysicalLines": -197
+  },
+  "verification": {
+    "realPinnedRuntimeImport": {
+      "image": "eva2/runtime35-official:087f57b",
+      "network": "none",
+      "rootFilesystem": "read-only",
+      "user": "65532:65532",
+      "toolCount": 19,
+      "canonicalSha256": "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b",
+      "passed": true
+    },
+    "modelRegression": {
+      "environment": "The current source and a temporary read-only pytest layer were mounted into the pinned 35-package runtime image; nothing was installed or downloaded.",
+      "passed": 44,
+      "skipped": 1,
+      "failed": 0,
+      "warnings": 2,
+      "warningReason": "Pytest could not write its optional cache into the deliberately read-only project mount.",
+      "logSha256": "d315d888c871a5a8deb312c266a1ad74932be8379492b6c510322ed21f53913f"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "compileall": {
+      "passed": true
+    },
+    "failuresFoundDuringRefactor": [
+      "The first real import found that the durable-goal property named description collided with the builder argument; the internal builder argument was renamed.",
+      "The first canonical comparison found that the pivot anyOf schema had accidentally gained type=string; type=None restored exact byte equality."
+    ]
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 88187,
+      "productManifestSha256": "2c4c5a1fbe13a5d9079f2c7082199cf38b7d4d93c7e58efa8391cad1504a4491"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87990,
+      "productManifestSha256": "c01272f2028410373d254cddc72fe5bd6d715c2183bf4aa178feb7406fb2dba8",
+      "livingCorePhysicalLines": 87397,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12990,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No tool, field, description, enum, limit, regex, requirement, or strictness setting was added or removed.",
+    "The stale managed-B source and cockpit evidence authority was not resealed or promoted.",
+    "No running Eva1 or Eva2 service, model call, route, image, database, secret, connector, or volume was changed."
+  ]
+}
