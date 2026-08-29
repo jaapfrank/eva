@@ -1,0 +1,81 @@
+{
+  "contract": "EvaPerformanceComplexityReceipt/v1",
+  "createdAt": "2026-08-29T12:06:37+02:00",
+  "gate": "PC01",
+  "status": "tested_candidate_not_promoted",
+  "source": {
+    "commit": "33d01288ab3d6545f1516f8e059b8b7387ed6aee",
+    "worktreeClaim": "The image uses the committed source; later workspace changes are not included."
+  },
+  "dependencyCandidate": {
+    "lockSha256": "4f14fb2e7289a8fcaf71710eb27a264cbc0211330cb09131ce73b65a1eedad24",
+    "packageCount": 35,
+    "wheelCount": 35,
+    "wheelSetSha256": "251390d048123dd07223b7b43b2819339160b0d77a577ca82166f772a45dc7f9",
+    "removed": [
+      "dbos",
+      "python-dateutil",
+      "pyyaml",
+      "six"
+    ],
+    "retainedAndPromotedToDirect": "websockets==17.0.1",
+    "reason": "Home Assistant events imports websockets directly; the first offline import exposed that it had accidentally arrived only through DBOS."
+  },
+  "image": {
+    "tag": "eva2/dbosless-distroless-candidate:33d0128",
+    "imageId": "sha256:8d8d01b403f05f852da687c3a4eb3f778ba714e01998b31d46a13dddfba053c3",
+    "bytes": 80015754,
+    "activeComparisonBytes": 85607601,
+    "bytesSmaller": 5591847,
+    "buildNetwork": "none",
+    "runtimeUser": "65532:65532"
+  },
+  "verification": {
+    "networklessReadonlyImports": {
+      "status": "passed",
+      "imports": [
+        "eva.bootstrap.runtime",
+        "eva.operations.durable_goal_worker",
+        "eva.bootstrap.delegated_work_service",
+        "websockets"
+      ],
+      "dbosImportable": false
+    },
+    "targetedTests": {
+      "status": "passed",
+      "passed": 9,
+      "files": [
+        "tests/contract/test_delegated_work.py",
+        "tests/application/test_durable_goals.py"
+      ]
+    },
+    "freshPostgres": {
+      "status": "passed",
+      "image": "postgres:16.13",
+      "firstInstallFinalRevision": "4e_0006_memory_outbox_erasure",
+      "secondInstallRoute": [],
+      "nonSystemTableCount": 48
+    },
+    "vulnerabilityScan": {
+      "status": "passed",
+      "critical": 0,
+      "high": 0,
+      "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+      "databaseUpdatedAt": "2026-08-29T07:03:04.5149579Z",
+      "databaseDownloadedAt": "2026-08-29T10:02:48.978895906Z",
+      "resultSha256": "6e36e495c415da5afd131d5d422733367ab9c91944bc3fcfec84fae1ada3979d",
+      "scanNetwork": "none"
+    }
+  },
+  "cleanup": {
+    "disposablePostgresContainer": "removed",
+    "disposableDockerNetwork": "removed",
+    "syntheticDatabaseSecret": "removed"
+  },
+  "liveImpact": {
+    "eva1": "not changed",
+    "activeEva2": "not changed",
+    "promotion": "not performed"
+  },
+  "openBoundary": "The candidate lock and wheel set still have to replace the DBOS-specific release manifests and pass that full sealed release path before promotion."
+}
