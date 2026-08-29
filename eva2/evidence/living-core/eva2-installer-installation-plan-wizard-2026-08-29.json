@@ -1,0 +1,58 @@
+{
+  "boundaries": {
+    "applyRouteExposed": false,
+    "dockerOrServiceCalled": false,
+    "providerCalled": false,
+    "secretReturned": false
+  },
+  "contract": "EvaInstallerInstallationPlanWizardReceipt/v1",
+  "issuedAt": "2026-08-29T02:36:28+00:00",
+  "loopbackRun": {
+    "blockedAfterProviderInvalidation": true,
+    "blockedBeforeCompletion": true,
+    "planStableAcrossRestart": true,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_on_127.0.0.1",
+    "wizardServerStarts": 4
+  },
+  "nonclaims": [
+    "This proof built and read an installation plan; it did not install, start, update or switch Eva.",
+    "Provider readiness used synthetic retained evidence and did not contact a live provider.",
+    "This is not a fresh-machine installation, managed-B promotion or consumer acceptance test."
+  ],
+  "source": {
+    "commit": "cf29ba81aa25e0d8bcd1fc8e2a3b3bd5f4dc4059",
+    "files": [
+      {
+        "path": "src/eva/adapters/api/installer_installation_plan_api.py",
+        "sha256": "449acddb93634ef8ea3ed24f69fc191cbd4dea5f268069676da64a1e592147bf"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard.py",
+        "sha256": "b670021894b1ae397d1b3f1dddd018c1c423b33c2f87ce751a84f911dd9458c9"
+      },
+      {
+        "path": "src/eva/operations/installer_installation_plan.py",
+        "sha256": "e6a8e58af0d5014ffaf15f64a60d955032641ed1ec5e60342ba1ba41bd7ec36d"
+      },
+      {
+        "path": "tests/api/test_installer_wizard.py",
+        "sha256": "57a36b46c6c268b210308297fd5acce7524c81e817a830a1cf4ba5ae3bfd4ff2"
+      },
+      {
+        "path": "tests/operations/test_installer_installation_plan.py",
+        "sha256": "c69e7155e6c558d751275d67e1299db5e7b6d39e50e59a9179023c6d69f4c777"
+      },
+      {
+        "path": "tools/prove_installer_installation_plan_wizard.py",
+        "sha256": "a4446cd28cdaa40715752406c74d6b5305e51196dff7cb5eacc42c45ecd55b92"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerTestsPassed": 178,
+    "focusedTestsPassed": 22,
+    "networkUsedOutsideLoopback": false
+  }
+}

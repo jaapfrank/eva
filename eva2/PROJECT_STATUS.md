@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 04:25 CEST
+Laatst bijgewerkt: 29 augustus 2026, 04:36 CEST
 
 ## Heel kort
 
@@ -216,6 +216,12 @@ installatie zijn nog niet klaar.
   providerproeven gecontroleerd. Een provider kan zelf nog steeds een bredere
   toegangscode uitgeven; echte least-privilege-providerrechten blijven daarom
   een aparte praktijkcontrole.
+- De wizard maakt nu uit alle controles één leesbaar installatieplan. Zolang
+  iets ontbreekt toont zij concrete blokkades; na afronding blijft exact
+  hetzelfde plan ook na een herstart staan. Wordt een koppeling ingetrokken,
+  dan blokkeert het plan meteen opnieuw. Vier echte lokale wizardstarts zijn
+  groen. Deze stap heeft niets geïnstalleerd en biedt bewust nog geen knop om
+  Docker of diensten te starten.
 
 ## Wat nog niet klaar is
 
@@ -231,8 +237,9 @@ installatie zijn nog niet klaar.
 - De schone kern-, Hindsight- en database-images staan alleen op deze computer.
   De bouwpakketten en images moeten nog veilig buiten deze computer worden
   bewaard en opnieuw herbouwbaar worden bewezen.
-- De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
-  bijwerken met één eenvoudige wizard.
+- De gewone gebruiker kan in de wizard nu wel een gecontroleerd installatieplan
+  krijgen, maar Eva2 nog niet zelf installeren, herstellen en bijwerken. De
+  aparte uitvoerknop en volledige fresh-installproef ontbreken nog.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -253,8 +260,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Begrensde huisbediening stap voor stap uitbreiden zonder de harde controle
-   en herstartveiligheid kwijt te raken.
+1. Het groene installatieplan veilig aan de verzegelde releasevoorbereiding
+   koppelen, met een aparte eigenaarbevestiging en automatische terugval.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -316,6 +323,7 @@ installatie zijn nog niet klaar.
 - [Telegramcontrole met zichtbaar en hashgebonden minimaal gebruiksrecht](evidence/living-core/eva2-installer-provider-wizard-scopes-2026-08-29.json)
 - [Home Assistant en AgentMail met ieder hun eigen zichtbare minimale gebruiksrecht](evidence/living-core/eva2-installer-endpoint-wizard-scopes-2026-08-29.json)
 - [Toolvrije modelcontrole met een apart hashgebonden gebruiksrecht](evidence/living-core/eva2-installer-codex-model-scopes-2026-08-29.json)
+- [Eén hervatbaar, fail-closed installatieplan zonder installatiestart](evidence/living-core/eva2-installer-installation-plan-wizard-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

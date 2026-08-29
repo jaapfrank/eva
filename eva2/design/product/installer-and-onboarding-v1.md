@@ -331,6 +331,15 @@ stil half-geconfigureerd.
   geen bewijs dat iedere provider ook werkelijk een even smalle credential kan
   uitgeven. Provider-granted least privilege, echte providerreadback en
   tokenvernieuwing ontbreken nog, dus IN05 blijft open.
+- De wizard projecteert deze hervatbare statussen nu ook naar één deterministisch
+  `EvaInstallerInstallationPlan/v1`. Het plan bindt preflight, identiteit,
+  profiel, capabilitybewijzen en uitsluitend de vaste secretreferentie plus
+  generatie. Ontbrekende, geselecteerde, geblokkeerde of onderbroken stappen
+  houden het plan rood. Vier echte loopback-serverstarts bewezen dat een groen
+  plan na herstart byte-inhoudelijk dezelfde vingerafdruk houdt en na
+  providerintrekking direct weer blokkeert. Er bestaat nog geen apply-route;
+  Docker, providers en diensten zijn in deze proef niet aangeroepen. Dit is een
+  noodzakelijke voorstap voor IN06, geen fresh-installbewijs.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
