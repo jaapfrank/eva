@@ -151,6 +151,10 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     assert secret_status.status_code == 200
     assert secret_status.json()["enabled"] is False
     assert {item["state"] for item in secret_status.json()["slots"]} == {"unavailable"}
+    plan = client.get("/internal/v1/onboarding/install/plan")
+    assert plan.status_code == 200
+    assert plan.json()["status"] == "blocked"
+    assert plan.json()["read_only"] is True
 
 
 def test_wizard_rejects_reused_wrong_or_cross_origin_bootstrap() -> None:
@@ -1190,3 +1194,60 @@ def test_wizard_recovers_interrupted_rotation_after_new_server(
     assert resumed_lifecycle.secret_store.read_secret(slot_id="model_provider") == (
         b"synthetic-new-model-secret-654321"
     )
+
+
+def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) -> None:
+    profile_workspace = private_tmp_path / "plan-profile"
+    capability_workspace = private_tmp_path / "plan-capabilities"
+    secret_workspace = private_tmp_path / "plan-secrets"
+    for path in (profile_workspace, capability_workspace, secret_workspace):
+        path.mkdir(mode=0o700)
+    profile = InstallerProfileWorkflow(
+        workspace=profile_workspace, clock=lambda: "2026-08-29T04:40:00Z"
+    )
+    staged = profile.stage(
+        installation_name="Thuis",
+        owner_label="Eigenaar",
+        language="nl-NL",
+        time_zone="Europe/Amsterdam",
+    )
+    profile.confirm(expected_profile_sha256=staged.profile_sha256)
+    capabilities = InstallerCapabilityWorkflow(
+        workspace=capability_workspace, clock=lambda: "2026-08-29T04:41:00Z"
+    )
+    capabilities.select(step_id="model_provider", wanted=True)
+    capabilities.record_verification(
+        step_id="model_provider", outcome="ready", evidence_sha256="a" * 64
+    )
+    for step_id in ("telegram", "home_assistant", "email", "adaptive_connector"):
+        capabilities.select(step_id=step_id, wanted=False)
+    capabilities.select(step_id="budgets", wanted=True)
+    capabilities.record_verification(
+        step_id="budgets", outcome="ready", evidence_sha256="b" * 64
+    )
+    secrets = InstallerSecretStore(workspace=secret_workspace)
+    secrets.store(
+        slot_id="model_provider", secret="synthetic-model-plan-secret-123456"
+    )
+    bootstrap = InstallerBootstrap(token="p" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        receipt=_receipt(status="ready"),
+        profile_workflow=profile,
+        capability_workflow=capabilities,
+        secret_store=secrets,
+    )
+    assert client.post(
+        "/internal/v1/bootstrap", json={"token": "p" * 43}
+    ).status_code == 204
+
+    page = client.get("/")
+    plan = client.get("/internal/v1/onboarding/install/plan")
+
+    assert "Installatieplan" in page.text
+    assert plan.status_code == 200
+    assert plan.headers["cache-control"] == "no-store"
+    assert plan.json()["status"] == "ready_to_install"
+    assert plan.json()["blockers"] == []
+    assert "synthetic-model-plan-secret" not in plan.text
+    assert all(route.path != "/internal/v1/onboarding/install/apply" for route in client.app.routes)

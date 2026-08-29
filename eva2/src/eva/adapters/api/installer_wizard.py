@@ -20,6 +20,11 @@ from eva.adapters.api.installer_capability_api import (
     register_installer_capability_routes,
 )
 from eva.adapters.api.installer_identity_ui import INSTALLER_IDENTITY_SCRIPT
+from eva.adapters.api.installer_installation_plan_api import (
+    INSTALLER_INSTALLATION_PLAN_SCRIPT,
+    INSTALLER_INSTALLATION_PLAN_SECTION,
+    register_installer_installation_plan_routes,
+)
 from eva.adapters.api.installer_profile_api import (
     INSTALLER_PROFILE_SCRIPT,
     INSTALLER_PROFILE_SECTION,
@@ -49,6 +54,9 @@ from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_identity_lifecycle import (
     InstallerIdentityLifecycle,
     InstallerIdentityWorkflowStatus,
+)
+from eva.operations.installer_installation_plan import (
+    build_installer_installation_plan,
 )
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
@@ -235,6 +243,7 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
 {INSTALLER_CAPABILITY_SECTION}
 {INSTALLER_SECRET_SECTION}
 {INSTALLER_PROVIDER_SECTION}
+{INSTALLER_INSTALLATION_PLAN_SECTION}
 <section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
 </main>
 <script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};window.__evaProfileEnabled={profile_enabled_json};window.__evaCapabilityEnabled={capability_enabled_json};window.__evaSecretEnabled={secret_enabled_json};window.__evaProviderVerificationEnabled={provider_enabled_json};</script>
@@ -246,6 +255,8 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
         + INSTALLER_SECRET_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_PROVIDER_SCRIPT
+        + "</script>\n<script>"
+        + INSTALLER_INSTALLATION_PLAN_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_IDENTITY_SCRIPT
         + "</script>\n</html>"
@@ -440,6 +451,22 @@ def create_installer_wizard(
         require_write=require_installer_write,
         security_headers=_SECURITY_HEADERS,
         configured_probe_factory=configured_probe_factory,
+    )
+    register_installer_installation_plan_routes(
+        app,
+        build_plan=lambda: build_installer_installation_plan(
+            preflight=receipt,
+            identity=current_identity(),
+            profile=profile_workflow.status() if profile_workflow is not None else None,
+            capabilities=(
+                capability_workflow.status()
+                if capability_workflow is not None
+                else None
+            ),
+            secrets=secret_store.status() if secret_store is not None else None,
+        ),
+        require_read=require_installer_read,
+        security_headers=_SECURITY_HEADERS,
     )
 
     @app.get("/internal/v1/preflight")
