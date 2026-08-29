@@ -1,4 +1,4 @@
-"""Fail-closed construction for Eva's patched synchronous DBOS datasource."""
+"""Historical DBOS datasource retained for exact database regressions."""
 
 from __future__ import annotations
 

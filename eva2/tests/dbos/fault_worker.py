@@ -12,7 +12,7 @@ from typing import Any
 from dbos import PortableWorkflowError
 from sqlalchemy import event
 
-from eva.adapters.dbos.datasource import open_runtime_datasource
+from tests.support.dbos_datasource import open_runtime_datasource
 from tests.support.episode_transition_4c import configure_episode_transition_runtime
 from eva.contracts.canonical_json import canonical_json_bytes
 

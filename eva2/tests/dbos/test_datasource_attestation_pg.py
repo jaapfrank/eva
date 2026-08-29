@@ -6,7 +6,7 @@ import dbos._dbos as dbos_runtime_module
 from dbos._utils import GlobalParams
 
 from conftest import Postgres4CGate
-from eva.adapters.dbos.datasource import (
+from tests.support.dbos_datasource import (
     DBOSDatasourceAttestationError,
     open_runtime_datasource,
 )

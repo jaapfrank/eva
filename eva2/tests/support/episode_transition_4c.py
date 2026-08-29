@@ -15,7 +15,7 @@ from dbos import (
 from dbos._utils import GlobalParams
 import dbos._dbos as dbos_runtime_module
 
-from eva.adapters.dbos.datasource import DBOS_SCHEMA, EvaDBOSDatasource
+from tests.support.dbos_datasource import DBOS_SCHEMA, EvaDBOSDatasource
 from tests.support.episode_repository import PostgresEpisodeRepository
 from eva.contracts.canonical_json import canonical_json_bytes, decode_json_bytes
 from eva.domain.episode import EpisodeTransitionCommand
