@@ -1,0 +1,50 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T14:42:10+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "031b94dcea35c6992b9864438bd76e507cf4fe4e",
+    "sharedDispatchAuthorizationSha256": "28496dde06088c1bdea2722aac16be103e1b3b15523df2f11bbbbd9ed1a3aa49"
+  },
+  "change": {
+    "description": "Read and effect authorization now share the scoped intent, plan, live authority, provider profile, durable grant columns and dispatch-authorized timeline boundary while retaining their distinct permits and state transitions.",
+    "productFilesChanged": 3,
+    "productLinesAdded": 357,
+    "productLinesDeleted": 405,
+    "netProductPhysicalLines": -48,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 236,
+    "productPhysicalLinesBefore": 89049,
+    "productPhysicalLinesAfter": 89001,
+    "productManifestSha256": "0e00d484d127c79f2c5ed3f0fc73f71e886ddd7b0bd6e327d29784b8407b71c6",
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 14001,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "initialInfrastructureErrors": 4,
+    "initialInfrastructureCause": "The first disposable DSN selected the absent legacy psycopg2 driver; the same live PostgreSQL container was reused with Eva's installed psycopg driver.",
+    "initialRefactorFailures": 4,
+    "initialRefactorCause": "The shared UTC parser was called with an unsupported second label argument; all failures stopped during authorization before provider I/O.",
+    "correctedTargetedAuthorizationTestsPassed": 4,
+    "postgresActionChain16_13TestsPassedAfterCorrection": 95,
+    "postgresActionChain16_13DurationSeconds": 436.77,
+    "postgresActionChainLogSha256": "4a81b028666f67cbe990d37095e33e6fb363df10a11e7b0d40d4bc62e46857d4",
+    "testsFailedAfterCorrection": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1HealthHttp": 200,
+    "liveEva2ReadyHttp": 200
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "Read and effect retain distinct intent-state, permit, event-data and corruption semantics.",
+    "This source consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Consolidate duplicated terminal provider-result and evidence validation without weakening replay, readback or corruption rejection."
+}
