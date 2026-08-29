@@ -1,0 +1,65 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ActionChainConnectorExecutionConsolidation/v1",
+  "recordedAt": "2026-08-29T16:00:43Z",
+  "sourceCommit": "cc7f130a8ead74d3b3e3c4def194ba76bf1333a9",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedExecution": [
+      "action-chain read",
+      "action-chain effect",
+      "effect readback"
+    ],
+    "preservedBoundaries": [
+      "module-local connector runner injection",
+      "terminal-result replay before claim",
+      "durable conflict race recovery",
+      "single first-claim call material",
+      "deadline and timeout enforcement",
+      "atomic provider-result persistence"
+    ],
+    "netProductPhysicalLines": -40
+  },
+  "verification": {
+    "focusedExecutorAndRecoveryTests": {
+      "passed": 38,
+      "failed": 0,
+      "logSha256": "ff1a8618d8a9e6e82eb860a18b173e814422b10116417952423fb0572c8667af"
+    },
+    "allActionChainPostgresTests": {
+      "files": 16,
+      "passed": 106,
+      "failed": 0,
+      "postgres": "16.13 disposable tmpfs",
+      "logSha256": "956ac8b1918b0049aedf81ba3f0a3d152c4ce7e5a79b29ddd9ec6c73430cebcb"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87754,
+      "productManifestSha256": "7dfe19d2206344b8289a3d91800015c6bd427bceedbf006733587e6cc6cec990"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87714,
+      "productManifestSha256": "71bf7747760873c8c1897243e581420930a74657e1044008aaa0b327936684c8",
+      "livingCorePhysicalLines": 87121,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12714,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "Four separate Playwright fixture cases were not counted because host.docker.internal did not resolve in this Docker test environment; the 106 action-chain database cases are the complete claimed regression set here.",
+    "No connector call, retry, deadline, replay, conflict, result, or public executor contract was promoted or relaxed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector, or volume was changed."
+  ]
+}
