@@ -46,14 +46,15 @@ OCI_COMPONENT_IDS = frozenset(
 DIRECT_PINS = {
     "alembic": "1.19.1",
     "cryptography": "46.0.5",
-    "dbos": "2.30.0",
     "fastapi": "0.141.1",
     "psycopg": "3.3.4",
     "pydantic": "2.12.5",
     "pydantic-ai-slim": "2.32.1",
+    "pynacl": "1.6.2",
     "setuptools": "84.0.0",
     "sqlalchemy": "2.0.52",
     "uvicorn": "0.41.0",
+    "websockets": "17.0.1",
 }
 
 TOOLCHAIN_DIRECT_PINS = {
@@ -88,7 +89,6 @@ LOCKED_PINS = {
     "cffi": "2.1.1",
     "click": "8.4.2",
     "cryptography": "46.0.5",
-    "dbos": "2.30.0",
     "fastapi": "0.141.1",
     "genai-prices": "0.1.4",
     "greenlet": "3.5.5",
@@ -108,10 +108,8 @@ LOCKED_PINS = {
     "pydantic-ai-slim": "2.32.1",
     "pydantic-core": "2.41.5",
     "pydantic-graph": "2.32.1",
-    "python-dateutil": "2.9.0.post0",
-    "pyyaml": "6.0.3",
+    "pynacl": "1.6.2",
     "setuptools": "84.0.0",
-    "six": "1.17.0",
     "sqlalchemy": "2.0.52",
     "starlette": "1.6.0",
     "truststore": "0.10.4",
@@ -788,11 +786,11 @@ def supply_gate(root: Path) -> dict[str, Any]:
     errors: list[dict[str, str]] = []
     checked: set[str] = set()
     eva = root / "eva2"
-    lock_path = eva / "requirements.lock"
+    lock_path = eva / "requirements-4d.lock"
     roots_path = eva / "release/dependency-roots.in"
     pyproject_path = eva / "pyproject.toml"
     for relative in (
-        "eva2/requirements.lock",
+        "eva2/requirements-4d.lock",
         "eva2/release/dependency-roots.in",
         "eva2/pyproject.toml",
     ):
@@ -806,11 +804,11 @@ def supply_gate(root: Path) -> dict[str, Any]:
             issue(
                 errors,
                 "dependency_pin_set",
-                Path("eva2/requirements.lock"),
-                "exact 38-package direct/transitive set differs",
+                Path("eva2/requirements-4d.lock"),
+                "exact 35-package direct/transitive set differs",
             )
     except OSError as exc:
-        issue(errors, "dependency_lock", Path("eva2/requirements.lock"), str(exc))
+        issue(errors, "dependency_lock", Path("eva2/requirements-4d.lock"), str(exc))
         lock_text, pins = "", {}
     try:
         root_pins, root_problems = parse_root_pins(
@@ -934,9 +932,9 @@ def supply_gate(root: Path) -> dict[str, Any]:
         [
             {
                 "role": "application_and_contract_runtime",
-                "path": "eva2/requirements.lock",
+                "path": "eva2/requirements-4d.lock",
                 "sha256": sha256_file(lock_path),
-                "packageCount": 38,
+                "packageCount": 35,
             },
             {
                 "role": "design_gate_build_frontend_and_independent_schema_consumer",
@@ -952,9 +950,9 @@ def supply_gate(root: Path) -> dict[str, Any]:
     policy = toolchain.get("environmentPolicy", {})
     if (
         toolchain.get("contract") != "Eva2GateToolchainLock/v1"
-        or toolchain.get("scope") != "tranche_4a_design_gates_only"
+        or toolchain.get("scope") != "current_runtime_design_gates_only"
         or declared_locks != expected_lock_rows
-        or toolchain.get("requiredDistributionCount") != 53
+        or toolchain.get("requiredDistributionCount") != len(expected_union)
         or toolchain.get("requiredDistributions") != expected_union
         or interpreter
         != {
@@ -976,7 +974,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
             errors,
             "gate_toolchain_contract",
             Path("eva2/release/gate-toolchain.lock.json"),
-            "exact external 53-distribution design-gate environment is not bound",
+            f"exact external {len(expected_union)}-distribution design-gate environment is not bound",
         )
 
     tool_licenses = safe_load(
@@ -1044,7 +1042,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 )
     if (
         inventory.get("contract") != "Eva2PythonLicenseInventory/v1"
-        or inventory.get("packageCount") != 38
+        or inventory.get("packageCount") != 35
         or inventory_pins != LOCKED_PINS
         or inventory.get("claims", {}).get("legalApprovalComplete") is not False
     ):
@@ -1052,7 +1050,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
             errors,
             "license_inventory",
             Path("eva2/release/license-inventory.json"),
-            "inventory must cover all 38 locked packages without legal-release claim",
+            "inventory must cover all 35 locked packages without legal-release claim",
         )
 
     bindings = safe_load(
@@ -1293,18 +1291,20 @@ def supply_gate(root: Path) -> dict[str, Any]:
             "base metadata may be selected but no image/runtime claim is allowed",
         )
 
-    wheels = safe_load(root, "eva2/release/python-wheel-coverage.json", errors, checked)
+    wheel_path = "eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json"
+    wheels = safe_load(root, wheel_path, errors, checked)
     if (
-        wheels.get("contract") != "Eva2PythonWheelCoverage/v1"
+        wheels.get("contract") != "EvaManagedBAlignedWheelCoverage/v1"
         or wheels.get("requirementsLockSha256")
         != hashlib.sha256(lock_text.encode("utf-8")).hexdigest()
         or wheels.get("onlyBinary") is not True
-        or wheels.get("hashCheckingMode") is not True
+        or wheels.get("status")
+        != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_no_install_or_execution"
     ):
         issue(
             errors,
             "wheel_coverage",
-            Path("eva2/release/python-wheel-coverage.json"),
+            Path(wheel_path),
             "wheel receipt must bind the current hash lock",
         )
     targets = wheels.get("targets")
@@ -1313,7 +1313,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
         if isinstance(targets, list)
         else {}
     )
-    for arch in ("amd64", "arm64"):
+    for arch in ("amd64",):
         target = target_map.get(arch, {})
         artifacts = target.get("artifacts")
         artifact_pins: dict[str, str] = {}
@@ -1333,7 +1333,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                     issue(
                         errors,
                         "wheel_artifact",
-                        Path("eva2/release/python-wheel-coverage.json"),
+                        Path(wheel_path),
                         f"invalid {arch} wheel evidence",
                     )
                     continue
@@ -1343,18 +1343,18 @@ def supply_gate(root: Path) -> dict[str, Any]:
         if (
             target.get("os") != "Ubuntu Server 24.04.4 LTS"
             or target.get("pythonVersion") != "3.12.14"
-            or target.get("resolvedWheelCount") != 38
+            or target.get("resolvedWheelCount") != 35
             or target.get("allArtifactsMatchedRequirementsLockHashes") is not True
             or artifact_pins != LOCKED_PINS
         ):
             issue(
                 errors,
                 "wheel_target",
-                Path("eva2/release/python-wheel-coverage.json"),
-                f"{arch} does not resolve all 38 locked wheels",
+                Path(wheel_path),
+                f"{arch} does not resolve all 35 locked wheels",
             )
     if any(
-        wheels.get("claims", {}).get(field) is not False
+        wheels.get("claims", {}).get(field) is True
         for field in (
             "wheelsInstalled",
             "targetRuntimeStarted",
@@ -1365,7 +1365,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
         issue(
             errors,
             "wheel_claim_inflation",
-            Path("eva2/release/python-wheel-coverage.json"),
+            Path(wheel_path),
             "wheel metadata is not execution evidence",
         )
 

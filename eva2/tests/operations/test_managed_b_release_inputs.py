@@ -92,7 +92,7 @@ def _replace_public_projection(
     return _replace_authority(files, authority)
 
 
-def test_release_inputs_bind_current_registry_historical_projection_and_migrations() -> (
+def test_release_inputs_bind_current_registry_runtime_dependencies_and_migrations() -> (
     None
 ):
     authority, raw = _authority()
@@ -102,9 +102,9 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["contract"] == "EvaManagedBReleaseInputReceipt/v1"
     assert receipt["status"] == "version_matched_dependency_inputs_bound"
     assert receipt["dependency_alignment"]["status"] == (
-        "version_matched_4d_dependency_inputs"
+        "version_matched_runtime_dependency_inputs"
     )
-    assert receipt["dependency_alignment"]["expected_wheel_count"] == 39
+    assert receipt["dependency_alignment"]["expected_wheel_count"] == 35
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64

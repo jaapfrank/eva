@@ -1,8 +1,8 @@
-"""Validate one version-matched managed-B dependency-input authority.
+"""Validate one version-matched managed-B runtime-input authority.
 
 The source archive remains the authority for bytes.  This module only proves
-that the selected commit contains the exact runtime registry, historical 4D
-compatibility projection, migration chain, build inputs and test files named by
+that the selected commit contains the exact runtime registry, current
+dependency projection, migration chain, build inputs and test files named by
 the release authority.  It does not build, deploy, inspect secrets or open B.
 """
 
@@ -17,7 +17,7 @@ from pathlib import PurePosixPath
 import re
 from typing import Any, Mapping
 
-from eva.operations.managed_b_wheelhouse import inspect_4d_dependency_alignment
+from eva.operations.managed_b_wheelhouse import inspect_runtime_dependency_alignment
 from tools.prepare_managed_b_candidate_context import (
     prepare_candidate_build_inputs,
     validate_candidate_build_inputs,
@@ -258,7 +258,6 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/operations/telegram_ingress.py",
     "tests/portable/restore_authority_fixture.py",
     "tools/__init__.py",
-    "tools/check_4d_freeze.py",
     "tools/check_container_vulnerabilities.py",
     "tools/check_performance_complexity_pc01.py",
     "tools/generate_contract_schemas.py",
@@ -415,8 +414,8 @@ _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
     "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, another capability provider, or production readiness.",
     "The pinned test files are inputs only; this authority does not prove collection, execution, results, skips, xfails, environment, toolchain, or complete regression coverage.",
-    "The active amd64 dependency inputs are version-matched to requirements-4d.lock; the stock 38-wheel authority remains historical and is not a fallback build input.",
-    "The 4D installer environment, exact installer command, post-install attestations, physical 39-wheel wheelhouse, and runtime import remain separate open gates.",
+    "The active amd64 dependency inputs are version-matched to the 35-package requirements-4d.lock compatibility path; the stock 38-wheel authority remains historical and is not a fallback build input.",
+    "The exact offline installer command, post-install attestations, physical 35-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
     "The immutable 0/0-scanned core now serves the explicit /eva2 canary after a green forward/rollback/forward switch; full nine-service managed-B cutover, reboot and resident acceptance remain open gates.",
 )
@@ -1223,7 +1222,7 @@ def _validate_static_archive_inputs(
     if (
         authority.get("contract") != "EvaManagedBReleaseInputAuthority/v1"
         or authority.get("schemaVersion") != 1
-        or authority.get("status") != "version_matched_4d_dependency_static_inputs"
+        or authority.get("status") != "version_matched_runtime_dependency_static_inputs"
         or authority.get("nonClaims") != list(_NONCLAIMS)
     ):
         raise RuntimeError("managed B release authority header differs")
@@ -1239,7 +1238,7 @@ def _validate_static_archive_inputs(
         expected_paths=_EXPECTED_TEST_PATHS,
         label="release test",
     )
-    alignment = inspect_4d_dependency_alignment(
+    alignment = inspect_runtime_dependency_alignment(
         _file(
             files,
             "release/managed-b-wheelhouse-amd64-v2.json",
@@ -1302,7 +1301,7 @@ def prepare_managed_b_release_inputs(commit: str) -> dict[str, object]:
         **receipt,
         "source_archive_sha256": candidate.source_archive_sha256,
         "source_commit": candidate.source_commit,
-        "status": "version_matched_4d_dependency_inputs_bound_not_built_or_deployed",
+        "status": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
     }
 
 

@@ -9,7 +9,7 @@ import tempfile
 import pytest
 
 from eva.operations.managed_b_wheelhouse import (
-    inspect_4d_dependency_alignment,
+    inspect_runtime_dependency_alignment,
     inspect_wheelhouse_manifest,
     materialize_wheelhouse,
     validate_wheelhouse,
@@ -204,25 +204,25 @@ def _committed_alignment_inputs() -> tuple[bytes, bytes, bytes, bytes, bytes, by
     )
 
 
-def test_committed_v2_manifest_is_the_exact_version_matched_4d_delta() -> None:
+def test_committed_v2_manifest_is_the_exact_dbos_free_runtime_delta() -> None:
     inputs = _committed_alignment_inputs()
 
-    receipt = inspect_4d_dependency_alignment(*inputs)
+    receipt = inspect_runtime_dependency_alignment(*inputs)
 
     assert receipt == {
-        "contract": "EvaManagedB4DDependencyAlignmentReceipt/v1",
-        "expected_wheel_count": 39,
+        "contract": "EvaManagedBRuntimeDependencyAlignmentReceipt/v1",
+        "expected_wheel_count": 35,
         "network_used": False,
         "requirements_lock_path": "requirements-4d.lock",
         "requirements_lock_sha256": (
-            "b05efcbc41cf8dce64177c82e15430c510ef4f12e30242a4e5ea75d803c1f708"
+            "e6b4e63e2f003e753e0d4db467faa84b8a46effd56fc644d0e7a4bd792ebfabd"
         ),
         "selected_manifest_sha256": (
-            "0e877383ffdef9d148a8d60729c91c2461685a31f001ee19787cfd96a4e56930"
+            "b36e97ef74e172420542380e3dd6a16c46e834e53974f07680c954a275f3a617"
         ),
-        "status": "version_matched_4d_dependency_inputs",
+        "status": "version_matched_runtime_dependency_inputs",
         "wheelhouse_tree_sha256": (
-            "63705d899207a8ce64a27086b38fb9699016fc64a0afb2f6a8c8d423b7c73629"
+            "1482d27e98e1e3d3c50e3baf222ccf7a0d7f247db86c59cbb05c36be18c4ced1"
         ),
     }
     assert hashlib.sha256(inputs[3]).hexdigest() == (
@@ -230,7 +230,7 @@ def test_committed_v2_manifest_is_the_exact_version_matched_4d_delta() -> None:
     )
 
 
-def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> None:
+def test_historical_39_wheel_install_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -238,20 +238,21 @@ def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> 
             / "evidence/living-core/managed-b-amd64-offline-wheel-install-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBOfflineWheelInstallReceipt/v1"
     assert receipt["status"] == "passed_offline_dependency_install_not_release"
     assert receipt["execution"]["network"] == "none"
     assert receipt["base_image"]["platform"] == "linux/amd64"
     assert receipt["base_image"]["python_version"] == "3.12.14"
-    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
+    assert receipt["inputs"]["requirements_4d_lock_sha256"] != alignment[
         "requirements_lock_sha256"
     ]
-    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
+    assert receipt["inputs"]["wheelhouse_tree_sha256"] != alignment[
         "wheelhouse_tree_sha256"
     ]
-    assert receipt["observed"]["wheel_count"] == alignment["expected_wheel_count"]
+    assert receipt["observed"]["wheel_count"] == 39
+    assert alignment["expected_wheel_count"] == 35
     assert receipt["observed"]["runtime_distribution_count"] == 39
     assert receipt["observed"]["runtime_has_pip"] is False
     assert receipt["observed"]["runtime_has_wheel"] is False
@@ -260,7 +261,18 @@ def test_offline_install_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> 
     assert any("release readiness" in claim for claim in receipt["nonclaims"])
 
 
-def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inputs() -> None:
+def _assert_historical_39_wheel_binding(
+    bound: dict[str, object], alignment: dict[str, object]
+) -> None:
+    assert bound["requirements_4d_lock_sha256"] != alignment[
+        "requirements_lock_sha256"
+    ]
+    assert bound["wheelhouse_tree_sha256"] != alignment["wheelhouse_tree_sha256"]
+    assert bound["wheel_count"] == 39
+    assert alignment["expected_wheel_count"] == 35
+
+
+def test_historical_candidate_image_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -268,7 +280,7 @@ def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inpu
             / "evidence/living-core/managed-b-current-candidate-image-smoke-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBCandidateImageSmokeReceipt/v1"
     assert receipt["status"] == "passed_current_local_candidate_build_and_nonroot_smoke_not_deployed"
@@ -277,13 +289,7 @@ def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inpu
         "runtime_smoke": "none",
         "wheel_acquisition": "network was used before sealing the exact wheelhouse; its provenance is not claimed",
     }
-    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
-        "requirements_lock_sha256"
-    ]
-    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
-        "wheelhouse_tree_sha256"
-    ]
-    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    _assert_historical_39_wheel_binding(receipt["inputs"], alignment)
     assert receipt["inputs"]["source_commit"] == "286095cba394019d1a80631b5e67c5789e5539be"
     assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
     assert receipt["observed"]["candidate_image_size_bytes"] > 0
@@ -291,7 +297,7 @@ def test_current_candidate_image_receipt_stays_bound_to_the_sealed_39_wheel_inpu
     assert any("release readiness" in claim for claim in receipt["nonclaims"])
 
 
-def test_render_fixed_candidate_image_receipt_stays_bound_to_the_sealed_wheels() -> None:
+def test_historical_render_fixed_image_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -299,24 +305,18 @@ def test_render_fixed_candidate_image_receipt_stays_bound_to_the_sealed_wheels()
             / "evidence/living-core/managed-b-render-fixed-candidate-image-smoke-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBRenderFixedCandidateImageSmokeReceipt/v1"
     assert receipt["status"] == "passed_render_fixed_candidate_image_smoke_not_deployed"
     assert receipt["network"] == {"candidate_build": "none", "runtime_smoke": "none"}
-    assert receipt["inputs"]["requirements_4d_lock_sha256"] == alignment[
-        "requirements_lock_sha256"
-    ]
-    assert receipt["inputs"]["wheelhouse_tree_sha256"] == alignment[
-        "wheelhouse_tree_sha256"
-    ]
-    assert receipt["inputs"]["wheel_count"] == alignment["expected_wheel_count"]
+    _assert_historical_39_wheel_binding(receipt["inputs"], alignment)
     assert receipt["inputs"]["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
     assert receipt["observed"]["candidate_image_id"].startswith("sha256:")
     assert receipt["observed"]["candidate_image_size_bytes"] > 0
 
 
-def test_current_candidate_schema_restart_receipt_stays_bound_to_sealed_inputs() -> None:
+def test_historical_schema_restart_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -324,16 +324,14 @@ def test_current_candidate_schema_restart_receipt_stays_bound_to_sealed_inputs()
             / "evidence/living-core/managed-b-current-candidate-schema-restart-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBCurrentCandidateSchemaRestartReceipt/v1"
     assert receipt["status"] == (
         "passed_current_candidate_schema_restart_and_drift_rejection_not_deployed"
     )
     image = receipt["image_source"]
-    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
-    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
-    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    _assert_historical_39_wheel_binding(image, alignment)
     assert image["source_commit"] == "73648ea9b8d2022f639ce21c4a088f71b99cf4aa"
     assert receipt["observed"]["first_start"]["status"] == "passed"
     assert receipt["observed"]["second_start"]["route"] == []
@@ -345,7 +343,7 @@ def test_current_candidate_schema_restart_receipt_stays_bound_to_sealed_inputs()
     assert "JSON receipt" in receipt["observed"]["stdout_protocol"]
 
 
-def test_render_fixed_candidate_schema_restart_stays_bound_to_sealed_inputs() -> None:
+def test_historical_render_fixed_schema_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -353,16 +351,14 @@ def test_render_fixed_candidate_schema_restart_stays_bound_to_sealed_inputs() ->
             / "evidence/living-core/managed-b-render-fixed-candidate-schema-restart-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBRenderFixedCandidateSchemaRestartReceipt/v1"
     assert receipt["status"] == (
         "passed_render_fixed_candidate_schema_restart_and_drift_rejection_not_deployed"
     )
     image = receipt["image_source"]
-    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
-    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
-    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    _assert_historical_39_wheel_binding(image, alignment)
     assert image["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
     assert receipt["observed"]["first_start"]["status"] == "passed"
     assert receipt["observed"]["second_start"]["route"] == []
@@ -373,7 +369,7 @@ def test_render_fixed_candidate_schema_restart_stays_bound_to_sealed_inputs() ->
     }
 
 
-def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs() -> None:
+def test_historical_runtime_readiness_receipt_is_not_current_release_input() -> None:
     root = Path(__file__).resolve().parents[2]
     receipt = json.loads(
         (
@@ -381,14 +377,12 @@ def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs()
             / "evidence/living-core/managed-b-render-fixed-candidate-runtime-readiness-2026-08-27.json"
         ).read_bytes()
     )
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
 
     assert receipt["contract"] == "EvaManagedBRenderFixedCandidateRuntimeReadinessReceipt/v1"
     assert receipt["status"] == "passed_render_fixed_candidate_runtime_readiness_not_deployed"
     image = receipt["image_source"]
-    assert image["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
-    assert image["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
-    assert image["wheel_count"] == alignment["expected_wheel_count"]
+    _assert_historical_39_wheel_binding(image, alignment)
     assert image["source_commit"] == "28104541f093d335729f0a1cf920914c97ca3036"
     assert receipt["observed"]["healthz"] == {"status": "alive"}
     assert receipt["observed"]["readyz"]["ready"] is True
@@ -397,9 +391,9 @@ def test_render_fixed_candidate_runtime_readiness_stays_bound_to_sealed_inputs()
     assert receipt["observed"]["readyz"]["model_provider"] == "ready"
 
 
-def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> None:
+def test_historical_whitelist_receipts_are_not_current_release_inputs() -> None:
     root = Path(__file__).resolve().parents[2]
-    alignment = inspect_4d_dependency_alignment(*_committed_alignment_inputs())
+    alignment = inspect_runtime_dependency_alignment(*_committed_alignment_inputs())
     evidence_root = root / "evidence/living-core"
     image = json.loads(
         (evidence_root / "managed-b-whitelist-candidate-image-smoke-2026-08-27.json").read_bytes()
@@ -419,9 +413,7 @@ def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> 
     for receipt in (image, schema, readiness):
         bound = receipt.get("inputs", receipt.get("image_source"))
         assert bound["source_commit"] == source_commit
-        assert bound["requirements_4d_lock_sha256"] == alignment["requirements_lock_sha256"]
-        assert bound["wheelhouse_tree_sha256"] == alignment["wheelhouse_tree_sha256"]
-        assert bound["wheel_count"] == alignment["expected_wheel_count"]
+        _assert_historical_39_wheel_binding(bound, alignment)
         if "candidate_image_id" in bound:
             assert bound["candidate_image_id"] == candidate_image_id
 
@@ -452,14 +444,14 @@ def test_whitelist_hardened_candidate_receipts_stay_bound_to_sealed_inputs() -> 
     ]
 
 
-def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
+def test_runtime_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     active_manifest, coverage_raw, lock, baseline_manifest, baseline_coverage, baseline_lock, binding = (
         _committed_alignment_inputs()
     )
     coverage = json.loads(coverage_raw)
     artifacts = coverage["targets"][0]["artifacts"]
-    patched = next(item for item in artifacts if item["filename"].startswith("dbos-2.30.0+"))
-    patched.update(
+    selected = next(item for item in artifacts if item["filename"].startswith("pynacl-"))
+    selected.update(
         filename="dbos-2.30.0-py3-none-any.whl",
         sha256="363f8209f808fd42c59ad0f19f7e2c25abdd17d73b581dd8ada6336c4ef47e8e",
         byteLength=268218,
@@ -472,7 +464,7 @@ def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     ).hexdigest()
 
     with pytest.raises(RuntimeError, match="artifact is not sealed"):
-        inspect_4d_dependency_alignment(
+        inspect_runtime_dependency_alignment(
             _canonical(manifest),
             changed_coverage,
             lock,
@@ -491,8 +483,8 @@ def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
     changed_coverage = _canonical(coverage)
     manifest = json.loads(active_manifest)
     manifest["coverageSha256"] = hashlib.sha256(changed_coverage).hexdigest()
-    with pytest.raises(RuntimeError, match="exact 38-to-39 delta"):
-        inspect_4d_dependency_alignment(
+    with pytest.raises(RuntimeError, match="exact 38-to-35 delta"):
+        inspect_runtime_dependency_alignment(
             _canonical(manifest),
             changed_coverage,
             lock,
@@ -503,31 +495,31 @@ def test_4d_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> None:
         )
 
 
-def test_4d_alignment_refuses_baseline_binding_lock_or_selected_manifest_drift() -> None:
+def test_runtime_alignment_refuses_baseline_binding_lock_or_selected_manifest_drift() -> None:
     inputs = list(_committed_alignment_inputs())
     inputs[4] += b" "
     with pytest.raises(RuntimeError, match="coverage digest differs"):
-        inspect_4d_dependency_alignment(*inputs)
+        inspect_runtime_dependency_alignment(*inputs)
 
     inputs = list(_committed_alignment_inputs())
     inputs[6] += b" "
     with pytest.raises(RuntimeError, match="binding digest differs"):
-        inspect_4d_dependency_alignment(*inputs)
+        inspect_runtime_dependency_alignment(*inputs)
 
     inputs = list(_committed_alignment_inputs())
     inputs[2] += b"\n# changed"
     with pytest.raises(RuntimeError, match="requirements lock digest differs"):
-        inspect_4d_dependency_alignment(*inputs)
+        inspect_runtime_dependency_alignment(*inputs)
 
     inputs = list(_committed_alignment_inputs())
     manifest = json.loads(inputs[0])
     manifest["selectedManifestSha256"] = "0" * 64
     inputs[0] = _canonical(manifest)
     with pytest.raises(RuntimeError, match="selected manifest differs"):
-        inspect_4d_dependency_alignment(*inputs)
+        inspect_runtime_dependency_alignment(*inputs)
 
 
-def test_4d_alignment_refuses_an_extra_target_even_when_rehashed() -> None:
+def test_runtime_alignment_refuses_an_extra_target_even_when_rehashed() -> None:
     inputs = list(_committed_alignment_inputs())
     coverage = json.loads(inputs[1])
     coverage["targets"].append(copy.deepcopy(coverage["targets"][0]))
@@ -538,4 +530,4 @@ def test_4d_alignment_refuses_an_extra_target_even_when_rehashed() -> None:
     inputs[1] = changed_coverage
 
     with pytest.raises(RuntimeError, match="target set differs"):
-        inspect_4d_dependency_alignment(*inputs)
+        inspect_runtime_dependency_alignment(*inputs)

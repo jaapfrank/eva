@@ -11,19 +11,14 @@ license = "LicenseRef-Proprietary"
 dependencies = [
   "alembic==1.19.1",
   "cryptography==46.0.5",
-  "dbos==2.30.0",
   "fastapi==0.141.1",
   "psycopg[binary]==3.3.4",
+  "PyNaCl==1.6.2",
   "pydantic==2.12.5",
   "pydantic-ai-slim==2.32.1",
   "SQLAlchemy==2.0.52",
   "uvicorn==0.41.0",
-]
-
-[project.optional-dependencies]
-tranche-4d = [
-  "dbos==2.30.0+eva.1",
-  "PyNaCl==1.6.2",
+  "websockets==17.0.1",
 ]
 
 [tool.setuptools]
