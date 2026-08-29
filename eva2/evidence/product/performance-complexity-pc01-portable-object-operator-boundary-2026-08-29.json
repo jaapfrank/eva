@@ -1,0 +1,41 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PortableObjectOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T21:49:08+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "0ef4b3fbd42b1cdf5e2fdef38badc0bee4b6806b",
+    "changedSourceManifestSha256": "3dd727413f8ae60cbf5eabff443933d6c493706cd0ef4b5a63f692be795b946b"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/portable_object_materializer.py",
+    "newPath": "tools/portable_object_materializer.py",
+    "physicalLinesMovedOutOfProductRoots": 337,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 2,
+    "remainingOldImports": 0,
+    "objectCipherCasContractsAndVerifierRemainInLivingCore": true
+  },
+  "verification": {
+    "temporaryCryptoDependency": "PyNaCl==1.6.2",
+    "localObjectAndCrashRecoveryTestsPassed": 7,
+    "realPostgresObjectBoundaryFileTestsPassed": 5,
+    "realPostgresObjectRefCaseIncluded": true,
+    "combinedTestAndDependencyLogsSha256": "a465dfcb75b3f817dd469cecccf4d447b87442804dc81d5fef343ed09258ddd7",
+    "disposablePostgresContainerRemoved": true
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 222,
+    "productPhysicalLines": 79617,
+    "livingCorePhysicalLines": 79024,
+    "productManifestSha256": "9f7212d82dcb8443805d2fb8788612a2e8cc2b76e959284f047a41d3fa721f57",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 4617,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 11216,
+    "status": "failed_budget_enforced"
+  },
+  "limitations": [
+    "The full PC01 checker still cannot re-attest the unavailable historical OCI baseline; the exact sealed source-measurement function was run separately.",
+    "The object materializer remains product functionality at the operator boundary; this does not prove key transfer or a second-machine restore.",
+    "PyNaCl was installed only into a temporary test directory and was not added to the host or product environment."
+  ]
+}
