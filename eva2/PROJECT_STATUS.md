@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 10:31 CEST
+Laatst bijgewerkt: 29 augustus 2026, 10:40 CEST
 
 ## Heel kort
 
@@ -62,6 +62,8 @@ praktijktest zijn nog niet klaar.
 - Eva1 is actief, heeft nul herstarts en alle vijf controles geven HTTP 200.
 - Slot 4 is actief en gezond. De oude slot-3-kern staat stil; zijn databases
   blijven gezond beschikbaar voor een later gesynchroniseerde terugrol.
+- De automatische controle na een Windows-reboot is geïnstalleerd en bewapend.
+  Op dezelfde start weigert zij terecht en maakt zij geen vals bewijsbestand.
 
 ## Wat nog niet klaar is
 
@@ -108,6 +110,7 @@ praktijktest zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Verliesloze tweerichtings A/B-omschakeling](evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json)
+- [Bewapende automatische controle voor de echte reboot](evidence/living-core/eva2-managed-b-postboot-proof-armed-2026-08-29.json)
 - [Actuele schone negen-dienstenproef](evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json)
 - [Bewaard slot 4](evidence/living-core/eva2-managed-b-retained-slot4-2026-08-29.json)
 - [Echte Telegramproef met twee personen en een groep](evidence/living-core/eva2-telegram-native-two-person-group-live-2026-08-28.json)

@@ -1,0 +1,52 @@
+{
+  "contract": "Eva2ManagedBPostbootProofArmedEvidence/v1",
+  "issuedAt": "2026-08-29T10:40:21+02:00",
+  "status": "armed_waiting_external_reboot",
+  "source": {
+    "commit": "c17a9515334fd9e2e77f020402a8ea6d9034c780",
+    "installedProbeSha256": "6cf3f7ecbb87924dc6530d65b91e4dc553a2d50f4f18e85a56825e9c3c145ea3",
+    "sourceMatchesInstalled": true
+  },
+  "installation": {
+    "path": "/usr/local/libexec/eva2-managed-b-reboot-probe",
+    "owner": "root:root",
+    "mode": "0755",
+    "systemdUnit": "eva2-managed-b-postboot-proof.service",
+    "systemdUnitEnabled": true,
+    "statePath": "/var/lib/eva2/reboot-proof/armed.json",
+    "stateOwner": "root:root",
+    "stateMode": "0600",
+    "requiredRestart": "windows_host_reboot"
+  },
+  "preReboot": {
+    "armedAt": "2026-08-29T08:39:30.866234+00:00",
+    "activeSlot": 4,
+    "activePort": 44711,
+    "activeReady": true,
+    "eva1RoutesHealthy": 5,
+    "eva1RestartCount": 0,
+    "rollbackSlot": 3,
+    "rollbackPort": 44710,
+    "rollbackWritersStopped": true,
+    "rollbackDatabasesHealthy": true,
+    "expectedContainerCount": 12,
+    "hindsightMemoryUnits": 271,
+    "hindsightMentalModels": 21,
+    "syntheticDurableReplySha256": "ef284e41ab7e4468bcf83ac6d9f261cad2118133c36012bbe4b030048ded5486"
+  },
+  "sameBootSafetyCheck": {
+    "verifyExitCode": 1,
+    "refusedBecauseRequiredRestartWasNotObserved": true,
+    "receiptCreated": false
+  },
+  "preservedHistory": {
+    "previousSlot3ArmArchived": true,
+    "archiveMode": "0600"
+  },
+  "nextRequiredAction": "Start one Windows host reboot outside Codex; the enabled systemd unit will verify the same armed state after startup.",
+  "nonClaims": [
+    "No reboot was initiated by Codex.",
+    "No post-reboot receipt exists yet.",
+    "This does not prove the seven-day acceptance run."
+  ]
+}
