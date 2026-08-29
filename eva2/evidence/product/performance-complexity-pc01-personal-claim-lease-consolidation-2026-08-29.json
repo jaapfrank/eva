@@ -1,0 +1,57 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T15:11:35+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "52cd1313e374af16bccba022ce928debc326b020",
+    "conversationActionsSha256": "8b500677bd60d0da5a69b669f155ab2e3f532191d369d52e9821f348b8bb15f8"
+  },
+  "change": {
+    "description": "Personal exploration, prototype and release workers now share one durable lease-expiry, optimistic revision and claim-transition protocol while retaining three explicit source/payload/result branches.",
+    "productFilesChanged": 1,
+    "productLinesAdded": 122,
+    "productLinesDeleted": 186,
+    "netProductPhysicalLines": -64,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88977,
+    "productPhysicalLinesAfter": 88913,
+    "productManifestSha256": "2667e701aeeeb33ba78174fa5dedaf9912f2e9d0a1a2287d8d2fdf7e2e9574e8",
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13913,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "rejectedGrowingCandidateNetProductLines": 72,
+    "rejectedCandidateCommitted": false,
+    "personalWorkContractTestsPassed": 28,
+    "personalWorkContractTestsDurationSeconds": 0.54,
+    "personalWorkContractLogSha256": "5c0b4a6291fa557ea35c1411ffab7246cf6e26517f028a618e0d2b19daf0e96f",
+    "coveredClaimStages": [
+      "exploration",
+      "prototype",
+      "release"
+    ],
+    "coveredLeaseRecoveryStages": [
+      "exploration",
+      "prototype",
+      "release"
+    ],
+    "testsFailedAfterCorrection": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1HealthHttp": 200,
+    "liveEva2ReadyHttp": 200
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "These claim tests use the operational-timeline contract double and are not a new live PostgreSQL claim.",
+    "This source consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Consolidate the shared completed/projected/failure lifecycle of the same three personal-work stores and then repeat a real disposable PostgreSQL progression."
+}

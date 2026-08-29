@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 14:58 CEST
+Laatst bijgewerkt: 29 augustus 2026, 15:12 CEST
 
 ## Heel kort
 
@@ -109,6 +109,10 @@ praktijktest zijn nog niet klaar.
   ledger, evidence-write/read en tijdlijnpayloadcontrole. Zestien gerichte en
   alle 95 PostgreSQL-actionchaintests zijn groen; netto verdwenen nog 24
   productregels.
+- Persoonlijke exploratie, prototypebouw en releasevoorbereiding delen nu één
+  lease-, herstel- en claimprotocol. Alle drie normale claims en alle drie
+  verlopen-leaseroutes zijn gericht getest; samen met de bestaande contracten
+  28/28 groen. De grootste runtimefile werd netto 64 productregels kleiner.
 
 ## Wat nog niet klaar is
 
@@ -124,7 +128,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  88.977 productregels en mag er maximaal 75.000 hebben.
+  88.913 productregels en mag er maximaal 75.000 hebben.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -146,7 +150,7 @@ praktijktest zijn nog niet klaar.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
 4. Na de echte Windows/WSL-reboot het automatisch gemaakte bewijs controleren.
-5. Nog minstens 13.977 productregels gericht verwijderen of vervangen zonder
+5. Nog minstens 13.913 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
 ## Belangrijk verschil
@@ -177,6 +181,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde duurzame claimvalidatie: 61 productregels minder](evidence/product/performance-complexity-pc01-claim-validation-consolidation-2026-08-29.json)
 - [Gedeelde dispatchautorisatie: 48 productregels minder](evidence/product/performance-complexity-pc01-dispatch-authorization-consolidation-2026-08-29.json)
 - [Gedeelde terminale resultaatopslag: 24 productregels minder](evidence/product/performance-complexity-pc01-result-persistence-consolidation-2026-08-29.json)
+- [Gedeeld persoonlijk claim-/leaseprotocol: 64 productregels minder](evidence/product/performance-complexity-pc01-personal-claim-lease-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)
