@@ -1090,6 +1090,15 @@ class PostgresHindsightMemoryRuntime:
             principal_id=principal_id,
         )
 
+    def _product_publication_store(
+        self, tenant_id: str, installation_id: str
+    ) -> PostgresProductPublicationStore:
+        return PostgresProductPublicationStore(
+            self._engine,
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+        )
+
     def plan_product_publication(
         self, *, tenant_id: str, installation_id: str, principal_id: str
     ) -> dict[str, object]:
@@ -1113,10 +1122,8 @@ class PostgresHindsightMemoryRuntime:
             live_mode=self._stripe_publication.live_mode,
             created_at=now,
         )
-        disposition = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
+        disposition = self._product_publication_store(
+            tenant_id, installation_id
         ).retain_plan(plan)
         return {
             "disposition": disposition,
@@ -1132,11 +1139,7 @@ class PostgresHindsightMemoryRuntime:
         plan_sha256: str,
         approved_by: str,
     ) -> ProductPublicationApproval:
-        store = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._product_publication_store(tenant_id, installation_id)
         plan = store.plan(plan_sha256)
         now = datetime.now(tz=UTC).replace(microsecond=0)
         approval = ProductPublicationApproval(
@@ -1162,11 +1165,7 @@ class PostgresHindsightMemoryRuntime:
     ) -> dict[str, object]:
         if self._stripe_publication is None:
             raise RuntimeError("Stripe publication connector is unavailable")
-        store = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._product_publication_store(tenant_id, installation_id)
         plan = store.plan(plan_sha256)
         approval = store.approval(plan_sha256)
         if approval.sha256 != approval_sha256:
@@ -1206,11 +1205,7 @@ class PostgresHindsightMemoryRuntime:
     ) -> dict[str, object]:
         if self._stripe_publication is None:
             raise RuntimeError("Stripe publication connector is unavailable")
-        store = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._product_publication_store(tenant_id, installation_id)
         plan: ProductPublicationPlan = store.plan(plan_sha256)
         approval = store.approval(plan_sha256)
         if approval.sha256 != approval_sha256:
@@ -1236,10 +1231,8 @@ class PostgresHindsightMemoryRuntime:
             signature_header,
             now=datetime.now(tz=UTC).replace(microsecond=0),
         )
-        publication_store = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=self._commerce_tenant_id,
-            installation_id=self._commerce_installation_id,
+        publication_store = self._product_publication_store(
+            self._commerce_tenant_id, self._commerce_installation_id
         )
         publication = publication_store.receipt(receipt.plan_sha256)
         if publication is None:
@@ -1269,10 +1262,8 @@ class PostgresHindsightMemoryRuntime:
             installation_id=self._commerce_installation_id,
         )
         paid = orders.load(checkout_session_id)
-        plan = PostgresProductPublicationStore(
-            self._engine,
-            tenant_id=self._commerce_tenant_id,
-            installation_id=self._commerce_installation_id,
+        plan = self._product_publication_store(
+            self._commerce_tenant_id, self._commerce_installation_id
         ).plan(paid.plan_sha256)
         try:
             artifact = self._release_store.exact(
