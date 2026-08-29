@@ -678,7 +678,10 @@ class CodexConversationModel:
                 "boodschap niet op. Dit geldt ook voor vragen, verzoeken en natuurlijke "
                 "vervolgzinnen zonder vraagteken. Zo nee: zet query_text op null. Kies "
                 "daarnaast nul tot vier actienamen die werkelijk nodig zijn om de actuele "
-                "boodschap uit te voeren. Kies nul acties voor een gewoon tekstantwoord. "
+                "boodschap uit te voeren. Kies nul acties voor een gewoon tekstantwoord, "
+                "een begroeting, smalltalk of een vraag die Eva uit gesprek en geheugen kan "
+                "beantwoorden. 'Hoi' en 'hoe gaat het?' kiezen dus nul acties. Kies alleen "
+                "een actie bij een expliciet verzoek om externe toestand te lezen of wijzigen. "
                 "Behoud bij een gecombineerde taak de relevante domeinen, maar selecteer "
                 "nooit een actie die niet is gevraagd. Gebruik exact de tool."
             ),

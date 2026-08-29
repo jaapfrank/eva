@@ -775,6 +775,7 @@ def test_memory_query_planner_expands_meaning_without_answering(
     assert "verzin nooit de gekozen waarde" in bodies[0]["instructions"]
     assert "natuurlijke vervolgzinnen zonder vraagteken" in bodies[0]["instructions"]
     assert "nul tot vier actienamen" in bodies[0]["instructions"]
+    assert "hoe gaat het?' kiezen dus nul acties" in bodies[0]["instructions"]
     assert (
         bodies[0]["tools"][0]["parameters"]["properties"]["selected_action_names"][
             "maxItems"
