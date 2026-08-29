@@ -1,0 +1,73 @@
+{
+  "contract": "EvaPerformanceComplexityPc01UnusedMcpProofExtraction/v1",
+  "recordedAt": "2026-08-29T17:01:41Z",
+  "sourceCommit": "0c7cf32942c514e826fc391d80f2c26d3157c448",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "movedOutOfRuntime": "src/eva/adapters/connectors/mcp.py",
+    "retainedFixture": "tests/fixtures/mcp.py",
+    "reason": "The client had zero product importers and was used only by its own tests and the rejected Playwright proof.",
+    "retainedFixtureSha256": "dbc06ce39e3ed89969ae95d3be2750f3bc70172151000fcf6fe5e45fc11edfe9",
+    "netProductPhysicalLines": -415,
+    "netProductFiles": -1
+  },
+  "verification": {
+    "mcpTests": {
+      "passed": 10,
+      "failed": 0,
+      "logSha256": "950a476676ab78bb9d516e27ac2c243c445fef1655ccc1afa0f6576faae577e7"
+    },
+    "allConnectorTestsOnLinuxTmp": {
+      "passed": 299,
+      "failed": 0,
+      "logSha256": "3531e910d3e81513bb00654afc0892dad34b1371de9ed7c7eafff545e27d3d21"
+    },
+    "networklessPython31214Wheel": {
+      "built": true,
+      "runtimeMcpModules": 0,
+      "wheelSha256": "88aff7b2950991f323db1ccc6f47c9e1e0e842f3c09aa41247d186a8cd891d3d",
+      "logSha256": "d5fb290a6ec85f2a43c3a3a6aee3a3b226204b43731c3fb165361ec7f53691e1"
+    },
+    "existingReleaseGateObservation": {
+      "baseline": {"passed": 7, "failed": 20},
+      "candidate": {"passed": 7, "failed": 20},
+      "newFailedTests": 0,
+      "candidateLogSha256": "d452f6b1922c4eafeac570d36f9fb56061fed0dd61bd6b30e5cd06589f9c840b"
+    },
+    "cockpitSourceObservation": {
+      "baselineStaleSources": 19,
+      "candidateStaleSources": 19,
+      "newStaleSources": 0
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 235,
+      "productPhysicalLines": 86564,
+      "productManifestSha256": "40658b1af0d186943aa276d5e30ba1642624d023a9be0058ab2b8b630c968750"
+    },
+    "after": {
+      "productFileCount": 234,
+      "productPhysicalLines": 86149,
+      "productManifestSha256": "906b5378bb2866c0a601c3fb06052e70f4de75a3bac132d1f25e3029d912868e",
+      "livingCorePhysicalLines": 85556,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 11149,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "Eva does not currently expose an MCP product connector.",
+    "No future MCP provider, SDK or adapter is selected or promoted by this extraction.",
+    "The pre-existing managed-release and cockpit evidence gates are not claimed green or silently resealed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector or volume was changed."
+  ]
+}
