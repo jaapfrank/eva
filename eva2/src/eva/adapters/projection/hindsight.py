@@ -134,7 +134,7 @@ class HindsightProjectionReceipt:
 class BackgroundReflectionReceipt:
     bank_id: str
     mental_model_id: str
-    disposition: Literal["created", "already_present"]
+    disposition: Literal["created", "refreshed"]
     operation_id: str | None
 
 
@@ -169,7 +169,6 @@ class HindsightMemoryEngine:
         self._config = config
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
-        self._known_reflections: set[tuple[str, str]] = set()
         self._cache_lock = threading.Lock()
         self._active_group_consent_resolver = active_group_consent_resolver
 
@@ -566,18 +565,30 @@ class HindsightMemoryEngine:
     def maintain_person_scope(
         self, tenant_id: str, installation_id: str, principal_id: str
     ) -> BackgroundReflectionReceipt:
-        """Provision one stale-only nightly mental model outside the chat path."""
+        """Run one explicitly admitted reflection without an unmanaged scheduler."""
 
         bank_id = self.ensure_bank(tenant_id, installation_id)
         person_tag = self._person_tag(principal_id)
         mental_model_id = self._style_mirror_id(principal_id)
-        key = (bank_id, mental_model_id)
-        with self._cache_lock:
-            if key in self._known_reflections:
-                return BackgroundReflectionReceipt(
-                    bank_id, mental_model_id, "already_present", None
-                )
-        status, _existing = self._request(
+        trigger = {
+            "exclude_mental_models": True,
+            "fact_types": ["world", "experience", "observation"],
+            "include_chunks": False,
+            "keep_trace": True,
+            "mode": "delta",
+            "recall_chunks_max_tokens": 512,
+            "recall_max_tokens": self._config.recall_max_tokens,
+            "refresh_after_consolidation": False,
+            "refresh_cron": None,
+            "tags_match": "all_strict",
+        }
+
+        def trigger_matches(value: object) -> bool:
+            return isinstance(value, dict) and all(
+                value.get(key) == expected for key, expected in trigger.items()
+            )
+
+        status, existing = self._request(
             "GET",
             f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}"
             "?detail=metadata",
@@ -602,18 +613,7 @@ class HindsightMemoryEngine:
                         "inhoudelijke projecten, huisfeiten of antwoordtekst."
                     ),
                     "tags": [person_tag],
-                    "trigger": {
-                        "exclude_mental_models": True,
-                        "fact_types": ["world", "experience", "observation"],
-                        "include_chunks": False,
-                        "keep_trace": True,
-                        "mode": "delta",
-                        "recall_chunks_max_tokens": 512,
-                        "recall_max_tokens": self._config.recall_max_tokens,
-                        "refresh_after_consolidation": False,
-                        "refresh_cron": "0 3 * * *",
-                        "tags_match": "all_strict",
-                    },
+                    "trigger": trigger,
                 },
             )
             operation_id = created.get("operation_id")
@@ -621,12 +621,38 @@ class HindsightMemoryEngine:
                 raise HindsightProjectionProtocolError(
                     "Hindsight did not queue background reflection"
                 )
-            disposition: Literal["created", "already_present"] = "created"
+            disposition: Literal["created", "refreshed"] = "created"
         else:
-            operation_id = None
-            disposition = "already_present"
-        with self._cache_lock:
-            self._known_reflections.add(key)
+            if existing.get("id") != mental_model_id or not isinstance(
+                existing.get("trigger"), dict
+            ):
+                raise HindsightProjectionProtocolError(
+                    "Hindsight mental model metadata is invalid"
+                )
+            if not trigger_matches(existing["trigger"]):
+                _, updated = self._request(
+                    "PATCH",
+                    f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}",
+                    {"trigger": trigger},
+                )
+                if updated.get("id") != mental_model_id or not trigger_matches(
+                    updated.get("trigger")
+                ):
+                    raise HindsightProjectionProtocolError(
+                        "Hindsight did not remove the unmanaged reflection schedule"
+                    )
+            _, refreshed = self._request(
+                "POST",
+                f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}/refresh",
+            )
+            operation_id = refreshed.get("operation_id")
+            if not isinstance(operation_id, str) or not operation_id:
+                raise HindsightProjectionProtocolError(
+                    "Hindsight did not queue the admitted background reflection"
+                )
+            disposition = "refreshed"
+        assert operation_id is not None
+        self._wait_for_operation(bank_id, operation_id)
         return BackgroundReflectionReceipt(
             bank_id, mental_model_id, disposition, operation_id
         )

@@ -57,6 +57,9 @@ from eva.adapters.postgres.conversation_actions import (
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+from eva.adapters.postgres.runtime_resource_usage import (
+    PostgresDailyReflectionBudget,
+)
 from eva.adapters.postgres.people_memory_overview import (
     PostgresPeopleMemoryOverview,
 )
@@ -2027,6 +2030,16 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id or "",
         installation_id=settings.background_installation_id or "",
     )
+    reflection_budget = (
+        None
+        if settings.runtime_resource_budget is None
+        else PostgresDailyReflectionBudget(
+            engine,
+            tenant_id=settings.background_tenant_id or "",
+            installation_id=settings.background_installation_id or "",
+            resource_budget=settings.runtime_resource_budget,
+        )
+    )
     prototype_store = PostgresPersonalPrototypeStore(
         engine, lease_seconds=settings.personal_interest_lease_seconds
     )
@@ -2156,6 +2169,7 @@ def create_runtime_app() -> FastAPI:
                 idle_seconds=settings.cold_path_idle_seconds,
                 idle_tasks=idle_tasks,
                 outbox=memory_outbox,
+                reflection_budget=reflection_budget,
             ),
             prototype_store,
             release_store,

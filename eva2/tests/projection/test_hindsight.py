@@ -48,6 +48,7 @@ class _State:
         self.source_fact_recall = False
         self.group_recall_response: dict[str, Any] | None = None
         self.mental_models: set[str] = set()
+        self.mental_model_triggers: dict[str, dict[str, Any]] = {}
 
 
 @pytest.fixture
@@ -98,6 +99,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                                 "onnodige kopjes; zijn latere correctie is leidend."
                             ),
                             "id": mental_model_id,
+                            "trigger": state.mental_model_triggers[mental_model_id],
                             "reflect_response": {
                                 "based_on": {"world": [FACT], "observation": []}
                             },
@@ -278,9 +280,18 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                         ]
                     },
                 )
+            elif self.path.endswith("/refresh") and "/mental-models/" in self.path:
+                self._send(
+                    200,
+                    {
+                        "operation_id": "763f8954-51f2-4d61-84b3-d11f858b7db8",
+                        "status": "queued",
+                    },
+                )
             elif self.path.endswith("/mental-models"):
                 assert body is not None
                 state.mental_models.add(body["id"])
+                state.mental_model_triggers[body["id"]] = body["trigger"]
                 self._send(
                     200,
                     {
@@ -302,7 +313,19 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
         def do_PATCH(self) -> None:  # noqa: N802
             body = self._body()
             state.requests.append(("PATCH", self.path, body))
-            self._send(200, {"bank_id": self.path.split("/")[-2], "config": {}})
+            if "/mental-models/" in self.path:
+                assert body is not None
+                mental_model_id = self.path.rsplit("/", 1)[-1]
+                state.mental_model_triggers[mental_model_id] = body["trigger"]
+                self._send(
+                    200,
+                    {
+                        "id": mental_model_id,
+                        "trigger": body["trigger"],
+                    },
+                )
+            else:
+                self._send(200, {"bank_id": self.path.split("/")[-2], "config": {}})
 
         def do_DELETE(self) -> None:  # noqa: N802
             state.requests.append(("DELETE", self.path, None))
@@ -1093,7 +1116,7 @@ def test_model_planned_synonyms_become_independent_recall_queries() -> None:
     )
 
 
-def test_reflection_is_a_stale_only_nightly_background_mental_model(
+def test_reflection_has_no_unmanaged_schedule_and_refreshes_only_on_request(
     hindsight_server: tuple[str, _State],
 ) -> None:
     base_url, state = hindsight_server
@@ -1103,7 +1126,7 @@ def test_reflection_is_a_stale_only_nightly_background_mental_model(
     repeated = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
 
     assert receipt.disposition == "created"
-    assert repeated.disposition == "already_present"
+    assert repeated.disposition == "refreshed"
     request = next(
         body
         for method, path, body in state.requests
@@ -1111,16 +1134,63 @@ def test_reflection_is_a_stale_only_nightly_background_mental_model(
     )
     assert request is not None
     assert request["trigger"]["mode"] == "delta"
-    assert request["trigger"]["refresh_cron"] == "0 3 * * *"
+    assert request["trigger"]["refresh_cron"] is None
     assert request["trigger"]["recall_max_tokens"] == 2048
     assert request["trigger"]["refresh_after_consolidation"] is False
     assert request["max_tokens"] == 320
     assert "maximaal 100" in request["source_query"]
+    assert sum(
+        method == "POST" and path.endswith("/refresh")
+        for method, path, _body in state.requests
+    ) == 1
     assert engine.recall_for_presence(_query()).style_mirror == (
         "Jaap wil korte, directe en warme antwoorden zonder onnodige kopjes; "
         "zijn latere correctie is leidend."
     )
     assert not any(path.endswith("/reflect") for _method, path, _body in state.requests)
+
+
+def test_reflection_removes_an_existing_unmanaged_cron_before_refresh(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    mental_model_id = engine._style_mirror_id(PRINCIPAL)  # noqa: SLF001
+    state.mental_models.add(mental_model_id)
+    state.mental_model_triggers[mental_model_id] = {
+        "exclude_mental_models": True,
+        "fact_types": ["world", "experience", "observation"],
+        "include_chunks": False,
+        "keep_trace": True,
+        "mode": "delta",
+        "recall_chunks_max_tokens": 512,
+        "recall_max_tokens": 2048,
+        "refresh_after_consolidation": False,
+        "refresh_cron": "0 3 * * *",
+        "tags_match": "all_strict",
+    }
+
+    receipt = engine.maintain_person_scope(TENANT, INSTALLATION, PRINCIPAL)
+
+    assert receipt.disposition == "refreshed"
+    patch_request = next(
+        body
+        for method, path, body in state.requests
+        if method == "PATCH" and "/mental-models/" in path
+    )
+    assert patch_request is not None
+    assert patch_request["trigger"]["refresh_cron"] is None
+    patch_index = next(
+        index
+        for index, (method, path, _body) in enumerate(state.requests)
+        if method == "PATCH" and "/mental-models/" in path
+    )
+    refresh_index = next(
+        index
+        for index, (method, path, _body) in enumerate(state.requests)
+        if method == "POST" and path.endswith("/refresh")
+    )
+    assert patch_index < refresh_index
 
 
 def test_projects_current_fact_and_uses_hindsight_to_rank_candidates(

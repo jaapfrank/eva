@@ -36,6 +36,17 @@ class DurableMemoryOutboxPort(Protocol):
     ) -> object: ...
 
 
+class BackgroundReflectionBudgetPort(Protocol):
+    def admit_background_reflection(
+        self,
+        *,
+        tenant_id: str,
+        installation_id: str,
+        principal_id: str,
+        now: datetime,
+    ) -> object: ...
+
+
 @dataclass(frozen=True, slots=True)
 class _RetainJob:
     document: ConversationMemoryDocument
@@ -59,6 +70,7 @@ class SemanticMemoryColdPathWorker:
         retry_delay_seconds: float = 2.0,
         idle_tasks: tuple[Callable[[], object], ...] = (),
         outbox: DurableMemoryOutboxPort | None = None,
+        reflection_budget: BackgroundReflectionBudgetPort | None = None,
     ) -> None:
         if idle_seconds <= 0 or retry_delay_seconds < 0:
             raise ValueError("cold-path timing is invalid")
@@ -67,6 +79,7 @@ class SemanticMemoryColdPathWorker:
         self._retry_delay_seconds = retry_delay_seconds
         self._idle_tasks = idle_tasks
         self._outbox = outbox
+        self._reflection_budget = reflection_budget
         self._queue: Queue[_RetainJob | None] = Queue()
         self._stop = Event()
         self._thread: Thread | None = None
@@ -222,6 +235,20 @@ class SemanticMemoryColdPathWorker:
             self._reflection_scopes.clear()
         for tenant_id, installation_id, principal_id in scopes:
             try:
+                if self._reflection_budget is not None:
+                    admission = self._reflection_budget.admit_background_reflection(
+                        tenant_id=tenant_id,
+                        installation_id=installation_id,
+                        principal_id=principal_id,
+                        now=datetime.now(tz=UTC).replace(microsecond=0),
+                    )
+                    admitted = getattr(admission, "admitted", None)
+                    if not isinstance(admitted, bool):
+                        raise RuntimeError(
+                            "background reflection budget returned an invalid decision"
+                        )
+                    if not admitted:
+                        continue
                 self._memory.maintain_person_scope(
                     tenant_id, installation_id, principal_id
                 )
@@ -245,6 +272,7 @@ HindsightColdPathWorker = SemanticMemoryColdPathWorker
 
 
 __all__ = [
+    "BackgroundReflectionBudgetPort",
     "DurableMemoryOutboxPort",
     "HindsightColdPathWorker",
     "SemanticMemoryColdPathWorker",

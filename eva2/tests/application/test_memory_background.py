@@ -98,6 +98,52 @@ def test_group_memory_never_schedules_a_person_style_reflection() -> None:
     assert reflections == []
 
 
+def test_daily_budget_blocks_reflection_before_memory_provider() -> None:
+    retained = Event()
+    reflections: list[tuple[str, str, str]] = []
+    admissions: list[tuple[str, str, str]] = []
+
+    class Admission:
+        admitted = False
+
+    class Budget:
+        def admit_background_reflection(
+            self, *, tenant_id, installation_id, principal_id, now
+        ):  # type: ignore[no-untyped-def]
+            assert now.tzinfo is not None
+            admissions.append((tenant_id, installation_id, principal_id))
+            return Admission()
+
+    class Memory:
+        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+            retained.set()
+            return MemoryRetentionReceipt(
+                bank_id="test-bank",
+                document_id=document.document_id,
+                content_sha256=(
+                    "f463c6c92e8ece20a2151f24ebf174886d150f47cc8b1ae86a837027c25936a4"
+                ),
+            )
+
+        def maintain_person_scope(self, tenant, installation, principal):  # type: ignore[no-untyped-def]
+            reflections.append((tenant, installation, principal))
+
+    worker = HindsightColdPathWorker(
+        Memory(),
+        idle_seconds=0.03,
+        retry_delay_seconds=0,
+        reflection_budget=Budget(),  # type: ignore[arg-type]
+    )
+    worker.start()
+    worker.submit(_document())
+    assert retained.wait(0.5)
+    time.sleep(0.08)
+    worker.stop()
+
+    assert admissions == [("tenant", "installation", "jaap")]
+    assert reflections == []
+
+
 def test_poison_retain_stops_after_three_attempts() -> None:
     attempts = 0
 
