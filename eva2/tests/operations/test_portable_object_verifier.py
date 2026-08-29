@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from eva.operations.object_keyring import FileObjectKeyResolver
-from eva.operations.portable_object_verifier import (
+from tools.portable_object_verifier import (
     PortableObjectVerificationError,
     verify_portable_object_bytes,
 )

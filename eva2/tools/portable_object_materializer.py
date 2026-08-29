@@ -27,7 +27,7 @@ from eva.application.objects import (
 )
 from eva.application.portable_objects import MaterializedPortableObject
 from eva.application.portable_archive import canonical_json_bytes
-from eva.operations.portable_object_verifier import (
+from tools.portable_object_verifier import (
     PortableObjectVerificationError,
     VerifiedPortableObjectCandidate,
     verify_portable_object_candidates,

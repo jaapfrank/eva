@@ -14,7 +14,7 @@ from tools.portable_object_materializer import (
     _append_journal,
     materialize_verified_portable_objects,
 )
-from eva.operations.portable_object_verifier import verify_portable_object_candidates
+from tools.portable_object_verifier import verify_portable_object_candidates
 
 
 ROOT = Path(__file__).resolve().parents[2]
