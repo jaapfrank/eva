@@ -1482,11 +1482,18 @@ export function validateExecutionRecord(row) {
 
 export function recentVerifiedTurnToolReceipts(conversationId, limit = 40) {
   requireExecutionLedger(db);
-  const rows = db.prepare(`SELECT execution.* FROM main.turn_tool_executions execution
-    WHERE execution.status='done' AND EXISTS (
-      SELECT 1 FROM main.timeline turn WHERE turn.kind='turn_understanding'
-        AND json_valid(turn.meta) AND json_extract(turn.meta, '$.conversationId')=?
-        AND json_extract(turn.meta, '$.turnId')=execution.turn_id)
+  // Materialiseer eerst de kleine, gesprekgebonden set turn-ID's. Een
+  // gecorreleerde EXISTS liet SQLite voor iedere uitvoering opnieuw door de
+  // tijdlijn lopen en blokkeerde op een langlevende installatie de event-loop.
+  const rows = db.prepare(`WITH turns AS MATERIALIZED (
+      SELECT DISTINCT json_extract(meta, '$.turnId') AS turn_id
+      FROM main.timeline INDEXED BY idx_timeline_understanding_conversation
+      WHERE kind='turn_understanding' AND json_valid(meta)
+        AND json_extract(meta, '$.conversationId')=?
+    )
+    SELECT execution.* FROM main.turn_tool_executions execution
+    JOIN turns ON turns.turn_id=execution.turn_id
+    WHERE execution.status='done'
     ORDER BY execution.finished_ts DESC, execution.execution_key DESC LIMIT ?`).all(
     String(conversationId || ''), Math.max(1, Math.min(80, Number(limit) || 40)),
   );

@@ -52,6 +52,29 @@ test('receipt-authority faalt gesloten ondanks main-qualified reads onder TEMP s
   }
 });
 
+test('recente receipts blijven gesprekgebonden en worden niet dubbel door dubbele authority', () => {
+  const turnId = 'turn:bounded-receipt-selection';
+  const conversationId = 'web:bounded-receipt-selection';
+  claimTurnToolExecution({
+    executionKey: 'execution:bounded-receipt-selection',
+    turnId,
+    tool: 'bewijs_tool',
+    args: { waarde: 'eenmaal' },
+  });
+  completeTurnToolExecution(
+    'execution:bounded-receipt-selection', JSON.stringify({ ok: true }),
+  );
+  logTimeline('turn_understanding', 'eerste authority', { conversationId, turnId });
+  logTimeline('turn_understanding', 'dubbele authority', { conversationId, turnId });
+  logTimeline('turn_understanding', 'vreemd gesprek', {
+    conversationId: 'web:ander-gesprek', turnId,
+  });
+
+  const receipts = recentVerifiedTurnToolReceipts(conversationId);
+  assert.equal(receipts.filter((row) => row.turn_id === turnId).length, 1);
+  assert.equal(recentVerifiedTurnToolReceipts('web:onbekend-gesprek').length, 0);
+});
+
 test('execution_seq is store-owned, uniek en onveranderlijk', () => {
   const first = claimTurnToolExecution({
     executionKey: 'execution:sequence:first', turnId: 'turn:sequence',
