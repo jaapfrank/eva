@@ -11,7 +11,7 @@ from typing import Any, Literal
 
 import pytest
 
-from eva.adapters.connectors.mcp import McpReadOnlyError, McpReadOnlyStreamableHttpAdapter
+from tests.fixtures.mcp import McpReadOnlyError, McpReadOnlyStreamableHttpAdapter
 from eva.contracts.capability import McpReadOnlyToolImport
 from eva.contracts.canonical_json import canonical_sha256
 

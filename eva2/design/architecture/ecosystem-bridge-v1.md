@@ -212,7 +212,7 @@ andere agent die de echte B-uitvoering en receipts controleert.
 | Getypeerde capability en grant | `src/eva/contracts/capability.py` |
 | Algemene broker en effectprotocol | `src/eva/application/capabilities.py` |
 | OpenClaw Gateway RPC | `src/eva/adapters/connectors/openclaw_gateway.py` |
-| MCP-client | `src/eva/adapters/connectors/mcp.py` |
+| MCP-bewijsclient, niet in de runtime | `tests/fixtures/mcp.py` |
 | ClawHub discovery/quarantaine | `src/eva/adapters/connectors/clawhub.py`, `forge/quarantine/` |
 | Agent Zero sidecar-RPC | `src/eva/adapters/connectors/agent_zero.py` |
 | PostgreSQL-events | bestaande `adapters/postgres/operational_timeline.py` |
