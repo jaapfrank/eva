@@ -1,0 +1,60 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ExternalTimelineScopeConsolidation/v1",
+  "recordedAt": "2026-08-29T18:17:00Z",
+  "sourceCommit": "554a6a2c21d010931a633e81c7567306bd56a77f",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedScopeFactory": "external_timeline_scope",
+    "consumers": [
+      "Telegram group consent",
+      "Telegram group observation",
+      "fan-out delivery",
+      "durable goals"
+    ],
+    "preservedUuid5Derivation": true,
+    "preservedRouteSpecificMissingScopeErrors": true,
+    "netProductPhysicalLines": -5
+  },
+  "verification": {
+    "focusedTests": {
+      "passed": 14,
+      "failed": 0,
+      "logSha256": "070bf70f257eb107cf631347b1fdcf26643c9e52efcb2cddf7b9802c528ea08b"
+    },
+    "realPostgresTimelineTests": {
+      "passed": 31,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "1dc10f406dda54d95f43d1c91793c134595c49681dcf0f73624a83c762e58a2d"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83168,
+      "productManifestSha256": "bdbc9b59472888fc41c1d3641b7d6ddd6ed6131ba69c5428a234e07aa50f802f"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83163,
+      "productManifestSha256": "fb3fa092ef087e9e1871d310720ffdd41466ca0e22f038bf8358d7008ee9dad9",
+      "livingCorePhysicalLines": 82570,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8163,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No identity scope, UUID, timeline authority or runtime permission changed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}

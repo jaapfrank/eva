@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 20:08 CEST
+Laatst bijgewerkt: 29 augustus 2026, 20:17 CEST
 
 ## Heel kort
 
@@ -224,6 +224,10 @@ praktijktest zijn nog niet klaar.
   toegestane connectorcontracten. Een eerste importcyclus werd vóór commit
   gevonden en hersteld; 22 echte PostgreSQL-cases zijn groen en dit scheelde
   acht productregels.
+- Telegramgroeptoestemming, groepswaarneming, bezorging en duurzame doelen
+  maken hun vaste tijdlijnidentiteit nu op één plek. De bestaande ID's en vier
+  eigen foutmeldingen bleven gelijk; 45 tests zijn groen en dit scheelde vijf
+  productregels.
 
 ## Wat nog niet klaar is
 
@@ -238,8 +242,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.665 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 83.168 productregels en mag er maximaal 75.000 hebben.
+  7.670 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 83.163 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -323,6 +327,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde dependencyvrijgavecontrole voor read- en effectvoortgang](evidence/product/performance-complexity-pc01-action-chain-release-validation-consolidation-2026-08-29.json)
 - [Gedeelde lookup van voorbereide read- en effect-child-events](evidence/product/performance-complexity-pc01-prepared-child-event-lookup-consolidation-2026-08-29.json)
 - [Eén parser voor terminale read- en effectproviderresultaten](evidence/product/performance-complexity-pc01-provider-result-parser-consolidation-2026-08-29.json)
+- [Eén vaste tijdlijnscope voor Telegramgroepen, bezorging en doelen](evidence/product/performance-complexity-pc01-external-timeline-scope-consolidation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
