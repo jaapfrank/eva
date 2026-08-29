@@ -1,0 +1,103 @@
+{
+  "contract": "Eva2Runtime35RealModelHindsightRestartReceipt/v1",
+  "issuedAt": "2026-08-29T12:59:45+02:00",
+  "status": "passed",
+  "candidate": {
+    "sourceCommit": "087f57b70c4e9ba28aa3ff48ecb3c0f120974020",
+    "coreImage": "sha256:c808a841bf74c6d2ed2487b24b47b93ffcc6c1e64ee3a8667db568ccf0a44626",
+    "hindsightImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "postgresImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "databaseCount": 2,
+    "homeAssistantConfigured": false,
+    "homeAssistantSecretMounted": false
+  },
+  "isolation": {
+    "freshEvaDatabase": true,
+    "freshHindsightDatabase": true,
+    "separateWorkVolume": true,
+    "databasePortsPublished": false,
+    "hindsightPortPublished": false,
+    "corePort": "random loopback-only test port",
+    "identityMountReadOnly": true,
+    "modelLeaseMountReadOnly": true,
+    "refreshTokenKeyPresent": false,
+    "externalNetworkUsedOnlyByModelBackends": true
+  },
+  "failClosedPreflight": {
+    "firstCoreStartWithoutRestoreAuthority": "refused",
+    "reason": "Eva dashboard owner binding requires a portable restore authority file",
+    "applicationStarted": false,
+    "followupAuthorityMountReadOnly": true
+  },
+  "schema": {
+    "sourceRevision": null,
+    "finalRevision": "4e_0006_memory_outbox_erasure",
+    "status": "passed",
+    "receiptSha256": "da88003287f552e7d12fa95039fcbf8fad22f832a746063448c12d0e9bacd29c"
+  },
+  "beforeRestart": {
+    "coreReady": true,
+    "hindsightHealthy": true,
+    "modelReply": {
+      "httpStatus": 200,
+      "contract": "EvaDashboardGroundedReply/v1",
+      "expectedExactReply": true,
+      "replySha256": "ce5a707e10c54ac9c1599c47aa02a51785d69f1602cf4db1cba326fbd157eb70",
+      "sanitizedReceiptSha256": "8692285c9261534fa755fb3f83fd2bbd62c0b548957508f9aa5cfd0481695e39"
+    },
+    "hindsight": {
+      "banks": 1,
+      "documents": 1,
+      "memoryUnits": 0,
+      "llmRequests": 1
+    }
+  },
+  "fullRestart": {
+    "stopped": [
+      "core",
+      "hindsight"
+    ],
+    "restarted": [
+      "eva-postgres",
+      "hindsight-postgres",
+      "hindsight",
+      "core"
+    ],
+    "coreReadyAfterRestart": true,
+    "hindsightHealthyAfterRestart": true,
+    "modelReplyAfterRestart": {
+      "httpStatus": 200,
+      "contract": "EvaDashboardGroundedReply/v1",
+      "previousReplyRecoveredExactly": true,
+      "replySha256": "ce5a707e10c54ac9c1599c47aa02a51785d69f1602cf4db1cba326fbd157eb70",
+      "sanitizedReceiptSha256": "8692285c9261534fa755fb3f83fd2bbd62c0b548957508f9aa5cfd0481695e39"
+    },
+    "evaOperationalEvents": 16,
+    "hindsight": {
+      "banks": 1,
+      "documents": 2,
+      "memoryUnits": 0,
+      "llmRequests": 2
+    }
+  },
+  "liveSafety": {
+    "eva1ServiceAfterTest": "active",
+    "liveSlot4ReadyHttpStatusAfterTest": 200,
+    "liveSlot4CoreRestartCount": 0,
+    "liveRouteChanged": false,
+    "liveDatabaseOpenedByCandidate": false,
+    "liveHindsightDatabaseOpenedByCandidate": false
+  },
+  "cleanup": {
+    "temporaryContainersRemoved": 4,
+    "temporaryVolumesRemoved": 4,
+    "temporaryNetworksRemoved": 1,
+    "testDatabaseRetained": false,
+    "syntheticSecretsRetained": false
+  },
+  "nonclaims": [
+    "No Hindsight memory unit was extracted from the two deliberately minimal test turns; this proves durable document retention and the real Hindsight model path, not semantic recall quality.",
+    "The candidate image has not replaced the live /eva2 route.",
+    "This receipt does not prove Telegram, Home Assistant effects, voice, browser use, host reboot survival, a seven-day run, or final release acceptance."
+  ]
+}

@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 12:49 CEST
+Laatst bijgewerkt: 29 augustus 2026, 13:02 CEST
 
 ## Heel kort
 
@@ -75,6 +75,13 @@ praktijktest zijn nog niet klaar.
   0 kritisch en 0 hoog.
 - Op een verse PostgreSQL-database installeerde zij het hele schema. Na een
   echte databaseherstart deed zij terecht geen migratie dubbel.
+- Dezelfde image praatte daarna echt via de korte Codex-lease en schreef twee
+  documenten naar een volledig verse Hindsight-database.
+- Na een gezamenlijke herstart van kern, Hindsight en beide databases wist zij
+  haar vorige antwoord exact. Hindsight behield zijn bank en documenten.
+- De twee minimale testzinnen leverden bewust nog geen Hindsight-geheugenunit
+  op. Dit bewijst dus wel de echte opslag- en modelroute, maar nog niet de
+  kwaliteit van semantische herinneringen.
 
 ## Wat nog niet klaar is
 
@@ -91,9 +98,9 @@ praktijktest zijn nog niet klaar.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
   89.442 productregels en mag er maximaal 75.000 hebben.
-- De nieuwe DBOS-loze 35-pakketimage is nog niet de levende `/eva2`-route. Eerst
-  moet de complete kern met echt model en Hindsight op diezelfde image groen
-  zijn; daarna kan zij via de bestaande A/B-terugvalroute worden omgeschakeld.
+- De nieuwe DBOS-loze 35-pakketimage is nog niet de levende `/eva2`-route. De
+  echte model-, Hindsight- en volledige herstartproef zijn groen; de aparte
+  A/B-promotie en directe terugvalproef op deze image moeten nog.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -114,8 +121,8 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
-4. De nieuwe exacte 35-pakketimage met echt model en Hindsight beproeven en
-   daarna alleen via de bestaande A/B-terugvalroute promoveren.
+4. De nieuwe exacte 35-pakketimage alleen via de bestaande A/B-terugvalroute
+   promoveren en daarna heen, terug en opnieuw heen controleren.
 5. Nog minstens 14.442 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
@@ -142,6 +149,7 @@ praktijktest zijn nog niet klaar.
 - [Eerste echte codesanering met behoud van regressies](evidence/product/performance-complexity-pc01-test-support-remediation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
+- [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en
