@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 07:10 CEST
+Laatst bijgewerkt: 29 augustus 2026, 07:25 CEST
 
 ## Heel kort
 
@@ -246,6 +246,11 @@ installatie zijn nog niet klaar.
   persoonsgrens en bewaartijd vóór Hindsight. Een bronbrede controle weigert
   voortaan iedere nieuwe directe geheugenwrite buiten de twee vaste
   opslaggrenzen; 76 gerichte regressies zijn groen.
+- Eén exact semantisch geheugenstuk kan nu op verzoek duurzaam uit Hindsight
+  worden verwijderd. Een andere persoon kan die verwijdering niet aanvragen,
+  een herstart hervat dezelfde poging zonder dubbele provideropdracht en Eva
+  markeert het stuk pas verwijderd nadat Hindsight dat heeft bevestigd. Het
+  achterblijvende bewijs bevat alleen hashes en tijden, geen geheugentekst.
 
 ## Wat nog niet klaar is
 
@@ -267,8 +272,11 @@ installatie zijn nog niet klaar.
 - De runtime handhaaft nu de model-, antwoord-, Hindsight-recall- en dagelijkse
   reflectiegrenzen, plus blokkering van onbekende autonome kosten. De kandidaat
   begrenst gespreksgeheugen per persoon, groep, project en hele installatie op
-  regels, bytes en bewaartijd. Volledige fysieke database-/vectorindexquota,
-  verwijderen uit brongesprekken en back-ups en echte geldbedragen blijven open.
+  regels, bytes en bewaartijd. Eén exact Hindsight-document kan herstartveilig
+  worden verwijderd, maar een eigenaar-chatopdracht, verwijderen uit het ruwe
+  gespreksjournal, caches, samenvattingen, procedurekandidaten en oude back-ups
+  ontbreken nog. Ook fysieke database-/vectorindexquota en echte geldbedragen
+  blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -289,8 +297,9 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Aantoonbaar verwijderen uit brongesprekken en back-ups toevoegen en daarna
-   cold-compaction testen zonder belangrijke betekenis te verliezen.
+1. De bewezen semantische verwijdering doortrekken naar het ruwe
+   gespreksjournal, caches en back-ups, met één eigenaar-chatopdracht en één
+   niet-inhoudelijke tombstone over de hele keten.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.

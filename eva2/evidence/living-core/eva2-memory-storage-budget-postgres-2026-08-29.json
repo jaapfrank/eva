@@ -1,5 +1,5 @@
 {
-  "contract": "EvaMemoryStorageBudgetProof/v2",
+  "contract": "EvaMemoryStorageBudgetProof/v3",
   "limits": {
     "bytes_per_group": 1048576,
     "bytes_per_installation": 10485760,
@@ -22,6 +22,9 @@
     "capacity_released_only_after_removal_ack": true,
     "concurrent_final_admitted": 1,
     "concurrent_final_attempts": 8,
+    "explicit_erasure_duplicate_provider_lease_blocked": true,
+    "explicit_erasure_recovered_after_restart": true,
+    "explicit_erasure_wrong_principal_blocked": true,
     "group_byte_limit_blocked_across_people": true,
     "group_concurrent_final_admitted": 1,
     "installation_byte_limit_blocked_across_people": true,
@@ -40,7 +43,7 @@
     "principal_identifier_stored_as_sha256": true,
     "project_identifier_stored_as_sha256": true
   },
-  "source_commit": "c154300127de43f013be588c7bbb81b2dbf95917",
+  "source_commit": "a47357ab0ace1a2bd67947463169f47027ddf9dc",
   "source_files": [
     {
       "path": "src/eva/adapters/postgres/conversation_journal.py",
@@ -52,7 +55,7 @@
     },
     {
       "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
-      "sha256": "9e776247c001eb94cea2a40cb73909798e8ff77472f92c8c47cde34f5298addd"
+      "sha256": "df346e73314ef5852ea5ffafaac6aa3e75b2e5a90c35d06473ceb23aecca52cf"
     },
     {
       "path": "src/eva/adapters/projection/hindsight.py",
@@ -64,7 +67,7 @@
     },
     {
       "path": "src/eva/application/memory_background.py",
-      "sha256": "7e126d6752a46875a9bbcef96629eb481ec7838de69e8c186aeeecf27059a2d9"
+      "sha256": "e9a7427c29b7f22c57838b826e0aafe0c6030764993ea5b90c355dd908aab876"
     },
     {
       "path": "src/eva/bootstrap/runtime.py",
@@ -72,7 +75,7 @@
     },
     {
       "path": "tests/application/test_memory_background.py",
-      "sha256": "f02da4fa6fa6f769ed5056c569f3f33bbc7b0bacc5b17c289e3df40689b285ae"
+      "sha256": "99de8abbdbaf107668bd9d6e245fc14f1af0eeae79593d947b6eab72e19e7c66"
     },
     {
       "path": "tests/bootstrap/test_memory_provenance.py",
@@ -84,7 +87,7 @@
     },
     {
       "path": "tests/postgres/test_runtime_resource_usage.py",
-      "sha256": "656dd160a55f5297267b0f9314fa18914cab6cac3aaf425946ea2d18be515568"
+      "sha256": "86bf1e8f517a0e205b67f194a1ac2f36a859d7d8c582bf30f87ea84a02090fd8"
     },
     {
       "path": "tests/projection/test_hindsight.py",
@@ -92,10 +95,10 @@
     },
     {
       "path": "tools/prove_memory_storage_budget.py",
-      "sha256": "0c1e3351c8a532f6f61e4b9b335d0f5b6e4d090637355c1772bab32ea391fb71"
+      "sha256": "12c587e4e93dd09d548c252616afa27222e9888d5fadc617d80697230fb71b0a"
     }
   ],
   "tests": {
-    "focused_passed": 108
+    "focused_passed": 20
   }
 }

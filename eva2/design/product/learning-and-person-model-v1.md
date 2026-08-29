@@ -111,6 +111,15 @@ tools.
   volgen een verzegelde retentie-/vervalroute en mogen gewiste inhoud na restore
   niet opnieuw actief maken.
 
+De eerste uitvoerbare deelgrens staat nu: voor één exact, al bewaard semantisch
+Hindsight-document kan de juiste persoon een duurzame verwijdering claimen. Een
+verkeerde persoon en een dubbele claim worden geweigerd; na procesuitval wordt
+dezelfde providerpoging hervat en pas na providerbevestiging volgt de
+niet-inhoudelijke tombstone. Dit bewijst nog niet `Vergeet dit` als complete
+gebruikersfunctie: het PostgreSQL-gespreksjournal, hot/cold-samenvattingen,
+caches, procedurekandidaten, back-ups en eigenaar-geauthenticeerde chatroute
+blijven afzonderlijk open.
+
 ## Geheugen-, token- en kostenbudget
 
 De exacte eindwaarden worden op de bevroren image gemeten; tot die tijd zijn
@@ -154,6 +163,8 @@ vectorindexgroei, cold-compaction en betekenisbehoud aantoonbaar begrensd zijn.
   correctie, laatste gebruik, audience en verval; chatroute voor inzien,
   corrigeren en volledige erasure met non-content tombstone. Geen geleerde
   relatie mag identiteit, binding, consent, eigenaarschap of toegang wijzigen.
+  De exacte semantische Hindsight-documentverwijdering is herstartveilig getest;
+  de volledige keten en gebruikersroute blijven open.
 - [ ] LG02 — Per call en per taak token-, latency- en kostenreceipt plus
   dashboard/chat-totalen; ontbrekende providerusage blijft `unknown`.
 - [ ] LG03 — Bronrecord- en UTF-8-bytequota zijn getest per persoon, groep,
