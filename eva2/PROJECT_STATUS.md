@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 11:38 CEST
+Laatst bijgewerkt: 29 augustus 2026, 11:46 CEST
 
 ## Heel kort
 
@@ -81,8 +81,11 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.024 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  89.850 productregels en mag er maximaal 75.000 hebben.
+  7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
+  89.442 productregels en mag er maximaal 75.000 hebben.
+- DBOS zit nog gepind in de image, maar de actuele kern importeert het niet.
+  Zijn oude datasource staat daarom nu eerlijk bij de regressietests. Later
+  moet DBOS óf echt een onderhouden runtimefunctie krijgen óf uit de lock.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -103,7 +106,7 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
-4. Nog minstens 14.850 productregels gericht verwijderen of vervangen zonder
+4. Nog minstens 14.442 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
 ## Belangrijk verschil

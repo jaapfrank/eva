@@ -1,10 +1,10 @@
 {
   "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
-  "issuedAt": "2026-08-29T11:38:58+02:00",
+  "issuedAt": "2026-08-29T11:46:27+02:00",
   "status": "improved_still_over_budget",
   "source": {
-    "commit": "2d2248ad0f2b4ddcf44c707cb69f2abd1532c049",
-    "rawReceiptSha256": "35f7fad1f153bbcaab488a3619b10ccac0bab6eb4a8f6c190b912502417cc089"
+    "commit": "99c90e1c75fc433f9f5174bc6335af0d44399f95",
+    "rawReceiptSha256": "7a01dc20eec323957219e01feecdb0c7ca9bf595a059b5c3b729e7340d6fe4df"
   },
   "before": {
     "commit": "1b51d9dd4f5c8f140ac94cccdfb5940a5ce9fc50",
@@ -12,9 +12,9 @@
     "excessProductPhysicalLines": 21874
   },
   "after": {
-    "productPhysicalLines": 89850,
-    "excessProductPhysicalLines": 14850,
-    "removedFromProductRuntime": 7024,
+    "productPhysicalLines": 89442,
+    "excessProductPhysicalLines": 14442,
+    "removedFromProductRuntime": 7432,
     "directRuntimeDependencies": 9,
     "unclassifiedSourcePaths": 0,
     "pc01Passed": false
@@ -28,7 +28,8 @@
     "host-only Telegram test preflight and launcher",
     "disposable Telegram diagnostic core and ingress wrapper",
     "managed-B runtime-smoke helper used only by tests",
-    "historical tranche-4B episode repository superseded by the current stores"
+    "historical tranche-4B episode repository superseded by the current stores",
+    "inactive DBOS datasource used only by historical crash and schema regressions"
   ],
   "verification": {
     "historicalFixtureContainerTestsPassed": 78,
@@ -47,13 +48,16 @@
     "historicalEpisodeStaticTestsPassed": 7,
     "historicalEpisodeDatabaseCasesStoppedBeforeRepository": 10,
     "historicalEpisodeDatabaseStopReason": "current empty-4D admission rejects the old fixture's pre-head anchor",
+    "dbosDisposablePostgresTestsPassed": 30,
+    "runtimeImportWithoutProductDbosAdapter": "passed",
     "eva1HealthHttp": 200,
     "eva2ReadyHttp": 200
   },
-  "nextRequiredAction": "Remove or replace another 14850 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
+  "nextRequiredAction": "Remove or replace another 14442 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
   "nonClaims": [
     "PC01 is not green.",
     "Moving active runtime or operator behavior outside the counted roots is not allowed remediation.",
-    "The live image was not rebuilt or changed by this source-only cleanup."
+    "The live image was not rebuilt or changed by this source-only cleanup.",
+    "The DBOS package is still pinned in the runtime lock; this evidence does not claim that dependency was removed or re-integrated."
   ]
 }

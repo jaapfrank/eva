@@ -1,18 +1,18 @@
 {
   "contract": "EvaPerformanceComplexityPc01CurrentEvidence/v1",
-  "issuedAt": "2026-08-29T11:38:58+02:00",
+  "issuedAt": "2026-08-29T11:46:27+02:00",
   "status": "failed_budget_enforced",
   "source": {
-    "commit": "2d2248ad0f2b4ddcf44c707cb69f2abd1532c049",
+    "commit": "99c90e1c75fc433f9f5174bc6335af0d44399f95",
     "authoritySha256": "b2d439ec1d46c138c8ebce6240ceb3ab774fee661f013f260d2a78dc58b07c9d",
-    "rawReceiptSha256": "35f7fad1f153bbcaab488a3619b10ccac0bab6eb4a8f6c190b912502417cc089"
+    "rawReceiptSha256": "7a01dc20eec323957219e01feecdb0c7ca9bf595a059b5c3b729e7340d6fe4df"
   },
   "measured": {
-    "productFiles": 234,
-    "productPhysicalLines": 89850,
-    "productBytes": 3586905,
-    "livingCoreFiles": 227,
-    "livingCorePhysicalLines": 89257,
+    "productFiles": 233,
+    "productPhysicalLines": 89442,
+    "productBytes": 3570739,
+    "livingCoreFiles": 226,
+    "livingCorePhysicalLines": 88849,
     "generatedFilesMeasuredSeparately": 1,
     "generatedPhysicalLines": 9,
     "unclassifiedSourcePaths": 0,
@@ -25,7 +25,7 @@
   },
   "budget": {
     "maximumProductPhysicalLines": 75000,
-    "excessProductPhysicalLines": 14850,
+    "excessProductPhysicalLines": 14442,
     "violations": [
       "product_physical_lines_budget_exceeded"
     ]
@@ -34,10 +34,10 @@
     "experimentPhysicalLines": 6094,
     "migrationPhysicalLines": 2251,
     "releasePhysicalLines": 1594,
-    "testPhysicalLines": 76818,
+    "testPhysicalLines": 77226,
     "toolPhysicalLines": 26370
   },
-  "nextRequiredAction": "Remove or replace at least 14850 counted product lines while preserving the proven capabilities; changing roots, exclusions or the 75000-line limit is not remediation.",
+  "nextRequiredAction": "Remove or replace at least 14442 counted product lines while preserving the proven capabilities; changing roots, exclusions or the 75000-line limit is not remediation.",
   "nonClaims": [
     "PC01 is not green.",
     "The dependency and OCI measurements do not compensate for the failed code-size limit.",
