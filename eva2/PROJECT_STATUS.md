@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 18:27 CEST
+Laatst bijgewerkt: 29 augustus 2026, 18:36 CEST
 
 ## Heel kort
 
@@ -171,6 +171,9 @@ praktijktest zijn nog niet klaar.
 - Stoppen en afronden van uitbesteed werk gebruiken nu dezelfde database-lock.
   Alle 48 gerichte contract- en PostgreSQL-tests zijn groen. Dit scheelde vier
   productregels en één extra databasequery per stop of afronding.
+- De runtime leest gewone waarden, booleans, lijsten en file-only secrets nu via
+  gedeelde controles. Alle 107 bootstraptests zijn groen; dit scheelde nog 28
+  productregels zonder een instelling of veiligheidsgrens te versoepelen.
 
 ## Wat nog niet klaar is
 
@@ -186,7 +189,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  87.588 productregels en mag er maximaal 75.000 hebben.
+  87.560 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -204,7 +207,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 12.588 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 12.560 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -253,6 +256,7 @@ praktijktest zijn nog niet klaar.
 - [Persoonsgebonden artifacts blijven zichtbaar: fout hersteld en 15 productregels minder](evidence/product/performance-complexity-pc01-personal-artifact-selection-2026-08-29.json)
 - [Gedeelde actionchain-storebasis: 135 productregels minder en 95/95 PostgreSQL-cases groen](evidence/product/performance-complexity-pc01-action-chain-store-base-consolidation-2026-08-29.json)
 - [Gedeelde stop- en afrondingslock voor uitbesteed werk](evidence/product/performance-complexity-pc01-delegated-terminal-lock-consolidation-2026-08-29.json)
+- [Gedeelde runtime-instellingen en file-only secrets](evidence/product/performance-complexity-pc01-runtime-environment-consolidation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)

@@ -1,0 +1,56 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RuntimeEnvironmentConsolidation/v1",
+  "recordedAt": "2026-08-29T16:35:57Z",
+  "sourceCommit": "d79545773b77e004349da84f95a875b8f0cb8177",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedParsing": [
+      "trimmed required and optional values",
+      "bounded integer, float and boolean values",
+      "comma-separated value sets",
+      "file-only secrets",
+      "all-or-none connector configurations"
+    ],
+    "preservedBoundaries": [
+      "empty inline secrets remain forbidden",
+      "existing defaults and error messages remain unchanged",
+      "partial identity and connector configurations remain rejected"
+    ],
+    "netProductPhysicalLines": -28
+  },
+  "verification": {
+    "allBootstrapTests": {
+      "passed": 107,
+      "failed": 0,
+      "logSha256": "8040389b5132171f0c00d948fd3be2537b4974a692c181997b8e53ee71afb896"
+    },
+    "compileAndRuff": {
+      "passed": true,
+      "ruffLogSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87588,
+      "productManifestSha256": "0c87c21a193d2cec48459e1cb19aff2c3048f42a733af46e8a86705de70ec8bc"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87560,
+      "productManifestSha256": "6257f16aa6ec7f166ed8e20ab1193932d125ff6a6121697e3636918e4e7e5e74",
+      "livingCorePhysicalLines": 86967,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12560,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No runtime setting, connector, secret source or validation boundary was added or relaxed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector or volume was changed."
+  ]
+}
