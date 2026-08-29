@@ -1,0 +1,47 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PublicationStoreConsolidation/v1",
+  "recordedAt": "2026-08-29T17:37:11Z",
+  "sourceCommit": "7668bedc4a88fa585aab23cb0c84d4aea9631c40",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "previousScopedStoreConstructors": 6,
+    "currentScopedStoreConstructors": 1,
+    "sharedConstructor": "EvaRuntime._product_publication_store",
+    "netProductPhysicalLines": -9
+  },
+  "verification": {
+    "apiCommerceStripeAndStoreTests": {
+      "passed": 37,
+      "failed": 0,
+      "logSha256": "601f8c168c7ccd7124dc317eb49b881107ae244b55df0b2aea9b55681b6b2fae"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83306,
+      "productManifestSha256": "a84ba4b2e271d54839cd808631e5b661bf4328b42fe43468aaba7083232c87cb"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83297,
+      "productManifestSha256": "c7f5fbbe185ea3be1c514816fb4426652794a12b5adfa10b08732f064d830cd0",
+      "livingCorePhysicalLines": 82704,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8297,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No Stripe account, live-mode rule, publication approval, paid-order rule or external call was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
