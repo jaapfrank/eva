@@ -3,9 +3,27 @@ import test from 'node:test';
 
 import {
   askEva2Canary,
+  createEva2DraftSink,
   eva2CanaryContinuation,
   eva2CanaryPrompt,
 } from '../src/integrations/eva2canary.js';
+
+test('Telegramconcept gebruikt één draft-id, begrenst updates en faalt zacht', async () => {
+  let now = 1_000;
+  const calls = [];
+  const sink = createEva2DraftSink({
+    chatId: 7, draftId: 9201, clock: () => now,
+    sendDraft: async (payload) => { calls.push(payload); return true; },
+  });
+  assert.ok(sink);
+  assert.equal(await sink('Hoi'), true);
+  now += 100;
+  assert.equal(await sink('Hoi Jaap'), false);
+  now += 250;
+  assert.equal(await sink('Hoi Jaap, leuk je te zien.'), true);
+  assert.deepEqual(calls.map((row) => row.draft_id), [9201, 9201]);
+  assert.equal(createEva2DraftSink({ chatId: -7, draftId: 1, sendDraft() {} }), null);
+});
 
 test('alleen expliciete /eva2 berichten gaan naar de B-canary', () => {
   assert.equal(eva2CanaryPrompt('hoi Eva'), null);
@@ -100,6 +118,50 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
   assert.equal(captured.body.audience, undefined);
   assert.equal(captured.body.recent_messages[0].text, 'We hadden het over een koersvlag.');
   assert.equal(result.text, 'Eerlijk? Ik denk dat je vooral duidelijkheid zoekt.');
+});
+
+test('een privébeurt verwerkt tekstchunks als één oplopend Telegramconcept', async () => {
+  const drafts = [];
+  let accept;
+  const rows = [
+    { contract: 'EvaTextDelta/v1', text: 'Hoi ' },
+    { contract: 'EvaTextDelta/v1', text: 'Jaap.' },
+    {
+      contract: 'EvaInternalGroundedReply/v1',
+      conversation_id: 'telegram:7',
+      message_id: 'telegram:7:9201',
+      text: 'Hoi Jaap.',
+    },
+  ];
+  const result = await askEva2Canary({
+    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9201, fromId: 7,
+    text: '/eva2 Hoi', telegramDate: 1787486400,
+    onDraft: async (text) => drafts.push(text),
+    fetchImpl: async (_url, options) => {
+      accept = options.headers.Accept;
+      return new Response(`${rows.map((row) => JSON.stringify(row)).join('\n')}\n`, {
+        headers: { 'content-type': 'application/x-ndjson' }, status: 200,
+      });
+    },
+  });
+  assert.equal(accept, 'application/x-ndjson');
+  assert.deepEqual(drafts, ['Hoi ', 'Hoi Jaap.']);
+  assert.equal(result.text, 'Hoi Jaap.');
+});
+
+test('een oudere Eva2 JSON-route blijft werken wanneer drafts al aanstaan', async () => {
+  const drafts = [];
+  const result = await askEva2Canary({
+    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9202, fromId: 7,
+    text: '/eva2 Hoi', telegramDate: 1787486400,
+    onDraft: async (text) => drafts.push(text),
+    fetchImpl: async () => new Response(JSON.stringify({
+      contract: 'EvaInternalGroundedReply/v1', conversation_id: 'telegram:7',
+      message_id: 'telegram:7:9202', text: 'Gewoon antwoord.',
+    }), { headers: { 'content-type': 'application/json' }, status: 200 }),
+  });
+  assert.deepEqual(drafts, []);
+  assert.equal(result.text, 'Gewoon antwoord.');
 });
 
 test('B-canary laat Eva2 de groepsconsent server-side bepalen', async () => {

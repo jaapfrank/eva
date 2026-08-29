@@ -65,6 +65,7 @@ import { householdMembers } from '../mind/household.js';
 import { turnUnderstandingAuthorityRecord } from '../turnauthority.js';
 import {
   askEva2Canary,
+  createEva2DraftSink,
   eva2CanaryContinuation,
   eva2CanaryPrompt,
 } from './eva2canary.js';
@@ -2579,6 +2580,11 @@ export async function startTelegram() {
               role: row.role === 'assistant' ? config.assistantName : (row.sender || naam),
               text: String(row.content || '').trim(),
             })).filter((row) => row.text),
+            onDraft: createEva2DraftSink({
+              chatId: ctx.chat.id,
+              draftId: ctx.message.message_id,
+              sendDraft: bot?.api?.raw?.sendMessageDraft?.bind(bot.api.raw),
+            }),
           });
           await sendTelegramText(ctx.chat.id, answer.text, {
             replyToMessageId: ctx.message.message_id,

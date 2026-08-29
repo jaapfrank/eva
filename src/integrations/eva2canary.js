@@ -1,11 +1,34 @@
 const CANARY_PREFIX = /^\/eva2(?:@\w+)?(?:\s+|$)/iu;
 const OTHER_COMMAND = /^\/(?!eva2(?:@\w+)?(?:\s+|$))\S+/iu;
 const CANARY_SESSION_MS = 30 * 60_000;
+const DRAFT_MIN_GROWTH = 32;
+const DRAFT_MAX_INTERVAL_MS = 300;
 
 export function eva2CanaryPrompt(text) {
   const value = String(text || '');
   if (!CANARY_PREFIX.test(value)) return null;
   return value.replace(CANARY_PREFIX, '').trim();
+}
+
+export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.now }) {
+  if (!Number.isSafeInteger(chatId) || chatId < 1
+    || !Number.isSafeInteger(draftId) || draftId === 0 || typeof sendDraft !== 'function') return null;
+  let previous = ''; let sentAt = 0; let enabled = true;
+  return async (cumulative) => {
+    const text = String(cumulative || '').slice(0, 4096);
+    if (!enabled || !text || !text.startsWith(previous)) return false;
+    const now = Number(clock());
+    if (previous && text.length - previous.length < DRAFT_MIN_GROWTH
+      && now - sentAt < DRAFT_MAX_INTERVAL_MS) return false;
+    try {
+      if (await sendDraft({ chat_id: chatId, draft_id: draftId, text }) !== true) return false;
+    } catch {
+      enabled = false;
+      return false;
+    }
+    previous = text; sentAt = now;
+    return true;
+  };
 }
 
 /**
@@ -60,6 +83,30 @@ function telegramCanaryIdentity({ chatId, fromId }) {
   return Object.freeze({ chat: String(chat), sender });
 }
 
+async function readCanaryStream(response, onDraft) {
+  const reader = response.body?.getReader?.();
+  if (!reader) throw new Error('Eva B-canary gaf geen leesbare tekststream');
+  const decoder = new TextDecoder();
+  let buffered = ''; let cumulative = ''; let final = null;
+  while (true) {
+    const { value, done } = await reader.read();
+    buffered += decoder.decode(value || new Uint8Array(), { stream: !done });
+    const lines = buffered.split('\n'); buffered = lines.pop() || '';
+    for (const line of lines) {
+      if (!line) continue;
+      const item = JSON.parse(line);
+      if (item?.contract === 'EvaTextDelta/v1' && typeof item.text === 'string') {
+        cumulative += item.text;
+        if (cumulative) await onDraft(cumulative);
+      } else if (item?.contract === 'EvaInternalGroundedReply/v1') final = item;
+      else throw new Error('Eva B-canary tekststream is ongeldig');
+    }
+    if (done) break;
+  }
+  if (buffered.trim()) throw new Error('Eva B-canary tekststream eindigde onvolledig');
+  return final;
+}
+
 export async function askEva2Canary({
   baseUrl,
   chatId,
@@ -70,6 +117,7 @@ export async function askEva2Canary({
   recentMessages = [],
   continuation = false,
   fetchImpl = fetch,
+  onDraft = null,
   timeoutMs = 20_000,
 }) {
   const explicit = eva2CanaryPrompt(text);
@@ -80,9 +128,13 @@ export async function askEva2Canary({
   if (!prompt) throw new Error('Zet je vraag achter /eva2');
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');
   const identity = telegramCanaryIdentity({ chatId, fromId });
+  const streaming = identity.chat === String(identity.sender) && typeof onDraft === 'function';
   const response = await fetchImpl(`${baseUrl}/internal/v1/telegram/canary/respond`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      Accept: streaming ? 'application/x-ndjson' : 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       chat_id: identity.chat,
       installation_id: 'live-test-installation',
@@ -98,7 +150,9 @@ export async function askEva2Canary({
   if (!response.ok) {
     throw new Error(`Eva B-canary antwoordde met HTTP ${response.status}`);
   }
-  const payload = await response.json();
+  const streamed = streaming && response.headers?.get?.('content-type')
+    ?.includes('application/x-ndjson');
+  const payload = streamed ? await readCanaryStream(response, onDraft) : await response.json();
   if (payload?.contract !== 'EvaInternalGroundedReply/v1'
     || typeof payload.text !== 'string' || !payload.text.trim()
     || payload.conversation_id !== `telegram:${chatId}`
