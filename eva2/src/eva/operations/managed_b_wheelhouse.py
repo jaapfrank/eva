@@ -30,6 +30,12 @@ REMOVED_DBOS_WHEELS = (
     "manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
     "six-1.17.0-py2.py3-none-any.whl",
 )
+STOCK_CRYPTOGRAPHY_WHEEL = (
+    "cryptography-46.0.5-cp311-abi3-manylinux_2_28_x86_64.whl"
+)
+CRYPTOGRAPHY50_AMD64_WHEEL = (
+    "cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl"
+)
 PYNACL_AMD64_WHEEL = (
     "pynacl-1.6.2-cp38-abi3-manylinux_2_26_x86_64."
     "manylinux_2_28_x86_64.whl"
@@ -37,6 +43,10 @@ PYNACL_AMD64_WHEEL = (
 PYNACL_AMD64_ARTIFACT = (
     "8a66d6fb6ae7661c58995f9c6435bda2b1e68b54b598a6a10247bfcdadac996c",
     1437614,
+)
+CRYPTOGRAPHY50_AMD64_ARTIFACT = (
+    "51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a",
+    4746230,
 )
 
 
@@ -249,7 +259,11 @@ def _expected_wheels(
             "resolvedWheelCount",
         }
         or target.get("acceptedWheelPlatforms")
-        != ["manylinux_2_28_x86_64", "manylinux2014_x86_64"]
+        != [
+            "manylinux_2_34_x86_64",
+            "manylinux_2_28_x86_64",
+            "manylinux2014_x86_64",
+        ]
     ):
         raise RuntimeError("managed B aligned wheel coverage target differs")
     artifacts = target.get("artifacts")
@@ -349,6 +363,9 @@ def inspect_runtime_dependency_alignment(
     for filename in REMOVED_DBOS_WHEELS:
         if expected_active.pop(filename, None) is None:
             raise RuntimeError("managed B historical wheel set omits a DBOS-only input")
+    if expected_active.pop(STOCK_CRYPTOGRAPHY_WHEEL, None) is None:
+        raise RuntimeError("managed B historical wheel set omits cryptography 46")
+    expected_active[CRYPTOGRAPHY50_AMD64_WHEEL] = CRYPTOGRAPHY50_AMD64_ARTIFACT
     expected_active[PYNACL_AMD64_WHEEL] = PYNACL_AMD64_ARTIFACT
     expected_active = dict(sorted(expected_active.items()))
     if len(baseline) != 38 or len(active) != 35 or active != expected_active:

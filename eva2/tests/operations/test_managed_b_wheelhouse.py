@@ -215,14 +215,14 @@ def test_committed_v2_manifest_is_the_exact_dbos_free_runtime_delta() -> None:
         "network_used": False,
         "requirements_lock_path": "requirements-4d.lock",
         "requirements_lock_sha256": (
-            "e6b4e63e2f003e753e0d4db467faa84b8a46effd56fc644d0e7a4bd792ebfabd"
+            "5b90b36192d9e977e659a44e8e569df9c150b7479782651e538ea52640c3fe63"
         ),
         "selected_manifest_sha256": (
-            "b36e97ef74e172420542380e3dd6a16c46e834e53974f07680c954a275f3a617"
+            "2f0a9ec67ea8b41fde854391d276d901dd325b80c24f20b8cc4ee1c57d435135"
         ),
         "status": "version_matched_runtime_dependency_inputs",
         "wheelhouse_tree_sha256": (
-            "1482d27e98e1e3d3c50e3baf222ccf7a0d7f247db86c59cbb05c36be18c4ced1"
+            "b255a2673909261c6a15970b9b78dfacfe5e402a4e96c8ae6000b9eaef41d89a"
         ),
     }
     assert hashlib.sha256(inputs[3]).hexdigest() == (

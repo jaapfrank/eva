@@ -2,7 +2,7 @@
 # pyproject.toml remains the package metadata authority; the design gate requires
 # these pins to match it exactly, including the build-system requirement.
 alembic==1.19.1
-cryptography==46.0.5
+cryptography==50.0.1
 fastapi==0.141.1
 psycopg[binary]==3.3.4
 PyNaCl==1.6.2

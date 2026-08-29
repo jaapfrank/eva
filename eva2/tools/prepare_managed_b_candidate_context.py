@@ -43,7 +43,11 @@ EXPECTED_COPY_SOURCES = frozenset(
 EXTERNAL_COPY_SOURCES = frozenset({"wheelhouse"})
 EXPECTED_OFFLINE_PIP_INSTALL = (
     "RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: "
-    f"--find-links=./wheelhouse --require-hashes -r {RUNTIME_REQUIREMENTS_LOCK}"
+    f"--find-links=./wheelhouse --require-hashes -r {RUNTIME_REQUIREMENTS_LOCK} "
+    "&& python -m pip uninstall -y pip wheel "
+    '&& python -c "import importlib.util; '
+    "assert importlib.util.find_spec('pip') is None; "
+    "assert importlib.util.find_spec('wheel') is None\""
 )
 
 
@@ -238,7 +242,19 @@ def _require_offline_pip_install(dockerfile: bytes) -> None:
         lines = dockerfile.decode("utf-8").splitlines()
     except UnicodeDecodeError as error:
         raise RuntimeError("candidate Dockerfile must be UTF-8") from error
-    commands = [line.strip() for line in lines if line.strip().startswith("RUN ")]
+    commands: list[str] = []
+    pending: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if not pending and not stripped.startswith("RUN "):
+            continue
+        continued = stripped.endswith("\\")
+        pending.append(stripped[:-1].rstrip() if continued else stripped)
+        if not continued:
+            commands.append(" ".join(pending))
+            pending = []
+    if pending:
+        raise RuntimeError("candidate Dockerfile has an unfinished RUN command")
     if commands != [EXPECTED_OFFLINE_PIP_INSTALL]:
         raise RuntimeError("candidate Dockerfile must have the exact offline pip install")
 

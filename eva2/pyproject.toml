@@ -10,7 +10,7 @@ requires-python = "==3.12.14"
 license = "LicenseRef-Proprietary"
 dependencies = [
   "alembic==1.19.1",
-  "cryptography==46.0.5",
+  "cryptography==50.0.1",
   "fastapi==0.141.1",
   "psycopg[binary]==3.3.4",
   "PyNaCl==1.6.2",

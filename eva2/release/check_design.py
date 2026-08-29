@@ -45,7 +45,7 @@ OCI_COMPONENT_IDS = frozenset(
 
 DIRECT_PINS = {
     "alembic": "1.19.1",
-    "cryptography": "46.0.5",
+    "cryptography": "50.0.1",
     "fastapi": "0.141.1",
     "psycopg": "3.3.4",
     "pydantic": "2.12.5",
@@ -88,7 +88,7 @@ LOCKED_PINS = {
     "anyio": "4.14.2",
     "cffi": "2.1.1",
     "click": "8.4.2",
-    "cryptography": "46.0.5",
+    "cryptography": "50.0.1",
     "fastapi": "0.141.1",
     "genai-prices": "0.1.4",
     "greenlet": "3.5.5",

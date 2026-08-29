@@ -8,6 +8,7 @@ import tarfile
 import pytest
 
 from tools.prepare_managed_b_candidate_context import (
+    EXPECTED_OFFLINE_PIP_INSTALL,
     GIT_BINARY,
     main,
     prepare_candidate_build_inputs,
@@ -32,7 +33,7 @@ def _archive(
                 b"FROM docker.io/library/python@sha256:" + b"1" * 64,
                 b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
+                EXPECTED_OFFLINE_PIP_INSTALL.encode(),
                 b"COPY src ./src",
                 b"COPY connector_sdk ./connector_sdk",
                 b"COPY alembic.ini ./alembic.ini",
@@ -206,7 +207,7 @@ def test_preparation_refuses_an_unpinned_or_ambiguous_base_image() -> None:
                 b"FROM python:3.12",
                 b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
+                EXPECTED_OFFLINE_PIP_INSTALL.encode(),
                 b"COPY src ./src",
             b"COPY connector_sdk ./connector_sdk",
             b"COPY alembic.ini ./alembic.ini",

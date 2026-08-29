@@ -14,7 +14,10 @@ from eva.operations.managed_b_wheelhouse import (
     MaterializedWheelhouse,
     materialize_wheelhouse,
 )
-from tools.prepare_managed_b_candidate_context import CandidateBuildInputs
+from tools.prepare_managed_b_candidate_context import (
+    CandidateBuildInputs,
+    EXPECTED_OFFLINE_PIP_INSTALL,
+)
 
 
 def _canonical(value: object) -> bytes:
@@ -28,7 +31,7 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
                 b"FROM docker.io/library/python@sha256:" + b"1" * 64,
                 b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
-                b"RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock",
+                EXPECTED_OFFLINE_PIP_INSTALL.encode(),
                 b"COPY src ./src",
                 b"COPY connector_sdk ./connector_sdk",
                 b"COPY alembic.ini ./alembic.ini",
