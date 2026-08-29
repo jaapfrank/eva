@@ -1,0 +1,39 @@
+{
+  "contract": "Eva2BrowserA02ClosedNetworkCurrentSource/v1",
+  "observedAt": "2026-08-29T21:33:47+02:00",
+  "sourceCommit": "20319e77fe8983a029ef4202ed748f9f884cdf1b",
+  "sourceManifestSha256": "335a4aa0471a03c6bb64f9170eb84a0da9f29a6c0a201e92d366efe5abb97648",
+  "status": "tested",
+  "result": {
+    "scenariosPassed": 4,
+    "normalClickStateVerified": true,
+    "crashBeforeClickNoSecondCall": true,
+    "crashAfterClickNoSecondCall": true,
+    "stopAfterAuthorizationNoClick": true,
+    "externalEgressBlocked": true,
+    "publishedBrowserPorts": 0,
+    "browserNetworkCount": 1,
+    "gatewaylessNetworks": 2
+  },
+  "environment": {
+    "browserImage": "mcr.microsoft.com/playwright/mcp@sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+    "postgresImage": "postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "controllerUsedIntendedClosedDockerNetworks": true,
+    "browserHadNoHostPortOrInternetRoute": true
+  },
+  "verification": {
+    "command": "python3 experiments/playwright-mcp-action-v1/smoke_candidate.py",
+    "logSha256": "0020df58463dfad5e417d968a0a25a2d8670264bd8d5d125bdbbef05feb55e5b",
+    "remainingCandidateContainers": 0,
+    "remainingCandidateNetworks": 0
+  },
+  "diagnosis": {
+    "earlierDirectHostFailures": 4,
+    "cause": "The direct host pytest route could not resolve the deliberately internal Docker alias fixture.eva.test. The official runner supplies the intended closed controller networks and passed all four cases without a code change."
+  },
+  "nonClaims": [
+    "This is not general-purpose browser access.",
+    "This does not promote the Playwright image as a safe release image.",
+    "This did not use an account, a public website or a live deployment."
+  ]
+}
