@@ -1,0 +1,56 @@
+{
+  "contract": "Eva2Runtime35PostbootProofArmedReceipt/v1",
+  "issuedAt": "2026-08-29T13:16:34+02:00",
+  "status": "armed",
+  "source": {
+    "commit": "60bc0b7",
+    "repositoryProbeSha256": "ce80fc9605cce9360dc931b6b5f2b672d1bec1a690e456190437d5fbbb0ec7f6",
+    "installedProbeSha256": "ce80fc9605cce9360dc931b6b5f2b672d1bec1a690e456190437d5fbbb0ec7f6",
+    "directedTests": 11,
+    "releaseAndProbeTests": 37,
+    "ruff": "passed"
+  },
+  "topology": {
+    "activeSlot": 3,
+    "activePort": 44710,
+    "activeCoreImage": "sha256:c808a841bf74c6d2ed2487b24b47b93ffcc6c1e64ee3a8667db568ccf0a44626",
+    "activeReadyHttpStatus": 200,
+    "rollbackSlot": 4,
+    "rollbackPort": 44711,
+    "rollbackWritersExpectedStopped": true,
+    "eva1Service": "active"
+  },
+  "armedState": {
+    "contract": "Eva2ManagedBRebootArm/v1",
+    "requiredRestart": "windows_host_reboot",
+    "sha256": "9515b81444e4be8e92f79901b4e35d107c8a8de1457ee93004463520ae3d9ba6",
+    "owner": "0:0",
+    "mode": "0600",
+    "bytes": 748,
+    "sourceSha256MatchesInstalledProbe": true,
+    "hindsightMemoryUnitsAfterArming": 275,
+    "privateMarkerExcludedFromReceipt": true
+  },
+  "previousArm": {
+    "preserved": true,
+    "sha256": "73a6074dca644aa0b7c6bd2937b7187441d3f52573e34166eee94d8086f0feb2",
+    "activeTopology": "slot4_before_runtime35_promotion"
+  },
+  "sameStartControl": {
+    "verificationRefused": true,
+    "observedRestart": "none",
+    "requiredRestart": "windows_host_reboot",
+    "receiptCreated": false
+  },
+  "systemd": {
+    "unit": "eva2-managed-b-postboot-proof.service",
+    "enabled": true,
+    "executesVerifyOnly": true,
+    "rebootCommandPresent": false
+  },
+  "nonclaims": [
+    "No Windows, WSL, Linux kernel, systemd, Docker or Eva service reboot was initiated by this step.",
+    "The postboot receipt does not exist yet; it can only be created after an externally initiated Windows host reboot.",
+    "This does not start the seven-day resident acceptance run."
+  ]
+}
