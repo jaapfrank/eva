@@ -54,10 +54,13 @@ def test_count_parser_is_closed_and_digest_is_order_independent() -> None:
 def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     source = PROBE_PATH.read_text(encoding="utf-8")
 
-    assert 'CURRENT_ROUTE_CORE = "eva2-managed-current-canary-core"' in source
-    assert 'CURRENT_ROUTE_POSTGRES = "eva2-candidate-794ff73-pg"' in source
-    assert 'CURRENT_ROUTE_HINDSIGHT = "eva2-hindsight-memory-live"' in source
-    assert 'CURRENT_ROUTE_PORT = "44708"' in source
+    assert 'CURRENT_ROUTE_CORE = "eva2-managed-b-slot3-core"' in source
+    assert 'CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot3-postgres-1"' in source
+    assert (
+        'CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot3-hindsight-postgres-1"'
+        in source
+    )
+    assert 'CURRENT_ROUTE_PORT = "44710"' in source
     assert "--format=custom" in source
     assert '"--exit-on-error"' in source
     assert '"--no-owner"' in source
@@ -70,7 +73,7 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert "candidate core image must be an immutable local digest reference" in source
     assert "attempts: int = 3" in source
     assert "--retain-slot" in source
-    assert 'RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"' in source
+    assert 'choices=(2, 3, 4)' in source
     assert "port = 44707 + retained_slot_number" in source
     assert "plaintextDumpsRetained" in source
     assert "CURRENT_ROUTE_HINDSIGHT_NAMESPACE" in source
@@ -82,6 +85,33 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST"' in source
     assert '"EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST"' in source
     assert "if environment_file.exists() and not keep_retained:" in source
+    assert "and staging_created" in source
     assert "docker stop eva2-candidate" not in source
     assert "docker rm eva2-candidate" not in source
     assert "docker volume rm eva2-candidate" not in source
+
+
+def test_existing_retained_slot_is_never_removed(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    staging_parent = tmp_path / "retained"
+    staging_parent.mkdir()
+    existing = staging_parent / "managed-b-slot4"
+    existing.mkdir()
+    marker = existing / "belongs-to-existing-slot"
+    marker.write_text("keep", encoding="utf-8")
+    monkeypatch.setattr(probe, "STAGING_PARENT", staging_parent)
+    monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(probe, "_live_status", lambda _url: 0)
+
+    status = probe.main(
+        clone_current_route=True,
+        retain_slot=True,
+        retained_slot_number=4,
+    )
+
+    assert status == 2
+    assert marker.read_text(encoding="utf-8") == "keep"
+    assert "retained managed-B slot already exists" in capsys.readouterr().out

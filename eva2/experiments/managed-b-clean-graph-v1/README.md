@@ -34,12 +34,14 @@ sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py \
   --core-image eva2/candidate@sha256:<64 hextekens>
 ```
 
-Na een geslaagde wegwerpproef kan exact één vast tweede slot worden
-klaargezet. Dit gebruikt poort `44709`, project `eva2-managed-b-slot2` en een
-private configuratiemap onder `/var/lib/eva2`. Bestaande slotmiddelen worden
-geweigerd. De bron blijft alleen-lezen; beide dumps worden na herstel gewist.
-Bij een fout worden uitsluitend de nieuw gemaakte slotcontainers en -volumes
-opgeruimd. Deze opdracht schakelt de `/eva2`-route nog niet om. De historische
+Na een geslaagde wegwerpproef kan exact één vrij vast slot worden klaargezet.
+Nu slot 3 de actieve route en slot 2 een bestaande terugval is, gebruikt de
+volgende kandidaat expliciet slot 4: poort `44711`, project
+`eva2-managed-b-slot4` en een private configuratiemap onder `/var/lib/eva2`.
+Bestaande slotmiddelen worden geweigerd en nooit opgeruimd. De bron blijft
+alleen-lezen; beide dumps worden na herstel gewist. Bij een fout worden
+uitsluitend middelen verwijderd die deze uitvoering zelf heeft gemaakt. Deze
+opdracht schakelt de `/eva2`-route nog niet om. De historische
 `live-test`-gespreksscope blijft behouden; het eigenaar-dashboard gebruikt een
 aparte, strikt UUID-gebonden beheerscope:
 
@@ -47,5 +49,6 @@ aparte, strikt UUID-gebonden beheerscope:
 sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py \
   --clone-current-route \
   --retain-slot \
+  --retained-slot-number 4 \
   --core-image eva2/candidate@sha256:<64 hextekens>
 ```

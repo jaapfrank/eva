@@ -21,6 +21,7 @@ import re
 import secrets
 import shutil
 import socket
+import stat
 import subprocess
 import sys
 import time
@@ -58,18 +59,17 @@ EXPECTED_SERVICES = {
     "schema-installer",
     "telegram-ingress",
 }
-CURRENT_ROUTE_CORE = "eva2-managed-current-canary-core"
-CURRENT_ROUTE_POSTGRES = "eva2-candidate-794ff73-pg"
-CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-candidate-794ff73-pg"
-CURRENT_ROUTE_HINDSIGHT = "eva2-hindsight-memory-live"
-CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-hindsight-memory-live"
-CURRENT_ROUTE_PORT = "44708"
+CURRENT_ROUTE_CORE = "eva2-managed-b-slot3-core"
+CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot3-postgres-1"
+CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-managed-b-slot3-operational"
+CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot3-hindsight-postgres-1"
+CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-managed-b-slot3-memory"
+CURRENT_ROUTE_PORT = "44710"
 CURRENT_ROUTE_HA_TOKEN = Path(
-    "/var/lib/eva2/candidate-794ff73/secrets/home-assistant-token"
+    "/var/lib/eva2/managed-b-slot3/secrets/home-assistant-token"
 )
-CURRENT_ROUTE_HA_URL = Path("/var/lib/eva2/candidate-794ff73/config/home-assistant-url")
+CURRENT_ROUTE_ENVIRONMENT = Path("/var/lib/eva2/managed-b-slot3/candidate.env")
 CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
-RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
        (xpath('/row/c/text()', query_to_xml(
@@ -393,7 +393,7 @@ def _require_current_route_sources() -> None:
         ),
         CURRENT_ROUTE_HINDSIGHT: (
             CURRENT_ROUTE_HINDSIGHT_VOLUME,
-            "/home/hindsight/.pg0",
+            "/var/lib/postgresql/data",
         ),
     }
     for name, expected in expected_mounts.items():
@@ -416,7 +416,7 @@ def _snapshot_current_route(
 ) -> tuple[dict[str, int], dict[str, int], dict[str, int], dict[str, int]]:
     _require_current_route_sources()
     operational_before = _operational_counts(CURRENT_ROUTE_POSTGRES)
-    hindsight_before = _embedded_hindsight_counts(CURRENT_ROUTE_HINDSIGHT)
+    hindsight_before = _operational_counts(CURRENT_ROUTE_HINDSIGHT)
     _run_binary_to_private_file(
         [
             "/usr/bin/docker",
@@ -430,24 +430,17 @@ def _snapshot_current_route(
         ],
         operational_dump,
     )
-    program = """
-import json, os
-from pathlib import Path
-cfg = json.loads(Path('/home/hindsight/.pg0/instances/hindsight/instance.json').read_text())
-env = dict(os.environ, PGPASSWORD=cfg['password'])
-pg_dump = str(Path(cfg['installation_dir']) / cfg['version'] / 'bin' / 'pg_dump')
-os.execvpe(pg_dump, [pg_dump, '-h', '127.0.0.1', '-U', cfg['username'],
-                    '-d', cfg['database'], '--format=custom', '--no-owner',
-                    '--no-privileges'], env)
-"""
     _run_binary_to_private_file(
         [
             "/usr/bin/docker",
             "exec",
+            "-u",
+            "postgres",
             CURRENT_ROUTE_HINDSIGHT,
-            "/app/api/.venv/bin/python3",
-            "-c",
-            program,
+            "sh",
+            "-lc",
+            'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" '
+            "--format=custom --no-owner --no-privileges",
         ],
         hindsight_dump,
     )
@@ -455,8 +448,28 @@ os.execvpe(pg_dump, [pg_dump, '-h', '127.0.0.1', '-U', cfg['username'],
         operational_before,
         _operational_counts(CURRENT_ROUTE_POSTGRES),
         hindsight_before,
-        _embedded_hindsight_counts(CURRENT_ROUTE_HINDSIGHT),
+        _operational_counts(CURRENT_ROUTE_HINDSIGHT),
     )
+
+
+def _current_environment_value(name: str) -> str:
+    metadata = os.lstat(CURRENT_ROUTE_ENVIRONMENT)
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or stat.S_ISLNK(metadata.st_mode)
+        or metadata.st_uid != 0
+        or stat.S_IMODE(metadata.st_mode) != 0o600
+        or metadata.st_size > 65_536
+    ):
+        raise ProbeError("current managed route environment is not private")
+    matches = []
+    for raw_line in CURRENT_ROUTE_ENVIRONMENT.read_text(encoding="utf-8").splitlines():
+        key, separator, value = raw_line.partition("=")
+        if separator and key == name:
+            matches.append(value.strip())
+    if len(matches) != 1 or not matches[0]:
+        raise ProbeError(f"current managed route {name} is unavailable")
+    return matches[0]
 
 
 def _write_private(path: Path, value: bytes, *, uid: int, gid: int) -> None:
@@ -618,10 +631,10 @@ def main(
             )
         )
         return 2
-    if retain_slot and retained_slot_number not in {2, 3}:
+    if retain_slot and retained_slot_number not in {2, 3, 4}:
         print(
             json.dumps(
-                {"error": "retained slot number must be 2 or 3", "status": "failed"},
+                {"error": "retained slot number must be 2, 3 or 4", "status": "failed"},
                 sort_keys=True,
             )
         )
@@ -649,6 +662,7 @@ def main(
     hindsight_dump = staging / "hindsight.dump"
     cleaned = False
     keep_retained = False
+    staging_created = False
     phase = "prepare"
     result: dict[str, Any] = {
         "contract": (
@@ -700,6 +714,7 @@ def main(
             if retained_volumes & existing_volumes:
                 raise ProbeError("retained managed-B Docker volume already exists")
         staging.mkdir(mode=0o700)
+        staging_created = True
         secrets_dir = staging / "secrets"
         identity_dir = staging / "identity"
         codex_dir = staging / "codex-auth"
@@ -752,9 +767,7 @@ def main(
                 uid=65532,
                 gid=65532,
             )
-            home_assistant_url = CURRENT_ROUTE_HA_URL.read_text(
-                encoding="utf-8"
-            ).strip()
+            home_assistant_url = _current_environment_value("EVA_HOME_ASSISTANT_URL")
             if not re.fullmatch(r"https?://[^\s]{1,2048}", home_assistant_url):
                 raise ProbeError("current Home Assistant URL is invalid")
         else:
@@ -1262,10 +1275,11 @@ def main(
                 cleaned = False
         if (
             not keep_retained
+            and staging_created
             and staging.parent == STAGING_PARENT
             and (
                 staging.name.startswith("managed-b-clean-probe-")
-                or staging in {RETAINED_STAGING, STAGING_PARENT / "managed-b-slot3"}
+                or staging.name in {"managed-b-slot2", "managed-b-slot3", "managed-b-slot4"}
             )
         ):
             shutil.rmtree(staging, ignore_errors=True)
@@ -1296,7 +1310,9 @@ if __name__ == "__main__":
     parser.add_argument("--clone-current-route", action="store_true")
     parser.add_argument("--core-image", default=CORE_IMAGE)
     parser.add_argument("--retain-slot", action="store_true")
-    parser.add_argument("--retained-slot-number", type=int, choices=(2, 3), default=2)
+    parser.add_argument(
+        "--retained-slot-number", type=int, choices=(2, 3, 4), default=2
+    )
     arguments = parser.parse_args()
     sys.exit(
         main(
