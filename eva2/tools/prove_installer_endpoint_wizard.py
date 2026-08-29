@@ -530,7 +530,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
         "nonclaims": [
             "The proof used synthetic access and loopback contract servers; it contacted neither a real Home Assistant nor AgentMail.",
             "This proves browser configuration, verification and restart continuity, not a complete installation or live provider account.",
-            "Secret rotation/removal and connector disconnect remain separate user-interface gates.",
+            "Real provider credentials, provider-granted least privilege and a complete installation remain separate gates.",
         ],
         "source": {
             "commit": _source_commit(),
