@@ -18,7 +18,7 @@ from sqlalchemy.engine import make_url
 
 from conftest import Postgres4CGate, Seeded4CEpisode
 from eva.adapters.dbos.datasource import open_runtime_datasource
-from eva.bootstrap.episode_transition_4c import configure_episode_transition_runtime
+from tests.support.episode_transition_4c import configure_episode_transition_runtime
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.lifecycle import EpisodeState
 

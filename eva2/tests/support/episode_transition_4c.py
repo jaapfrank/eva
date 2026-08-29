@@ -1,4 +1,4 @@
-"""Composition root for the sealed 4C accepted-to-planning vertical."""
+"""Test-only composition root for the historical sealed 4C vertical."""
 
 from __future__ import annotations
 

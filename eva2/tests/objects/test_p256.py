@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.objects.p256 import P256AckVerifier, P256KeyError
+from tests.support.p256 import P256AckVerifier, P256KeyError
 from eva.contracts import canonical_sha256
 from eva.contracts.execution import ClientAckChallengeClaim, DeliveryReceiptV2
 from eva.contracts.ingress import DeliveryOfferV2, IngressRequest

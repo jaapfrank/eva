@@ -1,4 +1,4 @@
-"""Isolated Bot API contract provider for native-live connector gates."""
+"""Test-only Bot API contract provider for historical native connector gates."""
 
 from __future__ import annotations
 

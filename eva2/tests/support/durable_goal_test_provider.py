@@ -1,4 +1,4 @@
-"""Isolated live-B HTTP provider for durable-goal fault and wake tests."""
+"""Test-only HTTP provider for historical durable-goal fault and wake gates."""
 
 from __future__ import annotations
 

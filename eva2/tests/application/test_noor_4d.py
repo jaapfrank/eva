@@ -19,7 +19,7 @@ from tests.support.model_fixture import FixtureModelAdapter
 from eva.adapters.objects.cas import FileSystemCAS
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
 from tests.support.fixture_keys import FixtureObjectKeyResolver
-from eva.adapters.objects.p256 import P256AckVerifier
+from tests.support.p256 import P256AckVerifier
 from tests.support.noor_4d import (
     Noor4DArtifactError,
     Noor4DCallLifecycle,

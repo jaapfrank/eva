@@ -1,4 +1,4 @@
-"""P-256/SHA-256 verifier for exact 64-byte P1363 client ACKs."""
+"""Test-only P-256 verifier for historical exact P1363 fixture ACKs."""
 
 from __future__ import annotations
 

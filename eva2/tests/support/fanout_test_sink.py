@@ -1,4 +1,4 @@
-"""Isolated idempotent HTTP sink used only by native-live delivery gates."""
+"""Test-only idempotent HTTP sink for historical native delivery gates."""
 
 from __future__ import annotations
 

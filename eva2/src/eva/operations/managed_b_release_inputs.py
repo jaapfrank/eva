@@ -396,10 +396,15 @@ _EXPECTED_TEST_PATHS = (
     "tests/subagents/test_openai_child_provider.py",
     "tests/subagents/test_tool_free_child.py",
     "tests/support/__init__.py",
+    "tests/support/durable_goal_test_provider.py",
+    "tests/support/episode_transition_4c.py",
+    "tests/support/fanout_test_sink.py",
     "tests/support/fixture_keys.py",
     "tests/support/model_fixture.py",
     "tests/support/noor_4d.py",
     "tests/support/noor_4d_repository.py",
+    "tests/support/p256.py",
+    "tests/support/telegram_test_provider.py",
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",

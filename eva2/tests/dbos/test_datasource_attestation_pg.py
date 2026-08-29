@@ -10,7 +10,7 @@ from eva.adapters.dbos.datasource import (
     DBOSDatasourceAttestationError,
     open_runtime_datasource,
 )
-from eva.bootstrap.episode_transition_4c import (
+from tests.support.episode_transition_4c import (
     CANONICAL_WORKFLOW_NAME,
     configure_episode_transition_runtime,
 )
