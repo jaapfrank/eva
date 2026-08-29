@@ -158,6 +158,7 @@ _DURABLE_GOAL_WAKE_KEYS = {
     "resource",
 }
 _DASHBOARD_EFFECT_STOP_KEYS = {"effect_intent_id"}
+_DASHBOARD_CONVERSATION_ERASE_KEYS = {"message_id"}
 _HOME_ASSISTANT_LIGHT_KEYS = {
     "entity_id",
     "installation_id",
@@ -431,7 +432,10 @@ def _query_from_wire(payload: dict[str, Any]) -> RecallCurrentFacts:
 
 
 def _document_from_wire(payload: dict[str, Any]) -> ConversationMemoryDocument:
-    if not _RETAIN_KEYS <= set(payload) or set(payload) - _RETAIN_KEYS - _RETAIN_OPTIONAL_KEYS:
+    if (
+        not _RETAIN_KEYS <= set(payload)
+        or set(payload) - _RETAIN_KEYS - _RETAIN_OPTIONAL_KEYS
+    ):
         raise ValueError("memory retain request has unknown or missing fields")
     try:
         return ConversationMemoryDocument(
@@ -543,11 +547,11 @@ def _durable_goal_from_wire(raw: object) -> DurableGoalSpec:
                 resource=wake["resource"],
                 field=wake["field"],
                 expected_value=wake["expected_value"],
-                deadline=datetime.fromisoformat(wake["deadline"].replace("Z", "+00:00")),
+                deadline=datetime.fromisoformat(
+                    wake["deadline"].replace("Z", "+00:00")
+                ),
             ),
-            created_at=datetime.fromisoformat(
-                raw["created_at"].replace("Z", "+00:00")
-            ),
+            created_at=datetime.fromisoformat(raw["created_at"].replace("Z", "+00:00")),
         )
     except (KeyError, AttributeError, TypeError, ValueError) as error:
         raise ValueError("durable goal request is invalid") from error
@@ -688,7 +692,9 @@ def create_app(
         )
 
     @app.post("/internal/v1/dashboard/identity/diff")
-    def dashboard_identity_diff(request: Request, payload: dict[str, Any]) -> JSONResponse:
+    def dashboard_identity_diff(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
         """Preview a staged IdentityPack presentation change without storing it."""
 
         dashboard_access.require(request)
@@ -789,17 +795,25 @@ def create_app(
             raise HTTPException(status_code=422, detail="owner conversation is invalid")
         respond_as_owner = getattr(runtime, "dashboard_turn", None)
         if not callable(respond_as_owner):
-            raise HTTPException(status_code=503, detail="owner conversation unavailable")
+            raise HTTPException(
+                status_code=503, detail="owner conversation unavailable"
+            )
         try:
             turn, reply = respond_as_owner(payload["text"])
-            if not isinstance(turn, ConversationTurn) or not isinstance(reply, GroundedReply):
+            if not isinstance(turn, ConversationTurn) or not isinstance(
+                reply, GroundedReply
+            ):
                 raise ValueError("owner conversation result is invalid")
         except ConversationConflict as error:
             raise HTTPException(status_code=409, detail=str(error)) from error
         except ValueError as error:
-            raise HTTPException(status_code=422, detail="owner conversation is invalid") from error
+            raise HTTPException(
+                status_code=422, detail="owner conversation is invalid"
+            ) from error
         except RuntimeError as error:
-            raise HTTPException(status_code=503, detail="owner conversation unavailable") from error
+            raise HTTPException(
+                status_code=503, detail="owner conversation unavailable"
+            ) from error
         background_tasks.add_task(runtime.after_response, turn, reply)
         return JSONResponse(
             {
@@ -811,6 +825,56 @@ def create_app(
                 "provider": reply.provider,
                 "text": reply.text,
                 "text_sha256": reply.text_sha256,
+            },
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @app.post("/internal/v1/dashboard/conversation/erase")
+    def dashboard_conversation_erase(
+        request: Request, payload: dict[str, Any]
+    ) -> JSONResponse:
+        """Erase one dashboard exchange under the server-bound owner scope."""
+
+        dashboard_access.require(request)
+        if set(payload) != _DASHBOARD_CONVERSATION_ERASE_KEYS:
+            raise HTTPException(
+                status_code=422, detail="conversation erasure is invalid"
+            )
+        message_id = payload["message_id"]
+        if (
+            not isinstance(message_id, str)
+            or not message_id.strip()
+            or len(message_id) > 240
+        ):
+            raise HTTPException(
+                status_code=422, detail="conversation erasure is invalid"
+            )
+        erase = getattr(runtime, "dashboard_erase_conversation_message", None)
+        if not callable(erase):
+            raise HTTPException(
+                status_code=503, detail="conversation erasure unavailable"
+            )
+        try:
+            erased = erase(message_id.strip())
+            if not isinstance(erased, bool):
+                raise RuntimeError("conversation erasure result is invalid")
+        except ConversationConflict as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+        except ValueError as error:
+            raise HTTPException(
+                status_code=422, detail="conversation erasure is invalid"
+            ) from error
+        except RuntimeError as error:
+            raise HTTPException(
+                status_code=503, detail="conversation erasure unavailable"
+            ) from error
+        return JSONResponse(
+            {
+                "contract": "EvaDashboardConversationErasure/v1",
+                "disposition": "erased" if erased else "already_requested",
+                "message_sha256": hashlib.sha256(
+                    message_id.strip().encode("utf-8")
+                ).hexdigest(),
             },
             headers={"Cache-Control": "no-store"},
         )
@@ -861,7 +925,9 @@ def create_app(
         try:
             workboard = projection()
         except Exception as error:
-            raise HTTPException(status_code=503, detail="workboard unavailable") from error
+            raise HTTPException(
+                status_code=503, detail="workboard unavailable"
+            ) from error
         if not isinstance(workboard, WorkBoard):
             raise HTTPException(status_code=503, detail="workboard unavailable")
         return JSONResponse(
@@ -877,14 +943,20 @@ def create_app(
 
         dashboard_access.require(request)
         if set(payload) != _DASHBOARD_EFFECT_STOP_KEYS:
-            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+            raise HTTPException(
+                status_code=422, detail="effect stop request is invalid"
+            )
         raw_effect_intent_id = payload["effect_intent_id"]
         if not isinstance(raw_effect_intent_id, str):
-            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+            raise HTTPException(
+                status_code=422, detail="effect stop request is invalid"
+            )
         try:
             effect_intent_id = UUID(raw_effect_intent_id)
         except ValueError:
-            raise HTTPException(status_code=422, detail="effect stop request is invalid")
+            raise HTTPException(
+                status_code=422, detail="effect stop request is invalid"
+            )
         stop = getattr(runtime, "dashboard_stop_effect", None)
         if not callable(stop):
             raise HTTPException(status_code=503, detail="effect stop unavailable")
@@ -902,7 +974,9 @@ def create_app(
             ):
                 raise ValueError("effect stop result is invalid")
         except Exception as error:
-            raise HTTPException(status_code=503, detail="effect stop unavailable") from error
+            raise HTTPException(
+                status_code=503, detail="effect stop unavailable"
+            ) from error
         return JSONResponse(
             {
                 "contract": "EvaDashboardEffectStop/v1",
@@ -957,7 +1031,9 @@ def create_app(
                 checkout_session_id=checkout_session_id
             )
         except (CommerceError, RuntimeError, ValueError) as error:
-            raise HTTPException(status_code=404, detail="paid order not found") from error
+            raise HTTPException(
+                status_code=404, detail="paid order not found"
+            ) from error
         return Response(
             content=download.content,
             media_type="application/zip",
@@ -1139,7 +1215,9 @@ def create_app(
             "reason",
             "tenant_id",
         }:
-            raise HTTPException(status_code=422, detail="goal cancellation request differs")
+            raise HTTPException(
+                status_code=422, detail="goal cancellation request differs"
+            )
         try:
             occurred_at = datetime.fromisoformat(
                 payload["occurred_at"].replace("Z", "+00:00")
@@ -1681,7 +1759,10 @@ def create_app(
         planner = getattr(runtime, "plan_product_publication", None)
         if not callable(planner):
             raise HTTPException(status_code=501, detail="commerce planning unavailable")
-        if set(payload) != _COMMERCE_PLAN_KEYS or payload.get("mode") != "plan_latest_release":
+        if (
+            set(payload) != _COMMERCE_PLAN_KEYS
+            or payload.get("mode") != "plan_latest_release"
+        ):
             raise HTTPException(
                 status_code=422,
                 detail="commerce plan has unknown, missing or invalid fields",
@@ -1724,7 +1805,9 @@ def create_app(
     async def publish_product(payload: dict[str, Any]) -> dict[str, object]:
         publish = getattr(runtime, "publish_approved_product", None)
         if not callable(publish):
-            raise HTTPException(status_code=501, detail="commerce publication unavailable")
+            raise HTTPException(
+                status_code=501, detail="commerce publication unavailable"
+            )
         if (
             set(payload) != _COMMERCE_PUBLISH_KEYS
             or payload.get("mode") != "publish_approved_plan"
@@ -1749,7 +1832,9 @@ def create_app(
     ) -> dict[str, object]:
         reconcile = getattr(runtime, "reconcile_product_publication", None)
         if not callable(reconcile):
-            raise HTTPException(status_code=501, detail="commerce reconciliation unavailable")
+            raise HTTPException(
+                status_code=501, detail="commerce reconciliation unavailable"
+            )
         if (
             set(payload) != _COMMERCE_RECONCILE_KEYS
             or payload.get("mode") != "reconcile_provider_readback"
@@ -1830,7 +1915,9 @@ def create_app(
             raise HTTPException(status_code=422, detail="research scope is incomplete")
         loader = getattr(runtime, "latest_current_research", None)
         if not callable(loader):
-            raise HTTPException(status_code=501, detail="research artifacts unavailable")
+            raise HTTPException(
+                status_code=501, detail="research artifacts unavailable"
+            )
         artifact = loader(tenant_id, installation_id, principal_id)
         if artifact is None:
             raise HTTPException(status_code=404, detail="research artifact not found")

@@ -226,14 +226,12 @@ class RuntimeSettings:
             raise RuntimeError(
                 "EVA_DATABASE_DSN is forbidden; use EVA_DATABASE_DSN_FILE"
             )
-        database_dsn = environment_secret(
-            "EVA_DATABASE_DSN", "EVA_DATABASE_DSN_FILE"
-        )
+        database_dsn = environment_secret("EVA_DATABASE_DSN", "EVA_DATABASE_DSN_FILE")
         hindsight_url = os.environ.get("EVA_HINDSIGHT_URL", "").strip()
         namespace = os.environ.get("EVA_HINDSIGHT_BANK_NAMESPACE", "eva2").strip()
-        hindsight_recall_budget = os.environ.get(
-            "EVA_HINDSIGHT_RECALL_BUDGET", "low"
-        ).strip().casefold()
+        hindsight_recall_budget = (
+            os.environ.get("EVA_HINDSIGHT_RECALL_BUDGET", "low").strip().casefold()
+        )
         try:
             hindsight_recall_max_tokens = int(
                 os.environ.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048")
@@ -242,7 +240,9 @@ class RuntimeSettings:
                 os.environ.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40")
             )
         except ValueError as error:
-            raise RuntimeError("Eva Hindsight recall configuration is invalid") from error
+            raise RuntimeError(
+                "Eva Hindsight recall configuration is invalid"
+            ) from error
         if not 2_000 <= hindsight_recall_max_tokens <= 4_000:
             raise RuntimeError(
                 "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
@@ -256,7 +256,9 @@ class RuntimeSettings:
             "EVA_IDENTITY_DESCRIPTION",
             "Je bent een warme, nuchtere en capabele digitale huisgenoot.",
         ).strip()
-        identity_pack_file = os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip() or None
+        identity_pack_file = (
+            os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip() or None
+        )
         identity_pack_trust_file = (
             os.environ.get("EVA_IDENTITY_PACK_TRUST_FILE", "").strip() or None
         )
@@ -305,8 +307,7 @@ class RuntimeSettings:
         if "EVA_HINDSIGHT_RECALL_NODE_BUDGET" not in os.environ:
             hindsight_recall_node_budget = runtime_resource_budget.retrieval_nodes
         if (
-            hindsight_recall_max_tokens
-            != runtime_resource_budget.recall_context_tokens
+            hindsight_recall_max_tokens != runtime_resource_budget.recall_context_tokens
             or hindsight_recall_node_budget != runtime_resource_budget.retrieval_nodes
         ):
             raise RuntimeError(
@@ -388,9 +389,11 @@ class RuntimeSettings:
             )
             or None
         )
-        home_assistant_effects = os.environ.get(
-            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "false"
-        ).strip().casefold()
+        home_assistant_effects = (
+            os.environ.get("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "false")
+            .strip()
+            .casefold()
+        )
         if home_assistant_effects not in {"false", "true"}:
             raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid")
         home_assistant_effects_enabled = home_assistant_effects == "true"
@@ -398,7 +401,13 @@ class RuntimeSettings:
             "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", ""
         ).strip()
         home_assistant_effect_allowlist = tuple(
-            sorted({value.strip() for value in raw_effect_allowlist.split(",") if value.strip()})
+            sorted(
+                {
+                    value.strip()
+                    for value in raw_effect_allowlist.split(",")
+                    if value.strip()
+                }
+            )
         )
         for value in home_assistant_effect_allowlist:
             entity_id, separator, service = value.partition(":")
@@ -408,7 +417,10 @@ class RuntimeSettings:
                 or domain not in {"light", "switch"}
                 or dot != "."
                 or not object_id
-                or any(character not in "abcdefghijklmnopqrstuvwxyz0123456789_" for character in object_id)
+                or any(
+                    character not in "abcdefghijklmnopqrstuvwxyz0123456789_"
+                    for character in object_id
+                )
                 or service not in {"turn_on", "turn_off"}
             ):
                 raise RuntimeError("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is invalid")
@@ -439,22 +451,16 @@ class RuntimeSettings:
         )
         if "EVA_TELEGRAM_BOT_TOKEN" in os.environ:
             raise RuntimeError(
-                "EVA_TELEGRAM_BOT_TOKEN is forbidden; use "
-                "EVA_TELEGRAM_BOT_TOKEN_FILE"
+                "EVA_TELEGRAM_BOT_TOKEN is forbidden; use EVA_TELEGRAM_BOT_TOKEN_FILE"
             )
         telegram_bot_token = (
-            environment_secret(
-                "EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE"
-            )
+            environment_secret("EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE")
             or None
         )
-        stripe_account_id = (
-            os.environ.get("EVA_STRIPE_ACCOUNT_ID", "").strip() or None
-        )
+        stripe_account_id = os.environ.get("EVA_STRIPE_ACCOUNT_ID", "").strip() or None
         if "EVA_STRIPE_SECRET_KEY" in os.environ:
             raise RuntimeError(
-                "EVA_STRIPE_SECRET_KEY is forbidden; use "
-                "EVA_STRIPE_SECRET_KEY_FILE"
+                "EVA_STRIPE_SECRET_KEY is forbidden; use EVA_STRIPE_SECRET_KEY_FILE"
             )
         if "EVA_STRIPE_WEBHOOK_SECRET" in os.environ:
             raise RuntimeError(
@@ -462,9 +468,7 @@ class RuntimeSettings:
                 "EVA_STRIPE_WEBHOOK_SECRET_FILE"
             )
         stripe_secret_key = (
-            environment_secret(
-                "EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE"
-            )
+            environment_secret("EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE")
             or None
         )
         stripe_webhook_secret = (
@@ -476,7 +480,9 @@ class RuntimeSettings:
         commerce_public_base_url = (
             os.environ.get("EVA_COMMERCE_PUBLIC_BASE_URL", "").strip() or None
         )
-        stripe_live_raw = os.environ.get("EVA_STRIPE_LIVE_MODE", "false").strip().lower()
+        stripe_live_raw = (
+            os.environ.get("EVA_STRIPE_LIVE_MODE", "false").strip().lower()
+        )
         if stripe_live_raw not in {"true", "false"}:
             raise RuntimeError("EVA_STRIPE_LIVE_MODE must be true or false")
         stripe_live_mode = stripe_live_raw == "true"
@@ -507,9 +513,9 @@ class RuntimeSettings:
                 str(key).strip(): str(value).strip()
                 for key, value in decoded_fanout.items()
             }
-        fanout_insecure_raw = os.environ.get(
-            "EVA_FANOUT_ALLOW_INSECURE_HTTP", "false"
-        ).strip().casefold()
+        fanout_insecure_raw = (
+            os.environ.get("EVA_FANOUT_ALLOW_INSECURE_HTTP", "false").strip().casefold()
+        )
         if fanout_insecure_raw not in {"true", "false"}:
             raise RuntimeError("EVA_FANOUT_ALLOW_INSECURE_HTTP must be true or false")
         fanout_allow_insecure_http = fanout_insecure_raw == "true"
@@ -554,14 +560,17 @@ class RuntimeSettings:
             raise RuntimeError("Eva AgentMail configuration is incomplete")
         if (telegram_proactive_chat_id is None) != (telegram_bot_token is None):
             raise RuntimeError("Eva proactive Telegram configuration is incomplete")
-        if len(
-            {
-                stripe_account_id is None,
-                stripe_secret_key is None,
-                stripe_webhook_secret is None,
-                commerce_public_base_url is None,
-            }
-        ) != 1:
+        if (
+            len(
+                {
+                    stripe_account_id is None,
+                    stripe_secret_key is None,
+                    stripe_webhook_secret is None,
+                    commerce_public_base_url is None,
+                }
+            )
+            != 1
+        ):
             raise RuntimeError("Eva Stripe commerce configuration is incomplete")
         if stripe_account_id is not None and (
             background_tenant_id is None or background_installation_id is None
@@ -880,7 +889,11 @@ class PostgresHindsightMemoryRuntime:
             or self._dashboard_principal_binding_id is None
         ):
             raise RuntimeError("owner conversation is unavailable")
-        if not isinstance(text, str) or not text.strip() or len(text.encode("utf-8")) > 4_096:
+        if (
+            not isinstance(text, str)
+            or not text.strip()
+            or len(text.encode("utf-8")) > 4_096
+        ):
             raise ValueError("owner conversation text is invalid")
         principal_id = str(self._dashboard_owner_principal_id)
         turn = ConversationTurn.private(
@@ -893,6 +906,31 @@ class PostgresHindsightMemoryRuntime:
             datetime.now(tz=UTC).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ"),
         )
         return turn, self.respond(turn)
+
+    def dashboard_erase_conversation_message(self, message_id: str) -> bool:
+        """Erase one owner-dashboard exchange without accepting browser scope."""
+
+        if (
+            self._runtime_tenant_id is None
+            or self._runtime_installation_id is None
+            or self._dashboard_owner_principal_id is None
+            or self._dashboard_principal_binding_id is None
+        ):
+            raise RuntimeError("owner conversation erasure is unavailable")
+        prefix = "dashboard:"
+        if not isinstance(message_id, str) or not message_id.startswith(prefix):
+            raise ValueError("owner conversation message is invalid")
+        try:
+            UUID(message_id.removeprefix(prefix))
+        except ValueError as error:
+            raise ValueError("owner conversation message is invalid") from error
+        conversation_id = f"dashboard:{self._dashboard_principal_binding_id}"
+        return self._cold_path.erase_document(
+            principal_id=str(self._dashboard_owner_principal_id),
+            document_id=f"{conversation_id}:exchange:{message_id}",
+            source_message_id=message_id,
+            now=datetime.now(tz=UTC).replace(microsecond=0),
+        )
 
     def recall(self, query: RecallCurrentFacts) -> PresenceMemory:
         return self._memory.recall_for_presence(query)
@@ -919,7 +957,9 @@ class PostgresHindsightMemoryRuntime:
                 now=datetime.now(tz=UTC).replace(microsecond=0),
             )
         except Exception as error:
-            raise ValueError("Telegram group turn consent could not be verified") from error
+            raise ValueError(
+                "Telegram group turn consent could not be verified"
+            ) from error
         if active != audience.consent_ref:
             raise ValueError("Telegram group turn consent is not active and exact")
 
@@ -953,8 +993,7 @@ class PostgresHindsightMemoryRuntime:
         grounded_correction = (
             completed_action
             if completed_action is not None
-            and completed_action.call.name
-            == "record_observation_identity_correction"
+            and completed_action.call.name == "record_observation_identity_correction"
             else None
         )
         if grounded_correction is None:
@@ -1089,7 +1128,11 @@ class PostgresHindsightMemoryRuntime:
             tenant_id=tenant_id,
             installation_id=installation_id,
         ).retain_plan(plan)
-        return {"disposition": disposition, "plan": plan.to_payload(), "plan_sha256": plan.sha256}
+        return {
+            "disposition": disposition,
+            "plan": plan.to_payload(),
+            "plan_sha256": plan.sha256,
+        }
 
     def approve_product_publication(
         self,
@@ -1150,9 +1193,7 @@ class PostgresHindsightMemoryRuntime:
                 raise CommerceError("verified publication receipt is missing")
             return {"disposition": opened, "receipt": existing.to_payload()}
         try:
-            receipt = await self._stripe_publication.publish(
-                plan, approval, now=now
-            )
+            receipt = await self._stripe_publication.publish(plan, approval, now=now)
         except Exception as error:
             try:
                 store.record_failure(plan_sha256=plan_sha256, error=error, now=now)
@@ -1229,10 +1270,7 @@ class PostgresHindsightMemoryRuntime:
     def paid_product_download(
         self, *, checkout_session_id: str
     ) -> DigitalFulfillmentDownload:
-        if (
-            self._commerce_tenant_id is None
-            or self._commerce_installation_id is None
-        ):
+        if self._commerce_tenant_id is None or self._commerce_installation_id is None:
             raise RuntimeError("paid product fulfillment is unavailable")
         now = datetime.now(tz=UTC).replace(microsecond=0)
         orders = PostgresPaidOrderStore(
@@ -1863,11 +1901,15 @@ def create_runtime_app() -> FastAPI:
         active_group_consent_resolver=group_consent,
     )
     identity_pack = load_current_identity_pack(
-        None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
+        None
+        if settings.identity_pack_file is None
+        else Path(settings.identity_pack_file),
         trust=(
             None
             if settings.identity_pack_trust_file is None
-            else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))
+            else load_identity_pack_trust_binding(
+                Path(settings.identity_pack_trust_file)
+            )
         ),
     )
     identity = IdentityProfile(
@@ -2082,9 +2124,7 @@ def create_runtime_app() -> FastAPI:
         else PostgresConversationJournal(
             engine,
             TimelineScope(
-                tenant_id=uuid5(
-                    NAMESPACE_URL, f"eva2:{settings.background_tenant_id}"
-                ),
+                tenant_id=uuid5(NAMESPACE_URL, f"eva2:{settings.background_tenant_id}"),
                 installation_id=uuid5(
                     NAMESPACE_URL,
                     "eva2:"
@@ -2197,9 +2237,7 @@ def create_runtime_app() -> FastAPI:
         assert settings.dashboard_installation_id is not None
         assert settings.background_principal_id is not None
         dashboard_owner_principal_id = UUID(settings.background_principal_id)
-        dashboard_principal_binding_id = UUID(
-            settings.dashboard_principal_binding_id
-        )
+        dashboard_principal_binding_id = UUID(settings.dashboard_principal_binding_id)
         delegated_work_store = PostgresDelegatedWorkStore(
             engine,
             TimelineScope(

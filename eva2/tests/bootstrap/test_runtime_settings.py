@@ -175,7 +175,9 @@ def test_runtime_requires_custom_identity_pack_and_trust_together(
 ) -> None:
     _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_IDENTITY_PACK_FILE", "/run/eva/identity/current.json")
-    with pytest.raises(RuntimeError, match="IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE"):
+    with pytest.raises(
+        RuntimeError, match="IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE"
+    ):
         RuntimeSettings.from_environment()
 
     monkeypatch.setenv("EVA_IDENTITY_PACK_TRUST_FILE", "/run/eva/identity/trust.json")
@@ -231,9 +233,7 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
     )
     settings = RuntimeSettings.from_environment()
     assert settings.background_tenant_id == "legacy-tenant"
-    assert settings.dashboard_tenant_id == (
-        "11111111-1111-1111-1111-111111111111"
-    )
+    assert settings.dashboard_tenant_id == ("11111111-1111-1111-1111-111111111111")
 
     monkeypatch.setenv("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "not-a-uuid")
     with pytest.raises(RuntimeError, match="dashboard owner binding is invalid"):
@@ -336,7 +336,9 @@ def test_runtime_requires_private_scoped_resource_budget(
     budget_file = private_tmp_path / "runtime-budget.json"
 
     monkeypatch.delenv("EVA_RUNTIME_RESOURCE_BUDGET_FILE")
-    with pytest.raises(RuntimeError, match="resource budget file and scope are required"):
+    with pytest.raises(
+        RuntimeError, match="resource budget file and scope are required"
+    ):
         RuntimeSettings.from_environment()
 
     monkeypatch.setenv("EVA_RUNTIME_RESOURCE_BUDGET_FILE", str(budget_file))
@@ -739,3 +741,46 @@ def test_dashboard_owner_turns_keep_one_server_bound_conversation(
     assert first.conversation_id == second.conversation_id == f"dashboard:{binding}"
     assert first.message_id != second.message_id
     assert seen == [first, second]
+
+
+def test_dashboard_erasure_uses_only_fixed_owner_and_conversation() -> None:
+    owner = UUID("33333333-3333-3333-3333-333333333333")
+    binding = UUID("44444444-4444-4444-8444-444444444444")
+    message_uuid = UUID("55555555-5555-4555-8555-555555555555")
+
+    class ColdPath:
+        def __init__(self) -> None:
+            self.calls: list[dict[str, object]] = []
+
+        def erase_document(self, **kwargs: object) -> bool:
+            self.calls.append(kwargs)
+            return True
+
+    cold_path = ColdPath()
+    runtime = PostgresHindsightMemoryRuntime(
+        object(),  # type: ignore[arg-type]
+        object(),  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        cold_path,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        runtime_tenant_id="tenant:dashboard",
+        runtime_installation_id="installation:dashboard",
+        delegated_work_store=object(),  # type: ignore[arg-type]
+        dashboard_owner_principal_id=owner,
+        dashboard_principal_binding_id=binding,
+    )
+
+    message_id = f"dashboard:{message_uuid}"
+    assert runtime.dashboard_erase_conversation_message(message_id)
+    assert len(cold_path.calls) == 1
+    call = cold_path.calls[0]
+    assert call["principal_id"] == str(owner)
+    assert call["document_id"] == (f"dashboard:{binding}:exchange:{message_id}")
+    assert call["source_message_id"] == message_id
+    assert getattr(call["now"], "tzinfo", None) is not None
+
+    with pytest.raises(ValueError, match="message is invalid"):
+        runtime.dashboard_erase_conversation_message("telegram:other-person:1")
+    assert len(cold_path.calls) == 1

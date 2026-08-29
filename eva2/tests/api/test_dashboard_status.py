@@ -102,6 +102,7 @@ class _EffectStopRuntime(_Runtime):
 class _ConversationRuntime(_Runtime):
     def __init__(self) -> None:
         self.after: list[tuple[ConversationTurn, GroundedReply]] = []
+        self.erased: list[str] = []
 
     def dashboard_turn(self, text: str) -> tuple[ConversationTurn, GroundedReply]:
         if not text.strip():
@@ -126,6 +127,10 @@ class _ConversationRuntime(_Runtime):
 
     def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None:
         self.after.append((turn, reply))
+
+    def dashboard_erase_conversation_message(self, message_id: str) -> bool:
+        self.erased.append(message_id)
+        return True
 
 
 def test_dashboard_status_is_read_only_and_non_secret() -> None:
@@ -224,12 +229,20 @@ def test_owner_conversation_page_and_turn_are_token_gated() -> None:
         ).status_code
         == 401
     )
+    assert (
+        client.post(
+            "/internal/v1/dashboard/conversation/erase",
+            json={"message_id": "dashboard:message"},
+        ).status_code
+        == 401
+    )
 
     headers = {"authorization": f"Bearer {token}"}
     page = client.get("/internal/v1/dashboard/conversation", headers=headers)
     assert page.status_code == 200
     assert "Lokale eigenaarssessie" in page.text
     assert "dashboard/conversation/respond" in page.text
+    assert "dashboard/conversation/erase" in page.text
     assert "https://" not in page.text
 
     response = client.post(
@@ -244,12 +257,33 @@ def test_owner_conversation_page_and_turn_are_token_gated() -> None:
     assert runtime.after[0][0].audience.kind == "private_person"
     assert runtime.after[0][0].principal_id == "person:owner"
 
+    erased = client.post(
+        "/internal/v1/dashboard/conversation/erase",
+        headers=headers,
+        json={"message_id": response.json()["message_id"]},
+    )
+    assert erased.status_code == 200
+    assert erased.headers["cache-control"] == "no-store"
+    assert erased.json() == {
+        "contract": "EvaDashboardConversationErasure/v1",
+        "disposition": "erased",
+        "message_sha256": hashlib.sha256(b"dashboard:message").hexdigest(),
+    }
+    assert runtime.erased == ["dashboard:message"]
+
     invalid = client.post(
         "/internal/v1/dashboard/conversation/respond",
         headers=headers,
         json={"text": "", "tenant_id": "not-accepted"},
     )
     assert invalid.status_code == 422
+
+    invalid_erasure = client.post(
+        "/internal/v1/dashboard/conversation/erase",
+        headers=headers,
+        json={"message_id": "dashboard:message", "principal_id": "other"},
+    )
+    assert invalid_erasure.status_code == 422
 
 
 def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> None:
@@ -414,14 +448,12 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     capability_by_id = {item["id"]: item for item in payload["capabilities"]}
     assert capability_by_id["child-engine"]["state"] == "tested"
     assert capability_by_id["runtime-subagents"]["state"] == "tested"
-    assert (
-        capability_by_id["runtime-subagents"]["title"]
-        == "Subagents vanuit Eva-chat"
-    )
+    assert capability_by_id["runtime-subagents"]["title"] == "Subagents vanuit Eva-chat"
     assert "86,6 MB" in capability_by_id["runtime-subagents"]["proof"]
-    assert "dezelfde modeloproep niet blind opnieuw" in capability_by_id[
-        "runtime-subagents"
-    ]["meaning"]
+    assert (
+        "dezelfde modeloproep niet blind opnieuw"
+        in capability_by_id["runtime-subagents"]["meaning"]
+    )
     assert capability_by_id["browser"]["state"] == "tested"
     assert "openbare accountloze pagina" in capability_by_id["browser"]["proof"]
     assert "directe egress was geblokkeerd" in capability_by_id["browser"]["meaning"]
@@ -433,9 +465,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "agent-browser" in capability_by_id["browser"]["meaning"]
     assert "8 kritieke + 55 hoge" in capability_by_id["browser"]["meaning"]
     assert capability_by_id["telegram-real-test"]["state"] == "selected"
-    assert "nog nul echte testberichten" in capability_by_id["telegram-real-test"][
-        "proof"
-    ]
+    assert (
+        "nog nul echte testberichten" in capability_by_id["telegram-real-test"]["proof"]
+    )
     assert "privé /start" in capability_by_id["telegram-real-test"]["next"]
     assert capability_by_id["voice"]["state"] == "selected"
     assert "geen bruikbare audiohardware" in capability_by_id["voice"]["proof"]
@@ -443,36 +475,41 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "speaker als antwoordgenerator stoppen" in capability_by_id["voice"]["proof"]
     assert "softwarestop is gebouwd" in capability_by_id["voice"]["meaning"]
     assert "read-only voorvertoning" in capability_by_id["personal-memory"]["meaning"]
-    assert "Home Assistant en AgentMail instellen" in capability_by_id["installer"]["proof"]
+    assert (
+        "Home Assistant en AgentMail instellen"
+        in capability_by_id["installer"]["proof"]
+    )
     assert "server-side controle" in capability_by_id["installer"]["meaning"]
     assert "toegang bewaren" in capability_by_id["installer"]["proof"]
-    assert "providerantwoord komen niet terug" in capability_by_id["installer"]["meaning"]
+    assert (
+        "providerantwoord komen niet terug" in capability_by_id["installer"]["meaning"]
+    )
     assert capability_by_id["benchmarks"]["state"] == "selected"
     assert "AgentBench FC-CPU-omgeving" in capability_by_id["benchmarks"]["proof"]
     assert "21 checks" in capability_by_id["benchmarks"]["proof"]
     assert "zonder score" in capability_by_id["benchmarks"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
-    assert dependency_by_name["Pydantic AI"]["version"] == (
-        "2.32.1 + OpenAI SDK 3.3.1"
-    )
+    assert dependency_by_name["Pydantic AI"]["version"] == ("2.32.1 + OpenAI SDK 3.3.1")
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"
-    assert "8 CRITICAL + 69 HIGH" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
+    assert (
+        "8 CRITICAL + 69 HIGH"
+        in dependency_by_name["Microsoft Playwright MCP"]["decision"]
+    )
     assert "7 + 47" in dependency_by_name["Microsoft Playwright MCP"]["decision"]
     assert dependency_by_name["agent-browser"]["state"] == "tested"
     assert dependency_by_name["agent-browser"]["version"] == "0.35.1 kandidaat"
     assert "8 CRITICAL + 55 HIGH" in dependency_by_name["agent-browser"]["decision"]
     assert dependency_by_name["Hindsight Control Plane"]["state"] == "open"
     assert dependency_by_name["Hindsight Control Plane"]["version"] == "0.9.1 kandidaat"
-    assert "nooit Eva's geheugenwaarheid" in dependency_by_name["Hindsight"][
-        "decision"
-    ]
+    assert "nooit Eva's geheugenwaarheid" in dependency_by_name["Hindsight"]["decision"]
     assert dependency_by_name["Renovate + Trivy"]["state"] == "selected"
-    assert "gerichte Trivy-scan vond blockers" in dependency_by_name["Renovate + Trivy"][
-        "version"
-    ]
+    assert (
+        "gerichte Trivy-scan vond blockers"
+        in dependency_by_name["Renovate + Trivy"]["version"]
+    )
     for item in [*payload["capabilities"], *payload["dependencies"]]:
         if item["state"] in {"live", "tested"}:
             assert item["evidence"].startswith(
@@ -667,13 +704,18 @@ def test_dashboard_identity_diff_rejects_an_unbound_or_unsupported_draft() -> No
         assert response.json() == {"detail": "identity draft is invalid"}
 
 
-def test_dashboard_soul_import_previews_without_storing_or_activating_identity() -> None:
+def test_dashboard_soul_import_previews_without_storing_or_activating_identity() -> (
+    None
+):
     identity = load_current_identity_pack()
     markdown = "# Eva\n\n## Naam\nEvi\n\n## Humor\ndroog wanneer het helpt\n"
 
     response = TestClient(create_app(_Runtime())).post(
         "/internal/v1/dashboard/identity/soul-import/diff",
-        json={"draft_id": "identity-draft:soul:dashboard:001", "soul_markdown": markdown},
+        json={
+            "draft_id": "identity-draft:soul:dashboard:001",
+            "soul_markdown": markdown,
+        },
     )
 
     assert response.status_code == 200
@@ -686,7 +728,11 @@ def test_dashboard_soul_import_previews_without_storing_or_activating_identity()
         "base_pack_sha256": canonical_sha256(identity),
         "changes": [
             {"field": "display_name", "before": "Eva", "after": "Evi"},
-            {"field": "humour", "before": identity.humour, "after": "droog wanneer het helpt"},
+            {
+                "field": "humour",
+                "before": identity.humour,
+                "after": "droog wanneer het helpt",
+            },
         ],
         "non_claims": [
             "SOUL.md is not opgeslagen of geactiveerd.",
@@ -696,7 +742,9 @@ def test_dashboard_soul_import_previews_without_storing_or_activating_identity()
     assert load_current_identity_pack() == identity
 
 
-def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source() -> None:
+def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source() -> (
+    None
+):
     source = "## Tools\nbrowser\n"
     response = TestClient(create_app(_Runtime())).post(
         "/internal/v1/dashboard/identity/soul-import/diff",
