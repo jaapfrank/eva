@@ -1,10 +1,10 @@
 {
   "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
-  "issuedAt": "2026-08-29T11:29:48+02:00",
+  "issuedAt": "2026-08-29T11:38:58+02:00",
   "status": "improved_still_over_budget",
   "source": {
-    "commit": "cf2f03452f2d0e07d97acba93bbcd45b3f289fba",
-    "rawReceiptSha256": "fb05a46a4f53413174c7ddada175408bf0fd1f1e00e858ebdba0ac1027ce230d"
+    "commit": "2d2248ad0f2b4ddcf44c707cb69f2abd1532c049",
+    "rawReceiptSha256": "35f7fad1f153bbcaab488a3619b10ccac0bab6eb4a8f6c190b912502417cc089"
   },
   "before": {
     "commit": "1b51d9dd4f5c8f140ac94cccdfb5940a5ce9fc50",
@@ -12,9 +12,9 @@
     "excessProductPhysicalLines": 21874
   },
   "after": {
-    "productPhysicalLines": 90127,
-    "excessProductPhysicalLines": 15127,
-    "removedFromProductRuntime": 6747,
+    "productPhysicalLines": 89850,
+    "excessProductPhysicalLines": 14850,
+    "removedFromProductRuntime": 7024,
     "directRuntimeDependencies": 9,
     "unclassifiedSourcePaths": 0,
     "pc01Passed": false
@@ -27,7 +27,8 @@
     "operator-only legacy memory trial repository",
     "host-only Telegram test preflight and launcher",
     "disposable Telegram diagnostic core and ingress wrapper",
-    "managed-B runtime-smoke helper used only by tests"
+    "managed-B runtime-smoke helper used only by tests",
+    "historical tranche-4B episode repository superseded by the current stores"
   ],
   "verification": {
     "historicalFixtureContainerTestsPassed": 78,
@@ -43,10 +44,13 @@
     "ruffPassed": true,
     "telegramTestImageOfflineBuildStatus": "passed",
     "telegramTestImageDigest": "sha256:92ebfecd3039554d6d52f025614704b441e9a5bde500e39f567fc40a6d80ecbd",
+    "historicalEpisodeStaticTestsPassed": 7,
+    "historicalEpisodeDatabaseCasesStoppedBeforeRepository": 10,
+    "historicalEpisodeDatabaseStopReason": "current empty-4D admission rejects the old fixture's pre-head anchor",
     "eva1HealthHttp": 200,
     "eva2ReadyHttp": 200
   },
-  "nextRequiredAction": "Remove or replace another 15127 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
+  "nextRequiredAction": "Remove or replace another 14850 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
   "nonClaims": [
     "PC01 is not green.",
     "Moving active runtime or operator behavior outside the counted roots is not allowed remediation.",
