@@ -1,14 +1,35 @@
-ARG PROVEN_CORE_IMAGE
-FROM ${PROVEN_CORE_IMAGE}
+ARG PROVEN_CORE_IMAGE=eva2/distroless-dashboard-authority@sha256:60a93eef434e0c317f3aeeb15c8cb64ff4dad62f225b5d3c8a0e37c3135a9b9d
+ARG RUNTIME_LIBS_IMAGE=python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+ARG FINAL_BASE_IMAGE=gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78
+
+FROM ${PROVEN_CORE_IMAGE} AS proven_core
+FROM ${RUNTIME_LIBS_IMAGE} AS runtime_libs
+FROM ${FINAL_BASE_IMAGE}
 
 ARG SOURCE_COMMIT
 ARG SOURCE_DATE_EPOCH
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/opt/eva/src:/opt/eva \
+    PYTHONUNBUFFERED=1
+WORKDIR /opt/eva
+
 LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
       io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH} \
       io.eva2.source-refresh="git-archive-v1"
 
+COPY --from=proven_core /usr/local /usr/local
+COPY --from=proven_core /opt/eva /opt/eva
+COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/
+COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libz.so.1* /usr/lib/x86_64-linux-gnu/
 COPY --chown=65532:65532 src /opt/eva/src
 COPY --chown=65532:65532 connector_sdk /opt/eva/connector_sdk
 COPY --chown=65532:65532 alembic.ini /opt/eva/alembic.ini
 COPY --chown=65532:65532 migrations /opt/eva/migrations
 COPY --chown=65532:65532 schemas /opt/eva/schemas
+
+USER 65532:65532
+EXPOSE 8080
+HEALTHCHECK --interval=10s --timeout=3s --retries=6 \
+  CMD ["/usr/local/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).read()"]
+ENTRYPOINT ["/usr/local/bin/python"]
+CMD ["-m", "uvicorn", "eva.bootstrap.runtime:create_runtime_app", "--factory", "--host", "0.0.0.0", "--port", "8080", "--no-access-log"]

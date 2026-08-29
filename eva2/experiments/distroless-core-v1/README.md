@@ -28,6 +28,9 @@ lokale digest worden opgegeven. De context komt uitsluitend uit een schone
 Git-archive en vervangt alleen Eva-bron, connector-SDK, migraties en schema's.
 De Dockerfile bevat bewust geen `RUN`, package-manager, shell of netwerkstap.
 Een bronrefresh telt pas na import-, migratie-, runtime- en 0/0-scanbewijs.
+De eindlaag gebruikt de lokaal aanwezige, digest-gepinde Debian 13-distroless-
+basis. Alleen `libffi` en `zlib` komen uit de eveneens gepinde Python-
+compatibiliteitsbasis; de actuele scan van die basis noemt geen van beide.
 
 De resterende drie Pythonbevindingen komen allemaal uit `cryptography 46.0.5`.
 De kandidaat installeert daarom uitsluitend de officiële abi3-wheel van
