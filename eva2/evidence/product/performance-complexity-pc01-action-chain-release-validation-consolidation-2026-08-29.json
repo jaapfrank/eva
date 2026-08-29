@@ -1,0 +1,63 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ActionChainReleaseValidationConsolidation/v1",
+  "recordedAt": "2026-08-29T18:00:32Z",
+  "sourceCommit": "0ae764ced97a4f26ba23d5361e93e7be5d55a99c",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedValidator": "validated_released_step_ids",
+    "consumers": [
+      "read advance reload validation",
+      "effect advance reload validation"
+    ],
+    "preservedBindings": [
+      "source step dependency",
+      "sorted unique released IDs",
+      "all dependencies succeeded",
+      "dependency update time not after proof event",
+      "kind-specific corruption messages"
+    ],
+    "netProductPhysicalLines": -26
+  },
+  "verification": {
+    "fullPostgresActionChainTests": {
+      "passed": 106,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "cc5595171e84fb4b9b16e00ba1e2059f7f961b3dc760312bebf1196e5ede42b9"
+    },
+    "applicationAdvanceTests": {
+      "passed": 7,
+      "failed": 0,
+      "logSha256": "3b1c284313edd5ff13ac9245822f8e0e4750778ea8e7d8c0189bf4d979c7433a"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83212,
+      "productManifestSha256": "307f65e807e8e0c5fc89c0306d68551122abf7a904b5d5ae82917733ff55481e"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83186,
+      "productManifestSha256": "aea81aa7bf9618f8c2d1d14d930818dd58e65bf8e73a36820f493c479761b12e",
+      "livingCorePhysicalLines": 82593,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8186,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No action-chain dependency, read, effect, authority, transition or replay boundary was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
