@@ -14,6 +14,7 @@ from eva.application.conversation import load_current_identity_pack
 from eva.application.soul_markdown import soul_markdown_to_draft
 from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_budget_workflow import InstallerBudgetWorkflow
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
 from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
@@ -52,6 +53,7 @@ def _client(
     capability_workflow: InstallerCapabilityWorkflow | None = None,
     secret_store: InstallerSecretStore | None = None,
     secret_lifecycle: InstallerSecretLifecycle | None = None,
+    budget_workflow: InstallerBudgetWorkflow | None = None,
 ) -> TestClient:
     return TestClient(
         create_installer_wizard(
@@ -62,6 +64,7 @@ def _client(
             capability_workflow=capability_workflow,
             secret_store=secret_store,
             secret_lifecycle=secret_lifecycle,
+            budget_workflow=budget_workflow,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -151,6 +154,10 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     assert secret_status.status_code == 200
     assert secret_status.json()["enabled"] is False
     assert {item["state"] for item in secret_status.json()["slots"]} == {"unavailable"}
+    budget_status = client.get("/internal/v1/onboarding/budgets/status")
+    assert budget_status.status_code == 200
+    assert budget_status.json()["phase"] == "unavailable"
+    assert budget_status.json()["enabled"] is False
     plan = client.get("/internal/v1/onboarding/install/plan")
     assert plan.status_code == 200
     assert plan.json()["status"] == "blocked"
@@ -1200,7 +1207,13 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     profile_workspace = private_tmp_path / "plan-profile"
     capability_workspace = private_tmp_path / "plan-capabilities"
     secret_workspace = private_tmp_path / "plan-secrets"
-    for path in (profile_workspace, capability_workspace, secret_workspace):
+    budget_workspace = private_tmp_path / "plan-budgets"
+    for path in (
+        profile_workspace,
+        capability_workspace,
+        secret_workspace,
+        budget_workspace,
+    ):
         path.mkdir(mode=0o700)
     profile = InstallerProfileWorkflow(
         workspace=profile_workspace, clock=lambda: "2026-08-29T04:40:00Z"
@@ -1222,9 +1235,25 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     for step_id in ("telegram", "home_assistant", "email", "adaptive_connector"):
         capabilities.select(step_id=step_id, wanted=False)
     capabilities.select(step_id="budgets", wanted=True)
-    capabilities.record_verification(
-        step_id="budgets", outcome="ready", evidence_sha256="b" * 64
+    budgets = InstallerBudgetWorkflow(
+        workspace=budget_workspace,
+        capability_workflow=capabilities,
+        clock=lambda: "2026-08-29T04:42:00Z",
     )
+    staged_budget = budgets.stage(
+        background_reflections_per_installation_day=40,
+        background_reflections_per_person_day=4,
+        external_monthly_spend_cap_eur_cents=0,
+        max_input_tokens=12_000,
+        max_output_tokens=1_200,
+        memory_bytes_per_person=20_971_520,
+        memory_records_per_person=2_000,
+        profile_context_tokens=800,
+        recall_context_tokens=3_000,
+        retention_days=365,
+        retrieval_nodes=50,
+    )
+    budgets.confirm(expected_budget_sha256=staged_budget.budget_sha256)
     secrets = InstallerSecretStore(workspace=secret_workspace)
     secrets.store(
         slot_id="model_provider", secret="synthetic-model-plan-secret-123456"
@@ -1236,6 +1265,7 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
         profile_workflow=profile,
         capability_workflow=capabilities,
         secret_store=secrets,
+        budget_workflow=budgets,
     )
     assert client.post(
         "/internal/v1/bootstrap", json={"token": "p" * 43}
@@ -1247,7 +1277,99 @@ def test_wizard_shows_ready_read_only_installation_plan(private_tmp_path: Path) 
     assert "Installatieplan" in page.text
     assert plan.status_code == 200
     assert plan.headers["cache-control"] == "no-store"
-    assert plan.json()["status"] == "ready_to_install"
+    assert plan.json()["status"] == "ready_for_release_preparation"
     assert plan.json()["blockers"] == []
     assert "synthetic-model-plan-secret" not in plan.text
     assert all(route.path != "/internal/v1/onboarding/install/apply" for route in client.app.routes)
+
+
+def test_wizard_user_can_confirm_safe_budgets_and_resume(
+    private_tmp_path: Path,
+) -> None:
+    capability_workspace = private_tmp_path / "budget-api-capabilities"
+    budget_workspace = private_tmp_path / "budget-api-state"
+    capability_workspace.mkdir(mode=0o700)
+    budget_workspace.mkdir(mode=0o700)
+    capabilities = InstallerCapabilityWorkflow(workspace=capability_workspace)
+    capabilities.select(step_id="budgets", wanted=True)
+    budgets = InstallerBudgetWorkflow(
+        workspace=budget_workspace,
+        capability_workflow=capabilities,
+        clock=lambda: "2026-08-29T05:10:00Z",
+    )
+    bootstrap = InstallerBootstrap(token="q" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=capabilities,
+        budget_workflow=budgets,
+    )
+    assert client.post(
+        "/internal/v1/bootstrap", json={"token": "q" * 43}
+    ).status_code == 204
+    origin = {"origin": "http://127.0.0.1"}
+    values = {
+        "background_reflections_per_installation_day": 40,
+        "background_reflections_per_person_day": 4,
+        "external_monthly_spend_cap_eur_cents": 0,
+        "max_input_tokens": 12_000,
+        "max_output_tokens": 1_200,
+        "memory_bytes_per_person": 20_971_520,
+        "memory_records_per_person": 2_000,
+        "profile_context_tokens": 800,
+        "recall_context_tokens": 3_000,
+        "retention_days": 365,
+        "retrieval_nodes": 50,
+    }
+    staged = client.post(
+        "/internal/v1/onboarding/budgets/stage", json=values, headers=origin
+    )
+    assert staged.status_code == 200
+    denied = client.post(
+        "/internal/v1/onboarding/budgets/confirm",
+        json={
+            "budget_sha256": staged.json()["budget_sha256"],
+            "confirmation": "LIMIETEN BEVESTIGEN",
+        },
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert denied.status_code == 403
+    confirmed = client.post(
+        "/internal/v1/onboarding/budgets/confirm",
+        json={
+            "budget_sha256": staged.json()["budget_sha256"],
+            "confirmation": "LIMIETEN BEVESTIGEN",
+        },
+        headers=origin,
+    )
+    assert confirmed.status_code == 200
+    assert confirmed.json()["phase"] == "ready"
+    assert capabilities.status().step("budgets").evidence_sha256 == (
+        confirmed.json()["budget_sha256"]
+    )
+
+    resumed = InstallerBudgetWorkflow(
+        workspace=budget_workspace,
+        capability_workflow=InstallerCapabilityWorkflow(
+            workspace=capability_workspace
+        ),
+    )
+    second_bootstrap = InstallerBootstrap(
+        token="r" * 43, created_at=1.0, clock=lambda: 1.0
+    )
+    second = _client(
+        second_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=resumed.capability_workflow,
+        budget_workflow=resumed,
+    )
+    assert second.post(
+        "/internal/v1/bootstrap", json={"token": "r" * 43}
+    ).status_code == 204
+    status = second.get("/internal/v1/onboarding/budgets/status")
+    assert status.status_code == 200
+    assert status.json()["phase"] == "ready"
+    assert status.json()["capability_bound"] is True
+    assert status.json()["budget"]["unknown_cost_policy"] == (
+        "block_autonomous_spend"
+    )

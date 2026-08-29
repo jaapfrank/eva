@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPack
+from eva.operations.installer_budget_workflow import InstallerBudgetStatus
 from eva.operations.installer_capability_workflow import InstallerCapabilityStatus
 from eva.operations.installer_profile_workflow import InstallerProfileStatus
 from eva.operations.installer_secret_store import InstallerSecretSlotStatus
@@ -21,6 +22,8 @@ _BLOCKER_MESSAGES = {
     "required_capability_not_ready": "Een verplichte installatiestap is nog niet klaar.",
     "secret_missing": "Voer de toegang voor de gekozen koppeling veilig in.",
     "secret_needs_help": "Rond de onderbroken wijziging van een koppeling eerst af.",
+    "budget_profile_not_ready": "Bewaar en bevestig eerst de harde gebruikslimieten.",
+    "budget_binding_mismatch": "De bevestigde limieten horen niet bij de groene budgetcontrole.",
 }
 
 
@@ -38,6 +41,7 @@ def build_installer_installation_plan(
     profile: InstallerProfileStatus | None,
     capabilities: InstallerCapabilityStatus | None,
     secrets: tuple[InstallerSecretSlotStatus, ...] | None,
+    budgets: InstallerBudgetStatus | None = None,
 ) -> dict[str, object]:
     """Return a fail-closed plan without reading secrets or changing the host."""
 
@@ -113,10 +117,32 @@ def build_installer_installation_plan(
             else:
                 blockers.append(_blocker("secret_missing", step_id=step.step_id))
 
+    budget_payload: dict[str, object] | None = None
+    budget_step = capabilities.step("budgets") if capabilities is not None else None
+    if (
+        budgets is None
+        or budgets.phase != "ready"
+        or budgets.budget is None
+        or budgets.budget_sha256 is None
+    ):
+        blockers.append(_blocker("budget_profile_not_ready", step_id="budgets"))
+    elif (
+        budget_step is None
+        or budget_step.state != "ready"
+        or budget_step.evidence_sha256 != budgets.budget_sha256
+    ):
+        blockers.append(_blocker("budget_binding_mismatch", step_id="budgets"))
+    else:
+        budget_payload = {
+            "budget": budgets.budget.as_dict(),
+            "budget_sha256": budgets.budget_sha256,
+            "revision": budgets.revision,
+        }
     inputs = {
         "capability_head_sha256": capability_head,
         "capability_revision": capability_revision,
         "identity_pack_sha256": canonical_sha256(identity),
+        "budgets": budget_payload,
         "preflight_sha256": canonical_sha256(preflight),
         "profile": profile_payload,
         "secret_bindings": secret_bindings,
@@ -139,7 +165,7 @@ def build_installer_installation_plan(
         "actions": actions,
         "blockers": blockers,
         "capabilities": capability_payload,
-        "contract": "EvaInstallerInstallationPlan/v1",
+        "contract": "EvaInstallerInstallationPlan/v2",
         "inputs": inputs,
         "non_claims": [
             "Dit plan heeft niets geïnstalleerd of gewijzigd.",
@@ -147,6 +173,6 @@ def build_installer_installation_plan(
             "Een echte installatie vereist een aparte, expliciete eigenaarhandeling.",
         ],
         "read_only": True,
-        "status": "ready_to_install" if not blockers else "blocked",
+        "status": "ready_for_release_preparation" if not blockers else "blocked",
     }
     return {**body, "plan_sha256": canonical_sha256(body)}

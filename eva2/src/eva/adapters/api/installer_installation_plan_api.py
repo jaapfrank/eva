@@ -17,8 +17,8 @@ INSTALLER_INSTALLATION_PLAN_SCRIPT = r"""
   function render(plan) {
     target.replaceChildren();
     const state = document.createElement('strong');
-    state.textContent = plan.status === 'ready_to_install' ?
-      'Klaar om de installatie voor te bereiden.' :
+    state.textContent = plan.status === 'ready_for_release_preparation' ?
+      'Klaar voor de veilige releasevoorbereiding.' :
       'Nog niet klaar om te installeren.';
     target.append(state);
     if (plan.blockers.length) {

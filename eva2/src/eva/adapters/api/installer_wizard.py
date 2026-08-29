@@ -19,6 +19,11 @@ from eva.adapters.api.installer_capability_api import (
     INSTALLER_CAPABILITY_SECTION,
     register_installer_capability_routes,
 )
+from eva.adapters.api.installer_budget_api import (
+    INSTALLER_BUDGET_SCRIPT,
+    INSTALLER_BUDGET_SECTION,
+    register_installer_budget_routes,
+)
 from eva.adapters.api.installer_identity_ui import INSTALLER_IDENTITY_SCRIPT
 from eva.adapters.api.installer_installation_plan_api import (
     INSTALLER_INSTALLATION_PLAN_SCRIPT,
@@ -58,6 +63,7 @@ from eva.operations.installer_identity_lifecycle import (
 from eva.operations.installer_installation_plan import (
     build_installer_installation_plan,
 )
+from eva.operations.installer_budget_workflow import InstallerBudgetWorkflow
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
 from eva.operations.installer_provider_configuration import (
@@ -190,6 +196,7 @@ def _page(
     capability_enabled: bool = False,
     secret_enabled: bool = False,
     provider_verification_enabled: bool = False,
+    budget_enabled: bool = False,
 ) -> str:
     status = html.escape(str(receipt["status"]))
     rows = "".join(
@@ -220,6 +227,7 @@ def _page(
     capability_enabled_json = "true" if capability_enabled else "false"
     secret_enabled_json = "true" if secret_enabled else "false"
     provider_enabled_json = "true" if provider_verification_enabled else "false"
+    budget_enabled_json = "true" if budget_enabled else "false"
     return (
         f"""<!doctype html>
 <html lang="nl">
@@ -243,10 +251,11 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
 {INSTALLER_CAPABILITY_SECTION}
 {INSTALLER_SECRET_SECTION}
 {INSTALLER_PROVIDER_SECTION}
+{INSTALLER_BUDGET_SECTION}
 {INSTALLER_INSTALLATION_PLAN_SECTION}
 <section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
 </main>
-<script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};window.__evaProfileEnabled={profile_enabled_json};window.__evaCapabilityEnabled={capability_enabled_json};window.__evaSecretEnabled={secret_enabled_json};window.__evaProviderVerificationEnabled={provider_enabled_json};</script>
+<script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};window.__evaProfileEnabled={profile_enabled_json};window.__evaCapabilityEnabled={capability_enabled_json};window.__evaSecretEnabled={secret_enabled_json};window.__evaProviderVerificationEnabled={provider_enabled_json};window.__evaBudgetEnabled={budget_enabled_json};</script>
 <script>"""
         + INSTALLER_PROFILE_SCRIPT
         + "</script>\n<script>"
@@ -255,6 +264,8 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
         + INSTALLER_SECRET_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_PROVIDER_SCRIPT
+        + "</script>\n<script>"
+        + INSTALLER_BUDGET_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_INSTALLATION_PLAN_SCRIPT
         + "</script>\n<script>"
@@ -275,6 +286,7 @@ def create_installer_wizard(
     provider_configuration_store: InstallerProviderConfigurationStore | None = None,
     configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
     secret_lifecycle: InstallerSecretLifecycle | None = None,
+    budget_workflow: InstallerBudgetWorkflow | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -312,9 +324,16 @@ def create_installer_wizard(
         or secret_lifecycle.secret_store.workspace != secret_store.workspace
     ):
         raise ValueError("installer secret lifecycle uses different workspaces")
+    if budget_workflow is not None and (
+        capability_workflow is None
+        or budget_workflow.capability_workflow.workspace
+        != capability_workflow.workspace
+    ):
+        raise ValueError("installer budget workflow uses different workspaces")
     provider_verification_enabled = (
         provider_verifier is not None and receipt["status"] == "ready"
     )
+    budget_enabled = budget_workflow is not None and receipt["status"] == "ready"
     app = FastAPI(
         title="Eva local installer", docs_url=None, redoc_url=None, openapi_url=None
     )
@@ -404,6 +423,7 @@ def create_installer_wizard(
                 capability_enabled=capability_enabled,
                 secret_enabled=secret_enabled,
                 provider_verification_enabled=provider_verification_enabled,
+                budget_enabled=budget_enabled,
             ),
             headers=_SECURITY_HEADERS,
         )
@@ -452,6 +472,14 @@ def create_installer_wizard(
         security_headers=_SECURITY_HEADERS,
         configured_probe_factory=configured_probe_factory,
     )
+    register_installer_budget_routes(
+        app,
+        workflow=budget_workflow,
+        enabled=budget_enabled,
+        require_read=require_installer_read,
+        require_write=require_installer_write,
+        security_headers=_SECURITY_HEADERS,
+    )
     register_installer_installation_plan_routes(
         app,
         build_plan=lambda: build_installer_installation_plan(
@@ -464,6 +492,7 @@ def create_installer_wizard(
                 else None
             ),
             secrets=secret_store.status() if secret_store is not None else None,
+            budgets=budget_workflow.status() if budget_workflow is not None else None,
         ),
         require_read=require_installer_read,
         security_headers=_SECURITY_HEADERS,
