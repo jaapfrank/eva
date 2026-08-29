@@ -109,12 +109,15 @@ def test_synthetic_turn_uses_the_sealed_live_canary_scope() -> None:
     assert payload["installation_id"] == "live-test-installation"
 
 
-def test_reboot_topology_requires_active_slot4_and_quiescent_slot3(
+def test_reboot_topology_requires_active_slot3_and_quiescent_slot4(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    assert probe.ACTIVE_PORT == 44711
-    assert probe.ROLLBACK_PORT == 44710
-    assert "managed-b-slot4" in probe.CONTAINERS["core"][0]
+    assert probe.ACTIVE_SLOT == 3
+    assert probe.ROLLBACK_SLOT == 4
+    assert probe.ACTIVE_PORT == 44710
+    assert probe.ROLLBACK_PORT == 44711
+    assert "managed-b-slot3" in probe.CONTAINERS["core"][0]
+    assert "managed-b-slot4" in probe.CONTAINERS["rollback_core"][0]
     assert probe.CONTAINERS["rollback_core"][1] == "exited"
     lines = []
     for name, expected_status, needs_health in probe.CONTAINERS.values():

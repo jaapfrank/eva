@@ -27,50 +27,70 @@ from urllib import error, request
 
 CONTRACT_ARM = "Eva2ManagedBRebootArm/v1"
 CONTRACT_RECEIPT = "Eva2ManagedBPostbootReceipt/v1"
-ACTIVE_PORT = 44711
-ROLLBACK_PORT = 44710
+ACTIVE_SLOT = 3
+ROLLBACK_SLOT = 4
+ACTIVE_PORT = 44707 + ACTIVE_SLOT
+ROLLBACK_PORT = 44707 + ROLLBACK_SLOT
 EVA1_PORT = 3210
 ROUTE_DROPIN = Path("/etc/systemd/system/eva.service.d/30-eva2-current-candidate.conf")
-DASHBOARD_TOKEN = Path("/var/lib/eva2/managed-b-slot4/secrets/dashboard-token")
+DASHBOARD_TOKEN = Path(
+    f"/var/lib/eva2/managed-b-slot{ACTIVE_SLOT}/secrets/dashboard-token"
+)
 POWERSHELL = Path("/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
 CONTAINERS = {
-    "core": ("eva2-managed-b-slot4-core", "running", True),
-    "hindsight": ("eva2-managed-b-slot4-hindsight-1", "running", True),
+    "core": (f"eva2-managed-b-slot{ACTIVE_SLOT}-core", "running", True),
+    "hindsight": (
+        f"eva2-managed-b-slot{ACTIVE_SLOT}-hindsight-1",
+        "running",
+        True,
+    ),
     "hindsight_access_lease": (
-        "eva2-managed-b-slot4-hindsight-access-lease-1",
+        f"eva2-managed-b-slot{ACTIVE_SLOT}-hindsight-access-lease-1",
         "running",
         False,
     ),
     "hindsight_postgres": (
-        "eva2-managed-b-slot4-hindsight-postgres-1",
+        f"eva2-managed-b-slot{ACTIVE_SLOT}-hindsight-postgres-1",
         "running",
         True,
     ),
     "model_access_lease": (
-        "eva2-managed-b-slot4-model-access-lease-1",
+        f"eva2-managed-b-slot{ACTIVE_SLOT}-model-access-lease-1",
         "running",
         False,
     ),
-    "postgres": ("eva2-managed-b-slot4-postgres-1", "running", True),
-    "rollback_core": ("eva2-managed-b-slot3-core", "exited", False),
-    "rollback_hindsight": ("eva2-managed-b-slot3-hindsight-1", "exited", False),
+    "postgres": (
+        f"eva2-managed-b-slot{ACTIVE_SLOT}-postgres-1",
+        "running",
+        True,
+    ),
+    "rollback_core": (
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-core",
+        "exited",
+        False,
+    ),
+    "rollback_hindsight": (
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-hindsight-1",
+        "exited",
+        False,
+    ),
     "rollback_hindsight_access_lease": (
-        "eva2-managed-b-slot3-hindsight-access-lease-1",
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-hindsight-access-lease-1",
         "running",
         False,
     ),
     "rollback_hindsight_postgres": (
-        "eva2-managed-b-slot3-hindsight-postgres-1",
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-hindsight-postgres-1",
         "running",
         True,
     ),
     "rollback_model_access_lease": (
-        "eva2-managed-b-slot3-model-access-lease-1",
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-model-access-lease-1",
         "running",
         False,
     ),
     "rollback_postgres": (
-        "eva2-managed-b-slot3-postgres-1",
+        f"eva2-managed-b-slot{ROLLBACK_SLOT}-postgres-1",
         "running",
         True,
     ),

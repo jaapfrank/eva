@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 13:02 CEST
+Laatst bijgewerkt: 29 augustus 2026, 13:15 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe beheerde Eva2 staat nu op slot 4. Zij praat via de bestaande
+De nieuwe DBOS-loze Eva2 staat nu op slot 3. Zij praat via de bestaande
 Codex-koppeling, heeft haar eigen persoonlijkheid, bewaart gesprekken in
 PostgreSQL en gebruikt Hindsight voor langetermijngeheugen.
 
@@ -20,7 +20,7 @@ praktijktest zijn nog niet klaar.
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de beheerde Eva2 op slot 4, poort `44711`.
+- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op slot 3, poort `44710`.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -57,13 +57,11 @@ praktijktest zijn nog niet klaar.
 - Slot 3 en slot 4 hebben ieder eigen databases. De nieuwe operator stopt eerst
   alle schrijvers, maakt een gecontroleerde Eva1-back-up, kopieert beide
   databases en vergelijkt aantallen, schema en inhoud vóór de route wijzigt.
-- De echte route ging groen 3→4, 4→3 en opnieuw 3→4. Het testfeit dat op slot 4
-  was geschreven kwam exact terug op slot 3 en daarna weer op slot 4.
+- De nieuwe image ging groen 4→3, 3→4 en opnieuw 4→3. Het testfeit dat op slot 3
+  was geschreven kwam exact terug op slot 4 en daarna weer op slot 3.
 - Eva1 is actief, heeft nul herstarts en alle vijf controles geven HTTP 200.
-- Slot 4 is actief en gezond. De oude slot-3-kern staat stil; zijn databases
+- Slot 3 is actief en gezond. De oude slot-4-kern staat stil; zijn databases
   blijven gezond beschikbaar voor een later gesynchroniseerde terugrol.
-- De automatische controle na een Windows-reboot is geïnstalleerd en bewapend.
-  Op dezelfde start weigert zij terecht en maakt zij geen vals bewijsbestand.
 - Oude proefproviders en de losse Telegram-testlauncher zitten niet meer in de
   gewone Eva2-runtime. De aparte Telegram-testimage is daarna echt opnieuw
   zonder bouwnetwerk gemaakt en kan haar twee diagnoseprocessen laden.
@@ -98,9 +96,9 @@ praktijktest zijn nog niet klaar.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
   89.442 productregels en mag er maximaal 75.000 hebben.
-- De nieuwe DBOS-loze 35-pakketimage is nog niet de levende `/eva2`-route. De
-  echte model-, Hindsight- en volledige herstartproef zijn groen; de aparte
-  A/B-promotie en directe terugvalproef op deze image moeten nog.
+- De automatische rebootcontrole verwacht nog slot 4 als actieve route. Zij
+  moet eerst voor de nieuwe actieve slot-3-route worden herbewapend; anders zou
+  een latere rebootcontrole terecht rood worden.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -121,8 +119,8 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
-4. De nieuwe exacte 35-pakketimage alleen via de bestaande A/B-terugvalroute
-   promoveren en daarna heen, terug en opnieuw heen controleren.
+4. De automatische rebootcontrole voor actief slot 3 en terugvalslot 4
+   herbewapenen voordat iemand de echte Windows/WSL-reboot uitvoert.
 5. Nog minstens 14.442 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
@@ -150,6 +148,7 @@ praktijktest zijn nog niet klaar.
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)
+- [Nieuwe image live met verliesloze heen-terug-heenproef](evidence/living-core/eva2-runtime35-live-bidirectional-cutover-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

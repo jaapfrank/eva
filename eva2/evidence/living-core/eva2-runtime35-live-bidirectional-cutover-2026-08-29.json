@@ -1,0 +1,126 @@
+{
+  "contract": "Eva2Runtime35LiveBidirectionalCutoverReceipt/v1",
+  "issuedAt": "2026-08-29T13:11:37+02:00",
+  "status": "passed_live",
+  "candidate": {
+    "sourceCommit": "087f57b70c4e9ba28aa3ff48ecb3c0f120974020",
+    "coreImage": "sha256:c808a841bf74c6d2ed2487b24b47b93ffcc6c1e64ee3a8667db568ccf0a44626",
+    "targetSlot": 3,
+    "targetPort": 44710,
+    "previousSlot": 4,
+    "previousCoreImage": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "previousSlotPort": 44711,
+    "previousEnvironmentBackupSha256": "64e318e01d26096a96c463400b7602b44a5f915b12d2cf19f017da8b3db624de",
+    "activeEnvironmentSha256": "325b267d07bbe7b215970cffdb9ad8e73561babd433d04e2aea6544982a1f886"
+  },
+  "staging": {
+    "liveSlotUnchangedDuringStaging": true,
+    "targetCoreInitiallyStopped": true,
+    "targetCoreRecreatedWithoutDependencies": true,
+    "imagePullPolicy": "never",
+    "targetCoreImageMatchedExactly": true,
+    "preflightBeforeFirstSwitch": "passed"
+  },
+  "transitions": [
+    {
+      "direction": "slot4_to_slot3",
+      "receiptSha256": "f1948665b538a31e207d4c0373bfefa51746e4e81c535906c5dc885300841210",
+      "eva1Backup": {
+        "bytes": 270360576,
+        "quickCheck": "ok",
+        "sha256": "537765fac9d22dc10cfdf75a72c4421139efc9e3a360d3450953a2b671dda7f5"
+      },
+      "operationalDatabase": {
+        "tableCount": 48,
+        "schemaDigest": "f91c290ff03cf558009cac7ea28eaec74a4cf50bf8bfc6d945c572d81370a60c",
+        "dataDigest": "370e683309b95c1359d4447d809fb69cc78757efefa7c69a03ef5ebca9c61e2e"
+      },
+      "hindsightDatabase": {
+        "tableCount": 23,
+        "schemaDigest": "56572522462d756e55030430dd5c42c464cb0089190a73c8d0a9d6f528b8f62b",
+        "dataDigest": "a0a74e5e902ffc7892ab967f678d270d30ad9f7a1ebc1cdca75ae7b33df5cb3d"
+      },
+      "targetReady": true,
+      "eva1RoutesHttp200": 5
+    },
+    {
+      "direction": "slot3_to_slot4",
+      "receiptSha256": "e3d116011ccd6996dafa926d9fd89e2806cecaecdc2feedb60ab8fcd64414334",
+      "eva1Backup": {
+        "bytes": 270360576,
+        "quickCheck": "ok",
+        "sha256": "abbed0141ec5906ee2f704768de3fa18cbeaf447c34d3e6573e8f6469d0725a1"
+      },
+      "operationalDatabase": {
+        "tableCount": 48,
+        "schemaDigest": "f91c290ff03cf558009cac7ea28eaec74a4cf50bf8bfc6d945c572d81370a60c",
+        "dataDigest": "920151ea0fbd44167f738ecf85804c3b8d955b36aafb6620a15d1e2ed1155c2f"
+      },
+      "hindsightDatabase": {
+        "tableCount": 23,
+        "schemaDigest": "56572522462d756e55030430dd5c42c464cb0089190a73c8d0a9d6f528b8f62b",
+        "dataDigest": "311709c6e12e0f81327d3247c67316b5c48e4958467cfb80a92367a7c81c96bb"
+      },
+      "targetReady": true,
+      "eva1RoutesHttp200": 5
+    },
+    {
+      "direction": "slot4_to_slot3_final",
+      "receiptSha256": "211d17658d7acbde4330a72e57227016bdea0087294c67af3221b17b81d2e5f2",
+      "eva1Backup": {
+        "bytes": 270360576,
+        "quickCheck": "ok",
+        "sha256": "2af6775cce921b720c78c690e827d25ac94486fb8ae028d9efffd90a2b6ba321"
+      },
+      "operationalDatabase": {
+        "tableCount": 48,
+        "schemaDigest": "f91c290ff03cf558009cac7ea28eaec74a4cf50bf8bfc6d945c572d81370a60c",
+        "dataDigest": "a4ac435fd3a9e61f57080cdd6da8689a5a3bb901484a55bd1a0f4302aac178e1"
+      },
+      "hindsightDatabase": {
+        "tableCount": 23,
+        "schemaDigest": "56572522462d756e55030430dd5c42c464cb0089190a73c8d0a9d6f528b8f62b",
+        "dataDigest": "08fccef3d192a6b162880c30e2ead954bf81be103ce8de9159504e182bc37eee"
+      },
+      "targetReady": true,
+      "eva1RoutesHttp200": 5
+    }
+  ],
+  "crossDirectionContinuity": {
+    "slot3Write": {
+      "httpStatus": 200,
+      "expectedExactReply": true,
+      "sanitizedReceiptSha256": "07b9551b4bdf8bbc298ac32a9beb30e2a0371c26afcb0868d42174d8827046ba"
+    },
+    "slot4RecallAfterRollback": {
+      "httpStatus": 200,
+      "expectedExactReply": true,
+      "replySha256": "c74f09482ebae0d6cb42e0771582cb18eba8edbecf8bbf301946ce67ebaab7b8",
+      "sanitizedReceiptSha256": "52bc0ddf1e11e15d7054d42512354231fad17b326c51c31e5bb3a1cb68ae118b"
+    },
+    "slot3RecallAfterFinalPromotion": {
+      "httpStatus": 200,
+      "expectedExactReply": true,
+      "replySha256": "c74f09482ebae0d6cb42e0771582cb18eba8edbecf8bbf301946ce67ebaab7b8",
+      "sanitizedReceiptSha256": "52bc0ddf1e11e15d7054d42512354231fad17b326c51c31e5bb3a1cb68ae118b"
+    }
+  },
+  "finalRuntime": {
+    "eva1Service": "active",
+    "eva2CanaryUrl": "http://127.0.0.1:44710",
+    "activeSlot": 3,
+    "activeCoreImage": "sha256:c808a841bf74c6d2ed2487b24b47b93ffcc6c1e64ee3a8667db568ccf0a44626",
+    "activeCoreHealth": "healthy",
+    "activeCoreRestartCount": 0,
+    "activeHindsightHealth": "healthy",
+    "activeHindsightRestartCount": 0,
+    "readyHttpStatus": 200,
+    "rollbackSlot": 4,
+    "rollbackCoreStopped": true
+  },
+  "nonclaims": [
+    "This does not prove a Windows/WSL reboot or the seven-day resident run.",
+    "The retained slot overlay predates the newer single-project managed-B renderer; this receipt proves the existing retained-slot A/B operator and exact staged image, not migration of both retained environments to that newer render contract.",
+    "No Telegram message or Home Assistant effect was sent during this cutover."
+  ]
+}
