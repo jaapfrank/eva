@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 00:02 CEST
+Laatst bijgewerkt: 30 augustus 2026, 00:52 CEST
 
 ## Heel kort
 
@@ -22,11 +22,14 @@ De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
 wachttijd van 180 seconden werd de nieuwe marker wel aantoonbaar gevonden.
 
-De volgende snelheidsstap meet nu per modelpoging wanneer het eerste stukje
-tekst binnenkomt en wanneer het volledige antwoord klaar is. Die tijden blijven
-ook na een herstart bij het antwoord bewaard. 89 gerichte tests zijn groen.
-Telegram krijgt het antwoord nog wel pas als geheel; echte zichtbare streaming
-en de bijbehorende reactietijdmeting zijn dus nog open.
+De nieuwe streamingkandidaat werkt echt: een gewoon antwoord kwam in 32
+tekststukjes binnen en was exact gelijk aan het eindantwoord. Een huisvraag
+koos eerst alleen de veilige leesactie en streamde pas daarna het antwoord.
+Daarbij zijn twee echte fouten in de Codex-toolplanner gevonden en hersteld.
+
+De kandidaat is nog niet live gezet. Het eerste gewone tekststukje kwam na
+3,29 seconden; de vaste productnorm is maximaal 2,0 seconden. De exacte image
+is wel zonder bouwnetwerk gemaakt en scant op 0 kritisch en 0 hoog.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -60,6 +63,10 @@ praktijktest zijn nog niet klaar.
   0 hoog gescand.
 - De huidige kern kiest per vraag maximaal vier passende tools. Een gewone
   tekstvraag krijgt geen onnodige tools mee.
+- Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
+  doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
+- Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
+  pas daarna 11 veilige antwoordstukjes door.
 - Het eigenaar-dashboard geeft met de juiste private binding HTTP 200 en zonder
   binding HTTP 401.
 - De installatiewizard kan identiteit en basiskeuzes bewaren, hervatten,
@@ -344,10 +351,9 @@ praktijktest zijn nog niet klaar.
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
-- De werkkandidaat meet inmiddels modeltijd tot eerste tekst en voltooiing, maar
-  verstuurt nog geen gedeeltelijk antwoord naar Telegram of de browser. De live
-  PC01-image telt 74.819 productregels; de nieuwe nog niet gebouwde kandidaat
-  telt 74.965 en houdt 35 regels over onder de harde grens.
+- De werkkandidaat kan gedeeltelijke antwoorden veilig doorgeven, maar de eerste
+  gewone tekst kwam na 3,29 seconden. Dat is nog boven de vaste norm van 2,0
+  seconden. Daarom is deze schone kandidaat nog niet live gezet.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -382,6 +388,7 @@ praktijktest zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Veilige echte tekststream; image 0/0, maar latencydoel nog rood](evidence/product/performance-complexity-pc03-safe-text-stream-2026-08-30.json)
 - [Eva1-vastloper gevonden en live van 24,6 seconden naar circa 0,05-0,15 seconde gebracht](evidence/living-core/eva1-autonomy-event-loop-responsiveness-2026-08-29.json)
 - [Langere Eva1-event-loopmeting: 600 controles, p95 11 ms en drie losse missers](evidence/living-core/eva1-event-loop-responsiveness-long-600-2026-08-29.json)
 - [Verliesloze tweerichtings A/B-omschakeling](evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json)

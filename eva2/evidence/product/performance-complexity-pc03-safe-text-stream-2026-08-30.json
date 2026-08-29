@@ -1,0 +1,58 @@
+{
+  "contract": "EvaPerformanceComplexityPc03SafeTextStreamReceipt/v1",
+  "createdAt": "2026-08-29T22:52:08Z",
+  "image": {
+    "criticalFindings": 0,
+    "highFindings": 0,
+    "id": "sha256:940211dab469dea1441625c8068d3ed6618517d2477ca1d285b9ed4f1d9dcfe2",
+    "networkUsedDuringBuild": false,
+    "sizeBytes": 85457792
+  },
+  "homeAssistantRead": {
+    "completeMilliseconds": 5677,
+    "finalReplyCount": 1,
+    "firstSafeDeltaMilliseconds": 5583,
+    "plannerSelectedActionNames": [
+      "read_home_assistant_state"
+    ],
+    "streamDeltaCount": 11,
+    "streamEqualsFinal": true
+  },
+  "nonclaims": [
+    "The candidate was not promoted to the active /eva2 route.",
+    "The measured ordinary first-content latency exceeds the 2000 ms product target.",
+    "This is not a Telegram client draft, reboot, voice, browser or long-duration acceptance receipt."
+  ],
+  "ordinaryText": {
+    "completeMilliseconds": 3614,
+    "finalReplyCount": 1,
+    "firstDeltaMilliseconds": 3291,
+    "plannerSelectedActionNames": [],
+    "streamDeltaCount": 32,
+    "streamEqualsFinal": true,
+    "targetMilliseconds": 2000,
+    "targetPassed": false
+  },
+  "probe": {
+    "activeEva1RestartCountChanged": false,
+    "activeEva2RestartCountChanged": false,
+    "candidatePort": 44715,
+    "candidateReadyHttpStatus": 200
+  },
+  "source": {
+    "commit": "9f410e86a407fa54593d6f4f6204485e418699e6",
+    "files": {
+      "src/eva/adapters/api/dashboard_conversation.py": "59146575bea20adfef49e5efdac13ccb38c33b5e488edc67fb9f496af61f1c80",
+      "src/eva/adapters/model/conversation.py": "111971e8c9499655e9cea1b952cc1d032824d3320cd113b3dec6be3f31d1ab45",
+      "src/eva/adapters/model/openai_responses_transport.py": "218025ab3e4022f5c612592056a6de4bea66036a95398a51f9e28688e6a22958",
+      "tests/model/test_conversation_model.py": "394a219fefdd36ed8ebfae568824d069796a2de889a6f2bb242e44131e83b412"
+    }
+  },
+  "status": "tested_not_promoted_latency_gate_red",
+  "verification": {
+    "exactSourceArchive": "passed",
+    "focusedTestsPassed": 55,
+    "lint": "passed",
+    "performanceComplexityPc02": "passed"
+  }
+}
