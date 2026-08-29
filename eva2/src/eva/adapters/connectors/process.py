@@ -144,11 +144,19 @@ class ConnectorProcessSpec:
                 or matching_pin.target_sha256
                 != hashlib.sha256(self.program_bytes).hexdigest()
             ):
-                raise ValueError("connector direct program target differs from program bytes")
+                raise ValueError(
+                    "connector direct program target differs from program bytes"
+                )
             return
-        if binding.argument_index < 2 or self.command[binding.argument_index - 1] != "-c":
+        if (
+            binding.argument_index < 2
+            or self.command[binding.argument_index - 1] != "-c"
+        ):
             raise ValueError("connector Python program must immediately follow -c")
-        if self.command.count("-c") != 1 or "-m" in self.command[1:binding.argument_index]:
+        if (
+            self.command.count("-c") != 1
+            or "-m" in self.command[1 : binding.argument_index]
+        ):
             raise ValueError("connector Python launcher mode is ambiguous")
         allowed_flags = {"-B", "-E", "-I", "-O", "-OO", "-S", "-s", "-u"}
         if any(
@@ -290,32 +298,6 @@ def _decode_violation(exc: ValueError, phase: ConnectorProtocolPhase) -> str:
     return "invalid_message"
 
 
-def _response_failure(
-    *,
-    initialize: ConnectorInitializeRequest,
-    invoke: ConnectorInvokeRequest,
-    spec: ConnectorProcessSpec,
-    observed_at: str,
-    stdout: bytes,
-    stderr: bytes,
-    returncode: int,
-    phase: ConnectorProtocolPhase,
-    violation: ConnectorProtocolViolation,
-    detail: str,
-) -> ConnectorProtocolFailure:
-    return _protocol_failure(
-        initialize=initialize,
-        invoke=invoke,
-        phase=phase,
-        violation=violation,
-        observed_at=observed_at,
-        stdout=stdout,
-        stderr=stderr,
-        returncode=returncode,
-        detail=detail,
-    )
-
-
 def run_connector_process(
     *,
     spec: ConnectorProcessSpec,
@@ -452,54 +434,45 @@ def run_connector_process(
 
     stdout = completed.stdout
     stderr = completed.stderr
-    if fixture_case is not None and stdout != fixture_case.success_exchange:
-        return _response_failure(
+
+    def response_failure(
+        *,
+        phase: ConnectorProtocolPhase,
+        violation: ConnectorProtocolViolation,
+        detail: str,
+    ) -> ConnectorProtocolFailure:
+        return _protocol_failure(
             initialize=initialize,
             invoke=invoke,
-            spec=spec,
+            phase=phase,
+            violation=violation,
             observed_at=observed_at,
             stdout=stdout,
             stderr=stderr,
             returncode=completed.returncode,
+            detail=detail,
+        )
+
+    if fixture_case is not None and stdout != fixture_case.success_exchange:
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="invalid_message",
             detail="worker stdout differs from the sealed fixture result exchange",
         )
     if len(stdout) > min(manifest.maximum_stdout_bytes, MAX_CONNECTOR_EXCHANGE_BYTES):
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="frame_too_large",
             detail="connector stdout exceeded the sealed exchange budget",
         )
     if len(stderr) > manifest.maximum_stderr_bytes:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="invalid_message",
             detail="connector stderr exceeded the sealed byte budget",
         )
     if completed.returncode != 0:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="unexpected_eof" if not stdout else "invalid_message",
             detail="connector worker exited nonzero",
@@ -508,14 +481,7 @@ def run_connector_process(
     try:
         first, remainder = decode_connector_rpc_frame_prefix(stdout)
     except ValueError as exc:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase="initialize",
             violation=_decode_violation(exc, "initialize"),
             detail=str(exc),
@@ -523,27 +489,13 @@ def run_connector_process(
 
     if isinstance(first, ConnectorErrorResponse):
         if remainder:
-            return _response_failure(
-                initialize=initialize,
-                invoke=invoke,
-                spec=spec,
-                observed_at=observed_at,
-                stdout=stdout,
-                stderr=stderr,
-                returncode=completed.returncode,
+            return response_failure(
                 phase="initialize",
                 violation="extra_frame",
                 detail="initialize error was followed by another stdout frame",
             )
         if first.id != initialize.id:
-            return _response_failure(
-                initialize=initialize,
-                invoke=invoke,
-                spec=spec,
-                observed_at=observed_at,
-                stdout=stdout,
-                stderr=stderr,
-                returncode=completed.returncode,
+            return response_failure(
                 phase="initialize",
                 violation="response_id_mismatch",
                 detail="initialize error response ID differs",
@@ -553,41 +505,20 @@ def run_connector_process(
                 initialize, external_io_may_have_started=False
             )
         except ValueError as exc:
-            return _response_failure(
-                initialize=initialize,
-                invoke=invoke,
-                spec=spec,
-                observed_at=observed_at,
-                stdout=stdout,
-                stderr=stderr,
-                returncode=completed.returncode,
+            return response_failure(
                 phase="initialize",
                 violation="invalid_message",
                 detail=str(exc),
             )
         return first
     if not isinstance(first, ConnectorInitializeSuccess):
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase="initialize",
             violation="invalid_message",
             detail="first stdout frame did not close initialize",
         )
     if first.id != initialize.id:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase="initialize",
             violation="response_id_mismatch",
             detail="initialize success response ID differs",
@@ -595,27 +526,13 @@ def run_connector_process(
     try:
         first.validate_against_request(initialize)
     except ValueError as exc:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase="initialize",
             violation="invalid_message",
             detail=str(exc),
         )
     if not remainder:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="unexpected_eof",
             detail="initialize success was not followed by an invoke response",
@@ -624,53 +541,25 @@ def run_connector_process(
     try:
         second, trailing = decode_connector_rpc_frame_prefix(remainder)
     except ValueError as exc:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation=_decode_violation(exc, spec.invoke_failure_phase),
             detail=str(exc),
         )
     if trailing:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="extra_frame",
             detail="invoke response was followed by a third stdout frame",
         )
     if not isinstance(second, (ConnectorInvokeSuccess, ConnectorErrorResponse)):
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="invalid_message",
             detail="second stdout frame did not close invoke",
         )
     if second.id != invoke.id:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="response_id_mismatch",
             detail="invoke response ID differs",
@@ -686,14 +575,7 @@ def run_connector_process(
         else:
             second.validate_against_request(invoke, manifest)
     except ValueError as exc:
-        return _response_failure(
-            initialize=initialize,
-            invoke=invoke,
-            spec=spec,
-            observed_at=observed_at,
-            stdout=stdout,
-            stderr=stderr,
-            returncode=completed.returncode,
+        return response_failure(
             phase=spec.invoke_failure_phase,
             violation="invalid_message",
             detail=str(exc),
