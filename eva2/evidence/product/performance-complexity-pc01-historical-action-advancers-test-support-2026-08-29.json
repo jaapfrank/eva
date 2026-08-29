@@ -1,0 +1,65 @@
+{
+  "contract": "EvaPerformanceComplexityPc01HistoricalActionAdvancersTestSupport/v1",
+  "recordedAt": "2026-08-29T19:17:13Z",
+  "sourceCommit": "e8aa32c522632e05eb561e5a01b8cb06aa82c399",
+  "status": "tested_pc01_still_red_browser_fixture_dns_red",
+  "change": {
+    "movedFromProductRuntime": [
+      "src/eva/adapters/postgres/action_chain_read_advances.py",
+      "src/eva/adapters/postgres/action_chain_effect_advances.py"
+    ],
+    "movedToTestSupport": [
+      "tests/support/postgres_action_chain_read_advances.py",
+      "tests/support/postgres_action_chain_effect_advances.py"
+    ],
+    "productConsumersBeforeMove": 0,
+    "historicalTestConsumersUpdated": 5,
+    "netProductPhysicalLines": -766
+  },
+  "verification": {
+    "realPostgresStateTransitionTests": {
+      "passed": 37,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "43b1cc5b924fb8c3f3fa2bf66290accbb7b31e0c60e6cd7af5373f42ea4f6e80"
+    },
+    "separateBrowserFixtureAttempt": {
+      "passed": 37,
+      "failed": 4,
+      "failure": "host could not resolve fixture.eva.test",
+      "countedAsGreen": false,
+      "temporaryDatabaseContainerRemoved": true,
+      "logSha256": "f306e402a8126d748e2cb6539a2bcd409f559234a5c5398705e508899a19500b"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83082,
+      "productManifestSha256": "b7fa89207072fafdc5bee8e333ee372b8b3c493653bbb84ec8d160d57222d797"
+    },
+    "after": {
+      "productFileCount": 227,
+      "productPhysicalLines": 82316,
+      "productManifestSha256": "9a3c98cdd388db259d30f31e77f30d29f10e64534aa1ca6a620116f3979cafcc",
+      "livingCorePhysicalLines": 81723,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 7316,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The historical browser fixture proof is not green in the current host DNS environment.",
+    "No live action-chain capability was removed because these writers had no product consumer.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
