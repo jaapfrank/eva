@@ -8,6 +8,7 @@ JSON. It does not build, contact a network, inspect Docker, or sign a release.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -31,7 +32,17 @@ def _sha256(path: str) -> str:
     return hashlib.sha256(candidate.read_bytes()).hexdigest()
 
 
+def _arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--admit-migration",
+        help="explicitly acknowledge one newly reviewed expected migration",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
+    arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
     authority["requiredInputs"] = [
@@ -45,6 +56,13 @@ def main() -> int:
     revisions = {
         row["revision"]: row for row in authority["migrationAuthority"]["revisions"]
     }
+    expected_revisions = {revision for revision, _, _ in _EXPECTED_MIGRATIONS}
+    current_revisions = set(revisions)
+    missing_revisions = expected_revisions - current_revisions
+    extra_revisions = current_revisions - expected_revisions
+    admitted = set() if arguments.admit_migration is None else {arguments.admit_migration}
+    if extra_revisions or missing_revisions != admitted:
+        raise RuntimeError("managed-B migration authority differs before reseal")
     authority["migrationAuthority"]["revisions"] = [
         {
             "downRevision": down_revision,
@@ -54,8 +72,7 @@ def main() -> int:
         }
         for revision, down_revision, path in _EXPECTED_MIGRATIONS
     ]
-    if set(revisions) != {revision for revision, _, _ in _EXPECTED_MIGRATIONS}:
-        raise RuntimeError("managed-B migration authority differs before reseal")
+    authority["migrationAuthority"]["head"] = _EXPECTED_MIGRATIONS[-1][0]
     authority["nonClaims"] = list(_NONCLAIMS)
     payload = (
         json.dumps(

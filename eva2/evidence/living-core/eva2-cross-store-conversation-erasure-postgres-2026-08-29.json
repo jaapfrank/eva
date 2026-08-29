@@ -1,0 +1,68 @@
+{
+  "contract": "EvaCrossStoreConversationErasureProof/v1",
+  "issued_at": "2026-08-29T07:48:00+02:00",
+  "non_claims": [
+    "geen live Eva1-, Eva2-, Hindsight- of gebruikersgegevens gewijzigd",
+    "de crashproef gebruikte de echte PostgreSQL-wisroute maar een lokale semantische-provideradapter",
+    "er is nog geen eigenaar-chatopdracht of gewone gebruikersknop",
+    "caches, afgeleide samenvattingen, procedurekandidaten en oude back-ups vallen nog niet onder deze wisopdracht"
+  ],
+  "postgres": {
+    "append_only_default_preserved": true,
+    "cross_store_crash_recovered": true,
+    "direct_unrelated_payload_mutation_blocked": true,
+    "erased_reply_cannot_be_replayed_as_content": true,
+    "exact_scoped_security_definer_only": true,
+    "ingress_and_reply_text_physically_absent": true,
+    "principal_bound_by_sha256": true,
+    "raw_erasure_replay_wrote_no_second_content_change": true,
+    "schema_head": "4e_0005_conversation_erasure",
+    "semantic_delete_retried_after_crash": true,
+    "server_version": "16.13 (Debian 16.13-1.pgdg13+1)",
+    "wrong_principal_blocked": true
+  },
+  "source_commit": "1f33726fbace97beb39d4240df6c07aa292b63d4",
+  "source_files": [
+    {
+      "path": "migrations/versions/4e_0005_conversation_erasure.py",
+      "sha256": "e820d91a7669f300e68141119add452762656227acb8161495e222b2d6094e80"
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "2fd937c625e0dfd979f146701cc010d2872a52fce3da8d1953c27fddecb407f8"
+    },
+    {
+      "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
+      "sha256": "67702c6733021945c7da31523cf7eb816ad2adbc5192f0a0b9a6b2da4c0e3ab9"
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "b57308d2b96612294c97b1c73b774716fd07e7962702e351b73e38418e44dff5"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "91b7ee61fb450d2609ff7588b25c4203751aaf077169832883bf24c44dae05dd"
+    },
+    {
+      "path": "tests/application/test_memory_background.py",
+      "sha256": "3bee78c35f0a81eac20dfc9a21b8350586ed6ed1bd41ae56b77429f49c1c9f86"
+    },
+    {
+      "path": "tests/postgres/test_operational_timeline.py",
+      "sha256": "4eb32e3a99da5e8393bbb6b300b374f6fd019fc0d4940768edc7cfddceee7dae"
+    },
+    {
+      "path": "tests/postgres/test_runtime_resource_usage.py",
+      "sha256": "9a6bf0056da3ec12e10b67d20a45ae6ad33cd8bf444ad9a14ecf92ea9c5619c9"
+    }
+  ],
+  "status": "passed",
+  "tests": {
+    "delegated_store_regressions_passed": 2,
+    "migration_regressions_passed": 1,
+    "postgres_operational_timeline_passed": 29,
+    "postgres_resource_budget_passed": 8,
+    "unit_and_runtime_regressions_passed": 75,
+    "total_passed": 115
+  }
+}
