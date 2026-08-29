@@ -13,7 +13,7 @@ import pytest
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.application.portable_archive import RecordSetBytes, canonical_json_bytes
 from tools.portable_export import publish_portable_archive
-from eva.operations.portable_transport import (
+from tools.portable_transport import (
     PortableTransportError,
     open_portable_transport,
     seal_portable_archive,
@@ -203,7 +203,7 @@ def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -
             [
                 sys.executable,
                 "-m",
-                "eva.operations.portable_transport_cli",
+                "tools.portable_transport_cli",
                 "seal",
                 "--source",
                 str(source),
@@ -224,7 +224,7 @@ def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -
             [
                 sys.executable,
                 "-m",
-                "eva.operations.portable_transport_cli",
+                "tools.portable_transport_cli",
                 "open",
                 "--source",
                 str(transport),
@@ -245,7 +245,7 @@ def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -
             [
                 sys.executable,
                 "-m",
-                "eva.operations.portable_transport_cli",
+                "tools.portable_transport_cli",
                 "seal",
                 "--source",
                 str(source),
@@ -269,7 +269,7 @@ def test_operator_cli_reads_only_owner_private_passphrase_file(tmp_path: Path) -
             [
                 sys.executable,
                 "-m",
-                "eva.operations.portable_transport_cli",
+                "tools.portable_transport_cli",
                 "seal",
                 "--source",
                 str(source),

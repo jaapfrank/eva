@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 from eva.application.portable_archive import PortableArchiveError
-from eva.operations.portable_transport import (
+from tools.portable_transport import (
     PortableTransportError,
     open_portable_transport,
     seal_portable_archive,
@@ -86,7 +86,7 @@ def _private_passphrase(path: Path) -> str:
 
 
 def _reader_validator(archive: Path) -> None:
-    root = Path(__file__).resolve().parents[3]
+    root = Path(__file__).resolve().parents[1]
     reader = root / "tools" / "read_eva_portable_archive.py"
     result = subprocess.run(
         [sys.executable, "-I", str(reader), str(archive), "--validate-only"],
