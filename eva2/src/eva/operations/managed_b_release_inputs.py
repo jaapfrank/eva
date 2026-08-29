@@ -71,6 +71,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-installer-profile-resume-loopback-2026-08-29.json",
     "evidence/living-core/eva2-installer-provider-wizard-2026-08-29.json",
     "evidence/living-core/eva2-installer-secret-lifecycle-2026-08-29.json",
+    "evidence/living-core/eva2-installer-secret-lifecycle-wizard-2026-08-29.json",
     "evidence/living-core/eva2-installer-telegram-readonly-verification-2026-08-29.json",
     "evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json",
@@ -225,6 +226,7 @@ _EXPECTED_INPUT_PATHS = (
     "tools/prove_installer_endpoint_wizard.py",
     "tools/prove_installer_provider_wizard.py",
     "tools/prove_installer_secret_lifecycle.py",
+    "tools/prove_installer_secret_lifecycle_wizard.py",
     "tools/prove_installer_telegram_verification.py",
     "tools/smoke_people_memory_runtime.py",
 )

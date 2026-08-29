@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 03:55 CEST
+Laatst bijgewerkt: 29 augustus 2026, 04:16 CEST
 
 ## Heel kort
 
@@ -180,11 +180,12 @@ installatie zijn nog niet klaar.
   apparaten. Ook na `ready` volgde geen tweede oproep. De proef gebruikte een
   lokale nabootsing; het echte huis is hiermee nog niet via de installer
   gekoppeld.
-- Een operator kan een opgeslagen toegangscode nu veilig vervangen of
-  verwijderen. Eva blokkeert eerst de koppeling en verandert pas daarna het
-  private bestand. Na een onderbreking kan dezelfde handeling veilig worden
-  hersteld; een oude controle telt niet meer voor een nieuwe toegangscode.
-  De proef doorliep generaties 1, 2 en 3 met synthetische gegevens.
+- Een gewone gebruiker kan in de wizard een opgeslagen toegangscode veilig
+  vervangen, verwijderen of na een onderbreking herstellen. Eva blokkeert
+  eerst de koppeling en verandert pas daarna het private bestand. Zelfs als
+  een oude controle pas na de vervanging antwoordt, kan die de nieuwe toegang
+  niet ten onrechte klaar verklaren. Vier echte wizardstarts doorliepen dit
+  met synthetische gegevens; niets geheims kwam terug in browser of bewijs.
 - De installer kan nu ook één gekozen AgentMail-inbox alleen-lezen
   controleren. Zij leest daarbij geen berichten en bewaart de sleutel,
   inboxgegevens en het providerantwoord niet. Na `ready` volgt bij een
@@ -225,8 +226,9 @@ installatie zijn nog niet klaar.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
-  in de wizard. De echte providerproeven, browserlogin/tokenvernieuwing en
-  gebruikersbediening voor secretrotatie en loskoppelen ontbreken nog.
+  in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
+  wijziging herstellen. Echte providerproeven, browserlogin/tokenvernieuwing
+  en expliciete providerscopes ontbreken nog.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
   `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
   de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
@@ -297,6 +299,7 @@ installatie zijn nog niet klaar.
 - [Telegram-read-only verifier met succes, weigering en herstart zonder tweede call](evidence/living-core/eva2-installer-telegram-readonly-verification-2026-08-29.json)
 - [Home Assistant API-root verifier met lokale adrespinning en nul huisacties](evidence/living-core/eva2-installer-home-assistant-readonly-verification-2026-08-29.json)
 - [Veilig roteren, verwijderen en herstellen na een onderbreking](evidence/living-core/eva2-installer-secret-lifecycle-2026-08-29.json)
+- [Dezelfde toegangshandelingen via vier echte wizardstarts, inclusief een oude controle die te laat antwoordt](evidence/living-core/eva2-installer-secret-lifecycle-wizard-2026-08-29.json)
 - [AgentMail-inboxcontrole zonder berichten, mutaties of bewaarde providerdata](evidence/living-core/eva2-installer-agentmail-readonly-verification-2026-08-29.json)
 - [Begrensde modelcontrole zonder refresh-login, tools of verzonnen kosten](evidence/living-core/eva2-installer-codex-model-verification-2026-08-29.json)
 - [Model en Telegram kiezen, toegang invoeren en controleren via echte lokale wizardservers](evidence/living-core/eva2-installer-provider-wizard-2026-08-29.json)

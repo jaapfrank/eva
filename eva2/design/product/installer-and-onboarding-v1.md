@@ -319,9 +319,13 @@ stil half-geconfigureerd.
   vanuit de geblokkeerde toestand worden hersteld. Twee echte CLI-processen,
   generaties 1→2→3 en 88 gerichte controles zijn groen met uitsluitend
   synthetische secrets. De gewone gebruiker kan een eerste secret voor alle
-  vier de vaste koppelingen invoeren en controleren. Gebruikersbediening voor
-  rotatie/verwijdering, expliciete providerscopes en echte providerreadback
-  ontbreken nog, dus IN05 blijft open.
+  vier de vaste koppelingen invoeren en controleren. De wizard kan die toegang
+  nu ook vervangen, verwijderen en na een onderbroken bestandswissel
+  herstellen. Vier echte loopback-serverstarts bewezen bovendien dat een
+  vertraagde oude providercontrole de nieuwe generatie niet klaar kan zetten
+  en dat secretbytes niet in browser of bewijs belanden. Expliciete
+  providerscopes, echte providerreadback en tokenvernieuwing ontbreken nog,
+  dus IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
