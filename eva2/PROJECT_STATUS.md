@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 09:58 CEST
+Laatst bijgewerkt: 29 augustus 2026, 10:28 CEST
 
 ## Heel kort
 
@@ -113,8 +113,8 @@ installatie zijn nog niet klaar.
   gevraagd. Na een eigen herstart wist zij het testwoord nog en zij las veilig
   uit Home Assistant dat de spotjes overkapping uit staan.
 - De beheerde kern, beide toegangsleases, Hindsight en twee aparte PostgreSQL
-  18-databases zijn nu de actieve `/eva2`-route op poort `44710`. De vorige
-  route op `44708` draait nog als directe terugval.
+  18-databases zijn nu de actieve `/eva2`-route op poort `44711`. Het vorige
+  slot op `44710` staat stil en wordt vóór terugrol eerst verliesloos bijgewerkt.
 - De nieuwe kernimage is zonder internet gebouwd en opnieuw gescand: 0 kritisch
   en 0 hoog. Gesprekken en het dashboard hebben ieder hun juiste, aparte scope.
 - Het eigenaar-dashboard heeft nu een echte geverifieerde binding. Met de
@@ -287,10 +287,13 @@ installatie zijn nog niet klaar.
   gaven een echt exact Codex-antwoord en kwamen na een volledige database- en
   serviceherstart weer groen terug. Alle proefmiddelen zijn verwijderd. Deze
   image is nog niet naar de live `/eva2`-route omgeschakeld.
-- Diezelfde image draait nu ook als bewaard slot 4 op poort `44711`. Beide
-  databases zijn vanuit alleen-lezen snapshots van het actieve slot 3 gevuld.
-  Codex, geheugen, dashboardtoegang en de gezamenlijke herstart zijn groen;
-  Telegram en de doelworker staan bewust uit. `/eva2` wijst nog naar `44710`.
+- Diezelfde image draait nu als actief slot 4 op poort `44711`. De operator
+  stopte Eva1 en beide schrijvers kort, maakte een gecontroleerde Eva1-back-up,
+  kopieerde beide databases en vergeleek aantallen, schema én inhoud voordat
+  hij de route wijzigde.
+- De echte route ging daarna verliesloos 3→4, 4→3 en opnieuw 3→4. Een testfeit
+  dat pas op slot 4 was geschreven kwam exact terug op slot 3 en daarna weer op
+  slot 4. Alle vijf Eva1-routes bleven groen en Eva1 heeft nul herstarts.
 
 ## Wat nog niet klaar is
 
@@ -318,10 +321,9 @@ installatie zijn nog niet klaar.
   geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Een
   oude back-up wordt bij herstel nu geblokkeerd en de wisknop werkt die grens
   eerst bij. De nieuwe kernimage is gebouwd, 0/0 gescand en in een volledige
-  wegwerp-B groen herstart. Een bewaard inactief slot 4 is eveneens groen. De
-  laatste brontelling veranderde tijdens de live snapshot; daarom volgt vóór
-  A/B-omschakeling nog een korte stilgezette eindsynchronisatie. Losse
-  applicatiecaches en procedurekandidaten ontbreken nog. Ook
+  wegwerp-B groen herstart. Slot 4 is nu na een stilgezette, tweerichtings
+  eindsynchronisatie de actieve `/eva2`-route. Losse applicatiecaches en
+  procedurekandidaten ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
@@ -343,13 +345,13 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Een korte, terugrolbare eindsynchronisatie maken zodat slot 4 bij de
-   A/B-omschakeling geen laatste slot-3-gebeurtenissen mist.
-2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
+1. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
-3. Daarna de langere praktijktest starten en de tijdelijke 503- en
+2. Daarna de langere praktijktest starten en de tijdelijke 503- en
    Eva1-stopwaarnemingen actief bewaken.
+3. De begrensde huisbediening uitbreiden zonder de onafhankelijke controle en
+   herstartveiligheid kwijt te raken.
 
 ## Belangrijk verschil
 
@@ -362,6 +364,7 @@ installatie zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Verliesloze tweerichtings A/B-omschakeling met echt gesprekstestfeit](evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json)
 - [Echte alleen-lezen huisvraag](evidence/living-core/eva2-home-assistant-readonly-live-2026-08-28.json)
 - [Echte begrensde huisactie](evidence/living-core/eva2-home-assistant-bounded-effect-live-2026-08-28.json) en [natuurlijke weigering zonder huisactie](evidence/living-core/eva2-home-assistant-natural-denial-live-2026-08-28.json)
 - [Veilige echte omschakeling en rollback](evidence/living-core/eva2-atomic-canary-cutover-live-2026-08-28.json)

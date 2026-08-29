@@ -85,6 +85,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-managed-b-clean-graph-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-data-transition-2026-08-28.json",
     "evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json",
+    "evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json",
     "evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json",
     "evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json",
     "evidence/living-core/eva2-owner-erasure-debian13-candidate-image-2026-08-29.json",

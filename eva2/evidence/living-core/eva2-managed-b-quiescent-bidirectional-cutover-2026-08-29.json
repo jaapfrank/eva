@@ -1,0 +1,94 @@
+{
+  "contract": "Eva2ManagedBQuiescentBidirectionalCutoverEvidence/v1",
+  "issuedAt": "2026-08-29T10:27:34+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "9d873fd3a2d2c047f5b4ac9808e3dcf03f6d5ce6",
+    "logicalRestoreAuthoritySha256": "e4e27614b2e91527d2e0398a27cff317b13900246ac61646e63ccbd23edda90c",
+    "operatorSha256": "cbf0177136155042b0a0b868bea99603db93a80fc3e6355724990d09545477e5",
+    "testSha256": "b22a6bce298edb6ae5f9d2487a839572b2d7ecf8bac555ea29add5abb60eefd4"
+  },
+  "verification": {
+    "directedTestsPassed": 141,
+    "lint": "passed",
+    "preflightBeforeEachDirection": true,
+    "privateTemporaryDumpsRetained": false,
+    "sourceAndTargetWritersStoppedBeforeSnapshot": true,
+    "sourceStableAcrossEverySnapshot": true,
+    "targetCountsSchemaAndDataMatchedBeforeRouteWrite": true
+  },
+  "hardeningObservation": {
+    "automaticRollbackRestoredEva1AndSlot3": true,
+    "firstAttemptRefusedBeforeRouteWrite": true,
+    "problem": "PostgreSQL dump framing and physical row order made the first content digest nondeterministic.",
+    "resolution": "Random restrict framing is excluded and the digest compares the multiset of hashed dump lines; changed content remains distinguishable.",
+    "sensitiveTemporaryFailureDumpDeleted": true
+  },
+  "transitions": [
+    {
+      "direction": "44710-to-44711",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "4694a8865cc1fb80e26225883c7067b6743b4377af4b548c574aea77c926fae2",
+      "eva1RoutesAllHttp200": true,
+      "memoryCountDigest": "070ccd73d09477ed97da6f6185e2521a9c9bcf8aeb5ca1691ba84aa733d22ff0",
+      "memoryDataDigest": "7fb042934771abdf2a353443158f1bc694cb0089190a73c8d0a9d6f528b8f60d",
+      "memoryTableCount": 23,
+      "operationalCountDigest": "ce97099504b0bdbe2dd5bb1a6043059ce4e5117916c91bd753433443c562a62a",
+      "operationalDataDigest": "90874cd51f75c946de4dd57b3edf70e89223c58cc80ac02af6d4e46825ac8b6a",
+      "operationalTableCount": 48,
+      "rawReceiptSha256": "568204a7becbe81a9ed13c25bbc6174bde5497d1b5fda23ce3250f7fc6986d0c",
+      "status": "switched"
+    },
+    {
+      "direction": "44711-to-44710",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "7f31f44265c1fc64a0e546d2c91ecbdd321c7d3719c3f3aa7f2f4bfe8dfd31a6",
+      "eva1RoutesAllHttp200": true,
+      "memoryCountDigest": "5aa4b85d6283cc94408220f08ad4293b02de9d9c994a5ab5c5a064cfd9e21968",
+      "memoryDataDigest": "5d4d189f219440c4cc94fd4bec25efd0be898ecd8aef745b102f66a1dd1cb5c0",
+      "memoryTableCount": 23,
+      "operationalCountDigest": "a65b3c4435dbe5aa04cb37eaddc524c54551e84eafbc12d43e80dd689f76a264",
+      "operationalDataDigest": "871cce92efa409fff3a639b3cafb8b6627caeed1d661e9316289c1b737c7a7fc",
+      "operationalTableCount": 48,
+      "rawReceiptSha256": "17f295402b33bbb002e2ecdbe9554f01b69cc7c94f143707ecdd7124298c9662",
+      "status": "switched"
+    },
+    {
+      "direction": "44710-to-44711",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "d6fb8799c296f380f89926a3c9393dd22ea104132b8405a9cb9455f7bbc316a3",
+      "eva1RoutesAllHttp200": true,
+      "memoryCountDigest": "812245ed270d930496cd563fb4ce85fceca51e8a11254ef0ee957e7aa9efeba4",
+      "memoryDataDigest": "1c06efccb8f9a21ef74e7d3e30617f39462ec85d07f3e3f323365dfae5aeaade",
+      "memoryTableCount": 23,
+      "operationalCountDigest": "c59a83dcb2843a68a158e0b58c2e69df68581df2d23f8b4bc3cb3d17cab01b30",
+      "operationalDataDigest": "1f4d9e46d06c0a60c39047137bb0db18636d2bb8d3ddbe4d6b20ddd840999cb4",
+      "operationalTableCount": 48,
+      "rawReceiptSha256": "77ff4b60dc478368a5ff01197cc98771d07a4fb39e177f02dc8a32b58d348a82",
+      "status": "switched"
+    }
+  ],
+  "crossDirectionContinuity": {
+    "finalForwardReadExact": true,
+    "modelReplyContract": "EvaInternalGroundedReply/v1",
+    "phraseSha256": "018be7b2bc0057a25baf28b81d2e28875710623f7323ffea0439c5d1131b5863",
+    "reverseReadExact": true,
+    "syntheticPrincipal": true,
+    "writeAcknowledgedOnSlot4": true
+  },
+  "finalRuntime": {
+    "activeCoreImage": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "activeEva2Port": 44711,
+    "eva1HttpRoutesAll200": true,
+    "eva1NRestarts": 0,
+    "eva1Service": "active",
+    "previousSlotCoreStopped": true,
+    "targetReadyHttp200": true
+  },
+  "nonClaims": [
+    "This is not a host reboot or a seven-day resident acceptance run.",
+    "The continuity probe used one synthetic private Telegram-shaped principal and did not send a provider Telegram message.",
+    "The prior slot requires the same reverse synchronization before any later rollback; a stale direct port switch remains forbidden.",
+    "This does not complete broad Home Assistant control, full-duplex voice, browser autonomy, installer acceptance, or public benchmark scores."
+  ]
+}
