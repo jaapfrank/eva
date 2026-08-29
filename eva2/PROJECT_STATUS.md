@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 16:52 CEST
+Laatst bijgewerkt: 29 augustus 2026, 17:03 CEST
 
 ## Heel kort
 
@@ -141,6 +141,10 @@ praktijktest zijn nog niet klaar.
   zeven UTC-controles delen eveneens één fail-closed implementatie. Alle 186
   installer-, wizard-, API- en connectorproeven zijn groen; netto verdwenen
   opnieuw 141 productregels.
+- De releasecontrole schrijft niet langer dezelfde 239 bronpaden en 130
+  testpaden ook nog eens in Python uit. Twee vaste sethashes houden ontbrekende,
+  extra, gewijzigde en verkeerd geordende paden fail-closed. De gerichte proef
+  is groen; hiermee verdwenen netto nog 360 productregels.
 
 ## Wat nog niet klaar is
 
@@ -156,7 +160,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  88.547 productregels en mag er maximaal 75.000 hebben.
+  88.187 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -174,7 +178,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 13.547 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 13.187 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -208,6 +212,7 @@ praktijktest zijn nog niet klaar.
 - [Eerlijke rode code-, dependency- en imagebudgetmeting](evidence/product/performance-complexity-pc01-current-2026-08-29.json)
 - [Eerste echte codesanering met behoud van regressies](evidence/product/performance-complexity-pc01-test-support-remediation-2026-08-29.json)
 - [Gedeelde installerbeveiliging met 186 groene regressies](evidence/product/performance-complexity-pc01-installer-safety-consolidation-2026-08-29.json)
+- [Releasepadensets compact en nog steeds fail-closed gebonden](evidence/product/performance-complexity-pc01-release-path-set-binding-2026-08-29.json)
 - [Gedeelde PostgreSQL-afscherming: 149 productregels minder](evidence/product/performance-complexity-pc01-scoped-role-consolidation-2026-08-29.json)
 - [Gedeelde read/effect-dispatchopslag: 23 productregels minder](evidence/product/performance-complexity-pc01-dispatch-consolidation-2026-08-29.json)
 - [Gedeelde grant-, envelop- en UTC-opbouw: 96 productregels minder](evidence/product/performance-complexity-pc01-authority-timestamp-consolidation-2026-08-29.json)

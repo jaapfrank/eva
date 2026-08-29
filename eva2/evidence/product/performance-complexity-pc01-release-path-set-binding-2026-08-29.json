@@ -1,0 +1,77 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ReleasePathSetBinding/v1",
+  "recordedAt": "2026-08-29T15:03:32Z",
+  "implementationCommit": "1ec8912",
+  "testCommit": "5c2123b78e69d71d48e5f20e2df55a101c5a1d63",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "path": "src/eva/operations/managed_b_release_inputs.py",
+    "removedDuplicateInputPathRows": 239,
+    "removedDuplicateTestPathRows": 130,
+    "inputPathSetSha256": "d534f49a3dd18ecfdb22e7ae6da96d906550a0df79fe2708d90461f56bd14c1c",
+    "testPathSetSha256": "a91e91fae1f53be748f4f7912c3005698183cc04a145924d1581373cf78e8a82",
+    "preservedChecks": [
+      "every authority row has exactly path and sha256",
+      "every path is canonical and relative",
+      "every named archive byte matches its individual SHA-256",
+      "rows are unique and sorted",
+      "the complete ordered input and test path sets match their fixed SHA-256"
+    ]
+  },
+  "verification": {
+    "focusedPathBinding": {
+      "command": "PYTHONPATH=src pytest -q -s tests/operations/test_managed_b_release_inputs.py -k pin_rows_bind_bytes",
+      "passed": 1,
+      "failed": 0,
+      "coveredCases": [
+        "valid complete path set",
+        "missing path",
+        "extra path",
+        "wrong ordering",
+        "changed individual file digest"
+      ],
+      "logSha256": "ff5b57083d60dd311922ed985dd59222952ab7895b9ad9b4980d778004fa86f5"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "compileall": {
+      "passed": true
+    },
+    "fullReleaseInputSuite": {
+      "passed": 7,
+      "failed": 20,
+      "unchangedBlockingFailureCount": 20,
+      "firstBlockingReason": "The older release authority still pins conversation_journal.py from before the earlier PC01 scope consolidation.",
+      "nextSafetyBoundary": "After current source pins are updated, the cockpit evidence index still requires an explicit review of fourteen changed source bindings.",
+      "logSha256": "b44fb40708b53093af49ccc9124daa7f00bc8e27701e4fcd9d24f2a8e670c5e9"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 88547,
+      "productManifestSha256": "71da3f564eab607110f927e00af27a4aa5bd46e8383c22f771a471a2f209f183"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 88187,
+      "productManifestSha256": "2c4c5a1fbe13a5d9079f2c7082199cf38b7d4d93c7e58efa8391cad1504a4491",
+      "livingCorePhysicalLines": 87594,
+      "unclassifiedSourcePaths": 0
+    },
+    "netProductPhysicalLines": -360,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13187,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The managed-B release authority and cockpit evidence index were not resealed or promoted.",
+    "The fixed digests do not replace individual file-byte hashes.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector, or volume was changed."
+  ]
+}
