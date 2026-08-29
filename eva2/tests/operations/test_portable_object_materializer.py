@@ -9,7 +9,7 @@ import pytest
 
 from eva.adapters.objects.cas import FileSystemCAS
 from eva.operations.object_keyring import FileObjectKeyResolver
-from eva.operations.portable_object_materializer import (
+from tools.portable_object_materializer import (
     PortableObjectMaterializationError,
     _append_journal,
     materialize_verified_portable_objects,
