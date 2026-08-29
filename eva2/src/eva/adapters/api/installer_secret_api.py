@@ -79,6 +79,7 @@ INSTALLER_SECRET_SCRIPT = r"""
       });
       if (!response.ok) throw new Error('secret rejected');
       await refresh();
+      window.dispatchEvent(new Event('eva-installer-state-changed'));
     } catch (_error) {
       value.value = '';
       message('De toegang kon niet veilig worden bewaard. Er wordt niets getoond.');

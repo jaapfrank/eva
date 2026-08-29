@@ -9,6 +9,16 @@ from pathlib import Path
 
 import uvicorn
 
+from eva.adapters.connectors.installer_agentmail_probe import (
+    AgentMailInstallerReadOnlyProbe,
+)
+from eva.adapters.connectors.installer_codex_model_probe import CodexInstallerModelProbe
+from eva.adapters.connectors.installer_home_assistant_probe import (
+    HomeAssistantInstallerReadOnlyProbe,
+)
+from eva.adapters.connectors.installer_telegram_probe import (
+    TelegramInstallerReadOnlyProbe,
+)
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflow,
@@ -24,6 +34,10 @@ from eva.operations.installer_preflight import (
 from eva.operations.installer_profile_workflow import (
     InstallerProfileWorkflow,
     InstallerProfileWorkflowError,
+)
+from eva.operations.installer_provider_verification import (
+    InstallerProviderVerificationError,
+    InstallerProviderVerifier,
 )
 from eva.operations.installer_secret_store import (
     InstallerSecretStore,
@@ -67,6 +81,9 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     parser.add_argument("--profile-workspace", type=Path)
     parser.add_argument("--capability-workspace", type=Path)
     parser.add_argument("--secret-workspace", type=Path)
+    parser.add_argument("--provider-evidence-workspace", type=Path)
+    parser.add_argument("--home-assistant-url")
+    parser.add_argument("--agentmail-inbox-id")
     args = parser.parse_args(argv)
     if not 1024 <= args.port <= 65535:
         parser.error("installer port must be between 1024 and 65535")
@@ -80,6 +97,19 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
         path is not None for path in identity_paths
     ):
         parser.error("all four identity lifecycle paths must be supplied together")
+    if args.provider_evidence_workspace is not None and (
+        args.capability_workspace is None or args.secret_workspace is None
+    ):
+        parser.error(
+            "provider verification requires capability and secret workspaces"
+        )
+    if (
+        args.provider_evidence_workspace is None
+        and (args.home_assistant_url is not None or args.agentmail_inbox_id is not None)
+    ):
+        parser.error(
+            "provider configuration requires a provider evidence workspace"
+        )
     try:
         receipt = preflight(load_platform_lock(args.platform_lock), inspect_host())
     except InstallerPreflightError as error:
@@ -90,6 +120,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     profile_workflow = None
     capability_workflow = None
     secret_store = None
+    provider_verifier = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -121,10 +152,34 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             secret_store = InstallerSecretStore(
                 workspace=_private_workspace(args.secret_workspace)
             )
+        if args.provider_evidence_workspace is not None:
+            assert capability_workflow is not None
+            assert secret_store is not None
+            probes = {
+                "model_provider": CodexInstallerModelProbe(),
+                "telegram": TelegramInstallerReadOnlyProbe(),
+            }
+            if args.home_assistant_url is not None:
+                probes["home_assistant"] = HomeAssistantInstallerReadOnlyProbe(
+                    base_url=args.home_assistant_url
+                )
+            if args.agentmail_inbox_id is not None:
+                probes["email"] = AgentMailInstallerReadOnlyProbe(
+                    inbox_id=args.agentmail_inbox_id
+                )
+            provider_verifier = InstallerProviderVerifier(
+                capability_workflow=capability_workflow,
+                secret_store=secret_store,
+                evidence_workspace=_private_workspace(
+                    args.provider_evidence_workspace
+                ),
+                probes=probes,
+            )
     except (
         InstallerProfileWorkflowError,
         InstallerCapabilityWorkflowError,
         InstallerSecretStoreError,
+        InstallerProviderVerificationError,
         OSError,
     ):
         print(
@@ -144,6 +199,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
             secret_store=secret_store,
+            provider_verifier=provider_verifier,
         ),
         host=args.host,
         port=args.port,

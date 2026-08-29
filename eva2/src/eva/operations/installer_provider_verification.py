@@ -1,10 +1,10 @@
-"""Operator-only, connector-neutral verification of installer credentials.
+"""Connector-neutral verification of installer credentials.
 
-The browser never calls this component.  A provider adapter receives the
-retained secret through one read-only probe port and returns a closed
-observation.  The verifier persists a sanitized, content-addressed receipt
-before it asks the existing capability workflow to record ``ready`` or
-``blocked``.
+The loopback wizard or operator CLI may invoke this component, but neither
+receives the retained secret. A provider adapter receives it through one
+bounded probe port and returns a closed observation. The verifier persists a
+sanitized, content-addressed receipt before it asks the existing capability
+workflow to record ``ready`` or ``blocked``.
 """
 
 from __future__ import annotations

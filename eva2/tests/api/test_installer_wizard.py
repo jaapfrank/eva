@@ -110,7 +110,7 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     page = client.get("/")
     assert page.status_code == 200
     assert "Voordat Eva iets installeert" in page.text
-    assert "nog geen connector- of secretknop" in page.text
+    assert "Iedere koppeling blijft afzonderlijk" in page.text
     assert "Nog niet bewezen" in page.text
 
     report = client.get("/internal/v1/preflight")
