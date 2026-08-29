@@ -1,0 +1,45 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T11:14:46+02:00",
+  "status": "improved_still_over_budget",
+  "source": {
+    "commit": "1815847eb55bcdff841b7bacf7c3f99ddba6c8c1",
+    "rawReceiptSha256": "d9c16066fb1e729ee0b8a0f20b3bc24ff46f9eeae86fe4a3e4bdccce64f3a2e6"
+  },
+  "before": {
+    "commit": "1b51d9dd4f5c8f140ac94cccdfb5940a5ce9fc50",
+    "productPhysicalLines": 96874,
+    "excessProductPhysicalLines": 21874
+  },
+  "after": {
+    "productPhysicalLines": 91235,
+    "excessProductPhysicalLines": 16235,
+    "removedFromProductRuntime": 5639,
+    "directRuntimeDependencies": 9,
+    "unclassifiedSourcePaths": 0,
+    "pc01Passed": false
+  },
+  "relocatedWithoutDeletingProof": [
+    "historical Noor 4D flow and exact-row repository",
+    "sealed model, object-key and P-256 fixture adapters",
+    "historical DBOS transition composition root",
+    "historical durable-goal, fan-out and Telegram live-gate providers",
+    "operator-only legacy memory trial repository"
+  ],
+  "verification": {
+    "historicalFixtureContainerTestsPassed": 78,
+    "postMoveNoorAndP256ContainerTestsPassed": 21,
+    "disposablePostgresDbosTestsPassed": 30,
+    "disposablePostgresLegacyMemoryToolTestsPassed": 1,
+    "disposablePostgresLegacyRecallTestPassed": 1,
+    "releaseAndPc01TestsPassed": 33,
+    "eva1HealthHttp": 200,
+    "eva2ReadyHttp": 200
+  },
+  "nextRequiredAction": "Remove or replace another 16235 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
+  "nonClaims": [
+    "PC01 is not green.",
+    "Moving active runtime or operator behavior outside the counted roots is not allowed remediation.",
+    "The live image was not rebuilt or changed by this source-only cleanup."
+  ]
+}
