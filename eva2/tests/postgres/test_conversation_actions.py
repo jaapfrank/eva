@@ -13,6 +13,8 @@ import eva.adapters.postgres.conversation_actions as conversation_actions_module
 
 from eva.adapters.postgres.conversation_actions import (
     PostgresConversationActions,
+    PostgresPersonalInterestStore,
+    PostgresPersonalPrototypeStore,
     PostgresPersonalProductReleaseStore,
 )
 from eva.adapters.postgres.operational_timeline import TimelineEvent
@@ -28,6 +30,7 @@ from eva.application.personal_interests import (
     CompletedPersonalPrototype,
     PersonalInterestClaim,
     PersonalInterestExploration,
+    PersonalProductReleaseClaim,
     PersonalPrototype,
     PersonalPrototypeClaim,
 )
@@ -810,6 +813,195 @@ def _completed_prototype() -> CompletedPersonalPrototype:
         ),
         8,
     )
+
+
+@pytest.mark.parametrize(
+    ("store_type", "stage", "source_method", "claim_type", "event_type"),
+    (
+        (
+            PostgresPersonalInterestStore,
+            "exploration",
+            "_claim_from_events",
+            PersonalInterestClaim,
+            "PERSONAL_EXPLORATION_CLAIMED",
+        ),
+        (
+            PostgresPersonalPrototypeStore,
+            "prototype",
+            "_exploration_from_events",
+            PersonalPrototypeClaim,
+            "PERSONAL_PROTOTYPE_CLAIMED",
+        ),
+        (
+            PostgresPersonalProductReleaseStore,
+            "release",
+            "_completed_prototype",
+            PersonalProductReleaseClaim,
+            "PERSONAL_PRODUCT_RELEASE_CLAIMED",
+        ),
+    ),
+)
+def test_personal_work_claim_stages_keep_their_exact_durable_contract(
+    monkeypatch: pytest.MonkeyPatch,
+    store_type: type,
+    stage: str,
+    source_method: str,
+    claim_type: type,
+    event_type: str,
+) -> None:
+    prototype = _completed_prototype()
+    interest = prototype.claim.completed_exploration.claim
+    source = {
+        "exploration": interest,
+        "prototype": prototype.claim.completed_exploration,
+        "release": prototype,
+    }[stage]
+    state = SimpleNamespace(
+        thread_id=interest.thread_id,
+        operation_id=interest.intent_id,
+        phase="ready",
+        status="completed" if stage != "exploration" else "active",
+        revision=8,
+        retry_count=1,
+        last_error_fingerprint="b" * 64,
+        deadline=None,
+    )
+    captured: dict[str, object] = {}
+
+    class Timeline:
+        def list_checkpoints(self, **kwargs):  # type: ignore[no-untyped-def]
+            captured["list"] = kwargs
+            return (state,)
+
+        def events(self, thread_id):  # type: ignore[no-untyped-def]
+            return ()
+
+        def transition(self, **kwargs):  # type: ignore[no-untyped-def]
+            captured.update(kwargs)
+            return SimpleNamespace(revision=9)
+
+    class Actions:
+        def _timeline_for(self, tenant_id, installation_id):  # type: ignore[no-untyped-def]
+            return Timeline()
+
+    store = object.__new__(store_type)
+    store._actions = Actions()
+    store._lease_seconds = 90
+    monkeypatch.setattr(store_type, source_method, staticmethod(lambda *args: source))
+
+    claim = store.claim_next(
+        tenant_id="tenant", installation_id="installation", now=NOW
+    )
+
+    assert isinstance(claim, claim_type)
+    assert claim.revision == 9
+    assert captured["checkpoint_id"] == f"{interest.thread_id}:{stage}:9"
+    assert captured["operation_id"] == interest.intent_id
+    assert captured["phase"] == f"{stage}_claimed"
+    assert captured["event_type"] == event_type
+    assert captured["retry_count"] == 1
+    assert captured["last_error_fingerprint"] == "b" * 64
+    assert captured["deadline"] == NOW + timedelta(seconds=90)
+    assert captured["data"]["intent_id"] == interest.intent_id
+
+
+@pytest.mark.parametrize(
+    ("store_type", "stage", "source_method", "expired_marker", "error_text"),
+    (
+        (
+            PostgresPersonalInterestStore,
+            "exploration",
+            "_claim_from_events",
+            "lease-expired",
+            "personal exploration lease expired",
+        ),
+        (
+            PostgresPersonalPrototypeStore,
+            "prototype",
+            "_exploration_from_events",
+            "prototype-lease-expired",
+            "personal prototype lease expired",
+        ),
+        (
+            PostgresPersonalProductReleaseStore,
+            "release",
+            "_completed_prototype",
+            "release-lease-expired",
+            "personal product release lease expired",
+        ),
+    ),
+)
+def test_personal_work_claim_stages_recover_their_exact_expired_lease(
+    monkeypatch: pytest.MonkeyPatch,
+    store_type: type,
+    stage: str,
+    source_method: str,
+    expired_marker: str,
+    error_text: str,
+) -> None:
+    prototype = _completed_prototype()
+    interest = prototype.claim.completed_exploration.claim
+    source = {
+        "exploration": interest,
+        "prototype": prototype.claim.completed_exploration,
+        "release": prototype,
+    }[stage]
+    waiting = SimpleNamespace(
+        thread_id=interest.thread_id,
+        operation_id=interest.intent_id,
+        phase=f"{stage}_claimed",
+        status="waiting_for_proof",
+        revision=8,
+        retry_count=0,
+        last_error_fingerprint=None,
+        deadline=NOW - timedelta(seconds=1),
+    )
+    recovered = SimpleNamespace(
+        **{
+            **waiting.__dict__,
+            "status": "failed",
+            "revision": 9,
+            "retry_count": 1,
+            "last_error_fingerprint": "c" * 64,
+        }
+    )
+    captured: dict[str, object] = {}
+
+    class Timeline:
+        def list_checkpoints(self, **kwargs):  # type: ignore[no-untyped-def]
+            return (waiting,)
+
+        def events(self, thread_id):  # type: ignore[no-untyped-def]
+            return ()
+
+        def record_recovery_failure(self, **kwargs):  # type: ignore[no-untyped-def]
+            captured["recovery"] = kwargs
+            return recovered
+
+        def transition(self, **kwargs):  # type: ignore[no-untyped-def]
+            captured["transition"] = kwargs
+            return SimpleNamespace(revision=10)
+
+    class Actions:
+        def _timeline_for(self, tenant_id, installation_id):  # type: ignore[no-untyped-def]
+            return Timeline()
+
+    store = object.__new__(store_type)
+    store._actions = Actions()
+    store._lease_seconds = 90
+    monkeypatch.setattr(store_type, source_method, staticmethod(lambda *args: source))
+
+    assert store.claim_next(
+        tenant_id="tenant", installation_id="installation", now=NOW
+    ) is not None
+    recovery = captured["recovery"]
+    assert recovery["checkpoint_id"] == f"{interest.thread_id}:{expired_marker}:9"
+    assert recovery["error_text"] == error_text
+    transition = captured["transition"]
+    assert transition["expected_revision"] == 9
+    assert transition["checkpoint_id"] == f"{interest.thread_id}:{stage}:10"
+    assert transition["retry_count"] == 1
+    assert transition["last_error_fingerprint"] == "c" * 64
 
 
 def test_retry_claim_preserves_error_fingerprint_until_third_identical_failure(

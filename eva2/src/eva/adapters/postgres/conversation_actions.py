@@ -4199,16 +4199,131 @@ class PostgresConversationActions:
         )
 
 
-class PostgresPersonalInterestStore:
-    """Lease and finish personal exploration through durable checkpoints."""
+class _PostgresPersonalClaimStore:
+    """Claim one personal-work stage through the shared durable lease fence."""
 
     _PREFIX = "intent:personal-interest:"
+    _stage: str
 
     def __init__(self, engine: sa.Engine, *, lease_seconds: int = 90) -> None:
+        lease_name = "product release" if self._stage == "release" else self._stage
         if not 10 <= lease_seconds <= 600:
-            raise ValueError("personal exploration lease must be 10..600 seconds")
+            raise ValueError(
+                f"personal {lease_name} lease must be 10..600 seconds"
+            )
         self._actions = PostgresConversationActions(engine)
         self._lease_seconds = lease_seconds
+
+    def claim_next(
+        self, *, tenant_id: str, installation_id: str, now: datetime
+    ) -> PersonalInterestClaim | PersonalPrototypeClaim | PersonalProductReleaseClaim | None:
+        stage = self._stage
+        phases, statuses, event_type = {
+            "exploration": (
+                ("intent_adopted", "exploration_claimed"),
+                ("active", "failed", "waiting_for_proof"),
+                "PERSONAL_EXPLORATION_CLAIMED",
+            ),
+            "prototype": (
+                ("exploration_projected", "prototype_claimed"),
+                ("completed", "failed", "waiting_for_proof"),
+                "PERSONAL_PROTOTYPE_CLAIMED",
+            ),
+            "release": (
+                ("prototype_projected", "release_claimed"),
+                ("completed", "failed", "waiting_for_proof"),
+                "PERSONAL_PRODUCT_RELEASE_CLAIMED",
+            ),
+        }[stage]
+        timeline = self._actions._timeline_for(tenant_id, installation_id)
+        candidates = timeline.list_checkpoints(
+            thread_prefix=self._PREFIX,
+            phases=phases,
+            statuses=statuses,
+            updated_before=now,
+        )
+        for state in candidates:
+            if state.status == "waiting_for_proof":
+                if state.deadline is None or state.deadline > now:
+                    continue
+                expired = "lease-expired" if stage == "exploration" else f"{stage}-lease-expired"
+                lease_name = "product release" if stage == "release" else stage
+                failed = timeline.record_recovery_failure(
+                    thread_id=state.thread_id,
+                    expected_revision=state.revision,
+                    checkpoint_id=f"{state.thread_id}:{expired}:{state.revision + 1}",
+                    operation_id=state.operation_id,
+                    error_text=f"personal {lease_name} lease expired",
+                    occurred_at=now,
+                )
+                if failed.status == "needs_help":
+                    continue
+                state = failed
+            events = timeline.events(state.thread_id)
+            if stage == "exploration":
+                source = self._claim_from_events(
+                    tenant_id, installation_id, events, state.revision + 1
+                )
+                operation_id = source.intent_id
+                data = {
+                    "intent_id": source.intent_id,
+                    "question": source.question,
+                    "title": source.title,
+                }
+            elif stage == "prototype":
+                source = self._exploration_from_events(
+                    tenant_id, installation_id, events, state.revision
+                )
+                operation_id = source.claim.intent_id
+                data = {
+                    "exploration_sha256": source.exploration.text_sha256,
+                    "intent_id": operation_id,
+                }
+            else:
+                source = self._completed_prototype(
+                    tenant_id, installation_id, events, state.revision
+                )
+                operation_id = source.claim.completed_exploration.claim.intent_id
+                data = {
+                    "intent_id": operation_id,
+                    "prototype_sha256": source.prototype.content_sha256,
+                }
+            try:
+                claimed = timeline.transition(
+                    thread_id=state.thread_id,
+                    expected_revision=state.revision,
+                    checkpoint_id=f"{state.thread_id}:{stage}:{state.revision + 1}",
+                    operation_id=operation_id,
+                    phase=f"{stage}_claimed",
+                    status="waiting_for_proof",
+                    event_type=event_type,
+                    occurred_at=now,
+                    deadline=now + timedelta(seconds=self._lease_seconds),
+                    retry_count=state.retry_count,
+                    last_error_fingerprint=state.last_error_fingerprint,
+                    data=data,
+                )
+            except CheckpointConflict:
+                continue
+            if stage == "exploration":
+                return PersonalInterestClaim(
+                    **{
+                        field: getattr(source, field)
+                        for field in source.__dataclass_fields__
+                        if field != "revision"
+                    },
+                    revision=claimed.revision,
+                )
+            if stage == "prototype":
+                return PersonalPrototypeClaim(source, claimed.revision)
+            return PersonalProductReleaseClaim(source, claimed.revision)
+        return None
+
+
+class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
+    """Lease and finish personal exploration through durable checkpoints."""
+
+    _stage = "exploration"
 
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
@@ -4252,66 +4367,6 @@ class PostgresPersonalInterestStore:
             PersonalInterestExploration(text, provider),
             state.revision,
         )
-
-    def claim_next(
-        self, *, tenant_id: str, installation_id: str, now: datetime
-    ) -> PersonalInterestClaim | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        candidates = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("intent_adopted", "exploration_claimed"),
-            statuses=("active", "failed", "waiting_for_proof"),
-            updated_before=now,
-        )
-        for state in candidates:
-            if state.status == "waiting_for_proof":
-                if state.deadline is None or state.deadline > now:
-                    continue
-                failed = timeline.record_recovery_failure(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:lease-expired:{state.revision + 1}",
-                    operation_id=state.operation_id,
-                    error_text="personal exploration lease expired",
-                    occurred_at=now,
-                )
-                if failed.status == "needs_help":
-                    continue
-                state = failed
-            events = timeline.events(state.thread_id)
-            claim_data = self._claim_from_events(
-                tenant_id, installation_id, events, state.revision + 1
-            )
-            try:
-                claimed = timeline.transition(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:exploration:{state.revision + 1}",
-                    operation_id=claim_data.intent_id,
-                    phase="exploration_claimed",
-                    status="waiting_for_proof",
-                    event_type="PERSONAL_EXPLORATION_CLAIMED",
-                    occurred_at=now,
-                    deadline=now + timedelta(seconds=self._lease_seconds),
-                    retry_count=state.retry_count,
-                    last_error_fingerprint=state.last_error_fingerprint,
-                    data={
-                        "intent_id": claim_data.intent_id,
-                        "question": claim_data.question,
-                        "title": claim_data.title,
-                    },
-                )
-            except CheckpointConflict:
-                continue
-            return PersonalInterestClaim(
-                **{
-                    field: getattr(claim_data, field)
-                    for field in claim_data.__dataclass_fields__
-                    if field != "revision"
-                },
-                revision=claimed.revision,
-            )
-        return None
 
     def complete(
         self,
@@ -4421,16 +4476,10 @@ class PostgresPersonalInterestStore:
         )
 
 
-class PostgresPersonalPrototypeStore:
+class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
     """Persist one concrete prototype after a durable exploration."""
 
-    _PREFIX = "intent:personal-interest:"
-
-    def __init__(self, engine: sa.Engine, *, lease_seconds: int = 90) -> None:
-        if not 10 <= lease_seconds <= 600:
-            raise ValueError("personal prototype lease must be 10..600 seconds")
-        self._actions = PostgresConversationActions(engine)
-        self._lease_seconds = lease_seconds
+    _stage = "prototype"
 
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
@@ -4465,58 +4514,6 @@ class PostgresPersonalPrototypeStore:
         data = PostgresConversationActions._event_data(prototype_event)
         prototype = self._prototype_from_data(data)
         return CompletedPersonalPrototype(claim, prototype, state.revision)
-
-    def claim_next(
-        self, *, tenant_id: str, installation_id: str, now: datetime
-    ) -> PersonalPrototypeClaim | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        candidates = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("exploration_projected", "prototype_claimed"),
-            statuses=("completed", "failed", "waiting_for_proof"),
-            updated_before=now,
-        )
-        for state in candidates:
-            if state.status == "waiting_for_proof":
-                if state.deadline is None or state.deadline > now:
-                    continue
-                failed = timeline.record_recovery_failure(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:prototype-lease-expired:{state.revision + 1}",
-                    operation_id=state.operation_id,
-                    error_text="personal prototype lease expired",
-                    occurred_at=now,
-                )
-                if failed.status == "needs_help":
-                    continue
-                state = failed
-            events = timeline.events(state.thread_id)
-            exploration = self._exploration_from_events(
-                tenant_id, installation_id, events, state.revision
-            )
-            try:
-                claimed = timeline.transition(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:prototype:{state.revision + 1}",
-                    operation_id=exploration.claim.intent_id,
-                    phase="prototype_claimed",
-                    status="waiting_for_proof",
-                    event_type="PERSONAL_PROTOTYPE_CLAIMED",
-                    occurred_at=now,
-                    deadline=now + timedelta(seconds=self._lease_seconds),
-                    retry_count=state.retry_count,
-                    last_error_fingerprint=state.last_error_fingerprint,
-                    data={
-                        "exploration_sha256": exploration.exploration.text_sha256,
-                        "intent_id": exploration.claim.intent_id,
-                    },
-                )
-            except CheckpointConflict:
-                continue
-            return PersonalPrototypeClaim(exploration, claimed.revision)
-        return None
 
     def complete(
         self,
@@ -4696,16 +4693,10 @@ class PostgresPersonalPrototypeStore:
         return prototype
 
 
-class PostgresPersonalProductReleaseStore:
+class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
     """Persist a channel-neutral sales bundle without claiming publication."""
 
-    _PREFIX = "intent:personal-interest:"
-
-    def __init__(self, engine: sa.Engine, *, lease_seconds: int = 90) -> None:
-        if not 10 <= lease_seconds <= 600:
-            raise ValueError("personal product release lease must be 10..600 seconds")
-        self._actions = PostgresConversationActions(engine)
-        self._lease_seconds = lease_seconds
+    _stage = "release"
 
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
@@ -4735,61 +4726,6 @@ class PostgresPersonalProductReleaseStore:
             ),
             state.revision,
         )
-
-    def claim_next(
-        self, *, tenant_id: str, installation_id: str, now: datetime
-    ) -> PersonalProductReleaseClaim | None:
-        timeline = self._actions._timeline_for(tenant_id, installation_id)
-        candidates = timeline.list_checkpoints(
-            thread_prefix=self._PREFIX,
-            phases=("prototype_projected", "release_claimed"),
-            statuses=("completed", "failed", "waiting_for_proof"),
-            updated_before=now,
-        )
-        for state in candidates:
-            if state.status == "waiting_for_proof":
-                if state.deadline is None or state.deadline > now:
-                    continue
-                failed = timeline.record_recovery_failure(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=(
-                        f"{state.thread_id}:release-lease-expired:{state.revision + 1}"
-                    ),
-                    operation_id=state.operation_id,
-                    error_text="personal product release lease expired",
-                    occurred_at=now,
-                )
-                if failed.status == "needs_help":
-                    continue
-                state = failed
-            events = timeline.events(state.thread_id)
-            prototype = self._completed_prototype(
-                tenant_id, installation_id, events, state.revision
-            )
-            interest = prototype.claim.completed_exploration.claim
-            try:
-                claimed = timeline.transition(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:release:{state.revision + 1}",
-                    operation_id=interest.intent_id,
-                    phase="release_claimed",
-                    status="waiting_for_proof",
-                    event_type="PERSONAL_PRODUCT_RELEASE_CLAIMED",
-                    occurred_at=now,
-                    deadline=now + timedelta(seconds=self._lease_seconds),
-                    retry_count=state.retry_count,
-                    last_error_fingerprint=state.last_error_fingerprint,
-                    data={
-                        "intent_id": interest.intent_id,
-                        "prototype_sha256": prototype.prototype.content_sha256,
-                    },
-                )
-            except CheckpointConflict:
-                continue
-            return PersonalProductReleaseClaim(prototype, claimed.revision)
-        return None
 
     def complete(
         self,
