@@ -1,0 +1,56 @@
+{
+  "contract": "EvaPerformanceComplexityPc01HistoricalReadbackStoreTestSupport/v1",
+  "recordedAt": "2026-08-29T19:21:15Z",
+  "sourceCommit": "1173a42bd34cadbc28d948d4ff9c62e29168aecd",
+  "status": "tested_pc01_still_red_browser_fixture_dns_red",
+  "change": {
+    "movedFromProductRuntime": "src/eva/adapters/postgres/action_chain_effect_readback_results.py",
+    "movedToTestSupport": "tests/support/postgres_action_chain_effect_readback_results.py",
+    "productConsumersBeforeMove": 0,
+    "historicalTestConsumersUpdated": 4,
+    "netProductPhysicalLines": -244
+  },
+  "verification": {
+    "realPostgresReadbackTests": {
+      "passed": 29,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "5de9732c9be715f2d47b23976a3d20d91aa4dbef050944f0f9df253aedb7170c"
+    },
+    "browserFixtureConsumer": {
+      "testedInThisStep": false,
+      "reason": "the same host DNS gate for fixture.eva.test is already recorded red",
+      "countedAsGreen": false
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 227,
+      "productPhysicalLines": 82316,
+      "productManifestSha256": "9a3c98cdd388db259d30f31e77f30d29f10e64534aa1ca6a620116f3979cafcc"
+    },
+    "after": {
+      "productFileCount": 226,
+      "productPhysicalLines": 82072,
+      "productManifestSha256": "1bedd6f3eefc44b0b0b42aae5748f03eb3c1e3c0b44cd8440306665679e96502",
+      "livingCorePhysicalLines": 81479,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 7072,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The historical browser fixture proof remains red in the current host DNS environment.",
+    "No live effect-readback capability was removed because this store had no product consumer.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}

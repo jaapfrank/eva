@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 21:17 CEST
+Laatst bijgewerkt: 29 augustus 2026, 21:21 CEST
 
 ## Heel kort
 
@@ -244,6 +244,9 @@ praktijktest zijn nog niet klaar.
 - Twee oude action-chain-writers van samen 766 regels hadden geen enkele
   productgebruiker en werden alleen door vijf historische tests geïmporteerd.
   Ze staan nu eerlijk bij testondersteuning; hun 37 PostgreSQL-cases blijven groen.
+- Ook de 244-regelige oude effect-readback-resultaatstore had nul
+  productgebruikers. Zij staat nu bij testondersteuning; haar 29 lokale
+  PostgreSQL-cases blijven groen en de rode browser-DNS-gate blijft apart staan.
 
 ## Wat nog niet klaar is
 
@@ -260,8 +263,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  8.517 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 82.316 productregels en mag er maximaal 75.000 hebben.
+  8.761 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 82.072 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -279,7 +282,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 7.316 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 7.072 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -351,6 +354,7 @@ praktijktest zijn nog niet klaar.
 - [Eén providerproces-executor voor lezen, handelen en effectcontrole](evidence/product/performance-complexity-pc01-action-chain-connector-executor-consolidation-2026-08-29.json)
 - [Gedeelde PostgreSQL- en dispatcheropbouw met aparte bevoegdheden](evidence/product/performance-complexity-pc01-action-chain-authority-wiring-consolidation-2026-08-29.json)
 - [Historische action-chain-writers uit de runtime, met browser-DNS-gat zichtbaar](evidence/product/performance-complexity-pc01-historical-action-advancers-test-support-2026-08-29.json)
+- [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
