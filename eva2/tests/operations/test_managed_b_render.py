@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import pytest
 
 from eva.operations.core_b_preflight import CoreBPlan
-from eva.operations.managed_b_render import (
+from tools.managed_b_render import (
     EXPECTED_SERVICES,
     MANAGED_B_MANIFEST,
     _contains_unresolved_interpolation,
@@ -79,7 +79,7 @@ def _mock_compose(
         )
         return SimpleNamespace(stdout=json.dumps(graph))
 
-    monkeypatch.setattr("eva.operations.managed_b_render.subprocess.run", run)
+    monkeypatch.setattr("tools.managed_b_render.subprocess.run", run)
     return calls, environment_files
 
 
@@ -153,7 +153,7 @@ def test_renderer_retries_partial_environment_writes(
         written.extend(portion)
         return len(portion)
 
-    monkeypatch.setattr("eva.operations.managed_b_render.os.write", partial_write)
+    monkeypatch.setattr("tools.managed_b_render.os.write", partial_write)
 
     _write_all(123, b"sealed-plan")
 
@@ -163,7 +163,7 @@ def test_renderer_retries_partial_environment_writes(
 def test_renderer_refuses_a_zero_byte_environment_write(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr("eva.operations.managed_b_render.os.write", lambda *_: 0)
+    monkeypatch.setattr("tools.managed_b_render.os.write", lambda *_: 0)
 
     with pytest.raises(OSError, match="unable to write"):
         _write_all(123, b"sealed-plan")
@@ -237,11 +237,11 @@ def test_renderer_cli_prints_only_a_non_secret_receipt(
         }
     )
     monkeypatch.setattr(
-        "eva.operations.managed_b_render.load_core_b_plan",
+        "tools.managed_b_render.load_core_b_plan",
         lambda environment_file: plan,
     )
     monkeypatch.setattr(
-        "eva.operations.managed_b_render.render_managed_b",
+        "tools.managed_b_render.render_managed_b",
         lambda rendered_plan: rendered,
     )
 
@@ -255,7 +255,7 @@ def test_renderer_cli_returns_failure_without_a_traceback(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "eva.operations.managed_b_render.load_core_b_plan",
+        "tools.managed_b_render.load_core_b_plan",
         lambda environment_file: (_ for _ in ()).throw(RuntimeError("refused")),
     )
 
@@ -272,11 +272,11 @@ def test_renderer_cli_sanitizes_operating_system_failures(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "eva.operations.managed_b_render.load_core_b_plan",
+        "tools.managed_b_render.load_core_b_plan",
         lambda environment_file: _plan(),
     )
     monkeypatch.setattr(
-        "eva.operations.managed_b_render.render_managed_b",
+        "tools.managed_b_render.render_managed_b",
         lambda rendered_plan: (_ for _ in ()).throw(OSError("private path")),
     )
 
