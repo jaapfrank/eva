@@ -1,0 +1,49 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T14:58:00+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "b6d9cff614ae99b766646eab5097cb557564a6a4",
+    "sharedResultPersistenceSha256": "3aa1e02dc2e2bfc1def6a351572e3259c9fff783b47de1737e313efc20b29f10"
+  },
+  "change": {
+    "description": "Read and effect terminal-result stores now share their PostgreSQL scope, ledger, evidence insert/read and timeline payload validation while retaining separate observations, receipts and readbacks.",
+    "productFilesChanged": 3,
+    "productLinesAdded": 122,
+    "productLinesDeleted": 146,
+    "netProductPhysicalLines": -24,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 89001,
+    "productPhysicalLinesAfter": 88977,
+    "productManifestSha256": "438d14f437bc56443c0c38dfcc0fc77f97fe8d2b38e62e6618185509712a84b1",
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13977,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "initialOperatorCommandErrors": 1,
+    "initialOperatorCommandCause": "The first targeted command named two nonexistent standalone result-test files; collection stopped without running tests or changing database state.",
+    "targetedReadEffectResultTestsPassed": 16,
+    "targetedDurationSeconds": 64.65,
+    "postgresActionChain16_13TestsPassed": 95,
+    "postgresActionChain16_13DurationSeconds": 443.03,
+    "postgresActionChainLogSha256": "a3a8988743c7e13bbc244f5679a3f8b4a5773ec0d1fb379d3b4110e74d7465a3",
+    "testsFailed": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1HealthHttp": 200,
+    "liveEva2ReadyHttp": 200
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "Read observations and effect receipts/readbacks remain deliberately distinct.",
+    "This source consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Consolidate the remaining duplicated terminal replay and stored-result loading paths without weakening event or evidence binding."
+}
