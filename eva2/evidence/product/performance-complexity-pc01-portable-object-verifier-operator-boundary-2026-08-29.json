@@ -1,0 +1,39 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PortableObjectVerifierOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T21:57:32+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "cfeeecd8db93be8e8170bf2701945b7e1484052c",
+    "changedSourceManifestSha256": "4e67823dc9b435689ce5d1d447475bb35044e98d80964c80ff829f0f4622f29a"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/portable_object_verifier.py",
+    "newPath": "tools/portable_object_verifier.py",
+    "physicalLinesMovedOutOfProductRoots": 224,
+    "runtimeConsumersBeforeMove": 0,
+    "operatorAndTestConsumersUpdated": 3,
+    "remainingOldImports": 0,
+    "objectCipherCasAndPortableObjectContractsRemainInLivingCore": true
+  },
+  "verification": {
+    "localVerifierMaterializerAndBoundaryTestsPassed": 9,
+    "realPostgresBoundaryFileTestsPassed": 5,
+    "realPostgresObjectRefCaseIncluded": true,
+    "combinedTestLogsSha256": "aeefa0b322b1421722d70fed3458b83aeea257f83644f1876cc9e8b099eab28d",
+    "disposablePostgresContainerRemoved": true
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 220,
+    "productPhysicalLines": 78922,
+    "livingCorePhysicalLines": 78329,
+    "productManifestSha256": "43cc6a0483f259e168030b35fded67a52a7739f82caa6cc2128cb1e35261a053",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 3922,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 11911,
+    "status": "failed_budget_enforced"
+  },
+  "limitations": [
+    "The full PC01 checker still cannot re-attest the unavailable historical OCI baseline; the exact sealed source-measurement function was run separately.",
+    "The verifier remains product functionality at the operator boundary; this does not prove key transfer or a second-machine restore."
+  ]
+}
