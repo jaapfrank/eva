@@ -140,10 +140,11 @@ Eva toont nooit benoemde of herleidbare usage van een andere persoon.
 Compactie is inhoudelijk gecontroleerd: Eva vergelijkt vóór/na of actieve
 doelen, expliciete correcties, belangrijke relaties, consent en open blockers
 behouden zijn. Een kleinere prompt is geen succes wanneer betekenis verdwijnt.
-LG03 legt de fysieke quota pas vast nadat de huidige installatie per
-geheugensoort is gemeten; tot die checkpoint zijn ze dus open en blijft de gate
-rood. Daarmee verzinnen we nu geen willekeurig aantal megabytes, maar kan de
-release evenmin met een onbegrensde opslagconfiguratie door.
+De huidige installatie is nu zonder inhoud of identifiers als PostgreSQL-
+aggregaten gemeten. De kandidaat handhaaft daarop harde bronrecord- en
+UTF-8-bytequota per persoon, groep, project en installatie, ook bij races,
+herstart en verwijderen. LG03 blijft rood totdat ook fysieke database- en
+vectorindexgroei, cold-compaction en betekenisbehoud aantoonbaar begrensd zijn.
 
 ## Kleine opleverstukken
 
@@ -155,8 +156,9 @@ release evenmin met een onbegrensde opslagconfiguratie door.
   relatie mag identiteit, binding, consent, eigenaarschap of toegang wijzigen.
 - [ ] LG02 — Per call en per taak token-, latency- en kostenreceipt plus
   dashboard/chat-totalen; ontbrekende providerusage blijft `unknown`.
-- [ ] LG03 — Geheugenquota, cold-compaction en betekenisbehoudtest per persoon,
-  groep en project; geen onbegrensde profiel- of contextgroei.
+- [ ] LG03 — Bronrecord- en UTF-8-bytequota zijn getest per persoon, groep,
+  project en installatie; fysieke opslagquota, cold-compaction en
+  betekenisbehoudtest blijven open. Geen onbegrensde profiel- of contextgroei.
 - [ ] LG04 — Zelf on the fly een procedurele skillkandidaat maken wanneer geen
   passende werkwijze bestaat, en die vanuit echte ervaring naar quarantaine
   brengen met exacte provenance, digest, permissiondiff en geen secrettoegang;

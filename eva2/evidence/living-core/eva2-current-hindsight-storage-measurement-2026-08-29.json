@@ -1,0 +1,43 @@
+{
+  "contract": "EvaCurrentHindsightStorageMeasurement/v1",
+  "measured_at": "2026-08-29T05:08:45Z",
+  "method": "read_only_postgresql_aggregate_queries",
+  "runtime": {
+    "hindsight_image_sha256": "20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+    "postgres_image_sha256": "7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "route": "eva2-managed-b-slot3"
+  },
+  "storage": {
+    "banks": 17,
+    "documents": {
+      "banks_with_documents": 12,
+      "max_source_bytes_per_document": 4297,
+      "max_source_bytes_per_bank": 58493,
+      "max_source_records_per_bank": 96,
+      "source_bytes": 73941,
+      "source_records": 135
+    },
+    "memory_units": {
+      "banks": 12,
+      "max_text_bytes_per_unit": 1164,
+      "text_bytes": 70598,
+      "units": 268
+    },
+    "mental_models": {
+      "banks": 13,
+      "content_bytes": 35877,
+      "max_content_bytes_per_model": 6895,
+      "models": 20
+    }
+  },
+  "privacy": {
+    "content_read": false,
+    "identifiers_recorded": false,
+    "only_aggregate_counts_and_byte_lengths_recorded": true
+  },
+  "non_claims": [
+    "een Hindsight-bank is niet automatisch gelijk aan een Eva-persoon, groep of project",
+    "de meting bewijst geen volledige fysieke database- of vectorindexgrootte per scope",
+    "de meting heeft geen geheugen, model of live container gewijzigd"
+  ]
+}

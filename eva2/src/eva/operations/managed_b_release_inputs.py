@@ -56,6 +56,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/browser-a02-stop-before-call-2026-08-26.json",
     "evidence/living-core/browser-dependency-vulnerability-scan-2026-08-26.json",
     "evidence/living-core/browser-public-read-allowlist-2026-08-26.json",
+    "evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json",
     "evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json",
     "evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json",
     "evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json",

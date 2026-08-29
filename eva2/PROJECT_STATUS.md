@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 06:42 CEST
+Laatst bijgewerkt: 29 augustus 2026, 07:10 CEST
 
 ## Heel kort
 
@@ -234,13 +234,13 @@ installatie zijn nog niet klaar.
   precies vier toegelaten. Na een nieuw proces bleef de gezamenlijke limiet zes;
   pas op de volgende UTC-dag begon de teller opnieuw. Hindsights eigen
   ongecontroleerde nachtplanning is uit deze kandidaat verwijderd.
-- De kandidaat begrenst nu ook het gewone gespreksgeheugen per persoon op een
-  exact aantal regels én echte UTF-8-bytes. Bij acht gelijktijdige verzoeken om
-  de honderdste plek kwam er precies één binnen. Iedere toegelaten herinnering
-  krijgt een vaste vervaldatum. De plek komt pas vrij nadat Hindsight de
-  verwijdering heeft bevestigd; na een nagebootste crash werd dezelfde
-  verwijdering veilig hervat. De proef gebruikte een nieuwe wegwerpdatabase en
-  wijzigde geen live geheugen.
+- De kandidaat begrenst gewoon gespreksgeheugen nu per persoon, Telegramgroep,
+  project én hele installatie op regels en echte UTF-8-bytes. Bij acht
+  gelijktijdige verzoeken om de laatste plek kwam op ieder niveau precies één
+  binnen. Ruimte komt pas vrij nadat Hindsight de verwijdering heeft bevestigd;
+  een afgebroken verwijdering wordt veilig hervat. De huidige Hindsight-opslag
+  is daarnaast zonder teksten of namen gemeten: 135 brondocumenten gebruiken
+  samen 73.941 bytes. De proefdatabase en de live meting wijzigden geen geheugen.
 - Ook Eva's eigen verkenningen, proefbouwsels en releasevoorstellen kunnen die
   geheugenlimiet niet meer omzeilen. Zij lopen nu door precies dezelfde
   persoonsgrens en bewaartijd vóór Hindsight. Een bronbrede controle weigert
@@ -266,9 +266,9 @@ installatie zijn nog niet klaar.
   aparte uitvoerknop en volledige fresh-installproef ontbreken nog.
 - De runtime handhaaft nu de model-, antwoord-, Hindsight-recall- en dagelijkse
   reflectiegrenzen, plus blokkering van onbekende autonome kosten. De kandidaat
-  begrenst ook gespreksgeheugen per persoon op regels, bytes en bewaartijd.
-  Quota voor groepen, projecten en de hele installatie, volledige verwijdering
-  uit brongesprekken/back-ups en echte geldbedragen blijven open.
+  begrenst gespreksgeheugen per persoon, groep, project en hele installatie op
+  regels, bytes en bewaartijd. Volledige fysieke database-/vectorindexquota,
+  verwijderen uit brongesprekken en back-ups en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -289,8 +289,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De resterende geheugenquota voor groepen, projecten en de hele installatie
-   toevoegen, plus aantoonbaar verwijderen uit brongesprekken en back-ups.
+1. Aantoonbaar verwijderen uit brongesprekken en back-ups toevoegen en daarna
+   cold-compaction testen zonder belangrijke betekenis te verliezen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -355,7 +355,8 @@ installatie zijn nog niet klaar.
 - [Eén hervatbaar plan met bevestigde harde limieten en herstel na procesuitval](evidence/living-core/eva2-installer-budgeted-installation-plan-wizard-2026-08-29.json)
 - [Bevestigde limieten echt afgedwongen in de modelruntime en PostgreSQL](evidence/living-core/eva2-runtime-resource-budget-postgres-2026-08-29.json)
 - [Dagelijkse Hindsight-reflectielimieten blijven hard bij race, herstart en daggrens](evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json)
-- [Geheugenregels, UTF-8-inhoud en bewaartijd per persoon blijven hard bij race, herstart en verwijdercrash](evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json)
+- [Geheugenquota per persoon, groep, project en installatie blijven hard bij race, herstart en verwijdercrash](evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json)
+- [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
