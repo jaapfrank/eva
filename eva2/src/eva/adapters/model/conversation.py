@@ -793,7 +793,10 @@ class CodexConversationModel:
             "model": self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": self._cache_key(turn),
-            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
+            "reasoning": {
+                "effort": self._reasoning_effort if available_actions else "none",
+                "summary": "auto",
+            },
             "store": False,
             "stream": True,
             "tool_choice": (

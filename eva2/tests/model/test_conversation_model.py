@@ -579,7 +579,7 @@ def test_direct_model_receives_recalled_memories_without_reflection(
 
     assert result.text == "Dat klinkt echt rot."
     assert result.provider == "chatgpt-codex:gpt-5.4-mini"
-    assert requests[0]["reasoning"]["effort"] == "medium"
+    assert requests[0]["reasoning"]["effort"] == "none"
     assert requests[0]["input"][0]["content"] == turn.text
     assert "Jaap houdt niet van formele antwoorden" in requests[0]["instructions"]
     assert "waargenomen 2026-08-23T14:00:00Z" in requests[0]["instructions"]
@@ -718,6 +718,7 @@ def test_direct_model_accepts_an_explicit_bounded_reasoning_effort(
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
         _memory(),
         (),
+        available_actions=("read_home_assistant_state",),
     )
     assert requests[0]["reasoning"]["effort"] == "high"
 
