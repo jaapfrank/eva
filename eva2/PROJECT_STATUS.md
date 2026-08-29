@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 19:33 CEST
+Laatst bijgewerkt: 29 augustus 2026, 19:35 CEST
 
 ## Heel kort
 
@@ -201,6 +201,9 @@ praktijktest zijn nog niet klaar.
 - Eenvoudige en geavanceerde huisautomatiseringen houden hun eigen veilige
   configuratiebouw, maar delen nu de identieke uitvoer- en bewijsstaart. Alle
   68 gerichte tests zijn groen; dit scheelde nog zeven productregels.
+- Gewone modelantwoorden en webonderzoek delen nu één begrensde decoder voor
+  SSE-framing, UTF-8 en JSON. Acties en bronverwerking blijven apart; alle 68
+  modeltests zijn groen en dit scheelde nog zestien productregels.
 
 ## Wat nog niet klaar is
 
@@ -215,8 +218,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.511 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 83.322 productregels en mag er maximaal 75.000 hebben.
+  7.527 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 83.306 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -293,6 +296,7 @@ praktijktest zijn nog niet klaar.
 - [Ongebruikte Home Assistant-switch-wrapper verwijderd](evidence/product/performance-complexity-pc01-home-assistant-binary-wrapper-removal-2026-08-29.json)
 - [Elf identieke taakopslagconstructies samengebracht](evidence/product/performance-complexity-pc01-advanced-task-store-consolidation-2026-08-29.json)
 - [Gedeelde veilige uitvoerstaart voor huisautomatiseringen](evidence/product/performance-complexity-pc01-automation-execution-tail-consolidation-2026-08-29.json)
+- [Eén begrensde SSE-framedecoder voor gesprek en onderzoek](evidence/product/performance-complexity-pc01-sse-frame-decoder-consolidation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)

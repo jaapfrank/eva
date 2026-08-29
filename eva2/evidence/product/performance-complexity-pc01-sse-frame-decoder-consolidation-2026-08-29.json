@@ -1,0 +1,56 @@
+{
+  "contract": "EvaPerformanceComplexityPc01SseFrameDecoderConsolidation/v1",
+  "recordedAt": "2026-08-29T17:35:15Z",
+  "sourceCommit": "714f820dc7e443c92a28d9e65c39ced96e409065",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedFrameDecoder": "CodexConversationModel._iter_sse_events",
+    "consumers": [
+      "conversation response stream",
+      "research response stream"
+    ],
+    "preservedSeparateSemantics": [
+      "conversation action calls",
+      "research citations",
+      "consulted research sources",
+      "route-specific errors"
+    ],
+    "netProductPhysicalLines": -16
+  },
+  "verification": {
+    "modelTests": {
+      "passed": 68,
+      "skipped": 1,
+      "failed": 0,
+      "logSha256": "24890b5734e0ee7f64e633af295f3ed9d2ba1cd1f1de661c7859ce6a87ffe3c5"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83322,
+      "productManifestSha256": "a1f39b784af66f496a0a815aa20747435b261b3fc74c2e8b48fdcf0d00d4d046"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83306,
+      "productManifestSha256": "a84ba4b2e271d54839cd808631e5b661bf4328b42fe43468aaba7083232c87cb",
+      "livingCorePhysicalLines": 82713,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8306,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No model prompt, provider endpoint, action permission, research source rule or stream limit was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
