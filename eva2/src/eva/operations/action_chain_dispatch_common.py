@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Any, Literal
+from typing import Any, Callable, Literal, NamedTuple
 from uuid import UUID, uuid5
 
 import sqlalchemy as sa
@@ -19,12 +19,15 @@ from eva.adapters.postgres.action_chain_ledger import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope
+from eva.contracts.timestamps import parse_utc_timestamp
 from eva.contracts.execution import (
     CapabilityGrant,
     CapabilityManifest,
     ConnectorBinding,
     CredentialGrant,
+    EffectAttempt,
     EffectIntent,
+    ReadAttempt,
     ReadIntent,
 )
 from eva.adapters.postgres.operational_timeline import (
@@ -32,6 +35,11 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     operational_events,
     transition_timeline_thread,
+)
+from eva.application.action_chain import (
+    ActionChainValidationError,
+    ActionToolCatalog,
+    validate_action_chain_requests,
 )
 
 
@@ -43,6 +51,254 @@ class DispatchAuthorityRows:
     activation: Any
     manifest: Any
     binding: Any
+
+
+class ResolvedDispatchAuthorization(NamedTuple):
+    intent_row: Any
+    chain: StoredActionChain
+    stored_step: Any
+    intent: ReadIntent | EffectIntent
+    action: Any
+    profile: Any
+    capability_manifest: CapabilityManifest
+    binding: ConnectorBinding
+    existing: Any
+    created_at: datetime
+
+
+def resolve_dispatch_authorization(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    kind: Literal["read", "effect"],
+    intent_id: UUID,
+    intent_table: sa.Table,
+    attempt_table: sa.Table,
+    ledger: Any,
+    preparer: Any,
+    provider_registry: Any,
+    live_catalog: ActionToolCatalog,
+    now: datetime,
+    conflict_type: type[Exception],
+    authority_factory: Callable[[Any, Any, ReadIntent | EffectIntent], Any],
+    validate_profile: Callable[..., None],
+) -> ResolvedDispatchAuthorization:
+    """Resolve and revalidate the shared durable authority graph once."""
+
+    intent_id_name = f"{kind}_intent_id"
+    intent_statement = sa.select(intent_table).where(
+        intent_table.c.tenant_id == scope.tenant_id,
+        intent_table.c.installation_id == scope.installation_id,
+        intent_table.c[intent_id_name] == intent_id,
+    )
+    if kind == "effect":
+        intent_statement = intent_statement.with_for_update()
+    intent_row = connection.execute(intent_statement).one_or_none()
+    if intent_row is None:
+        raise conflict_type(f"prepared {kind} intent is absent in scope")
+    step_row = connection.execute(
+        sa.select(plan_steps)
+        .where(
+            plan_steps.c.tenant_id == scope.tenant_id,
+            plan_steps.c.installation_id == scope.installation_id,
+            plan_steps.c.plan_step_id == intent_row.plan_step_id,
+            plan_steps.c[intent_id_name] == intent_id,
+        )
+        .with_for_update()
+    ).one_or_none()
+    if step_row is None or step_row.state != "running":
+        raise conflict_type(f"prepared {kind} step is no longer running")
+
+    chain = ledger.load_in_transaction(connection, step_row.plan_id)
+    stored_step = next(
+        (
+            item
+            for item in chain.steps
+            if item.plan_step_id == step_row.plan_step_id
+            and (kind == "effect" or getattr(item, intent_id_name) == intent_id)
+        ),
+        None,
+    )
+    if stored_step is None:
+        raise conflict_type(f"prepared {kind} differs from its plan")
+    intent_type = ReadIntent if kind == "read" else EffectIntent
+    try:
+        intent = intent_type.model_validate(intent_row.payload)
+        validate_action_chain_requests(chain.decision, live_catalog)
+    except (ValueError, ActionChainValidationError) as error:
+        raise conflict_type(str(error)) from error
+    if live_catalog.authority_snapshot() != chain.authority_snapshot:
+        raise conflict_type("live action catalog differs from admission")
+
+    action = next(
+        (
+            item
+            for item in chain.decision.actions
+            if item.action_id == stored_step.logical_step_key
+        ),
+        None,
+    )
+    plan_step = next(
+        (
+            item
+            for item in chain.plan.steps
+            if item.step_id == stored_step.logical_step_key
+        ),
+        None,
+    )
+    expected_action_kind = "request_read" if kind == "read" else "propose_effect"
+    if (
+        action is None
+        or plan_step is None
+        or action.kind != expected_action_kind
+        or (kind == "effect" and plan_step.kind != "effect")
+    ):
+        raise conflict_type(f"prepared action is not a {kind}")
+    activation_hint = connection.execute(
+        sa.select(capability_activations)
+        .where(
+            capability_activations.c.tenant_id == scope.tenant_id,
+            capability_activations.c.installation_id == scope.installation_id,
+            capability_activations.c.activation_id
+            == intent_row.capability_activation_id,
+        )
+        .with_for_update(read=True)
+    ).one_or_none()
+    if activation_hint is None:
+        raise conflict_type(f"{kind} capability activation is absent")
+    descriptor = live_catalog.require(action.operation)
+    activation, capability_manifest = preparer._validate_authority(
+        connection,
+        chain,
+        action=action,
+        plan_step=plan_step,
+        descriptor=descriptor,
+        authority=authority_factory(intent_row, activation_hint, intent),
+    )
+    binding = ConnectorBinding.model_validate(
+        connection.execute(
+            sa.select(connector_bindings.c.payload).where(
+                connector_bindings.c.tenant_id == scope.tenant_id,
+                connector_bindings.c.installation_id == scope.installation_id,
+                connector_bindings.c.binding_id == activation.connector_binding_id,
+            )
+        ).scalar_one()
+    )
+    try:
+        profile = provider_registry.resolve(activation.capability_manifest_id)
+    except LookupError as error:
+        raise conflict_type(str(error)) from error
+    validate_profile(
+        profile,
+        capability_manifest=capability_manifest,
+        binding=binding,
+        intent=intent,
+    )
+    existing = connection.execute(
+        sa.select(attempt_table)
+        .where(
+            attempt_table.c.tenant_id == scope.tenant_id,
+            attempt_table.c.installation_id == scope.installation_id,
+            attempt_table.c[intent_id_name] == intent_id,
+            attempt_table.c.ordinal == 1,
+        )
+        .with_for_update()
+    ).one_or_none()
+    if existing is None and now >= parse_utc_timestamp(intent.deadline):
+        raise conflict_type(f"{kind} dispatch deadline has passed")
+    return ResolvedDispatchAuthorization(
+        intent_row,
+        chain,
+        stored_step,
+        intent,
+        action,
+        profile,
+        capability_manifest,
+        binding,
+        existing,
+        now if existing is None else existing.created_at,
+    )
+
+
+def build_dispatch_attempt_values(
+    *,
+    scope: TimelineScope,
+    chain: StoredActionChain,
+    attempt: ReadAttempt | EffectAttempt,
+    capability_grant: CapabilityGrant,
+    credential_grant: CredentialGrant,
+    created_at: datetime,
+) -> dict[str, object]:
+    """Return the provider-neutral durable columns for one dispatch fence."""
+
+    return {
+        "tenant_id": scope.tenant_id,
+        "installation_id": scope.installation_id,
+        "ordinal": attempt.ordinal,
+        "state": attempt.state,
+        "capability_grant_id": UUID(capability_grant.grant_id),
+        "capability_grant_payload": capability_grant.model_dump(mode="json"),
+        "capability_grant_sha256": bytes.fromhex(canonical_sha256(capability_grant)),
+        "capability_grant_nonce": capability_grant.nonce,
+        "capability_grant_deadline": parse_utc_timestamp(capability_grant.deadline),
+        "credential_grant_id": UUID(credential_grant.credential_grant_id),
+        "credential_grant_payload": credential_grant.model_dump(mode="json"),
+        "credential_grant_sha256": bytes.fromhex(canonical_sha256(credential_grant)),
+        "credential_grant_nonce": credential_grant.nonce,
+        "credential_grant_deadline": parse_utc_timestamp(credential_grant.deadline),
+        "connector_manifest_sha256": bytes.fromhex(attempt.connector_manifest_sha256),
+        "request_sha256": bytes.fromhex(attempt.request_sha256),
+        "response_sha256": None,
+        "deadline": parse_utc_timestamp(attempt.deadline),
+        "payload": attempt.model_dump(mode="json"),
+        "payload_sha256": bytes.fromhex(canonical_sha256(attempt)),
+        "revision": 1,
+        "retention_policy_id": chain.retention_policy_id,
+        "retention_until": chain.retention_until,
+        "created_at": created_at,
+        "updated_at": created_at,
+    }
+
+
+def commit_dispatch_authorized(
+    connection: sa.Connection,
+    scope: TimelineScope,
+    *,
+    kind: Literal["read", "effect"],
+    operation_id: str,
+    occurred_at: datetime,
+    event_data: dict[str, object],
+    deadline: datetime,
+) -> None:
+    """Commit the shared timeline boundary after a dispatch fence is stored."""
+
+    checkpoint = _load_scoped_row(
+        connection,
+        scope,
+        operational_checkpoints,
+        operational_checkpoints.c.thread_id == operation_id,
+        lock="write",
+    )
+    transition_timeline_thread(
+        connection,
+        scope,
+        thread_id=operation_id,
+        expected_revision=int(checkpoint.revision),
+        checkpoint_id=f"checkpoint:{operation_id}:{kind}-dispatch-authorized",
+        phase=f"action_chain_{kind}_dispatch_authorized",
+        status="waiting_for_proof",
+        event_type=f"ACTION_CHAIN_{kind.upper()}_DISPATCH_AUTHORIZED",
+        occurred_at=occurred_at,
+        data=event_data,
+        operation_id=operation_id,
+        deadline=deadline,
+        retry_count=int(checkpoint.retry_count),
+        last_error_fingerprint=(
+            None
+            if checkpoint.last_error_fingerprint is None
+            else bytes(checkpoint.last_error_fingerprint).hex()
+        ),
+    )
 
 
 def build_dispatch_authority_material(
@@ -60,9 +316,12 @@ def build_dispatch_authority_material(
 ) -> tuple[UUID, CapabilityGrant, CredentialGrant, str, ConnectorEnvelope]:
     """Build the provider-neutral grants and exact connector envelope once."""
 
-    if datetime.strptime(
-        profile.connector_manifest.issued_at, "%Y-%m-%dT%H:%M:%SZ"
-    ).replace(tzinfo=UTC) > created_at:
+    if (
+        datetime.strptime(
+            profile.connector_manifest.issued_at, "%Y-%m-%dT%H:%M:%SZ"
+        ).replace(tzinfo=UTC)
+        > created_at
+    ):
         raise conflict_type("connector manifest was issued in the future")
     if kind == "read" and isinstance(intent, ReadIntent):
         attempt_id = uuid5(UUID(intent.read_intent_id), "read-attempt:1")
