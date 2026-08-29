@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from queue import Empty, Queue
 from threading import Event, Lock, Thread
@@ -47,6 +47,24 @@ class BackgroundReflectionBudgetPort(Protocol):
     ) -> object: ...
 
 
+class MemoryStorageBudgetPort(Protocol):
+    def admit_memory(
+        self, document: ConversationMemoryDocument, *, now: datetime
+    ) -> object: ...
+
+    def mark_retained(
+        self,
+        document: ConversationMemoryDocument,
+        receipt: MemoryRetentionReceipt,
+        *,
+        now: datetime,
+    ) -> object: ...
+
+    def claim_expired(self, *, now: datetime, limit: int = 64) -> tuple[object, ...]: ...
+
+    def mark_removed(self, job: object, *, now: datetime) -> object: ...
+
+
 @dataclass(frozen=True, slots=True)
 class _RetainJob:
     document: ConversationMemoryDocument
@@ -71,6 +89,7 @@ class SemanticMemoryColdPathWorker:
         idle_tasks: tuple[Callable[[], object], ...] = (),
         outbox: DurableMemoryOutboxPort | None = None,
         reflection_budget: BackgroundReflectionBudgetPort | None = None,
+        storage_budget: MemoryStorageBudgetPort | None = None,
     ) -> None:
         if idle_seconds <= 0 or retry_delay_seconds < 0:
             raise ValueError("cold-path timing is invalid")
@@ -80,6 +99,7 @@ class SemanticMemoryColdPathWorker:
         self._idle_tasks = idle_tasks
         self._outbox = outbox
         self._reflection_budget = reflection_budget
+        self._storage_budget = storage_budget
         self._queue: Queue[_RetainJob | None] = Queue()
         self._stop = Event()
         self._thread: Thread | None = None
@@ -119,11 +139,29 @@ class SemanticMemoryColdPathWorker:
         if thread is not None:
             thread.join(timeout_seconds)
 
-    def submit(self, document: ConversationMemoryDocument) -> None:
+    def submit(self, document: ConversationMemoryDocument) -> object | None:
         with self._lock:
             self._last_activity = time.monotonic()
+        admission = None
+        if self._storage_budget is not None:
+            admission = self._storage_budget.admit_memory(
+                document,
+                now=datetime.now(tz=UTC).replace(microsecond=0),
+            )
+            admitted = getattr(admission, "admitted", None)
+            retention_until = getattr(admission, "retention_until", None)
+            if not isinstance(admitted, bool):
+                raise RuntimeError("memory storage budget returned an invalid decision")
+            if not admitted:
+                return admission
+            if not isinstance(retention_until, str) or not retention_until:
+                raise RuntimeError(
+                    "admitted memory storage decision lacks a retention deadline"
+                )
+            document = replace(document, retention_until=retention_until)
         durable_job = None if self._outbox is None else self._outbox.enqueue(document)
         self._queue.put_nowait(_RetainJob(document, durable_job=durable_job))
+        return admission
 
     def _run(self) -> None:
         poll_seconds = min(self._idle_seconds, 1.0)
@@ -176,6 +214,12 @@ class SemanticMemoryColdPathWorker:
                 active_job = _RetainJob(job.document, durable_job=durable_job)
             try:
                 receipt = self._memory.retain_conversation(active_job.document)
+                if self._storage_budget is not None:
+                    self._storage_budget.mark_retained(
+                        active_job.document,
+                        receipt,
+                        now=datetime.now(tz=UTC).replace(microsecond=0),
+                    )
                 if self._outbox is not None:
                     self._outbox.succeed(
                         active_job.durable_job,
@@ -233,6 +277,32 @@ class SemanticMemoryColdPathWorker:
                 return
             scopes = tuple(self._reflection_scopes)
             self._reflection_scopes.clear()
+        if self._storage_budget is not None:
+            now = datetime.now(tz=UTC).replace(microsecond=0)
+            try:
+                expired = self._storage_budget.claim_expired(now=now)
+            except Exception as error:
+                with self._lock:
+                    self._last_error = f"{type(error).__name__}: {error}"
+                expired = ()
+            for expiry_job in expired:
+                try:
+                    bank_id = getattr(expiry_job, "bank_id", None)
+                    document_id = getattr(expiry_job, "document_id", None)
+                    if not isinstance(bank_id, str) or not isinstance(document_id, str):
+                        raise RuntimeError(
+                            "memory storage budget returned an invalid expiry job"
+                        )
+                    self._memory.remove_conversation_document(
+                        bank_id=bank_id, document_id=document_id
+                    )
+                    self._storage_budget.mark_removed(
+                        expiry_job,
+                        now=datetime.now(tz=UTC).replace(microsecond=0),
+                    )
+                except Exception as error:
+                    with self._lock:
+                        self._last_error = f"{type(error).__name__}: {error}"
         for tenant_id, installation_id, principal_id in scopes:
             try:
                 if self._reflection_budget is not None:
@@ -275,5 +345,6 @@ __all__ = [
     "BackgroundReflectionBudgetPort",
     "DurableMemoryOutboxPort",
     "HindsightColdPathWorker",
+    "MemoryStorageBudgetPort",
     "SemanticMemoryColdPathWorker",
 ]

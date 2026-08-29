@@ -768,6 +768,11 @@ class HindsightMemoryEngine:
                     else {"project_id": document.project_id}
                 ),
                 "privacy_class": document.privacy_class,
+                **(
+                    {}
+                    if document.retention_until is None
+                    else {"retention_until": document.retention_until}
+                ),
                 "source_ref": document.source_ref,
                 "trust": document.trust,
             },
@@ -800,6 +805,30 @@ class HindsightMemoryEngine:
             document_id=document.document_id,
             content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest(),
         )
+
+    def remove_conversation_document(
+        self, *, bank_id: str, document_id: str
+    ) -> None:
+        """Remove one exact retained document; a missing replay is already safe."""
+
+        if not re.fullmatch(
+            rf"{re.escape(self._config.bank_namespace)}-[0-9a-f]{{32}}", bank_id
+        ):
+            raise HindsightMemoryScopeError(
+                "Hindsight removal bank is outside Eva's namespace"
+            )
+        if not document_id.strip() or len(document_id) > 1_024:
+            raise HindsightMemoryScopeError("Hindsight removal document is invalid")
+        encoded = urllib.parse.quote(document_id, safe="")
+        status, response = self._request(
+            "DELETE",
+            f"/v1/default/banks/{bank_id}/documents/{encoded}",
+            allowed_statuses=frozenset({404}),
+        )
+        if status != 404 and response.get("success") is not True:
+            raise HindsightProjectionProtocolError(
+                "Hindsight did not acknowledge conversation-memory removal"
+            )
 
     def _wait_for_operation(self, bank_id: str, operation_id: str) -> None:
         deadline = time.monotonic() + self._config.timeout_seconds

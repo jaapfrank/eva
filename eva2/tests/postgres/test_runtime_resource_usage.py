@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 import hashlib
 import os
@@ -15,7 +16,10 @@ from sqlalchemy.engine import Engine, make_url
 
 from eva.adapters.postgres.runtime_resource_usage import (
     PostgresDailyReflectionBudget,
+    PostgresMemoryStorageBudget,
 )
+from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory_audience import MemoryAudience
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 
@@ -59,6 +63,52 @@ def _budget() -> RuntimeResourceBudget:
         background_reflections_per_person_day=4,
         background_reflections_per_installation_day=6,
         external_monthly_spend_cap_eur_cents=0,
+    )
+
+
+def _storage_budget() -> RuntimeResourceBudget:
+    payload = {
+        **_budget().budget_payload(),
+        "memory_bytes_per_person": 1_048_576,
+        "memory_records_per_person": 100,
+        "retention_days": 7,
+    }
+    return RuntimeResourceBudget(
+        tenant_id=TENANT,
+        installation_id=INSTALLATION,
+        source_budget_sha256=hashlib.sha256(
+            canonical_json_bytes(payload)
+        ).hexdigest(),
+        recall_context_tokens=3_000,
+        retrieval_nodes=50,
+        max_input_tokens=12_000,
+        max_output_tokens=1_200,
+        profile_context_tokens=800,
+        memory_records_per_person=100,
+        memory_bytes_per_person=1_048_576,
+        retention_days=7,
+        background_reflections_per_person_day=4,
+        background_reflections_per_installation_day=6,
+        external_monthly_spend_cap_eur_cents=0,
+    )
+
+
+def _document(
+    document_id: str, *, principal_id: str = "person:memory", content: str = "x"
+) -> ConversationMemoryDocument:
+    return ConversationMemoryDocument(
+        tenant_id=TENANT,
+        installation_id=INSTALLATION,
+        principal_id=principal_id,
+        conversation_id=f"conversation:{principal_id}",
+        document_id=document_id,
+        content=content,
+        occurred_at="2026-08-29T09:00:00Z",
+        source_ref=f"source:{document_id}",
+        evidence_ref=f"evidence:{document_id}",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id=principal_id),
     )
 
 
@@ -164,3 +214,107 @@ def test_reflection_admission_rejects_cross_scope(
             principal_id="person:jaap",
             now=NOW,
         )
+
+
+def test_memory_storage_limits_survive_races_restart_and_expiry(
+    resource_engine: Engine,
+) -> None:
+    storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=INSTALLATION,
+        resource_budget=_storage_budget(),
+        removal_lease_seconds=1,
+    )
+    large = _document("memory:large", content="é" * 300_000)
+    admitted = storage.admit_memory(large, now=NOW)
+    replayed = storage.admit_memory(large, now=NOW + timedelta(seconds=1))
+
+    assert admitted.admitted is True
+    assert admitted.content_bytes == 600_000
+    assert admitted.retention_until == "2026-09-05T09:00:00Z"
+    assert replayed.admitted is True
+    assert replayed.replayed is True
+    assert replayed.person_records_used == 1
+    assert replayed.person_bytes_used == 600_000
+
+    byte_blocked = storage.admit_memory(
+        _document("memory:too-many-bytes", content="b" * 500_000),
+        now=NOW + timedelta(seconds=2),
+    )
+    assert byte_blocked.admitted is False
+    assert byte_blocked.reason == "person_byte_limit_reached"
+    assert byte_blocked.retention_until is None
+
+    other_person = storage.admit_memory(
+        _document(
+            "memory:other-person",
+            principal_id="person:other",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(seconds=3),
+    )
+    assert other_person.admitted is True
+
+    for index in range(99):
+        assert storage.admit_memory(
+            _document(f"memory:race:prefill:{index}", principal_id="person:race"),
+            now=NOW + timedelta(seconds=10 + index),
+        ).admitted
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        raced = tuple(
+            pool.map(
+                lambda index: storage.admit_memory(
+                    _document(
+                        f"memory:race:final:{index}", principal_id="person:race"
+                    ),
+                    now=NOW + timedelta(seconds=200 + index),
+                ),
+                range(8),
+            )
+        )
+    assert sum(item.admitted for item in raced) == 1
+    assert {item.reason for item in raced if not item.admitted} == {
+        "person_record_limit_reached"
+    }
+
+    retained_document = replace(
+        large, retention_until=admitted.retention_until
+    )
+    receipt = MemoryRetentionReceipt(
+        bank_id="eva2-" + "a" * 32,
+        document_id=large.document_id,
+        content_sha256=hashlib.sha256(large.content.encode("utf-8")).hexdigest(),
+    )
+    storage.mark_retained(
+        retained_document, receipt, now=NOW + timedelta(seconds=300)
+    )
+    assert storage.claim_expired(now=NOW + timedelta(days=7, seconds=-1)) == ()
+
+    restarted = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=INSTALLATION,
+        resource_budget=_storage_budget(),
+        removal_lease_seconds=1,
+    )
+    first_claim = restarted.claim_expired(now=NOW + timedelta(days=7))
+    assert len(first_claim) == 1
+    assert first_claim[0].document_id == large.document_id
+    assert restarted.claim_expired(now=NOW + timedelta(days=7)) == ()
+    second_claim = restarted.claim_expired(
+        now=NOW + timedelta(days=7, seconds=1)
+    )
+    assert len(second_claim) == 1
+    assert second_claim[0].state.retry_count == 2
+    restarted.mark_removed(
+        second_claim[0], now=NOW + timedelta(days=7, seconds=2)
+    )
+
+    replacement = restarted.admit_memory(
+        _document("memory:replacement", content="c" * 500_000),
+        now=NOW + timedelta(days=7, seconds=3),
+    )
+    assert replacement.admitted is True
+    assert replacement.person_records_used == 1
+    assert replacement.person_bytes_used == 500_000

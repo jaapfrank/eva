@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from types import SimpleNamespace
 
 import pytest
 
@@ -73,6 +74,61 @@ def test_semantic_retention_never_promotes_model_output_to_direct_user() -> None
         "Waarschuw me stil als ik geconcentreerd werk."
     )
     assert reply.text not in document.content  # type: ignore[attr-defined]
+
+
+def test_quota_refusal_is_durable_and_never_claimed_as_queued() -> None:
+    turn = ConversationTurn.private(
+        tenant_id="tenant:1",
+        installation_id="installation:1",
+        principal_id="person:1",
+        conversation_id="conversation:1",
+        message_id="message:1",
+        text="Onthoud nog iets.",
+        occurred_at="2026-08-24T12:00:00Z",
+    )
+    reply = GroundedReply(
+        turn.conversation_id,
+        turn.message_id,
+        "Ik heb je gehoord.",
+        (),
+        turn.occurred_at,
+        "test",
+    )
+    events: list[tuple[str, str]] = []
+
+    class ColdPath:
+        def submit(self, _document):  # type: ignore[no-untyped-def]
+            return SimpleNamespace(
+                admitted=False,
+                reason="person_record_limit_reached",
+            )
+
+    class Journal:
+        def load(self, _turn):  # type: ignore[no-untyped-def]
+            return object()
+
+        def memory_queued(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError("a blocked memory was not queued")
+
+        def memory_skipped(
+            self,
+            _turn,
+            _state,
+            *,
+            operation_document_id,
+            reason,
+        ):  # type: ignore[no-untyped-def]
+            events.append((operation_document_id, reason))
+
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._cold_path = ColdPath()  # type: ignore[attr-defined]
+    runtime._journal = lambda _turn: Journal()  # type: ignore[attr-defined,method-assign]
+
+    runtime.after_response(turn, reply)
+
+    assert events == [
+        ("conversation:1:exchange:message:1", "person_record_limit_reached")
+    ]
 
 
 def test_bound_identity_correction_retains_only_the_grounded_user_fact() -> None:

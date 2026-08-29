@@ -51,12 +51,9 @@ def conversation_memory_document_from_outbox_data(
         "trust",
     }
     audience_keys = {*legacy_keys, "audience"}
-    if set(data) not in {
-        frozenset(legacy_keys),
-        frozenset((*legacy_keys, "project_id")),
-        frozenset(audience_keys),
-        frozenset((*audience_keys, "project_id")),
-    }:
+    required_keys = audience_keys if "audience" in data else legacy_keys
+    optional_keys = {"project_id", "retention_until"}
+    if not required_keys <= set(data) or set(data) - required_keys - optional_keys:
         raise RuntimeError("durable memory outbox document fields are malformed")
     scalar_keys = set(data) - {"audience"}
     if not all(isinstance(data[key], str) for key in scalar_keys):
@@ -90,6 +87,7 @@ def conversation_memory_document_from_outbox_data(
             trust=data["trust"],  # type: ignore[arg-type]
             audience=audience,
             project_id=data.get("project_id"),
+            retention_until=data.get("retention_until"),
         )
     except (KeyError, TypeError, ValueError) as error:
         raise RuntimeError("durable memory outbox document is invalid") from error
@@ -141,6 +139,8 @@ class PostgresMemoryOutbox:
         }
         if document.project_id is not None:
             data["project_id"] = document.project_id
+        if document.retention_until is not None:
+            data["retention_until"] = document.retention_until
         return data
 
     @staticmethod

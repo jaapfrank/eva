@@ -823,6 +823,66 @@ def test_conversation_replay_returns_one_durable_reply_and_one_memory_queue(
     ]
 
 
+def test_conversation_records_a_content_free_memory_quota_refusal(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "living-memory-blocked"
+    installation_id = "home"
+    scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
+        ),
+    )
+    journal = PostgresConversationJournal(timeline_engine, scope)
+    turn = ConversationTurn.private(
+        tenant_id,
+        installation_id,
+        "person:jaap",
+        "telegram:jaap",
+        "telegram:memory-blocked:1",
+        "Dit bericht past niet meer in het semantische geheugen.",
+        "2026-08-23T12:56:00Z",
+    )
+    journal.admit(turn)
+    journal.commit_reply(
+        turn,
+        GroundedReply(
+            turn.conversation_id,
+            turn.message_id,
+            "Ik heb je wel gehoord.",
+            (),
+            turn.occurred_at,
+            "test",
+        ),
+    )
+
+    skipped = journal.memory_skipped(
+        turn,
+        journal.load(turn),
+        operation_document_id="telegram:jaap:exchange:memory-blocked:1",
+        reason="person_byte_limit_reached",
+    )
+    assert (
+        journal.memory_skipped(
+            turn,
+            skipped,
+            operation_document_id="telegram:jaap:exchange:memory-blocked:1",
+            reason="person_byte_limit_reached",
+        )
+        == skipped
+    )
+    events = PostgresOperationalTimeline(timeline_engine, scope).events(
+        f"conversation:{turn.message_id}"
+    )
+    assert [event.event_type for event in events] == [
+        "INGRESS_COMMITTED",
+        "REPLY_COMMITTED",
+        "MEMORY_RETAIN_SKIPPED",
+    ]
+    assert "Dit bericht past niet" not in str(events[-1].payload)
+
+
 def test_hindsight_outbox_rehydrates_and_stops_after_three_attempts(
     timeline_engine: Engine,
 ) -> None:

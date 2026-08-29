@@ -493,6 +493,37 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     assert retained["async"] is True
 
 
+def test_hindsight_retention_deadline_and_exact_document_removal(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    document = replace(
+        _conversation_document(), retention_until="2027-08-23T14:00:00Z"
+    )
+
+    receipt = engine.retain_conversation(document)
+    engine.remove_conversation_document(
+        bank_id=receipt.bank_id, document_id=document.document_id
+    )
+
+    retained = next(
+        body
+        for method, path, body in state.requests
+        if method == "POST" and path.endswith("/memories")
+    )
+    assert retained is not None
+    assert (
+        retained["items"][0]["metadata"]["retention_until"]
+        == "2027-08-23T14:00:00Z"
+    )
+    assert any(
+        method == "DELETE"
+        and path.endswith("/documents/conversation%3Atelegram%3Ajaap%3Ahistory")
+        for method, path, _body in state.requests
+    )
+
+
 def test_private_hindsight_memory_never_calls_the_group_consent_resolver(
     hindsight_server: tuple[str, _State],
 ) -> None:

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime, timedelta
 import hashlib
 import json
@@ -59,6 +59,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.runtime_resource_usage import (
     PostgresDailyReflectionBudget,
+    PostgresMemoryStorageBudget,
 )
 from eva.adapters.postgres.people_memory_overview import (
     PostgresPeopleMemoryOverview,
@@ -648,6 +649,7 @@ class PostgresHindsightMemoryRuntime:
         dashboard_effect_controller: DashboardActionChainEffectController | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
+        memory_storage_budget: PostgresMemoryStorageBudget | None = None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -682,6 +684,7 @@ class PostgresHindsightMemoryRuntime:
         self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
+        self._memory_storage_budget = memory_storage_budget
 
     def admit_telegram_canary(
         self,
@@ -890,7 +893,18 @@ class PostgresHindsightMemoryRuntime:
         return self._memory.recall_for_presence(query)
 
     def retain(self, document: ConversationMemoryDocument) -> MemoryRetentionReceipt:
-        return self._memory.retain_conversation(document)
+        if self._memory_storage_budget is None:
+            return self._memory.retain_conversation(document)
+        now = datetime.now(tz=UTC).replace(microsecond=0)
+        admission = self._memory_storage_budget.admit_memory(document, now=now)
+        if not admission.admitted:
+            raise ValueError(f"memory storage blocked: {admission.reason}")
+        if admission.retention_until is None:
+            raise RuntimeError("memory storage admission lacks a retention deadline")
+        admitted = replace(document, retention_until=admission.retention_until)
+        receipt = self._memory.retain_conversation(admitted)
+        self._memory_storage_budget.mark_retained(admitted, receipt, now=now)
+        return receipt
 
     def admit_turn_audience(self, turn: ConversationTurn) -> None:
         """Revalidate a connector's group grant at the core boundary."""
@@ -999,8 +1013,24 @@ class PostgresHindsightMemoryRuntime:
         # ``submit`` commits the separate outbox thread before returning. The
         # queue wake-up and Hindsight call remain asynchronous, but a crash in
         # between cannot strand the source document anymore.
-        self._cold_path.submit(document)
+        admission = self._cold_path.submit(document)
         journal = self._journal(turn)
+        admitted = None if admission is None else getattr(admission, "admitted", None)
+        if admitted is False:
+            reason = getattr(admission, "reason", None)
+            if not isinstance(reason, str) or not reason:
+                raise ConversationConflict(
+                    "memory storage budget returned an invalid refusal"
+                )
+            journal.memory_skipped(
+                turn,
+                journal.load(turn),
+                operation_document_id=document_id,
+                reason=reason,
+            )
+            return
+        if admitted is not None and admitted is not True:
+            raise ConversationConflict("memory storage budget decision is invalid")
         journal.memory_queued(
             turn,
             journal.load(turn),
@@ -2040,6 +2070,16 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
         )
     )
+    storage_budget = (
+        None
+        if settings.runtime_resource_budget is None
+        else PostgresMemoryStorageBudget(
+            engine,
+            tenant_id=settings.background_tenant_id or "",
+            installation_id=settings.background_installation_id or "",
+            resource_budget=settings.runtime_resource_budget,
+        )
+    )
     prototype_store = PostgresPersonalPrototypeStore(
         engine, lease_seconds=settings.personal_interest_lease_seconds
     )
@@ -2170,6 +2210,7 @@ def create_runtime_app() -> FastAPI:
                 idle_tasks=idle_tasks,
                 outbox=memory_outbox,
                 reflection_budget=reflection_budget,
+                storage_budget=storage_budget,
             ),
             prototype_store,
             release_store,
@@ -2194,6 +2235,7 @@ def create_runtime_app() -> FastAPI:
             dashboard_effect_controller=dashboard_effect_controller,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
+            memory_storage_budget=storage_budget,
         ),
         dashboard_access_token=settings.dashboard_access_token,
     )

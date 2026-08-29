@@ -3,6 +3,7 @@ from __future__ import annotations
 from threading import Event
 import time
 from dataclasses import replace
+from types import SimpleNamespace
 
 from eva.application.memory import ConversationMemoryDocument
 from eva.application.memory import MemoryRetentionReceipt
@@ -142,6 +143,120 @@ def test_daily_budget_blocks_reflection_before_memory_provider() -> None:
 
     assert admissions == [("tenant", "installation", "jaap")]
     assert reflections == []
+
+
+def test_storage_budget_blocks_before_outbox_and_provider() -> None:
+    calls: list[str] = []
+
+    class Budget:
+        def admit_memory(self, document, *, now):  # type: ignore[no-untyped-def]
+            assert document == _document()
+            assert now.tzinfo is not None
+            return SimpleNamespace(
+                admitted=False,
+                retention_until=None,
+                reason="person_byte_limit_reached",
+            )
+
+        def mark_retained(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError("blocked memory cannot be retained")
+
+        def claim_expired(self, *, now, limit=64):  # type: ignore[no-untyped-def]
+            return ()
+
+        def mark_removed(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError("blocked memory cannot be removed")
+
+    class Outbox:
+        def pending(self, *, limit=256):  # type: ignore[no-untyped-def]
+            return ()
+
+        def enqueue(self, document):  # type: ignore[no-untyped-def]
+            calls.append("outbox")
+
+    class Memory:
+        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+
+        def maintain_person_scope(self, *scope):  # type: ignore[no-untyped-def]
+            return None
+
+    worker = HindsightColdPathWorker(
+        Memory(),
+        outbox=Outbox(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        idle_seconds=60,
+    )
+    decision = worker.submit(_document())
+
+    assert getattr(decision, "admitted") is False
+    assert calls == []
+
+
+def test_storage_budget_marks_retained_then_removes_expired_document() -> None:
+    retained = Event()
+    removed = Event()
+    marked: list[str] = []
+    document = _document()
+    expiry = SimpleNamespace(bank_id="eva2-bank", document_id=document.document_id)
+
+    class Budget:
+        expiry_returned = False
+
+        def admit_memory(self, submitted, *, now):  # type: ignore[no-untyped-def]
+            assert submitted == document
+            return SimpleNamespace(
+                admitted=True,
+                retention_until="2026-09-01T14:00:00Z",
+                reason="reserved",
+            )
+
+        def mark_retained(self, submitted, receipt, *, now):  # type: ignore[no-untyped-def]
+            assert submitted.retention_until == "2026-09-01T14:00:00Z"
+            assert receipt.document_id == document.document_id
+            marked.append("retained")
+
+        def claim_expired(self, *, now, limit=64):  # type: ignore[no-untyped-def]
+            if not retained.is_set() or self.expiry_returned:
+                return ()
+            self.expiry_returned = True
+            return (expiry,)
+
+        def mark_removed(self, job, *, now):  # type: ignore[no-untyped-def]
+            assert job is expiry
+            marked.append("removed")
+            removed.set()
+
+    class Memory:
+        def retain_conversation(self, submitted):  # type: ignore[no-untyped-def]
+            retained.set()
+            return MemoryRetentionReceipt(
+                bank_id="eva2-bank",
+                document_id=submitted.document_id,
+                content_sha256=(
+                    "f463c6c92e8ece20a2151f24ebf174886d150f47cc8b1ae86a837027c25936a4"
+                ),
+            )
+
+        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
+            assert (bank_id, document_id) == ("eva2-bank", document.document_id)
+
+        def maintain_person_scope(self, *scope):  # type: ignore[no-untyped-def]
+            return None
+
+    worker = HindsightColdPathWorker(
+        Memory(),
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        idle_seconds=0.03,
+        retry_delay_seconds=0,
+    )
+    worker.start()
+    worker.submit(document)
+    assert retained.wait(0.5)
+    assert removed.wait(1)
+    worker.stop()
+
+    assert marked == ["retained", "removed"]
 
 
 def test_poison_retain_stops_after_three_attempts() -> None:

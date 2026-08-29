@@ -145,6 +145,7 @@ class ConversationMemoryDocument:
     ]
     audience: MemoryAudience
     project_id: str | None = None
+    retention_until: str | None = None
 
     def __post_init__(self) -> None:
         required = (
@@ -183,11 +184,24 @@ class ConversationMemoryDocument:
         }:
             raise ValueError("memory document trust is invalid")
         try:
-            datetime.strptime(self.occurred_at, "%Y-%m-%dT%H:%M:%SZ")
+            occurred_at = datetime.strptime(self.occurred_at, "%Y-%m-%dT%H:%M:%SZ")
         except ValueError as error:
             raise ValueError(
                 "memory document timestamp must be canonical UTC"
             ) from error
+        if self.retention_until is not None:
+            try:
+                retention_until = datetime.strptime(
+                    self.retention_until, "%Y-%m-%dT%H:%M:%SZ"
+                )
+            except ValueError as error:
+                raise ValueError(
+                    "memory document retention deadline must be canonical UTC"
+                ) from error
+            if retention_until < occurred_at:
+                raise ValueError(
+                    "memory document retention deadline precedes its source"
+                )
 
 
 @dataclass(frozen=True, slots=True)
@@ -223,6 +237,10 @@ class SemanticMemoryProviderPort(Protocol):
     def retain_conversation(
         self, document: ConversationMemoryDocument
     ) -> MemoryRetentionReceipt: ...
+
+    def remove_conversation_document(
+        self, *, bank_id: str, document_id: str
+    ) -> None: ...
 
     def maintain_person_scope(
         self, tenant_id: str, installation_id: str, principal_id: str

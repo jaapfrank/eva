@@ -194,6 +194,63 @@ class PostgresConversationJournal:
                 "memory retention commit raced without a matching event"
             ) from None
 
+    def memory_skipped(
+        self,
+        turn: ConversationTurn,
+        completed: CheckpointState,
+        *,
+        operation_document_id: str,
+        reason: str,
+    ) -> CheckpointState:
+        """Record a durable, content-free quota refusal for one completed turn."""
+
+        if reason not in {
+            "person_record_limit_reached",
+            "person_byte_limit_reached",
+        }:
+            raise ConversationConflict("memory retention refusal reason is invalid")
+        data = {
+            "conversation_id": turn.conversation_id,
+            "document_id": operation_document_id,
+            "kind": "memory_retain_skipped",
+            "message_id": turn.message_id,
+            "principal_id": turn.principal_id,
+            "reason": reason,
+        }
+        if turn.project_id is not None:
+            data["project_id"] = turn.project_id
+        for event in reversed(self._timeline.events(completed.thread_id)):
+            if event.event_type != "MEMORY_RETAIN_SKIPPED":
+                continue
+            payload = event.payload
+            durable = payload.get("data") if isinstance(payload, dict) else None
+            if durable != data:
+                raise ConversationConflict("memory retention refusal replay differs")
+            return self._timeline.load(completed.thread_id)
+        current = self._timeline.load(completed.thread_id)
+        try:
+            return self._timeline.transition(
+                thread_id=current.thread_id,
+                expected_revision=current.revision,
+                checkpoint_id=f"conversation:{turn.message_id}:memory-skipped",
+                phase="memory_skipped",
+                status="completed",
+                event_type="MEMORY_RETAIN_SKIPPED",
+                occurred_at=self._timestamp(turn.occurred_at),
+                data=data,
+            )
+        except CheckpointConflict:
+            for event in reversed(self._timeline.events(completed.thread_id)):
+                if event.event_type != "MEMORY_RETAIN_SKIPPED":
+                    continue
+                payload = event.payload
+                durable = payload.get("data") if isinstance(payload, dict) else None
+                if durable == data:
+                    return self._timeline.load(completed.thread_id)
+            raise ConversationConflict(
+                "memory retention refusal raced without a matching event"
+            ) from None
+
     @staticmethod
     def _thread_id(turn: ConversationTurn) -> str:
         return f"conversation:{turn.message_id}"
