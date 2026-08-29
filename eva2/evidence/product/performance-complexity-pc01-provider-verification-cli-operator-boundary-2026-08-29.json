@@ -1,0 +1,43 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ProviderVerificationCliOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:32:25+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "e6b10584f182f17b2653e9d8aebe73aa64570074",
+    "changedSourceManifestSha256": "d0e41b6a735beb356fa3920c8a5336f109c80de7f979da7c0b91d1bb0c32bfd2"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/installer_provider_verification_cli.py",
+    "newPath": "tools/installer_provider_verification_cli.py",
+    "physicalLinesMovedOutOfProductRoots": 167,
+    "runtimeConsumersBeforeMove": 0,
+    "operatorAndTestConsumersUpdated": 8,
+    "remainingOldCodeReferences": 0,
+    "historicalReceiptReferencesPreserved": true,
+    "currentCockpitInstallerSourceRebound": true
+  },
+  "verification": {
+    "providerCliAndConnectorTestsPassed": 58,
+    "failClosedReleaseTestsPassed": 38,
+    "proofCommandsCompiled": 5,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "requiredInputs": 244,
+    "requiredTests": 134,
+    "combinedTestAndAttestationLogsSha256": "3d9caaa7b7dc63c37dce5178e7e7080865b4901fb0a525b59456053dbd8dbcef"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 214,
+    "productPhysicalLines": 76198,
+    "livingCorePhysicalLines": 75605,
+    "productManifestSha256": "df8a213723b3cc762a7b63e1cbde534c1cd6d98c19e0cae847d70dda4d461541",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 1198,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 14635,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "No real provider credential or account was opened during this move.",
+    "Historical receipts retain their historical source path; only current release bindings changed.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}

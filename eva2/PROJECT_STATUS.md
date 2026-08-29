@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 22:25 CEST
+Laatst bijgewerkt: 29 augustus 2026, 22:32 CEST
 
 ## Heel kort
 
@@ -296,6 +296,10 @@ praktijktest zijn nog niet klaar.
   naast de portable restoretools. Veertien lokale en alle vijf echte
   objectgrensgevallen zijn groen. De bron en drie eerder ongepinde gerichte
   tests zijn nu verzegeld: 244 inputs en 134 tests.
+- De 167-regelige provider-verificatie-CLI had nul runtimegebruikers en staat nu
+  bij de installer-operator-tools. Alle 58 provider-/connectorchecks en 38
+  releasechecks zijn groen. De actuele cockpitbron en drie bewijscommands zijn
+  aan het nieuwe pad gebonden; historische receipts blijven historisch intact.
 
 ## Wat nog niet klaar is
 
@@ -310,8 +314,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  14.468 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 76.365 productregels en mag er maximaal 75.000 hebben.
+  14.635 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 76.198 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -329,7 +333,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 1.365 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 1.198 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -413,6 +417,7 @@ praktijktest zijn nog niet klaar.
 - [Managed-B-preflight naar de operatorgrens, wrapper en bron samen verzegeld](evidence/product/performance-complexity-pc01-core-b-preflight-operator-boundary-2026-08-29.json)
 - [Canary-omschakelaar naar de operatorgrens, volledige switchketen verzegeld](evidence/product/performance-complexity-pc01-canary-cutover-operator-boundary-2026-08-29.json)
 - [Private object-keyring naar de operatorgrens, bron en tests verzegeld](evidence/product/performance-complexity-pc01-object-keyring-operator-boundary-2026-08-29.json)
+- [Provider-verificatie-CLI naar de operatorgrens, cockpitbron opnieuw gebonden](evidence/product/performance-complexity-pc01-provider-verification-cli-operator-boundary-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
