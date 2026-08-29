@@ -1,0 +1,50 @@
+{
+  "contract": "EvaPerformanceComplexityPc01AutomationExecutionTailConsolidation/v1",
+  "recordedAt": "2026-08-29T17:33:03Z",
+  "sourceCommit": "d0e3b41eebce7bb489a38b60c5a87d995d76032e",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedAvailabilityCheck": [
+      "simple Home Assistant automation",
+      "advanced Home Assistant automation"
+    ],
+    "sharedExecutionTail": "ConversationActions._run_automation",
+    "preservedSeparateConfigurationBuilders": true,
+    "netProductPhysicalLines": -7
+  },
+  "verification": {
+    "conversationApiAndAutomationTests": {
+      "passed": 68,
+      "failed": 0,
+      "logSha256": "fb9ec7ebe3ffd24da61f30af3ced7ee07516a0bd265926f709220fdb4199ab03"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83329,
+      "productManifestSha256": "60e01aa89d7bada2014f604453c5083fc693f1aaf4d29462f5bed1eb1fb2556d"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83322,
+      "productManifestSha256": "a1f39b784af66f496a0a815aa20747435b261b3fc74c2e8b48fdcf0d00d4d046",
+      "livingCorePhysicalLines": 82729,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8322,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No automation trigger, condition, action, permission or external call was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
