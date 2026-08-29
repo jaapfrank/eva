@@ -287,6 +287,7 @@ class PostgresActionChainEffectDispatcher(PostgresScopedRole):
                 invoke,
             )
 
+
 def _require_registry_event(
     data: object,
     profile: ActionProviderProfile,
@@ -400,10 +401,6 @@ def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
         raise ActionChainEffectConflict("effect provider timeline payload differs")
     return payload["data"]
-
-
-
-
 
 
 __all__ = [

@@ -136,9 +136,7 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
                 None,
             )
             if stored_step is None:
-                raise ActionChainEffectConflict(
-                    "prepared effect differs from its plan"
-                )
+                raise ActionChainEffectConflict("prepared effect differs from its plan")
             try:
                 intent = EffectIntent.model_validate(intent_row.payload)
                 validate_action_chain_requests(chain.decision, live_catalog)
@@ -175,8 +173,7 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
             activation_hint = connection.execute(
                 sa.select(capability_activations)
                 .where(
-                    capability_activations.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    capability_activations.c.tenant_id == self._scope_value.tenant_id,
                     capability_activations.c.installation_id
                     == self._scope_value.installation_id,
                     capability_activations.c.activation_id
@@ -204,8 +201,7 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
             binding = ConnectorBinding.model_validate(
                 connection.execute(
                     sa.select(connector_bindings.c.payload).where(
-                        connector_bindings.c.tenant_id
-                        == self._scope_value.tenant_id,
+                        connector_bindings.c.tenant_id == self._scope_value.tenant_id,
                         connector_bindings.c.installation_id
                         == self._scope_value.installation_id,
                         connector_bindings.c.binding_id
@@ -265,9 +261,7 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
                     or intent_row.state != "dispatch_authorized"
                     or int(intent_row.revision) != 2
                 ):
-                    raise ActionChainEffectConflict(
-                        "authorized effect intent differs"
-                    )
+                    raise ActionChainEffectConflict("authorized effect intent differs")
                 return AuthorizedActionChainEffect("already_authorized", attempt)
             if (
                 intent.state != "prepared"
@@ -360,8 +354,7 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
@@ -398,9 +391,6 @@ class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainEffect("authorized", attempt)
-
-
-
 
 
 __all__ = [

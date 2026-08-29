@@ -128,14 +128,10 @@ def validate_action_chain_read_advances(
         if not isinstance(current_context, dict) or current_context != expected:
             raise corrupt("current read advance context differs")
         return expected
-    if (
-        current_context is not None
-        and latest.event_type
-        not in {
-            "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED",
-            "ACTION_CHAIN_EFFECT_CANCELLED",
-        }
-    ):
+    if current_context is not None and latest.event_type not in {
+        "ACTION_CHAIN_EFFECT_DEPENDENCIES_RELEASED",
+        "ACTION_CHAIN_EFFECT_CANCELLED",
+    }:
         raise corrupt("non-advance root event contains read advance context")
     return None
 
@@ -272,9 +268,7 @@ def _validated_released_ids(
         set(released_ids)
     ) != len(released_ids):
         raise corrupt("read advance released-step order differs")
-    succeeded = {
-        step_id for step_id, row in by_id.items() if row.state == "succeeded"
-    }
+    succeeded = {step_id for step_id, row in by_id.items() if row.state == "succeeded"}
     if any(
         released_id not in by_id
         or read_row.plan_step_id not in by_id[released_id].dependency_step_ids
@@ -287,8 +281,6 @@ def _validated_released_ids(
     ):
         raise corrupt("read advance released an ineligible dependency")
     return released_ids
-
-
 
 
 __all__ = ["validate_action_chain_read_advances"]

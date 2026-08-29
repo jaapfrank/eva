@@ -108,8 +108,7 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == claim.plan_step_id,
                     plan_steps.c.plan_id == claim.plan_id,
                 )
@@ -135,7 +134,9 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
             except ActionChainValidationError as error:
                 raise ActionChainReadConflict(str(error)) from error
             if live_catalog.authority_snapshot() != chain.authority_snapshot:
-                raise ActionChainReadConflict("live action catalog differs from admission")
+                raise ActionChainReadConflict(
+                    "live action catalog differs from admission"
+                )
 
             action = next(
                 (
@@ -178,7 +179,9 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
                     connection, chain, stored_step.logical_step_key
                 )
                 if event_data.get("claim_token_sha256") != claim.token_sha256:
-                    raise ActionChainReadConflict("prepared read belongs to another lease")
+                    raise ActionChainReadConflict(
+                        "prepared read belongs to another lease"
+                    )
                 intent_row = connection.execute(
                     sa.select(read_intents).where(
                         read_intents.c.tenant_id == self._scope_value.tenant_id,
@@ -190,16 +193,15 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
                 try:
                     intent = ReadIntent.model_validate(intent_row.payload)
                 except ValidationError as error:
-                    raise ActionChainReadConflict("prepared read payload is invalid") from error
+                    raise ActionChainReadConflict(
+                        "prepared read payload is invalid"
+                    ) from error
                 return PreparedActionChainRead("already_prepared", intent)
 
             states = {item.plan_step_id: item.state for item in chain.steps}
-            if (
-                stored_step.state != "ready"
-                or any(
-                    states.get(dependency) != "succeeded"
-                    for dependency in stored_step.dependency_step_ids
-                )
+            if stored_step.state != "ready" or any(
+                states.get(dependency) != "succeeded"
+                for dependency in stored_step.dependency_step_ids
             ):
                 raise ActionChainReadConflict("claimed read is no longer runnable")
             if (
@@ -266,8 +268,7 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
                 sa.update(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == claim.plan_step_id,
                     plan_steps.c.plan_id == claim.plan_id,
                     plan_steps.c.state == "ready",
@@ -305,8 +306,7 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
             child_checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == child_operation_id,
@@ -370,13 +370,15 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
         ):
             raise ActionChainReadConflict("host resource scope differs from the plan")
         activation = connection.execute(
-            sa.select(capability_activations).where(
+            sa.select(capability_activations)
+            .where(
                 capability_activations.c.tenant_id == self._scope_value.tenant_id,
                 capability_activations.c.installation_id
                 == self._scope_value.installation_id,
                 capability_activations.c.activation_id
                 == authority.capability_activation_id,
-            ).with_for_update(read=True)
+            )
+            .with_for_update(read=True)
         ).one_or_none()
         if activation is None:
             raise ActionChainReadConflict("read capability activation is absent")
@@ -390,22 +392,25 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
             )
         ).one_or_none()
         binding_row = connection.execute(
-            sa.select(connector_bindings).where(
+            sa.select(connector_bindings)
+            .where(
                 connector_bindings.c.tenant_id == self._scope_value.tenant_id,
                 connector_bindings.c.installation_id
                 == self._scope_value.installation_id,
                 connector_bindings.c.binding_id == authority.connector_binding_id,
-            ).with_for_update(read=True)
+            )
+            .with_for_update(read=True)
         ).one_or_none()
         policy_row = connection.execute(
-            sa.select(policy_pack_versions).where(
+            sa.select(policy_pack_versions)
+            .where(
                 policy_pack_versions.c.tenant_id == self._scope_value.tenant_id,
                 policy_pack_versions.c.installation_id
                 == self._scope_value.installation_id,
                 policy_pack_versions.c.policy_id == activation.policy_id,
-                policy_pack_versions.c.policy_version
-                == activation.policy_pack_version,
-            ).with_for_update(read=True)
+                policy_pack_versions.c.policy_version == activation.policy_pack_version,
+            )
+            .with_for_update(read=True)
         ).one_or_none()
         try:
             manifest = CapabilityManifest.model_validate(
@@ -415,7 +420,9 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
                 None if binding_row is None else binding_row.payload
             )
         except ValidationError as error:
-            raise ActionChainReadConflict("read capability payload is invalid") from error
+            raise ActionChainReadConflict(
+                "read capability payload is invalid"
+            ) from error
         if (
             manifest_row is None
             or binding_row is None
@@ -478,8 +485,7 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
             or binding.credential_reference != binding_row.credential_reference
             or canonical_sha256(policy_row.payload)
             != bytes(policy_row.payload_sha256).hex()
-            or bytes(policy_row.canonical_sha256)
-            != bytes(policy_row.payload_sha256)
+            or bytes(policy_row.canonical_sha256) != bytes(policy_row.payload_sha256)
         ):
             raise ActionChainReadConflict("concrete read authority differs")
         return activation, manifest
@@ -508,9 +514,6 @@ class PostgresActionChainReadPreparer(PostgresScopedRole):
         ):
             raise ActionChainReadConflict("prepared read timeline differs")
         return data
-
-
-
 
 
 __all__ = [

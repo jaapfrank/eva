@@ -112,8 +112,7 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
             intent_row = connection.execute(
                 sa.select(read_intents).where(
                     read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id
-                    == self._scope_value.installation_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
                     read_intents.c.read_intent_id == read_intent_id,
                     read_intents.c.purpose == "effect_verify",
                 )
@@ -128,8 +127,7 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
                     effect_intents.c.installation_id
                     == self._scope_value.installation_id,
-                    effect_intents.c.effect_intent_id
-                    == intent_row.effect_intent_id,
+                    effect_intents.c.effect_intent_id == intent_row.effect_intent_id,
                     effect_intents.c.plan_step_id == intent_row.plan_step_id,
                 )
                 .with_for_update(read=True)
@@ -138,11 +136,9 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == intent_row.plan_step_id,
-                    plan_steps.c.effect_intent_id
-                    == intent_row.effect_intent_id,
+                    plan_steps.c.effect_intent_id == intent_row.effect_intent_id,
                 )
                 .with_for_update(read=True)
             ).one_or_none()
@@ -234,8 +230,7 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
             latest = connection.execute(
                 sa.select(operational_events)
                 .where(
-                    operational_events.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
                     operational_events.c.installation_id
                     == self._scope_value.installation_id,
                     operational_events.c.thread_id == thread_id,
@@ -283,8 +278,7 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == thread_id,
@@ -323,16 +317,13 @@ class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
                 invoke,
             )
 
+
 def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
         raise ActionChainEffectReadbackConflict(
             "effect readback provider timeline payload differs"
         )
     return payload["data"]
-
-
-
-
 
 
 def _format_timestamp(value: datetime) -> str:

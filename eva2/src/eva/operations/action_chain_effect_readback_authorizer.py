@@ -87,11 +87,9 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
         with self._engine.begin() as connection:
             self._scope(connection)
             intent_row = connection.execute(
-                sa.select(read_intents)
-                .where(
+                sa.select(read_intents).where(
                     read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id
-                    == self._scope_value.installation_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
                     read_intents.c.read_intent_id == read_intent_id,
                     read_intents.c.purpose == "effect_verify",
                 )
@@ -106,8 +104,7 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
                     effect_intents.c.installation_id
                     == self._scope_value.installation_id,
-                    effect_intents.c.effect_intent_id
-                    == intent_row.effect_intent_id,
+                    effect_intents.c.effect_intent_id == intent_row.effect_intent_id,
                     effect_intents.c.plan_step_id == intent_row.plan_step_id,
                 )
                 .with_for_update()
@@ -116,18 +113,13 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == intent_row.plan_step_id,
                     plan_steps.c.effect_intent_id == intent_row.effect_intent_id,
                 )
                 .with_for_update()
             ).one_or_none()
-            if (
-                effect_row is None
-                or step_row is None
-                or step_row.state != "running"
-            ):
+            if effect_row is None or step_row is None or step_row.state != "running":
                 raise ActionChainEffectReadbackConflict(
                     "effect readback step is no longer running"
                 )
@@ -238,9 +230,7 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
                     ),
                     capability_grant_nonce=capability_grant.nonce,
                     capability_grant_deadline=deadline,
-                    credential_grant_id=UUID(
-                        credential_grant.credential_grant_id
-                    ),
+                    credential_grant_id=UUID(credential_grant.credential_grant_id),
                     credential_grant_payload=credential_grant.model_dump(mode="json"),
                     credential_grant_sha256=bytes.fromhex(
                         canonical_sha256(credential_grant)
@@ -266,8 +256,7 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == thread_id,
@@ -310,6 +299,7 @@ class PostgresActionChainEffectReadbackAuthorizer(PostgresScopedRole):
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainEffectReadback("authorized", attempt)
 
+
 def prepared_effect_readback_request_payload(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -338,10 +328,6 @@ def prepared_effect_readback_request_payload(
             "prepared effect readback request differs"
         )
     return dict(payload)
-
-
-
-
 
 
 __all__ = [

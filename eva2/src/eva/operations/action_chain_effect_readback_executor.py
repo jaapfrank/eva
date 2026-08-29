@@ -141,12 +141,6 @@ def _require_timeout(value: float) -> None:
         raise ValueError("connector timeout must be between 0 and 30 seconds")
 
 
-
-
-
-
-
-
 __all__ = [
     "ExecutedActionChainEffectReadback",
     "PostgresActionChainEffectReadbackExecutor",

@@ -79,10 +79,6 @@ def verify_action_chain_effect_proof(
     )
 
 
-
-
-
-
 __all__ = [
     "ActionChainEffectProofError",
     "VerifiedActionChainEffectProof",

@@ -247,6 +247,7 @@ class PostgresActionChainReadDispatcher(PostgresScopedRole):
                 invoke,
             )
 
+
 def require_action_chain_read_registry_event(
     data: object,
     profile: ReadProviderProfile,
@@ -364,10 +365,6 @@ def _read_invoke_method(intent: ReadIntent) -> str:
         "effect.readback": "effect.readback",
         "connector.probe": "connector.probe",
     }.get(intent.operation, "resource.read")
-
-
-
-
 
 
 __all__ = [

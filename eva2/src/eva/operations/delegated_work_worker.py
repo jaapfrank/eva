@@ -167,6 +167,4 @@ class DelegatedWorkWorker:
         return value.astimezone(UTC)
 
 
-
-
 __all__ = ["DelegatedWorkWorker", "WorkerDisposition"]

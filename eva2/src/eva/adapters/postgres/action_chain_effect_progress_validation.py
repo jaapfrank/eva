@@ -77,9 +77,7 @@ def validate_action_chain_effect_advances(
                 operational_events.c.tenant_id == scope.tenant_id,
                 operational_events.c.installation_id == scope.installation_id,
                 operational_events.c.thread_id
-                == action_chain_step_operation_id(
-                    plan, logical_by_id[effect_step_id]
-                ),
+                == action_chain_step_operation_id(plan, logical_by_id[effect_step_id]),
                 operational_events.c.event_type == "STATE_VERIFIED",
             )
         ).one_or_none()
@@ -208,8 +206,6 @@ def _released_ids(
     ):
         raise corrupt("effect advance released an ineligible dependency")
     return released
-
-
 
 
 __all__ = ["validate_action_chain_effect_advances"]

@@ -514,6 +514,7 @@ class PostgresOperationalTimeline:
                 )
         return state
 
+
 def insert_initial_timeline_thread(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -646,15 +647,18 @@ def transition_timeline_thread(
         updated_at=occurred_at,
     )
     payload = _checkpoint_payload(state, data)
-    sequence = int(
-        connection.scalar(
-            sa.select(sa.func.max(operational_events.c.sequence)).where(
-                operational_events.c.tenant_id == scope.tenant_id,
-                operational_events.c.installation_id == scope.installation_id,
-                operational_events.c.thread_id == thread_id,
+    sequence = (
+        int(
+            connection.scalar(
+                sa.select(sa.func.max(operational_events.c.sequence)).where(
+                    operational_events.c.tenant_id == scope.tenant_id,
+                    operational_events.c.installation_id == scope.installation_id,
+                    operational_events.c.thread_id == thread_id,
+                )
             )
         )
-    ) + 1
+        + 1
+    )
     _insert_event_in_transaction(
         connection,
         scope,
@@ -729,8 +733,6 @@ def _require_identifier(value: str, field: str) -> None:
     if not isinstance(value, str) or not 1 <= len(value) <= 240:
         raise ValueError(f"{field} must contain 1..240 characters")
     validate_json_value(value)
-
-
 
 
 def _canonical_timestamp(value: datetime) -> str:

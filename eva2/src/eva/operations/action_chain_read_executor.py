@@ -76,7 +76,9 @@ class PostgresActionChainReadExecutor:
         _require_timeout(timeout_seconds)
         existing = self._results.load_terminal(read_intent_id)
         if existing is not None:
-            return ExecutedActionChainRead("already_started", existing.attempt, existing)
+            return ExecutedActionChainRead(
+                "already_started", existing.attempt, existing
+            )
         try:
             claim = self._dispatcher.claim_provider_call(
                 read_intent_id,
@@ -136,12 +138,6 @@ def _require_timeout(value: float) -> None:
         raise TypeError("connector timeout must be numeric")
     if value <= 0 or value > 30:
         raise ValueError("connector timeout must be between 0 and 30 seconds")
-
-
-
-
-
-
 
 
 __all__ = ["ExecutedActionChainRead", "PostgresActionChainReadExecutor"]

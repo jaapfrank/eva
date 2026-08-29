@@ -100,7 +100,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
             attempt_row = connection.execute(
                 sa.select(read_attempts).where(
                     read_attempts.c.tenant_id == self._scope_value.tenant_id,
-                    read_attempts.c.installation_id == self._scope_value.installation_id,
+                    read_attempts.c.installation_id
+                    == self._scope_value.installation_id,
                     read_attempts.c.read_intent_id == read_intent_id,
                     read_attempts.c.ordinal == 1,
                 )
@@ -165,7 +166,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 sa.select(read_attempts)
                 .where(
                     read_attempts.c.tenant_id == self._scope_value.tenant_id,
-                    read_attempts.c.installation_id == self._scope_value.installation_id,
+                    read_attempts.c.installation_id
+                    == self._scope_value.installation_id,
                     read_attempts.c.read_intent_id == read_intent_id,
                     read_attempts.c.ordinal == 1,
                 )
@@ -230,7 +232,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 sa.update(read_attempts)
                 .where(
                     read_attempts.c.tenant_id == self._scope_value.tenant_id,
-                    read_attempts.c.installation_id == self._scope_value.installation_id,
+                    read_attempts.c.installation_id
+                    == self._scope_value.installation_id,
                     read_attempts.c.read_attempt_id
                     == UUID(projected.attempt.read_attempt_id),
                     read_attempts.c.state == "dispatch_authorized",
@@ -254,8 +257,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
@@ -320,9 +322,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
                 producer=evidence.producer,
                 subject_contract=evidence.subject_contract,
                 subject_id=evidence.subject_id,
-                subject_payload_sha256=bytes.fromhex(
-                    evidence.subject_payload_sha256
-                ),
+                subject_payload_sha256=bytes.fromhex(evidence.subject_payload_sha256),
                 object_ref_id=None,
                 object_sha256=None,
                 predecessor_sha256=None,
@@ -381,7 +381,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
             sa.select(operational_events)
             .where(
                 operational_events.c.tenant_id == self._scope_value.tenant_id,
-                operational_events.c.installation_id == self._scope_value.installation_id,
+                operational_events.c.installation_id
+                == self._scope_value.installation_id,
                 operational_events.c.thread_id == operation_id,
                 operational_events.c.event_type.in_(
                     tuple(item[0] for item in _TERMINAL_TIMELINE.values())
@@ -393,10 +394,8 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
         data = _event_data(event.payload)
         if (
             data.get("provider_result_sha256") != canonical_sha256(result)
-            or data.get("provider_result_observed_at")
-            != _format_timestamp(observed_at)
-            or data.get("provider_result_recorded_at")
-            != _format_timestamp(recorded_at)
+            or data.get("provider_result_observed_at") != _format_timestamp(observed_at)
+            or data.get("provider_result_recorded_at") != _format_timestamp(recorded_at)
         ):
             raise ActionChainReadConflict("read result replay differs")
         return self._load_stored_result(
@@ -458,6 +457,7 @@ class PostgresActionChainReadResultStore(PostgresScopedRole):
         return StoredActionChainReadResult(
             "already_recorded", stored_attempt, evidence, observation
         )
+
 
 _TERMINAL_TIMELINE = {
     "observed": ("ACTION_CHAIN_READ_OBSERVED", "action_chain_read_observed", "active"),
@@ -535,7 +535,9 @@ def _terminal_event_data(
         "provider_result_recorded_at": _format_timestamp(recorded_at),
         "provider_result_sha256": projected.provider_result_sha256,
         "read_attempt_terminal_payload_sha256": canonical_sha256(projected.attempt),
-        "read_observation_id": None if observation is None else observation.observation_id,
+        "read_observation_id": None
+        if observation is None
+        else observation.observation_id,
         "read_observation_payload_sha256": (
             None if observation is None else canonical_sha256(observation)
         ),
@@ -557,12 +559,6 @@ def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
         raise ActionChainReadConflict("read result timeline payload differs")
     return dict(payload["data"])
-
-
-
-
-
-
 
 
 __all__ = ["PostgresActionChainReadResultStore", "StoredActionChainReadResult"]

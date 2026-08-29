@@ -85,7 +85,11 @@ def project_action_chain_read_result(
         raise ValueError("selected connector manifest differs from read attempt")
     invoke.validate_against_initialize(initialize, manifest)
     operation = next(
-        (item for item in manifest.operations if item.operation == invoke.params.operation),
+        (
+            item
+            for item in manifest.operations
+            if item.operation == invoke.params.operation
+        ),
         None,
     )
     if operation is None:
@@ -173,8 +177,7 @@ def _classify_result(
             or provider_result.request_sha256 != canonical_sha256(envelope)
             or provider_result.connector_manifest_sha256
             != attempt.connector_manifest_sha256
-            or envelope.connector_manifest_sha256
-            != attempt.connector_manifest_sha256
+            or envelope.connector_manifest_sha256 != attempt.connector_manifest_sha256
             or invoke.method != _required_read_method(envelope.operation)
         ):
             raise ValueError("provider success binds another read request")
@@ -182,7 +185,9 @@ def _classify_result(
         if completed_at > _parse_timestamp(envelope.deadline):
             raise ValueError("provider completion exceeds the read deadline")
         if completed_at < observed_at or completed_at > recorded_at:
-            raise ValueError("provider completion is outside the host observation window")
+            raise ValueError(
+                "provider completion is outside the host observation window"
+            )
         outcome = provider_result.outcome
         if isinstance(outcome, ReadOk):
             if outcome.payload.output_schema_sha256 != output_schema_sha256:
@@ -198,8 +203,7 @@ def _classify_result(
             payload = outcome.payload
             if (
                 invoke.method != "effect.readback"
-                or outcome.idempotency_key
-                != request_payload.get("idempotencyKey")
+                or outcome.idempotency_key != request_payload.get("idempotencyKey")
                 or outcome.request_sha256 != request_payload.get("requestSha256")
                 or outcome.provider_resource_id
                 != request_payload.get("providerResourceId")
@@ -210,7 +214,10 @@ def _classify_result(
                 raise ValueError(
                     "provider readback is outside the host/completion window"
                 )
-            if payload is not None and payload.output_schema_sha256 != output_schema_sha256:
+            if (
+                payload is not None
+                and payload.output_schema_sha256 != output_schema_sha256
+            ):
                 raise ValueError("provider readback uses another output schema")
             return "observed", result_sha256, outcome
         if outcome.kind == "rate_limited":
@@ -227,7 +234,11 @@ def _classify_result(
         raise ValueError("provider result is not a business-read outcome")
 
     if isinstance(result, ConnectorErrorResponse):
-        request = initialize if result.request_contract.endswith("InitializeRequest/v1") else invoke
+        request = (
+            initialize
+            if result.request_contract.endswith("InitializeRequest/v1")
+            else invoke
+        )
         result.validate_against_request(
             request,
             external_io_may_have_started=result.error.external_io_possible,
@@ -261,25 +272,21 @@ def _validate_exchange_authority(
         invoke.method != _required_read_method(envelope.operation)
         or envelope.tenant_id != str(tenant_id)
         or canonical_sha256(envelope) != attempt.request_sha256
-        or envelope.connector_manifest_sha256
-        != attempt.connector_manifest_sha256
+        or envelope.connector_manifest_sha256 != attempt.connector_manifest_sha256
         or envelope.capability_grant_id != attempt.capability_grant_id
         or envelope.credential_grant_id != attempt.credential_grant_id
         or envelope.deadline != attempt.deadline
         or envelope.correlation_id != params.correlation_id
         or envelope.connector_id != params.connector_id
-        or envelope.connector_manifest_sha256
-        != params.connector_manifest_sha256
-        or envelope.connector_binding_id
-        != params.connector_binding.binding_id
+        or envelope.connector_manifest_sha256 != params.connector_manifest_sha256
+        or envelope.connector_binding_id != params.connector_binding.binding_id
         or envelope.capability_id != params.capability_grant.capability_id
         or envelope.operation != params.capability_grant.operation
         or envelope.resource_scope != params.capability_grant.resource_scope
         or envelope.request_payload_sha256
         != params.capability_grant.authorized_payload_sha256
         or params.capability_grant.grant_id != attempt.capability_grant_id
-        or params.credential_grant.credential_grant_id
-        != attempt.credential_grant_id
+        or params.credential_grant.credential_grant_id != attempt.credential_grant_id
         or params.deadline != attempt.deadline
     ):
         raise ValueError("provider exchange binds another read attempt")
@@ -305,7 +312,9 @@ def _build_observation(
             "idempotencyKey": outcome.idempotency_key,
             "matchStatus": outcome.match_status,
             "payload": (
-                None if outcome.payload is None else _normalized_payload(outcome.payload)
+                None
+                if outcome.payload is None
+                else _normalized_payload(outcome.payload)
             ),
             "requestSha256": outcome.request_sha256,
         }
@@ -346,13 +355,9 @@ def _required_read_method(operation: str) -> str:
 
 
 def _result_subject_id(result: ProviderReadResult) -> str:
-    return result.request_id if isinstance(result, ConnectorProtocolFailure) else result.id
-
-
-
-
-
-
+    return (
+        result.request_id if isinstance(result, ConnectorProtocolFailure) else result.id
+    )
 
 
 __all__ = [

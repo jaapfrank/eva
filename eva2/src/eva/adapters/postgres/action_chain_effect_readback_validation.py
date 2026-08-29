@@ -120,8 +120,7 @@ def validate_action_chain_effect_readback_preparation(
         or row.circuit_breaker_id is not None
         or row.operation != "effect.readback"
         or row.resource_scope != effect.resource_scope.model_dump(mode="json")
-        or bytes(row.resource_scope_sha256).hex()
-        != effect.resource_scope.scope_sha256
+        or bytes(row.resource_scope_sha256).hex() != effect.resource_scope.scope_sha256
         or bytes(row.query_sha256).hex() != expected.query_sha256
         or int(row.maximum_freshness_ms) != 0
         or int(row.maximum_attempts) != 2
@@ -248,8 +247,7 @@ def readback_authority(
             policy_pack_versions.c.tenant_id == scope.tenant_id,
             policy_pack_versions.c.installation_id == scope.installation_id,
             policy_pack_versions.c.policy_id == activation.policy_id,
-            policy_pack_versions.c.policy_version
-            == activation.policy_pack_version,
+            policy_pack_versions.c.policy_version == activation.policy_pack_version,
         )
     )
     if policy_statement is not None and lock:
@@ -274,8 +272,7 @@ def readback_authority(
         or binding_row.status != "verified"
         or binding.status != "verified"
         or policy.state != "current"
-        or activation.capability_manifest_id
-        != manifest_row.capability_manifest_id
+        or activation.capability_manifest_id != manifest_row.capability_manifest_id
         or activation.connector_binding_id != binding_row.binding_id
         or binding.binding_id != effect.connector_binding_id
         or binding.binding_id != str(binding_id)
@@ -292,8 +289,7 @@ def readback_authority(
         or manifest_row.capability_id != manifest.capability_id
         or manifest_row.connector_id != manifest.connector_id
         or manifest_row.operation != manifest.operation
-        or bytes(manifest_row.input_schema_sha256).hex()
-        != manifest.input_schema_sha256
+        or bytes(manifest_row.input_schema_sha256).hex() != manifest.input_schema_sha256
         or bytes(manifest_row.output_schema_sha256).hex()
         != manifest.output_schema_sha256
         or manifest_row.effect_class != manifest.effect_class
@@ -312,9 +308,7 @@ def readback_authority(
         or bytes(activation.scope_sha256).hex() != resource_scope.scope_sha256
         or resource_scope != effect.resource_scope
         or "effect.readback" not in binding.confirmed_operations
-        or not set(manifest.required_provider_scopes).issubset(
-            binding.confirmed_scopes
-        )
+        or not set(manifest.required_provider_scopes).issubset(binding.confirmed_scopes)
         or bytes(activation.policy_pack_sha256).hex() != policy_sha256
         or bytes(policy.canonical_sha256).hex() != policy_sha256
         or bytes(activation.executable_sha256) != bytes(manifest_row.executable_sha256)
@@ -418,8 +412,7 @@ def _validate_thread(
         if (
             len(events) != 1
             or checkpoint.revision != 1
-            or checkpoint.phase
-            != "action_chain_effect_readback_intent_prepared"
+            or checkpoint.phase != "action_chain_effect_readback_intent_prepared"
             or checkpoint.status != "waiting_for_proof"
             or checkpoint.operation_id != thread_id
             or checkpoint.deadline != _parse_timestamp(intent.deadline)
@@ -536,8 +529,7 @@ def _validate_physical_readback(
             sa.select(read_observations).where(
                 read_observations.c.tenant_id == scope.tenant_id,
                 read_observations.c.installation_id == scope.installation_id,
-                read_observations.c.read_attempt_id
-                == UUID(attempt.read_attempt_id),
+                read_observations.c.read_attempt_id == UUID(attempt.read_attempt_id),
             )
         ).one()
         observation = ReadObservation.model_validate(observation_row.payload)
@@ -545,8 +537,7 @@ def _validate_physical_readback(
             sa.select(evidence_envelopes).where(
                 evidence_envelopes.c.tenant_id == scope.tenant_id,
                 evidence_envelopes.c.installation_id == scope.installation_id,
-                evidence_envelopes.c.evidence_id
-                == UUID(observation.evidence_ref),
+                evidence_envelopes.c.evidence_id == UUID(observation.evidence_ref),
             )
         ).one()
         evidence = EvidenceEnvelopeV2.model_validate(evidence_row.payload)
@@ -563,7 +554,12 @@ def _validate_physical_readback(
             provider_result=provider_result,
         )
         stored = EffectReadback.model_validate(rows[0].payload)
-    except (TypeError, ValueError, sa.exc.MultipleResultsFound, sa.exc.NoResultFound) as error:
+    except (
+        TypeError,
+        ValueError,
+        sa.exc.MultipleResultsFound,
+        sa.exc.NoResultFound,
+    ) as error:
         raise corrupt("physical effect readback proof is invalid") from error
     readback = projected.readback
     row = rows[0]
@@ -625,10 +621,6 @@ def _row(
 
 def effect_readback_thread_id(read_intent_id: UUID) -> str:
     return f"action-chain-effect-readback:{read_intent_id}"
-
-
-
-
 
 
 __all__ = [

@@ -7,7 +7,9 @@ attempt or provider-result timeline.
 """
 
 from __future__ import annotations
-from eva.contracts.timestamps import format_normalized_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import (
+    format_normalized_utc_timestamp as _format_timestamp,
+)
 from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
@@ -218,6 +220,7 @@ class PostgresActionChainEffectStopRequester(PostgresScopedRole):
                 thread_id,
             )
 
+
 def _call_start_event(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -384,7 +387,9 @@ def _require_existing_request(
     try:
         call_start_event_id = UUID(str(data["call_start_event_id"]))
     except (TypeError, ValueError) as error:
-        raise ActionChainEffectStopRequestConflict("stored stop request differs") from error
+        raise ActionChainEffectStopRequestConflict(
+            "stored stop request differs"
+        ) from error
     call_start = connection.execute(
         sa.select(operational_events).where(
             operational_events.c.tenant_id == scope.tenant_id,
@@ -431,12 +436,10 @@ def _require_existing_request(
         or call_start.event_type != "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED"
         or not isinstance(call_data, dict)
         or int(data["call_start_sequence"]) != int(call_start.sequence)
-        or data["call_start_payload_sha256"]
-        != bytes(call_start.payload_sha256).hex()
+        or data["call_start_payload_sha256"] != bytes(call_start.payload_sha256).hex()
         or data["effect_intent_id"] != call_data.get("effect_intent_id")
         or data["effect_attempt_id"] != call_data.get("effect_attempt_id")
-        or data["dispatch_permit_sha256"]
-        != call_data.get("dispatch_permit_sha256")
+        or data["dispatch_permit_sha256"] != call_data.get("dispatch_permit_sha256")
         or data["request_sha256"] != call_data.get("request_sha256")
         or data["effect_intent_payload_sha256"]
         != call_data.get("effect_intent_payload_sha256")
@@ -532,14 +535,18 @@ def _intent(row: sa.Row) -> EffectIntent:
     try:
         return EffectIntent.model_validate(row.payload)
     except ValueError as error:
-        raise ActionChainEffectStopRequestConflict("effect intent payload is invalid") from error
+        raise ActionChainEffectStopRequestConflict(
+            "effect intent payload is invalid"
+        ) from error
 
 
 def _attempt(row: sa.Row) -> EffectAttempt:
     try:
         return EffectAttempt.model_validate(row.payload)
     except ValueError as error:
-        raise ActionChainEffectStopRequestConflict("effect attempt payload is invalid") from error
+        raise ActionChainEffectStopRequestConflict(
+            "effect attempt payload is invalid"
+        ) from error
 
 
 def _stop_thread_id(attempt: EffectAttempt) -> str:
@@ -550,7 +557,9 @@ def _stop_checkpoint_id(thread_id: str, context: dict[str, object]) -> str:
     return f"checkpoint:{thread_id}:{canonical_sha256(context)}"
 
 
-def _checkpoint_payload(checkpoint: sa.Row, data: dict[str, object]) -> dict[str, object]:
+def _checkpoint_payload(
+    checkpoint: sa.Row, data: dict[str, object]
+) -> dict[str, object]:
     return {
         "checkpoint": {
             "checkpoint_id": checkpoint.checkpoint_id,
@@ -573,10 +582,6 @@ def _checkpoint_payload(checkpoint: sa.Row, data: dict[str, object]) -> dict[str
         },
         "data": data,
     }
-
-
-
-
 
 
 def _is_sha256(value: object) -> bool:

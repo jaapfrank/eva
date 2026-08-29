@@ -74,8 +74,7 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
             intent_row = connection.execute(
                 sa.select(read_intents).where(
                     read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id
-                    == self._scope_value.installation_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
                     read_intents.c.read_intent_id == read_intent_id,
                 )
             ).one_or_none()
@@ -85,8 +84,7 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
             seed_step = connection.execute(
                 sa.select(plan_steps.c.plan_id).where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == intent_row.plan_step_id,
                     plan_steps.c.read_intent_id == read_intent_id,
                 )
@@ -105,8 +103,7 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_id == plan_id,
                 )
                 .order_by(plan_steps.c.plan_step_id)
@@ -122,7 +119,9 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
             chain = self._ledger.load_in_transaction(connection, plan_id)
             if read_row.state == "succeeded":
                 if now < read_row.updated_at:
-                    raise ActionChainReadConflict("read advance replay predates storage")
+                    raise ActionChainReadConflict(
+                        "read advance replay predates storage"
+                    )
                 return self._replay(
                     connection,
                     root_thread_id=action_chain_thread_id(chain.plan),
@@ -156,8 +155,7 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
                 .with_for_update(read=True)
             ).one_or_none()
             observation_row = connection.execute(
-                sa.select(read_observations)
-                .where(
+                sa.select(read_observations).where(
                     read_observations.c.tenant_id == self._scope_value.tenant_id,
                     read_observations.c.installation_id
                     == self._scope_value.installation_id,
@@ -186,11 +184,11 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
                 or attempt_row.updated_at > now
                 or now >= _parse_timestamp(chain.plan.deadline)
             ):
-                raise ActionChainReadConflict("read advance lacks timely observed proof")
+                raise ActionChainReadConflict(
+                    "read advance lacks timely observed proof"
+                )
 
-            succeeded = {
-                row.plan_step_id for row in rows if row.state == "succeeded"
-            }
+            succeeded = {row.plan_step_id for row in rows if row.state == "succeeded"}
             succeeded.add(read_row.plan_step_id)
             released_ids = tuple(
                 sorted(
@@ -209,8 +207,7 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
                 sa.update(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == read_row.plan_step_id,
                     plan_steps.c.state == "running",
                     plan_steps.c.read_intent_id == read_intent_id,
@@ -310,8 +307,8 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
         matches = []
         for event in events:
             data = event.payload.get("data")
-            context = None if not isinstance(data, dict) else data.get(
-                "transition_context"
+            context = (
+                None if not isinstance(data, dict) else data.get("transition_context")
             )
             if isinstance(context, dict) and context.get("read_step_id") == str(
                 read_step_id
@@ -340,9 +337,6 @@ class PostgresActionChainReadAdvancer(PostgresScopedRole):
             released_ids,
             str(outcome_ref),
         )
-
-
-
 
 
 __all__ = [

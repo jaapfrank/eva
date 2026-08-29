@@ -158,7 +158,9 @@ class PostgresActionChainLedger(PostgresScopedRole):
             plan.generation,
             plan_sha256,
         )
-        step_ids = {step.step_id: uuid5(plan_id, f"step:{step.step_id}") for step in plan.steps}
+        step_ids = {
+            step.step_id: uuid5(plan_id, f"step:{step.step_id}") for step in plan.steps
+        }
 
         with self._engine.begin() as connection:
             self._scope(connection)
@@ -478,7 +480,9 @@ class PostgresActionChainLedger(PostgresScopedRole):
         try:
             decision = ModelDecision.model_validate(admission["decision"])
         except (KeyError, TypeError, ValueError) as error:
-            raise ActionChainCorrupt("action-chain admission decision is invalid") from error
+            raise ActionChainCorrupt(
+                "action-chain admission decision is invalid"
+            ) from error
         authority_snapshot = admission.get("authority_snapshot")
         if not isinstance(authority_snapshot, dict):
             raise ActionChainCorrupt("action-chain authority snapshot is absent")
@@ -642,8 +646,16 @@ class PostgresActionChainLedger(PostgresScopedRole):
                 )
             elif prepared_effect or completed_effect or cancelled_effect:
                 validate_action_chain_effect(
-                    connection, self._scope_value, plan_id, plan, decision,
-                    authority_snapshot, row, step, stored, step_current,
+                    connection,
+                    self._scope_value,
+                    plan_id,
+                    plan,
+                    decision,
+                    authority_snapshot,
+                    row,
+                    step,
+                    stored,
+                    step_current,
                     ActionChainCorrupt,
                 )
             expected_admission_ids.append(
@@ -682,9 +694,7 @@ class PostgresActionChainLedger(PostgresScopedRole):
             effect_released_step_ids=effect_released_step_ids,
             corrupt=ActionChainCorrupt,
         )
-        normal_transition_context = (
-            effect_transition_context or read_transition_context
-        )
+        normal_transition_context = effect_transition_context or read_transition_context
         current_states = {row.plan_step_id: row.state for row in step_rows}
         if any(
             row.state == "pending"
@@ -712,7 +722,9 @@ class PostgresActionChainLedger(PostgresScopedRole):
         try:
             attention = AttentionWake.model_validate(attention_row.payload)
         except ValueError as error:
-            raise ActionChainCorrupt("continuation attention payload is invalid") from error
+            raise ActionChainCorrupt(
+                "continuation attention payload is invalid"
+            ) from error
         if (
             canonical_sha256(attention) != bytes(attention_row.payload_sha256).hex()
             or attention.attention_id != str(attention_id)
@@ -756,9 +768,7 @@ class PostgresActionChainLedger(PostgresScopedRole):
         )
         if normal_transition_context is not None and cancellation_context is not None:
             raise ActionChainCorrupt("cancellation overlaps a completion transition")
-        current_transition_context = (
-            normal_transition_context or cancellation_context
-        )
+        current_transition_context = normal_transition_context or cancellation_context
         if attention_row.revision == 1:
             if (
                 attention.state != "pending"
@@ -796,6 +806,7 @@ class PostgresActionChainLedger(PostgresScopedRole):
             retention_until=row.retention_until,
             created_at=row.created_at,
         )
+
 
 def _origin_data(
     connection: sa.Connection,
@@ -910,7 +921,12 @@ def _current_timeline_data(
             "ACTION_CHAIN_EFFECT_INTENT_PREPARED",
             "ACTION_CHAIN_EFFECT_CANCELLED",
             "ACTION_CHAIN_EFFECT_DISPATCH_AUTHORIZED",
-            "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED", "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED", "ACTION_CHAIN_EFFECT_REJECTED", "ACTION_CHAIN_EFFECT_AMBIGUOUS", "ACTION_CHAIN_EFFECT_RATE_LIMITED", "ACTION_CHAIN_EFFECT_BLOCKED",
+            "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
+            "ACTION_CHAIN_EFFECT_PROVIDER_ACCEPTED",
+            "ACTION_CHAIN_EFFECT_REJECTED",
+            "ACTION_CHAIN_EFFECT_AMBIGUOUS",
+            "ACTION_CHAIN_EFFECT_RATE_LIMITED",
+            "ACTION_CHAIN_EFFECT_BLOCKED",
             "STATE_VERIFIED",
         }
     )
@@ -1068,7 +1084,8 @@ def _validate_action_chain_effect_cancellation(
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
             operational_events.c.thread_id == operation_id,
-            operational_events.c.event_type == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
+            operational_events.c.event_type
+            == "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED",
         )
     )
     attempts = connection.execute(
@@ -1197,10 +1214,6 @@ def _require_retention(
         raise ValueError("action-chain deadline precedes admission")
     if retention_until < deadline:
         raise ValueError("retention ends before the action-chain deadline")
-
-
-
-
 
 
 def _format_timestamp(value: datetime) -> str:

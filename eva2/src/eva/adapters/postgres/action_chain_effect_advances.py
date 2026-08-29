@@ -90,8 +90,7 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             seed = connection.execute(
                 sa.select(plan_steps.c.plan_id, plan_steps.c.plan_step_id).where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.effect_intent_id == effect_intent_id,
                 )
             ).one_or_none()
@@ -108,8 +107,7 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_id == seed.plan_id,
                 )
                 .order_by(plan_steps.c.plan_step_id)
@@ -209,23 +207,23 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             try:
                 effect = EffectIntent.model_validate(effect_row.payload)
                 projection = EffectVerificationProjection.from_authority_payload(
-                    None if descriptor is None else descriptor.get("effect_verification")
+                    None
+                    if descriptor is None
+                    else descriptor.get("effect_verification")
                 )
                 if action is None:
                     raise ValueError("effect action is absent")
-                proof, readback, observation = (
-                    project_stored_action_chain_effect_proof(
-                        connection,
-                        self._scope_value,
-                        effect_intent_id=effect_intent_id,
-                        projection=projection,
-                        resource=action.resource,
-                        arguments=action.arguments,
-                        provider_accepted_at=attempt_rows[0].updated_at,
-                        verified_at=now,
-                        deadline=_parse_timestamp(chain.plan.deadline),
-                        corrupt=ActionChainEffectAdvanceConflict,
-                    )
+                proof, readback, observation = project_stored_action_chain_effect_proof(
+                    connection,
+                    self._scope_value,
+                    effect_intent_id=effect_intent_id,
+                    projection=projection,
+                    resource=action.resource,
+                    arguments=action.arguments,
+                    provider_accepted_at=attempt_rows[0].updated_at,
+                    verified_at=now,
+                    deadline=_parse_timestamp(chain.plan.deadline),
+                    corrupt=ActionChainEffectAdvanceConflict,
                 )
             except (EffectVerificationError, ValueError) as error:
                 raise ActionChainEffectAdvanceConflict(
@@ -273,8 +271,7 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
@@ -321,7 +318,10 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AdvancedActionChainEffect(
-                "advanced", step_row.plan_step_id, released, str(context["effect_outcome_ref"])
+                "advanced",
+                step_row.plan_step_id,
+                released,
+                str(context["effect_outcome_ref"]),
             )
 
     def _commit_rows(
@@ -378,8 +378,7 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
                 sa.update(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == released_id,
                     plan_steps.c.state == "pending",
                     plan_steps.c.read_intent_id.is_(None),
@@ -422,7 +421,9 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             ):
                 matches.append(context)
         if len(matches) != 1:
-            raise ActionChainEffectAdvanceConflict("effect advance replay event differs")
+            raise ActionChainEffectAdvanceConflict(
+                "effect advance replay event differs"
+            )
         context = matches[0]
         raw_released = context.get("released_step_ids")
         if (
@@ -431,7 +432,9 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
             or not isinstance(outcome_ref, str)
             or not isinstance(raw_released, list)
         ):
-            raise ActionChainEffectAdvanceConflict("effect advance replay binding differs")
+            raise ActionChainEffectAdvanceConflict(
+                "effect advance replay binding differs"
+            )
         try:
             released = tuple(UUID(str(item)) for item in raw_released)
         except (TypeError, ValueError) as error:
@@ -441,9 +444,6 @@ class PostgresActionChainEffectAdvancer(PostgresScopedRole):
         return AdvancedActionChainEffect(
             "already_advanced", effect_step_id, released, outcome_ref
         )
-
-
-
 
 
 __all__ = [

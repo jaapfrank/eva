@@ -301,14 +301,12 @@ def validate_action_chain_effect(
             if (
                 int(intent_row.revision) != 2
                 or intent_row.updated_at < prepared_at
-                or current_event_data.get("effect_intent_id")
-                != str(expected_intent_id)
+                or current_event_data.get("effect_intent_id") != str(expected_intent_id)
                 or current_event_data.get("effect_intent_payload_sha256")
                 != canonical_sha256(intent)
                 or current_event_data.get("logical_step_key") != step.step_id
                 or current_event_data.get("plan_id") != str(plan_id)
-                or current_event_data.get("plan_step_id")
-                != str(stored.plan_step_id)
+                or current_event_data.get("plan_step_id") != str(stored.plan_step_id)
                 or any(external_counts)
             ):
                 raise corrupt("cancelled effect timeline binding differs")
@@ -408,9 +406,7 @@ def _validate_authorized_effect(
                 "resource_scope": intent.resource_scope.model_dump(mode="json"),
                 "deadline": intent.deadline,
                 "request_payload_sha256": intent.frozen_payload_sha256,
-                "connector_manifest_sha256": (
-                    stored_attempt.connector_manifest_sha256
-                ),
+                "connector_manifest_sha256": (stored_attempt.connector_manifest_sha256),
                 "capability_grant_id": capability_grant.grant_id,
                 "credential_grant_id": credential_grant.credential_grant_id,
                 "request_payload": action_arguments,
@@ -422,9 +418,7 @@ def _validate_authorized_effect(
     registry_sha256 = current_event_data.get("provider_registry_sha256")
     release_manifest_sha256 = current_event_data.get("release_manifest_sha256")
     provenance_sha256 = current_event_data.get("release_provenance_sha256")
-    verification_sha256 = current_event_data.get(
-        "release_verification_receipt_sha256"
-    )
+    verification_sha256 = current_event_data.get("release_verification_receipt_sha256")
     if (
         not isinstance(profile_revision, int)
         or profile_revision < 1
@@ -499,8 +493,7 @@ def _validate_authorized_effect(
         or capability_grant.connector_binding_id != binding.binding_id
         or capability_grant.operation != step.operation
         or capability_grant.resource_scope != intent.resource_scope
-        or capability_grant.authorized_payload_sha256
-        != intent.frozen_payload_sha256
+        or capability_grant.authorized_payload_sha256 != intent.frozen_payload_sha256
         or capability_grant.policy_sha256 != plan.policy_sha256
         or capability_grant.nonce
         != str(uuid5(expected_attempt_id, "capability-nonce:v1"))
@@ -527,10 +520,8 @@ def _validate_authorized_effect(
         != canonical_sha256(credential_grant)
         or attempt_row.capability_grant_nonce != capability_grant.nonce
         or attempt_row.credential_grant_nonce != credential_grant.nonce
-        or attempt_row.capability_grant_deadline
-        != _parse_timestamp(intent.deadline)
-        or attempt_row.credential_grant_deadline
-        != _parse_timestamp(intent.deadline)
+        or attempt_row.capability_grant_deadline != _parse_timestamp(intent.deadline)
+        or attempt_row.credential_grant_deadline != _parse_timestamp(intent.deadline)
         or attempt_row.capability_grant_payload
         != capability_grant.model_dump(mode="json")
         or attempt_row.credential_grant_payload
@@ -794,8 +785,6 @@ def _prepared_claim(
     )
 
 
-
-
 def _worker_process_sha256(worker_id: str, *, corrupt: type[RuntimeError]) -> str:
     prefix = "connector-worker:"
     value = worker_id[len(prefix) :] if worker_id.startswith(prefix) else ""
@@ -810,8 +799,6 @@ def _is_sha256(value: object) -> bool:
         and len(value) == 64
         and all(character in "0123456789abcdef" for character in value)
     )
-
-
 
 
 __all__ = [

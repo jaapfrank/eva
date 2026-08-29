@@ -183,8 +183,7 @@ def validate_action_chain_read(
                 policy_pack_versions.c.tenant_id == scope.tenant_id,
                 policy_pack_versions.c.installation_id == scope.installation_id,
                 policy_pack_versions.c.policy_id == activation.policy_id,
-                policy_pack_versions.c.policy_version
-                == activation.policy_pack_version,
+                policy_pack_versions.c.policy_version == activation.policy_pack_version,
             )
         ).one_or_none()
     )
@@ -381,7 +380,13 @@ def validate_authorized_action_chain_read(
         or attempt.read_intent_id != intent.read_intent_id
         or attempt.ordinal != 1
         or attempt.state
-        not in {"dispatch_authorized", "observed", "ambiguous", "rejected", "rate_limited"}
+        not in {
+            "dispatch_authorized",
+            "observed",
+            "ambiguous",
+            "rejected",
+            "rate_limited",
+        }
         or attempt.capability_grant_id != str(expected_capability_grant_id)
         or attempt.credential_grant_id != str(expected_credential_grant_id)
         or attempt.request_sha256 != canonical_sha256(envelope)
@@ -401,8 +406,7 @@ def validate_authorized_action_chain_read(
         != str(uuid5(expected_attempt_id, "capability-nonce:v1"))
         or capability_grant.issued_at != attempt.created_at
         or capability_grant.deadline != intent.deadline
-        or credential_grant.credential_grant_id
-        != str(expected_credential_grant_id)
+        or credential_grant.credential_grant_id != str(expected_credential_grant_id)
         or credential_grant.connector_binding_id != binding.binding_id
         or credential_grant.model_provider_profile_id is not None
         or credential_grant.executable_sha256 != manifest.executable_sha256
@@ -462,9 +466,7 @@ def validate_authorized_action_chain_read(
     profile_revision = current_event_data.get("provider_profile_revision")
     registry_sha256 = current_event_data.get("provider_registry_sha256")
     release_manifest_sha256 = current_event_data.get("release_manifest_sha256")
-    release_provenance_sha256 = current_event_data.get(
-        "release_provenance_sha256"
-    )
+    release_provenance_sha256 = current_event_data.get("release_provenance_sha256")
     release_verification_receipt_sha256 = current_event_data.get(
         "release_verification_receipt_sha256"
     )
@@ -496,9 +498,7 @@ def validate_authorized_action_chain_read(
         "provider_registry_sha256": registry_sha256,
         "release_manifest_sha256": release_manifest_sha256,
         "release_provenance_sha256": release_provenance_sha256,
-        "release_verification_receipt_sha256": (
-            release_verification_receipt_sha256
-        ),
+        "release_verification_receipt_sha256": (release_verification_receipt_sha256),
         "read_attempt_id": attempt.read_attempt_id,
         "read_attempt_payload_sha256": canonical_sha256(authorized_attempt),
         "read_intent_id": attempt.read_intent_id,
@@ -602,8 +602,7 @@ def _prepared_claim(
     root_thread_id = action_chain_thread_id(plan)
     child_thread_id = action_chain_step_operation_id(plan, logical_step_key)
     child_prepared = connection.execute(
-        sa.select(operational_events)
-        .where(
+        sa.select(operational_events).where(
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
             operational_events.c.thread_id == child_thread_id,
@@ -670,8 +669,7 @@ def _prepared_claim(
         or attention.state != "claimed"
         or attention.lease_owner is None
         or attention.lease_expires_at is None
-        or claimed_data.get("attention_payload_sha256")
-        != canonical_sha256(attention)
+        or claimed_data.get("attention_payload_sha256") != canonical_sha256(attention)
         or claimed_data.get("attention_revision") != claimed.sequence
         or claimed_data.get("plan_id") != str(plan_id)
     ):
@@ -714,10 +712,6 @@ def _is_sha256(value: object) -> bool:
         and len(value) == 64
         and all(character in "0123456789abcdef" for character in value)
     )
-
-
-
-
 
 
 __all__ = [

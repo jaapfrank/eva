@@ -53,8 +53,7 @@ def validate_action_chain_effect_profile(
         != capability_manifest.sandbox_profile_sha256
         or operation is None
         or operation.input_schema_sha256 != capability_manifest.input_schema_sha256
-        or operation.output_schema_sha256
-        != capability_manifest.output_schema_sha256
+        or operation.output_schema_sha256 != capability_manifest.output_schema_sha256
         or not operation.writes_provider_state
         or operation.external_calls_per_invocation != 1
     ):
@@ -150,8 +149,7 @@ def require_existing_action_chain_effect_attempt(
         stored != attempt
         or row.effect_attempt_id != UUID(attempt.effect_attempt_id)
         or row.state != "dispatch_authorized"
-        or bytes(row.dispatch_permit_sha256).hex()
-        != attempt.dispatch_permit_sha256
+        or bytes(row.dispatch_permit_sha256).hex() != attempt.dispatch_permit_sha256
         or row.response_sha256 is not None
         or row.error_class != "none"
         or row.transport_evidence_id is not None
@@ -168,14 +166,12 @@ def require_existing_action_chain_effect_attempt(
         or bytes(row.capability_grant_sha256).hex()
         != canonical_sha256(capability_grant)
         or row.capability_grant_nonce != capability_grant.nonce
-        or row.capability_grant_deadline
-        != _parse_timestamp(capability_grant.deadline)
+        or row.capability_grant_deadline != _parse_timestamp(capability_grant.deadline)
         or row.credential_grant_payload != credential_grant.model_dump(mode="json")
         or bytes(row.credential_grant_sha256).hex()
         != canonical_sha256(credential_grant)
         or row.credential_grant_nonce != credential_grant.nonce
-        or row.credential_grant_deadline
-        != _parse_timestamp(credential_grant.deadline)
+        or row.credential_grant_deadline != _parse_timestamp(credential_grant.deadline)
     ):
         raise ActionChainEffectConflict("authorized effect attempt differs")
 
@@ -211,10 +207,6 @@ def effect_dispatch_event_data(
         ),
         "request_sha256": attempt.request_sha256,
     }
-
-
-
-
 
 
 __all__ = [

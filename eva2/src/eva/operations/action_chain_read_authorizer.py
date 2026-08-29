@@ -336,6 +336,7 @@ class PostgresActionChainReadAuthorizer(PostgresScopedRole):
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return AuthorizedActionChainRead("authorized", attempt)
 
+
 def validate_action_chain_read_profile(
     profile: ReadProviderProfile,
     *,
@@ -468,10 +469,6 @@ def read_dispatch_event_data(
         "read_intent_id": attempt.read_intent_id,
         "request_sha256": attempt.request_sha256,
     }
-
-
-
-
 
 
 def _format_timestamp(value: datetime) -> str:

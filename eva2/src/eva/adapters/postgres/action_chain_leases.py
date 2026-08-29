@@ -337,6 +337,7 @@ class PostgresActionChainLeases(PostgresScopedRole):
         )
         return needs_help
 
+
 def write_action_chain_attention(
     connection: sa.Connection,
     scope: TimelineScope,
@@ -462,22 +463,25 @@ def _runnable_step(chain: StoredActionChain) -> StoredActionChainStep | None:
             step
             for step in chain.steps
             if step.state == "ready"
-            and all(states.get(dependency) == "succeeded" for dependency in step.dependency_step_ids)
+            and all(
+                states.get(dependency) == "succeeded"
+                for dependency in step.dependency_step_ids
+            )
         ),
         None,
     )
 
 
 def _require_worker(worker_id: str) -> None:
-    if not 1 <= len(worker_id) <= 192 or not worker_id[0].isalnum() or any(
-        not (character.isalnum() or character in ":._/@+-=")
-        for character in worker_id
+    if (
+        not 1 <= len(worker_id) <= 192
+        or not worker_id[0].isalnum()
+        or any(
+            not (character.isalnum() or character in ":._/@+-=")
+            for character in worker_id
+        )
     ):
         raise ValueError("worker_id is not a valid identifier")
-
-
-
-
 
 
 def _format_timestamp(value: datetime) -> str:

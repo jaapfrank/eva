@@ -101,16 +101,12 @@ def validate_action_chain_read_terminal(
         {
             "connector_manifest": manifest.model_dump(mode="json"),
             "provider_evidence_id": projected.evidence.evidence_id,
-            "provider_evidence_payload_sha256": canonical_sha256(
-                projected.evidence
-            ),
+            "provider_evidence_payload_sha256": canonical_sha256(projected.evidence),
             "provider_result": result.model_dump(mode="json"),
             "provider_result_observed_at": _format_timestamp(observed_at),
             "provider_result_recorded_at": _format_timestamp(recorded_at),
             "provider_result_sha256": projected.provider_result_sha256,
-            "read_attempt_terminal_payload_sha256": canonical_sha256(
-                projected.attempt
-            ),
+            "read_attempt_terminal_payload_sha256": canonical_sha256(projected.attempt),
             "read_observation_id": (
                 None if observation is None else observation.observation_id
             ),
@@ -179,8 +175,7 @@ def _validate_evidence(
         or row.producer != evidence.producer
         or row.subject_contract != evidence.subject_contract
         or row.subject_id != evidence.subject_id
-        or bytes(row.subject_payload_sha256).hex()
-        != evidence.subject_payload_sha256
+        or bytes(row.subject_payload_sha256).hex() != evidence.subject_payload_sha256
         or row.object_ref_id is not None
         or row.object_sha256 is not None
         or row.predecessor_sha256 is not None
@@ -239,10 +234,6 @@ def _provider_result(value: object) -> ProviderReadResult:
     if result_type is None:
         raise ValueError("provider result contract is not allowed")
     return result_type.model_validate(value)
-
-
-
-
 
 
 __all__ = ["validate_action_chain_read_terminal"]

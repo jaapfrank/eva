@@ -96,8 +96,7 @@ class PostgresActionChainEffectReadbackPreparer(PostgresScopedRole):
                 sa.select(plan_steps)
                 .where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == effect_row.plan_step_id,
                     plan_steps.c.effect_intent_id == effect_intent_id,
                 )
@@ -199,9 +198,7 @@ class PostgresActionChainEffectReadbackPreparer(PostgresScopedRole):
                 occurred_at=now,
                 data={
                     "capability_activation_id": str(activation.activation_id),
-                    "capability_manifest_id": str(
-                        activation.capability_manifest_id
-                    ),
+                    "capability_manifest_id": str(activation.capability_manifest_id),
                     "connector_binding_id": binding.binding_id,
                     "effect_attempt_id": attempt.effect_attempt_id,
                     "effect_intent_id": effect.effect_intent_id,
@@ -223,9 +220,6 @@ class PostgresActionChainEffectReadbackPreparer(PostgresScopedRole):
             )
             self._ledger.load_in_transaction(connection, step_row.plan_id)
             return PreparedActionChainEffectReadback("prepared", intent)
-
-
-
 
 
 __all__ = [

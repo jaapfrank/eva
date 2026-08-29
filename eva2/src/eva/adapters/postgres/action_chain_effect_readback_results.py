@@ -83,8 +83,7 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
             intent_row = connection.execute(
                 sa.select(read_intents).where(
                     read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id
-                    == self._scope_value.installation_id,
+                    read_intents.c.installation_id == self._scope_value.installation_id,
                     read_intents.c.read_intent_id == read_intent_id,
                 )
             ).one_or_none()
@@ -126,8 +125,7 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
             step_row = connection.execute(
                 sa.select(plan_steps).where(
                     plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id
-                    == self._scope_value.installation_id,
+                    plan_steps.c.installation_id == self._scope_value.installation_id,
                     plan_steps.c.plan_step_id == intent_row.plan_step_id,
                     plan_steps.c.effect_intent_id == intent_row.effect_intent_id,
                 )
@@ -139,8 +137,7 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
                     effect_readbacks.c.tenant_id == self._scope_value.tenant_id,
                     effect_readbacks.c.installation_id
                     == self._scope_value.installation_id,
-                    effect_readbacks.c.effect_intent_id
-                    == intent_row.effect_intent_id,
+                    effect_readbacks.c.effect_intent_id == intent_row.effect_intent_id,
                 )
             ).all()
             if existing:
@@ -169,8 +166,7 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
                     effect_intents.c.installation_id
                     == self._scope_value.installation_id,
-                    effect_intents.c.effect_intent_id
-                    == intent_row.effect_intent_id,
+                    effect_intents.c.effect_intent_id == intent_row.effect_intent_id,
                 )
             ).one()
             observation_row = connection.execute(
@@ -178,15 +174,13 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
                     read_observations.c.tenant_id == self._scope_value.tenant_id,
                     read_observations.c.installation_id
                     == self._scope_value.installation_id,
-                    read_observations.c.read_attempt_id
-                    == attempt_row.read_attempt_id,
+                    read_observations.c.read_attempt_id == attempt_row.read_attempt_id,
                 )
             ).one()
             latest = connection.execute(
                 sa.select(operational_events)
                 .where(
-                    operational_events.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
                     operational_events.c.installation_id
                     == self._scope_value.installation_id,
                     operational_events.c.thread_id
@@ -205,12 +199,10 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
             observation = ReadObservation.model_validate(observation_row.payload)
             evidence_row = connection.execute(
                 sa.select(evidence_envelopes).where(
-                    evidence_envelopes.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    evidence_envelopes.c.tenant_id == self._scope_value.tenant_id,
                     evidence_envelopes.c.installation_id
                     == self._scope_value.installation_id,
-                    evidence_envelopes.c.evidence_id
-                    == UUID(observation.evidence_ref),
+                    evidence_envelopes.c.evidence_id == UUID(observation.evidence_ref),
                 )
             ).one()
             try:
@@ -259,7 +251,6 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return StoredActionChainEffectReadback("recorded", readback)
-
 
 
 __all__ = [

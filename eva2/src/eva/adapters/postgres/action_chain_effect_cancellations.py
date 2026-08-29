@@ -7,7 +7,9 @@ that no connector process or external provider call could have been created.
 """
 
 from __future__ import annotations
-from eva.contracts.timestamps import format_normalized_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import (
+    format_normalized_utc_timestamp as _format_timestamp,
+)
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
@@ -101,7 +103,8 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 sa.select(effect_intents)
                 .where(
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
-                    effect_intents.c.installation_id == self._scope_value.installation_id,
+                    effect_intents.c.installation_id
+                    == self._scope_value.installation_id,
                     effect_intents.c.effect_intent_id == effect_intent_id,
                 )
                 .with_for_update()
@@ -143,7 +146,8 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 sa.select(effect_attempts)
                 .where(
                     effect_attempts.c.tenant_id == self._scope_value.tenant_id,
-                    effect_attempts.c.installation_id == self._scope_value.installation_id,
+                    effect_attempts.c.installation_id
+                    == self._scope_value.installation_id,
                     effect_attempts.c.effect_intent_id == effect_intent_id,
                 )
                 .order_by(effect_attempts.c.ordinal)
@@ -185,7 +189,8 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 sa.update(effect_intents)
                 .where(
                     effect_intents.c.tenant_id == self._scope_value.tenant_id,
-                    effect_intents.c.installation_id == self._scope_value.installation_id,
+                    effect_intents.c.installation_id
+                    == self._scope_value.installation_id,
                     effect_intents.c.effect_intent_id == effect_intent_id,
                     effect_intents.c.state == intent_row.state,
                     effect_intents.c.revision == expected_revision,
@@ -221,7 +226,8 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 sa.select(operational_checkpoints)
                 .where(
                     operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
-                    operational_checkpoints.c.installation_id == self._scope_value.installation_id,
+                    operational_checkpoints.c.installation_id
+                    == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
                 )
                 .with_for_update()
@@ -238,9 +244,7 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 "contract": "ActionChainEffectCancellation/v1",
                 "cancellation_stage": cancellation_stage,
                 "effect_attempt_id": (
-                    None
-                    if not attempts
-                    else str(attempts[0].effect_attempt_id)
+                    None if not attempts else str(attempts[0].effect_attempt_id)
                 ),
                 "effect_intent_id": str(effect_intent_id),
                 "effect_intent_payload_sha256": canonical_sha256(cancelled),
@@ -248,9 +252,7 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 "owner_principal_id": str(cancellation_owner.principal_id),
                 "plan_id": str(chain.plan_id),
                 "plan_step_id": str(step_row.plan_step_id),
-                "principal_binding_id": str(
-                    cancellation_owner.principal_binding_id
-                ),
+                "principal_binding_id": str(cancellation_owner.principal_binding_id),
             }
             transition_timeline_thread(
                 connection,
@@ -272,8 +274,10 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
                 sa.select(attention_items)
                 .where(
                     attention_items.c.tenant_id == self._scope_value.tenant_id,
-                    attention_items.c.installation_id == self._scope_value.installation_id,
-                    attention_items.c.attention_id == UUID(chain.attention.attention_id),
+                    attention_items.c.installation_id
+                    == self._scope_value.installation_id,
+                    attention_items.c.attention_id
+                    == UUID(chain.attention.attention_id),
                 )
                 .with_for_update()
             ).one()
@@ -313,6 +317,7 @@ class PostgresActionChainEffectCanceller(PostgresScopedRole):
             principal_binding_id=principal_binding_id,
             conflict=ActionChainEffectCancellationConflict,
         )
+
 
 def _cancellation_stage(
     *,
@@ -432,17 +437,14 @@ def validate_action_chain_effect_owner(
         binding_verified_at=binding.verified_at,
     )
 
+
 def _intent(row: sa.Row) -> EffectIntent:
     try:
         return EffectIntent.model_validate(row.payload)
     except ValueError as error:
-        raise ActionChainEffectCancellationConflict("effect intent payload is invalid") from error
-
-
-
-
-
-
+        raise ActionChainEffectCancellationConflict(
+            "effect intent payload is invalid"
+        ) from error
 
 
 __all__ = [

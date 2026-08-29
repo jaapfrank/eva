@@ -196,7 +196,9 @@ def _classify_result(
         response = result.result
         completed_at = _parse_timestamp(response.completed_at)
         if completed_at < observed_at or completed_at > recorded_at:
-            raise ValueError("provider completion is outside the host observation window")
+            raise ValueError(
+                "provider completion is outside the host observation window"
+            )
         if response.request_sha256 != attempt.request_sha256:
             raise ValueError("provider result binds another effect request")
         outcome = response.outcome
@@ -275,8 +277,7 @@ def _validate_exchange_authority(
         or envelope.request_payload_sha256
         != params.capability_grant.authorized_payload_sha256
         or params.capability_grant.grant_id != attempt.capability_grant_id
-        or params.credential_grant.credential_grant_id
-        != attempt.credential_grant_id
+        or params.credential_grant.credential_grant_id != attempt.credential_grant_id
         or params.deadline != attempt.deadline
     ):
         raise ValueError("provider exchange binds another effect attempt")
@@ -305,9 +306,7 @@ def _build_receipt(
                 outcome.provider_resource_id if accepted else None
             ),
             "provider_receipt_sha256": (
-                outcome.provider_receipt_sha256
-                if accepted
-                else outcome.evidence_sha256
+                outcome.provider_receipt_sha256 if accepted else outcome.evidence_sha256
             ),
             "request_payload_sha256": intent.frozen_payload_sha256,
             "provider_time": (
@@ -327,13 +326,9 @@ def _result_completed_at(
 
 
 def _result_subject_id(result: ProviderEffectResult) -> str:
-    return result.request_id if isinstance(result, ConnectorProtocolFailure) else result.id
-
-
-
-
-
-
+    return (
+        result.request_id if isinstance(result, ConnectorProtocolFailure) else result.id
+    )
 
 
 __all__ = [

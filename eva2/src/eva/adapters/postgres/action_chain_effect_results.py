@@ -146,10 +146,14 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
                     recorded_at=recorded_at,
                 )
             if attempt != claim.attempt or intent.state != "dispatch_authorized":
-                raise ActionChainEffectConflict("effect result claim differs from storage")
+                raise ActionChainEffectConflict(
+                    "effect result claim differs from storage"
+                )
             latest = self._latest_event(connection, operation_id)
             if latest.event_type != "ACTION_CHAIN_EFFECT_PROVIDER_CALL_STARTED":
-                raise ActionChainEffectConflict("effect result has no call-start marker")
+                raise ActionChainEffectConflict(
+                    "effect result has no call-start marker"
+                )
             started_at = _parse_timestamp(
                 str(_event_data(latest.payload).get("provider_call_started_at"))
             )
@@ -177,8 +181,7 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
             checkpoint = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == operation_id,
@@ -266,10 +269,8 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
             sa.update(effect_attempts)
             .where(
                 effect_attempts.c.tenant_id == self._scope_value.tenant_id,
-                effect_attempts.c.installation_id
-                == self._scope_value.installation_id,
-                effect_attempts.c.effect_attempt_id
-                == UUID(attempt.effect_attempt_id),
+                effect_attempts.c.installation_id == self._scope_value.installation_id,
+                effect_attempts.c.effect_attempt_id == UUID(attempt.effect_attempt_id),
                 effect_attempts.c.state == "dispatch_authorized",
                 effect_attempts.c.revision == 1,
             )
@@ -307,8 +308,7 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
             sa.update(effect_intents)
             .where(
                 effect_intents.c.tenant_id == self._scope_value.tenant_id,
-                effect_intents.c.installation_id
-                == self._scope_value.installation_id,
+                effect_intents.c.installation_id == self._scope_value.installation_id,
                 effect_intents.c.effect_intent_id == UUID(intent.effect_intent_id),
                 effect_intents.c.state == "dispatch_authorized",
                 effect_intents.c.revision == 2,
@@ -342,9 +342,7 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
                 producer=evidence.producer,
                 subject_contract=evidence.subject_contract,
                 subject_id=evidence.subject_id,
-                subject_payload_sha256=bytes.fromhex(
-                    evidence.subject_payload_sha256
-                ),
+                subject_payload_sha256=bytes.fromhex(evidence.subject_payload_sha256),
                 object_ref_id=None,
                 object_sha256=None,
                 predecessor_sha256=None,
@@ -374,12 +372,8 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
                 effect_attempt_id=UUID(receipt.effect_attempt_id),
                 decision=receipt.decision,
                 provider_resource_id=receipt.provider_resource_id,
-                provider_receipt_sha256=bytes.fromhex(
-                    receipt.provider_receipt_sha256
-                ),
-                request_payload_sha256=bytes.fromhex(
-                    receipt.request_payload_sha256
-                ),
+                provider_receipt_sha256=bytes.fromhex(receipt.provider_receipt_sha256),
+                request_payload_sha256=bytes.fromhex(receipt.request_payload_sha256),
                 provider_time=_parse_timestamp(receipt.provider_time),
                 evidence_id=UUID(receipt.evidence_ref),
                 payload=receipt.model_dump(mode="json"),
@@ -405,10 +399,8 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
         data = _event_data(event.payload)
         if (
             data.get("provider_result_sha256") != canonical_sha256(result)
-            or data.get("provider_result_observed_at")
-            != _format_timestamp(observed_at)
-            or data.get("provider_result_recorded_at")
-            != _format_timestamp(recorded_at)
+            or data.get("provider_result_observed_at") != _format_timestamp(observed_at)
+            or data.get("provider_result_recorded_at") != _format_timestamp(recorded_at)
         ):
             raise ActionChainEffectConflict("effect result replay differs")
         return self._load_stored(
@@ -444,10 +436,8 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
         receipt_payload = connection.scalar(
             sa.select(effect_receipts.c.payload).where(
                 effect_receipts.c.tenant_id == self._scope_value.tenant_id,
-                effect_receipts.c.installation_id
-                == self._scope_value.installation_id,
-                effect_receipts.c.effect_attempt_id
-                == UUID(attempt.effect_attempt_id),
+                effect_receipts.c.installation_id == self._scope_value.installation_id,
+                effect_receipts.c.effect_attempt_id == UUID(attempt.effect_attempt_id),
             )
         )
         receipt = (
@@ -471,6 +461,7 @@ class PostgresActionChainEffectResultStore(PostgresScopedRole):
             .order_by(operational_events.c.sequence.desc())
             .limit(1)
         ).one()
+
 
 _TERMINAL_TIMELINE = {
     "provider_accepted": (
@@ -510,7 +501,9 @@ def _terminal_timeline(state: str) -> tuple[str, str, str]:
     try:
         return _TERMINAL_TIMELINE[state]
     except KeyError as error:
-        raise ActionChainEffectConflict("effect result state is not terminal") from error
+        raise ActionChainEffectConflict(
+            "effect result state is not terminal"
+        ) from error
 
 
 def _terminal_event_data(
@@ -523,9 +516,7 @@ def _terminal_event_data(
     receipt = projected.receipt
     return {
         "connector_manifest": connector_manifest.model_dump(mode="json"),
-        "effect_attempt_terminal_payload_sha256": canonical_sha256(
-            projected.attempt
-        ),
+        "effect_attempt_terminal_payload_sha256": canonical_sha256(projected.attempt),
         "effect_intent_terminal_payload_sha256": canonical_sha256(projected.intent),
         "effect_receipt_id": None if receipt is None else receipt.receipt_id,
         "effect_receipt_payload_sha256": (
@@ -565,12 +556,6 @@ def _event_data(payload: object) -> dict[str, object]:
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), dict):
         raise ActionChainEffectConflict("effect result timeline payload differs")
     return dict(payload["data"])
-
-
-
-
-
-
 
 
 __all__ = [

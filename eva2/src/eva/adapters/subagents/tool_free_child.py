@@ -532,8 +532,6 @@ def _rated_cost(tokens: int, micros_per_million: int) -> int:
     return int(amount.to_integral_value(rounding=ROUND_CEILING))
 
 
-
-
 def _canonical_timestamp(value: datetime) -> str:
     return value.astimezone(UTC).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
 

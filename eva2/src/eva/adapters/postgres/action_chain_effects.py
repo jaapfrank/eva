@@ -528,9 +528,6 @@ class PostgresActionChainEffectPreparer(PostgresScopedRole):
         return data
 
 
-
-
-
 __all__ = [
     "ActionChainEffectConflict",
     "ActionChainEffectError",
