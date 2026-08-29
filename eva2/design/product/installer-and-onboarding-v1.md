@@ -286,8 +286,16 @@ stil half-geconfigureerd.
   lengte en hostpad staan niet in status of metadata. De aparte verifier geeft
   het secret alleen aan een begrensde read-only adapter, bewaart een geschoonde
   content-addressed receipt en wist zijn eigen mutabele buffer best-effort.
-  Rotatie, verwijdering, scopes en echte providerreadback ontbreken nog, dus
-  IN05 blijft open.
+  De lokale operatorroute kan alle vier slots nu ook roteren of verwijderen.
+  Eerst wordt de capability duurzaam geblokkeerd; pas daarna worden de bytes
+  gewisseld of verwijderd. Iedere nieuwe invoer krijgt een hogere generatie,
+  zodat een oude verificatie nooit opnieuw geldig wordt. Een onderbreking na
+  de eerste bestandswissel blijft zichtbaar als `needs_help` en kan alleen
+  vanuit de geblokkeerde toestand worden hersteld. Twee echte CLI-processen,
+  generaties 1→2→3 en 88 gerichte controles zijn groen met uitsluitend
+  synthetische secrets. Bediening door een gewone gebruiker, expliciete
+  providerscopes en echte providerreadback ontbreken nog, dus IN05 blijft
+  open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
