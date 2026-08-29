@@ -1,6 +1,7 @@
 """Reload validation for proof-driven effect completion and dependency release."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
 
 from datetime import datetime
 from typing import Any, Sequence
@@ -209,8 +210,6 @@ def _released_ids(
     return released
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = ["validate_action_chain_effect_advances"]

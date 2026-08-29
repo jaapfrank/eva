@@ -1,9 +1,12 @@
 """Project one effect-provider result without claiming physical success."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Literal, TypeAlias
 from uuid import UUID, uuid5
 
@@ -327,19 +330,10 @@ def _result_subject_id(result: ProviderEffectResult) -> str:
     return result.request_id if isinstance(result, ConnectorProtocolFailure) else result.id
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _require_utc_second(value: datetime, label: str) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError(f"{label} must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError(f"{label} must use whole-second precision")
 
 
 __all__ = [

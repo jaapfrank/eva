@@ -1,9 +1,11 @@
 """Claim one authorized action-chain read for exactly one provider call."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_now_second as _require_utc_second
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
@@ -364,15 +366,8 @@ def _read_invoke_method(intent: ReadIntent) -> str:
     }.get(intent.operation, "resource.read")
 
 
-def _require_utc_second(value: datetime) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError("now must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError("now must use whole-second precision")
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 __all__ = [

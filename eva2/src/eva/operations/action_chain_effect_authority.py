@@ -1,9 +1,11 @@
 """Pure construction and validation for one action-chain effect fence."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
-from datetime import UTC, datetime
-from uuid import UUID, uuid5
+from datetime import datetime
+from uuid import UUID
 
 import sqlalchemy as sa
 
@@ -11,7 +13,6 @@ from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
 from eva.adapters.postgres.action_chain_ledger import StoredActionChain
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.connector import ConnectorEnvelope
 from eva.contracts.execution import (
     CapabilityGrant,
     CapabilityManifest,
@@ -23,6 +24,9 @@ from eva.contracts.execution import (
 from eva.operations.action_chain_provider_registry import (
     ActionProviderProfile,
     SealedActionProviderRegistry,
+)
+from eva.operations.action_chain_dispatch_common import (
+    build_dispatch_authority_material,
 )
 
 
@@ -69,73 +73,23 @@ def build_action_chain_effect_authority(
     created_at: datetime,
     registry: SealedActionProviderRegistry,
 ) -> tuple[EffectAttempt, CapabilityGrant, CredentialGrant, dict[str, object]]:
-    if _parse_timestamp(profile.connector_manifest.issued_at) > created_at:
-        raise ActionChainEffectConflict(
-            "connector manifest was issued in the future"
-        )
-    attempt_id = uuid5(UUID(intent.effect_intent_id), "effect-attempt:1")
-    capability_grant = CapabilityGrant.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "CapabilityGrant/v1",
-            "grant_id": str(uuid5(attempt_id, "capability-grant:v1")),
-            "tenant_id": str(scope.tenant_id),
-            "episode_id": chain.plan.episode_id,
-            "generation": chain.plan.generation,
-            "capability_id": intent.capability_id,
-            "connector_binding_id": binding.binding_id,
-            "operation": intent.operation,
-            "resource_scope": intent.resource_scope.model_dump(mode="json"),
-            "authorized_payload_sha256": intent.frozen_payload_sha256,
-            "policy_sha256": chain.plan.policy_sha256,
-            "nonce": str(uuid5(attempt_id, "capability-nonce:v1")),
-            "issued_at": _format_timestamp(created_at),
-            "deadline": intent.deadline,
-        }
-    )
-    credential_grant = CredentialGrant.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "CredentialGrant/v1",
-            "credential_grant_id": str(uuid5(attempt_id, "credential-grant:v1")),
-            "connector_binding_id": binding.binding_id,
-            "model_provider_profile_id": None,
-            "worker_id": profile.worker_id,
-            "executable_sha256": capability_manifest.executable_sha256,
-            "provider_scopes": capability_manifest.required_provider_scopes,
-            "secret_descriptor_id": binding.credential_reference,
-            "nonce": str(uuid5(attempt_id, "credential-nonce:v1")),
-            "issued_at": _format_timestamp(created_at),
-            "deadline": intent.deadline,
-        }
-    )
-    connector_manifest_sha256 = canonical_sha256(profile.connector_manifest)
-    envelope = ConnectorEnvelope.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "ConnectorEnvelope/v1",
-            "installation_id": str(scope.installation_id),
-            "tenant_id": str(scope.tenant_id),
-            # The connector protocol exposes request_id to every provider.  For
-            # effects it is therefore also the exact durable idempotency key;
-            # no provider-specific payload field or hidden side channel is
-            # needed to prevent duplicate external effects.
-            "request_id": intent.idempotency_key,
-            "correlation_id": str(uuid5(attempt_id, "correlation:v1")),
-            "episode_id": chain.plan.episode_id,
-            "generation": chain.plan.generation,
-            "connector_id": binding.provider_id,
-            "connector_binding_id": binding.binding_id,
-            "capability_id": intent.capability_id,
-            "operation": intent.operation,
-            "resource_scope": intent.resource_scope.model_dump(mode="json"),
-            "deadline": intent.deadline,
-            "request_payload_sha256": intent.frozen_payload_sha256,
-            "connector_manifest_sha256": connector_manifest_sha256,
-            "capability_grant_id": capability_grant.grant_id,
-            "credential_grant_id": credential_grant.credential_grant_id,
-            "request_payload": action_arguments,
-        }
+    (
+        attempt_id,
+        capability_grant,
+        credential_grant,
+        connector_manifest_sha256,
+        envelope,
+    ) = build_dispatch_authority_material(
+        kind="effect",
+        scope=scope,
+        chain=chain,
+        action_arguments=action_arguments,
+        intent=intent,
+        profile=profile,
+        capability_manifest=capability_manifest,
+        binding=binding,
+        created_at=created_at,
+        conflict_type=ActionChainEffectConflict,
     )
     request_sha256 = canonical_sha256(envelope)
     permit = {
@@ -259,12 +213,8 @@ def effect_dispatch_event_data(
     }
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [

@@ -1,8 +1,10 @@
 """Corruption-sensitive reload validation for prepared action-chain effects."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid5
 
@@ -792,8 +794,6 @@ def _prepared_claim(
     )
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 def _worker_process_sha256(worker_id: str, *, corrupt: type[RuntimeError]) -> str:
@@ -812,8 +812,6 @@ def _is_sha256(value: object) -> bool:
     )
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [

@@ -1,6 +1,7 @@
 """One-shot worker that couples Eva's durable fence to Pydantic AI execution."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 import asyncio
 from collections.abc import Callable
@@ -166,8 +167,6 @@ class DelegatedWorkWorker:
         return value.astimezone(UTC)
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 __all__ = ["DelegatedWorkWorker", "WorkerDisposition"]

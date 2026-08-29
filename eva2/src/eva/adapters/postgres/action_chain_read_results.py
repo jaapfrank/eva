@@ -1,9 +1,12 @@
 """Atomically retain one claimed action-chain provider-read result."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
@@ -556,19 +559,10 @@ def _event_data(payload: object) -> dict[str, object]:
     return dict(payload["data"])
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _require_utc_second(value: datetime, label: str) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError(f"{label} must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError(f"{label} must use whole-second precision")
 
 
 __all__ = ["PostgresActionChainReadResultStore", "StoredActionChainReadResult"]

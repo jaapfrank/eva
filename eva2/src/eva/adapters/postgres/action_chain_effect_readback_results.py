@@ -1,9 +1,9 @@
 """Persist one canonical effect readback from retained provider evidence."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from typing import Literal
 from uuid import UUID
 
@@ -260,8 +260,6 @@ class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return StoredActionChainEffectReadback("recorded", readback)
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 __all__ = [

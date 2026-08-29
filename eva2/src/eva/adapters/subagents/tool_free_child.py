@@ -8,6 +8,7 @@ to PostgreSQL and is deliberately outside this API spike.
 """
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 import asyncio
 import hashlib
@@ -531,8 +532,6 @@ def _rated_cost(tokens: int, micros_per_million: int) -> int:
     return int(amount.to_integral_value(rounding=ROUND_CEILING))
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 def _canonical_timestamp(value: datetime) -> str:

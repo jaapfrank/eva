@@ -1,9 +1,11 @@
 """Crash-safe worker leases for admitted action chains; no capability execution."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 import hashlib
 from typing import Literal
 from uuid import UUID
@@ -474,15 +476,8 @@ def _require_worker(worker_id: str) -> None:
         raise ValueError("worker_id is not a valid identifier")
 
 
-def _require_utc_second(value: datetime, field: str) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError(f"{field} must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError(f"{field} must use whole-second precision")
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 def _format_timestamp(value: datetime) -> str:

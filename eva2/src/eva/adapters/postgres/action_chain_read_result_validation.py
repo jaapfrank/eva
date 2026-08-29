@@ -1,8 +1,10 @@
 """Reload validation for a terminal action-chain provider-read projection."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
-from datetime import UTC, datetime
+from datetime import datetime
 from uuid import UUID
 
 import sqlalchemy as sa
@@ -239,12 +241,8 @@ def _provider_result(value: object) -> ProviderReadResult:
     return result_type.model_validate(value)
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = ["validate_action_chain_read_terminal"]

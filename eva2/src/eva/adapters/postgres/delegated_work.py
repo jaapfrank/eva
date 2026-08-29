@@ -1,6 +1,8 @@
 """Durable PostgreSQL handoff and at-most-once fence for bounded child work."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_normalized_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 import re
 from dataclasses import dataclass
@@ -1566,16 +1568,12 @@ def _whole_second(value: datetime, *, label: str) -> datetime:
     return value.astimezone(UTC)
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 def _parse_optional_timestamp(value: str | None) -> datetime | None:
     return None if value is None else _parse_timestamp(value)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [

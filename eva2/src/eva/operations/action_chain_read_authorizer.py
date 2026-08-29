@@ -1,11 +1,13 @@
 """Authorize one provider-bound action-chain read without provider I/O."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Literal
-from uuid import UUID, uuid5
+from uuid import UUID
 
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine
@@ -21,6 +23,9 @@ from eva.adapters.postgres.action_chain_ledger import (
 from eva.operations.action_chain_provider_registry import (
     ReadProviderProfile,
     SealedReadProviderRegistry,
+)
+from eva.operations.action_chain_dispatch_common import (
+    build_dispatch_authority_material,
 )
 from eva.adapters.postgres.action_chain_reads import (
     ActionChainReadConflict,
@@ -372,67 +377,24 @@ def build_action_chain_read_authority(
     binding: ConnectorBinding,
     created_at: datetime,
 ) -> tuple[ReadAttempt, CapabilityGrant, CredentialGrant]:
-    if _parse_timestamp(profile.connector_manifest.issued_at) > created_at:
-        raise ActionChainReadConflict("connector manifest was issued in the future")
-    attempt_id = uuid5(UUID(intent.read_intent_id), "read-attempt:1")
-    capability_grant = CapabilityGrant.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "CapabilityGrant/v1",
-            "grant_id": str(uuid5(attempt_id, "capability-grant:v1")),
-            "tenant_id": str(scope.tenant_id),
-            "episode_id": chain.plan.episode_id,
-            "generation": chain.plan.generation,
-            "capability_id": intent.capability_id,
-            "connector_binding_id": binding.binding_id,
-            "operation": intent.operation,
-            "resource_scope": intent.resource_scope.model_dump(mode="json"),
-            "authorized_payload_sha256": intent.query_sha256,
-            "policy_sha256": chain.plan.policy_sha256,
-            "nonce": str(uuid5(attempt_id, "capability-nonce:v1")),
-            "issued_at": _format_timestamp(created_at),
-            "deadline": intent.deadline,
-        }
+    (
+        attempt_id,
+        capability_grant,
+        credential_grant,
+        connector_manifest_sha256,
+        envelope,
+    ) = build_dispatch_authority_material(
+        kind="read",
+        scope=scope,
+        chain=chain,
+        action_arguments=action_arguments,
+        intent=intent,
+        profile=profile,
+        capability_manifest=capability_manifest,
+        binding=binding,
+        created_at=created_at,
+        conflict_type=ActionChainReadConflict,
     )
-    credential_grant = CredentialGrant.model_validate(
-        {
-            "schema_version": 1,
-            "contract": "CredentialGrant/v1",
-            "credential_grant_id": str(uuid5(attempt_id, "credential-grant:v1")),
-            "connector_binding_id": binding.binding_id,
-            "model_provider_profile_id": None,
-            "worker_id": profile.worker_id,
-            "executable_sha256": capability_manifest.executable_sha256,
-            "provider_scopes": capability_manifest.required_provider_scopes,
-            "secret_descriptor_id": binding.credential_reference,
-            "nonce": str(uuid5(attempt_id, "credential-nonce:v1")),
-            "issued_at": _format_timestamp(created_at),
-            "deadline": intent.deadline,
-        }
-    )
-    correlation_id = str(uuid5(attempt_id, "correlation:v1"))
-    connector_manifest_sha256 = canonical_sha256(profile.connector_manifest)
-    request_payload = {
-        "schema_version": 1,
-        "contract": "ConnectorEnvelope/v1",
-        "installation_id": str(scope.installation_id),
-        "tenant_id": str(scope.tenant_id),
-        "request_id": str(uuid5(attempt_id, "connector-invoke:v1")),
-        "correlation_id": correlation_id,
-        "episode_id": chain.plan.episode_id,
-        "generation": chain.plan.generation,
-        "connector_id": binding.provider_id,
-        "connector_binding_id": binding.binding_id,
-        "capability_id": intent.capability_id,
-        "operation": intent.operation,
-        "resource_scope": intent.resource_scope.model_dump(mode="json"),
-        "deadline": intent.deadline,
-        "request_payload_sha256": intent.query_sha256,
-        "connector_manifest_sha256": connector_manifest_sha256,
-        "capability_grant_id": capability_grant.grant_id,
-        "credential_grant_id": credential_grant.credential_grant_id,
-        "request_payload": action_arguments,
-    }
     attempt = ReadAttempt(
         schema_version=1,
         contract="ReadAttempt/v1",
@@ -443,7 +405,7 @@ def build_action_chain_read_authority(
         capability_grant_id=capability_grant.grant_id,
         credential_grant_id=credential_grant.credential_grant_id,
         connector_manifest_sha256=connector_manifest_sha256,
-        request_sha256=canonical_sha256(request_payload),
+        request_sha256=canonical_sha256(envelope),
         response_sha256=None,
         deadline=intent.deadline,
         created_at=_format_timestamp(created_at),
@@ -508,15 +470,8 @@ def read_dispatch_event_data(
     }
 
 
-def _require_utc_second(value: datetime, field: str) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError(f"{field} must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError(f"{field} must use whole-second precision")
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
 def _format_timestamp(value: datetime) -> str:

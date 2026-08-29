@@ -1,6 +1,9 @@
 """Execute one claimed effect readback through the sealed process boundary."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp
+from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -138,19 +141,10 @@ def _require_timeout(value: float) -> None:
         raise ValueError("connector timeout must be between 0 and 30 seconds")
 
 
-def _require_utc_second(value: datetime, label: str) -> None:
-    if value.tzinfo is None or value.utcoffset() != UTC.utcoffset(value):
-        raise ValueError(f"{label} must be timezone-aware UTC")
-    if value.microsecond:
-        raise ValueError(f"{label} must use whole-second precision")
 
 
-def _parse_timestamp(value: str) -> datetime:
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
 
 
-def _format_timestamp(value: datetime) -> str:
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [
