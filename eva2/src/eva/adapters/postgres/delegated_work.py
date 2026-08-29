@@ -794,37 +794,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 or observed.principal_binding_id != principal_binding_id
             ):
                 raise DelegatedWorkNotFound("delegated work is absent")
-            attention = (
-                connection.execute(
-                    sa.select(attention_items)
-                    .where(
-                        attention_items.c.tenant_id == self._scope_value.tenant_id,
-                        attention_items.c.installation_id
-                        == self._scope_value.installation_id,
-                        attention_items.c.attention_id == observed.attention_id,
-                    )
-                    .with_for_update()
-                )
-                .mappings()
-                .one_or_none()
+            loaded = self._load_terminal_locked(
+                connection,
+                work_id=work_id,
+                attention_id=observed.attention_id,
+                missing_message="delegated work is absent",
             )
-            row = (
-                connection.execute(
-                    sa.select(delegated_work_runs)
-                    .where(
-                        delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
-                        delegated_work_runs.c.installation_id
-                        == self._scope_value.installation_id,
-                        delegated_work_runs.c.work_id == work_id,
-                    )
-                    .with_for_update()
-                )
-                .mappings()
-                .one_or_none()
-            )
-            if attention is None or row is None:
-                raise DelegatedWorkNotFound("delegated work is absent")
-            loaded = self._validated(connection, row)
             if loaded.spec.owner_principal_id != str(
                 owner_principal_id
             ) or loaded.spec.principal_binding_id != str(principal_binding_id):
@@ -1096,37 +1071,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         usage_payload = usage.model_dump(mode="json")
         with self._engine.begin() as connection:
             self._scope(connection)
-            attention_row = (
-                connection.execute(
-                    sa.select(attention_items)
-                    .where(
-                        attention_items.c.tenant_id == self._scope_value.tenant_id,
-                        attention_items.c.installation_id
-                        == self._scope_value.installation_id,
-                        attention_items.c.attention_id == call.attention_id,
-                    )
-                    .with_for_update()
-                )
-                .mappings()
-                .one_or_none()
+            loaded = self._load_terminal_locked(
+                connection,
+                work_id=call.work_id,
+                attention_id=call.attention_id,
+                missing_message="delegated work call is absent",
             )
-            row = (
-                connection.execute(
-                    sa.select(delegated_work_runs)
-                    .where(
-                        delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
-                        delegated_work_runs.c.installation_id
-                        == self._scope_value.installation_id,
-                        delegated_work_runs.c.work_id == call.work_id,
-                    )
-                    .with_for_update()
-                )
-                .mappings()
-                .one_or_none()
-            )
-            if attention_row is None or row is None:
-                raise DelegatedWorkNotFound("delegated work call is absent")
-            loaded = self._validated(connection, row)
             if loaded.state != "call_started":
                 if (
                     loaded.state == state
@@ -1367,8 +1317,52 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkNotFound("delegated work is absent")
         return self._validated(connection, row)
 
+    def _load_terminal_locked(
+        self,
+        connection: sa.Connection,
+        *,
+        work_id: str,
+        attention_id: UUID,
+        missing_message: str,
+    ) -> StoredDelegatedWork:
+        attention_row = (
+            connection.execute(
+                sa.select(attention_items)
+                .where(
+                    attention_items.c.tenant_id == self._scope_value.tenant_id,
+                    attention_items.c.installation_id
+                    == self._scope_value.installation_id,
+                    attention_items.c.attention_id == attention_id,
+                )
+                .with_for_update()
+            )
+            .mappings()
+            .one_or_none()
+        )
+        row = (
+            connection.execute(
+                sa.select(delegated_work_runs)
+                .where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id
+                    == self._scope_value.installation_id,
+                    delegated_work_runs.c.work_id == work_id,
+                )
+                .with_for_update()
+            )
+            .mappings()
+            .one_or_none()
+        )
+        if attention_row is None or row is None:
+            raise DelegatedWorkNotFound(missing_message)
+        return self._validated(connection, row, attention_row=attention_row)
+
     def _validated(
-        self, connection: sa.Connection, row: sa.RowMapping
+        self,
+        connection: sa.Connection,
+        row: sa.RowMapping,
+        *,
+        attention_row: sa.RowMapping | None = None,
     ) -> StoredDelegatedWork:
         try:
             spec = DelegatedWorkSpec.model_validate(row.spec_payload)
@@ -1396,18 +1390,20 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 row.usage_sha256
             ).hex() != canonical_sha256(row.usage_payload):
                 raise ValueError("usage hash differs")
-            attention_row = (
-                connection.execute(
-                    sa.select(attention_items).where(
-                        attention_items.c.tenant_id == self._scope_value.tenant_id,
-                        attention_items.c.installation_id
-                        == self._scope_value.installation_id,
-                        attention_items.c.attention_id == row.attention_id,
+            if attention_row is None:
+                attention_row = (
+                    connection.execute(
+                        sa.select(attention_items).where(
+                            attention_items.c.tenant_id
+                            == self._scope_value.tenant_id,
+                            attention_items.c.installation_id
+                            == self._scope_value.installation_id,
+                            attention_items.c.attention_id == row.attention_id,
+                        )
                     )
+                    .mappings()
+                    .one()
                 )
-                .mappings()
-                .one()
-            )
             attention = AttentionWakeV2.model_validate(attention_row.payload)
             if bytes(attention_row.payload_sha256).hex() != canonical_sha256(
                 attention_row.payload
