@@ -95,12 +95,17 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
     payload = json.loads(raw)
     assert raw == canonical_json_bytes(payload)
     assert payload == {
+        "billable_request_attempted": False,
         "check_id": "telegram.get_me",
         "completed_at": "2026-08-29T05:01:00Z",
-        "contract": "EvaInstallerProviderVerificationReceipt/v1",
+        "contract": "EvaInstallerProviderVerificationReceipt/v2",
+        "cost_measurement": "not_applicable",
         "duration_ms": 125,
+        "input_tokens": None,
         "mutation_attempted": False,
         "outcome": "ready",
+        "output_tokens": None,
+        "provider_operation": "read_only_identity",
         "provider_payload_retained": False,
         "reason_code": "verified",
         "secret_generation": 1,
@@ -108,6 +113,7 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
         "secret_returned": False,
         "slot_id": "telegram",
         "started_at": "2026-08-29T05:00:00Z",
+        "usage_measurement": "not_applicable",
     }
     assert receipts[0].stat().st_mode & 0o077 == 0
 
@@ -145,6 +151,20 @@ def test_provider_failures_are_sanitized_and_recorded_blocked(
         InstallerProviderProbeObservation("wrong.check", "ready", "verified"),
         InstallerProviderProbeObservation("telegram.get_me", "ready", "timeout"),
         InstallerProviderProbeObservation("telegram.get_me", "blocked", "verified"),
+        InstallerProviderProbeObservation(
+            "telegram.get_me",
+            "ready",
+            "verified",
+            usage_measurement="measured",
+            input_tokens=1,
+            output_tokens=1,
+        ),
+        InstallerProviderProbeObservation(
+            "telegram.get_me",
+            "ready",
+            "verified",
+            provider_operation="bounded_generation",
+        ),
     ],
 )
 def test_invalid_provider_observation_never_marks_ready(

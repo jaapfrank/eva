@@ -36,6 +36,8 @@ from eva.operations.installer_secret_store import (
 
 
 VerificationOutcome = Literal["ready", "blocked"]
+ProviderOperation = Literal["read_only_identity", "bounded_generation"]
+UsageMeasurement = Literal["not_applicable", "measured", "unmeasured"]
 VerificationReason = Literal[
     "verified",
     "unauthorized",
@@ -50,7 +52,7 @@ _BLOCKED_REASONS = frozenset(
 _ALL_REASONS = frozenset({"verified", *_BLOCKED_REASONS})
 _CHECK_IDS = MappingProxyType(
     {
-        "model_provider": "model.identity.read",
+        "model_provider": "model.response.generate",
         "telegram": "telegram.get_me",
         "home_assistant": "home_assistant.api.read",
         "email": "email.identity.read",
@@ -70,11 +72,30 @@ class InstallerProviderVerificationError(ValueError):
 class InstallerProviderProbeError(RuntimeError):
     """A sanitized, expected provider failure with one closed reason code."""
 
-    def __init__(self, reason_code: VerificationReason) -> None:
+    def __init__(
+        self,
+        reason_code: VerificationReason,
+        *,
+        provider_operation: ProviderOperation = "read_only_identity",
+        usage_measurement: UsageMeasurement = "not_applicable",
+        billable_request_attempted: bool = False,
+    ) -> None:
         if reason_code not in _BLOCKED_REASONS:
             raise ValueError("provider probe reason is invalid")
+        if provider_operation not in {"read_only_identity", "bounded_generation"}:
+            raise ValueError("provider probe operation is invalid")
+        if usage_measurement not in {"not_applicable", "unmeasured"}:
+            raise ValueError("failed provider probe usage is invalid")
+        if not isinstance(billable_request_attempted, bool) or (
+            billable_request_attempted
+            and provider_operation != "bounded_generation"
+        ):
+            raise ValueError("provider probe billing attempt is invalid")
         super().__init__("provider verification did not succeed")
         self.reason_code = reason_code
+        self.provider_operation = provider_operation
+        self.usage_measurement = usage_measurement
+        self.billable_request_attempted = billable_request_attempted
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,6 +103,11 @@ class InstallerProviderProbeObservation:
     check_id: str
     outcome: VerificationOutcome
     reason_code: VerificationReason
+    provider_operation: ProviderOperation = "read_only_identity"
+    usage_measurement: UsageMeasurement = "not_applicable"
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    billable_request_attempted: bool = False
 
 
 class InstallerProviderProbe(Protocol):
@@ -160,7 +186,69 @@ def _checked_observation(
         raise InstallerProviderVerificationError(
             "provider verification observation is invalid"
         )
+    if value.provider_operation not in {"read_only_identity", "bounded_generation"}:
+        raise InstallerProviderVerificationError(
+            "provider verification observation is invalid"
+        )
+    if value.usage_measurement not in {"not_applicable", "measured", "unmeasured"}:
+        raise InstallerProviderVerificationError(
+            "provider verification observation is invalid"
+        )
+    counts = (value.input_tokens, value.output_tokens)
+    if not isinstance(value.billable_request_attempted, bool) or (
+        value.billable_request_attempted
+        and value.provider_operation != "bounded_generation"
+    ):
+        raise InstallerProviderVerificationError(
+            "provider verification observation is invalid"
+        )
+    if value.usage_measurement == "measured":
+        if any(
+            not isinstance(count, int) or isinstance(count, bool) or count < 0
+            for count in counts
+        ):
+            raise InstallerProviderVerificationError(
+                "provider verification observation is invalid"
+            )
+    elif counts != (None, None):
+        raise InstallerProviderVerificationError(
+            "provider verification observation is invalid"
+        )
+    if (
+        expected_check_id == "model.response.generate"
+        and value.provider_operation != "bounded_generation"
+    ) or (
+        expected_check_id != "model.response.generate"
+        and value.provider_operation != "read_only_identity"
+    ) or (
+        value.provider_operation == "read_only_identity"
+        and value.usage_measurement != "not_applicable"
+    ) or (
+        value.provider_operation == "bounded_generation"
+        and value.usage_measurement == "not_applicable"
+    ) or (
+        value.outcome == "ready"
+        and value.provider_operation == "bounded_generation"
+        and not value.billable_request_attempted
+    ):
+        raise InstallerProviderVerificationError(
+            "provider verification observation is invalid"
+        )
     return value
+
+
+def _blocked_observation(
+    check_id: str, reason_code: VerificationReason
+) -> InstallerProviderProbeObservation:
+    if check_id == "model.response.generate":
+        return InstallerProviderProbeObservation(
+            check_id,
+            "blocked",
+            reason_code,
+            provider_operation="bounded_generation",
+            usage_measurement="unmeasured",
+        )
+    return InstallerProviderProbeObservation(check_id, "blocked", reason_code)
 
 
 @dataclass(frozen=True, slots=True)
@@ -259,20 +347,23 @@ class InstallerProviderVerifier:
                     observed, expected_check_id=_CHECK_IDS[slot_id]
                 )
             except TimeoutError:
-                observation = InstallerProviderProbeObservation(
-                    _CHECK_IDS[slot_id], "blocked", "timeout"
-                )
+                observation = _blocked_observation(_CHECK_IDS[slot_id], "timeout")
             except InstallerProviderProbeError as exc:
                 observation = InstallerProviderProbeObservation(
-                    _CHECK_IDS[slot_id], "blocked", exc.reason_code
+                    _CHECK_IDS[slot_id],
+                    "blocked",
+                    exc.reason_code,
+                    provider_operation=exc.provider_operation,
+                    usage_measurement=exc.usage_measurement,
+                    billable_request_attempted=exc.billable_request_attempted,
                 )
             except InstallerProviderVerificationError:
-                observation = InstallerProviderProbeObservation(
-                    _CHECK_IDS[slot_id], "blocked", "invalid_response"
+                observation = _blocked_observation(
+                    _CHECK_IDS[slot_id], "invalid_response"
                 )
             except Exception:
-                observation = InstallerProviderProbeObservation(
-                    _CHECK_IDS[slot_id], "blocked", "provider_error"
+                observation = _blocked_observation(
+                    _CHECK_IDS[slot_id], "provider_error"
                 )
         finally:
             secret_buffer[:] = b"\x00" * len(secret_buffer)
@@ -293,7 +384,16 @@ class InstallerProviderVerifier:
         duration_ms = int(round((completed_monotonic - started_monotonic) * 1000))
         if duration_ms > round(checked_timeout * 1000):
             observation = InstallerProviderProbeObservation(
-                _CHECK_IDS[slot_id], "blocked", "timeout"
+                _CHECK_IDS[slot_id],
+                "blocked",
+                "timeout",
+                provider_operation=observation.provider_operation,
+                usage_measurement=(
+                    "unmeasured"
+                    if observation.provider_operation == "bounded_generation"
+                    else "not_applicable"
+                ),
+                billable_request_attempted=observation.billable_request_attempted,
             )
         completed_at = _timestamp(self.clock())
         if completed_at < started_at:
@@ -302,12 +402,21 @@ class InstallerProviderVerifier:
             )
 
         receipt = {
+            "billable_request_attempted": observation.billable_request_attempted,
             "check_id": observation.check_id,
             "completed_at": completed_at,
-            "contract": "EvaInstallerProviderVerificationReceipt/v1",
+            "contract": "EvaInstallerProviderVerificationReceipt/v2",
+            "cost_measurement": (
+                "not_reported_by_chatgpt_access"
+                if observation.provider_operation == "bounded_generation"
+                else "not_applicable"
+            ),
             "duration_ms": duration_ms,
+            "input_tokens": observation.input_tokens,
             "mutation_attempted": False,
             "outcome": observation.outcome,
+            "output_tokens": observation.output_tokens,
+            "provider_operation": observation.provider_operation,
             "provider_payload_retained": False,
             "reason_code": observation.reason_code,
             "secret_reference": reference,
@@ -315,6 +424,7 @@ class InstallerProviderVerifier:
             "secret_returned": False,
             "slot_id": slot_id,
             "started_at": started_at,
+            "usage_measurement": observation.usage_measurement,
         }
         encoded = canonical_json_bytes(receipt)
         evidence_sha256 = hashlib.sha256(encoded).hexdigest()

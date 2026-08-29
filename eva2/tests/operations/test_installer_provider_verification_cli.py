@@ -165,6 +165,73 @@ def test_cli_builds_default_agentmail_probe_for_selected_inbox(
     assert workflow.status().step("email").state == "ready"
 
 
+def test_cli_builds_default_codex_generation_probe_for_access_only_lease(
+    private_tmp_path: Path,
+    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    capability = private_tmp_path / "capabilities"
+    secrets = private_tmp_path / "secrets"
+    evidence = private_tmp_path / "evidence"
+    for path in (capability, secrets, evidence):
+        path.mkdir(mode=0o700)
+    workflow = InstallerCapabilityWorkflow(workspace=capability)
+    workflow.select(step_id="model_provider", wanted=True)
+    lease = json.dumps(
+        {
+            "access_token": "synthetic-access-token-value-123456789",
+            "account_id": "synthetic-account-id",
+            "contract": "EvaModelAccessLease/v1",
+            "source_sha256": "a" * 64,
+        },
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    InstallerSecretStore(workspace=secrets).store(
+        slot_id="model_provider", secret=lease
+    )
+
+    def probe(_self, *, secret: memoryview, timeout_seconds: float):
+        assert bytes(secret) == lease.encode()
+        assert timeout_seconds == 3.0
+        return InstallerProviderProbeObservation(
+            "model.response.generate",
+            "ready",
+            "verified",
+            provider_operation="bounded_generation",
+            usage_measurement="measured",
+            input_tokens=12,
+            output_tokens=4,
+            billable_request_attempted=True,
+        )
+
+    monkeypatch.setattr(
+        "eva.adapters.connectors.installer_codex_model_probe."
+        "CodexInstallerModelProbe.read_only_probe",
+        probe,
+    )
+    exit_code = run_installer_provider_verification(
+        [
+            "--slot",
+            "model_provider",
+            "--capability-workspace",
+            str(capability),
+            "--secret-workspace",
+            str(secrets),
+            "--evidence-workspace",
+            str(evidence),
+            "--timeout-seconds",
+            "3",
+        ]
+    )
+
+    payload = json.loads(capsys.readouterr().out)
+    assert exit_code == 0
+    assert payload["slot_id"] == "model_provider"
+    assert payload["outcome"] == "ready"
+    assert workflow.status().step("model_provider").state == "ready"
+
+
 def test_cli_preflight_failure_does_not_call_probe_or_echo_paths(
     private_tmp_path: Path, capsys
 ) -> None:
@@ -196,6 +263,11 @@ def test_cli_preflight_failure_does_not_call_probe_or_echo_paths(
     [
         ("home_assistant", []),
         ("email", []),
+        (
+            "model_provider",
+            ["--home-assistant-url", "http://127.0.0.1:8123"],
+        ),
+        ("model_provider", ["--agentmail-inbox-id", "eva-test@agentmail.to"]),
         ("telegram", ["--home-assistant-url", "http://127.0.0.1:8123"]),
         ("telegram", ["--agentmail-inbox-id", "eva-test@agentmail.to"]),
         (

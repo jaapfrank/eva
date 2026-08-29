@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 from typing import Mapping
 
+from eva.adapters.connectors.installer_codex_model_probe import (
+    CodexInstallerModelProbe,
+)
 from eva.adapters.connectors.installer_agentmail_probe import (
     AgentMailInstallerReadOnlyProbe,
 )
@@ -49,6 +52,12 @@ def _default_probe(
     agentmail_inbox_id: str | None,
 ) -> InstallerProviderProbe:
     if (
+        slot_id == "model_provider"
+        and home_assistant_url is None
+        and agentmail_inbox_id is None
+    ):
+        return CodexInstallerModelProbe()
+    if (
         slot_id == "telegram"
         and home_assistant_url is None
         and agentmail_inbox_id is None
@@ -76,7 +85,9 @@ def run_installer_provider_verification(
 ) -> int:
     parser = argparse.ArgumentParser(prog="eva-installer-verify")
     parser.add_argument(
-        "--slot", choices=("telegram", "home_assistant", "email"), required=True
+        "--slot",
+        choices=("model_provider", "telegram", "home_assistant", "email"),
+        required=True,
     )
     parser.add_argument("--home-assistant-url")
     parser.add_argument("--agentmail-inbox-id")
