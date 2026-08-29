@@ -1,10 +1,10 @@
 {
   "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
-  "issuedAt": "2026-08-29T11:14:46+02:00",
+  "issuedAt": "2026-08-29T11:29:48+02:00",
   "status": "improved_still_over_budget",
   "source": {
-    "commit": "1815847eb55bcdff841b7bacf7c3f99ddba6c8c1",
-    "rawReceiptSha256": "d9c16066fb1e729ee0b8a0f20b3bc24ff46f9eeae86fe4a3e4bdccce64f3a2e6"
+    "commit": "cf2f03452f2d0e07d97acba93bbcd45b3f289fba",
+    "rawReceiptSha256": "fb05a46a4f53413174c7ddada175408bf0fd1f1e00e858ebdba0ac1027ce230d"
   },
   "before": {
     "commit": "1b51d9dd4f5c8f140ac94cccdfb5940a5ce9fc50",
@@ -12,9 +12,9 @@
     "excessProductPhysicalLines": 21874
   },
   "after": {
-    "productPhysicalLines": 91235,
-    "excessProductPhysicalLines": 16235,
-    "removedFromProductRuntime": 5639,
+    "productPhysicalLines": 90127,
+    "excessProductPhysicalLines": 15127,
+    "removedFromProductRuntime": 6747,
     "directRuntimeDependencies": 9,
     "unclassifiedSourcePaths": 0,
     "pc01Passed": false
@@ -24,7 +24,10 @@
     "sealed model, object-key and P-256 fixture adapters",
     "historical DBOS transition composition root",
     "historical durable-goal, fan-out and Telegram live-gate providers",
-    "operator-only legacy memory trial repository"
+    "operator-only legacy memory trial repository",
+    "host-only Telegram test preflight and launcher",
+    "disposable Telegram diagnostic core and ingress wrapper",
+    "managed-B runtime-smoke helper used only by tests"
   ],
   "verification": {
     "historicalFixtureContainerTestsPassed": 78,
@@ -33,10 +36,17 @@
     "disposablePostgresLegacyMemoryToolTestsPassed": 1,
     "disposablePostgresLegacyRecallTestPassed": 1,
     "releaseAndPc01TestsPassed": 33,
+    "telegramHostToolContainerTestsPassed": 32,
+    "telegramRuntimePackagingContainerTestsPassed": 27,
+    "telegramDockerNetworkProbePassed": 1,
+    "managedBReleaseInputTestsPassed": 26,
+    "ruffPassed": true,
+    "telegramTestImageOfflineBuildStatus": "passed",
+    "telegramTestImageDigest": "sha256:92ebfecd3039554d6d52f025614704b441e9a5bde500e39f567fc40a6d80ecbd",
     "eva1HealthHttp": 200,
     "eva2ReadyHttp": 200
   },
-  "nextRequiredAction": "Remove or replace another 16235 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
+  "nextRequiredAction": "Remove or replace another 15127 product lines without changing the sealed roots, exclusions, dependency limit or 75000-line budget.",
   "nonClaims": [
     "PC01 is not green.",
     "Moving active runtime or operator behavior outside the counted roots is not allowed remediation.",

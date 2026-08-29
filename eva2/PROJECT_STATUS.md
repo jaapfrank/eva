@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 11:14 CEST
+Laatst bijgewerkt: 29 augustus 2026, 11:29 CEST
 
 ## Heel kort
 
@@ -64,6 +64,9 @@ praktijktest zijn nog niet klaar.
   blijven gezond beschikbaar voor een later gesynchroniseerde terugrol.
 - De automatische controle na een Windows-reboot is geïnstalleerd en bewapend.
   Op dezelfde start weigert zij terecht en maakt zij geen vals bewijsbestand.
+- Oude proefproviders en de losse Telegram-testlauncher zitten niet meer in de
+  gewone Eva2-runtime. De aparte Telegram-testimage is daarna echt opnieuw
+  zonder bouwnetwerk gemaakt en kan haar twee diagnoseprocessen laden.
 
 ## Wat nog niet klaar is
 
@@ -78,8 +81,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  5.639 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  91.236 productregels en mag er maximaal 75.000 hebben.
+  6.747 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
+  90.127 productregels en mag er maximaal 75.000 hebben.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -100,7 +103,7 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
-4. Nog minstens 16.236 productregels gericht verwijderen of vervangen zonder
+4. Nog minstens 15.127 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
 ## Belangrijk verschil
