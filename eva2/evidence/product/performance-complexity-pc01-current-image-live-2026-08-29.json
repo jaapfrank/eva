@@ -13,16 +13,16 @@
     "eva1HealthHttp": 200,
     "freshDatabaseReadyHttp": 200,
     "liveEva2ReadyHttp": 200,
-    "rollbackEva2ReadyHttp": 200,
+    "rollbackPreStopReadyHttp": 200,
     "targetEva2ReadyHttp": 200
   },
   "contract": "EvaPerformanceComplexityPc01CurrentImageLiveReceipt/v1",
   "cutover": {
-    "currentUrl": "http://127.0.0.1:44711",
-    "previousUrl": "http://127.0.0.1:44710",
-    "receiptSha256": "56b7866d0cf2bbb93de9c4894367eccd383623e58ad0e0469c879d84bbbdc417",
-    "rollbackContainerStillReady": true,
-    "routerClientReplySha256": "127a658235e6ea7a5c797b66ac4265318dbdc5552f0b4d76c8fb85a588cb6bc6",
+    "currentUrl": "http://127.0.0.1:44710",
+    "previousUrl": "http://127.0.0.1:44711",
+    "receiptSha256": "d7e4af4d281b46fcdaaecf756f65148e4738212e156555cd295c2af390f3b21b",
+    "rollbackCoreStoppedIntact": true,
+    "routerClientReplySha256": "23078032c97516676ac139d064ed65df0beaa9e5c5fd01abced7803fb150914a",
     "status": "switched"
   },
   "freshDatabase": {
@@ -41,7 +41,7 @@
     "localReference": "eva2/pc01-current@sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
     "sizeBytes": 85454607
   },
-  "issuedAt": "2026-08-29T22:58:01+02:00",
+  "issuedAt": "2026-08-29T23:20:05+02:00",
   "modelAndRestart": {
     "initialReplySha256": "b8188cee43947d7cb394919f92c03f2c1ae3cfd4626b42f674dd89f22dc206fe",
     "liveDataReplySha256": "221bc8e4ec90ea2ca9b9f09c3b705fe414bd5694d4fbcd51ea35bc8d3be0db94",
@@ -53,18 +53,19 @@
   "nonclaims": [
     "This closes the current PC01 core-image baseline, not full voice, browser, installer, or seven-day acceptance.",
     "The fresh database and its synthetic conversation are disposable and are not Eva1 or live Eva2 user data.",
-    "The live canary reuses the already authorized Eva2 database, Hindsight service, identity, and access-only model lease; no refresh token was copied.",
-    "The previous Eva2 core remains running and ready for immediate rollback."
+    "The managed slot-3 core reuses the already authorized Eva2 database, Hindsight service, identity, and access-only model lease; no refresh token was copied.",
+    "The slot-4 rollback core and Hindsight containers are stopped but intact; rollback still requires the bounded operator start and route switch."
   ],
   "previousBaseline": {
     "compressedLayerBytes": 85591932,
     "reductionBytes": 151830
   },
   "runtime": {
-    "activeContainer": "eva2-pc01-live-canary",
+    "activeContainer": "eva2-managed-b-slot3-core",
     "capabilitiesDropped": [
       "ALL"
     ],
+    "managedComposeService": "core",
     "readOnlyRootFilesystem": true,
     "restartCount": 0,
     "restartPolicy": "unless-stopped",

@@ -1,21 +1,26 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 23:02 CEST
+Laatst bijgewerkt: 29 augustus 2026, 23:22 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op de actuele canaryroute. Zij praat via de bestaande
-Codex-koppeling, heeft haar eigen persoonlijkheid, bewaart gesprekken in
-PostgreSQL en gebruikt Hindsight voor langetermijngeheugen.
+De nieuwe DBOS-loze Eva2 staat nu als beheerde slot-3-dienst op de gewone
+`/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
+persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
+langetermijngeheugen.
 
 De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
 Ook de volledige omvangs- en imagepoort PC01 is nu groen: 74.819 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route blijft draaiend klaarstaan voor directe terugval.
+De vorige Eva2-route staat gestopt maar intact klaar voor de begrensde terugval.
+
+De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
+De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
+wachttijd van 180 seconden werd de nieuwe marker wel aantoonbaar gevonden.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -345,7 +350,7 @@ praktijktest zijn nog niet klaar.
 
 1. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
-2. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
@@ -438,6 +443,7 @@ praktijktest zijn nog niet klaar.
 - [Nieuwe actieve slot-3-route voor de externe Windows-reboot bewapend](evidence/living-core/eva2-runtime35-postboot-proof-armed-2026-08-29.json)
 - [Actuele PC01-image: netwerkloze build, scan, schema, model, herstart en live omschakeling](evidence/product/performance-complexity-pc01-current-image-live-2026-08-29.json)
 - [Volledige PC01-poort groen zonder overtredingen](evidence/product/performance-complexity-pc01-passed-2026-08-29.json)
+- [PC01-image beheerd op slot 3 en de echte Windows/WSL-reboot opnieuw bewapend](evidence/living-core/eva2-pc01-managed-slot3-reboot-armed-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

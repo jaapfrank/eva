@@ -43,7 +43,7 @@
     ]
   },
   "preVoiceBrowserCoreImageBaseline": {
-    "activeContainer": "eva2-pc01-live-canary",
+    "activeContainer": "eva2-managed-b-slot3-core",
     "platform": "linux/amd64",
     "manifestDigest": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
     "configDigest": "sha256:c8a5c20d4703cb53f0dfe1b3e6b0287585057d10d821ade2e8c68fd11ce215df",
@@ -51,6 +51,6 @@
     "layerCount": 31,
     "sourceCommit": "f93a8b3f0c78c89e9dd2035eeb0a8d8194b0a153",
     "sourceEvidence": "evidence/product/performance-complexity-pc01-current-image-live-2026-08-29.json",
-    "sourceEvidenceSha256": "9c89745c20916223f1b175b92918be62502308e2d6551bdaab2667234340d69c"
+    "sourceEvidenceSha256": "daac995c5722d6fcf85d92f73a815b249a3a4a120e42a69b5d168cd476b4af3e"
   }
 }

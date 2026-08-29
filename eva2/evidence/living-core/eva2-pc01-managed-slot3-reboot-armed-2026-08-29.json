@@ -1,0 +1,52 @@
+{
+  "active": {
+    "container": "eva2-managed-b-slot3-core",
+    "coreImage": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "managedContainersRunning": 6,
+    "readyHttp": 200,
+    "routePort": 44710,
+    "routerReplySha256": "23078032c97516676ac139d064ed65df0beaa9e5c5fd01abced7803fb150914a"
+  },
+  "arm": {
+    "privateStateSha256": "7742cd1740fe1afaac6afbf7b9d96e2639c4b0c2d3a5c02378707c69cf0a4be6",
+    "requiredRestart": "windows_host_reboot",
+    "routeDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "sourceSha256": "ce80fc9605cce9360dc931b6b5f2b672d1bec1a690e456190437d5fbbb0ec7f6",
+    "status": "armed"
+  },
+  "configuration": {
+    "currentEnvironmentSha256": "fcf71ce12e52b7ee1bd05df59199187635edf91eabddcc7cf1735c6633783019",
+    "previousEnvironmentSha256": "325b267d07bbe7b215970cffdb9ad8e73561babd433d04e2aea6544982a1f886",
+    "previousEnvironmentRetainedPrivately": true
+  },
+  "contract": "Eva2Pc01ManagedSlot3RebootArmedReceipt/v1",
+  "issuedAt": "2026-08-29T23:25:23+02:00",
+  "memory": {
+    "firstBoundSeconds": 60,
+    "firstBoundStatus": "marker_arrived_after_bound",
+    "observedLatestQueueToRetainedSeconds": 98,
+    "secondBoundSeconds": 180,
+    "secondBoundStatus": "marker_found"
+  },
+  "nonclaims": [
+    "No Windows, WSL, Linux kernel, Docker daemon, database, or host reboot has happened yet.",
+    "This receipt proves only that the current managed route is armed and that verification refuses the current boot.",
+    "The private state contains a synthetic marker and identifiers and is intentionally represented here only by its SHA-256 digest.",
+    "The stopped rollback containers were not promoted, modified, or claimed ready after their intentional stop."
+  ],
+  "postbootVerifier": {
+    "enabled": true,
+    "installedProbeSha256": "ce80fc9605cce9360dc931b6b5f2b672d1bec1a690e456190437d5fbbb0ec7f6",
+    "prebootAttemptExitCode": 1,
+    "prebootReceiptAbsent": true,
+    "prebootResult": "required_windows_host_reboot_not_observed",
+    "unitSha256": "2df7ff3053fc1a96b6c2d54c0e23233c720492c519a52833c327023356c3fb54"
+  },
+  "rollback": {
+    "coreContainer": "eva2-managed-b-slot4-core",
+    "hindsightContainer": "eva2-managed-b-slot4-hindsight-1",
+    "intactStoppedContainers": 2,
+    "routePort": 44711
+  },
+  "status": "armed"
+}
