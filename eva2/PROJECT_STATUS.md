@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 21:57 CEST
+Laatst bijgewerkt: 29 augustus 2026, 22:04 CEST
 
 ## Heel kort
 
@@ -273,6 +273,11 @@ praktijktest zijn nog niet klaar.
 - De 224-regelige controle van portable objecten staat nu eveneens naast de
   operator-materializer. Negen lokale en alle vijf objectgrensgevallen zijn
   groen; een gewijzigde byte of verkeerde sleutel blijft vóór opslag geweigerd.
+- De verzegelde B-release-inputlijst liep door eerdere wijzigingen 41 hashes
+  achter en verwees nog naar drie oude operatorpaden. Alle 369 verplichte bron-
+  en testpaden bestaan en zijn nu opnieuw gebonden. Ook 26 cockpitbronhashes
+  zijn bijgewerkt zonder claims te veranderen. De fail-closed tests zijn 38/38
+  groen en het exacte Git-archief bindt 239 inputs plus 130 tests.
 
 ## Wat nog niet klaar is
 
@@ -384,6 +389,7 @@ praktijktest zijn nog niet klaar.
 - [Portable objectmateriaalstap naar de operatorgrens, inclusief echte ObjectRef-proef](evidence/product/performance-complexity-pc01-portable-object-operator-boundary-2026-08-29.json)
 - [PostgreSQL-exportadapter naar de operatorgrens, met vier echte databasegrenzen](evidence/product/performance-complexity-pc01-postgres-portable-export-operator-boundary-2026-08-29.json)
 - [Portable objectverifier naar de operatorgrens, met echte ObjectRef-proef](evidence/product/performance-complexity-pc01-portable-object-verifier-operator-boundary-2026-08-29.json)
+- [Alle 369 B-release-inputs opnieuw gebonden en op exact Git-archief gecontroleerd](evidence/living-core/eva2-managed-b-release-input-rebind-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

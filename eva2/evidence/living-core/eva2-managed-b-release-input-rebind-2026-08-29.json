@@ -1,0 +1,35 @@
+{
+  "contract": "Eva2ManagedBReleaseInputRebind/v1",
+  "issuedAt": "2026-08-29T22:04:24+02:00",
+  "status": "tested",
+  "sourceCommit": "3d3b73636db20e907d6f1909da3b20c989251e62",
+  "releaseAuthority": {
+    "path": "release/managed-b-release-input-authority-v1.json",
+    "sha256": "1c08e4c14be213e8c74b5dcf5c978fde30399a7231f747976ef382afb5f6ee30",
+    "requiredInputs": 239,
+    "requiredTests": 130,
+    "missingPathsBeforeRebind": 0,
+    "staleHashesRebound": 41,
+    "operatorPathsMoved": 3
+  },
+  "cockpitEvidenceIndex": {
+    "path": "release/eva-cockpit-evidence-index-v1.json",
+    "sha256": "39cbf1e22ca93ca8bb89b5e1c8409a9dc96392baa7fc10c0f8b96dea21ea5678",
+    "sourceHashesRebound": 26,
+    "claimsChanged": 0,
+    "claimStatesChanged": 0
+  },
+  "validator": {
+    "path": "tools/managed_b_candidate/release_inputs.py",
+    "sha256": "ad114bf7f2f54b6aed8cea2f70cde728f81049411ce9524d93d041c47c599f40",
+    "failClosedTestsPassed": 38,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "combinedTestAndAttestationLogsSha256": "f2f33fccf76a281811b5ab9501e8619c141f861beab0947ff1f9a58b3ce8f7f0"
+  },
+  "nonClaims": [
+    "This did not build an image or deploy a release.",
+    "This did not open or change Eva1, Eva2, a database, a volume or a secret.",
+    "Rebinding source hashes does not turn historical evidence into a new live run.",
+    "The full PC01 source budget remains red."
+  ]
+}
