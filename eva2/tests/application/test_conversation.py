@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from threading import Event
-
 import pytest
 
 from eva.application.conversation import (
@@ -13,7 +11,7 @@ from eva.application.conversation import (
     ConversationTurn,
     IdentityProfile,
     LivingConversation,
-    MemorySearchPlan,
+    MEMORY_SEARCH_ACTION,
     load_current_identity_pack,
     stream_conversation_text,
 )
@@ -360,8 +358,8 @@ def test_photo_identity_memory_is_filtered_to_the_exact_bound_region() -> None:
     }
 
 
-def test_memory_intent_is_model_planned_without_question_mark() -> None:
-    class PlanningMemory(_Memory):
+def test_model_requested_memory_search_recalls_then_answers() -> None:
+    class SearchMemory(_Memory):
         def __init__(self) -> None:
             super().__init__()
             self.queries: list[str] = []
@@ -370,80 +368,81 @@ def test_memory_intent_is_model_planned_without_question_mark() -> None:
             self.queries.append(query.query_text)
             return super().recall_for_presence(query)
 
-    class PlanningModel(_Model):
-        def expand_memory_query(self, turn, recent_messages):  # type: ignore[no-untyped-def]
-            assert turn.text == "Zeg nog eens hoe warm ik het bij de veranda wilde"
-            assert recent_messages == ()
-            return MemorySearchPlan(
-                True,
-                "veranda overkapping buitenruimte temperatuur warm koel voorkeur",
+    class SearchModel(_Model):
+        def __init__(self) -> None:
+            super().__init__()
+            self.calls = 0
+
+        def generate(self, *args, completed_action=None, **kwargs):  # type: ignore[no-untyped-def]
+            self.calls += 1
+            if self.calls == 1:
+                return ConversationModelResult(
+                    None,
+                    "direct-conversation-model",
+                    ConversationActionCall(
+                        "memory-query-1",
+                        MEMORY_SEARCH_ACTION,
+                        {"query_text": "veranda overkapping temperatuur voorkeur"},
+                    ),
+                )
+            assert completed_action.call.name == MEMORY_SEARCH_ACTION
+            return super().generate(
+                *args, completed_action=completed_action, **kwargs
             )
 
-    memory = PlanningMemory()
+    memory = SearchMemory()
+    model = SearchModel()
     conversation = LivingConversation(
         memory,
-        PlanningModel(),
+        model,
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
     )
-
+    text = "Zeg nog eens hoe warm ik het bij de veranda wilde"
     conversation.respond(
         ConversationTurn.private(
-            "tenant",
-            "installation",
-            "jaap",
-            "telegram:jaap",
-            "telegram:memory:no-punctuation",
-            "Zeg nog eens hoe warm ik het bij de veranda wilde",
-            NOW,
+            "tenant", "installation", "jaap", "telegram:jaap",
+            "telegram:memory:no-punctuation", text, NOW,
         )
     )
 
+    assert model.calls == 2
     assert memory.queries == [
-        "Zeg nog eens hoe warm ik het bij de veranda wilde",
-        (
-            "Zeg nog eens hoe warm ik het bij de veranda wilde\n"
-            "Semantische zoekconcepten: veranda overkapping buitenruimte "
-            "temperatuur warm koel voorkeur"
-        ),
+        text,
+        f"{text}\nSemantische zoekconcepten: veranda overkapping temperatuur voorkeur",
     ]
 
 
-def test_tool_free_draft_waits_for_parallel_planner_before_publication() -> None:
-    draft_started = Event()
-
-    class ParallelModel(_Model):
-        def expand_memory_query(self, turn, recent_messages):  # type: ignore[no-untyped-def]
-            assert draft_started.wait(1)
-            return MemorySearchPlan(False, None)
+def test_direct_answer_uses_one_model_call_and_is_published() -> None:
+    class DirectModel(_Model):
+        def __init__(self) -> None:
+            super().__init__()
+            self.calls = 0
 
         def generate(self, *args, **kwargs):  # type: ignore[no-untyped-def]
-            draft_started.set()
+            self.calls += 1
             return super().generate(*args, **kwargs)
 
+    model = DirectModel()
     conversation = LivingConversation(
         _Memory(),
-        ParallelModel(),
+        model,
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
     )
     deltas: list[str] = []
     with stream_conversation_text(deltas.append):
         reply = conversation.respond(
             ConversationTurn.private(
-                "tenant",
-                "installation",
-                "jaap",
-                "conversation",
-                "message:parallel",
-                "Hoi Eva",
-                NOW,
+                "tenant", "installation", "jaap", "conversation",
+                "message:dynamic", "Hoi Eva", NOW,
             )
         )
 
+    assert model.calls == 1
     assert deltas == [reply.text]
 
 
-def test_semantic_planner_offers_only_selected_available_actions() -> None:
-    offered: list[tuple[str, ...]] = []
+def test_memory_search_can_be_followed_by_one_available_action() -> None:
+    calls: list[str] = []
 
     class Actions:
         action_names = ("read_home_assistant_state", "research_current_options")
@@ -455,49 +454,79 @@ def test_semantic_planner_offers_only_selected_available_actions() -> None:
             return ()
 
         def execute(self, turn, call):  # type: ignore[no-untyped-def]
-            raise AssertionError((turn, call))
+            calls.append(call.name)
+            return ConversationActionReceipt(call, {"state": "off"})
 
-    class PlanningModel(_Model):
-        def expand_memory_query(self, turn, recent_messages):  # type: ignore[no-untyped-def]
-            return MemorySearchPlan(
-                False,
-                None,
-                ("read_home_assistant_state", "unavailable_action"),
-            )
+    class SearchThenActModel(_Model):
+        def __init__(self) -> None:
+            super().__init__()
+            self.calls = 0
 
-        def generate(self, *args, available_actions=(), **kwargs):  # type: ignore[no-untyped-def]
-            offered.append(available_actions)
-            return super().generate(
-                *args, available_actions=available_actions, **kwargs
+        def generate(  # type: ignore[no-untyped-def]
+            self, *args, available_actions=(), completed_action=None, **kwargs
+        ):
+            self.calls += 1
+            if self.calls == 1:
+                assert set(available_actions) == set(Actions.action_names)
+                return ConversationModelResult(
+                    None, "model", ConversationActionCall(
+                        "memory-call", MEMORY_SEARCH_ACTION,
+                        {"query_text": "favoriete lamp overkapping veranda"},
+                    )
+                )
+            if self.calls == 2:
+                assert completed_action.call.name == MEMORY_SEARCH_ACTION
+                assert set(available_actions) == set(Actions.action_names)
+                return ConversationModelResult(
+                    None, "model", ConversationActionCall(
+                        "home-call", "read_home_assistant_state",
+                        {"target_name": "spotjes overkapping"},
+                    )
+                )
+            assert completed_action.call.name == "read_home_assistant_state"
+            assert available_actions == ()
+            return ConversationModelResult("De spotjes zijn uit.", "model")
+
+    model = SearchThenActModel()
+    conversation = LivingConversation(
+        _Memory(),
+        model,
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        Actions(),
+    )
+    reply = conversation.respond(
+        ConversationTurn.private(
+            "tenant", "installation", "jaap", "conversation",
+            "message:memory-then-action", "Staat mijn favoriete lamp uit?", NOW,
+        )
+    )
+
+    assert reply.text == "De spotjes zijn uit."
+    assert model.calls == 3
+    assert calls == ["read_home_assistant_state"]
+
+
+def test_invalid_model_requested_memory_query_is_rejected() -> None:
+    class InvalidModel(_Model):
+        def generate(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            return ConversationModelResult(
+                None, "model", ConversationActionCall(
+                    "memory-call", MEMORY_SEARCH_ACTION, {"query_text": ""}
+                )
             )
 
     conversation = LivingConversation(
         _Memory(),
-        PlanningModel(),
+        InvalidModel(),
         IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
-        Actions(),
     )
-    conversation.respond(
-        ConversationTurn.private(
-            "tenant",
-            "installation",
-            "jaap",
-            "conversation",
-            "message:selected-tools",
-            "Lees de lampstatus.",
-            NOW,
+    with pytest.raises(RuntimeError, match="memory search request"):
+        conversation.respond(
+            ConversationTurn.private(
+                "tenant", "installation", "jaap", "conversation",
+                "message:invalid-memory", "Wat weet je nog?", NOW,
+            )
         )
-    )
-
-    assert offered == [(), ("read_home_assistant_state",)]
-
-
-def test_memory_search_plan_limits_selected_actions() -> None:
-    with pytest.raises(ValueError, match="selected conversation actions"):
-        MemorySearchPlan(False, None, ("same", "same"))
-
-    with pytest.raises(ValueError, match="selected conversation actions"):
-        MemorySearchPlan(False, None, ("a", "b", "c", "d", "e"))
 
 
 def test_model_chosen_interest_is_committed_before_eva_claims_it() -> None:

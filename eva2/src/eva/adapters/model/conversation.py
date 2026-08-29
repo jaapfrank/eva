@@ -27,7 +27,7 @@ from eva.application.conversation import (
     ConversationModelUsage,
     ConversationTurn,
     IdentityProfile,
-    MemorySearchPlan,
+    MEMORY_SEARCH_ACTION,
     RecentConversationMessage,
 )
 from eva.application.memory import PresenceMemory
@@ -87,30 +87,6 @@ _VALIDATED_FILE_EDIT_ACTION = "edit_text_file_with_focused_validation"
 _REPOSITORY_IMPROVEMENT_ACTION = "improve_isolated_repository"
 _REPOSITORY_PROPOSAL_ACTION = "submit_repository_improvement"
 _OBSERVATION_IDENTITY_CORRECTION_ACTION = "record_observation_identity_correction"
-_MEMORY_SEARCH_ACTION = "submit_memory_search_plan"
-_SELECTABLE_ACTION_NAMES = (
-    _OBSERVATION_IDENTITY_CORRECTION_ACTION,
-    _PERSONAL_INTEREST_ACTION,
-    _HOME_ASSISTANT_LIGHT_ACTION,
-    _HOME_ASSISTANT_SWITCH_ACTION,
-    _HOME_ASSISTANT_HISTORY_ACTION,
-    _HOME_ASSISTANT_STATE_ACTION,
-    _HOME_ASSISTANT_AUTOMATION_ACTION,
-    _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
-    _TUYA_LOCAL_PLAN_ACTION,
-    _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
-    _LOCALTUYA_PACKAGE_INSTALL_ACTION,
-    _FANOUT_DELIVERY_ACTION,
-    _DURABLE_GOAL_ACTION,
-    _DURABLE_GOAL_CANCEL_ACTION,
-    _CURRENT_RESEARCH_ACTION,
-    _DOCUMENT_TASK_ACTION,
-    _FILE_BATCH_ACTION,
-    _VALIDATED_FILE_EDIT_ACTION,
-    _REPOSITORY_IMPROVEMENT_ACTION,
-)
-
-
 def _schema(
     description: str | None = None,
     *,
@@ -151,19 +127,15 @@ def _tool(
 
 
 _MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
-    _MEMORY_SEARCH_ACTION,
+    MEMORY_SEARCH_ACTION,
     (
-        "Classificeer of de actuele vraag persoonlijke semantische herinneringen "
-        "nodig heeft en kies hoogstens vier werkelijk benodigde acties voor deze "
-        "beurt. Geef nooit het antwoord."
+        "Zoek extra persoonsgebonden herinneringen wanneer het betrouwbare antwoord "
+        "afhangt van persoonlijke geschiedenis, voorkeuren, relaties, correcties of "
+        "eerdere gebeurtenissen. Gebruik dit vóór een externe actie wanneer het doel "
+        "daarvan afhangt. Geef een compacte Nederlandse zoekquery met ondubbelzinnige "
+        "synoniemen, maar verzin nooit het gezochte antwoord."
     ),
-    needs_semantic_memory=_schema(type_="boolean"),
-    query_text=_schema(type_=["string", "null"]),
-    selected_action_names=_schema(
-        type_="array",
-        items={"enum": list(_SELECTABLE_ACTION_NAMES), "type": "string"},
-        maxItems=4,
-    ),
+    query_text=_schema(maxLength=1_024),
 )
 _REPOSITORY_PROPOSAL_TOOL: dict[str, Any] = _tool(
     _REPOSITORY_PROPOSAL_ACTION,
@@ -640,96 +612,6 @@ class CodexConversationModel:
             return ConversationCredentialStatus(False, "expired", expires_at)
         return ConversationCredentialStatus(True, "ready", expires_at)
 
-    def expand_memory_query(
-        self,
-        turn: ConversationTurn,
-        recent_messages: tuple[RecentConversationMessage, ...],
-    ) -> MemorySearchPlan:
-        """Interpret a possibly memory-dependent turn without answering it."""
-
-        recent = "\n".join(
-            f"{message.role}: {message.text[:500]}" for message in recent_messages[-4:]
-        )
-        if not recent:
-            recent = "Geen recente gesprekstijdlijn."
-        body = {
-            "include": ["reasoning.encrypted_content"],
-            "input": [
-                {
-                    "content": (
-                        f"Actuele boodschap: {turn.grounded_text}\n"
-                        f"Recente gesprekstijdlijn:\n{recent}"
-                    ),
-                    "role": "user",
-                    "type": "message",
-                }
-            ],
-            "instructions": (
-                "Je bent uitsluitend de semantische zoekplanner vóór Hindsight recall. "
-                "Bepaal of voor een betrouwbaar antwoord persoonlijke geschiedenis, "
-                "voorkeuren, relaties, correcties of eerdere gebeurtenissen nodig zijn. "
-                "Zo ja: geef een compacte Nederlandse zoekquery met de genoemde personen, "
-                "plaatsen en onderwerpen plus gewone ondubbelzinnige synoniemen of "
-                "alternatieve benamingen. Herhaal niet alleen de originele woorden: geef "
-                "voor ieder concreet plaats-, apparaat- of objectbegrip minstens één gewone "
-                "alternatieve benaming als die redelijk ondubbelzinnig bestaat. Neem beide "
-                "kanten van een mogelijke voorkeur op, "
-                "maar verzin nooit de gekozen waarde, gebeurtenis of het antwoord. Los de "
-                "boodschap niet op. Dit geldt ook voor vragen, verzoeken en natuurlijke "
-                "vervolgzinnen zonder vraagteken. Zo nee: zet query_text op null. Kies "
-                "daarnaast nul tot vier actienamen die werkelijk nodig zijn om de actuele "
-                "boodschap uit te voeren. Kies nul acties voor een gewoon tekstantwoord, "
-                "een begroeting, smalltalk of een vraag die Eva uit gesprek en geheugen kan "
-                "beantwoorden. 'Hoi' en 'hoe gaat het?' kiezen dus nul acties. Kies alleen "
-                "een actie bij een expliciet verzoek om externe toestand te lezen of wijzigen. "
-                "Behoud bij een gecombineerde taak de relevante domeinen, maar selecteer "
-                "nooit een actie die niet is gevraagd. Gebruik exact de tool."
-            ),
-            "model": self._model,
-            "parallel_tool_calls": False,
-            "prompt_cache_key": f"{self._cache_key(turn)}-memory-query",
-            "reasoning": {"effort": "low", "summary": "auto"},
-            "store": False,
-            "stream": True,
-            "tool_choice": {"name": _MEMORY_SEARCH_ACTION, "type": "function"},
-            "tools": [_MEMORY_SEARCH_TOOL],
-        }
-        text, action_call = self._request(body)
-        if (
-            text.strip()
-            or action_call is None
-            or action_call.name != _MEMORY_SEARCH_ACTION
-        ):
-            raise ConversationModelError(
-                "memory search planner returned invalid output"
-            )
-        arguments = action_call.arguments
-        if set(arguments) != {
-            "needs_semantic_memory",
-            "query_text",
-            "selected_action_names",
-        }:
-            raise ConversationModelError("memory search planner arguments are invalid")
-        needs_memory = arguments["needs_semantic_memory"]
-        query_text = arguments["query_text"]
-        selected_actions = arguments["selected_action_names"]
-        if (
-            not isinstance(needs_memory, bool)
-            or not (query_text is None or isinstance(query_text, str))
-            or not isinstance(selected_actions, list)
-            or any(
-                not isinstance(name, str) or name not in _ACTION_TOOLS
-                for name in selected_actions
-            )
-        ):
-            raise ConversationModelError("memory search planner values are invalid")
-        try:
-            return MemorySearchPlan(needs_memory, query_text, tuple(selected_actions))
-        except ValueError as error:
-            raise ConversationModelError(
-                "memory search planner plan is invalid"
-            ) from error
-
     def generate(
         self,
         turn: ConversationTurn,
@@ -744,7 +626,11 @@ class CodexConversationModel:
         unknown = set(available_actions) - set(_ACTION_TOOLS)
         if unknown:
             raise ValueError(f"unknown conversation actions: {sorted(unknown)!r}")
-        if completed_action is not None and available_actions:
+        memory_completed = (
+            completed_action is not None
+            and completed_action.call.name == MEMORY_SEARCH_ACTION
+        )
+        if completed_action is not None and available_actions and not memory_completed:
             raise ValueError("completed conversation action cannot offer more actions")
         instructions = self._instructions(
             identity,
@@ -787,23 +673,34 @@ class CodexConversationModel:
                     },
                 ]
             )
+        offer_tools = completed_action is None or (
+            memory_completed and bool(available_actions)
+        )
+        dynamic_tools = []
+        if offer_tools:
+            catalog = (
+                ([] if memory_completed else [_MEMORY_SEARCH_TOOL])
+                + [_ACTION_TOOLS[name] for name in available_actions]
+            )
+            dynamic_tools = [
+                {"type": "tool_search", "execution": "server"},
+                *[{**tool, "defer_loading": True} for tool in catalog],
+            ]
         body = {
             "include": ["reasoning.encrypted_content"],
             "input": input_items,
             "instructions": instructions,
-            "model": _TOOL_FREE_MODEL if not available_actions else self._model,
+            "model": _TOOL_FREE_MODEL if offer_tools else self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": self._cache_key(turn),
             "reasoning": {
-                "effort": self._reasoning_effort if available_actions else "none",
+                "effort": "none" if offer_tools else self._reasoning_effort,
                 "summary": "auto",
             },
             "store": False,
             "stream": True,
-            "tool_choice": (
-                "none" if completed_action is not None or not available_actions else "auto"
-            ),
-            "tools": [_ACTION_TOOLS[name] for name in available_actions],
+            "tool_choice": "auto" if offer_tools else "none",
+            "tools": dynamic_tools,
         }
         usages: list[ConversationModelUsage] = []
         timings: list[ConversationModelTiming] = []
@@ -825,7 +722,10 @@ class CodexConversationModel:
             text, action_call, usage, timing = self._request_conversation(body)
             usages.append(usage)
             timings.append(timing)
-        if action_call is not None and action_call.name not in available_actions:
+        allowed_actions = set(available_actions)
+        if completed_action is None:
+            allowed_actions.add(MEMORY_SEARCH_ACTION)
+        if action_call is not None and action_call.name not in allowed_actions:
             raise ConversationModelError(
                 "conversation model requested an unavailable action"
             )
@@ -1523,7 +1423,43 @@ class CodexConversationModel:
         if autonomous and budget.unknown_cost_policy == "block_autonomous_spend":
             raise ConversationModelError("autonomous model spend has no verified price")
         try:
-            conservative_input_tokens = len(canonical_json_bytes(body)) + 256
+            admission_body = body
+            tools = body.get("tools")
+            tool_search = {"execution": "server", "type": "tool_search"}
+            if isinstance(tools, list) and tools[:1] == [tool_search]:
+                expected = {MEMORY_SEARCH_ACTION: _MEMORY_SEARCH_TOOL, **_ACTION_TOOLS}
+                deferred = tools[1:]
+                names = [item.get("name") for item in deferred if isinstance(item, dict)]
+                if (
+                    len(names) != len(deferred)
+                    or len(names) > len(expected)
+                    or len(set(names)) != len(names)
+                    or any(
+                        name not in expected
+                        or item != {**expected[name], "defer_loading": True}
+                        for name, item in zip(names, deferred, strict=True)
+                    )
+                    or len(canonical_json_bytes(tools)) > 20_000
+                ):
+                    raise ConversationModelError(
+                        "conversation deferred tool catalog is invalid"
+                    )
+                admission_body = {
+                    **body,
+                    "tools": [
+                        tool_search,
+                        *[
+                            {
+                                "defer_loading": True,
+                                "description": item["description"],
+                                "name": item["name"],
+                                "type": "function",
+                            }
+                            for item in deferred
+                        ],
+                    ],
+                }
+            conservative_input_tokens = len(canonical_json_bytes(admission_body)) + 256
         except (TypeError, ValueError) as error:
             raise ConversationModelError(
                 "conversation request is not a bounded canonical payload"
@@ -1900,6 +1836,15 @@ class CodexConversationModel:
             else "- Geen ander actief eigen project in deze context."
         )
         action_guidance_parts: list[str] = []
+        if completed_action is None:
+            action_guidance_parts.append(
+                "Gebruik de aangeboden geheugenzoekactie alleen als het betrouwbare "
+                "antwoord of een extern doel afhangt van persoonlijke geschiedenis, "
+                "voorkeuren, relaties, correcties of eerdere gebeurtenissen die niet al "
+                "in de zichtbare herinneringen staan. Geef dan nog geen antwoord en kies "
+                "eerst één compacte zoekquery. Voor gewone kennis, smalltalk en aanwezige "
+                "context antwoord je direct zonder tool."
+            )
         if _OBSERVATION_IDENTITY_CORRECTION_ACTION in available_actions:
             action_guidance_parts.append(
                 "De connector heeft exact één foto en onderwerpregio aan deze beurt "
@@ -2079,7 +2024,13 @@ class CodexConversationModel:
                 "expliciet geïsoleerde fixture."
             )
         if completed_action is not None:
-            if completed_action.call.name == _OBSERVATION_IDENTITY_CORRECTION_ACTION:
+            if completed_action.call.name == MEMORY_SEARCH_ACTION:
+                action_guidance_parts.append(
+                    "De extra persoonsgebonden geheugenzoeking is afgerond. Gebruik alleen "
+                    "de zichtbare bevestigde herinneringen. Kies nu zo nodig één aangeboden "
+                    "externe actie; zoek niet opnieuw en verzin geen ontbrekend feit."
+                )
+            elif completed_action.call.name == _OBSERVATION_IDENTITY_CORRECTION_ACTION:
                 action_guidance_parts.append(
                     "De receipt bewijst alleen dat de expliciete naamcorrectie aan deze "
                     "ene foto en onderwerpregio is vastgelegd. Bevestig dat kort en "
@@ -2266,7 +2217,10 @@ class CodexConversationModel:
                     "De persoonlijke interesse uit de action receipt is werkelijk en "
                     "duurzaam vastgelegd. Baseer je antwoord op precies die receipt."
                 )
-        if not action_guidance_parts:
+        if not available_actions and (
+            completed_action is None
+            or completed_action.call.name == MEMORY_SEARCH_ACTION
+        ):
             action_guidance_parts.append(
                 "Deze gespreksroute kan geen toekomstig werk inplannen. Beloof geen "
                 "tijdstip of latere terugkoppeling zonder zichtbaar bewijs."

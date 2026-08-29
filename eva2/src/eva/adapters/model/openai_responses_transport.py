@@ -492,8 +492,14 @@ def _validate_request(
         or not isinstance(body.get("input"), list)
         or not isinstance(body.get("tools"), list)
         or any(
-            not isinstance(tool, dict) or tool.get("type") != "function"
-            for tool in body.get("tools", [])
+            not isinstance(tool, dict)
+            or not (
+                tool.get("type") == "function"
+                and tool.get("defer_loading") in {None, True}
+                or index == 0
+                and tool == {"execution": "server", "type": "tool_search"}
+            )
+            for index, tool in enumerate(body.get("tools", []))
         )
     ):
         raise OpenAIResponsesTransportError("OpenAI SDK request contract is invalid")

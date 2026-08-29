@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
@@ -22,6 +21,8 @@ from eva.application.identity_verifier import (
     load_default_identity_pack_trust_binding,
     verify_identity_pack_bytes,
 )
+
+MEMORY_SEARCH_ACTION = "search_personal_memory"
 
 
 class ConversationConflict(RuntimeError):
@@ -444,37 +445,6 @@ class RecentConversationMessage:
             ) from error
 
 
-@dataclass(frozen=True, slots=True)
-class MemorySearchPlan:
-    """Model-understood semantic lookup and bounded per-turn capability choice."""
-
-    needs_semantic_memory: bool
-    query_text: str | None
-    selected_action_names: tuple[str, ...] = ()
-
-    def __post_init__(self) -> None:
-        if self.needs_semantic_memory:
-            if (
-                self.query_text is None
-                or not self.query_text.strip()
-                or len(self.query_text.encode("utf-8")) > 1_024
-            ):
-                raise ValueError("semantic memory query is invalid")
-        elif self.query_text is not None:
-            raise ValueError("unused semantic memory query must be null")
-        if (
-            len(self.selected_action_names) > 4
-            or len(set(self.selected_action_names)) != len(self.selected_action_names)
-            or any(
-                not isinstance(name, str)
-                or not name.strip()
-                or len(name.encode("utf-8")) > 128
-                for name in self.selected_action_names
-            )
-        ):
-            raise ValueError("selected conversation actions are invalid")
-
-
 class ConversationMemoryPort(Protocol):
     def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory: ...
 
@@ -616,54 +586,44 @@ class LivingConversation:
                 else self._actions.action_names
             )
         self_context = () if self._actions is None else self._actions.active_context(turn)
-        memory_query = getattr(self._model, "expand_memory_query", None)
-        plan: MemorySearchPlan | None = None
-        draft = None
-        if callable(memory_query):
-            with ThreadPoolExecutor(max_workers=3) as executor:
-                memory_future = executor.submit(recall, turn.text)
-                plan_future = executor.submit(memory_query, turn, recent_messages)
-                draft_future = executor.submit(
-                    lambda: self._model.generate(
-                        turn, self._identity, memory_future.result(), recent_messages,
-                        completed_action=completed, self_context=self_context))
-                memory = memory_future.result()
-                try:
-                    plan = plan_future.result()
-                except RuntimeError:
-                    plan = None
-                try:
-                    draft = draft_future.result()
-                except RuntimeError:
-                    draft = None
+        memory = recall(turn.text)
+        generated = self._model.generate(
+            turn, self._identity, memory, recent_messages,
+            available_actions=available_names, completed_action=completed,
+            self_context=self_context)
+        usages = [generated.usage]
+        timings = [generated.timing]
+        if (
+            generated.action_call is not None
+            and generated.action_call.name == MEMORY_SEARCH_ACTION
+        ):
+            arguments = generated.action_call.arguments
+            query_text = arguments.get("query_text")
             if (
-                isinstance(plan, MemorySearchPlan)
-                and plan.needs_semantic_memory
-                and plan.query_text is not None
+                set(arguments) != {"query_text"}
+                or not isinstance(query_text, str)
+                or not query_text.strip()
+                or len(query_text.encode("utf-8")) > 1_024
             ):
-                expanded = recall(
-                    f"{turn.text}\nSemantische zoekconcepten: {plan.query_text}"
-                )
-                if expanded.confirmed_facts:
-                    memory = expanded
-            available_names = tuple(
-                name
-                for name in available_names
-                if plan is not None and name in plan.selected_action_names
+                raise RuntimeError("conversation memory search request is invalid")
+            expanded = recall(
+                f"{turn.text}\nSemantische zoekconcepten: {query_text}"
             )
-        else:
-            memory = recall(turn.text)
-        if draft is not None and (plan is None or (
-            not plan.needs_semantic_memory and not plan.selected_action_names)):
-            generated = draft
-            publish_conversation_text(generated.text, tools_disabled=True)
-        else:
+            if expanded.confirmed_facts:
+                memory = expanded
             generated = self._model.generate(
                 turn, self._identity, memory, recent_messages,
-                available_actions=available_names, completed_action=completed,
-                self_context=self_context)
-        usages = ([draft.usage] if draft is not None and generated is not draft else []) + [generated.usage]
-        timings = [generated.timing]
+                available_actions=available_names,
+                completed_action=ConversationActionReceipt(
+                    call=generated.action_call,
+                    output={"result_count": len(expanded.confirmed_facts)},
+                ),
+                self_context=self_context,
+            )
+            usages.append(generated.usage)
+            timings.append(generated.timing)
+        elif generated.action_call is None:
+            publish_conversation_text(generated.text or "", tools_disabled=True)
         if generated.action_call is not None:
             if self._actions is None or completed is not None:
                 raise RuntimeError("conversation model requested an unavailable action")
@@ -765,7 +725,7 @@ __all__ = [
     "GroundedReply",
     "IdentityProfile",
     "LivingConversation",
-    "MemorySearchPlan",
+    "MEMORY_SEARCH_ACTION",
     "RecentConversationMessage",
     "load_current_identity_pack",
     "publish_conversation_text",

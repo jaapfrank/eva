@@ -68,6 +68,12 @@ def local_model_lease_contract(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
+def _deferred_tool(body: dict[str, Any], name: str) -> dict[str, Any]:
+    matches = [tool for tool in body["tools"] if tool.get("name") == name]
+    assert len(matches) == 1
+    return matches[0]
+
+
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
         "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b"
@@ -82,7 +88,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
             "_FREE_WILL_TOOL",
         )
     } == {
-        "_MEMORY_SEARCH_TOOL": "c9f78d86076d7395ab5408a01ae11acaabec6c4ff1808cc4b812d6768c651d5a",
+        "_MEMORY_SEARCH_TOOL": "a68ad57bd13e9cac1e86b4f996c93f26438cfaae0249f151233c02a2784dd13c",
         "_REPOSITORY_PROPOSAL_TOOL": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
         "_PROTOTYPE_TOOL": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
         "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
@@ -131,7 +137,7 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == ("record_observation_identity_correction")
+    assert _deferred_tool(bodies[0], "record_observation_identity_correction")
     assert binding.binding_sha256 in bodies[0]["input"][0]["content"]
     assert "Leid zelf geen gezicht of naam" in bodies[0]["instructions"]
 
@@ -177,7 +183,7 @@ def test_validated_file_edit_is_a_closed_model_action(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == ("edit_text_file_with_focused_validation")
+    assert _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")
     assert "rolt alleen de eigen edit terug" in bodies[0]["instructions"]
 
 
@@ -414,6 +420,33 @@ def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
             )
 
     assert requests == []
+
+
+def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -> None:
+    budget = _runtime_budget()
+    model = CodexConversationModel(
+        auth_file=tmp_path / "missing-auth.json", resource_budget=budget
+    )
+    catalog = [
+        {"execution": "server", "type": "tool_search"},
+        {
+            **conversation_module._MEMORY_SEARCH_TOOL,
+            "defer_loading": True,
+        },
+        *[
+            {**tool, "defer_loading": True}
+            for tool in conversation_module._ACTION_TOOLS.values()
+        ],
+    ]
+    body = {"input": [{"content": "hoi", "role": "user"}], "tools": catalog}
+    assert len(canonical_json_bytes(body)) + 256 > budget.max_input_tokens
+
+    model._admit_request(body, autonomous=False)  # noqa: SLF001
+
+    tampered = json.loads(json.dumps(body))
+    tampered["tools"][1]["description"] += " gewijzigd"
+    with pytest.raises(ConversationModelError, match="deferred tool catalog"):
+        model._admit_request(tampered, autonomous=False)  # noqa: SLF001
 
 
 def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(
@@ -660,8 +693,9 @@ def test_recent_durable_conversation_is_not_denied_as_missing_memory(
     assert "een herstart van core of databasecontainer overleven" in instructions
     assert "niet kunt onthouden" in instructions
     assert "amberkleurige maan" in instructions
-    assert captured[0]["tool_choice"] == "none"
-    assert captured[0]["tools"] == []
+    assert captured[0]["tool_choice"] == "auto"
+    assert captured[0]["tools"][0] == {"execution": "server", "type": "tool_search"}
+    assert _deferred_tool(captured[0], "search_personal_memory")
 
 
 def test_document_work_action_is_model_chosen_but_episode_bound(
@@ -697,13 +731,13 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
         self_context=("Direct actieve documenttaak in dit gesprek: checklist.md.",),
     )
 
-    assert requests[0]["tools"][0]["name"] == "checkpoint_document_task"
+    assert _deferred_tool(requests[0], "checkpoint_document_task")
     instructions = requests[0]["instructions"]
     assert "oudere globale taak" in instructions
     assert "Direct actieve documenttaak in dit gesprek" in instructions
 
 
-def test_direct_model_accepts_an_explicit_bounded_reasoning_effort(
+def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
     model_server: tuple[str, list[dict[str, Any]]], tmp_path: Path
 ) -> None:
     endpoint, requests = model_server
@@ -721,8 +755,8 @@ def test_direct_model_accepts_an_explicit_bounded_reasoning_effort(
         (),
         available_actions=("read_home_assistant_state",),
     )
-    assert requests[0]["reasoning"]["effort"] == "high"
-    assert requests[0]["model"] == "gpt-5.4-mini"
+    assert requests[0]["reasoning"]["effort"] == "none"
+    assert requests[0]["model"] == "gpt-5.6-luna"
 
     with pytest.raises(ValueError, match="reasoning effort"):
         CodexConversationModel(
@@ -732,7 +766,7 @@ def test_direct_model_accepts_an_explicit_bounded_reasoning_effort(
         )
 
 
-def test_memory_query_planner_expands_meaning_without_answering(
+def test_dynamic_catalog_defers_memory_and_available_actions(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
@@ -742,54 +776,37 @@ def test_memory_query_planner_expands_meaning_without_answering(
         bodies.append(body)
         return "", ConversationActionCall(
             "memory-query-1",
-            "submit_memory_search_plan",
-            {
-                "needs_semantic_memory": True,
-                "query_text": (
-                    "overkapping veranda buitenruimte temperatuur warm koel voorkeur"
-                ),
-                "selected_action_names": [
-                    "read_home_assistant_state",
-                    "set_home_assistant_light",
-                ],
-            },
+            "search_personal_memory",
+            {"query_text": "overkapping veranda temperatuur warm koel voorkeur"},
         )
 
     monkeypatch.setattr(model, "_request", request)
     turn = ConversationTurn.private(
-        "tenant",
-        "installation",
-        "jaap",
-        "conversation",
-        "message-memory-query",
-        "Welke kant moet de temperatuur onder de overkapping volgens mij op?",
-        NOW,
+        "tenant", "installation", "jaap", "conversation", "message-memory-query",
+        "Welke kant moet de temperatuur onder de overkapping volgens mij op?", NOW,
     )
 
-    plan = model.expand_memory_query(turn, ())
+    result = model.generate(
+        turn,
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        _memory(),
+        (),
+        available_actions=("read_home_assistant_state", "set_home_assistant_light"),
+    )
 
-    assert plan.needs_semantic_memory is True
-    assert plan.query_text is not None
-    assert "veranda" in plan.query_text
-    assert plan.selected_action_names == (
+    assert result.action_call is not None
+    assert result.action_call.name == "search_personal_memory"
+    assert bodies[0]["model"] == "gpt-5.6-luna"
+    assert bodies[0]["reasoning"]["effort"] == "none"
+    assert bodies[0]["tool_choice"] == "auto"
+    assert bodies[0]["tools"][0] == {"execution": "server", "type": "tool_search"}
+    assert [tool["name"] for tool in bodies[0]["tools"][1:]] == [
+        "search_personal_memory",
         "read_home_assistant_state",
         "set_home_assistant_light",
-    )
-    assert bodies[0]["reasoning"]["effort"] == "low"
-    assert bodies[0]["tool_choice"]["name"] == "submit_memory_search_plan"
-    assert "verzin nooit de gekozen waarde" in bodies[0]["instructions"]
-    assert "natuurlijke vervolgzinnen zonder vraagteken" in bodies[0]["instructions"]
-    assert "nul tot vier actienamen" in bodies[0]["instructions"]
-    assert "hoe gaat het?' kiezen dus nul acties" in bodies[0]["instructions"]
-    assert (
-        bodies[0]["tools"][0]["parameters"]["properties"]["selected_action_names"][
-            "maxItems"
-        ]
-        == 4
-    )
-    assert "uniqueItems" not in bodies[0]["tools"][0]["parameters"]["properties"][
-        "selected_action_names"
     ]
+    assert all(tool["defer_loading"] is True for tool in bodies[0]["tools"][1:])
+    assert set(bodies[0]["tools"][1]["parameters"]["properties"]) == {"query_text"}
 
 
 def test_model_reports_an_expired_access_lease_without_provider_call(
@@ -965,7 +982,7 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
 
     assert result.action_call is not None
     assert result.action_call.name == "set_home_assistant_switch"
-    assert captured[0]["tools"][0]["name"] == "set_home_assistant_switch"
+    assert _deferred_tool(captured[0], "set_home_assistant_switch")
     assert "sloten of alarmsystemen" in captured[0]["instructions"]
     assert (
         "neemt het concrete apparaat en de richting over"
@@ -1012,12 +1029,13 @@ def test_model_can_choose_bounded_home_assistant_history_read(
 
     assert result.action_call is not None
     assert result.action_call.arguments["period"] == "yesterday"
-    assert captured[0]["tools"][0]["name"] == "read_home_assistant_history"
+    assert _deferred_tool(captured[0], "read_home_assistant_history")
     assert "Gok niet vanuit herinneringen" in captured[0]["instructions"]
     assert (
         "behoud bijvoorbeeld 'licht in de overkapping'"
         in (
-            captured[0]["tools"][0]["parameters"]["properties"]["target"]["description"]
+            _deferred_tool(captured[0], "read_home_assistant_history")
+            ["parameters"]["properties"]["target"]["description"]
         )
     )
 
@@ -1055,7 +1073,7 @@ def test_model_can_choose_current_home_assistant_state_read(
 
     assert result.action_call is not None
     assert result.action_call.arguments["entity_kind"] == "switch"
-    assert captured[0]["tools"][0]["name"] == "read_home_assistant_state"
+    assert _deferred_tool(captured[0], "read_home_assistant_state")
     assert "niet op oude gesprekscontext" in captured[0]["instructions"]
 
 
@@ -1186,7 +1204,7 @@ def test_model_action_roundtrip_uses_durable_receipt_before_visible_text(
 
         assert expressed.text == "Ik kies slim koken; dat staat nu echt vast."
         assert expressed.action_call is None
-        assert requests[0]["tools"][0]["name"] == "adopt_personal_interest"
+        assert _deferred_tool(requests[0], "adopt_personal_interest")
         assert requests[0]["tool_choice"] == "auto"
         assert requests[1]["tool_choice"] == "none"
         assert requests[1]["input"][1]["type"] == "function_call"
@@ -1287,7 +1305,7 @@ def test_explicit_automation_request_uses_exact_bounded_action(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == ("create_home_assistant_state_automation")
+    assert _deferred_tool(bodies[0], "create_home_assistant_state_automation")
     assert "natuurlijke namen" in bodies[0]["instructions"]
     assert "exacte Home Assistant-entiteiten" in bodies[0]["instructions"]
 
@@ -1398,10 +1416,10 @@ def test_explicit_multistep_automation_uses_advanced_action(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == (
-        "create_home_assistant_advanced_state_automation"
+    advanced = _deferred_tool(
+        bodies[0], "create_home_assistant_advanced_state_automation"
     )
-    properties = bodies[0]["tools"][0]["parameters"]["properties"]
+    properties = advanced["parameters"]["properties"]
     assert properties["trigger_kind"]["enum"] == [
         "state",
         "time",
@@ -1524,7 +1542,7 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == "plan_tuya_to_localtuya_migration"
+    assert _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")
     assert "verandert nog geen apparaat" in bodies[0]["instructions"]
 
 
@@ -1617,7 +1635,7 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == "install_approved_localtuya_package"
+    assert _deferred_tool(bodies[0], "install_approved_localtuya_package")
     assert "expliciet zegt" in bodies[0]["instructions"]
 
 
@@ -1662,7 +1680,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == ("register_approved_localtuya_repository")
+    assert _deferred_tool(bodies[0], "register_approved_localtuya_repository")
     assert "alleen de bron toe" in bodies[0]["instructions"]
 
 
@@ -1704,7 +1722,7 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == "deliver_test_message_fanout"
+    assert _deferred_tool(bodies[0], "deliver_test_message_fanout")
     assert "geen algemeen succes" in bodies[0]["instructions"]
 
 
@@ -1799,7 +1817,11 @@ def test_future_condition_selects_bounded_durable_goal_action(
     )
 
     assert result.action_call == call
-    assert [tool["name"] for tool in bodies[0]["tools"]] == [
+    assert [
+        tool["name"]
+        for tool in bodies[0]["tools"]
+        if tool.get("name") not in {None, "search_personal_memory"}
+    ] == [
         "create_bounded_durable_goal",
         "cancel_active_durable_goal",
     ]
