@@ -124,27 +124,31 @@ def test_real_loopback_api_root_marks_ready_without_retaining_payload(
             private_tmp_path,
             HomeAssistantInstallerReadOnlyProbe(base_url=origin),
         )
-        exit_code = run_installer_provider_verification(
-            [
-                "--slot",
-                "home_assistant",
-                "--home-assistant-url",
-                origin,
-                "--capability-workspace",
-                str(verifier.capability_workflow.workspace),
-                "--secret-workspace",
-                str(verifier.secret_store.workspace),
-                "--evidence-workspace",
-                str(evidence),
-                "--timeout-seconds",
-                "2",
-            ]
-        )
+        arguments = [
+            "--slot",
+            "home_assistant",
+            "--home-assistant-url",
+            origin,
+            "--capability-workspace",
+            str(verifier.capability_workflow.workspace),
+            "--secret-workspace",
+            str(verifier.secret_store.workspace),
+            "--evidence-workspace",
+            str(evidence),
+            "--timeout-seconds",
+            "2",
+        ]
+        exit_code = run_installer_provider_verification(arguments)
+        restart_exit_code = run_installer_provider_verification(arguments)
 
-    result = json.loads(capsys.readouterr().out)
+    outputs = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+    assert len(outputs) == 2
+    result, restart = outputs
     assert exit_code == 0
+    assert restart_exit_code == 2
     assert result["outcome"] == "ready"
     assert result["reason_code"] == "verified"
+    assert restart["status"] == "failed"
     assert workflow.status().step("home_assistant").state == "ready"
     assert handler.requests == [
         {
