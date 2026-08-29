@@ -334,9 +334,10 @@ praktijktest zijn nog niet klaar.
 - De negen grootste runtimebestanden kunnen niet meer stil verder groeien.
   Ieder heeft nu een vaste eigenaar, contract en bovengrens; een nieuw
   niet-geregistreerd productbestand boven 1.000 regels maakt PC02 rood.
-- De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
-  verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
-  weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
+- De blokkade van 18-27 seconden is weg. Een langere meting gaf 597 van 600
+  lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
+  elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
+  de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -351,10 +352,10 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
-   verder verkleinen.
-2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
+2. De teksthot-path instrumenteren en echte tijd tot eerste inhoud meten; retain,
+   reflectie en evaluatie moeten daar aantoonbaar buiten blijven.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
 4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
@@ -372,6 +373,7 @@ praktijktest zijn nog niet klaar.
 ## Laatste bewijs
 
 - [Eva1-vastloper gevonden en live van 24,6 seconden naar circa 0,05-0,15 seconde gebracht](evidence/living-core/eva1-autonomy-event-loop-responsiveness-2026-08-29.json)
+- [Langere Eva1-event-loopmeting: 600 controles, p95 11 ms en drie losse missers](evidence/living-core/eva1-event-loop-responsiveness-long-600-2026-08-29.json)
 - [Verliesloze tweerichtings A/B-omschakeling](evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json)
 - [Bewapende automatische controle voor de echte reboot](evidence/living-core/eva2-managed-b-postboot-proof-armed-2026-08-29.json)
 - [Actuele schone negen-dienstenproef](evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json)

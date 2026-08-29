@@ -1,0 +1,35 @@
+{
+  "contract": "Eva1EventLoopResponsivenessLongReceipt/v1",
+  "eva1After": {
+    "healthRoutesHttp200": 5,
+    "serviceRestarts": 0
+  },
+  "eva2After": {
+    "managedReadyHttp": 200,
+    "routePort": 44710
+  },
+  "issuedAt": "2026-08-29T23:34:00+02:00",
+  "measurement": {
+    "deadlineSeconds": 0.4,
+    "endedAt": "2026-08-29T23:33:24+02:00",
+    "failureIndices": [175, 233, 465],
+    "failures": 3,
+    "http200": 597,
+    "intervalSeconds": 0.5,
+    "logSha256": "b5bd124760465a3f1e6e3d18b47b4f318bccafb85dd44fd08f04682c147dac5b",
+    "longestConsecutiveFailures": 1,
+    "maximumSeconds": 0.401292,
+    "p50Seconds": 0.006788,
+    "p95Seconds": 0.011238,
+    "p99Seconds": 0.286412,
+    "samples": 600,
+    "startedAt": "2026-08-29T23:28:12+02:00"
+  },
+  "nonclaims": [
+    "This measures Eva1's local health endpoint, not Telegram delivery, model latency, first visible content, tool completion, or voice latency.",
+    "Three samples exceeded the strict 400 millisecond per-sample deadline; they were isolated and are not represented as zero failures.",
+    "The service journal contained no matching model or autonomy category record for reliable attribution of the three misses.",
+    "This five-minute observation is not the required seven-day resident acceptance run."
+  ],
+  "status": "p95_passed_with_isolated_deadline_misses"
+}
