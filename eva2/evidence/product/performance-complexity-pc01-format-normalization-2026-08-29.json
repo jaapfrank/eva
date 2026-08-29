@@ -1,0 +1,41 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T14:08:47+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "ebb542f06e62ec05a238bddf348b6af20cf76a10",
+    "semanticParentCommit": "0d27be700d7972aa76cca0e6876ec341e757c88d"
+  },
+  "change": {
+    "description": "Ruff normalized only the thirty-five Python files where removed duplicate helpers had left redundant blank lines and inconsistent wrapping.",
+    "productFilesChanged": 35,
+    "productLinesAdded": 606,
+    "productLinesDeleted": 675,
+    "netProductPhysicalLines": -69,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 235,
+    "productPhysicalLinesBefore": 89179,
+    "productPhysicalLinesAfter": 89110,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 14110,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "ruff": "passed",
+    "compileAll": "passed",
+    "changedPythonFiles": 35,
+    "astIdenticalToSemanticParent": 35,
+    "astDifferentFromSemanticParent": 0,
+    "fastRegressionTestsPassed": 43,
+    "semanticParentPostgresActionChain16_13TestsPassed": 95
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "The 95 PostgreSQL tests ran on the semantic parent; this formatting commit was proven to have an identical AST for every changed file instead of rerunning the same database suite.",
+    "Formatting does not close any product capability gate."
+  ],
+  "nextRequiredAction": "Reduce real validator and attempt-persistence duplication; do not seek further savings by compressing readable source formatting."
+}
