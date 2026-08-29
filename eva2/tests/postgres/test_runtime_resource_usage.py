@@ -19,7 +19,10 @@ from eva.adapters.postgres.runtime_resource_usage import (
     PostgresMemoryStorageBudget,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
-from eva.application.memory_audience import MemoryAudience
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 
@@ -34,12 +37,18 @@ def _budget() -> RuntimeResourceBudget:
     payload = {
         "background_reflections_per_installation_day": 6,
         "background_reflections_per_person_day": 4,
-        "contract": "EvaInstallerBudget/v1",
+        "contract": "EvaInstallerBudget/v2",
         "external_monthly_spend_cap_eur_cents": 0,
         "max_input_tokens": 12_000,
         "max_output_tokens": 1_200,
         "memory_bytes_per_person": 20_971_520,
+        "memory_bytes_per_group": 20_971_520,
+        "memory_bytes_per_installation": 209_715_200,
+        "memory_bytes_per_project": 20_971_520,
         "memory_records_per_person": 2_000,
+        "memory_records_per_group": 2_000,
+        "memory_records_per_installation": 20_000,
+        "memory_records_per_project": 2_000,
         "profile_context_tokens": 800,
         "recall_context_tokens": 3_000,
         "retention_days": 365,
@@ -59,6 +68,12 @@ def _budget() -> RuntimeResourceBudget:
         profile_context_tokens=800,
         memory_records_per_person=2_000,
         memory_bytes_per_person=20_971_520,
+        memory_records_per_group=2_000,
+        memory_bytes_per_group=20_971_520,
+        memory_records_per_project=2_000,
+        memory_bytes_per_project=20_971_520,
+        memory_records_per_installation=20_000,
+        memory_bytes_per_installation=209_715_200,
         retention_days=365,
         background_reflections_per_person_day=4,
         background_reflections_per_installation_day=6,
@@ -86,6 +101,57 @@ def _storage_budget() -> RuntimeResourceBudget:
         profile_context_tokens=800,
         memory_records_per_person=100,
         memory_bytes_per_person=1_048_576,
+        memory_records_per_group=2_000,
+        memory_bytes_per_group=20_971_520,
+        memory_records_per_project=2_000,
+        memory_bytes_per_project=20_971_520,
+        memory_records_per_installation=20_000,
+        memory_bytes_per_installation=209_715_200,
+        retention_days=7,
+        background_reflections_per_person_day=4,
+        background_reflections_per_installation_day=6,
+        external_monthly_spend_cap_eur_cents=0,
+    )
+
+
+def _limited_storage_budget(
+    installation_id: str,
+    *,
+    group_records: int = 100,
+    group_bytes: int = 1_048_576,
+    project_records: int = 100,
+    project_bytes: int = 1_048_576,
+    installation_records: int = 1_000,
+    installation_bytes: int = 10_485_760,
+) -> RuntimeResourceBudget:
+    payload = {
+        **_storage_budget().budget_payload(),
+        "memory_bytes_per_group": group_bytes,
+        "memory_bytes_per_installation": installation_bytes,
+        "memory_bytes_per_project": project_bytes,
+        "memory_records_per_group": group_records,
+        "memory_records_per_installation": installation_records,
+        "memory_records_per_project": project_records,
+    }
+    return RuntimeResourceBudget(
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        source_budget_sha256=hashlib.sha256(
+            canonical_json_bytes(payload)
+        ).hexdigest(),
+        recall_context_tokens=3_000,
+        retrieval_nodes=50,
+        max_input_tokens=12_000,
+        max_output_tokens=1_200,
+        profile_context_tokens=800,
+        memory_records_per_person=100,
+        memory_bytes_per_person=1_048_576,
+        memory_records_per_group=group_records,
+        memory_bytes_per_group=group_bytes,
+        memory_records_per_project=project_records,
+        memory_bytes_per_project=project_bytes,
+        memory_records_per_installation=installation_records,
+        memory_bytes_per_installation=installation_bytes,
         retention_days=7,
         background_reflections_per_person_day=4,
         background_reflections_per_installation_day=6,
@@ -94,11 +160,16 @@ def _storage_budget() -> RuntimeResourceBudget:
 
 
 def _document(
-    document_id: str, *, principal_id: str = "person:memory", content: str = "x"
+    document_id: str,
+    *,
+    principal_id: str = "person:memory",
+    content: str = "x",
+    installation_id: str = INSTALLATION,
+    project_id: str | None = None,
 ) -> ConversationMemoryDocument:
     return ConversationMemoryDocument(
         tenant_id=TENANT,
-        installation_id=INSTALLATION,
+        installation_id=installation_id,
         principal_id=principal_id,
         conversation_id=f"conversation:{principal_id}",
         document_id=document_id,
@@ -109,6 +180,40 @@ def _document(
         privacy_class="internal",
         trust="direct_user",
         audience=MemoryAudience.private_person(principal_id=principal_id),
+        project_id=project_id,
+    )
+
+
+def _group_document(
+    document_id: str,
+    *,
+    installation_id: str,
+    principal_id: str,
+    group_chat_id: str,
+    content: str = "x",
+) -> ConversationMemoryDocument:
+    consent = TelegramGroupConsentReference(
+        principal_id=principal_id,
+        group_chat_id=group_chat_id,
+        operation_id=f"telegram-group-consent:{principal_id}:{group_chat_id[1:]}",
+    )
+    return ConversationMemoryDocument(
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        principal_id=principal_id,
+        conversation_id=f"telegram:{group_chat_id}",
+        document_id=document_id,
+        content=content,
+        occurred_at="2026-08-29T09:00:00Z",
+        source_ref=f"telegram:{group_chat_id}:source:{document_id}",
+        evidence_ref=f"telegram:{group_chat_id}:evidence:{document_id}",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.telegram_group(
+            principal_id=principal_id,
+            group_chat_id=group_chat_id,
+            consent_ref=consent,
+        ),
     )
 
 
@@ -318,3 +423,289 @@ def test_memory_storage_limits_survive_races_restart_and_expiry(
     assert replacement.admitted is True
     assert replacement.person_records_used == 1
     assert replacement.person_bytes_used == 500_000
+
+
+def test_group_and_project_limits_are_atomic_across_people_and_restart(
+    resource_engine: Engine,
+) -> None:
+    installation_id = "memory-scope-group-project"
+    budget = _limited_storage_budget(installation_id)
+    storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=budget,
+    )
+
+    group_large = storage.admit_memory(
+        _group_document(
+            "memory:group:large",
+            installation_id=installation_id,
+            principal_id="person:group-a",
+            group_chat_id="-1001",
+            content="é" * 300_000,
+        ),
+        now=NOW,
+    )
+    group_bytes_blocked = storage.admit_memory(
+        _group_document(
+            "memory:group:bytes-blocked",
+            installation_id=installation_id,
+            principal_id="person:group-b",
+            group_chat_id="-1001",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+    assert group_large.admitted is True
+    assert group_large.content_bytes == 600_000
+    assert group_bytes_blocked.admitted is False
+    assert group_bytes_blocked.reason == "group_byte_limit_reached"
+    assert group_bytes_blocked.group_records_used == 1
+    assert group_bytes_blocked.group_bytes_used == 600_000
+
+    for index in range(99):
+        assert storage.admit_memory(
+            _group_document(
+                f"memory:group:race:prefill:{index}",
+                installation_id=installation_id,
+                principal_id=f"person:group-prefill:{index}",
+                group_chat_id="-1002",
+            ),
+            now=NOW + timedelta(seconds=10 + index),
+        ).admitted
+    restarted = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=budget,
+    )
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        group_race = tuple(
+            pool.map(
+                lambda index: restarted.admit_memory(
+                    _group_document(
+                        f"memory:group:race:final:{index}",
+                        installation_id=installation_id,
+                        principal_id=f"person:group-final:{index}",
+                        group_chat_id="-1002",
+                    ),
+                    now=NOW + timedelta(seconds=200 + index),
+                ),
+                range(8),
+            )
+        )
+    assert sum(item.admitted for item in group_race) == 1
+    assert {item.reason for item in group_race if not item.admitted} == {
+        "group_record_limit_reached"
+    }
+
+    project_large = restarted.admit_memory(
+        _document(
+            "memory:project:large",
+            installation_id=installation_id,
+            principal_id="person:project-a",
+            project_id="project:alpha",
+            content="é" * 300_000,
+        ),
+        now=NOW + timedelta(seconds=300),
+    )
+    project_bytes_blocked = restarted.admit_memory(
+        _document(
+            "memory:project:bytes-blocked",
+            installation_id=installation_id,
+            principal_id="person:project-b",
+            project_id="project:alpha",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(seconds=301),
+    )
+    assert project_large.admitted is True
+    assert project_bytes_blocked.admitted is False
+    assert project_bytes_blocked.reason == "project_byte_limit_reached"
+    assert project_bytes_blocked.project_records_used == 1
+    assert project_bytes_blocked.project_bytes_used == 600_000
+
+    for index in range(99):
+        assert restarted.admit_memory(
+            _document(
+                f"memory:project:race:prefill:{index}",
+                installation_id=installation_id,
+                principal_id=f"person:project-prefill:{index}",
+                project_id="project:race",
+            ),
+            now=NOW + timedelta(seconds=400 + index),
+        ).admitted
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        project_race = tuple(
+            pool.map(
+                lambda index: restarted.admit_memory(
+                    _document(
+                        f"memory:project:race:final:{index}",
+                        installation_id=installation_id,
+                        principal_id=f"person:project-final:{index}",
+                        project_id="project:race",
+                    ),
+                    now=NOW + timedelta(seconds=600 + index),
+                ),
+                range(8),
+            )
+        )
+    assert sum(item.admitted for item in project_race) == 1
+    assert {item.reason for item in project_race if not item.admitted} == {
+        "project_record_limit_reached"
+    }
+
+
+def test_installation_limits_are_atomic_across_independent_scopes(
+    resource_engine: Engine,
+) -> None:
+    bytes_installation = "memory-scope-installation-bytes"
+    bytes_budget = _limited_storage_budget(
+        bytes_installation,
+        installation_records=1_000,
+        installation_bytes=1_048_576,
+    )
+    byte_storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=bytes_installation,
+        resource_budget=bytes_budget,
+    )
+    first = byte_storage.admit_memory(
+        _document(
+            "memory:installation:large",
+            installation_id=bytes_installation,
+            principal_id="person:installation-a",
+            content="é" * 300_000,
+        ),
+        now=NOW,
+    )
+    blocked = byte_storage.admit_memory(
+        _document(
+            "memory:installation:bytes-blocked",
+            installation_id=bytes_installation,
+            principal_id="person:installation-b",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+    assert first.admitted is True
+    assert blocked.admitted is False
+    assert blocked.reason == "installation_byte_limit_reached"
+    assert blocked.installation_records_used == 1
+    assert blocked.installation_bytes_used == 600_000
+
+    records_installation = "memory-scope-installation-records"
+    records_budget = _limited_storage_budget(
+        records_installation,
+        installation_records=100,
+        installation_bytes=10_485_760,
+    )
+    record_storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=records_installation,
+        resource_budget=records_budget,
+    )
+    for index in range(99):
+        assert record_storage.admit_memory(
+            _document(
+                f"memory:installation:race:prefill:{index}",
+                installation_id=records_installation,
+                principal_id=f"person:installation-prefill:{index}",
+            ),
+            now=NOW + timedelta(seconds=10 + index),
+        ).admitted
+    restarted = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=records_installation,
+        resource_budget=records_budget,
+    )
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        raced = tuple(
+            pool.map(
+                lambda index: restarted.admit_memory(
+                    _document(
+                        f"memory:installation:race:final:{index}",
+                        installation_id=records_installation,
+                        principal_id=f"person:installation-final:{index}",
+                    ),
+                    now=NOW + timedelta(seconds=200 + index),
+                ),
+                range(8),
+            )
+        )
+    assert sum(item.admitted for item in raced) == 1
+    assert {item.reason for item in raced if not item.admitted} == {
+        "installation_record_limit_reached"
+    }
+
+
+def test_removal_releases_group_and_installation_capacity_only_after_ack(
+    resource_engine: Engine,
+) -> None:
+    installation_id = "memory-scope-removal"
+    budget = _limited_storage_budget(
+        installation_id,
+        installation_bytes=1_048_576,
+    )
+    storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=budget,
+        removal_lease_seconds=1,
+    )
+    document = _group_document(
+        "memory:scope-removal:large",
+        installation_id=installation_id,
+        principal_id="person:removal-a",
+        group_chat_id="-2001",
+        content="é" * 300_000,
+    )
+    admission = storage.admit_memory(document, now=NOW)
+    retained = replace(document, retention_until=admission.retention_until)
+    storage.mark_retained(
+        retained,
+        MemoryRetentionReceipt(
+            bank_id="eva2-" + "b" * 32,
+            document_id=document.document_id,
+            content_sha256=hashlib.sha256(
+                document.content.encode("utf-8")
+            ).hexdigest(),
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+    before_ack = storage.admit_memory(
+        _group_document(
+            "memory:scope-removal:before-ack",
+            installation_id=installation_id,
+            principal_id="person:removal-b",
+            group_chat_id="-2001",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(days=7),
+    )
+    assert before_ack.admitted is False
+    assert before_ack.reason == "group_byte_limit_reached"
+
+    jobs = storage.claim_expired(now=NOW + timedelta(days=7))
+    assert len(jobs) == 1
+    storage.mark_removed(jobs[0], now=NOW + timedelta(days=7, seconds=1))
+    replacement = storage.admit_memory(
+        _group_document(
+            "memory:scope-removal:replacement",
+            installation_id=installation_id,
+            principal_id="person:removal-b",
+            group_chat_id="-2001",
+            content="b" * 500_000,
+        ),
+        now=NOW + timedelta(days=7, seconds=2),
+    )
+    assert replacement.admitted is True
+    assert replacement.group_records_used == 1
+    assert replacement.group_bytes_used == 500_000
+    assert replacement.installation_records_used == 1
+    assert replacement.installation_bytes_used == 500_000

@@ -24,12 +24,18 @@ def _write_runtime_budget(
     budget_values = {
         "background_reflections_per_installation_day": 40,
         "background_reflections_per_person_day": 4,
-        "contract": "EvaInstallerBudget/v1",
+        "contract": "EvaInstallerBudget/v2",
         "external_monthly_spend_cap_eur_cents": 0,
         "max_input_tokens": 12_000,
         "max_output_tokens": 1_200,
         "memory_bytes_per_person": 20_971_520,
+        "memory_bytes_per_group": 20_971_520,
+        "memory_bytes_per_installation": 209_715_200,
+        "memory_bytes_per_project": 20_971_520,
         "memory_records_per_person": 2_000,
+        "memory_records_per_group": 2_000,
+        "memory_records_per_installation": 20_000,
+        "memory_records_per_project": 2_000,
         "profile_context_tokens": 800,
         "recall_context_tokens": 3_000,
         "retention_days": 365,
@@ -49,6 +55,12 @@ def _write_runtime_budget(
         profile_context_tokens=800,
         memory_records_per_person=2_000,
         memory_bytes_per_person=20_971_520,
+        memory_records_per_group=2_000,
+        memory_bytes_per_group=20_971_520,
+        memory_records_per_project=2_000,
+        memory_bytes_per_project=20_971_520,
+        memory_records_per_installation=20_000,
+        memory_bytes_per_installation=209_715_200,
         retention_days=365,
         background_reflections_per_person_day=4,
         background_reflections_per_installation_day=40,
@@ -346,6 +358,22 @@ def test_runtime_rejects_tampered_resource_budget(
     budget_file = private_tmp_path / "runtime-budget.json"
     payload = json.loads(budget_file.read_bytes())
     payload["budget"]["max_input_tokens"] = 11_999
+    budget_file.write_bytes(canonical_json_bytes(payload))
+    budget_file.chmod(0o600)
+
+    with pytest.raises(RuntimeError, match="resource budget is invalid"):
+        RuntimeSettings.from_environment()
+
+
+def test_runtime_rejects_legacy_resource_budget_contract(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    budget_file = private_tmp_path / "runtime-budget.json"
+    payload = json.loads(budget_file.read_bytes())
+    payload["contract"] = "EvaRuntimeResourceBudget/v1"
+    payload["budget"]["contract"] = "EvaInstallerBudget/v1"
     budget_file.write_bytes(canonical_json_bytes(payload))
     budget_file.chmod(0o600)
 

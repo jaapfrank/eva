@@ -21,7 +21,13 @@ def _values() -> dict[str, int]:
         "max_input_tokens": 12_000,
         "max_output_tokens": 1_200,
         "memory_bytes_per_person": 20_971_520,
+        "memory_bytes_per_group": 20_971_520,
+        "memory_bytes_per_installation": 209_715_200,
+        "memory_bytes_per_project": 20_971_520,
         "memory_records_per_person": 2_000,
+        "memory_records_per_group": 2_000,
+        "memory_records_per_installation": 20_000,
+        "memory_records_per_project": 2_000,
         "profile_context_tokens": 800,
         "recall_context_tokens": 3_000,
         "retention_days": 365,
@@ -58,6 +64,14 @@ def test_budget_requires_selection_and_rejects_unsafe_values(
     invalid = _values()
     invalid["background_reflections_per_installation_day"] = 3
     with pytest.raises(InstallerBudgetInputError, match="smaller"):
+        workflow.stage(**invalid)
+    invalid = _values()
+    invalid["memory_records_per_group"] = 0
+    with pytest.raises(InstallerBudgetInputError, match="both be zero"):
+        workflow.stage(**invalid)
+    invalid = _values()
+    invalid["memory_records_per_installation"] = 1_000
+    with pytest.raises(InstallerBudgetInputError, match="scope budget"):
         workflow.stage(**invalid)
 
 

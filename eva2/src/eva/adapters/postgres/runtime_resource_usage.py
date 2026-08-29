@@ -38,15 +38,33 @@ class BackgroundReflectionAdmission:
 
 @dataclass(frozen=True, slots=True)
 class MemoryStorageAdmission:
-    """Durable per-person record/byte decision for one semantic document."""
+    """Durable hierarchical record/byte decision for one semantic document."""
 
     admitted: bool
     replayed: bool
     content_bytes: int
     person_records_used: int
     person_bytes_used: int
+    group_records_used: int | None
+    group_bytes_used: int | None
+    project_records_used: int | None
+    project_bytes_used: int | None
+    installation_records_used: int
+    installation_bytes_used: int
     retention_until: str | None
     reason: str
+
+
+@dataclass(frozen=True, slots=True)
+class _MemoryStorageUsage:
+    person_records: int
+    person_bytes: int
+    group_records: int | None
+    group_bytes: int | None
+    project_records: int | None
+    project_bytes: int | None
+    installation_records: int
+    installation_bytes: int
 
 
 @dataclass(frozen=True, slots=True)
@@ -274,10 +292,11 @@ class PostgresMemoryStorageBudget:
     """Keep conversation-memory records and UTF-8 bytes inside owner limits.
 
     The append-only events contain hashes, byte counts and the provider deletion
-    address, never the memory content.  A per-person advisory lock makes the
-    aggregate check and reservation atomic across runtime processes.  Capacity
-    is released only after Hindsight has acknowledged deletion, so an overdue
-    provider cannot make the physical store silently exceed the configured cap.
+    address, never the memory content.  One installation advisory lock makes
+    the person, group, project and installation checks one atomic reservation
+    across runtime processes. Capacity is released only after Hindsight has
+    acknowledged deletion, so an overdue provider cannot make the physical
+    store silently exceed any configured cap.
     """
 
     def __init__(
@@ -308,8 +327,16 @@ class PostgresMemoryStorageBudget:
             ),
         )
         self._timeline = PostgresOperationalTimeline(engine, self._scope_value)
-        self._record_limit = resource_budget.memory_records_per_person
-        self._byte_limit = resource_budget.memory_bytes_per_person
+        self._person_record_limit = resource_budget.memory_records_per_person
+        self._person_byte_limit = resource_budget.memory_bytes_per_person
+        self._group_record_limit = resource_budget.memory_records_per_group
+        self._group_byte_limit = resource_budget.memory_bytes_per_group
+        self._project_record_limit = resource_budget.memory_records_per_project
+        self._project_byte_limit = resource_budget.memory_bytes_per_project
+        self._installation_record_limit = (
+            resource_budget.memory_records_per_installation
+        )
+        self._installation_byte_limit = resource_budget.memory_bytes_per_installation
         self._retention_days = resource_budget.retention_days
         self._source_budget_sha256 = resource_budget.source_budget_sha256
         self._removal_lease_seconds = removal_lease_seconds
@@ -358,6 +385,12 @@ class PostgresMemoryStorageBudget:
         return hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
 
     @staticmethod
+    def _scope_sha256(value: str, *, label: str) -> str:
+        if not value.strip() or len(value) > 240:
+            raise ValueError(f"memory storage {label} is invalid")
+        return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+    @staticmethod
     def _document_sha256(document_id: str) -> str:
         if not document_id.strip() or len(document_id) > 1_024:
             raise ValueError("memory storage document ID is invalid")
@@ -372,11 +405,15 @@ class PostgresMemoryStorageBudget:
             raise OperationalTimelineError("memory storage event is malformed")
         return data
 
-    def _usage(
-        self, connection: sa.Connection, *, principal_sha256: str
+    def _usage_pair(
+        self,
+        connection: sa.Connection,
+        *,
+        scope_field: str | None = None,
+        scope_sha256: str | None = None,
     ) -> tuple[int, int]:
         data = operational_events.c.payload["data"]
-        row = connection.execute(
+        statement = (
             sa.select(
                 sa.func.count(),
                 sa.func.coalesce(
@@ -403,13 +440,117 @@ class PostgresMemoryStorageBudget:
                 == self._scope_value.installation_id,
                 operational_events.c.sequence == 1,
                 operational_events.c.event_type == "MEMORY_STORAGE_RESERVED",
-                data["principal_sha256"].astext == principal_sha256,
                 operational_checkpoints.c.phase.notin_(
                     ("memory_storage_blocked", "memory_storage_removed")
                 ),
             )
-        ).one()
+        )
+        if scope_field is not None:
+            if scope_sha256 is None:
+                raise ValueError("memory storage scope hash is missing")
+            statement = statement.where(data[scope_field].astext == scope_sha256)
+        row = connection.execute(statement).one()
         return int(row[0]), int(row[1])
+
+    def _usage(
+        self,
+        connection: sa.Connection,
+        *,
+        principal_sha256: str,
+        group_sha256: str | None,
+        project_sha256: str | None,
+    ) -> _MemoryStorageUsage:
+        person_records, person_bytes = self._usage_pair(
+            connection,
+            scope_field="principal_sha256",
+            scope_sha256=principal_sha256,
+        )
+        if group_sha256 is None:
+            group_records = group_bytes = None
+        else:
+            group_records, group_bytes = self._usage_pair(
+                connection,
+                scope_field="group_sha256",
+                scope_sha256=group_sha256,
+            )
+        if project_sha256 is None:
+            project_records = project_bytes = None
+        else:
+            project_records, project_bytes = self._usage_pair(
+                connection,
+                scope_field="project_sha256",
+                scope_sha256=project_sha256,
+            )
+        installation_records, installation_bytes = self._usage_pair(connection)
+        return _MemoryStorageUsage(
+            person_records=person_records,
+            person_bytes=person_bytes,
+            group_records=group_records,
+            group_bytes=group_bytes,
+            project_records=project_records,
+            project_bytes=project_bytes,
+            installation_records=installation_records,
+            installation_bytes=installation_bytes,
+        )
+
+    def _active_legacy_reservations(self, connection: sa.Connection) -> int:
+        data = operational_events.c.payload["data"]
+        return int(
+            connection.scalar(
+                sa.select(sa.func.count())
+                .select_from(
+                    operational_events.join(
+                        operational_checkpoints,
+                        sa.and_(
+                            operational_events.c.tenant_id
+                            == operational_checkpoints.c.tenant_id,
+                            operational_events.c.installation_id
+                            == operational_checkpoints.c.installation_id,
+                            operational_events.c.thread_id
+                            == operational_checkpoints.c.thread_id,
+                        ),
+                    )
+                )
+                .where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.sequence == 1,
+                    operational_events.c.event_type == "MEMORY_STORAGE_RESERVED",
+                    data["contract"].astext == "EvaMemoryStorageAdmission/v1",
+                    operational_checkpoints.c.phase.notin_(
+                        ("memory_storage_blocked", "memory_storage_removed")
+                    ),
+                )
+            )
+            or 0
+        )
+
+    def _admission(
+        self,
+        *,
+        admitted: bool,
+        replayed: bool,
+        content_bytes: int,
+        usage: _MemoryStorageUsage,
+        retention_until: str | None,
+        reason: str,
+    ) -> MemoryStorageAdmission:
+        return MemoryStorageAdmission(
+            admitted=admitted,
+            replayed=replayed,
+            content_bytes=content_bytes,
+            person_records_used=usage.person_records,
+            person_bytes_used=usage.person_bytes,
+            group_records_used=usage.group_records,
+            group_bytes_used=usage.group_bytes,
+            project_records_used=usage.project_records,
+            project_bytes_used=usage.project_bytes,
+            installation_records_used=usage.installation_records,
+            installation_bytes_used=usage.installation_bytes,
+            retention_until=retention_until,
+            reason=reason,
+        )
 
     def admit_memory(
         self, document: ConversationMemoryDocument, *, now: datetime
@@ -423,6 +564,16 @@ class PostgresMemoryStorageBudget:
         ):
             raise ValueError("memory admission crossed its runtime scope")
         principal_sha256 = self._principal_sha256(document.principal_id)
+        group_sha256 = (
+            None
+            if document.audience.kind != "telegram_group"
+            else self._scope_sha256(document.audience.audience_id, label="group")
+        )
+        project_sha256 = (
+            None
+            if document.project_id is None
+            else self._scope_sha256(document.project_id, label="project")
+        )
         document_sha256 = self._document_sha256(document.document_id)
         content_sha256 = hashlib.sha256(document.content.encode("utf-8")).hexdigest()
         content_bytes = len(document.content.encode("utf-8"))
@@ -437,8 +588,8 @@ class PostgresMemoryStorageBudget:
                 {
                     "key": (
                         f"{self._scope_value.tenant_id}:"
-                        f"{self._scope_value.installation_id}:memory-storage:"
-                        f"{principal_sha256}"
+                        f"{self._scope_value.installation_id}:"
+                        "memory-storage:installation"
                     )
                 },
             )
@@ -472,13 +623,26 @@ class PostgresMemoryStorageBudget:
             if existing is not None:
                 data = self._first_data(existing.payload)
                 if (
-                    data.get("contract") != "EvaMemoryStorageAdmission/v1"
+                    data.get("contract") != "EvaMemoryStorageAdmission/v2"
+                    or data.get("audience_kind") != document.audience.kind
                     or data.get("content_bytes") != content_bytes
                     or data.get("content_sha256") != content_sha256
                     or data.get("document_sha256") != document_sha256
+                    or data.get("group_sha256") != group_sha256
                     or data.get("principal_sha256") != principal_sha256
-                    or data.get("record_limit") != self._record_limit
-                    or data.get("byte_limit") != self._byte_limit
+                    or data.get("project_sha256") != project_sha256
+                    or data.get("person_record_limit")
+                    != self._person_record_limit
+                    or data.get("person_byte_limit") != self._person_byte_limit
+                    or data.get("group_record_limit") != self._group_record_limit
+                    or data.get("group_byte_limit") != self._group_byte_limit
+                    or data.get("project_record_limit")
+                    != self._project_record_limit
+                    or data.get("project_byte_limit") != self._project_byte_limit
+                    or data.get("installation_record_limit")
+                    != self._installation_record_limit
+                    or data.get("installation_byte_limit")
+                    != self._installation_byte_limit
                     or data.get("source_budget_sha256")
                     != self._source_budget_sha256
                 ):
@@ -490,8 +654,11 @@ class PostgresMemoryStorageBudget:
                     raise OperationalTimelineError(
                         "memory storage replay decision is malformed"
                     )
-                records_used, bytes_used = self._usage(
-                    connection, principal_sha256=principal_sha256
+                usage = self._usage(
+                    connection,
+                    principal_sha256=principal_sha256,
+                    group_sha256=group_sha256,
+                    project_sha256=project_sha256,
                 )
                 stored_retention = data.get("retention_until")
                 if admitted:
@@ -507,46 +674,127 @@ class PostgresMemoryStorageBudget:
                     else {
                         "person_record_limit_reached",
                         "person_byte_limit_reached",
+                        "group_record_limit_reached",
+                        "group_byte_limit_reached",
+                        "project_record_limit_reached",
+                        "project_byte_limit_reached",
+                        "installation_record_limit_reached",
+                        "installation_byte_limit_reached",
+                        "legacy_scope_accounting_unavailable",
                     }
                 )
                 if reason not in allowed_reasons:
                     raise OperationalTimelineError(
                         "memory storage replay reason is malformed"
                     )
-                return MemoryStorageAdmission(
+                return self._admission(
                     admitted=admitted,
                     replayed=True,
                     content_bytes=content_bytes,
-                    person_records_used=records_used,
-                    person_bytes_used=bytes_used,
+                    usage=usage,
                     retention_until=(stored_retention if admitted else None),  # type: ignore[arg-type]
                     reason=reason,  # type: ignore[arg-type]
                 )
 
-            records_used, bytes_used = self._usage(
-                connection, principal_sha256=principal_sha256
+            usage = self._usage(
+                connection,
+                principal_sha256=principal_sha256,
+                group_sha256=group_sha256,
+                project_sha256=project_sha256,
             )
-            if records_used >= self._record_limit:
+            if (
+                (group_sha256 is not None or project_sha256 is not None)
+                and self._active_legacy_reservations(connection)
+            ):
+                admitted = False
+                reason = "legacy_scope_accounting_unavailable"
+            elif usage.person_records >= self._person_record_limit:
                 admitted = False
                 reason = "person_record_limit_reached"
-            elif bytes_used + content_bytes > self._byte_limit:
+            elif usage.person_bytes + content_bytes > self._person_byte_limit:
                 admitted = False
                 reason = "person_byte_limit_reached"
+            elif (
+                usage.group_records is not None
+                and usage.group_records >= self._group_record_limit
+            ):
+                admitted = False
+                reason = "group_record_limit_reached"
+            elif (
+                usage.group_bytes is not None
+                and usage.group_bytes + content_bytes > self._group_byte_limit
+            ):
+                admitted = False
+                reason = "group_byte_limit_reached"
+            elif (
+                usage.project_records is not None
+                and usage.project_records >= self._project_record_limit
+            ):
+                admitted = False
+                reason = "project_record_limit_reached"
+            elif (
+                usage.project_bytes is not None
+                and usage.project_bytes + content_bytes > self._project_byte_limit
+            ):
+                admitted = False
+                reason = "project_byte_limit_reached"
+            elif usage.installation_records >= self._installation_record_limit:
+                admitted = False
+                reason = "installation_record_limit_reached"
+            elif (
+                usage.installation_bytes + content_bytes
+                > self._installation_byte_limit
+            ):
+                admitted = False
+                reason = "installation_byte_limit_reached"
             else:
                 admitted = True
                 reason = "reserved"
-                records_used += 1
-                bytes_used += content_bytes
+                usage = _MemoryStorageUsage(
+                    person_records=usage.person_records + 1,
+                    person_bytes=usage.person_bytes + content_bytes,
+                    group_records=(
+                        None
+                        if usage.group_records is None
+                        else usage.group_records + 1
+                    ),
+                    group_bytes=(
+                        None
+                        if usage.group_bytes is None
+                        else usage.group_bytes + content_bytes
+                    ),
+                    project_records=(
+                        None
+                        if usage.project_records is None
+                        else usage.project_records + 1
+                    ),
+                    project_bytes=(
+                        None
+                        if usage.project_bytes is None
+                        else usage.project_bytes + content_bytes
+                    ),
+                    installation_records=usage.installation_records + 1,
+                    installation_bytes=usage.installation_bytes + content_bytes,
+                )
             data = {
                 "admitted": admitted,
-                "byte_limit": self._byte_limit,
+                "audience_kind": document.audience.kind,
                 "content_bytes": content_bytes,
                 "content_sha256": content_sha256,
-                "contract": "EvaMemoryStorageAdmission/v1",
+                "contract": "EvaMemoryStorageAdmission/v2",
                 "document_sha256": document_sha256,
+                "group_byte_limit": self._group_byte_limit,
+                "group_record_limit": self._group_record_limit,
+                "group_sha256": group_sha256,
+                "installation_byte_limit": self._installation_byte_limit,
+                "installation_record_limit": self._installation_record_limit,
+                "person_byte_limit": self._person_byte_limit,
+                "person_record_limit": self._person_record_limit,
                 "principal_sha256": principal_sha256,
+                "project_byte_limit": self._project_byte_limit,
+                "project_record_limit": self._project_record_limit,
+                "project_sha256": project_sha256,
                 "reason": reason,
-                "record_limit": self._record_limit,
                 "retention_until": retention_text if admitted else None,
                 "source_budget_sha256": self._source_budget_sha256,
             }
@@ -570,12 +818,11 @@ class PostgresMemoryStorageBudget:
                 status="active" if admitted else "completed",
                 deadline=retention_until if admitted else None,
             )
-        return MemoryStorageAdmission(
+        return self._admission(
             admitted=admitted,
             replayed=False,
             content_bytes=content_bytes,
-            person_records_used=records_used,
-            person_bytes_used=bytes_used,
+            usage=usage,
             retention_until=retention_text if admitted else None,
             reason=reason,
         )

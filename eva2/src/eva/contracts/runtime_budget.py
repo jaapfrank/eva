@@ -55,6 +55,12 @@ class RuntimeResourceBudget:
     profile_context_tokens: int
     memory_records_per_person: int
     memory_bytes_per_person: int
+    memory_records_per_group: int
+    memory_bytes_per_group: int
+    memory_records_per_project: int
+    memory_bytes_per_project: int
+    memory_records_per_installation: int
+    memory_bytes_per_installation: int
     retention_days: int
     background_reflections_per_person_day: int
     background_reflections_per_installation_day: int
@@ -81,6 +87,37 @@ class RuntimeResourceBudget:
                 1_048_576,
                 104_857_600,
             ),
+            (self.memory_records_per_group, "group memory records", 0, 100_000),
+            (
+                self.memory_bytes_per_group,
+                "group memory bytes",
+                0,
+                1_073_741_824,
+            ),
+            (
+                self.memory_records_per_project,
+                "project memory records",
+                0,
+                100_000,
+            ),
+            (
+                self.memory_bytes_per_project,
+                "project memory bytes",
+                0,
+                1_073_741_824,
+            ),
+            (
+                self.memory_records_per_installation,
+                "installation memory records",
+                100,
+                1_000_000,
+            ),
+            (
+                self.memory_bytes_per_installation,
+                "installation memory bytes",
+                1_048_576,
+                10_737_418_240,
+            ),
             (self.retention_days, "retention days", 7, 3_650),
             (
                 self.background_reflections_per_person_day,
@@ -103,6 +140,38 @@ class RuntimeResourceBudget:
         )
         for value, label, minimum, maximum in bounds:
             _integer(value, label=label, minimum=minimum, maximum=maximum)
+        for records, bytes_, label in (
+            (
+                self.memory_records_per_group,
+                self.memory_bytes_per_group,
+                "group",
+            ),
+            (
+                self.memory_records_per_project,
+                self.memory_bytes_per_project,
+                "project",
+            ),
+        ):
+            if (records == 0) != (bytes_ == 0):
+                raise RuntimeResourceBudgetError(
+                    f"runtime {label} memory records and bytes must both be zero or non-zero"
+                )
+        if self.memory_records_per_installation < max(
+            self.memory_records_per_person,
+            self.memory_records_per_group,
+            self.memory_records_per_project,
+        ):
+            raise RuntimeResourceBudgetError(
+                "runtime installation memory record budget is smaller than a scope budget"
+            )
+        if self.memory_bytes_per_installation < max(
+            self.memory_bytes_per_person,
+            self.memory_bytes_per_group,
+            self.memory_bytes_per_project,
+        ):
+            raise RuntimeResourceBudgetError(
+                "runtime installation memory byte budget is smaller than a scope budget"
+            )
         if (
             self.background_reflections_per_installation_day
             < self.background_reflections_per_person_day
@@ -120,12 +189,18 @@ class RuntimeResourceBudget:
         return {
             "background_reflections_per_installation_day": self.background_reflections_per_installation_day,
             "background_reflections_per_person_day": self.background_reflections_per_person_day,
-            "contract": "EvaInstallerBudget/v1",
+            "contract": "EvaInstallerBudget/v2",
             "external_monthly_spend_cap_eur_cents": self.external_monthly_spend_cap_eur_cents,
             "max_input_tokens": self.max_input_tokens,
             "max_output_tokens": self.max_output_tokens,
             "memory_bytes_per_person": self.memory_bytes_per_person,
+            "memory_bytes_per_group": self.memory_bytes_per_group,
+            "memory_bytes_per_installation": self.memory_bytes_per_installation,
+            "memory_bytes_per_project": self.memory_bytes_per_project,
             "memory_records_per_person": self.memory_records_per_person,
+            "memory_records_per_group": self.memory_records_per_group,
+            "memory_records_per_installation": self.memory_records_per_installation,
+            "memory_records_per_project": self.memory_records_per_project,
             "profile_context_tokens": self.profile_context_tokens,
             "recall_context_tokens": self.recall_context_tokens,
             "retention_days": self.retention_days,
@@ -136,7 +211,7 @@ class RuntimeResourceBudget:
     def to_payload(self) -> dict[str, object]:
         return {
             "budget": self.budget_payload(),
-            "contract": "EvaRuntimeResourceBudget/v1",
+            "contract": "EvaRuntimeResourceBudget/v2",
             "installation_id": self.installation_id,
             "source_budget_sha256": self.source_budget_sha256,
             "tenant_id": self.tenant_id,
@@ -163,7 +238,7 @@ class RuntimeResourceBudget:
             "installation_id",
             "source_budget_sha256",
             "tenant_id",
-        } or payload.get("contract") != "EvaRuntimeResourceBudget/v1":
+        } or payload.get("contract") != "EvaRuntimeResourceBudget/v2":
             raise RuntimeResourceBudgetError("runtime budget artifact is invalid")
         budget = payload.get("budget")
         if not isinstance(budget, dict) or set(budget) != {
@@ -174,13 +249,19 @@ class RuntimeResourceBudget:
             "max_input_tokens",
             "max_output_tokens",
             "memory_bytes_per_person",
+            "memory_bytes_per_group",
+            "memory_bytes_per_installation",
+            "memory_bytes_per_project",
             "memory_records_per_person",
+            "memory_records_per_group",
+            "memory_records_per_installation",
+            "memory_records_per_project",
             "profile_context_tokens",
             "recall_context_tokens",
             "retention_days",
             "retrieval_nodes",
             "unknown_cost_policy",
-        } or budget.get("contract") != "EvaInstallerBudget/v1":
+        } or budget.get("contract") != "EvaInstallerBudget/v2":
             raise RuntimeResourceBudgetError("runtime budget values are invalid")
         tenant_id = _scope(payload.get("tenant_id"), label="tenant")
         installation_id = _scope(
@@ -202,6 +283,12 @@ class RuntimeResourceBudget:
             profile_context_tokens=budget["profile_context_tokens"],  # type: ignore[arg-type]
             memory_records_per_person=budget["memory_records_per_person"],  # type: ignore[arg-type]
             memory_bytes_per_person=budget["memory_bytes_per_person"],  # type: ignore[arg-type]
+            memory_records_per_group=budget["memory_records_per_group"],  # type: ignore[arg-type]
+            memory_bytes_per_group=budget["memory_bytes_per_group"],  # type: ignore[arg-type]
+            memory_records_per_project=budget["memory_records_per_project"],  # type: ignore[arg-type]
+            memory_bytes_per_project=budget["memory_bytes_per_project"],  # type: ignore[arg-type]
+            memory_records_per_installation=budget["memory_records_per_installation"],  # type: ignore[arg-type]
+            memory_bytes_per_installation=budget["memory_bytes_per_installation"],  # type: ignore[arg-type]
             retention_days=budget["retention_days"],  # type: ignore[arg-type]
             background_reflections_per_person_day=budget[
                 "background_reflections_per_person_day"

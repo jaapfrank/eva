@@ -47,6 +47,12 @@ class InstallerBudget:
     profile_context_tokens: int
     memory_records_per_person: int
     memory_bytes_per_person: int
+    memory_records_per_group: int
+    memory_bytes_per_group: int
+    memory_records_per_project: int
+    memory_bytes_per_project: int
+    memory_records_per_installation: int
+    memory_bytes_per_installation: int
     retention_days: int
     background_reflections_per_person_day: int
     background_reflections_per_installation_day: int
@@ -56,12 +62,18 @@ class InstallerBudget:
         return {
             "background_reflections_per_installation_day": self.background_reflections_per_installation_day,
             "background_reflections_per_person_day": self.background_reflections_per_person_day,
-            "contract": "EvaInstallerBudget/v1",
+            "contract": "EvaInstallerBudget/v2",
             "external_monthly_spend_cap_eur_cents": self.external_monthly_spend_cap_eur_cents,
             "max_input_tokens": self.max_input_tokens,
             "max_output_tokens": self.max_output_tokens,
             "memory_bytes_per_person": self.memory_bytes_per_person,
+            "memory_bytes_per_group": self.memory_bytes_per_group,
+            "memory_bytes_per_installation": self.memory_bytes_per_installation,
+            "memory_bytes_per_project": self.memory_bytes_per_project,
             "memory_records_per_person": self.memory_records_per_person,
+            "memory_records_per_group": self.memory_records_per_group,
+            "memory_records_per_installation": self.memory_records_per_installation,
+            "memory_records_per_project": self.memory_records_per_project,
             "profile_context_tokens": self.profile_context_tokens,
             "recall_context_tokens": self.recall_context_tokens,
             "retention_days": self.retention_days,
@@ -121,7 +133,13 @@ def _budget(**values: object) -> InstallerBudget:
         "max_input_tokens",
         "max_output_tokens",
         "memory_bytes_per_person",
+        "memory_bytes_per_group",
+        "memory_bytes_per_installation",
+        "memory_bytes_per_project",
         "memory_records_per_person",
+        "memory_records_per_group",
+        "memory_records_per_installation",
+        "memory_records_per_project",
         "profile_context_tokens",
         "recall_context_tokens",
         "retention_days",
@@ -172,6 +190,42 @@ def _budget(**values: object) -> InstallerBudget:
             minimum=1_048_576,
             maximum=104_857_600,
         ),
+        memory_records_per_group=_integer(
+            values["memory_records_per_group"],
+            label="group memory records",
+            minimum=0,
+            maximum=100_000,
+        ),
+        memory_bytes_per_group=_integer(
+            values["memory_bytes_per_group"],
+            label="group memory bytes",
+            minimum=0,
+            maximum=1_073_741_824,
+        ),
+        memory_records_per_project=_integer(
+            values["memory_records_per_project"],
+            label="project memory records",
+            minimum=0,
+            maximum=100_000,
+        ),
+        memory_bytes_per_project=_integer(
+            values["memory_bytes_per_project"],
+            label="project memory bytes",
+            minimum=0,
+            maximum=1_073_741_824,
+        ),
+        memory_records_per_installation=_integer(
+            values["memory_records_per_installation"],
+            label="installation memory records",
+            minimum=100,
+            maximum=1_000_000,
+        ),
+        memory_bytes_per_installation=_integer(
+            values["memory_bytes_per_installation"],
+            label="installation memory bytes",
+            minimum=1_048_576,
+            maximum=10_737_418_240,
+        ),
         retention_days=_integer(
             values["retention_days"],
             label="retention days",
@@ -203,6 +257,38 @@ def _budget(**values: object) -> InstallerBudget:
     ):
         raise InstallerBudgetInputError(
             "installation reflection budget is smaller than the person budget"
+        )
+    for records, bytes_, label in (
+        (
+            result.memory_records_per_group,
+            result.memory_bytes_per_group,
+            "group",
+        ),
+        (
+            result.memory_records_per_project,
+            result.memory_bytes_per_project,
+            "project",
+        ),
+    ):
+        if (records == 0) != (bytes_ == 0):
+            raise InstallerBudgetInputError(
+                f"{label} memory records and bytes must both be zero or non-zero"
+            )
+    if result.memory_records_per_installation < max(
+        result.memory_records_per_person,
+        result.memory_records_per_group,
+        result.memory_records_per_project,
+    ):
+        raise InstallerBudgetInputError(
+            "installation memory record budget is smaller than a scope budget"
+        )
+    if result.memory_bytes_per_installation < max(
+        result.memory_bytes_per_person,
+        result.memory_bytes_per_group,
+        result.memory_bytes_per_project,
+    ):
+        raise InstallerBudgetInputError(
+            "installation memory byte budget is smaller than a scope budget"
         )
     return result
 
@@ -296,7 +382,7 @@ class InstallerBudgetWorkflow:
         } or payload.get("contract") != "EvaInstallerBudgetWorkflow/v1":
             raise InstallerBudgetWorkflowError("installer budget workflow is invalid")
         raw_budget = payload.get("budget")
-        if not isinstance(raw_budget, dict) or raw_budget.get("contract") != "EvaInstallerBudget/v1":
+        if not isinstance(raw_budget, dict) or raw_budget.get("contract") != "EvaInstallerBudget/v2":
             raise InstallerBudgetWorkflowError("installer budget is invalid")
         values = dict(raw_budget)
         values.pop("contract", None)

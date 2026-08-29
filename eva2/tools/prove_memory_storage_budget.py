@@ -16,7 +16,10 @@ import sqlalchemy as sa
 
 from eva.adapters.postgres.runtime_resource_usage import PostgresMemoryStorageBudget
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
-from eva.application.memory_audience import MemoryAudience
+from eva.application.memory_audience import (
+    MemoryAudience,
+    TelegramGroupConsentReference,
+)
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
@@ -44,16 +47,31 @@ SOURCE_PATHS = (
 )
 
 
-def _budget() -> RuntimeResourceBudget:
+def _budget(
+    installation_id: str = INSTALLATION,
+    *,
+    group_records: int = 100,
+    group_bytes: int = 1_048_576,
+    project_records: int = 100,
+    project_bytes: int = 1_048_576,
+    installation_records: int = 1_000,
+    installation_bytes: int = 10_485_760,
+) -> RuntimeResourceBudget:
     payload = {
         "background_reflections_per_installation_day": 6,
         "background_reflections_per_person_day": 4,
-        "contract": "EvaInstallerBudget/v1",
+        "contract": "EvaInstallerBudget/v2",
         "external_monthly_spend_cap_eur_cents": 0,
         "max_input_tokens": 12_000,
         "max_output_tokens": 1_200,
         "memory_bytes_per_person": 1_048_576,
+        "memory_bytes_per_group": group_bytes,
+        "memory_bytes_per_installation": installation_bytes,
+        "memory_bytes_per_project": project_bytes,
         "memory_records_per_person": 100,
+        "memory_records_per_group": group_records,
+        "memory_records_per_installation": installation_records,
+        "memory_records_per_project": project_records,
         "profile_context_tokens": 800,
         "recall_context_tokens": 3_000,
         "retention_days": 7,
@@ -62,7 +80,7 @@ def _budget() -> RuntimeResourceBudget:
     }
     return RuntimeResourceBudget(
         tenant_id=TENANT,
-        installation_id=INSTALLATION,
+        installation_id=installation_id,
         source_budget_sha256=hashlib.sha256(
             canonical_json_bytes(payload)
         ).hexdigest(),
@@ -73,6 +91,12 @@ def _budget() -> RuntimeResourceBudget:
         profile_context_tokens=800,
         memory_records_per_person=100,
         memory_bytes_per_person=1_048_576,
+        memory_records_per_group=group_records,
+        memory_bytes_per_group=group_bytes,
+        memory_records_per_project=project_records,
+        memory_bytes_per_project=project_bytes,
+        memory_records_per_installation=installation_records,
+        memory_bytes_per_installation=installation_bytes,
         retention_days=7,
         background_reflections_per_person_day=4,
         background_reflections_per_installation_day=6,
@@ -81,11 +105,16 @@ def _budget() -> RuntimeResourceBudget:
 
 
 def _document(
-    document_id: str, *, principal_id: str, content: str = "x"
+    document_id: str,
+    *,
+    principal_id: str,
+    content: str = "x",
+    installation_id: str = INSTALLATION,
+    project_id: str | None = None,
 ) -> ConversationMemoryDocument:
     return ConversationMemoryDocument(
         tenant_id=TENANT,
-        installation_id=INSTALLATION,
+        installation_id=installation_id,
         principal_id=principal_id,
         conversation_id=f"conversation:{principal_id}",
         document_id=document_id,
@@ -96,15 +125,54 @@ def _document(
         privacy_class="internal",
         trust="direct_user",
         audience=MemoryAudience.private_person(principal_id=principal_id),
+        project_id=project_id,
     )
 
 
-def _governor(engine: sa.Engine) -> PostgresMemoryStorageBudget:
+def _group_document(
+    document_id: str,
+    *,
+    installation_id: str,
+    principal_id: str,
+    group_chat_id: str,
+    content: str = "x",
+) -> ConversationMemoryDocument:
+    consent = TelegramGroupConsentReference(
+        principal_id=principal_id,
+        group_chat_id=group_chat_id,
+        operation_id=f"telegram-group-consent:{principal_id}:{group_chat_id[1:]}",
+    )
+    return ConversationMemoryDocument(
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        principal_id=principal_id,
+        conversation_id=f"telegram:{group_chat_id}",
+        document_id=document_id,
+        content=content,
+        occurred_at="2026-08-29T12:00:00Z",
+        source_ref=f"telegram:{group_chat_id}:source:{document_id}",
+        evidence_ref=f"telegram:{group_chat_id}:evidence:{document_id}",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.telegram_group(
+            principal_id=principal_id,
+            group_chat_id=group_chat_id,
+            consent_ref=consent,
+        ),
+    )
+
+
+def _governor(
+    engine: sa.Engine,
+    *,
+    installation_id: str = INSTALLATION,
+    budget: RuntimeResourceBudget | None = None,
+) -> PostgresMemoryStorageBudget:
     return PostgresMemoryStorageBudget(
         engine,
         tenant_id=TENANT,
-        installation_id=INSTALLATION,
-        resource_budget=_budget(),
+        installation_id=installation_id,
+        resource_budget=budget or _budget(installation_id),
         removal_lease_seconds=1,
     )
 
@@ -203,6 +271,255 @@ def prove(
             now=NOW + timedelta(days=7, seconds=3),
         )
 
+        group_installation = f"{INSTALLATION}-group"
+        group_governor = _governor(
+            engine,
+            installation_id=group_installation,
+        )
+        group_large = group_governor.admit_memory(
+            _group_document(
+                "memory:proof:group:large",
+                installation_id=group_installation,
+                principal_id="person:group-a",
+                group_chat_id="-3101",
+                content="é" * 300_000,
+            ),
+            now=NOW,
+        )
+        group_byte_block = group_governor.admit_memory(
+            _group_document(
+                "memory:proof:group:byte-block",
+                installation_id=group_installation,
+                principal_id="person:group-b",
+                group_chat_id="-3101",
+                content="b" * 500_000,
+            ),
+            now=NOW + timedelta(seconds=1),
+        )
+        for index in range(99):
+            decision = group_governor.admit_memory(
+                _group_document(
+                    f"memory:proof:group:prefill:{index}",
+                    installation_id=group_installation,
+                    principal_id=f"person:group-prefill:{index}",
+                    group_chat_id="-3102",
+                ),
+                now=NOW + timedelta(seconds=10 + index),
+            )
+            if not decision.admitted:
+                raise RuntimeError("group memory prefill was unexpectedly blocked")
+        restarted_group = _governor(
+            engine,
+            installation_id=group_installation,
+        )
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            group_raced = tuple(
+                pool.map(
+                    lambda index: restarted_group.admit_memory(
+                        _group_document(
+                            f"memory:proof:group:final:{index}",
+                            installation_id=group_installation,
+                            principal_id=f"person:group-final:{index}",
+                            group_chat_id="-3102",
+                        ),
+                        now=NOW + timedelta(seconds=200 + index),
+                    ),
+                    range(8),
+                )
+            )
+
+        project_installation = f"{INSTALLATION}-project"
+        project_governor = _governor(
+            engine,
+            installation_id=project_installation,
+        )
+        project_large = project_governor.admit_memory(
+            _document(
+                "memory:proof:project:large",
+                installation_id=project_installation,
+                principal_id="person:project-a",
+                project_id="project:alpha",
+                content="é" * 300_000,
+            ),
+            now=NOW,
+        )
+        project_byte_block = project_governor.admit_memory(
+            _document(
+                "memory:proof:project:byte-block",
+                installation_id=project_installation,
+                principal_id="person:project-b",
+                project_id="project:alpha",
+                content="b" * 500_000,
+            ),
+            now=NOW + timedelta(seconds=1),
+        )
+        for index in range(99):
+            decision = project_governor.admit_memory(
+                _document(
+                    f"memory:proof:project:prefill:{index}",
+                    installation_id=project_installation,
+                    principal_id=f"person:project-prefill:{index}",
+                    project_id="project:race",
+                ),
+                now=NOW + timedelta(seconds=10 + index),
+            )
+            if not decision.admitted:
+                raise RuntimeError("project memory prefill was unexpectedly blocked")
+        restarted_project = _governor(
+            engine,
+            installation_id=project_installation,
+        )
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            project_raced = tuple(
+                pool.map(
+                    lambda index: restarted_project.admit_memory(
+                        _document(
+                            f"memory:proof:project:final:{index}",
+                            installation_id=project_installation,
+                            principal_id=f"person:project-final:{index}",
+                            project_id="project:race",
+                        ),
+                        now=NOW + timedelta(seconds=200 + index),
+                    ),
+                    range(8),
+                )
+            )
+
+        installation_byte_id = f"{INSTALLATION}-installation-byte"
+        installation_byte_budget = _budget(
+            installation_byte_id,
+            installation_bytes=1_048_576,
+        )
+        installation_byte_governor = _governor(
+            engine,
+            installation_id=installation_byte_id,
+            budget=installation_byte_budget,
+        )
+        installation_large = installation_byte_governor.admit_memory(
+            _document(
+                "memory:proof:installation:large",
+                installation_id=installation_byte_id,
+                principal_id="person:installation-a",
+                content="é" * 300_000,
+            ),
+            now=NOW,
+        )
+        installation_byte_block = installation_byte_governor.admit_memory(
+            _document(
+                "memory:proof:installation:byte-block",
+                installation_id=installation_byte_id,
+                principal_id="person:installation-b",
+                content="b" * 500_000,
+            ),
+            now=NOW + timedelta(seconds=1),
+        )
+
+        installation_record_id = f"{INSTALLATION}-installation-record"
+        installation_record_budget = _budget(
+            installation_record_id,
+            installation_records=100,
+        )
+        installation_record_governor = _governor(
+            engine,
+            installation_id=installation_record_id,
+            budget=installation_record_budget,
+        )
+        for index in range(99):
+            decision = installation_record_governor.admit_memory(
+                _document(
+                    f"memory:proof:installation:prefill:{index}",
+                    installation_id=installation_record_id,
+                    principal_id=f"person:installation-prefill:{index}",
+                ),
+                now=NOW + timedelta(seconds=10 + index),
+            )
+            if not decision.admitted:
+                raise RuntimeError(
+                    "installation memory prefill was unexpectedly blocked"
+                )
+        restarted_installation = _governor(
+            engine,
+            installation_id=installation_record_id,
+            budget=installation_record_budget,
+        )
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            installation_raced = tuple(
+                pool.map(
+                    lambda index: restarted_installation.admit_memory(
+                        _document(
+                            f"memory:proof:installation:final:{index}",
+                            installation_id=installation_record_id,
+                            principal_id=f"person:installation-final:{index}",
+                        ),
+                        now=NOW + timedelta(seconds=200 + index),
+                    ),
+                    range(8),
+                )
+            )
+
+        removal_installation = f"{INSTALLATION}-scope-removal"
+        removal_budget = _budget(
+            removal_installation,
+            installation_bytes=1_048_576,
+        )
+        removal_governor = _governor(
+            engine,
+            installation_id=removal_installation,
+            budget=removal_budget,
+        )
+        removal_document = _group_document(
+            "memory:proof:scope-removal:large",
+            installation_id=removal_installation,
+            principal_id="person:removal-a",
+            group_chat_id="-3201",
+            content="é" * 300_000,
+        )
+        removal_admission = removal_governor.admit_memory(
+            removal_document,
+            now=NOW,
+        )
+        removal_governor.mark_retained(
+            replace(
+                removal_document,
+                retention_until=removal_admission.retention_until,
+            ),
+            MemoryRetentionReceipt(
+                bank_id="eva2-" + "b" * 32,
+                document_id=removal_document.document_id,
+                content_sha256=hashlib.sha256(
+                    removal_document.content.encode("utf-8")
+                ).hexdigest(),
+            ),
+            now=NOW + timedelta(seconds=1),
+        )
+        removal_blocked = removal_governor.admit_memory(
+            _group_document(
+                "memory:proof:scope-removal:blocked",
+                installation_id=removal_installation,
+                principal_id="person:removal-b",
+                group_chat_id="-3201",
+                content="b" * 500_000,
+            ),
+            now=NOW + timedelta(days=7),
+        )
+        removal_jobs = removal_governor.claim_expired(
+            now=NOW + timedelta(days=7)
+        )
+        if len(removal_jobs) == 1:
+            removal_governor.mark_removed(
+                removal_jobs[0], now=NOW + timedelta(days=7, seconds=1)
+            )
+        scope_replacement = removal_governor.admit_memory(
+            _group_document(
+                "memory:proof:scope-removal:replacement",
+                installation_id=removal_installation,
+                principal_id="person:removal-b",
+                group_chat_id="-3201",
+                content="b" * 500_000,
+            ),
+            now=NOW + timedelta(days=7, seconds=2),
+        )
+
         expected = (
             large_admission.admitted
             and large_admission.content_bytes == 600_000
@@ -224,15 +541,55 @@ def prove(
             and replacement.admitted
             and replacement.person_records_used == 1
             and replacement.person_bytes_used == 500_000
+            and group_large.admitted
+            and not group_byte_block.admitted
+            and group_byte_block.reason == "group_byte_limit_reached"
+            and sum(item.admitted for item in group_raced) == 1
+            and all(
+                item.reason == "group_record_limit_reached"
+                for item in group_raced
+                if not item.admitted
+            )
+            and project_large.admitted
+            and not project_byte_block.admitted
+            and project_byte_block.reason == "project_byte_limit_reached"
+            and sum(item.admitted for item in project_raced) == 1
+            and all(
+                item.reason == "project_record_limit_reached"
+                for item in project_raced
+                if not item.admitted
+            )
+            and installation_large.admitted
+            and not installation_byte_block.admitted
+            and installation_byte_block.reason
+            == "installation_byte_limit_reached"
+            and sum(item.admitted for item in installation_raced) == 1
+            and all(
+                item.reason == "installation_record_limit_reached"
+                for item in installation_raced
+                if not item.admitted
+            )
+            and not removal_blocked.admitted
+            and removal_blocked.reason == "group_byte_limit_reached"
+            and len(removal_jobs) == 1
+            and scope_replacement.admitted
+            and scope_replacement.group_records_used == 1
+            and scope_replacement.installation_records_used == 1
         )
         if not expected:
             raise RuntimeError("memory storage budget proof differs")
 
         return {
-            "contract": "EvaMemoryStorageBudgetProof/v1",
+            "contract": "EvaMemoryStorageBudgetProof/v2",
             "limits": {
+                "bytes_per_group": 1_048_576,
+                "bytes_per_installation": 10_485_760,
                 "bytes_per_person": 1_048_576,
+                "bytes_per_project": 1_048_576,
+                "records_per_group": 100,
+                "records_per_installation": 1_000,
                 "records_per_person": 100,
+                "records_per_project": 100,
                 "retention_days": 7,
             },
             "postgres": {
@@ -241,20 +598,35 @@ def prove(
                 "capacity_released_only_after_removal_ack": True,
                 "concurrent_final_admitted": sum(item.admitted for item in raced),
                 "concurrent_final_attempts": len(raced),
+                "group_byte_limit_blocked_across_people": True,
+                "group_concurrent_final_admitted": sum(
+                    item.admitted for item in group_raced
+                ),
+                "installation_byte_limit_blocked_across_people": True,
+                "installation_concurrent_final_admitted": sum(
+                    item.admitted for item in installation_raced
+                ),
+                "project_byte_limit_blocked_across_people": True,
+                "project_concurrent_final_admitted": sum(
+                    item.admitted for item in project_raced
+                ),
                 "record_limit_final_used": max(
                     item.person_records_used for item in raced
                 ),
                 "removal_crash_reclaimed": True,
                 "restart_reloaded_reservations": True,
+                "scope_capacity_released_only_after_removal_ack": True,
                 "server_version": version,
             },
             "privacy": {
                 "budget_events_store_content": False,
+                "group_identifier_stored_as_sha256": True,
                 "principal_identifier_stored_as_sha256": True,
+                "project_identifier_stored_as_sha256": True,
             },
             "non_claims": [
                 "geen live Hindsight- of productiegegevens gewijzigd",
-                "nog geen quota per groep, project of hele installatie",
+                "quota tellen bronrecords en UTF-8-inhoud, niet database- of vectorindexoverhead",
                 "nog geen volledige verwijdering van brongesprekken of back-ups",
             ],
             "source_commit": source_commit,
