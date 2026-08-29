@@ -1,0 +1,67 @@
+{
+  "contract": "EvaPerformanceComplexityPc01InstallerSafetyConsolidation/v1",
+  "recordedAt": "2026-08-29T14:52:43Z",
+  "sourceCommit": "be1e4ae3390bc6767e93aeea9ff98f9e55885b5e",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedModule": "src/eva/operations/installer_safety.py",
+    "ownerOnlyLockCallers": 6,
+    "ownerOnlyDirectoryCallers": 8,
+    "strictUtcTimestampCallers": 7,
+    "preservedBoundaries": [
+      "lock path is opened with O_NOFOLLOW",
+      "lock is a single-link owner-only regular file",
+      "workspace is an existing non-linked owner-only directory",
+      "timestamps are second-resolution UTC values ending in Z",
+      "each caller retains its public exception type and message"
+    ],
+    "managedReleaseInputAdded": "src/eva/operations/installer_safety.py"
+  },
+  "verification": {
+    "installerRegression": {
+      "command": "PYTHONPATH=src pytest -q -s tests/operations/test_installer*.py tests/api/test_installer*.py tests/connectors/test_installer*.py",
+      "passed": 186,
+      "failed": 0,
+      "logSha256": "9e1067523a31a8391d18d93ee39409c43ae9bd7e8d7fbc4627a1f0f6f62dd7fc"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "compileall": {
+      "passed": true
+    },
+    "releaseFreeze": {
+      "passed": false,
+      "reason": "The pre-existing managed-B authority still pins the conversation_journal.py bytes from before the earlier PC01 scope consolidation. All 20 release-input cases stop first at that same stale pin; this step does not reseal the release authority while PC01 remains under active reduction."
+    }
+  },
+  "pc01SourceMeasurement": {
+    "method": "The committed source tree was measured with the source-only _measure_sources implementation from tools/check_performance_complexity_pc01.py and the active PC01 authority.",
+    "before": {
+      "productFileCount": 237,
+      "productPhysicalLines": 88688,
+      "productManifestSha256": "50e9d4b09cb7e2a2e0aaf7b0a6c5af10f929d1479285a5d70e969f8d3d725968"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 88547,
+      "productManifestSha256": "71da3f564eab607110f927e00af27a4aa5bd46e8383c22f771a471a2f209f183",
+      "livingCorePhysicalLines": 87954,
+      "unclassifiedSourcePaths": 0
+    },
+    "netProductPhysicalLines": -141,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13547,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ],
+    "fullCheckerLimitation": "The full PC01 checker currently stops because the OCI manifest named by the older authority is no longer locally available; no image-budget claim is made."
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The managed-B release authority was not resealed.",
+    "No running Eva1 or Eva2 service, database, secret, connector, or route was changed.",
+    "This consolidation does not by itself prove a consumer installer or a fresh-machine installation."
+  ]
+}
