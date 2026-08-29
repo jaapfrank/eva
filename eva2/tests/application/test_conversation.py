@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -243,7 +245,9 @@ def test_bound_photo_region_is_carried_into_recall_and_action_availability() -> 
     class Model(_Model):
         def generate(self, *args, available_actions=(), **kwargs):  # type: ignore[no-untyped-def]
             offered.append(available_actions)
-            return super().generate(*args, available_actions=available_actions, **kwargs)
+            return super().generate(
+                *args, available_actions=available_actions, **kwargs
+            )
 
     conversation = LivingConversation(
         memory,
@@ -266,9 +270,7 @@ def test_bound_photo_region_is_carried_into_recall_and_action_availability() -> 
 
     assert memory.query is not None
     assert binding.binding_sha256 in memory.query.query_text
-    assert "Gebonden retrieval-ankers: Mark" in (
-        memory.query.query_text
-    )
+    assert "Gebonden retrieval-ankers: Mark" in (memory.query.query_text)
     assert offered == [("record_observation_identity_correction",)]
 
 
@@ -403,6 +405,64 @@ def test_memory_intent_is_model_planned_without_question_mark() -> None:
     ]
 
 
+def test_semantic_planner_offers_only_selected_available_actions() -> None:
+    offered: list[tuple[str, ...]] = []
+
+    class Actions:
+        action_names = ("read_home_assistant_state", "research_current_options")
+
+        def pending(self, turn):  # type: ignore[no-untyped-def]
+            return None
+
+        def active_context(self, turn):  # type: ignore[no-untyped-def]
+            return ()
+
+        def execute(self, turn, call):  # type: ignore[no-untyped-def]
+            raise AssertionError((turn, call))
+
+    class PlanningModel(_Model):
+        def expand_memory_query(self, turn, recent_messages):  # type: ignore[no-untyped-def]
+            return MemorySearchPlan(
+                False,
+                None,
+                ("read_home_assistant_state", "unavailable_action"),
+            )
+
+        def generate(self, *args, available_actions=(), **kwargs):  # type: ignore[no-untyped-def]
+            offered.append(available_actions)
+            return super().generate(
+                *args, available_actions=available_actions, **kwargs
+            )
+
+    conversation = LivingConversation(
+        _Memory(),
+        PlanningModel(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        Actions(),
+    )
+    conversation.respond(
+        ConversationTurn.private(
+            "tenant",
+            "installation",
+            "jaap",
+            "conversation",
+            "message:selected-tools",
+            "Lees de lampstatus.",
+            NOW,
+        )
+    )
+
+    assert offered == [("read_home_assistant_state",)]
+
+
+def test_memory_search_plan_limits_selected_actions() -> None:
+    with pytest.raises(ValueError, match="selected conversation actions"):
+        MemorySearchPlan(False, None, ("same", "same"))
+
+    with pytest.raises(ValueError, match="selected conversation actions"):
+        MemorySearchPlan(False, None, ("a", "b", "c", "d", "e"))
+
+
 def test_model_chosen_interest_is_committed_before_eva_claims_it() -> None:
     order: list[str] = []
     call = ConversationActionCall(
@@ -489,7 +549,9 @@ def test_model_chosen_interest_is_committed_before_eva_claims_it() -> None:
     assert reply.text.startswith("Ik kies slim koken")
 
 
-def test_action_clarification_becomes_one_normal_reply_without_second_model_call() -> None:
+def test_action_clarification_becomes_one_normal_reply_without_second_model_call() -> (
+    None
+):
     call = ConversationActionCall(
         "call:light:ambiguous",
         "read_home_assistant_state",

@@ -108,9 +108,7 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == (
-        "record_observation_identity_correction"
-    )
+    assert bodies[0]["tools"][0]["name"] == ("record_observation_identity_correction")
     assert binding.binding_sha256 in bodies[0]["input"][0]["content"]
     assert "Leid zelf geen gezicht of naam" in bodies[0]["instructions"]
 
@@ -156,9 +154,7 @@ def test_validated_file_edit_is_a_closed_model_action(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == (
-        "edit_text_file_with_focused_validation"
-    )
+    assert bodies[0]["tools"][0]["name"] == ("edit_text_file_with_focused_validation")
     assert "rolt alleen de eigen edit terug" in bodies[0]["instructions"]
 
 
@@ -170,11 +166,7 @@ def test_repository_improvement_is_self_chosen_from_a_bounded_snapshot(
         project_directory="fixture-repo",
         repository_sha256="a" * 64,
         checks_manifest_sha256="b" * 64,
-        files=(
-            RepositoryFile(
-                "settings.toml", "retry_limit = 0\n", "c" * 64
-            ),
-        ),
+        files=(RepositoryFile("settings.toml", "retry_limit = 0\n", "c" * 64),),
         checks=(
             RepositoryCheck(
                 "bounded_retry",
@@ -255,9 +247,7 @@ def _runtime_budget(
     return RuntimeResourceBudget(
         tenant_id="tenant:test",
         installation_id="installation:test",
-        source_budget_sha256=hashlib.sha256(
-            canonical_json_bytes(values)
-        ).hexdigest(),
+        source_budget_sha256=hashlib.sha256(canonical_json_bytes(values)).hexdigest(),
         recall_context_tokens=3_000,
         retrieval_nodes=50,
         max_input_tokens=max_input_tokens,
@@ -672,9 +662,7 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
         _memory(),
         (),
         available_actions=("checkpoint_document_task",),
-        self_context=(
-            "Direct actieve documenttaak in dit gesprek: checklist.md.",
-        ),
+        self_context=("Direct actieve documenttaak in dit gesprek: checklist.md.",),
     )
 
     assert requests[0]["tools"][0]["name"] == "checkpoint_document_task"
@@ -726,6 +714,10 @@ def test_memory_query_planner_expands_meaning_without_answering(
                 "query_text": (
                     "overkapping veranda buitenruimte temperatuur warm koel voorkeur"
                 ),
+                "selected_action_names": [
+                    "read_home_assistant_state",
+                    "set_home_assistant_light",
+                ],
             },
         )
 
@@ -745,10 +737,21 @@ def test_memory_query_planner_expands_meaning_without_answering(
     assert plan.needs_semantic_memory is True
     assert plan.query_text is not None
     assert "veranda" in plan.query_text
+    assert plan.selected_action_names == (
+        "read_home_assistant_state",
+        "set_home_assistant_light",
+    )
     assert bodies[0]["reasoning"]["effort"] == "low"
     assert bodies[0]["tool_choice"]["name"] == "submit_memory_search_plan"
     assert "verzin nooit de gekozen waarde" in bodies[0]["instructions"]
     assert "natuurlijke vervolgzinnen zonder vraagteken" in bodies[0]["instructions"]
+    assert "nul tot vier actienamen" in bodies[0]["instructions"]
+    assert (
+        bodies[0]["tools"][0]["parameters"]["properties"]["selected_action_names"][
+            "maxItems"
+        ]
+        == 4
+    )
 
 
 def test_model_reports_an_expired_access_lease_without_provider_call(
@@ -1621,9 +1624,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
     )
 
     assert result.action_call == call
-    assert bodies[0]["tools"][0]["name"] == (
-        "register_approved_localtuya_repository"
-    )
+    assert bodies[0]["tools"][0]["name"] == ("register_approved_localtuya_repository")
     assert "alleen de bron toe" in bodies[0]["instructions"]
 
 
@@ -1998,9 +1999,7 @@ def test_web_research_sse_parser_preserves_clickable_citations() -> None:
             ],
         },
     }
-    response = BytesIO(
-        ("data: " + json.dumps(item) + "\n\ndata: [DONE]\n\n").encode()
-    )
+    response = BytesIO(("data: " + json.dumps(item) + "\n\ndata: [DONE]\n\n").encode())
 
     text, sources, consulted = CodexConversationModel._parse_research_sse(response)
 

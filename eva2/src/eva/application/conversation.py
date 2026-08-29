@@ -338,7 +338,9 @@ class ConversationTurn:
     def grounded_text(self) -> str:
         if self.observation_binding is None:
             return self.text
-        return f"{self.observation_binding.model_context}\nGebruikersbericht: {self.text}"
+        return (
+            f"{self.observation_binding.model_context}\nGebruikersbericht: {self.text}"
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -426,10 +428,11 @@ class RecentConversationMessage:
 
 @dataclass(frozen=True, slots=True)
 class MemorySearchPlan:
-    """Model-understood semantic lookup without carrying an answer."""
+    """Model-understood semantic lookup and bounded per-turn capability choice."""
 
     needs_semantic_memory: bool
     query_text: str | None
+    selected_action_names: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.needs_semantic_memory:
@@ -441,6 +444,17 @@ class MemorySearchPlan:
                 raise ValueError("semantic memory query is invalid")
         elif self.query_text is not None:
             raise ValueError("unused semantic memory query must be null")
+        if (
+            len(self.selected_action_names) > 4
+            or len(set(self.selected_action_names)) != len(self.selected_action_names)
+            or any(
+                not isinstance(name, str)
+                or not name.strip()
+                or len(name.encode("utf-8")) > 128
+                for name in self.selected_action_names
+            )
+        ):
+            raise ValueError("selected conversation actions are invalid")
 
 
 class ConversationMemoryPort(Protocol):
@@ -507,9 +521,7 @@ class LivingConversation:
             if self._actions is None
             else getattr(self._actions, "memory_query_hints", None)
         )
-        memory_query_hints = (
-            hint_loader(turn) if callable(hint_loader) else ()
-        )
+        memory_query_hints = hint_loader(turn) if callable(hint_loader) else ()
 
         def recall(query_text: str) -> PresenceMemory:
             grounded_query = query_text
@@ -520,9 +532,8 @@ class LivingConversation:
                     "eerdere correcties, identiteit en persoonsnaam."
                 )
                 if memory_query_hints:
-                    grounded_query += (
-                        "\nGebonden retrieval-ankers: "
-                        + ", ".join(memory_query_hints)
+                    grounded_query += "\nGebonden retrieval-ankers: " + ", ".join(
+                        memory_query_hints
                     )
             recalled = self._memory.recall_for_presence(
                 RecallCurrentFacts(
@@ -541,8 +552,7 @@ class LivingConversation:
                             "group_chat_id": turn.audience.group_chat_id,
                         }
                         if turn.audience.kind == "telegram_group"
-                        else
-                        {
+                        else {
                             "kind": "person",
                             "principal_id": turn.principal_id,
                             **(
@@ -578,13 +588,21 @@ class LivingConversation:
             )
             return self._bound_observation_memory(turn, recalled)
 
+        completed = None if self._actions is None else self._actions.pending(turn)
+        available_names: tuple[str, ...] = ()
+        if self._actions is not None and completed is None:
+            action_selector = getattr(self._actions, "available_action_names", None)
+            available_names = (
+                action_selector(turn)
+                if callable(action_selector)
+                else self._actions.action_names
+            )
         memory_query = getattr(self._model, "expand_memory_query", None)
+        plan: MemorySearchPlan | None = None
         if callable(memory_query):
             with ThreadPoolExecutor(max_workers=2) as executor:
                 memory_future = executor.submit(recall, turn.text)
-                plan_future = executor.submit(
-                    memory_query, turn, recent_messages
-                )
+                plan_future = executor.submit(memory_query, turn, recent_messages)
                 memory = memory_future.result()
                 try:
                     plan = plan_future.result()
@@ -600,28 +618,22 @@ class LivingConversation:
                 )
                 if expanded.confirmed_facts:
                     memory = expanded
+            available_names = tuple(
+                name
+                for name in available_names
+                if plan is not None and name in plan.selected_action_names
+            )
         else:
             memory = recall(turn.text)
-        completed = None if self._actions is None else self._actions.pending(turn)
         self_context = (
             () if self._actions is None else self._actions.active_context(turn)
         )
-        available_names: tuple[str, ...] = ()
-        if self._actions is not None and completed is None:
-            action_selector = getattr(self._actions, "available_action_names", None)
-            available_names = (
-                action_selector(turn)
-                if callable(action_selector)
-                else self._actions.action_names
-            )
         generated = self._model.generate(
             turn,
             self._identity,
             memory,
             recent_messages,
-            available_actions=(
-                available_names
-            ),
+            available_actions=(available_names),
             completed_action=completed,
             self_context=self_context,
         )

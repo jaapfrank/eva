@@ -83,10 +83,32 @@ _REPOSITORY_IMPROVEMENT_ACTION = "improve_isolated_repository"
 _REPOSITORY_PROPOSAL_ACTION = "submit_repository_improvement"
 _OBSERVATION_IDENTITY_CORRECTION_ACTION = "record_observation_identity_correction"
 _MEMORY_SEARCH_ACTION = "submit_memory_search_plan"
+_SELECTABLE_ACTION_NAMES = (
+    _OBSERVATION_IDENTITY_CORRECTION_ACTION,
+    _PERSONAL_INTEREST_ACTION,
+    _HOME_ASSISTANT_LIGHT_ACTION,
+    _HOME_ASSISTANT_SWITCH_ACTION,
+    _HOME_ASSISTANT_HISTORY_ACTION,
+    _HOME_ASSISTANT_STATE_ACTION,
+    _HOME_ASSISTANT_AUTOMATION_ACTION,
+    _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
+    _TUYA_LOCAL_PLAN_ACTION,
+    _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
+    _LOCALTUYA_PACKAGE_INSTALL_ACTION,
+    _FANOUT_DELIVERY_ACTION,
+    _DURABLE_GOAL_ACTION,
+    _DURABLE_GOAL_CANCEL_ACTION,
+    _CURRENT_RESEARCH_ACTION,
+    _DOCUMENT_TASK_ACTION,
+    _FILE_BATCH_ACTION,
+    _VALIDATED_FILE_EDIT_ACTION,
+    _REPOSITORY_IMPROVEMENT_ACTION,
+)
 _MEMORY_SEARCH_TOOL: dict[str, Any] = {
     "description": (
         "Classificeer of de actuele vraag persoonlijke semantische herinneringen "
-        "nodig heeft en geef alleen een zoekquery, nooit het antwoord."
+        "nodig heeft en kies hoogstens vier werkelijk benodigde acties voor deze "
+        "beurt. Geef nooit het antwoord."
     ),
     "name": _MEMORY_SEARCH_ACTION,
     "parameters": {
@@ -94,8 +116,18 @@ _MEMORY_SEARCH_TOOL: dict[str, Any] = {
         "properties": {
             "needs_semantic_memory": {"type": "boolean"},
             "query_text": {"type": ["string", "null"]},
+            "selected_action_names": {
+                "items": {"enum": list(_SELECTABLE_ACTION_NAMES), "type": "string"},
+                "maxItems": 4,
+                "type": "array",
+                "uniqueItems": True,
+            },
         },
-        "required": ["needs_semantic_memory", "query_text"],
+        "required": [
+            "needs_semantic_memory",
+            "query_text",
+            "selected_action_names",
+        ],
         "type": "object",
     },
     "strict": True,
@@ -911,8 +943,11 @@ class CodexConversationModel:
                 "kanten van een mogelijke voorkeur op, "
                 "maar verzin nooit de gekozen waarde, gebeurtenis of het antwoord. Los de "
                 "boodschap niet op. Dit geldt ook voor vragen, verzoeken en natuurlijke "
-                "vervolgzinnen zonder vraagteken. Zo nee: zet query_text op null. Gebruik "
-                "exact de tool."
+                "vervolgzinnen zonder vraagteken. Zo nee: zet query_text op null. Kies "
+                "daarnaast nul tot vier actienamen die werkelijk nodig zijn om de actuele "
+                "boodschap uit te voeren. Kies nul acties voor een gewoon tekstantwoord. "
+                "Behoud bij een gecombineerde taak de relevante domeinen, maar selecteer "
+                "nooit een actie die niet is gevraagd. Gebruik exact de tool."
             ),
             "model": self._model,
             "parallel_tool_calls": False,
@@ -933,16 +968,27 @@ class CodexConversationModel:
                 "memory search planner returned invalid output"
             )
         arguments = action_call.arguments
-        if set(arguments) != {"needs_semantic_memory", "query_text"}:
+        if set(arguments) != {
+            "needs_semantic_memory",
+            "query_text",
+            "selected_action_names",
+        }:
             raise ConversationModelError("memory search planner arguments are invalid")
         needs_memory = arguments["needs_semantic_memory"]
         query_text = arguments["query_text"]
-        if not isinstance(needs_memory, bool) or not (
-            query_text is None or isinstance(query_text, str)
+        selected_actions = arguments["selected_action_names"]
+        if (
+            not isinstance(needs_memory, bool)
+            or not (query_text is None or isinstance(query_text, str))
+            or not isinstance(selected_actions, list)
+            or any(
+                not isinstance(name, str) or name not in _ACTION_TOOLS
+                for name in selected_actions
+            )
         ):
             raise ConversationModelError("memory search planner values are invalid")
         try:
-            return MemorySearchPlan(needs_memory, query_text)
+            return MemorySearchPlan(needs_memory, query_text, tuple(selected_actions))
         except ValueError as error:
             raise ConversationModelError(
                 "memory search planner plan is invalid"
@@ -1595,9 +1641,7 @@ class CodexConversationModel:
 
     def _request_research(
         self, body: dict[str, Any]
-    ) -> tuple[
-        str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]
-    ]:
+    ) -> tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]]:
         return self._request_using(
             body,
             self._parse_research_sse,
@@ -1706,9 +1750,7 @@ class CodexConversationModel:
         if budget is None:
             return
         if autonomous and budget.unknown_cost_policy == "block_autonomous_spend":
-            raise ConversationModelError(
-                "autonomous model spend has no verified price"
-            )
+            raise ConversationModelError("autonomous model spend has no verified price")
         try:
             conservative_input_tokens = len(canonical_json_bytes(body)) + 256
         except (TypeError, ValueError) as error:
@@ -1740,9 +1782,7 @@ class CodexConversationModel:
             )
 
     @staticmethod
-    def _capture_terminal_usage(
-        response: Any, retained: list[tuple[int, int]]
-    ) -> Any:
+    def _capture_terminal_usage(response: Any, retained: list[tuple[int, int]]) -> Any:
         completed = False
         for raw in response:
             if isinstance(raw, bytes):
@@ -1819,7 +1859,12 @@ class CodexConversationModel:
                 required_mode=_MODEL_LEASE_FILE_MODE,
             )
             value = json.loads(raw.decode("utf-8"))
-        except (OSError, RuntimeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        except (
+            OSError,
+            RuntimeError,
+            UnicodeDecodeError,
+            json.JSONDecodeError,
+        ) as error:
             raise ConversationModelError(
                 "conversation auth file is unavailable"
             ) from error
@@ -1970,7 +2015,9 @@ class CodexConversationModel:
             try:
                 line = raw.decode("utf-8").rstrip("\r\n")
             except UnicodeDecodeError as error:
-                raise ConversationModelError("research response is not UTF-8") from error
+                raise ConversationModelError(
+                    "research response is not UTF-8"
+                ) from error
             if line.startswith("event: "):
                 event_type = line[7:]
                 continue
@@ -2001,7 +2048,9 @@ class CodexConversationModel:
                 continue
             if item.get("type") == "web_search_call":
                 action = item.get("action")
-                raw_sources = action.get("sources") if isinstance(action, dict) else None
+                raw_sources = (
+                    action.get("sources") if isinstance(action, dict) else None
+                )
                 if isinstance(raw_sources, list):
                     for source in raw_sources:
                         if not isinstance(source, dict):
@@ -2578,12 +2627,12 @@ class CodexConversationModel:
 def _source_matches_named_option(url: str, option: str) -> bool:
     """Admit only a source whose host or canonical repository names the option."""
 
-    normalized_option = "".join(character for character in option.casefold() if character.isalnum())
+    normalized_option = "".join(
+        character for character in option.casefold() if character.isalnum()
+    )
     parsed = urlparse(url)
     host = (parsed.hostname or "").casefold()
-    normalized_host = "".join(
-        character for character in host if character.isalnum()
-    )
+    normalized_host = "".join(character for character in host if character.isalnum())
     if not normalized_option:
         return False
     if host in {"github.com", "www.github.com"}:

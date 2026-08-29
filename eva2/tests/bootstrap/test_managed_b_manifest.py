@@ -75,9 +75,30 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "${EVA_STACK_CORE_CONTAINER:?set the sealed core container name}"
     )
     assert services["core"]["user"] == "65532:65532"
-    assert services["core"]["environment"][
-        "EVA_PORTABLE_RESTORE_AUTHORITY_FILE"
-    ] == "/var/lib/eva/restore-authority/current.json"
+    assert (
+        services["core"]["environment"]["EVA_PORTABLE_RESTORE_AUTHORITY_FILE"]
+        == "/var/lib/eva/restore-authority/current.json"
+    )
+    assert (
+        services["core"]["environment"]["EVA_RUNTIME_RESOURCE_BUDGET_FILE"]
+        == "/run/eva/runtime-budget/current.json"
+    )
+    assert [
+        volume
+        for volume in _private_binds(services["core"])
+        if volume["target"] == "/run/eva/runtime-budget/current.json"
+    ] == [
+        {
+            "bind": {"create_host_path": False},
+            "read_only": True,
+            "source": (
+                "${EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST:?set the confirmed "
+                "runtime resource budget file}"
+            ),
+            "target": "/run/eva/runtime-budget/current.json",
+            "type": "bind",
+        }
+    ]
     authority_binds = [
         volume
         for volume in _private_binds(services["core"])
@@ -97,25 +118,26 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
     assert services["postgres"]["environment"]["POSTGRES_INITDB_ARGS"] == (
         "--auth-host=scram-sha-256"
     )
-    assert services["hindsight-postgres"]["environment"][
-        "POSTGRES_INITDB_ARGS"
-    ] == "--auth-host=scram-sha-256"
+    assert (
+        services["hindsight-postgres"]["environment"]["POSTGRES_INITDB_ARGS"]
+        == "--auth-host=scram-sha-256"
+    )
     assert services["postgres"]["pull_policy"] == "never"
     assert services["hindsight-postgres"]["pull_policy"] == "never"
     assert services["hindsight"]["pull_policy"] == "never"
     assert services["hindsight"]["user"] == "1000:1000"
     assert services["hindsight"]["read_only"] is True
     assert services["hindsight"]["cap_drop"] == ["ALL"]
-    assert services["hindsight"]["environment"][
-        "HINDSIGHT_API_DATABASE_URL_FILE"
-    ] == "/run/secrets/hindsight_database_dsn"
-    assert services["hindsight"]["environment"][
-        "HINDSIGHT_API_EMBEDDINGS_PROVIDER"
-    ] == "local"
     assert (
-        services["hindsight"]["environment"][
-            "HINDSIGHT_API_SKIP_LLM_VERIFICATION"
-        ]
+        services["hindsight"]["environment"]["HINDSIGHT_API_DATABASE_URL_FILE"]
+        == "/run/secrets/hindsight_database_dsn"
+    )
+    assert (
+        services["hindsight"]["environment"]["HINDSIGHT_API_EMBEDDINGS_PROVIDER"]
+        == "local"
+    )
+    assert (
+        services["hindsight"]["environment"]["HINDSIGHT_API_SKIP_LLM_VERIFICATION"]
         == "true"
     )
     assert {
@@ -149,12 +171,8 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "--no-access-log",
     ]
     assert {
-        "EVA_DURABLE_GOAL_PROVIDER": (
-            "${EVA_DURABLE_GOAL_ADMISSION_PROVIDER:-}"
-        ),
-        "EVA_DURABLE_GOAL_RECIPIENTS": (
-            "${EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS:-}"
-        ),
+        "EVA_DURABLE_GOAL_PROVIDER": ("${EVA_DURABLE_GOAL_ADMISSION_PROVIDER:-}"),
+        "EVA_DURABLE_GOAL_RECIPIENTS": ("${EVA_DURABLE_GOAL_ADMISSION_RECIPIENTS:-}"),
         "EVA_FANOUT_ALLOW_INSECURE_HTTP": (
             "${EVA_FANOUT_ALLOW_INSECURE_HTTP:?set the sealed fanout transport policy}"
         ),
@@ -177,11 +195,14 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "EVA_IDENTITY_PACK_FILE": "/run/eva/identity/current.json",
         "EVA_IDENTITY_PACK_TRUST_FILE": "/run/eva/identity/trust.json",
     }.items() <= services["core"]["environment"].items()
-    assert services["durable-goal-worker"]["environment"][
-        "EVA_DURABLE_GOAL_PROVIDER"
-    ] == "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
+    assert (
+        services["durable-goal-worker"]["environment"]["EVA_DURABLE_GOAL_PROVIDER"]
+        == "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
+    )
 
-    core_binds = {volume["target"]: volume for volume in _private_binds(services["core"])}
+    core_binds = {
+        volume["target"]: volume for volume in _private_binds(services["core"])
+    }
     assert core_binds["/run/eva/identity/current.json"]["source"] == (
         "${EVA_IDENTITY_PACK_FILE_HOST:?set a verified current IdentityPack file}"
     )
@@ -237,9 +258,7 @@ def test_managed_b_keeps_hindsight_database_credentials_out_of_environment() -> 
     hindsight_database = services["hindsight-postgres"]
 
     assert "HINDSIGHT_API_DATABASE_URL" not in hindsight["environment"]
-    hindsight_binds = {
-        volume["target"]: volume for volume in _private_binds(hindsight)
-    }
+    hindsight_binds = {volume["target"]: volume for volume in _private_binds(hindsight)}
     assert hindsight_binds["/run/secrets/hindsight_database_dsn"] == {
         "type": "bind",
         "source": (

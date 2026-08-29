@@ -28,7 +28,6 @@ from typing import Any
 from urllib import error, parse, request
 from uuid import uuid4
 
-
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
 STAGING_PARENT = Path("/var/lib/eva2")
@@ -68,9 +67,7 @@ CURRENT_ROUTE_PORT = "44708"
 CURRENT_ROUTE_HA_TOKEN = Path(
     "/var/lib/eva2/candidate-794ff73/secrets/home-assistant-token"
 )
-CURRENT_ROUTE_HA_URL = Path(
-    "/var/lib/eva2/candidate-794ff73/config/home-assistant-url"
-)
+CURRENT_ROUTE_HA_URL = Path("/var/lib/eva2/candidate-794ff73/config/home-assistant-url")
 CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
 RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"
 _COUNT_SQL = """
@@ -165,7 +162,9 @@ def _run_binary_to_private_file(
             diagnostic = _sanitize_diagnostic(
                 completed.stderr.decode("utf-8", errors="replace")[-2000:]
             )
-            raise ProbeError(f"database snapshot failed: {diagnostic or 'no diagnostic'}")
+            raise ProbeError(
+                f"database snapshot failed: {diagnostic or 'no diagnostic'}"
+            )
         os.fchmod(descriptor, 0o600)
     except (OSError, subprocess.SubprocessError) as exc:
         path.unlink(missing_ok=True)
@@ -184,7 +183,9 @@ def _restore_private_dump(
     preserve_authority: bool = False,
     timeout: int = 300,
 ) -> None:
-    authority_arguments = [] if preserve_authority else ["--no-owner", "--no-privileges"]
+    authority_arguments = (
+        [] if preserve_authority else ["--no-owner", "--no-privileges"]
+    )
     try:
         with path.open("rb") as source:
             completed = subprocess.run(
@@ -216,7 +217,9 @@ def _restore_private_dump(
         diagnostic = _sanitize_diagnostic(
             completed.stderr.decode("utf-8", errors="replace")[-2000:]
         )
-        raise ProbeError(f"database restoration failed: {diagnostic or 'no diagnostic'}")
+        raise ProbeError(
+            f"database restoration failed: {diagnostic or 'no diagnostic'}"
+        )
 
 
 def _prepare_logical_restore_roles(container: str, database: str) -> None:
@@ -240,8 +243,7 @@ def _prepare_logical_restore_roles(container: str, database: str) -> None:
     }:
         raise ProbeError("logical restore role authority is unavailable")
     preparation_sql = (
-        values["_LOGICAL_RESTORE_EMPTY_GUARD_SQL"]
-        + values["_LOGICAL_RESTORE_ROLE_SQL"]
+        values["_LOGICAL_RESTORE_EMPTY_GUARD_SQL"] + values["_LOGICAL_RESTORE_ROLE_SQL"]
     )
 
     _run(
@@ -375,9 +377,9 @@ def _require_current_route_sources() -> None:
     }
     if inspected[CURRENT_ROUTE_CORE]["State"].get("Running") is not True:
         raise ProbeError("current Eva2 route core is not running")
-    port_bindings = inspected[CURRENT_ROUTE_CORE]["NetworkSettings"]["Ports"].get(
-        "8080/tcp"
-    ) or []
+    port_bindings = (
+        inspected[CURRENT_ROUTE_CORE]["NetworkSettings"]["Ports"].get("8080/tcp") or []
+    )
     if not any(
         binding.get("HostIp") == "127.0.0.1"
         and binding.get("HostPort") == CURRENT_ROUTE_PORT
@@ -400,8 +402,13 @@ def _require_current_route_sources() -> None:
             for mount in inspected[name].get("Mounts", [])
             if mount.get("Type") == "volume"
         }
-        if expected not in mounts or inspected[name]["State"].get("Running") is not True:
-            raise ProbeError("current Eva2 data source no longer matches its sealed volume")
+        if (
+            expected not in mounts
+            or inspected[name]["State"].get("Running") is not True
+        ):
+            raise ProbeError(
+                "current Eva2 data source no longer matches its sealed volume"
+            )
 
 
 def _snapshot_current_route(
@@ -419,8 +426,7 @@ def _snapshot_current_route(
             CURRENT_ROUTE_POSTGRES,
             "sh",
             "-lc",
-            'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" '
-            "--format=custom",
+            'exec pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" --format=custom',
         ],
         operational_dump,
     )
@@ -491,7 +497,9 @@ def _http_json(url: str, *, payload: dict[str, Any] | None = None) -> Any:
     if payload is not None:
         body = json.dumps(payload, separators=(",", ":")).encode()
         headers["Content-Type"] = "application/json"
-    req = request.Request(url, data=body, headers=headers, method="POST" if body else "GET")
+    req = request.Request(
+        url, data=body, headers=headers, method="POST" if body else "GET"
+    )
     try:
         with request.urlopen(req, timeout=120) as response:
             if response.status != 200:
@@ -578,7 +586,9 @@ def _wait_healthy(container: str, *, timeout: int = 90) -> None:
 
 def _immutable_core_image(value: str) -> str:
     if not re.fullmatch(r"[a-z0-9][a-z0-9._/-]*@sha256:[0-9a-f]{64}", value):
-        raise ProbeError("candidate core image must be an immutable local digest reference")
+        raise ProbeError(
+            "candidate core image must be an immutable local digest reference"
+        )
     return value
 
 
@@ -600,7 +610,10 @@ def main(
     if retain_slot and not clone_current_route:
         print(
             json.dumps(
-                {"error": "retained slot requires a current-route clone", "status": "failed"},
+                {
+                    "error": "retained slot requires a current-route clone",
+                    "status": "failed",
+                },
                 sort_keys=True,
             )
         )
@@ -616,9 +629,7 @@ def main(
     retained_name = f"slot{retained_slot_number}"
     run_id = retained_name if retain_slot else uuid4().hex[:12]
     project = (
-        f"eva2-managed-b-{retained_name}"
-        if retain_slot
-        else f"eva2-clean-b-{run_id}"
+        f"eva2-managed-b-{retained_name}" if retain_slot else f"eva2-clean-b-{run_id}"
     )
     core_name = (
         f"eva2-managed-b-{retained_name}-core"
@@ -652,9 +663,7 @@ def main(
     }
     initial_live = {
         "eva1": _live_status("http://127.0.0.1:3210/api/health"),
-        "currentEva2": _live_status(
-            f"http://127.0.0.1:{CURRENT_ROUTE_PORT}/readyz"
-        ),
+        "currentEva2": _live_status(f"http://127.0.0.1:{CURRENT_ROUTE_PORT}/readyz"),
     }
     try:
         if retain_slot:
@@ -696,12 +705,14 @@ def main(
         codex_dir = staging / "codex-auth"
         model_lease = staging / "model-access-lease"
         hindsight_lease = staging / "hindsight-access"
+        restore_authority_dir = staging / "restore-authority"
         for directory, uid, gid, mode in (
             (secrets_dir, 0, 0, 0o700),
             (identity_dir, 65532, 65532, 0o700),
             (codex_dir, 1000, 1000, 0o700),
             (model_lease, 1000, 65532, 0o2750),
             (hindsight_lease, 1000, 1000, 0o700),
+            (restore_authority_dir, 65532, 65532, 0o700),
         ):
             _private_directory(directory, uid=uid, gid=gid, mode=mode)
 
@@ -760,7 +771,9 @@ def main(
             uid=65532,
             gid=65532,
         )
-        _write_private(secrets_dir / "telegram-token", b"probe-only", uid=65532, gid=65532)
+        _write_private(
+            secrets_dir / "telegram-token", b"probe-only", uid=65532, gid=65532
+        )
         _write_private(secrets_dir / "telegram-bindings", b"{}", uid=65532, gid=65532)
         _write_private(
             secrets_dir / "telegram-pairing",
@@ -768,10 +781,76 @@ def main(
             uid=65532,
             gid=65532,
         )
-        _copy_private(IDENTITY_PACK, identity_dir / "current.json", uid=65532, gid=65532)
+        _copy_private(
+            IDENTITY_PACK, identity_dir / "current.json", uid=65532, gid=65532
+        )
         _copy_private(IDENTITY_TRUST, identity_dir / "trust.json", uid=65532, gid=65532)
         if not retain_slot:
             _copy_private(SOURCE_AUTH, codex_dir / "auth.json", uid=1000, gid=1000)
+
+        runtime_tenant_id = (
+            "live-test-tenant"
+            if retain_slot
+            else "11111111-1111-1111-8111-111111111111"
+        )
+        runtime_installation_id = (
+            "live-test-installation"
+            if retain_slot
+            else "22222222-2222-2222-8222-222222222222"
+        )
+        runtime_budget_file = secrets_dir / "runtime-budget.json"
+        runtime_budget_values = {
+            "recall_context_tokens": 2048,
+            "retrieval_nodes": 40,
+            "max_input_tokens": 12000,
+            "max_output_tokens": 1200,
+            "profile_context_tokens": 800,
+            "memory_records_per_person": 2000,
+            "memory_bytes_per_person": 20971520,
+            "memory_records_per_group": 2000,
+            "memory_bytes_per_group": 20971520,
+            "memory_records_per_project": 2000,
+            "memory_bytes_per_project": 20971520,
+            "memory_records_per_installation": 20000,
+            "memory_bytes_per_installation": 209715200,
+            "retention_days": 365,
+            "background_reflections_per_person_day": 4,
+            "background_reflections_per_installation_day": 40,
+            "external_monthly_spend_cap_eur_cents": 0,
+        }
+        installer_budget_payload = {
+            "contract": "EvaInstallerBudget/v2",
+            **runtime_budget_values,
+            "unknown_cost_policy": "block_autonomous_spend",
+        }
+        source_budget_sha256 = hashlib.sha256(
+            json.dumps(
+                installer_budget_payload,
+                ensure_ascii=False,
+                allow_nan=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
+        runtime_budget = {
+            "budget": installer_budget_payload,
+            "contract": "EvaRuntimeResourceBudget/v2",
+            "installation_id": runtime_installation_id,
+            "source_budget_sha256": source_budget_sha256,
+            "tenant_id": runtime_tenant_id,
+        }
+        _write_private(
+            runtime_budget_file,
+            json.dumps(
+                runtime_budget,
+                ensure_ascii=False,
+                allow_nan=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8"),
+            uid=65532,
+            gid=65532,
+        )
 
         values = {
             "EVA_B_CONFIGURATION_SHA256": hashlib.sha256(run_id.encode()).hexdigest(),
@@ -796,25 +875,35 @@ def main(
             "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": (
                 "light.dimmable_light_1:turn_off" if retain_slot else ""
             ),
-            "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": (secrets_dir / "home-assistant-token").as_posix(),
-            "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": (secrets_dir / "dashboard-token").as_posix(),
+            "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": (
+                secrets_dir / "home-assistant-token"
+            ).as_posix(),
+            "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": (
+                secrets_dir / "dashboard-token"
+            ).as_posix(),
             "EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111",
             "EVA_DASHBOARD_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222",
             "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "44444444-4444-4444-8444-444444444444",
             "EVA_DASHBOARD_RELEASE_SHA256": core_image.rsplit("sha256:", 1)[-1],
+            "EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST": (
+                restore_authority_dir.as_posix()
+            ),
+            "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST": runtime_budget_file.as_posix(),
             "EVA_IDENTITY_PACK_FILE_HOST": (identity_dir / "current.json").as_posix(),
-            "EVA_IDENTITY_PACK_TRUST_FILE_HOST": (identity_dir / "trust.json").as_posix(),
-            "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": (secrets_dir / "telegram-token").as_posix(),
-            "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": (secrets_dir / "telegram-bindings").as_posix(),
-            "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": (secrets_dir / "telegram-pairing").as_posix(),
-            "EVA_RUNTIME_TENANT_ID": (
-                "live-test-tenant" if retain_slot else "11111111-1111-1111-8111-111111111111"
-            ),
-            "EVA_RUNTIME_INSTALLATION_ID": (
-                "live-test-installation"
-                if retain_slot
-                else "22222222-2222-2222-8222-222222222222"
-            ),
+            "EVA_IDENTITY_PACK_TRUST_FILE_HOST": (
+                identity_dir / "trust.json"
+            ).as_posix(),
+            "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": (
+                secrets_dir / "telegram-token"
+            ).as_posix(),
+            "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": (
+                secrets_dir / "telegram-bindings"
+            ).as_posix(),
+            "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST": (
+                secrets_dir / "telegram-pairing"
+            ).as_posix(),
+            "EVA_RUNTIME_TENANT_ID": runtime_tenant_id,
+            "EVA_RUNTIME_INSTALLATION_ID": runtime_installation_id,
             "EVA_RUNTIME_PRINCIPAL_ID": "33333333-3333-3333-8333-333333333333",
             # The retained canary has no real durable-goal provider.  Keep the
             # worker wiring renderable, but do not advertise an unusable
@@ -840,22 +929,34 @@ def main(
         }
         _write_private(
             environment_file,
-            "".join(f"{key}={value}\n" for key, value in sorted(values.items())).encode(),
+            "".join(
+                f"{key}={value}\n" for key, value in sorted(values.items())
+            ).encode(),
             uid=0,
             gid=0,
         )
 
-        source_counts: tuple[
-            dict[str, int], dict[str, int], dict[str, int], dict[str, int]
-        ] | None = None
+        source_counts: (
+            tuple[dict[str, int], dict[str, int], dict[str, int], dict[str, int]] | None
+        ) = None
         if clone_current_route:
             phase = "current-route-snapshot"
-            source_counts = _snapshot_current_route(
-                operational_dump, hindsight_dump
-            )
+            source_counts = _snapshot_current_route(operational_dump, hindsight_dump)
 
         phase = "render"
-        rendered = json.loads(_run(_compose(project, environment_file, "--profile", "schema-install", "config", "--format", "json")))
+        rendered = json.loads(
+            _run(
+                _compose(
+                    project,
+                    environment_file,
+                    "--profile",
+                    "schema-install",
+                    "config",
+                    "--format",
+                    "json",
+                )
+            )
+        )
         if set(rendered.get("services", {})) != EXPECTED_SERVICES:
             raise ProbeError("rendered service graph differs")
         hindsight_environment = rendered["services"]["hindsight"]["environment"]
@@ -911,7 +1012,17 @@ def main(
             phase = "restored-hindsight-start"
             _run(_compose(project, environment_file, "up", "-d", "hindsight"))
         phase = "schema-install"
-        _run(_compose(project, environment_file, "--profile", "schema-install", "run", "--rm", "schema-installer"))
+        _run(
+            _compose(
+                project,
+                environment_file,
+                "--profile",
+                "schema-install",
+                "run",
+                "--rm",
+                "schema-installer",
+            )
+        )
         phase = "dashboard-authority-install"
         _run(
             _compose(
@@ -950,7 +1061,9 @@ def main(
             )
         ).strip()
         if vector_version != "0.8.6":
-            raise ProbeError("Hindsight database did not load the pinned vector extension")
+            raise ProbeError(
+                "Hindsight database did not load the pinned vector extension"
+            )
 
         phase = "real-model-turn"
         turn = {
@@ -982,9 +1095,29 @@ def main(
             raise ProbeError("real model response was not the requested exact word")
 
         phase = "joint-stop"
-        _run(_compose(project, environment_file, "stop", "core", "hindsight", "hindsight-postgres", "postgres"))
+        _run(
+            _compose(
+                project,
+                environment_file,
+                "stop",
+                "core",
+                "hindsight",
+                "hindsight-postgres",
+                "postgres",
+            )
+        )
         phase = "joint-start"
-        _run(_compose(project, environment_file, "start", "postgres", "hindsight-postgres", "hindsight", "core"))
+        _run(
+            _compose(
+                project,
+                environment_file,
+                "start",
+                "postgres",
+                "hindsight-postgres",
+                "hindsight",
+                "core",
+            )
+        )
         phase = "core-ready-after-restart"
         _wait_ready(port)
 
@@ -1002,9 +1135,13 @@ def main(
                         "restored Hindsight semantic data decreased after restart"
                     )
 
-        hindsight_id = _run(_compose(project, environment_file, "ps", "-q", "hindsight")).strip()
+        hindsight_id = _run(
+            _compose(project, environment_file, "ps", "-q", "hindsight")
+        ).strip()
         inspected = json.loads(_run(["/usr/bin/docker", "inspect", hindsight_id]))[0]
-        configured_names = {item.partition("=")[0] for item in inspected["Config"]["Env"]}
+        configured_names = {
+            item.partition("=")[0] for item in inspected["Config"]["Env"]
+        }
         if "HINDSIGHT_API_DATABASE_URL" in configured_names:
             raise ProbeError("Hindsight container configuration retained an inline DSN")
 
@@ -1087,7 +1224,9 @@ def main(
         if environment_file.exists() and not keep_retained:
             try:
                 state = _run(
-                    _compose(project, environment_file, "ps", "--all", "--format", "json")
+                    _compose(
+                        project, environment_file, "ps", "--all", "--format", "json"
+                    )
                 )
                 result["candidateState"] = _sanitize_diagnostic(state)
                 for service in ("core", "hindsight"):
@@ -1109,7 +1248,15 @@ def main(
         keep_retained = retain_slot and result.get("status") == "passed"
         if environment_file.exists() and not keep_retained:
             try:
-                _run(_compose(project, environment_file, "down", "--volumes", "--remove-orphans"))
+                _run(
+                    _compose(
+                        project,
+                        environment_file,
+                        "down",
+                        "--volumes",
+                        "--remove-orphans",
+                    )
+                )
                 cleaned = True
             except ProbeError:
                 cleaned = False

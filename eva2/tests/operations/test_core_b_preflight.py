@@ -8,6 +8,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from eva.contracts.canonical_json import canonical_json_bytes
+from eva.contracts.runtime_budget import RuntimeResourceBudget
 from eva.operations import core_b_preflight
 from eva.operations.core_b_preflight import (
     REQUIRED_CONFIGURATION,
@@ -54,9 +56,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     telegram_token = _private_secret(
         private_tmp_path / "telegram-token", "not-a-real-telegram-token\n"
     )
-    telegram_bindings = _private_secret(
-        private_tmp_path / "telegram-bindings", "{}\n"
-    )
+    telegram_bindings = _private_secret(private_tmp_path / "telegram-bindings", "{}\n")
     telegram_pairing_secret = _private_secret(
         private_tmp_path / "telegram-pairing-secret", "p" * 32
     )
@@ -75,6 +75,44 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         private_tmp_path / "identity-trust.json",
         (ROOT / "src/eva/application/default_identity_pack_trust.json").read_text(),
     )
+    runtime_budget = private_tmp_path / "runtime-budget.json"
+    runtime_budget_values = {
+        "recall_context_tokens": 2048,
+        "retrieval_nodes": 40,
+        "max_input_tokens": 12000,
+        "max_output_tokens": 1200,
+        "profile_context_tokens": 800,
+        "memory_records_per_person": 2000,
+        "memory_bytes_per_person": 20971520,
+        "memory_records_per_group": 2000,
+        "memory_bytes_per_group": 20971520,
+        "memory_records_per_project": 2000,
+        "memory_bytes_per_project": 20971520,
+        "memory_records_per_installation": 20000,
+        "memory_bytes_per_installation": 209715200,
+        "retention_days": 365,
+        "background_reflections_per_person_day": 4,
+        "background_reflections_per_installation_day": 40,
+        "external_monthly_spend_cap_eur_cents": 0,
+    }
+    source_budget_sha256 = hashlib.sha256(
+        canonical_json_bytes(
+            {
+                "contract": "EvaInstallerBudget/v2",
+                **runtime_budget_values,
+                "unknown_cost_policy": "block_autonomous_spend",
+            }
+        )
+    ).hexdigest()
+    runtime_budget.write_bytes(
+        RuntimeResourceBudget(
+            tenant_id="tenant:test",
+            installation_id="installation:test",
+            source_budget_sha256=source_budget_sha256,
+            **runtime_budget_values,
+        ).to_bytes()
+    )
+    runtime_budget.chmod(0o600)
     codex_authority = private_tmp_path / "codex-auth"
     codex_authority.mkdir(mode=0o700, exist_ok=True)
     codex_authority.chmod(0o700)
@@ -84,6 +122,9 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
     hindsight_lease = private_tmp_path / "hindsight-access"
     hindsight_lease.mkdir(mode=0o700, exist_ok=True)
     hindsight_lease.chmod(0o700)
+    restore_authority = private_tmp_path / "restore-authority"
+    restore_authority.mkdir(mode=0o700, exist_ok=True)
+    restore_authority.chmod(0o700)
     return {
         "EVA_B_DOCKER_BINARY": "/usr/bin/docker",
         "EVA_B_DOCKER_CONFIG_DIR": str(docker_config),
@@ -104,9 +145,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_DATABASE_DSN_FILE_HOST": str(database_dsn),
         "EVA_POSTGRES_PASSWORD_FILE_HOST": str(postgres_password),
         "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST": str(hindsight_database_dsn),
-        "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST": str(
-            hindsight_postgres_password
-        ),
+        "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST": str(hindsight_postgres_password),
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
         "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "false",
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": "",
@@ -124,6 +163,8 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_RUNTIME_TENANT_ID": "tenant:test",
         "EVA_RUNTIME_INSTALLATION_ID": "installation:test",
         "EVA_RUNTIME_PRINCIPAL_ID": "principal:test",
+        "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST": str(runtime_budget),
+        "EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST": str(restore_authority),
         "EVA_DURABLE_GOAL_PROVIDER": "provider:test",
         "EVA_DURABLE_GOAL_PROVIDER_URL": "https://provider.example/v1",
         "EVA_DURABLE_GOAL_RECIPIENTS": "owner-channel",
@@ -134,9 +175,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_FILE_BATCH_ROOT": "/var/lib/eva/work",
         "EVA_STACK_WORK_VOLUME": "eva2-living-work-b",
         "EVA_STACK_POSTGRES_VOLUME": "eva2-postgres-b-live",
-        "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME": (
-            "eva2-hindsight-postgres-b-live"
-        ),
+        "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME": ("eva2-hindsight-postgres-b-live"),
         "EVA_HINDSIGHT_BANK_NAMESPACE": "eva2",
         "EVA_CODEX_AUTH_DIR": str(codex_authority),
         "EVA_MODEL_ACCESS_LEASE_DIR": str(model_lease),
@@ -163,17 +202,22 @@ def _environment_file(private_tmp_path: Path, values: dict[str, str]) -> Path:
 def test_runtime_environment_template_names_every_required_preflight_value() -> None:
     values = {
         line.split("=", 1)[0]: line.split("=", 1)[1]
-        for raw_line in RUNTIME_ENVIRONMENT_TEMPLATE.read_text(encoding="utf-8").splitlines()
+        for raw_line in RUNTIME_ENVIRONMENT_TEMPLATE.read_text(
+            encoding="utf-8"
+        ).splitlines()
         if (line := raw_line.strip()) and not line.startswith("#") and "=" in line
     }
 
     assert set(REQUIRED_CONFIGURATION) <= set(values)
-    assert {"EVA_DATABASE_DSN", "EVA_HOME_ASSISTANT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN"}.isdisjoint(
-        values
+    assert {
+        "EVA_DATABASE_DSN",
+        "EVA_HOME_ASSISTANT_TOKEN",
+        "EVA_TELEGRAM_BOT_TOKEN",
+    }.isdisjoint(values)
+    assert (
+        values["EVA_B_MANAGED_MANIFEST_SHA256"]
+        == hashlib.sha256(MANAGED_B_MANIFEST.read_bytes()).hexdigest()
     )
-    assert values["EVA_B_MANAGED_MANIFEST_SHA256"] == hashlib.sha256(
-        MANAGED_B_MANIFEST.read_bytes()
-    ).hexdigest()
 
 
 def test_plan_uses_one_immutable_environment_snapshot(
@@ -188,9 +232,9 @@ def test_plan_uses_one_immutable_environment_snapshot(
     assert plan.value("EVA_FILE_BATCH_ROOT") == "/var/lib/eva/work"
     assert plan.value("EVA_DURABLE_GOAL_PROVIDER") == "provider:test"
     assert "owner" in plan.value("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON")
-    assert plan.value("EVA_MODEL_ACCESS_LEASE_DIR") == values[
-        "EVA_MODEL_ACCESS_LEASE_DIR"
-    ]
+    assert (
+        plan.value("EVA_MODEL_ACCESS_LEASE_DIR") == values["EVA_MODEL_ACCESS_LEASE_DIR"]
+    )
 
 
 def test_plan_refuses_its_derived_configuration_hash_in_the_snapshot(
@@ -221,7 +265,9 @@ def test_managed_service_labels_require_the_entire_sealed_graph(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     labels = {
@@ -254,7 +300,9 @@ def test_managed_service_labels_reject_a_service_from_another_snapshot(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     labels = {
@@ -285,7 +333,9 @@ def test_steady_managed_service_labels_exclude_profiled_schema_installer(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     labels = {
@@ -422,15 +472,11 @@ def test_plan_requires_a_bounded_home_assistant_effect_allowlist(
     with pytest.raises(RuntimeError, match="EFFECT_ALLOWLIST is required"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
-    values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = (
-        "light.dimmable_light_1:turn_off"
-    )
+    values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = "light.dimmable_light_1:turn_off"
     environment = _environment_file(private_tmp_path, values)
-    assert load_core_b_plan(
-        environment.as_posix(), runtime_uid=os.geteuid()
-    ).value("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST") == (
-        "light.dimmable_light_1:turn_off"
-    )
+    assert load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid()).value(
+        "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"
+    ) == ("light.dimmable_light_1:turn_off")
 
     values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = "light.dimmable_light_1:toggle"
     environment = _environment_file(private_tmp_path, values)
@@ -448,6 +494,7 @@ def test_plan_requires_a_bounded_home_assistant_effect_allowlist(
         "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST",
         "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST",
         "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
+        "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
     ),
 )
 def test_plan_rejects_insecure_mounted_runtime_secret(
@@ -541,6 +588,8 @@ def test_plan_rejects_postgres_password_outside_exact_root_contract(
         "EVA_HINDSIGHT_ACCESS_DIR",
         "EVA_IDENTITY_PACK_FILE_HOST",
         "EVA_IDENTITY_PACK_TRUST_FILE_HOST",
+        "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
+        "EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST",
     ),
 )
 def test_plan_refuses_capability_loss(
@@ -557,7 +606,9 @@ def test_plan_refuses_capability_loss(
 
 def test_plan_rejects_wrong_docker_context_or_daemon(private_tmp_path: Path) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
 
@@ -625,7 +676,9 @@ def test_plan_rejects_unpinned_volume_and_unsafe_contract_directories(
 
 def test_plan_rejects_unmanaged_current_b(private_tmp_path: Path) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
 
@@ -647,11 +700,11 @@ def test_host_only_receipt_has_no_secret_or_docker_observation(
     assert receipt == {
         "apply_supported": False,
         "checked": {
-            "authority_directories": 3,
+            "authority_directories": 4,
             "docker_binary_metadata": True,
             "docker_config_directory_metadata": True,
             "docker_observed": False,
-            "host_secret_file_metadata": 11,
+            "host_secret_file_metadata": 12,
             "secret_contents_read": False,
         },
         "configuration_sha256": plan.snapshot_sha256,
@@ -672,7 +725,9 @@ def test_host_only_cli_never_observes_docker_or_b(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     monkeypatch.setattr(
@@ -695,7 +750,7 @@ def test_plan_rejects_true_and_wrapper_instead_of_system_docker(
     private_tmp_path: Path,
 ) -> None:
     wrapper = private_tmp_path / "docker-wrapper"
-    wrapper.write_text("#!/bin/sh\nexec /usr/bin/docker \"$@\"\n", encoding="utf-8")
+    wrapper.write_text('#!/bin/sh\nexec /usr/bin/docker "$@"\n', encoding="utf-8")
     wrapper.chmod(0o700)
     baseline = _configuration(private_tmp_path)
 
@@ -713,7 +768,9 @@ def test_container_read_uses_verified_host_after_context_config_swap(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     docker_config_marker = (
@@ -769,7 +826,9 @@ def test_managed_service_observation_reads_eight_steady_labeled_containers(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     commands: list[list[str]] = []
@@ -847,7 +906,9 @@ def test_managed_service_observation_rejects_another_compose_project(
     private_tmp_path: Path,
 ) -> None:
     plan = load_core_b_plan(
-        _environment_file(private_tmp_path, _configuration(private_tmp_path)).as_posix(),
+        _environment_file(
+            private_tmp_path, _configuration(private_tmp_path)
+        ).as_posix(),
         runtime_uid=os.geteuid(),
     )
     calls = 0

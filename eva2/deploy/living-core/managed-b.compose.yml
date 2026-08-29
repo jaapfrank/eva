@@ -301,6 +301,7 @@ services:
       EVA_IDENTITY_PACK_TRUST_FILE: /run/eva/identity/trust.json
       EVA_PERSONAL_INTEREST_LEASE_SECONDS: ${EVA_PERSONAL_INTEREST_LEASE_SECONDS:-90}
       EVA_PORTABLE_RESTORE_AUTHORITY_FILE: /var/lib/eva/restore-authority/current.json
+      EVA_RUNTIME_RESOURCE_BUDGET_FILE: /run/eva/runtime-budget/current.json
       EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
       EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
       EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
@@ -332,6 +333,12 @@ services:
       - type: bind
         source: ${EVA_IDENTITY_PACK_TRUST_FILE_HOST:?set the IdentityPack public trust binding}
         target: /run/eva/identity/trust.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST:?set the confirmed runtime resource budget file}
+        target: /run/eva/runtime-budget/current.json
         read_only: true
         bind:
           create_host_path: false

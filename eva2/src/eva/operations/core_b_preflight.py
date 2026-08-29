@@ -19,6 +19,10 @@ from eva.bootstrap.secrets import (
     MAX_RUNTIME_SECRET_BYTES,
     read_private_runtime_file_bytes,
 )
+from eva.contracts.runtime_budget import (
+    RuntimeResourceBudget,
+    RuntimeResourceBudgetError,
+)
 
 
 MANAGEMENT_LABEL = "io.eva2.managed-by"
@@ -80,6 +84,8 @@ REQUIRED_CONFIGURATION = (
     "EVA_RUNTIME_TENANT_ID",
     "EVA_RUNTIME_INSTALLATION_ID",
     "EVA_RUNTIME_PRINCIPAL_ID",
+    "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
+    "EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST",
     "EVA_DURABLE_GOAL_PROVIDER",
     "EVA_DURABLE_GOAL_PROVIDER_URL",
     "EVA_DURABLE_GOAL_RECIPIENTS",
@@ -121,11 +127,13 @@ HOST_SECRET_SETTING_NAMES = (
     "EVA_TELEGRAM_PAIRING_SECRET_FILE_HOST",
     "EVA_POSTGRES_PASSWORD_FILE_HOST",
     "EVA_HINDSIGHT_POSTGRES_PASSWORD_FILE_HOST",
+    "EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
 )
 HOST_DIRECTORY_SETTING_NAMES = (
     "EVA_CODEX_AUTH_DIR",
     "EVA_MODEL_ACCESS_LEASE_DIR",
     "EVA_HINDSIGHT_ACCESS_DIR",
+    "EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST",
 )
 
 
@@ -310,10 +318,13 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError("EVA_LIVING_CORE_IMAGE must use an exact sha256 digest")
     if not re.fullmatch(r"[0-9a-f]{64}", values["EVA_DASHBOARD_RELEASE_SHA256"]):
         raise RuntimeError("EVA_DASHBOARD_RELEASE_SHA256 must be a lowercase sha256")
-    if values["EVA_DASHBOARD_RELEASE_SHA256"] != values["EVA_LIVING_CORE_IMAGE"].rsplit(
-        "sha256:", 1
-    )[-1]:
-        raise RuntimeError("EVA_DASHBOARD_RELEASE_SHA256 must match the Living Core image")
+    if (
+        values["EVA_DASHBOARD_RELEASE_SHA256"]
+        != values["EVA_LIVING_CORE_IMAGE"].rsplit("sha256:", 1)[-1]
+    ):
+        raise RuntimeError(
+            "EVA_DASHBOARD_RELEASE_SHA256 must match the Living Core image"
+        )
     for image_setting in (
         "EVA_POSTGRES_IMAGE",
         "EVA_HINDSIGHT_POSTGRES_IMAGE",
@@ -324,13 +335,17 @@ def _validate_configuration(values: dict[str, str]) -> None:
     if values["EVA_FILE_BATCH_ROOT"] != "/var/lib/eva/work":
         raise RuntimeError("EVA_FILE_BATCH_ROOT must preserve /var/lib/eva/work")
     if values["EVA_STACK_WORK_VOLUME"] != MANAGED_WORK_VOLUME:
-        raise RuntimeError(f"EVA_STACK_WORK_VOLUME must be exactly {MANAGED_WORK_VOLUME}")
+        raise RuntimeError(
+            f"EVA_STACK_WORK_VOLUME must be exactly {MANAGED_WORK_VOLUME}"
+        )
     if values["EVA_STACK_POSTGRES_VOLUME"] != MANAGED_POSTGRES_VOLUME:
         raise RuntimeError(
-            "EVA_STACK_POSTGRES_VOLUME must be exactly "
-            f"{MANAGED_POSTGRES_VOLUME}"
+            f"EVA_STACK_POSTGRES_VOLUME must be exactly {MANAGED_POSTGRES_VOLUME}"
         )
-    if values["EVA_STACK_HINDSIGHT_POSTGRES_VOLUME"] != MANAGED_HINDSIGHT_POSTGRES_VOLUME:
+    if (
+        values["EVA_STACK_HINDSIGHT_POSTGRES_VOLUME"]
+        != MANAGED_HINDSIGHT_POSTGRES_VOLUME
+    ):
         raise RuntimeError(
             "EVA_STACK_HINDSIGHT_POSTGRES_VOLUME must be exactly "
             f"{MANAGED_HINDSIGHT_POSTGRES_VOLUME}"
@@ -408,7 +423,8 @@ def _validate_configuration(values: dict[str, str]) -> None:
             "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
         )
     if not any(
-        recipient.strip() for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
+        recipient.strip()
+        for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")
     ):
         raise RuntimeError("Eva durable-goal recipients must be preserved")
     for setting in (
@@ -425,22 +441,14 @@ def _validate_configuration(values: dict[str, str]) -> None:
     if recall_budget not in {"low", "mid", "high"}:
         raise RuntimeError("EVA_HINDSIGHT_RECALL_BUDGET is invalid")
     try:
-        recall_max_tokens = int(
-            values.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048")
-        )
-        recall_node_budget = int(
-            values.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40")
-        )
+        recall_max_tokens = int(values.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048"))
+        recall_node_budget = int(values.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40"))
     except ValueError as error:
         raise RuntimeError("Eva Hindsight recall configuration is invalid") from error
     if not 2_000 <= recall_max_tokens <= 4_000:
-        raise RuntimeError(
-            "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
-        )
+        raise RuntimeError("EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000")
     if not 20 <= recall_node_budget <= 100:
-        raise RuntimeError(
-            "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
-        )
+        raise RuntimeError("EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100")
 
 
 def load_core_b_plan(
@@ -491,6 +499,25 @@ def load_core_b_plan(
         setting_name="EVA_IDENTITY_PACK_TRUST_FILE_HOST",
         owner_uid=runtime_uid,
     )
+    _preflight_host_secret(
+        values["EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST"],
+        setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
+        owner_uid=runtime_uid,
+    )
+    try:
+        RuntimeResourceBudget.from_bytes(
+            read_private_runtime_file_bytes(
+                values["EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST"],
+                setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST",
+                effective_uid=runtime_uid,
+            ),
+            expected_tenant_id=values["EVA_RUNTIME_TENANT_ID"],
+            expected_installation_id=values["EVA_RUNTIME_INSTALLATION_ID"],
+        )
+    except (RuntimeError, RuntimeResourceBudgetError) as error:
+        raise RuntimeError(
+            "Eva managed B runtime resource budget is invalid"
+        ) from error
     try:
         identity_trust = load_identity_pack_trust_binding(
             Path(values["EVA_IDENTITY_PACK_TRUST_FILE_HOST"])
@@ -548,6 +575,13 @@ def load_core_b_plan(
         group_gid=MODEL_AUTHORITY_GID,
         required_mode=0o700,
     )
+    _preflight_host_directory(
+        values["EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST"],
+        setting_name="EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST",
+        owner_uid=runtime_uid,
+        group_gid=runtime_uid,
+        required_mode=0o700,
+    )
     return CoreBPlan(
         tuple(sorted(values.items())),
         hashlib.sha256(snapshot).hexdigest(),
@@ -588,7 +622,9 @@ def verify_docker_endpoint(
 ) -> None:
     expected_context = plan.value("EVA_B_DOCKER_CONTEXT")
     if observed_context != expected_context:
-        raise RuntimeError("Docker returned a different context than the explicit B plan")
+        raise RuntimeError(
+            "Docker returned a different context than the explicit B plan"
+        )
     expected = plan.value("EVA_B_DOCKER_DAEMON")
     if observed_daemon != expected:
         raise RuntimeError(
@@ -644,11 +680,16 @@ def _verify_service_labels(
     expected_services: frozenset[str],
     graph_name: str,
 ) -> None:
-    if not isinstance(labels_by_service, dict) or set(labels_by_service) != expected_services:
+    if (
+        not isinstance(labels_by_service, dict)
+        or set(labels_by_service) != expected_services
+    ):
         raise RuntimeError(f"managed B does not contain its {graph_name}")
     for service_name, labels in labels_by_service.items():
         if not isinstance(labels, dict):
-            raise RuntimeError(f"managed B service {service_name} has no verifiable labels")
+            raise RuntimeError(
+                f"managed B service {service_name} has no verifiable labels"
+            )
         verify_current_management(plan, labels)
 
 
@@ -732,7 +773,9 @@ def _verified_docker_daemon(plan: CoreBPlan) -> str:
     try:
         contexts = json.loads(context_raw)
     except json.JSONDecodeError as error:
-        raise RuntimeError("Docker context returned invalid endpoint metadata") from error
+        raise RuntimeError(
+            "Docker context returned invalid endpoint metadata"
+        ) from error
     if not isinstance(contexts, list) or len(contexts) != 1:
         raise RuntimeError("Docker context read did not return exactly one context")
     context = contexts[0]
@@ -742,8 +785,7 @@ def _verified_docker_daemon(plan: CoreBPlan) -> str:
     endpoints = context.get("Endpoints")
     observed_daemon = (
         endpoints.get("docker", {}).get("Host")
-        if isinstance(endpoints, dict)
-        and isinstance(endpoints.get("docker"), dict)
+        if isinstance(endpoints, dict) and isinstance(endpoints.get("docker"), dict)
         else None
     )
     if not isinstance(observed_context, str) or not isinstance(observed_daemon, str):
@@ -794,7 +836,9 @@ def observe_managed_b_services(plan: CoreBPlan) -> None:
         if not isinstance(labels, dict):
             raise RuntimeError("managed B container has no verifiable labels")
         if labels.get(COMPOSE_PROJECT_LABEL) != plan.value("EVA_B_COMPOSE_PROJECT"):
-            raise RuntimeError("managed B container belongs to a different Compose project")
+            raise RuntimeError(
+                "managed B container belongs to a different Compose project"
+            )
         service = labels.get(COMPOSE_SERVICE_LABEL)
         if not isinstance(service, str):
             raise RuntimeError("managed B container has no Compose service label")

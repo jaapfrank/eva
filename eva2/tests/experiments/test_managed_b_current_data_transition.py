@@ -62,14 +62,16 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"--exit-on-error"' in source
     assert '"--no-owner"' in source
     assert '"--no-privileges"' in source
-    assert '"down", "--volumes", "--remove-orphans"' in source
+    assert '"down",' in source
+    assert '"--volumes",' in source
+    assert '"--remove-orphans",' in source
     assert "--clone-current-route" in source
     assert "--core-image" in source
     assert "candidate core image must be an immutable local digest reference" in source
     assert "attempts: int = 3" in source
     assert "--retain-slot" in source
-    assert 'RETAINED_PROJECT = "eva2-managed-b-slot2"' in source
-    assert 'RETAINED_PORT = 44709' in source
+    assert 'RETAINED_STAGING = STAGING_PARENT / "managed-b-slot2"' in source
+    assert "port = 44707 + retained_slot_number" in source
     assert "plaintextDumpsRetained" in source
     assert "CURRENT_ROUTE_HINDSIGHT_NAMESPACE" in source
     assert "retained managed-B Docker volume already exists" in source
@@ -77,7 +79,9 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"sourceRuntimeScope": "legacy-live-test"' in source
     assert '"EVA_DASHBOARD_TENANT_ID"' in source
     assert '"EVA_DASHBOARD_INSTALLATION_ID"' in source
-    assert 'if environment_file.exists() and not keep_retained:' in source
+    assert '"EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST"' in source
+    assert '"EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST"' in source
+    assert "if environment_file.exists() and not keep_retained:" in source
     assert "docker stop eva2-candidate" not in source
     assert "docker rm eva2-candidate" not in source
     assert "docker volume rm eva2-candidate" not in source
