@@ -1,0 +1,57 @@
+{
+  "contract": "EvaPerformanceComplexityPc01OpenAiEndpointTimeoutConsolidation/v1",
+  "recordedAt": "2026-08-29T18:33:23Z",
+  "sourceCommit": "9a1f9616bc9b6a17399f3bc0346df5d4ae3fde94",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedEndpointValidator": "responses_base_url",
+    "consumers": [
+      "ordinary OpenAI Responses transport",
+      "sealed tool-free child provider"
+    ],
+    "preservedRouteSpecificErrors": true,
+    "lateTimedOutRequestClosesTransport": true,
+    "lateTimedOutResponseClosesStream": true,
+    "namedCloseWorkerIsIncludedInLeakGate": true,
+    "netProductPhysicalLines": -8
+  },
+  "verification": {
+    "exactCandidateEnvironment": {
+      "requirementsLockSha256": "66d30604d6b818bad41c61ff003a482badc84401b6b4c5d89796a64f38245f02",
+      "temporaryEnvironmentRemoved": true
+    },
+    "transportAndChildProviderTests": {
+      "passed": 40,
+      "failed": 0,
+      "logSha256": "d649df7cfef3debaab95de6e8830644f001c69fd938c1e4e3162da11d1e6be8e"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83163,
+      "productManifestSha256": "fb3fa092ef087e9e1871d310720ffdd41466ca0e22f038bf8358d7008ee9dad9"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83155,
+      "productManifestSha256": "638d509093af0603ebbde0732800bf9e590c4df4b51995d1803f57369530c1d9",
+      "livingCorePhysicalLines": 82562,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8155,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No model authority, endpoint allowance, credential scope or retry was added.",
+    "No live model call was made and no running Eva1 or Eva2 component was changed."
+  ]
+}
