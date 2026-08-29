@@ -1,0 +1,73 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T15:25:26+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "03553a215f2ff98b1f4bcd3bb9534f167520f320",
+    "conversationActionsSha256": "206cb5fc9b36a03b764768c81d29640377693ad091364923b10848bbf3e64999"
+  },
+  "change": {
+    "description": "Personal exploration, prototype and release workers now share one completion, projection and failure-transition lifecycle while retaining three explicit artifact payload branches.",
+    "productFilesChanged": 1,
+    "productLinesAdded": 107,
+    "productLinesDeleted": 140,
+    "netProductPhysicalLines": -33,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88913,
+    "productPhysicalLinesAfter": 88880,
+    "productManifestSha256": "c564bf1aa05cc3248d067909141d300e84d3df6cc0392bcf5c61c25797449d11",
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13880,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "personalWorkContractTestsPassed": 29,
+    "personalWorkContractTestsDurationSeconds": 0.15,
+    "personalWorkContractLogSha256": "75d33f71a7383ed564f8369917267f478585257aed425c840de32d0b5601dfde",
+    "postgresVersion": "16.13",
+    "postgresSchemaRevision": "4e_0006_memory_outbox_erasure",
+    "postgresProgressionStatus": "passed",
+    "postgresPersonalEventCount": 10,
+    "postgresConversationLinked": true,
+    "postgresFinalPhase": "release_ready",
+    "postgresEventTypes": [
+      "PERSONAL_INTENT_ADOPTED",
+      "PERSONAL_EXPLORATION_CLAIMED",
+      "PERSONAL_EXPLORATION_COMPLETED",
+      "PERSONAL_EXPLORATION_PROJECTED",
+      "PERSONAL_PROTOTYPE_CLAIMED",
+      "PERSONAL_PROTOTYPE_COMPLETED",
+      "PERSONAL_PROTOTYPE_PROJECTED",
+      "PERSONAL_PRODUCT_RELEASE_CLAIMED",
+      "PERSONAL_PRODUCT_RELEASE_COMPLETED",
+      "PERSONAL_PRODUCT_RELEASE_READY"
+    ],
+    "postgresProgressionLogSha256": "a292e2205b2eaad6d2dbbceda86a4b27412755579186461361b249aa244eff9d",
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1Restarts": 0,
+    "liveEva1HealthFollowupHttp": [
+      200,
+      200
+    ],
+    "liveEva2ReadyHttp": 200
+  },
+  "discoveries": [
+    "The old postgres_gate fixture intentionally seeds a 4B anchor and therefore conflicts with the current empty-catalog admission boundary before this progression starts.",
+    "The old schema facade omits current mandatory tenant and installation anchor fields, so the disposable probe seeded those current fields explicitly.",
+    "The first probe had no conversation scaffold; the successful progression created it through Eva's own timeline API before linking the personal intent.",
+    "One live Eva1 health request timed out during evidence collection; two immediate follow-up requests returned HTTP 200 and the service remained active with zero restarts."
+  ],
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "The PostgreSQL progression used synthetic data in one temporary database and did not touch live Eva data.",
+    "This source consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Consolidate the repeated completed-unprojected and latest-state reconstruction of the same three personal-work stores without changing their durable protocol."
+}
