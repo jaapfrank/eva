@@ -267,6 +267,12 @@ stil half-geconfigureerd.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
+  De one-time invoer en private filegrens staan nu voor model, Telegram, Home
+  Assistant en e-mail: alleen een al geselecteerde capability mag schrijven,
+  ieder slot is write-once en de browser krijgt uitsluitend een vaste
+  secretreferentie terug. Een halve bundle blijft `needs_help`; waarde, hash,
+  lengte en hostpad staan niet in status of metadata. Rotatie, verwijdering,
+  scopes en echte providerreadback ontbreken nog, dus IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
