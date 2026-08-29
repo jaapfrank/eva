@@ -1,0 +1,86 @@
+{
+  "contract": "EvaMemoryStorageBudgetProof/v1",
+  "limits": {
+    "bytes_per_person": 1048576,
+    "records_per_person": 100,
+    "retention_days": 7
+  },
+  "non_claims": [
+    "geen live Hindsight- of productiegegevens gewijzigd",
+    "nog geen quota per groep, project of hele installatie",
+    "nog geen volledige verwijdering van brongesprekken of back-ups"
+  ],
+  "postgres": {
+    "byte_admission_utf8_bytes": 600000,
+    "byte_limit_blocked_before_provider": true,
+    "capacity_released_only_after_removal_ack": true,
+    "concurrent_final_admitted": 1,
+    "concurrent_final_attempts": 8,
+    "record_limit_final_used": 100,
+    "removal_crash_reclaimed": true,
+    "restart_reloaded_reservations": true,
+    "server_version": "16.13"
+  },
+  "privacy": {
+    "budget_events_store_content": false,
+    "principal_identifier_stored_as_sha256": true
+  },
+  "source_commit": "052195ee8f77b687e5d43eef8be258df0550c37e",
+  "source_files": [
+    {
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "bd01fd1d143167f0ff3c8dca3630228e1d568e5e4a2e8e3cba3d0e415eb1a3ff"
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py",
+      "sha256": "6b2986a59948ddbae5ea7d7c96bb651bab08cc894684dabf4a09f274b304a6a4"
+    },
+    {
+      "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
+      "sha256": "d5d078046fe7874d6eabf5471ee9292f4b39463ebdc2d59e9ee1e8c97fbfcec9"
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "sha256": "48729f12005d30738a33752927b2dda31c5aa93ea5dea380929e6995b00bf421"
+    },
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "dea285e73105abdf8ca369b5a9e10d7c11a907390b33e0a969e922221931e64a"
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "7e126d6752a46875a9bbcef96629eb481ec7838de69e8c186aeeecf27059a2d9"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "9981dbb639b10b2246c54e7e9e9dd84ef4eeb1d8ff7bd3518b091399ac1c7d38"
+    },
+    {
+      "path": "tests/application/test_memory_background.py",
+      "sha256": "7c997b289c7c7214f736ccde60be84c4eda79b351deec9c20a52f64a72556634"
+    },
+    {
+      "path": "tests/bootstrap/test_memory_provenance.py",
+      "sha256": "a57c36e996bd9d15490d06d1d7e12e6e8f6e05571ed2ac5b772bbdaa60860ebd"
+    },
+    {
+      "path": "tests/postgres/test_operational_timeline.py",
+      "sha256": "fcf800257b24824c26f2b03a0416f28f068e9274dd6941dedb48c201b3ad8ea9"
+    },
+    {
+      "path": "tests/postgres/test_runtime_resource_usage.py",
+      "sha256": "bf56f49000ed229f421340b21239e6bd75dd554ebfa0a831ede394d92287102f"
+    },
+    {
+      "path": "tests/projection/test_hindsight.py",
+      "sha256": "f6fdb50b11badefafe8a40ee1066a2559793c68b5cb399dc59ddb7f169ed2c87"
+    },
+    {
+      "path": "tools/prove_memory_storage_budget.py",
+      "sha256": "6bbb204eb2ce7e61b081e52c36e6b783e21f3945be6787c7b4b945faeee53fc1"
+    }
+  ],
+  "tests": {
+    "focused_passed": 107
+  }
+}
