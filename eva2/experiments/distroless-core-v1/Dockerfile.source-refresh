@@ -1,0 +1,14 @@
+ARG PROVEN_CORE_IMAGE
+FROM ${PROVEN_CORE_IMAGE}
+
+ARG SOURCE_COMMIT
+ARG SOURCE_DATE_EPOCH
+LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
+      io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH} \
+      io.eva2.source-refresh="git-archive-v1"
+
+COPY --chown=65532:65532 src /opt/eva/src
+COPY --chown=65532:65532 connector_sdk /opt/eva/connector_sdk
+COPY --chown=65532:65532 alembic.ini /opt/eva/alembic.ini
+COPY --chown=65532:65532 migrations /opt/eva/migrations
+COPY --chown=65532:65532 schemas /opt/eva/schemas

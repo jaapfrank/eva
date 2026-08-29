@@ -22,6 +22,13 @@ gekopieerde bibliotheken niet altijd aan hun oorspronkelijke package koppelt.
 De Chainguardvergelijking was 0/0 als losse basis, maar bleek
 ABI-incompatibel met Python 3.12's OpenSSL-module en is functioneel afgewezen.
 
+`Dockerfile.source-refresh` maakt een latere codekandidaat zonder de bewezen
+dependencylaag opnieuw te downloaden of installeren. De basis moet als exacte
+lokale digest worden opgegeven. De context komt uitsluitend uit een schone
+Git-archive en vervangt alleen Eva-bron, connector-SDK, migraties en schema's.
+De Dockerfile bevat bewust geen `RUN`, package-manager, shell of netwerkstap.
+Een bronrefresh telt pas na import-, migratie-, runtime- en 0/0-scanbewijs.
+
 De resterende drie Pythonbevindingen komen allemaal uit `cryptography 46.0.5`.
 De kandidaat installeert daarom uitsluitend de officiële abi3-wheel van
 `cryptography 50.0.1`, gebonden aan SHA-256
