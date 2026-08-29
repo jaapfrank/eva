@@ -25,6 +25,10 @@ from eva.operations.installer_profile_workflow import (
     InstallerProfileWorkflow,
     InstallerProfileWorkflowError,
 )
+from eva.operations.installer_secret_store import (
+    InstallerSecretStore,
+    InstallerSecretStoreError,
+)
 
 
 def _loopback_host(value: str) -> str:
@@ -62,6 +66,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     parser.add_argument("--identity-workspace", type=Path)
     parser.add_argument("--profile-workspace", type=Path)
     parser.add_argument("--capability-workspace", type=Path)
+    parser.add_argument("--secret-workspace", type=Path)
     args = parser.parse_args(argv)
     if not 1024 <= args.port <= 65535:
         parser.error("installer port must be between 1024 and 65535")
@@ -84,6 +89,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     identity_lifecycle = None
     profile_workflow = None
     capability_workflow = None
+    secret_store = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -111,7 +117,16 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             capability_workflow = InstallerCapabilityWorkflow(
                 workspace=_private_workspace(args.capability_workspace)
             )
-    except (InstallerProfileWorkflowError, InstallerCapabilityWorkflowError, OSError):
+        if args.secret_workspace is not None:
+            secret_store = InstallerSecretStore(
+                workspace=_private_workspace(args.secret_workspace)
+            )
+    except (
+        InstallerProfileWorkflowError,
+        InstallerCapabilityWorkflowError,
+        InstallerSecretStoreError,
+        OSError,
+    ):
         print(
             json.dumps(
                 {"status": "failed", "error": "installer workspace is invalid"},
@@ -128,6 +143,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
+            secret_store=secret_store,
         ),
         host=args.host,
         port=args.port,

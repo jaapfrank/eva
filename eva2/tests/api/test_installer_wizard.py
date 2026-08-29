@@ -14,6 +14,7 @@ from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
+from eva.operations.installer_secret_store import InstallerSecretStore
 
 
 def _receipt(*, status: str = "blocked") -> dict[str, object]:
@@ -43,6 +44,7 @@ def _client(
     identity_lifecycle: InstallerIdentityLifecycle | None = None,
     profile_workflow: InstallerProfileWorkflow | None = None,
     capability_workflow: InstallerCapabilityWorkflow | None = None,
+    secret_store: InstallerSecretStore | None = None,
 ) -> TestClient:
     return TestClient(
         create_installer_wizard(
@@ -51,6 +53,7 @@ def _client(
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
+            secret_store=secret_store,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -136,6 +139,10 @@ def test_wizard_requires_one_time_bootstrap_before_any_read() -> None:
     assert {item["state"] for item in capability_status.json()["steps"]} == {
         "unavailable"
     }
+    secret_status = client.get("/internal/v1/onboarding/secrets/status")
+    assert secret_status.status_code == 200
+    assert secret_status.json()["enabled"] is False
+    assert {item["state"] for item in secret_status.json()["slots"]} == {"unavailable"}
 
 
 def test_wizard_rejects_reused_wrong_or_cross_origin_bootstrap() -> None:
@@ -820,3 +827,174 @@ def test_wizard_blocks_capability_choices_when_platform_preflight_is_blocked(
     )
     assert denied.status_code == 409
     assert list(workspace.iterdir()) == []
+
+
+def test_wizard_stores_selected_connector_secret_once_without_returning_it(
+    private_tmp_path: Path,
+) -> None:
+    capability_workspace = private_tmp_path / "secret-capabilities"
+    secret_workspace = private_tmp_path / "secrets"
+    capability_workspace.mkdir(mode=0o700)
+    secret_workspace.mkdir(mode=0o700)
+    capabilities = InstallerCapabilityWorkflow(
+        workspace=capability_workspace,
+        clock=lambda: "2026-08-29T04:20:00Z",
+    )
+    secrets = InstallerSecretStore(
+        workspace=secret_workspace,
+        clock=lambda: "2026-08-29T04:21:00Z",
+    )
+    bootstrap = InstallerBootstrap(token="n" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=capabilities,
+        secret_store=secrets,
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "n" * 43}).status_code
+        == 204
+    )
+    page = client.get("/")
+    assert "Eenmalige toegang invoeren" in page.text
+    assert 'autocomplete="new-password"' in page.text
+    assert "localStorage" not in page.text
+    assert "sessionStorage" not in page.text
+    assert "window.__evaSecretEnabled=true" in page.text
+    origin = {"origin": "http://127.0.0.1"}
+
+    not_selected = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": "synthetic-telegram-token-123456789"},
+        headers=origin,
+    )
+    assert not_selected.status_code == 409
+    selected = client.post(
+        "/internal/v1/onboarding/capabilities/select",
+        json={"step_id": "telegram", "wanted": True},
+        headers=origin,
+    )
+    assert selected.status_code == 200
+    cross_origin = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": "synthetic-telegram-token-123456789"},
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert cross_origin.status_code == 403
+    extra_field = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": "synthetic-telegram-token-123456789", "ready": True},
+        headers=origin,
+    )
+    assert extra_field.status_code == 422
+
+    secret = "synthetic-telegram-token-123456789"
+    stored = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": secret},
+        headers=origin,
+    )
+    assert stored.status_code == 200
+    assert stored.json() == {
+        "contract": "EvaInstallerSecretStored/v1",
+        "slot_id": "telegram",
+        "state": "present",
+        "reference": "installer-secret://telegram/v1",
+        "created_at": "2026-08-29T04:21:00Z",
+        "provider_verified": False,
+        "secret_returned": False,
+    }
+    assert secret not in stored.text
+    assert (
+        client.get("/internal/v1/onboarding/secrets/telegram/read").status_code == 404
+    )
+    duplicate = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": secret},
+        headers=origin,
+    )
+    assert duplicate.status_code == 409
+
+    next_bootstrap = InstallerBootstrap(
+        token="o" * 43, created_at=2.0, clock=lambda: 2.0
+    )
+    restarted = _client(
+        next_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=InstallerCapabilityWorkflow(workspace=capability_workspace),
+        secret_store=InstallerSecretStore(workspace=secret_workspace),
+    )
+    assert (
+        restarted.post("/internal/v1/bootstrap", json={"token": "o" * 43}).status_code
+        == 204
+    )
+    status = restarted.get("/internal/v1/onboarding/secrets/status")
+    assert status.status_code == 200
+    assert secret not in status.text
+    telegram = next(
+        item for item in status.json()["slots"] if item["slot_id"] == "telegram"
+    )
+    assert telegram == {
+        "slot_id": "telegram",
+        "label": "Telegram",
+        "state": "present",
+        "eligible": True,
+        "reference": "installer-secret://telegram/v1",
+        "created_at": "2026-08-29T04:21:00Z",
+    }
+    assert status.json()["non_claims"][0].endswith("hostpad.")
+
+
+def test_wizard_rejects_oversized_or_blocked_secret_intake(
+    private_tmp_path: Path,
+) -> None:
+    capability_workspace = private_tmp_path / "blocked-secret-capabilities"
+    secret_workspace = private_tmp_path / "blocked-secrets"
+    capability_workspace.mkdir(mode=0o700)
+    secret_workspace.mkdir(mode=0o700)
+    capabilities = InstallerCapabilityWorkflow(
+        workspace=capability_workspace,
+        clock=lambda: "2026-08-29T04:30:00Z",
+    )
+    capabilities.select(step_id="telegram", wanted=True)
+    bootstrap = InstallerBootstrap(token="y" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        capability_workflow=capabilities,
+        secret_store=InstallerSecretStore(workspace=secret_workspace),
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "y" * 43}).status_code
+        == 204
+    )
+    denied = client.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        json={"secret": "synthetic-telegram-token-123456789"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert denied.status_code == 409
+    assert list(secret_workspace.iterdir()) == []
+
+    ready_bootstrap = InstallerBootstrap(
+        token="x" * 43, created_at=2.0, clock=lambda: 2.0
+    )
+    ready = _client(
+        ready_bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=capabilities,
+        secret_store=InstallerSecretStore(workspace=secret_workspace),
+    )
+    assert (
+        ready.post("/internal/v1/bootstrap", json={"token": "x" * 43}).status_code
+        == 204
+    )
+    oversized = ready.post(
+        "/internal/v1/onboarding/secrets/telegram/store",
+        content=b'{"secret":"' + (b"a" * 13_000) + b'"}',
+        headers={
+            "origin": "http://127.0.0.1",
+            "content-type": "application/json",
+        },
+    )
+    assert oversized.status_code == 413
+    assert list(secret_workspace.iterdir()) == []
