@@ -15,7 +15,7 @@ candidate_source = candidate_root / "src"
 if candidate_source.is_dir() and (candidate_root / "connector_sdk").is_dir():
     sys.path[:0] = [str(candidate_source), str(candidate_root)]
 
-from eva.adapters.connectors.playwright_mcp_action import (  # noqa: E402
+from tests.fixtures.browser.playwright_mcp_action import (  # noqa: E402
     PlaywrightFixtureStateAdapter,
     PlaywrightMcpActionProfile,
     PlaywrightMcpClickAdapter,

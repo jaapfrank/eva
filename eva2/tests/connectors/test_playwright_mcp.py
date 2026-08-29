@@ -11,7 +11,7 @@ from typing import Any, Iterator, Literal
 
 import pytest
 
-from eva.adapters.connectors.playwright_mcp import (
+from tests.fixtures.browser.playwright_mcp import (
     PLAYWRIGHT_MCP_AMD64_DIGEST,
     PLAYWRIGHT_NAVIGATE_TOOL_SHA256,
     PLAYWRIGHT_SERVER_VERSION,

@@ -73,16 +73,15 @@ from eva.operations.action_chain_provider_registry import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPERIMENT = ROOT / "experiments" / "playwright-mcp-action-v1"
-PROFILE_PATH = EXPERIMENT / "worker-profile.json"
-WORKER_PATH = ROOT / "src/eva/adapters/connectors/playwright_mcp_worker.py"
+PROFILE_PATH = ROOT / "tests/fixtures/browser/worker-profile.json"
+WORKER_PATH = ROOT / "tests/fixtures/browser/playwright_mcp_worker.py"
 EFFECT_INPUT_SHA256 = "74cf02212aa6a14edc59279827695ccbc7ce87fe4622fde034d69676e8785db0"
 EFFECT_OUTPUT_SHA256 = "6a8f6d037c157dc18a7bc44608f0b79ccb574e4099c3804a7b232d25ae62c691"
 READBACK_INPUT_SHA256 = "7300325716eea0c03f68384fe15bcf91aad459bb93a5b3f68b3cb8ae2b955cb3"
 READBACK_OUTPUT_SHA256 = "c332825e9e133dcea610e33ea881587bad6f2248ab40e2dcd2abb47415997fa9"
 SANDBOX_SHA256 = "f3e99ea7a5bc6691771f2d0b4f50d41fa838d47ed7c35c3f8d98959bd453dd9c"
 RESOURCE_ID = "browser_fixture.eva_action_a02"
-WORKER_SHA256 = "9578c4598b008f9b1e0dbc9d704b8d5fdfd37ee3c3a5a5f7c65ba80d59003a15"
+WORKER_SHA256 = "bf70068762a8ccf6e512f2b390d78cdbe8ff9c0921bb8940524c5f177c6f6b1b"
 _ORIGINAL_EFFECT_AUTHORITY = effect_fixtures._effect_authority
 
 

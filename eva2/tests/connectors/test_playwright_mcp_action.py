@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from eva.adapters.connectors.playwright_mcp import PLAYWRIGHT_MCP_AMD64_DIGEST
-from eva.adapters.connectors.playwright_mcp_action import (
+from tests.fixtures.browser.playwright_mcp import PLAYWRIGHT_MCP_AMD64_DIGEST
+from tests.fixtures.browser.playwright_mcp_action import (
     PLAYWRIGHT_CLICK_TOOL_SHA256,
     PlaywrightMcpActionError,
     PlaywrightMcpActionProfile,
