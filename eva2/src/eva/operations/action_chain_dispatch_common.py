@@ -74,6 +74,53 @@ def utc_now_second() -> datetime:
     return datetime.now(UTC).replace(microsecond=0)
 
 
+class PostgresActionChainConnectorExecutor:
+    """Shared store, dispatcher and call-once wiring for action-chain I/O."""
+
+    _dispatcher_factory: Callable[..., Any]
+    _result_store_factory: Callable[..., Any]
+    _conflict: type[Exception]
+    _claim_label: str
+    _recording_subject: str
+
+    def __init__(
+        self,
+        engine: Any,
+        scope: TimelineScope,
+        *,
+        provider_registry: Any,
+        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
+        clock: Callable[[], datetime] | None = None,
+    ) -> None:
+        self._dispatcher = self._dispatcher_factory(
+            engine, scope, provider_registry=provider_registry, role=role
+        )
+        self._results = self._result_store_factory(engine, scope, role=role)
+        self._clock = clock or utc_now_second
+
+    def _execute_connector_once(
+        self,
+        operation_id: UUID,
+        *,
+        claim_provider: Callable[[], Any],
+        now: datetime,
+        timeout_seconds: float,
+        runner: Callable[..., Any],
+    ) -> tuple[Literal["executed", "already_started"], Any, Any | None]:
+        return execute_connector_once(
+            operation_id,
+            results=self._results,
+            claim_provider=claim_provider,
+            conflict=self._conflict,
+            now=now,
+            timeout_seconds=timeout_seconds,
+            clock=self._clock,
+            claim_label=self._claim_label,
+            recording_subject=self._recording_subject,
+            runner=runner,
+        )
+
+
 def require_connector_execution_inputs(now: datetime, timeout_seconds: float) -> None:
     require_utc_second(now, "now")
     if not isinstance(timeout_seconds, (int, float)) or isinstance(

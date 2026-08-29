@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.process import run_connector_process
 from eva.adapters.postgres.action_chain_effect_results import (
@@ -16,17 +14,14 @@ from eva.adapters.postgres.action_chain_effect_results import (
     StoredActionChainEffectResult,
 )
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
-from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.application.action_chain import ActionToolCatalog
 from eva.contracts.execution import EffectAttempt
 from eva.operations.action_chain_dispatch_common import (
-    execute_connector_once,
-    utc_now_second,
+    PostgresActionChainConnectorExecutor,
 )
 from eva.operations.action_chain_effect_dispatcher import (
     PostgresActionChainEffectDispatcher,
 )
-from eva.operations.action_chain_provider_registry import SealedActionProviderRegistry
 
 
 @dataclass(frozen=True, slots=True)
@@ -38,30 +33,14 @@ class ExecutedActionChainEffect:
     stored_result: StoredActionChainEffectResult | None
 
 
-class PostgresActionChainEffectExecutor:
+class PostgresActionChainEffectExecutor(PostgresActionChainConnectorExecutor):
     """Own the only provider-process call for a validated action-chain effect."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedActionProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-        clock: Callable[[], datetime] | None = None,
-    ) -> None:
-        self._dispatcher = PostgresActionChainEffectDispatcher(
-            engine,
-            scope,
-            provider_registry=provider_registry,
-            role=role,
-        )
-        self._results = PostgresActionChainEffectResultStore(
-            engine,
-            scope,
-            role=role,
-        )
-        self._clock = clock or utc_now_second
+    _dispatcher_factory = PostgresActionChainEffectDispatcher
+    _result_store_factory = PostgresActionChainEffectResultStore
+    _conflict = ActionChainEffectConflict
+    _claim_label = "action-chain effect"
+    _recording_subject = "provider result"
 
     def execute(
         self,
@@ -74,20 +53,15 @@ class PostgresActionChainEffectExecutor:
         """Call once after a durable marker and atomically retain the outcome."""
 
         return ExecutedActionChainEffect(
-            *execute_connector_once(
+            *self._execute_connector_once(
                 effect_intent_id,
-                results=self._results,
                 claim_provider=lambda: self._dispatcher.claim_provider_call(
                     effect_intent_id,
                     live_catalog=live_catalog,
                     now=now,
                 ),
-                conflict=ActionChainEffectConflict,
                 now=now,
                 timeout_seconds=timeout_seconds,
-                clock=self._clock,
-                claim_label="action-chain effect",
-                recording_subject="provider result",
                 runner=run_connector_process,
             )
         )
