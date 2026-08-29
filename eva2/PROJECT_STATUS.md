@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 16:21 CEST
+Laatst bijgewerkt: 29 augustus 2026, 16:31 CEST
 
 ## Heel kort
 
@@ -130,6 +130,9 @@ praktijktest zijn nog niet klaar.
   ledgeropstart. Hun elf verschillende foutmeldingen blijven exact behouden.
   48 snelle controles en alle 95 echte PostgreSQL 16.13-actionchaintests zijn
   groen; netto verdwenen nog 135 productregels.
+- Veertien duurzame gesprek-ID's gebruiken nu één canonieke afleiding. De oude
+  en nieuwe code gaven voor twee verschillende beurten alle 28 ID's bytegelijk
+  terug. Dertig gesprekactietests zijn groen; netto verdwenen 17 productregels.
 
 ## Wat nog niet klaar is
 
@@ -145,7 +148,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  88.730 productregels en mag er maximaal 75.000 hebben.
+  88.713 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -163,7 +166,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 13.730 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 13.713 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -207,6 +210,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde persoonlijke lifecycle en echte PostgreSQL-route: 33 productregels minder](evidence/product/performance-complexity-pc01-personal-lifecycle-consolidation-2026-08-29.json)
 - [Persoonsgebonden artifacts blijven zichtbaar: fout hersteld en 15 productregels minder](evidence/product/performance-complexity-pc01-personal-artifact-selection-2026-08-29.json)
 - [Gedeelde actionchain-storebasis: 135 productregels minder en 95/95 PostgreSQL-cases groen](evidence/product/performance-complexity-pc01-action-chain-store-base-consolidation-2026-08-29.json)
+- [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)

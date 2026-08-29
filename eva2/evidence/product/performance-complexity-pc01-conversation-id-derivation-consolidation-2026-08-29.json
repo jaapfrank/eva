@@ -1,0 +1,62 @@
+{
+  "contract": "PerformanceComplexityPc01ConversationIdDerivationConsolidation/v1",
+  "issuedAt": "2026-08-29T16:30:51+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "6c228ff8e7349abd326478937f89946218a04fa3",
+    "branch": "recovery/v2-containment",
+    "productManifestSha256": "f73b7b2aa304a666c6c6c1f830eb5695014f3021832f332be2b3877cf4868637"
+  },
+  "change": {
+    "summary": "Fourteen durable conversation operation and thread ID builders now share one canonical scoped derivation.",
+    "durableIdBuildersConsolidated": 14,
+    "productFilesChanged": 1,
+    "productLinesAdded": 234,
+    "productLinesDeleted": 251,
+    "netProductLines": -17,
+    "databaseSchemaChanged": false,
+    "externalContractChanged": false
+  },
+  "equivalence": {
+    "oldAndNewImplementationsExecuted": true,
+    "turnVariants": 2,
+    "identifiersPerTurn": 14,
+    "byteEqualComparisons": 28,
+    "byteEqualFailures": 0,
+    "fixedIdentifierFixtureSha256": "8da7b370f9e22d45596398d8410131e89039385908090b05843dde6ff23d8247",
+    "changedAstFunctions": 15,
+    "changedAstBoundary": "the fourteen former builders plus the new shared helper"
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88730,
+    "productPhysicalLinesAfter": 88713,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13713,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "conversationActionTestsPassed": 30,
+    "testsFailed": 0,
+    "liveEva1RoutesHttp200": 5,
+    "liveEva2ReadyHttp200": true
+  },
+  "logs": {
+    "ruffSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "conversationActionTestsSha256": "e08697013aefdfe535bb20471ca2a6e8962ba5aaf6448885a8cfff435f2c956c",
+    "oldNewEquivalenceSha256": "77c63e8d1ba46698e047bd152e41b1627c62c9596cdfa64a854b5e6cb6f257a4",
+    "astChangeSetSha256": "78e90f3ef6e458e97e055484c4b7ca57dc1feec79217b5a6b91c0be2587cd423",
+    "pc01SourceMeasurementSha256": "396be182452286a36b8d2097607a84150e5da8863344f60fa510d4bbc2c6730e",
+    "liveRoutesSha256": "a724ef606ab4304276373f601ec27370c59bd2a8101457a9f4e0dff2de5299d4"
+  },
+  "nonClaims": [
+    "The 75000-line PC01 gate remains red.",
+    "This checkpoint does not change an existing durable identifier or migrate stored data.",
+    "This checkpoint does not deploy a new Eva2 image.",
+    "The full release, reboot, and seven-day acceptance gates remain open."
+  ],
+  "nextRequiredAction": "Remove or replace at least 13713 more measured product lines without weakening the source boundary or proven capabilities."
+}
