@@ -395,6 +395,76 @@ def test_storage_budget_marks_retained_then_removes_expired_document() -> None:
     assert marked == ["retained", "removed"]
 
 
+def test_explicit_erasure_calls_provider_once_and_marks_only_after_ack() -> None:
+    calls: list[str] = []
+    job = SimpleNamespace(bank_id="eva2-bank", document_id="conversation:1")
+    now = datetime(2026, 8, 29, 10, 0, tzinfo=UTC)
+
+    class Budget:
+        returned = False
+
+        def request_erasure(self, *, principal_id, document_id, now):  # type: ignore[no-untyped-def]
+            assert (principal_id, document_id) == ("jaap", "conversation:1")
+            if self.returned:
+                return None
+            self.returned = True
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, removed_job, *, now):  # type: ignore[no-untyped-def]
+            assert removed_job is job
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
+            assert (bank_id, document_id) == ("eva2-bank", "conversation:1")
+            calls.append("provider")
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+    )
+
+    assert worker.erase_document(
+        principal_id="jaap", document_id="conversation:1", now=now
+    )
+    assert not worker.erase_document(
+        principal_id="jaap", document_id="conversation:1", now=now
+    )
+    assert calls == ["leased", "provider", "marked"]
+
+
+def test_explicit_erasure_keeps_durable_lease_when_provider_fails() -> None:
+    calls: list[str] = []
+    job = SimpleNamespace(bank_id="eva2-bank", document_id="conversation:1")
+
+    class Budget:
+        def request_erasure(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+            raise RuntimeError("temporary delete failure")
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+    )
+
+    with pytest.raises(RuntimeError, match="temporary delete failure"):
+        worker.erase_document(
+            principal_id="jaap",
+            document_id="conversation:1",
+            now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
+        )
+    assert calls == ["leased", "provider"]
+
+
 def test_poison_retain_stops_after_three_attempts() -> None:
     attempts = 0
 

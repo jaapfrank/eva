@@ -18,6 +18,10 @@ from eva.adapters.postgres.runtime_resource_usage import (
     PostgresDailyReflectionBudget,
     PostgresMemoryStorageBudget,
 )
+from eva.adapters.postgres.operational_timeline import (
+    OperationalTimelineError,
+    operational_events,
+)
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -423,6 +427,100 @@ def test_memory_storage_limits_survive_races_restart_and_expiry(
     assert replacement.admitted is True
     assert replacement.person_records_used == 1
     assert replacement.person_bytes_used == 500_000
+
+
+def test_owner_erasure_is_scoped_durable_and_content_free(
+    resource_engine: Engine,
+) -> None:
+    installation_id = "memory-owner-erasure"
+    budget = _limited_storage_budget(
+        installation_id,
+        group_bytes=1_048_576,
+        installation_bytes=1_048_576,
+    )
+    storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=budget,
+        removal_lease_seconds=1,
+    )
+    document = _document(
+        "memory:owner-erasure",
+        installation_id=installation_id,
+        principal_id="person:owner",
+        content="persoonlijk geheim",
+    )
+    admission = storage.admit_memory(document, now=NOW)
+    retained = replace(document, retention_until=admission.retention_until)
+    storage.mark_retained(
+        retained,
+        MemoryRetentionReceipt(
+            bank_id="eva2-" + "e" * 32,
+            document_id=document.document_id,
+            content_sha256=hashlib.sha256(
+                document.content.encode("utf-8")
+            ).hexdigest(),
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+
+    with pytest.raises(OperationalTimelineError, match="scope differs"):
+        storage.request_erasure(
+            principal_id="person:other",
+            document_id=document.document_id,
+            now=NOW + timedelta(seconds=2),
+        )
+    job = storage.request_erasure(
+        principal_id="person:owner",
+        document_id=document.document_id,
+        now=NOW + timedelta(seconds=3),
+    )
+    assert job is not None
+    assert storage.request_erasure(
+        principal_id="person:owner",
+        document_id=document.document_id,
+        now=NOW + timedelta(seconds=3),
+    ) is None
+
+    scope = storage._scope_value  # exact disposable-PostgreSQL evidence inspection
+    with resource_engine.begin() as connection:
+        storage._scope(connection)
+        payload = connection.scalar(
+            sa.select(operational_events.c.payload).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.thread_id == job.state.thread_id,
+                operational_events.c.event_type
+                == "MEMORY_STORAGE_ERASURE_CLAIMED",
+            )
+        )
+    assert payload["data"] == {
+        "content_sha256": job.content_sha256,
+        "contract": "EvaMemoryStorageErasure/v1",
+        "document_sha256": job.document_sha256,
+        "principal_sha256": hashlib.sha256(b"person:owner").hexdigest(),
+        "reason": "explicit_request",
+        "requested_at": "2026-08-29T09:00:03Z",
+    }
+    assert document.content not in str(payload)
+
+    restarted = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=budget,
+        removal_lease_seconds=1,
+    )
+    recovered = restarted.claim_expired(now=NOW + timedelta(seconds=4))
+    assert len(recovered) == 1
+    assert recovered[0].document_id == document.document_id
+    restarted.mark_removed(recovered[0], now=NOW + timedelta(seconds=5))
+    assert restarted.request_erasure(
+        principal_id="person:owner",
+        document_id=document.document_id,
+        now=NOW + timedelta(seconds=6),
+    ) is None
 
 
 def test_group_and_project_limits_are_atomic_across_people_and_restart(

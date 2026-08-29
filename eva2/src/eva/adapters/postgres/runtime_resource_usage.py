@@ -907,6 +907,128 @@ class PostgresMemoryStorageBudget:
             )
         return data
 
+    def request_erasure(
+        self, *, principal_id: str, document_id: str, now: datetime
+    ) -> MemoryExpiryJob | None:
+        """Lease one exact principal-scoped delete before calling Hindsight."""
+
+        now = self._require_now(now)
+        principal_sha256 = self._principal_sha256(principal_id)
+        document_sha256 = self._document_sha256(document_id)
+        thread_id = f"memory-storage:{document_sha256}"
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            connection.execute(
+                sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {
+                    "key": (
+                        f"{self._scope_value.tenant_id}:"
+                        f"{self._scope_value.installation_id}:"
+                        "memory-storage:installation"
+                    )
+                },
+            )
+            row = connection.execute(
+                sa.select(operational_checkpoints)
+                .where(
+                    operational_checkpoints.c.tenant_id
+                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_checkpoints.c.thread_id == thread_id,
+                )
+                .with_for_update()
+            ).one_or_none()
+            if row is None:
+                raise OperationalTimelineError("memory erasure target does not exist")
+            state = CheckpointState(
+                thread_id=str(row.thread_id),
+                checkpoint_id=str(row.checkpoint_id),
+                operation_id=(None if row.operation_id is None else str(row.operation_id)),
+                phase=str(row.phase),  # type: ignore[arg-type]
+                status=str(row.status),  # type: ignore[arg-type]
+                retry_count=int(row.retry_count),
+                last_error_fingerprint=(
+                    None
+                    if row.last_error_fingerprint is None
+                    else bytes(row.last_error_fingerprint).hex()
+                ),
+                deadline=row.deadline,
+                revision=int(row.revision),
+                updated_at=row.updated_at,
+            )
+            initial = connection.execute(
+                sa.select(operational_events.c.payload).where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.thread_id == thread_id,
+                    operational_events.c.sequence == 1,
+                )
+            ).one_or_none()
+            initial_data = self._first_data(
+                None if initial is None else initial.payload
+            )
+            if (
+                initial_data.get("contract") != "EvaMemoryStorageAdmission/v2"
+                or initial_data.get("document_sha256") != document_sha256
+                or initial_data.get("principal_sha256") != principal_sha256
+            ):
+                raise OperationalTimelineError("memory erasure scope differs")
+            if state.phase in {"memory_storage_removing", "memory_storage_removed"}:
+                return None
+            if state.phase != "memory_storage_retained":
+                raise OperationalTimelineError(
+                    "memory erasure target is not durably retained"
+                )
+            retained_data = self._validate_retention_data(
+                self._retained_event_data(thread_id)
+            )
+            values = (
+                retained_data.get("bank_id"),
+                retained_data.get("document_id"),
+                retained_data.get("document_sha256"),
+                retained_data.get("content_sha256"),
+                retained_data.get("retention_until"),
+            )
+            if (
+                not all(isinstance(value, str) and value for value in values)
+                or values[1] != document_id
+                or values[2] != document_sha256
+            ):
+                raise OperationalTimelineError(
+                    "memory erasure deletion address is malformed"
+                )
+            leased = transition_timeline_thread(
+                connection,
+                self._scope_value,
+                thread_id=thread_id,
+                expected_revision=state.revision,
+                checkpoint_id=f"{thread_id}:erase:1",
+                phase="memory_storage_removing",
+                status="waiting_for_proof",
+                event_type="MEMORY_STORAGE_ERASURE_CLAIMED",
+                occurred_at=now,
+                deadline=now + timedelta(seconds=self._removal_lease_seconds),
+                retry_count=1,
+                data={
+                    "content_sha256": values[3],
+                    "contract": "EvaMemoryStorageErasure/v1",
+                    "document_sha256": document_sha256,
+                    "principal_sha256": principal_sha256,
+                    "reason": "explicit_request",
+                    "requested_at": self._timestamp(now),
+                },
+            )
+        return MemoryExpiryJob(
+            state=leased,
+            bank_id=values[0],
+            document_id=values[1],
+            document_sha256=values[2],
+            content_sha256=values[3],
+            retention_until=values[4],
+        )
+
     def claim_expired(
         self, *, now: datetime, limit: int = 64
     ) -> tuple[MemoryExpiryJob, ...]:

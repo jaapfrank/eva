@@ -62,6 +62,10 @@ class MemoryStorageBudgetPort(Protocol):
 
     def claim_expired(self, *, now: datetime, limit: int = 64) -> tuple[object, ...]: ...
 
+    def request_erasure(
+        self, *, principal_id: str, document_id: str, now: datetime
+    ) -> object | None: ...
+
     def mark_removed(self, job: object, *, now: datetime) -> object: ...
 
 
@@ -162,6 +166,31 @@ class SemanticMemoryColdPathWorker:
         durable_job = None if self._outbox is None else self._outbox.enqueue(document)
         self._queue.put_nowait(_RetainJob(document, durable_job=durable_job))
         return admission
+
+    def erase_document(
+        self, *, principal_id: str, document_id: str, now: datetime
+    ) -> bool:
+        """Remove one retained document now; a crash remains retryable."""
+
+        if self._storage_budget is None:
+            raise RuntimeError("memory erasure requires a durable storage budget")
+        job = self._storage_budget.request_erasure(
+            principal_id=principal_id,
+            document_id=document_id,
+            now=now,
+        )
+        if job is None:
+            return False
+        bank_id = getattr(job, "bank_id", None)
+        retained_document_id = getattr(job, "document_id", None)
+        if not isinstance(bank_id, str) or not isinstance(retained_document_id, str):
+            raise RuntimeError("memory storage budget returned an invalid erasure job")
+        self._memory.remove_conversation_document(
+            bank_id=bank_id,
+            document_id=retained_document_id,
+        )
+        self._storage_budget.mark_removed(job, now=now)
+        return True
 
     def _run(self) -> None:
         poll_seconds = min(self._idle_seconds, 1.0)
