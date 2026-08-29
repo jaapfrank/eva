@@ -15,7 +15,7 @@ from eva.adapters.postgres.portable_export import (
 )
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes
-from eva.operations.portable_export import _schema_payloads
+from tools.portable_export import _schema_payloads
 
 from test_portable_export_end_to_end import _fixture_record_sets
 

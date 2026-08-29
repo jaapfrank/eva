@@ -12,7 +12,7 @@ import pytest
 
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.application.portable_archive import RecordSetBytes, canonical_json_bytes
-from eva.operations.portable_export import publish_portable_archive
+from tools.portable_export import publish_portable_archive
 from eva.operations.portable_transport import (
     PortableTransportError,
     open_portable_transport,

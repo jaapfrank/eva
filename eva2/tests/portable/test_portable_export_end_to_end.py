@@ -15,7 +15,7 @@ from eva.application.portable_archive import (
     RecordSetBytes,
     canonical_json_bytes,
 )
-from eva.operations.portable_export import publish_portable_archive
+from tools.portable_export import publish_portable_archive
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]

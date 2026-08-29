@@ -26,7 +26,7 @@ from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.ingress import TurnEnvelope
 from eva.contracts.memory import ExperienceSourceEvent, MemoryFact
 from eva.operations.install_schema import install_schema
-from eva.operations.portable_export import export_portable_archive
+from tools.portable_export import export_portable_archive
 from tools.portable_restore import restore_column_preserving_records
 from tests.portable.restore_authority_fixture import (
     RESTORE_AUTHORITY_ARGUMENTS,

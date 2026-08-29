@@ -73,7 +73,7 @@ _PENDING_DELIVERIES = {
 
 
 def _eva2_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    return Path(__file__).resolve().parents[1]
 
 
 def _safe_source_relative_path(relative: str) -> tuple[str, ...]:
