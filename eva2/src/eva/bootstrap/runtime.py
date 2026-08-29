@@ -1314,6 +1314,15 @@ class PostgresHindsightMemoryRuntime:
             service=service,
         )
 
+    def _advanced_task_store(
+        self, tenant_id: str, installation_id: str
+    ) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            self._engine,
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+        )
+
     async def plan_tuya_to_localtuya(
         self,
         *,
@@ -1324,11 +1333,7 @@ class PostgresHindsightMemoryRuntime:
     ) -> AdvancedTaskPlan:
         if self._home_assistant_admin is None:
             raise RuntimeError("Home Assistant advanced planning is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         plan_id = advanced_plan_id(operation_id=operation_id, requested_by=principal_id)
         existing = store.find(plan_id)
         if existing is not None:
@@ -1353,11 +1358,7 @@ class PostgresHindsightMemoryRuntime:
 
         if self._home_assistant_admin is None:
             raise RuntimeError("Home Assistant advanced planning is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         current = store.load(plan_id)
         inventory = await self._home_assistant_admin.inventory()
         refreshed = TuyaToLocalTuyaPlanner().build(
@@ -1381,10 +1382,8 @@ class PostgresHindsightMemoryRuntime:
         device_id: str,
         approved_by: str,
     ) -> AdvancedTaskApproval:
-        return PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
+        return self._advanced_task_store(
+            tenant_id, installation_id
         ).approve_canary(
             plan_id=plan_id,
             plan_sha256=plan_sha256,
@@ -1414,11 +1413,7 @@ class PostgresHindsightMemoryRuntime:
 
         if self._home_assistant_localtuya is None or self._home_assistant_admin is None:
             raise RuntimeError("Home Assistant LocalTuya preflight is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         plan = store.load(plan_id)
         if plan.sha256 != plan_sha256 or plan.inventory_sha256 != inventory_sha256:
             raise RuntimeError("LocalTuya preflight has stale plan authority")
@@ -1481,11 +1476,7 @@ class PostgresHindsightMemoryRuntime:
 
         if self._home_assistant_admin is None:
             raise RuntimeError("Home Assistant LocalTuya execution is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         plan = store.load(plan_id)
         approval, preflight = store.canary_authority(
             plan_id=plan_id,
@@ -1526,11 +1517,7 @@ class PostgresHindsightMemoryRuntime:
 
         if self._home_assistant_admin is None:
             raise RuntimeError("Home Assistant LocalTuya execution is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         approval, preflight, configuration_sha256, before = (
             store.prepared_canary_context(plan_id=plan_id)
         )
@@ -1573,11 +1560,7 @@ class PostgresHindsightMemoryRuntime:
             protocol_version=protocol_version,
             entities=entities,
         )
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         _approval, preflight, expected_sha256, _before = store.prepared_canary_context(
             plan_id=plan_id
         )
@@ -1680,10 +1663,8 @@ class PostgresHindsightMemoryRuntime:
         version: str,
         approved_by: str,
     ) -> AdvancedTaskPackageApproval:
-        return PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
+        return self._advanced_task_store(
+            tenant_id, installation_id
         ).approve_package_install(
             plan_id=plan_id,
             plan_sha256=plan_sha256,
@@ -1706,10 +1687,8 @@ class PostgresHindsightMemoryRuntime:
         expected_version: str,
         approved_by: str,
     ) -> AdvancedTaskRepositoryApproval:
-        return PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
+        return self._advanced_task_store(
+            tenant_id, installation_id
         ).approve_repository_registration(
             plan_id=plan_id,
             plan_sha256=plan_sha256,
@@ -1730,11 +1709,7 @@ class PostgresHindsightMemoryRuntime:
     ) -> dict[str, object]:
         if self._home_assistant_hacs is None:
             raise RuntimeError("Home Assistant HACS execution is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         approval = store.repository_approval(
             plan_id=plan_id, approval_sha256=approval_sha256
         )
@@ -1795,11 +1770,7 @@ class PostgresHindsightMemoryRuntime:
     ) -> dict[str, object]:
         if self._home_assistant_hacs is None:
             raise RuntimeError("Home Assistant HACS execution is unavailable")
-        store = PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
+        store = self._advanced_task_store(tenant_id, installation_id)
         approval = store.package_approval(
             plan_id=plan_id, approval_sha256=approval_sha256
         )
