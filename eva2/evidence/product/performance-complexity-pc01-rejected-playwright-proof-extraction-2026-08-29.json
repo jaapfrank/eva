@@ -1,0 +1,82 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RejectedPlaywrightProofExtraction/v1",
+  "recordedAt": "2026-08-29T16:56:30Z",
+  "sourceCommit": "f00fc50ea9f090136ad87d78794b045d8ac4691f",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "movedOutOfRuntime": [
+      "playwright_mcp.py",
+      "playwright_mcp_action.py",
+      "playwright_mcp_worker.py"
+    ],
+    "reason": "These modules are used only by the rejected Playwright proof and are not imported or started by Eva's product runtime.",
+    "preservedProof": "The read and action modules are byte-identical test fixtures; the worker changes only its import path and has a separately bound test profile.",
+    "netProductPhysicalLines": -996,
+    "netProductFiles": -3
+  },
+  "verification": {
+    "allConnectorTestsOnLinuxTmp": {
+      "passed": 299,
+      "failed": 0,
+      "logSha256": "b057ed45dfa141abea8f79cc5ae3d3465aa9cea2eab4e837f3e2a56181a51da9"
+    },
+    "playwrightProofUnitTests": {
+      "passed": 37,
+      "failed": 0,
+      "logSha256": "0712ce46cf8275e241b66a20925f7da319899e36d90e7892538ecc54ab2713cf"
+    },
+    "networklessPython31214Wheel": {
+      "built": true,
+      "playwrightProofModules": 0,
+      "wheelSha256": "7887bd08ee2913d49ab053c41e35d6c98da8de34ef829b895e8e6b7039d8ec46",
+      "logSha256": "98cc6d31c63ce6580492fca877d37b7624ab74c28d884218d71105fb4b449e79"
+    },
+    "workerBoundary": {
+      "noArgumentsExitCode": 64,
+      "workerSha256": "bf70068762a8ccf6e512f2b390d78cdbe8ff9c0921bb8940524c5f177c6f6b1b"
+    },
+    "browserPostgreSqlObservation": {
+      "baseline": "4 failed because the fixture hostname is not resolvable from the test Docker environment",
+      "candidate": "the same 4 cases failed at the same external DNS boundary",
+      "baselineLogSha256": "344677598565e725456413681a8f2ec8917f5158a07f9f0dd4a20cea3cbb0188",
+      "candidateLogSha256": "28a3cecfeaaabc4bf2cef3269a48fa37b773701aab5bc76a024d52077288345a"
+    },
+    "existingReleaseGateObservation": {
+      "baseline": {"passed": 7, "failed": 20},
+      "candidate": {"passed": 7, "failed": 20},
+      "newFailedTests": 0,
+      "baselineLogSha256": "2c36f0e2cf1de65c7d1ab9835a04e89d690a083cfa65ab734ec150da23dfe775",
+      "candidateLogSha256": "052bd59334a6521c0138d3a6d1419bbe66140a2eac7647f8c4fb714966a5dd8c"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87560,
+      "productManifestSha256": "6257f16aa6ec7f166ed8e20ab1193932d125ff6a6121697e3636918e4e7e5e74"
+    },
+    "after": {
+      "productFileCount": 235,
+      "productPhysicalLines": 86564,
+      "productManifestSha256": "40658b1af0d186943aa276d5e30ba1642624d023a9be0058ab2b8b630c968750",
+      "livingCorePhysicalLines": 85971,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 11564,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The rejected Playwright image or browser provider is not promoted or release-ready.",
+    "The four Docker-DNS-blocked PostgreSQL/browser cases are not claimed green.",
+    "The pre-existing managed-release and cockpit evidence gates are not claimed green or silently resealed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector or volume was changed."
+  ]
+}
