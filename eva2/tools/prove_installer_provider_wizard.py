@@ -311,6 +311,33 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                     raise RuntimeError("wizard secret intake failed")
                 status, _, raw = _request(
                     port,
+                    "GET",
+                    "/internal/v1/onboarding/providers/status",
+                    cookie=cookie,
+                )
+                responses.append(raw)
+                provider_status = _json(raw)
+                telegram_scope = next(
+                    item
+                    for item in provider_status["slots"]  # type: ignore[union-attr]
+                    if item["slot_id"] == "telegram"
+                )
+                if (
+                    status != 200
+                    or telegram_scope["provider_scopes"]
+                    != [
+                        {
+                            "description": "Alleen de identiteit van de testbot lezen",
+                            "scope_id": "telegram.bot_identity.read",
+                        }
+                    ]
+                    or not isinstance(
+                        telegram_scope["provider_scope_manifest_sha256"], str
+                    )
+                ):
+                    raise RuntimeError("wizard provider scope differs")
+                status, _, raw = _request(
+                    port,
                     "POST",
                     "/internal/v1/onboarding/providers/telegram/verify",
                     body={"confirmation": "VERBINDING CONTROLEREN"},
@@ -385,9 +412,17 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             ):
                 raise RuntimeError("wizard provider request count differs")
             evidence_raw = evidence_files[0].read_bytes()
+            evidence_value = json.loads(evidence_raw)
             evidence_sha256 = hashlib.sha256(evidence_raw).hexdigest()
             if evidence_files[0].name != f"{evidence_sha256}.json":
                 raise RuntimeError("wizard provider evidence is not content-addressed")
+            if (
+                evidence_value.get("provider_scopes")
+                != ["telegram.bot_identity.read"]
+                or evidence_value.get("provider_scope_manifest_sha256")
+                != telegram_scope["provider_scope_manifest_sha256"]
+            ):
+                raise RuntimeError("wizard provider evidence lacks scope binding")
             forbidden = (TOKEN.encode(), str(BOT_ID).encode(), BOT_USERNAME.encode())
             if any(
                 item in evidence_raw or any(item in response for response in responses)
@@ -399,6 +434,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
         "boundaries": {
             "crossOriginWriteDenied": True,
             "providerPayloadReturned": False,
+            "providerScopeBound": True,
             "secretReturned": False,
             "secondProviderCallAfterRestart": False,
         },
@@ -408,6 +444,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             "browserSessions": 2,
             "providerRequests": 1,
             "providerVerificationReceipts": 1,
+            "scopeManifests": 1,
             "temporaryWorkspaceRemovedAfterRun": True,
             "transport": "real_http_on_127.0.0.1",
             "wizardServerProcesses": 2,

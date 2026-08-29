@@ -208,7 +208,7 @@ def test_user_can_configure_and_verify_endpoint_provider_without_value_echo(
     receipt = next(verifier.evidence_workspace.iterdir()).read_text()
     assert configuration not in receipt
     assert configured.json()["configuration_sha256"] in receipt
-    assert '"contract":"EvaInstallerProviderVerificationReceipt/v3"' in receipt
+    assert '"contract":"EvaInstallerProviderVerificationReceipt/v4"' in receipt
 
     resumed = _client(
         workflow,
@@ -358,6 +358,14 @@ def test_user_can_verify_selected_telegram_connection_without_secret_echo(
     assert telegram["can_verify"] is True
     assert telegram["secret_present"] is True
     assert telegram["confirmation"] == "VERBINDING CONTROLEREN"
+    assert telegram["provider_scopes"] == [
+        {
+            "description": "Alleen de identiteit van de testbot lezen",
+            "scope_id": "telegram.bot_identity.read",
+        }
+    ]
+    assert len(telegram["provider_scope_manifest_sha256"]) == 64
+    assert "Eva gebruikt deze toegang alleen voor:" in page.text
     assert secret not in status.text
 
     wrong_origin = client.post(
@@ -384,6 +392,10 @@ def test_user_can_verify_selected_telegram_connection_without_secret_echo(
     assert verified.json()["outcome"] == "ready"
     assert verified.json()["secret_returned"] is False
     assert verified.json()["provider_payload_returned"] is False
+    assert (
+        verified.json()["provider_scope_manifest_sha256"]
+        == telegram["provider_scope_manifest_sha256"]
+    )
     assert secret not in verified.text
     assert probe.calls == 1
     assert workflow.status().step("telegram").state == "ready"
@@ -420,6 +432,9 @@ def test_model_verification_requires_explicit_billable_confirmation(
     model = next(item for item in status["slots"] if item["slot_id"] == "model_provider")
     assert model["billable_request"] is True
     assert model["confirmation"] == "MODEL CONTROLEREN"
+    assert model["provider_scopes"][0]["scope_id"] == (
+        "model.response.generate:installer_probe"
+    )
 
     generic = client.post(
         "/internal/v1/onboarding/providers/model_provider/verify",

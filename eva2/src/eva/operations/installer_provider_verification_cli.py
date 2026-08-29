@@ -144,6 +144,9 @@ def run_installer_provider_verification(
             "evidence_sha256": result.evidence_sha256,
             "outcome": result.outcome,
             "provider_payload_retained": False,
+            "provider_scope_manifest_sha256": (
+                result.provider_scope_manifest_sha256
+            ),
             "reason_code": result.reason_code,
             "secret_returned": False,
             "slot_id": result.slot_id,

@@ -625,7 +625,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                     raise RuntimeError("secret lifecycle evidence contract is missing")
                 contracts[contract] = contracts.get(contract, 0) + 1
             expected_contracts = {
-                "EvaInstallerProviderVerificationReceipt/v3": 3,
+                "EvaInstallerProviderVerificationReceipt/v4": 3,
                 "EvaInstallerSecretInvalidationReceipt/v1": 4,
                 "EvaInstallerSecretLifecycleCompletionReceipt/v1": 4,
             }

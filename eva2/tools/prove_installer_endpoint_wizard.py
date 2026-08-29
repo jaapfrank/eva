@@ -355,6 +355,31 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                 responses.append(raw)
                 if status != 403:
                     raise RuntimeError("cross-origin configuration was not denied")
+                status, _, raw = _request(
+                    port,
+                    "GET",
+                    "/internal/v1/onboarding/providers/status",
+                    cookie=cookie,
+                )
+                responses.append(raw)
+                provider_status = _json(raw)
+                scoped_slots = {
+                    item["slot_id"]: item
+                    for item in provider_status["slots"]  # type: ignore[union-attr]
+                }
+                expected_scopes = {
+                    "home_assistant": "home_assistant.api_root.read",
+                    "email": "agentmail.inbox_identity.read",
+                }
+                if status != 200 or any(
+                    scoped_slots[slot_id]["provider_scopes"][0]["scope_id"]
+                    != scope_id
+                    or not isinstance(
+                        scoped_slots[slot_id]["provider_scope_manifest_sha256"], str
+                    )
+                    for slot_id, scope_id in expected_scopes.items()
+                ):
+                    raise RuntimeError("configured provider scopes differ")
                 for slot_id in ("home_assistant", "email"):
                     _post(
                         port,
@@ -452,11 +477,21 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                 raise RuntimeError("configured provider request count differs")
             evidence_values = [json.loads(path.read_bytes()) for path in evidence_files]
             if any(
-                value.get("contract") != "EvaInstallerProviderVerificationReceipt/v3"
+                value.get("contract") != "EvaInstallerProviderVerificationReceipt/v4"
                 or not isinstance(value.get("configuration_sha256"), str)
                 for value in evidence_values
             ):
                 raise RuntimeError("provider evidence lacks configuration binding")
+            evidence_by_slot = {value["slot_id"]: value for value in evidence_values}
+            if any(
+                evidence_by_slot[slot_id].get("provider_scopes") != [scope_id]
+                or evidence_by_slot[slot_id].get(
+                    "provider_scope_manifest_sha256"
+                )
+                != scoped_slots[slot_id]["provider_scope_manifest_sha256"]
+                for slot_id, scope_id in expected_scopes.items()
+            ):
+                raise RuntimeError("provider evidence lacks scope binding")
             evidence_raw = b"".join(path.read_bytes() for path in evidence_files)
             forbidden = (
                 HA_TOKEN.encode(),
@@ -477,6 +512,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             "configurationReturned": False,
             "crossOriginConfigurationDenied": True,
             "providerPayloadReturned": False,
+            "providerScopesBound": True,
             "secretReturned": False,
             "secondProviderCallAfterRestart": False,
         },
@@ -486,6 +522,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             "configurationBoundReceipts": 2,
             "configuredProviderRequests": 2,
             "providerKinds": ["home_assistant", "agentmail"],
+            "scopeManifests": 2,
             "temporaryWorkspaceRemovedAfterRun": True,
             "transport": "real_http_on_127.0.0.1",
             "wizardServerProcesses": 2,

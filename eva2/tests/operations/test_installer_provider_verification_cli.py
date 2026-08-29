@@ -86,6 +86,7 @@ def test_cli_marks_ready_and_outputs_only_closed_receipt_fields(
         "evidence_sha256",
         "outcome",
         "provider_payload_retained",
+        "provider_scope_manifest_sha256",
         "reason_code",
         "secret_returned",
         "slot_id",

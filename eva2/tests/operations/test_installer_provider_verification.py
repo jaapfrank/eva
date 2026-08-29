@@ -13,6 +13,7 @@ from eva.operations.installer_provider_verification import (
     InstallerProviderProbeObservation,
     InstallerProviderVerificationError,
     InstallerProviderVerifier,
+    installer_provider_scope_manifest_sha256,
 )
 from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
 from eva.operations.installer_secret_store import InstallerSecretStore
@@ -100,7 +101,7 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
         "check_id": "telegram.get_me",
         "completed_at": "2026-08-29T05:01:00Z",
         "configuration_sha256": None,
-        "contract": "EvaInstallerProviderVerificationReceipt/v3",
+        "contract": "EvaInstallerProviderVerificationReceipt/v4",
         "cost_measurement": "not_applicable",
         "duration_ms": 125,
         "input_tokens": None,
@@ -109,6 +110,10 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
         "output_tokens": None,
         "provider_operation": "read_only_identity",
         "provider_payload_retained": False,
+        "provider_scope_manifest_sha256": installer_provider_scope_manifest_sha256(
+            "telegram"
+        ),
+        "provider_scopes": ["telegram.bot_identity.read"],
         "reason_code": "verified",
         "secret_generation": 1,
         "secret_reference": "installer-secret://telegram/v1",
@@ -118,6 +123,18 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
         "usage_measurement": "not_applicable",
     }
     assert receipts[0].stat().st_mode & 0o077 == 0
+
+
+def test_provider_scope_manifests_are_closed_stable_and_slot_specific() -> None:
+    hashes = {
+        slot_id: installer_provider_scope_manifest_sha256(slot_id)
+        for slot_id in ("model_provider", "telegram", "home_assistant", "email")
+    }
+
+    assert len(set(hashes.values())) == 4
+    assert all(len(value) == 64 for value in hashes.values())
+    with pytest.raises(InstallerProviderVerificationError, match="slot is invalid"):
+        installer_provider_scope_manifest_sha256("unknown")
 
 
 @pytest.mark.parametrize(

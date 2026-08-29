@@ -234,6 +234,10 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             or inner.get("input_tokens") != 19
             or inner.get("output_tokens") != 5
             or inner.get("cost_measurement") != "not_reported_by_chatgpt_access"
+            or inner.get("provider_scopes")
+            != ["model.response.generate:installer_probe"]
+            or success.get("provider_scope_manifest_sha256")
+            != inner.get("provider_scope_manifest_sha256")
         ):
             raise RuntimeError("successful model installer proof differs")
 
@@ -278,6 +282,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
         "boundaries": {
             "completeLoginAccepted": False,
             "providerPayloadRetained": False,
+            "providerScopeBound": True,
             "refreshTokenAccepted": False,
             "secretReturned": False,
             "toolAuthorityAvailable": False,
@@ -290,6 +295,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             "measuredOutputTokens": 5,
             "operatorCliInvocations": 3,
             "providerRequests": 2,
+            "scopeManifests": 1,
             "restartAttemptProviderRequests": 0,
             "temporaryWorkspaceRemovedAfterRun": True,
             "transport": "real_http_sse_on_127.0.0.1",

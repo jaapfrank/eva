@@ -59,6 +59,31 @@ _CHECK_IDS = MappingProxyType(
         "email": "email.identity.read",
     }
 )
+_PROVIDER_SCOPES = MappingProxyType(
+    {
+        "model_provider": (
+            (
+                "model.response.generate:installer_probe",
+                "Eén kleine modelcontrole zonder tools of opslag",
+            ),
+        ),
+        "telegram": (
+            ("telegram.bot_identity.read", "Alleen de identiteit van de testbot lezen"),
+        ),
+        "home_assistant": (
+            (
+                "home_assistant.api_root.read",
+                "Alleen controleren of de Home Assistant-API bereikbaar is",
+            ),
+        ),
+        "email": (
+            (
+                "agentmail.inbox_identity.read",
+                "Alleen de gekozen inboxidentiteit controleren; geen berichten lezen",
+            ),
+        ),
+    }
+)
 _TIMESTAMP_RE = re.compile(
     r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
 )
@@ -126,6 +151,32 @@ class InstallerProviderVerificationResult:
     capability_revision: int
     capability_head_sha256: str | None
     already_in_state: bool
+    provider_scope_manifest_sha256: str
+
+
+def installer_provider_scope_manifest(slot_id: object) -> dict[str, object]:
+    """Return the closed verification-only access boundary for one provider."""
+
+    if not isinstance(slot_id, str) or slot_id not in _PROVIDER_SCOPES:
+        raise InstallerProviderVerificationError("provider verification slot is invalid")
+    scopes = _PROVIDER_SCOPES[slot_id]
+    return {
+        "contract": "EvaInstallerProviderScopeManifest/v1",
+        "credential_scope_introspection": False,
+        "mutation_allowed": False,
+        "provider_scopes": [
+            {"description": description, "scope_id": scope_id}
+            for scope_id, description in scopes
+        ],
+        "slot_id": slot_id,
+        "use_boundary": "installer_verification_only",
+    }
+
+
+def installer_provider_scope_manifest_sha256(slot_id: object) -> str:
+    return hashlib.sha256(
+        canonical_json_bytes(installer_provider_scope_manifest(slot_id))
+    ).hexdigest()
 
 
 def _utc_now() -> str:
@@ -437,12 +488,16 @@ class InstallerProviderVerifier:
                 "provider verification completion precedes start"
             )
 
+        scope_manifest = installer_provider_scope_manifest(slot_id)
+        scope_manifest_sha256 = hashlib.sha256(
+            canonical_json_bytes(scope_manifest)
+        ).hexdigest()
         receipt = {
             "billable_request_attempted": observation.billable_request_attempted,
             "check_id": observation.check_id,
             "completed_at": completed_at,
             "configuration_sha256": self.configuration_sha256_by_slot.get(slot_id),
-            "contract": "EvaInstallerProviderVerificationReceipt/v3",
+            "contract": "EvaInstallerProviderVerificationReceipt/v4",
             "cost_measurement": (
                 "not_reported_by_chatgpt_access"
                 if observation.provider_operation == "bounded_generation"
@@ -455,6 +510,10 @@ class InstallerProviderVerifier:
             "output_tokens": observation.output_tokens,
             "provider_operation": observation.provider_operation,
             "provider_payload_retained": False,
+            "provider_scope_manifest_sha256": scope_manifest_sha256,
+            "provider_scopes": [
+                item["scope_id"] for item in scope_manifest["provider_scopes"]
+            ],
             "reason_code": observation.reason_code,
             "secret_reference": reference,
             "secret_generation": secret_generation,
@@ -493,6 +552,7 @@ class InstallerProviderVerifier:
             capability_revision=transition.revision,
             capability_head_sha256=transition.head_sha256,
             already_in_state=transition.already_in_state,
+            provider_scope_manifest_sha256=scope_manifest_sha256,
         )
 
 
@@ -503,4 +563,6 @@ __all__ = [
     "InstallerProviderVerificationError",
     "InstallerProviderVerificationResult",
     "InstallerProviderVerifier",
+    "installer_provider_scope_manifest",
+    "installer_provider_scope_manifest_sha256",
 ]

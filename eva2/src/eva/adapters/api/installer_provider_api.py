@@ -24,6 +24,8 @@ from eva.operations.installer_provider_verification import (
     InstallerProviderProbe,
     InstallerProviderVerificationError,
     InstallerProviderVerifier,
+    installer_provider_scope_manifest,
+    installer_provider_scope_manifest_sha256,
 )
 from eva.operations.installer_provider_configuration import (
     PROVIDER_CONFIGURATION_SLOTS,
@@ -68,7 +70,15 @@ INSTALLER_PROVIDER_SCRIPT = r"""
         item.state === 'blocked' ? 'controle niet gelukt' :
         item.secret_present ? 'toegang aanwezig · nog niet gecontroleerd' :
         'eerst kiezen en toegang invoeren';
-      row.append(title, status);
+      const scopeTitle = document.createElement('p');
+      scopeTitle.textContent = 'Eva gebruikt deze toegang alleen voor:';
+      const scopes = document.createElement('ul');
+      item.provider_scopes.forEach((scope) => {
+        const line = document.createElement('li');
+        line.textContent = scope.description;
+        scopes.append(line);
+      });
+      row.append(title, status, scopeTitle, scopes);
       if (item.can_configure) {
         const config = document.createElement('input');
         config.type = item.slot_id === 'home_assistant' ? 'url' : 'text';
@@ -247,6 +257,7 @@ def _payload(
         configuration_present = (
             getattr(configuration, "state", None) == "configured"
         )
+        scope_manifest = installer_provider_scope_manifest(slot_id)
         rows.append(
             {
                 "available": is_available,
@@ -272,6 +283,10 @@ def _payload(
                 ),
                 "evidence_sha256": getattr(capability, "evidence_sha256", None),
                 "label": label,
+                "provider_scope_manifest_sha256": (
+                    installer_provider_scope_manifest_sha256(slot_id)
+                ),
+                "provider_scopes": scope_manifest["provider_scopes"],
                 "secret_present": secret_present,
                 "slot_id": slot_id,
                 "state": state,
@@ -285,6 +300,7 @@ def _payload(
             "De browser ontvangt geen secret of providerantwoord.",
             "Een bewaarde endpoint- of inboxinstelling komt niet terug in de browser.",
             "De modelcontrole gebruikt precies één begrensde generatie.",
+            "Deze rechten beschrijven Eva's gebruik; sommige providers kunnen een bredere toegangscode uitgeven.",
             "Een mislukte of onduidelijke controle blijft geblokkeerd.",
         ],
     }
@@ -456,6 +472,9 @@ def register_installer_provider_routes(
                 "evidence_sha256": result.evidence_sha256,
                 "outcome": result.outcome,
                 "provider_payload_returned": False,
+                "provider_scope_manifest_sha256": (
+                    result.provider_scope_manifest_sha256
+                ),
                 "reason_code": result.reason_code,
                 "secret_returned": False,
                 "slot_id": result.slot_id,
