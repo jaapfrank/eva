@@ -1,0 +1,59 @@
+{
+  "contract": "EvaPerformanceComplexityPc01LocalTuyaAdmissionHaProofConsolidation/v1",
+  "recordedAt": "2026-08-29T17:23:56Z",
+  "sourceCommit": "bbf654541b3bf492e792919efe190f5c652fb83f",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedAdmission": [
+      "LocalTuya package conversation",
+      "LocalTuya repository conversation"
+    ],
+    "sharedTerminalProof": [
+      "Home Assistant entity action",
+      "Home Assistant automation"
+    ],
+    "preservedBoundaries": [
+      "approval type and expiry",
+      "event types and phases",
+      "replay error messages",
+      "terminal status mapping",
+      "proof validation"
+    ],
+    "netProductPhysicalLines": -5
+  },
+  "verification": {
+    "conversationActionTests": {
+      "passed": 30,
+      "failed": 0,
+      "logSha256": "462ddca50f5f659fdf03bdba83686ab11583be917c830d9076748bd65d719dd2"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83393,
+      "productManifestSha256": "56a281cc023e3bcc8232aa4446c46f0753402d3175bb46cd7954f60b604b95cb"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83388,
+      "productManifestSha256": "09f7627bee3e5ddc0f48419692ab60034879f536749ca27bb879b487bd9c168d",
+      "livingCorePhysicalLines": 82795,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8388,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No Home Assistant or LocalTuya permission, target, action or external call was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
