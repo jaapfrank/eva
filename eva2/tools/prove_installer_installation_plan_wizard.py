@@ -21,6 +21,7 @@ from typing import Iterator
 import uvicorn
 
 from eva.adapters.api.installer_wizard import InstallerBootstrap, create_installer_wizard
+from eva.operations.installer_budget_workflow import InstallerBudgetWorkflow
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
 from eva.operations.installer_secret_store import InstallerSecretStore
@@ -30,10 +31,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SYNTHETIC_SECRET = "Eva2SyntheticPlanAccess_1234567890"
 SOURCE_PATHS = (
     "src/eva/adapters/api/installer_installation_plan_api.py",
+    "src/eva/adapters/api/installer_budget_api.py",
     "src/eva/adapters/api/installer_wizard.py",
     "src/eva/operations/installer_installation_plan.py",
+    "src/eva/operations/installer_budget_workflow.py",
     "tests/api/test_installer_wizard.py",
     "tests/operations/test_installer_installation_plan.py",
+    "tests/operations/test_installer_budget_workflow.py",
     "tools/prove_installer_installation_plan_wizard.py",
 )
 
@@ -177,7 +181,7 @@ def _get_plan(port: int, cookie: str, responses: list[bytes]) -> dict[str, objec
     if status != 200 or headers.get("cache-control") != "no-store":
         raise RuntimeError("installer plan response differs")
     plan = _json(raw)
-    if plan.get("contract") != "EvaInstallerInstallationPlan/v1":
+    if plan.get("contract") != "EvaInstallerInstallationPlan/v2":
         raise RuntimeError("installer plan contract differs")
     return plan
 
@@ -192,17 +196,23 @@ def _app(
     profile: Path,
     capability: Path,
     secrets: Path,
+    budgets: Path,
     bootstrap_token: str,
 ):
     bootstrap = InstallerBootstrap(
         token=bootstrap_token, created_at=1.0, clock=lambda: 1.0
     )
+    capability_workflow = InstallerCapabilityWorkflow(workspace=capability)
     return create_installer_wizard(
         _receipt(),
         bootstrap,
         profile_workflow=InstallerProfileWorkflow(workspace=profile),
-        capability_workflow=InstallerCapabilityWorkflow(workspace=capability),
+        capability_workflow=capability_workflow,
         secret_store=InstallerSecretStore(workspace=secrets),
+        budget_workflow=InstallerBudgetWorkflow(
+            workspace=budgets,
+            capability_workflow=capability_workflow,
+        ),
     )
 
 
@@ -230,12 +240,13 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
     ) as temporary:
         root = Path(temporary)
         root.chmod(0o700)
-        profile, capability, secrets = (
+        profile, capability, secrets, budgets = (
             root / "profile",
             root / "capabilities",
             root / "secrets",
+            root / "budgets",
         )
-        for path in (profile, capability, secrets):
+        for path in (profile, capability, secrets, budgets):
             _private(path)
 
         first_token = "i" * 43
@@ -244,6 +255,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                 profile=profile,
                 capability=capability,
                 secrets=secrets,
+                budgets=budgets,
                 bootstrap_token=first_token,
             )
         ) as port:
@@ -307,16 +319,83 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                 cookie,
                 responses,
             )
+            staged_budget = _post(
+                port,
+                "/internal/v1/onboarding/budgets/stage",
+                {
+                    "background_reflections_per_installation_day": 40,
+                    "background_reflections_per_person_day": 4,
+                    "external_monthly_spend_cap_eur_cents": 0,
+                    "max_input_tokens": 12_000,
+                    "max_output_tokens": 1_200,
+                    "memory_bytes_per_person": 20_971_520,
+                    "memory_records_per_person": 2_000,
+                    "profile_context_tokens": 800,
+                    "recall_context_tokens": 3_000,
+                    "retention_days": 365,
+                    "retrieval_nodes": 50,
+                },
+                cookie,
+                responses,
+            )
             selected = _get_plan(port, cookie, responses)
             if selected.get("status") != "blocked":
                 raise RuntimeError("unverified provider unexpectedly became installable")
 
+        real_record_verification = InstallerCapabilityWorkflow.record_verification
+
+        def interrupt_budget_binding(
+            _workflow: InstallerCapabilityWorkflow, **_values: object
+        ) -> object:
+            raise RuntimeError("synthetic process boundary")
+
+        InstallerCapabilityWorkflow.record_verification = interrupt_budget_binding  # type: ignore[method-assign]
+        interrupted_token = "m" * 43
+        try:
+            with _wizard_server(
+                _app(
+                    profile=profile,
+                    capability=capability,
+                    secrets=secrets,
+                    budgets=budgets,
+                    bootstrap_token=interrupted_token,
+                )
+            ) as port:
+                cookie = _bootstrap(port, interrupted_token)
+                status, _, raw = _request(
+                    port,
+                    "POST",
+                    "/internal/v1/onboarding/budgets/confirm",
+                    body={
+                        "budget_sha256": staged_budget["budget_sha256"],
+                        "confirmation": "LIMIETEN BEVESTIGEN",
+                    },
+                    cookie=cookie,
+                    origin=f"http://127.0.0.1:{port}",
+                )
+                responses.append(raw)
+                if status != 409:
+                    raise RuntimeError("interrupted budget binding was not refused")
+                status, _, raw = _request(
+                    port,
+                    "GET",
+                    "/internal/v1/onboarding/budgets/status",
+                    cookie=cookie,
+                )
+                responses.append(raw)
+                budget_status = _json(raw)
+                if (
+                    status != 200
+                    or budget_status.get("phase") != "ready"
+                    or budget_status.get("capability_bound") is not False
+                ):
+                    raise RuntimeError("interrupted budget binding was not recoverable")
+        finally:
+            InstallerCapabilityWorkflow.record_verification = real_record_verification  # type: ignore[method-assign]
+
         workflow = InstallerCapabilityWorkflow(workspace=capability)
         workflow.record_verification(
             step_id="model_provider", outcome="ready", evidence_sha256="a" * 64
-        )
-        workflow.record_verification(
-            step_id="budgets", outcome="ready", evidence_sha256="b" * 64
         )
         InstallerSecretStore(workspace=secrets).store(
             slot_id="model_provider", secret=SYNTHETIC_SECRET
@@ -328,12 +407,26 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                     profile=profile,
                     capability=capability,
                     secrets=secrets,
+                    budgets=budgets,
                     bootstrap_token=token,
                 )
             ) as port:
                 cookie = _bootstrap(port, token)
+                if token.startswith("j"):
+                    recovered = _post(
+                        port,
+                        "/internal/v1/onboarding/budgets/confirm",
+                        {
+                            "budget_sha256": staged_budget["budget_sha256"],
+                            "confirmation": "LIMIETEN BEVESTIGEN",
+                        },
+                        cookie,
+                        responses,
+                    )
+                    if recovered.get("already_in_phase") is not True:
+                        raise RuntimeError("budget binding recovery was not resumed")
                 ready = _get_plan(port, cookie, responses)
-                if ready.get("status") != "ready_to_install" or ready.get(
+                if ready.get("status") != "ready_for_release_preparation" or ready.get(
                     "blockers"
                 ) != []:
                     raise RuntimeError("completed wizard did not become installable")
@@ -365,6 +458,7 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
                 profile=profile,
                 capability=capability,
                 secrets=secrets,
+                budgets=budgets,
                 bootstrap_token=final_token,
             )
         ) as port:
@@ -385,15 +479,17 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
             "providerCalled": False,
             "secretReturned": False,
         },
-        "contract": "EvaInstallerInstallationPlanWizardReceipt/v1",
+        "contract": "EvaInstallerInstallationPlanWizardReceipt/v2",
         "issuedAt": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "loopbackRun": {
             "blockedBeforeCompletion": True,
             "blockedAfterProviderInvalidation": True,
             "planStableAcrossRestart": True,
+            "budgetsConfirmedThroughWizard": True,
+            "interruptedBudgetBindingRecovered": True,
             "temporaryWorkspaceRemovedAfterRun": True,
             "transport": "real_http_on_127.0.0.1",
-            "wizardServerStarts": 4,
+            "wizardServerStarts": 5,
         },
         "nonclaims": [
             "This proof built and read an installation plan; it did not install, start, update or switch Eva.",
