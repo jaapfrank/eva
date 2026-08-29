@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.objects.cas import FileSystemCAS
+from tools.cas import FileSystemCAS
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
 from tests.support.fixture_keys import (
     DurableFixtureTraceCommit,

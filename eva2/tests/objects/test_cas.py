@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.objects.cas import (
+from tools.cas import (
     CasIntegrityError,
     CasRecoveryError,
     CasStateError,

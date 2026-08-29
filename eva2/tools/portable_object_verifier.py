@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from eva.adapters.objects.cas import CasError, FileSystemCAS
+from tools.cas import CasError, FileSystemCAS
 from eva.adapters.objects.envelope import ObjectAuthenticationError, XChaCha20ObjectCipher
 from eva.application.objects import EncryptedObjectCandidate, ObjectBinding, ObjectKeyResolver
 from eva.application.portable_archive import PortableArchiveError, canonical_json_bytes

@@ -16,7 +16,7 @@ from eva.adapters.connectors.process import (
     run_connector_process,
 )
 from tests.support.model_fixture import FixtureModelAdapter
-from eva.adapters.objects.cas import FileSystemCAS
+from tools.cas import FileSystemCAS
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
 from tests.support.fixture_keys import FixtureObjectKeyResolver
 from tests.support.p256 import P256AckVerifier

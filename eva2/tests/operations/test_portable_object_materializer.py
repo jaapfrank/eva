@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.objects.cas import FileSystemCAS
+from tools.cas import FileSystemCAS
 from tools.object_keyring import FileObjectKeyResolver
 from tools.portable_object_materializer import (
     PortableObjectMaterializationError,
