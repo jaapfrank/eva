@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 08:57 CEST
+Laatst bijgewerkt: 29 augustus 2026, 09:14 CEST
 
 ## Heel kort
 
@@ -273,6 +273,10 @@ installatie zijn nog niet klaar.
   gesprekstekst en de wachtende geheugenkopie. Een nagebootste crash hervatte
   dezelfde opdracht zonder een tweede generatie te maken. Twee gelijktijdige
   wisacties kregen netjes generatie één en twee; geen van beide ging verloren.
+- De nieuwe kerncode zit nu in een kleine Debian 13-kandidaatimage. Een eerste
+  Debian 12-build werd terecht afgekeurd op één HIGH-bevinding. De vervanger
+  importeert als beperkte gebruiker op een alleen-lezen systeem en de verse
+  scan van 29 augustus telt 0 kritisch en 0 hoog. Zij is nog niet live gezet.
 
 ## Wat nog niet klaar is
 
@@ -299,8 +303,8 @@ installatie zijn nog niet klaar.
   De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Ook de wachtende
   geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Een
   oude back-up wordt bij herstel nu geblokkeerd en de wisknop werkt die grens
-  eerst bij. De nieuwe private map moet nog op de beheerde host worden gemaakt
-  en de nieuwe kern moet nog worden gebouwd, gescand en via A/B beproefd. Losse
+  eerst bij. De nieuwe kernimage is gebouwd en 0/0 gescand. De private map moet
+  nog voor een inactief slot worden gemaakt en via A/B worden beproefd. Losse
   applicatiecaches en procedurekandidaten ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
@@ -323,8 +327,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De nieuwe wis-/back-upgrens in een schone kernimage bouwen, scannen en via
-   het terugvalslot beproeven; daarna losse caches en procedurekandidaten wissen.
+1. De private wis-/back-upmap voor een inactief slot maken en de nieuwe 0/0-
+   kernimage via de terugvalroute beproeven; daarna caches en procedures wissen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -394,6 +398,7 @@ installatie zijn nog niet klaar.
 - [Bronfeit, afgeleide observatie, persoonsstijl en wachtende geheugenkopie echt gewist](evidence/living-core/eva2-derived-memory-erasure-disposable-2026-08-29.json)
 - [Oude back-up na wissen geweigerd vóór iedere databasevraag](evidence/living-core/eva2-portable-restore-erasure-authority-2026-08-29.json)
 - [Wisknop maakt oude back-ups eerst ongeldig, ook bij crash en gelijktijdige wisacties](evidence/living-core/eva2-owner-erasure-restore-authority-fail-closed-2026-08-29.json)
+- [Nieuwe Debian 13-kernimage: beperkte start en verse scan 0 kritisch/0 hoog](evidence/living-core/eva2-owner-erasure-debian13-candidate-image-2026-08-29.json)
 - [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
