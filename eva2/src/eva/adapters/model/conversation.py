@@ -15,7 +15,7 @@ import unicodedata
 import urllib.error
 import urllib.request
 from urllib.parse import urlparse
-from typing import Any, Literal
+from typing import Any, Iterator, Literal
 from uuid import uuid4
 
 from eva.application.conversation import (
@@ -1643,21 +1643,20 @@ class CodexConversationModel:
             return None
 
     @staticmethod
-    def _parse_sse(response: Any) -> tuple[str, ConversationActionCall | None]:
+    def _iter_sse_events(
+        response: Any, label: str
+    ) -> Iterator[tuple[Any, Any]]:
         total = 0
         event_type: str | None = None
-        deltas: list[str] = []
-        completed_parts: list[str] = []
-        action_call: ConversationActionCall | None = None
         for raw in response:
             total += len(raw)
             if total > _MAX_STREAM_BYTES:
-                raise ConversationModelError("conversation response is too large")
+                raise ConversationModelError(f"{label} response is too large")
             try:
                 line = raw.decode("utf-8").rstrip("\r\n")
             except UnicodeDecodeError as error:
                 raise ConversationModelError(
-                    "conversation response is not UTF-8"
+                    f"{label} response is not UTF-8"
                 ) from error
             if line.startswith("event: "):
                 event_type = line[7:]
@@ -1671,9 +1670,18 @@ class CodexConversationModel:
                 data = json.loads(encoded)
             except json.JSONDecodeError as error:
                 raise ConversationModelError(
-                    "conversation response contains invalid JSON"
+                    f"{label} response contains invalid JSON"
                 ) from error
-            kind = data.get("type") or event_type
+            yield data.get("type") or event_type, data
+
+    @staticmethod
+    def _parse_sse(response: Any) -> tuple[str, ConversationActionCall | None]:
+        deltas: list[str] = []
+        completed_parts: list[str] = []
+        action_call: ConversationActionCall | None = None
+        for kind, data in CodexConversationModel._iter_sse_events(
+            response, "conversation"
+        ):
             if kind in {"response.output_text.delta", "response.text.delta"}:
                 delta = data.get("delta")
                 if not isinstance(delta, str):
@@ -1731,37 +1739,13 @@ class CodexConversationModel:
     def _parse_research_sse(
         response: Any,
     ) -> tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]]:
-        total = 0
-        event_type: str | None = None
         deltas: list[str] = []
         completed_parts: list[str] = []
         cited: dict[str, str] = {}
         consulted: dict[str, str] = {}
-        for raw in response:
-            total += len(raw)
-            if total > _MAX_STREAM_BYTES:
-                raise ConversationModelError("research response is too large")
-            try:
-                line = raw.decode("utf-8").rstrip("\r\n")
-            except UnicodeDecodeError as error:
-                raise ConversationModelError(
-                    "research response is not UTF-8"
-                ) from error
-            if line.startswith("event: "):
-                event_type = line[7:]
-                continue
-            if not line.startswith("data: "):
-                continue
-            encoded = line[6:]
-            if encoded == "[DONE]":
-                continue
-            try:
-                data = json.loads(encoded)
-            except json.JSONDecodeError as error:
-                raise ConversationModelError(
-                    "research response contains invalid JSON"
-                ) from error
-            kind = data.get("type") or event_type
+        for kind, data in CodexConversationModel._iter_sse_events(
+            response, "research"
+        ):
             if kind in {"response.output_text.delta", "response.text.delta"}:
                 delta = data.get("delta")
                 if not isinstance(delta, str):
