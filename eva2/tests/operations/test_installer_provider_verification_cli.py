@@ -113,6 +113,58 @@ def test_cli_blocked_result_is_sanitized_and_nonzero(
     assert "synthetic_token" not in json.dumps(payload)
 
 
+def test_cli_builds_default_agentmail_probe_for_selected_inbox(
+    private_tmp_path: Path,
+    capsys,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    capability = private_tmp_path / "capabilities"
+    secrets = private_tmp_path / "secrets"
+    evidence = private_tmp_path / "evidence"
+    for path in (capability, secrets, evidence):
+        path.mkdir(mode=0o700)
+    workflow = InstallerCapabilityWorkflow(workspace=capability)
+    workflow.select(step_id="email", wanted=True)
+    InstallerSecretStore(workspace=secrets).store(
+        slot_id="email", secret="am_synthetic_installer_key_1234567890"
+    )
+
+    def probe(_self, *, secret: memoryview, timeout_seconds: float):
+        assert bytes(secret) == b"am_synthetic_installer_key_1234567890"
+        assert timeout_seconds == 3.0
+        return InstallerProviderProbeObservation(
+            "email.identity.read", "ready", "verified"
+        )
+
+    monkeypatch.setattr(
+        "eva.adapters.connectors.installer_agentmail_probe."
+        "AgentMailInstallerReadOnlyProbe.read_only_probe",
+        probe,
+    )
+    exit_code = run_installer_provider_verification(
+        [
+            "--slot",
+            "email",
+            "--agentmail-inbox-id",
+            "eva-test@agentmail.to",
+            "--capability-workspace",
+            str(capability),
+            "--secret-workspace",
+            str(secrets),
+            "--evidence-workspace",
+            str(evidence),
+            "--timeout-seconds",
+            "3",
+        ]
+    )
+
+    payload = json.loads(capsys.readouterr().out)
+    assert exit_code == 0
+    assert payload["slot_id"] == "email"
+    assert payload["outcome"] == "ready"
+    assert workflow.status().step("email").state == "ready"
+
+
 def test_cli_preflight_failure_does_not_call_probe_or_echo_paths(
     private_tmp_path: Path, capsys
 ) -> None:
@@ -143,10 +195,21 @@ def test_cli_preflight_failure_does_not_call_probe_or_echo_paths(
     ("slot_id", "extra_arguments"),
     [
         ("home_assistant", []),
+        ("email", []),
         ("telegram", ["--home-assistant-url", "http://127.0.0.1:8123"]),
+        ("telegram", ["--agentmail-inbox-id", "eva-test@agentmail.to"]),
+        (
+            "email",
+            [
+                "--agentmail-inbox-id",
+                "eva-test@agentmail.to",
+                "--home-assistant-url",
+                "http://127.0.0.1:8123",
+            ],
+        ),
     ],
 )
-def test_cli_rejects_missing_or_irrelevant_home_assistant_url_without_echo(
+def test_cli_rejects_missing_or_irrelevant_provider_configuration_without_echo(
     private_tmp_path: Path,
     capsys,
     slot_id: str,
@@ -162,3 +225,4 @@ def test_cli_rejects_missing_or_irrelevant_home_assistant_url_without_echo(
     assert exit_code == 2
     assert json.loads(output)["status"] == "failed"
     assert "127.0.0.1" not in output
+    assert "eva-test@agentmail.to" not in output

@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 from typing import Mapping
 
+from eva.adapters.connectors.installer_agentmail_probe import (
+    AgentMailInstallerReadOnlyProbe,
+)
 from eva.adapters.connectors.installer_home_assistant_probe import (
     HomeAssistantInstallerReadOnlyProbe,
 )
@@ -40,11 +43,29 @@ def _output(value: object) -> None:
     )
 
 
-def _default_probe(slot_id: str, home_assistant_url: str | None) -> InstallerProviderProbe:
-    if slot_id == "telegram" and home_assistant_url is None:
+def _default_probe(
+    slot_id: str,
+    home_assistant_url: str | None,
+    agentmail_inbox_id: str | None,
+) -> InstallerProviderProbe:
+    if (
+        slot_id == "telegram"
+        and home_assistant_url is None
+        and agentmail_inbox_id is None
+    ):
         return TelegramInstallerReadOnlyProbe()
-    if slot_id == "home_assistant" and home_assistant_url is not None:
+    if (
+        slot_id == "home_assistant"
+        and home_assistant_url is not None
+        and agentmail_inbox_id is None
+    ):
         return HomeAssistantInstallerReadOnlyProbe(base_url=home_assistant_url)
+    if (
+        slot_id == "email"
+        and home_assistant_url is None
+        and agentmail_inbox_id is not None
+    ):
+        return AgentMailInstallerReadOnlyProbe(inbox_id=agentmail_inbox_id)
     raise ValueError("provider verification configuration is invalid")
 
 
@@ -55,9 +76,10 @@ def run_installer_provider_verification(
 ) -> int:
     parser = argparse.ArgumentParser(prog="eva-installer-verify")
     parser.add_argument(
-        "--slot", choices=("telegram", "home_assistant"), required=True
+        "--slot", choices=("telegram", "home_assistant", "email"), required=True
     )
     parser.add_argument("--home-assistant-url")
+    parser.add_argument("--agentmail-inbox-id")
     parser.add_argument("--capability-workspace", type=Path, required=True)
     parser.add_argument("--secret-workspace", type=Path, required=True)
     parser.add_argument("--evidence-workspace", type=Path, required=True)
@@ -67,7 +89,9 @@ def run_installer_provider_verification(
         selected_probes: Mapping[str, InstallerProviderProbe] = (
             {
                 arguments.slot: _default_probe(
-                    arguments.slot, arguments.home_assistant_url
+                    arguments.slot,
+                    arguments.home_assistant_url,
+                    arguments.agentmail_inbox_id,
                 )
             }
             if probes is None
