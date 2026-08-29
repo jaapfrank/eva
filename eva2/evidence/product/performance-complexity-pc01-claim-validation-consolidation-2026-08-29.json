@@ -1,0 +1,45 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T14:20:24+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "76929661c9848f998efb133a3f3923279fc89386",
+    "sharedClaimValidationSha256": "3a42be643bfcaafbe6eebcf9861e8c9f402089f2cf96d1b8bf6bd7017079a611"
+  },
+  "change": {
+    "description": "Read and effect reload validation now share the exact durable child/root prepared-event, continuation-claim, attention and worker-claim hash proof.",
+    "productFilesChanged": 3,
+    "productLinesAdded": 135,
+    "productLinesDeleted": 196,
+    "netProductPhysicalLines": -61,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 236,
+    "productPhysicalLinesBefore": 89110,
+    "productPhysicalLinesAfter": 89049,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 14049,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "initialCollectionErrors": 15,
+    "initialCollectionCause": "The first helper import named ValidatedPlan from execution instead of planning; collection stopped before any database schema or test data was written.",
+    "correctedValidatorImports": "passed",
+    "postgresActionChain16_13TestsPassedAfterCorrection": 95,
+    "postgresActionChain16_13DurationSeconds": 454.07,
+    "testsFailedAfterCorrection": 0,
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva2ReadyHttp": 200
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "Read and effect still retain their distinct event types, error messages and authorization semantics.",
+    "This validation consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Consolidate duplicated authorized-attempt persistence and terminal evidence validation without weakening replay or corruption rejection."
+}
