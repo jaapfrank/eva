@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 13:18 CEST
+Laatst bijgewerkt: 29 augustus 2026, 13:40 CEST
 
 ## Heel kort
 
@@ -84,6 +84,10 @@ praktijktest zijn nog niet klaar.
   4 bewapend. Zij schreef een private testherinnering naar Hindsight.
 - Een controle op dezelfde Windows-start werd terecht geweigerd en maakte geen
   vals bewijsbestand. De echte Windows-reboot moet van buiten Codex komen.
+- Negentien databaseonderdelen gebruiken nu één gedeelde, identieke
+  rol- en persoonsafscherming. Daardoor verdwenen netto 149 productregels;
+  41 gewone tests, alle 95 actionchain-databasegevallen en een aparte
+  delegated-work-scopecontrole bleven groen.
 
 ## Wat nog niet klaar is
 
@@ -99,7 +103,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  89.442 productregels en mag er maximaal 75.000 hebben.
+  89.298 productregels en mag er maximaal 75.000 hebben.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -121,7 +125,7 @@ praktijktest zijn nog niet klaar.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
 4. Na de echte Windows/WSL-reboot het automatisch gemaakte bewijs controleren.
-5. Nog minstens 14.442 productregels gericht verwijderen of vervangen zonder
+5. Nog minstens 14.298 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
 ## Belangrijk verschil
@@ -145,6 +149,7 @@ praktijktest zijn nog niet klaar.
 - [Persoonsgebonden wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Eerlijke rode code-, dependency- en imagebudgetmeting](evidence/product/performance-complexity-pc01-current-2026-08-29.json)
 - [Eerste echte codesanering met behoud van regressies](evidence/product/performance-complexity-pc01-test-support-remediation-2026-08-29.json)
+- [Gedeelde PostgreSQL-afscherming: 149 productregels minder](evidence/product/performance-complexity-pc01-scoped-role-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)

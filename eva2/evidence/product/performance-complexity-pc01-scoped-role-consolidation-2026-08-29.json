@@ -1,0 +1,56 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T13:39:41+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "b7d14955297fdbd6424e3747a2df447d8472d93d",
+    "authoritySha256": "dfa790d18b4e58d443baf6f52936cb0c3c91d02603f7fcfba4376a7b11b196de",
+    "counterSha256": "9c1f7a729cc7f818f1b49915643eae828532ecc81f065cbfa018297113256d96",
+    "sharedScopeSha256": "8ff3d9f429a2e061548e947c0bd7d88fe0029291a587c30c331c124a0764af8e"
+  },
+  "change": {
+    "description": "Nineteen PostgreSQL stores and action-chain services now inherit one identical fail-closed role and tenant-scope implementation.",
+    "filesChanged": 20,
+    "linesAdded": 59,
+    "linesDeleted": 208,
+    "netProductPhysicalLines": -149,
+    "behavioralBoundaryChanged": false
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 233,
+    "productPhysicalLinesBefore": 89447,
+    "productPhysicalLinesAfter": 89298,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 14298,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "applicationAndContractTests": {
+      "passed": 41,
+      "failed": 0
+    },
+    "postgresActionChainTests": {
+      "firstRunPassed": 85,
+      "firstRunInfrastructureErrors": 10,
+      "infrastructureError": "The disposable PostgreSQL tmpfs reached its 512 MiB limit after 85 repeated migration cycles.",
+      "affectedFilesRerunPassedOnFreshPostgres16_13": 15,
+      "rerunFailed": 0
+    },
+    "delegatedWorkInheritedScopeProbe": "passed",
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1HttpRoutes200": 5,
+    "liveEva2ReadyHttp": 200,
+    "liveEva2CoreRestarts": 0,
+    "liveHindsightRestarts": 0
+  },
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "The full PC01 checker could not re-attest its historical slot-4 OCI baseline because that old manifest is no longer present in the local containerd content store.",
+    "The unrelated delegated-work provider tests still require their retained experimental pydantic-ai and httpx2 environment; no dependency was installed for this remediation."
+  ],
+  "nextRequiredAction": "Consolidate the duplicated read/effect dispatch and authorization paths without relaxing the source roots, generated exclusions, or 75000-line limit."
+}
