@@ -1,0 +1,43 @@
+{
+  "contract": "EvaPerformanceComplexityPc01CanaryCutoverOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:21:12+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "f373706b8352aa9de35a310cc6fdd20bd1718118",
+    "changedSourceManifestSha256": "a2d88c6cf72809020ab269eb6e74730f6831a0db56f605a25796185b9c78ecb7"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/eva2_canary_cutover.py",
+    "newPath": "tools/eva2_canary_cutover.py",
+    "physicalLinesMovedOutOfProductRoots": 282,
+    "runtimeConsumersBeforeMove": 0,
+    "operatorAndTestConsumersUpdated": 4,
+    "remainingOldReferences": 0,
+    "canaryModuleAndSwitchToolPinnedAsReleaseInputs": true,
+    "canaryTestAddedToReleaseTests": true
+  },
+  "verification": {
+    "canaryAndQuiescentCutoverTestsPassed": 15,
+    "combinedCutoverAndFailClosedReleaseTestsPassed": 53,
+    "switchToolHelpExitedZero": true,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "requiredInputsAfterPin": 243,
+    "requiredTestsAfterPin": 131,
+    "combinedTestAndAttestationLogsSha256": "1a3870c9f7e0e64359d69ad127ce11adb2b5f96d8fae74535bff94f61cdee7af"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 216,
+    "productPhysicalLines": 76562,
+    "livingCorePhysicalLines": 75969,
+    "productManifestSha256": "27d465d8336406811f85812c5eddb348eac2a47f58b126894d7c0a567a1c25a6",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 1562,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 14271,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "This change did not execute another live canary or quiescent cutover.",
+    "The canary implementation and switch command remain required operator code and are now explicitly pinned.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}
