@@ -162,7 +162,6 @@ _MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
         type_="array",
         items={"enum": list(_SELECTABLE_ACTION_NAMES), "type": "string"},
         maxItems=4,
-        uniqueItems=True,
     ),
 )
 _REPOSITORY_PROPOSAL_TOOL: dict[str, Any] = _tool(

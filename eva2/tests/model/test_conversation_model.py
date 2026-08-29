@@ -82,7 +82,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
             "_FREE_WILL_TOOL",
         )
     } == {
-        "_MEMORY_SEARCH_TOOL": "c49f5bfdd0ee75120eea4e39b46ef4521e4818000ba63df0898967249e0c01e9",
+        "_MEMORY_SEARCH_TOOL": "c9f78d86076d7395ab5408a01ae11acaabec6c4ff1808cc4b812d6768c651d5a",
         "_REPOSITORY_PROPOSAL_TOOL": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
         "_PROTOTYPE_TOOL": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
         "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
@@ -782,6 +782,9 @@ def test_memory_query_planner_expands_meaning_without_answering(
         ]
         == 4
     )
+    assert "uniqueItems" not in bodies[0]["tools"][0]["parameters"]["properties"][
+        "selected_action_names"
+    ]
 
 
 def test_model_reports_an_expired_access_lease_without_provider_call(
