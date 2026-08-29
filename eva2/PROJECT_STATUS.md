@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 10:40 CEST
+Laatst bijgewerkt: 29 augustus 2026, 10:53 CEST
 
 ## Heel kort
 
@@ -77,6 +77,8 @@ praktijktest zijn nog niet klaar.
 - De algemene browserimages zijn nog niet veilig genoeg voor vrij gebruik.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
+- De nieuwe harde codeteller is terecht rood: Eva2 telt 96.874 productregels en
+  mag er maximaal 75.000 hebben. Dependencies en imagegrootte zijn wel groen.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -97,6 +99,8 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
+4. Minstens 21.874 productregels gericht verwijderen of vervangen zonder
+   bewezen functies weg te laten of de meetgrens te versoepelen.
 
 ## Belangrijk verschil
 
@@ -117,6 +121,7 @@ praktijktest zijn nog niet klaar.
 - [Twee echte privégesprekken na herstart](evidence/living-core/eva2-telegram-human-private-two-person-restart-2026-08-28.json)
 - [Echte begrensde huisactie](evidence/living-core/eva2-home-assistant-bounded-effect-live-2026-08-28.json)
 - [Persoonsgebonden wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
+- [Eerlijke rode code-, dependency- en imagebudgetmeting](evidence/product/performance-complexity-pc01-current-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

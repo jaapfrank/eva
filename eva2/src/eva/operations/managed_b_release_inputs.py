@@ -97,6 +97,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-runtime-resource-budget-postgres-2026-08-29.json",
     "evidence/living-core/playwright-mcp-runtime-trim-2026-08-26.json",
     "evidence/living-core/playwright-mcp-system-refresh-2026-08-26.json",
+    "evidence/product/performance-complexity-pc01-current-2026-08-29.json",
     "evidence/public/eva-cockpit-sanitized-evidence-v1.json",
     "experiments/agent-browser-sidecar-v1/Dockerfile",
     "experiments/agent-browser-sidecar-v1/README.md",

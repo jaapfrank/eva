@@ -1,0 +1,46 @@
+{
+  "contract": "EvaPerformanceComplexityPc01CurrentEvidence/v1",
+  "issuedAt": "2026-08-29T10:53:09+02:00",
+  "status": "failed_budget_enforced",
+  "source": {
+    "commit": "1b51d9dd4f5c8f140ac94cccdfb5940a5ce9fc50",
+    "authoritySha256": "b2d439ec1d46c138c8ebce6240ceb3ab774fee661f013f260d2a78dc58b07c9d",
+    "rawReceiptSha256": "322b38ee85663f98393410153a2e7cfdb8065b38b1605f607acc38237a370237"
+  },
+  "measured": {
+    "productFiles": 250,
+    "productPhysicalLines": 96874,
+    "productBytes": 3855442,
+    "livingCoreFiles": 243,
+    "livingCorePhysicalLines": 96281,
+    "generatedFilesMeasuredSeparately": 1,
+    "generatedPhysicalLines": 9,
+    "unclassifiedSourcePaths": 0,
+    "directRuntimeDependencies": 9,
+    "maximumDirectRuntimeDependencies": 12,
+    "preVoiceBrowserCoreImageManifestDigest": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "preVoiceBrowserCoreImageConfigDigest": "sha256:ebe0894663a9da2759509229673228aa27efb2c6477cb4a897d38a113eda0b60",
+    "preVoiceBrowserCoreImageCompressedLayerBytes": 85591932,
+    "preVoiceBrowserCoreImageLayerCount": 31
+  },
+  "budget": {
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 21874,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "separateDiagnostics": {
+    "experimentPhysicalLines": 6094,
+    "migrationPhysicalLines": 2251,
+    "releasePhysicalLines": 1594,
+    "testPhysicalLines": 71377,
+    "toolPhysicalLines": 24791
+  },
+  "nextRequiredAction": "Remove or replace at least 21874 counted product lines while preserving the proven capabilities; changing roots, exclusions or the 75000-line limit is not remediation.",
+  "nonClaims": [
+    "PC01 is not green.",
+    "The dependency and OCI measurements do not compensate for the failed code-size limit.",
+    "Tests, tools, migrations and experiments were measured separately and were not used to hide product lines."
+  ]
+}
