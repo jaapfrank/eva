@@ -77,6 +77,8 @@ class MemoryExpiryJob:
     document_sha256: str
     content_sha256: str
     retention_until: str
+    principal_sha256: str | None = None
+    source_message_id: str | None = None
 
 
 class PostgresDailyReflectionBudget:
@@ -908,12 +910,21 @@ class PostgresMemoryStorageBudget:
         return data
 
     def request_erasure(
-        self, *, principal_id: str, document_id: str, now: datetime
+        self,
+        *,
+        principal_id: str,
+        document_id: str,
+        now: datetime,
+        source_message_id: str | None = None,
     ) -> MemoryExpiryJob | None:
         """Lease one exact principal-scoped delete before calling Hindsight."""
 
         now = self._require_now(now)
         principal_sha256 = self._principal_sha256(principal_id)
+        if source_message_id is not None and (
+            not source_message_id.strip() or len(source_message_id) > 240
+        ):
+            raise ValueError("memory erasure source message is invalid")
         document_sha256 = self._document_sha256(document_id)
         thread_id = f"memory-storage:{document_sha256}"
         with self._engine.begin() as connection:
@@ -999,6 +1010,16 @@ class PostgresMemoryStorageBudget:
                 raise OperationalTimelineError(
                     "memory erasure deletion address is malformed"
                 )
+            erasure_data = {
+                "content_sha256": values[3],
+                "contract": "EvaMemoryStorageErasure/v1",
+                "document_sha256": document_sha256,
+                "principal_sha256": principal_sha256,
+                "reason": "explicit_request",
+                "requested_at": self._timestamp(now),
+            }
+            if source_message_id is not None:
+                erasure_data["source_message_id"] = source_message_id
             leased = transition_timeline_thread(
                 connection,
                 self._scope_value,
@@ -1011,14 +1032,7 @@ class PostgresMemoryStorageBudget:
                 occurred_at=now,
                 deadline=now + timedelta(seconds=self._removal_lease_seconds),
                 retry_count=1,
-                data={
-                    "content_sha256": values[3],
-                    "contract": "EvaMemoryStorageErasure/v1",
-                    "document_sha256": document_sha256,
-                    "principal_sha256": principal_sha256,
-                    "reason": "explicit_request",
-                    "requested_at": self._timestamp(now),
-                },
+                data=erasure_data,
             )
         return MemoryExpiryJob(
             state=leased,
@@ -1027,7 +1041,43 @@ class PostgresMemoryStorageBudget:
             document_sha256=values[2],
             content_sha256=values[3],
             retention_until=values[4],
+            principal_sha256=principal_sha256,
+            source_message_id=source_message_id,
         )
+
+    def _explicit_erasure_bindings(
+        self, thread_id: str
+    ) -> tuple[str | None, str | None]:
+        for event in reversed(self._timeline.events(thread_id)):
+            if event.event_type != "MEMORY_STORAGE_ERASURE_CLAIMED":
+                continue
+            data = self._first_data(event.payload)
+            allowed = {
+                "content_sha256",
+                "contract",
+                "document_sha256",
+                "principal_sha256",
+                "reason",
+                "requested_at",
+            }
+            if frozenset(data) not in {
+                frozenset(allowed),
+                frozenset(allowed | {"source_message_id"}),
+            }:
+                raise OperationalTimelineError("memory erasure event is malformed")
+            if (
+                data.get("contract") != "EvaMemoryStorageErasure/v1"
+                or data.get("reason") != "explicit_request"
+                or not isinstance(data.get("principal_sha256"), str)
+            ):
+                raise OperationalTimelineError("memory erasure event is malformed")
+            source_message_id = data.get("source_message_id")
+            if source_message_id is not None and (
+                not isinstance(source_message_id, str) or not source_message_id
+            ):
+                raise OperationalTimelineError("memory erasure event is malformed")
+            return str(data["principal_sha256"]), source_message_id
+        return None, None
 
     def claim_expired(
         self, *, now: datetime, limit: int = 64
@@ -1102,6 +1152,9 @@ class PostgresMemoryStorageBudget:
                     None if retained_row is None else retained_row.payload
                 )
                 data = self._validate_retention_data(data)
+                explicit_principal_sha256, source_message_id = (
+                    self._explicit_erasure_bindings(state.thread_id)
+                )
                 retention_until = data.get("retention_until")
                 self._parse_timestamp(retention_until, label="retention deadline")
                 retry_count = state.retry_count + 1
@@ -1163,6 +1216,8 @@ class PostgresMemoryStorageBudget:
                         document_sha256=values[2],
                         content_sha256=values[3],
                         retention_until=values[4],
+                        principal_sha256=explicit_principal_sha256,
+                        source_message_id=source_message_id,
                     )
                 )
         return tuple(claimed)

@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from dataclasses import dataclass
+from datetime import UTC, datetime
+import hashlib
+import re
 from typing import Any
 
 import sqlalchemy as sa
@@ -21,6 +24,22 @@ from eva.application.conversation import (
     GroundedReply,
     RecentConversationMessage,
 )
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+
+
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+
+
+@dataclass(frozen=True, slots=True)
+class ConversationContentErasureReceipt:
+    """Non-content proof that one raw message exchange was redacted."""
+
+    operation_sha256: str
+    principal_sha256: str
+    message_sha256: str
+    erased_at: str
+    redacted_event_count: int
+    replayed: bool
 
 
 class PostgresConversationJournal:
@@ -108,6 +127,8 @@ class PostgresConversationJournal:
             evidence = data.get("evidence_memory_ids")
             text = data.get("text")
             provider = data.get("provider")
+            if text is None and isinstance(data.get("content_erasure"), dict):
+                raise ConversationConflict("conversation reply content was erased")
             if (
                 not isinstance(evidence, list)
                 or not all(isinstance(item, str) for item in evidence)
@@ -368,6 +389,148 @@ class PostgresConversationJournal:
             )
         return tuple(messages[-limit:])
 
+    def erase_message_content(
+        self,
+        *,
+        principal_id: str | None = None,
+        principal_sha256: str | None = None,
+        message_id: str,
+        operation_sha256: str,
+        erased_at: datetime,
+    ) -> ConversationContentErasureReceipt:
+        """Physically redact only the raw ingress/reply text for one principal."""
+
+        if (principal_id is None) == (principal_sha256 is None):
+            raise ValueError("conversation erasure needs one principal binding")
+        if principal_id is not None:
+            if not principal_id.strip() or len(principal_id) > 240:
+                raise ValueError("conversation erasure principal is invalid")
+            principal_sha256 = hashlib.sha256(
+                principal_id.encode("utf-8")
+            ).hexdigest()
+        elif not isinstance(principal_sha256, str) or not _SHA256.fullmatch(
+            principal_sha256
+        ):
+            raise ValueError("conversation erasure principal hash is invalid")
+        assert principal_sha256 is not None
+        if not message_id.strip() or len(message_id) > 240:
+            raise ValueError("conversation erasure message is invalid")
+        if not _SHA256.fullmatch(operation_sha256):
+            raise ValueError("conversation erasure operation hash is invalid")
+        if (
+            erased_at.tzinfo is None
+            or erased_at.utcoffset() is None
+            or erased_at.microsecond
+        ):
+            raise ValueError("conversation erasure time must be whole-second UTC")
+        erased_at = erased_at.astimezone(UTC)
+        erased_text = erased_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+        message_sha256 = hashlib.sha256(message_id.encode("utf-8")).hexdigest()
+        erasure = {
+            "contract": "EvaConversationContentErasure/v1",
+            "erased_at": erased_text,
+            "message_sha256": message_sha256,
+            "operation_sha256": operation_sha256,
+            "principal_sha256": principal_sha256,
+            "status": "erased",
+        }
+        data = operational_events.c.payload["data"]
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            candidates = connection.execute(
+                sa.select(operational_events)
+                .where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.event_type.in_(
+                        ["INGRESS_COMMITTED", "REPLY_COMMITTED"]
+                    ),
+                    data["message_id"].astext == message_id,
+                )
+                .order_by(operational_events.c.sequence)
+            ).all()
+            rows = []
+            for row in candidates:
+                value = row.payload.get("data") if isinstance(row.payload, dict) else None
+                durable_principal = (
+                    value.get("principal_id") if isinstance(value, dict) else None
+                )
+                if (
+                    isinstance(durable_principal, str)
+                    and hashlib.sha256(durable_principal.encode("utf-8")).hexdigest()
+                    == principal_sha256
+                ):
+                    rows.append(row)
+            if not rows:
+                raise ConversationConflict("conversation erasure target does not exist")
+
+            existing: dict[str, Any] | None = None
+            redacted = 0
+            for row in rows:
+                payload = dict(row.payload)
+                value = payload.get("data")
+                if not isinstance(value, dict):
+                    raise ConversationConflict("conversation erasure target is malformed")
+                old_erasure = value.get("content_erasure")
+                if "text" not in value:
+                    if not isinstance(old_erasure, dict):
+                        raise ConversationConflict(
+                            "conversation content disappeared without an erasure proof"
+                        )
+                    if existing is None:
+                        existing = old_erasure
+                    elif existing != old_erasure:
+                        raise ConversationConflict(
+                            "conversation erasure proofs differ within one exchange"
+                        )
+                    continue
+                if old_erasure is not None:
+                    raise ConversationConflict(
+                        "conversation text and erasure proof coexist"
+                    )
+                redacted_data = dict(value)
+                redacted_data.pop("text", None)
+                redacted_data.pop("text_sha256", None)
+                redacted_data["content_erasure"] = erasure
+                redacted_payload = dict(payload)
+                redacted_payload["data"] = redacted_data
+                changed = connection.scalar(
+                    sa.text(
+                        "SELECT eva_core.erase_conversation_event_content("
+                        ":event_id, :expected_hash, :payload, :new_hash)"
+                    ),
+                    {
+                        "event_id": row.event_id,
+                        "expected_hash": bytes(row.payload_sha256),
+                        "payload": canonical_json_bytes(redacted_payload).decode("utf-8"),
+                        "new_hash": bytes.fromhex(canonical_sha256(redacted_payload)),
+                    },
+                )
+                if changed is not True:
+                    raise ConversationConflict("conversation erasure target vanished")
+                redacted += 1
+
+            if redacted == 0:
+                if existing is None:
+                    raise ConversationConflict("conversation erasure proof is missing")
+                return ConversationContentErasureReceipt(
+                    operation_sha256=str(existing["operation_sha256"]),
+                    principal_sha256=str(existing["principal_sha256"]),
+                    message_sha256=str(existing["message_sha256"]),
+                    erased_at=str(existing["erased_at"]),
+                    redacted_event_count=0,
+                    replayed=True,
+                )
+        return ConversationContentErasureReceipt(
+            operation_sha256=operation_sha256,
+            principal_sha256=principal_sha256,
+            message_sha256=message_sha256,
+            erased_at=erased_text,
+            redacted_event_count=redacted,
+            replayed=False,
+        )
+
     def _scope(self, connection: sa.Connection) -> None:
         connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
         connection.execute(
@@ -380,4 +543,4 @@ class PostgresConversationJournal:
         )
 
 
-__all__ = ["PostgresConversationJournal"]
+__all__ = ["ConversationContentErasureReceipt", "PostgresConversationJournal"]

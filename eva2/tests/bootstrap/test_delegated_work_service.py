@@ -160,7 +160,7 @@ def test_health_check_validates_dependencies_lease_database_and_schema(
 
         def scalar(self, statement):  # type: ignore[no-untyped-def]
             observed.append(str(statement))
-            return "4e_0004_delegated_work_stop"
+            return "4e_0005_conversation_erasure"
 
     class Engine:
         def connect(self) -> Connection:
@@ -177,7 +177,11 @@ def test_health_check_validates_dependencies_lease_database_and_schema(
         "eva.bootstrap.delegated_work_provider.validate_delegated_model_access_lease",
         lambda path: observed.append(path),
     )
-    monkeypatch.setattr(service_module, "read_runtime_secret_file", lambda *_a, **_k: "dsn")
+    monkeypatch.setattr(
+        service_module,
+        "read_runtime_secret_file",
+        lambda *_a, **_k: "postgresql://eva:secret@postgres/eva",
+    )
     monkeypatch.setattr(service_module.sa, "create_engine", lambda dsn, **_k: Engine())
 
     assert check_openai_delegated_work(settings) is None

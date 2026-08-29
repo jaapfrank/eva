@@ -26,7 +26,7 @@ ROLE_SQL = importlib.import_module(
 
 
 def test_delegated_work_migration_is_the_explicit_schema_head() -> None:
-    assert _HEAD_REVISION == "4e_0004_delegated_work_stop"
+    assert _HEAD_REVISION == "4e_0005_conversation_erasure"
     assert _HEAD_REVISION in _KNOWN_FORWARD_REVISIONS
 
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 from datetime import UTC, datetime
+import hashlib
 from pathlib import Path
 from threading import Event
 import time
@@ -432,6 +433,106 @@ def test_explicit_erasure_calls_provider_once_and_marks_only_after_ack() -> None
         principal_id="jaap", document_id="conversation:1", now=now
     )
     assert calls == ["leased", "provider", "marked"]
+
+
+def test_explicit_erasure_removes_semantic_and_raw_content_before_marking() -> None:
+    calls: list[str] = []
+    principal_id = "person:jaap"
+    source_message_id = "telegram:jaap:41"
+    principal_sha256 = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
+    message_sha256 = hashlib.sha256(source_message_id.encode("utf-8")).hexdigest()
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=principal_sha256,
+        source_message_id=source_message_id,
+    )
+    now = datetime(2026, 8, 29, 10, 0, tzinfo=UTC)
+
+    class Budget:
+        def request_erasure(self, **kwargs):  # type: ignore[no-untyped-def]
+            assert kwargs == {
+                "document_id": "conversation:1",
+                "now": now,
+                "principal_id": principal_id,
+                "source_message_id": source_message_id,
+            }
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, removed_job, *, now):  # type: ignore[no-untyped-def]
+            assert removed_job is job
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+
+    class RawConversation:
+        def erase_message_content(self, **kwargs):  # type: ignore[no-untyped-def]
+            calls.append("raw")
+            return SimpleNamespace(
+                operation_sha256=kwargs["operation_sha256"],
+                principal_sha256=principal_sha256,
+                message_sha256=message_sha256,
+                redacted_event_count=2,
+                replayed=False,
+            )
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+    )
+    assert worker.erase_document(
+        principal_id=principal_id,
+        document_id="conversation:1",
+        source_message_id=source_message_id,
+        now=now,
+    )
+    assert calls == ["leased", "provider", "raw", "marked"]
+
+
+def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
+    calls: list[str] = []
+    principal_id = "person:jaap"
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=hashlib.sha256(principal_id.encode("utf-8")).hexdigest(),
+        source_message_id="telegram:jaap:41",
+    )
+
+    class Budget:
+        def request_erasure(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+
+    class RawConversation:
+        def erase_message_content(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("raw")
+            raise RuntimeError("raw journal unavailable")
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+    )
+    with pytest.raises(RuntimeError, match="raw journal unavailable"):
+        worker.erase_document(
+            principal_id=principal_id,
+            document_id="conversation:1",
+            source_message_id="telegram:jaap:41",
+            now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
+        )
+    assert calls == ["leased", "provider", "raw"]
 
 
 def test_explicit_erasure_keeps_durable_lease_when_provider_fails() -> None:

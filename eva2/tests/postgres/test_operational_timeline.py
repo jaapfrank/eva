@@ -68,6 +68,7 @@ from eva.application.telegram_group_consent import (
     TelegramGroupConsent,
     TelegramGroupConsentResponder,
 )
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -821,6 +822,151 @@ def test_conversation_replay_returns_one_durable_reply_and_one_memory_queue(
         "REPLY_COMMITTED",
         "MEMORY_RETAIN_QUEUED",
     ]
+
+
+def test_conversation_content_erasure_is_physical_scoped_and_replay_safe(
+    timeline_engine: Engine,
+) -> None:
+    scope = _scope("conversation-erasure")
+    journal = PostgresConversationJournal(timeline_engine, scope)
+    turn = ConversationTurn.private(
+        tenant_id="tenant",
+        installation_id="installation",
+        principal_id="person:jaap",
+        conversation_id="telegram:jaap",
+        message_id="telegram:erase:41",
+        text="verwijderbare bronzin 41",
+        occurred_at="2026-08-23T12:51:00Z",
+    )
+    journal.admit(turn)
+    journal.commit_reply(
+        turn,
+        GroundedReply(
+            turn.conversation_id,
+            turn.message_id,
+            "verwijderbaar antwoord 41",
+            (),
+            turn.occurred_at,
+            "test",
+        ),
+    )
+    assert [message.text for message in journal.recent(turn)] == [
+        "verwijderbare bronzin 41",
+        "verwijderbaar antwoord 41",
+    ]
+
+    with pytest.raises(ConversationConflict, match="does not exist"):
+        journal.erase_message_content(
+            principal_id="person:lola",
+            message_id=turn.message_id,
+            operation_sha256="1" * 64,
+            erased_at=NOW,
+        )
+
+    # Even the scoped runtime role cannot use the narrow SECURITY DEFINER
+    # function to alter a checkpoint or add an unrelated payload field.
+    with timeline_engine.connect() as connection:
+        transaction = connection.begin()
+        journal._scope(connection)  # noqa: SLF001
+        row = connection.execute(
+            sa.select(operational_events).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.event_type == "INGRESS_COMMITTED",
+            )
+        ).one()
+        forged_payload = dict(row.payload)
+        forged_data = dict(forged_payload["data"])
+        forged_data.pop("text")
+        forged_data["content_erasure"] = {
+            "contract": "EvaConversationContentErasure/v1",
+            "erased_at": "2026-08-23T12:00:00Z",
+            "message_sha256": hashlib.sha256(
+                turn.message_id.encode("utf-8")
+            ).hexdigest(),
+            "operation_sha256": "2" * 64,
+            "principal_sha256": hashlib.sha256(
+                turn.principal_id.encode("utf-8")
+            ).hexdigest(),
+            "status": "erased",
+        }
+        forged_payload["data"] = forged_data
+        forged_payload["unrelated"] = "mutation"
+        forged_json = canonical_json_bytes(forged_payload).decode("utf-8")
+        with pytest.raises(sa.exc.DBAPIError, match="payload_invalid"):
+            connection.scalar(
+                sa.text(
+                    "SELECT eva_core.erase_conversation_event_content("
+                    ":event_id, :expected_hash, :payload, :new_hash)"
+                ),
+                {
+                    "event_id": row.event_id,
+                    "expected_hash": bytes(row.payload_sha256),
+                    "payload": forged_json,
+                    "new_hash": bytes.fromhex(canonical_sha256(forged_payload)),
+                },
+            )
+        transaction.rollback()
+
+    receipt = journal.erase_message_content(
+        principal_id=turn.principal_id,
+        message_id=turn.message_id,
+        operation_sha256="2" * 64,
+        erased_at=NOW,
+    )
+    assert receipt.redacted_event_count == 2
+    assert receipt.replayed is False
+    assert receipt.principal_sha256 == hashlib.sha256(
+        turn.principal_id.encode("utf-8")
+    ).hexdigest()
+    assert receipt.message_sha256 == hashlib.sha256(
+        turn.message_id.encode("utf-8")
+    ).hexdigest()
+    assert journal.recent(turn) == ()
+    with pytest.raises(ConversationConflict, match="content was erased"):
+        journal.committed_reply(turn)
+    with pytest.raises(ConversationConflict, match="different ingress"):
+        journal.admit(turn)
+
+    restarted = PostgresConversationJournal(timeline_engine, scope)
+    replay = restarted.erase_message_content(
+        principal_id=turn.principal_id,
+        message_id=turn.message_id,
+        operation_sha256="3" * 64,
+        erased_at=NOW + timedelta(seconds=1),
+    )
+    assert replay.replayed is True
+    assert replay.redacted_event_count == 0
+    assert replay.operation_sha256 == "2" * 64
+
+    data = operational_events.c.payload["data"]
+    with timeline_engine.begin() as connection:
+        rows = connection.execute(
+            sa.select(operational_events.c.payload).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.event_type.in_(
+                    ["INGRESS_COMMITTED", "REPLY_COMMITTED"]
+                ),
+                data["message_id"].astext == turn.message_id,
+            )
+        ).all()
+    assert len(rows) == 2
+    for row in rows:
+        raw = str(row.payload)
+        assert "verwijderbare bronzin 41" not in raw
+        assert "verwijderbaar antwoord 41" not in raw
+        value = row.payload["data"]
+        assert "text" not in value
+        assert "text_sha256" not in value
+        assert value["content_erasure"] == {
+            "contract": "EvaConversationContentErasure/v1",
+            "erased_at": "2026-08-23T12:00:00Z",
+            "message_sha256": receipt.message_sha256,
+            "operation_sha256": "2" * 64,
+            "principal_sha256": receipt.principal_sha256,
+            "status": "erased",
+        }
 
 
 def test_conversation_records_a_content_free_memory_quota_refusal(

@@ -2075,6 +2075,25 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
         )
     )
+    conversation_erasure = (
+        None
+        if settings.background_tenant_id is None
+        or settings.background_installation_id is None
+        else PostgresConversationJournal(
+            engine,
+            TimelineScope(
+                tenant_id=uuid5(
+                    NAMESPACE_URL, f"eva2:{settings.background_tenant_id}"
+                ),
+                installation_id=uuid5(
+                    NAMESPACE_URL,
+                    "eva2:"
+                    f"{settings.background_tenant_id}:"
+                    f"{settings.background_installation_id}",
+                ),
+            ),
+        )
+    )
     memory_writer = BudgetedConversationMemoryWriter(memory, storage_budget)
     prototype_store = PostgresPersonalPrototypeStore(
         engine, lease_seconds=settings.personal_interest_lease_seconds
@@ -2209,6 +2228,7 @@ def create_runtime_app() -> FastAPI:
                 outbox=memory_outbox,
                 reflection_budget=reflection_budget,
                 storage_budget=storage_budget,
+                conversation_erasure=conversation_erasure,
             ),
             prototype_store,
             release_store,

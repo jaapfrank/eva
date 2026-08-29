@@ -124,6 +124,7 @@ _EXPECTED_INPUT_PATHS = (
     "experiments/playwright-mcp-sidecar-v1/smoke_client.py",
     "migrations/env.py",
     "migrations/versions/4e_0004_delegated_work_stop.py",
+    "migrations/versions/4e_0005_conversation_erasure.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
     "release/build-policy.json",
@@ -518,6 +519,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0004_delegated_work_stop",
         "4e_0003_delegated_work_runs",
         "migrations/versions/4e_0004_delegated_work_stop.py",
+    ),
+    (
+        "4e_0005_conversation_erasure",
+        "4e_0004_delegated_work_stop",
+        "migrations/versions/4e_0005_conversation_erasure.py",
     ),
 )
 

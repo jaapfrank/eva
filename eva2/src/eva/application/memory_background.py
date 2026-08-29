@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
+import hashlib
 from queue import Empty, Queue
 from threading import Event, Lock, Thread
 import time
@@ -63,10 +64,26 @@ class MemoryStorageBudgetPort(Protocol):
     def claim_expired(self, *, now: datetime, limit: int = 64) -> tuple[object, ...]: ...
 
     def request_erasure(
-        self, *, principal_id: str, document_id: str, now: datetime
+        self,
+        *,
+        principal_id: str,
+        document_id: str,
+        now: datetime,
+        source_message_id: str | None = None,
     ) -> object | None: ...
 
     def mark_removed(self, job: object, *, now: datetime) -> object: ...
+
+
+class ConversationContentErasurePort(Protocol):
+    def erase_message_content(
+        self,
+        *,
+        principal_sha256: str,
+        message_id: str,
+        operation_sha256: str,
+        erased_at: datetime,
+    ) -> object: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,6 +111,7 @@ class SemanticMemoryColdPathWorker:
         outbox: DurableMemoryOutboxPort | None = None,
         reflection_budget: BackgroundReflectionBudgetPort | None = None,
         storage_budget: MemoryStorageBudgetPort | None = None,
+        conversation_erasure: ConversationContentErasurePort | None = None,
     ) -> None:
         if idle_seconds <= 0 or retry_delay_seconds < 0:
             raise ValueError("cold-path timing is invalid")
@@ -104,6 +122,7 @@ class SemanticMemoryColdPathWorker:
         self._outbox = outbox
         self._reflection_budget = reflection_budget
         self._storage_budget = storage_budget
+        self._conversation_erasure = conversation_erasure
         self._queue: Queue[_RetainJob | None] = Queue()
         self._stop = Event()
         self._thread: Thread | None = None
@@ -168,29 +187,102 @@ class SemanticMemoryColdPathWorker:
         return admission
 
     def erase_document(
-        self, *, principal_id: str, document_id: str, now: datetime
+        self,
+        *,
+        principal_id: str,
+        document_id: str,
+        now: datetime,
+        source_message_id: str | None = None,
     ) -> bool:
-        """Remove one retained document now; a crash remains retryable."""
+        """Remove semantic and optional raw source content under one durable lease."""
 
         if self._storage_budget is None:
             raise RuntimeError("memory erasure requires a durable storage budget")
-        job = self._storage_budget.request_erasure(
-            principal_id=principal_id,
-            document_id=document_id,
-            now=now,
-        )
+        if source_message_id is not None and self._conversation_erasure is None:
+            raise RuntimeError("raw conversation erasure is not configured")
+        request = {
+            "principal_id": principal_id,
+            "document_id": document_id,
+            "now": now,
+        }
+        if source_message_id is not None:
+            request["source_message_id"] = source_message_id
+        job = self._storage_budget.request_erasure(**request)
         if job is None:
             return False
+        durable_source = getattr(job, "source_message_id", None)
+        if source_message_id is not None and durable_source != source_message_id:
+            raise RuntimeError("memory erasure source binding differs")
+        self._remove_job(job, now=now)
+        return True
+
+    @staticmethod
+    def _erasure_operation_sha256(
+        *, principal_sha256: str, document_id: str, source_message_id: str
+    ) -> str:
+        payload = (
+            "EvaConversationMemoryErasure/v1\0"
+            f"{principal_sha256}\0{document_id}\0{source_message_id}"
+        ).encode("utf-8")
+        return hashlib.sha256(payload).hexdigest()
+
+    def _remove_job(self, job: object, *, now: datetime) -> None:
+        if self._storage_budget is None:
+            raise RuntimeError("memory erasure requires a durable storage budget")
         bank_id = getattr(job, "bank_id", None)
-        retained_document_id = getattr(job, "document_id", None)
-        if not isinstance(bank_id, str) or not isinstance(retained_document_id, str):
+        document_id = getattr(job, "document_id", None)
+        source_message_id = getattr(job, "source_message_id", None)
+        principal_sha256 = getattr(job, "principal_sha256", None)
+        if not isinstance(bank_id, str) or not isinstance(document_id, str):
             raise RuntimeError("memory storage budget returned an invalid erasure job")
+        if source_message_id is not None and (
+            not isinstance(source_message_id, str) or not source_message_id
+        ):
+            raise RuntimeError("memory erasure source binding is invalid")
+        if source_message_id is not None and (
+            not isinstance(principal_sha256, str)
+            or len(principal_sha256) != 64
+        ):
+            raise RuntimeError("memory erasure principal binding is missing")
+        if source_message_id is not None and self._conversation_erasure is None:
+            raise RuntimeError("raw conversation erasure is not configured")
+
         self._memory.remove_conversation_document(
             bank_id=bank_id,
-            document_id=retained_document_id,
+            document_id=document_id,
         )
+        if source_message_id is not None:
+            assert principal_sha256 is not None
+            assert self._conversation_erasure is not None
+            operation_sha256 = self._erasure_operation_sha256(
+                principal_sha256=principal_sha256,
+                document_id=document_id,
+                source_message_id=source_message_id,
+            )
+            receipt = self._conversation_erasure.erase_message_content(
+                principal_sha256=principal_sha256,
+                message_id=source_message_id,
+                operation_sha256=operation_sha256,
+                erased_at=now,
+            )
+            expected_message = hashlib.sha256(
+                source_message_id.encode("utf-8")
+            ).hexdigest()
+            if (
+                getattr(receipt, "operation_sha256", None) != operation_sha256
+                or getattr(receipt, "principal_sha256", None)
+                != principal_sha256
+                or getattr(receipt, "message_sha256", None) != expected_message
+                or not isinstance(getattr(receipt, "replayed", None), bool)
+                or not isinstance(
+                    getattr(receipt, "redacted_event_count", None), int
+                )
+                or not 0 <= receipt.redacted_event_count <= 2
+                or (receipt.replayed and receipt.redacted_event_count != 0)
+                or (not receipt.replayed and receipt.redacted_event_count == 0)
+            ):
+                raise RuntimeError("raw conversation erasure receipt is invalid")
         self._storage_budget.mark_removed(job, now=now)
-        return True
 
     def _run(self) -> None:
         poll_seconds = min(self._idle_seconds, 1.0)
@@ -316,16 +408,7 @@ class SemanticMemoryColdPathWorker:
                 expired = ()
             for expiry_job in expired:
                 try:
-                    bank_id = getattr(expiry_job, "bank_id", None)
-                    document_id = getattr(expiry_job, "document_id", None)
-                    if not isinstance(bank_id, str) or not isinstance(document_id, str):
-                        raise RuntimeError(
-                            "memory storage budget returned an invalid expiry job"
-                        )
-                    self._memory.remove_conversation_document(
-                        bank_id=bank_id, document_id=document_id
-                    )
-                    self._storage_budget.mark_removed(
+                    self._remove_job(
                         expiry_job,
                         now=datetime.now(tz=UTC).replace(microsecond=0),
                     )
@@ -372,6 +455,7 @@ HindsightColdPathWorker = SemanticMemoryColdPathWorker
 
 __all__ = [
     "BackgroundReflectionBudgetPort",
+    "ConversationContentErasurePort",
     "DurableMemoryOutboxPort",
     "HindsightColdPathWorker",
     "MemoryStorageBudgetPort",

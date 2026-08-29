@@ -18,11 +18,14 @@ from eva.adapters.postgres.runtime_resource_usage import (
     PostgresDailyReflectionBudget,
     PostgresMemoryStorageBudget,
 )
+from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.operational_timeline import (
     OperationalTimelineError,
     operational_events,
 )
+from eva.application.conversation import ConversationTurn, GroundedReply
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.memory_audience import (
     MemoryAudience,
     TelegramGroupConsentReference,
@@ -475,6 +478,7 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
         principal_id="person:owner",
         document_id=document.document_id,
         now=NOW + timedelta(seconds=3),
+        source_message_id="telegram:owner:41",
     )
     assert job is not None
     assert storage.request_erasure(
@@ -502,6 +506,7 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
         "principal_sha256": hashlib.sha256(b"person:owner").hexdigest(),
         "reason": "explicit_request",
         "requested_at": "2026-08-29T09:00:03Z",
+        "source_message_id": "telegram:owner:41",
     }
     assert document.content not in str(payload)
 
@@ -515,12 +520,133 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
     recovered = restarted.claim_expired(now=NOW + timedelta(seconds=4))
     assert len(recovered) == 1
     assert recovered[0].document_id == document.document_id
+    assert recovered[0].principal_sha256 == hashlib.sha256(
+        b"person:owner"
+    ).hexdigest()
+    assert recovered[0].source_message_id == "telegram:owner:41"
     restarted.mark_removed(recovered[0], now=NOW + timedelta(seconds=5))
     assert restarted.request_erasure(
         principal_id="person:owner",
         document_id=document.document_id,
         now=NOW + timedelta(seconds=6),
     ) is None
+
+
+def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
+    resource_engine: Engine,
+) -> None:
+    installation_id = "memory-cross-store-erasure"
+    principal_id = "person:owner-cross-store"
+    message_id = "telegram:owner-cross-store:41"
+    document_id = "telegram:owner-cross-store:exchange:41"
+    storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=_limited_storage_budget(installation_id),
+        removal_lease_seconds=1,
+    )
+    journal = PostgresConversationJournal(resource_engine, storage._scope_value)  # noqa: SLF001
+    turn = ConversationTurn.private(
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        principal_id=principal_id,
+        conversation_id="telegram:owner-cross-store",
+        message_id=message_id,
+        text="ruwe geheime bronzin 41",
+        occurred_at="2026-08-29T09:00:00Z",
+    )
+    journal.admit(turn)
+    journal.commit_reply(
+        turn,
+        GroundedReply(
+            turn.conversation_id,
+            turn.message_id,
+            "ruw geheim antwoord 41",
+            (),
+            "2026-08-29T09:00:01Z",
+            "test",
+        ),
+    )
+    document = ConversationMemoryDocument(
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        principal_id=principal_id,
+        conversation_id=turn.conversation_id,
+        document_id=document_id,
+        content="Gebruiker (directe bron): ruwe geheime bronzin 41",
+        occurred_at=turn.occurred_at,
+        source_ref=message_id,
+        evidence_ref=f"conversation-reply:{message_id}",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=turn.audience,
+    )
+    admission = storage.admit_memory(document, now=NOW)
+    retained = replace(document, retention_until=admission.retention_until)
+    storage.mark_retained(
+        retained,
+        MemoryRetentionReceipt(
+            bank_id="eva2-" + "f" * 32,
+            document_id=document_id,
+            content_sha256=hashlib.sha256(
+                document.content.encode("utf-8")
+            ).hexdigest(),
+        ),
+        now=NOW + timedelta(seconds=1),
+    )
+
+    provider_deletes: list[str] = []
+
+    class Memory:
+        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
+            assert bank_id == "eva2-" + "f" * 32
+            provider_deletes.append(document_id)
+
+    class CrashAfterRawErasure:
+        def erase_message_content(self, **kwargs):  # type: ignore[no-untyped-def]
+            journal.erase_message_content(**kwargs)
+            raise RuntimeError("simulated crash after raw erasure")
+
+    crashing = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=storage,
+        conversation_erasure=CrashAfterRawErasure(),  # type: ignore[arg-type]
+    )
+    with pytest.raises(RuntimeError, match="simulated crash after raw erasure"):
+        crashing.erase_document(
+            principal_id=principal_id,
+            document_id=document_id,
+            source_message_id=message_id,
+            now=NOW + timedelta(seconds=2),
+        )
+    assert journal.recent(turn) == ()
+
+    restarted_storage = PostgresMemoryStorageBudget(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+        resource_budget=_limited_storage_budget(installation_id),
+        removal_lease_seconds=1,
+    )
+    recovered = restarted_storage.claim_expired(now=NOW + timedelta(seconds=4))
+    assert len(recovered) == 1
+    assert recovered[0].source_message_id == message_id
+    resumed = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=restarted_storage,
+        conversation_erasure=PostgresConversationJournal(
+            resource_engine, restarted_storage._scope_value  # noqa: SLF001
+        ),
+    )
+    resumed._remove_job(recovered[0], now=NOW + timedelta(seconds=5))  # noqa: SLF001
+    assert provider_deletes == [document_id, document_id]
+    assert restarted_storage._timeline.load(  # noqa: SLF001
+        recovered[0].state.thread_id
+    ).phase == "memory_storage_removed"
+    assert PostgresConversationJournal(
+        resource_engine, restarted_storage._scope_value  # noqa: SLF001
+    ).recent(turn) == ()
 
 
 def test_group_and_project_limits_are_atomic_across_people_and_restart(
