@@ -1,0 +1,68 @@
+{
+  "contract": "EvaPerformanceComplexityPc01BoundedApiApprovalConsolidation/v1",
+  "recordedAt": "2026-08-29T16:15:39Z",
+  "sourceCommit": "1e9e240d003bc983d59bec1ab56b372817ebd387",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedValidation": [
+      "Tuya-to-LocalTuya plan and refresh",
+      "canary approve, preflight, prepare, execute and reconcile",
+      "LocalTuya package approve and install",
+      "LocalTuya repository approve and register"
+    ],
+    "sharedApproval": [
+      "canary",
+      "package",
+      "repository"
+    ],
+    "preservedBoundaries": [
+      "exact field sets and modes",
+      "64-character local-key maximum",
+      "240-character identifier maximum",
+      "422 input errors, 409 task errors and 501 unavailable routes"
+    ],
+    "netProductPhysicalLines": -64
+  },
+  "verification": {
+    "apiRoutesWithoutStaleDashboardEvidenceGate": {
+      "passed": 64,
+      "failed": 0,
+      "logSha256": "49aa54bbfedcfe1fe40e18c901e1cfd102e4b7517ee1b3173c55b59c1b796cc4"
+    },
+    "allApiObservation": {
+      "passed": 83,
+      "failed": 1,
+      "failure": "pre-existing cockpit source hash differs after later committed source changes",
+      "logSha256": "764540a5343b2c51c675683eac3ba6801839a9ef7a931e6a0e1acab723ca9fd4"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87656,
+      "productManifestSha256": "e4ea92980269663e261d2bfb5a9249663ef1c2bc447132eee064fc4df37c00c1"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87592,
+      "productManifestSha256": "5814a5aa918096e8a75b8c20f5eafdf77f3d83a9d9dfdc791c2c737f6dd9fa27",
+      "livingCorePhysicalLines": 86999,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12592,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The stale cockpit evidence hash was not silently resealed and is not claimed green.",
+    "No Home Assistant capability, mode, field, limit, approval, error mapping, or external action was added or relaxed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector, or volume was changed."
+  ]
+}
