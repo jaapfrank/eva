@@ -276,6 +276,12 @@ stil half-geconfigureerd.
   ongeldige inhoud, redirect en herstart zonder tweede call zijn via echte
   loopback-HTTP getest. Ook dit gebruikte alleen synthetische gegevens en is
   nog geen proef tegen het echte huis.
+  Voor e-mail is dezelfde grens nu gekoppeld aan de bestaande vaste
+  AgentMail-route. De operator kiest één inbox en de verifier doet uitsluitend
+  de officieel gedocumenteerde `GET /v0/inboxes/:inbox_id`. Een echte lokale
+  HTTP-contractproef bewees succes, afwijzing en herstart zonder tweede call;
+  zij las geen bericht en bewaarde sleutel, inbox-ID en providermetadata niet.
+  Ook deze proef was volledig synthetisch en bewijst nog geen live mailbox.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
