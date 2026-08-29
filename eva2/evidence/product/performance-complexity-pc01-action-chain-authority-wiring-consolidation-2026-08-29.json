@@ -1,0 +1,57 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ActionChainAuthorityWiringConsolidation/v1",
+  "recordedAt": "2026-08-29T19:06:31Z",
+  "sourceCommit": "9743e617e7ab2ede33d9b46900718789edb2e0ea",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedCatalogAuthorizer": "PostgresActionChainCatalogAuthorizer",
+    "sharedProviderDispatcher": "PostgresActionChainProviderDispatcher",
+    "sharedCatalogExecution": "_execute_catalog_connector_once",
+    "consumers": [
+      "action-chain read",
+      "action-chain effect",
+      "action-chain effect readback"
+    ],
+    "preservedKindSpecificPreparers": true,
+    "preservedKindSpecificAuthorizers": true,
+    "preservedPostgresErrors": true,
+    "netProductPhysicalLines": -34
+  },
+  "verification": {
+    "fullRealPostgresActionChainTests": {
+      "passed": 106,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "4d00e2918d7e44ea345f645948371b2eb07a486766b0f8aedf079c571bf83a58"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83116,
+      "productManifestSha256": "c59d2c6cb4820da37882788621d71aa31dc84a2e34f49ebf6b600ffda5745c58"
+    },
+    "after": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83082,
+      "productManifestSha256": "b7fa89207072fafdc5bee8e333ee372b8b3c493653bbb84ec8d160d57222d797",
+      "livingCorePhysicalLines": 82489,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8082,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No read, effect or readback authority was merged or relaxed.",
+    "No real provider call was made and no running Eva1 or Eva2 component was changed."
+  ]
+}

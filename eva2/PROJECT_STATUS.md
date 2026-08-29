@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 20:55 CEST
+Laatst bijgewerkt: 29 augustus 2026, 21:06 CEST
 
 ## Heel kort
 
@@ -238,6 +238,9 @@ praktijktest zijn nog niet klaar.
 - Lezen, handelen en de aparte controle achteraf delen nu één vaste executor
   voor de providerprocesgrens. Hun eigen autorisatie, opslag en foutsoort blijven
   apart; alle 106 echte PostgreSQL-cases zijn groen en dit scheelde 29 regels.
+- Dezelfde drie routes delen nu ook hun identieke PostgreSQL-, ledger- en
+  dispatcheropbouw. Read, effect en readback houden ieder hun eigen preparer,
+  bevoegdheid en fouttekst; 106 echte cases zijn groen en dit scheelde 34 regels.
 
 ## Wat nog niet klaar is
 
@@ -252,8 +255,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.717 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 83.116 productregels en mag er maximaal 75.000 hebben.
+  7.751 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 83.082 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -271,7 +274,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 8.116 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 8.082 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -341,6 +344,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde OpenAI-endpointcontrole en late time-outsluiting](evidence/product/performance-complexity-pc01-openai-endpoint-timeout-consolidation-2026-08-29.json)
 - [Eén begrensde JSON-ingang voor installer-secrets en providercontrole](evidence/product/performance-complexity-pc01-installer-json-intake-consolidation-2026-08-29.json)
 - [Eén providerproces-executor voor lezen, handelen en effectcontrole](evidence/product/performance-complexity-pc01-action-chain-connector-executor-consolidation-2026-08-29.json)
+- [Gedeelde PostgreSQL- en dispatcheropbouw met aparte bevoegdheden](evidence/product/performance-complexity-pc01-action-chain-authority-wiring-consolidation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
