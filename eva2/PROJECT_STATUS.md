@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 06:24 CEST
+Laatst bijgewerkt: 29 augustus 2026, 06:42 CEST
 
 ## Heel kort
 
@@ -241,6 +241,11 @@ installatie zijn nog niet klaar.
   verwijdering heeft bevestigd; na een nagebootste crash werd dezelfde
   verwijdering veilig hervat. De proef gebruikte een nieuwe wegwerpdatabase en
   wijzigde geen live geheugen.
+- Ook Eva's eigen verkenningen, proefbouwsels en releasevoorstellen kunnen die
+  geheugenlimiet niet meer omzeilen. Zij lopen nu door precies dezelfde
+  persoonsgrens en bewaartijd vóór Hindsight. Een bronbrede controle weigert
+  voortaan iedere nieuwe directe geheugenwrite buiten de twee vaste
+  opslaggrenzen; 76 gerichte regressies zijn groen.
 
 ## Wat nog niet klaar is
 
@@ -351,6 +356,7 @@ installatie zijn nog niet klaar.
 - [Bevestigde limieten echt afgedwongen in de modelruntime en PostgreSQL](evidence/living-core/eva2-runtime-resource-budget-postgres-2026-08-29.json)
 - [Dagelijkse Hindsight-reflectielimieten blijven hard bij race, herstart en daggrens](evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json)
 - [Geheugenregels, UTF-8-inhoud en bewaartijd per persoon blijven hard bij race, herstart en verwijdercrash](evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json)
+- [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

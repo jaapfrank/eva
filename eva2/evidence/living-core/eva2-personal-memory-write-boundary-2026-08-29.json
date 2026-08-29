@@ -1,0 +1,61 @@
+{
+  "callsite_inventory": {
+    "background_outbox_raw_write": "src/eva/application/memory_background.py",
+    "budgeted_writer_raw_write": "src/eva/application/memory.py",
+    "personal_development_producers": [
+      "exploration",
+      "prototype",
+      "release"
+    ],
+    "production_bypasses_found": 0
+  },
+  "contract": "EvaPersonalMemoryWriteBoundaryProof/v1",
+  "guarantees": {
+    "blocked_before_hindsight": true,
+    "provider_failure_not_marked_retained": true,
+    "retention_deadline_bound_before_hindsight": true,
+    "runtime_direct_write_uses_same_writer": true
+  },
+  "non_claims": [
+    "geen nieuwe live Hindsight- of productiegegevens gewijzigd",
+    "deze bron- en regressieproef vervangt niet de afzonderlijke echte PostgreSQL-budgetproef",
+    "quota voor groepen, projecten en de hele installatie blijven open",
+    "volledige verwijdering uit brongesprekken en back-ups blijft open"
+  ],
+  "source_commit": "ef269d39bd2e3340adaac36bb59729ced19faafd",
+  "source_files": [
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "8c1beca29d2c66dfd218c440dd9ccc25c7f612ee44d18c134d9bb31f37aab9aa"
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "7e126d6752a46875a9bbcef96629eb481ec7838de69e8c186aeeecf27059a2d9"
+    },
+    {
+      "path": "src/eva/application/personal_interests.py",
+      "sha256": "d9abf0e3f3c912d5311e0cfc577ad0c7ddc969667c2a7fe23468d0abfcdf9402"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "e4b43aa18b9161e7c461b4b93a4a5a91f20cff5a9b863db9b33b0322b676c45b"
+    },
+    {
+      "path": "tests/application/test_memory_background.py",
+      "sha256": "f02da4fa6fa6f769ed5056c569f3f33bbc7b0bacc5b17c289e3df40689b285ae"
+    },
+    {
+      "path": "tests/application/test_personal_interests.py",
+      "sha256": "92c05ad9036edccededf5e1a7487b1c67229d59c082ddfcf01b2a6e88fde7bb8"
+    }
+  ],
+  "supporting_postgres_proof": {
+    "path": "evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json",
+    "sha256": "c07b8b5f97dc666540183388e360877f96e4b6df217acd04e72ab4edf324ae27"
+  },
+  "tests": {
+    "focused_passed": 76,
+    "network": "none",
+    "read_only_root_filesystem": true
+  }
+}
