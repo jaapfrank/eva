@@ -125,9 +125,9 @@ def cockpit_progress() -> dict[str, Any]:
                 "id": "installer",
                 "title": "Installeren en bijwerken",
                 "state": "tested",
-                "proof": "De lokale wizard hervat identiteit en basiskeuzes en kan model of Telegram kiezen, toegang eenmalig bewaren en echt controleren",
-                "meaning": "Eva controleert eerst het platform. Een model- of Telegramkoppeling wordt pas groen na een aparte server-side controle; de browser ziet secret of providerantwoord nooit terug.",
-                "next": "Echte provideraccounts, Home Assistant- en e-mailkeuzes, fresh install, update en terugrol via dezelfde wizard bewijzen.",
+                "proof": "De lokale wizard hervat identiteit en basiskeuzes en kan model, Telegram, Home Assistant en AgentMail instellen, toegang bewaren en controleren",
+                "meaning": "Eva controleert eerst het platform. Een koppeling wordt pas groen na een aparte server-side controle; configuratie, secret en providerantwoord komen niet terug in de browser.",
+                "next": "Echte provideraccounts, secretrotatie, loskoppelen, fresh install, update en terugrol via dezelfde wizard bewijzen.",
                 "evidence": _evidence("capability/installer"),
             },
             {

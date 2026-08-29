@@ -250,12 +250,13 @@ stil half-geconfigureerd.
   vragen hebben deze statusmachine nog niet. Model, Telegram, Home Assistant,
   e-mail, een adaptief kanaal en budgetten hebben nu wel ieder een eigen
   `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
-  De browser kan kiezen of overslaan en voor model of Telegram na eenmalige
-  secretinvoer de server-side providercontrole starten; uitsluitend die
-  controle met receipthash mag `ready` of `blocked` schrijven. Twee echte
-  lokale wizardservers hervatten de groene Telegramstatus zonder tweede
-  providercall. De model-, Telegram-, Home Assistant- en AgentMail-verifiers
-  bestaan nu; echte providerproeven en de overige connectorflows ontbreken
+  De browser kan kiezen of overslaan en voor model, Telegram, Home Assistant
+  of AgentMail na eenmalige secretinvoer de server-side providercontrole
+  starten; uitsluitend die controle met receipthash mag `ready` of `blocked`
+  schrijven. De lokale Home Assistant-URL en AgentMail-inbox-ID worden privé
+  bewaard en hun hash wordt aan de controlereceipt gebonden. Twee echte lokale
+  wizardservers hervatten alle bewezen groene statussen zonder tweede
+  providercall. Echte providerproeven en de overige connectorflows ontbreken
   nog. Daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
@@ -293,11 +294,12 @@ stil half-geconfigureerd.
   geen tweede call en bewaarde secret, account of modelantwoord niet. De
   ChatGPT-route rapporteerde geen geldbedrag, dus het bewijs noemt de kosten
   eerlijk onbekend. Dit is nog geen browserlogin, tokenrefresh of live
-  providerproef. De loopback-wizard biedt nu voor model en Telegram ook de
-  zichtbare kies→secret→controle-route. De echte HTTP-proef gebruikte twee
-  wizardservers, één synthetische Telegramprovidercall en nul tweede calls na
-  herstart. Home Assistant-URL en AgentMail-inbox moeten nog veilig vanuit de
-  wizard worden gekozen voordat hun bestaande verifiers daar bruikbaar zijn.
+  providerproef. De loopback-wizard biedt nu voor alle vier de vaste
+  koppelingen de zichtbare kies→instelling→secret→controle-route. Home
+  Assistant en AgentMail bewaren hun URL of inbox-ID uitsluitend privé en
+  binden de configuratiehash aan het bewijs. De echte HTTP-proef gebruikte
+  twee wizardservers, één synthetische call per provider en nul tweede calls na
+  herstart. Echte accounts en het adaptieve kanaal blijven open.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
@@ -316,8 +318,8 @@ stil half-geconfigureerd.
   de eerste bestandswissel blijft zichtbaar als `needs_help` en kan alleen
   vanuit de geblokkeerde toestand worden hersteld. Twee echte CLI-processen,
   generaties 1→2→3 en 88 gerichte controles zijn groen met uitsluitend
-  synthetische secrets. De gewone gebruiker kan een eerste model- of
-  Telegramsecret invoeren en controleren. Gebruikersbediening voor
+  synthetische secrets. De gewone gebruiker kan een eerste secret voor alle
+  vier de vaste koppelingen invoeren en controleren. Gebruikersbediening voor
   rotatie/verwijdering, expliciete providerscopes en echte providerreadback
   ontbreken nog, dus IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,

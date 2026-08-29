@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 03:37 CEST
+Laatst bijgewerkt: 29 augustus 2026, 03:55 CEST
 
 ## Heel kort
 
@@ -201,6 +201,12 @@ installatie zijn nog niet klaar.
   provideroproep; na de herstart bleef de groene status staan en volgde geen
   tweede oproep. De proef gebruikte synthetische toegang en benaderde geen
   echte provider.
+- Home Assistant en AgentMail hebben nu dezelfde gebruikersroute. De wizard
+  bewaart de lokale URL of inbox-ID privé, toont alleen dat de instelling er
+  is en bindt de hash daarvan aan de providercontrole. Twee echte lokale
+  wizardservers deden precies één Home Assistant- en één AgentMail-call; na
+  herstart bleven beide groen zonder nieuwe call. De proef gebruikte lokale
+  nabootsingen en dus geen echt huis of echte mailbox.
 
 ## Wat nog niet klaar is
 
@@ -218,9 +224,9 @@ installatie zijn nog niet klaar.
   bewaard en opnieuw herbouwbaar worden bewezen.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
-- Model en Telegram hebben nu gebruikersbediening in de wizard. De echte
-  providerproeven, browserlogin/tokenvernieuwing, Home Assistant-/AgentMail-
-  endpointinvoer en gebruikersbediening voor secretrotatie ontbreken nog.
+- Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
+  in de wizard. De echte providerproeven, browserlogin/tokenvernieuwing en
+  gebruikersbediening voor secretrotatie en loskoppelen ontbreken nog.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
   `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
   de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
@@ -294,6 +300,7 @@ installatie zijn nog niet klaar.
 - [AgentMail-inboxcontrole zonder berichten, mutaties of bewaarde providerdata](evidence/living-core/eva2-installer-agentmail-readonly-verification-2026-08-29.json)
 - [Begrensde modelcontrole zonder refresh-login, tools of verzonnen kosten](evidence/living-core/eva2-installer-codex-model-verification-2026-08-29.json)
 - [Model en Telegram kiezen, toegang invoeren en controleren via echte lokale wizardservers](evidence/living-core/eva2-installer-provider-wizard-2026-08-29.json)
+- [Home Assistant en AgentMail instellen en controleren via echte lokale wizardservers](evidence/living-core/eva2-installer-endpoint-wizard-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
