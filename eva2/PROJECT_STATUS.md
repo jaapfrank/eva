@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 04:36 CEST
+Laatst bijgewerkt: 29 augustus 2026, 04:53 CEST
 
 ## Heel kort
 
@@ -216,12 +216,15 @@ installatie zijn nog niet klaar.
   providerproeven gecontroleerd. Een provider kan zelf nog steeds een bredere
   toegangscode uitgeven; echte least-privilege-providerrechten blijven daarom
   een aparte praktijkcontrole.
-- De wizard maakt nu uit alle controles één leesbaar installatieplan. Zolang
-  iets ontbreekt toont zij concrete blokkades; na afronding blijft exact
-  hetzelfde plan ook na een herstart staan. Wordt een koppeling ingetrokken,
-  dan blokkeert het plan meteen opnieuw. Vier echte lokale wizardstarts zijn
-  groen. Deze stap heeft niets geïnstalleerd en biedt bewust nog geen knop om
-  Docker of diensten te starten.
+- De wizard laat een gewone gebruiker nu ook harde maxima kiezen voor
+  modelcontext, output, geheugen, bewaartijd, achtergrondwerk en externe
+  autonome uitgaven. Onbekende autonome kosten blijven geblokkeerd. Deze
+  limieten worden apart bevestigd en exact aan het installatieplan gebonden.
+- Uit alle controles maakt de wizard één leesbaar plan dat eerlijk “klaar voor
+  releasevoorbereiding” heet. Zolang iets ontbreekt toont zij concrete
+  blokkades. Vijf echte lokale wizardstarts bewezen hervatten, dezelfde
+  planvingerafdruk na herstart, herstel na een afgebroken budgetbinding en
+  directe blokkering na intrekking. Er bestaat bewust nog geen installatiestart.
 
 ## Wat nog niet klaar is
 
@@ -240,6 +243,9 @@ installatie zijn nog niet klaar.
 - De gewone gebruiker kan in de wizard nu wel een gecontroleerd installatieplan
   krijgen, maar Eva2 nog niet zelf installeren, herstellen en bijwerken. De
   aparte uitvoerknop en volledige fresh-installproef ontbreken nog.
+- De gekozen gebruikslimieten zijn duurzaam aan het plan gebonden, maar de
+  eindruntime handhaaft nog niet ieder geheugen-, token- en kostenquotum. Dat
+  moet vóór de fresh-installproef apart worden aangesloten en gemeten.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -323,7 +329,7 @@ installatie zijn nog niet klaar.
 - [Telegramcontrole met zichtbaar en hashgebonden minimaal gebruiksrecht](evidence/living-core/eva2-installer-provider-wizard-scopes-2026-08-29.json)
 - [Home Assistant en AgentMail met ieder hun eigen zichtbare minimale gebruiksrecht](evidence/living-core/eva2-installer-endpoint-wizard-scopes-2026-08-29.json)
 - [Toolvrije modelcontrole met een apart hashgebonden gebruiksrecht](evidence/living-core/eva2-installer-codex-model-scopes-2026-08-29.json)
-- [Eén hervatbaar, fail-closed installatieplan zonder installatiestart](evidence/living-core/eva2-installer-installation-plan-wizard-2026-08-29.json)
+- [Eén hervatbaar plan met bevestigde harde limieten en herstel na procesuitval](evidence/living-core/eva2-installer-budgeted-installation-plan-wizard-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

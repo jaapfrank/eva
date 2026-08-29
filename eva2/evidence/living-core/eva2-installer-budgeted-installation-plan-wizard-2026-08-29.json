@@ -1,0 +1,72 @@
+{
+  "boundaries": {
+    "applyRouteExposed": false,
+    "dockerOrServiceCalled": false,
+    "providerCalled": false,
+    "secretReturned": false
+  },
+  "contract": "EvaInstallerInstallationPlanWizardReceipt/v2",
+  "issuedAt": "2026-08-29T02:52:53+00:00",
+  "loopbackRun": {
+    "blockedAfterProviderInvalidation": true,
+    "blockedBeforeCompletion": true,
+    "budgetsConfirmedThroughWizard": true,
+    "interruptedBudgetBindingRecovered": true,
+    "planStableAcrossRestart": true,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_on_127.0.0.1",
+    "wizardServerStarts": 5
+  },
+  "nonclaims": [
+    "This proof built and read an installation plan; it did not install, start, update or switch Eva.",
+    "Provider readiness used synthetic retained evidence and did not contact a live provider.",
+    "This is not a fresh-machine installation, managed-B promotion or consumer acceptance test."
+  ],
+  "source": {
+    "commit": "f6ac3c60b6d661da6093ae7f00a0b40732b1df9a",
+    "files": [
+      {
+        "path": "src/eva/adapters/api/installer_installation_plan_api.py",
+        "sha256": "e6289fc3fe2fb96aa104f6d80c9c155f959bf68a1dd91670f76e7189ae5bbc3e"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_budget_api.py",
+        "sha256": "411e051c1f8b09548336e51ded08a4ee28ed646acd2ef00963cc4de54abb32e4"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard.py",
+        "sha256": "07b5926fc962338cdb25945b1360da9b05cc9e3198e8aac38253290245ba2e6d"
+      },
+      {
+        "path": "src/eva/operations/installer_installation_plan.py",
+        "sha256": "2e16a1a4f5d57854ad09bb0ab67cd7c59ae602d4ba3bd4040b5189b978c6185e"
+      },
+      {
+        "path": "src/eva/operations/installer_budget_workflow.py",
+        "sha256": "839c358d5da2043e6eeb7a3deccdc12cfdaeb8468db04a5d04a4b00a8bdba385"
+      },
+      {
+        "path": "tests/api/test_installer_wizard.py",
+        "sha256": "0b779a64617bcdc9bfe624e383e7fd07cce16c59567a1e29660b93c4a962836d"
+      },
+      {
+        "path": "tests/operations/test_installer_installation_plan.py",
+        "sha256": "234cf9256f6a00905c65958995e0e1c8f30f03407243f7e594370d3ef86f1cd8"
+      },
+      {
+        "path": "tests/operations/test_installer_budget_workflow.py",
+        "sha256": "94585739377f1f6a6550610289bc9a81f73f8176793c5ccc8e664aa6c4bebc98"
+      },
+      {
+        "path": "tools/prove_installer_installation_plan_wizard.py",
+        "sha256": "3057bec239e0a2738909a00c18981a288b9c8339cbd45d835fc1277cae3d8747"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerTestsPassed": 184,
+    "focusedTestsPassed": 28,
+    "networkUsedOutsideLoopback": false
+  }
+}
