@@ -1,0 +1,70 @@
+{
+  "boundaries": {
+    "crossOriginWriteDenied": true,
+    "providerPayloadReturned": false,
+    "secondProviderCallAfterRestart": false,
+    "secretReturned": false
+  },
+  "contract": "EvaInstallerProviderWizardReceipt/v1",
+  "issuedAt": "2026-08-29T01:37:09+00:00",
+  "loopbackRun": {
+    "browserSessions": 2,
+    "providerRequests": 1,
+    "providerVerificationReceipts": 1,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_on_127.0.0.1",
+    "wizardServerProcesses": 2
+  },
+  "nonclaims": [
+    "The proof used a synthetic Telegram token and loopback contract server; it did not contact Telegram.",
+    "This proves browser controls for selection, one-time intake and verification, not a complete installation or a live provider account.",
+    "Home Assistant and AgentMail need their non-secret endpoint choices before the same browser control can be enabled for them."
+  ],
+  "source": {
+    "commit": "979387c72ef54820c7d365d979432d62d88531b9",
+    "files": [
+      {
+        "path": "src/eva/adapters/api/installer_capability_api.py",
+        "sha256": "9b45e7bd04353d0af07af284123d03dca78736b723c52cc62a89b6e2c37a0511"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_provider_api.py",
+        "sha256": "6dfe7ddfd028fd339808a6f604f18795db5fd054fd3f7922fc9aca3d2fff374b"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_secret_api.py",
+        "sha256": "03ee75ea4a2e3e34b21eeb68c121da679a7449fb9f0cef51ef801152840a00af"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard.py",
+        "sha256": "47fd921f736069d0097ca287ba84281b947f216977dea5caa3c3f213bd2c3ff3"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_wizard_cli.py",
+        "sha256": "44b7e59a5cfebb0196659e41a2f4c0eb3d2c466aa06ebc24ecfa9420036f2262"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "1c9c3300c17c178521afae2a6696d8350856d7761bad8f5548388f9934107b92"
+      },
+      {
+        "path": "tests/api/test_installer_provider_api.py",
+        "sha256": "053b4d4d91b620eeda9a3954bd19caa8a595f62b64d4ecd0fb99cf9da7f49bc0"
+      },
+      {
+        "path": "tests/api/test_installer_wizard.py",
+        "sha256": "f34b5babbab5dc48d7fd3d94406a94074eb8413df8eb77cb585501955ac9e418"
+      },
+      {
+        "path": "tools/prove_installer_provider_wizard.py",
+        "sha256": "f2cc614ffb230929b6dea7df38ba4ba347093fc9a079d8600140589f0653936a"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerReleaseTestsPassed": 156,
+    "focusedTestsPassed": 48,
+    "networkUsedOutsideLoopback": false
+  }
+}

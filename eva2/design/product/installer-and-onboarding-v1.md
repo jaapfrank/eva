@@ -250,11 +250,13 @@ stil half-geconfigureerd.
   vragen hebben deze statusmachine nog niet. Model, Telegram, Home Assistant,
   e-mail, een adaptief kanaal en budgetten hebben nu wel ieder een eigen
   `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
-  De browser kan alleen kiezen of overslaan; uitsluitend een aparte
-  providercontrole met receipthash mag `ready` of `blocked` schrijven. De
-  eenmalige secretflow plus model-, Telegram-, Home Assistant- en AgentMail-
-  verifiers bestaan nu; de echte providerproeven en de overige connectorflows
-  ontbreken nog. Daarom blijft IN02 als geheel open.
+  De browser kan kiezen of overslaan en voor model of Telegram na eenmalige
+  secretinvoer de server-side providercontrole starten; uitsluitend die
+  controle met receipthash mag `ready` of `blocked` schrijven. Twee echte
+  lokale wizardservers hervatten de groene Telegramstatus zonder tweede
+  providercall. De model-, Telegram-, Home Assistant- en AgentMail-verifiers
+  bestaan nu; echte providerproeven en de overige connectorflows ontbreken
+  nog. Daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
@@ -291,7 +293,11 @@ stil half-geconfigureerd.
   geen tweede call en bewaarde secret, account of modelantwoord niet. De
   ChatGPT-route rapporteerde geen geldbedrag, dus het bewijs noemt de kosten
   eerlijk onbekend. Dit is nog geen browserlogin, tokenrefresh of live
-  providerproef.
+  providerproef. De loopback-wizard biedt nu voor model en Telegram ook de
+  zichtbare kies→secret→controle-route. De echte HTTP-proef gebruikte twee
+  wizardservers, één synthetische Telegramprovidercall en nul tweede calls na
+  herstart. Home Assistant-URL en AgentMail-inbox moeten nog veilig vanuit de
+  wizard worden gekozen voordat hun bestaande verifiers daar bruikbaar zijn.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
@@ -310,9 +316,10 @@ stil half-geconfigureerd.
   de eerste bestandswissel blijft zichtbaar als `needs_help` en kan alleen
   vanuit de geblokkeerde toestand worden hersteld. Twee echte CLI-processen,
   generaties 1→2→3 en 88 gerichte controles zijn groen met uitsluitend
-  synthetische secrets. Bediening door een gewone gebruiker, expliciete
-  providerscopes en echte providerreadback ontbreken nog, dus IN05 blijft
-  open.
+  synthetische secrets. De gewone gebruiker kan een eerste model- of
+  Telegramsecret invoeren en controleren. Gebruikersbediening voor
+  rotatie/verwijdering, expliciete providerscopes en echte providerreadback
+  ontbreken nog, dus IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.
