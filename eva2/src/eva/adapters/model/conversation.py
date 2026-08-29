@@ -64,6 +64,7 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
+_TOOL_FREE_MODEL = "gpt-5.6-luna"
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _HOME_ASSISTANT_LIGHT_ACTION = "set_home_assistant_light"
 _HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
@@ -790,7 +791,7 @@ class CodexConversationModel:
             "include": ["reasoning.encrypted_content"],
             "input": input_items,
             "instructions": instructions,
-            "model": self._model,
+            "model": _TOOL_FREE_MODEL if not available_actions else self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": self._cache_key(turn),
             "reasoning": {
@@ -834,7 +835,7 @@ class CodexConversationModel:
             )
         return ConversationModelResult(
             text=text.strip() or None,
-            provider=f"chatgpt-codex:{self._model}",
+            provider=f"chatgpt-codex:{body['model']}",
             action_call=action_call,
             usage=ConversationModelUsage.aggregate(tuple(usages)),
             timing=ConversationModelTiming.aggregate(tuple(timings)),
