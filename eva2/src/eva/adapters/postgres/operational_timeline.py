@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
 from typing import Any, Literal
-from uuid import UUID, uuid4
+from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
@@ -145,6 +145,19 @@ class CheckpointConflict(OperationalTimelineError):
 class TimelineScope:
     tenant_id: UUID
     installation_id: UUID
+
+
+def external_timeline_scope(
+    tenant_id: str, installation_id: str, missing_error: str
+) -> TimelineScope:
+    if not tenant_id.strip() or not installation_id.strip():
+        raise ValueError(missing_error)
+    return TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
+        ),
+    )
 
 
 @dataclass(frozen=True, slots=True)

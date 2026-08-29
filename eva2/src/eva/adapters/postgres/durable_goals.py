@@ -4,15 +4,14 @@ from __future__ import annotations
 
 from datetime import datetime
 import hashlib
-from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
 
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
+    external_timeline_scope,
     PostgresOperationalTimeline,
     TimelineEvent,
-    TimelineScope,
 )
 from eva.application.durable_goals import (
     DurableGoalError,
@@ -36,13 +35,10 @@ class PostgresDurableGoalStore:
     def __init__(
         self, engine: sa.Engine, *, tenant_id: str, installation_id: str
     ) -> None:
-        if not tenant_id.strip() or not installation_id.strip():
-            raise ValueError("durable goal store scope is required")
         self._timeline = PostgresOperationalTimeline(
             engine,
-            TimelineScope(
-                uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-                uuid5(NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"),
+            external_timeline_scope(
+                tenant_id, installation_id, "durable goal store scope is required"
             ),
         )
 

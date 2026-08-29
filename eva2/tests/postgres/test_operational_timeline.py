@@ -18,6 +18,7 @@ from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
     PostgresOperationalTimeline,
     TimelineScope,
+    external_timeline_scope,
     operational_checkpoints,
     operational_events,
 )
@@ -73,6 +74,24 @@ from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
 NOW = datetime(2026, 8, 23, 12, 0, tzinfo=UTC)
+
+
+def test_external_timeline_scope_preserves_existing_ids_and_error() -> None:
+    scope = external_timeline_scope(
+        "tenant-a",
+        "installation-a",
+        "scope is required",
+    )
+
+    assert scope == TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, "eva2:tenant-a"),
+        installation_id=uuid5(
+            NAMESPACE_URL,
+            "eva2:tenant-a:installation-a",
+        ),
+    )
+    with pytest.raises(ValueError, match="^scope is required$"):
+        external_timeline_scope(" ", "installation-a", "scope is required")
 
 
 def _pairing_bindings() -> TelegramPrincipalBindings:

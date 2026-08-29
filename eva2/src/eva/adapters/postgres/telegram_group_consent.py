@@ -3,15 +3,14 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from uuid import NAMESPACE_URL, uuid5
 
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
+    external_timeline_scope,
     OperationalTimelineError,
     PostgresOperationalTimeline,
-    TimelineScope,
 )
 from eva.application.telegram_group_consent import TelegramGroupConsent
 from eva.application.memory_audience import TelegramGroupConsentReference
@@ -22,15 +21,10 @@ class PostgresTelegramGroupConsentStore:
     """Stores consent and withdrawal as immutable events, scoped to one installation."""
 
     def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str) -> None:
-        if not tenant_id.strip() or not installation_id.strip():
-            raise ValueError("Telegram group consent scope is required")
         self._timeline = PostgresOperationalTimeline(
             engine,
-            TimelineScope(
-                tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-                installation_id=uuid5(
-                    NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
-                ),
+            external_timeline_scope(
+                tenant_id, installation_id, "Telegram group consent scope is required"
             ),
         )
 
