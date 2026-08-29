@@ -251,8 +251,10 @@ stil half-geconfigureerd.
   e-mail, een adaptief kanaal en budgetten hebben nu wel ieder een eigen
   `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
   De browser kan alleen kiezen of overslaan; uitsluitend een aparte
-  providercontrole met receipthash mag `ready` of `blocked` schrijven. De echte
-  secret- en providerflows ontbreken nog. Daarom blijft IN02 als geheel open.
+  providercontrole met receipthash mag `ready` of `blocked` schrijven. De
+  eenmalige secretflow en de eerste Telegram-`getMe`-verifier bestaan nu; de
+  echte providerproef en de overige connectorflows ontbreken nog. Daarom
+  blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
@@ -264,6 +266,10 @@ stil half-geconfigureerd.
 - [ ] IN04 — Telegram-, Home Assistant- en één e-mailproviderwizard met
   least-privilege scopes, echte read-only proeven en capability-permissions,
   plus een ingang naar AC01 voor een niet-vooraf-ingebakken kanaal.
+  Telegram heeft nu een operator-side `getMe`-adapter die alleen de officiële
+  HTTPS-origin accepteert. Een echte lokale HTTP-contractproef bewees succes,
+  weigering en geen tweede providercall na `ready`. Zij gebruikte uitsluitend
+  synthetische gegevens en is dus nog geen echte Telegram-providerproef.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
@@ -271,8 +277,11 @@ stil half-geconfigureerd.
   Assistant en e-mail: alleen een al geselecteerde capability mag schrijven,
   ieder slot is write-once en de browser krijgt uitsluitend een vaste
   secretreferentie terug. Een halve bundle blijft `needs_help`; waarde, hash,
-  lengte en hostpad staan niet in status of metadata. Rotatie, verwijdering,
-  scopes en echte providerreadback ontbreken nog, dus IN05 blijft open.
+  lengte en hostpad staan niet in status of metadata. De aparte verifier geeft
+  het secret alleen aan een begrensde read-only adapter, bewaart een geschoonde
+  content-addressed receipt en wist zijn eigen mutabele buffer best-effort.
+  Rotatie, verwijdering, scopes en echte providerreadback ontbreken nog, dus
+  IN05 blijft open.
 - [ ] IN06 — Fresh install op twee schone computers doorloopt schema, services,
   readiness, Telegramgesprek, Home Assistant-read en herstart zonder handmatige
   bron- of configuratiebewerking.

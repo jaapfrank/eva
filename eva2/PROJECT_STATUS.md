@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 02:05 CEST
+Laatst bijgewerkt: 29 augustus 2026, 02:25 CEST
 
 ## Heel kort
 
@@ -170,6 +170,11 @@ installatie zijn nog niet klaar.
   de wizard nu een toegangscode eenmalig privé bewaren. Zij toont alleen een
   vaste verwijzing terug; lezen, overschrijven en automatisch groen verklaren
   kan niet.
+- De eerste aparte Telegramcontrole werkt nu ook van begin tot eind. Zij doet
+  alleen `getMe`, bewaart geen botgegevens of toegangscode en doet na `ready`
+  niet stiekem nog een tweede provideroproep. De praktijkproef gebruikte een
+  lokale Telegram-nabootsing en volledig synthetische gegevens; een echt
+  Telegramaccount is dus nog niet via de installer gekoppeld.
 
 ## Wat nog niet klaar is
 
@@ -187,6 +192,9 @@ installatie zijn nog niet klaar.
   bewaard en opnieuw herbouwbaar worden bewezen.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
+- De installer kan Telegram lokaal veilig controleren, maar de echte
+  Telegram-providerproef, Home Assistant-, model- en e-mailcontrole, rotatie
+  en verwijderen van toegangscodes zijn nog niet klaar.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
   `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
   de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
@@ -254,6 +262,7 @@ installatie zijn nog niet klaar.
 - [Installer hervat de eerste vier niet-geheime installatiekeuzes](evidence/living-core/eva2-installer-profile-resume-loopback-2026-08-29.json)
 - [Connectorneutrale installerstatus zonder schijnbaar groene koppelingen](evidence/living-core/eva2-installer-capability-status-loopback-2026-08-29.json)
 - [Eenmalige private secretinvoer zonder echo of schijnverificatie](evidence/living-core/eva2-installer-one-time-secret-loopback-2026-08-29.json)
+- [Telegram-read-only verifier met succes, weigering en herstart zonder tweede call](evidence/living-core/eva2-installer-telegram-readonly-verification-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

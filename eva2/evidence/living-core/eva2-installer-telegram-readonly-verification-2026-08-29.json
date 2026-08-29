@@ -1,0 +1,72 @@
+{
+  "contract": "EvaInstallerTelegramReadOnlyVerificationReceipt/v1",
+  "issuedAt": "2026-08-29T00:24:44+00:00",
+  "status": "passed",
+  "source": {
+    "commit": "e1b991e10fee0ce23b118f424bcabffddd86a45e",
+    "files": [
+      {
+        "path": "src/eva/adapters/connectors/installer_telegram_probe.py",
+        "sha256": "a70f3a11203c9b6d7044866ecb07046d0d8f19524df41f23ffefe110fcff06c9"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "fffe0204375376333a02f41f23b73d058d50e5240195ab9fc4b9cee4a03cf149"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification_cli.py",
+        "sha256": "cd0c5c7412b42ff134184249fd6ac3ba86319946008e0410560bae943738daf1"
+      },
+      {
+        "path": "tests/connectors/test_installer_telegram_probe.py",
+        "sha256": "77fa7da63c1167292de67d74406eaa9252e38f1d162f6eff1a40af8936c89585"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification.py",
+        "sha256": "5ac36a75786ef87b6f7851c370bc935a69bf29808324b6dc640d1610cbfb7846"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification_cli.py",
+        "sha256": "b2499dbc129b362ed662f475a89368afb1780fb1ed8e51fbd4381023a6a3bde4"
+      },
+      {
+        "path": "tools/prove_installer_telegram_verification.py",
+        "sha256": "6aef37179ab152a10938a3a86ab484227fd217ec5d9ea2aede27ecea35e35b33"
+      }
+    ]
+  },
+  "loopbackRun": {
+    "transport": "real_http_on_127.0.0.1",
+    "operatorCliInvocations": 3,
+    "providerRequests": 2,
+    "successfulReadOnlyGetMe": 1,
+    "unauthorizedReadOnlyGetMe": 1,
+    "restartAttemptProviderRequests": 0,
+    "temporaryWorkspaceRemovedAfterRun": true
+  },
+  "boundaries": {
+    "browserProviderRouteExists": false,
+    "mutationAttempted": false,
+    "providerPayloadRetained": false,
+    "secretReturned": false,
+    "secretHashRetained": false,
+    "secretLengthRetained": false,
+    "contentAddressedPrivateReceipts": 2,
+    "successfulCapabilityState": "ready",
+    "rejectedCapabilityState": "blocked",
+    "runtimeChanges": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 28,
+    "broadInstallerDashboardReleaseTestsPassed": 169,
+    "ruff": "passed",
+    "cliHelpChecked": true,
+    "gitDiffCheck": "passed"
+  },
+  "nonclaims": [
+    "The proof used a fully synthetic token and a local contract server; it did not contact Telegram or verify a real bot credential.",
+    "A local getMe contract proof is not connector activation, message delivery, group consent or a live Telegram claim.",
+    "The verifier clears its mutable secret buffer best-effort; Python and HTTP libraries may create short-lived internal copies, so broad process-memory erasure is not claimed.",
+    "No Eva1, Eva2, container, database, live route, external provider or real credential was read or changed."
+  ]
+}
