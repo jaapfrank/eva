@@ -119,6 +119,7 @@ def prove(source_commit: str) -> dict[str, object]:
         evidence_workspace = proof_root / "evidence"
         for path in (capability_workspace, secret_workspace, evidence_workspace):
             path.mkdir(mode=0o700)
+            os.chmod(path, 0o700)
         workflow = InstallerCapabilityWorkflow(workspace=capability_workspace)
         store = InstallerSecretStore(workspace=secret_workspace)
         workflow.select(step_id="telegram", wanted=True)
