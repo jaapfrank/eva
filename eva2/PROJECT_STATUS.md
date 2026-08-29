@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 04:53 CEST
+Laatst bijgewerkt: 29 augustus 2026, 05:31 CEST
 
 ## Heel kort
 
@@ -225,6 +225,10 @@ installatie zijn nog niet klaar.
   blokkades. Vijf echte lokale wizardstarts bewezen hervatten, dezelfde
   planvingerafdruk na herstart, herstel na een afgebroken budgetbinding en
   directe blokkering na intrekking. Er bestaat bewust nog geen installatiestart.
+- De bevestigde limieten gaan nu echt mee naar Eva's runtime. Een te grote
+  modelvraag en zelfstandig werk met onbekende kosten stoppen vóór de provider.
+  Een providerantwoord boven de uitvoergrens wordt niet opgeslagen. Een normale
+  beurt bewaarde het gemeten gebruik echt in een nieuwe PostgreSQL-database.
 
 ## Wat nog niet klaar is
 
@@ -243,9 +247,10 @@ installatie zijn nog niet klaar.
 - De gewone gebruiker kan in de wizard nu wel een gecontroleerd installatieplan
   krijgen, maar Eva2 nog niet zelf installeren, herstellen en bijwerken. De
   aparte uitvoerknop en volledige fresh-installproef ontbreken nog.
-- De gekozen gebruikslimieten zijn duurzaam aan het plan gebonden, maar de
-  eindruntime handhaaft nog niet ieder geheugen-, token- en kostenquotum. Dat
-  moet vóór de fresh-installproef apart worden aangesloten en gemeten.
+- De runtime handhaaft nu de model-, antwoord-, Hindsight- en onbekende
+  autonome-kostengrenzen. De fysieke geheugen-, bewaartijd- en
+  achtergrondwerkquota en echte geldbedragen moeten nog worden aangesloten en
+  gemeten.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -266,8 +271,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Het groene installatieplan veilig aan de verzegelde releasevoorbereiding
-   koppelen, met een aparte eigenaarbevestiging en automatische terugval.
+1. De resterende fysieke geheugen-, bewaartijd- en achtergrondwerkquota aan
+   dezelfde runtimegrens koppelen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -330,6 +335,7 @@ installatie zijn nog niet klaar.
 - [Home Assistant en AgentMail met ieder hun eigen zichtbare minimale gebruiksrecht](evidence/living-core/eva2-installer-endpoint-wizard-scopes-2026-08-29.json)
 - [Toolvrije modelcontrole met een apart hashgebonden gebruiksrecht](evidence/living-core/eva2-installer-codex-model-scopes-2026-08-29.json)
 - [Eén hervatbaar plan met bevestigde harde limieten en herstel na procesuitval](evidence/living-core/eva2-installer-budgeted-installation-plan-wizard-2026-08-29.json)
+- [Bevestigde limieten echt afgedwongen in de modelruntime en PostgreSQL](evidence/living-core/eva2-runtime-resource-budget-postgres-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
