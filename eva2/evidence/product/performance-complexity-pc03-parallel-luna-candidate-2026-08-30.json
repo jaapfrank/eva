@@ -1,0 +1,77 @@
+{
+  "contract": "EvaPerformanceComplexityPc03ParallelLunaCandidateReceipt/v1",
+  "createdAt": "2026-08-29T23:26:36Z",
+  "directToolFreeDiagnostic": {
+    "firstContentMilliseconds": [
+      792,
+      1871,
+      774,
+      779,
+      784
+    ],
+    "maximumFirstContentMilliseconds": 1871,
+    "model": "gpt-5.6-luna",
+    "samplesUnderTarget": 5,
+    "sampleSize": 5
+  },
+  "exactCandidate": {
+    "allStreamsEqualFinalReply": true,
+    "firstContentMilliseconds": [
+      2248,
+      1768,
+      2524,
+      2210,
+      5845
+    ],
+    "maximumFirstContentMilliseconds": 5845,
+    "medianFirstContentMilliseconds": 2248,
+    "model": "gpt-5.6-luna",
+    "samplesUnderTarget": 1,
+    "sampleSize": 5,
+    "targetMilliseconds": 2000,
+    "targetPassed": false
+  },
+  "homeAssistantRead": {
+    "completeMilliseconds": 5480,
+    "finalProvider": "chatgpt-codex:gpt-5.6-luna",
+    "firstSafeContentMilliseconds": 5121,
+    "reportsObservedLightOff": true,
+    "streamDeltaCount": 13,
+    "streamEqualsFinal": true
+  },
+  "image": {
+    "criticalFindings": 0,
+    "highFindings": 0,
+    "id": "sha256:2b6a1eb51fc85f6c915c4d0384238421b937ce7a7487d3c79bf0bc13b5b687ec",
+    "networkUsedDuringBuild": false,
+    "sizeBytes": 85457970
+  },
+  "modelDocumentation": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+  "nonclaims": [
+    "The candidate was not promoted to the active /eva2 route.",
+    "Five samples are diagnostic and do not satisfy the required 200-turn p95 gate.",
+    "The integrated planner plus draft path still exceeds the 2000 ms target.",
+    "This is not reboot, Telegram draft, voice, browser or long-duration acceptance evidence."
+  ],
+  "productCode": {
+    "maximumPhysicalLines": 75000,
+    "physicalLines": 74985,
+    "remainingLines": 15
+  },
+  "source": {
+    "commit": "4bf9dc2f84ea114a8455e9fe719d2a642c665aea",
+    "files": {
+      "src/eva/adapters/model/conversation.py": "d9918306435374cc5f76d9a81daac2b626c0aa2b7ae3512181568b9a1f7aee86",
+      "src/eva/application/conversation.py": "f6be16ed77cc2dd23b4e066edafd8548787d5bfdb7095180db8af80c5e69f368",
+      "tests/application/test_conversation.py": "844a0e811ce16171a66829a874b236d489fad3c9906917eebdbbcf44e16465b4",
+      "tests/model/test_conversation_model.py": "14439451eef2b2eb63184600010a6ae8f03c97d9a8f460f9f50ff431576107b6"
+    }
+  },
+  "status": "tested_not_promoted_latency_gate_red",
+  "verification": {
+    "exactSourceArchive": "passed",
+    "focusedTestsPassed": 75,
+    "lint": "passed",
+    "performanceComplexityPc02": "passed"
+  }
+}

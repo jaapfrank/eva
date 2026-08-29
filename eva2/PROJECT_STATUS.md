@@ -27,9 +27,10 @@ tekststukjes binnen en was exact gelijk aan het eindantwoord. Een huisvraag
 koos eerst alleen de veilige leesactie en streamde pas daarna het antwoord.
 Daarbij zijn twee echte fouten in de Codex-toolplanner gevonden en hersteld.
 
-De kandidaat is nog niet live gezet. Het eerste gewone tekststukje kwam na
-3,29 seconden; de vaste productnorm is maximaal 2,0 seconden. De exacte image
-is wel zonder bouwnetwerk gemaakt en scant op 0 kritisch en 0 hoog.
+De kandidaat is nog niet live gezet. Luna alleen gaf 5/5 eerste tekst binnen
+2,0 seconden, maar samen met de verplichte planner lukte dat slechts 1/5 keer;
+de mediaan was 2,25 en de langzaamste beurt 5,85 seconden. De exacte image is
+wel zonder bouwnetwerk gemaakt en scant op 0 kritisch en 0 hoog.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -351,9 +352,9 @@ praktijktest zijn nog niet klaar.
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
-- De werkkandidaat kan gedeeltelijke antwoorden veilig doorgeven, maar de eerste
-  gewone tekst kwam na 3,29 seconden. Dat is nog boven de vaste norm van 2,0
-  seconden. Daarom is deze schone kandidaat nog niet live gezet.
+- De werkkandidaat kan antwoorden veilig doorgeven en gebruikt Luna alleen voor
+  een definitief toolvrij antwoord. De planner plus antwoordroute blijft met
+  mediaan 2,25 seconden nog boven de norm; daarom is zij niet live gezet.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -388,6 +389,7 @@ praktijktest zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Parallelle Luna-kandidaat: image 0/0, directe tekst snel, geïntegreerde latency nog rood](evidence/product/performance-complexity-pc03-parallel-luna-candidate-2026-08-30.json)
 - [Veilige echte tekststream; image 0/0, maar latencydoel nog rood](evidence/product/performance-complexity-pc03-safe-text-stream-2026-08-30.json)
 - [Eva1-vastloper gevonden en live van 24,6 seconden naar circa 0,05-0,15 seconde gebracht](evidence/living-core/eva1-autonomy-event-loop-responsiveness-2026-08-29.json)
 - [Langere Eva1-event-loopmeting: 600 controles, p95 11 ms en drie losse missers](evidence/living-core/eva1-event-loop-responsiveness-long-600-2026-08-29.json)
