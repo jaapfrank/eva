@@ -7,27 +7,16 @@ from datetime import UTC, datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
-import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.process import ConnectorProcessSpec
 from eva.adapters.postgres.action_chain_ledger import (
     PostgresActionChainLedger,
     StoredActionChain,
-    capability_activations,
-    capability_manifests,
-    connector_bindings,
-    plan_steps,
-    policy_pack_versions,
     read_intents,
 )
 from eva.adapters.postgres.catalog import metadata
-from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
-    operational_checkpoints,
-    operational_events,
-    transition_timeline_thread,
-)
+from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
@@ -48,6 +37,11 @@ from eva.contracts.execution import (
     CredentialGrant,
     ReadAttempt,
     ReadIntent,
+)
+from eva.operations.action_chain_dispatch_common import (
+    commit_provider_call_started,
+    load_dispatch_authority_rows,
+    load_latest_provider_event,
 )
 from eva.operations.action_chain_provider_registry import (
     ReadProviderProfile,
@@ -119,76 +113,21 @@ class PostgresActionChainReadDispatcher(PostgresScopedRole):
         )
         with self._engine.begin() as connection:
             self._scope(connection)
-            intent_row = connection.execute(
-                sa.select(read_intents).where(
-                    read_intents.c.tenant_id == self._scope_value.tenant_id,
-                    read_intents.c.installation_id == self._scope_value.installation_id,
-                    read_intents.c.read_intent_id == read_intent_id,
-                )
-            ).one()
-            step_row = connection.execute(
-                sa.select(plan_steps)
-                .where(
-                    plan_steps.c.tenant_id == self._scope_value.tenant_id,
-                    plan_steps.c.installation_id == self._scope_value.installation_id,
-                    plan_steps.c.plan_step_id == intent_row.plan_step_id,
-                    plan_steps.c.read_intent_id == read_intent_id,
-                )
-                .with_for_update(read=True)
-            ).one()
-            attempt_row = connection.execute(
-                sa.select(read_attempts)
-                .where(
-                    read_attempts.c.tenant_id == self._scope_value.tenant_id,
-                    read_attempts.c.installation_id
-                    == self._scope_value.installation_id,
-                    read_attempts.c.read_intent_id == read_intent_id,
-                    read_attempts.c.ordinal == 1,
-                )
-                .with_for_update()
-            ).one()
-            activation = connection.execute(
-                sa.select(capability_activations)
-                .where(
-                    capability_activations.c.tenant_id == self._scope_value.tenant_id,
-                    capability_activations.c.installation_id
-                    == self._scope_value.installation_id,
-                    capability_activations.c.activation_id
-                    == intent_row.capability_activation_id,
-                )
-                .with_for_update(read=True)
-            ).one()
-            manifest_row = connection.execute(
-                sa.select(capability_manifests).where(
-                    capability_manifests.c.tenant_id == self._scope_value.tenant_id,
-                    capability_manifests.c.installation_id
-                    == self._scope_value.installation_id,
-                    capability_manifests.c.capability_manifest_id
-                    == activation.capability_manifest_id,
-                )
-            ).one()
-            binding_row = connection.execute(
-                sa.select(connector_bindings)
-                .where(
-                    connector_bindings.c.tenant_id == self._scope_value.tenant_id,
-                    connector_bindings.c.installation_id
-                    == self._scope_value.installation_id,
-                    connector_bindings.c.binding_id == activation.connector_binding_id,
-                )
-                .with_for_update(read=True)
-            ).one()
-            connection.execute(
-                sa.select(policy_pack_versions)
-                .where(
-                    policy_pack_versions.c.tenant_id == self._scope_value.tenant_id,
-                    policy_pack_versions.c.installation_id
-                    == self._scope_value.installation_id,
-                    policy_pack_versions.c.policy_id == activation.policy_id,
-                    policy_pack_versions.c.policy_version
-                    == activation.policy_pack_version,
-                )
-                .with_for_update(read=True)
-            ).one()
+            rows = load_dispatch_authority_rows(
+                connection,
+                self._scope_value,
+                intent_table=read_intents,
+                attempt_table=read_attempts,
+                intent_id_name="read_intent_id",
+                intent_id=read_intent_id,
+                lock_intent=False,
+            )
+            intent_row, step_row, attempt_row = rows.intent, rows.step, rows.attempt
+            activation, manifest_row, binding_row = (
+                rows.activation,
+                rows.manifest,
+                rows.binding,
+            )
 
             chain = self._ledger.load_in_transaction(connection, step_row.plan_id)
             try:
@@ -257,17 +196,9 @@ class PostgresActionChainReadDispatcher(PostgresScopedRole):
             operation_id = action_chain_step_operation_id(
                 chain.plan, stored_step.logical_step_key
             )
-            latest = connection.execute(
-                sa.select(operational_events)
-                .where(
-                    operational_events.c.tenant_id == self._scope_value.tenant_id,
-                    operational_events.c.installation_id
-                    == self._scope_value.installation_id,
-                    operational_events.c.thread_id == operation_id,
-                )
-                .order_by(operational_events.c.sequence.desc())
-                .limit(1)
-            ).one()
+            latest = load_latest_provider_event(
+                connection, self._scope_value, operation_id
+            )
             latest_data = _event_data(latest.payload)
             require_action_chain_read_registry_event(
                 latest_data,
@@ -295,37 +226,14 @@ class PostgresActionChainReadDispatcher(PostgresScopedRole):
                 capability_grant=capability_grant,
                 credential_grant=credential_grant,
             )
-            checkpoint = connection.execute(
-                sa.select(operational_checkpoints)
-                .where(
-                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
-                    operational_checkpoints.c.installation_id
-                    == self._scope_value.installation_id,
-                    operational_checkpoints.c.thread_id == operation_id,
-                )
-                .with_for_update()
-            ).one()
-            event_data = dict(latest_data)
-            event_data["provider_call_started_at"] = _format_timestamp(now)
-            transition_timeline_thread(
+            commit_provider_call_started(
                 connection,
                 self._scope_value,
-                thread_id=operation_id,
-                expected_revision=int(checkpoint.revision),
-                checkpoint_id=f"checkpoint:{operation_id}:read-provider-call-started",
-                phase="action_chain_read_provider_call_started",
-                status="waiting_for_proof",
-                event_type="ACTION_CHAIN_READ_PROVIDER_CALL_STARTED",
-                occurred_at=now,
-                data=event_data,
+                kind="read",
                 operation_id=operation_id,
+                checkpoint_data=latest_data,
+                now=now,
                 deadline=deadline,
-                retry_count=int(checkpoint.retry_count),
-                last_error_fingerprint=(
-                    None
-                    if checkpoint.last_error_fingerprint is None
-                    else bytes(checkpoint.last_error_fingerprint).hex()
-                ),
             )
             self._ledger.load_in_transaction(connection, chain.plan_id)
             return ClaimedActionChainReadCall(
@@ -465,11 +373,6 @@ def _require_utc_second(value: datetime) -> None:
 
 def _parse_timestamp(value: str) -> datetime:
     return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
-
-
-def _format_timestamp(value: datetime) -> str:
-    _require_utc_second(value)
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [
