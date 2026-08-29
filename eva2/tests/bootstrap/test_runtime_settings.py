@@ -102,6 +102,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_DASHBOARD_PRINCIPAL_BINDING_ID",
         "EVA_DASHBOARD_ACCESS_TOKEN",
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE",
+        "EVA_PORTABLE_RESTORE_AUTHORITY_FILE",
         "EVA_IDENTITY_PACK_FILE",
         "EVA_IDENTITY_PACK_TRUST_FILE",
         "EVA_RUNTIME_RESOURCE_BUDGET_FILE",
@@ -212,10 +213,16 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
     dashboard_token.chmod(0o600)
     monkeypatch.setenv("EVA_DASHBOARD_ACCESS_TOKEN_FILE", str(dashboard_token))
 
+    with pytest.raises(RuntimeError, match="requires a portable restore authority"):
+        RuntimeSettings.from_environment()
+    authority_file = private_tmp_path / "restore-authority" / "current.json"
+    monkeypatch.setenv("EVA_PORTABLE_RESTORE_AUTHORITY_FILE", str(authority_file))
+
     settings = RuntimeSettings.from_environment()
     assert settings.dashboard_principal_binding_id == (
         "44444444-4444-4444-4444-444444444444"
     )
+    assert settings.portable_restore_authority_file == str(authority_file)
 
     monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "legacy-tenant")
     monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "legacy-installation")

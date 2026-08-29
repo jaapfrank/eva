@@ -43,6 +43,13 @@ def _arguments() -> argparse.Namespace:
         "--admit-cockpit-source",
         help="explicitly add CLAIM_ID=PATH to one existing cockpit claim",
     )
+    parser.add_argument(
+        "--replace-cockpit-source",
+        help=(
+            "explicitly replace CLAIM_ID=OLD_PATH=NEW_PATH in one existing "
+            "cockpit claim"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -52,6 +59,32 @@ def main() -> int:
     authority = json.loads(authority_file.read_bytes())
     cockpit_file = ROOT / _COCKPIT_EVIDENCE_PATH
     cockpit = json.loads(cockpit_file.read_bytes())
+    if arguments.replace_cockpit_source is not None:
+        parts = arguments.replace_cockpit_source.split("=", 2)
+        if len(parts) != 3:
+            raise RuntimeError("replacement cockpit source is invalid")
+        claim_id, old_path, new_path = parts
+        if (
+            not claim_id
+            or not old_path
+            or new_path not in _EXPECTED_INPUT_PATHS
+            or old_path == new_path
+        ):
+            raise RuntimeError("replacement cockpit source is invalid")
+        matching = [
+            entry for entry in cockpit["entries"] if entry.get("claimId") == claim_id
+        ]
+        if len(matching) != 1:
+            raise RuntimeError("replacement cockpit claim is invalid")
+        sources = matching[0]["sources"]
+        old_sources = [source for source in sources if source.get("path") == old_path]
+        if len(old_sources) != 1 or new_path in {
+            source.get("path") for source in sources
+        }:
+            raise RuntimeError("replacement cockpit source is invalid")
+        old_sources[0]["path"] = new_path
+        old_sources[0]["sha256"] = _sha256(new_path)
+        sources.sort(key=lambda source: source["path"])
     if arguments.admit_cockpit_source is not None:
         claim_id, separator, source_path = arguments.admit_cockpit_source.partition("=")
         if not separator or source_path not in _EXPECTED_INPUT_PATHS:

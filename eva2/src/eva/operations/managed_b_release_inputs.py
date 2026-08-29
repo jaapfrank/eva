@@ -87,6 +87,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-managed-b-current-immutable-image-2026-08-28.json",
     "evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json",
     "evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json",
+    "evidence/living-core/eva2-owner-erasure-restore-authority-fail-closed-2026-08-29.json",
     "evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json",
     "evidence/living-core/eva2-pgvector-offline-rebuild-2026-08-28.json",
     "evidence/living-core/eva2-portable-restore-erasure-authority-2026-08-29.json",

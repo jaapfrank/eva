@@ -67,6 +67,7 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
             assert volume.get("read_only") is True or volume["target"] in {
                 "/run/eva/model-lease",
                 "/run/eva/hindsight-access",
+                "/var/lib/eva/restore-authority",
             }
             assert volume["bind"] == {"create_host_path": False}
 
@@ -74,6 +75,25 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "${EVA_STACK_CORE_CONTAINER:?set the sealed core container name}"
     )
     assert services["core"]["user"] == "65532:65532"
+    assert services["core"]["environment"][
+        "EVA_PORTABLE_RESTORE_AUTHORITY_FILE"
+    ] == "/var/lib/eva/restore-authority/current.json"
+    authority_binds = [
+        volume
+        for volume in _private_binds(services["core"])
+        if volume["target"] == "/var/lib/eva/restore-authority"
+    ]
+    assert authority_binds == [
+        {
+            "bind": {"create_host_path": False},
+            "source": (
+                "${EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST:?set the private "
+                "restore authority directory}"
+            ),
+            "target": "/var/lib/eva/restore-authority",
+            "type": "bind",
+        }
+    ]
     assert services["postgres"]["environment"]["POSTGRES_INITDB_ARGS"] == (
         "--auth-host=scram-sha-256"
     )

@@ -23,6 +23,23 @@ from eva.application.memory_audience import (
 from eva.application.memory_background import HindsightColdPathWorker
 
 
+class _RestoreAuthority:
+    def __init__(self, calls: list[str], error: Exception | None = None) -> None:
+        self._calls = calls
+        self._error = error
+
+    def advance_erasure_generation(self, **kwargs):  # type: ignore[no-untyped-def]
+        self._calls.append("authority")
+        if self._error is not None:
+            raise self._error
+        return SimpleNamespace(
+            authority_sha256="a" * 64,
+            erasure_generation=1,
+            operation_sha256=kwargs["operation_sha256"],
+            replayed=False,
+        )
+
+
 def _document() -> ConversationMemoryDocument:
     return ConversationMemoryDocument(
         tenant_id="tenant",
@@ -517,6 +534,7 @@ def test_explicit_erasure_removes_semantic_and_raw_content_before_marking() -> N
         outbox=Outbox(),  # type: ignore[arg-type]
         storage_budget=Budget(),  # type: ignore[arg-type]
         conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+        restore_authority_erasure=_RestoreAuthority(calls),  # type: ignore[arg-type]
     )
     assert worker.erase_document(
         principal_id=principal_id,
@@ -524,7 +542,52 @@ def test_explicit_erasure_removes_semantic_and_raw_content_before_marking() -> N
         source_message_id=source_message_id,
         now=now,
     )
-    assert calls == ["leased", "provider", "raw", "outbox", "marked"]
+    assert calls == ["leased", "authority", "provider", "raw", "outbox", "marked"]
+
+
+def test_restore_authority_failure_stops_before_every_content_deletion() -> None:
+    calls: list[str] = []
+    principal_id = "person:jaap"
+    source_message_id = "telegram:jaap:41"
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=hashlib.sha256(principal_id.encode()).hexdigest(),
+        source_message_id=source_message_id,
+    )
+
+    class Budget:
+        def request_erasure(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+
+    class RawConversation:
+        def erase_message_content(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("raw")
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+        restore_authority_erasure=_RestoreAuthority(
+            calls, RuntimeError("authority storage unavailable")
+        ),  # type: ignore[arg-type]
+    )
+    with pytest.raises(RuntimeError, match="authority storage unavailable"):
+        worker.erase_document(
+            principal_id=principal_id,
+            document_id="conversation:1",
+            source_message_id=source_message_id,
+            now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
+        )
+    assert calls == ["leased", "authority"]
 
 
 def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
@@ -558,6 +621,7 @@ def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
         Memory(),  # type: ignore[arg-type]
         storage_budget=Budget(),  # type: ignore[arg-type]
         conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+        restore_authority_erasure=_RestoreAuthority(calls),  # type: ignore[arg-type]
     )
     with pytest.raises(RuntimeError, match="raw journal unavailable"):
         worker.erase_document(
@@ -566,7 +630,7 @@ def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
             source_message_id="telegram:jaap:41",
             now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
         )
-    assert calls == ["leased", "provider", "raw"]
+    assert calls == ["leased", "authority", "provider", "raw"]
 
 
 def test_outbox_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
@@ -614,6 +678,7 @@ def test_outbox_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
         outbox=Outbox(),  # type: ignore[arg-type]
         storage_budget=Budget(),  # type: ignore[arg-type]
         conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+        restore_authority_erasure=_RestoreAuthority(calls),  # type: ignore[arg-type]
     )
     with pytest.raises(RuntimeError, match="outbox unavailable"):
         worker.erase_document(
@@ -622,7 +687,7 @@ def test_outbox_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
             source_message_id=source_message_id,
             now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
         )
-    assert calls == ["leased", "provider", "raw", "outbox"]
+    assert calls == ["leased", "authority", "provider", "raw", "outbox"]
 
 
 def test_explicit_erasure_keeps_durable_lease_when_provider_fails() -> None:

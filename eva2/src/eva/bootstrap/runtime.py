@@ -171,6 +171,7 @@ from eva.bootstrap.secrets import (
     read_runtime_secret_file,
 )
 from eva.adapters.api.dashboard_access import validate_dashboard_access_token
+from eva.operations.portable_restore_authority import PrivateRestoreAuthorityStore
 
 
 @dataclass(frozen=True, slots=True)
@@ -198,6 +199,7 @@ class RuntimeSettings:
     dashboard_installation_id: str | None = None
     dashboard_principal_binding_id: str | None = None
     dashboard_access_token: str | None = None
+    portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
     home_assistant_url: str | None = None
@@ -345,6 +347,16 @@ class RuntimeSettings:
                 raise RuntimeError(
                     "EVA_DASHBOARD_ACCESS_TOKEN_FILE has an invalid length or contents"
                 ) from error
+        portable_restore_authority_file = (
+            os.environ.get("EVA_PORTABLE_RESTORE_AUTHORITY_FILE", "").strip()
+            or None
+        )
+        if portable_restore_authority_file is not None and not Path(
+            portable_restore_authority_file
+        ).is_absolute():
+            raise RuntimeError(
+                "EVA_PORTABLE_RESTORE_AUTHORITY_FILE must be absolute"
+            )
         if dashboard_principal_binding_id is not None:
             if background_principal_id is None:
                 raise RuntimeError(
@@ -360,6 +372,11 @@ class RuntimeSettings:
             if dashboard_access_token is None:
                 raise RuntimeError(
                     "Eva dashboard owner binding requires a dashboard access token file"
+                )
+            if portable_restore_authority_file is None:
+                raise RuntimeError(
+                    "Eva dashboard owner binding requires a portable restore "
+                    "authority file"
                 )
         try:
             cold_path_idle_seconds = float(
@@ -604,6 +621,7 @@ class RuntimeSettings:
             dashboard_installation_id=dashboard_installation_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
             dashboard_access_token=dashboard_access_token,
+            portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             home_assistant_url=home_assistant_url,
@@ -2134,6 +2152,15 @@ def create_runtime_app() -> FastAPI:
             ),
         )
     )
+    restore_authority_erasure = (
+        None
+        if settings.portable_restore_authority_file is None
+        or settings.dashboard_installation_id is None
+        else PrivateRestoreAuthorityStore(
+            Path(settings.portable_restore_authority_file),
+            source_installation_id=settings.dashboard_installation_id,
+        )
+    )
     memory_writer = BudgetedConversationMemoryWriter(memory, storage_budget)
     prototype_store = PostgresPersonalPrototypeStore(
         engine, lease_seconds=settings.personal_interest_lease_seconds
@@ -2267,6 +2294,7 @@ def create_runtime_app() -> FastAPI:
                 reflection_budget=reflection_budget,
                 storage_budget=storage_budget,
                 conversation_erasure=conversation_erasure,
+                restore_authority_erasure=restore_authority_erasure,
             ),
             prototype_store,
             release_store,

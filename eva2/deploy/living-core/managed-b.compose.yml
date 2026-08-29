@@ -300,6 +300,7 @@ services:
       EVA_IDENTITY_PACK_FILE: /run/eva/identity/current.json
       EVA_IDENTITY_PACK_TRUST_FILE: /run/eva/identity/trust.json
       EVA_PERSONAL_INTEREST_LEASE_SECONDS: ${EVA_PERSONAL_INTEREST_LEASE_SECONDS:-90}
+      EVA_PORTABLE_RESTORE_AUTHORITY_FILE: /var/lib/eva/restore-authority/current.json
       EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
       EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
       EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
@@ -343,6 +344,11 @@ services:
       - type: volume
         source: work-data
         target: /var/lib/eva/work
+      - type: bind
+        source: ${EVA_PORTABLE_RESTORE_AUTHORITY_DIR_HOST:?set the private restore authority directory}
+        target: /var/lib/eva/restore-authority
+        bind:
+          create_host_path: false
     depends_on:
       postgres:
         condition: service_healthy

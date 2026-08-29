@@ -33,6 +33,10 @@ from eva.application.memory_audience import (
 )
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
+from eva.operations.portable_restore_authority import (
+    PrivateRestoreAuthorityStore,
+    read_private_restore_authority,
+)
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
@@ -519,6 +523,7 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
 
 def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
     resource_engine: Engine,
+    private_tmp_path: Path,
 ) -> None:
     installation_id = "memory-cross-store-erasure"
     principal_id = "person:owner-cross-store"
@@ -604,11 +609,19 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
             journal.erase_message_content(**kwargs)
             raise RuntimeError("simulated crash after raw erasure")
 
+    private_tmp_path.chmod(0o700)
+    authority_path = private_tmp_path / "restore-authority.json"
+    restore_authority = PrivateRestoreAuthorityStore(
+        authority_path,
+        source_installation_id="22222222-2222-4222-8222-222222222222",
+    )
+
     crashing = HindsightColdPathWorker(
         Memory(),  # type: ignore[arg-type]
         outbox=outbox,
         storage_budget=storage,
         conversation_erasure=CrashAfterRawErasure(),  # type: ignore[arg-type]
+        restore_authority_erasure=restore_authority,
     )
     with pytest.raises(RuntimeError, match="simulated crash after raw erasure"):
         crashing.erase_document(
@@ -641,6 +654,7 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
             resource_engine,
             restarted_storage._scope_value,  # noqa: SLF001
         ),
+        restore_authority_erasure=restore_authority,
     )
     resumed._remove_job(recovered[0], now=NOW + timedelta(seconds=5))  # noqa: SLF001
     assert provider_deletes == [document_id, document_id]
@@ -661,6 +675,11 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
         ).recent(turn)
         == ()
     )
+    authority = __import__("json").loads(
+        read_private_restore_authority(authority_path)
+    )
+    assert authority["erasure_generation"] == 1
+    assert authority["authorized_archives"] == []
 
 
 def test_group_and_project_limits_are_atomic_across_people_and_restart(

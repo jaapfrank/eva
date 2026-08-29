@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 08:44 CEST
+Laatst bijgewerkt: 29 augustus 2026, 08:57 CEST
 
 ## Heel kort
 
@@ -268,6 +268,11 @@ installatie zijn nog niet klaar.
   met de exacte toegestane back-up. Na een wisactie telt de oude lijst niet meer;
   zelfs een per ongeluk opnieuw aangewezen oude back-up wordt vóór de eerste
   databasevraag geweigerd. Een verse niet-lege PostgreSQL-herstelproef bleef groen.
+- De wisknop en die private back-upgrens zijn nu één herstartveilige handeling.
+  Eva maakt eerst alle oude back-ups ongeldig en wist daarna pas Hindsight, ruwe
+  gesprekstekst en de wachtende geheugenkopie. Een nagebootste crash hervatte
+  dezelfde opdracht zonder een tweede generatie te maken. Twee gelijktijdige
+  wisacties kregen netjes generatie één en twee; geen van beide ging verloren.
 
 ## Wat nog niet klaar is
 
@@ -293,9 +298,10 @@ installatie zijn nog niet klaar.
   én de bijbehorende ruwe vraag en het antwoord herstartveilig verwijderen.
   De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Ook de wachtende
   geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Een
-  oude back-up wordt bij herstel nu geblokkeerd. Het automatisch bijwerken van
-  die private back-uplijst vanuit de wisknop, losse applicatiecaches en
-  procedurekandidaten ontbreken nog. Ook
+  oude back-up wordt bij herstel nu geblokkeerd en de wisknop werkt die grens
+  eerst bij. De nieuwe private map moet nog op de beheerde host worden gemaakt
+  en de nieuwe kern moet nog worden gebouwd, gescand en via A/B beproefd. Losse
+  applicatiecaches en procedurekandidaten ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
@@ -317,8 +323,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De wisknop atomair verbinden met de nieuwe private back-upgrens en daarna
-   losse applicatiecaches en procedurekandidaten aansluiten.
+1. De nieuwe wis-/back-upgrens in een schone kernimage bouwen, scannen en via
+   het terugvalslot beproeven; daarna losse caches en procedurekandidaten wissen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -387,6 +393,7 @@ installatie zijn nog niet klaar.
 - [Eén herstartveilige wisopdracht voor Hindsight én ruwe gesprekstekst](evidence/living-core/eva2-cross-store-conversation-erasure-postgres-2026-08-29.json)
 - [Bronfeit, afgeleide observatie, persoonsstijl en wachtende geheugenkopie echt gewist](evidence/living-core/eva2-derived-memory-erasure-disposable-2026-08-29.json)
 - [Oude back-up na wissen geweigerd vóór iedere databasevraag](evidence/living-core/eva2-portable-restore-erasure-authority-2026-08-29.json)
+- [Wisknop maakt oude back-ups eerst ongeldig, ook bij crash en gelijktijdige wisacties](evidence/living-core/eva2-owner-erasure-restore-authority-fail-closed-2026-08-29.json)
 - [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)

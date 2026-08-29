@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import hashlib
 import os
+from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
 from eva.application.portable_archive import canonical_json_bytes
 from eva.operations.portable_restore_authority import (
+    PrivateRestoreAuthorityStore,
     PortableRestoreAuthorityError,
+    advance_restore_authority_for_erasure,
     authorize_portable_restore,
     read_private_restore_authority,
 )
@@ -165,3 +169,114 @@ def test_restore_authority_file_must_be_private_regular_and_unlinked(
 
     with pytest.raises(PortableRestoreAuthorityError, match="unavailable"):
         read_private_restore_authority(authority, effective_uid=os.geteuid() + 1)
+
+
+def test_erasure_advance_clears_archives_and_replays_same_operation() -> None:
+    archive = _archive(created_at="2026-08-29T07:01:00Z")
+    operation = hashlib.sha256(b"erase-dashboard-exchange").hexdigest()
+    updated, receipt = advance_restore_authority_for_erasure(
+        _authority(archive, generation=1, admit=True),
+        source_installation_id=INSTALLATION_ID,
+        operation_sha256=operation,
+        issued_at=datetime(2026, 8, 29, 8, 0, tzinfo=UTC),
+    )
+    payload = __import__("json").loads(updated)
+    assert payload["authorized_archives"] == []
+    assert payload["erasure_generation"] == 2
+    assert payload["latest_erasure_operation_sha256"] == operation
+    assert receipt.erasure_generation == 2
+    assert not receipt.replayed
+
+    replay_raw, replay = advance_restore_authority_for_erasure(
+        updated,
+        source_installation_id=INSTALLATION_ID,
+        operation_sha256=operation,
+        issued_at=datetime(2026, 8, 29, 8, 1, tzinfo=UTC),
+    )
+    assert replay_raw == updated
+    assert replay.erasure_generation == 2
+    assert replay.replayed
+
+
+def test_private_store_initializes_advances_and_reads_back_atomically(
+    private_tmp_path: Path,
+) -> None:
+    private_tmp_path.chmod(0o700)
+    path = private_tmp_path / "restore-authority.json"
+    first_operation = hashlib.sha256(b"first-erasure").hexdigest()
+    store = PrivateRestoreAuthorityStore(
+        path, source_installation_id=INSTALLATION_ID
+    )
+
+    first = store.advance_erasure_generation(
+        operation_sha256=first_operation,
+        erased_at=datetime(2026, 8, 29, 8, 0, tzinfo=UTC),
+    )
+    assert first.erasure_generation == 1
+    assert not first.replayed
+    assert path.stat().st_mode & 0o777 == 0o600
+    persisted = read_private_restore_authority(path)
+    assert hashlib.sha256(persisted).hexdigest() == first.authority_sha256
+
+    replay = store.advance_erasure_generation(
+        operation_sha256=first_operation,
+        erased_at=datetime(2026, 8, 29, 8, 1, tzinfo=UTC),
+    )
+    assert replay.erasure_generation == 1
+    assert replay.replayed
+
+    second = store.advance_erasure_generation(
+        operation_sha256=hashlib.sha256(b"second-erasure").hexdigest(),
+        erased_at=datetime(2026, 8, 29, 8, 2, tzinfo=UTC),
+    )
+    assert second.erasure_generation == 2
+    assert not second.replayed
+
+
+def test_private_store_refuses_a_shared_or_linked_directory(
+    private_tmp_path: Path,
+) -> None:
+    shared = private_tmp_path / "shared"
+    shared.mkdir(mode=0o770)
+    with pytest.raises(PortableRestoreAuthorityError, match="directory is unavailable"):
+        PrivateRestoreAuthorityStore(
+            shared / "restore-authority.json",
+            source_installation_id=INSTALLATION_ID,
+        )
+
+    real = private_tmp_path / "real"
+    real.mkdir(mode=0o700)
+    linked = private_tmp_path / "linked"
+    linked.symlink_to(real, target_is_directory=True)
+    with pytest.raises(PortableRestoreAuthorityError, match="directory is unavailable"):
+        PrivateRestoreAuthorityStore(
+            linked / "restore-authority.json",
+            source_installation_id=INSTALLATION_ID,
+        )
+
+
+def test_concurrent_erasure_advances_cannot_overwrite_one_generation(
+    private_tmp_path: Path,
+) -> None:
+    private_tmp_path.chmod(0o700)
+    path = private_tmp_path / "restore-authority.json"
+    operations = (
+        hashlib.sha256(b"parallel-erasure-a").hexdigest(),
+        hashlib.sha256(b"parallel-erasure-b").hexdigest(),
+    )
+
+    def advance(operation: str) -> int:
+        return PrivateRestoreAuthorityStore(
+            path, source_installation_id=INSTALLATION_ID
+        ).advance_erasure_generation(
+            operation_sha256=operation,
+            erased_at=datetime(2026, 8, 29, 8, 0, tzinfo=UTC),
+        ).erasure_generation
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        generations = tuple(executor.map(advance, operations))
+
+    assert sorted(generations) == [1, 2]
+    authority = __import__("json").loads(read_private_restore_authority(path))
+    assert authority["erasure_generation"] == 2
+    assert authority["latest_erasure_operation_sha256"] in operations

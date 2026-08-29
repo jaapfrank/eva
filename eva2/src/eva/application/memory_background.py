@@ -98,6 +98,12 @@ class ConversationContentErasurePort(Protocol):
     ) -> object: ...
 
 
+class RestoreAuthorityErasurePort(Protocol):
+    def advance_erasure_generation(
+        self, *, operation_sha256: str, erased_at: datetime
+    ) -> object: ...
+
+
 @dataclass(frozen=True, slots=True)
 class _RetainJob:
     document: ConversationMemoryDocument
@@ -124,6 +130,7 @@ class SemanticMemoryColdPathWorker:
         reflection_budget: BackgroundReflectionBudgetPort | None = None,
         storage_budget: MemoryStorageBudgetPort | None = None,
         conversation_erasure: ConversationContentErasurePort | None = None,
+        restore_authority_erasure: RestoreAuthorityErasurePort | None = None,
     ) -> None:
         if idle_seconds <= 0 or retry_delay_seconds < 0:
             raise ValueError("cold-path timing is invalid")
@@ -135,6 +142,7 @@ class SemanticMemoryColdPathWorker:
         self._reflection_budget = reflection_budget
         self._storage_budget = storage_budget
         self._conversation_erasure = conversation_erasure
+        self._restore_authority_erasure = restore_authority_erasure
         self._queue: Queue[_RetainJob | None] = Queue()
         self._stop = Event()
         self._thread: Thread | None = None
@@ -212,6 +220,8 @@ class SemanticMemoryColdPathWorker:
             raise RuntimeError("memory erasure requires a durable storage budget")
         if source_message_id is not None and self._conversation_erasure is None:
             raise RuntimeError("raw conversation erasure is not configured")
+        if source_message_id is not None and self._restore_authority_erasure is None:
+            raise RuntimeError("restore authority erasure is not configured")
         request = {
             "principal_id": principal_id,
             "document_id": document_id,
@@ -265,16 +275,41 @@ class SemanticMemoryColdPathWorker:
             raise RuntimeError("memory erasure principal binding is missing")
         if source_message_id is not None and self._conversation_erasure is None:
             raise RuntimeError("raw conversation erasure is not configured")
-
-        self._memory.remove_conversation_document(
-            bank_id=bank_id,
-            document_id=document_id,
-            principal_sha256=principal_sha256,
-        )
         operation_sha256 = self._erasure_operation_sha256(
             principal_sha256=principal_sha256,
             document_id=document_id,
             source_message_id=source_message_id,
+        )
+        if source_message_id is not None:
+            if self._restore_authority_erasure is None:
+                raise RuntimeError("restore authority erasure is not configured")
+            authority_receipt = (
+                self._restore_authority_erasure.advance_erasure_generation(
+                    operation_sha256=operation_sha256,
+                    erased_at=now,
+                )
+            )
+            if (
+                getattr(authority_receipt, "operation_sha256", None)
+                != operation_sha256
+                or not isinstance(
+                    getattr(authority_receipt, "erasure_generation", None), int
+                )
+                or authority_receipt.erasure_generation < 1
+                or not isinstance(
+                    getattr(authority_receipt, "authority_sha256", None), str
+                )
+                or re.fullmatch(
+                    r"[0-9a-f]{64}", authority_receipt.authority_sha256
+                )
+                is None
+                or not isinstance(getattr(authority_receipt, "replayed", None), bool)
+            ):
+                raise RuntimeError("restore authority erasure receipt is invalid")
+        self._memory.remove_conversation_document(
+            bank_id=bank_id,
+            document_id=document_id,
+            principal_sha256=principal_sha256,
         )
         if source_message_id is not None:
             assert self._conversation_erasure is not None
@@ -504,5 +539,6 @@ __all__ = [
     "DurableMemoryOutboxPort",
     "HindsightColdPathWorker",
     "MemoryStorageBudgetPort",
+    "RestoreAuthorityErasurePort",
     "SemanticMemoryColdPathWorker",
 ]
