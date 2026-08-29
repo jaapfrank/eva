@@ -1,0 +1,58 @@
+{
+  "contract": "EvaPerformanceComplexityPc01DelegatedTerminalLockConsolidation/v1",
+  "recordedAt": "2026-08-29T16:27:26Z",
+  "sourceCommit": "c98e6fb2de08b82539a2e8eaec377d5637256be0",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedOperation": "attention and delegated-work locking for stop and terminal result",
+    "preservedBoundaries": [
+      "attention row remains locked before delegated-work row",
+      "tenant, installation, owner and contract validation remain fail-closed",
+      "stop and terminal-result error messages remain distinct"
+    ],
+    "removedDatabaseQueriesPerOperation": 1,
+    "netProductPhysicalLines": -4
+  },
+  "verification": {
+    "delegatedWorkPostgreSqlStore": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 3,
+      "postgresVersion": "16.13",
+      "logSha256": "5a88fa73562511ab64b8acba03de1b15e265342e5aa969564423675af5815bb2"
+    },
+    "delegatedWorkContractBootstrapAndMigration": {
+      "passed": 23,
+      "failed": 0,
+      "logSha256": "7489947c2c9dc16ddd9b04b54f692a86e77d89e09a88836314af8b321a39c428"
+    },
+    "compileAndRuff": {
+      "passed": true,
+      "ruffLogSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87592,
+      "productManifestSha256": "5814a5aa918096e8a75b8c20f5eafdf77f3d83a9d9dfdc791c2c737f6dd9fa27"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87588,
+      "productManifestSha256": "0c87c21a193d2cec48459e1cb19aff2c3048f42a733af46e8a86705de70ec8bc",
+      "livingCorePhysicalLines": 86995,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12588,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No delegated-work state, stop authority, replay rule or owner boundary was relaxed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector or volume was changed."
+  ]
+}
