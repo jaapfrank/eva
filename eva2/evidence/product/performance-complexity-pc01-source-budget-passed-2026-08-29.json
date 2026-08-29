@@ -1,0 +1,46 @@
+{
+  "contract": "EvaPerformanceComplexityPc01SourceBudgetPassed/v1",
+  "issuedAt": "2026-08-29T22:40:27+02:00",
+  "status": "passed_source_budget_only",
+  "source": {
+    "commit": "4ce6f0fbce525a2c34c234202ebfc11a9b2d2052",
+    "changedSourceManifestSha256": "c2fbe691706428ca3f44ba3e8f430bd0bba21c95a8f76803be438a4e82e72645"
+  },
+  "finalOperatorBoundary": {
+    "oldPaths": [
+      "src/eva/operations/portable_transport.py",
+      "src/eva/operations/portable_transport_cli.py"
+    ],
+    "newPaths": [
+      "tools/portable_transport.py",
+      "tools/portable_transport_cli.py"
+    ],
+    "physicalLinesMovedOutOfProductRoots": 734,
+    "runtimeConsumersBeforeMove": 0,
+    "portableTransportTestsPassed": 5,
+    "portableTransportCliHelpExitedZero": true,
+    "combinedTransportAndFailClosedReleaseTestsPassed": 43,
+    "combinedTestAndAttestationLogsSha256": "4d8d74efe73ad2738ac320ce6e4510a530da2404593ef2e0a31f25c2f7da4b41"
+  },
+  "releaseBinding": {
+    "requiredInputs": 247,
+    "requiredTests": 138,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 211,
+    "productPhysicalLines": 74819,
+    "livingCorePhysicalLines": 74226,
+    "productManifestSha256": "83e4849c25ab78f5ca264e15e5f69743e4769d92a5b5f22bb4339d5dd38a00cf",
+    "maximumProductPhysicalLines": 75000,
+    "remainingMarginPhysicalLines": 181,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 15369,
+    "sourceViolations": []
+  },
+  "nonClaims": [
+    "This proves only the closed PC01 source measurement, not the complete PC01 gate.",
+    "The historical OCI baseline image is unavailable locally and has not been replaced by a current image attestation.",
+    "No image was built, scanned or deployed during this final source-budget step.",
+    "The 181-line margin is small; future product additions must remain inside the limit or remove equivalent code."
+  ]
+}
