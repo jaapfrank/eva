@@ -35,6 +35,10 @@ from eva.operations.installer_profile_workflow import (
     InstallerProfileWorkflow,
     InstallerProfileWorkflowError,
 )
+from eva.operations.installer_provider_configuration import (
+    InstallerProviderConfigurationError,
+    InstallerProviderConfigurationStore,
+)
 from eva.operations.installer_provider_verification import (
     InstallerProviderVerificationError,
     InstallerProviderVerifier,
@@ -82,6 +86,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     parser.add_argument("--capability-workspace", type=Path)
     parser.add_argument("--secret-workspace", type=Path)
     parser.add_argument("--provider-evidence-workspace", type=Path)
+    parser.add_argument("--provider-configuration-workspace", type=Path)
     parser.add_argument("--home-assistant-url")
     parser.add_argument("--agentmail-inbox-id")
     args = parser.parse_args(argv)
@@ -103,12 +108,15 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
         parser.error(
             "provider verification requires capability and secret workspaces"
         )
-    if (
+    if args.provider_configuration_workspace is not None and (
         args.provider_evidence_workspace is None
-        and (args.home_assistant_url is not None or args.agentmail_inbox_id is not None)
+    ):
+        parser.error("provider configuration requires provider verification")
+    if (args.home_assistant_url is not None or args.agentmail_inbox_id is not None) and (
+        args.provider_configuration_workspace is None
     ):
         parser.error(
-            "provider configuration requires a provider evidence workspace"
+            "provider endpoint input requires a provider configuration workspace"
         )
     try:
         receipt = preflight(load_platform_lock(args.platform_lock), inspect_host())
@@ -121,6 +129,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     capability_workflow = None
     secret_store = None
     provider_verifier = None
+    provider_configuration_store = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -159,14 +168,6 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
                 "model_provider": CodexInstallerModelProbe(),
                 "telegram": TelegramInstallerReadOnlyProbe(),
             }
-            if args.home_assistant_url is not None:
-                probes["home_assistant"] = HomeAssistantInstallerReadOnlyProbe(
-                    base_url=args.home_assistant_url
-                )
-            if args.agentmail_inbox_id is not None:
-                probes["email"] = AgentMailInstallerReadOnlyProbe(
-                    inbox_id=args.agentmail_inbox_id
-                )
             provider_verifier = InstallerProviderVerifier(
                 capability_workflow=capability_workflow,
                 secret_store=secret_store,
@@ -175,11 +176,27 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
                 ),
                 probes=probes,
             )
+        if args.provider_configuration_workspace is not None:
+            provider_configuration_store = InstallerProviderConfigurationStore(
+                workspace=_private_workspace(args.provider_configuration_workspace)
+            )
+            if args.home_assistant_url is not None:
+                HomeAssistantInstallerReadOnlyProbe(base_url=args.home_assistant_url)
+                provider_configuration_store.configure(
+                    slot_id="home_assistant", value=args.home_assistant_url
+                )
+            if args.agentmail_inbox_id is not None:
+                AgentMailInstallerReadOnlyProbe(inbox_id=args.agentmail_inbox_id)
+                provider_configuration_store.configure(
+                    slot_id="email", value=args.agentmail_inbox_id
+                )
     except (
         InstallerProfileWorkflowError,
         InstallerCapabilityWorkflowError,
         InstallerSecretStoreError,
         InstallerProviderVerificationError,
+        InstallerProviderConfigurationError,
+        ValueError,
         OSError,
     ):
         print(
@@ -200,6 +217,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             capability_workflow=capability_workflow,
             secret_store=secret_store,
             provider_verifier=provider_verifier,
+            provider_configuration_store=provider_configuration_store,
         ),
         host=args.host,
         port=args.port,

@@ -9,7 +9,7 @@ workflow to record ``ready`` or ``blocked``.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 import hashlib
 import math
@@ -257,6 +257,7 @@ class InstallerProviderVerifier:
     secret_store: InstallerSecretStore
     evidence_workspace: Path
     probes: Mapping[str, InstallerProviderProbe]
+    configuration_sha256_by_slot: Mapping[str, str] = field(default_factory=dict)
     clock: Callable[[], str] = _utc_now
     monotonic: Callable[[], float] = time.monotonic
 
@@ -271,7 +272,20 @@ class InstallerProviderVerifier:
             raise InstallerProviderVerificationError(
                 "provider verification probe registry is invalid"
             )
+        configuration = dict(self.configuration_sha256_by_slot)
+        if any(
+            slot_id not in copied
+            or not isinstance(digest, str)
+            or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+            for slot_id, digest in configuration.items()
+        ):
+            raise InstallerProviderVerificationError(
+                "provider verification configuration binding is invalid"
+            )
         object.__setattr__(self, "probes", MappingProxyType(copied))
+        object.__setattr__(
+            self, "configuration_sha256_by_slot", MappingProxyType(configuration)
+        )
 
     def _preflight(self, slot_id: str) -> tuple[str, int, InstallerProviderProbe]:
         if slot_id not in SECRET_SLOTS or slot_id not in _CHECK_IDS:
@@ -405,7 +419,8 @@ class InstallerProviderVerifier:
             "billable_request_attempted": observation.billable_request_attempted,
             "check_id": observation.check_id,
             "completed_at": completed_at,
-            "contract": "EvaInstallerProviderVerificationReceipt/v2",
+            "configuration_sha256": self.configuration_sha256_by_slot.get(slot_id),
+            "contract": "EvaInstallerProviderVerificationReceipt/v3",
             "cost_measurement": (
                 "not_reported_by_chatgpt_access"
                 if observation.provider_operation == "bounded_generation"

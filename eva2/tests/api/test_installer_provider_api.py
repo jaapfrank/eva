@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import Event, Thread
+from typing import Callable
 
 import pytest
 from fastapi.testclient import TestClient
@@ -12,7 +13,11 @@ from eva.adapters.api.installer_wizard import (
 )
 from eva.adapters.api.installer_wizard_cli import run_installer_wizard
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
+from eva.operations.installer_provider_configuration import (
+    InstallerProviderConfigurationStore,
+)
 from eva.operations.installer_provider_verification import (
+    InstallerProviderProbe,
     InstallerProviderProbeObservation,
     InstallerProviderVerifier,
 )
@@ -101,6 +106,10 @@ def _client(
     *,
     token: str = "p" * 43,
     status: str = "ready",
+    configuration_store: InstallerProviderConfigurationStore | None = None,
+    configured_probe_factory: (
+        Callable[[str, str], InstallerProviderProbe] | None
+    ) = None,
 ) -> TestClient:
     bootstrap = InstallerBootstrap(token=token, created_at=1.0, clock=lambda: 1.0)
     client = TestClient(
@@ -110,12 +119,219 @@ def _client(
             capability_workflow=workflow,
             secret_store=store,
             provider_verifier=verifier,
+            provider_configuration_store=configuration_store,
+            configured_probe_factory=configured_probe_factory,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
     )
     assert client.post("/internal/v1/bootstrap", json={"token": token}).status_code == 204
     return client
+
+
+@pytest.mark.parametrize(
+    ("slot_id", "configuration", "check_id"),
+    [
+        ("home_assistant", "http://127.0.0.1:18123", "home_assistant.api.read"),
+        ("email", "eva-family@agentmail.to", "email.identity.read"),
+    ],
+)
+def test_user_can_configure_and_verify_endpoint_provider_without_value_echo(
+    private_tmp_path: Path,
+    slot_id: str,
+    configuration: str,
+    check_id: str,
+) -> None:
+    probe = Probe(InstallerProviderProbeObservation(check_id, "ready", "verified"))
+    workflow, store, verifier = _components(
+        private_tmp_path, slot_id=slot_id, probe=probe
+    )
+    configuration_workspace = private_tmp_path / "provider-configuration"
+    configuration_workspace.mkdir(mode=0o700)
+    configuration_store = InstallerProviderConfigurationStore(
+        workspace=configuration_workspace,
+        clock=lambda: "2026-08-29T06:00:30Z",
+    )
+    factory_calls: list[tuple[str, str]] = []
+
+    def factory(actual_slot: str, actual_value: str) -> InstallerProviderProbe:
+        factory_calls.append((actual_slot, actual_value))
+        assert actual_slot == slot_id
+        assert actual_value == configuration
+        return probe
+
+    client = _client(
+        workflow,
+        store,
+        verifier,
+        token=("h" if slot_id == "home_assistant" else "e") * 43,
+        configuration_store=configuration_store,
+        configured_probe_factory=factory,
+    )
+    before = client.get("/internal/v1/onboarding/providers/status")
+    row = next(item for item in before.json()["slots"] if item["slot_id"] == slot_id)
+    assert row["can_configure"] is True
+    assert row["configuration_present"] is False
+    assert row["can_verify"] is False
+    assert configuration not in before.text
+
+    denied = client.post(
+        f"/internal/v1/onboarding/providers/{slot_id}/configure",
+        json={"configuration": configuration},
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert denied.status_code == 403
+    configured = client.post(
+        f"/internal/v1/onboarding/providers/{slot_id}/configure",
+        json={"configuration": configuration},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert configured.status_code == 200
+    assert configured.json()["configuration_returned"] is False
+    assert len(configured.json()["configuration_sha256"]) == 64
+    assert configuration not in configured.text
+
+    after = client.get("/internal/v1/onboarding/providers/status")
+    row = next(item for item in after.json()["slots"] if item["slot_id"] == slot_id)
+    assert row["configuration_present"] is True
+    assert row["can_verify"] is True
+    assert configuration not in after.text
+    verified = client.post(
+        f"/internal/v1/onboarding/providers/{slot_id}/verify",
+        json={"confirmation": "VERBINDING CONTROLEREN"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert verified.status_code == 200
+    assert verified.json()["outcome"] == "ready"
+    assert probe.calls == 1
+    assert factory_calls == [(slot_id, configuration), (slot_id, configuration)]
+    receipt = next(verifier.evidence_workspace.iterdir()).read_text()
+    assert configuration not in receipt
+    assert configured.json()["configuration_sha256"] in receipt
+    assert '"contract":"EvaInstallerProviderVerificationReceipt/v3"' in receipt
+
+    resumed = _client(
+        workflow,
+        store,
+        verifier,
+        token=("j" if slot_id == "home_assistant" else "f") * 43,
+        configuration_store=InstallerProviderConfigurationStore(
+            workspace=configuration_workspace
+        ),
+        configured_probe_factory=factory,
+    )
+    resumed_status = resumed.get("/internal/v1/onboarding/providers/status")
+    resumed_row = next(
+        item for item in resumed_status.json()["slots"] if item["slot_id"] == slot_id
+    )
+    assert resumed_row["configuration_present"] is True
+    assert resumed_row["state"] == "ready"
+    replacement = resumed.post(
+        f"/internal/v1/onboarding/providers/{slot_id}/configure",
+        json={"configuration": configuration},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert replacement.status_code == 409
+    assert probe.calls == 1
+
+
+def test_default_home_assistant_configuration_rejects_public_literal(
+    private_tmp_path: Path,
+) -> None:
+    probe = Probe(
+        InstallerProviderProbeObservation(
+            "home_assistant.api.read", "ready", "verified"
+        )
+    )
+    workflow, store, verifier = _components(
+        private_tmp_path, slot_id="home_assistant", probe=probe
+    )
+    configuration_workspace = private_tmp_path / "provider-configuration"
+    configuration_workspace.mkdir(mode=0o700)
+    client = _client(
+        workflow,
+        store,
+        verifier,
+        token="k" * 43,
+        configuration_store=InstallerProviderConfigurationStore(
+            workspace=configuration_workspace
+        ),
+    )
+    rejected = client.post(
+        "/internal/v1/onboarding/providers/home_assistant/configure",
+        json={"configuration": "https://8.8.8.8"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert rejected.status_code == 422
+    assert configuration_store_is_empty(configuration_workspace)
+
+
+def test_configuration_cannot_change_while_provider_verification_is_running(
+    private_tmp_path: Path,
+) -> None:
+    entered = Event()
+    release = Event()
+    probe = Probe(
+        InstallerProviderProbeObservation(
+            "home_assistant.api.read", "ready", "verified"
+        ),
+        entered=entered,
+        release=release,
+    )
+    workflow, store, verifier = _components(
+        private_tmp_path, slot_id="home_assistant", probe=probe
+    )
+    configuration_workspace = private_tmp_path / "provider-configuration"
+    configuration_workspace.mkdir(mode=0o700)
+    configuration_store = InstallerProviderConfigurationStore(
+        workspace=configuration_workspace,
+        clock=lambda: "2026-08-29T06:00:30Z",
+    )
+    original = "http://127.0.0.1:18123"
+    configuration_store.configure(slot_id="home_assistant", value=original)
+
+    def factory(_slot_id: str, value: str) -> InstallerProviderProbe:
+        assert value == original
+        return probe
+
+    client = _client(
+        workflow,
+        store,
+        verifier,
+        token="l" * 43,
+        configuration_store=configuration_store,
+        configured_probe_factory=factory,
+    )
+    response_codes: list[int] = []
+
+    def verify() -> None:
+        response = client.post(
+            "/internal/v1/onboarding/providers/home_assistant/verify",
+            json={"confirmation": "VERBINDING CONTROLEREN"},
+            headers={"origin": "http://127.0.0.1"},
+        )
+        response_codes.append(response.status_code)
+
+    thread = Thread(target=verify)
+    thread.start()
+    assert entered.wait(timeout=2)
+    changed = client.post(
+        "/internal/v1/onboarding/providers/home_assistant/configure",
+        json={"configuration": "http://127.0.0.1:18124"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert changed.status_code == 409
+    assert configuration_store.read(slot_id="home_assistant").value == original
+    release.set()
+    thread.join(timeout=2)
+    assert not thread.is_alive()
+    assert response_codes == [200]
+    assert probe.calls == 1
+
+
+def configuration_store_is_empty(workspace: Path) -> bool:
+    store = InstallerProviderConfigurationStore(workspace=workspace)
+    return all(item.state == "missing" for item in store.status())
 
 
 def test_user_can_verify_selected_telegram_connection_without_secret_echo(

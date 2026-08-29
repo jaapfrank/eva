@@ -180,7 +180,8 @@ def test_real_loopback_generation_records_usage_without_retaining_payload(
     receipt_raw = next(evidence.iterdir()).read_bytes()
     receipt = json.loads(receipt_raw)
     assert hashlib.sha256(receipt_raw).hexdigest() == outputs[0]["evidence_sha256"]
-    assert receipt["contract"] == "EvaInstallerProviderVerificationReceipt/v2"
+    assert receipt["contract"] == "EvaInstallerProviderVerificationReceipt/v3"
+    assert receipt["configuration_sha256"] is None
     assert receipt["billable_request_attempted"] is True
     assert receipt["provider_operation"] == "bounded_generation"
     assert receipt["usage_measurement"] == "measured"

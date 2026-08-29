@@ -52,7 +52,13 @@ from eva.operations.installer_identity_lifecycle import (
 )
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
-from eva.operations.installer_provider_verification import InstallerProviderVerifier
+from eva.operations.installer_provider_configuration import (
+    InstallerProviderConfigurationStore,
+)
+from eva.operations.installer_provider_verification import (
+    InstallerProviderProbe,
+    InstallerProviderVerifier,
+)
 from eva.operations.installer_secret_store import InstallerSecretStore
 
 
@@ -254,6 +260,8 @@ def create_installer_wizard(
     capability_workflow: InstallerCapabilityWorkflow | None = None,
     secret_store: InstallerSecretStore | None = None,
     provider_verifier: InstallerProviderVerifier | None = None,
+    provider_configuration_store: InstallerProviderConfigurationStore | None = None,
+    configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -415,10 +423,12 @@ def create_installer_wizard(
     register_installer_provider_routes(
         app,
         verifier=provider_verifier,
+        configuration_store=provider_configuration_store,
         enabled=provider_verification_enabled,
         require_read=require_installer_read,
         require_write=require_installer_write,
         security_headers=_SECURITY_HEADERS,
+        configured_probe_factory=configured_probe_factory,
     )
 
     @app.get("/internal/v1/preflight")
