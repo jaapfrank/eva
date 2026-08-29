@@ -43,14 +43,14 @@
     ]
   },
   "preVoiceBrowserCoreImageBaseline": {
-    "activeContainer": "eva2-managed-b-slot4-core",
+    "activeContainer": "eva2-pc01-live-canary",
     "platform": "linux/amd64",
-    "manifestDigest": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
-    "configDigest": "sha256:ebe0894663a9da2759509229673228aa27efb2c6477cb4a897d38a113eda0b60",
-    "compressedLayerBytes": 85591932,
+    "manifestDigest": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "configDigest": "sha256:c8a5c20d4703cb53f0dfe1b3e6b0287585057d10d821ade2e8c68fd11ce215df",
+    "compressedLayerBytes": 85440102,
     "layerCount": 31,
-    "sourceCommit": "022afbaa038eea8dc80f5c82e629b57e6eb05afa",
-    "sourceEvidence": "evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json",
-    "sourceEvidenceSha256": "758d7142e08e663f5b75fcbb7860b1897826daed9c7654d2c50eae7576f15984"
+    "sourceCommit": "f93a8b3f0c78c89e9dd2035eeb0a8d8194b0a153",
+    "sourceEvidence": "evidence/product/performance-complexity-pc01-current-image-live-2026-08-29.json",
+    "sourceEvidenceSha256": "9c89745c20916223f1b175b92918be62502308e2d6551bdaab2667234340d69c"
   }
 }

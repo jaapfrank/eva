@@ -16,9 +16,9 @@ from pathlib import Path
 from tools.managed_b_candidate.release_inputs import (
     AUTHORITY_PATH,
     _COCKPIT_EVIDENCE_PATH,
-    _EXPECTED_INPUT_PATHS,
+    _EXPECTED_INPUT_PATHS_SHA256,
     _EXPECTED_MIGRATIONS,
-    _EXPECTED_TEST_PATHS,
+    _EXPECTED_TEST_PATHS_SHA256,
     _NONCLAIMS,
 )
 
@@ -31,6 +31,14 @@ def _sha256(path: str) -> str:
     if not candidate.is_file():
         raise RuntimeError(f"managed-B authority input is missing: {path}")
     return hashlib.sha256(candidate.read_bytes()).hexdigest()
+
+
+def _path_set_sha256(paths: tuple[str, ...]) -> str:
+    payload = (
+        json.dumps(paths, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        + "\n"
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _arguments() -> argparse.Namespace:
@@ -57,6 +65,12 @@ def main() -> int:
     arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
+    input_paths = tuple(row["path"] for row in authority["requiredInputs"])
+    test_paths = tuple(row["path"] for row in authority["requiredTests"])
+    if _path_set_sha256(input_paths) != _EXPECTED_INPUT_PATHS_SHA256:
+        raise RuntimeError("managed-B required input path set differs")
+    if _path_set_sha256(test_paths) != _EXPECTED_TEST_PATHS_SHA256:
+        raise RuntimeError("managed-B required test path set differs")
     cockpit_file = ROOT / _COCKPIT_EVIDENCE_PATH
     cockpit = json.loads(cockpit_file.read_bytes())
     if arguments.replace_cockpit_source is not None:
@@ -67,7 +81,7 @@ def main() -> int:
         if (
             not claim_id
             or not old_path
-            or new_path not in _EXPECTED_INPUT_PATHS
+            or new_path not in input_paths
             or old_path == new_path
         ):
             raise RuntimeError("replacement cockpit source is invalid")
@@ -87,7 +101,7 @@ def main() -> int:
         sources.sort(key=lambda source: source["path"])
     if arguments.admit_cockpit_source is not None:
         claim_id, separator, source_path = arguments.admit_cockpit_source.partition("=")
-        if not separator or source_path not in _EXPECTED_INPUT_PATHS:
+        if not separator or source_path not in input_paths:
             raise RuntimeError("admitted cockpit source is invalid")
         matching = [
             entry for entry in cockpit["entries"] if entry.get("claimId") == claim_id
@@ -113,11 +127,11 @@ def main() -> int:
     cockpit_file.write_bytes(cockpit_payload)
     authority["requiredInputs"] = [
         {"path": path, "sha256": _sha256(path)}
-        for path in sorted(_EXPECTED_INPUT_PATHS)
+        for path in input_paths
     ]
     authority["requiredTests"] = [
         {"path": path, "sha256": _sha256(path)}
-        for path in sorted(_EXPECTED_TEST_PATHS)
+        for path in test_paths
     ]
     revisions = {
         row["revision"]: row for row in authority["migrationAuthority"]["revisions"]

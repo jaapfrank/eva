@@ -1,0 +1,48 @@
+{
+  "authoritySha256": "6aad099cfe0562d098ff1204fb64a5c66b354546a41e3bc7e8df6e0058332311",
+  "contract": "EvaPerformanceComplexityPc01Receipt/v1",
+  "dependencies": {
+    "count": 10,
+    "maximum": 12,
+    "names": [
+      "alembic",
+      "cryptography",
+      "fastapi",
+      "psycopg",
+      "pydantic",
+      "pydantic-ai-slim",
+      "pynacl",
+      "sqlalchemy",
+      "uvicorn",
+      "websockets"
+    ],
+    "sourceSha256": "7c42baf3ad4bb9cbdffb7afa748c22e5681aa2bc0520c08f50981e1dbe5fca39"
+  },
+  "gitCommit": "f93a8b3f0c78c89e9dd2035eeb0a8d8194b0a153",
+  "imageBaseline": {
+    "activeContainer": "eva2-pc01-live-canary",
+    "activeContainerRunning": true,
+    "activeImageDigest": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "compressedLayerBytes": 85440102,
+    "configDigest": "sha256:c8a5c20d4703cb53f0dfe1b3e6b0287585057d10d821ade2e8c68fd11ce215df",
+    "layerCount": 31,
+    "manifestDigest": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "platform": "linux/amd64",
+    "sourceCommit": "f93a8b3f0c78c89e9dd2035eeb0a8d8194b0a153"
+  },
+  "source": {
+    "classifiedNonProduct": {
+      "experiments": {"bytes": 230798, "fileCount": 30, "manifestSha256": "82227073cca0d049b9ddab7ddfd849caac06edb19cdbd878093d12f1dc092d7c", "physicalLines": 6094},
+      "migrations": {"bytes": 84513, "fileCount": 15, "manifestSha256": "048346598eb8f6f91ec5f301298bd311c857ae9ed1d2cb69a9a9f204c2b95e9a", "physicalLines": 2251},
+      "release": {"bytes": 59321, "fileCount": 1, "manifestSha256": "f72e88d0e0d9c20bd64e9ef95fb0e679839dc7d1e707351e64d8c9d632adf7c9", "physicalLines": 1594},
+      "tests": {"bytes": 2911431, "fileCount": 261, "manifestSha256": "041fbedb8358fc5e573fb2403992633422960b7ef7f8087e8e800a3861102c12", "physicalLines": 80415},
+      "tools": {"bytes": 1418366, "fileCount": 65, "manifestSha256": "c57acd05f81438ec582755a2a2e43321e1c74509c14df2b7f3c036f669514c2a", "physicalLines": 36408}
+    },
+    "generated": {"bytes": 385818, "fileCount": 1, "manifestSha256": "52b849e6be6bfaf73386c91daede9e81aeadd632a7dcef2cdb5679676d20a493", "physicalLines": 9},
+    "livingCore": {"bytes": 2944141, "fileCount": 204, "manifestSha256": "ae58c2d85b5000156d039a571e07126a5b996279807b5fe4dadf7232fa26551b", "physicalLines": 74226},
+    "product": {"bytes": 2967376, "fileCount": 211, "manifestSha256": "83e4849c25ab78f5ca264e15e5f69743e4769d92a5b5f22bb4339d5dd38a00cf", "physicalLines": 74819},
+    "unclassifiedSourcePaths": []
+  },
+  "status": "passed",
+  "violations": []
+}

@@ -1,17 +1,21 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 22:40 CEST
+Laatst bijgewerkt: 29 augustus 2026, 23:02 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op slot 3. Zij praat via de bestaande
+De nieuwe DBOS-loze Eva2 staat nu op de actuele canaryroute. Zij praat via de bestaande
 Codex-koppeling, heeft haar eigen persoonlijkheid, bewaart gesprekken in
 PostgreSQL en gebruikt Hindsight voor langetermijngeheugen.
 
 De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
+
+Ook de volledige omvangs- en imagepoort PC01 is nu groen: 74.819 productregels,
+10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
+De vorige Eva2-route blijft draaiend klaarstaan voor directe terugval.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -320,7 +324,8 @@ praktijktest zijn nog niet klaar.
 - De harde broncodeteller is nu voor het eerst groen. In totaal zijn 15.369
   oude test-, proef-, operator- en dubbele regels uit de runtimewortels gehaald.
   Eva2 telt 74.819 productregels bij een maximum van 75.000. De marge is dus
-  slechts 181 regels; de volledige PC01-gate wacht nog op een actuele imagebasis.
+  slechts 181 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
+  live geschakeld; de volledige PC01-gate is daardoor groen.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -338,15 +343,13 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De actuele runtimeimage opnieuw bouwen en de ontbrekende PC01-imagebasis
-   met digest, grootte, lagen, import, scan en herstartbewijs vastleggen.
-2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
+1. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
-3. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+2. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-4. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
+3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
-5. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
+4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
 
 ## Belangrijk verschil
@@ -433,6 +436,8 @@ praktijktest zijn nog niet klaar.
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)
 - [Nieuwe image live met verliesloze heen-terug-heenproef](evidence/living-core/eva2-runtime35-live-bidirectional-cutover-2026-08-29.json)
 - [Nieuwe actieve slot-3-route voor de externe Windows-reboot bewapend](evidence/living-core/eva2-runtime35-postboot-proof-armed-2026-08-29.json)
+- [Actuele PC01-image: netwerkloze build, scan, schema, model, herstart en live omschakeling](evidence/product/performance-complexity-pc01-current-image-live-2026-08-29.json)
+- [Volledige PC01-poort groen zonder overtredingen](evidence/product/performance-complexity-pc01-passed-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

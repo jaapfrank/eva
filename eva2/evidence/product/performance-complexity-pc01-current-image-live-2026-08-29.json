@@ -1,0 +1,81 @@
+{
+  "build": {
+    "baseImagesResolvedLocally": true,
+    "dockerfileSha256": "175f0ec4cd9b6aa4d49b8d188c60faed9cb2164d7e257015f6f9efd68fa3480f",
+    "network": "none",
+    "ociArchiveSha256": "8804d17728143b0d861c6979376fca188aadc9845e63e1bfef4c6e46f4a6b9ef",
+    "provenanceAttachment": false,
+    "sourceArchiveSha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652",
+    "sourceCommit": "f93a8b3f0c78c89e9dd2035eeb0a8d8194b0a153",
+    "sourceDateEpoch": 1788036084
+  },
+  "checks": {
+    "eva1HealthHttp": 200,
+    "freshDatabaseReadyHttp": 200,
+    "liveEva2ReadyHttp": 200,
+    "rollbackEva2ReadyHttp": 200,
+    "targetEva2ReadyHttp": 200
+  },
+  "contract": "EvaPerformanceComplexityPc01CurrentImageLiveReceipt/v1",
+  "cutover": {
+    "currentUrl": "http://127.0.0.1:44711",
+    "previousUrl": "http://127.0.0.1:44710",
+    "receiptSha256": "56b7866d0cf2bbb93de9c4894367eccd383623e58ad0e0469c879d84bbbdc417",
+    "rollbackContainerStillReady": true,
+    "routerClientReplySha256": "127a658235e6ea7a5c797b66ac4265318dbdc5552f0b4d76c8fb85a588cb6bc6",
+    "status": "switched"
+  },
+  "freshDatabase": {
+    "firstSchemaInstall": "passed",
+    "firstSourceRevision": null,
+    "finalRevision": "4e_0006_memory_outbox_erasure",
+    "secondSchemaInstall": "passed",
+    "secondSourceRevision": "4e_0006_memory_outbox_erasure",
+    "temporaryDatabase": true
+  },
+  "image": {
+    "compressedLayerBytes": 85440102,
+    "configDigest": "sha256:c8a5c20d4703cb53f0dfe1b3e6b0287585057d10d821ade2e8c68fd11ce215df",
+    "id": "sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "layerCount": 31,
+    "localReference": "eva2/pc01-current@sha256:ea58b0e6997f13417e4f26c908260adfcab53fe4e237868355a44078b2f7644d",
+    "sizeBytes": 85454607
+  },
+  "issuedAt": "2026-08-29T22:58:01+02:00",
+  "modelAndRestart": {
+    "initialReplySha256": "b8188cee43947d7cb394919f92c03f2c1ae3cfd4626b42f674dd89f22dc206fe",
+    "liveDataReplySha256": "221bc8e4ec90ea2ca9b9f09c3b705fe414bd5694d4fbcd51ea35bc8d3be0db94",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "recallReplySha256": "c74f09482ebae0d6cb42e0771582cb18eba8edbecf8bbf301946ce67ebaab7b8",
+    "restartReadyHttp": 200,
+    "storeReplySha256": "ef011005457547038118d886fbc469905c211301b440d6134bfb4c6c3dc429ec"
+  },
+  "nonclaims": [
+    "This closes the current PC01 core-image baseline, not full voice, browser, installer, or seven-day acceptance.",
+    "The fresh database and its synthetic conversation are disposable and are not Eva1 or live Eva2 user data.",
+    "The live canary reuses the already authorized Eva2 database, Hindsight service, identity, and access-only model lease; no refresh token was copied.",
+    "The previous Eva2 core remains running and ready for immediate rollback."
+  ],
+  "previousBaseline": {
+    "compressedLayerBytes": 85591932,
+    "reductionBytes": 151830
+  },
+  "runtime": {
+    "activeContainer": "eva2-pc01-live-canary",
+    "capabilitiesDropped": [
+      "ALL"
+    ],
+    "readOnlyRootFilesystem": true,
+    "restartCount": 0,
+    "restartPolicy": "unless-stopped",
+    "runsAs": "65532:65532"
+  },
+  "scan": {
+    "critical": 0,
+    "high": 0,
+    "network": "none",
+    "receiptSha256": "7acdf4a3142c6ef180e2d4c9ab7b6443ac4b548ee7a66fea8e2ea4301a89e61f",
+    "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+  },
+  "status": "passed"
+}
