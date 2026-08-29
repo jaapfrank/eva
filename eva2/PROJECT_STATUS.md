@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 22:04 CEST
+Laatst bijgewerkt: 29 augustus 2026, 22:08 CEST
 
 ## Heel kort
 
@@ -278,6 +278,9 @@ praktijktest zijn nog niet klaar.
   en testpaden bestaan en zijn nu opnieuw gebonden. Ook 26 cockpitbronhashes
   zijn bijgewerkt zonder claims te veranderen. De fail-closed tests zijn 38/38
   groen en het exacte Git-archief bindt 239 inputs plus 130 tests.
+- De 932-regelige verliesloze A/B-omschakelaar had nul runtimegebruikers en staat
+  nu als host-operatorprogramma bij `tools`. Zes cutovertests en samen 44
+  cutover-/releasechecks zijn groen; het exacte Git-archief is opnieuw gebonden.
 
 ## Wat nog niet klaar is
 
@@ -292,8 +295,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  11.911 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 78.922 productregels en mag er maximaal 75.000 hebben.
+  12.843 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 77.990 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -311,7 +314,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 3.922 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 2.990 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -390,6 +393,7 @@ praktijktest zijn nog niet klaar.
 - [PostgreSQL-exportadapter naar de operatorgrens, met vier echte databasegrenzen](evidence/product/performance-complexity-pc01-postgres-portable-export-operator-boundary-2026-08-29.json)
 - [Portable objectverifier naar de operatorgrens, met echte ObjectRef-proef](evidence/product/performance-complexity-pc01-portable-object-verifier-operator-boundary-2026-08-29.json)
 - [Alle 369 B-release-inputs opnieuw gebonden en op exact Git-archief gecontroleerd](evidence/living-core/eva2-managed-b-release-input-rebind-2026-08-29.json)
+- [Verliesloze A/B-omschakelaar naar de operatorgrens, releasearchief opnieuw groen](evidence/product/performance-complexity-pc01-quiescent-cutover-operator-boundary-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

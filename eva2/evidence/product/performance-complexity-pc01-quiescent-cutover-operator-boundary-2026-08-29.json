@@ -1,0 +1,39 @@
+{
+  "contract": "EvaPerformanceComplexityPc01QuiescentCutoverOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:08:16+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "b8123987a1f0cc93bab49050a8e6a7f66fa57943",
+    "changedSourceManifestSha256": "3994426b3780618c1161174a8542b69f84ae9defd811cbfd39137baaccf76f5d"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/eva2_quiescent_cutover.py",
+    "newPath": "tools/eva2_quiescent_cutover.py",
+    "physicalLinesMovedOutOfProductRoots": 932,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 1,
+    "remainingOldImports": 0,
+    "managedBReleaseInputPathRebound": true
+  },
+  "verification": {
+    "quiescentCutoverTestsPassed": 6,
+    "combinedCutoverAndFailClosedReleaseTestsPassed": 44,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "combinedTestAndAttestationLogsSha256": "282ee742e04d792adabcb4abc2d4dd501263c306331b2624c74ac1d211e283f7"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 219,
+    "productPhysicalLines": 77990,
+    "livingCorePhysicalLines": 77397,
+    "productManifestSha256": "b3783c23f5258411dbaa2e7be45d13b11914e18f6b8ab1b4f3baa16180ceb3ad",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 2990,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 12843,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "This change did not execute another live slot cutover.",
+    "The operator implementation remains part of the managed release archive even though it is not resident in Eva's runtime package.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}
