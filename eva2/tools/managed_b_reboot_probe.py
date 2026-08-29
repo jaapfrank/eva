@@ -27,41 +27,53 @@ from urllib import error, request
 
 CONTRACT_ARM = "Eva2ManagedBRebootArm/v1"
 CONTRACT_RECEIPT = "Eva2ManagedBPostbootReceipt/v1"
-ACTIVE_PORT = 44710
-FALLBACK_PORT = 44708
+ACTIVE_PORT = 44711
+ROLLBACK_PORT = 44710
 EVA1_PORT = 3210
-ROUTE_DROPIN = Path(
-    "/etc/systemd/system/eva.service.d/30-eva2-current-candidate.conf"
-)
-DASHBOARD_TOKEN = Path(
-    "/var/lib/eva2/managed-b-slot3/secrets/dashboard-token"
-)
-POWERSHELL = Path(
-    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
-)
+ROUTE_DROPIN = Path("/etc/systemd/system/eva.service.d/30-eva2-current-candidate.conf")
+DASHBOARD_TOKEN = Path("/var/lib/eva2/managed-b-slot4/secrets/dashboard-token")
+POWERSHELL = Path("/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
 CONTAINERS = {
-    "core": ("eva2-managed-b-slot3-core", True),
-    "hindsight": ("eva2-managed-b-slot3-hindsight-1", True),
+    "core": ("eva2-managed-b-slot4-core", "running", True),
+    "hindsight": ("eva2-managed-b-slot4-hindsight-1", "running", True),
     "hindsight_access_lease": (
-        "eva2-managed-b-slot3-hindsight-access-lease-1",
+        "eva2-managed-b-slot4-hindsight-access-lease-1",
+        "running",
         False,
     ),
     "hindsight_postgres": (
-        "eva2-managed-b-slot3-hindsight-postgres-1",
+        "eva2-managed-b-slot4-hindsight-postgres-1",
+        "running",
         True,
     ),
     "model_access_lease": (
-        "eva2-managed-b-slot3-model-access-lease-1",
+        "eva2-managed-b-slot4-model-access-lease-1",
+        "running",
         False,
     ),
-    "postgres": ("eva2-managed-b-slot3-postgres-1", True),
-    "rollback_core": ("eva2-managed-current-canary-core", True),
-    "rollback_hindsight": ("eva2-hindsight-memory-live", False),
+    "postgres": ("eva2-managed-b-slot4-postgres-1", "running", True),
+    "rollback_core": ("eva2-managed-b-slot3-core", "exited", False),
+    "rollback_hindsight": ("eva2-managed-b-slot3-hindsight-1", "exited", False),
     "rollback_hindsight_access_lease": (
-        "eva2-hindsight-access-lease-b",
+        "eva2-managed-b-slot3-hindsight-access-lease-1",
+        "running",
         False,
     ),
-    "rollback_postgres": ("eva2-candidate-794ff73-pg", False),
+    "rollback_hindsight_postgres": (
+        "eva2-managed-b-slot3-hindsight-postgres-1",
+        "running",
+        True,
+    ),
+    "rollback_model_access_lease": (
+        "eva2-managed-b-slot3-model-access-lease-1",
+        "running",
+        False,
+    ),
+    "rollback_postgres": (
+        "eva2-managed-b-slot3-postgres-1",
+        "running",
+        True,
+    ),
 }
 EVA1_ROUTES = (
     "/",
@@ -133,9 +145,9 @@ def _pid1_start_ticks(raw: str) -> int:
 
 def _read_boot_identity() -> BootIdentity:
     try:
-        kernel_boot_id = Path("/proc/sys/kernel/random/boot_id").read_text(
-            encoding="ascii"
-        ).strip()
+        kernel_boot_id = (
+            Path("/proc/sys/kernel/random/boot_id").read_text(encoding="ascii").strip()
+        )
         pid1_stat = Path("/proc/1/stat").read_text(encoding="ascii")
     except OSError as exc:
         raise RebootProbeError("Linux boot identity is unavailable") from exc
@@ -351,7 +363,10 @@ def _container_snapshot() -> dict[str, dict[str, Any]]:
         ]
     )
     observed: dict[str, dict[str, Any]] = {}
-    by_name = {name: (key, health) for key, (name, health) in CONTAINERS.items()}
+    by_name = {
+        name: (key, expected_status, health)
+        for key, (name, expected_status, health) in CONTAINERS.items()
+    }
     for line in output.splitlines():
         fields = line.split("|")
         if len(fields) != 5 or not fields[3].isdigit():
@@ -359,14 +374,20 @@ def _container_snapshot() -> dict[str, dict[str, Any]]:
         name = fields[0].removeprefix("/")
         if name not in by_name or name in observed:
             raise RebootProbeError("Docker runtime set differs")
-        key, needs_health = by_name[name]
+        key, expected_status, needs_health = by_name[name]
         restart_count = int(fields[3])
         if (
-            fields[1] != "running"
+            fields[1] != expected_status
             or fields[4] != "unless-stopped"
             or restart_count > 1
-            or (needs_health and fields[2] != "healthy")
-            or (not needs_health and fields[2] != "none")
+            or (
+                expected_status == "running" and needs_health and fields[2] != "healthy"
+            )
+            or (
+                expected_status == "running"
+                and not needs_health
+                and fields[2] != "none"
+            )
         ):
             raise RebootProbeError(f"managed container is not stable: {key}")
         observed[name] = {
@@ -417,12 +438,11 @@ def _runtime_snapshot(token: str) -> dict[str, Any]:
     }
     if set(eva1_statuses.values()) != {200}:
         raise RebootProbeError("Eva1 route is not healthy")
-    ready: dict[str, dict[str, Any]] = {}
-    for label, port in (("active", ACTIVE_PORT), ("fallback", FALLBACK_PORT)):
-        status_code, payload = _http_json("GET", f"http://127.0.0.1:{port}/readyz")
-        if status_code != 200 or payload.get("ready") is not True:
-            raise RebootProbeError(f"Eva2 {label} route is not ready")
-        ready[label] = payload
+    status_code, active_ready = _http_json(
+        "GET", f"http://127.0.0.1:{ACTIVE_PORT}/readyz"
+    )
+    if status_code != 200 or active_ready.get("ready") is not True:
+        raise RebootProbeError("Eva2 active route is not ready")
     unauthorized, _ = _http_json(
         "GET", f"http://127.0.0.1:{ACTIVE_PORT}/internal/v1/dashboard/workboard"
     )
@@ -447,22 +467,30 @@ def _runtime_snapshot(token: str) -> dict[str, Any]:
         },
         "eva1_http_statuses": eva1_statuses,
         "hindsight": _hindsight_counts(),
-        "ready": ready,
+        "ready": {"active": active_ready},
+        "rollback": {
+            "databases_healthy": True,
+            "port": ROLLBACK_PORT,
+            "writers_stopped": True,
+        },
         "route_dropin_sha256": route_sha256,
         "services": services,
     }
 
 
-def _canary_payload(*, chat_id: str, user_id: int, message_id: int, text: str) -> dict[str, Any]:
+def _canary_payload(
+    *, chat_id: str, user_id: int, message_id: int, text: str
+) -> dict[str, Any]:
     return {
         "chat_id": chat_id,
         # The live canary derives person/chat identity server-side but still
         # accepts only the sealed runtime scope used by Eva1's /eva2 client.
         "installation_id": "live-test-installation",
         "message_id": message_id,
-        "occurred_at": datetime.now(UTC).replace(microsecond=0).isoformat().replace(
-            "+00:00", "Z"
-        ),
+        "occurred_at": datetime.now(UTC)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z"),
         "recent_messages": [],
         "telegram_user_id": user_id,
         "tenant_id": "live-test-tenant",
@@ -470,7 +498,9 @@ def _canary_payload(*, chat_id: str, user_id: int, message_id: int, text: str) -
     }
 
 
-def _canary_turn(*, chat_id: str, user_id: int, message_id: int, text: str) -> dict[str, Any]:
+def _canary_turn(
+    *, chat_id: str, user_id: int, message_id: int, text: str
+) -> dict[str, Any]:
     payload = _canary_payload(
         chat_id=chat_id, user_id=user_id, message_id=message_id, text=text
     )
@@ -495,7 +525,9 @@ def _source_sha256() -> str:
     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
-def arm(state_path: Path, *, required_restart: str, memory_wait_seconds: int) -> dict[str, Any]:
+def arm(
+    state_path: Path, *, required_restart: str, memory_wait_seconds: int
+) -> dict[str, Any]:
     token = _dashboard_token()
     boot = _read_boot_identity()
     before = _runtime_snapshot(token)
@@ -691,6 +723,7 @@ def verify(
             "ready": {
                 label: value.get("ready") for label, value in runtime["ready"].items()
             },
+            "rollback": runtime["rollback"],
             "route_port": ACTIVE_PORT,
             "services": runtime["services"],
         },
@@ -698,7 +731,11 @@ def verify(
         "status": "passed",
     }
     encoded = json.dumps(receipt, sort_keys=True)
-    if token in encoded or conversation["chat_id"] in encoded or conversation["marker"] in encoded:
+    if (
+        token in encoded
+        or conversation["chat_id"] in encoded
+        or conversation["marker"] in encoded
+    ):
         raise RebootProbeError("receipt contains private probe material")
     _write_new_json(output_path, receipt)
     return receipt
@@ -740,7 +777,10 @@ def main() -> int:
                 memory_wait_seconds=arguments.memory_wait_seconds,
             )
         else:
-            if arguments.startup_wait_seconds < 0 or arguments.startup_wait_seconds > 600:
+            if (
+                arguments.startup_wait_seconds < 0
+                or arguments.startup_wait_seconds > 600
+            ):
                 raise RebootProbeError("startup wait must be between 0 and 600 seconds")
             verify(
                 arguments.state,
