@@ -9,7 +9,7 @@ import tempfile
 
 import pytest
 
-from eva.operations.managed_b_base_image import (
+from tools.managed_b_candidate.base_image import (
     _docker_export,
     materialize_pinned_base_image,
     validate_materialized_base_image,
@@ -194,7 +194,7 @@ def test_default_exporter_preserves_the_pinned_source_index(
     def run(command: list[str], **_kwargs: object) -> None:
         commands.append(command)
 
-    monkeypatch.setattr("eva.operations.managed_b_base_image.subprocess.run", run)
+    monkeypatch.setattr("tools.managed_b_candidate.base_image.subprocess.run", run)
     _docker_export("docker.io/library/python@sha256:" + "1" * 64, tmp_path / "base.tar")
 
     assert commands == [

@@ -16,11 +16,11 @@ import subprocess
 import tempfile
 from typing import Any, Callable
 
-from eva.operations.managed_b_base_image import (
+from .base_image import (
     MaterializedBaseImage,
     validate_materialized_base_image,
 )
-from eva.operations.managed_b_build_context import (
+from .build_context import (
     MaterializedBuildContext,
     validate_materialized_build_context,
 )

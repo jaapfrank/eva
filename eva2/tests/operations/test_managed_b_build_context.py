@@ -9,8 +9,8 @@ import tempfile
 
 import pytest
 
-from eva.operations.managed_b_base_image import materialize_pinned_base_image
-from eva.operations.managed_b_build_context import (
+from tools.managed_b_candidate.base_image import materialize_pinned_base_image
+from tools.managed_b_candidate.build_context import (
     materialize_build_context,
     validate_materialized_build_context,
 )
@@ -223,7 +223,7 @@ def test_refuses_a_wheel_added_between_preflight_and_context_copy(
         return materialized
 
     monkeypatch.setattr(
-        "eva.operations.managed_b_build_context.validate_materialized_base_image",
+        "tools.managed_b_candidate.build_context.validate_materialized_base_image",
         add_unsealed_wheel,
     )
 
@@ -240,7 +240,7 @@ def test_failed_post_seal_validation_removes_only_its_fresh_context(
     output = native_tmp_path / "context-output"
     output.mkdir(mode=0o700)
     monkeypatch.setattr(
-        "eva.operations.managed_b_build_context._actual_entries",
+        "tools.managed_b_candidate.build_context._actual_entries",
         lambda _root: [],
     )
 

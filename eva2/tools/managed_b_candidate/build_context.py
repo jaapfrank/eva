@@ -14,7 +14,7 @@ from pathlib import Path
 import stat
 import tempfile
 
-from eva.operations.managed_b_base_image import (
+from .base_image import (
     MaterializedBaseImage,
     validate_materialized_base_image,
 )

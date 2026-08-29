@@ -7,9 +7,9 @@ import tempfile
 
 import pytest
 
-from eva.operations.managed_b_base_image import MaterializedBaseImage
-from eva.operations.managed_b_build_context import MaterializedBuildContext
-from eva.operations.managed_b_candidate_image import (
+from tools.managed_b_candidate.base_image import MaterializedBaseImage
+from tools.managed_b_candidate.build_context import MaterializedBuildContext
+from tools.managed_b_candidate.candidate_image import (
     _read_iid,
     build_offline_candidate_image,
     validate_offline_candidate_image,
@@ -55,11 +55,11 @@ def _receipts() -> tuple[dict[str, object], dict[str, object]]:
 def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
     context, base = _receipts()
     monkeypatch.setattr(
-        "eva.operations.managed_b_candidate_image.validate_materialized_build_context",
+        "tools.managed_b_candidate.candidate_image.validate_materialized_build_context",
         lambda _context: context,
     )
     monkeypatch.setattr(
-        "eva.operations.managed_b_candidate_image.validate_materialized_base_image",
+        "tools.managed_b_candidate.candidate_image.validate_materialized_base_image",
         lambda _base: base,
     )
 

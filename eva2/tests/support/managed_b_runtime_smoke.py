@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import subprocess
 from typing import Callable
 
-from eva.operations.managed_b_candidate_image import CandidateImage, validate_offline_candidate_image
+from tools.managed_b_candidate.candidate_image import CandidateImage, validate_offline_candidate_image
 
 
 _PROGRAM = (

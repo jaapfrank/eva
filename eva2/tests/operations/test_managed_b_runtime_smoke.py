@@ -4,7 +4,7 @@ import subprocess
 
 import pytest
 
-from eva.operations.managed_b_candidate_image import CandidateImage
+from tools.managed_b_candidate.candidate_image import CandidateImage
 from tests.support.managed_b_runtime_smoke import run_candidate_runtime_smoke
 
 
