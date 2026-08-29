@@ -145,6 +145,8 @@ def _allowed(previous: CapabilityState, current: CapabilityState) -> bool:
         return current == "selected"
     if previous == "blocked":
         return current in {"selected", "skipped", "blocked", "ready"}
+    if previous == "ready":
+        return current == "blocked"
     return False
 
 
@@ -461,6 +463,54 @@ class InstallerCapabilityWorkflow:
             return InstallerCapabilityTransition(
                 step_id=step_id,
                 state=outcome,
+                revision=updated.revision,
+                head_sha256=updated.head_sha256,
+                evidence_sha256=evidence,
+                already_in_state=False,
+            )
+
+    def record_invalidation(
+        self, *, step_id: object, evidence_sha256: object
+    ) -> InstallerCapabilityTransition:
+        """Make retained provider authority unusable before secret mutation."""
+
+        if not isinstance(step_id, str) or step_id not in {
+            "model_provider",
+            "telegram",
+            "home_assistant",
+            "email",
+        }:
+            raise InstallerCapabilityWorkflowError(
+                "installer capability invalidation step is unknown"
+            )
+        evidence = _sha256(evidence_sha256)
+        assert evidence is not None
+        with self._lock():
+            events, status = self._load()
+            current = status.step(step_id)
+            if current.state == "blocked" and current.evidence_sha256 is not None:
+                if hmac.compare_digest(current.evidence_sha256, evidence):
+                    return InstallerCapabilityTransition(
+                        step_id=step_id,
+                        state="blocked",
+                        revision=status.revision,
+                        head_sha256=status.head_sha256,
+                        evidence_sha256=evidence,
+                        already_in_state=True,
+                    )
+            if current.state not in {"selected", "blocked", "ready"}:
+                raise InstallerCapabilityWorkflowError(
+                    "capability must be selected before invalidation"
+                )
+            updated = self._append(
+                events,
+                step_id=step_id,
+                state="blocked",
+                evidence_sha256=evidence,
+            )
+            return InstallerCapabilityTransition(
+                step_id=step_id,
+                state="blocked",
                 revision=updated.revision,
                 head_sha256=updated.head_sha256,
                 evidence_sha256=evidence,

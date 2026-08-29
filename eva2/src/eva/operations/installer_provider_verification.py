@@ -185,7 +185,7 @@ class InstallerProviderVerifier:
             )
         object.__setattr__(self, "probes", MappingProxyType(copied))
 
-    def _preflight(self, slot_id: str) -> tuple[str, InstallerProviderProbe]:
+    def _preflight(self, slot_id: str) -> tuple[str, int, InstallerProviderProbe]:
         if slot_id not in SECRET_SLOTS or slot_id not in _CHECK_IDS:
             raise InstallerProviderVerificationError(
                 "provider verification slot is invalid"
@@ -211,11 +211,12 @@ class InstallerProviderVerifier:
         if (
             secret_status.state != "present"
             or secret_status.reference != expected_reference
+            or secret_status.generation is None
         ):
             raise InstallerProviderVerificationError(
                 "provider verification secret is not available"
             )
-        return expected_reference, probe
+        return expected_reference, secret_status.generation, probe
 
     def verify(
         self, *, slot_id: object, timeout_seconds: object = 10.0
@@ -235,7 +236,7 @@ class InstallerProviderVerifier:
                 "provider verification timeout is invalid"
             )
         checked_timeout = float(timeout_seconds)
-        reference, probe = self._preflight(slot_id)
+        reference, secret_generation, probe = self._preflight(slot_id)
         try:
             raw_secret = self.secret_store.read_secret(slot_id=slot_id)
         except InstallerSecretStoreError as exc:
@@ -310,6 +311,7 @@ class InstallerProviderVerifier:
             "provider_payload_retained": False,
             "reason_code": observation.reason_code,
             "secret_reference": reference,
+            "secret_generation": secret_generation,
             "secret_returned": False,
             "slot_id": slot_id,
             "started_at": started_at,

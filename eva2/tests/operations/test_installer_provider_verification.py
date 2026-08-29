@@ -103,6 +103,7 @@ def test_ready_probe_writes_sanitized_receipt_then_marks_capability_ready(
         "outcome": "ready",
         "provider_payload_retained": False,
         "reason_code": "verified",
+        "secret_generation": 1,
         "secret_reference": "installer-secret://telegram/v1",
         "secret_returned": False,
         "slot_id": "telegram",

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_secret_store import (
     InstallerSecretInputError,
     InstallerSecretStore,
@@ -80,6 +81,26 @@ def test_secret_slot_refuses_overwrite_even_with_the_same_value(
         store.store(slot_id="home_assistant", secret=secret)
 
     assert store.read_secret(slot_id="home_assistant") == secret.encode()
+
+
+def test_existing_v1_bundle_is_read_as_first_generation(
+    private_tmp_path: Path,
+) -> None:
+    store = _store(private_tmp_path)
+    store.store(slot_id="telegram", secret="synthetic-token-value-123456789")
+    bundle = store.workspace / "slot-telegram"
+    metadata_path = bundle / "metadata.json"
+    metadata = json.loads(metadata_path.read_bytes())
+    metadata.pop("generation")
+    metadata["contract"] = "EvaInstallerSecretMetadata/v1"
+    metadata_path.write_bytes(canonical_json_bytes(metadata))
+    os.chmod(metadata_path, 0o600)
+    (store.workspace / "slot-telegram.generation.json").unlink()
+
+    restarted = InstallerSecretStore(workspace=store.workspace)
+    status = next(item for item in restarted.status() if item.slot_id == "telegram")
+    assert status.state == "present"
+    assert status.generation == 1
 
 
 def test_incomplete_bundle_is_needs_help_and_never_silently_reused(
