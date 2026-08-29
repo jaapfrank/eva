@@ -1,0 +1,52 @@
+{
+  "contract": "EvaPerformanceComplexityPc01InstallerJsonIntakeConsolidation/v1",
+  "recordedAt": "2026-08-29T18:36:46Z",
+  "sourceCommit": "bf7e37647d98f377ef90432deff844d54409e8e1",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedIntake": "read_small_json_request",
+    "consumers": [
+      "installer secret routes",
+      "installer provider verification routes"
+    ],
+    "secretMaximumBytes": 12288,
+    "providerMaximumBytes": 2048,
+    "preservedRouteSpecificErrors": true,
+    "netProductPhysicalLines": -10
+  },
+  "verification": {
+    "installerApiTests": {
+      "passed": 29,
+      "failed": 0,
+      "logSha256": "768c57f6e5c40d8409cc85fa8018ceff035de1ecbff24461d7db1545ebfdbed9"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83155,
+      "productManifestSha256": "638d509093af0603ebbde0732800bf9e590c4df4b51995d1803f57369530c1d9"
+    },
+    "after": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83145,
+      "productManifestSha256": "ffd146428aa325f5e8f6c48b250740c3665a7f1bfa99d7ff93fef2c5992c13d0",
+      "livingCorePhysicalLines": 82552,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8145,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No installer capability, request size, authentication or secret authority changed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
