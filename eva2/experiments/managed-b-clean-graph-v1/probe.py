@@ -11,7 +11,6 @@ result and remove their private temporary state.
 from __future__ import annotations
 
 import argparse
-import ast
 from datetime import UTC, datetime
 import hashlib
 import json
@@ -28,6 +27,8 @@ import time
 from typing import Any
 from urllib import error, parse, request
 from uuid import uuid4
+
+from eva.operations.logical_restore_authority import logical_restore_preparation_sql
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
@@ -226,29 +227,6 @@ def _restore_private_dump(
 
 
 def _prepare_logical_restore_roles(container: str, database: str) -> None:
-    source = ROOT / "src" / "eva" / "operations" / "install_schema.py"
-    tree = ast.parse(source.read_text(encoding="utf-8"), filename=source.as_posix())
-    values: dict[str, str] = {}
-    for node in tree.body:
-        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-            continue
-        target = node.targets[0]
-        if isinstance(target, ast.Name) and target.id in {
-            "_LOGICAL_RESTORE_EMPTY_GUARD_SQL",
-            "_LOGICAL_RESTORE_ROLE_SQL",
-        }:
-            value = ast.literal_eval(node.value)
-            if isinstance(value, str):
-                values[target.id] = value
-    if set(values) != {
-        "_LOGICAL_RESTORE_EMPTY_GUARD_SQL",
-        "_LOGICAL_RESTORE_ROLE_SQL",
-    }:
-        raise ProbeError("logical restore role authority is unavailable")
-    preparation_sql = (
-        values["_LOGICAL_RESTORE_EMPTY_GUARD_SQL"] + values["_LOGICAL_RESTORE_ROLE_SQL"]
-    )
-
     _run(
         [
             "/usr/bin/docker",
@@ -265,7 +243,7 @@ def _prepare_logical_restore_roles(container: str, database: str) -> None:
             "-d",
             database,
             "-c",
-            preparation_sql,
+            logical_restore_preparation_sql(),
         ]
     )
 
@@ -1323,7 +1301,8 @@ def main(
             and staging.parent == STAGING_PARENT
             and (
                 staging.name.startswith("managed-b-clean-probe-")
-                or staging.name in {"managed-b-slot2", "managed-b-slot3", "managed-b-slot4"}
+                or staging.name
+                in {"managed-b-slot2", "managed-b-slot3", "managed-b-slot4"}
             )
         ):
             shutil.rmtree(staging, ignore_errors=True)

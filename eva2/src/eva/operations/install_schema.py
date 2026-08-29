@@ -24,8 +24,15 @@ from alembic.config import Config
 from alembic.util import CommandError
 
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
-from eva.adapters.postgres.foreign_key_catalog import require_current_foreign_key_catalog
+from eva.adapters.postgres.foreign_key_catalog import (
+    require_current_foreign_key_catalog,
+)
 from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.operations.logical_restore_authority import (
+    _LOGICAL_RESTORE_ROLES,
+    _LOGICAL_RESTORE_ROLE_SQL,  # noqa: F401 - compatibility re-export
+    logical_restore_preparation_sql,
+)
 
 _REVISION_4B0 = "4b_0000_core_namespace"
 _REVISION_4B1 = "4b_0001_tenant_scope"
@@ -61,70 +68,6 @@ class SchemaInstallationReceipt:
 class LogicalRestoreRoleReceipt:
     roles: tuple[str, ...]
     target_was_empty: bool
-
-
-_LOGICAL_RESTORE_ROLES = (
-    "eva_backup",
-    "eva_dbos",
-    "eva_migrator",
-    "eva_runtime",
-)
-_LOGICAL_RESTORE_ROLE_SQL = """
-DO $roles$
-DECLARE
-    role_name text;
-BEGIN
-    FOREACH role_name IN ARRAY ARRAY[
-        'eva_migrator', 'eva_runtime', 'eva_dbos', 'eva_backup'
-    ]
-    LOOP
-        IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = role_name) THEN
-            EXECUTE format(
-                'CREATE ROLE %I NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE '
-                'NOINHERIT NOREPLICATION NOBYPASSRLS',
-                role_name
-            );
-        END IF;
-        IF EXISTS (
-            SELECT 1
-            FROM pg_roles
-            WHERE rolname = role_name
-              AND (
-                  rolcanlogin OR rolsuper OR rolcreatedb OR rolcreaterole
-                  OR rolinherit OR rolreplication OR rolbypassrls
-              )
-        ) THEN
-            RAISE EXCEPTION 'unsafe pre-existing Eva database role: %', role_name;
-        END IF;
-    END LOOP;
-END
-$roles$;
-"""
-_LOGICAL_RESTORE_EMPTY_GUARD_SQL = """
-DO $restore_target$
-BEGIN
-    IF EXISTS (
-        SELECT 1
-        FROM pg_catalog.pg_tables
-        WHERE schemaname NOT IN ('pg_catalog', 'information_schema')
-    ) OR EXISTS (
-        SELECT 1
-        FROM pg_catalog.pg_namespace
-        WHERE nspname <> 'public'
-          AND nspname <> 'information_schema'
-          AND nspname NOT LIKE 'pg_%'
-    ) THEN
-        RAISE EXCEPTION 'logical restore roles require a completely empty target database';
-    END IF;
-END
-$restore_target$;
-"""
-
-
-def logical_restore_preparation_sql() -> str:
-    """Return the exact atomic empty-target guard and fixed-role bootstrap."""
-
-    return _LOGICAL_RESTORE_EMPTY_GUARD_SQL + _LOGICAL_RESTORE_ROLE_SQL
 
 
 def _canonical(value: object) -> str:
@@ -251,7 +194,9 @@ def prepare_logical_restore_roles(database_dsn: str) -> LogicalRestoreRoleReceip
     try:
         sqlalchemy_dsn = sqlalchemy_postgres_dsn(database_dsn)
     except ValueError as error:
-        raise RuntimeError("Eva logical restore preparation requires PostgreSQL") from error
+        raise RuntimeError(
+            "Eva logical restore preparation requires PostgreSQL"
+        ) from error
     engine = sa.create_engine(sqlalchemy_dsn)
     try:
         with engine.begin() as connection:
