@@ -16,7 +16,7 @@ from eva.adapters.postgres.action_chain_ledger import (
     plan_steps,
 )
 from eva.adapters.postgres.action_chain_leases import PostgresActionChainLeases
-from eva.adapters.postgres.action_chain_read_advances import (
+from tests.support.postgres_action_chain_read_advances import (
     PostgresActionChainReadAdvancer,
 )
 from eva.adapters.postgres.action_chain_read_results import (

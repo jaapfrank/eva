@@ -13,7 +13,7 @@ from sqlalchemy.engine import Engine
 import eva.operations.action_chain_effect_executor as effect_executor_module
 import test_action_chain_read_dispatcher as read_dispatcher_fixtures
 
-from eva.adapters.postgres.action_chain_effect_advances import (
+from tests.support.postgres_action_chain_effect_advances import (
     ActionChainEffectAdvanceConflict,
     PostgresActionChainEffectAdvancer,
 )

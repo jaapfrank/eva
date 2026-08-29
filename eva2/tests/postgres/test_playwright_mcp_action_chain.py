@@ -25,7 +25,7 @@ from test_action_chain_ledger import (
 )
 from test_action_chain_read_authorizer import _verified_registry_release
 
-from eva.adapters.postgres.action_chain_effect_advances import (
+from tests.support.postgres_action_chain_effect_advances import (
     PostgresActionChainEffectAdvancer,
 )
 from eva.adapters.postgres.action_chain_effect_cancellations import (

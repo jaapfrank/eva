@@ -6,7 +6,7 @@ from uuid import UUID
 import pytest
 import sqlalchemy as sa
 
-from eva.adapters.postgres.action_chain_effect_advances import (
+from tests.support.postgres_action_chain_effect_advances import (
     PostgresActionChainEffectAdvancer,
 )
 from eva.adapters.postgres.action_chain_effect_cancellations import (
@@ -26,7 +26,7 @@ from eva.adapters.postgres.action_chain_effect_stop_requests import (
 )
 from eva.adapters.postgres.action_chain_effects import PostgresActionChainEffectPreparer
 from eva.adapters.postgres.action_chain_leases import PostgresActionChainLeases
-from eva.adapters.postgres.action_chain_read_advances import (
+from tests.support.postgres_action_chain_read_advances import (
     PostgresActionChainReadAdvancer,
 )
 from eva.adapters.postgres.action_chain_read_results import (
