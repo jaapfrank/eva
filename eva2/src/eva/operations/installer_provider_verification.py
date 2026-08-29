@@ -13,10 +13,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 import hashlib
 import math
-import os
 from pathlib import Path
 import re
-import stat
 import time
 from types import MappingProxyType
 from typing import Callable, Literal, Mapping, Protocol
@@ -33,6 +31,10 @@ from eva.operations.installer_secret_store import (
     InstallerSecretNotAvailableError,
     InstallerSecretStore,
     InstallerSecretStoreError,
+)
+from eva.operations.installer_safety import (
+    require_owner_only_directory,
+    require_utc_timestamp,
 )
 
 
@@ -84,9 +86,6 @@ _PROVIDER_SCOPES = MappingProxyType(
         ),
     }
 )
-_TIMESTAMP_RE = re.compile(
-    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
-)
 _MIN_TIMEOUT_SECONDS = 1.0
 _MAX_TIMEOUT_SECONDS = 30.0
 
@@ -113,8 +112,7 @@ class InstallerProviderProbeError(RuntimeError):
         if usage_measurement not in {"not_applicable", "unmeasured"}:
             raise ValueError("failed provider probe usage is invalid")
         if not isinstance(billable_request_attempted, bool) or (
-            billable_request_attempted
-            and provider_operation != "bounded_generation"
+            billable_request_attempted and provider_operation != "bounded_generation"
         ):
             raise ValueError("provider probe billing attempt is invalid")
         super().__init__("provider verification did not succeed")
@@ -158,7 +156,9 @@ def installer_provider_scope_manifest(slot_id: object) -> dict[str, object]:
     """Return the closed verification-only access boundary for one provider."""
 
     if not isinstance(slot_id, str) or slot_id not in _PROVIDER_SCOPES:
-        raise InstallerProviderVerificationError("provider verification slot is invalid")
+        raise InstallerProviderVerificationError(
+            "provider verification slot is invalid"
+        )
     scopes = _PROVIDER_SCOPES[slot_id]
     return {
         "contract": "EvaInstallerProviderScopeManifest/v1",
@@ -184,39 +184,23 @@ def _utc_now() -> str:
 
 
 def _timestamp(value: object) -> str:
-    if not isinstance(value, str) or _TIMESTAMP_RE.fullmatch(value) is None:
-        raise InstallerProviderVerificationError(
-            "provider verification timestamp is invalid"
-        )
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise InstallerProviderVerificationError(
-            "provider verification timestamp is invalid"
-        ) from exc
-    if parsed.tzinfo is None or parsed.utcoffset() != UTC.utcoffset(parsed):
-        raise InstallerProviderVerificationError(
-            "provider verification timestamp must be UTC"
-        )
-    return value
+    return require_utc_timestamp(
+        value,
+        error=InstallerProviderVerificationError,
+        invalid_message="provider verification timestamp is invalid",
+        non_utc_message="provider verification timestamp must be UTC",
+    )
 
 
 def _private_directory(path: Path) -> None:
-    try:
-        metadata = path.lstat()
-    except OSError as exc:
-        raise InstallerProviderVerificationError(
-            "provider verification workspace is unavailable"
-        ) from exc
-    if (
-        stat.S_ISLNK(metadata.st_mode)
-        or not stat.S_ISDIR(metadata.st_mode)
-        or metadata.st_uid != os.geteuid()
-        or metadata.st_mode & 0o077
-    ):
-        raise InstallerProviderVerificationError(
+    require_owner_only_directory(
+        path,
+        error=InstallerProviderVerificationError,
+        unavailable_message="provider verification workspace is unavailable",
+        invalid_message=(
             "provider verification workspace must be an owner-only directory"
-        )
+        ),
+    )
 
 
 def _checked_observation(
@@ -230,7 +214,10 @@ def _checked_observation(
         raise InstallerProviderVerificationError(
             "provider verification observation is invalid"
         )
-    if value.outcome not in {"ready", "blocked"} or value.reason_code not in _ALL_REASONS:
+    if (
+        value.outcome not in {"ready", "blocked"}
+        or value.reason_code not in _ALL_REASONS
+    ):
         raise InstallerProviderVerificationError(
             "provider verification observation is invalid"
         )
@@ -267,21 +254,27 @@ def _checked_observation(
             "provider verification observation is invalid"
         )
     if (
-        expected_check_id == "model.response.generate"
-        and value.provider_operation != "bounded_generation"
-    ) or (
-        expected_check_id != "model.response.generate"
-        and value.provider_operation != "read_only_identity"
-    ) or (
-        value.provider_operation == "read_only_identity"
-        and value.usage_measurement != "not_applicable"
-    ) or (
-        value.provider_operation == "bounded_generation"
-        and value.usage_measurement == "not_applicable"
-    ) or (
-        value.outcome == "ready"
-        and value.provider_operation == "bounded_generation"
-        and not value.billable_request_attempted
+        (
+            expected_check_id == "model.response.generate"
+            and value.provider_operation != "bounded_generation"
+        )
+        or (
+            expected_check_id != "model.response.generate"
+            and value.provider_operation != "read_only_identity"
+        )
+        or (
+            value.provider_operation == "read_only_identity"
+            and value.usage_measurement != "not_applicable"
+        )
+        or (
+            value.provider_operation == "bounded_generation"
+            and value.usage_measurement == "not_applicable"
+        )
+        or (
+            value.outcome == "ready"
+            and value.provider_operation == "bounded_generation"
+            and not value.billable_request_attempted
+        )
     ):
         raise InstallerProviderVerificationError(
             "provider verification observation is invalid"

@@ -5,10 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
-import os
 from pathlib import Path
-import re
-import stat
 from typing import Callable, Literal
 
 from eva.contracts.canonical_json import canonical_json_bytes
@@ -23,12 +20,13 @@ from eva.operations.installer_secret_store import (
     InstallerSecretStore,
     InstallerSecretStoreError,
 )
+from eva.operations.installer_safety import (
+    require_owner_only_directory,
+    require_utc_timestamp,
+)
 
 
 SecretLifecycleOperation = Literal["rotate", "remove", "recover"]
-_TIMESTAMP_RE = re.compile(
-    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
-)
 
 
 class InstallerSecretLifecycleError(ValueError):
@@ -52,37 +50,21 @@ def _utc_now() -> str:
 
 
 def _timestamp(value: object) -> str:
-    if not isinstance(value, str) or _TIMESTAMP_RE.fullmatch(value) is None:
-        raise InstallerSecretLifecycleError("secret lifecycle timestamp is invalid")
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise InstallerSecretLifecycleError(
-            "secret lifecycle timestamp is invalid"
-        ) from exc
-    if parsed.tzinfo is None or parsed.utcoffset() != UTC.utcoffset(parsed):
-        raise InstallerSecretLifecycleError(
-            "secret lifecycle timestamp must be UTC"
-        )
-    return value
+    return require_utc_timestamp(
+        value,
+        error=InstallerSecretLifecycleError,
+        invalid_message="secret lifecycle timestamp is invalid",
+        non_utc_message="secret lifecycle timestamp must be UTC",
+    )
 
 
 def _private_directory(path: Path) -> None:
-    try:
-        metadata = path.lstat()
-    except OSError as exc:
-        raise InstallerSecretLifecycleError(
-            "secret lifecycle evidence workspace is unavailable"
-        ) from exc
-    if (
-        stat.S_ISLNK(metadata.st_mode)
-        or not stat.S_ISDIR(metadata.st_mode)
-        or metadata.st_uid != os.geteuid()
-        or metadata.st_mode & 0o077
-    ):
-        raise InstallerSecretLifecycleError(
-            "secret lifecycle evidence workspace must be owner-only"
-        )
+    require_owner_only_directory(
+        path,
+        error=InstallerSecretLifecycleError,
+        unavailable_message="secret lifecycle evidence workspace is unavailable",
+        invalid_message="secret lifecycle evidence workspace must be owner-only",
+    )
 
 
 @dataclass(frozen=True, slots=True)

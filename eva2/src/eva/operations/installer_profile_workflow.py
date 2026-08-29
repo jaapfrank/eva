@@ -8,16 +8,12 @@ profile under its own authority.
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
-import fcntl
 import hashlib
 import hmac
-import os
 from pathlib import Path
 import re
-import stat
 from typing import Callable, Literal
 import unicodedata
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -28,11 +24,15 @@ from eva.operations.installer_identity_storage import (
     atomic_write_private,
     read_private_artifact,
 )
+from eva.operations.installer_safety import (
+    owner_only_lock,
+    require_owner_only_directory,
+    require_utc_timestamp,
+)
 
 
 _LANGUAGE_RE = re.compile(r"[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|[0-9]{3}))?")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
-_TIMESTAMP_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z")
 
 
 class InstallerProfileWorkflowError(ValueError):
@@ -85,15 +85,12 @@ def _utc_now() -> str:
 
 
 def _timestamp(value: object, *, label: str) -> str:
-    if not isinstance(value, str) or _TIMESTAMP_RE.fullmatch(value) is None:
-        raise InstallerProfileWorkflowError(f"{label} is invalid")
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise InstallerProfileWorkflowError(f"{label} is invalid") from exc
-    if parsed.tzinfo is None or parsed.utcoffset() != UTC.utcoffset(parsed):
-        raise InstallerProfileWorkflowError(f"{label} must be UTC")
-    return value
+    return require_utc_timestamp(
+        value,
+        error=InstallerProfileWorkflowError,
+        invalid_message=f"{label} is invalid",
+        non_utc_message=f"{label} must be UTC",
+    )
 
 
 def _bounded_text(value: object, *, label: str, maximum: int) -> str:
@@ -151,59 +148,23 @@ class InstallerProfileWorkflow:
     clock: Callable[[], str] = _utc_now
 
     def __post_init__(self) -> None:
-        try:
-            metadata = self.workspace.lstat()
-        except OSError as exc:
-            raise InstallerProfileWorkflowError(
-                "installer profile workspace is unavailable"
-            ) from exc
-        if (
-            stat.S_ISLNK(metadata.st_mode)
-            or not stat.S_ISDIR(metadata.st_mode)
-            or metadata.st_uid != os.geteuid()
-            or metadata.st_mode & 0o077
-        ):
-            raise InstallerProfileWorkflowError(
-                "installer profile workspace must be an owner-only directory"
-            )
+        require_owner_only_directory(
+            self.workspace,
+            error=InstallerProfileWorkflowError,
+            unavailable_message="installer profile workspace is unavailable",
+            invalid_message="installer profile workspace must be an owner-only directory",
+        )
 
     @property
     def state_path(self) -> Path:
         return self.workspace / "profile-workflow.json"
 
-    @contextmanager
     def _lock(self):
-        path = self.workspace / ".profile-workflow.lock"
-        descriptor: int | None = None
-        try:
-            descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
-            metadata = os.fstat(descriptor)
-            if (
-                not stat.S_ISREG(metadata.st_mode)
-                or metadata.st_uid != os.geteuid()
-                or metadata.st_mode & 0o077
-                or metadata.st_nlink != 1
-            ):
-                raise OSError("profile lock is not a private regular file")
-            os.fchmod(descriptor, 0o600)
-            fcntl.flock(descriptor, fcntl.LOCK_EX)
-        except OSError as exc:
-            if descriptor is not None:
-                try:
-                    os.close(descriptor)
-                except OSError:
-                    pass
-            raise InstallerProfileWorkflowError(
-                "installer profile lock is unavailable"
-            ) from exc
-        assert descriptor is not None
-        try:
-            yield
-        finally:
-            try:
-                fcntl.flock(descriptor, fcntl.LOCK_UN)
-            finally:
-                os.close(descriptor)
+        return owner_only_lock(
+            self.workspace / ".profile-workflow.lock",
+            error=InstallerProfileWorkflowError,
+            unavailable_message="installer profile lock is unavailable",
+        )
 
     def _load(self) -> InstallerProfileStatus | None:
         if not self.state_path.exists() and not self.state_path.is_symlink():

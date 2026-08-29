@@ -244,6 +244,7 @@ _EXPECTED_INPUT_PATHS = (
     "src/eva/operations/installer_provider_verification.py",
     "src/eva/operations/installer_provider_verification_cli.py",
     "src/eva/operations/installer_runtime_budget.py",
+    "src/eva/operations/installer_safety.py",
     "src/eva/operations/installer_secret_lifecycle.py",
     "src/eva/operations/installer_secret_lifecycle_cli.py",
     "src/eva/operations/installer_secret_store.py",

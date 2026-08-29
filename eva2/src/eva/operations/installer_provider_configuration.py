@@ -2,15 +2,10 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
-import fcntl
 import hashlib
-import os
 from pathlib import Path
-import re
-import stat
 from typing import Callable, Literal
 
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
@@ -19,14 +14,16 @@ from eva.operations.installer_identity_storage import (
     atomic_write_private,
     read_private_artifact,
 )
+from eva.operations.installer_safety import (
+    owner_only_lock,
+    require_owner_only_directory,
+    require_utc_timestamp,
+)
 
 
 ProviderConfigurationState = Literal["missing", "configured"]
 PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email")
 _SLOT_SET = frozenset(PROVIDER_CONFIGURATION_SLOTS)
-_TIMESTAMP_RE = re.compile(
-    r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
-)
 _MAX_VALUE_LENGTH = 1_024
 
 
@@ -61,21 +58,12 @@ def _utc_now() -> str:
 
 
 def _timestamp(value: object) -> str:
-    if not isinstance(value, str) or _TIMESTAMP_RE.fullmatch(value) is None:
-        raise InstallerProviderConfigurationError(
-            "provider configuration timestamp is invalid"
-        )
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise InstallerProviderConfigurationError(
-            "provider configuration timestamp is invalid"
-        ) from exc
-    if parsed.tzinfo is None or parsed.utcoffset() != UTC.utcoffset(parsed):
-        raise InstallerProviderConfigurationError(
-            "provider configuration timestamp must be UTC"
-        )
-    return value
+    return require_utc_timestamp(
+        value,
+        error=InstallerProviderConfigurationError,
+        invalid_message="provider configuration timestamp is invalid",
+        non_utc_message="provider configuration timestamp must be UTC",
+    )
 
 
 def _slot(value: object) -> str:
@@ -107,21 +95,12 @@ def _digest(slot_id: str, value: str) -> str:
 
 
 def _private_directory(path: Path) -> None:
-    try:
-        metadata = path.lstat()
-    except OSError as exc:
-        raise InstallerProviderConfigurationError(
-            "provider configuration workspace is unavailable"
-        ) from exc
-    if (
-        stat.S_ISLNK(metadata.st_mode)
-        or not stat.S_ISDIR(metadata.st_mode)
-        or metadata.st_uid != os.geteuid()
-        or metadata.st_mode & 0o077
-    ):
-        raise InstallerProviderConfigurationError(
-            "provider configuration workspace must be owner-only"
-        )
+    require_owner_only_directory(
+        path,
+        error=InstallerProviderConfigurationError,
+        unavailable_message="provider configuration workspace is unavailable",
+        invalid_message="provider configuration workspace must be owner-only",
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,39 +115,12 @@ class InstallerProviderConfigurationStore:
     def state_path(self) -> Path:
         return self.workspace / "provider-configuration.json"
 
-    @contextmanager
     def _lock(self):
-        path = self.workspace / ".provider-configuration.lock"
-        descriptor: int | None = None
-        try:
-            descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
-            metadata = os.fstat(descriptor)
-            if (
-                not stat.S_ISREG(metadata.st_mode)
-                or metadata.st_uid != os.geteuid()
-                or metadata.st_mode & 0o077
-                or metadata.st_nlink != 1
-            ):
-                raise OSError("provider configuration lock is unsafe")
-            os.fchmod(descriptor, 0o600)
-            fcntl.flock(descriptor, fcntl.LOCK_EX)
-        except OSError as exc:
-            if descriptor is not None:
-                try:
-                    os.close(descriptor)
-                except OSError:
-                    pass
-            raise InstallerProviderConfigurationError(
-                "provider configuration lock is unavailable"
-            ) from exc
-        assert descriptor is not None
-        try:
-            yield
-        finally:
-            try:
-                fcntl.flock(descriptor, fcntl.LOCK_UN)
-            finally:
-                os.close(descriptor)
+        return owner_only_lock(
+            self.workspace / ".provider-configuration.lock",
+            error=InstallerProviderConfigurationError,
+            unavailable_message="provider configuration lock is unavailable",
+        )
 
     def _load(self) -> tuple[int, dict[str, InstallerProviderConfiguration]]:
         if not self.state_path.exists() and not self.state_path.is_symlink():

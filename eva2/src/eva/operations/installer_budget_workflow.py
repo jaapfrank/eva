@@ -2,16 +2,12 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
-import fcntl
 import hashlib
 import hmac
-import os
 from pathlib import Path
 import re
-import stat
 from typing import Callable, Literal
 
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
@@ -23,11 +19,15 @@ from eva.operations.installer_identity_storage import (
     atomic_write_private,
     read_private_artifact,
 )
+from eva.operations.installer_safety import (
+    owner_only_lock,
+    require_owner_only_directory,
+    require_utc_timestamp,
+)
 
 
 BudgetPhase = Literal["empty", "staged", "ready"]
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
-_TIMESTAMP_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z")
 
 
 class InstallerBudgetWorkflowError(ValueError):
@@ -104,15 +104,12 @@ def _utc_now() -> str:
 
 
 def _timestamp(value: object) -> str:
-    if not isinstance(value, str) or _TIMESTAMP_RE.fullmatch(value) is None:
-        raise InstallerBudgetWorkflowError("budget timestamp is invalid")
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise InstallerBudgetWorkflowError("budget timestamp is invalid") from exc
-    if parsed.tzinfo is None or parsed.utcoffset() != UTC.utcoffset(parsed):
-        raise InstallerBudgetWorkflowError("budget timestamp must be UTC")
-    return value
+    return require_utc_timestamp(
+        value,
+        error=InstallerBudgetWorkflowError,
+        invalid_message="budget timestamp is invalid",
+        non_utc_message="budget timestamp must be UTC",
+    )
 
 
 def _integer(value: object, *, label: str, minimum: int, maximum: int) -> int:
@@ -304,59 +301,23 @@ class InstallerBudgetWorkflow:
     clock: Callable[[], str] = _utc_now
 
     def __post_init__(self) -> None:
-        try:
-            metadata = self.workspace.lstat()
-        except OSError as exc:
-            raise InstallerBudgetWorkflowError(
-                "installer budget workspace is unavailable"
-            ) from exc
-        if (
-            stat.S_ISLNK(metadata.st_mode)
-            or not stat.S_ISDIR(metadata.st_mode)
-            or metadata.st_uid != os.geteuid()
-            or metadata.st_mode & 0o077
-        ):
-            raise InstallerBudgetWorkflowError(
-                "installer budget workspace must be an owner-only directory"
-            )
+        require_owner_only_directory(
+            self.workspace,
+            error=InstallerBudgetWorkflowError,
+            unavailable_message="installer budget workspace is unavailable",
+            invalid_message="installer budget workspace must be an owner-only directory",
+        )
 
     @property
     def state_path(self) -> Path:
         return self.workspace / "budget-workflow.json"
 
-    @contextmanager
     def _lock(self):
-        descriptor: int | None = None
-        try:
-            descriptor = os.open(
-                self.workspace / ".budget-workflow.lock",
-                os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW,
-                0o600,
-            )
-            metadata = os.fstat(descriptor)
-            if (
-                not stat.S_ISREG(metadata.st_mode)
-                or metadata.st_uid != os.geteuid()
-                or metadata.st_mode & 0o077
-                or metadata.st_nlink != 1
-            ):
-                raise OSError("budget lock is not a private regular file")
-            os.fchmod(descriptor, 0o600)
-            fcntl.flock(descriptor, fcntl.LOCK_EX)
-        except OSError as exc:
-            if descriptor is not None:
-                os.close(descriptor)
-            raise InstallerBudgetWorkflowError(
-                "installer budget lock is unavailable"
-            ) from exc
-        assert descriptor is not None
-        try:
-            yield
-        finally:
-            try:
-                fcntl.flock(descriptor, fcntl.LOCK_UN)
-            finally:
-                os.close(descriptor)
+        return owner_only_lock(
+            self.workspace / ".budget-workflow.lock",
+            error=InstallerBudgetWorkflowError,
+            unavailable_message="installer budget lock is unavailable",
+        )
 
     def _load(self) -> InstallerBudgetStatus | None:
         if not self.state_path.exists() and not self.state_path.is_symlink():
@@ -371,18 +332,25 @@ class InstallerBudgetWorkflow:
             raise InstallerBudgetWorkflowError(
                 "installer budget workflow is invalid"
             ) from exc
-        if set(payload) != {
-            "budget",
-            "budget_sha256",
-            "contract",
-            "events",
-            "phase",
-            "revision",
-            "updated_at",
-        } or payload.get("contract") != "EvaInstallerBudgetWorkflow/v1":
+        if (
+            set(payload)
+            != {
+                "budget",
+                "budget_sha256",
+                "contract",
+                "events",
+                "phase",
+                "revision",
+                "updated_at",
+            }
+            or payload.get("contract") != "EvaInstallerBudgetWorkflow/v1"
+        ):
             raise InstallerBudgetWorkflowError("installer budget workflow is invalid")
         raw_budget = payload.get("budget")
-        if not isinstance(raw_budget, dict) or raw_budget.get("contract") != "EvaInstallerBudget/v2":
+        if (
+            not isinstance(raw_budget, dict)
+            or raw_budget.get("contract") != "EvaInstallerBudget/v2"
+        ):
             raise InstallerBudgetWorkflowError("installer budget is invalid")
         values = dict(raw_budget)
         values.pop("contract", None)
@@ -412,7 +380,9 @@ class InstallerBudgetWorkflow:
                 "revision",
                 "transition",
             }:
-                raise InstallerBudgetWorkflowError("installer budget history is invalid")
+                raise InstallerBudgetWorkflowError(
+                    "installer budget history is invalid"
+                )
             at = _timestamp(event.get("at"))
             if (
                 event.get("revision") != index
@@ -420,7 +390,9 @@ class InstallerBudgetWorkflow:
                 or event.get("budget_sha256") != digest
                 or (previous_at and at < previous_at)
             ):
-                raise InstallerBudgetWorkflowError("installer budget history is invalid")
+                raise InstallerBudgetWorkflowError(
+                    "installer budget history is invalid"
+                )
             previous_at = at
         updated_at = _timestamp(payload.get("updated_at"))
         if updated_at != previous_at:
@@ -516,13 +488,18 @@ class InstallerBudgetWorkflow:
             )
 
     def confirm(self, *, expected_budget_sha256: object) -> InstallerBudgetTransition:
-        if not isinstance(expected_budget_sha256, str) or _SHA256_RE.fullmatch(
-            expected_budget_sha256
-        ) is None:
+        if (
+            not isinstance(expected_budget_sha256, str)
+            or _SHA256_RE.fullmatch(expected_budget_sha256) is None
+        ):
             raise InstallerBudgetWorkflowError("installer budget hash is invalid")
         with self._lock():
             retained = self._load()
-            if retained is None or retained.budget is None or retained.budget_sha256 is None:
+            if (
+                retained is None
+                or retained.budget is None
+                or retained.budget_sha256 is None
+            ):
                 raise InstallerBudgetWorkflowError("no installer budgets are staged")
             if not hmac.compare_digest(retained.budget_sha256, expected_budget_sha256):
                 raise InstallerBudgetWorkflowError("installer budget hash differs")

@@ -8,16 +8,12 @@ never returns identity contents or private-key material.
 
 from __future__ import annotations
 
-from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
-import fcntl
 import hashlib
 import hmac
-import os
 from pathlib import Path
 import re
-import stat
 from typing import Callable, Literal
 
 from eva.application.identity_drafts import (
@@ -44,6 +40,10 @@ from eva.operations.identity_pack_lifecycle import (
     rollback_identity_successor,
     validate_identity_successor,
     write_identity_candidate,
+)
+from eva.operations.installer_safety import (
+    owner_only_lock,
+    require_owner_only_directory,
 )
 from eva.operations.installer_identity_storage import (
     atomic_write_private,
@@ -119,21 +119,12 @@ class InstallerIdentityLifecycle:
     clock: Callable[[], str] = _utc_now
 
     def __post_init__(self) -> None:
-        try:
-            metadata = self.workspace.lstat()
-        except OSError as exc:
-            raise IdentityPackLifecycleError(
-                "installer identity workspace is unavailable"
-            ) from exc
-        if (
-            stat.S_ISLNK(metadata.st_mode)
-            or not stat.S_ISDIR(metadata.st_mode)
-            or metadata.st_uid != os.geteuid()
-            or metadata.st_mode & 0o077
-        ):
-            raise IdentityPackLifecycleError(
-                "installer identity workspace must be an owner-only directory"
-            )
+        require_owner_only_directory(
+            self.workspace,
+            error=IdentityPackLifecycleError,
+            unavailable_message="installer identity workspace is unavailable",
+            invalid_message="installer identity workspace must be an owner-only directory",
+        )
         paths = {
             self.current_path.absolute(),
             self.trust_path.absolute(),
@@ -181,39 +172,12 @@ class InstallerIdentityLifecycle:
     def workflow_path(self) -> Path:
         return self.workspace / "workflow.json"
 
-    @contextmanager
     def _workflow_lock(self):
-        path = self.workspace / ".workflow.lock"
-        descriptor: int | None = None
-        try:
-            descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
-            metadata = os.fstat(descriptor)
-            if (
-                not stat.S_ISREG(metadata.st_mode)
-                or metadata.st_uid != os.geteuid()
-                or metadata.st_mode & 0o077
-                or metadata.st_nlink != 1
-            ):
-                raise OSError("workflow lock is not a private regular file")
-            os.fchmod(descriptor, 0o600)
-            fcntl.flock(descriptor, fcntl.LOCK_EX)
-        except OSError as exc:
-            if descriptor is not None:
-                try:
-                    os.close(descriptor)
-                except OSError:
-                    pass
-            raise IdentityPackLifecycleError(
-                "installer identity workflow lock is unavailable"
-            ) from exc
-        assert descriptor is not None
-        try:
-            yield
-        finally:
-            try:
-                fcntl.flock(descriptor, fcntl.LOCK_UN)
-            finally:
-                os.close(descriptor)
+        return owner_only_lock(
+            self.workspace / ".workflow.lock",
+            error=IdentityPackLifecycleError,
+            unavailable_message="installer identity workflow lock is unavailable",
+        )
 
     def _load_workflow(self) -> InstallerIdentityWorkflowStatus | None:
         if not self.workflow_path.exists() and not self.workflow_path.is_symlink():
