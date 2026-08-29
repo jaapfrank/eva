@@ -2235,28 +2235,6 @@ class PostgresConversationActions:
             admission_context=admission_context,
         )
 
-    async def execute_home_assistant_switch(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        entity_id: str,
-        service: str,
-        admission_context: dict[str, JsonValue] | None = None,
-    ) -> VerifiedToolResult:
-        return await self._execute_home_assistant_binary(
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-            thread_id=thread_id,
-            operation_id=operation_id,
-            domain="switch",
-            entity_id=entity_id,
-            service=service,
-            admission_context=admission_context,
-        )
-
     async def _execute_home_assistant_binary(
         self,
         *,
@@ -2437,16 +2415,12 @@ class PostgresConversationActions:
                         "vrijgegeven huisacties zijn nu beschikbaar."
                     )
                 raise ConversationClarificationRequired(prompt)
-            executor = (
-                self.execute_home_assistant_switch
-                if domain == "switch"
-                else self.execute_home_assistant_light
-            )
-            await executor(
+            await self._execute_home_assistant_binary(
                 tenant_id=turn.tenant_id,
                 installation_id=turn.installation_id,
                 thread_id=self._home_assistant_thread_id(turn),
                 operation_id=self._home_assistant_operation_id(turn),
+                domain=domain,
                 entity_id=resolved["entity_id"],
                 service=service,
                 admission_context={
@@ -3343,17 +3317,13 @@ class PostgresConversationActions:
         )
         if operation_id is None:
             raise ConversationConflict("Home Assistant resume operation is missing")
-        executor = (
-            self.execute_home_assistant_switch
-            if domain == "switch"
-            else self.execute_home_assistant_light
-        )
         asyncio.run(
-            executor(
+            self._execute_home_assistant_binary(
                 tenant_id=turn.tenant_id,
                 installation_id=turn.installation_id,
                 thread_id=self._home_assistant_thread_id(turn),
                 operation_id=operation_id,
+                domain=domain,
                 entity_id=entity_id,
                 service=service,
                 admission_context=context,
