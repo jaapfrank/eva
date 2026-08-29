@@ -659,6 +659,8 @@ def test_recent_durable_conversation_is_not_denied_as_missing_memory(
     assert "een herstart van core of databasecontainer overleven" in instructions
     assert "niet kunt onthouden" in instructions
     assert "amberkleurige maan" in instructions
+    assert captured[0]["tool_choice"] == "none"
+    assert captured[0]["tools"] == []
 
 
 def test_document_work_action_is_model_chosen_but_episode_bound(

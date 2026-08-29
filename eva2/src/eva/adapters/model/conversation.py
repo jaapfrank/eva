@@ -796,7 +796,9 @@ class CodexConversationModel:
             "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
             "store": False,
             "stream": True,
-            "tool_choice": "none" if completed_action is not None else "auto",
+            "tool_choice": (
+                "none" if completed_action is not None or not available_actions else "auto"
+            ),
             "tools": [_ACTION_TOOLS[name] for name in available_actions],
         }
         usages: list[ConversationModelUsage] = []
