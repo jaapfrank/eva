@@ -1,0 +1,51 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PostgresPortableExportOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T21:55:22+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "b77dd838acbc93267403f42cbd21fff02d2270e1",
+    "changedSourceManifestSha256": "ebeedd08f7c30da81f56465e5ef7a20fa16688225d5af30c3cf294d56e338444"
+  },
+  "classification": {
+    "oldPath": "src/eva/adapters/postgres/portable_export.py",
+    "newPath": "tools/postgres_portable_export.py",
+    "physicalLinesMovedOutOfProductRoots": 471,
+    "runtimeConsumersBeforeMove": 0,
+    "operatorAndTestConsumersUpdated": 14,
+    "remainingOldImportsInSourceToolsAndTests": 0,
+    "archiveContractsAndRuntimePostgresRepositoryRemainInLivingCore": true
+  },
+  "verification": {
+    "localPortableTestsPassed": 124,
+    "localDatabaseTestsSkippedWithoutDsn": 7,
+    "realPostgresCasesPassed": 4,
+    "realPostgresCases": [
+      "backup-role tenant and installation isolation",
+      "empty full-schema restore",
+      "non-empty source-to-target full-schema restore",
+      "verified object materialization before ObjectRef write"
+    ],
+    "objectBoundaryFileTestsPassedWithDatabase": 5,
+    "actionChainEffectTestsCollectedAfterImportMove": 8,
+    "plainEnvironmentDsnWasRefused": true,
+    "ownerPrivateDsnFileWasAccepted": true,
+    "combinedTestLogsSha256": "f7963d77a34b4e074bb2666945cfa40807af0547851b3162b5f29a3b262e7ed4",
+    "disposablePostgresContainerRemoved": true,
+    "temporaryDsnFileRemoved": true
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 221,
+    "productPhysicalLines": 79146,
+    "livingCorePhysicalLines": 78553,
+    "productManifestSha256": "4f6d93e4576cbf263433e4f3804e4117bb5b6e192ae61404886dbf9778065466",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 4146,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 11687,
+    "status": "failed_budget_enforced"
+  },
+  "limitations": [
+    "The full PC01 checker still cannot re-attest the unavailable historical OCI baseline; the exact sealed source-measurement function was run separately.",
+    "The PostgreSQL export adapter remains product functionality at the operator boundary; this does not prove an off-host backup or consumer restore wizard.",
+    "Stale untracked build/lib copies were not changed and are not authoritative source inputs."
+  ]
+}
