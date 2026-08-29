@@ -1,0 +1,65 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemediationEvidence/v1",
+  "issuedAt": "2026-08-29T15:43:28+02:00",
+  "status": "tested_partial_remediation",
+  "source": {
+    "commit": "c9bf90256ce3a51f3537997dc5ce5fe1f819852d",
+    "conversationActionsSha256": "61b8854d2f960d884847c2030e4a3dcf89a57fc8ddd16f36d2ba9ea83bc637fd"
+  },
+  "change": {
+    "description": "The three personal-work stores share completed-result selection and last-event lookup; prototype and release stores share principal-bound artifact selection. A completed prototype now remains visible while release work is claimed, fails, completes or becomes ready.",
+    "productFilesChanged": 1,
+    "productLinesAdded": 152,
+    "productLinesDeleted": 167,
+    "netProductPhysicalLines": -15,
+    "behavioralBoundaryChanged": true
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88880,
+    "productPhysicalLinesAfter": 88865,
+    "productManifestSha256": "2047f44be9bdb295fba49f669a42db09d1d4677744f9a0b3eab52bfb96b354e7",
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13865,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "rejectedGrowingCandidateNetProductLines": 10,
+    "rejectedCandidateCommitted": false,
+    "personalWorkContractTestsPassed": 33,
+    "personalWorkContractTestsDurationSeconds": 0.26,
+    "personalWorkContractLogSha256": "3b382da6feaad215b9081b667d74a8f28ddd66ed3836ca37249c63a905cc077d",
+    "postgresVersion": "16.13",
+    "postgresSchemaRevision": "4e_0006_memory_outbox_erasure",
+    "postgresProgressionStatus": "passed",
+    "postgresPersonalEventCount": 10,
+    "postgresFinalPhase": "release_ready",
+    "postgresPrincipalIsolation": true,
+    "postgresSelectionMethods": [
+      "completed_unprojected",
+      "latest",
+      "exact"
+    ],
+    "postgresProgressionLogSha256": "78f4a2a1172ef12ef67a2a9cff4b299825b15e461deddae514fe59e8a9357746",
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1Service": "active",
+    "liveEva1Restarts": 0,
+    "liveEva1HealthAtClosureHttp": 200,
+    "liveEva2ReadyHttp": 200
+  },
+  "discoveries": [
+    "The first real progression exposed that latest prototype selection returned no artifact after the same durable thread advanced to release_ready.",
+    "The corrected selector includes later release phases and their waiting or failure statuses, so an already built prototype remains visible while release work progresses.",
+    "A bounded live Eva1 observation separately found six consecutive three-second health timeouts during an autonomous turn followed by recovery without a process restart; this is an open runtime responsiveness issue, not evidence against the Eva2 PostgreSQL progression."
+  ],
+  "nonClaims": [
+    "The 75000-line release budget is not yet met.",
+    "The PostgreSQL progression used synthetic data in one temporary database and did not touch live Eva data.",
+    "This checkpoint does not claim that live Eva1 is latency-stable.",
+    "This source consolidation does not itself deploy a new runtime image."
+  ],
+  "nextRequiredAction": "Measure and isolate the live Eva1 event-loop stalls, while continuing PC01 consolidation in Eva2 without weakening the sealed source boundary."
+}

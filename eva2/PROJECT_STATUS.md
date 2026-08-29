@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 15:25 CEST
+Laatst bijgewerkt: 29 augustus 2026, 15:43 CEST
 
 ## Heel kort
 
@@ -117,6 +117,11 @@ praktijktest zijn nog niet klaar.
   fouten opslaan. De volledige route liep echt door een tijdelijke PostgreSQL
   16.13-database tot `release_ready`, met precies tien verwachte gebeurtenissen.
   Alle 29 gerichte tests zijn groen en er verdwenen netto nog 33 productregels.
+- Het laatste persoonlijke prototype en de laatste release gebruiken nu ook
+  één persoonsgebonden zoekroute. Een echte databaseproef vond daarbij dat het
+  prototype na `release_ready` onzichtbaar werd. Dat is hersteld: prototype en
+  release blijven terug te vinden, terwijl een andere persoon niets krijgt.
+  Alle 33 gerichte tests zijn groen en er verdwenen netto nog 15 productregels.
 
 ## Wat nog niet klaar is
 
@@ -132,7 +137,10 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  88.880 productregels en mag er maximaal 75.000 hebben.
+  88.865 productregels en mag er maximaal 75.000 hebben.
+- Eva1 herstartte niet, maar blokkeerde tijdens een zelfstandige werkbeurt zes
+  keer achter elkaar langer dan drie seconden. Daarna antwoordden alle routes
+  weer snel. De oorzaak van deze event-loopblokkade moet nog worden gevonden.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -147,15 +155,16 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
-   geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
-   bewaken.
-3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
-   controle en herstartveiligheid kwijt te raken.
-4. Na de echte Windows/WSL-reboot het automatisch gemaakte bewijs controleren.
-5. Nog minstens 13.880 productregels gericht verwijderen of vervangen zonder
+1. De periodieke Eva1-event-loopblokkade tijdens zelfstandig werk meten en de
+   precieze synchrone codegrens vinden, zonder de live service blind te wijzigen.
+2. Nog minstens 13.865 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
+3. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+   geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
+4. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
+   bewaken.
+5. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
+   controle en herstartveiligheid kwijt te raken.
 
 ## Belangrijk verschil
 
@@ -187,6 +196,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde terminale resultaatopslag: 24 productregels minder](evidence/product/performance-complexity-pc01-result-persistence-consolidation-2026-08-29.json)
 - [Gedeeld persoonlijk claim-/leaseprotocol: 64 productregels minder](evidence/product/performance-complexity-pc01-personal-claim-lease-consolidation-2026-08-29.json)
 - [Gedeelde persoonlijke lifecycle en echte PostgreSQL-route: 33 productregels minder](evidence/product/performance-complexity-pc01-personal-lifecycle-consolidation-2026-08-29.json)
+- [Persoonsgebonden artifacts blijven zichtbaar: fout hersteld en 15 productregels minder](evidence/product/performance-complexity-pc01-personal-artifact-selection-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
 - [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 - [Dezelfde image met echt Codex, Hindsight en volledige herstart](evidence/living-core/eva2-runtime35-real-model-hindsight-restart-2026-08-29.json)
