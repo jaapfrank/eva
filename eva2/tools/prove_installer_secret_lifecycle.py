@@ -111,7 +111,9 @@ def prove(source_commit: str) -> dict[str, object]:
     old_secret = "synthetic-proof-old-telegram-secret-123456"
     new_secret = "synthetic-proof-new-telegram-secret-654321"
     third_secret = "synthetic-proof-third-telegram-secret-abcdef"
-    with tempfile.TemporaryDirectory(prefix="eva2-installer-secret-proof-") as raw:
+    with tempfile.TemporaryDirectory(
+        prefix="eva2-installer-secret-proof-", dir="/tmp"
+    ) as raw:
         proof_root = Path(raw)
         os.chmod(proof_root, 0o700)
         capability_workspace = proof_root / "capabilities"
