@@ -1,0 +1,60 @@
+{
+  "contract": "PerformanceComplexityPc01ActionChainStoreBaseConsolidation/v1",
+  "issuedAt": "2026-08-29T16:21:03+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "2d5040f41f20e739dfcd4b4b001602151737a535",
+    "branch": "recovery/v2-containment",
+    "productManifestSha256": "4558ce971e07d60d73da7f06f584ebd73d2d51a87e4a33277ded0e5fc446488b"
+  },
+  "change": {
+    "summary": "Ten action-chain store families now share one PostgreSQL, scope, role, and ledger initializer while retaining their own fail-closed error contract.",
+    "productFilesChanged": 11,
+    "productLinesAdded": 54,
+    "productLinesDeleted": 189,
+    "netProductLines": -135,
+    "databaseSchemaChanged": false,
+    "apiContractsChanged": false,
+    "connectorBehaviorChanged": false,
+    "exactNonPostgresErrorsRetained": 11
+  },
+  "measurement": {
+    "method": "sealed PC01 _measure_sources implementation against committed HEAD",
+    "productFiles": 237,
+    "productPhysicalLinesBefore": 88865,
+    "productPhysicalLinesAfter": 88730,
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 13730,
+    "status": "failed_budget_enforced"
+  },
+  "verification": {
+    "compileAll": "passed",
+    "ruff": "passed",
+    "fastApplicationTestsPassed": 37,
+    "exactPostgresGateTestsPassed": 11,
+    "postgresVersion": "16.13",
+    "postgresActionChainTestsPassed": 95,
+    "postgresActionChainDurationSeconds": 327.26,
+    "testsFailed": 0,
+    "initialOperatorCommandErrors": 95,
+    "initialOperatorCommandCause": "The first PostgreSQL command used the valid 4B disposable prefix instead of the stricter action-chain disposable prefix. Every case stopped before migration or test execution; the correctly named empty database then passed all 95 cases.",
+    "temporaryPostgresContainersRemaining": 0,
+    "liveEva1RoutesHttp200": 5,
+    "liveEva2ReadyHttp200": true
+  },
+  "logs": {
+    "fastApplicationTestsSha256": "8df44c46e238524d21ed1514fc9f8e93ddf281ce884f45e7a4ea092474662801",
+    "exactPostgresGateTestsSha256": "c867b8f136ee8524e35a201d8f28a022f2a863abd0cd4c6b55c2bd114a97246f",
+    "postgresActionChainTestsSha256": "aa5085cdef6a9bb79201a1a8acf0b9c0e96b7cd5aec413c0dc37893f7c68fd6e",
+    "ruffSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "pc01SourceMeasurementSha256": "315e6f5844ebd68a5fe6a0da0e42e954e0aeb039732edaab9f4f22c39d1a0877",
+    "liveRoutesSha256": "7063f5a11259cd688171289bdc9c8d48b83f10db7dd1c3d0f0433d348180f4c6"
+  },
+  "nonClaims": [
+    "The 75000-line PC01 gate remains red.",
+    "This checkpoint does not deploy a new Eva2 image or modify a live database.",
+    "The existing action-chain feature set is preserved; this is a maintenance reduction, not a new autonomy capability.",
+    "The Windows and WSL reboot gate and the seven-day acceptance run remain open."
+  ],
+  "nextRequiredAction": "Remove or replace at least 13730 more measured product lines without weakening the source boundary or proven capabilities."
+}
