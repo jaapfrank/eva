@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from eva.operations.eva2_canary_cutover import EVA1_PATHS, canonical_dropin
-from eva.operations.eva2_quiescent_cutover import (
+from tools.eva2_quiescent_cutover import (
     _dump_content_digest,
     DatabaseAttestation,
     DatabaseSnapshot,
