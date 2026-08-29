@@ -1,0 +1,49 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PortableRestoreOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T21:42:31+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "035f75c84d29ff52f56461f8bf6b122d6c0cd3db",
+    "changedSourceManifestSha256": "60820aded16b52770280d7a08a291f5310305061a4c30ea331e3188e577a46a5"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/portable_restore.py",
+    "newPath": "tools/portable_restore.py",
+    "physicalLinesMovedOutOfProductRoots": 1219,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 7,
+    "remainingOldImports": 0,
+    "portableRestoreAuthorityRemainsInLivingCore": true
+  },
+  "verification": {
+    "localRestoreTestsPassed": 34,
+    "localRestoreTestsSkippedWithoutDatabase": 6,
+    "realPostgresCasesPassed": 5,
+    "realPostgresCases": [
+      "terminal effect history",
+      "terminal model history",
+      "terminal read history",
+      "empty full-schema restore",
+      "non-empty source-to-target full-schema restore"
+    ],
+    "optionalObjectCasCaseSkipped": true,
+    "optionalObjectCasSkipReason": "PyNaCl is not installed in the host test environment",
+    "combinedTestLogsSha256": "e2b3638a322cda4e5a436c00970eea8b9b89b0bae945994dc43def695d61f9f9",
+    "disposablePostgresContainersRemoved": true
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 224,
+    "productPhysicalLines": 80630,
+    "livingCorePhysicalLines": 80037,
+    "productManifestSha256": "22fe6a70843d9a049d4d7c59000798a4574a6f6a26f0e7ea4d742d34accfc5ba",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 5630,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 10203,
+    "status": "failed_budget_enforced"
+  },
+  "limitations": [
+    "The full PC01 checker could not re-attest the historical OCI baseline because that old local image is unavailable; the exact sealed source-measurement function was run separately.",
+    "The restore writer remains product functionality at the operator boundary; this change does not prove a consumer installer or second-machine restore.",
+    "The optional encrypted-object PostgreSQL case was not rerun in this host environment."
+  ]
+}
