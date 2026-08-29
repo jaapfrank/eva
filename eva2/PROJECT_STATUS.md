@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 22:12 CEST
+Laatst bijgewerkt: 29 augustus 2026, 22:17 CEST
 
 ## Heel kort
 
@@ -284,6 +284,10 @@ praktijktest zijn nog niet klaar.
 - De 258-regelige managed-B-renderer staat nu eveneens bij de operator-tools.
   Alle 24 renderchecks en samen 62 render-/releasechecks zijn groen. De bron was
   eerder niet zelf gepind; hij is nu als 240e verplichte release-input toegevoegd.
+- De 888-regelige managed-B-preflight draait nu als hostoperator uit `tools`.
+  Wrapper, renderer en tests gebruiken hetzelfde nieuwe pad. Alle 84 inhoudelijke
+  en samen 122 releasechecks zijn groen. De eerder ongepinde shellwrapper is nu
+  samen met de preflightbron als verplichte release-input 241 verzegeld.
 
 ## Wat nog niet klaar is
 
@@ -298,8 +302,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  13.101 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 77.732 productregels en mag er maximaal 75.000 hebben.
+  13.989 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 76.844 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -317,7 +321,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 2.732 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 1.844 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -398,6 +402,7 @@ praktijktest zijn nog niet klaar.
 - [Alle 369 B-release-inputs opnieuw gebonden en op exact Git-archief gecontroleerd](evidence/living-core/eva2-managed-b-release-input-rebind-2026-08-29.json)
 - [Verliesloze A/B-omschakelaar naar de operatorgrens, releasearchief opnieuw groen](evidence/product/performance-complexity-pc01-quiescent-cutover-operator-boundary-2026-08-29.json)
 - [Managed-B-renderer naar de operatorgrens en als nieuwe release-input gepind](evidence/product/performance-complexity-pc01-managed-b-render-operator-boundary-2026-08-29.json)
+- [Managed-B-preflight naar de operatorgrens, wrapper en bron samen verzegeld](evidence/product/performance-complexity-pc01-core-b-preflight-operator-boundary-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

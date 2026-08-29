@@ -1,0 +1,43 @@
+{
+  "contract": "EvaPerformanceComplexityPc01CoreBPreflightOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:17:38+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "f457deea792084a045cb1cc90beb7bc716ef3658",
+    "changedSourceManifestSha256": "8040954b5e1d4911c9d57f8a15fbfc61008bc2702ecc34b22fca75f129ae5c30"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/core_b_preflight.py",
+    "newPath": "tools/core_b_preflight.py",
+    "physicalLinesMovedOutOfProductRoots": 888,
+    "runtimeConsumersBeforeMove": 0,
+    "hostWrapperUpdated": true,
+    "rendererAndTestConsumersUpdated": 3,
+    "remainingOldReferences": 0,
+    "preflightSourceAndWrapperPinnedAsReleaseInputs": true
+  },
+  "verification": {
+    "preflightRendererAndDeploymentTestsPassed": 84,
+    "combinedPreflightRendererDeploymentAndFailClosedReleaseTestsPassed": 122,
+    "missingEnvironmentWrapperSmokeRefused": true,
+    "missingEnvironmentWrapperExitCode": 1,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "requiredInputsAfterPin": 241,
+    "combinedTestAndAttestationLogsSha256": "7f47ede5247ee2913e7f32c193df52f7d8e46fa378f639d8c0a34c807c820288"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 217,
+    "productPhysicalLines": 76844,
+    "livingCorePhysicalLines": 76251,
+    "productManifestSha256": "3f62496563ef8f779d33957ebb6979e4eda5a739df888791270df53cc4f5040f",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 1844,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 13989,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "The wrapper smoke used a deliberately missing file and did not read Docker, a secret or live B metadata.",
+    "This did not render, create, start, adopt or change managed-B services.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}
