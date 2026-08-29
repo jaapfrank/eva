@@ -9,6 +9,7 @@ import pytest
 
 from eva.operations.managed_b_release_inputs import (
     AUTHORITY_PATH,
+    _pin_rows,
     _validate_static_archive_inputs,
     prepare_managed_b_release_inputs,
 )
@@ -24,6 +25,57 @@ def _canonical(value: object) -> bytes:
         ).encode("utf-8")
         + b"\n"
     )
+
+
+def test_release_pin_rows_bind_bytes_and_the_complete_sorted_path_set() -> None:
+    files = {
+        "a.py": (b"a\n", 0o644),
+        "b.py": (b"b\n", 0o644),
+        "c.py": (b"c\n", 0o644),
+    }
+    rows = [
+        {"path": path, "sha256": hashlib.sha256(files[path][0]).hexdigest()}
+        for path in ("a.py", "b.py")
+    ]
+    expected_paths_sha256 = hashlib.sha256(_canonical(("a.py", "b.py"))).hexdigest()
+
+    assert _pin_rows(
+        files,
+        rows,
+        expected_paths_sha256=expected_paths_sha256,
+        label="test",
+    ) == tuple((row["path"], row["sha256"]) for row in rows)
+
+    with pytest.raises(RuntimeError, match="path set differs"):
+        _pin_rows(
+            files,
+            rows[:1],
+            expected_paths_sha256=expected_paths_sha256,
+            label="test",
+        )
+    with pytest.raises(RuntimeError, match="path set differs"):
+        _pin_rows(
+            files,
+            rows + [{"path": "c.py", "sha256": hashlib.sha256(b"c\n").hexdigest()}],
+            expected_paths_sha256=expected_paths_sha256,
+            label="test",
+        )
+    with pytest.raises(RuntimeError, match="pins must be unique and sorted"):
+        _pin_rows(
+            files,
+            list(reversed(rows)),
+            expected_paths_sha256=expected_paths_sha256,
+            label="test",
+        )
+    changed = copy.deepcopy(rows)
+    changed[0]["sha256"] = "0" * 64
+    with pytest.raises(RuntimeError, match="pinned input differs"):
+        _pin_rows(
+            files,
+            changed,
+            expected_paths_sha256=expected_paths_sha256,
+            label="test",
+        )
 
 
 def _authority() -> tuple[dict[str, object], bytes]:
