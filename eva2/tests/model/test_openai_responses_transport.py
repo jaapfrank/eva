@@ -687,8 +687,7 @@ def test_cold_process_request_uses_one_absolute_wall_clock_deadline() -> None:
     script = """
 import json, sys
 from time import monotonic
-from eva.bootstrap.runtime import CodexConversationModel
-from eva.adapters.model.conversation import ConversationModelError
+from eva.adapters.model.conversation import CodexConversationModel, ConversationModelError
 body = {
     'include': [], 'input': [{'content': 'Hoi', 'role': 'user', 'type': 'message'}],
     'instructions': 'Antwoord kort.', 'model': 'gpt-5.4-mini',
@@ -749,7 +748,11 @@ def test_repeated_timeouts_do_not_accumulate_threads_or_descriptors() -> None:
     while wall_monotonic() < cleanup_deadline:
         candidate_threads = tuple(
             thread for thread in threading.enumerate()
-            if thread.name in {"eva-openai-request", "eva-openai-response"}
+            if thread.name in {
+                "eva-openai-close",
+                "eva-openai-request",
+                "eva-openai-response",
+            }
         )
         if not candidate_threads:
             break

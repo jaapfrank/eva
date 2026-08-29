@@ -92,6 +92,9 @@ class _BoundedResponseStream(httpx2.SyncByteStream):
                         return
                     except Full:
                         continue
+            finally:
+                if self._expired:
+                    self._stream.close()
 
         Thread(target=pump, name="eva-openai-response", daemon=True).start()
         total = 0
@@ -145,7 +148,9 @@ class _BoundedTransport(httpx2.BaseTransport):
         if self._expired.is_set():
             return
         self._expired.set()
-        Thread(target=self._transport.close, daemon=True).start()
+        Thread(
+            target=self._transport.close, name="eva-openai-close", daemon=True
+        ).start()
 
     def handle_request(self, request: httpx2.Request) -> httpx2.Response:
         deadline = self._deadline
@@ -162,6 +167,9 @@ class _BoundedTransport(httpx2.BaseTransport):
                 results.put(("response", self._transport.handle_request(request)))
             except BaseException as error:
                 results.put(("error", error))
+            finally:
+                if self._expired.is_set():
+                    self._transport.close()
 
         Thread(target=send, name="eva-openai-request", daemon=True).start()
         remaining = deadline - monotonic()
@@ -206,7 +214,9 @@ class OpenAIResponsesTransport:
         maximum_request_bytes: int = 8 * 1024 * 1024,
         maximum_response_bytes: int = 8 * 1024 * 1024,
     ) -> None:
-        self._base_url = _responses_base_url(endpoint)
+        self._base_url = responses_base_url(
+            endpoint, invalid_error="OpenAI SDK endpoint must end in /responses"
+        )
         if not 1 <= timeout_seconds <= 120:
             raise ValueError("OpenAI SDK timeout must be 1..120 seconds")
         if not 256 <= maximum_request_bytes <= 8 * 1024 * 1024:
@@ -316,7 +326,7 @@ def _remaining(deadline: float) -> float:
     return remaining
 
 
-def _responses_base_url(endpoint: str) -> str:
+def responses_base_url(endpoint: str, *, invalid_error: str) -> str:
     parsed = urlsplit(endpoint)
     loopback_http = False
     if parsed.scheme == "http" and parsed.hostname is not None:
@@ -334,9 +344,10 @@ def _responses_base_url(endpoint: str) -> str:
         or parsed.fragment
         or not parsed.path.endswith("/responses")
     ):
-        raise ValueError("OpenAI SDK endpoint must end in /responses")
-    base_path = parsed.path[: -len("responses")]
-    return urlunsplit((parsed.scheme, parsed.netloc, base_path, "", ""))
+        raise ValueError(invalid_error)
+    return urlunsplit(
+        (parsed.scheme, parsed.netloc, parsed.path[: -len("responses")], "", "")
+    )
 
 
 def _sanitized_failure(

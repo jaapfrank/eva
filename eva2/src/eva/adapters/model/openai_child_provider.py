@@ -11,10 +11,8 @@ import json
 import os
 from collections.abc import Callable
 from dataclasses import dataclass
-from ipaddress import ip_address
 from types import TracebackType
 from typing import cast
-from urllib.parse import urlsplit, urlunsplit
 from uuid import uuid4
 
 import httpx2
@@ -24,6 +22,7 @@ from pydantic_ai.models import Model, ModelRequestParameters
 from pydantic_ai.settings import ModelSettings
 from pydantic_ai.usage import RequestUsage
 
+from eva.adapters.model.openai_responses_transport import responses_base_url
 from eva.contracts.canonical_json import canonical_json_bytes
 
 CredentialLoader = Callable[[], tuple[str, str]]
@@ -57,7 +56,9 @@ class OpenAIChildProviderSettings:
     maximum_response_bytes: int = 256 * 1024
 
     def __post_init__(self) -> None:
-        _responses_base_url(self.endpoint)
+        responses_base_url(
+            self.endpoint, invalid_error="child OpenAI endpoint must end in /responses"
+        )
         if not self.model_name.strip() or len(self.model_name) > 120:
             raise ValueError("child model name is invalid")
         if not 1 <= self.timeout_seconds <= 120:
@@ -441,7 +442,10 @@ class OpenAIChildProvider:
                     self._credential_loader,
                     account_id=account_id,
                 ),
-                base_url=_responses_base_url(self._settings.endpoint),
+                base_url=responses_base_url(
+                    self._settings.endpoint,
+                    invalid_error="child OpenAI endpoint must end in /responses",
+                ),
                 default_headers={
                     "OpenAI-Account-ID": account_id,
                     "OpenAI-Beta": "responses=experimental",
@@ -504,29 +508,6 @@ def _load_credentials(loader: CredentialLoader) -> tuple[str, str]:
     if not isinstance(account_id, str) or not account_id:
         raise ChildProviderConfigurationError("child model account ID is missing")
     return access_token, account_id
-
-
-def _responses_base_url(endpoint: str) -> str:
-    parsed = urlsplit(endpoint)
-    loopback_http = False
-    if parsed.scheme == "http" and parsed.hostname is not None:
-        try:
-            loopback_http = ip_address(parsed.hostname).is_loopback
-        except ValueError:
-            loopback_http = False
-    if (
-        parsed.scheme not in {"http", "https"}
-        or not parsed.netloc
-        or (parsed.scheme == "http" and not loopback_http)
-        or parsed.username is not None
-        or parsed.password is not None
-        or parsed.query
-        or parsed.fragment
-        or not parsed.path.endswith("/responses")
-    ):
-        raise ValueError("child OpenAI endpoint must end in /responses")
-    base_path = parsed.path[: -len("responses")]
-    return urlunsplit((parsed.scheme, parsed.netloc, base_path, "", ""))
 
 
 def _forbid_sdk_logging() -> None:
