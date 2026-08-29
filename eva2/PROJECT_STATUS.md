@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 20:36 CEST
+Laatst bijgewerkt: 29 augustus 2026, 20:55 CEST
 
 ## Heel kort
 
@@ -235,6 +235,9 @@ praktijktest zijn nog niet klaar.
 - Secretinvoer en providercontrole in de installatiewizard delen nu één
   begrensde JSON-ingang. Hun verschillende groottelimieten en foutmeldingen
   bleven gelijk; alle 29 API-tests zijn groen en dit scheelde tien productregels.
+- Lezen, handelen en de aparte controle achteraf delen nu één vaste executor
+  voor de providerprocesgrens. Hun eigen autorisatie, opslag en foutsoort blijven
+  apart; alle 106 echte PostgreSQL-cases zijn groen en dit scheelde 29 regels.
 
 ## Wat nog niet klaar is
 
@@ -249,8 +252,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  7.688 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 83.145 productregels en mag er maximaal 75.000 hebben.
+  7.717 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 83.116 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -268,7 +271,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 8.145 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 8.116 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -337,6 +340,7 @@ praktijktest zijn nog niet klaar.
 - [Eén vaste tijdlijnscope voor Telegramgroepen, bezorging en doelen](evidence/product/performance-complexity-pc01-external-timeline-scope-consolidation-2026-08-29.json)
 - [Gedeelde OpenAI-endpointcontrole en late time-outsluiting](evidence/product/performance-complexity-pc01-openai-endpoint-timeout-consolidation-2026-08-29.json)
 - [Eén begrensde JSON-ingang voor installer-secrets en providercontrole](evidence/product/performance-complexity-pc01-installer-json-intake-consolidation-2026-08-29.json)
+- [Eén providerproces-executor voor lezen, handelen en effectcontrole](evidence/product/performance-complexity-pc01-action-chain-connector-executor-consolidation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)

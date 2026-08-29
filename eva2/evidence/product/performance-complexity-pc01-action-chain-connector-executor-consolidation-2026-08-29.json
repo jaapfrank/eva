@@ -1,0 +1,56 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ActionChainConnectorExecutorConsolidation/v1",
+  "recordedAt": "2026-08-29T18:55:16Z",
+  "sourceCommit": "77b27919a026d3c052335f4b35510ef358e3a86e",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedExecutor": "PostgresActionChainConnectorExecutor",
+    "consumers": [
+      "action-chain read",
+      "action-chain effect",
+      "action-chain effect readback"
+    ],
+    "preservedDispatcherProfiles": true,
+    "preservedResultStores": true,
+    "preservedConflictTypesAndCallLabels": true,
+    "preservedRuntimeMonkeypatchBoundary": true,
+    "netProductPhysicalLines": -29
+  },
+  "verification": {
+    "fullRealPostgresActionChainTests": {
+      "passed": 106,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "b28f77b71f39cd62ff2a6bd459cbfaedf346b7b948e3fb88c1815497e46ea5d5"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83145,
+      "productManifestSha256": "ffd146428aa325f5e8f6c48b250740c3665a7f1bfa99d7ff93fef2c5992c13d0"
+    },
+    "after": {
+      "productFileCount": 229,
+      "productPhysicalLines": 83116,
+      "productManifestSha256": "c59d2c6cb4820da37882788621d71aa31dc84a2e34f49ebf6b600ffda5745c58",
+      "livingCorePhysicalLines": 82523,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8116,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No provider permission, call material, replay rule, timeout or result state changed.",
+    "No real provider call was made and no running Eva1 or Eva2 component was changed."
+  ]
+}
