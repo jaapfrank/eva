@@ -19,6 +19,7 @@ from eva.adapters.postgres.runtime_resource_usage import (
     PostgresMemoryStorageBudget,
 )
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.operational_timeline import (
     OperationalTimelineError,
     operational_events,
@@ -65,9 +66,7 @@ def _budget() -> RuntimeResourceBudget:
     return RuntimeResourceBudget(
         tenant_id=TENANT,
         installation_id=INSTALLATION,
-        source_budget_sha256=hashlib.sha256(
-            canonical_json_bytes(payload)
-        ).hexdigest(),
+        source_budget_sha256=hashlib.sha256(canonical_json_bytes(payload)).hexdigest(),
         recall_context_tokens=3_000,
         retrieval_nodes=50,
         max_input_tokens=12_000,
@@ -98,9 +97,7 @@ def _storage_budget() -> RuntimeResourceBudget:
     return RuntimeResourceBudget(
         tenant_id=TENANT,
         installation_id=INSTALLATION,
-        source_budget_sha256=hashlib.sha256(
-            canonical_json_bytes(payload)
-        ).hexdigest(),
+        source_budget_sha256=hashlib.sha256(canonical_json_bytes(payload)).hexdigest(),
         recall_context_tokens=3_000,
         retrieval_nodes=50,
         max_input_tokens=12_000,
@@ -143,9 +140,7 @@ def _limited_storage_budget(
     return RuntimeResourceBudget(
         tenant_id=TENANT,
         installation_id=installation_id,
-        source_budget_sha256=hashlib.sha256(
-            canonical_json_bytes(payload)
-        ).hexdigest(),
+        source_budget_sha256=hashlib.sha256(canonical_json_bytes(payload)).hexdigest(),
         recall_context_tokens=3_000,
         retrieval_nodes=50,
         max_input_tokens=12_000,
@@ -377,9 +372,7 @@ def test_memory_storage_limits_survive_races_restart_and_expiry(
         raced = tuple(
             pool.map(
                 lambda index: storage.admit_memory(
-                    _document(
-                        f"memory:race:final:{index}", principal_id="person:race"
-                    ),
+                    _document(f"memory:race:final:{index}", principal_id="person:race"),
                     now=NOW + timedelta(seconds=200 + index),
                 ),
                 range(8),
@@ -390,17 +383,13 @@ def test_memory_storage_limits_survive_races_restart_and_expiry(
         "person_record_limit_reached"
     }
 
-    retained_document = replace(
-        large, retention_until=admitted.retention_until
-    )
+    retained_document = replace(large, retention_until=admitted.retention_until)
     receipt = MemoryRetentionReceipt(
         bank_id="eva2-" + "a" * 32,
         document_id=large.document_id,
         content_sha256=hashlib.sha256(large.content.encode("utf-8")).hexdigest(),
     )
-    storage.mark_retained(
-        retained_document, receipt, now=NOW + timedelta(seconds=300)
-    )
+    storage.mark_retained(retained_document, receipt, now=NOW + timedelta(seconds=300))
     assert storage.claim_expired(now=NOW + timedelta(days=7, seconds=-1)) == ()
 
     restarted = PostgresMemoryStorageBudget(
@@ -414,14 +403,10 @@ def test_memory_storage_limits_survive_races_restart_and_expiry(
     assert len(first_claim) == 1
     assert first_claim[0].document_id == large.document_id
     assert restarted.claim_expired(now=NOW + timedelta(days=7)) == ()
-    second_claim = restarted.claim_expired(
-        now=NOW + timedelta(days=7, seconds=1)
-    )
+    second_claim = restarted.claim_expired(now=NOW + timedelta(days=7, seconds=1))
     assert len(second_claim) == 1
     assert second_claim[0].state.retry_count == 2
-    restarted.mark_removed(
-        second_claim[0], now=NOW + timedelta(days=7, seconds=2)
-    )
+    restarted.mark_removed(second_claim[0], now=NOW + timedelta(days=7, seconds=2))
 
     replacement = restarted.admit_memory(
         _document("memory:replacement", content="c" * 500_000),
@@ -461,13 +446,10 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
         MemoryRetentionReceipt(
             bank_id="eva2-" + "e" * 32,
             document_id=document.document_id,
-            content_sha256=hashlib.sha256(
-                document.content.encode("utf-8")
-            ).hexdigest(),
+            content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest(),
         ),
         now=NOW + timedelta(seconds=1),
     )
-
     with pytest.raises(OperationalTimelineError, match="scope differs"):
         storage.request_erasure(
             principal_id="person:other",
@@ -481,11 +463,14 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
         source_message_id="telegram:owner:41",
     )
     assert job is not None
-    assert storage.request_erasure(
-        principal_id="person:owner",
-        document_id=document.document_id,
-        now=NOW + timedelta(seconds=3),
-    ) is None
+    assert (
+        storage.request_erasure(
+            principal_id="person:owner",
+            document_id=document.document_id,
+            now=NOW + timedelta(seconds=3),
+        )
+        is None
+    )
 
     scope = storage._scope_value  # exact disposable-PostgreSQL evidence inspection
     with resource_engine.begin() as connection:
@@ -495,8 +480,7 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
                 operational_events.c.tenant_id == scope.tenant_id,
                 operational_events.c.installation_id == scope.installation_id,
                 operational_events.c.thread_id == job.state.thread_id,
-                operational_events.c.event_type
-                == "MEMORY_STORAGE_ERASURE_CLAIMED",
+                operational_events.c.event_type == "MEMORY_STORAGE_ERASURE_CLAIMED",
             )
         )
     assert payload["data"] == {
@@ -520,16 +504,17 @@ def test_owner_erasure_is_scoped_durable_and_content_free(
     recovered = restarted.claim_expired(now=NOW + timedelta(seconds=4))
     assert len(recovered) == 1
     assert recovered[0].document_id == document.document_id
-    assert recovered[0].principal_sha256 == hashlib.sha256(
-        b"person:owner"
-    ).hexdigest()
+    assert recovered[0].principal_sha256 == hashlib.sha256(b"person:owner").hexdigest()
     assert recovered[0].source_message_id == "telegram:owner:41"
     restarted.mark_removed(recovered[0], now=NOW + timedelta(seconds=5))
-    assert restarted.request_erasure(
-        principal_id="person:owner",
-        document_id=document.document_id,
-        now=NOW + timedelta(seconds=6),
-    ) is None
+    assert (
+        restarted.request_erasure(
+            principal_id="person:owner",
+            document_id=document.document_id,
+            now=NOW + timedelta(seconds=6),
+        )
+        is None
+    )
 
 
 def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
@@ -589,18 +574,29 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
         MemoryRetentionReceipt(
             bank_id="eva2-" + "f" * 32,
             document_id=document_id,
-            content_sha256=hashlib.sha256(
-                document.content.encode("utf-8")
-            ).hexdigest(),
+            content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest(),
         ),
         now=NOW + timedelta(seconds=1),
     )
+    outbox = PostgresMemoryOutbox(
+        resource_engine,
+        tenant_id=TENANT,
+        installation_id=installation_id,
+    )
+    queued = outbox.enqueue(document)
+    assert outbox.begin(queued, now=NOW + timedelta(seconds=1)) is not None
 
     provider_deletes: list[str] = []
 
     class Memory:
-        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
+        def remove_conversation_document(  # type: ignore[no-untyped-def]
+            self, *, bank_id, document_id, principal_sha256
+        ):
             assert bank_id == "eva2-" + "f" * 32
+            assert (
+                principal_sha256
+                == hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
+            )
             provider_deletes.append(document_id)
 
     class CrashAfterRawErasure:
@@ -610,6 +606,7 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
 
     crashing = HindsightColdPathWorker(
         Memory(),  # type: ignore[arg-type]
+        outbox=outbox,
         storage_budget=storage,
         conversation_erasure=CrashAfterRawErasure(),  # type: ignore[arg-type]
     )
@@ -634,19 +631,36 @@ def test_owner_erasure_resumes_across_semantic_and_raw_stores_after_crash(
     assert recovered[0].source_message_id == message_id
     resumed = HindsightColdPathWorker(
         Memory(),  # type: ignore[arg-type]
+        outbox=PostgresMemoryOutbox(
+            resource_engine,
+            tenant_id=TENANT,
+            installation_id=installation_id,
+        ),
         storage_budget=restarted_storage,
         conversation_erasure=PostgresConversationJournal(
-            resource_engine, restarted_storage._scope_value  # noqa: SLF001
+            resource_engine,
+            restarted_storage._scope_value,  # noqa: SLF001
         ),
     )
     resumed._remove_job(recovered[0], now=NOW + timedelta(seconds=5))  # noqa: SLF001
     assert provider_deletes == [document_id, document_id]
-    assert restarted_storage._timeline.load(  # noqa: SLF001
-        recovered[0].state.thread_id
-    ).phase == "memory_storage_removed"
-    assert PostgresConversationJournal(
-        resource_engine, restarted_storage._scope_value  # noqa: SLF001
-    ).recent(turn) == ()
+    assert outbox.pending() == ()
+    assert "ruwe geheime bronzin 41" not in str(
+        outbox._timeline.events(queued.state.thread_id)  # noqa: SLF001
+    )
+    assert (
+        restarted_storage._timeline.load(  # noqa: SLF001
+            recovered[0].state.thread_id
+        ).phase
+        == "memory_storage_removed"
+    )
+    assert (
+        PostgresConversationJournal(
+            resource_engine,
+            restarted_storage._scope_value,  # noqa: SLF001
+        ).recent(turn)
+        == ()
+    )
 
 
 def test_group_and_project_limits_are_atomic_across_people_and_restart(
@@ -896,9 +910,7 @@ def test_removal_releases_group_and_installation_capacity_only_after_ack(
         MemoryRetentionReceipt(
             bank_id="eva2-" + "b" * 32,
             document_id=document.document_id,
-            content_sha256=hashlib.sha256(
-                document.content.encode("utf-8")
-            ).hexdigest(),
+            content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest(),
         ),
         now=NOW + timedelta(seconds=1),
     )

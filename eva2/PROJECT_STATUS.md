@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 07:58 CEST
+Laatst bijgewerkt: 29 augustus 2026, 08:34 CEST
 
 ## Heel kort
 
@@ -259,6 +259,10 @@ installatie zijn nog niet klaar.
   een herstart hervat dezelfde poging zonder dubbele provideropdracht en Eva
   markeert het stuk pas verwijderd nadat Hindsight dat heeft bevestigd. Het
   achterblijvende bewijs bevat alleen hashes en tijden, geen geheugentekst.
+- `Vergeet dit` wist in de kandidaat nu ook Hindsight-afleidingen en Eva's
+  wachtende geheugenkopie. In een echte wegwerpproef gingen het bronfeit, de
+  daarvan gemaakte observatie en de persoonsstijl alle drie naar nul. Na een
+  volledige herstart bleven ze weg. Een onderbroken opdracht kan veilig verder.
 
 ## Wat nog niet klaar is
 
@@ -282,8 +286,9 @@ installatie zijn nog niet klaar.
   begrenst gespreksgeheugen per persoon, groep, project en hele installatie op
   regels, bytes en bewaartijd. Eén opdracht kan een exact Hindsight-document
   én de bijbehorende ruwe vraag en het antwoord herstartveilig verwijderen.
-  De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Caches,
-  samenvattingen, procedurekandidaten en oude back-ups ontbreken nog. Ook
+  De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Ook de wachtende
+  geheugenkopie, Hindsight-observaties en de persoonsstijl worden gewist. Losse
+  applicatiecaches, procedurekandidaten en oude back-ups ontbreken nog. Ook
   fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
@@ -305,7 +310,7 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De volledige `Vergeet dit`-keten uitbreiden naar caches, samenvattingen,
+1. De volledige `Vergeet dit`-keten uitbreiden naar losse applicatiecaches,
    procedurekandidaten en daarna oude back-ups afschermen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
@@ -373,6 +378,7 @@ installatie zijn nog niet klaar.
 - [Dagelijkse Hindsight-reflectielimieten blijven hard bij race, herstart en daggrens](evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json)
 - [Geheugenquota per persoon, groep, project en installatie blijven hard bij race, herstart en verwijdercrash](evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json)
 - [Eén herstartveilige wisopdracht voor Hindsight én ruwe gesprekstekst](evidence/living-core/eva2-cross-store-conversation-erasure-postgres-2026-08-29.json)
+- [Bronfeit, afgeleide observatie, persoonsstijl en wachtende geheugenkopie echt gewist](evidence/living-core/eva2-derived-memory-erasure-disposable-2026-08-29.json)
 - [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)

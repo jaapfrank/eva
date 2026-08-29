@@ -335,7 +335,12 @@ def test_storage_budget_marks_retained_then_removes_expired_document() -> None:
     removed = Event()
     marked: list[str] = []
     document = _document()
-    expiry = SimpleNamespace(bank_id="eva2-bank", document_id=document.document_id)
+    principal_sha256 = hashlib.sha256(document.principal_id.encode("utf-8")).hexdigest()
+    expiry = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id=document.document_id,
+        principal_sha256=principal_sha256,
+    )
 
     class Budget:
         expiry_returned = False
@@ -375,8 +380,14 @@ def test_storage_budget_marks_retained_then_removes_expired_document() -> None:
                 ),
             )
 
-        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
-            assert (bank_id, document_id) == ("eva2-bank", document.document_id)
+        def remove_conversation_document(  # type: ignore[no-untyped-def]
+            self, *, bank_id, document_id, principal_sha256
+        ):
+            assert (bank_id, document_id, principal_sha256) == (
+                "eva2-bank",
+                document.document_id,
+                hashlib.sha256(document.principal_id.encode("utf-8")).hexdigest(),
+            )
 
         def maintain_person_scope(self, *scope):  # type: ignore[no-untyped-def]
             return None
@@ -398,7 +409,12 @@ def test_storage_budget_marks_retained_then_removes_expired_document() -> None:
 
 def test_explicit_erasure_calls_provider_once_and_marks_only_after_ack() -> None:
     calls: list[str] = []
-    job = SimpleNamespace(bank_id="eva2-bank", document_id="conversation:1")
+    principal_sha256 = hashlib.sha256(b"jaap").hexdigest()
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=principal_sha256,
+    )
     now = datetime(2026, 8, 29, 10, 0, tzinfo=UTC)
 
     class Budget:
@@ -417,8 +433,14 @@ def test_explicit_erasure_calls_provider_once_and_marks_only_after_ack() -> None
             calls.append("marked")
 
     class Memory:
-        def remove_conversation_document(self, *, bank_id, document_id):  # type: ignore[no-untyped-def]
-            assert (bank_id, document_id) == ("eva2-bank", "conversation:1")
+        def remove_conversation_document(  # type: ignore[no-untyped-def]
+            self, *, bank_id, document_id, principal_sha256
+        ):
+            assert (bank_id, document_id, principal_sha256) == (
+                "eva2-bank",
+                "conversation:1",
+                hashlib.sha256(b"jaap").hexdigest(),
+            )
             calls.append("provider")
 
     worker = HindsightColdPathWorker(
@@ -479,8 +501,20 @@ def test_explicit_erasure_removes_semantic_and_raw_content_before_marking() -> N
                 replayed=False,
             )
 
+    class Outbox:
+        def erase_content(self, **kwargs):  # type: ignore[no-untyped-def]
+            calls.append("outbox")
+            return SimpleNamespace(
+                operation_sha256=kwargs["operation_sha256"],
+                principal_sha256=principal_sha256,
+                document_sha256=hashlib.sha256(b"conversation:1").hexdigest(),
+                redacted_event_count=1,
+                replayed=False,
+            )
+
     worker = HindsightColdPathWorker(
         Memory(),  # type: ignore[arg-type]
+        outbox=Outbox(),  # type: ignore[arg-type]
         storage_budget=Budget(),  # type: ignore[arg-type]
         conversation_erasure=RawConversation(),  # type: ignore[arg-type]
     )
@@ -490,7 +524,7 @@ def test_explicit_erasure_removes_semantic_and_raw_content_before_marking() -> N
         source_message_id=source_message_id,
         now=now,
     )
-    assert calls == ["leased", "provider", "raw", "marked"]
+    assert calls == ["leased", "provider", "raw", "outbox", "marked"]
 
 
 def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
@@ -535,9 +569,69 @@ def test_raw_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
     assert calls == ["leased", "provider", "raw"]
 
 
+def test_outbox_erasure_failure_keeps_the_durable_lease_unfinished() -> None:
+    calls: list[str] = []
+    principal_id = "person:jaap"
+    source_message_id = "telegram:jaap:41"
+    principal_sha256 = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=principal_sha256,
+        source_message_id=source_message_id,
+    )
+
+    class Budget:
+        def request_erasure(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("leased")
+            return job
+
+        def mark_removed(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("marked")
+
+    class Memory:
+        def remove_conversation_document(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+
+    class RawConversation:
+        def erase_message_content(self, **kwargs):  # type: ignore[no-untyped-def]
+            calls.append("raw")
+            return SimpleNamespace(
+                operation_sha256=kwargs["operation_sha256"],
+                principal_sha256=principal_sha256,
+                message_sha256=hashlib.sha256(source_message_id.encode()).hexdigest(),
+                redacted_event_count=2,
+                replayed=False,
+            )
+
+    class Outbox:
+        def erase_content(self, **_kwargs):  # type: ignore[no-untyped-def]
+            calls.append("outbox")
+            raise RuntimeError("outbox unavailable")
+
+    worker = HindsightColdPathWorker(
+        Memory(),  # type: ignore[arg-type]
+        outbox=Outbox(),  # type: ignore[arg-type]
+        storage_budget=Budget(),  # type: ignore[arg-type]
+        conversation_erasure=RawConversation(),  # type: ignore[arg-type]
+    )
+    with pytest.raises(RuntimeError, match="outbox unavailable"):
+        worker.erase_document(
+            principal_id=principal_id,
+            document_id="conversation:1",
+            source_message_id=source_message_id,
+            now=datetime(2026, 8, 29, 10, 0, tzinfo=UTC),
+        )
+    assert calls == ["leased", "provider", "raw", "outbox"]
+
+
 def test_explicit_erasure_keeps_durable_lease_when_provider_fails() -> None:
     calls: list[str] = []
-    job = SimpleNamespace(bank_id="eva2-bank", document_id="conversation:1")
+    job = SimpleNamespace(
+        bank_id="eva2-bank",
+        document_id="conversation:1",
+        principal_sha256=hashlib.sha256(b"jaap").hexdigest(),
+    )
 
     class Budget:
         def request_erasure(self, **_kwargs):  # type: ignore[no-untyped-def]

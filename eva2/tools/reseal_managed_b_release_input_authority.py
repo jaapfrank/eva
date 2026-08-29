@@ -15,6 +15,7 @@ from pathlib import Path
 
 from eva.operations.managed_b_release_inputs import (
     AUTHORITY_PATH,
+    _COCKPIT_EVIDENCE_PATH,
     _EXPECTED_INPUT_PATHS,
     _EXPECTED_MIGRATIONS,
     _EXPECTED_TEST_PATHS,
@@ -38,6 +39,10 @@ def _arguments() -> argparse.Namespace:
         "--admit-migration",
         help="explicitly acknowledge one newly reviewed expected migration",
     )
+    parser.add_argument(
+        "--admit-cockpit-source",
+        help="explicitly add CLAIM_ID=PATH to one existing cockpit claim",
+    )
     return parser.parse_args()
 
 
@@ -45,6 +50,34 @@ def main() -> int:
     arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
+    cockpit_file = ROOT / _COCKPIT_EVIDENCE_PATH
+    cockpit = json.loads(cockpit_file.read_bytes())
+    if arguments.admit_cockpit_source is not None:
+        claim_id, separator, source_path = arguments.admit_cockpit_source.partition("=")
+        if not separator or source_path not in _EXPECTED_INPUT_PATHS:
+            raise RuntimeError("admitted cockpit source is invalid")
+        matching = [
+            entry for entry in cockpit["entries"] if entry.get("claimId") == claim_id
+        ]
+        if len(matching) != 1:
+            raise RuntimeError("admitted cockpit claim is invalid")
+        sources = matching[0]["sources"]
+        if source_path not in {source["path"] for source in sources}:
+            sources.append({"path": source_path, "sha256": _sha256(source_path)})
+        sources.sort(key=lambda source: source["path"])
+    for entry in cockpit["entries"]:
+        for source in entry["sources"]:
+            source["sha256"] = _sha256(source["path"])
+    cockpit_payload = (
+        json.dumps(
+            cockpit,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+        + b"\n"
+    )
+    cockpit_file.write_bytes(cockpit_payload)
     authority["requiredInputs"] = [
         {"path": path, "sha256": _sha256(path)}
         for path in sorted(_EXPECTED_INPUT_PATHS)

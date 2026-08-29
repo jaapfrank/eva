@@ -6,6 +6,7 @@ from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
 from queue import Empty, Queue
+import re
 from threading import Event, Lock, Thread
 import time
 from typing import Callable, Protocol
@@ -23,6 +24,15 @@ class DurableMemoryOutboxPort(Protocol):
     def pending(self, *, limit: int = 256) -> tuple[object, ...]: ...
 
     def begin(self, job: object, *, now: datetime | None = None) -> object | None: ...
+
+    def erase_content(
+        self,
+        *,
+        principal_sha256: str,
+        document_id: str,
+        operation_sha256: str,
+        erased_at: datetime,
+    ) -> object: ...
 
     def succeed(
         self,
@@ -61,7 +71,9 @@ class MemoryStorageBudgetPort(Protocol):
         now: datetime,
     ) -> object: ...
 
-    def claim_expired(self, *, now: datetime, limit: int = 64) -> tuple[object, ...]: ...
+    def claim_expired(
+        self, *, now: datetime, limit: int = 64
+    ) -> tuple[object, ...]: ...
 
     def request_erasure(
         self,
@@ -218,11 +230,19 @@ class SemanticMemoryColdPathWorker:
 
     @staticmethod
     def _erasure_operation_sha256(
-        *, principal_sha256: str, document_id: str, source_message_id: str
+        *,
+        principal_sha256: str,
+        document_id: str,
+        source_message_id: str | None,
     ) -> str:
+        source_binding = (
+            source_message_id
+            if source_message_id is not None
+            else "retention-expiry"
+        )
         payload = (
             "EvaConversationMemoryErasure/v1\0"
-            f"{principal_sha256}\0{document_id}\0{source_message_id}"
+            f"{principal_sha256}\0{document_id}\0{source_binding}"
         ).encode("utf-8")
         return hashlib.sha256(payload).hexdigest()
 
@@ -239,9 +259,8 @@ class SemanticMemoryColdPathWorker:
             not isinstance(source_message_id, str) or not source_message_id
         ):
             raise RuntimeError("memory erasure source binding is invalid")
-        if source_message_id is not None and (
-            not isinstance(principal_sha256, str)
-            or len(principal_sha256) != 64
+        if not isinstance(principal_sha256, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", principal_sha256
         ):
             raise RuntimeError("memory erasure principal binding is missing")
         if source_message_id is not None and self._conversation_erasure is None:
@@ -250,15 +269,15 @@ class SemanticMemoryColdPathWorker:
         self._memory.remove_conversation_document(
             bank_id=bank_id,
             document_id=document_id,
+            principal_sha256=principal_sha256,
+        )
+        operation_sha256 = self._erasure_operation_sha256(
+            principal_sha256=principal_sha256,
+            document_id=document_id,
+            source_message_id=source_message_id,
         )
         if source_message_id is not None:
-            assert principal_sha256 is not None
             assert self._conversation_erasure is not None
-            operation_sha256 = self._erasure_operation_sha256(
-                principal_sha256=principal_sha256,
-                document_id=document_id,
-                source_message_id=source_message_id,
-            )
             receipt = self._conversation_erasure.erase_message_content(
                 principal_sha256=principal_sha256,
                 message_id=source_message_id,
@@ -270,18 +289,47 @@ class SemanticMemoryColdPathWorker:
             ).hexdigest()
             if (
                 getattr(receipt, "operation_sha256", None) != operation_sha256
-                or getattr(receipt, "principal_sha256", None)
-                != principal_sha256
+                or getattr(receipt, "principal_sha256", None) != principal_sha256
                 or getattr(receipt, "message_sha256", None) != expected_message
                 or not isinstance(getattr(receipt, "replayed", None), bool)
-                or not isinstance(
-                    getattr(receipt, "redacted_event_count", None), int
-                )
+                or not isinstance(getattr(receipt, "redacted_event_count", None), int)
                 or not 0 <= receipt.redacted_event_count <= 2
                 or (receipt.replayed and receipt.redacted_event_count != 0)
                 or (not receipt.replayed and receipt.redacted_event_count == 0)
             ):
                 raise RuntimeError("raw conversation erasure receipt is invalid")
+        if self._outbox is not None:
+            outbox_receipt = self._outbox.erase_content(
+                principal_sha256=principal_sha256,
+                document_id=document_id,
+                operation_sha256=operation_sha256,
+                erased_at=now,
+            )
+            expected_document = hashlib.sha256(
+                document_id.encode("utf-8")
+            ).hexdigest()
+            if (
+                getattr(outbox_receipt, "operation_sha256", None)
+                != operation_sha256
+                or getattr(outbox_receipt, "principal_sha256", None)
+                != principal_sha256
+                or getattr(outbox_receipt, "document_sha256", None)
+                != expected_document
+                or not isinstance(getattr(outbox_receipt, "replayed", None), bool)
+                or not isinstance(
+                    getattr(outbox_receipt, "redacted_event_count", None), int
+                )
+                or not 0 <= outbox_receipt.redacted_event_count <= 1
+                or (
+                    outbox_receipt.replayed
+                    and outbox_receipt.redacted_event_count != 0
+                )
+                or (
+                    not outbox_receipt.replayed
+                    and outbox_receipt.redacted_event_count != 1
+                )
+            ):
+                raise RuntimeError("memory outbox erasure receipt is invalid")
         self._storage_budget.mark_removed(job, now=now)
 
     def _run(self) -> None:
@@ -375,19 +423,16 @@ class SemanticMemoryColdPathWorker:
                         if not self._stop.wait(self._retry_delay_seconds):
                             self._queue.put_nowait(active_job)
                         continue
-                    if (
-                        getattr(state, "status", None) != "needs_help"
-                        and not self._stop.wait(self._retry_delay_seconds)
+                    if getattr(
+                        state, "status", None
+                    ) != "needs_help" and not self._stop.wait(
+                        self._retry_delay_seconds
                     ):
                         self._queue.put_nowait(
                             _RetainJob(job.document, durable_job=state)
                         )
-                elif job.attempt < 3 and not self._stop.wait(
-                    self._retry_delay_seconds
-                ):
-                    self._queue.put_nowait(
-                        _RetainJob(job.document, job.attempt + 1)
-                    )
+                elif job.attempt < 3 and not self._stop.wait(self._retry_delay_seconds):
+                    self._queue.put_nowait(_RetainJob(job.document, job.attempt + 1))
             finally:
                 self._queue.task_done()
             self._schedule_reflection_if_idle()

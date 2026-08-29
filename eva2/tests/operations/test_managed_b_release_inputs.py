@@ -113,7 +113,7 @@ def test_release_inputs_bind_current_registry_historical_projection_and_migratio
     assert receipt["portable_v1_manifest_sha256"] == (
         "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
     )
-    assert receipt["migration_head"] == "4e_0005_conversation_erasure"
+    assert receipt["migration_head"] == "4e_0006_memory_outbox_erasure"
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
     assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()

@@ -33,7 +33,8 @@ from eva.application.memory import (
     MemoryRetentionReceipt,
     PresenceMemory,
     RecallCurrentFacts,
-    RememberFact, SemanticMemoryProviderError,
+    RememberFact,
+    SemanticMemoryProviderError,
 )
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -113,9 +114,7 @@ class HindsightProjectionConfig:
         if not 0.0 < self.minimum_final_score <= 1.5:
             raise ValueError("Hindsight recall score floor must be within 0..1.5")
         if not (
-            0.0
-            < self.exact_binding_minimum_final_score
-            <= self.minimum_final_score
+            0.0 < self.exact_binding_minimum_final_score <= self.minimum_final_score
         ):
             raise ValueError(
                 "Hindsight exact-binding score floor must be within the general floor"
@@ -170,6 +169,7 @@ class HindsightMemoryEngine:
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
         self._cache_lock = threading.Lock()
+        self._derivative_lock = threading.RLock()
         self._active_group_consent_resolver = active_group_consent_resolver
 
     def _bank_id(self, tenant_id: str, installation_id: str) -> str:
@@ -266,14 +266,20 @@ class HindsightMemoryEngine:
     ) -> str:
         if not _SHA256.fullmatch(observation_binding_sha256):
             raise HindsightMemoryScopeError("observation memory binding is invalid")
-        return (
-            f"{installation_id}:eva-observation:{observation_binding_sha256[:32]}"
-        )
+        return f"{installation_id}:eva-observation:{observation_binding_sha256[:32]}"
 
     @staticmethod
     def _style_mirror_id(principal_id: str) -> str:
         digest = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
-        return f"eva-style-mirror-v1-{digest[:16]}"
+        return HindsightMemoryEngine._style_mirror_id_from_sha256(digest)
+
+    @staticmethod
+    def _style_mirror_id_from_sha256(principal_sha256: str) -> str:
+        if not _SHA256.fullmatch(principal_sha256):
+            raise HindsightMemoryScopeError(
+                "Hindsight derivative principal binding is invalid"
+            )
+        return f"eva-style-mirror-v1-{principal_sha256[:16]}"
 
     @staticmethod
     def _recall_query_variants(query_text: str) -> tuple[str, ...]:
@@ -567,6 +573,14 @@ class HindsightMemoryEngine:
     ) -> BackgroundReflectionReceipt:
         """Run one explicitly admitted reflection without an unmanaged scheduler."""
 
+        with self._derivative_lock:
+            return self._maintain_person_scope(tenant_id, installation_id, principal_id)
+
+    def _maintain_person_scope(
+        self, tenant_id: str, installation_id: str, principal_id: str
+    ) -> BackgroundReflectionReceipt:
+        """Perform the serialized Hindsight reflection operation."""
+
         bank_id = self.ensure_bank(tenant_id, installation_id)
         person_tag = self._person_tag(principal_id)
         mental_model_id = self._style_mirror_id(principal_id)
@@ -758,9 +772,7 @@ class HindsightMemoryEngine:
                 **(
                     {}
                     if observation_binding_sha256 is None
-                    else {
-                        "observation_binding_sha256": observation_binding_sha256
-                    }
+                    else {"observation_binding_sha256": observation_binding_sha256}
                 ),
                 **(
                     {}
@@ -807,9 +819,9 @@ class HindsightMemoryEngine:
         )
 
     def remove_conversation_document(
-        self, *, bank_id: str, document_id: str
+        self, *, bank_id: str, document_id: str, principal_sha256: str
     ) -> None:
-        """Remove one exact retained document; a missing replay is already safe."""
+        """Remove one source and its person-derived style model, replay safely."""
 
         if not re.fullmatch(
             rf"{re.escape(self._config.bank_namespace)}-[0-9a-f]{{32}}", bank_id
@@ -819,16 +831,27 @@ class HindsightMemoryEngine:
             )
         if not document_id.strip() or len(document_id) > 1_024:
             raise HindsightMemoryScopeError("Hindsight removal document is invalid")
-        encoded = urllib.parse.quote(document_id, safe="")
-        status, response = self._request(
-            "DELETE",
-            f"/v1/default/banks/{bank_id}/documents/{encoded}",
-            allowed_statuses=frozenset({404}),
-        )
-        if status != 404 and response.get("success") is not True:
-            raise HindsightProjectionProtocolError(
-                "Hindsight did not acknowledge conversation-memory removal"
+        mental_model_id = self._style_mirror_id_from_sha256(principal_sha256)
+        with self._derivative_lock:
+            encoded = urllib.parse.quote(document_id, safe="")
+            status, response = self._request(
+                "DELETE",
+                f"/v1/default/banks/{bank_id}/documents/{encoded}",
+                allowed_statuses=frozenset({404}),
             )
+            if status != 404 and response.get("success") is not True:
+                raise HindsightProjectionProtocolError(
+                    "Hindsight did not acknowledge conversation-memory removal"
+                )
+            status, response = self._request(
+                "DELETE",
+                f"/v1/default/banks/{bank_id}/mental-models/{mental_model_id}",
+                allowed_statuses=frozenset({404}),
+            )
+            if status != 404 and response.get("status") != "deleted":
+                raise HindsightProjectionProtocolError(
+                    "Hindsight did not acknowledge derived-style removal"
+                )
 
     def _wait_for_operation(self, bank_id: str, operation_id: str) -> None:
         deadline = time.monotonic() + self._config.timeout_seconds
@@ -870,8 +893,7 @@ class HindsightMemoryEngine:
             assert query.audience.group_chat_id is not None
             assert query.audience.consent_ref is not None
             if (
-                query.conversation_id
-                != f"telegram:{query.audience.group_chat_id}"
+                query.conversation_id != f"telegram:{query.audience.group_chat_id}"
                 or query.project_id is not None
                 or "observation_binding_sha256" in query.scope
             ):
@@ -888,9 +910,7 @@ class HindsightMemoryEngine:
         else:
             self._require_private_recall_audience(query)
             audience_tag = self._person_tag(query.principal_id)
-        observation_binding_sha256 = query.scope.get(
-            "observation_binding_sha256"
-        )
+        observation_binding_sha256 = query.scope.get("observation_binding_sha256")
         if observation_binding_sha256 is not None and (
             not isinstance(observation_binding_sha256, str)
             or not _SHA256.fullmatch(observation_binding_sha256)
@@ -1104,7 +1124,10 @@ class HindsightMemoryEngine:
             returned_project_id = metadata.get(
                 "project_id", raw.get("_eva_memory_project_id")
             )
-            if returned_project_id is not None and returned_project_id != query.project_id:
+            if (
+                returned_project_id is not None
+                and returned_project_id != query.project_id
+            ):
                 continue
             returned_observation_binding = metadata.get(
                 "observation_binding_sha256",

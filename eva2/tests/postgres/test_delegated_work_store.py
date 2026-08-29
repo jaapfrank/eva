@@ -93,7 +93,7 @@ def delegated_engine() -> Engine:
             sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
         )
     receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-    assert receipt.final_revision == "4e_0005_conversation_erasure"
+    assert receipt.final_revision == "4e_0006_memory_outbox_erasure"
     try:
         yield engine
     finally:

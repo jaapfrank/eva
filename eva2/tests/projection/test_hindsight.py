@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import threading
 from dataclasses import replace
@@ -136,7 +137,8 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                                             "principal_id": PRINCIPAL,
                                             "privacy_class": "confidential",
                                             "source_ref": "telegram:photo-correction",
-                                            "evidence_ref": "observation-binding:" + "a" * 64,
+                                            "evidence_ref": "observation-binding:"
+                                            + "a" * 64,
                                             "trust": "direct_user",
                                             "observation_binding_sha256": "a" * 64,
                                         },
@@ -329,6 +331,14 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
 
         def do_DELETE(self) -> None:  # noqa: N802
             state.requests.append(("DELETE", self.path, None))
+            if "/mental-models/" in self.path:
+                mental_model_id = self.path.rsplit("/", 1)[-1]
+                if mental_model_id not in state.mental_models:
+                    self._send(404, {"detail": "not found"})
+                    return
+                state.mental_models.remove(mental_model_id)
+                self._send(200, {"status": "deleted"})
+                return
             self._send(200, {"success": True})
 
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
@@ -498,13 +508,16 @@ def test_hindsight_retention_deadline_and_exact_document_removal(
 ) -> None:
     base_url, state = hindsight_server
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
-    document = replace(
-        _conversation_document(), retention_until="2027-08-23T14:00:00Z"
-    )
+    document = replace(_conversation_document(), retention_until="2027-08-23T14:00:00Z")
 
     receipt = engine.retain_conversation(document)
+    principal_sha256 = hashlib.sha256(document.principal_id.encode("utf-8")).hexdigest()
+    mental_model_id = f"eva-style-mirror-v1-{principal_sha256[:16]}"
+    state.mental_models.add(mental_model_id)
     engine.remove_conversation_document(
-        bank_id=receipt.bank_id, document_id=document.document_id
+        bank_id=receipt.bank_id,
+        document_id=document.document_id,
+        principal_sha256=principal_sha256,
     )
 
     retained = next(
@@ -513,15 +526,43 @@ def test_hindsight_retention_deadline_and_exact_document_removal(
         if method == "POST" and path.endswith("/memories")
     )
     assert retained is not None
-    assert (
-        retained["items"][0]["metadata"]["retention_until"]
-        == "2027-08-23T14:00:00Z"
-    )
+    assert retained["items"][0]["metadata"]["retention_until"] == "2027-08-23T14:00:00Z"
     assert any(
         method == "DELETE"
         and path.endswith("/documents/conversation%3Atelegram%3Ajaap%3Ahistory")
         for method, path, _body in state.requests
     )
+    assert mental_model_id not in state.mental_models
+    assert any(
+        method == "DELETE" and path.endswith(f"/mental-models/{mental_model_id}")
+        for method, path, _body in state.requests
+    )
+
+    # A crash after either provider delete can replay both exact DELETEs safely.
+    engine.remove_conversation_document(
+        bank_id=receipt.bank_id,
+        document_id=document.document_id,
+        principal_sha256=principal_sha256,
+    )
+
+
+def test_hindsight_document_removal_rejects_an_unbound_derivative_scope(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+
+    with pytest.raises(
+        HindsightMemoryScopeError,
+        match="derivative principal binding is invalid",
+    ):
+        engine.remove_conversation_document(
+            bank_id="eva2-" + "a" * 32,
+            document_id="conversation:1",
+            principal_sha256="not-a-hash",
+        )
+
+    assert state.requests == []
 
 
 def test_private_hindsight_memory_never_calls_the_group_consent_resolver(
@@ -662,7 +703,10 @@ def test_hindsight_retain_rejects_a_group_document_with_private_evidence_binding
     engine = HindsightMemoryEngine(
         HindsightProjectionConfig(base_url), active_group_consent_resolver=Resolver()
     )
-    document = replace(_group_document(consent_ref=consent_ref), evidence_ref="observation-binding:" + "a" * 64)
+    document = replace(
+        _group_document(consent_ref=consent_ref),
+        evidence_ref="observation-binding:" + "a" * 64,
+    )
 
     with pytest.raises(HindsightMemoryScopeError, match="not bound to its group"):
         engine.retain_conversation(document)
@@ -934,9 +978,9 @@ def test_bound_photo_identity_uses_an_exact_observation_bank(
         for method, path, body in state.requests
         if method == "POST" and path.endswith("/memories")
     )
-    assert retained["items"][0]["metadata"][
-        "observation_binding_sha256"
-    ] == binding_sha256
+    assert (
+        retained["items"][0]["metadata"]["observation_binding_sha256"] == binding_sha256
+    )
     assert receipt.bank_id != engine._bank_id(TENANT, INSTALLATION)  # noqa: SLF001
 
     state.requests.clear()
@@ -1170,10 +1214,13 @@ def test_reflection_has_no_unmanaged_schedule_and_refreshes_only_on_request(
     assert request["trigger"]["refresh_after_consolidation"] is False
     assert request["max_tokens"] == 320
     assert "maximaal 100" in request["source_query"]
-    assert sum(
-        method == "POST" and path.endswith("/refresh")
-        for method, path, _body in state.requests
-    ) == 1
+    assert (
+        sum(
+            method == "POST" and path.endswith("/refresh")
+            for method, path, _body in state.requests
+        )
+        == 1
+    )
     assert engine.recall_for_presence(_query()).style_mirror == (
         "Jaap wil korte, directe en warme antwoorden zonder onnodige kopjes; "
         "zijn latere correctie is leidend."

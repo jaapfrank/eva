@@ -239,7 +239,7 @@ class SemanticMemoryProviderPort(Protocol):
     ) -> MemoryRetentionReceipt: ...
 
     def remove_conversation_document(
-        self, *, bank_id: str, document_id: str
+        self, *, bank_id: str, document_id: str, principal_sha256: str
     ) -> None: ...
 
     def maintain_person_scope(

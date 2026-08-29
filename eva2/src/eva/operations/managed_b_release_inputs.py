@@ -60,6 +60,7 @@ _EXPECTED_INPUT_PATHS = (
     "evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json",
     "evidence/living-core/eva2-current-immutable-canary-cutover-live-2026-08-28.json",
     "evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json",
+    "evidence/living-core/eva2-derived-memory-erasure-disposable-2026-08-29.json",
     "evidence/living-core/eva2-distroless-core-crypto50-candidate-2026-08-28.json",
     "evidence/living-core/eva2-distroless-hindsight-pgvector-candidate-2026-08-28.json",
     "evidence/living-core/eva2-hindsight-database-file-secret-2026-08-28.json",
@@ -127,6 +128,7 @@ _EXPECTED_INPUT_PATHS = (
     "migrations/env.py",
     "migrations/versions/4e_0004_delegated_work_stop.py",
     "migrations/versions/4e_0005_conversation_erasure.py",
+    "migrations/versions/4e_0006_memory_outbox_erasure.py",
     "pyproject.toml",
     "release/4d-dependency-source-binding.json",
     "release/build-policy.json",
@@ -526,6 +528,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0005_conversation_erasure",
         "4e_0004_delegated_work_stop",
         "migrations/versions/4e_0005_conversation_erasure.py",
+    ),
+    (
+        "4e_0006_memory_outbox_erasure",
+        "4e_0005_conversation_erasure",
+        "migrations/versions/4e_0006_memory_outbox_erasure.py",
     ),
 )
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 import hashlib
+import re
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
@@ -77,7 +78,7 @@ class MemoryExpiryJob:
     document_sha256: str
     content_sha256: str
     retention_until: str
-    principal_sha256: str | None = None
+    principal_sha256: str
     source_message_id: str | None = None
 
 
@@ -155,10 +156,8 @@ class PostgresDailyReflectionBudget:
             event_data.get("contract") != "EvaDailyReflectionBudget/v1"
             or event_data.get("day") != expected_day
             or event_data.get("person_limit") != expected_person_limit
-            or event_data.get("installation_limit")
-            != expected_installation_limit
-            or event_data.get("source_budget_sha256")
-            != expected_source_budget_sha256
+            or event_data.get("installation_limit") != expected_installation_limit
+            or event_data.get("source_budget_sha256") != expected_source_budget_sha256
             or not isinstance(event_data.get("installation_used"), int)
             or not isinstance(people, dict)
             or any(
@@ -324,9 +323,7 @@ class PostgresMemoryStorageBudget:
         self._installation_id = installation_id
         self._scope_value = TimelineScope(
             tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-            installation_id=uuid5(
-                NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
-            ),
+            installation_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"),
         )
         self._timeline = PostgresOperationalTimeline(engine, self._scope_value)
         self._person_record_limit = resource_budget.memory_records_per_person
@@ -371,9 +368,7 @@ class PostgresMemoryStorageBudget:
         if not isinstance(value, str):
             raise OperationalTimelineError(f"memory storage {label} is malformed")
         try:
-            parsed = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(
-                tzinfo=UTC
-            )
+            parsed = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
         except ValueError as error:
             raise OperationalTimelineError(
                 f"memory storage {label} is malformed"
@@ -614,8 +609,7 @@ class PostgresMemoryStorageBudget:
                     )
                 )
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == thread_id,
@@ -633,20 +627,17 @@ class PostgresMemoryStorageBudget:
                     or data.get("group_sha256") != group_sha256
                     or data.get("principal_sha256") != principal_sha256
                     or data.get("project_sha256") != project_sha256
-                    or data.get("person_record_limit")
-                    != self._person_record_limit
+                    or data.get("person_record_limit") != self._person_record_limit
                     or data.get("person_byte_limit") != self._person_byte_limit
                     or data.get("group_record_limit") != self._group_record_limit
                     or data.get("group_byte_limit") != self._group_byte_limit
-                    or data.get("project_record_limit")
-                    != self._project_record_limit
+                    or data.get("project_record_limit") != self._project_record_limit
                     or data.get("project_byte_limit") != self._project_byte_limit
                     or data.get("installation_record_limit")
                     != self._installation_record_limit
                     or data.get("installation_byte_limit")
                     != self._installation_byte_limit
-                    or data.get("source_budget_sha256")
-                    != self._source_budget_sha256
+                    or data.get("source_budget_sha256") != self._source_budget_sha256
                 ):
                     raise OperationalTimelineError(
                         "memory storage replay differs from its reservation"
@@ -705,9 +696,8 @@ class PostgresMemoryStorageBudget:
                 project_sha256=project_sha256,
             )
             if (
-                (group_sha256 is not None or project_sha256 is not None)
-                and self._active_legacy_reservations(connection)
-            ):
+                group_sha256 is not None or project_sha256 is not None
+            ) and self._active_legacy_reservations(connection):
                 admitted = False
                 reason = "legacy_scope_accounting_unavailable"
             elif usage.person_records >= self._person_record_limit:
@@ -744,8 +734,7 @@ class PostgresMemoryStorageBudget:
                 admitted = False
                 reason = "installation_record_limit_reached"
             elif (
-                usage.installation_bytes + content_bytes
-                > self._installation_byte_limit
+                usage.installation_bytes + content_bytes > self._installation_byte_limit
             ):
                 admitted = False
                 reason = "installation_byte_limit_reached"
@@ -756,9 +745,7 @@ class PostgresMemoryStorageBudget:
                     person_records=usage.person_records + 1,
                     person_bytes=usage.person_bytes + content_bytes,
                     group_records=(
-                        None
-                        if usage.group_records is None
-                        else usage.group_records + 1
+                        None if usage.group_records is None else usage.group_records + 1
                     ),
                     group_bytes=(
                         None
@@ -808,14 +795,10 @@ class PostgresMemoryStorageBudget:
                 occurred_at=now,
                 data=data,
                 event_type=(
-                    "MEMORY_STORAGE_RESERVED"
-                    if admitted
-                    else "MEMORY_STORAGE_BLOCKED"
+                    "MEMORY_STORAGE_RESERVED" if admitted else "MEMORY_STORAGE_BLOCKED"
                 ),
                 phase=(
-                    "memory_storage_reserved"
-                    if admitted
-                    else "memory_storage_blocked"
+                    "memory_storage_reserved" if admitted else "memory_storage_blocked"
                 ),
                 status="active" if admitted else "completed",
                 deadline=retention_until if admitted else None,
@@ -896,14 +879,18 @@ class PostgresMemoryStorageBudget:
 
     @staticmethod
     def _validate_retention_data(data: dict[str, object]) -> dict[str, object]:
-        if set(data) != {
-            "bank_id",
-            "content_sha256",
-            "contract",
-            "document_id",
-            "document_sha256",
-            "retention_until",
-        } or data.get("contract") != "EvaMemoryStorageRetention/v1":
+        if (
+            set(data)
+            != {
+                "bank_id",
+                "content_sha256",
+                "contract",
+                "document_id",
+                "document_sha256",
+                "retention_until",
+            }
+            or data.get("contract") != "EvaMemoryStorageRetention/v1"
+        ):
             raise OperationalTimelineError(
                 "memory storage retention event is malformed"
             )
@@ -942,8 +929,7 @@ class PostgresMemoryStorageBudget:
             row = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
                     operational_checkpoints.c.thread_id == thread_id,
@@ -955,7 +941,9 @@ class PostgresMemoryStorageBudget:
             state = CheckpointState(
                 thread_id=str(row.thread_id),
                 checkpoint_id=str(row.checkpoint_id),
-                operation_id=(None if row.operation_id is None else str(row.operation_id)),
+                operation_id=(
+                    None if row.operation_id is None else str(row.operation_id)
+                ),
                 phase=str(row.phase),  # type: ignore[arg-type]
                 status=str(row.status),  # type: ignore[arg-type]
                 retry_count=int(row.retry_count),
@@ -1093,13 +1081,10 @@ class PostgresMemoryStorageBudget:
             rows = connection.execute(
                 sa.select(operational_checkpoints)
                 .where(
-                    operational_checkpoints.c.tenant_id
-                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
                     operational_checkpoints.c.installation_id
                     == self._scope_value.installation_id,
-                    operational_checkpoints.c.thread_id.startswith(
-                        "memory-storage:"
-                    ),
+                    operational_checkpoints.c.thread_id.startswith("memory-storage:"),
                     operational_checkpoints.c.phase.in_(
                         ("memory_storage_retained", "memory_storage_removing")
                     ),
@@ -1137,13 +1122,11 @@ class PostgresMemoryStorageBudget:
                 retained_row = connection.execute(
                     sa.select(operational_events.c.payload)
                     .where(
-                        operational_events.c.tenant_id
-                        == self._scope_value.tenant_id,
+                        operational_events.c.tenant_id == self._scope_value.tenant_id,
                         operational_events.c.installation_id
                         == self._scope_value.installation_id,
                         operational_events.c.thread_id == state.thread_id,
-                        operational_events.c.event_type
-                        == "MEMORY_STORAGE_RETAINED",
+                        operational_events.c.event_type == "MEMORY_STORAGE_RETAINED",
                     )
                     .order_by(operational_events.c.sequence.desc())
                     .limit(1)
@@ -1155,6 +1138,31 @@ class PostgresMemoryStorageBudget:
                 explicit_principal_sha256, source_message_id = (
                     self._explicit_erasure_bindings(state.thread_id)
                 )
+                admission_row = connection.execute(
+                    sa.select(operational_events.c.payload).where(
+                        operational_events.c.tenant_id == self._scope_value.tenant_id,
+                        operational_events.c.installation_id
+                        == self._scope_value.installation_id,
+                        operational_events.c.thread_id == state.thread_id,
+                        operational_events.c.sequence == 1,
+                    )
+                ).one_or_none()
+                admission_data = self._first_data(
+                    None if admission_row is None else admission_row.payload
+                )
+                principal_sha256 = admission_data.get("principal_sha256")
+                if (
+                    admission_data.get("contract") != "EvaMemoryStorageAdmission/v2"
+                    or not isinstance(principal_sha256, str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", principal_sha256)
+                    or (
+                        explicit_principal_sha256 is not None
+                        and explicit_principal_sha256 != principal_sha256
+                    )
+                ):
+                    raise OperationalTimelineError(
+                        "memory storage erasure principal binding is malformed"
+                    )
                 retention_until = data.get("retention_until")
                 self._parse_timestamp(retention_until, label="retention deadline")
                 retry_count = state.retry_count + 1
@@ -1216,15 +1224,13 @@ class PostgresMemoryStorageBudget:
                         document_sha256=values[2],
                         content_sha256=values[3],
                         retention_until=values[4],
-                        principal_sha256=explicit_principal_sha256,
+                        principal_sha256=principal_sha256,
                         source_message_id=source_message_id,
                     )
                 )
         return tuple(claimed)
 
-    def mark_removed(
-        self, job: MemoryExpiryJob, *, now: datetime
-    ) -> CheckpointState:
+    def mark_removed(self, job: MemoryExpiryJob, *, now: datetime) -> CheckpointState:
         now = self._require_now(now)
         try:
             return self._timeline.transition(

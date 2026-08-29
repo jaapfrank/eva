@@ -1,0 +1,84 @@
+{
+  "contract": "EvaDerivedMemoryErasureEvidence/v1",
+  "createdAt": "2026-08-29T08:30:27+02:00",
+  "status": "tested",
+  "sourceBaseCommit": "b38339f7aab59c6563592c60d117ef925b435577",
+  "sourceInputs": {
+    "memoryOutboxSha256": "a4061aacd9f39346f87137db52aa7c61c693d20bf64c4f60b43d04eb71df5b66",
+    "memoryWorkerSha256": "8ae57b57d38f8baf831f01d04432ba6bc3f544c027182286628471b00a5d1f72",
+    "migrationSha256": "3583bc1944d5166061c9889c180cf1cdfda0d08792b5edc0a6f503a25bee40d5",
+    "projectionSha256": "15051ee34c40cef0451332f2b90a4591b17ae652fe9794f1ec399b968fd5a28c"
+  },
+  "disposableRuntime": {
+    "hindsightImage": "eva2/distroless-hindsight-api-clean@sha256:f52dafb0e23b9f61dfe9a4f4e7b34c15e721fae26f15d024be38e1694ede0167",
+    "postgresImage": "eva2/chainguard-pgvector18-offline-candidate@sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "publishedAddress": "127.0.0.1:44720",
+    "userData": false
+  },
+  "hindsightProof": {
+    "bank": "forgetproof-57d55061730b86ae57d8642c407dccdb",
+    "before": {
+      "documents": 1,
+      "mentalModelHistoryRows": 0,
+      "mentalModels": 1,
+      "memoryUnits": 2,
+      "sourceFacts": 1,
+      "sourceLinkedObservations": 1
+    },
+    "afterDelete": {
+      "documents": 0,
+      "mentalModelHistoryRows": 0,
+      "mentalModels": 0,
+      "memoryUnits": 0
+    },
+    "afterFullDatabaseAndApiRestart": {
+      "documents": 0,
+      "healthHttpStatus": 200,
+      "mentalModelHistoryRows": 0,
+      "mentalModels": 0,
+      "memoryUnits": 0
+    },
+    "deleteReplayAcknowledged": true,
+    "fixture": "A synthetic bank and style-model record were created through the Hindsight API. One synthetic document, its source fact and one source-linked observation were inserted into that disposable Hindsight schema so the exact upstream deletion cascade could be observed without granting a real model credential.",
+    "successfulExternalModelCalls": 0
+  },
+  "postgresProof": {
+    "conversationJournalRedacted": true,
+    "durableOutboxContentRedacted": true,
+    "durableOutboxReplayStopped": true,
+    "leaseRemainsRecoverableAfterInjectedCrash": true,
+    "migrationHead": "4e_0006_memory_outbox_erasure"
+  },
+  "checks": [
+    {
+      "result": "16 passed",
+      "target": "tests/application/test_memory_background.py"
+    },
+    {
+      "result": "42 passed",
+      "target": "memory worker plus Hindsight projection"
+    },
+    {
+      "result": "8 passed",
+      "target": "disposable PostgreSQL resource and crash recovery"
+    },
+    {
+      "result": "30 passed",
+      "target": "disposable PostgreSQL operational timeline"
+    },
+    {
+      "result": "33 passed, 2 skipped for unavailable optional environments",
+      "target": "schema installation, managed-B static release inputs and portable schema"
+    },
+    {
+      "result": "passed",
+      "target": "Ruff and git diff whitespace checks"
+    }
+  ],
+  "nonClaims": [
+    "No live Eva1 or Eva2 service, database, Hindsight bank, volume or user memory was deleted or changed.",
+    "This proves the candidate erasure boundary, not a production deployment or a user-interface acceptance test.",
+    "Existing portable archives and old backups are not yet deleted or suppressed by this change.",
+    "The synthetic Hindsight fixture does not claim a successful retain, recall, reflection or external model call."
+  ]
+}

@@ -5,8 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
+import re
 from uuid import NAMESPACE_URL, uuid5
 
+import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.operational_timeline import (
@@ -14,6 +16,9 @@ from eva.adapters.postgres.operational_timeline import (
     CheckpointState,
     PostgresOperationalTimeline,
     TimelineScope,
+    operational_checkpoints,
+    operational_events,
+    transition_timeline_thread,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import (
@@ -21,12 +26,26 @@ from eva.application.memory_audience import (
     memory_audience_from_wire,
     memory_audience_to_wire,
 )
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 
 @dataclass(frozen=True, slots=True)
 class DurableMemoryRetentionJob:
     document: ConversationMemoryDocument
     state: CheckpointState
+
+
+@dataclass(frozen=True, slots=True)
+class MemoryOutboxContentErasureReceipt:
+    """Content-free proof that one durable retain payload was redacted."""
+
+    operation_sha256: str
+    principal_sha256: str
+    document_sha256: str
+    source_message_sha256: str
+    erased_at: str
+    redacted_event_count: int
+    replayed: bool
 
 
 def conversation_memory_document_from_outbox_data(
@@ -99,17 +118,16 @@ class PostgresMemoryOutbox:
     def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str) -> None:
         if not tenant_id.strip() or not installation_id.strip():
             raise ValueError("memory outbox scope is required")
+        self._engine = engine
         self._tenant_id = tenant_id
         self._installation_id = installation_id
-        self._timeline = PostgresOperationalTimeline(
-            engine,
-            TimelineScope(
-                tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-                installation_id=uuid5(
-                    NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
-                ),
+        self._scope_value = TimelineScope(
+            tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
+            installation_id=uuid5(
+                NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
             ),
         )
+        self._timeline = PostgresOperationalTimeline(engine, self._scope_value)
 
     @staticmethod
     def _thread_id(document_id: str) -> str:
@@ -119,6 +137,17 @@ class PostgresMemoryOutbox:
     @staticmethod
     def _now() -> datetime:
         return datetime.now(tz=UTC).replace(microsecond=0)
+
+    def _scope(self, connection: sa.Connection) -> None:
+        connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
+        connection.execute(
+            sa.text("SELECT set_config('eva.tenant_id', :value, true)"),
+            {"value": str(self._scope_value.tenant_id)},
+        )
+        connection.execute(
+            sa.text("SELECT set_config('eva.installation_id', :value, true)"),
+            {"value": str(self._scope_value.installation_id)},
+        )
 
     @staticmethod
     def _document_data(document: ConversationMemoryDocument) -> dict[str, object]:
@@ -316,9 +345,169 @@ class PostgresMemoryOutbox:
             last_error_fingerprint=fingerprint,
         )
 
+    def erase_content(
+        self,
+        *,
+        principal_sha256: str,
+        document_id: str,
+        operation_sha256: str,
+        erased_at: datetime,
+    ) -> MemoryOutboxContentErasureReceipt:
+        """Atomically stop replay and redact one queued Hindsight document."""
+
+        sha256_pattern = re.compile(r"^[0-9a-f]{64}$")
+        if not sha256_pattern.fullmatch(principal_sha256):
+            raise ValueError("memory outbox erasure principal hash is invalid")
+        if not document_id.strip() or len(document_id) > 1_024:
+            raise ValueError("memory outbox erasure document is invalid")
+        if not sha256_pattern.fullmatch(operation_sha256):
+            raise ValueError("memory outbox erasure operation hash is invalid")
+        if (
+            erased_at.tzinfo is None
+            or erased_at.utcoffset() is None
+            or erased_at.microsecond
+        ):
+            raise ValueError("memory outbox erasure time must be whole-second UTC")
+        erased_text = erased_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+        document_sha256 = hashlib.sha256(document_id.encode("utf-8")).hexdigest()
+        thread_id = self._thread_id(document_id)
+
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            checkpoint = connection.execute(
+                sa.select(operational_checkpoints)
+                .where(
+                    operational_checkpoints.c.tenant_id
+                    == self._scope_value.tenant_id,
+                    operational_checkpoints.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_checkpoints.c.thread_id == thread_id,
+                )
+                .with_for_update()
+            ).one_or_none()
+            queued = connection.execute(
+                sa.select(operational_events)
+                .where(
+                    operational_events.c.tenant_id
+                    == self._scope_value.tenant_id,
+                    operational_events.c.installation_id
+                    == self._scope_value.installation_id,
+                    operational_events.c.thread_id == thread_id,
+                    operational_events.c.event_type == "MEMORY_RETAIN_QUEUED",
+                )
+                .limit(1)
+            ).one_or_none()
+            if checkpoint is None or queued is None:
+                raise RuntimeError("memory outbox erasure target does not exist")
+            payload = dict(queued.payload)
+            value = payload.get("data")
+            if not isinstance(value, dict):
+                raise RuntimeError("memory outbox erasure target is malformed")
+            durable_principal = value.get("principal_id")
+            source_message_id = value.get("source_ref")
+            if (
+                value.get("kind") != "hindsight_memory_document"
+                or value.get("document_id") != document_id
+                or not isinstance(durable_principal, str)
+                or hashlib.sha256(durable_principal.encode("utf-8")).hexdigest()
+                != principal_sha256
+                or not isinstance(source_message_id, str)
+                or not source_message_id
+            ):
+                raise RuntimeError("memory outbox erasure scope differs")
+            source_message_sha256 = hashlib.sha256(
+                source_message_id.encode("utf-8")
+            ).hexdigest()
+            expected_erasure = {
+                "contract": "EvaConversationContentErasure/v1",
+                "erased_at": erased_text,
+                "message_sha256": source_message_sha256,
+                "operation_sha256": operation_sha256,
+                "principal_sha256": principal_sha256,
+                "status": "erased",
+            }
+            existing = value.get("content_erasure")
+            if "content" not in value:
+                if existing != expected_erasure:
+                    raise RuntimeError("memory outbox erasure proof differs")
+                return MemoryOutboxContentErasureReceipt(
+                    operation_sha256=operation_sha256,
+                    principal_sha256=principal_sha256,
+                    document_sha256=document_sha256,
+                    source_message_sha256=source_message_sha256,
+                    erased_at=erased_text,
+                    redacted_event_count=0,
+                    replayed=True,
+                )
+            if existing is not None:
+                raise RuntimeError("memory outbox content and erasure proof coexist")
+
+            if str(checkpoint.status) != "completed":
+                last_error_fingerprint = (
+                    None
+                    if checkpoint.last_error_fingerprint is None
+                    else bytes(checkpoint.last_error_fingerprint).hex()
+                )
+                transition_timeline_thread(
+                    connection,
+                    self._scope_value,
+                    thread_id=thread_id,
+                    expected_revision=int(checkpoint.revision),
+                    checkpoint_id=f"{thread_id}:erased",
+                    operation_id=(
+                        None
+                        if checkpoint.operation_id is None
+                        else str(checkpoint.operation_id)
+                    ),
+                    occurred_at=erased_at.astimezone(UTC),
+                    data={
+                        "contract": "EvaMemoryOutboxErasure/v1",
+                        "document_sha256": document_sha256,
+                        "operation_sha256": operation_sha256,
+                        "principal_sha256": principal_sha256,
+                        "status": "erased",
+                    },
+                    event_type="MEMORY_RETAIN_ERASED",
+                    phase="memory_erased",
+                    status="completed",
+                    retry_count=int(checkpoint.retry_count),
+                    last_error_fingerprint=last_error_fingerprint,
+                )
+
+            redacted_data = dict(value)
+            redacted_data.pop("content")
+            redacted_data["content_erasure"] = expected_erasure
+            redacted_payload = dict(payload)
+            redacted_payload["data"] = redacted_data
+            changed = connection.scalar(
+                sa.text(
+                    "SELECT eva_core.erase_conversation_event_content("
+                    ":event_id, :expected_hash, :payload, :new_hash)"
+                ),
+                {
+                    "event_id": queued.event_id,
+                    "expected_hash": bytes(queued.payload_sha256),
+                    "payload": canonical_json_bytes(redacted_payload).decode("utf-8"),
+                    "new_hash": bytes.fromhex(canonical_sha256(redacted_payload)),
+                },
+            )
+            if changed is not True:
+                raise RuntimeError("memory outbox erasure target vanished")
+
+        return MemoryOutboxContentErasureReceipt(
+            operation_sha256=operation_sha256,
+            principal_sha256=principal_sha256,
+            document_sha256=document_sha256,
+            source_message_sha256=source_message_sha256,
+            erased_at=erased_text,
+            redacted_event_count=1,
+            replayed=False,
+        )
+
 
 __all__ = [
     "DurableMemoryRetentionJob",
+    "MemoryOutboxContentErasureReceipt",
     "PostgresMemoryOutbox",
     "conversation_memory_document_from_outbox_data",
 ]

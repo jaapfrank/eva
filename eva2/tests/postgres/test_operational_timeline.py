@@ -1144,6 +1144,72 @@ def test_hindsight_outbox_commits_hash_bound_success(
     assert outbox.pending() == ()
 
 
+def test_hindsight_outbox_erasure_stops_replay_and_physically_redacts_content(
+    timeline_engine: Engine,
+) -> None:
+    tenant_id = "living-memory-outbox-erasure"
+    installation_id = "home"
+    outbox = PostgresMemoryOutbox(
+        timeline_engine, tenant_id=tenant_id, installation_id=installation_id
+    )
+    document = ConversationMemoryDocument(
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        principal_id="jaap",
+        conversation_id="telegram:jaap",
+        document_id="telegram:jaap:exchange:memory-erasure-1",
+        content="Gebruiker (directe bron): verwijder mijn saffieren geheim.",
+        occurred_at="2026-08-29T09:10:00Z",
+        source_ref="telegram:memory-erasure-1",
+        evidence_ref="conversation-reply:telegram:memory-erasure-1",
+        privacy_class="internal",
+        trust="direct_user",
+        audience=MemoryAudience.private_person(principal_id="jaap"),
+    )
+    queued = outbox.enqueue(document)
+    assert outbox.begin(queued, now=NOW) is not None
+    principal_sha256 = hashlib.sha256(b"jaap").hexdigest()
+    operation_sha256 = hashlib.sha256(b"outbox-erasure-operation").hexdigest()
+
+    receipt = outbox.erase_content(
+        principal_sha256=principal_sha256,
+        document_id=document.document_id,
+        operation_sha256=operation_sha256,
+        erased_at=NOW + timedelta(seconds=1),
+    )
+
+    assert receipt.redacted_event_count == 1
+    assert receipt.replayed is False
+    assert outbox.pending() == ()
+    scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
+        ),
+    )
+    events = PostgresOperationalTimeline(timeline_engine, scope).events(
+        queued.state.thread_id
+    )
+    assert [event.event_type for event in events] == [
+        "MEMORY_RETAIN_QUEUED",
+        "MEMORY_RETAIN_ATTEMPTED",
+        "MEMORY_RETAIN_ERASED",
+    ]
+    assert "saffieren geheim" not in str(events)
+    queued_data = events[0].payload["data"]
+    assert "content" not in queued_data
+    assert queued_data["content_erasure"]["operation_sha256"] == operation_sha256
+
+    replay = outbox.erase_content(
+        principal_sha256=principal_sha256,
+        document_id=document.document_id,
+        operation_sha256=operation_sha256,
+        erased_at=NOW + timedelta(seconds=1),
+    )
+    assert replay.redacted_event_count == 0
+    assert replay.replayed is True
+
+
 def test_hindsight_outbox_preserves_group_audience_across_restart(
     timeline_engine: Engine,
 ) -> None:

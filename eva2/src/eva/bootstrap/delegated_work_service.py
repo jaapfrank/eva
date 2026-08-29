@@ -29,7 +29,7 @@ from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-_SCHEMA_HEAD = "4e_0005_conversation_erasure"
+_SCHEMA_HEAD = "4e_0006_memory_outbox_erasure"
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:
