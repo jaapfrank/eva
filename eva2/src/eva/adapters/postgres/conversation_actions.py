@@ -2439,9 +2439,7 @@ class PostgresConversationActions:
         events = self._timeline(turn).events(self._home_assistant_thread_id(turn))
         return self._home_assistant_receipt(turn, events)
 
-    def _execute_automation(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
+    def _require_automation_ports(self) -> None:
         if self._home_assistant_automations is None:
             raise ConversationConflict(
                 "Home Assistant automation action is unavailable"
@@ -2450,24 +2448,16 @@ class PostgresConversationActions:
             raise ConversationConflict(
                 "Home Assistant automation entity resolution is unavailable"
             )
-        arguments = self._validated_automation_arguments(call.arguments)
-        resolved = asyncio.run(
-            self._home_assistant.resolve_entities(
-                (
-                    (arguments["trigger_entity_id"], _AUTOMATION_TRIGGER_DOMAINS),
-                    (arguments["action_entity_id"], _AUTOMATION_ACTION_DOMAINS),
-                )
-            )
-        )
-        automation_id = self._automation_id(turn)
-        config = state_action_automation(
-            automation_id=automation_id,
-            alias=arguments["alias"],
-            trigger_entity_id=resolved[0]["entity_id"],
-            trigger_to=arguments["trigger_to"],
-            action_entity_id=resolved[1]["entity_id"],
-            action_service=arguments["action_service"],
-        )
+
+    def _run_automation(
+        self,
+        turn: ConversationTurn,
+        call: ConversationActionCall,
+        arguments: dict[str, JsonValue],
+        resolved: tuple[dict[str, str], ...],
+        automation_id: str,
+        config: dict[str, JsonValue],
+    ) -> ConversationActionReceipt:
         asyncio.run(
             self.execute_home_assistant_automation(
                 tenant_id=turn.tenant_id,
@@ -2490,17 +2480,38 @@ class PostgresConversationActions:
         events = self._timeline(turn).events(self._automation_thread_id(turn))
         return self._automation_receipt(turn, events)
 
+    def _execute_automation(
+        self, turn: ConversationTurn, call: ConversationActionCall
+    ) -> ConversationActionReceipt:
+        self._require_automation_ports()
+        assert self._home_assistant is not None
+        arguments = self._validated_automation_arguments(call.arguments)
+        resolved = asyncio.run(
+            self._home_assistant.resolve_entities(
+                (
+                    (arguments["trigger_entity_id"], _AUTOMATION_TRIGGER_DOMAINS),
+                    (arguments["action_entity_id"], _AUTOMATION_ACTION_DOMAINS),
+                )
+            )
+        )
+        automation_id = self._automation_id(turn)
+        config = state_action_automation(
+            automation_id=automation_id,
+            alias=arguments["alias"],
+            trigger_entity_id=resolved[0]["entity_id"],
+            trigger_to=arguments["trigger_to"],
+            action_entity_id=resolved[1]["entity_id"],
+            action_service=arguments["action_service"],
+        )
+        return self._run_automation(
+            turn, call, arguments, resolved, automation_id, config
+        )
+
     def _execute_advanced_automation(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt:
-        if self._home_assistant_automations is None:
-            raise ConversationConflict(
-                "Home Assistant automation action is unavailable"
-            )
-        if self._home_assistant is None:
-            raise ConversationConflict(
-                "Home Assistant automation entity resolution is unavailable"
-            )
+        self._require_automation_ports()
+        assert self._home_assistant is not None
         arguments = self._validated_advanced_automation_arguments(call.arguments)
         queries: list[tuple[str, tuple[str, ...]]] = []
         if arguments["trigger_entity_id"] is not None:
@@ -2570,27 +2581,9 @@ class PostgresConversationActions:
             ),
             actions=resolved_actions,
         )
-        asyncio.run(
-            self.execute_home_assistant_automation(
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-                thread_id=self._automation_thread_id(turn),
-                operation_id=self._automation_operation_id(turn),
-                automation_id=automation_id,
-                config=config,
-                admission_context={
-                    "action_call_id": call.call_id,
-                    "action_name": call.name,
-                    "arguments": arguments,
-                    "conversation_id": turn.conversation_id,
-                    "principal_id": turn.principal_id,
-                    "resolved_entities": list(resolved),
-                    "source_message_id": turn.message_id,
-                },
-            )
+        return self._run_automation(
+            turn, call, arguments, resolved, automation_id, config
         )
-        events = self._timeline(turn).events(self._automation_thread_id(turn))
-        return self._automation_receipt(turn, events)
 
     def _pending_durable_goal(
         self, turn: ConversationTurn
