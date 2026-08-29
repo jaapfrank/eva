@@ -19,6 +19,7 @@ from eva.application.conversation import (
     ConversationActionCall,
     ConversationModelTiming,
     ConversationModelUsage,
+    publish_conversation_text,
 )
 from eva.contracts.canonical_json import canonical_json_bytes
 
@@ -45,12 +46,9 @@ class ConversationSseError(ValueError):
     """The ordinary conversation stream is malformed."""
 
 
-def parse_conversation_sse(
-    events: Iterator[tuple[str, dict[str, Any]]],
-    *,
-    started_at: float | None = None,
-    clock: Callable[[], float] = monotonic,
-) -> Any:
+def parse_conversation_sse(events: Iterator[tuple[str, dict[str, Any]]], *,
+                           started_at: float | None = None, clock: Callable[[], float] = monotonic,
+                           tools_disabled: bool = False) -> Any:
     deltas: list[str] = []
     completed_parts: list[str] = []
     action_call: ConversationActionCall | None = None
@@ -62,6 +60,7 @@ def parse_conversation_sse(
                 raise ConversationSseError("conversation text delta is invalid")
             if delta and started_at is not None and first_content_ms is None:
                 first_content_ms = round((clock() - started_at) * 1000)
+            publish_conversation_text(delta, tools_disabled=tools_disabled)
             deltas.append(delta)
         elif kind == "response.output_item.done":
             item = data.get("item")
@@ -76,35 +75,26 @@ def parse_conversation_sse(
                 try:
                     arguments = json.loads(encoded)
                 except json.JSONDecodeError as error:
-                    raise ConversationSseError(
-                        "conversation action arguments are invalid JSON"
-                    ) from error
+                    raise ConversationSseError("conversation action arguments are invalid JSON") from error
                 if not isinstance(arguments, dict):
                     raise ConversationSseError("conversation action arguments are not an object")
                 try:
                     action_call = ConversationActionCall(call_id, name, arguments)
                 except ValueError as error:
-                    raise ConversationSseError(
-                        "conversation action arguments are invalid"
-                    ) from error
+                    raise ConversationSseError("conversation action arguments are invalid") from error
                 continue
             content = item.get("content")
             if isinstance(content, list):
-                completed_parts.extend(
-                    part["text"]
-                    for part in content
-                    if isinstance(part, dict) and isinstance(part.get("text"), str)
-                )
+                completed_parts.extend(part["text"] for part in content
+                                       if isinstance(part, dict) and isinstance(part.get("text"), str))
         elif kind == "response.failed":
             raise ConversationSseError("conversation provider reported failure")
     text = "".join(deltas) if deltas else "".join(completed_parts)
     if started_at is None:
         return text, action_call
     completed_ms = max(0, round((clock() - started_at) * 1000))
-    return text, action_call, ConversationModelTiming(
-        completed_ms if first_content_ms is None and text else first_content_ms,
-        completed_ms,
-    )
+    first = completed_ms if first_content_ms is None and text else first_content_ms
+    return text, action_call, ConversationModelTiming(first, completed_ms)
 
 
 class _RequestTooLarge(RuntimeError):
@@ -368,7 +358,11 @@ class OpenAIResponsesTransport:
                         timeout=_remaining(deadline),
                     )
                     with cast(Any, stream) as events:
-                        return _project_events(events, started_at=started_at)
+                        return _project_events(
+                            events,
+                            started_at=started_at,
+                            tools_disabled=payload.get("tool_choice") == "none",
+                        )
         except Exception as error:
             failure = _sanitized_failure(
                 error,
@@ -516,6 +510,7 @@ def _project_events(
     *,
     started_at: float | None = None,
     clock: Callable[[], float] = monotonic,
+    tools_disabled: bool = False,
 ) -> OpenAIResponsesResult:
     deltas: list[str] = []
     completed_parts: list[str] = []
@@ -538,6 +533,7 @@ def _project_events(
                     )
                 if delta and started_at is not None and first_text_delta_seconds is None:
                     first_text_delta_seconds = max(0.0, clock() - started_at)
+                publish_conversation_text(delta, tools_disabled=tools_disabled)
                 deltas.append(delta)
                 continue
             if kind == "response.output_item.done":

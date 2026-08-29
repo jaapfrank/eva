@@ -1468,7 +1468,11 @@ class CodexConversationModel:
                         else response
                     )
                     parsed = (
-                        parser(stream, started_at=started_at)
+                        parser(
+                            stream,
+                            started_at=started_at,
+                            tools_disabled=body.get("tool_choice") == "none",
+                        )
                         if include_timing
                         else parser(stream)
                     )
@@ -1706,11 +1710,13 @@ class CodexConversationModel:
 
     @staticmethod
     def _parse_sse(
-        response: Any, *, started_at: float | None = None
+        response: Any, *, started_at: float | None = None, tools_disabled: bool = False
     ) -> Any:
         events = CodexConversationModel._iter_sse_events(response, "conversation")
         try:
-            return parse_conversation_sse(events, started_at=started_at)
+            return parse_conversation_sse(
+                events, started_at=started_at, tools_disabled=tools_disabled
+            )
         except ConversationSseError as error:
             raise ConversationModelError(str(error)) from error
 

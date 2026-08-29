@@ -13,7 +13,11 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from eva.adapters.api.cockpit import COCKPIT_HTML, cockpit_progress
-from eva.adapters.api.dashboard_conversation import DASHBOARD_CONVERSATION_HTML
+from eva.adapters.api.dashboard_conversation import (
+    DASHBOARD_CONVERSATION_HTML,
+    conversation_stream_response,
+    grounded_reply_wire,
+)
 from eva.adapters.api.dashboard_access import DashboardAccess
 
 from eva.application.conversation import (
@@ -1118,21 +1122,12 @@ def create_app(
                 detail="Eva's conversation model is tijdelijk unavailable",
             ) from error
         background_tasks.add_task(runtime.after_response, turn, reply)
-        return {
-            "contract": "EvaInternalGroundedReply/v1",
-            "conversation_id": reply.conversation_id,
-            "evidence_memory_ids": list(reply.evidence_memory_ids),
-            "generated_at": reply.generated_at,
-            "message_id": reply.message_id,
-            "provider": reply.provider,
-            "text": reply.text,
-            "text_sha256": reply.text_sha256,
-        }
+        return grounded_reply_wire(reply)
 
     @app.post("/internal/v1/telegram/canary/respond")
     def respond_telegram_canary(
-        payload: dict[str, Any], background_tasks: BackgroundTasks
-    ) -> dict[str, Any]:
+        payload: dict[str, Any], background_tasks: BackgroundTasks, request: Request
+    ) -> Any:
         try:
             if set(payload) != _TELEGRAM_CANARY_KEYS:
                 raise ValueError("Telegram canary request differs")
@@ -1198,6 +1193,8 @@ def create_app(
                 }
             )
             runtime.admit_turn_audience(turn)
+            if "application/x-ndjson" in request.headers.get("accept", "") and not chat_id.startswith("-"):
+                return conversation_stream_response(runtime, turn, recent)
             reply = runtime.respond(turn, recent)
         except ConversationConflict as error:
             raise HTTPException(status_code=409, detail=str(error)) from error
@@ -1209,16 +1206,7 @@ def create_app(
                 detail="Eva's Telegram canary is tijdelijk unavailable",
             ) from error
         background_tasks.add_task(runtime.after_response, turn, reply)
-        return {
-            "contract": "EvaInternalGroundedReply/v1",
-            "conversation_id": reply.conversation_id,
-            "evidence_memory_ids": list(reply.evidence_memory_ids),
-            "generated_at": reply.generated_at,
-            "message_id": reply.message_id,
-            "provider": reply.provider,
-            "text": reply.text,
-            "text_sha256": reply.text_sha256,
-        }
+        return grounded_reply_wire(reply)
 
     @app.post("/internal/v1/goals/admit")
     def admit_durable_goal(payload: dict[str, Any]) -> dict[str, Any]:

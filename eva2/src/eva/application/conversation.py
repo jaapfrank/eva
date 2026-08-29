@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass, field
 from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
 import re
-from typing import Literal, Protocol
+from typing import Callable, Iterator, Literal, Protocol
 
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
@@ -38,6 +40,22 @@ class ConversationClarificationRequired(RuntimeError):
 
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
+_TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar("eva_conversation_text_delta_sink", default=None)
+
+
+@contextmanager
+def stream_conversation_text(sink: Callable[[str], None]) -> Iterator[None]:
+    token = _TEXT_DELTA_SINK.set(sink)
+    try:
+        yield
+    finally:
+        _TEXT_DELTA_SINK.reset(token)
+
+
+def publish_conversation_text(delta: str, *, tools_disabled: bool) -> None:
+    sink = _TEXT_DELTA_SINK.get()
+    if sink is not None and tools_disabled and delta:
+        sink(delta)
 
 
 @dataclass(frozen=True, slots=True)
@@ -51,106 +69,55 @@ class ConversationModelUsage:
     output_tokens: int | None
 
     def __post_init__(self) -> None:
-        values = (
-            self.model_attempts,
-            self.tool_calls,
-            self.input_tokens,
-            self.output_tokens,
-        )
+        values = (self.model_attempts, self.tool_calls, self.input_tokens, self.output_tokens)
         if self.measurement == "unmeasured":
             if any(value is not None for value in values):
                 raise ValueError("unmeasured model usage cannot carry values")
             return
         if self.measurement != "measured" or any(value is None for value in values):
             raise ValueError("measured model usage is incomplete")
-        if any(
-            not isinstance(value, int) or isinstance(value, bool) for value in values
-        ):
+        if any(not isinstance(value, int) or isinstance(value, bool) for value in values):
             raise ValueError("measured model usage is invalid")
-        assert self.model_attempts is not None
-        assert self.tool_calls is not None
-        assert self.input_tokens is not None
-        assert self.output_tokens is not None
-        if (
-            self.model_attempts < 1
-            or self.tool_calls < 0
-            or self.input_tokens < 0
-            or self.output_tokens < 0
-        ):
+        attempts, tools, inputs, outputs = (int(value) for value in values)
+        if attempts < 1 or min(tools, inputs, outputs) < 0:
             raise ValueError("measured model usage is invalid")
 
     @classmethod
-    def measured(
-        cls,
-        *,
-        model_attempts: int = 1,
-        tool_calls: int,
-        input_tokens: int,
-        output_tokens: int,
-    ) -> "ConversationModelUsage":
-        return cls(
-            "measured",
-            model_attempts,
-            tool_calls,
-            input_tokens,
-            output_tokens,
-        )
+    def measured(cls, *, model_attempts: int = 1, tool_calls: int,
+                 input_tokens: int, output_tokens: int) -> "ConversationModelUsage":
+        return cls("measured", model_attempts, tool_calls, input_tokens, output_tokens)
 
     @classmethod
     def unmeasured(cls) -> "ConversationModelUsage":
         return cls("unmeasured", None, None, None, None)
 
     @classmethod
-    def aggregate(
-        cls, usages: tuple["ConversationModelUsage", ...]
-    ) -> "ConversationModelUsage":
+    def aggregate(cls, usages: tuple["ConversationModelUsage", ...]) -> "ConversationModelUsage":
         if not usages or any(usage.measurement == "unmeasured" for usage in usages):
             return cls.unmeasured()
-        return cls.measured(
-            model_attempts=sum(usage.model_attempts or 0 for usage in usages),
-            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
-            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
-            output_tokens=sum(usage.output_tokens or 0 for usage in usages),
-        )
+        return cls.measured(model_attempts=sum(usage.model_attempts or 0 for usage in usages),
+                            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
+                            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
+                            output_tokens=sum(usage.output_tokens or 0 for usage in usages))
 
     def to_wire(self) -> dict[str, str | int | None]:
-        return {
-            "input_tokens": self.input_tokens,
-            "measurement": self.measurement,
-            "model_attempts": self.model_attempts,
-            "output_tokens": self.output_tokens,
-            "tool_calls": self.tool_calls,
-        }
+        return {"input_tokens": self.input_tokens, "measurement": self.measurement,
+                "model_attempts": self.model_attempts, "output_tokens": self.output_tokens,
+                "tool_calls": self.tool_calls}
 
     @classmethod
     def from_wire(cls, value: object) -> "ConversationModelUsage":
-        if not isinstance(value, dict) or set(value) != {
-            "input_tokens",
-            "measurement",
-            "model_attempts",
-            "output_tokens",
-            "tool_calls",
-        }:
+        fields = {"input_tokens", "measurement", "model_attempts", "output_tokens", "tool_calls"}
+        if not isinstance(value, dict) or set(value) != fields:
             raise ValueError("model usage payload is invalid")
         measurement = value["measurement"]
-        numeric = (
-            value["model_attempts"],
-            value["tool_calls"],
-            value["input_tokens"],
-            value["output_tokens"],
-        )
+        numeric = (value["model_attempts"], value["tool_calls"], value["input_tokens"], value["output_tokens"])
         if measurement not in {"measured", "unmeasured"} or any(
             item is not None and (not isinstance(item, int) or isinstance(item, bool))
             for item in numeric
         ):
             raise ValueError("model usage payload is invalid")
-        return cls(
-            measurement,  # type: ignore[arg-type]
-            numeric[0],
-            numeric[1],
-            numeric[2],
-            numeric[3],
-        )
+        return cls(measurement, *numeric)  # type: ignore[arg-type]
 
 
 @dataclass(frozen=True, slots=True)
@@ -794,4 +761,6 @@ __all__ = [
     "MemorySearchPlan",
     "RecentConversationMessage",
     "load_current_identity_pack",
+    "publish_conversation_text",
+    "stream_conversation_text",
 ]

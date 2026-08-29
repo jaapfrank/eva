@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import json
 
 from fastapi.testclient import TestClient
 
 from eva.adapters.api.app import create_app
-from eva.application.conversation import ConversationTurn, GroundedReply
+from eva.application.conversation import (
+    ConversationTurn,
+    GroundedReply,
+    publish_conversation_text,
+)
 from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.application.telegram_canary import TelegramCanaryBridge
 
@@ -108,6 +113,45 @@ def test_private_canary_derives_principal_server_side() -> None:
     assert runtime.turns[0].principal_id == "telegram:7"
     assert runtime.turns[0].audience.audience_id == "person:telegram:7"
     assert response.json()["provider"] == "test-model"
+
+
+def test_private_canary_streams_safe_deltas_then_the_durable_final_reply() -> None:
+    class StreamingRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
+            publish_conversation_text("Veilig ", tools_disabled=True)
+            publish_conversation_text("antwoord.", tools_disabled=True)
+            return super().respond(turn, recent_messages)
+
+    runtime = StreamingRuntime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/telegram/canary/respond",
+        headers={"accept": "application/x-ndjson"},
+        json=_payload(),
+    )
+    rows = [json.loads(line) for line in response.iter_lines()]
+    assert [row["contract"] for row in rows] == [
+        "EvaTextDelta/v1",
+        "EvaTextDelta/v1",
+        "EvaInternalGroundedReply/v1",
+    ]
+    assert "".join(row["text"] for row in rows[:-1]) == rows[-1]["text"]
+    assert runtime.after == runtime.turns
+
+
+def test_stream_sink_never_emits_a_delta_while_tools_are_available() -> None:
+    class ToolRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
+            publish_conversation_text('{"target":"secret"}', tools_disabled=False)
+            return super().respond(turn, recent_messages)
+
+    response = TestClient(create_app(ToolRuntime())).post(
+        "/internal/v1/telegram/canary/respond",
+        headers={"accept": "application/x-ndjson"},
+        json=_payload(),
+    )
+    assert [json.loads(line)["contract"] for line in response.iter_lines()] == [
+        "EvaInternalGroundedReply/v1"
+    ]
 
 
 def test_first_group_turn_stays_out_of_conversation_and_returns_instruction() -> None:

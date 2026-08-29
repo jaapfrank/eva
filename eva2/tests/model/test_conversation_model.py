@@ -27,6 +27,7 @@ from eva.application.conversation import (
     IdentityProfile,
     RecentConversationMessage,
     load_current_identity_pack,
+    stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory
 from eva.application.sensory import SensoryEvent
@@ -445,9 +446,11 @@ def test_runtime_budget_records_measured_terminal_provider_usage(
             resource_budget=_runtime_budget(),
         )
 
-        text, action, usage, timing = model._request_conversation(  # noqa: SLF001
-            {"input": [{"content": "hoi", "role": "user"}]}
-        )
+        chunks: list[str] = []
+        with stream_conversation_text(chunks.append):
+            text, action, usage, timing = model._request_conversation(  # noqa: SLF001
+                {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
+            )
 
     assert text == "Binnen grens."
     assert action is None
@@ -459,6 +462,7 @@ def test_runtime_budget_records_measured_terminal_provider_usage(
     assert timing.first_content_ms is not None
     assert timing.completed_ms is not None
     assert 0 <= timing.first_content_ms <= timing.completed_ms
+    assert "".join(chunks) == text
     assert len(requests) == 1
 
 

@@ -33,6 +33,7 @@ from eva.application.conversation import (
     ConversationTurn,
     IdentityProfile,
     load_current_identity_pack,
+    stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory
 from eva.contracts.canonical_json import canonical_sha256
@@ -635,14 +636,17 @@ def test_byte_deadline_proxy_and_error_redaction_are_bounded(
 ) -> None:
     monkeypatch.setenv("HTTP_PROXY", "http://127.0.0.1:1")
     monkeypatch.setenv("NO_PROXY", "")
+    chunks: list[str] = []
     with _server([_outcome(_text_events())]) as (endpoint, calls):
-        result = OpenAIResponsesTransport(endpoint=endpoint, timeout_seconds=5).request(
-            _transport_body(), access_token="access", account_id="account"
-        )
+        with stream_conversation_text(chunks.append):
+            result = OpenAIResponsesTransport(
+                endpoint=endpoint, timeout_seconds=5
+            ).request(_transport_body(), access_token="access", account_id="account")
     assert result.text == "Dat werkt."
     assert result.first_text_delta_seconds is not None
     assert result.completed_seconds is not None
     assert 0 <= result.first_text_delta_seconds <= result.completed_seconds
+    assert "".join(chunks) == result.text
     assert len(calls) == 1
 
     with _server([(500, b"secret-token secret-prompt", {})]) as (endpoint, calls):
