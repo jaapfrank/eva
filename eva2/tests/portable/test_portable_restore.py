@@ -8,7 +8,7 @@ import pytest
 
 from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.portable_archive import canonical_json_bytes
-from eva.operations.portable_restore import (
+from tools.portable_restore import (
     PortableRestoreError,
     decode_column_preserving_record,
     restore_column_preserving_records,

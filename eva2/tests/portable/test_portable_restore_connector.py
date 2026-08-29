@@ -10,7 +10,7 @@ import pytest
 from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.portable_archive import build_portable_record, canonical_json_bytes
 from eva.contracts.execution import ConnectorBinding
-from eva.operations.portable_restore import (
+from tools.portable_restore import (
     PortableRestoreError,
     decode_reauthorization_required_connector_binding,
     restore_column_preserving_records,
