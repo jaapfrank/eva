@@ -174,6 +174,60 @@ from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 from eva.operations.portable_restore_authority import PrivateRestoreAuthorityStore
 
 
+def _environment_value(name: str, default: str = "") -> str:
+    return os.environ.get(name, default).strip()
+
+
+def _environment_optional(name: str) -> str | None:
+    return _environment_value(name) or None
+
+
+def _environment_items(
+    name: str, default: str = "", *, unique_sorted: bool = False
+) -> tuple[str, ...]:
+    values = tuple(
+        item.strip()
+        for item in _environment_value(name, default).split(",")
+        if item.strip()
+    )
+    return tuple(sorted(set(values))) if unique_sorted else values
+
+
+def _environment_int(name: str, default: int, invalid: str) -> int:
+    try:
+        return int(_environment_value(name, str(default)))
+    except ValueError as error:
+        raise RuntimeError(invalid) from error
+
+
+def _environment_float(name: str, default: float, invalid: str) -> float:
+    try:
+        return float(_environment_value(name, str(default)))
+    except ValueError as error:
+        raise RuntimeError(invalid) from error
+
+
+def _environment_bool(
+    name: str, default: bool = False, invalid: str | None = None
+) -> bool:
+    raw = _environment_value(name, str(default).lower()).casefold()
+    if raw not in {"false", "true"}:
+        raise RuntimeError(invalid or f"{name} must be true or false")
+    return raw == "true"
+
+
+def _file_only_environment_secret(value_name: str, file_name: str) -> str:
+    if value_name in os.environ:
+        raise RuntimeError(f"{value_name} is forbidden; use {file_name}")
+    return environment_secret(value_name, file_name)
+
+
+def _require_complete_configuration(invalid: str, *values: object) -> None:
+    present = tuple(value is not None for value in values)
+    if any(present) and not all(present):
+        raise RuntimeError(invalid)
+
+
 @dataclass(frozen=True, slots=True)
 class RuntimeSettings:
     database_dsn: str
@@ -224,27 +278,24 @@ class RuntimeSettings:
 
     @classmethod
     def from_environment(cls) -> "RuntimeSettings":
-        if "EVA_DATABASE_DSN" in os.environ:
-            raise RuntimeError(
-                "EVA_DATABASE_DSN is forbidden; use EVA_DATABASE_DSN_FILE"
-            )
-        database_dsn = environment_secret("EVA_DATABASE_DSN", "EVA_DATABASE_DSN_FILE")
-        hindsight_url = os.environ.get("EVA_HINDSIGHT_URL", "").strip()
-        namespace = os.environ.get("EVA_HINDSIGHT_BANK_NAMESPACE", "eva2").strip()
-        hindsight_recall_budget = (
-            os.environ.get("EVA_HINDSIGHT_RECALL_BUDGET", "low").strip().casefold()
+        database_dsn = _file_only_environment_secret(
+            "EVA_DATABASE_DSN", "EVA_DATABASE_DSN_FILE"
         )
-        try:
-            hindsight_recall_max_tokens = int(
-                os.environ.get("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "2048")
-            )
-            hindsight_recall_node_budget = int(
-                os.environ.get("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "40")
-            )
-        except ValueError as error:
-            raise RuntimeError(
-                "Eva Hindsight recall configuration is invalid"
-            ) from error
+        hindsight_url = _environment_value("EVA_HINDSIGHT_URL")
+        namespace = _environment_value("EVA_HINDSIGHT_BANK_NAMESPACE", "eva2")
+        hindsight_recall_budget = _environment_value(
+            "EVA_HINDSIGHT_RECALL_BUDGET", "low"
+        ).casefold()
+        hindsight_recall_max_tokens = _environment_int(
+            "EVA_HINDSIGHT_RECALL_MAX_TOKENS",
+            2048,
+            "Eva Hindsight recall configuration is invalid",
+        )
+        hindsight_recall_node_budget = _environment_int(
+            "EVA_HINDSIGHT_RECALL_NODE_BUDGET",
+            40,
+            "Eva Hindsight recall configuration is invalid",
+        )
         if not 2_000 <= hindsight_recall_max_tokens <= 4_000:
             raise RuntimeError(
                 "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
@@ -253,38 +304,32 @@ class RuntimeSettings:
             raise RuntimeError(
                 "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
             )
-        identity_name = os.environ.get("EVA_IDENTITY_NAME", "Eva").strip()
-        identity_description = os.environ.get(
+        identity_name = _environment_value("EVA_IDENTITY_NAME", "Eva")
+        identity_description = _environment_value(
             "EVA_IDENTITY_DESCRIPTION",
             "Je bent een warme, nuchtere en capabele digitale huisgenoot.",
-        ).strip()
-        identity_pack_file = (
-            os.environ.get("EVA_IDENTITY_PACK_FILE", "").strip() or None
         )
-        identity_pack_trust_file = (
-            os.environ.get("EVA_IDENTITY_PACK_TRUST_FILE", "").strip() or None
+        identity_pack_file = _environment_optional("EVA_IDENTITY_PACK_FILE")
+        identity_pack_trust_file = _environment_optional(
+            "EVA_IDENTITY_PACK_TRUST_FILE"
         )
-        conversation_auth_file = os.environ.get(
+        conversation_auth_file = _environment_value(
             "EVA_CONVERSATION_AUTH_FILE", "/run/eva/codex/auth.json"
-        ).strip()
-        conversation_model = os.environ.get(
+        )
+        conversation_model = _environment_value(
             "EVA_CONVERSATION_MODEL", "gpt-5.4-mini"
-        ).strip()
-        conversation_reasoning_effort = os.environ.get(
+        )
+        conversation_reasoning_effort = _environment_value(
             "EVA_CONVERSATION_REASONING_EFFORT", "medium"
-        ).strip()
-        background_tenant_id = (
-            os.environ.get("EVA_RUNTIME_TENANT_ID", "").strip() or None
         )
-        background_installation_id = (
-            os.environ.get("EVA_RUNTIME_INSTALLATION_ID", "").strip() or None
+        background_tenant_id = _environment_optional("EVA_RUNTIME_TENANT_ID")
+        background_installation_id = _environment_optional(
+            "EVA_RUNTIME_INSTALLATION_ID"
         )
-        background_principal_id = (
-            os.environ.get("EVA_RUNTIME_PRINCIPAL_ID", "").strip() or None
+        background_principal_id = _environment_optional("EVA_RUNTIME_PRINCIPAL_ID")
+        runtime_resource_budget_file = _environment_value(
+            "EVA_RUNTIME_RESOURCE_BUDGET_FILE"
         )
-        runtime_resource_budget_file = os.environ.get(
-            "EVA_RUNTIME_RESOURCE_BUDGET_FILE", ""
-        ).strip()
         if (
             not runtime_resource_budget_file
             or background_tenant_id is None
@@ -315,41 +360,31 @@ class RuntimeSettings:
             raise RuntimeError(
                 "Eva Hindsight recall configuration differs from runtime budget"
             )
-        dashboard_principal_binding_id = (
-            os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
+        dashboard_principal_binding_id = _environment_optional(
+            "EVA_DASHBOARD_PRINCIPAL_BINDING_ID"
         )
         dashboard_tenant_id = (
-            os.environ.get("EVA_DASHBOARD_TENANT_ID", "").strip()
-            or background_tenant_id
+            _environment_optional("EVA_DASHBOARD_TENANT_ID") or background_tenant_id
         )
         dashboard_installation_id = (
-            os.environ.get("EVA_DASHBOARD_INSTALLATION_ID", "").strip()
+            _environment_optional("EVA_DASHBOARD_INSTALLATION_ID")
             or background_installation_id
         )
-        if "EVA_DASHBOARD_ACCESS_TOKEN" in os.environ:
-            raise RuntimeError(
-                "EVA_DASHBOARD_ACCESS_TOKEN is forbidden; use "
-                "EVA_DASHBOARD_ACCESS_TOKEN_FILE"
-            )
-        dashboard_access_token_file = os.environ.get(
-            "EVA_DASHBOARD_ACCESS_TOKEN_FILE", ""
-        ).strip()
+        dashboard_access_token_raw = _file_only_environment_secret(
+            "EVA_DASHBOARD_ACCESS_TOKEN", "EVA_DASHBOARD_ACCESS_TOKEN_FILE"
+        )
         dashboard_access_token = None
-        if dashboard_access_token_file:
+        if dashboard_access_token_raw:
             try:
                 dashboard_access_token = validate_dashboard_access_token(
-                    read_runtime_secret_file(
-                        dashboard_access_token_file,
-                        setting_name="EVA_DASHBOARD_ACCESS_TOKEN_FILE",
-                    )
+                    dashboard_access_token_raw
                 )
             except ValueError as error:
                 raise RuntimeError(
                     "EVA_DASHBOARD_ACCESS_TOKEN_FILE has an invalid length or contents"
                 ) from error
-        portable_restore_authority_file = (
-            os.environ.get("EVA_PORTABLE_RESTORE_AUTHORITY_FILE", "").strip()
-            or None
+        portable_restore_authority_file = _environment_optional(
+            "EVA_PORTABLE_RESTORE_AUTHORITY_FILE"
         )
         if portable_restore_authority_file is not None and not Path(
             portable_restore_authority_file
@@ -378,53 +413,25 @@ class RuntimeSettings:
                     "Eva dashboard owner binding requires a portable restore "
                     "authority file"
                 )
-        try:
-            cold_path_idle_seconds = float(
-                os.environ.get("EVA_COLD_PATH_IDLE_SECONDS", "300")
-            )
-        except ValueError as error:
-            raise RuntimeError("EVA_COLD_PATH_IDLE_SECONDS is invalid") from error
-        try:
-            personal_interest_lease_seconds = int(
-                os.environ.get("EVA_PERSONAL_INTEREST_LEASE_SECONDS", "90")
-            )
-        except ValueError as error:
-            raise RuntimeError(
-                "EVA_PERSONAL_INTEREST_LEASE_SECONDS is invalid"
-            ) from error
-        home_assistant_url = (
-            os.environ.get("EVA_HOME_ASSISTANT_URL", "").strip() or None
+        cold_path_idle_seconds = _environment_float(
+            "EVA_COLD_PATH_IDLE_SECONDS", 300, "EVA_COLD_PATH_IDLE_SECONDS is invalid"
         )
-        if "EVA_HOME_ASSISTANT_TOKEN" in os.environ:
-            raise RuntimeError(
-                "EVA_HOME_ASSISTANT_TOKEN is forbidden; use "
-                "EVA_HOME_ASSISTANT_TOKEN_FILE"
-            )
-        home_assistant_token = (
-            environment_secret(
-                "EVA_HOME_ASSISTANT_TOKEN", "EVA_HOME_ASSISTANT_TOKEN_FILE"
-            )
-            or None
+        personal_interest_lease_seconds = _environment_int(
+            "EVA_PERSONAL_INTEREST_LEASE_SECONDS",
+            90,
+            "EVA_PERSONAL_INTEREST_LEASE_SECONDS is invalid",
         )
-        home_assistant_effects = (
-            os.environ.get("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "false")
-            .strip()
-            .casefold()
+        home_assistant_url = _environment_optional("EVA_HOME_ASSISTANT_URL")
+        home_assistant_token = _file_only_environment_secret(
+            "EVA_HOME_ASSISTANT_TOKEN", "EVA_HOME_ASSISTANT_TOKEN_FILE"
+        ) or None
+        home_assistant_effects_enabled = _environment_bool(
+            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
+            False,
+            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid",
         )
-        if home_assistant_effects not in {"false", "true"}:
-            raise RuntimeError("EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid")
-        home_assistant_effects_enabled = home_assistant_effects == "true"
-        raw_effect_allowlist = os.environ.get(
-            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", ""
-        ).strip()
-        home_assistant_effect_allowlist = tuple(
-            sorted(
-                {
-                    value.strip()
-                    for value in raw_effect_allowlist.split(",")
-                    if value.strip()
-                }
-            )
+        home_assistant_effect_allowlist = _environment_items(
+            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", unique_sorted=True
         )
         for value in home_assistant_effect_allowlist:
             entity_id, separator, service = value.partition(":")
@@ -445,66 +452,32 @@ class RuntimeSettings:
             raise RuntimeError(
                 "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
             )
-        home_assistant_event_domains = tuple(
-            sorted(
-                {
-                    value.strip()
-                    for value in os.environ.get(
-                        "EVA_HOME_ASSISTANT_EVENT_DOMAINS",
-                        "binary_sensor,light,person",
-                    ).split(",")
-                    if value.strip()
-                }
-            )
+        home_assistant_event_domains = _environment_items(
+            "EVA_HOME_ASSISTANT_EVENT_DOMAINS",
+            "binary_sensor,light,person",
+            unique_sorted=True,
         )
-        agentmail_inbox_id = (
-            os.environ.get("EVA_AGENTMAIL_INBOX_ID", "").strip() or None
+        agentmail_inbox_id = _environment_optional("EVA_AGENTMAIL_INBOX_ID")
+        agentmail_api_key_file = _environment_optional("EVA_AGENTMAIL_API_KEY_FILE")
+        telegram_proactive_chat_id = _environment_optional(
+            "EVA_TELEGRAM_PROACTIVE_CHAT_ID"
         )
-        agentmail_api_key_file = (
-            os.environ.get("EVA_AGENTMAIL_API_KEY_FILE", "").strip() or None
+        telegram_bot_token = _file_only_environment_secret(
+            "EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE"
+        ) or None
+        stripe_account_id = _environment_optional("EVA_STRIPE_ACCOUNT_ID")
+        stripe_secret_key = _file_only_environment_secret(
+            "EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE"
+        ) or None
+        stripe_webhook_secret = _file_only_environment_secret(
+            "EVA_STRIPE_WEBHOOK_SECRET", "EVA_STRIPE_WEBHOOK_SECRET_FILE"
+        ) or None
+        commerce_public_base_url = _environment_optional(
+            "EVA_COMMERCE_PUBLIC_BASE_URL"
         )
-        telegram_proactive_chat_id = (
-            os.environ.get("EVA_TELEGRAM_PROACTIVE_CHAT_ID", "").strip() or None
-        )
-        if "EVA_TELEGRAM_BOT_TOKEN" in os.environ:
-            raise RuntimeError(
-                "EVA_TELEGRAM_BOT_TOKEN is forbidden; use EVA_TELEGRAM_BOT_TOKEN_FILE"
-            )
-        telegram_bot_token = (
-            environment_secret("EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE")
-            or None
-        )
-        stripe_account_id = os.environ.get("EVA_STRIPE_ACCOUNT_ID", "").strip() or None
-        if "EVA_STRIPE_SECRET_KEY" in os.environ:
-            raise RuntimeError(
-                "EVA_STRIPE_SECRET_KEY is forbidden; use EVA_STRIPE_SECRET_KEY_FILE"
-            )
-        if "EVA_STRIPE_WEBHOOK_SECRET" in os.environ:
-            raise RuntimeError(
-                "EVA_STRIPE_WEBHOOK_SECRET is forbidden; use "
-                "EVA_STRIPE_WEBHOOK_SECRET_FILE"
-            )
-        stripe_secret_key = (
-            environment_secret("EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE")
-            or None
-        )
-        stripe_webhook_secret = (
-            environment_secret(
-                "EVA_STRIPE_WEBHOOK_SECRET", "EVA_STRIPE_WEBHOOK_SECRET_FILE"
-            )
-            or None
-        )
-        commerce_public_base_url = (
-            os.environ.get("EVA_COMMERCE_PUBLIC_BASE_URL", "").strip() or None
-        )
-        stripe_live_raw = (
-            os.environ.get("EVA_STRIPE_LIVE_MODE", "false").strip().lower()
-        )
-        if stripe_live_raw not in {"true", "false"}:
-            raise RuntimeError("EVA_STRIPE_LIVE_MODE must be true or false")
-        stripe_live_mode = stripe_live_raw == "true"
-        file_batch_root = os.environ.get("EVA_FILE_BATCH_ROOT", "").strip() or None
-        fanout_raw = os.environ.get("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON", "").strip()
+        stripe_live_mode = _environment_bool("EVA_STRIPE_LIVE_MODE")
+        file_batch_root = _environment_optional("EVA_FILE_BATCH_ROOT")
+        fanout_raw = _environment_value("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON")
         fanout_recipient_endpoints: dict[str, str] | None = None
         if fanout_raw:
             try:
@@ -530,22 +503,16 @@ class RuntimeSettings:
                 str(key).strip(): str(value).strip()
                 for key, value in decoded_fanout.items()
             }
-        fanout_insecure_raw = (
-            os.environ.get("EVA_FANOUT_ALLOW_INSECURE_HTTP", "false").strip().casefold()
+        fanout_allow_insecure_http = _environment_bool(
+            "EVA_FANOUT_ALLOW_INSECURE_HTTP"
         )
-        if fanout_insecure_raw not in {"true", "false"}:
-            raise RuntimeError("EVA_FANOUT_ALLOW_INSECURE_HTTP must be true or false")
-        fanout_allow_insecure_http = fanout_insecure_raw == "true"
-        durable_goal_provider = (
-            os.environ.get("EVA_DURABLE_GOAL_PROVIDER", "").strip() or None
+        durable_goal_provider = _environment_optional("EVA_DURABLE_GOAL_PROVIDER")
+        durable_goal_recipients = _environment_items("EVA_DURABLE_GOAL_RECIPIENTS")
+        _require_complete_configuration(
+            "Eva durable goal configuration is incomplete",
+            durable_goal_provider,
+            durable_goal_recipients or None,
         )
-        durable_goal_recipients = tuple(
-            item.strip()
-            for item in os.environ.get("EVA_DURABLE_GOAL_RECIPIENTS", "").split(",")
-            if item.strip()
-        )
-        if (durable_goal_provider is None) != (not durable_goal_recipients):
-            raise RuntimeError("Eva durable goal configuration is incomplete")
         if len(durable_goal_recipients) > 8 or len(set(durable_goal_recipients)) != len(
             durable_goal_recipients
         ):
@@ -563,32 +530,37 @@ class RuntimeSettings:
             or not conversation_model
         ):
             raise RuntimeError("Eva identity configuration is incomplete")
-        if (identity_pack_file is None) != (identity_pack_trust_file is None):
-            raise RuntimeError(
-                "EVA_IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE must be set together"
-            )
+        _require_complete_configuration(
+            "EVA_IDENTITY_PACK_FILE and EVA_IDENTITY_PACK_TRUST_FILE must be set together",
+            identity_pack_file,
+            identity_pack_trust_file,
+        )
         if conversation_reasoning_effort not in {"low", "medium", "high"}:
             raise RuntimeError("EVA_CONVERSATION_REASONING_EFFORT is invalid")
         if background_tenant_id is None or background_installation_id is None:
             raise RuntimeError("Eva runtime tenant and installation scope are required")
-        if (home_assistant_url is None) != (home_assistant_token is None):
-            raise RuntimeError("Eva Home Assistant configuration is incomplete")
-        if (agentmail_inbox_id is None) != (agentmail_api_key_file is None):
-            raise RuntimeError("Eva AgentMail configuration is incomplete")
-        if (telegram_proactive_chat_id is None) != (telegram_bot_token is None):
-            raise RuntimeError("Eva proactive Telegram configuration is incomplete")
-        if (
-            len(
-                {
-                    stripe_account_id is None,
-                    stripe_secret_key is None,
-                    stripe_webhook_secret is None,
-                    commerce_public_base_url is None,
-                }
-            )
-            != 1
-        ):
-            raise RuntimeError("Eva Stripe commerce configuration is incomplete")
+        _require_complete_configuration(
+            "Eva Home Assistant configuration is incomplete",
+            home_assistant_url,
+            home_assistant_token,
+        )
+        _require_complete_configuration(
+            "Eva AgentMail configuration is incomplete",
+            agentmail_inbox_id,
+            agentmail_api_key_file,
+        )
+        _require_complete_configuration(
+            "Eva proactive Telegram configuration is incomplete",
+            telegram_proactive_chat_id,
+            telegram_bot_token,
+        )
+        _require_complete_configuration(
+            "Eva Stripe commerce configuration is incomplete",
+            stripe_account_id,
+            stripe_secret_key,
+            stripe_webhook_secret,
+            commerce_public_base_url,
+        )
         if stripe_account_id is not None and (
             background_tenant_id is None or background_installation_id is None
         ):
