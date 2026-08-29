@@ -1,0 +1,93 @@
+{
+    "authoritySha256": "76b5fedb9e3a3159f480bb1d2131a1ea203c3584efde06fb06dfcbf123cec35e",
+    "contract": "EvaPerformanceComplexityPc02Receipt/v1",
+    "gitCommit": "29cf2dd50ae3cca0ba526be77756af837dd14b27",
+    "hotPaths": [
+        {
+            "baselineSha256": "475dde569b5d9676fbceee226127155a05998a57ce384f40661e667455408055",
+            "componentOwner": "HTTP adapter",
+            "contract": "Eva HTTP API boundary",
+            "currentSha256": "475dde569b5d9676fbceee226127155a05998a57ce384f40661e667455408055",
+            "maximumPhysicalLines": 1877,
+            "path": "src/eva/adapters/api/app.py",
+            "physicalLines": 1877
+        },
+        {
+            "baselineSha256": "822702c4fcb3e7be6dd42442dc812c8701e9ee05cfe4729b9fbbf41b1df350e1",
+            "componentOwner": "model adapter",
+            "contract": "TurnEnvelope/v1 model conversation",
+            "currentSha256": "822702c4fcb3e7be6dd42442dc812c8701e9ee05cfe4729b9fbbf41b1df350e1",
+            "maximumPhysicalLines": 2388,
+            "path": "src/eva/adapters/model/conversation.py",
+            "physicalLines": 2388
+        },
+        {
+            "baselineSha256": "447b5ecfea6d360ea15d3d9b48a48cb5d13b58be1d35179a2c977402598f85c1",
+            "componentOwner": "action-chain persistence",
+            "contract": "durable action-chain ledger",
+            "currentSha256": "447b5ecfea6d360ea15d3d9b48a48cb5d13b58be1d35179a2c977402598f85c1",
+            "maximumPhysicalLines": 1261,
+            "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+            "physicalLines": 1261
+        },
+        {
+            "baselineSha256": "0e60166f6136f7e66c0e76ea0ddfd729006a41f35dd9bc099d3d9f82c50bbf76",
+            "componentOwner": "conversation persistence",
+            "contract": "conversation and effect journal",
+            "currentSha256": "0e60166f6136f7e66c0e76ea0ddfd729006a41f35dd9bc099d3d9f82c50bbf76",
+            "maximumPhysicalLines": 4853,
+            "path": "src/eva/adapters/postgres/conversation_actions.py",
+            "physicalLines": 4853
+        },
+        {
+            "baselineSha256": "8558df75ddbf0ea260d37961e61b18ac5490a78b1129aba79423ff5b0897bfe4",
+            "componentOwner": "delegated-work persistence",
+            "contract": "DelegatedWork/v1",
+            "currentSha256": "8558df75ddbf0ea260d37961e61b18ac5490a78b1129aba79423ff5b0897bfe4",
+            "maximumPhysicalLines": 1651,
+            "path": "src/eva/adapters/postgres/delegated_work.py",
+            "physicalLines": 1651
+        },
+        {
+            "baselineSha256": "8a9a8916d77e16bea12df9a790e0906e2997f60aadd7b53bf05bd62c72138b87",
+            "componentOwner": "runtime budget persistence",
+            "contract": "RuntimeResourceBudget/v1",
+            "currentSha256": "8a9a8916d77e16bea12df9a790e0906e2997f60aadd7b53bf05bd62c72138b87",
+            "maximumPhysicalLines": 1256,
+            "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
+            "physicalLines": 1256
+        },
+        {
+            "baselineSha256": "15051ee34c40cef0451332f2b90a4591b17ae652fe9794f1ec399b968fd5a28c",
+            "componentOwner": "semantic-memory projection",
+            "contract": "ConversationMemoryDocument/v1",
+            "currentSha256": "15051ee34c40cef0451332f2b90a4591b17ae652fe9794f1ec399b968fd5a28c",
+            "maximumPhysicalLines": 1413,
+            "path": "src/eva/adapters/projection/hindsight.py",
+            "physicalLines": 1413
+        },
+        {
+            "baselineSha256": "cbfd3374d4e1eae972d7a104b7409417403159885d77bfcfdeddad71bb304381",
+            "componentOwner": "advanced-task application",
+            "contract": "durable task and goal orchestration",
+            "currentSha256": "cbfd3374d4e1eae972d7a104b7409417403159885d77bfcfdeddad71bb304381",
+            "maximumPhysicalLines": 1565,
+            "path": "src/eva/application/advanced_tasks.py",
+            "physicalLines": 1565
+        },
+        {
+            "baselineSha256": "2e4f34a3331ee3c2975d3481ac1e3abb08cb6b298dc02b38b9c90a608e483f10",
+            "componentOwner": "runtime composition",
+            "contract": "eva.bootstrap.runtime:create_runtime_app",
+            "currentSha256": "2e4f34a3331ee3c2975d3481ac1e3abb08cb6b298dc02b38b9c90a608e483f10",
+            "maximumPhysicalLines": 2266,
+            "path": "src/eva/bootstrap/runtime.py",
+            "physicalLines": 2266
+        }
+    ],
+    "maximumUnclassifiedPhysicalLines": 1000,
+    "observedProductFiles": 211,
+    "status": "passed",
+    "unclassifiedHotPaths": [],
+    "violations": []
+}

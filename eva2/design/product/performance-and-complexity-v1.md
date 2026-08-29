@@ -109,11 +109,15 @@ effect blijft exact nul.
 
 - [x] PC00 — Productdoel, exacte Git-baseline, manifesthash en harde
   V1-bovengrens vastgelegd; dit is nog geen image-/latency-/releaseacceptatie.
-- [ ] PC01 — Commitgebonden teller en fail-closed CI-gate voor LOC, bestanden,
+- [x] PC01 — Commitgebonden teller en fail-closed CI-gate voor LOC, bestanden,
   directe dependencies en imagebytes; generated/vendor-uitzonderingen staan in
-  een gesloten allowlist.
-- [ ] PC02 — De grootste hot-pathbestanden begrenzen: niet verder laten groeien
+  een gesloten allowlist. De actuele bron- en imagepoort is zonder overtredingen
+  vastgelegd in `performance-complexity-pc01-passed-2026-08-29.json`.
+- [x] PC02 — De grootste hot-pathbestanden begrenzen: niet verder laten groeien
   en bij aanraking gericht per eigenaar/contract splitsen, zonder massarewrite.
+  Negen bestaande uitzonderingen hebben nu ieder een eigenaar, contract en vaste
+  bovengrens; ieder nieuw niet-geregistreerd productbestand boven 1.000 regels
+  maakt de controle rood.
 - [ ] PC03 — Teksthot-path streamen en instrumenteren; cold recall, retain,
   reflectie en evaluatie aantoonbaar buiten tijd tot eerste inhoud houden.
 - [ ] PC04 — Browser- en voice-sidecars afzonderlijk budgetteren op code,

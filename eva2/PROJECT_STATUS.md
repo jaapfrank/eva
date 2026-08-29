@@ -331,6 +331,9 @@ praktijktest zijn nog niet klaar.
   Eva2 telt 74.819 productregels bij een maximum van 75.000. De marge is dus
   slechts 181 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
   live geschakeld; de volledige PC01-gate is daardoor groen.
+- De negen grootste runtimebestanden kunnen niet meer stil verder groeien.
+  Ieder heeft nu een vaste eigenaar, contract en bovengrens; een nieuw
+  niet-geregistreerd productbestand boven 1.000 regels maakt PC02 rood.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -432,6 +435,7 @@ praktijktest zijn nog niet klaar.
 - [Private object-keyring naar de operatorgrens, bron en tests verzegeld](evidence/product/performance-complexity-pc01-object-keyring-operator-boundary-2026-08-29.json)
 - [Provider-verificatie-CLI naar de operatorgrens, cockpitbron opnieuw gebonden](evidence/product/performance-complexity-pc01-provider-verification-cli-operator-boundary-2026-08-29.json)
 - [PC01-bronbudget groen: 74.819 regels, 181 regels marge](evidence/product/performance-complexity-pc01-source-budget-passed-2026-08-29.json)
+- [PC02-hot-pathgrens groen: negen eigenaars en nul ongeregistreerde reuzenbestanden](evidence/product/performance-complexity-pc02-hot-paths-passed-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
