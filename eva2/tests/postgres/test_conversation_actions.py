@@ -27,9 +27,12 @@ from eva.application.conversation import (
 )
 from eva.application.personal_interests import (
     CompletedPersonalExploration,
+    CompletedPersonalProductRelease,
     CompletedPersonalPrototype,
     PersonalInterestClaim,
     PersonalInterestExploration,
+    PersonalProductListing,
+    PersonalProductRelease,
     PersonalProductReleaseClaim,
     PersonalPrototype,
     PersonalPrototypeClaim,
@@ -1002,6 +1005,111 @@ def test_personal_work_claim_stages_recover_their_exact_expired_lease(
     assert transition["checkpoint_id"] == f"{interest.thread_id}:{stage}:10"
     assert transition["retry_count"] == 1
     assert transition["last_error_fingerprint"] == "c" * 64
+
+
+def test_personal_work_stages_keep_complete_projection_and_failure_contracts() -> None:
+    prototype = _completed_prototype()
+    exploration = prototype.claim.completed_exploration
+    interest = exploration.claim
+    release_claim = PersonalProductReleaseClaim(prototype, 8)
+    release = PersonalProductRelease(
+        PersonalProductListing(
+            "Slimme planner",
+            "Een direct bruikbare planner voor thuis.",
+            499,
+            ("planner", "thuis", "template"),
+            "model",
+        ),
+        "slimme-planner.zip",
+        b"zip-bytes",
+    )
+    cases = (
+        (
+            PostgresPersonalInterestStore,
+            interest,
+            exploration.exploration,
+            CompletedPersonalExploration,
+            "exploration",
+            "PERSONAL_EXPLORATION_COMPLETED",
+            "exploration-projected",
+            "PERSONAL_EXPLORATION_PROJECTED",
+        ),
+        (
+            PostgresPersonalPrototypeStore,
+            prototype.claim,
+            prototype.prototype,
+            CompletedPersonalPrototype,
+            "prototype",
+            "PERSONAL_PROTOTYPE_COMPLETED",
+            "prototype-projected",
+            "PERSONAL_PROTOTYPE_PROJECTED",
+        ),
+        (
+            PostgresPersonalProductReleaseStore,
+            release_claim,
+            release,
+            CompletedPersonalProductRelease,
+            "release",
+            "PERSONAL_PRODUCT_RELEASE_COMPLETED",
+            "release-ready",
+            "PERSONAL_PRODUCT_RELEASE_READY",
+        ),
+    )
+    for (
+        store_type,
+        claim,
+        artifact,
+        completed_type,
+        stage,
+        completed_event,
+        projected_checkpoint,
+        projected_event,
+    ) in cases:
+        transitions: list[dict[str, object]] = []
+        failures: list[dict[str, object]] = []
+
+        class Timeline:
+            def transition(self, **kwargs):  # type: ignore[no-untyped-def]
+                transitions.append(kwargs)
+                return SimpleNamespace(revision=kwargs["expected_revision"] + 1)
+
+            def record_recovery_failure(self, **kwargs):  # type: ignore[no-untyped-def]
+                failures.append(kwargs)
+
+        class Actions:
+            def _timeline_for(self, tenant_id, installation_id):  # type: ignore[no-untyped-def]
+                assert tenant_id == interest.tenant_id
+                assert installation_id == interest.installation_id
+                return Timeline()
+
+        store = object.__new__(store_type)
+        store._actions = Actions()
+        completed = store.complete(claim, artifact, now=NOW)
+        assert isinstance(completed, completed_type)
+        assert completed.revision == 9
+        store.mark_projected(completed, now=NOW)
+        store.record_failure(claim, RuntimeError("test failure"), now=NOW)
+
+        assert transitions[0]["checkpoint_id"] == (
+            f"{interest.thread_id}:{stage}-completed"
+        )
+        assert transitions[0]["event_type"] == completed_event
+        assert transitions[0]["status"] == "active"
+        assert transitions[0]["operation_id"] == interest.intent_id
+        assert transitions[0]["data"]["intent_id"] == interest.intent_id
+        assert transitions[1]["checkpoint_id"] == (
+            f"{interest.thread_id}:{projected_checkpoint}"
+        )
+        assert transitions[1]["event_type"] == projected_event
+        assert transitions[1]["status"] == "completed"
+        assert transitions[1]["expected_revision"] == 9
+        assert failures[0]["checkpoint_id"] == (
+            f"{interest.thread_id}:{stage}-failed:9"
+        )
+        assert failures[0]["expected_revision"] == 8
+        assert failures[0]["operation_id"] == interest.intent_id
+        assert failures[0]["error_text"] == "RuntimeError: test failure"
+
 
 
 def test_retry_claim_preserves_error_fingerprint_until_third_identical_failure(

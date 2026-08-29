@@ -8,7 +8,7 @@ from datetime import UTC, datetime, timedelta
 import hashlib
 import re
 import time
-from typing import Protocol
+from typing import Any, Protocol
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
@@ -4319,6 +4319,98 @@ class _PostgresPersonalClaimStore:
             return PersonalProductReleaseClaim(source, claimed.revision)
         return None
 
+    def _interest(self, value: Any) -> PersonalInterestClaim:
+        if self._stage == "exploration":
+            return value
+        if self._stage == "prototype":
+            return value.completed_exploration.claim
+        return value.completed_prototype.claim.completed_exploration.claim
+
+    def _transition(
+        self,
+        interest: PersonalInterestClaim,
+        *,
+        expected_revision: int,
+        checkpoint: str,
+        phase: str,
+        status: str,
+        event_type: str,
+        now: datetime,
+        data: dict[str, JsonValue],
+    ):
+        timeline = self._actions._timeline_for(
+            interest.tenant_id, interest.installation_id
+        )
+        return timeline.transition(
+            thread_id=interest.thread_id,
+            expected_revision=expected_revision,
+            checkpoint_id=f"{interest.thread_id}:{checkpoint}",
+            operation_id=interest.intent_id,
+            phase=phase,
+            status=status,
+            event_type=event_type,
+            occurred_at=now,
+            data=data,
+        )
+
+    def mark_projected(self, completed: Any, *, now: datetime) -> None:
+        interest = self._interest(completed.claim)
+        if self._stage == "exploration":
+            checkpoint = "exploration-projected"
+            phase = "exploration_projected"
+            event_type = "PERSONAL_EXPLORATION_PROJECTED"
+            data = {
+                "document_id": f"{interest.intent_id}:exploration:v1",
+                "exploration_sha256": completed.exploration.text_sha256,
+                "intent_id": interest.intent_id,
+            }
+        elif self._stage == "prototype":
+            checkpoint = "prototype-projected"
+            phase = "prototype_projected"
+            event_type = "PERSONAL_PROTOTYPE_PROJECTED"
+            data = {
+                "content_sha256": completed.prototype.content_sha256,
+                "document_id": f"{interest.intent_id}:prototype:v1",
+                "filename": completed.prototype.filename,
+                "intent_id": interest.intent_id,
+            }
+        else:
+            checkpoint = "release-ready"
+            phase = "release_ready"
+            event_type = "PERSONAL_PRODUCT_RELEASE_READY"
+            data = {
+                "content_sha256": completed.release.content_sha256,
+                "filename": completed.release.filename,
+                "intent_id": interest.intent_id,
+                "publication_status": "unpublished_release_candidate",
+            }
+        self._transition(
+            interest,
+            expected_revision=completed.revision,
+            checkpoint=checkpoint,
+            phase=phase,
+            status="completed",
+            event_type=event_type,
+            now=now,
+            data=data,
+        )
+
+    def record_failure(self, claim: Any, error: Exception, *, now: datetime) -> None:
+        interest = self._interest(claim)
+        timeline = self._actions._timeline_for(
+            interest.tenant_id, interest.installation_id
+        )
+        timeline.record_recovery_failure(
+            thread_id=interest.thread_id,
+            expected_revision=claim.revision,
+            checkpoint_id=(
+                f"{interest.thread_id}:{self._stage}-failed:{claim.revision + 1}"
+            ),
+            operation_id=interest.intent_id,
+            error_text=f"{type(error).__name__}: {error}",
+            occurred_at=now,
+        )
+
 
 class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
     """Lease and finish personal exploration through durable checkpoints."""
@@ -4375,16 +4467,14 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
         *,
         now: datetime,
     ) -> CompletedPersonalExploration:
-        timeline = self._actions._timeline_for(claim.tenant_id, claim.installation_id)
-        completed = timeline.transition(
-            thread_id=claim.thread_id,
+        completed = self._transition(
+            claim,
             expected_revision=claim.revision,
-            checkpoint_id=f"{claim.thread_id}:exploration-completed",
-            operation_id=claim.intent_id,
+            checkpoint="exploration-completed",
             phase="exploration_completed",
             status="active",
             event_type="PERSONAL_EXPLORATION_COMPLETED",
-            occurred_at=now,
+            now=now,
             data={
                 "exploration_sha256": exploration.text_sha256,
                 "exploration_text": exploration.text,
@@ -4393,40 +4483,6 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
             },
         )
         return CompletedPersonalExploration(claim, exploration, completed.revision)
-
-    def mark_projected(
-        self, completed: CompletedPersonalExploration, *, now: datetime
-    ) -> None:
-        claim = completed.claim
-        timeline = self._actions._timeline_for(claim.tenant_id, claim.installation_id)
-        timeline.transition(
-            thread_id=claim.thread_id,
-            expected_revision=completed.revision,
-            checkpoint_id=f"{claim.thread_id}:exploration-projected",
-            operation_id=claim.intent_id,
-            phase="exploration_projected",
-            status="completed",
-            event_type="PERSONAL_EXPLORATION_PROJECTED",
-            occurred_at=now,
-            data={
-                "document_id": f"{claim.intent_id}:exploration:v1",
-                "exploration_sha256": completed.exploration.text_sha256,
-                "intent_id": claim.intent_id,
-            },
-        )
-
-    def record_failure(
-        self, claim: PersonalInterestClaim, error: Exception, *, now: datetime
-    ) -> None:
-        timeline = self._actions._timeline_for(claim.tenant_id, claim.installation_id)
-        timeline.record_recovery_failure(
-            thread_id=claim.thread_id,
-            expected_revision=claim.revision,
-            checkpoint_id=f"{claim.thread_id}:exploration-failed:{claim.revision + 1}",
-            operation_id=claim.intent_id,
-            error_text=f"{type(error).__name__}: {error}",
-            occurred_at=now,
-        )
 
     @staticmethod
     def _claim_from_events(
@@ -4522,19 +4578,15 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
         *,
         now: datetime,
     ) -> CompletedPersonalPrototype:
-        interest = claim.completed_exploration.claim
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        completed = timeline.transition(
-            thread_id=interest.thread_id,
+        interest = self._interest(claim)
+        completed = self._transition(
+            interest,
             expected_revision=claim.revision,
-            checkpoint_id=f"{interest.thread_id}:prototype-completed",
-            operation_id=interest.intent_id,
+            checkpoint="prototype-completed",
             phase="prototype_completed",
             status="active",
             event_type="PERSONAL_PROTOTYPE_COMPLETED",
-            occurred_at=now,
+            now=now,
             data={
                 "content": prototype.content,
                 "content_sha256": prototype.content_sha256,
@@ -4547,46 +4599,6 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
             },
         )
         return CompletedPersonalPrototype(claim, prototype, completed.revision)
-
-    def mark_projected(
-        self, completed: CompletedPersonalPrototype, *, now: datetime
-    ) -> None:
-        interest = completed.claim.completed_exploration.claim
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        timeline.transition(
-            thread_id=interest.thread_id,
-            expected_revision=completed.revision,
-            checkpoint_id=f"{interest.thread_id}:prototype-projected",
-            operation_id=interest.intent_id,
-            phase="prototype_projected",
-            status="completed",
-            event_type="PERSONAL_PROTOTYPE_PROJECTED",
-            occurred_at=now,
-            data={
-                "content_sha256": completed.prototype.content_sha256,
-                "document_id": f"{interest.intent_id}:prototype:v1",
-                "filename": completed.prototype.filename,
-                "intent_id": interest.intent_id,
-            },
-        )
-
-    def record_failure(
-        self, claim: PersonalPrototypeClaim, error: Exception, *, now: datetime
-    ) -> None:
-        interest = claim.completed_exploration.claim
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        timeline.record_recovery_failure(
-            thread_id=interest.thread_id,
-            expected_revision=claim.revision,
-            checkpoint_id=f"{interest.thread_id}:prototype-failed:{claim.revision + 1}",
-            operation_id=interest.intent_id,
-            error_text=f"{type(error).__name__}: {error}",
-            occurred_at=now,
-        )
 
     def latest(
         self,
@@ -4734,19 +4746,15 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
         *,
         now: datetime,
     ) -> CompletedPersonalProductRelease:
-        interest = claim.completed_prototype.claim.completed_exploration.claim
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        completed = timeline.transition(
-            thread_id=interest.thread_id,
+        interest = self._interest(claim)
+        completed = self._transition(
+            interest,
             expected_revision=claim.revision,
-            checkpoint_id=f"{interest.thread_id}:release-completed",
-            operation_id=interest.intent_id,
+            checkpoint="release-completed",
             phase="release_completed",
             status="active",
             event_type="PERSONAL_PRODUCT_RELEASE_COMPLETED",
-            occurred_at=now,
+            now=now,
             data={
                 "content_base64": release.content_base64,
                 "content_sha256": release.content_sha256,
@@ -4762,47 +4770,6 @@ class PostgresPersonalProductReleaseStore(_PostgresPersonalClaimStore):
             },
         )
         return CompletedPersonalProductRelease(claim, release, completed.revision)
-
-    def mark_projected(
-        self, completed: CompletedPersonalProductRelease, *, now: datetime
-    ) -> None:
-        interest = completed.claim.completed_prototype.claim.completed_exploration.claim
-        release = completed.release
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        timeline.transition(
-            thread_id=interest.thread_id,
-            expected_revision=completed.revision,
-            checkpoint_id=f"{interest.thread_id}:release-ready",
-            operation_id=interest.intent_id,
-            phase="release_ready",
-            status="completed",
-            event_type="PERSONAL_PRODUCT_RELEASE_READY",
-            occurred_at=now,
-            data={
-                "content_sha256": release.content_sha256,
-                "filename": release.filename,
-                "intent_id": interest.intent_id,
-                "publication_status": "unpublished_release_candidate",
-            },
-        )
-
-    def record_failure(
-        self, claim: PersonalProductReleaseClaim, error: Exception, *, now: datetime
-    ) -> None:
-        interest = claim.completed_prototype.claim.completed_exploration.claim
-        timeline = self._actions._timeline_for(
-            interest.tenant_id, interest.installation_id
-        )
-        timeline.record_recovery_failure(
-            thread_id=interest.thread_id,
-            expected_revision=claim.revision,
-            checkpoint_id=f"{interest.thread_id}:release-failed:{claim.revision + 1}",
-            operation_id=interest.intent_id,
-            error_text=f"{type(error).__name__}: {error}",
-            occurred_at=now,
-        )
 
     def latest(
         self,
