@@ -5,21 +5,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
-import hmac
 from pathlib import Path
-import re
 from typing import Callable, Literal
 
-from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
-from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
+from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflow,
 )
-from eva.operations.installer_identity_storage import (
-    atomic_write_private,
-    read_private_artifact,
-)
 from eva.operations.installer_safety import (
+    InstallerTwoPhaseJournal,
+    InstallerTwoPhaseMessages,
     owner_only_lock,
     require_owner_only_directory,
     require_utc_timestamp,
@@ -27,7 +22,6 @@ from eva.operations.installer_safety import (
 
 
 BudgetPhase = Literal["empty", "staged", "ready"]
-_SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
 class InstallerBudgetWorkflowError(ValueError):
@@ -294,6 +288,31 @@ def _budget_sha256(value: InstallerBudget) -> str:
     return hashlib.sha256(canonical_json_bytes(value.as_dict())).hexdigest()
 
 
+def _budget_value(value: object) -> InstallerBudget:
+    if not isinstance(value, dict) or value.get("contract") != "EvaInstallerBudget/v2":
+        raise InstallerBudgetWorkflowError("installer budget is invalid")
+    values = dict(value)
+    values.pop("contract", None)
+    if values.pop("unknown_cost_policy", None) != "block_autonomous_spend":
+        raise InstallerBudgetWorkflowError("installer budget cost policy differs")
+    return _budget(**values)
+
+
+_BUDGET_MESSAGES = InstallerTwoPhaseMessages(
+    invalid="installer budget workflow is invalid",
+    digest_invalid="installer budget hash is invalid",
+    retained_digest_differs="installer budget state differs",
+    expected_digest_differs="installer budget hash differs",
+    state_differs="installer budget state differs",
+    history_invalid="installer budget history is invalid",
+    update_differs="installer budget update differs",
+    write_failed="installer budget workflow write failed",
+    different_retained="different installer budgets are already retained",
+    missing_staged="no installer budgets are staged",
+    confirmation_precedes="budget confirmation precedes staging",
+)
+
+
 @dataclass(frozen=True, slots=True)
 class InstallerBudgetWorkflow:
     workspace: Path
@@ -319,127 +338,34 @@ class InstallerBudgetWorkflow:
             unavailable_message="installer budget lock is unavailable",
         )
 
-    def _load(self) -> InstallerBudgetStatus | None:
-        if not self.state_path.exists() and not self.state_path.is_symlink():
-            return None
-        try:
-            payload = require_canonical_bytes(
-                read_private_artifact(
-                    self.state_path, label="installer budget workflow"
-                )
-            )
-        except (IdentityPackLifecycleError, ValueError) as exc:
-            raise InstallerBudgetWorkflowError(
-                "installer budget workflow is invalid"
-            ) from exc
-        if (
-            set(payload)
-            != {
-                "budget",
-                "budget_sha256",
-                "contract",
-                "events",
-                "phase",
-                "revision",
-                "updated_at",
-            }
-            or payload.get("contract") != "EvaInstallerBudgetWorkflow/v1"
-        ):
-            raise InstallerBudgetWorkflowError("installer budget workflow is invalid")
-        raw_budget = payload.get("budget")
-        if (
-            not isinstance(raw_budget, dict)
-            or raw_budget.get("contract") != "EvaInstallerBudget/v2"
-        ):
-            raise InstallerBudgetWorkflowError("installer budget is invalid")
-        values = dict(raw_budget)
-        values.pop("contract", None)
-        if values.pop("unknown_cost_policy", None) != "block_autonomous_spend":
-            raise InstallerBudgetWorkflowError("installer budget cost policy differs")
-        budget = _budget(**values)
-        digest = payload.get("budget_sha256")
-        phase = payload.get("phase")
-        revision = payload.get("revision")
-        events = payload.get("events")
-        if (
-            not isinstance(digest, str)
-            or _SHA256_RE.fullmatch(digest) is None
-            or not hmac.compare_digest(digest, _budget_sha256(budget))
-            or phase not in {"staged", "ready"}
-            or revision not in {1, 2}
-            or not isinstance(events, list)
-            or len(events) != revision
-        ):
-            raise InstallerBudgetWorkflowError("installer budget state differs")
-        transitions = ["staged"] if phase == "staged" else ["staged", "confirmed"]
-        previous_at = ""
-        for index, event in enumerate(events, start=1):
-            if not isinstance(event, dict) or set(event) != {
-                "at",
-                "budget_sha256",
-                "revision",
-                "transition",
-            }:
-                raise InstallerBudgetWorkflowError(
-                    "installer budget history is invalid"
-                )
-            at = _timestamp(event.get("at"))
-            if (
-                event.get("revision") != index
-                or event.get("transition") != transitions[index - 1]
-                or event.get("budget_sha256") != digest
-                or (previous_at and at < previous_at)
-            ):
-                raise InstallerBudgetWorkflowError(
-                    "installer budget history is invalid"
-                )
-            previous_at = at
-        updated_at = _timestamp(payload.get("updated_at"))
-        if updated_at != previous_at:
-            raise InstallerBudgetWorkflowError("installer budget update differs")
-        return InstallerBudgetStatus(
-            phase=phase,
-            revision=revision,
-            budget_sha256=digest,
-            budget=budget,
-            updated_at=updated_at,
-        )
-
-    def _write(
-        self,
-        *,
-        phase: Literal["staged", "ready"],
-        budget: InstallerBudget,
-        events: list[dict[str, object]],
-    ) -> InstallerBudgetStatus:
-        digest = _budget_sha256(budget)
-        payload = {
-            "budget": budget.as_dict(),
-            "budget_sha256": digest,
-            "contract": "EvaInstallerBudgetWorkflow/v1",
-            "events": events,
-            "phase": phase,
-            "revision": len(events),
-            "updated_at": events[-1]["at"],
-        }
-        try:
-            atomic_write_private(self.state_path, canonical_json_bytes(payload))
-        except IdentityPackLifecycleError as exc:
-            raise InstallerBudgetWorkflowError(
-                "installer budget workflow write failed"
-            ) from exc
-        return InstallerBudgetStatus(
-            phase=phase,
-            revision=len(events),
-            budget_sha256=digest,
-            budget=budget,
-            updated_at=str(events[-1]["at"]),
+    def _journal(self) -> InstallerTwoPhaseJournal[InstallerBudget]:
+        return InstallerTwoPhaseJournal(
+            path=self.state_path,
+            contract="EvaInstallerBudgetWorkflow/v1",
+            value_field="budget",
+            digest_field="budget_sha256",
+            read_label="installer budget workflow",
+            decode=_budget_value,
+            encode=InstallerBudget.as_dict,
+            value_digest=_budget_sha256,
+            event_timestamp=_timestamp,
+            update_timestamp=_timestamp,
+            error=InstallerBudgetWorkflowError,
+            messages=_BUDGET_MESSAGES,
         )
 
     def status(self) -> InstallerBudgetStatus:
         with self._lock():
-            retained = self._load()
-            return retained or InstallerBudgetStatus(
+            retained = self._journal().load()
+            if retained is not None:
+                return InstallerBudgetStatus(
+                    phase=retained.phase,
+                    revision=retained.revision,
+                    budget_sha256=retained.digest,
+                    budget=retained.value,
+                    updated_at=retained.updated_at,
+                )
+            return InstallerBudgetStatus(
                 phase="empty",
                 revision=0,
                 budget_sha256=None,
@@ -453,88 +379,28 @@ class InstallerBudgetWorkflow:
                 "installer budgets must be selected before staging"
             )
         budget = _budget(**values)
-        digest = _budget_sha256(budget)
         with self._lock():
-            retained = self._load()
-            if retained is not None:
-                if retained.budget_sha256 != digest:
-                    raise InstallerBudgetWorkflowError(
-                        "different installer budgets are already retained"
-                    )
-                return InstallerBudgetTransition(
-                    phase=retained.phase,
-                    revision=retained.revision,
-                    budget_sha256=digest,
-                    already_in_phase=True,
-                )
-            at = _timestamp(self.clock())
-            written = self._write(
-                phase="staged",
-                budget=budget,
-                events=[
-                    {
-                        "at": at,
-                        "budget_sha256": digest,
-                        "revision": 1,
-                        "transition": "staged",
-                    }
-                ],
-            )
-            return InstallerBudgetTransition(
-                phase="staged",
-                revision=written.revision,
-                budget_sha256=digest,
-                already_in_phase=False,
-            )
+            change = self._journal().stage(budget, at=_timestamp(self.clock()))
+        return InstallerBudgetTransition(
+            phase=change.record.phase,
+            revision=change.record.revision,
+            budget_sha256=change.record.digest,
+            already_in_phase=change.already_in_phase,
+        )
 
     def confirm(self, *, expected_budget_sha256: object) -> InstallerBudgetTransition:
-        if (
-            not isinstance(expected_budget_sha256, str)
-            or _SHA256_RE.fullmatch(expected_budget_sha256) is None
-        ):
-            raise InstallerBudgetWorkflowError("installer budget hash is invalid")
+        journal = self._journal()
+        expected_hash = journal.require_digest(expected_budget_sha256)
         with self._lock():
-            retained = self._load()
-            if (
-                retained is None
-                or retained.budget is None
-                or retained.budget_sha256 is None
-            ):
-                raise InstallerBudgetWorkflowError("no installer budgets are staged")
-            if not hmac.compare_digest(retained.budget_sha256, expected_budget_sha256):
-                raise InstallerBudgetWorkflowError("installer budget hash differs")
-            already_ready = retained.phase == "ready"
-            if not already_ready:
-                first_at = retained.updated_at
-                assert first_at is not None
-                at = _timestamp(self.clock())
-                if at < first_at:
-                    raise InstallerBudgetWorkflowError(
-                        "budget confirmation precedes staging"
-                    )
-                retained = self._write(
-                    phase="ready",
-                    budget=retained.budget,
-                    events=[
-                        {
-                            "at": first_at,
-                            "budget_sha256": retained.budget_sha256,
-                            "revision": 1,
-                            "transition": "staged",
-                        },
-                        {
-                            "at": at,
-                            "budget_sha256": retained.budget_sha256,
-                            "revision": 2,
-                            "transition": "confirmed",
-                        },
-                    ],
-                )
+            change = journal.confirm(
+                expected_hash,
+                confirmed_at=lambda: _timestamp(self.clock()),
+            )
         try:
             self.capability_workflow.record_verification(
                 step_id="budgets",
                 outcome="ready",
-                evidence_sha256=retained.budget_sha256,
+                evidence_sha256=change.record.digest,
             )
         except Exception as exc:
             raise InstallerBudgetWorkflowError(
@@ -542,9 +408,9 @@ class InstallerBudgetWorkflow:
             ) from exc
         return InstallerBudgetTransition(
             phase="ready",
-            revision=retained.revision,
-            budget_sha256=retained.budget_sha256,
-            already_in_phase=already_ready,
+            revision=change.record.revision,
+            budget_sha256=change.record.digest,
+            already_in_phase=change.already_in_phase,
         )
 
 

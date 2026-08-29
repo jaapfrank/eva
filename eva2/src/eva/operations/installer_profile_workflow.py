@@ -11,20 +11,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
-import hmac
 from pathlib import Path
 import re
 from typing import Callable, Literal
 import unicodedata
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
-from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
-from eva.operations.installer_identity_storage import (
-    atomic_write_private,
-    read_private_artifact,
-)
+from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_safety import (
+    InstallerTwoPhaseJournal,
+    InstallerTwoPhaseMessages,
     owner_only_lock,
     require_owner_only_directory,
     require_utc_timestamp,
@@ -32,7 +28,6 @@ from eva.operations.installer_safety import (
 
 
 _LANGUAGE_RE = re.compile(r"[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|[0-9]{3}))?")
-_SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
 class InstallerProfileWorkflowError(ValueError):
@@ -136,10 +131,35 @@ def _profile_sha256(profile: InstallerProfile) -> str:
     return hashlib.sha256(canonical_json_bytes(profile.as_dict())).hexdigest()
 
 
-def _require_sha256(value: object) -> str:
-    if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
-        raise InstallerProfileWorkflowError("profile hash is invalid")
-    return value
+def _profile_value(value: object) -> InstallerProfile:
+    if (
+        not isinstance(value, dict)
+        or set(value)
+        != {"contract", "installation_name", "language", "owner_label", "time_zone"}
+        or value.get("contract") != "EvaInstallerProfile/v1"
+    ):
+        raise InstallerProfileWorkflowError("installer profile is invalid")
+    return _profile(
+        installation_name=value.get("installation_name"),
+        owner_label=value.get("owner_label"),
+        language=value.get("language"),
+        time_zone=value.get("time_zone"),
+    )
+
+
+_PROFILE_MESSAGES = InstallerTwoPhaseMessages(
+    invalid="installer profile workflow is invalid",
+    digest_invalid="profile hash is invalid",
+    retained_digest_differs="installer profile hash differs",
+    expected_digest_differs="installer profile hash differs",
+    state_differs="installer profile workflow phase is invalid",
+    history_invalid="installer profile workflow history is invalid",
+    update_differs="installer profile update time differs from history",
+    write_failed="installer profile workflow write failed",
+    different_retained="a different installer profile is already retained",
+    missing_staged="no installer profile is staged",
+    confirmation_precedes="profile confirmation time precedes staging",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -166,146 +186,37 @@ class InstallerProfileWorkflow:
             unavailable_message="installer profile lock is unavailable",
         )
 
-    def _load(self) -> InstallerProfileStatus | None:
-        if not self.state_path.exists() and not self.state_path.is_symlink():
-            return None
-        try:
-            raw = read_private_artifact(
-                self.state_path, label="installer profile workflow"
-            )
-        except IdentityPackLifecycleError as exc:
-            raise InstallerProfileWorkflowError(
-                "installer profile workflow is unavailable"
-            ) from exc
-        try:
-            payload = require_canonical_bytes(raw)
-        except ValueError as exc:
-            raise InstallerProfileWorkflowError(
-                "installer profile workflow is invalid"
-            ) from exc
-        if (
-            set(payload)
-            != {
-                "contract",
-                "events",
-                "phase",
-                "profile",
-                "profile_sha256",
-                "revision",
-                "updated_at",
-            }
-            or payload.get("contract") != "EvaInstallerProfileWorkflow/v1"
-        ):
-            raise InstallerProfileWorkflowError("installer profile workflow is invalid")
-        phase = payload.get("phase")
-        revision = payload.get("revision")
-        events = payload.get("events")
-        if phase not in {"staged", "ready"} or revision not in {1, 2}:
-            raise InstallerProfileWorkflowError(
-                "installer profile workflow phase is invalid"
-            )
-        if not isinstance(events, list) or len(events) != revision:
-            raise InstallerProfileWorkflowError(
-                "installer profile workflow history is invalid"
-            )
-        profile_value = payload.get("profile")
-        if (
-            not isinstance(profile_value, dict)
-            or set(profile_value)
-            != {
-                "contract",
-                "installation_name",
-                "language",
-                "owner_label",
-                "time_zone",
-            }
-            or profile_value.get("contract") != "EvaInstallerProfile/v1"
-        ):
-            raise InstallerProfileWorkflowError("installer profile is invalid")
-        profile = _profile(
-            installation_name=profile_value.get("installation_name"),
-            owner_label=profile_value.get("owner_label"),
-            language=profile_value.get("language"),
-            time_zone=profile_value.get("time_zone"),
-        )
-        profile_hash = _require_sha256(payload.get("profile_sha256"))
-        if not hmac.compare_digest(profile_hash, _profile_sha256(profile)):
-            raise InstallerProfileWorkflowError("installer profile hash differs")
-        expected_transitions = (
-            ["staged"] if phase == "staged" else ["staged", "confirmed"]
-        )
-        previous_at = ""
-        for index, event in enumerate(events, start=1):
-            if not isinstance(event, dict) or set(event) != {
-                "at",
-                "profile_sha256",
-                "revision",
-                "transition",
-            }:
-                raise InstallerProfileWorkflowError(
-                    "installer profile workflow history is invalid"
-                )
-            at = _timestamp(event.get("at"), label="profile event timestamp")
-            if (
-                event.get("revision") != index
-                or event.get("transition") != expected_transitions[index - 1]
-                or not isinstance(event.get("profile_sha256"), str)
-                or not hmac.compare_digest(event["profile_sha256"], profile_hash)
-                or (previous_at and at < previous_at)
-            ):
-                raise InstallerProfileWorkflowError(
-                    "installer profile workflow history is invalid"
-                )
-            previous_at = at
-        updated_at = _timestamp(payload.get("updated_at"), label="profile update time")
-        if updated_at != previous_at:
-            raise InstallerProfileWorkflowError(
-                "installer profile update time differs from history"
-            )
-        return InstallerProfileStatus(
-            phase=phase,
-            revision=revision,
-            profile_sha256=profile_hash,
-            profile=profile,
-            updated_at=updated_at,
-        )
-
-    def _write(
-        self,
-        *,
-        phase: Literal["staged", "ready"],
-        profile: InstallerProfile,
-        events: list[dict[str, object]],
-    ) -> InstallerProfileStatus:
-        profile_hash = _profile_sha256(profile)
-        payload = {
-            "contract": "EvaInstallerProfileWorkflow/v1",
-            "events": events,
-            "phase": phase,
-            "profile": profile.as_dict(),
-            "profile_sha256": profile_hash,
-            "revision": len(events),
-            "updated_at": events[-1]["at"],
-        }
-        try:
-            atomic_write_private(self.state_path, canonical_json_bytes(payload))
-        except IdentityPackLifecycleError as exc:
-            raise InstallerProfileWorkflowError(
-                "installer profile workflow write failed"
-            ) from exc
-        return InstallerProfileStatus(
-            phase=phase,
-            revision=len(events),
-            profile_sha256=profile_hash,
-            profile=profile,
-            updated_at=str(events[-1]["at"]),
+    def _journal(self) -> InstallerTwoPhaseJournal[InstallerProfile]:
+        return InstallerTwoPhaseJournal(
+            path=self.state_path,
+            contract="EvaInstallerProfileWorkflow/v1",
+            value_field="profile",
+            digest_field="profile_sha256",
+            read_label="installer profile workflow",
+            decode=_profile_value,
+            encode=InstallerProfile.as_dict,
+            value_digest=_profile_sha256,
+            event_timestamp=lambda value: _timestamp(
+                value, label="profile event timestamp"
+            ),
+            update_timestamp=lambda value: _timestamp(
+                value, label="profile update time"
+            ),
+            error=InstallerProfileWorkflowError,
+            messages=_PROFILE_MESSAGES,
         )
 
     def status(self) -> InstallerProfileStatus:
         with self._lock():
-            retained = self._load()
+            retained = self._journal().load()
             if retained is not None:
-                return retained
+                return InstallerProfileStatus(
+                    phase=retained.phase,
+                    revision=retained.revision,
+                    profile_sha256=retained.digest,
+                    profile=retained.value,
+                    updated_at=retained.updated_at,
+                )
             return InstallerProfileStatus(
                 phase="empty",
                 revision=0,
@@ -328,92 +239,34 @@ class InstallerProfileWorkflow:
             language=language,
             time_zone=time_zone,
         )
-        profile_hash = _profile_sha256(profile)
         with self._lock():
-            retained = self._load()
-            if retained is not None:
-                if retained.profile_sha256 is None or not hmac.compare_digest(
-                    retained.profile_sha256, profile_hash
-                ):
-                    raise InstallerProfileWorkflowError(
-                        "a different installer profile is already retained"
-                    )
-                return InstallerProfileTransition(
-                    phase=retained.phase,
-                    revision=retained.revision,
-                    profile_sha256=profile_hash,
-                    already_in_phase=True,
-                )
-            at = _timestamp(self.clock(), label="profile stage time")
-            written = self._write(
-                phase="staged",
-                profile=profile,
-                events=[
-                    {
-                        "at": at,
-                        "profile_sha256": profile_hash,
-                        "revision": 1,
-                        "transition": "staged",
-                    }
-                ],
+            change = self._journal().stage(
+                profile,
+                at=_timestamp(self.clock(), label="profile stage time"),
             )
-            return InstallerProfileTransition(
-                phase="staged",
-                revision=written.revision,
-                profile_sha256=profile_hash,
-                already_in_phase=False,
-            )
+        return InstallerProfileTransition(
+            phase=change.record.phase,
+            revision=change.record.revision,
+            profile_sha256=change.record.digest,
+            already_in_phase=change.already_in_phase,
+        )
 
     def confirm(self, *, expected_profile_sha256: object) -> InstallerProfileTransition:
-        expected_hash = _require_sha256(expected_profile_sha256)
+        journal = self._journal()
+        expected_hash = journal.require_digest(expected_profile_sha256)
         with self._lock():
-            retained = self._load()
-            if (
-                retained is None
-                or retained.profile is None
-                or retained.profile_sha256 is None
-            ):
-                raise InstallerProfileWorkflowError("no installer profile is staged")
-            if not hmac.compare_digest(retained.profile_sha256, expected_hash):
-                raise InstallerProfileWorkflowError("installer profile hash differs")
-            if retained.phase == "ready":
-                return InstallerProfileTransition(
-                    phase="ready",
-                    revision=retained.revision,
-                    profile_sha256=retained.profile_sha256,
-                    already_in_phase=True,
-                )
-            at = _timestamp(self.clock(), label="profile confirmation time")
-            first_at = retained.updated_at
-            assert first_at is not None
-            if at < first_at:
-                raise InstallerProfileWorkflowError(
-                    "profile confirmation time precedes staging"
-                )
-            written = self._write(
-                phase="ready",
-                profile=retained.profile,
-                events=[
-                    {
-                        "at": first_at,
-                        "profile_sha256": retained.profile_sha256,
-                        "revision": 1,
-                        "transition": "staged",
-                    },
-                    {
-                        "at": at,
-                        "profile_sha256": retained.profile_sha256,
-                        "revision": 2,
-                        "transition": "confirmed",
-                    },
-                ],
+            change = journal.confirm(
+                expected_hash,
+                confirmed_at=lambda: _timestamp(
+                    self.clock(), label="profile confirmation time"
+                ),
             )
-            return InstallerProfileTransition(
-                phase="ready",
-                revision=written.revision,
-                profile_sha256=retained.profile_sha256,
-                already_in_phase=False,
-            )
+        return InstallerProfileTransition(
+            phase="ready",
+            revision=change.record.revision,
+            profile_sha256=change.record.digest,
+            already_in_phase=change.already_in_phase,
+        )
 
 
 __all__ = [
