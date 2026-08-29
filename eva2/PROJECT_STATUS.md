@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 17:18 CEST
+Laatst bijgewerkt: 29 augustus 2026, 17:31 CEST
 
 ## Heel kort
 
@@ -141,6 +141,9 @@ praktijktest zijn nog niet klaar.
   zeven UTC-controles delen eveneens één fail-closed implementatie. Alle 186
   installer-, wizard-, API- en connectorproeven zijn groen; netto verdwenen
   opnieuw 141 productregels.
+- Het installatieprofiel en de budgetten gebruiken nu ook dezelfde veilige
+  klaarzet- en bevestigingsroute. Alle 186 installatieproeven bleven groen en
+  er verdwenen nog 44 productregels.
 - De releasecontrole schrijft niet langer dezelfde 239 bronpaden en 130
   testpaden ook nog eens in Python uit. Twee vaste sethashes houden ontbrekende,
   extra, gewijzigde en verkeerd geordende paden fail-closed. De gerichte proef
@@ -168,7 +171,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  87.916 productregels en mag er maximaal 75.000 hebben.
+  87.872 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
