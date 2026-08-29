@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_provider_verification import (
     InstallerProviderProbeError,
@@ -135,3 +137,28 @@ def test_cli_preflight_failure_does_not_call_probe_or_echo_paths(
     }
     assert str(private_tmp_path) not in output
     assert probe.calls == 0
+
+
+@pytest.mark.parametrize(
+    ("slot_id", "extra_arguments"),
+    [
+        ("home_assistant", []),
+        ("telegram", ["--home-assistant-url", "http://127.0.0.1:8123"]),
+    ],
+)
+def test_cli_rejects_missing_or_irrelevant_home_assistant_url_without_echo(
+    private_tmp_path: Path,
+    capsys,
+    slot_id: str,
+    extra_arguments: list[str],
+) -> None:
+    arguments = _arguments(_workspaces(private_tmp_path))
+    arguments[1] = slot_id
+    arguments.extend(extra_arguments)
+
+    exit_code = run_installer_provider_verification(arguments)
+
+    output = capsys.readouterr().out
+    assert exit_code == 2
+    assert json.loads(output)["status"] == "failed"
+    assert "127.0.0.1" not in output

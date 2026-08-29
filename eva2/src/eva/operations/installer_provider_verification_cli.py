@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 from typing import Mapping
 
+from eva.adapters.connectors.installer_home_assistant_probe import (
+    HomeAssistantInstallerReadOnlyProbe,
+)
 from eva.adapters.connectors.installer_telegram_probe import (
     TelegramInstallerReadOnlyProbe,
 )
@@ -37,24 +40,39 @@ def _output(value: object) -> None:
     )
 
 
+def _default_probe(slot_id: str, home_assistant_url: str | None) -> InstallerProviderProbe:
+    if slot_id == "telegram" and home_assistant_url is None:
+        return TelegramInstallerReadOnlyProbe()
+    if slot_id == "home_assistant" and home_assistant_url is not None:
+        return HomeAssistantInstallerReadOnlyProbe(base_url=home_assistant_url)
+    raise ValueError("provider verification configuration is invalid")
+
+
 def run_installer_provider_verification(
     argv: list[str] | None = None,
     *,
     probes: Mapping[str, InstallerProviderProbe] | None = None,
 ) -> int:
     parser = argparse.ArgumentParser(prog="eva-installer-verify")
-    parser.add_argument("--slot", choices=("telegram",), required=True)
+    parser.add_argument(
+        "--slot", choices=("telegram", "home_assistant"), required=True
+    )
+    parser.add_argument("--home-assistant-url")
     parser.add_argument("--capability-workspace", type=Path, required=True)
     parser.add_argument("--secret-workspace", type=Path, required=True)
     parser.add_argument("--evidence-workspace", type=Path, required=True)
     parser.add_argument("--timeout-seconds", type=float, default=10.0)
     arguments = parser.parse_args(argv)
-    selected_probes: Mapping[str, InstallerProviderProbe] = (
-        {"telegram": TelegramInstallerReadOnlyProbe()}
-        if probes is None
-        else probes
-    )
     try:
+        selected_probes: Mapping[str, InstallerProviderProbe] = (
+            {
+                arguments.slot: _default_probe(
+                    arguments.slot, arguments.home_assistant_url
+                )
+            }
+            if probes is None
+            else probes
+        )
         verifier = InstallerProviderVerifier(
             capability_workflow=InstallerCapabilityWorkflow(
                 workspace=arguments.capability_workspace
@@ -72,6 +90,7 @@ def run_installer_provider_verification(
         InstallerProviderVerificationError,
         InstallerSecretStoreError,
         OSError,
+        ValueError,
     ):
         _output(
             {
