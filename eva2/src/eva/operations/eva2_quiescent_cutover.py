@@ -163,13 +163,16 @@ def _count_digest(counts: dict[str, int]) -> str:
 
 
 def _dump_content_digest(lines: Iterable[bytes]) -> str:
-    digest = hashlib.sha256()
+    line_digests: list[bytes] = []
     for line in lines:
         # PostgreSQL 17+ emits a fresh anti-injection key on every dump.  It is
         # transport framing, not database content.
         if line.startswith((b"\\restrict ", b"\\unrestrict ")):
             continue
-        digest.update(line)
+        line_digests.append(hashlib.sha256(line).digest())
+    digest = hashlib.sha256()
+    for line_digest in sorted(line_digests):
+        digest.update(line_digest)
     return digest.hexdigest()
 
 
@@ -652,9 +655,21 @@ class SystemBackend:
         )
         operational = self._attest(slot.operational_postgres, "eva2")
         memory = self._attest(slot.memory_postgres, "hindsight")
-        if operational != snapshot.operational or memory != snapshot.memory:
+        differences: list[str] = []
+        for name, restored, expected in (
+            ("operational", operational, snapshot.operational),
+            ("memory", memory, snapshot.memory),
+        ):
+            if restored.counts != expected.counts:
+                differences.append(f"{name}-counts")
+            if restored.schema_digest != expected.schema_digest:
+                differences.append(f"{name}-schema")
+            if restored.data_digest != expected.data_digest:
+                differences.append(f"{name}-data")
+        if differences:
             raise QuiescentCutoverError(
-                "restored database content differs from its source"
+                "restored database content differs from its source: "
+                + ",".join(differences)
             )
 
     @staticmethod
@@ -854,6 +869,7 @@ def main(argv: list[str] | None = None) -> int:
     lock_descriptor = os.open(LOCK, os.O_CREAT | os.O_RDWR, 0o600)
     workspace: Path | None = None
     success = False
+    retain_workspace = False
     try:
         try:
             fcntl.flock(lock_descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -887,10 +903,13 @@ def main(argv: list[str] | None = None) -> int:
             )
         success = True
     except QuiescentCutoverError as exc:
+        retain_workspace = "rollback both failed" in str(exc) or (
+            "automatic lossless rollback both failed" in str(exc)
+        )
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
     finally:
-        if success and workspace is not None:
+        if workspace is not None and (success or not retain_workspace):
             shutil.rmtree(workspace)
         os.close(lock_descriptor)
     print(json.dumps(receipt, sort_keys=True))

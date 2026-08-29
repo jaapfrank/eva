@@ -70,6 +70,14 @@ def test_database_digest_ignores_only_postgres_random_restrict_framing() -> None
 
     assert first == second
     assert first != changed
+    assert first == _dump_content_digest(
+        [
+            b"INSERT INTO x VALUES (1);\n",
+            b"\\unrestrict another\n",
+            b"-- header\n",
+            b"\\restrict another\n",
+        ]
+    )
 
 
 class FakeBackend:
