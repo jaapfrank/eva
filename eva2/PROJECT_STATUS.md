@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 17:31 CEST
+Laatst bijgewerkt: 29 augustus 2026, 17:38 CEST
 
 ## Heel kort
 
@@ -156,6 +156,9 @@ praktijktest zijn nog niet klaar.
   verkooptekst en een passieve huisprikkel gebruiken diezelfde bouwers. Hun vijf
   afzonderlijke hashes bleven in de echte image gelijk; dit scheelde nog 74
   productregels.
+- Zeventien connectorfouten gebruiken nu één gebonden antwoordroute. Alle 299
+  connectortests zijn groen; dit verwijderde nog 118 productregels zonder het
+  connectorprotocol of de bewijsinformatie te veranderen.
 
 ## Wat nog niet klaar is
 
@@ -171,7 +174,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  87.872 productregels en mag er maximaal 75.000 hebben.
+  87.754 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.

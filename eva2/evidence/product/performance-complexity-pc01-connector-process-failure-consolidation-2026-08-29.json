@@ -1,0 +1,57 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ConnectorProcessFailureConsolidation/v1",
+  "recordedAt": "2026-08-29T15:37:40Z",
+  "sourceCommit": "0e32116ba84157ad04276fa1087ae686d3193505",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "path": "src/eva/adapters/connectors/process.py",
+    "consolidatedFailureResponses": 17,
+    "preservedBindings": [
+      "initialize and invoke request hashes",
+      "protocol phase and violation",
+      "stdout, stderr and return code evidence",
+      "observation timestamp and detail"
+    ],
+    "netProductPhysicalLines": -118
+  },
+  "verification": {
+    "focusedConnectorProcessTests": {
+      "passed": 19,
+      "failed": 0,
+      "logSha256": "eec8b33cf9fb701a70bb3de2399e5c1f0dbd0af7040bcb27113f0c10dce53da0"
+    },
+    "allConnectorTestsOnLinuxFilesystem": {
+      "passed": 299,
+      "failed": 0,
+      "logSha256": "7af6861925075e61734a008a7cf583ffce63750e4d423e4203f16d0b2592c10b"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87872,
+      "productManifestSha256": "1577bf08f69eae8c3b1c333858afe324ce7042a0cdde33a7fdcb8f8d41625abe"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87754,
+      "productManifestSha256": "7dfe19d2206344b8289a3d91800015c6bd427bceedbf006733587e6cc6cec990",
+      "livingCorePhysicalLines": 87161,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12754,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No connector protocol, violation class, retry meaning, manifest binding, subprocess boundary, or external I/O behavior changed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector, or volume was changed."
+  ]
+}
