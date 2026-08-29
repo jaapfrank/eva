@@ -1,0 +1,65 @@
+{
+  "contract": "EvaPerformanceComplexityPc01CandidateBuildToolSeparation/v1",
+  "recordedAt": "2026-08-29T17:07:08Z",
+  "sourceCommit": "a059ac814f0aa6c1c1d302e6e635ce4da2f673f0",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "movedOutOfRuntime": [
+      "managed_b_base_image.py",
+      "managed_b_build_context.py",
+      "managed_b_candidate_image.py"
+    ],
+    "retainedToolPackage": "tools/managed_b_candidate",
+    "reason": "The modules are candidate-only offline build tools and have no runtime or Compose importer.",
+    "netProductPhysicalLines": -990,
+    "netProductFiles": -3
+  },
+  "verification": {
+    "candidateBuildAndSmokeTests": {
+      "passed": 16,
+      "failed": 0,
+      "logSha256": "43f6f546a45cdf4cbe4d9c4b5f326736425e5b43c42ef153180205577ca56621"
+    },
+    "networklessPython31214Wheel": {
+      "built": true,
+      "candidateBuildModules": 0,
+      "wheelSha256": "8def56055ceec5381ede471e829b3b759a65e3db84daa0c87aa629c3707b2c5e",
+      "logSha256": "5d8c431e62009e2ba079064b2a4905d3cbadf32261443de622bdb3a2a42b0431"
+    },
+    "existingReleaseGateObservation": {
+      "baseline": {"passed": 7, "failed": 20},
+      "candidate": {"passed": 7, "failed": 20},
+      "newFailedTests": 0,
+      "candidateLogSha256": "81b798f186585cc3ff7999b13baf2c305c90e02c3172e38896bfb179a5581a59"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 234,
+      "productPhysicalLines": 86149,
+      "productManifestSha256": "906b5378bb2866c0a601c3fb06052e70f4de75a3bac132d1f25e3029d912868e"
+    },
+    "after": {
+      "productFileCount": 231,
+      "productPhysicalLines": 85159,
+      "productManifestSha256": "42fd806311751a6e9aa993a99ee5752ca039689db2af33b360fe39fd0ba2fd73",
+      "livingCorePhysicalLines": 84566,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 10159,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "The candidate build tools were retained, not deleted or promoted to a runtime capability.",
+    "The pre-existing managed-release gate is not claimed green or silently resealed.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector or volume was changed."
+  ]
+}

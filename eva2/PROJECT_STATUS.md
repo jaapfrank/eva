@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 19:02 CEST
+Laatst bijgewerkt: 29 augustus 2026, 19:07 CEST
 
 ## Heel kort
 
@@ -181,6 +181,9 @@ praktijktest zijn nog niet klaar.
 - Ook de oude handgeschreven MCP-client had nul productgebruikers. Hij blijft
   bytegelijk als testfixture, maar zit niet meer in de runtimewheel. Alle 299
   connectortests zijn opnieuw groen; dit verwijderde nog 415 productregels.
+- Drie offline kandidaatimagebouwers stonden onnodig in de runtime. Ze blijven
+  volledig beschikbaar onder `tools/`; 16 build- en smoketests zijn groen en
+  de netwerkloze wheel bevat ze niet. Dit scheelde nog 990 productregels.
 
 ## Wat nog niet klaar is
 
@@ -196,7 +199,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  86.149 productregels en mag er maximaal 75.000 hebben.
+  85.159 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -214,7 +217,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 11.149 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 10.159 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -266,6 +269,7 @@ praktijktest zijn nog niet klaar.
 - [Gedeelde runtime-instellingen en file-only secrets](evidence/product/performance-complexity-pc01-runtime-environment-consolidation-2026-08-29.json)
 - [Afgewezen Playwright-proefcode uit de runtime: 996 productregels minder](evidence/product/performance-complexity-pc01-rejected-playwright-proof-extraction-2026-08-29.json)
 - [Ongebruikte MCP-bewijsclient uit de runtime: 415 productregels minder](evidence/product/performance-complexity-pc01-unused-mcp-proof-extraction-2026-08-29.json)
+- [Offline kandidaatimagebouwers uit de runtime: 990 productregels minder](evidence/product/performance-complexity-pc01-candidate-build-tool-separation-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)
 - [Gedeelde geheugen-/journalscope: 25 productregels minder en 52 tests groen](evidence/product/performance-complexity-pc01-memory-scope-consolidation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
