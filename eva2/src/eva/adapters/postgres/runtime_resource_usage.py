@@ -147,6 +147,10 @@ class PostgresDailyReflectionBudget:
             try:
                 state = self._timeline.load(thread_id)
             except OperationalTimelineError as error:
+                if str(error) == (
+                    "checkpoint projection differs from append-only timeline"
+                ):
+                    continue
                 if str(error) != "thread does not exist":
                     raise
                 installation_used = 0
