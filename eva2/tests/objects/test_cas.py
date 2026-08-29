@@ -15,7 +15,7 @@ from eva.adapters.objects.cas import (
     FileSystemCAS,
 )
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
-from eva.adapters.objects.fixture_keys import FixtureObjectKeyResolver
+from tests.support.fixture_keys import FixtureObjectKeyResolver
 from eva.application.objects import (
     CasInstallStatus,
     CandidateBindingCommitError,

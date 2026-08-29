@@ -277,6 +277,7 @@ _EXPECTED_INPUT_PATHS = (
     "tools/smoke_people_memory_runtime.py",
 )
 _EXPECTED_TEST_PATHS = (
+    "tests/__init__.py",
     "tests/api/test_dashboard_status.py",
     "tests/api/test_installer_provider_api.py",
     "tests/api/test_installer_wizard.py",
@@ -394,6 +395,11 @@ _EXPECTED_TEST_PATHS = (
     "tests/projection/test_hindsight.py",
     "tests/subagents/test_openai_child_provider.py",
     "tests/subagents/test_tool_free_child.py",
+    "tests/support/__init__.py",
+    "tests/support/fixture_keys.py",
+    "tests/support/model_fixture.py",
+    "tests/support/noor_4d.py",
+    "tests/support/noor_4d_repository.py",
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",

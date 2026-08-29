@@ -1,4 +1,4 @@
-"""Content-addressed, networkless 4D model fixture interpreter.
+"""Test-only content-addressed, networkless 4D model fixture interpreter.
 
 The sealed artifact defines canonical program data, not a subprocess protocol.
 This module therefore provides the smallest honest runtime boundary: it verifies

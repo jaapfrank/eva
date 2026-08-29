@@ -16,7 +16,7 @@ from alembic.config import Config
 from sqlalchemy.engine import Connection, Engine, make_url
 
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
-from eva.adapters.postgres.noor_4d_repository import (
+from tests.support.noor_4d_repository import (
     ExactNoor4DRow,
     ExpectedNoor4DRow,
     Noor4DDuplicateConflict,

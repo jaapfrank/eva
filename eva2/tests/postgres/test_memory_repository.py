@@ -21,7 +21,7 @@ from eva.adapters.projection.hindsight import (
 )
 from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
 from eva.adapters.postgres.memory import PostgresMemoryRepository
-from eva.adapters.postgres.noor_4d_repository import (
+from tests.support.noor_4d_repository import (
     ExactNoor4DRow,
     PostgresNoor4DRepository,
 )

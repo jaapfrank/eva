@@ -1,4 +1,4 @@
-"""Exact-row PostgreSQL primitives for the sealed Noor 4D fixture.
+"""Test-only exact-row PostgreSQL primitives for the sealed Noor 4D fixture.
 
 The repository deliberately owns neither a transaction nor a workflow.  It
 accepts native database rows, verifies their sealed portable-row digest, and

@@ -14,7 +14,7 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import Engine, make_url
 
-from eva.adapters.postgres.noor_4d_repository import PostgresNoor4DRepository
+from tests.support.noor_4d_repository import PostgresNoor4DRepository
 from eva.application.legacy_memory_trial import LegacyMemoryTrialError
 from tools.run_legacy_memory_trial import run_trial
 from tests.postgres import test_memory_repository as memory_fixture

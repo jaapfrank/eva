@@ -1,4 +1,4 @@
-"""Isolated 4D fixture keys, KATs and the one-shot traced nonce harness.
+"""Test-only 4D fixture keys, KATs and one-shot traced nonce harness.
 
 This module is deliberately not imported by the package marker or a default
 bootstrap. Its fixed nonce path produces a private, non-adoptable value until

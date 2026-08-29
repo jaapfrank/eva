@@ -15,12 +15,12 @@ from eva.adapters.connectors.process import (
     ConnectorProcessSpec,
     run_connector_process,
 )
-from eva.adapters.model import FixtureModelAdapter
+from tests.support.model_fixture import FixtureModelAdapter
 from eva.adapters.objects.cas import FileSystemCAS
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
-from eva.adapters.objects.fixture_keys import FixtureObjectKeyResolver
+from tests.support.fixture_keys import FixtureObjectKeyResolver
 from eva.adapters.objects.p256 import P256AckVerifier
-from eva.application.noor_4d import (
+from tests.support.noor_4d import (
     Noor4DArtifactError,
     Noor4DCallLifecycle,
     Noor4DConnectorCall,

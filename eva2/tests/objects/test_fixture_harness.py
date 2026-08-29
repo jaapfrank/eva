@@ -7,7 +7,7 @@ import pytest
 
 from eva.adapters.objects.cas import FileSystemCAS
 from eva.adapters.objects.envelope import XChaCha20ObjectCipher
-from eva.adapters.objects.fixture_keys import (
+from tests.support.fixture_keys import (
     DurableFixtureTraceCommit,
     FixtureHarnessError,
     FixtureObjectKeyResolver,

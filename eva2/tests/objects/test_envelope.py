@@ -18,7 +18,7 @@ from eva.adapters.objects.envelope import (
     encrypt_object,
     inspect_envelope,
 )
-from eva.adapters.objects.fixture_keys import (
+from tests.support.fixture_keys import (
     FixtureObjectKeyResolver,
     verify_known_answer_vector,
 )

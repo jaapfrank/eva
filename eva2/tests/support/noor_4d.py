@@ -1,4 +1,4 @@
-"""Small framework-neutral application flow for the sealed Noor 4D fixture.
+"""Test-only framework-neutral flow for the sealed historical Noor 4D fixture.
 
 This module composes the verified in-process model interpreter with a connector
 port.  It proves call ordering and proof adoption in one process; the lifecycle

@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from eva.adapters.model import (
+from tests.support.model_fixture import (
     FixtureDispatchRejected,
     FixtureModelAdapter,
     SealedFixtureProgram,
