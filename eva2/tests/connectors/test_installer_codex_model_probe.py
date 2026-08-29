@@ -15,7 +15,7 @@ from eva.adapters.connectors.installer_codex_model_probe import (
 )
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_provider_verification import InstallerProviderVerifier
-from eva.operations.installer_provider_verification_cli import (
+from tools.installer_provider_verification_cli import (
     run_installer_provider_verification,
 )
 from eva.operations.installer_secret_store import InstallerSecretStore

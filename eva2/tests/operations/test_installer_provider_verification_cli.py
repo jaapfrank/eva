@@ -10,7 +10,7 @@ from eva.operations.installer_provider_verification import (
     InstallerProviderProbeError,
     InstallerProviderProbeObservation,
 )
-from eva.operations.installer_provider_verification_cli import (
+from tools.installer_provider_verification_cli import (
     run_installer_provider_verification,
 )
 from eva.operations.installer_secret_store import InstallerSecretStore
