@@ -1,0 +1,59 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PreparedChildEventLookupConsolidation/v1",
+  "recordedAt": "2026-08-29T18:03:28Z",
+  "sourceCommit": "c6f9e9e1f731a87675064779326c12bbda233158",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedLookup": "latest_prepared_child_data",
+    "consumers": [
+      "prepared read intent replay",
+      "prepared effect intent replay"
+    ],
+    "preservedBindings": [
+      "tenant",
+      "installation",
+      "child operation ID",
+      "latest event sequence",
+      "kind-specific prepared event type",
+      "kind-specific conflict"
+    ],
+    "netProductPhysicalLines": -10
+  },
+  "verification": {
+    "realPostgresReadAndEffectTests": {
+      "passed": 14,
+      "failed": 0,
+      "database": "new disposable PostgreSQL 16.13 database",
+      "temporaryContainerRemoved": true,
+      "logSha256": "cbf044105090a21d464cbd73879a8003ea124ef475da3171348b69603098b4da"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83186,
+      "productManifestSha256": "aea81aa7bf9618f8c2d1d14d930818dd58e65bf8e73a36820f493c479761b12e"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83176,
+      "productManifestSha256": "84b502e48662f086bd23b2742a237421d7d1520b4f654aebf8445afe702c2a0d",
+      "livingCorePhysicalLines": 82583,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8176,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No read, effect, replay, scope, event or conflict boundary was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
