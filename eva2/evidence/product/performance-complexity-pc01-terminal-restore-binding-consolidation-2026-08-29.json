@@ -1,0 +1,68 @@
+{
+  "contract": "EvaPerformanceComplexityPc01TerminalRestoreBindingConsolidation/v1",
+  "recordedAt": "2026-08-29T16:10:54Z",
+  "sourceCommit": "848b494dcd99bedc998eff8a98eb30aff38522c6",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedBinding": [
+      "ambiguous model history",
+      "terminal read history",
+      "terminal effect history"
+    ],
+    "preservedBoundaries": [
+      "sealed table specification",
+      "redacted credential payload",
+      "exact database column order",
+      "typed SQL placeholders and bindings"
+    ],
+    "netProductPhysicalLines": -58
+  },
+  "verification": {
+    "focusedTerminalRestoreTests": {
+      "passed": 9,
+      "skippedWithoutDsn": 3,
+      "failed": 0,
+      "logSha256": "6bb3dfec334e247ff2d2dd083fc15ff1140bfb660998d63c043a397fdb006a1c"
+    },
+    "allPortableTests": {
+      "passed": 123,
+      "skippedExternalGates": 7,
+      "failed": 0,
+      "logSha256": "0ed6ab4be066c5f4d451b2a3952554805322f8cccbf6d193a7b84f8ecd6581ce"
+    },
+    "realPostgresTerminalWrites": {
+      "passed": 3,
+      "failed": 0,
+      "postgres": "16.13 disposable tmpfs",
+      "logSha256": "dcd15a764555fac92dd6048a207db0858560aa383e8c72200e2ecaf8833644ad"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87714,
+      "productManifestSha256": "71bf7747760873c8c1897243e581420930a74657e1044008aaa0b327936684c8"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87656,
+      "productManifestSha256": "e4ea92980269663e261d2bfb5a9249663ef1c2bc447132eee064fc4df37c00c1",
+      "livingCorePhysicalLines": 87063,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12656,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No restored terminal history becomes executable and no credential, provider reference, retry, or external action is revived.",
+    "No running Eva1 or Eva2 service, route, image, database, secret, connector, or volume was changed."
+  ]
+}

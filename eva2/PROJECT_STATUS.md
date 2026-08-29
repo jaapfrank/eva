@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 18:01 CEST
+Laatst bijgewerkt: 29 augustus 2026, 18:11 CEST
 
 ## Heel kort
 
@@ -162,6 +162,9 @@ praktijktest zijn nog niet klaar.
 - Lezen, handelen en de controle achteraf gebruiken nu één herstartveilige
   connectoruitvoering. Alle 106 actionchain-databaseproeven zijn groen; dit
   scheelde nog 40 productregels.
+- Oude model-, lees- en effectgeschiedenis gebruikt bij herstel nu één veilige
+  omzetter. Alle 123 portable tests en drie echte PostgreSQL-writes zijn groen;
+  dit scheelde nog 58 productregels.
 
 ## Wat nog niet klaar is
 
@@ -177,7 +180,7 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
-  87.714 productregels en mag er maximaal 75.000 hebben.
+  87.656 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -195,7 +198,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 12.916 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 12.656 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
