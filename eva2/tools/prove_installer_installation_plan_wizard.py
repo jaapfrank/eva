@@ -356,8 +356,8 @@ def prove(*, focused_tests_passed: int, broad_tests_passed: int) -> dict[str, ob
         if len(set(plan_hashes)) != 1:
             raise RuntimeError("installer plan changed across restart")
 
-        workflow.record_verification(
-            step_id="model_provider", outcome="blocked", evidence_sha256="c" * 64
+        workflow.record_invalidation(
+            step_id="model_provider", evidence_sha256="c" * 64
         )
         final_token = "l" * 43
         with _wizard_server(
