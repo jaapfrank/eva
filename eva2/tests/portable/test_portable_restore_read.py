@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
+from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.portable_archive import build_portable_record, canonical_json_bytes
 from eva.contracts.execution import CapabilityGrant, CredentialGrant, ReadAttempt
 from tools.portable_restore import (

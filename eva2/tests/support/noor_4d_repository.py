@@ -24,7 +24,7 @@ from eva.adapters.postgres.catalog import (
     CANONICAL_TABLE_SPECS,
     metadata,
 )
-from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
+from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 from eva.adapters.postgres.scope import set_local_scope
 from eva.application.episode_repository import (
     TransactionRequired,

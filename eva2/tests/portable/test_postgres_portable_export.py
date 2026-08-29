@@ -4,7 +4,7 @@ from collections.abc import Mapping
 
 import pytest
 
-from eva.adapters.postgres.portable_export import (
+from tools.postgres_portable_export import (
     PostgresPortableSnapshot,
     SNAPSHOT_BEGIN_SQL,
     validate_portable_v1_attention_rows,

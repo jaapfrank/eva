@@ -27,7 +27,7 @@ from tests.support.postgres_action_chain_read_advances import (
     PostgresActionChainReadAdvancer,
 )
 from eva.adapters.postgres.catalog import metadata
-from eva.adapters.postgres.portable_export import PostgresPortableSnapshot
+from tools.postgres_portable_export import PostgresPortableSnapshot
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.scope import set_local_scope
 from eva.application.portable_archive import PortableArchiveError

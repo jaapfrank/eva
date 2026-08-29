@@ -19,7 +19,7 @@ from tests.support.noor_4d_repository import (
     ExactNoor4DRow,
     PostgresNoor4DRepository,
 )
-from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
+from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.memory import MemoryAuthority, RememberFact
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.evidence import EvidenceEnvelopeV2

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.postgres.portable_export import (
+from tools.postgres_portable_export import (
     PrincipalBindingIsolationError,
     validate_principal_binding_evidence_scope,
 )

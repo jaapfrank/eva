@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 from uuid import UUID, uuid4
 
-from eva.adapters.postgres.portable_export import (
+from tools.postgres_portable_export import (
     CANONICAL_EXPORT_SPECS,
     PostgresPortableSnapshot,
 )

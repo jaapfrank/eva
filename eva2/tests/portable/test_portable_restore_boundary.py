@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from eva.adapters.postgres.portable_export import CANONICAL_EXPORT_SPECS
+from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 
 
 def test_portable_v1_is_not_a_generic_database_dump() -> None:

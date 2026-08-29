@@ -5,7 +5,7 @@ import uuid
 
 import pytest
 
-from eva.adapters.postgres.portable_export import PostgresPortableSnapshot
+from tools.postgres_portable_export import PostgresPortableSnapshot
 
 
 POSTGRES_DSN = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
