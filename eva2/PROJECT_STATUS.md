@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 12:07 CEST
+Laatst bijgewerkt: 29 augustus 2026, 12:49 CEST
 
 ## Heel kort
 
@@ -67,11 +67,14 @@ praktijktest zijn nog niet klaar.
 - Oude proefproviders en de losse Telegram-testlauncher zitten niet meer in de
   gewone Eva2-runtime. De aparte Telegram-testimage is daarna echt opnieuw
   zonder bouwnetwerk gemaakt en kan haar twee diagnoseprocessen laden.
-- Een kleinere kernkandidaat draait zonder het ongebruikte DBOS-pakket. Zij
-  bouwde zonder internet, is 5,6 MB kleiner, scant 0 kritisch en 0 hoog en
-  installeerde haar schema tweemaal veilig op een verse PostgreSQL-database.
-- Die proef vond ook een verborgen fout: Home Assistant gebruikt `websockets`
-  rechtstreeks. Dat pakket blijft daarom behouden als eigen afhankelijkheid.
+- DBOS is nu ook uit de officiële releaselock en eindimage verwijderd.
+- De nieuwe eindimage bevat exact 35 runtimepakketten. `websockets` en PyNaCl
+  blijven bewust staan, omdat Eva ze zelf gebruikt.
+- `pip` en `wheel` zijn na de bouw niet meer in de eindimage aanwezig.
+- De nieuwe image is volledig zonder bouwnetwerk gemaakt en scant opnieuw
+  0 kritisch en 0 hoog.
+- Op een verse PostgreSQL-database installeerde zij het hele schema. Na een
+  echte databaseherstart deed zij terecht geen migratie dubbel.
 
 ## Wat nog niet klaar is
 
@@ -88,9 +91,9 @@ praktijktest zijn nog niet klaar.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
   89.442 productregels en mag er maximaal 75.000 hebben.
-- DBOS zit nog in de officiële releaselock. De vervangende 35-pakketkandidaat
-  is groen, maar moet nog door de DBOS-specifieke releasemanifesten en de hele
-  verzegelde releasecontrole voordat zij live mag worden.
+- De nieuwe DBOS-loze 35-pakketimage is nog niet de levende `/eva2`-route. Eerst
+  moet de complete kern met echt model en Hindsight op diezelfde image groen
+  zijn; daarna kan zij via de bestaande A/B-terugvalroute worden omgeschakeld.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -111,8 +114,8 @@ praktijktest zijn nog niet klaar.
    bewaken.
 3. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
-4. De groene DBOS-loze kandidaat door de officiële releaselock en manifesten
-   trekken, daarna de volledige releasecontrole herhalen.
+4. De nieuwe exacte 35-pakketimage met echt model en Hindsight beproeven en
+   daarna alleen via de bestaande A/B-terugvalroute promoveren.
 5. Nog minstens 14.442 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 
@@ -138,6 +141,7 @@ praktijktest zijn nog niet klaar.
 - [Eerlijke rode code-, dependency- en imagebudgetmeting](evidence/product/performance-complexity-pc01-current-2026-08-29.json)
 - [Eerste echte codesanering met behoud van regressies](evidence/product/performance-complexity-pc01-test-support-remediation-2026-08-29.json)
 - [Kleinere DBOS-loze runtimekandidaat met scan en databaseproef](evidence/product/performance-complexity-pc01-dbosless-runtime-candidate-2026-08-29.json)
+- [Exacte DBOS-loze eindimage met scan en databaseherstart](evidence/living-core/eva2-runtime35-exact-image-schema-restart-2026-08-29.json)
 
 Technische details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [EVA2_MOGELIJKHEDEN_EN_GATEN.md](EVA2_MOGELIJKHEDEN_EN_GATEN.md) en

@@ -1,0 +1,82 @@
+{
+  "contract": "Eva2Runtime35ExactImageSchemaRestartReceipt/v1",
+  "issuedAt": "2026-08-29T12:47:25+02:00",
+  "status": "passed",
+  "source": {
+    "commit": "087f57b70c4e9ba28aa3ff48ecb3c0f120974020",
+    "archiveSha256": "f76639f02fb607178f53eeedbd0242ced045940ea92f09b604a893f4fab49258",
+    "sourceDateEpoch": 1788000128,
+    "dockerfileSha256": "84172e5f8b88814a981c6de192a9e97067a2d9b0f912116c175b65d7dcd05dd0",
+    "requirementsLockSha256": "5b90b36192d9e977e659a44e8e569df9c150b7479782651e538ea52640c3fe63"
+  },
+  "inputs": {
+    "baseImageArchiveSha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "wheelCount": 35,
+    "wheelhouseTreeSha256": "b255a2673909261c6a15970b9b78dfacfe5e402a4e96c8ae6000b9eaef41d89a",
+    "networkDuringBothBuilds": "none",
+    "buildCache": "disabled"
+  },
+  "images": {
+    "offlineBuild": {
+      "id": "sha256:c6d0b09b68238822c084d8e0b37b5616ffdbbd1b5480e61e39f0da6497d32050",
+      "sizeBytes": 101856297
+    },
+    "distrolessRuntime": {
+      "id": "sha256:c808a841bf74c6d2ed2487b24b47b93ffcc6c1e64ee3a8667db568ccf0a44626",
+      "sizeBytes": 75201733,
+      "dockerfileSha256": "2b4fe14ed3a08bbaaef8da545fa603c0eedafb1612fad82aa442ab591220cc1d"
+    },
+    "installedRuntime": {
+      "distributionCount": 35,
+      "cryptographyVersion": "50.0.1",
+      "dbosPresent": false,
+      "pipPresent": false,
+      "wheelPresent": false,
+      "directImportsPassed": [
+        "cryptography",
+        "eva",
+        "fastapi",
+        "nacl",
+        "psycopg",
+        "sqlalchemy",
+        "websockets"
+      ]
+    }
+  },
+  "scan": {
+    "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "network": "none",
+    "critical": 0,
+    "high": 0
+  },
+  "schemaRestart": {
+    "postgresImage": "postgres@sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "firstStart": {
+      "sourceRevision": null,
+      "finalRevision": "4e_0006_memory_outbox_erasure",
+      "status": "passed",
+      "receiptSha256": "da88003287f552e7d12fa95039fcbf8fad22f832a746063448c12d0e9bacd29c"
+    },
+    "databaseRestarted": true,
+    "secondStart": {
+      "sourceRevision": "4e_0006_memory_outbox_erasure",
+      "finalRevision": "4e_0006_memory_outbox_erasure",
+      "migrationRoute": [],
+      "status": "passed",
+      "receiptSha256": "e52bbe2e38a23f45279a76dc1a12638deab146a317509f9041f16f69ff4669c9"
+    },
+    "temporaryContainerRemoved": true,
+    "temporaryNetworkRemoved": true,
+    "temporarySecretVolumeRemoved": true
+  },
+  "checks": {
+    "focusedReleaseTests": "68 passed",
+    "designGates": "passed",
+    "ruff": "passed"
+  },
+  "nonclaims": [
+    "The new image has not replaced the live /eva2 route or Eva1.",
+    "This receipt does not prove Hindsight, Telegram, Home Assistant effects, voice, browser use, reboot survival, or a seven-day run.",
+    "The local images are not an off-host artifact backup or a signed production release."
+  ]
+}
