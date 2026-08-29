@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import re
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from datetime import datetime
 from collections.abc import Mapping
 from pathlib import Path
@@ -1018,34 +1018,37 @@ def _prepare_reauthorization_required_connector_record(
     return restored, tuple(placeholders), tuple(bindings)
 
 
-def _prepare_ambiguous_model_attempt_record(
-    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+def _prepare_terminal_attempt_record(
+    record: Mapping[str, Any],
+    *,
+    table_specs: tuple[Mapping[str, Any], ...],
+    table: str,
+    decoder: Callable[..., dict[str, Any]],
+    label: str,
 ) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
-    """Type one terminalized model-history row for the common restore writer."""
-
-    spec = _spec_for_table(table_specs, _MODEL_ATTEMPT_TABLE)
-    restored = decode_ambiguous_model_attempt(record, table_specs=table_specs)
+    spec = _spec_for_table(table_specs, table)
+    restored = decoder(record, table_specs=table_specs)
     transform = spec.get("transform_spec")
     mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
     if not isinstance(mappings, list):
-        raise PortableRestoreError("portable model attempt transform mappings are absent")
+        raise PortableRestoreError(f"portable {label} attempt transform mappings are absent")
     encodings: dict[str, str] = {}
     for mapping in mappings:
         source, property_name, encoding = (
             mapping.get("source"), mapping.get("portableProperty"), mapping.get("encoding")
         )
         if not isinstance(source, Mapping) or not isinstance(property_name, str) or not isinstance(encoding, str):
-            raise PortableRestoreError("portable model attempt transform mapping is incomplete")
+            raise PortableRestoreError(f"portable {label} attempt transform mapping is incomplete")
         if source.get("kind") == "column":
             column = source.get("column")
             if not isinstance(column, str) or column in encodings:
-                raise PortableRestoreError("portable model attempt source column is invalid")
+                raise PortableRestoreError(f"portable {label} attempt source column is invalid")
             encodings[column] = encoding
         elif source.get("kind") == "redactedContractColumn" and property_name == "credential_grant_payload":
             encodings["credential_grant_payload"] = "canonicalJson"
     columns = tuple(spec.get("database_column_order", ()))
     if tuple(encodings) != columns:
-        raise PortableRestoreError("portable model attempt encodings differ from table pin")
+        raise PortableRestoreError(f"portable {label} attempt encodings differ from table pin")
     placeholders: list[str] = []
     bindings: list[Any] = []
     for column in columns:
@@ -1053,94 +1056,33 @@ def _prepare_ambiguous_model_attempt_record(
         placeholders.append(placeholder)
         bindings.append(value)
     return restored, tuple(placeholders), tuple(bindings)
+
+
+def _prepare_ambiguous_model_attempt_record(
+    record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
+) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
+    return _prepare_terminal_attempt_record(
+        record, table_specs=table_specs, table=_MODEL_ATTEMPT_TABLE,
+        decoder=decode_ambiguous_model_attempt, label="model",
+    )
 
 
 def _prepare_terminal_read_attempt_record(
     record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
 ) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
-    """Type one finished read-history row for the common restore writer."""
-
-    spec = _spec_for_table(table_specs, _READ_ATTEMPT_TABLE)
-    restored = decode_terminal_read_attempt(record, table_specs=table_specs)
-    transform = spec.get("transform_spec")
-    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
-    if not isinstance(mappings, list):
-        raise PortableRestoreError("portable read attempt transform mappings are absent")
-    encodings: dict[str, str] = {}
-    for mapping in mappings:
-        source, property_name, encoding = (
-            mapping.get("source"), mapping.get("portableProperty"), mapping.get("encoding")
-        )
-        if (
-            not isinstance(source, Mapping)
-            or not isinstance(property_name, str)
-            or not isinstance(encoding, str)
-        ):
-            raise PortableRestoreError("portable read attempt transform mapping is incomplete")
-        if source.get("kind") == "column":
-            column = source.get("column")
-            if not isinstance(column, str) or column in encodings:
-                raise PortableRestoreError("portable read attempt source column is invalid")
-            encodings[column] = encoding
-        elif (
-            source.get("kind") == "redactedContractColumn"
-            and property_name == "credential_grant_payload"
-        ):
-            encodings["credential_grant_payload"] = "canonicalJson"
-    columns = tuple(spec.get("database_column_order", ()))
-    if tuple(encodings) != columns:
-        raise PortableRestoreError("portable read attempt encodings differ from table pin")
-    placeholders: list[str] = []
-    bindings: list[Any] = []
-    for column in columns:
-        placeholder, value = _bind_value(restored[column], encodings[column])
-        placeholders.append(placeholder)
-        bindings.append(value)
-    return restored, tuple(placeholders), tuple(bindings)
+    return _prepare_terminal_attempt_record(
+        record, table_specs=table_specs, table=_READ_ATTEMPT_TABLE,
+        decoder=decode_terminal_read_attempt, label="read",
+    )
 
 
 def _prepare_terminal_effect_attempt_record(
     record: Mapping[str, Any], *, table_specs: tuple[Mapping[str, Any], ...]
 ) -> tuple[dict[str, Any], tuple[str, ...], tuple[Any, ...]]:
-    """Type one completed effect-history row for the common restore writer."""
-
-    spec = _spec_for_table(table_specs, _EFFECT_ATTEMPT_TABLE)
-    restored = decode_terminal_effect_attempt(record, table_specs=table_specs)
-    transform = spec.get("transform_spec")
-    mappings = transform.get("propertyMappings") if isinstance(transform, Mapping) else None
-    if not isinstance(mappings, list):
-        raise PortableRestoreError("portable effect attempt transform mappings are absent")
-    encodings: dict[str, str] = {}
-    for mapping in mappings:
-        source, property_name, encoding = (
-            mapping.get("source"), mapping.get("portableProperty"), mapping.get("encoding")
-        )
-        if (
-            not isinstance(source, Mapping)
-            or not isinstance(property_name, str)
-            or not isinstance(encoding, str)
-        ):
-            raise PortableRestoreError("portable effect attempt transform mapping is incomplete")
-        if source.get("kind") == "column":
-            column = source.get("column")
-            if not isinstance(column, str) or column in encodings:
-                raise PortableRestoreError("portable effect attempt source column is invalid")
-            encodings[column] = encoding
-        elif (
-            source.get("kind") == "redactedContractColumn"
-            and property_name == "credential_grant_payload"
-        ):
-            encodings["credential_grant_payload"] = "canonicalJson"
-    columns = tuple(spec.get("database_column_order", ()))
-    if tuple(encodings) != columns:
-        raise PortableRestoreError("portable effect attempt encodings differ from table pin")
-    placeholders: list[str] = []
-    bindings: list[Any] = []
-    for column in columns:
-        placeholder, value = _bind_value(restored[column], encodings[column])
-        placeholders.append(placeholder)
-        bindings.append(value)
-    return restored, tuple(placeholders), tuple(bindings)
+    return _prepare_terminal_attempt_record(
+        record, table_specs=table_specs, table=_EFFECT_ATTEMPT_TABLE,
+        decoder=decode_terminal_effect_attempt, label="effect",
+    )
 
 
 def _validate_record_sets(
