@@ -47,12 +47,9 @@ from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.workboard import WorkBoard
 from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.advanced_tasks import (
-    AdvancedTaskApproval,
     AdvancedTaskBlocked,
     AdvancedTaskError,
-    AdvancedTaskPackageApproval,
     AdvancedTaskPlan,
-    AdvancedTaskRepositoryApproval,
     LocalTuyaEntityConfiguration,
 )
 from eva.application.personal_interests import (
@@ -588,15 +585,49 @@ def _home_assistant_light_from_wire(payload: dict[str, Any]) -> dict[str, str]:
 
 
 def _bounded_string_fields(
-    payload: dict[str, Any], fields: set[str], *, prefix: str
+    payload: dict[str, Any],
+    fields: set[str] | tuple[str, ...],
+    *,
+    prefix: str,
+    maximum_by_field: dict[str, int] | None = None,
 ) -> dict[str, str]:
     values: dict[str, str] = {}
     for key in fields:
         value = payload.get(key)
-        if not isinstance(value, str) or not value.strip() or len(value) > 240:
+        maximum = 240 if maximum_by_field is None else maximum_by_field.get(key, 240)
+        if not isinstance(value, str) or not value.strip() or len(value) > maximum:
             raise HTTPException(status_code=422, detail=f"{prefix} {key} is invalid")
         values[key] = value.strip()
     return values
+
+
+def _advanced_approval(
+    runtime: Any,
+    payload: dict[str, Any],
+    *,
+    method_name: str,
+    keys: set[str],
+    mode: str,
+    unavailable: str,
+    unknown_fields: str,
+    wrong_mode: str,
+    prefix: str,
+) -> dict[str, object]:
+    approve = getattr(runtime, method_name, None)
+    if not callable(approve):
+        raise HTTPException(status_code=501, detail=unavailable)
+    if set(payload) != keys:
+        raise HTTPException(status_code=422, detail=unknown_fields)
+    if payload.get("mode") != mode:
+        raise HTTPException(status_code=422, detail=wrong_mode)
+    values = _bounded_string_fields(payload, keys - {"mode"}, prefix=prefix)
+    try:
+        approval = approve(**values)
+    except (AdvancedTaskBlocked, AdvancedTaskError) as error:
+        raise HTTPException(status_code=409, detail=str(error)) from error
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    return approval.to_payload()
 
 
 def create_app(
@@ -1345,14 +1376,11 @@ def create_app(
                 status_code=422,
                 detail="only plan-only Tuya migration is admitted",
             )
-        values: dict[str, str] = {}
-        for key in ("tenant_id", "installation_id", "principal_id", "operation_id"):
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422, detail=f"advanced task {key} is invalid"
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            ("tenant_id", "installation_id", "principal_id", "operation_id"),
+            prefix="advanced task",
+        )
         try:
             plan: AdvancedTaskPlan = await planner(**values)
         except ValueError as error:
@@ -1379,14 +1407,9 @@ def create_app(
             raise HTTPException(
                 status_code=422, detail="only inventory refresh is admitted"
             )
-        values: dict[str, str] = {}
-        for key in _TUYA_LOCAL_REFRESH_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422, detail=f"advanced refresh {key} is invalid"
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload, _TUYA_LOCAL_REFRESH_KEYS - {"mode"}, prefix="advanced refresh"
+        )
         try:
             return await refresh(**values)
         except AdvancedTaskError as error:
@@ -1398,37 +1421,16 @@ def create_app(
     def approve_tuya_to_localtuya_canary(
         payload: dict[str, Any],
     ) -> dict[str, object]:
-        approve = getattr(runtime, "approve_tuya_to_localtuya_canary", None)
-        if not callable(approve):
-            raise HTTPException(
-                status_code=501, detail="advanced HA approval unavailable"
-            )
-        if set(payload) != _ADVANCED_CANARY_APPROVAL_KEYS:
-            raise HTTPException(
-                status_code=422,
-                detail="advanced approval has unknown or missing fields",
-            )
-        if payload.get("mode") != "approve_canary_only":
-            raise HTTPException(
-                status_code=422, detail="only canary approval is admitted"
-            )
-        values: dict[str, str] = {}
-        for key in _ADVANCED_CANARY_APPROVAL_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422, detail=f"advanced approval {key} is invalid"
-                )
-            values[key] = value.strip()
-        try:
-            approval: AdvancedTaskApproval = approve(**values)
-        except AdvancedTaskBlocked as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except AdvancedTaskError as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except ValueError as error:
-            raise HTTPException(status_code=422, detail=str(error)) from error
-        return approval.to_payload()
+        return _advanced_approval(
+            runtime, payload,
+            method_name="approve_tuya_to_localtuya_canary",
+            keys=_ADVANCED_CANARY_APPROVAL_KEYS,
+            mode="approve_canary_only",
+            unavailable="advanced HA approval unavailable",
+            unknown_fields="advanced approval has unknown or missing fields",
+            wrong_mode="only canary approval is admitted",
+            prefix="advanced approval",
+        )
 
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-canary/preflight")
     async def probe_localtuya_canary(payload: dict[str, Any]) -> dict[str, object]:
@@ -1446,15 +1448,12 @@ def create_app(
             raise HTTPException(
                 status_code=422, detail="only non-writing LocalTuya probe is admitted"
             )
-        values: dict[str, str] = {}
-        for key in _TUYA_LOCAL_PREFLIGHT_KEYS - {"mode"}:
-            value = payload.get(key)
-            maximum = 64 if key == "local_key" else 240
-            if not isinstance(value, str) or not value.strip() or len(value) > maximum:
-                raise HTTPException(
-                    status_code=422, detail=f"LocalTuya preflight {key} is invalid"
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _TUYA_LOCAL_PREFLIGHT_KEYS - {"mode"},
+            prefix="LocalTuya preflight",
+            maximum_by_field={"local_key": 64},
+        )
         try:
             return await probe(**values)
         except AdvancedTaskBlocked as error:
@@ -1480,15 +1479,11 @@ def create_app(
             raise HTTPException(
                 status_code=422, detail="LocalTuya canary preparation mode is invalid"
             )
-        values: dict[str, str] = {}
-        for key in _TUYA_LOCAL_CANARY_PREPARE_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"LocalTuya canary preparation {key} is invalid",
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _TUYA_LOCAL_CANARY_PREPARE_KEYS - {"mode"},
+            prefix="LocalTuya canary preparation",
+        )
         try:
             return await prepare(**values)
         except (AdvancedTaskError, RuntimeError, ValueError) as error:
@@ -1510,16 +1505,12 @@ def create_app(
             raise HTTPException(
                 status_code=422, detail="LocalTuya canary execution mode is invalid"
             )
-        values: dict[str, str] = {}
-        for key in _TUYA_LOCAL_CANARY_EXECUTE_KEYS - {"entities", "mode"}:
-            value = payload.get(key)
-            maximum = 64 if key == "local_key" else 240
-            if not isinstance(value, str) or not value.strip() or len(value) > maximum:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"LocalTuya canary execution {key} is invalid",
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _TUYA_LOCAL_CANARY_EXECUTE_KEYS - {"entities", "mode"},
+            prefix="LocalTuya canary execution",
+            maximum_by_field={"local_key": 64},
+        )
         raw_entities = payload.get("entities")
         if not isinstance(raw_entities, list) or not 1 <= len(raw_entities) <= 16:
             raise HTTPException(
@@ -1558,15 +1549,11 @@ def create_app(
                 status_code=422,
                 detail="LocalTuya canary reconciliation mode is invalid",
             )
-        values: dict[str, str] = {}
-        for key in _TUYA_LOCAL_CANARY_RECONCILE_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"LocalTuya canary reconciliation {key} is invalid",
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _TUYA_LOCAL_CANARY_RECONCILE_KEYS - {"mode"},
+            prefix="LocalTuya canary reconciliation",
+        )
         try:
             return await reconcile(**values)
         except (AdvancedTaskError, RuntimeError, ValueError) as error:
@@ -1574,73 +1561,29 @@ def create_app(
 
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-package/approve")
     def approve_localtuya_package(payload: dict[str, Any]) -> dict[str, object]:
-        approve = getattr(runtime, "approve_localtuya_package", None)
-        if not callable(approve):
-            raise HTTPException(
-                status_code=501, detail="advanced package approval unavailable"
-            )
-        if set(payload) != _ADVANCED_PACKAGE_APPROVAL_KEYS:
-            raise HTTPException(
-                status_code=422,
-                detail="advanced package approval has unknown or missing fields",
-            )
-        if payload.get("mode") != "approve_install_only":
-            raise HTTPException(
-                status_code=422, detail="only exact package approval is admitted"
-            )
-        values: dict[str, str] = {}
-        for key in _ADVANCED_PACKAGE_APPROVAL_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"advanced package approval {key} is invalid",
-                )
-            values[key] = value.strip()
-        try:
-            approval: AdvancedTaskPackageApproval = approve(**values)
-        except AdvancedTaskBlocked as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except AdvancedTaskError as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except ValueError as error:
-            raise HTTPException(status_code=422, detail=str(error)) from error
-        return approval.to_payload()
+        return _advanced_approval(
+            runtime, payload,
+            method_name="approve_localtuya_package",
+            keys=_ADVANCED_PACKAGE_APPROVAL_KEYS,
+            mode="approve_install_only",
+            unavailable="advanced package approval unavailable",
+            unknown_fields="advanced package approval has unknown or missing fields",
+            wrong_mode="only exact package approval is admitted",
+            prefix="advanced package approval",
+        )
 
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-repository/approve")
     def approve_localtuya_repository(payload: dict[str, Any]) -> dict[str, object]:
-        approve = getattr(runtime, "approve_localtuya_repository", None)
-        if not callable(approve):
-            raise HTTPException(
-                status_code=501, detail="advanced repository approval unavailable"
-            )
-        if set(payload) != _ADVANCED_REPOSITORY_APPROVAL_KEYS:
-            raise HTTPException(
-                status_code=422,
-                detail="advanced repository approval has unknown or missing fields",
-            )
-        if payload.get("mode") != "approve_registration_only":
-            raise HTTPException(
-                status_code=422, detail="only exact repository approval is admitted"
-            )
-        values: dict[str, str] = {}
-        for key in _ADVANCED_REPOSITORY_APPROVAL_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"advanced repository approval {key} is invalid",
-                )
-            values[key] = value.strip()
-        try:
-            approval: AdvancedTaskRepositoryApproval = approve(**values)
-        except AdvancedTaskBlocked as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except AdvancedTaskError as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        except ValueError as error:
-            raise HTTPException(status_code=422, detail=str(error)) from error
-        return approval.to_payload()
+        return _advanced_approval(
+            runtime, payload,
+            method_name="approve_localtuya_repository",
+            keys=_ADVANCED_REPOSITORY_APPROVAL_KEYS,
+            mode="approve_registration_only",
+            unavailable="advanced repository approval unavailable",
+            unknown_fields="advanced repository approval has unknown or missing fields",
+            wrong_mode="only exact repository approval is admitted",
+            prefix="advanced repository approval",
+        )
 
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-repository/register")
     async def register_localtuya_repository(
@@ -1661,15 +1604,11 @@ def create_app(
                 status_code=422,
                 detail="only approved repository registration is admitted",
             )
-        values: dict[str, str] = {}
-        for key in _ADVANCED_REPOSITORY_REGISTER_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422,
-                    detail=f"advanced repository registration {key} is invalid",
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _ADVANCED_REPOSITORY_REGISTER_KEYS - {"mode"},
+            prefix="advanced repository registration",
+        )
         try:
             return await register(**values)
         except (AdvancedTaskError, RuntimeError) as error:
@@ -1691,14 +1630,11 @@ def create_app(
             raise HTTPException(
                 status_code=422, detail="only approved package install is admitted"
             )
-        values: dict[str, str] = {}
-        for key in _ADVANCED_PACKAGE_INSTALL_KEYS - {"mode"}:
-            value = payload.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 240:
-                raise HTTPException(
-                    status_code=422, detail=f"advanced package install {key} is invalid"
-                )
-            values[key] = value.strip()
+        values = _bounded_string_fields(
+            payload,
+            _ADVANCED_PACKAGE_INSTALL_KEYS - {"mode"},
+            prefix="advanced package install",
+        )
         try:
             return await install(**values)
         except AdvancedTaskError as error:
