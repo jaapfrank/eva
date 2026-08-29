@@ -8,7 +8,7 @@ from datetime import UTC, datetime, timedelta
 import hashlib
 import re
 import time
-from typing import Any, Protocol
+from typing import Any, Callable, Protocol
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
@@ -3509,68 +3509,60 @@ class PostgresConversationActions:
     def _localtuya_package_receipt(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> ConversationActionReceipt:
-        if (
-            len(events) != 2
-            or events[0].event_type != "ADVANCED_PACKAGE_CONVERSATION_ADMITTED"
-            or events[1].event_type != "ADVANCED_PACKAGE_CONVERSATION_VERIFIED"
-        ):
-            raise ConversationConflict("LocalTuya package receipt differs")
-        admission = self._event_data(events[0])
-        expected = {
-            "action_name": _LOCALTUYA_PACKAGE_INSTALL_ACTION,
-            "conversation_id": turn.conversation_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        for key, value in expected.items():
-            if admission.get(key) != value:
-                raise ConversationConflict("LocalTuya package receipt scope differs")
-        raw_arguments = admission.get("arguments")
-        call_id = admission.get("action_call_id")
-        if not isinstance(raw_arguments, dict) or not isinstance(call_id, str):
-            raise ConversationConflict("LocalTuya package receipt is malformed")
-        arguments = self._validated_localtuya_package_arguments(raw_arguments)
-        result = self._event_data(events[1])
-        return ConversationActionReceipt(
-            ConversationActionCall(
-                call_id, _LOCALTUYA_PACKAGE_INSTALL_ACTION, arguments
-            ),
-            {
-                "contract": "EvaConversationActionReceipt/v1",
-                "durable": True,
-                **result,
-            },
+        return self._localtuya_verified_receipt(
+            turn,
+            events,
+            action_name=_LOCALTUYA_PACKAGE_INSTALL_ACTION,
+            event_name="PACKAGE",
+            label="LocalTuya package",
+            validate_arguments=self._validated_localtuya_package_arguments,
         )
 
     def _localtuya_repository_receipt(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> ConversationActionReceipt:
-        if (
-            len(events) != 2
-            or events[0].event_type != "ADVANCED_REPOSITORY_CONVERSATION_ADMITTED"
-            or events[1].event_type != "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED"
+        return self._localtuya_verified_receipt(
+            turn,
+            events,
+            action_name=_LOCALTUYA_REPOSITORY_REGISTER_ACTION,
+            event_name="REPOSITORY",
+            label="LocalTuya repository",
+            validate_arguments=self._validated_localtuya_repository_arguments,
+        )
+
+    def _localtuya_verified_receipt(
+        self,
+        turn: ConversationTurn,
+        events: tuple[TimelineEvent, ...],
+        *,
+        action_name: str,
+        event_name: str,
+        label: str,
+        validate_arguments: Callable[[dict[str, JsonValue]], dict[str, str]],
+    ) -> ConversationActionReceipt:
+        if len(events) != 2 or tuple(event.event_type for event in events) != (
+            f"ADVANCED_{event_name}_CONVERSATION_ADMITTED",
+            f"ADVANCED_{event_name}_CONVERSATION_VERIFIED",
         ):
-            raise ConversationConflict("LocalTuya repository receipt differs")
+            raise ConversationConflict(f"{label} receipt differs")
         admission = self._event_data(events[0])
         expected = {
-            "action_name": _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
+            "action_name": action_name,
             "conversation_id": turn.conversation_id,
             "principal_id": turn.principal_id,
             "source_message_id": turn.message_id,
         }
         for key, value in expected.items():
             if admission.get(key) != value:
-                raise ConversationConflict("LocalTuya repository receipt scope differs")
+                raise ConversationConflict(f"{label} receipt scope differs")
         raw_arguments = admission.get("arguments")
         call_id = admission.get("action_call_id")
         if not isinstance(raw_arguments, dict) or not isinstance(call_id, str):
-            raise ConversationConflict("LocalTuya repository receipt is malformed")
-        arguments = self._validated_localtuya_repository_arguments(raw_arguments)
+            raise ConversationConflict(f"{label} receipt is malformed")
+        arguments = validate_arguments(raw_arguments)
         result = self._event_data(events[1])
         return ConversationActionReceipt(
-            ConversationActionCall(
-                call_id, _LOCALTUYA_REPOSITORY_REGISTER_ACTION, arguments
-            ),
+            ConversationActionCall(call_id, action_name, arguments),
             {
                 "contract": "EvaConversationActionReceipt/v1",
                 "durable": True,
