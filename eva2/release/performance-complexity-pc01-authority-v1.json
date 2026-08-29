@@ -1,0 +1,55 @@
+{
+  "contract": "EvaPerformanceComplexityPc01Authority/v1",
+  "source": {
+    "extensions": [
+      ".py",
+      ".rs",
+      ".ts",
+      ".tsx"
+    ],
+    "productRoots": [
+      "connector_sdk",
+      "connectors",
+      "src/eva"
+    ],
+    "classifiedNonProductRoots": [
+      "experiments",
+      "migrations",
+      "release",
+      "tests",
+      "tools"
+    ],
+    "generatedExactPaths": [
+      "src/eva/adapters/postgres/catalog_generated.py"
+    ],
+    "maximumProductPhysicalLines": 75000,
+    "preferredLivingCorePhysicalLines": 60000,
+    "livingCoreRoot": "src/eva"
+  },
+  "dependencies": {
+    "source": "pyproject.toml",
+    "maximumDirectRuntimeDependencies": 12,
+    "expected": [
+      "alembic",
+      "cryptography",
+      "dbos",
+      "fastapi",
+      "psycopg",
+      "pydantic",
+      "pydantic-ai-slim",
+      "sqlalchemy",
+      "uvicorn"
+    ]
+  },
+  "preVoiceBrowserCoreImageBaseline": {
+    "activeContainer": "eva2-managed-b-slot4-core",
+    "platform": "linux/amd64",
+    "manifestDigest": "sha256:755f7ec6aed8b19c20ba67e246f41ba010a041496ca544b41022052e40682167",
+    "configDigest": "sha256:ebe0894663a9da2759509229673228aa27efb2c6477cb4a897d38a113eda0b60",
+    "compressedLayerBytes": 85591932,
+    "layerCount": 31,
+    "sourceCommit": "022afbaa038eea8dc80f5c82e629b57e6eb05afa",
+    "sourceEvidence": "evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json",
+    "sourceEvidenceSha256": "758d7142e08e663f5b75fcbb7860b1897826daed9c7654d2c50eae7576f15984"
+  }
+}
