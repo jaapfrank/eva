@@ -1,0 +1,53 @@
+{
+  "contract": "EvaPerformanceComplexityPc01TurnScopedTaskStoreConsolidation/v1",
+  "recordedAt": "2026-08-29T17:39:42Z",
+  "sourceCommit": "3e7b07451376d7dfaf3f1ab10f2bff57d4a2166b",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "advancedTaskStoreConstructors": {
+      "before": 5,
+      "after": 1
+    },
+    "durableGoalStoreConstructors": {
+      "before": 4,
+      "after": 1
+    },
+    "scopeSource": "ConversationTurn tenant_id and installation_id",
+    "netProductPhysicalLines": -14
+  },
+  "verification": {
+    "conversationAdvancedTaskAndDurableGoalTests": {
+      "passed": 54,
+      "failed": 0,
+      "logSha256": "df96b7969ed22fd675069223e40ddef18c9f9b9d379a1bd7bb807f6bc53549b2"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83297,
+      "productManifestSha256": "c7f5fbbe185ea3be1c514816fb4426652794a12b5adfa10b08732f064d830cd0"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83283,
+      "productManifestSha256": "a97e3fdac16561a0470f3149902fda6cf5230a4712061382dd08b74d32932b4a",
+      "livingCorePhysicalLines": 82690,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8283,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No tenant, installation, principal, approval, goal or advanced-task authority was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
