@@ -71,7 +71,7 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=8m
-    command: ["python", "-m", "eva.operations.telegram_test_core"]
+    command: ["python", "-m", "tools.telegram_test_core"]
     environment:
       EVA_TEST_RUNTIME_INSTALLATION_ID: ${EVA_TEST_RUNTIME_INSTALLATION_ID:?set a test installation identity}
       EVA_TEST_RUNTIME_TENANT_ID: ${EVA_TEST_RUNTIME_TENANT_ID:?set a test tenant identity}

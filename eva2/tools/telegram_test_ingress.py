@@ -1,4 +1,4 @@
-"""Start the Telegram test ingress only after its in-container invariants hold."""
+"""Start the disposable Telegram test ingress after its invariants hold."""
 
 from __future__ import annotations
 

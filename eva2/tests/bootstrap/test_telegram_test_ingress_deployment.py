@@ -8,11 +8,12 @@ from uuid import uuid4
 import pytest
 import yaml
 
-from eva.operations import (
+from tools import (
     telegram_test_core,
     telegram_test_ingress,
+    telegram_test_launch,
+    telegram_test_preflight,
 )
-from tools import telegram_test_launch, telegram_test_preflight
 from tools.telegram_test_preflight import (
     load_telegram_test_plan,
     preflight_telegram_test,
@@ -93,7 +94,7 @@ def _test_core(plan: object, *, container_id: str = "test-core") -> dict[str, ob
         "Id": container_id,
         "Config": {
             "Image": plan.value("EVA_TEST_LIVING_CORE_IMAGE"),
-            "Cmd": ["python", "-m", "eva.operations.telegram_test_core"],
+            "Cmd": ["python", "-m", "tools.telegram_test_core"],
             "User": "65532:65532",
             "Labels": {
                 "io.eva2.test-route": "telegram-native-test-v1",
@@ -154,7 +155,7 @@ def _test_ingress(plan: object) -> dict[str, object]:
         "Id": "test-ingress",
         "Config": {
             "Image": plan.value("EVA_TEST_LIVING_CORE_IMAGE"),
-            "Cmd": ["python", "-m", "eva.operations.telegram_test_ingress"],
+            "Cmd": ["python", "-m", "tools.telegram_test_ingress"],
             "User": "65532:65532",
             "Labels": {
                 "io.eva2.test-route": "telegram-native-test-v1",
@@ -257,7 +258,7 @@ def test_telegram_test_ingress_requires_test_namespaced_inputs() -> None:
     assert service["user"] == "65532:65532"
     assert service["cap_drop"] == ["ALL"]
     assert service["security_opt"] == ["no-new-privileges:true"]
-    assert service["command"] == ["python", "-m", "eva.operations.telegram_test_ingress"]
+    assert service["command"] == ["python", "-m", "tools.telegram_test_ingress"]
     assert service["image"].startswith("${EVA_TEST_")
     assert service["environment"]["EVA_LIVING_CORE_URL"].startswith("${EVA_TEST_")
     assert service["environment"]["EVA_RUNTIME_INSTALLATION_ID"].startswith(
@@ -527,7 +528,7 @@ def test_telegram_test_support_keeps_database_and_transport_separate() -> None:
     assert postgres["networks"] == ["telegram-test-db"]
     assert schema["networks"] == ["telegram-test-db"]
     assert core["networks"] == {"telegram-test": {"aliases": ["eva-test-core"]}}
-    assert core["command"] == ["python", "-m", "eva.operations.telegram_test_core"]
+    assert core["command"] == ["python", "-m", "tools.telegram_test_core"]
     assert postgres["labels"] == {
         "io.eva2.test-database": "telegram-native-test-db-v1",
         "io.eva2.test-run": "telegram-native-test-v1",

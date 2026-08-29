@@ -60,13 +60,16 @@ def validate_telegram_test_inputs(inputs: CandidateBuildInputs) -> None:
         "COPY --chown=65532:65532 alembic.ini ./alembic.ini",
         "COPY --chown=65532:65532 migrations ./migrations",
         "COPY --chown=65532:65532 schemas ./schemas",
+        "COPY --chown=65532:65532 tools/__init__.py ./tools/__init__.py",
+        "COPY --chown=65532:65532 tools/telegram_test_core.py ./tools/telegram_test_core.py",
+        "COPY --chown=65532:65532 tools/telegram_test_ingress.py ./tools/telegram_test_ingress.py",
         "USER 65532:65532",
     )
     if any(value not in text for value in required) or "RUN " in text:
         raise RuntimeError("Telegram test Dockerfile differs from the sealed copy-only contract")
     # Make accidental additions (network downloads, packages or a second stage)
     # fail rather than quietly broadening the disposable test image.
-    if text.count("FROM ") != 1 or text.count("COPY ") != 5:
+    if text.count("FROM ") != 1 or text.count("COPY ") != 8:
         raise RuntimeError("Telegram test Dockerfile copy contract differs")
 
 

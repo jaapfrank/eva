@@ -75,6 +75,9 @@ def _dockerfile(*, extra: bytes = b"") -> bytes:
             b"COPY --chown=65532:65532 alembic.ini ./alembic.ini",
             b"COPY --chown=65532:65532 migrations ./migrations",
             b"COPY --chown=65532:65532 schemas ./schemas",
+            b"COPY --chown=65532:65532 tools/__init__.py ./tools/__init__.py",
+            b"COPY --chown=65532:65532 tools/telegram_test_core.py ./tools/telegram_test_core.py",
+            b"COPY --chown=65532:65532 tools/telegram_test_ingress.py ./tools/telegram_test_ingress.py",
             b"USER 65532:65532",
             extra,
         )

@@ -14,7 +14,7 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=8m
-    command: ["python", "-m", "eva.operations.telegram_test_ingress"]
+    command: ["python", "-m", "tools.telegram_test_ingress"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_LIVING_CORE_URL: ${EVA_TEST_LIVING_CORE_URL:?set the separate Eva test core URL}

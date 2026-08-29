@@ -1,4 +1,4 @@
-"""A fixed diagnostic core for a later real Telegram transport test.
+"""Disposable fixed diagnostic core for a real Telegram transport test.
 
 It is not Eva's conversation model.  Its presence proves neither Telegram
 delivery, pairing, group consent, nor a real Eva conversation; those claims
