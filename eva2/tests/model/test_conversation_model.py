@@ -71,6 +71,22 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
         "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b"
     )
+    assert {
+        name: canonical_sha256(getattr(conversation_module, name))
+        for name in (
+            "_MEMORY_SEARCH_TOOL",
+            "_REPOSITORY_PROPOSAL_TOOL",
+            "_PROTOTYPE_TOOL",
+            "_LISTING_TOOL",
+            "_FREE_WILL_TOOL",
+        )
+    } == {
+        "_MEMORY_SEARCH_TOOL": "c49f5bfdd0ee75120eea4e39b46ef4521e4818000ba63df0898967249e0c01e9",
+        "_REPOSITORY_PROPOSAL_TOOL": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
+        "_PROTOTYPE_TOOL": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
+        "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
+        "_FREE_WILL_TOOL": "2959078dc6323da786622599f7631ec74de2f38693d9cb144475609030788895",
+    }
 
 
 def test_bound_photo_correction_uses_closed_action_without_face_inference(

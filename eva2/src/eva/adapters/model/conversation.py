@@ -104,61 +104,6 @@ _SELECTABLE_ACTION_NAMES = (
     _VALIDATED_FILE_EDIT_ACTION,
     _REPOSITORY_IMPROVEMENT_ACTION,
 )
-_MEMORY_SEARCH_TOOL: dict[str, Any] = {
-    "description": (
-        "Classificeer of de actuele vraag persoonlijke semantische herinneringen "
-        "nodig heeft en kies hoogstens vier werkelijk benodigde acties voor deze "
-        "beurt. Geef nooit het antwoord."
-    ),
-    "name": _MEMORY_SEARCH_ACTION,
-    "parameters": {
-        "additionalProperties": False,
-        "properties": {
-            "needs_semantic_memory": {"type": "boolean"},
-            "query_text": {"type": ["string", "null"]},
-            "selected_action_names": {
-                "items": {"enum": list(_SELECTABLE_ACTION_NAMES), "type": "string"},
-                "maxItems": 4,
-                "type": "array",
-                "uniqueItems": True,
-            },
-        },
-        "required": [
-            "needs_semantic_memory",
-            "query_text",
-            "selected_action_names",
-        ],
-        "type": "object",
-    },
-    "strict": True,
-    "type": "function",
-}
-_REPOSITORY_PROPOSAL_TOOL: dict[str, Any] = {
-    "description": "Kies exact één bewezen, begrensde repositoryverbetering.",
-    "name": _REPOSITORY_PROPOSAL_ACTION,
-    "parameters": {
-        "additionalProperties": False,
-        "properties": {
-            "check_id": {"type": "string"},
-            "evidence": {"type": "string"},
-            "new_text": {"type": "string"},
-            "old_text": {"type": "string"},
-            "problem": {"type": "string"},
-            "target_path": {"type": "string"},
-        },
-        "required": [
-            "check_id",
-            "evidence",
-            "new_text",
-            "old_text",
-            "problem",
-            "target_path",
-        ],
-        "type": "object",
-    },
-    "strict": True,
-    "type": "function",
-}
 
 
 def _schema(
@@ -200,6 +145,32 @@ def _tool(
     }
 
 
+_MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
+    _MEMORY_SEARCH_ACTION,
+    (
+        "Classificeer of de actuele vraag persoonlijke semantische herinneringen "
+        "nodig heeft en kies hoogstens vier werkelijk benodigde acties voor deze "
+        "beurt. Geef nooit het antwoord."
+    ),
+    needs_semantic_memory=_schema(type_="boolean"),
+    query_text=_schema(type_=["string", "null"]),
+    selected_action_names=_schema(
+        type_="array",
+        items={"enum": list(_SELECTABLE_ACTION_NAMES), "type": "string"},
+        maxItems=4,
+        uniqueItems=True,
+    ),
+)
+_REPOSITORY_PROPOSAL_TOOL: dict[str, Any] = _tool(
+    _REPOSITORY_PROPOSAL_ACTION,
+    "Kies exact één bewezen, begrensde repositoryverbetering.",
+    check_id=_schema(),
+    evidence=_schema(),
+    new_text=_schema(),
+    old_text=_schema(),
+    problem=_schema(),
+    target_path=_schema(),
+)
 _ACTION_TOOLS: dict[str, dict[str, Any]] = {
     _OBSERVATION_IDENTITY_CORRECTION_ACTION: _tool(
         _OBSERVATION_IDENTITY_CORRECTION_ACTION,
@@ -429,7 +400,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
                     ],
                     "type": "object",
                 },
-            ]
+            ],
         ),
         primary_instruction=_schema(),
         wake_deadline=_schema(
@@ -544,89 +515,44 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
     ),
 }
 _PROTOTYPE_ACTION = "submit_personal_prototype"
-_PROTOTYPE_TOOL: dict[str, Any] = {
-    "description": "Lever precies één volledig bruikbaar digitaal prototype op.",
-    "name": _PROTOTYPE_ACTION,
-    "parameters": {
-        "additionalProperties": False,
-        "properties": {
-            "content": {
-                "description": "De volledige UTF-8 Markdown-inhoud van het product.",
-                "type": "string",
-            },
-            "filename": {
-                "description": "Veilige korte bestandsnaam die eindigt op .md.",
-                "type": "string",
-            },
-            "media_type": {"const": "text/markdown", "type": "string"},
-            "title": {"description": "Menselijke producttitel.", "type": "string"},
-        },
-        "required": ["content", "filename", "media_type", "title"],
-        "type": "object",
-    },
-    "strict": True,
-    "type": "function",
-}
+_PROTOTYPE_TOOL: dict[str, Any] = _tool(
+    _PROTOTYPE_ACTION,
+    "Lever precies één volledig bruikbaar digitaal prototype op.",
+    content=_schema("De volledige UTF-8 Markdown-inhoud van het product."),
+    filename=_schema("Veilige korte bestandsnaam die eindigt op .md."),
+    media_type=_schema(const="text/markdown"),
+    title=_schema("Menselijke producttitel."),
+)
 _LISTING_ACTION = "submit_personal_product_listing"
-_LISTING_TOOL: dict[str, Any] = {
-    "description": "Lever een eerlijke verkooptekst en toetsbare introductieprijs.",
-    "name": _LISTING_ACTION,
-    "parameters": {
-        "additionalProperties": False,
-        "properties": {
-            "description": {
-                "description": "Compacte Nederlandse productomschrijving.",
-                "type": "string",
-            },
-            "headline": {"description": "Concrete producttitel.", "type": "string"},
-            "price_eur_cents": {
-                "maximum": 1999,
-                "minimum": 299,
-                "type": "integer",
-            },
-            "tags": {
-                "items": {"maxLength": 32, "minLength": 1, "type": "string"},
-                "maxItems": 8,
-                "minItems": 3,
-                "type": "array",
-            },
-        },
-        "required": ["description", "headline", "price_eur_cents", "tags"],
-        "type": "object",
-    },
-    "strict": True,
-    "type": "function",
-}
+_LISTING_TOOL: dict[str, Any] = _tool(
+    _LISTING_ACTION,
+    "Lever een eerlijke verkooptekst en toetsbare introductieprijs.",
+    description=_schema("Compacte Nederlandse productomschrijving."),
+    headline=_schema("Concrete producttitel."),
+    price_eur_cents=_schema(type_="integer", maximum=1999, minimum=299),
+    tags=_schema(
+        type_="array",
+        items={"maxLength": 32, "minLength": 1, "type": "string"},
+        maxItems=8,
+        minItems=3,
+    ),
+)
 _FREE_WILL_ACTION = "submit_sensory_decision"
-_FREE_WILL_TOOL: dict[str, Any] = {
-    "description": "Leg precies één beslissing over een passieve huisprikkel vast.",
-    "name": _FREE_WILL_ACTION,
-    "parameters": {
-        "additionalProperties": False,
-        "properties": {
-            "disposition": {
-                "enum": ["silence", "respond"],
-                "type": "string",
-            },
-            "reason": {
-                "description": "Korte operationele motivatie, geen verborgen redeneerketen.",
-                "type": "string",
-            },
-            "expression": {
-                "description": (
-                    "Eén natuurlijk Nederlands bericht als disposition respond is; "
-                    "anders null. Geen diagnose of oorzaak die niet bewezen is."
-                ),
-                "type": ["string", "null"],
-            },
-            "urgency": {"maximum": 3, "minimum": 0, "type": "integer"},
-        },
-        "required": ["disposition", "expression", "reason", "urgency"],
-        "type": "object",
-    },
-    "strict": True,
-    "type": "function",
-}
+_FREE_WILL_TOOL: dict[str, Any] = _tool(
+    _FREE_WILL_ACTION,
+    "Leg precies één beslissing over een passieve huisprikkel vast.",
+    required=("disposition", "expression", "reason", "urgency"),
+    disposition=_schema(enum=("silence", "respond")),
+    reason=_schema("Korte operationele motivatie, geen verborgen redeneerketen."),
+    expression=_schema(
+        (
+            "Eén natuurlijk Nederlands bericht als disposition respond is; "
+            "anders null. Geen diagnose of oorzaak die niet bewezen is."
+        ),
+        type_=["string", "null"],
+    ),
+    urgency=_schema(type_="integer", maximum=3, minimum=0),
+)
 
 
 class ConversationModelError(RuntimeError):
