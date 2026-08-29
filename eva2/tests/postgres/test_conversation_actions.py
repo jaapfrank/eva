@@ -48,6 +48,38 @@ from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 NOW = datetime(2026, 8, 23, 14, 0, tzinfo=UTC)
 
 
+def test_durable_turn_identifiers_remain_byte_equal_after_shared_derivation() -> None:
+    turn = ConversationTurn.private(
+        "tenant",
+        "installation",
+        "jaap",
+        "telegram:123",
+        "telegram:123:9",
+        "test",
+        "2026-08-29T14:25:00Z",
+        project_id="project",
+    )
+    expected = {
+        "_automation_operation_id": "home-assistant-automation:f51cb82dfb04388cb8a71b532193be98",
+        "_document_episode_operation_id": "document-work:e26527c7cb2ebac692ca5986e3435f85",
+        "_document_task_id": "document-task:0c1b5c743efe2ef443e09ba4944290b0",
+        "_fanout_operation_id": "fanout-delivery:197936a99e2b5f2c2cf6aef1757bc4fc",
+        "_file_batch_operation_id": "file-batch:2953c51ce77caee25034e51065c8a96a",
+        "_home_assistant_operation_id": "home-assistant-light:f9681b0df36bd7a1be3376c21a4f90d1",
+        "_intent_id": "personal-interest:eadd7f2b068d9fd4987faa479286bc3d",
+        "_localtuya_package_thread_id": "advanced-package-conversation:b5dd954412f97c5c6393a80935562395",
+        "_localtuya_repository_thread_id": "advanced-repository-conversation:717b95f2be6caed2854380f8eeea19f9",
+        "_observation_identity_correction_thread_id": "memory:observation-identity:61d73df29f0600e5e60112d5f84e4897",
+        "_repository_improvement_operation_id": "repository-improvement:40a7a9a340d3f0d09e717048738084c7",
+        "_research_operation_id": "current-research:2420e50d0762dff9a05d63a67234616c",
+        "_tuya_plan_operation_id": "tuya-local-plan:3cb83441698f9057fb6aaa88fe1adc41",
+        "_validated_file_edit_operation_id": "validated-file-edit:3f87371c0e0134708bd5a3c9e049b601",
+    }
+    assert {
+        name: getattr(PostgresConversationActions, name)(turn) for name in expected
+    } == expected
+
+
 def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> None:
     class HomeAssistant:
         async def resolve_light(self, target):  # type: ignore[no-untyped-def]

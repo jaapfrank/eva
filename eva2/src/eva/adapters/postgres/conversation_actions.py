@@ -82,7 +82,11 @@ from eva.application.personal_interests import (
     PersonalPrototypeArtifact,
     PersonalPrototypeClaim,
 )
-from eva.application.research import CurrentResearchPort, ResearchArtifact, ResearchSource
+from eva.application.research import (
+    CurrentResearchPort,
+    ResearchArtifact,
+    ResearchSource,
+)
 from eva.application.file_batches import (
     BatchFilePlan,
     TextBatchPlan,
@@ -231,6 +235,32 @@ _AUTOMATION_ACTION_DOMAINS = (
     "scene",
     "switch",
 )
+
+
+_TURN_ID_FIELDS = {
+    "document": ("conversation_id", "principal_id", "project_id"),
+    "document_task": (
+        "conversation_id",
+        "message_id",
+        "principal_id",
+        "project_id",
+    ),
+    "message": ("message_id",),
+    "person": ("message_id", "principal_id"),
+    "project": ("message_id", "principal_id", "project_id"),
+}
+
+
+def _turn_id(
+    turn: ConversationTurn, kind: str, prefix: str, scope: str = "message"
+) -> str:
+    identity: dict[str, JsonValue] = {
+        "installation_id": turn.installation_id,
+        "kind": kind,
+        "tenant_id": turn.tenant_id,
+        **{field: getattr(turn, field) for field in _TURN_ID_FIELDS[scope]},
+    }
+    return prefix + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
 
 
 class _HomeAssistantLightPort(AsyncToolPort, Protocol):
@@ -448,9 +478,7 @@ class PostgresConversationActions:
         if edit_events:
             if edit_events[-1].event_type not in _VALIDATED_FILE_EDIT_TERMINAL_EVENTS:
                 self._resume_validated_file_edit(turn, edit_events)
-                edit_events = timeline.events(
-                    self._validated_file_edit_thread_id(turn)
-                )
+                edit_events = timeline.events(self._validated_file_edit_thread_id(turn))
             return self._validated_file_edit_receipt(turn, edit_events)
         batch_events = timeline.events(self._file_batch_thread_id(turn))
         if batch_events:
@@ -476,9 +504,7 @@ class PostgresConversationActions:
         )
         if read_receipt is not None:
             return read_receipt
-        repository_events = timeline.events(
-            self._localtuya_repository_thread_id(turn)
-        )
+        repository_events = timeline.events(self._localtuya_repository_thread_id(turn))
         if repository_events:
             if (
                 repository_events[-1].event_type
@@ -809,12 +835,15 @@ class PostgresConversationActions:
             call.arguments
         )
         thread_id = self._observation_identity_correction_thread_id(turn)
-        correction_id = "observation-identity:" + hashlib.sha256(
-            (
-                f"{turn.tenant_id}\0{turn.installation_id}\0{turn.principal_id}\0"
-                f"{binding.binding_sha256}\0{turn.message_id}"
-            ).encode()
-        ).hexdigest()
+        correction_id = (
+            "observation-identity:"
+            + hashlib.sha256(
+                (
+                    f"{turn.tenant_id}\0{turn.installation_id}\0{turn.principal_id}\0"
+                    f"{binding.binding_sha256}\0{turn.message_id}"
+                ).encode()
+            ).hexdigest()
+        )
         data: dict[str, JsonValue] = {
             "action_call_id": call.call_id,
             "action_name": call.name,
@@ -868,7 +897,9 @@ class PostgresConversationActions:
             "project_id": turn.project_id,
             "source_message_id": turn.message_id,
         }
-        if binding is None or any(data.get(key) != value for key, value in expected.items()):
+        if binding is None or any(
+            data.get(key) != value for key, value in expected.items()
+        ):
             raise ConversationConflict("observation identity correction scope differs")
         if data.get("binding_sha256") != binding.binding_sha256:
             raise ConversationConflict("observation identity binding differs")
@@ -951,13 +982,13 @@ class PostgresConversationActions:
         except CheckpointConflict:
             events = timeline.events(thread_id)
             if not events or self._event_data(events[0]) != data:
-                raise ConversationConflict("validated file edit replay differs") from None
+                raise ConversationConflict(
+                    "validated file edit replay differs"
+                ) from None
         events = timeline.events(thread_id)
         if len(events) == 1:
             self._resume_validated_file_edit(turn, events)
-        return self._validated_file_edit_receipt(
-            turn, timeline.events(thread_id)
-        )
+        return self._validated_file_edit_receipt(turn, timeline.events(thread_id))
 
     def _execute_repository_improvement(
         self, turn: ConversationTurn, call: ConversationActionCall
@@ -1010,13 +1041,13 @@ class PostgresConversationActions:
         except CheckpointConflict:
             events = timeline.events(thread_id)
             if not events or self._event_data(events[0]) != data:
-                raise ConversationConflict("repository improvement replay differs") from None
+                raise ConversationConflict(
+                    "repository improvement replay differs"
+                ) from None
         events = timeline.events(thread_id)
         if events[-1].event_type not in _REPOSITORY_IMPROVEMENT_TERMINAL_EVENTS:
             self._resume_repository_improvement(turn, events)
-        return self._repository_improvement_receipt(
-            turn, timeline.events(thread_id)
-        )
+        return self._repository_improvement_receipt(turn, timeline.events(thread_id))
 
     def _resume_repository_improvement(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
@@ -1047,11 +1078,17 @@ class PostgresConversationActions:
                 snapshot
             )
             selected = next(
-                (item for item in snapshot.failed_checks if item.check_id == proposal.check_id),
+                (
+                    item
+                    for item in snapshot.failed_checks
+                    if item.check_id == proposal.check_id
+                ),
                 None,
             )
             if selected is None or selected.target_path != proposal.target_path:
-                raise ConversationConflict("repository improvement choice is ungrounded")
+                raise ConversationConflict(
+                    "repository improvement choice is ungrounded"
+                )
             state = timeline.load(thread_id)
             timeline.transition(
                 thread_id=thread_id,
@@ -1074,7 +1111,9 @@ class PostgresConversationActions:
             prepared = self._event_data(events[1])
             proposal = self._repository_proposal_from_data(prepared.get("proposal"))
             if prepared.get("repository_sha256") != snapshot.repository_sha256:
-                raise ConversationConflict("repository improvement snapshot binding differs")
+                raise ConversationConflict(
+                    "repository improvement snapshot binding differs"
+                )
             try:
                 result = self._repository_improvement.apply(snapshot, proposal)
             except (RuntimeError, ValueError) as error:
@@ -1118,7 +1157,10 @@ class PostgresConversationActions:
         self._repository_proposal_from_data(prepared.get("proposal"))
         result = self._repository_result_from_data(completed.get("result"))
         call_id = admission.get("action_call_id")
-        if not isinstance(call_id, str) or completed.get("source_message_id") != turn.message_id:
+        if (
+            not isinstance(call_id, str)
+            or completed.get("source_message_id") != turn.message_id
+        ):
             raise ConversationConflict("repository improvement receipt scope differs")
         return ConversationActionReceipt(
             ConversationActionCall(
@@ -1192,7 +1234,9 @@ class PostgresConversationActions:
             raise ConversationConflict("repository check data is malformed") from error
 
     @classmethod
-    def _repository_snapshot_from_data(cls, raw: JsonValue | None) -> RepositorySnapshot:
+    def _repository_snapshot_from_data(
+        cls, raw: JsonValue | None
+    ) -> RepositorySnapshot:
         if (
             not isinstance(raw, dict)
             or not isinstance(raw.get("files"), list)
@@ -1213,11 +1257,15 @@ class PostgresConversationActions:
                     for item in raw["files"]
                     if isinstance(item, dict)
                 ),
-                checks=tuple(cls._repository_check_from_data(item) for item in raw["checks"]),
+                checks=tuple(
+                    cls._repository_check_from_data(item) for item in raw["checks"]
+                ),
                 captured_at=datetime.fromisoformat(str(raw["captured_at"])),
             )
         except (KeyError, ValueError) as error:
-            raise ConversationConflict("repository snapshot data is malformed") from error
+            raise ConversationConflict(
+                "repository snapshot data is malformed"
+            ) from error
 
     @staticmethod
     def _repository_proposal_data(
@@ -1248,15 +1296,21 @@ class PostgresConversationActions:
                 target_path=str(raw["target_path"]),
             )
         except (KeyError, ValueError) as error:
-            raise ConversationConflict("repository proposal data is malformed") from error
+            raise ConversationConflict(
+                "repository proposal data is malformed"
+            ) from error
 
     @classmethod
     def _repository_result_data(
         cls, result: RepositoryImprovementResult
     ) -> dict[str, JsonValue]:
         return {
-            "checks_after": [cls._repository_check_data(item) for item in result.checks_after],
-            "checks_before": [cls._repository_check_data(item) for item in result.checks_before],
+            "checks_after": [
+                cls._repository_check_data(item) for item in result.checks_after
+            ],
+            "checks_before": [
+                cls._repository_check_data(item) for item in result.checks_before
+            ],
             "final_sha256": result.final_sha256,
             "original_sha256": result.original_sha256,
             "patch_sha256": result.patch_sha256,
@@ -1294,10 +1348,12 @@ class PostgresConversationActions:
                 final_sha256=str(raw["final_sha256"]),
                 patch_sha256=str(raw["patch_sha256"]),
                 checks_before=tuple(
-                    cls._repository_check_from_data(item) for item in raw["checks_before"]
+                    cls._repository_check_from_data(item)
+                    for item in raw["checks_before"]
                 ),
                 checks_after=tuple(
-                    cls._repository_check_from_data(item) for item in raw["checks_after"]
+                    cls._repository_check_from_data(item)
+                    for item in raw["checks_after"]
                 ),
             )
         except (KeyError, ValueError) as error:
@@ -1309,17 +1365,14 @@ class PostgresConversationActions:
         if self._validated_file_edit is None or not events:
             raise ConversationConflict("validated file edit cannot resume")
         admission = self._event_data(events[0])
-        if (
-            events[0].event_type != "VALIDATED_FILE_EDIT_PREPARED"
-            or any(
-                admission.get(key) != value
-                for key, value in {
-                    "conversation_id": turn.conversation_id,
-                    "principal_id": turn.principal_id,
-                    "project_id": turn.project_id,
-                    "source_message_id": turn.message_id,
-                }.items()
-            )
+        if events[0].event_type != "VALIDATED_FILE_EDIT_PREPARED" or any(
+            admission.get(key) != value
+            for key, value in {
+                "conversation_id": turn.conversation_id,
+                "principal_id": turn.principal_id,
+                "project_id": turn.project_id,
+                "source_message_id": turn.message_id,
+            }.items()
         ):
             raise ConversationConflict("validated file edit scope differs")
         baseline = self._focused_validation_from_data(
@@ -1337,7 +1390,9 @@ class PostgresConversationActions:
                 baseline_validation=baseline,
             )
         except (KeyError, ValueError) as error:
-            raise ConversationConflict("validated file edit plan is malformed") from error
+            raise ConversationConflict(
+                "validated file edit plan is malformed"
+            ) from error
         if (
             admission.get("original_sha256") != plan.original_sha256
             or admission.get("proposed_sha256") != plan.proposed_sha256
@@ -1425,7 +1480,9 @@ class PostgresConversationActions:
                 ),
             )
         except (KeyError, ValueError) as error:
-            raise ConversationConflict("focused validation data is malformed") from error
+            raise ConversationConflict(
+                "focused validation data is malformed"
+            ) from error
 
     def _validated_file_edit_result_data(
         self, turn: ConversationTurn, result: ValidatedTextEditResult
@@ -1588,7 +1645,9 @@ class PostgresConversationActions:
         if len(plan.files) != len(raw_files):
             raise ConversationConflict("bestandsbatchplan bevat ongeldige files")
         attempt_events = [
-            event for event in events if event.event_type == "FILE_BATCH_ATTEMPT_RECORDED"
+            event
+            for event in events
+            if event.event_type == "FILE_BATCH_ATTEMPT_RECORDED"
         ]
         last_attempt_data = (
             None if not attempt_events else self._event_data(attempt_events[-1])
@@ -1622,9 +1681,8 @@ class PostgresConversationActions:
                 {
                     "destination_path": item.destination_path,
                     "error_code": item.error_code,
-                    "retryable": (
-                        item.source_path, item.destination_path
-                    ) in retryable_ids,
+                    "retryable": (item.source_path, item.destination_path)
+                    in retryable_ids,
                     "source_path": item.source_path,
                 }
                 for item in result.failed
@@ -1634,9 +1692,7 @@ class PostgresConversationActions:
             self._timeline(turn).transition(
                 thread_id=self._file_batch_thread_id(turn),
                 expected_revision=state.revision,
-                checkpoint_id=(
-                    f"{self._file_batch_thread_id(turn)}:attempt:{attempt}"
-                ),
+                checkpoint_id=(f"{self._file_batch_thread_id(turn)}:attempt:{attempt}"),
                 operation_id=self._file_batch_operation_id(turn),
                 phase="file_batch_attempted",
                 status="active",
@@ -1649,9 +1705,10 @@ class PostgresConversationActions:
                     "successes": successes,
                 },
             )
-            attempt_events = [*attempt_events, self._timeline(turn).events(
-                self._file_batch_thread_id(turn)
-            )[-1]]
+            attempt_events = [
+                *attempt_events,
+                self._timeline(turn).events(self._file_batch_thread_id(turn))[-1],
+            ]
             last_attempt_data = self._event_data(attempt_events[-1])
             if not failures or any(item["retryable"] is not True for item in failures):
                 break
@@ -1672,7 +1729,9 @@ class PostgresConversationActions:
             event_type=(
                 "FILE_BATCH_PARTIALLY_COMPLETED"
                 if successes and failures
-                else "FILE_BATCH_COMPLETED" if successes else "FILE_BATCH_FAILED"
+                else "FILE_BATCH_COMPLETED"
+                if successes
+                else "FILE_BATCH_FAILED"
             ),
             occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
             data={
@@ -1732,7 +1791,11 @@ class PostgresConversationActions:
                 "failed": failures,
                 "failed_count": len(failures),
                 "status": (
-                    "partial" if successes and failures else "completed" if successes else "failed"
+                    "partial"
+                    if successes and failures
+                    else "completed"
+                    if successes
+                    else "failed"
                 ),
                 "successful": successes,
                 "successful_count": len(successes),
@@ -1752,10 +1815,16 @@ class PostgresConversationActions:
         current = self._current_document_task(events)
         mode = str(arguments["mode"])
         if mode in {"continue_current", "replace_current"} and current is None:
-            raise ConversationConflict("dit gesprek heeft geen direct actieve documenttaak")
-        if mode == "continue_current" and current is not None and (
-            arguments["title"] != current["title"]
-            or arguments["filename"] != current["filename"]
+            raise ConversationConflict(
+                "dit gesprek heeft geen direct actieve documenttaak"
+            )
+        if (
+            mode == "continue_current"
+            and current is not None
+            and (
+                arguments["title"] != current["title"]
+                or arguments["filename"] != current["filename"]
+            )
         ):
             raise ConversationConflict(
                 "documentvervolg wijkt af van de direct actieve taak"
@@ -1810,7 +1879,9 @@ class PostgresConversationActions:
             )
         if not events:
             if mode != "start_new":
-                raise ConversationConflict("documenttaak kan niet zonder begin hervatten")
+                raise ConversationConflict(
+                    "documenttaak kan niet zonder begin hervatten"
+                )
             timeline.create_thread(
                 thread_id=thread_id,
                 checkpoint_id=f"{thread_id}:1",
@@ -1834,9 +1905,7 @@ class PostgresConversationActions:
                 occurred_at=self._timestamp(turn),
                 data=data,
             )
-        receipt = self._document_receipt_for_turn(
-            turn, timeline.events(thread_id)
-        )
+        receipt = self._document_receipt_for_turn(turn, timeline.events(thread_id))
         if receipt is None:
             raise ConversationConflict("documenttaakcheckpoint ontbreekt")
         return receipt
@@ -1899,9 +1968,7 @@ class PostgresConversationActions:
                 if line.strip() and not line.lstrip().startswith("#")
             ]
             if not body:
-                raise ConversationConflict(
-                    "afgerond document bevat een lege sectie"
-                )
+                raise ConversationConflict("afgerond document bevat een lege sectie")
         meaningful = " ".join(
             line.strip()
             for line in lines
@@ -1942,10 +2009,9 @@ class PostgresConversationActions:
         )
         content = str(arguments["content"])
         content_sha256 = hashlib.sha256(content.encode("utf-8")).hexdigest()
-        if (
-            data.get("content_sha256") != content_sha256
-            or data.get("utf8_byte_length") != len(content.encode("utf-8"))
-        ):
+        if data.get("content_sha256") != content_sha256 or data.get(
+            "utf8_byte_length"
+        ) != len(content.encode("utf-8")):
             raise ConversationConflict("documenttaakbytes verschillen")
         return ConversationActionReceipt(
             ConversationActionCall(call_id, _DOCUMENT_TASK_ACTION, arguments),
@@ -2216,7 +2282,9 @@ class PostgresConversationActions:
             self._home_assistant_effect_allowlist is not None
             and (entity_id, service) not in self._home_assistant_effect_allowlist
         ):
-            raise RuntimeError("Home Assistant effect is outside the configured allowlist")
+            raise RuntimeError(
+                "Home Assistant effect is outside the configured allowlist"
+            )
         expected_state = "on" if service == "turn_on" else "off"
         request = ToolRequest(
             thread_id=thread_id,
@@ -2575,8 +2643,12 @@ class PostgresConversationActions:
             raise ConversationConflict("durable goal execution is unavailable")
         arguments = self._validated_durable_goal_arguments(call.arguments)
         request_text = turn.text.casefold()
-        if not any(word in request_text for word in ("zodra", "wanneer", "wacht", "als")):
-            raise ConversationConflict("durable goal requires an explicit wake condition")
+        if not any(
+            word in request_text for word in ("zodra", "wanneer", "wacht", "als")
+        ):
+            raise ConversationConflict(
+                "durable goal requires an explicit wake condition"
+            )
         recipient = str(arguments["delivery_recipient"])
         if recipient not in self._durable_goal_recipients:
             raise ConversationConflict("durable goal recipient is not configured")
@@ -2585,7 +2657,9 @@ class PostgresConversationActions:
         )
         created_at = self._timestamp(turn)
         if deadline <= created_at or deadline > created_at + timedelta(days=7):
-            raise ConversationConflict("durable goal deadline is outside 1 second..7 days")
+            raise ConversationConflict(
+                "durable goal deadline is outside 1 second..7 days"
+            )
         goal = DurableGoalSpec(
             goal_id=self._durable_goal_id(turn),
             owner_id=turn.principal_id,
@@ -2638,7 +2712,9 @@ class PostgresConversationActions:
         reason = call.arguments.get("reason")
         if not isinstance(reason, str) or not reason.strip() or len(reason) > 240:
             raise ConversationConflict("durable goal cancellation reason is invalid")
-        if not any(word in turn.text.casefold() for word in ("annuleer", "stop", "hoeft niet")):
+        if not any(
+            word in turn.text.casefold() for word in ("annuleer", "stop", "hoeft niet")
+        ):
             raise ConversationConflict("durable goal cancellation was not explicit")
         store = PostgresDurableGoalStore(
             self._engine,
@@ -2715,19 +2791,25 @@ class PostgresConversationActions:
 
     @staticmethod
     def _durable_goal_id(turn: ConversationTurn) -> str:
-        return "durable-goal:" + hashlib.sha256(
-            canonical_json_bytes(
-                {
-                    "conversation_id": turn.conversation_id,
-                    "message_id": turn.message_id,
-                    "principal_id": turn.principal_id,
-                }
-            )
-        ).hexdigest()[:40]
+        return (
+            "durable-goal:"
+            + hashlib.sha256(
+                canonical_json_bytes(
+                    {
+                        "conversation_id": turn.conversation_id,
+                        "message_id": turn.message_id,
+                        "principal_id": turn.principal_id,
+                    }
+                )
+            ).hexdigest()[:40]
+        )
 
     @classmethod
     def _durable_goal_call_id(cls, turn: ConversationTurn) -> str:
-        return "call:" + hashlib.sha256(cls._durable_goal_id(turn).encode()).hexdigest()[:24]
+        return (
+            "call:"
+            + hashlib.sha256(cls._durable_goal_id(turn).encode()).hexdigest()[:24]
+        )
 
     @staticmethod
     def _durable_goal_arguments(goal: DurableGoalSpec) -> dict[str, JsonValue]:
@@ -3070,13 +3152,17 @@ class PostgresConversationActions:
             plan_id=plan_id, approval_sha256=approval_sha256
         )
         if store.status(plan_id) == "needs_help":
-            raise ConversationConflict("LocalTuya repository registration needs owner help")
+            raise ConversationConflict(
+                "LocalTuya repository registration needs owner help"
+            )
         now = datetime.now(tz=UTC).replace(microsecond=0)
         if now >= approval.expires_at:
             raise ConversationConflict("LocalTuya repository approval expired")
         if not store.repository_registration_started(plan_id):
             if self._home_assistant_admin is None:
-                raise ConversationConflict("LocalTuya repository preflight is unavailable")
+                raise ConversationConflict(
+                    "LocalTuya repository preflight is unavailable"
+                )
             inventory = asyncio.run(self._home_assistant_admin.inventory())
             try:
                 require_current_repository_preflight(store.load(plan_id), inventory)
@@ -3651,7 +3737,9 @@ class PostgresConversationActions:
         raw: dict[str, JsonValue],
     ) -> dict[str, JsonValue]:
         if set(raw) != _OBSERVATION_IDENTITY_CORRECTION_ARGUMENT_KEYS:
-            raise ConversationConflict("observation identity correction has wrong fields")
+            raise ConversationConflict(
+                "observation identity correction has wrong fields"
+            )
         corrected_name = raw.get("corrected_name")
         if (
             not isinstance(corrected_name, str)
@@ -3932,7 +4020,9 @@ class PostgresConversationActions:
                 provider=str(data["provider"]),
             )
         except (KeyError, ValueError) as error:
-            raise ConversationConflict("current research artifact is malformed") from error
+            raise ConversationConflict(
+                "current research artifact is malformed"
+            ) from error
         if (
             artifact.content_sha256 != data.get("content_sha256")
             or len(artifact.content.encode("utf-8")) != data.get("utf8_byte_length")
@@ -3948,16 +4038,7 @@ class PostgresConversationActions:
 
     @staticmethod
     def _intent_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "personal_interest",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "personal-interest:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "personal_interest", "personal-interest:", "person")
 
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
@@ -3965,15 +4046,7 @@ class PostgresConversationActions:
 
     @staticmethod
     def _home_assistant_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "home_assistant_light",
-                "message_id": turn.message_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "home-assistant-light:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "home_assistant_light", "home-assistant-light:")
 
     @classmethod
     def _home_assistant_thread_id(cls, turn: ConversationTurn) -> str:
@@ -3981,15 +4054,11 @@ class PostgresConversationActions:
 
     @staticmethod
     def _automation_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "home_assistant_automation",
-                "message_id": turn.message_id,
-                "tenant_id": turn.tenant_id,
-            }
+        return _turn_id(
+            turn,
+            "home_assistant_automation",
+            "home-assistant-automation:",
         )
-        return "home-assistant-automation:" + hashlib.sha256(identity).hexdigest()[:32]
 
     @classmethod
     def _automation_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4002,15 +4071,7 @@ class PostgresConversationActions:
 
     @staticmethod
     def _tuya_plan_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "tuya_to_localtuya_plan",
-                "message_id": turn.message_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "tuya-local-plan:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "tuya_to_localtuya_plan", "tuya-local-plan:")
 
     @classmethod
     def _tuya_plan_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4018,64 +4079,34 @@ class PostgresConversationActions:
 
     @staticmethod
     def _localtuya_package_thread_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "localtuya_package_install",
-                "message_id": turn.message_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return (
-            "advanced-package-conversation:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(
+            turn,
+            "localtuya_package_install",
+            "advanced-package-conversation:",
         )
 
     @staticmethod
     def _localtuya_repository_thread_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "localtuya_repository_registration",
-                "message_id": turn.message_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return (
-            "advanced-repository-conversation:"
-            + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(
+            turn,
+            "localtuya_repository_registration",
+            "advanced-repository-conversation:",
         )
 
     @staticmethod
     def _fanout_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "fanout_delivery",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "fanout-delivery:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "fanout_delivery", "fanout-delivery:", "person")
 
     @classmethod
     def _fanout_call_id(cls, turn: ConversationTurn) -> str:
-        return "fanout-call:" + hashlib.sha256(
-            cls._fanout_operation_id(turn).encode()
-        ).hexdigest()[:32]
+        return (
+            "fanout-call:"
+            + hashlib.sha256(cls._fanout_operation_id(turn).encode()).hexdigest()[:32]
+        )
 
     @staticmethod
     def _research_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "current_research",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "current-research:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "current_research", "current-research:", "person")
 
     @classmethod
     def _research_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4083,17 +4114,7 @@ class PostgresConversationActions:
 
     @staticmethod
     def _document_episode_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "conversation_id": turn.conversation_id,
-                "installation_id": turn.installation_id,
-                "kind": "document_work_episode",
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "document-work:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "document_work_episode", "document-work:", "document")
 
     @classmethod
     def _document_episode_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4101,32 +4122,11 @@ class PostgresConversationActions:
 
     @staticmethod
     def _document_task_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "conversation_id": turn.conversation_id,
-                "installation_id": turn.installation_id,
-                "kind": "document_task",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "document-task:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "document_task", "document-task:", "document_task")
 
     @staticmethod
     def _file_batch_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "text_to_markdown_batch",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
-        )
-        return "file-batch:" + hashlib.sha256(identity).hexdigest()[:32]
+        return _turn_id(turn, "text_to_markdown_batch", "file-batch:", "project")
 
     @classmethod
     def _file_batch_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4134,17 +4134,9 @@ class PostgresConversationActions:
 
     @staticmethod
     def _validated_file_edit_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "validated_text_file_edit",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
+        return _turn_id(
+            turn, "validated_text_file_edit", "validated-file-edit:", "project"
         )
-        return "validated-file-edit:" + hashlib.sha256(identity).hexdigest()[:32]
 
     @classmethod
     def _validated_file_edit_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4152,17 +4144,12 @@ class PostgresConversationActions:
 
     @staticmethod
     def _repository_improvement_operation_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "self_chosen_repository_improvement",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
+        return _turn_id(
+            turn,
+            "self_chosen_repository_improvement",
+            "repository-improvement:",
+            "project",
         )
-        return "repository-improvement:" + hashlib.sha256(identity).hexdigest()[:32]
 
     @classmethod
     def _repository_improvement_thread_id(cls, turn: ConversationTurn) -> str:
@@ -4170,17 +4157,12 @@ class PostgresConversationActions:
 
     @staticmethod
     def _observation_identity_correction_thread_id(turn: ConversationTurn) -> str:
-        identity = canonical_json_bytes(
-            {
-                "installation_id": turn.installation_id,
-                "kind": "observation_identity_correction",
-                "message_id": turn.message_id,
-                "principal_id": turn.principal_id,
-                "project_id": turn.project_id,
-                "tenant_id": turn.tenant_id,
-            }
+        return _turn_id(
+            turn,
+            "observation_identity_correction",
+            "memory:observation-identity:",
+            "project",
         )
-        return "memory:observation-identity:" + hashlib.sha256(identity).hexdigest()[:32]
 
     def _timeline(self, turn: ConversationTurn) -> PostgresOperationalTimeline:
         return self._timeline_for(turn.tenant_id, turn.installation_id)
@@ -4209,15 +4191,18 @@ class _PostgresPersonalClaimStore:
     def __init__(self, engine: sa.Engine, *, lease_seconds: int = 90) -> None:
         lease_name = "product release" if self._stage == "release" else self._stage
         if not 10 <= lease_seconds <= 600:
-            raise ValueError(
-                f"personal {lease_name} lease must be 10..600 seconds"
-            )
+            raise ValueError(f"personal {lease_name} lease must be 10..600 seconds")
         self._actions = PostgresConversationActions(engine)
         self._lease_seconds = lease_seconds
 
     def claim_next(
         self, *, tenant_id: str, installation_id: str, now: datetime
-    ) -> PersonalInterestClaim | PersonalPrototypeClaim | PersonalProductReleaseClaim | None:
+    ) -> (
+        PersonalInterestClaim
+        | PersonalPrototypeClaim
+        | PersonalProductReleaseClaim
+        | None
+    ):
         stage = self._stage
         phases, statuses, event_type = {
             "exploration": (
@@ -4247,7 +4232,11 @@ class _PostgresPersonalClaimStore:
             if state.status == "waiting_for_proof":
                 if state.deadline is None or state.deadline > now:
                     continue
-                expired = "lease-expired" if stage == "exploration" else f"{stage}-lease-expired"
+                expired = (
+                    "lease-expired"
+                    if stage == "exploration"
+                    else f"{stage}-lease-expired"
+                )
                 lease_name = "product release" if stage == "release" else stage
                 failed = timeline.record_recovery_failure(
                     thread_id=state.thread_id,
@@ -4511,9 +4500,7 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
         claim = self._claim_from_events(
             tenant_id, installation_id, events, state.revision
         )
-        completed = self._latest_event(
-            events, "PERSONAL_EXPLORATION_COMPLETED"
-        )
+        completed = self._latest_event(events, "PERSONAL_EXPLORATION_COMPLETED")
         if completed is None:
             raise ConversationConflict("completed exploration has no result event")
         data = PostgresConversationActions._event_data(completed)
@@ -4624,9 +4611,7 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
             ),
             state.revision,
         )
-        prototype_event = self._latest_event(
-            events, "PERSONAL_PROTOTYPE_COMPLETED"
-        )
+        prototype_event = self._latest_event(events, "PERSONAL_PROTOTYPE_COMPLETED")
         if prototype_event is None:
             raise ConversationConflict("completed prototype has no artifact event")
         data = PostgresConversationActions._event_data(prototype_event)
@@ -4679,9 +4664,7 @@ class PostgresPersonalPrototypeStore(_PostgresPersonalClaimStore):
         if candidate is None:
             return None
         intent_id, events = candidate
-        prototype_event = self._latest_event(
-            events, "PERSONAL_PROTOTYPE_COMPLETED"
-        )
+        prototype_event = self._latest_event(events, "PERSONAL_PROTOTYPE_COMPLETED")
         if prototype_event is None:
             return None
         return PersonalPrototypeArtifact(
