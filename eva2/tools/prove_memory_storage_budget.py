@@ -15,6 +15,7 @@ import re
 import sqlalchemy as sa
 
 from eva.adapters.postgres.runtime_resource_usage import PostgresMemoryStorageBudget
+from eva.adapters.postgres.operational_timeline import OperationalTimelineError
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -520,6 +521,72 @@ def prove(
             now=NOW + timedelta(days=7, seconds=2),
         )
 
+        erasure_installation = f"{INSTALLATION}-explicit-erasure"
+        erasure_governor = _governor(
+            engine,
+            installation_id=erasure_installation,
+        )
+        erasure_document = _document(
+            "memory:proof:explicit-erasure",
+            installation_id=erasure_installation,
+            principal_id="person:erasure-owner",
+            content="synthetic erasure content",
+        )
+        erasure_admission = erasure_governor.admit_memory(
+            erasure_document,
+            now=NOW,
+        )
+        erasure_governor.mark_retained(
+            replace(
+                erasure_document,
+                retention_until=erasure_admission.retention_until,
+            ),
+            MemoryRetentionReceipt(
+                bank_id="eva2-" + "e" * 32,
+                document_id=erasure_document.document_id,
+                content_sha256=hashlib.sha256(
+                    erasure_document.content.encode("utf-8")
+                ).hexdigest(),
+            ),
+            now=NOW + timedelta(seconds=1),
+        )
+        wrong_principal_blocked = False
+        try:
+            erasure_governor.request_erasure(
+                principal_id="person:other",
+                document_id=erasure_document.document_id,
+                now=NOW + timedelta(seconds=2),
+            )
+        except OperationalTimelineError as error:
+            wrong_principal_blocked = "scope differs" in str(error)
+        erasure_job = erasure_governor.request_erasure(
+            principal_id="person:erasure-owner",
+            document_id=erasure_document.document_id,
+            now=NOW + timedelta(seconds=3),
+        )
+        duplicate_erasure = erasure_governor.request_erasure(
+            principal_id="person:erasure-owner",
+            document_id=erasure_document.document_id,
+            now=NOW + timedelta(seconds=3),
+        )
+        restarted_erasure = _governor(
+            engine,
+            installation_id=erasure_installation,
+        )
+        recovered_erasure = restarted_erasure.claim_expired(
+            now=NOW + timedelta(seconds=4)
+        )
+        if len(recovered_erasure) == 1:
+            restarted_erasure.mark_removed(
+                recovered_erasure[0],
+                now=NOW + timedelta(seconds=5),
+            )
+        completed_erasure_replay = restarted_erasure.request_erasure(
+            principal_id="person:erasure-owner",
+            document_id=erasure_document.document_id,
+            now=NOW + timedelta(seconds=6),
+        )
+
         expected = (
             large_admission.admitted
             and large_admission.content_bytes == 600_000
@@ -575,12 +642,19 @@ def prove(
             and scope_replacement.admitted
             and scope_replacement.group_records_used == 1
             and scope_replacement.installation_records_used == 1
+            and wrong_principal_blocked
+            and erasure_job is not None
+            and erasure_job.state.retry_count == 1
+            and duplicate_erasure is None
+            and len(recovered_erasure) == 1
+            and recovered_erasure[0].state.retry_count == 2
+            and completed_erasure_replay is None
         )
         if not expected:
             raise RuntimeError("memory storage budget proof differs")
 
         return {
-            "contract": "EvaMemoryStorageBudgetProof/v2",
+            "contract": "EvaMemoryStorageBudgetProof/v3",
             "limits": {
                 "bytes_per_group": 1_048_576,
                 "bytes_per_installation": 10_485_760,
@@ -606,6 +680,9 @@ def prove(
                 "installation_concurrent_final_admitted": sum(
                     item.admitted for item in installation_raced
                 ),
+                "explicit_erasure_recovered_after_restart": True,
+                "explicit_erasure_wrong_principal_blocked": True,
+                "explicit_erasure_duplicate_provider_lease_blocked": True,
                 "project_byte_limit_blocked_across_people": True,
                 "project_concurrent_final_admitted": sum(
                     item.admitted for item in project_raced
