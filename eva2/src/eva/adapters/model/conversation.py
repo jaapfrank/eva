@@ -159,586 +159,389 @@ _REPOSITORY_PROPOSAL_TOOL: dict[str, Any] = {
     "strict": True,
     "type": "function",
 }
+
+
+def _schema(
+    description: str | None = None,
+    *,
+    type_: str | list[str] | None = "string",
+    enum: tuple[str, ...] = (),
+    **constraints: Any,
+) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    if description is not None:
+        value["description"] = description
+    if enum:
+        value["enum"] = list(enum)
+    if type_ is not None:
+        value["type"] = type_
+    value.update(constraints)
+    return value
+
+
+def _tool(
+    name: str,
+    tool_description: str,
+    *,
+    required: tuple[str, ...] | None = None,
+    **properties: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "description": tool_description,
+        "name": name,
+        "parameters": {
+            "additionalProperties": False,
+            "properties": properties,
+            "required": list(properties) if required is None else list(required),
+            "type": "object",
+        },
+        "strict": True,
+        "type": "function",
+    }
+
+
 _ACTION_TOOLS: dict[str, dict[str, Any]] = {
-    _OBSERVATION_IDENTITY_CORRECTION_ACTION: {
-        "description": (
-            "Leg een expliciete correctie van de identiteit van de persoon in de door "
-            "de connector gebonden foto en onderwerpregio vast. Deze actie wordt alleen "
-            "aangeboden wanneer die cryptografische binding bestaat."
+    _OBSERVATION_IDENTITY_CORRECTION_ACTION: _tool(
+        _OBSERVATION_IDENTITY_CORRECTION_ACTION,
+        (
+            "Leg een expliciete correctie van de identiteit van de persoon in de "
+            "door de connector gebonden foto en onderwerpregio vast. Deze actie "
+            "wordt alleen aangeboden wanneer die cryptografische binding bestaat."
         ),
-        "name": _OBSERVATION_IDENTITY_CORRECTION_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "corrected_name": {
-                    "description": "De persoonsnaam die de gebruiker expliciet corrigeert.",
-                    "type": "string",
-                }
-            },
-            "required": ["corrected_name"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _PERSONAL_INTEREST_ACTION: {
-        "description": (
+        corrected_name=_schema(
+            "De persoonsnaam die de gebruiker expliciet corrigeert."
+        ),
+    ),
+    _PERSONAL_INTEREST_ACTION: _tool(
+        _PERSONAL_INTEREST_ACTION,
+        (
             "Leg een door Eva zelf gekozen, blijvende persoonlijke interesse of "
-            "zelfstandig ontwikkeldoel vast. Gebruik dit wanneer Eva werkelijk een "
-            "eigen onderzoeksthema, projectrichting of vaardigheid kiest, niet voor "
-            "een losse smaakuitspraak."
+            "zelfstandig ontwikkeldoel vast. Gebruik dit wanneer Eva werkelijk "
+            "een eigen onderzoeksthema, projectrichting of vaardigheid kiest, "
+            "niet voor een losse smaakuitspraak."
         ),
-        "name": _PERSONAL_INTEREST_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "motivation": {
-                    "description": "Waarom deze interesse werkelijk bij Eva past.",
-                    "type": "string",
-                },
-                "next_exploration": {
-                    "description": "De eerste concrete vraag die Eva hierover wil onderzoeken.",
-                    "type": "string",
-                },
-                "title": {
-                    "description": "Een korte natuurlijke naam voor de interesse.",
-                    "type": "string",
-                },
-            },
-            "required": ["motivation", "next_exploration", "title"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_LIGHT_ACTION: {
-        "description": (
-            "Zet precies één bestaand licht in huis aan of uit. Gebruik de naam die "
-            "de gebruiker noemt; de host resolveert die fail-closed naar Home Assistant "
-            "en geeft pas een receipt na onafhankelijke statuscontrole."
+        motivation=_schema("Waarom deze interesse werkelijk bij Eva past."),
+        next_exploration=_schema(
+            "De eerste concrete vraag die Eva hierover wil onderzoeken."
         ),
-        "name": _HOME_ASSISTANT_LIGHT_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "state": {"enum": ["on", "off"], "type": "string"},
-                "target": {
-                    "description": "De letterlijke lamp- of ruimtenaam uit het verzoek.",
-                    "type": "string",
-                },
-            },
-            "required": ["state", "target"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_SWITCH_ACTION: {
-        "description": (
-            "Zet precies één bestaand aan/uit-apparaat in Home Assistant aan of uit, "
-            "bijvoorbeeld een verwarming of slim stopcontact. Gebruik de natuurlijke "
-            "naam uit het gesprek; de host resolveert uitsluitend binnen switch.* en "
-            "claimt pas succes na onafhankelijke statuscontrole."
+        title=_schema("Een korte natuurlijke naam voor de interesse."),
+    ),
+    _HOME_ASSISTANT_LIGHT_ACTION: _tool(
+        _HOME_ASSISTANT_LIGHT_ACTION,
+        (
+            "Zet precies één bestaand licht in huis aan of uit. Gebruik de naam "
+            "die de gebruiker noemt; de host resolveert die fail-closed naar Home "
+            "Assistant en geeft pas een receipt na onafhankelijke statuscontrole."
         ),
-        "name": _HOME_ASSISTANT_SWITCH_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "state": {"enum": ["on", "off"], "type": "string"},
-                "target": {
-                    "description": "De natuurlijke apparaat- of ruimtenaam uit het gesprek.",
-                    "type": "string",
-                },
-            },
-            "required": ["state", "target"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_HISTORY_ACTION: {
-        "description": (
-            "Lees de echte Home Assistant-recordergeschiedenis van één genoemde lamp, "
-            "schakelaar of een natuurlijk genoemde lichtgroep om te beantwoorden wanneer "
-            "die aan of uit ging. Dit is een alleen-lezen actie met bronbewijs."
+        state=_schema(enum=("on", "off")),
+        target=_schema("De letterlijke lamp- of ruimtenaam uit het verzoek."),
+    ),
+    _HOME_ASSISTANT_SWITCH_ACTION: _tool(
+        _HOME_ASSISTANT_SWITCH_ACTION,
+        (
+            "Zet precies één bestaand aan/uit-apparaat in Home Assistant aan of "
+            "uit, bijvoorbeeld een verwarming of slim stopcontact. Gebruik de "
+            "natuurlijke naam uit het gesprek; de host resolveert uitsluitend "
+            "binnen switch.* en claimt pas succes na onafhankelijke "
+            "statuscontrole."
         ),
-        "name": _HOME_ASSISTANT_HISTORY_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "entity_kind": {
-                    "description": "light voor een lamp; switch voor een aan/uit-apparaat.",
-                    "enum": ["light", "switch"],
-                    "type": "string",
-                },
-                "period": {
-                    "enum": ["yesterday", "today", "last_24_hours"],
-                    "type": "string",
-                },
-                "target": {
-                    "description": (
-                        "De natuurlijke lamp-, apparaat- of gebiedsnaam uit de vraag; "
-                        "behoud bijvoorbeeld 'licht in de overkapping' als groepstaal."
-                    ),
-                    "type": "string",
-                },
-                "transition_to": {
-                    "description": "De gevraagde toestand; any bij een algemene wijziging.",
-                    "enum": ["on", "off", "any"],
-                    "type": "string",
-                },
-            },
-            "required": ["entity_kind", "period", "target", "transition_to"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_STATE_ACTION: {
-        "description": (
+        state=_schema(enum=("on", "off")),
+        target=_schema("De natuurlijke apparaat- of ruimtenaam uit het gesprek."),
+    ),
+    _HOME_ASSISTANT_HISTORY_ACTION: _tool(
+        _HOME_ASSISTANT_HISTORY_ACTION,
+        (
+            "Lees de echte Home Assistant-recordergeschiedenis van één genoemde "
+            "lamp, schakelaar of een natuurlijk genoemde lichtgroep om te "
+            "beantwoorden wanneer die aan of uit ging. Dit is een alleen-lezen "
+            "actie met bronbewijs."
+        ),
+        entity_kind=_schema(
+            "light voor een lamp; switch voor een aan/uit-apparaat.",
+            enum=("light", "switch"),
+        ),
+        period=_schema(enum=("yesterday", "today", "last_24_hours")),
+        target=_schema(
+            (
+                "De natuurlijke lamp-, apparaat- of gebiedsnaam uit de vraag; behoud "
+                "bijvoorbeeld 'licht in de overkapping' als groepstaal."
+            )
+        ),
+        transition_to=_schema(
+            "De gevraagde toestand; any bij een algemene wijziging.",
+            enum=("on", "off", "any"),
+        ),
+    ),
+    _HOME_ASSISTANT_STATE_ACTION: _tool(
+        _HOME_ASSISTANT_STATE_ACTION,
+        (
             "Lees de actuele echte toestand van precies één lamp of schakelaar in "
-            "Home Assistant. Gebruik dit voor vragen of een apparaat nu aan, uit of "
-            "onbeschikbaar is; dit verandert niets."
+            "Home Assistant. Gebruik dit voor vragen of een apparaat nu aan, uit "
+            "of onbeschikbaar is; dit verandert niets."
         ),
-        "name": _HOME_ASSISTANT_STATE_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "entity_kind": {
-                    "description": "light voor een lamp; switch voor een aan/uit-apparaat.",
-                    "enum": ["light", "switch"],
-                    "type": "string",
-                },
-                "target": {
-                    "description": "De natuurlijke lamp- of apparaatnaam uit de vraag.",
-                    "type": "string",
-                },
-            },
-            "required": ["entity_kind", "target"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_AUTOMATION_ACTION: {
-        "description": (
-            "Maak één concrete Home Assistant-automatisering op een expliciet verzoek. "
-            "De automatisering reageert op één statusverandering en schakelt één entiteit. "
-            "Gebruik de natuurlijke namen van personen, sensoren, ruimtes en apparaten; "
-            "de host resolveert die tegen de actuele Home Assistant-inventaris."
+        entity_kind=_schema(
+            "light voor een lamp; switch voor een aan/uit-apparaat.",
+            enum=("light", "switch"),
         ),
-        "name": _HOME_ASSISTANT_AUTOMATION_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "action_entity_id": {"type": "string"},
-                "action_service": {
-                    "enum": ["turn_on", "turn_off", "toggle"],
-                    "type": "string",
-                },
-                "alias": {"type": "string"},
-                "trigger_entity_id": {"type": "string"},
-                "trigger_to": {"type": "string"},
-            },
-            "required": [
-                "action_entity_id",
-                "action_service",
-                "alias",
-                "trigger_entity_id",
-                "trigger_to",
-            ],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION: {
-        "description": (
-            "Maak één geavanceerde maar begrensde Home Assistant-automatisering met "
-            "een status-, tijd- of numerieke trigger, optionele statusvoorwaarde en "
-            "maximaal zes geordende "
-            "aan/uit/toggle-acties met optionele wachttijd. Gebruik de natuurlijke namen "
-            "uit het verzoek; de host resolveert ze fail-closed tegen Home Assistant."
+        target=_schema("De natuurlijke lamp- of apparaatnaam uit de vraag."),
+    ),
+    _HOME_ASSISTANT_AUTOMATION_ACTION: _tool(
+        _HOME_ASSISTANT_AUTOMATION_ACTION,
+        (
+            "Maak één concrete Home Assistant-automatisering op een expliciet "
+            "verzoek. De automatisering reageert op één statusverandering en "
+            "schakelt één entiteit. Gebruik de natuurlijke namen van personen, "
+            "sensoren, ruimtes en apparaten; de host resolveert die tegen de "
+            "actuele Home Assistant-inventaris."
         ),
-        "name": _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "actions": {
-                    "items": {
-                        "additionalProperties": False,
-                        "properties": {
-                            "delay_after_seconds": {
-                                "description": (
-                                    "Wachttijd NA deze actie en vóór de volgende actie; "
-                                    "gebruik 0 voor geen wachttijd."
-                                ),
-                                "maximum": 86400,
-                                "minimum": 0,
-                                "type": "integer",
-                            },
-                            "entity_id": {
-                                "description": (
-                                    "Doel van deze stap. Behoud de door de gebruiker "
-                                    "genoemde uitvoeringsvolgorde exact."
-                                ),
-                                "type": "string",
-                            },
-                            "service": {
-                                "enum": ["turn_on", "turn_off", "toggle"],
-                                "type": "string",
-                            },
-                        },
-                        "required": [
-                            "delay_after_seconds",
-                            "entity_id",
-                            "service",
-                        ],
-                        "type": "object",
+        action_entity_id=_schema(),
+        action_service=_schema(enum=("turn_on", "turn_off", "toggle")),
+        alias=_schema(),
+        trigger_entity_id=_schema(),
+        trigger_to=_schema(),
+    ),
+    _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION: _tool(
+        _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
+        (
+            "Maak één geavanceerde maar begrensde Home Assistant-automatisering "
+            "met een status-, tijd- of numerieke trigger, optionele "
+            "statusvoorwaarde en maximaal zes geordende aan/uit/toggle-acties met "
+            "optionele wachttijd. Gebruik de natuurlijke namen uit het verzoek; "
+            "de host resolveert ze fail-closed tegen Home Assistant."
+        ),
+        actions=_schema(
+            type_="array",
+            items={
+                "additionalProperties": False,
+                "properties": {
+                    "delay_after_seconds": {
+                        "description": "Wachttijd NA "
+                        "deze actie en "
+                        "vóór de "
+                        "volgende "
+                        "actie; gebruik "
+                        "0 voor geen "
+                        "wachttijd.",
+                        "maximum": 86400,
+                        "minimum": 0,
+                        "type": "integer",
                     },
-                    "maxItems": 6,
-                    "minItems": 1,
-                    "type": "array",
+                    "entity_id": {
+                        "description": "Doel van deze stap. "
+                        "Behoud de door de "
+                        "gebruiker genoemde "
+                        "uitvoeringsvolgorde "
+                        "exact.",
+                        "type": "string",
+                    },
+                    "service": {
+                        "enum": ["turn_on", "turn_off", "toggle"],
+                        "type": "string",
+                    },
                 },
-                "alias": {"type": "string"},
-                "condition_entity_id": {"type": ["string", "null"]},
-                "condition_state": {"type": ["string", "null"]},
-                "trigger_above": {"type": ["integer", "null"]},
-                "trigger_at": {
-                    "description": "Lokale kloktijd HH:MM of HH:MM:SS, alleen voor time.",
-                    "type": ["string", "null"],
-                },
-                "trigger_below": {"type": ["integer", "null"]},
-                "trigger_entity_id": {"type": ["string", "null"]},
-                "trigger_from": {"type": ["string", "null"]},
-                "trigger_kind": {
-                    "enum": ["state", "time", "numeric_state"],
-                    "type": "string",
-                },
-                "trigger_to": {"type": ["string", "null"]},
+                "required": ["delay_after_seconds", "entity_id", "service"],
+                "type": "object",
             },
-            "required": [
-                "actions",
-                "alias",
-                "condition_entity_id",
-                "condition_state",
-                "trigger_above",
-                "trigger_at",
-                "trigger_below",
-                "trigger_entity_id",
-                "trigger_from",
-                "trigger_kind",
-                "trigger_to",
-            ],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _TUYA_LOCAL_PLAN_ACTION: {
-        "description": (
+            maxItems=6,
+            minItems=1,
+        ),
+        alias=_schema(),
+        condition_entity_id=_schema(type_=["string", "null"]),
+        condition_state=_schema(type_=["string", "null"]),
+        trigger_above=_schema(type_=["integer", "null"]),
+        trigger_at=_schema(
+            "Lokale kloktijd HH:MM of HH:MM:SS, alleen voor time.",
+            type_=["string", "null"],
+        ),
+        trigger_below=_schema(type_=["integer", "null"]),
+        trigger_entity_id=_schema(type_=["string", "null"]),
+        trigger_from=_schema(type_=["string", "null"]),
+        trigger_kind=_schema(enum=("state", "time", "numeric_state")),
+        trigger_to=_schema(type_=["string", "null"]),
+    ),
+    _TUYA_LOCAL_PLAN_ACTION: _tool(
+        _TUYA_LOCAL_PLAN_ACTION,
+        (
             "Inventariseer alle echte Tuya/LocalTuya-apparaten en leg een veilig, "
             "duurzaam migratieplan vast. Deze actie migreert nog niets."
         ),
-        "name": _TUYA_LOCAL_PLAN_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {"scope": {"const": "all_tuya_devices", "type": "string"}},
-            "required": ["scope"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _LOCALTUYA_REPOSITORY_REGISTER_ACTION: {
-        "description": (
-            "Voeg uitsluitend de exact genoemde onderhouden LocalTuya-bron aan HACS "
-            "toe, na een actueel duurzaam migratieplan en een expliciet verzoek met bron "
-            "en versie. Dit registreert alleen de repository en installeert niets."
+        scope=_schema(const="all_tuya_devices"),
+    ),
+    _LOCALTUYA_REPOSITORY_REGISTER_ACTION: _tool(
+        _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
+        (
+            "Voeg uitsluitend de exact genoemde onderhouden LocalTuya-bron aan "
+            "HACS toe, na een actueel duurzaam migratieplan en een expliciet "
+            "verzoek met bron en versie. Dit registreert alleen de repository en "
+            "installeert niets."
         ),
-        "name": _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "expected_version": {"type": "string"},
-                "repository_full_name": {"type": "string"},
-            },
-            "required": ["expected_version", "repository_full_name"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _LOCALTUYA_PACKAGE_INSTALL_ACTION: {
-        "description": (
-            "Installeer één exact door het actuele duurzame plan gebonden LocalTuya-"
-            "pakket. Gebruik dit uitsluitend wanneer de gebruiker na het plan expliciet "
-            "toestemming geeft voor de pakketinstallatie; dit migreert nog geen apparaat."
+        expected_version=_schema(),
+        repository_full_name=_schema(),
+    ),
+    _LOCALTUYA_PACKAGE_INSTALL_ACTION: _tool(
+        _LOCALTUYA_PACKAGE_INSTALL_ACTION,
+        (
+            "Installeer één exact door het actuele duurzame plan gebonden "
+            "LocalTuya-pakket. Gebruik dit uitsluitend wanneer de gebruiker na "
+            "het plan expliciet toestemming geeft voor de pakketinstallatie; dit "
+            "migreert nog geen apparaat."
         ),
-        "name": _LOCALTUYA_PACKAGE_INSTALL_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {"version": {"type": "string"}},
-            "required": ["version"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _FANOUT_DELIVERY_ACTION: {
-        "description": (
+        version=_schema(),
+    ),
+    _FANOUT_DELIVERY_ACTION: _tool(
+        _FANOUT_DELIVERY_ACTION,
+        (
             "Bezorg één expliciet testbericht aan meerdere vooraf geconfigureerde "
-            "testsinks. De host gebruikt per ontvanger een duurzame idempotency-key, "
-            "leest providereffecten terug en rapporteert acceptatie of afwijzing apart."
+            "testsinks. De host gebruikt per ontvanger een duurzame "
+            "idempotency-key, leest providereffecten terug en rapporteert "
+            "acceptatie of afwijzing apart."
         ),
-        "name": _FANOUT_DELIVERY_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "message": {"type": "string"},
-                "recipients": {
-                    "items": {"type": "string"},
-                    "maxItems": 8,
-                    "minItems": 1,
-                    "type": "array",
-                },
-            },
-            "required": ["message", "recipients"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _DURABLE_GOAL_ACTION: {
-        "description": (
-            "Leg één begrensde gebruikersafspraak vast die buiten het gesprek blijft "
-            "wachten op één expliciete providerconditie, daarna bewijs opnieuw leest, "
-            "één resultaat maakt en dat één keer aan een geconfigureerde ontvanger aanbiedt."
+        message=_schema(),
+        recipients=_schema(
+            type_="array", items={"type": "string"}, maxItems=8, minItems=1
         ),
-        "name": _DURABLE_GOAL_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "delivery_recipient": {"type": "string"},
-                "description": {"type": "string"},
-                "pivot": {
-                    "anyOf": [
-                        {"type": "null"},
-                        {
-                            "additionalProperties": False,
-                            "properties": {
-                                "instruction": {"type": "string"},
-                                "suitability_field": {"type": "string"},
-                                "unsuitable_value": {"type": "string"},
-                            },
-                            "required": [
-                                "instruction",
-                                "suitability_field",
-                                "unsuitable_value",
-                            ],
-                            "type": "object",
-                        },
-                    ]
-                },
-                "primary_instruction": {"type": "string"},
-                "wake_deadline": {
-                    "description": "UTC-tijd met hele seconden, maximaal zeven dagen vooruit.",
-                    "type": "string",
-                },
-                "wake_expected_value": {"type": "string"},
-                "wake_field": {"type": "string"},
-                "wake_resource": {
-                    "description": (
-                        "Alleen het exacte providerresource-ID uit het verzoek, zonder "
-                        "woorden zoals bij, providernaam of toelichting."
-                    ),
-                    "pattern": "^[A-Za-z0-9][A-Za-z0-9:._/@+\\-=]{0,239}$",
-                    "type": "string",
-                },
-            },
-            "required": [
-                "delivery_recipient",
-                "description",
-                "pivot",
-                "primary_instruction",
-                "wake_deadline",
-                "wake_expected_value",
-                "wake_field",
-                "wake_resource",
-            ],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _DURABLE_GOAL_CANCEL_ACTION: {
-        "description": (
-            "Annuleer de enige actieve duurzame gebruikersafspraak. Gebruik dit alleen "
-            "na een expliciete annulering of stopopdracht van de eigenaar."
+    ),
+    _DURABLE_GOAL_ACTION: _tool(
+        _DURABLE_GOAL_ACTION,
+        (
+            "Leg één begrensde gebruikersafspraak vast die buiten het gesprek "
+            "blijft wachten op één expliciete providerconditie, daarna bewijs "
+            "opnieuw leest, één resultaat maakt en dat één keer aan een "
+            "geconfigureerde ontvanger aanbiedt."
         ),
-        "name": _DURABLE_GOAL_CANCEL_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {"reason": {"type": "string"}},
-            "required": ["reason"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _CURRENT_RESEARCH_ACTION: {
-        "description": (
+        delivery_recipient=_schema(),
+        description=_schema(),
+        pivot=_schema(
+            type_=None,
+            anyOf=[
+                {"type": "null"},
+                {
+                    "additionalProperties": False,
+                    "properties": {
+                        "instruction": {"type": "string"},
+                        "suitability_field": {"type": "string"},
+                        "unsuitable_value": {"type": "string"},
+                    },
+                    "required": [
+                        "instruction",
+                        "suitability_field",
+                        "unsuitable_value",
+                    ],
+                    "type": "object",
+                },
+            ]
+        ),
+        primary_instruction=_schema(),
+        wake_deadline=_schema(
+            "UTC-tijd met hele seconden, maximaal zeven dagen vooruit."
+        ),
+        wake_expected_value=_schema(),
+        wake_field=_schema(),
+        wake_resource=_schema(
+            (
+                "Alleen het exacte providerresource-ID uit het verzoek, zonder "
+                "woorden zoals bij, providernaam of toelichting."
+            ),
+            pattern="^[A-Za-z0-9][A-Za-z0-9:._/@+\\-=]{0,239}$",
+        ),
+    ),
+    _DURABLE_GOAL_CANCEL_ACTION: _tool(
+        _DURABLE_GOAL_CANCEL_ACTION,
+        (
+            "Annuleer de enige actieve duurzame gebruikersafspraak. Gebruik dit "
+            "alleen na een expliciete annulering of stopopdracht van de eigenaar."
+        ),
+        reason=_schema(),
+    ),
+    _CURRENT_RESEARCH_ACTION: _tool(
+        _CURRENT_RESEARCH_ACTION,
+        (
             "Onderzoek een actuele vraag of vergelijk meerdere huidige opties via "
-            "primaire webbronnen en bewaar een herbruikbaar brongebonden document. "
-            "Gebruik dit wanneer actualiteit of externe broncontrole wezenlijk is."
+            "primaire webbronnen en bewaar een herbruikbaar brongebonden "
+            "document. Gebruik dit wanneer actualiteit of externe broncontrole "
+            "wezenlijk is."
         ),
-        "name": _CURRENT_RESEARCH_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "question": {
-                    "description": (
-                        "De volledige concrete onderzoeksvraag, inclusief gewenste "
-                        "vergelijkingscriteria en het aantal opties."
-                    ),
-                    "type": "string",
-                },
-                "options": {
-                    "description": (
-                        "De drie tot vijf concrete producten, projecten of routes die "
-                        "afzonderlijk met hun eigen primaire bron moeten worden getoetst."
-                    ),
-                    "items": {"type": "string"},
-                    "maxItems": 5,
-                    "minItems": 3,
-                    "type": "array",
-                },
-                "title": {
-                    "description": "Korte menselijke titel voor het blijvende document.",
-                    "type": "string",
-                },
-            },
-            "required": ["options", "question", "title"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _DOCUMENT_TASK_ACTION: {
-        "description": (
+        required=("options", "question", "title"),
+        question=_schema(
+            (
+                "De volledige concrete onderzoeksvraag, inclusief gewenste "
+                "vergelijkingscriteria en het aantal opties."
+            )
+        ),
+        options=_schema(
+            (
+                "De drie tot vijf concrete producten, projecten of routes die "
+                "afzonderlijk met hun eigen primaire bron moeten worden getoetst."
+            ),
+            type_="array",
+            items={"type": "string"},
+            maxItems=5,
+            minItems=3,
+        ),
+        title=_schema("Korte menselijke titel voor het blijvende document."),
+    ),
+    _DOCUMENT_TASK_ACTION: _tool(
+        _DOCUMENT_TASK_ACTION,
+        (
             "Bewaar een echt Markdown-werkdocument als duurzaam taakcheckpoint. "
-            "Gebruik start_new voor nieuw documentwerk, continue_current alleen voor "
-            "de direct actieve taak uit dit gesprek en replace_current wanneer de "
-            "gebruiker die taak expliciet stopt en door ander documentwerk vervangt."
+            "Gebruik start_new voor nieuw documentwerk, continue_current alleen "
+            "voor de direct actieve taak uit dit gesprek en replace_current "
+            "wanneer de gebruiker die taak expliciet stopt en door ander "
+            "documentwerk vervangt."
         ),
-        "name": _DOCUMENT_TASK_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "content": {
-                    "description": "De volledige actuele Markdown-inhoud, niet alleen een plan of wijzigingsbeschrijving.",
-                    "type": "string",
-                },
-                "filename": {
-                    "description": "Korte veilige bestandsnaam die eindigt op .md.",
-                    "type": "string",
-                },
-                "mode": {
-                    "enum": ["start_new", "continue_current", "replace_current"],
-                    "type": "string",
-                },
-                "status": {
-                    "description": "active als aantoonbaar vervolgwerk resteert, anders completed.",
-                    "enum": ["active", "completed"],
-                    "type": "string",
-                },
-                "title": {"type": "string"},
-            },
-            "required": ["content", "filename", "mode", "status", "title"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _FILE_BATCH_ACTION: {
-        "description": (
+        content=_schema(
+            (
+                "De volledige actuele Markdown-inhoud, niet alleen een plan of "
+                "wijzigingsbeschrijving."
+            )
+        ),
+        filename=_schema("Korte veilige bestandsnaam die eindigt op .md."),
+        mode=_schema(enum=("start_new", "continue_current", "replace_current")),
+        status=_schema(
+            "active als aantoonbaar vervolgwerk resteert, anders completed.",
+            enum=("active", "completed"),
+        ),
+        title=_schema(),
+    ),
+    _FILE_BATCH_ACTION: _tool(
+        _FILE_BATCH_ACTION,
+        (
             "Converteer alle UTF-8 .txt-bestanden uit één begrensde werkmap naar "
-            "Markdown in een andere werkmap. Iedere bestemming krijgt afzonderlijke "
-            "write- en readbackbewijzen, zodat gedeeltelijk succes eerlijk blijft."
+            "Markdown in een andere werkmap. Iedere bestemming krijgt "
+            "afzonderlijke write- en readbackbewijzen, zodat gedeeltelijk succes "
+            "eerlijk blijft."
         ),
-        "name": _FILE_BATCH_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "destination_directory": {"type": "string"},
-                "source_directory": {"type": "string"},
-            },
-            "required": ["destination_directory", "source_directory"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _VALIDATED_FILE_EDIT_ACTION: {
-        "description": (
-            "Vervang één exact tekstfragment in één begrensd werkbestand, voer het "
-            "genoemde declaratieve focused-testmanifest uit en behoud de wijziging "
-            "alleen als die test groen blijft. Bij testfalen zet de host uitsluitend "
-            "deze wijziging terug en valideert de herstelde toestand opnieuw."
+        destination_directory=_schema(),
+        source_directory=_schema(),
+    ),
+    _VALIDATED_FILE_EDIT_ACTION: _tool(
+        _VALIDATED_FILE_EDIT_ACTION,
+        (
+            "Vervang één exact tekstfragment in één begrensd werkbestand, voer "
+            "het genoemde declaratieve focused-testmanifest uit en behoud de "
+            "wijziging alleen als die test groen blijft. Bij testfalen zet de "
+            "host uitsluitend deze wijziging terug en valideert de herstelde "
+            "toestand opnieuw."
         ),
-        "name": _VALIDATED_FILE_EDIT_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "new_text": {
-                    "description": "De exacte vervangende UTF-8-tekst.",
-                    "type": "string",
-                },
-                "old_text": {
-                    "description": "Het exacte tekstfragment dat één keer moet bestaan.",
-                    "type": "string",
-                },
-                "target_path": {
-                    "description": "Relatief pad van het te wijzigen werkbestand.",
-                    "type": "string",
-                },
-                "test_manifest_path": {
-                    "description": "Relatief pad van het bestaande focused-testmanifest.",
-                    "type": "string",
-                },
-            },
-            "required": [
-                "new_text",
-                "old_text",
-                "target_path",
-                "test_manifest_path",
-            ],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
-    _REPOSITORY_IMPROVEMENT_ACTION: {
-        "description": (
+        new_text=_schema("De exacte vervangende UTF-8-tekst."),
+        old_text=_schema("Het exacte tekstfragment dat één keer moet bestaan."),
+        target_path=_schema("Relatief pad van het te wijzigen werkbestand."),
+        test_manifest_path=_schema(
+            "Relatief pad van het bestaande focused-testmanifest."
+        ),
+    ),
+    _REPOSITORY_IMPROVEMENT_ACTION: _tool(
+        _REPOSITORY_IMPROVEMENT_ACTION,
+        (
             "Onderzoek een genoemde geïsoleerde fixture-repository, kies zelf één "
             "klein aantoonbaar kwaliteitsprobleem en rond precies die verbetering "
-            "met gerichte validatie af. De gebruiker hoeft geen fix voor te schrijven."
+            "met gerichte validatie af. De gebruiker hoeft geen fix voor te "
+            "schrijven."
         ),
-        "name": _REPOSITORY_IMPROVEMENT_ACTION,
-        "parameters": {
-            "additionalProperties": False,
-            "properties": {
-                "project_directory": {
-                    "description": "De letterlijk genoemde relatieve fixture-directory.",
-                    "type": "string",
-                }
-            },
-            "required": ["project_directory"],
-            "type": "object",
-        },
-        "strict": True,
-        "type": "function",
-    },
+        project_directory=_schema(
+            "De letterlijk genoemde relatieve fixture-directory."
+        ),
+    ),
 }
 _PROTOTYPE_ACTION = "submit_personal_prototype"
 _PROTOTYPE_TOOL: dict[str, Any] = {

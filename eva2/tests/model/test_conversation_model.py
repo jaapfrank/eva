@@ -67,6 +67,12 @@ def local_model_lease_contract(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
+def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
+    assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
+        "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b"
+    )
+
+
 def test_bound_photo_correction_uses_closed_action_without_face_inference(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
