@@ -48,9 +48,10 @@ installatie zijn nog niet klaar.
   als de ruwe vraag en Eva's antwoord uit PostgreSQL verwijderen. Een
   verkeerde persoon wordt geweigerd. Na een nagebootste crash hervatte dezelfde
   opdracht zonder tekst terug te brengen of zichzelf vals als klaar te melden.
-- Op de afgeschermde eigenaarspagina staat nu bij ieder nieuw antwoord
-  `Vergeet deze beurt`. De browser kiest geen persoon, installatie of gesprek;
-  Eva leidt die vaste binding zelf af en meldt pas succes na de wisopdracht.
+- In de nieuwe kandidaat van de afgeschermde eigenaarspagina staat bij ieder
+  antwoord `Vergeet deze beurt`. De browser kiest geen persoon, installatie of
+  gesprek; Eva leidt die vaste binding zelf af en meldt pas succes na de
+  wisopdracht. Deze kandidaat is nog niet op de live `/eva2`-route gezet.
 - Eva2 kan Home Assistant echt lezen. Op de vraag naar de spotjes overkapping
   antwoordde ze terecht dat die uit stonden.
 - Bij een vage huisnaam vraagt Eva nu gewoon welke lamp je bedoelt. Ze gokt
