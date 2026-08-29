@@ -1,0 +1,48 @@
+{
+  "contract": "EvaOwnerConversationErasureControlProof/v1",
+  "issued_at": "2026-08-29T07:58:00+02:00",
+  "non_claims": [
+    "geen live Eva1-, Eva2-, Hindsight- of gebruikersgegevens gewist",
+    "de knop wist alleen een eerder door de eigenaarspagina uitgegeven dashboardbeurt",
+    "een net opgeslagen Hindsight-document kan kort nog niet verwijderbaar zijn; de pagina meldt dan geen vals succes",
+    "caches, afgeleide samenvattingen, procedurekandidaten en oude back-ups vallen nog niet onder deze knop"
+  ],
+  "proof": {
+    "browser_cannot_choose_principal": true,
+    "browser_cannot_choose_tenant_installation_or_conversation": true,
+    "dashboard_message_uuid_required": true,
+    "owner_authentication_required": true,
+    "raw_message_id_not_returned_by_erasure_receipt": true,
+    "server_derives_semantic_document_id": true,
+    "ui_clears_displayed_exchange_after_confirmed_erasure": true
+  },
+  "source_commit": "892a670057e5af4af791ebf12a173129261c0f9b",
+  "source_files": [
+    {
+      "path": "src/eva/adapters/api/app.py",
+      "sha256": "7065a763ba1f1a5631833d145d0b4cfebbdb3925d7b29c65521642619c30681d"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_conversation.py",
+      "sha256": "0e560512666f2e2f90e000f729565f7723b045440721f775a480c80093c2cba1"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "1ca3b9f5ef0724002f5fdece7252d7c1abd9d48fd747d95c992a6fea93f56ee9"
+    },
+    {
+      "path": "tests/api/test_dashboard_status.py",
+      "sha256": "970778f312ca2d66fea5f9a0aae457e0898a3cdaabb92b3707eb94da8f873dbd"
+    },
+    {
+      "path": "tests/bootstrap/test_runtime_settings.py",
+      "sha256": "cda5bb82c1a070f8b5ee148146be3e24bdb7a33826a648e1e5a7920dba3a544d"
+    }
+  ],
+  "status": "passed",
+  "tests": {
+    "api_runtime_and_worker_passed": 66,
+    "release_input_passed": 26,
+    "total_passed": 92
+  }
+}

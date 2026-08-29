@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 07:48 CEST
+Laatst bijgewerkt: 29 augustus 2026, 07:58 CEST
 
 ## Heel kort
 
@@ -48,6 +48,9 @@ installatie zijn nog niet klaar.
   als de ruwe vraag en Eva's antwoord uit PostgreSQL verwijderen. Een
   verkeerde persoon wordt geweigerd. Na een nagebootste crash hervatte dezelfde
   opdracht zonder tekst terug te brengen of zichzelf vals als klaar te melden.
+- Op de afgeschermde eigenaarspagina staat nu bij ieder nieuw antwoord
+  `Vergeet deze beurt`. De browser kiest geen persoon, installatie of gesprek;
+  Eva leidt die vaste binding zelf af en meldt pas succes na de wisopdracht.
 - Eva2 kan Home Assistant echt lezen. Op de vraag naar de spotjes overkapping
   antwoordde ze terecht dat die uit stonden.
 - Bij een vage huisnaam vraagt Eva nu gewoon welke lamp je bedoelt. Ze gokt
@@ -278,9 +281,9 @@ installatie zijn nog niet klaar.
   begrenst gespreksgeheugen per persoon, groep, project en hele installatie op
   regels, bytes en bewaartijd. Eén opdracht kan een exact Hindsight-document
   én de bijbehorende ruwe vraag en het antwoord herstartveilig verwijderen.
-  Een eigenaar-chatopdracht, caches, samenvattingen, procedurekandidaten en
-  oude back-ups ontbreken nog. Ook fysieke database-/vectorindexquota en echte
-  geldbedragen blijven open.
+  De eigenaarspagina heeft nu een knop voor één dashboardbeurt. Caches,
+  samenvattingen, procedurekandidaten en oude back-ups ontbreken nog. Ook
+  fysieke database-/vectorindexquota en echte geldbedragen blijven open.
 - Model, Telegram, Home Assistant en AgentMail hebben nu gebruikersbediening
   in de wizard, inclusief toegang vervangen, loskoppelen en een onderbroken
   wijziging herstellen. Eva's minimale gebruiksrechten zijn zichtbaar en aan
@@ -301,8 +304,8 @@ installatie zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De bewezen gezamenlijke Hindsight-/gespreksverwijdering aansluiten op één
-   eigenaar-chatopdracht en daarna caches en oude back-ups afschermen.
+1. De volledige `Vergeet dit`-keten uitbreiden naar caches, samenvattingen,
+   procedurekandidaten en daarna oude back-ups afschermen.
 2. Na een echte, buiten Codex gestarte Windows-reboot het al klaargezette
    bewijs laten controleren voor Eva1, `/eva2`, beide databases, geheugen,
    dashboard en terugval.
@@ -369,6 +372,7 @@ installatie zijn nog niet klaar.
 - [Dagelijkse Hindsight-reflectielimieten blijven hard bij race, herstart en daggrens](evidence/living-core/eva2-daily-reflection-budget-postgres-2026-08-29.json)
 - [Geheugenquota per persoon, groep, project en installatie blijven hard bij race, herstart en verwijdercrash](evidence/living-core/eva2-memory-storage-budget-postgres-2026-08-29.json)
 - [Eén herstartveilige wisopdracht voor Hindsight én ruwe gesprekstekst](evidence/living-core/eva2-cross-store-conversation-erasure-postgres-2026-08-29.json)
+- [Eigenaar-geauthenticeerde knop om één dashboardbeurt te wissen](evidence/living-core/eva2-owner-conversation-erasure-control-2026-08-29.json)
 - [Huidige Hindsight-omvang gemeten zonder teksten of namen te lezen](evidence/living-core/eva2-current-hindsight-storage-measurement-2026-08-29.json)
 - [Ook verkenning, proefbouw en releasevoorstel gebruiken dezelfde persoonsgrens](evidence/living-core/eva2-personal-memory-write-boundary-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
