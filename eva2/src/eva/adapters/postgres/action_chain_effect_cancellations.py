@@ -19,11 +19,10 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     attention_items,
     plan_steps,
 )
@@ -35,7 +34,6 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
@@ -69,22 +67,9 @@ class ActionChainEffectOwner:
     binding_verified_at: datetime
 
 
-class PostgresActionChainEffectCanceller(PostgresScopedRole):
+class PostgresActionChainEffectCanceller(PostgresActionChainStore):
+    _postgres_error = "action-chain effect cancellation requires PostgreSQL"
     """Cancel a prepared or authorized-but-not-started effect under dispatch locks."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain effect cancellation requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def cancel_pre_dispatch(
         self,

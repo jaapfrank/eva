@@ -11,10 +11,9 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     StoredActionChain,
     StoredActionChainStep,
     attention_items,
@@ -25,7 +24,6 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     action_chain_step_operation_id,
     action_chain_thread_id,
@@ -69,22 +67,9 @@ class ActionChainClaim:
         )
 
 
-class PostgresActionChainLeases(PostgresScopedRole):
+class PostgresActionChainLeases(PostgresActionChainStore):
+    _postgres_error = "action-chain leases require PostgreSQL"
     """Lease one ready step atomically without creating an intent or effect."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain leases require PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def claim_next(
         self,

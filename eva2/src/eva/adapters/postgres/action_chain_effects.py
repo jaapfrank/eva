@@ -11,7 +11,6 @@ from uuid import UUID, uuid5
 
 from pydantic import ValidationError
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_leases import (
     ActionChainClaim,
@@ -19,7 +18,7 @@ from eva.adapters.postgres.action_chain_leases import (
     write_action_chain_attention,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     StoredActionChain,
     capability_activations,
     capability_manifests,
@@ -29,12 +28,10 @@ from eva.adapters.postgres.action_chain_ledger import (
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
     operational_checkpoints,
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -76,22 +73,9 @@ class PreparedActionChainEffect:
     intent: EffectIntent
 
 
-class PostgresActionChainEffectPreparer(PostgresScopedRole):
+class PostgresActionChainEffectPreparer(PostgresActionChainStore):
+    _postgres_error = "action-chain effect preparation requires PostgreSQL"
     """Consume one exact chain lease into one immutable, undispatched effect."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain effect preparation requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def prepare_effect(
         self,

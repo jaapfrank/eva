@@ -18,7 +18,6 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effect_cancellations import (
     ActionChainEffectOwner,
@@ -26,7 +25,7 @@ from eva.adapters.postgres.action_chain_effect_cancellations import (
 )
 from eva.adapters.postgres.action_chain_effects import ActionChainEffectConflict
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     StoredActionChain,
     plan_steps,
 )
@@ -37,7 +36,6 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     operational_events,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_step_operation_id
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
@@ -64,22 +62,9 @@ class RequestedActionChainEffectStop:
     thread_id: str
 
 
-class PostgresActionChainEffectStopRequester(PostgresScopedRole):
+class PostgresActionChainEffectStopRequester(PostgresActionChainStore):
+    _postgres_error = "action-chain effect stop requests require PostgreSQL"
     """Append one owner-bound stop request only after provider call-start."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain effect stop requests require PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def request_stop(
         self,

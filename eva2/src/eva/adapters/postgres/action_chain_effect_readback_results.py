@@ -8,22 +8,19 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
     accepted_effect,
     effect_readback_thread_id,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     plan_steps,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
     operational_events,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector_rpc import ConnectorInvokeSuccess
 from eva.contracts.evidence import EvidenceEnvelopeV2
@@ -58,22 +55,9 @@ class StoredActionChainEffectReadback:
     readback: EffectReadback
 
 
-class PostgresActionChainEffectReadbackResultStore(PostgresScopedRole):
+class PostgresActionChainEffectReadbackResultStore(PostgresActionChainStore):
+    _postgres_error = "effect readback result storage requires PostgreSQL"
     """Materialize immutable EffectReadback/v1 without another provider call."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("effect readback result storage requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def record(self, read_intent_id: UUID) -> StoredActionChainEffectReadback:
         """Project only retained bytes and insert exactly one immutable proof."""

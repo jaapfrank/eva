@@ -6,15 +6,12 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     StoredActionChain,
 )
 from eva.adapters.postgres.catalog import metadata
-from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.timestamps import parse_utc_timestamp
@@ -23,27 +20,12 @@ from eva.contracts.timestamps import parse_utc_timestamp
 evidence_envelopes = metadata.tables["eva_evidence.evidence_envelopes"]
 
 
-class PostgresActionChainResultStore(PostgresScopedRole):
+class PostgresActionChainResultStore(PostgresActionChainStore):
     """Own the storage invariants shared by provider read/effect results."""
 
     _result_kind: Literal["read", "effect"]
+    _postgres_error = "action-chain {result_kind} results require PostgreSQL"
     _conflict_type: type[Exception]
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError(
-                f"action-chain {self._result_kind} results require PostgreSQL"
-            )
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def _insert_evidence(
         self,

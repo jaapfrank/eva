@@ -11,24 +11,21 @@ from uuid import UUID, uuid5
 
 from pydantic import ValidationError
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_leases import (
     _locked_attention,
     write_action_chain_attention,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     plan_steps,
     read_intents,
 )
 from eva.adapters.postgres.action_chain_reads import ActionChainReadConflict
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
     operational_events,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import action_chain_thread_id
 from eva.contracts.execution import ReadAttempt, ReadObservation
 
@@ -45,22 +42,9 @@ class AdvancedActionChainRead:
     outcome_ref: str
 
 
-class PostgresActionChainReadAdvancer(PostgresScopedRole):
+class PostgresActionChainReadAdvancer(PostgresActionChainStore):
+    _postgres_error = "action-chain read advances require PostgreSQL"
     """Release dependencies only after one reload-valid observed read."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain read advances require PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def advance(
         self,

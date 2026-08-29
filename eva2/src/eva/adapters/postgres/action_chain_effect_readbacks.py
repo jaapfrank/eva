@@ -10,7 +10,6 @@ from typing import Literal
 from uuid import UUID, uuid5
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
     accepted_effect,
@@ -19,16 +18,14 @@ from eva.adapters.postgres.action_chain_effect_readback_validation import (
     verification_rows,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
+    PostgresActionChainStore,
     plan_steps,
     read_intents,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
     insert_initial_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.execution import ReadIntent, ResourceScope
 
@@ -53,22 +50,9 @@ class PreparedActionChainEffectReadback:
     intent: ReadIntent
 
 
-class PostgresActionChainEffectReadbackPreparer(PostgresScopedRole):
+class PostgresActionChainEffectReadbackPreparer(PostgresActionChainStore):
+    _postgres_error = "effect readback preparation requires PostgreSQL"
     """Create one immutable read-only verification intent after provider ACK."""
-
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("effect readback preparation requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
 
     def prepare(
         self,

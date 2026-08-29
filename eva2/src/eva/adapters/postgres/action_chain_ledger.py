@@ -808,6 +808,30 @@ class PostgresActionChainLedger(PostgresScopedRole):
         )
 
 
+class PostgresActionChainStore(PostgresScopedRole):
+    """Share PostgreSQL, scope, role, and ledger setup across chain stores."""
+
+    _postgres_error: str
+
+    def __init__(
+        self,
+        engine: Engine,
+        scope: TimelineScope,
+        *,
+        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
+    ) -> None:
+        if engine.url.get_backend_name() != "postgresql":
+            raise ValueError(
+                self._postgres_error.format(
+                    result_kind=getattr(self, "_result_kind", "")
+                )
+            )
+        self._engine = engine
+        self._scope_value = scope
+        self._role = role
+        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
+
+
 def _origin_data(
     connection: sa.Connection,
     scope: TimelineScope,
