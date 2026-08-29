@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 22:21 CEST
+Laatst bijgewerkt: 29 augustus 2026, 22:25 CEST
 
 ## Heel kort
 
@@ -292,6 +292,10 @@ praktijktest zijn nog niet klaar.
   Alle 15 canary-/quiescenttests en samen 53 releasechecks zijn groen. Zowel de
   implementatie als switchtool en de eerder ongepinde canarytest zijn nu
   verzegeld: 243 inputs en 131 tests.
+- De 197-regelige private object-keyring had nul runtimegebruikers en staat nu
+  naast de portable restoretools. Veertien lokale en alle vijf echte
+  objectgrensgevallen zijn groen. De bron en drie eerder ongepinde gerichte
+  tests zijn nu verzegeld: 244 inputs en 134 tests.
 
 ## Wat nog niet klaar is
 
@@ -306,8 +310,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  14.271 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 76.562 productregels en mag er maximaal 75.000 hebben.
+  14.468 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 76.365 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -325,7 +329,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 1.562 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 1.365 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -408,6 +412,7 @@ praktijktest zijn nog niet klaar.
 - [Managed-B-renderer naar de operatorgrens en als nieuwe release-input gepind](evidence/product/performance-complexity-pc01-managed-b-render-operator-boundary-2026-08-29.json)
 - [Managed-B-preflight naar de operatorgrens, wrapper en bron samen verzegeld](evidence/product/performance-complexity-pc01-core-b-preflight-operator-boundary-2026-08-29.json)
 - [Canary-omschakelaar naar de operatorgrens, volledige switchketen verzegeld](evidence/product/performance-complexity-pc01-canary-cutover-operator-boundary-2026-08-29.json)
+- [Private object-keyring naar de operatorgrens, bron en tests verzegeld](evidence/product/performance-complexity-pc01-object-keyring-operator-boundary-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

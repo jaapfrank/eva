@@ -1,0 +1,44 @@
+{
+  "contract": "EvaPerformanceComplexityPc01ObjectKeyringOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T22:25:10+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "b18246e3492708d5c165bb4d09f90b6a6275c9e2",
+    "changedSourceManifestSha256": "5e9ddf9bc6f1caf80ae16531844689b0a45dfd936a79361bf9b5043f1917ba5c"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/object_keyring.py",
+    "newPath": "tools/object_keyring.py",
+    "physicalLinesMovedOutOfProductRoots": 197,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 4,
+    "remainingOldReferences": 0,
+    "keyringSourcePinnedAsReleaseInput": true,
+    "threeFocusedTestsAddedToReleaseTests": true
+  },
+  "verification": {
+    "localKeyringAndObjectTestsPassed": 14,
+    "realPostgresObjectBoundaryFileTestsPassed": 5,
+    "combinedObjectAndFailClosedReleaseTestsPassed": 52,
+    "localReleaseRunSkippedOnlyDatabaseCase": 1,
+    "archivedCommitAttestationStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+    "requiredInputsAfterPin": 244,
+    "requiredTestsAfterPin": 134,
+    "combinedTestAndAttestationLogsSha256": "fe0f7d55d83b77bdb2edcd0eb280b762bc371284d7490e149193ce2da3940147"
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 215,
+    "productPhysicalLines": 76365,
+    "livingCorePhysicalLines": 75772,
+    "productManifestSha256": "83d07ce6deb5500624f553b6104206d7fff94acb08fe696ccdda317556629471",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 1365,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 14468,
+    "status": "failed_budget_enforced"
+  },
+  "nonClaims": [
+    "The keyring remains required restore operator functionality and is now explicitly pinned.",
+    "This did not transfer a real object key or restore data to another physical machine.",
+    "The full PC01 image baseline remains unavailable and the source budget remains red."
+  ]
+}
