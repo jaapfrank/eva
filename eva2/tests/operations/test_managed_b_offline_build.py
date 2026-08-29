@@ -9,8 +9,8 @@ import tempfile
 
 import pytest
 
-from eva.operations.managed_b_offline_build import validate_offline_candidate_inputs
-from eva.operations.managed_b_wheelhouse import (
+from tools.managed_b_candidate.offline_build import validate_offline_candidate_inputs
+from tools.managed_b_candidate.wheelhouse import (
     MaterializedWheelhouse,
     materialize_wheelhouse,
 )

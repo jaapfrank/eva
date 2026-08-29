@@ -14,7 +14,7 @@ from tools.managed_b_candidate.build_context import (
     materialize_build_context,
     validate_materialized_build_context,
 )
-from eva.operations.managed_b_wheelhouse import materialize_wheelhouse
+from tools.managed_b_candidate.wheelhouse import materialize_wheelhouse
 from tools.prepare_managed_b_candidate_context import (
     CandidateBuildInputs,
     EXPECTED_OFFLINE_PIP_INSTALL,

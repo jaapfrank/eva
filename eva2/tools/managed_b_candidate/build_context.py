@@ -18,8 +18,8 @@ from .base_image import (
     MaterializedBaseImage,
     validate_materialized_base_image,
 )
-from eva.operations.managed_b_offline_build import validate_offline_candidate_inputs
-from eva.operations.managed_b_wheelhouse import (
+from .offline_build import validate_offline_candidate_inputs
+from .wheelhouse import (
     MaterializedWheelhouse,
     expected_wheel_artifacts,
 )

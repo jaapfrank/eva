@@ -13,7 +13,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from eva.operations.managed_b_release_inputs import (
+from tools.managed_b_candidate.release_inputs import (
     AUTHORITY_PATH,
     _COCKPIT_EVIDENCE_PATH,
     _EXPECTED_INPUT_PATHS,

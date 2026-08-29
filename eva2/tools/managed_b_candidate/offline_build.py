@@ -10,7 +10,7 @@ from __future__ import annotations
 import stat
 from typing import Any
 
-from eva.operations.managed_b_wheelhouse import (
+from .wheelhouse import (
     MaterializedWheelhouse,
     validate_wheelhouse,
 )

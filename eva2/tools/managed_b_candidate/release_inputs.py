@@ -17,7 +17,7 @@ from pathlib import PurePosixPath
 import re
 from typing import Any, Mapping
 
-from eva.operations.managed_b_wheelhouse import inspect_runtime_dependency_alignment
+from .wheelhouse import inspect_runtime_dependency_alignment
 from tools.prepare_managed_b_candidate_context import (
     prepare_candidate_build_inputs,
     validate_candidate_build_inputs,
@@ -39,7 +39,7 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "702062afbce56cd32b7e8e56e683a0deb0acbe173c75df3cee0fdfe4fd01a296"
+    "8a133b79a43f1121968294e980bae08e3a6a51b0e3e0168be7adc0a0d6bbabad"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
     "a91e91fae1f53be748f4f7912c3005698183cc04a145924d1581373cf78e8a82"

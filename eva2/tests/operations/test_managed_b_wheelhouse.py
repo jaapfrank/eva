@@ -8,7 +8,7 @@ import tempfile
 
 import pytest
 
-from eva.operations.managed_b_wheelhouse import (
+from tools.managed_b_candidate.wheelhouse import (
     inspect_runtime_dependency_alignment,
     inspect_wheelhouse_manifest,
     materialize_wheelhouse,

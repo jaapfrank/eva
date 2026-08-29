@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.operations.managed_b_release_inputs import (
+from tools.managed_b_candidate.release_inputs import (
     AUTHORITY_PATH,
     _pin_rows,
     _validate_static_archive_inputs,
