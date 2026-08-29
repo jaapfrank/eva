@@ -33,7 +33,7 @@ API_KEY = "am_synthetic_proof_key_1234567890"
 SOURCE_PATHS = (
     "src/eva/adapters/connectors/installer_agentmail_probe.py",
     "src/eva/operations/installer_provider_verification.py",
-    "src/eva/operations/installer_provider_verification_cli.py",
+    "tools/installer_provider_verification_cli.py",
     "tests/connectors/test_installer_agentmail_probe.py",
     "tests/operations/test_installer_provider_verification.py",
     "tests/operations/test_installer_provider_verification_cli.py",

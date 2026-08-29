@@ -43,7 +43,7 @@ LEASE = json.dumps(
 SOURCE_PATHS = (
     "src/eva/adapters/connectors/installer_codex_model_probe.py",
     "src/eva/operations/installer_provider_verification.py",
-    "src/eva/operations/installer_provider_verification_cli.py",
+    "tools/installer_provider_verification_cli.py",
     "tests/connectors/test_installer_codex_model_probe.py",
     "tests/operations/test_installer_provider_verification.py",
     "tests/operations/test_installer_provider_verification_cli.py",
