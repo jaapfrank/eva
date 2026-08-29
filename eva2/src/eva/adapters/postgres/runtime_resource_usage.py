@@ -22,6 +22,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 
@@ -289,7 +290,7 @@ class PostgresDailyReflectionBudget:
         raise OperationalTimelineError("reflection budget admission remained busy")
 
 
-class PostgresMemoryStorageBudget:
+class PostgresMemoryStorageBudget(PostgresScopedRole):
     """Keep conversation-memory records and UTF-8 bytes inside owner limits.
 
     The append-only events contain hashes, byte counts and the provider deletion
@@ -299,6 +300,8 @@ class PostgresMemoryStorageBudget:
     acknowledged deletion, so an overdue provider cannot make the physical
     store silently exceed any configured cap.
     """
+
+    _role = "eva_runtime"
 
     def __init__(
         self,
@@ -339,17 +342,6 @@ class PostgresMemoryStorageBudget:
         self._retention_days = resource_budget.retention_days
         self._source_budget_sha256 = resource_budget.source_budget_sha256
         self._removal_lease_seconds = removal_lease_seconds
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
-        connection.execute(
-            sa.text("SELECT set_config('eva.tenant_id', :value, true)"),
-            {"value": str(self._scope_value.tenant_id)},
-        )
-        connection.execute(
-            sa.text("SELECT set_config('eva.installation_id', :value, true)"),
-            {"value": str(self._scope_value.installation_id)},
-        )
 
     @staticmethod
     def _require_now(now: datetime) -> datetime:

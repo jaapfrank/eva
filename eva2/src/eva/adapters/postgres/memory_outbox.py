@@ -20,6 +20,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -112,8 +113,10 @@ def conversation_memory_document_from_outbox_data(
         raise RuntimeError("durable memory outbox document is invalid") from error
 
 
-class PostgresMemoryOutbox:
+class PostgresMemoryOutbox(PostgresScopedRole):
     """Own a retry-bounded memory delivery timeline for one installation."""
+
+    _role = "eva_runtime"
 
     def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str) -> None:
         if not tenant_id.strip() or not installation_id.strip():
@@ -137,17 +140,6 @@ class PostgresMemoryOutbox:
     @staticmethod
     def _now() -> datetime:
         return datetime.now(tz=UTC).replace(microsecond=0)
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
-        connection.execute(
-            sa.text("SELECT set_config('eva.tenant_id', :value, true)"),
-            {"value": str(self._scope_value.tenant_id)},
-        )
-        connection.execute(
-            sa.text("SELECT set_config('eva.installation_id', :value, true)"),
-            {"value": str(self._scope_value.installation_id)},
-        )
 
     @staticmethod
     def _document_data(document: ConversationMemoryDocument) -> dict[str, object]:

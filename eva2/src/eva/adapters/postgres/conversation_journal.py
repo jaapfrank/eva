@@ -17,6 +17,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     operational_events,
 )
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.conversation import (
     ConversationConflict,
     ConversationModelUsage,
@@ -42,8 +43,10 @@ class ConversationContentErasureReceipt:
     replayed: bool
 
 
-class PostgresConversationJournal:
+class PostgresConversationJournal(PostgresScopedRole):
     """Commit raw chat events before semantic projection or model generation."""
+
+    _role = "eva_runtime"
 
     def __init__(self, engine: sa.Engine, scope: TimelineScope) -> None:
         self._engine = engine
@@ -530,17 +533,5 @@ class PostgresConversationJournal:
             redacted_event_count=redacted,
             replayed=False,
         )
-
-    def _scope(self, connection: sa.Connection) -> None:
-        connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
-        connection.execute(
-            sa.text("SELECT set_config('eva.tenant_id', :value, true)"),
-            {"value": str(self._scope_value.tenant_id)},
-        )
-        connection.execute(
-            sa.text("SELECT set_config('eva.installation_id', :value, true)"),
-            {"value": str(self._scope_value.installation_id)},
-        )
-
 
 __all__ = ["ConversationContentErasureReceipt", "PostgresConversationJournal"]
