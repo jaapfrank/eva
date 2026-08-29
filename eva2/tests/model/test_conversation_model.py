@@ -445,7 +445,7 @@ def test_runtime_budget_records_measured_terminal_provider_usage(
             resource_budget=_runtime_budget(),
         )
 
-        text, action, usage = model._request_conversation(  # noqa: SLF001
+        text, action, usage, timing = model._request_conversation(  # noqa: SLF001
             {"input": [{"content": "hoi", "role": "user"}]}
         )
 
@@ -456,6 +456,9 @@ def test_runtime_budget_records_measured_terminal_provider_usage(
     assert usage.output_tokens == 20
     assert usage.model_attempts == 1
     assert usage.tool_calls == 0
+    assert timing.first_content_ms is not None
+    assert timing.completed_ms is not None
+    assert 0 <= timing.first_content_ms <= timing.completed_ms
     assert len(requests) == 1
 
 

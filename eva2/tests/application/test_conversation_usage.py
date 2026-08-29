@@ -6,6 +6,7 @@ from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
     ConversationModelResult,
+    ConversationModelTiming,
     ConversationModelUsage,
     ConversationTurn,
     IdentityProfile,
@@ -118,12 +119,14 @@ def test_tool_and_followup_model_usage_are_aggregated() -> None:
                     "local-model",
                     call,
                     _usage(tools=1, input_tokens=40, output_tokens=3),
+                    ConversationModelTiming(20, 50),
                 )
             assert kwargs["completed_action"] == receipt
             return ConversationModelResult(
                 "De lamp is uit.",
                 "local-model",
                 usage=_usage(input_tokens=24, output_tokens=6),
+                timing=ConversationModelTiming(30, 80),
             )
 
     reply = _conversation(Model(), Actions()).respond(_turn("message:two-calls"))
@@ -134,6 +137,7 @@ def test_tool_and_followup_model_usage_are_aggregated() -> None:
         input_tokens=64,
         output_tokens=9,
     )
+    assert reply.model_timing == ConversationModelTiming(80, 130)
 
 
 def test_an_unreported_call_keeps_the_whole_reply_usage_unmeasured() -> None:
@@ -146,6 +150,12 @@ def test_an_unreported_call_keeps_the_whole_reply_usage_unmeasured() -> None:
         )
         == ConversationModelUsage.unmeasured()
     )
+
+
+def test_unmeasured_timing_keeps_the_whole_reply_timing_unmeasured() -> None:
+    assert ConversationModelTiming.aggregate(
+        (ConversationModelTiming(4, 9), ConversationModelTiming.unmeasured())
+    ) == ConversationModelTiming.unmeasured()
 
 
 @pytest.mark.parametrize(

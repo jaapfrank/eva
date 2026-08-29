@@ -154,6 +154,47 @@ class ConversationModelUsage:
 
 
 @dataclass(frozen=True, slots=True)
+class ConversationModelTiming:
+    """Measured provider time to first text and completed response, in ms."""
+
+    first_content_ms: int | None
+    completed_ms: int | None
+
+    def __post_init__(self) -> None:
+        values = (self.first_content_ms, self.completed_ms)
+        if any(value is not None and (type(value) is not int or value < 0) for value in values):
+            raise ValueError("model timing is invalid")
+        if self.first_content_ms is not None and (
+            self.completed_ms is None or self.first_content_ms > self.completed_ms
+        ):
+            raise ValueError("first content timing is invalid")
+
+    @classmethod
+    def unmeasured(cls) -> "ConversationModelTiming":
+        return cls(None, None)
+
+    @classmethod
+    def aggregate(
+        cls, timings: tuple["ConversationModelTiming", ...]
+    ) -> "ConversationModelTiming":
+        if not timings or any(item.completed_ms is None for item in timings):
+            return cls.unmeasured()
+        completed = sum(item.completed_ms or 0 for item in timings)
+        final_first = timings[-1].first_content_ms
+        first = None if final_first is None else completed - (timings[-1].completed_ms or 0) + final_first
+        return cls(first, completed)
+
+    def to_wire(self) -> dict[str, int | None]:
+        return {"completed_ms": self.completed_ms, "first_content_ms": self.first_content_ms}
+
+    @classmethod
+    def from_wire(cls, value: object) -> "ConversationModelTiming":
+        if not isinstance(value, dict) or set(value) != {"completed_ms", "first_content_ms"}:
+            raise ValueError("model timing payload is invalid")
+        return cls(value["first_content_ms"], value["completed_ms"])  # type: ignore[arg-type]
+
+
+@dataclass(frozen=True, slots=True)
 class ConversationObservationBinding:
     """Connector-attested media and subject region for one grounded correction."""
 
@@ -354,10 +395,15 @@ class GroundedReply:
     model_usage: ConversationModelUsage = field(
         default_factory=ConversationModelUsage.unmeasured
     )
+    model_timing: ConversationModelTiming = field(
+        default_factory=ConversationModelTiming.unmeasured
+    )
 
     def __post_init__(self) -> None:
         if not isinstance(self.model_usage, ConversationModelUsage):
             raise ValueError("grounded reply model usage is invalid")
+        if not isinstance(self.model_timing, ConversationModelTiming):
+            raise ValueError("grounded reply model timing is invalid")
 
     @property
     def text_sha256(self) -> str:
@@ -395,6 +441,9 @@ class ConversationModelResult:
     usage: ConversationModelUsage = field(
         default_factory=ConversationModelUsage.unmeasured
     )
+    timing: ConversationModelTiming = field(
+        default_factory=ConversationModelTiming.unmeasured
+    )
 
     def __post_init__(self) -> None:
         if self.text is not None and not self.text.strip():
@@ -405,6 +454,8 @@ class ConversationModelResult:
             raise ValueError("conversation model returned neither text nor action")
         if not isinstance(self.usage, ConversationModelUsage):
             raise ValueError("conversation model usage is invalid")
+        if not isinstance(self.timing, ConversationModelTiming):
+            raise ValueError("conversation model timing is invalid")
 
 
 @dataclass(frozen=True, slots=True)
@@ -638,6 +689,7 @@ class LivingConversation:
             self_context=self_context,
         )
         usages = [generated.usage]
+        timings = [generated.timing]
         if generated.action_call is not None:
             if self._actions is None or completed is not None:
                 raise RuntimeError("conversation model requested an unavailable action")
@@ -654,6 +706,7 @@ class LivingConversation:
                     generated_at=turn.occurred_at,
                     provider=generated.provider,
                     model_usage=ConversationModelUsage.aggregate(tuple(usages)),
+                    model_timing=ConversationModelTiming.aggregate(tuple(timings)),
                 )
             generated = self._model.generate(
                 turn,
@@ -665,6 +718,7 @@ class LivingConversation:
                 self_context=self_context,
             )
             usages.append(generated.usage)
+            timings.append(generated.timing)
         if generated.action_call is not None:
             raise RuntimeError("conversation model requested more than one action")
         text = "" if generated.text is None else generated.text.strip()
@@ -680,6 +734,7 @@ class LivingConversation:
             generated_at=turn.occurred_at,
             provider=generated.provider,
             model_usage=ConversationModelUsage.aggregate(tuple(usages)),
+            model_timing=ConversationModelTiming.aggregate(tuple(timings)),
         )
 
     @staticmethod

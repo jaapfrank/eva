@@ -8,6 +8,7 @@ import pytest
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.application.conversation import (
     ConversationConflict,
+    ConversationModelTiming,
     ConversationModelUsage,
     ConversationTurn,
     GroundedReply,
@@ -30,7 +31,10 @@ def _turn() -> ConversationTurn:
     )
 
 
-def _reply(usage: ConversationModelUsage) -> GroundedReply:
+def _reply(
+    usage: ConversationModelUsage,
+    timing: ConversationModelTiming | None = None,
+) -> GroundedReply:
     turn = _turn()
     return GroundedReply(
         conversation_id=turn.conversation_id,
@@ -40,6 +44,7 @@ def _reply(usage: ConversationModelUsage) -> GroundedReply:
         generated_at=NOW,
         provider="local-model",
         model_usage=usage,
+        model_timing=timing or ConversationModelTiming.unmeasured(),
     )
 
 
@@ -89,6 +94,17 @@ def test_legacy_reply_without_usage_replays_as_unmeasured_not_zero() -> None:
     assert restored.model_usage == ConversationModelUsage.unmeasured()
     assert restored.model_usage.input_tokens is None
     assert restored.model_usage.output_tokens is None
+
+
+def test_measured_timing_round_trips_and_legacy_timing_stays_unmeasured() -> None:
+    turn = _turn()
+    reply = _reply(ConversationModelUsage.unmeasured(), ConversationModelTiming(25, 70))
+    data = PostgresConversationJournal._reply_data(turn, reply)  # noqa: SLF001
+    assert _journal_with_reply_data(data).committed_reply(turn) == reply
+    data.pop("model_timing")
+    restored = _journal_with_reply_data(data).committed_reply(turn)
+    assert restored is not None
+    assert restored.model_timing == ConversationModelTiming.unmeasured()
 
 
 @pytest.mark.parametrize(

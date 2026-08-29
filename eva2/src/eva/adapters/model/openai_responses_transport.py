@@ -15,7 +15,11 @@ from uuid import uuid4
 
 import httpx2
 
-from eva.application.conversation import ConversationActionCall, ConversationModelUsage
+from eva.application.conversation import (
+    ConversationActionCall,
+    ConversationModelTiming,
+    ConversationModelUsage,
+)
 from eva.contracts.canonical_json import canonical_json_bytes
 
 
@@ -37,6 +41,72 @@ class OpenAIResponsesUnavailable(OpenAIResponsesTransportError):
     """The provider or optional SDK dependency is unavailable."""
 
 
+class ConversationSseError(ValueError):
+    """The ordinary conversation stream is malformed."""
+
+
+def parse_conversation_sse(
+    events: Iterator[tuple[str, dict[str, Any]]],
+    *,
+    started_at: float | None = None,
+    clock: Callable[[], float] = monotonic,
+) -> Any:
+    deltas: list[str] = []
+    completed_parts: list[str] = []
+    action_call: ConversationActionCall | None = None
+    first_content_ms: int | None = None
+    for kind, data in events:
+        if kind in {"response.output_text.delta", "response.text.delta"}:
+            delta = data.get("delta")
+            if not isinstance(delta, str):
+                raise ConversationSseError("conversation text delta is invalid")
+            if delta and started_at is not None and first_content_ms is None:
+                first_content_ms = round((clock() - started_at) * 1000)
+            deltas.append(delta)
+        elif kind == "response.output_item.done":
+            item = data.get("item")
+            if not isinstance(item, dict):
+                continue
+            if item.get("type") == "function_call":
+                if action_call is not None:
+                    raise ConversationSseError("conversation model returned multiple actions")
+                call_id, name, encoded = item.get("call_id"), item.get("name"), item.get("arguments")
+                if not all(isinstance(value, str) for value in (call_id, name, encoded)):
+                    raise ConversationSseError("conversation action frame is invalid")
+                try:
+                    arguments = json.loads(encoded)
+                except json.JSONDecodeError as error:
+                    raise ConversationSseError(
+                        "conversation action arguments are invalid JSON"
+                    ) from error
+                if not isinstance(arguments, dict):
+                    raise ConversationSseError("conversation action arguments are not an object")
+                try:
+                    action_call = ConversationActionCall(call_id, name, arguments)
+                except ValueError as error:
+                    raise ConversationSseError(
+                        "conversation action arguments are invalid"
+                    ) from error
+                continue
+            content = item.get("content")
+            if isinstance(content, list):
+                completed_parts.extend(
+                    part["text"]
+                    for part in content
+                    if isinstance(part, dict) and isinstance(part.get("text"), str)
+                )
+        elif kind == "response.failed":
+            raise ConversationSseError("conversation provider reported failure")
+    text = "".join(deltas) if deltas else "".join(completed_parts)
+    if started_at is None:
+        return text, action_call
+    completed_ms = max(0, round((clock() - started_at) * 1000))
+    return text, action_call, ConversationModelTiming(
+        completed_ms if first_content_ms is None and text else first_content_ms,
+        completed_ms,
+    )
+
+
 class _RequestTooLarge(RuntimeError):
     pass
 
@@ -56,6 +126,22 @@ class OpenAIResponsesResult:
     text: str
     action_call: ConversationActionCall | None
     usage: ConversationModelUsage
+    first_text_delta_seconds: float | None = None
+    completed_seconds: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.first_text_delta_seconds is not None and (
+            self.first_text_delta_seconds < 0 or self.completed_seconds is None
+        ):
+            raise ValueError("first text timing is invalid")
+        if self.completed_seconds is not None and self.completed_seconds < 0:
+            raise ValueError("completion timing is invalid")
+        if (
+            self.first_text_delta_seconds is not None
+            and self.completed_seconds is not None
+            and self.first_text_delta_seconds > self.completed_seconds
+        ):
+            raise ValueError("first text timing exceeds completion timing")
 
 
 class _BoundedResponseStream(httpx2.SyncByteStream):
@@ -274,6 +360,7 @@ class OpenAIResponsesTransport:
                     max_retries=0,
                     timeout=remaining,
                 ) as client:
+                    started_at = monotonic()
                     stream = client.responses.create(
                         **payload,
                         stream=True,
@@ -281,7 +368,7 @@ class OpenAIResponsesTransport:
                         timeout=_remaining(deadline),
                     )
                     with cast(Any, stream) as events:
-                        return _project_events(events)
+                        return _project_events(events, started_at=started_at)
         except Exception as error:
             failure = _sanitized_failure(
                 error,
@@ -424,12 +511,18 @@ def _validate_request(
         ) from error
 
 
-def _project_events(events: Iterator[Any]) -> OpenAIResponsesResult:
+def _project_events(
+    events: Iterator[Any],
+    *,
+    started_at: float | None = None,
+    clock: Callable[[], float] = monotonic,
+) -> OpenAIResponsesResult:
     deltas: list[str] = []
     completed_parts: list[str] = []
     action_call: ConversationActionCall | None = None
     completed_usage: Any | None = None
     completed = False
+    first_text_delta_seconds: float | None = None
     try:
         for event in events:
             kind = getattr(event, "type", None)
@@ -443,6 +536,8 @@ def _project_events(events: Iterator[Any]) -> OpenAIResponsesResult:
                     raise OpenAIResponsesTransportError(
                         "OpenAI SDK text delta is invalid"
                     )
+                if delta and started_at is not None and first_text_delta_seconds is None:
+                    first_text_delta_seconds = max(0.0, clock() - started_at)
                 deltas.append(delta)
                 continue
             if kind == "response.output_item.done":
@@ -497,7 +592,16 @@ def _project_events(events: Iterator[Any]) -> OpenAIResponsesResult:
         raise OpenAIResponsesTransportError(
             "OpenAI SDK returned neither text nor a tool call"
         )
-    return OpenAIResponsesResult(text, action_call, usage)
+    completed_seconds = (
+        None if started_at is None else max(0.0, clock() - started_at)
+    )
+    return OpenAIResponsesResult(
+        text,
+        action_call,
+        usage,
+        first_text_delta_seconds,
+        completed_seconds,
+    )
 
 
 def _action_call(item: Any) -> ConversationActionCall:

@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 import socket
 import threading
+from time import monotonic
 import unicodedata
 import urllib.error
 import urllib.request
@@ -22,6 +23,7 @@ from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
     ConversationModelResult,
+    ConversationModelTiming,
     ConversationModelUsage,
     ConversationTurn,
     IdentityProfile,
@@ -49,10 +51,12 @@ from eva.bootstrap.secrets import read_shared_runtime_file_bytes
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 from eva.adapters.model.openai_responses_transport import (
+    ConversationSseError,
     OpenAIResponsesCredentialRejected,
     OpenAIResponsesTransport,
     OpenAIResponsesTransportError,
     OpenAIResponsesUnavailable,
+    parse_conversation_sse,
 )
 
 
@@ -794,8 +798,10 @@ class CodexConversationModel:
             "tools": [_ACTION_TOOLS[name] for name in available_actions],
         }
         usages: list[ConversationModelUsage] = []
-        text, action_call, usage = self._request_conversation(body)
+        timings: list[ConversationModelTiming] = []
+        text, action_call, usage, timing = self._request_conversation(body)
         usages.append(usage)
+        timings.append(timing)
         if (
             action_call is None
             and text.strip()
@@ -808,8 +814,9 @@ class CodexConversationModel:
                 "schrifttaal. Formuleer het antwoord opnieuw, volledig in natuurlijk "
                 "Nederlands en zonder de inhoud of bewijsgrenzen te veranderen."
             )
-            text, action_call, usage = self._request_conversation(body)
+            text, action_call, usage, timing = self._request_conversation(body)
             usages.append(usage)
+            timings.append(timing)
         if action_call is not None and action_call.name not in available_actions:
             raise ConversationModelError(
                 "conversation model requested an unavailable action"
@@ -823,6 +830,7 @@ class CodexConversationModel:
             provider=f"chatgpt-codex:{self._model}",
             action_call=action_call,
             usage=ConversationModelUsage.aggregate(tuple(usages)),
+            timing=ConversationModelTiming.aggregate(tuple(timings)),
         )
 
     def explore(self, claim: PersonalInterestClaim) -> PersonalInterestExploration:
@@ -1307,20 +1315,27 @@ class CodexConversationModel:
         str,
         ConversationActionCall | None,
         ConversationModelUsage,
+        ConversationModelTiming,
     ]:
         """Use the explicit candidate only for the ordinary conversation route."""
 
         if self._transport_kind == "legacy_urllib":
             if self._resource_budget is None:
                 text, action_call = self._request(body)
-                return text, action_call, ConversationModelUsage.unmeasured()
+                return (
+                    text,
+                    action_call,
+                    ConversationModelUsage.unmeasured(),
+                    ConversationModelTiming.unmeasured(),
+                )
             parsed, usage = self._request_using(
                 body,
                 self._parse_sse,
                 include_usage=True,
+                include_timing=True,
             )
-            text, action_call = parsed
-            return text, action_call, usage
+            text, action_call, timing = parsed
+            return text, action_call, usage, timing
         assert self._openai_transport is not None
         self._admit_request(body, autonomous=False)
         last_auth: tuple[str, str] | None = None
@@ -1360,7 +1375,15 @@ class CodexConversationModel:
                     output_tokens=usage.output_tokens,
                 )
             self._enforce_reported_usage(usage)
-            return result.text, result.action_call, usage
+            timing = ConversationModelTiming(
+                None
+                if result.first_text_delta_seconds is None
+                else round(result.first_text_delta_seconds * 1000),
+                None
+                if result.completed_seconds is None
+                else round(result.completed_seconds * 1000),
+            )
+            return result.text, result.action_call, usage, timing
         if last_auth is not None:
             with self._credential_lock:
                 self._rejected_token_sha256 = hashlib.sha256(
@@ -1385,6 +1408,7 @@ class CodexConversationModel:
         timeout_seconds: float | None = None,
         autonomous: bool = False,
         include_usage: bool = False,
+        include_timing: bool = False,
     ) -> Any:
         self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
@@ -1413,6 +1437,7 @@ class CodexConversationModel:
                 },
             )
             try:
+                started_at = monotonic()
                 response = urllib.request.urlopen(
                     request, timeout=timeout_seconds or self._timeout_seconds
                 )
@@ -1437,10 +1462,15 @@ class CodexConversationModel:
                     self._rejected_token_sha256 = None
                 try:
                     terminal_usage: list[tuple[int, int]] = []
-                    parsed = parser(
+                    stream = (
                         self._capture_terminal_usage(response, terminal_usage)
                         if self._resource_budget is not None
                         else response
+                    )
+                    parsed = (
+                        parser(stream, started_at=started_at)
+                        if include_timing
+                        else parser(stream)
                     )
                     if self._resource_budget is None:
                         return parsed
@@ -1675,65 +1705,14 @@ class CodexConversationModel:
             yield data.get("type") or event_type, data
 
     @staticmethod
-    def _parse_sse(response: Any) -> tuple[str, ConversationActionCall | None]:
-        deltas: list[str] = []
-        completed_parts: list[str] = []
-        action_call: ConversationActionCall | None = None
-        for kind, data in CodexConversationModel._iter_sse_events(
-            response, "conversation"
-        ):
-            if kind in {"response.output_text.delta", "response.text.delta"}:
-                delta = data.get("delta")
-                if not isinstance(delta, str):
-                    raise ConversationModelError("conversation text delta is invalid")
-                deltas.append(delta)
-            elif kind == "response.output_item.done":
-                item = data.get("item")
-                if not isinstance(item, dict):
-                    continue
-                if item.get("type") == "function_call":
-                    if action_call is not None:
-                        raise ConversationModelError(
-                            "conversation model returned multiple actions"
-                        )
-                    call_id = item.get("call_id")
-                    name = item.get("name")
-                    encoded_arguments = item.get("arguments")
-                    if (
-                        not isinstance(call_id, str)
-                        or not isinstance(name, str)
-                        or not isinstance(encoded_arguments, str)
-                    ):
-                        raise ConversationModelError(
-                            "conversation action frame is invalid"
-                        )
-                    try:
-                        arguments = json.loads(encoded_arguments)
-                    except json.JSONDecodeError as error:
-                        raise ConversationModelError(
-                            "conversation action arguments are invalid JSON"
-                        ) from error
-                    if not isinstance(arguments, dict):
-                        raise ConversationModelError(
-                            "conversation action arguments are not an object"
-                        )
-                    try:
-                        action_call = ConversationActionCall(call_id, name, arguments)
-                    except ValueError as error:
-                        raise ConversationModelError(
-                            "conversation action arguments are invalid"
-                        ) from error
-                    continue
-                content = item.get("content")
-                if not isinstance(content, list):
-                    continue
-                for part in content:
-                    if isinstance(part, dict) and isinstance(part.get("text"), str):
-                        completed_parts.append(part["text"])
-            elif kind == "response.failed":
-                raise ConversationModelError("conversation provider reported failure")
-        text = "".join(deltas) if deltas else "".join(completed_parts)
-        return text, action_call
+    def _parse_sse(
+        response: Any, *, started_at: float | None = None
+    ) -> Any:
+        events = CodexConversationModel._iter_sse_events(response, "conversation")
+        try:
+            return parse_conversation_sse(events, started_at=started_at)
+        except ConversationSseError as error:
+            raise ConversationModelError(str(error)) from error
 
     @staticmethod
     def _parse_research_sse(

@@ -617,6 +617,19 @@ def test_language_retry_aggregates_both_successful_sdk_usages(
     )
 
 
+def test_transport_does_not_invent_first_text_timing_for_tool_only_stream() -> None:
+    with _server([_outcome(_function_events())]) as (endpoint, _calls):
+        result = OpenAIResponsesTransport(endpoint=endpoint, timeout_seconds=5).request(
+            _transport_body(), access_token="access", account_id="account"
+        )
+
+    assert result.text == ""
+    assert result.action_call is not None
+    assert result.first_text_delta_seconds is None
+    assert result.completed_seconds is not None
+    assert result.completed_seconds >= 0
+
+
 def test_byte_deadline_proxy_and_error_redaction_are_bounded(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -627,6 +640,9 @@ def test_byte_deadline_proxy_and_error_redaction_are_bounded(
             _transport_body(), access_token="access", account_id="account"
         )
     assert result.text == "Dat werkt."
+    assert result.first_text_delta_seconds is not None
+    assert result.completed_seconds is not None
+    assert 0 <= result.first_text_delta_seconds <= result.completed_seconds
     assert len(calls) == 1
 
     with _server([(500, b"secret-token secret-prompt", {})]) as (endpoint, calls):

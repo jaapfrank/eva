@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 23:22 CEST
+Laatst bijgewerkt: 30 augustus 2026, 00:02 CEST
 
 ## Heel kort
 
@@ -21,6 +21,12 @@ De vorige Eva2-route staat gestopt maar intact klaar voor de begrensde terugval.
 De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
 wachttijd van 180 seconden werd de nieuwe marker wel aantoonbaar gevonden.
+
+De volgende snelheidsstap meet nu per modelpoging wanneer het eerste stukje
+tekst binnenkomt en wanneer het volledige antwoord klaar is. Die tijden blijven
+ook na een herstart bij het antwoord bewaard. 89 gerichte tests zijn groen.
+Telegram krijgt het antwoord nog wel pas als geheel; echte zichtbare streaming
+en de bijbehorende reactietijdmeting zijn dus nog open.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -338,6 +344,10 @@ praktijktest zijn nog niet klaar.
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
+- De werkkandidaat meet inmiddels modeltijd tot eerste tekst en voltooiing, maar
+  verstuurt nog geen gedeeltelijk antwoord naar Telegram of de browser. De live
+  PC01-image telt 74.819 productregels; de nieuwe nog niet gebouwde kandidaat
+  telt 74.965 en houdt 35 regels over onder de harde grens.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -354,8 +364,8 @@ praktijktest zijn nog niet klaar.
 
 1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. De teksthot-path instrumenteren en echte tijd tot eerste inhoud meten; retain,
-   reflectie en evaluatie moeten daar aantoonbaar buiten blijven.
+2. De gemeten eerste modeltekst veilig als zichtbare stream naar de gebruiker
+   brengen en de echte tijd tot eerste inhoud meten; tooltekst mag niet lekken.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
 4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
@@ -438,6 +448,7 @@ praktijktest zijn nog niet klaar.
 - [Provider-verificatie-CLI naar de operatorgrens, cockpitbron opnieuw gebonden](evidence/product/performance-complexity-pc01-provider-verification-cli-operator-boundary-2026-08-29.json)
 - [PC01-bronbudget groen: 74.819 regels, 181 regels marge](evidence/product/performance-complexity-pc01-source-budget-passed-2026-08-29.json)
 - [PC02-hot-pathgrens groen: negen eigenaars en nul ongeregistreerde reuzenbestanden](evidence/product/performance-complexity-pc02-hot-paths-passed-2026-08-29.json)
+- [PC03-meetlaag voor eerste modeltekst en voltooiing](evidence/product/performance-complexity-pc03-provider-timing-instrumentation-2026-08-30.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

@@ -1,0 +1,36 @@
+{
+  "contract": "EvaPerformanceComplexityPc03InstrumentationReceipt/v1",
+  "recordedAt": "2026-08-30T00:02:30+02:00",
+  "sourceParentCommit": "6099d873c31c7a50c2d9b72e4cbc10cf83aeb235",
+  "status": "tested_not_live",
+  "result": {
+    "providerFirstTextMeasured": true,
+    "providerCompletionMeasured": true,
+    "multiAttemptTimingAggregated": true,
+    "durableJournalRoundTrip": true,
+    "legacyJournalBackwardCompatible": true,
+    "productPhysicalLines": 74965,
+    "maximumProductPhysicalLines": 75000,
+    "remainingProductPhysicalLines": 35,
+    "pc02Status": "passed",
+    "pc02Violations": 0,
+    "targetedTestsPassed": 89,
+    "releaseTestsPassed": 27,
+    "ruffStatus": "passed"
+  },
+  "sourceSha256": {
+    "src/eva/application/conversation.py": "e698a146882f0eb13abb76e6aedc8330f782dd0a4663dc35e05fac20f3da72b2",
+    "src/eva/adapters/model/conversation.py": "a6c465e3d66248e53150281b9cfedaca0fb6dd988c0eee18d0cea53ec6d81741",
+    "src/eva/adapters/model/openai_responses_transport.py": "c79cfb2f99a1587f63d232e68c100554c7db10ca0da891d6904251d8d6f7058a",
+    "src/eva/adapters/postgres/conversation_journal.py": "c4f555e91d0f3152d79be347e88db6e0124498e932c30dfbbc7149dbdd3af024",
+    "release/managed-b-release-input-authority-v1.json": "138b80cf3236745336365e81d5ef44a703f5185efacd644e190fa45a93950f07"
+  },
+  "testLogSha256": "04c9f1aee5b1782eb47f30ad08eaadbe79d0e5881cc68b3eb020c8f666737a7b",
+  "ruffLogSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+  "nonClaims": [
+    "This does not prove that Telegram or the browser receives partial text before model completion.",
+    "This does not promote or restart the live Eva2 managed slot.",
+    "This does not close PC03; a real user-visible first-content measurement remains required.",
+    "The exact 41-package SDK environment was temporary and is not a production dependency promotion."
+  ]
+}

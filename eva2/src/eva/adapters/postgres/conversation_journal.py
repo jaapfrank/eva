@@ -20,6 +20,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.conversation import (
     ConversationConflict,
+    ConversationModelTiming,
     ConversationModelUsage,
     ConversationTurn,
     GroundedReply,
@@ -149,6 +150,11 @@ class PostgresConversationJournal(PostgresScopedRole):
                     if "model_usage" not in data
                     else ConversationModelUsage.from_wire(data["model_usage"])
                 )
+                timing = (
+                    ConversationModelTiming.unmeasured()
+                    if "model_timing" not in data
+                    else ConversationModelTiming.from_wire(data["model_timing"])
+                )
             except ValueError as error:
                 raise ConversationConflict(
                     "durable conversation reply usage is invalid"
@@ -161,6 +167,7 @@ class PostgresConversationJournal(PostgresScopedRole):
                 generated_at=event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 provider=provider,
                 model_usage=usage,
+                model_timing=timing,
             )
             if data.get("text_sha256") != reply.text_sha256:
                 raise ConversationConflict("durable conversation reply hash differs")
@@ -310,6 +317,7 @@ class PostgresConversationJournal(PostgresScopedRole):
             "kind": "conversation_reply",
             "message_id": turn.message_id,
             "model_usage": reply.model_usage.to_wire(),
+            "model_timing": reply.model_timing.to_wire(),
             "principal_id": turn.principal_id,
             "provider": reply.provider,
             "text": reply.text,
