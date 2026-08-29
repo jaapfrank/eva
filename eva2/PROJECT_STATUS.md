@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 21:42 CEST
+Laatst bijgewerkt: 29 augustus 2026, 21:46 CEST
 
 ## Heel kort
 
@@ -258,6 +258,10 @@ praktijktest zijn nog niet klaar.
   zeven testgebruikers. Hij staat nu bij de operator-tools; 34 lokale en vijf
   echte PostgreSQL-herstelgevallen blijven groen. De aparte herstelbevoegdheid
   blijft wel in Eva's kern.
+- Ook de 676-regelige portable-exportpublisher had nul runtimegebruikers en
+  alleen vier testgebruikers. Hij staat nu bij de operator-tools; 66 lokale en
+  twee echte volledige PostgreSQL-export→restoregevallen blijven groen. De
+  snapshotadapter en archiefcontracten blijven in Eva's kern.
 
 ## Wat nog niet klaar is
 
@@ -272,8 +276,8 @@ praktijktest zijn nog niet klaar.
 - De schone images en bouwpakketten staan nog alleen op deze computer. Er is nog
   geen gecontroleerde kopie buiten deze computer.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
-  10.203 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
-  telt nu 80.630 productregels en mag er maximaal 75.000 hebben.
+  10.879 oude test-, proef- en dubbele regels zijn uit de runtime gehaald. Eva2
+  telt nu 79.954 productregels en mag er maximaal 75.000 hebben.
 - De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
   verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
   weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
@@ -291,7 +295,7 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. Nog minstens 5.630 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 4.954 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
 2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
    verder verkleinen.
@@ -365,6 +369,7 @@ praktijktest zijn nog niet klaar.
 - [Historische action-chain-writers uit de runtime, met browser-DNS-gat zichtbaar](evidence/product/performance-complexity-pc01-historical-action-advancers-test-support-2026-08-29.json)
 - [De vier historische browsergevallen groen in de bedoelde gesloten omgeving](evidence/living-core/eva2-browser-a02-closed-network-current-source-2026-08-29.json)
 - [Portable herstelwriter naar de operatorgrens, met vijf echte databaseproeven](evidence/product/performance-complexity-pc01-portable-restore-operator-boundary-2026-08-29.json)
+- [Portable exportpublisher naar de operatorgrens, met twee volledige databaseproeven](evidence/product/performance-complexity-pc01-portable-export-operator-boundary-2026-08-29.json)
 - [Historische effect-readback-store uit de runtime, lokale PostgreSQL-proef groen](evidence/product/performance-complexity-pc01-historical-readback-store-test-support-2026-08-29.json)
 - [Eenmalige Eva1-geheugenproef uit de runtime naar operator-tools](evidence/product/performance-complexity-pc01-legacy-memory-trial-operator-boundary-2026-08-29.json)
 - [Veertien duurzame gesprek-ID's bytegelijk uit één helper: 17 productregels minder](evidence/product/performance-complexity-pc01-conversation-id-derivation-consolidation-2026-08-29.json)

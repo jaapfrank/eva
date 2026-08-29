@@ -1,0 +1,43 @@
+{
+  "contract": "EvaPerformanceComplexityPc01PortableExportOperatorBoundary/v1",
+  "issuedAt": "2026-08-29T21:46:16+02:00",
+  "status": "tested",
+  "source": {
+    "commit": "c3496d02ea1de3f73eab7dbab413ae5fb2c19b86",
+    "changedSourceManifestSha256": "3eb6f4ee58442463e7d2cab71c57eaf196c5377cc2e45108a8f8d20016796216"
+  },
+  "classification": {
+    "oldPath": "src/eva/operations/portable_export.py",
+    "newPath": "tools/portable_export.py",
+    "physicalLinesMovedOutOfProductRoots": 676,
+    "runtimeConsumersBeforeMove": 0,
+    "testConsumersUpdated": 4,
+    "remainingOldImports": 0,
+    "postgresSnapshotAdapterAndArchiveContractsRemainInLivingCore": true
+  },
+  "verification": {
+    "localExportTransportRestoreTestsPassed": 66,
+    "localDatabaseTestsSkippedWithoutDsn": 2,
+    "realPostgresFullSchemaCasesPassed": 2,
+    "realPostgresCases": [
+      "empty full-schema archive restore",
+      "non-empty export from fresh source and restore to distinct fresh target"
+    ],
+    "combinedTestLogsSha256": "73e2faf7cf90f6ea44f4ceb1a2008cbff12252f3a4fa0634ddd028993d5b6cfb",
+    "disposablePostgresContainerRemoved": true
+  },
+  "pc01SourceMeasurement": {
+    "productFiles": 223,
+    "productPhysicalLines": 79954,
+    "livingCorePhysicalLines": 79361,
+    "productManifestSha256": "1b45c2ef500e7f2f74676df92a451e72354a6cf3e66c998c3f70f99423e17c61",
+    "maximumProductPhysicalLines": 75000,
+    "excessProductPhysicalLines": 4954,
+    "cumulativePhysicalLinesRemovedFromProductRoots": 10879,
+    "status": "failed_budget_enforced"
+  },
+  "limitations": [
+    "The full PC01 checker still cannot re-attest the unavailable historical OCI baseline; the exact sealed source-measurement function was run separately.",
+    "The export publisher remains product functionality at the operator boundary; this does not prove a consumer installer or off-host backup."
+  ]
+}
