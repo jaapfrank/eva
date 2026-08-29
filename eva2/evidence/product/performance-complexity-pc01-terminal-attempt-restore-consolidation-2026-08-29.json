@@ -1,0 +1,57 @@
+{
+  "contract": "EvaPerformanceComplexityPc01TerminalAttemptRestoreConsolidation/v1",
+  "recordedAt": "2026-08-29T17:45:09Z",
+  "sourceCommit": "72a19e0fe5baccf7a3b3c99c116ef7cdf2a4d07d",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "sharedDecoder": "_decode_terminal_attempt",
+    "consumers": [
+      "terminal read attempt restore",
+      "terminal effect attempt restore"
+    ],
+    "preservedSeparateAuthority": [
+      "source table",
+      "record contract",
+      "terminal state allowlist",
+      "Pydantic attempt contract",
+      "direct row bindings"
+    ],
+    "netProductPhysicalLines": -71
+  },
+  "verification": {
+    "portableRestoreTests": {
+      "passed": 123,
+      "skipped": 7,
+      "failed": 0,
+      "logSha256": "3411836bcd1254b1681e48776568261da5b592d279f6a868fe9167cb427ab8fa"
+    },
+    "ruff": {
+      "passed": true,
+      "logSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83283,
+      "productManifestSha256": "a97e3fdac16561a0470f3149902fda6cf5230a4712061382dd08b74d32932b4a"
+    },
+    "after": {
+      "productFileCount": 228,
+      "productPhysicalLines": 83212,
+      "productManifestSha256": "307f65e807e8e0c5fc89c0306d68551122abf7a904b5d5ae82917733ff55481e",
+      "livingCorePhysicalLines": 82619,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 8212,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No credential, capability, terminal state, hash, table, column or replay boundary was added or relaxed.",
+    "No running Eva1 or Eva2 component was changed."
+  ]
+}
