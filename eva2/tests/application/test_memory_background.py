@@ -1,12 +1,20 @@
 from __future__ import annotations
 
+import ast
+from datetime import UTC, datetime
+from pathlib import Path
 from threading import Event
 import time
 from dataclasses import replace
 from types import SimpleNamespace
 
-from eva.application.memory import ConversationMemoryDocument
-from eva.application.memory import MemoryRetentionReceipt
+import pytest
+
+from eva.application.memory import (
+    BudgetedConversationMemoryWriter,
+    ConversationMemoryDocument,
+    MemoryRetentionReceipt,
+)
 from eva.application.memory_audience import (
     MemoryAudience,
     TelegramGroupConsentReference,
@@ -29,6 +37,134 @@ def _document() -> ConversationMemoryDocument:
         trust="direct_user",
         audience=MemoryAudience.private_person(principal_id="jaap"),
     )
+
+
+def test_no_production_memory_producer_calls_the_raw_provider_directly() -> None:
+    source_root = Path(__file__).resolve().parents[2] / "src" / "eva"
+    allowed_raw_boundaries = {
+        Path("application/memory.py"),
+        Path("application/memory_background.py"),
+    }
+    bypasses: list[str] = []
+
+    for source_path in sorted(source_root.rglob("*.py")):
+        relative_path = source_path.relative_to(source_root)
+        tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=source_path)
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Attribute)
+                and node.func.attr == "retain_conversation"
+                and relative_path not in allowed_raw_boundaries
+            ):
+                bypasses.append(f"{relative_path}:{node.lineno}")
+
+    assert bypasses == []
+
+
+def test_budgeted_writer_blocks_before_the_raw_memory_provider() -> None:
+    calls: list[str] = []
+    now = datetime(2026, 8, 29, 7, 0, tzinfo=UTC)
+
+    class Budget:
+        def admit_memory(self, document, *, now):  # type: ignore[no-untyped-def]
+            calls.append("admit")
+            return SimpleNamespace(
+                admitted=False,
+                retention_until=None,
+                reason="person_record_limit_reached",
+            )
+
+        def mark_retained(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError("blocked memory cannot be marked retained")
+
+    class Memory:
+        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+            calls.append("provider")
+            raise AssertionError("blocked memory cannot reach Hindsight")
+
+    writer = BudgetedConversationMemoryWriter(
+        Memory(),  # type: ignore[arg-type]
+        Budget(),  # type: ignore[arg-type]
+    )
+
+    with pytest.raises(ValueError, match="person_record_limit_reached"):
+        writer.retain_bounded(_document(), now=now)
+
+    assert calls == ["admit"]
+
+
+def test_budgeted_writer_sets_retention_and_marks_only_after_provider_success() -> None:
+    calls: list[str] = []
+    now = datetime(2026, 8, 29, 7, 0, tzinfo=UTC)
+    document = _document()
+    receipt = MemoryRetentionReceipt(
+        bank_id="eva2-bank",
+        document_id=document.document_id,
+        content_sha256="a" * 64,
+    )
+
+    class Budget:
+        def admit_memory(self, submitted, *, now):  # type: ignore[no-untyped-def]
+            assert submitted == document
+            calls.append("admit")
+            return SimpleNamespace(
+                admitted=True,
+                retention_until="2026-09-05T07:00:00Z",
+                reason="reserved",
+            )
+
+        def mark_retained(self, submitted, stored, *, now):  # type: ignore[no-untyped-def]
+            assert submitted.retention_until == "2026-09-05T07:00:00Z"
+            assert stored is receipt
+            calls.append("marked")
+
+    class Memory:
+        def retain_conversation(self, submitted):  # type: ignore[no-untyped-def]
+            assert submitted.retention_until == "2026-09-05T07:00:00Z"
+            calls.append("provider")
+            return receipt
+
+    writer = BudgetedConversationMemoryWriter(
+        Memory(),  # type: ignore[arg-type]
+        Budget(),  # type: ignore[arg-type]
+    )
+
+    assert writer.retain_bounded(document, now=now) is receipt
+    assert calls == ["admit", "provider", "marked"]
+
+
+def test_budgeted_writer_does_not_mark_a_failed_provider_write() -> None:
+    calls: list[str] = []
+    now = datetime(2026, 8, 29, 7, 0, tzinfo=UTC)
+
+    class Budget:
+        def admit_memory(self, document, *, now):  # type: ignore[no-untyped-def]
+            calls.append("admit")
+            return SimpleNamespace(
+                admitted=True,
+                retention_until="2026-09-05T07:00:00Z",
+                reason="reserved",
+            )
+
+        def mark_retained(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            calls.append("marked")
+
+    class Memory:
+        def retain_conversation(self, submitted):  # type: ignore[no-untyped-def]
+            assert submitted.retention_until == "2026-09-05T07:00:00Z"
+            calls.append("provider")
+            raise RuntimeError("temporary Hindsight failure")
+
+    writer = BudgetedConversationMemoryWriter(
+        Memory(),  # type: ignore[arg-type]
+        Budget(),  # type: ignore[arg-type]
+    )
+
+    with pytest.raises(RuntimeError, match="temporary Hindsight failure"):
+        writer.retain_bounded(_document(), now=now)
+
+    assert calls == ["admit", "provider"]
 
 
 def test_retain_is_fire_and_forget_and_reflect_waits_for_idle() -> None:

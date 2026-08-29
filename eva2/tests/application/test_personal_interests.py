@@ -76,7 +76,8 @@ def test_exploration_is_committed_before_hindsight_projection() -> None:
             return result
 
     class Memory:
-        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+        def retain_bounded(self, document, *, now):  # type: ignore[no-untyped-def]
+            assert now == NOW
             order.append("retained")
             documents.append(document)
 
@@ -119,7 +120,8 @@ def test_crash_after_result_retries_projection_without_second_model_call() -> No
             raise AssertionError("model must not run twice")
 
     class Memory:
-        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+        def retain_bounded(self, document, *, now):  # type: ignore[no-untyped-def]
+            assert now == NOW
             return None
 
     store = Store()
@@ -170,7 +172,8 @@ def test_prototype_bytes_are_committed_before_memory_claims_they_exist() -> None
             return prototype
 
     class Memory:
-        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+        def retain_bounded(self, document, *, now):  # type: ignore[no-untyped-def]
+            assert now == NOW
             assert prototype.content_sha256 in document.content
             order.append("retained")
 
@@ -234,7 +237,8 @@ def test_release_bundle_is_reproducible_and_committed_before_claim() -> None:
             return listing
 
     class Memory:
-        def retain_conversation(self, document):  # type: ignore[no-untyped-def]
+        def retain_bounded(self, document, *, now):  # type: ignore[no-untyped-def]
+            assert now == NOW
             assert committed[0].content_sha256 in document.content
             assert "nog niet gepubliceerd" in document.content
             order.append("retained")

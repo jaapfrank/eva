@@ -7,8 +7,8 @@ write authority through this module.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from datetime import datetime
+from dataclasses import dataclass, replace
+from datetime import UTC, datetime
 import re
 from typing import Literal, Protocol
 
@@ -247,6 +247,71 @@ class SemanticMemoryProviderPort(Protocol):
     ) -> object: ...
 
 
+class MemoryStorageAdmissionPort(Protocol):
+    """Minimum result needed from a durable memory-storage admission."""
+
+    admitted: bool
+    retention_until: str | None
+    reason: str
+
+
+class ConversationMemoryStorageBudgetPort(Protocol):
+    """Provider-neutral budget boundary used before a semantic-memory write."""
+
+    def admit_memory(
+        self, document: ConversationMemoryDocument, *, now: datetime
+    ) -> MemoryStorageAdmissionPort: ...
+
+    def mark_retained(
+        self,
+        document: ConversationMemoryDocument,
+        receipt: MemoryRetentionReceipt,
+        *,
+        now: datetime,
+    ) -> object: ...
+
+
+class BudgetedConversationMemoryWriter:
+    """The only direct semantic-memory writer exposed to runtime producers.
+
+    The raw provider deliberately has ``retain_conversation`` while this writer
+    exposes ``retain_bounded``.  Producers cannot accidentally satisfy this
+    boundary by receiving Hindsight directly.
+    """
+
+    def __init__(
+        self,
+        memory: SemanticMemoryProviderPort,
+        budget: ConversationMemoryStorageBudgetPort | None,
+    ) -> None:
+        self._memory = memory
+        self._budget = budget
+
+    @staticmethod
+    def _require_now(now: datetime) -> datetime:
+        if now.tzinfo is None or now.utcoffset() != UTC.utcoffset(now):
+            raise ValueError("memory writer time must be timezone-aware UTC")
+        if now.microsecond:
+            raise ValueError("memory writer time must use whole seconds")
+        return now
+
+    def retain_bounded(
+        self, document: ConversationMemoryDocument, *, now: datetime
+    ) -> MemoryRetentionReceipt:
+        now = self._require_now(now)
+        if self._budget is None:
+            return self._memory.retain_conversation(document)
+        admission = self._budget.admit_memory(document, now=now)
+        if not admission.admitted:
+            raise ValueError(f"memory storage blocked: {admission.reason}")
+        if admission.retention_until is None:
+            raise RuntimeError("memory storage admission lacks a retention deadline")
+        admitted = replace(document, retention_until=admission.retention_until)
+        receipt = self._memory.retain_conversation(admitted)
+        self._budget.mark_retained(admitted, receipt, now=now)
+        return receipt
+
+
 class MemoryRepository(Protocol):
     def remember(self, command: RememberFact) -> MemoryWriteReceipt: ...
 
@@ -412,6 +477,8 @@ class MemoryAuthority:
 
 __all__ = [
     "ConversationMemoryDocument",
+    "BudgetedConversationMemoryWriter",
+    "ConversationMemoryStorageBudgetPort",
     "CurrentMemoryConflict",
     "ExpectedCurrentFact",
     "InvalidMemoryAssertion",
@@ -419,6 +486,7 @@ __all__ = [
     "MemoryAuthorityError",
     "MemoryRepository",
     "MemoryRetentionReceipt",
+    "MemoryStorageAdmissionPort",
     "MemoryWriteReceipt",
     "PresenceMemory",
     "RecallCurrentFacts",

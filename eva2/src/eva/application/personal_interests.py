@@ -208,7 +208,9 @@ class PersonalInterestModel(Protocol):
 
 
 class PersonalInterestMemory(Protocol):
-    def retain_conversation(self, document: ConversationMemoryDocument) -> object: ...
+    def retain_bounded(
+        self, document: ConversationMemoryDocument, *, now: datetime
+    ) -> object: ...
 
 
 class PersonalInterestWorker:
@@ -255,7 +257,7 @@ class PersonalInterestWorker:
         claim = completed.claim
         exploration = completed.exploration
         timestamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        self._memory.retain_conversation(
+        self._memory.retain_bounded(
             ConversationMemoryDocument(
                 tenant_id=claim.tenant_id,
                 installation_id=claim.installation_id,
@@ -275,7 +277,8 @@ class PersonalInterestWorker:
                 privacy_class="internal",
                 trust="model_inference_unconfirmed",
                 audience=MemoryAudience.private_person(principal_id=claim.principal_id),
-            )
+            ),
+            now=now,
         )
         self._store.mark_projected(completed, now=now)
 
@@ -347,7 +350,7 @@ class PersonalPrototypeWorker:
         interest = completed.claim.completed_exploration.claim
         prototype = completed.prototype
         timestamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        self._memory.retain_conversation(
+        self._memory.retain_bounded(
             ConversationMemoryDocument(
                 tenant_id=interest.tenant_id,
                 installation_id=interest.installation_id,
@@ -368,7 +371,8 @@ class PersonalPrototypeWorker:
                 audience=MemoryAudience.private_person(
                     principal_id=interest.principal_id
                 ),
-            )
+            ),
+            now=now,
         )
         self._store.mark_projected(completed, now=now)
 
@@ -444,7 +448,7 @@ class PersonalProductReleaseWorker:
         interest = prototype_claim.completed_exploration.claim
         release = completed.release
         timestamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        self._memory.retain_conversation(
+        self._memory.retain_bounded(
             ConversationMemoryDocument(
                 tenant_id=interest.tenant_id,
                 installation_id=interest.installation_id,
@@ -466,7 +470,8 @@ class PersonalProductReleaseWorker:
                 audience=MemoryAudience.private_person(
                     principal_id=interest.principal_id
                 ),
-            )
+            ),
+            now=now,
         )
         self._store.mark_projected(completed, now=now)
 

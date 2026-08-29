@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 import hashlib
 import json
@@ -116,11 +116,13 @@ from eva.application.advanced_tasks import (
     verify_localtuya_canary_readback,
 )
 from eva.application.memory import (
+    BudgetedConversationMemoryWriter,
     ConversationMemoryDocument,
     MemoryRetentionReceipt,
     PresenceMemory,
     RecallCurrentFacts,
-    SemanticMemoryProviderError, SemanticMemoryProviderPort,
+    SemanticMemoryProviderError,
+    SemanticMemoryProviderPort,
 )
 from eva.application.memory_audience import MemoryAudience
 from eva.application.people_memory_overview import (
@@ -685,6 +687,9 @@ class PostgresHindsightMemoryRuntime:
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
         self._memory_storage_budget = memory_storage_budget
+        self._memory_writer = BudgetedConversationMemoryWriter(
+            memory, memory_storage_budget
+        )
 
     def admit_telegram_canary(
         self,
@@ -893,18 +898,8 @@ class PostgresHindsightMemoryRuntime:
         return self._memory.recall_for_presence(query)
 
     def retain(self, document: ConversationMemoryDocument) -> MemoryRetentionReceipt:
-        if self._memory_storage_budget is None:
-            return self._memory.retain_conversation(document)
         now = datetime.now(tz=UTC).replace(microsecond=0)
-        admission = self._memory_storage_budget.admit_memory(document, now=now)
-        if not admission.admitted:
-            raise ValueError(f"memory storage blocked: {admission.reason}")
-        if admission.retention_until is None:
-            raise RuntimeError("memory storage admission lacks a retention deadline")
-        admitted = replace(document, retention_until=admission.retention_until)
-        receipt = self._memory.retain_conversation(admitted)
-        self._memory_storage_budget.mark_retained(admitted, receipt, now=now)
-        return receipt
+        return self._memory_writer.retain_bounded(document, now=now)
 
     def admit_turn_audience(self, turn: ConversationTurn) -> None:
         """Revalidate a connector's group grant at the core boundary."""
@@ -2080,6 +2075,7 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
         )
     )
+    memory_writer = BudgetedConversationMemoryWriter(memory, storage_budget)
     prototype_store = PostgresPersonalPrototypeStore(
         engine, lease_seconds=settings.personal_interest_lease_seconds
     )
@@ -2095,14 +2091,16 @@ def create_runtime_app() -> FastAPI:
                 engine, lease_seconds=settings.personal_interest_lease_seconds
             ),
             model,
-            memory,
+            memory_writer,
         )
         prototype_worker = PersonalPrototypeWorker(
             prototype_store,
             model,
-            memory,
+            memory_writer,
         )
-        release_worker = PersonalProductReleaseWorker(release_store, model, memory)
+        release_worker = PersonalProductReleaseWorker(
+            release_store, model, memory_writer
+        )
         decision_worker = (
             None
             if settings.background_principal_id is None or sensory_store is None
