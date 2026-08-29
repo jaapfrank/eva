@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fastapi.testclient import TestClient
+import pytest
 
 from eva.adapters.api.installer_wizard import (
     InstallerBootstrap,
@@ -14,7 +16,11 @@ from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
-from eva.operations.installer_secret_store import InstallerSecretStore
+from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
+from eva.operations.installer_secret_store import (
+    InstallerSecretStore,
+    InstallerSecretStoreError,
+)
 
 
 def _receipt(*, status: str = "blocked") -> dict[str, object]:
@@ -45,6 +51,7 @@ def _client(
     profile_workflow: InstallerProfileWorkflow | None = None,
     capability_workflow: InstallerCapabilityWorkflow | None = None,
     secret_store: InstallerSecretStore | None = None,
+    secret_lifecycle: InstallerSecretLifecycle | None = None,
 ) -> TestClient:
     return TestClient(
         create_installer_wizard(
@@ -54,6 +61,7 @@ def _client(
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
             secret_store=secret_store,
+            secret_lifecycle=secret_lifecycle,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -998,3 +1006,187 @@ def test_wizard_rejects_oversized_or_blocked_secret_intake(
     )
     assert oversized.status_code == 413
     assert list(secret_workspace.iterdir()) == []
+
+
+def test_wizard_rotates_and_removes_secret_without_returning_either_value(
+    private_tmp_path: Path,
+) -> None:
+    capability_workspace = private_tmp_path / "lifecycle-capabilities"
+    secret_workspace = private_tmp_path / "lifecycle-secrets"
+    evidence_workspace = private_tmp_path / "lifecycle-evidence"
+    for path in (capability_workspace, secret_workspace, evidence_workspace):
+        path.mkdir(mode=0o700)
+    capabilities = InstallerCapabilityWorkflow(
+        workspace=capability_workspace,
+        clock=lambda: "2026-08-29T08:00:00Z",
+    )
+    secrets = InstallerSecretStore(
+        workspace=secret_workspace,
+        clock=lambda: "2026-08-29T08:01:00Z",
+    )
+    lifecycle = InstallerSecretLifecycle(
+        capability_workflow=capabilities,
+        secret_store=secrets,
+        evidence_workspace=evidence_workspace,
+        clock=lambda: "2026-08-29T08:02:00Z",
+    )
+    old_secret = "synthetic-old-telegram-token-123456"
+    new_secret = "synthetic-new-telegram-token-654321"
+    capabilities.select(step_id="telegram", wanted=True)
+    secrets.store(slot_id="telegram", secret=old_secret)
+    capabilities.record_verification(
+        step_id="telegram", outcome="ready", evidence_sha256="a" * 64
+    )
+    bootstrap = InstallerBootstrap(token="z" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=capabilities,
+        secret_store=secrets,
+        secret_lifecycle=lifecycle,
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "z" * 43}).status_code
+        == 204
+    )
+    page = client.get("/")
+    assert "Toegang vervangen" in page.text
+    assert "Koppeling losmaken" in page.text
+    assert "window.confirm" in page.text
+    status = client.get("/internal/v1/onboarding/secrets/status").json()
+    assert status["lifecycle_enabled"] is True
+    origin = {"origin": "http://127.0.0.1"}
+    denied = client.post(
+        "/internal/v1/onboarding/secrets/telegram/rotate",
+        json={"secret": new_secret, "confirmation": "TOEGANG VERVANGEN"},
+        headers={"origin": "http://evil.invalid"},
+    )
+    assert denied.status_code == 403
+    unconfirmed = client.post(
+        "/internal/v1/onboarding/secrets/telegram/rotate",
+        json={"secret": new_secret, "confirmation": "ja"},
+        headers=origin,
+    )
+    assert unconfirmed.status_code == 422
+    rotated = client.post(
+        "/internal/v1/onboarding/secrets/telegram/rotate",
+        json={"secret": new_secret, "confirmation": "TOEGANG VERVANGEN"},
+        headers=origin,
+    )
+    assert rotated.status_code == 200
+    assert rotated.json()["operation"] == "rotate"
+    assert rotated.json()["generation"] == 2
+    assert rotated.json()["secret_returned"] is False
+    assert old_secret not in rotated.text
+    assert new_secret not in rotated.text
+    assert capabilities.status().step("telegram").state == "blocked"
+    assert secrets.read_secret(slot_id="telegram") == new_secret.encode()
+
+    removed = client.post(
+        "/internal/v1/onboarding/secrets/telegram/remove",
+        json={"confirmation": "KOPPELING LOSMAKEN"},
+        headers=origin,
+    )
+    assert removed.status_code == 200
+    assert removed.json()["operation"] == "remove"
+    assert removed.json()["state"] == "missing"
+    assert removed.json()["secret_returned"] is False
+    assert old_secret not in removed.text
+    assert new_secret not in removed.text
+    telegram = next(
+        item
+        for item in client.get("/internal/v1/onboarding/secrets/status").json()[
+            "slots"
+        ]
+        if item["slot_id"] == "telegram"
+    )
+    assert telegram["state"] == "missing"
+
+
+def test_wizard_recovers_interrupted_rotation_after_new_server(
+    private_tmp_path: Path, monkeypatch
+) -> None:
+    capability_workspace = private_tmp_path / "recovery-capabilities"
+    secret_workspace = private_tmp_path / "recovery-secrets"
+    evidence_workspace = private_tmp_path / "recovery-evidence"
+    for path in (capability_workspace, secret_workspace, evidence_workspace):
+        path.mkdir(mode=0o700)
+    capabilities = InstallerCapabilityWorkflow(workspace=capability_workspace)
+    secrets = InstallerSecretStore(workspace=secret_workspace)
+    lifecycle = InstallerSecretLifecycle(
+        capability_workflow=capabilities,
+        secret_store=secrets,
+        evidence_workspace=evidence_workspace,
+    )
+    capabilities.select(step_id="model_provider", wanted=True)
+    secrets.store(
+        slot_id="model_provider", secret="synthetic-old-model-secret-123456"
+    )
+    capabilities.record_verification(
+        step_id="model_provider", outcome="ready", evidence_sha256="b" * 64
+    )
+    evidence, _revision, _head = lifecycle._invalidate(
+        slot_id="model_provider",
+        operation="rotate",
+        from_generation=1,
+        to_generation=2,
+    )
+    confirm = lifecycle._confirm_invalidation(
+        slot_id="model_provider",
+        evidence_sha256=evidence,
+        from_generation=1,
+        to_generation=2,
+    )
+    real_replace = os.replace
+
+    def interrupt(source: object, destination: object) -> None:
+        if str(source).endswith(".rotation-next"):
+            raise OSError("synthetic interruption")
+        real_replace(source, destination)
+
+    monkeypatch.setattr(os, "replace", interrupt)
+    with pytest.raises(InstallerSecretStoreError, match="needs recovery"):
+        secrets.rotate(
+            slot_id="model_provider",
+            secret="synthetic-new-model-secret-654321",
+            invalidate=confirm,
+        )
+    monkeypatch.setattr(os, "replace", real_replace)
+
+    resumed_lifecycle = InstallerSecretLifecycle(
+        capability_workflow=InstallerCapabilityWorkflow(
+            workspace=capability_workspace
+        ),
+        secret_store=InstallerSecretStore(workspace=secret_workspace),
+        evidence_workspace=evidence_workspace,
+    )
+    bootstrap = InstallerBootstrap(token="w" * 43, created_at=1.0, clock=lambda: 1.0)
+    client = _client(
+        bootstrap,
+        receipt=_receipt(status="ready"),
+        capability_workflow=resumed_lifecycle.capability_workflow,
+        secret_store=resumed_lifecycle.secret_store,
+        secret_lifecycle=resumed_lifecycle,
+    )
+    assert (
+        client.post("/internal/v1/bootstrap", json={"token": "w" * 43}).status_code
+        == 204
+    )
+    status = client.get("/internal/v1/onboarding/secrets/status")
+    assert "synthetic-new-model" not in status.text
+    model = next(
+        item for item in status.json()["slots"] if item["slot_id"] == "model_provider"
+    )
+    assert model["state"] == "needs_help"
+    recovered = client.post(
+        "/internal/v1/onboarding/secrets/model_provider/recover",
+        json={"confirmation": "WIJZIGING HERSTELLEN"},
+        headers={"origin": "http://127.0.0.1"},
+    )
+    assert recovered.status_code == 200
+    assert recovered.json()["operation"] == "recover"
+    assert recovered.json()["generation"] == 2
+    assert recovered.json()["secret_returned"] is False
+    assert resumed_lifecycle.secret_store.read_secret(slot_id="model_provider") == (
+        b"synthetic-new-model-secret-654321"
+    )

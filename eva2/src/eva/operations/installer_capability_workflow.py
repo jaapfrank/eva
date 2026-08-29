@@ -54,6 +54,7 @@ CAPABILITY_SPECS = (
     CapabilitySpec("budgets", True),
 )
 _SPEC_BY_ID = {item.step_id: item for item in CAPABILITY_SPECS}
+_UNSET = object()
 
 
 @dataclass(frozen=True, slots=True)
@@ -426,6 +427,8 @@ class InstallerCapabilityWorkflow:
         step_id: object,
         outcome: object,
         evidence_sha256: object,
+        expected_revision: object = _UNSET,
+        expected_head_sha256: object = _UNSET,
     ) -> InstallerCapabilityTransition:
         if not isinstance(step_id, str) or step_id not in _SPEC_BY_ID:
             raise InstallerCapabilityWorkflowError(
@@ -436,9 +439,33 @@ class InstallerCapabilityWorkflow:
                 "installer capability verification outcome is invalid"
             )
         evidence = _sha256(evidence_sha256)
+        if (expected_revision is _UNSET) != (expected_head_sha256 is _UNSET):
+            raise InstallerCapabilityWorkflowError(
+                "capability verification expectation is incomplete"
+            )
+        checked_revision: int | None = None
+        checked_head: str | None = None
+        if expected_revision is not _UNSET:
+            if (
+                not isinstance(expected_revision, int)
+                or isinstance(expected_revision, bool)
+                or expected_revision < 0
+            ):
+                raise InstallerCapabilityWorkflowError(
+                    "capability verification revision is invalid"
+                )
+            checked_revision = expected_revision
+            checked_head = _sha256(expected_head_sha256, optional=True)
         assert evidence is not None and isinstance(outcome, str)
         with self._lock():
             events, status = self._load()
+            if checked_revision is not None and (
+                status.revision != checked_revision
+                or status.head_sha256 != checked_head
+            ):
+                raise InstallerCapabilityWorkflowError(
+                    "capability state changed before verification"
+                )
             current = status.step(step_id)
             if current.state == outcome and current.evidence_sha256 is not None:
                 if hmac.compare_digest(current.evidence_sha256, evidence):

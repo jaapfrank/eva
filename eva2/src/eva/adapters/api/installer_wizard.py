@@ -60,6 +60,7 @@ from eva.operations.installer_provider_verification import (
     InstallerProviderVerifier,
 )
 from eva.operations.installer_secret_store import InstallerSecretStore
+from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
 
 
 _COOKIE = "eva_installer_session"
@@ -262,6 +263,7 @@ def create_installer_wizard(
     provider_verifier: InstallerProviderVerifier | None = None,
     provider_configuration_store: InstallerProviderConfigurationStore | None = None,
     configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
+    secret_lifecycle: InstallerSecretLifecycle | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -291,6 +293,14 @@ def create_installer_wizard(
         or provider_verifier.secret_store.workspace != secret_store.workspace
     ):
         raise ValueError("installer provider verifier uses different workspaces")
+    if secret_lifecycle is not None and (
+        capability_workflow is None
+        or secret_store is None
+        or secret_lifecycle.capability_workflow.workspace
+        != capability_workflow.workspace
+        or secret_lifecycle.secret_store.workspace != secret_store.workspace
+    ):
+        raise ValueError("installer secret lifecycle uses different workspaces")
     provider_verification_enabled = (
         provider_verifier is not None and receipt["status"] == "ready"
     )
@@ -415,6 +425,7 @@ def create_installer_wizard(
         app,
         store=secret_store,
         capability_workflow=capability_workflow,
+        lifecycle=secret_lifecycle,
         enabled=secret_enabled,
         require_read=require_installer_read,
         require_write=require_installer_write,

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from threading import Lock
 from typing import Callable, Mapping
 
 from fastapi import FastAPI, HTTPException, Request
@@ -18,6 +19,11 @@ from eva.operations.installer_secret_store import (
     InstallerSecretSlotStatus,
     InstallerSecretStore,
     InstallerSecretStoreError,
+)
+from eva.operations.installer_secret_lifecycle import (
+    InstallerSecretLifecycle,
+    InstallerSecretLifecycleError,
+    InstallerSecretLifecycleResult,
 )
 
 
@@ -49,6 +55,25 @@ INSTALLER_SECRET_SCRIPT = r"""
         (item.state === 'present' ? 'privé bewaard' :
          item.state === 'needs_help' ? 'hulp nodig' : 'nog leeg');
       list.append(row);
+      if (payload.lifecycle_enabled && item.state === 'present') {
+        const replacement = document.createElement('input');
+        replacement.type = 'password'; replacement.minLength = 16;
+        replacement.maxLength = 8192; replacement.autocomplete = 'new-password';
+        replacement.spellcheck = false; replacement.dataset.rotateSecret = item.slot_id;
+        replacement.placeholder = 'Nieuwe toegang';
+        const rotate = document.createElement('button');
+        rotate.type = 'button'; rotate.dataset.rotate = item.slot_id;
+        rotate.textContent = 'Toegang vervangen';
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.dataset.remove = item.slot_id;
+        remove.textContent = 'Koppeling losmaken';
+        row.append(replacement, rotate, remove);
+      } else if (payload.lifecycle_enabled && item.state === 'needs_help') {
+        const recover = document.createElement('button');
+        recover.type = 'button'; recover.dataset.recover = item.slot_id;
+        recover.textContent = 'Onderbroken wijziging herstellen';
+        row.append(recover);
+      }
       if (enabled && payload.enabled && item.eligible && item.state === 'missing') {
         const option = document.createElement('option');
         option.value = item.slot_id; option.textContent = item.label; slot.append(option);
@@ -85,6 +110,46 @@ INSTALLER_SECRET_SCRIPT = r"""
       message('De toegang kon niet veilig worden bewaard. Er wordt niets getoond.');
     }
   });
+  list.addEventListener('click', async (event) => {
+    const rotate = event.target.closest('button[data-rotate]');
+    const remove = event.target.closest('button[data-remove]');
+    const recover = event.target.closest('button[data-recover]');
+    const control = rotate || remove || recover;
+    if (!control) return;
+    const slotId = control.dataset.rotate || control.dataset.remove || control.dataset.recover;
+    let action = rotate ? 'rotate' : remove ? 'remove' : 'recover';
+    let body;
+    if (rotate) {
+      const input = list.querySelector('input[data-rotate-secret="' + slotId + '"]');
+      const secret = input ? input.value : '';
+      if (input) input.value = '';
+      if (!window.confirm('De oude toegang direct vervangen?')) return;
+      body = {secret, confirmation: 'TOEGANG VERVANGEN'};
+    } else if (remove) {
+      if (!window.confirm('Deze koppeling echt losmaken?')) return;
+      body = {confirmation: 'KOPPELING LOSMAKEN'};
+    } else {
+      if (!window.confirm('De onderbroken wijziging veilig afmaken?')) return;
+      body = {confirmation: 'WIJZIGING HERSTELLEN'};
+    }
+    control.disabled = true;
+    try {
+      message(action === 'rotate' ? 'Toegang veilig vervangen…' :
+        action === 'remove' ? 'Koppeling veilig losmaken…' :
+        'Onderbroken wijziging herstellen…');
+      const response = await fetch('/internal/v1/onboarding/secrets/' +
+        encodeURIComponent(slotId) + '/' + action, {
+          method: 'POST', credentials: 'same-origin',
+          headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+        });
+      if (!response.ok) throw new Error('secret lifecycle rejected');
+      await refresh();
+      window.dispatchEvent(new Event('eva-installer-state-changed'));
+    } catch (_error) {
+      control.disabled = false;
+      message('De wijziging kon niet veilig worden afgerond.');
+    }
+  });
   refresh().catch(() => {
     slot.disabled = true; value.disabled = true; store.disabled = true;
     list.textContent = 'De secretstatus is niet leesbaar.'; message('Er is niets gewijzigd.');
@@ -118,6 +183,7 @@ def _payload(
     slots: tuple[InstallerSecretSlotStatus, ...] | None,
     *,
     capability_workflow: InstallerCapabilityWorkflow | None,
+    lifecycle: InstallerSecretLifecycle | None,
     enabled: bool,
 ) -> dict[str, object]:
     capability_states: dict[str, str] = {}
@@ -148,11 +214,12 @@ def _payload(
     return {
         "contract": "EvaInstallerSecretStatus/v1",
         "enabled": enabled,
+        "lifecycle_enabled": lifecycle is not None and enabled,
         "slots": rows,
         "non_claims": [
             "Status bevat nooit secretwaarde, secrethash, lengte of hostpad.",
             "Een bewaard secret maakt de koppeling nog niet ready.",
-            "Roteren en verwijderen zijn aparte, nog niet geopende handelingen.",
+            "Roteren, verwijderen en herstel schrijven alleen geschoonde receipts.",
         ],
     }
 
@@ -162,11 +229,14 @@ def register_installer_secret_routes(
     *,
     store: InstallerSecretStore | None,
     capability_workflow: InstallerCapabilityWorkflow | None,
+    lifecycle: InstallerSecretLifecycle | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
 ) -> None:
+    locks = {slot_id: Lock() for slot_id in SECRET_SLOTS}
+
     def statuses() -> tuple[InstallerSecretSlotStatus, ...] | None:
         if store is None:
             return None
@@ -184,6 +254,7 @@ def register_installer_secret_routes(
             _payload(
                 statuses(),
                 capability_workflow=capability_workflow,
+                lifecycle=lifecycle,
                 enabled=enabled,
             ),
             headers=security_headers,
@@ -235,6 +306,110 @@ def register_installer_secret_routes(
             },
             headers=security_headers,
         )
+
+    def lifecycle_target(slot_id: str) -> InstallerSecretLifecycle:
+        if lifecycle is None or not enabled or slot_id not in SECRET_SLOTS:
+            raise HTTPException(
+                status_code=409, detail="installer secret lifecycle is not enabled"
+            )
+        return lifecycle
+
+    def lifecycle_response(result: InstallerSecretLifecycleResult) -> JSONResponse:
+        return JSONResponse(
+            {
+                "capability_head_sha256": result.capability_head_sha256,
+                "capability_revision": result.capability_revision,
+                "completion_evidence_sha256": result.completion_evidence_sha256,
+                "contract": "EvaInstallerSecretLifecycleUiResult/v1",
+                "generation": result.generation,
+                "invalidation_evidence_sha256": (
+                    result.invalidation_evidence_sha256
+                ),
+                "operation": result.operation,
+                "secret_returned": False,
+                "slot_id": result.slot_id,
+                "state": result.state,
+            },
+            headers=security_headers,
+        )
+
+    async def lifecycle_body(request: Request) -> object:
+        return await _small_json(request)
+
+    @app.post("/internal/v1/onboarding/secrets/{slot_id}/rotate")
+    async def secret_rotate(request: Request, slot_id: str) -> JSONResponse:
+        require_write(request)
+        target = lifecycle_target(slot_id)
+        body = await lifecycle_body(request)
+        if (
+            not isinstance(body, dict)
+            or set(body) != {"confirmation", "secret"}
+            or body.get("confirmation") != "TOEGANG VERVANGEN"
+        ):
+            raise HTTPException(status_code=422, detail="secret rotation is invalid")
+        lock = locks[slot_id]
+        if not lock.acquire(blocking=False):
+            raise HTTPException(status_code=409, detail="secret change is already running")
+        try:
+            try:
+                result = target.rotate(slot_id=slot_id, secret=body.get("secret"))
+            except InstallerSecretLifecycleError as exc:
+                raise HTTPException(
+                    status_code=409, detail="secret rotation could not be completed"
+                ) from exc
+        finally:
+            lock.release()
+        return lifecycle_response(result)
+
+    @app.post("/internal/v1/onboarding/secrets/{slot_id}/remove")
+    async def secret_remove(request: Request, slot_id: str) -> JSONResponse:
+        require_write(request)
+        target = lifecycle_target(slot_id)
+        body = await lifecycle_body(request)
+        if (
+            not isinstance(body, dict)
+            or set(body) != {"confirmation"}
+            or body.get("confirmation") != "KOPPELING LOSMAKEN"
+        ):
+            raise HTTPException(status_code=422, detail="secret removal is invalid")
+        lock = locks[slot_id]
+        if not lock.acquire(blocking=False):
+            raise HTTPException(status_code=409, detail="secret change is already running")
+        try:
+            try:
+                result = target.remove(slot_id=slot_id)
+            except InstallerSecretLifecycleError as exc:
+                raise HTTPException(
+                    status_code=409, detail="secret removal could not be completed"
+                ) from exc
+        finally:
+            lock.release()
+        return lifecycle_response(result)
+
+    @app.post("/internal/v1/onboarding/secrets/{slot_id}/recover")
+    async def secret_recover(request: Request, slot_id: str) -> JSONResponse:
+        require_write(request)
+        target = lifecycle_target(slot_id)
+        body = await lifecycle_body(request)
+        if (
+            not isinstance(body, dict)
+            or set(body) != {"confirmation"}
+            or body.get("confirmation") != "WIJZIGING HERSTELLEN"
+        ):
+            raise HTTPException(status_code=422, detail="secret recovery is invalid")
+        lock = locks[slot_id]
+        if not lock.acquire(blocking=False):
+            raise HTTPException(status_code=409, detail="secret change is already running")
+        try:
+            try:
+                result = target.recover(slot_id=slot_id)
+            except InstallerSecretLifecycleError as exc:
+                raise HTTPException(
+                    status_code=409, detail="secret recovery could not be completed"
+                ) from exc
+        finally:
+            lock.release()
+        return lifecycle_response(result)
 
 
 __all__ = [

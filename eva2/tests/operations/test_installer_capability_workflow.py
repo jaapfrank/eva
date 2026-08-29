@@ -113,6 +113,32 @@ def test_blocked_verification_can_be_selected_again_and_later_become_ready(
     assert ready.revision == 4
 
 
+def test_verification_compare_and_swap_refuses_concurrent_workflow_change(
+    private_tmp_path: Path,
+) -> None:
+    workflow = _workflow(private_tmp_path)
+    workflow.select(step_id="telegram", wanted=True)
+    snapshot = workflow.status()
+    workflow.select(step_id="email", wanted=False)
+
+    with pytest.raises(InstallerCapabilityWorkflowError, match="state changed"):
+        workflow.record_verification(
+            step_id="telegram",
+            outcome="ready",
+            evidence_sha256="f" * 64,
+            expected_revision=snapshot.revision,
+            expected_head_sha256=snapshot.head_sha256,
+        )
+    assert workflow.status().step("telegram").state == "selected"
+    with pytest.raises(InstallerCapabilityWorkflowError, match="incomplete"):
+        workflow.record_verification(
+            step_id="telegram",
+            outcome="ready",
+            evidence_sha256="f" * 64,
+            expected_revision=workflow.status().revision,
+        )
+
+
 def test_required_steps_cannot_be_skipped_and_unknown_steps_are_rejected(
     private_tmp_path: Path,
 ) -> None:

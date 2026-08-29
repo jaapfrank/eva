@@ -43,6 +43,10 @@ class InstallerSecretInputError(InstallerSecretStoreError):
     """Raised when a browser-supplied opaque secret is invalid."""
 
 
+class InstallerSecretNotAvailableError(InstallerSecretStoreError):
+    """Raised when a valid secret bundle has not been retained for a slot."""
+
+
 @dataclass(frozen=True, slots=True)
 class InstallerSecretSlotStatus:
     slot_id: str
@@ -610,14 +614,18 @@ class InstallerSecretStore:
             self._sync_workspace()
             return self._status(checked_slot)
 
-    def read_secret(self, *, slot_id: object) -> bytes:
-        """Return secret bytes only to an operator-side provider verifier."""
+    def read_secret_with_status(
+        self, *, slot_id: object
+    ) -> tuple[InstallerSecretSlotStatus, bytes]:
+        """Atomically bind returned bytes to their retained generation."""
 
         checked_slot = _slot(slot_id)
         with self._lock():
             status = self._status(checked_slot)
             if status.state != "present":
-                raise InstallerSecretStoreError("installer secret is not available")
+                raise InstallerSecretNotAvailableError(
+                    "installer secret is not available"
+                )
             try:
                 raw = read_private_artifact(
                     self._bundle(checked_slot) / "secret.bin",
@@ -633,12 +641,19 @@ class InstallerSecretStore:
                 raise InstallerSecretStoreError(
                     "installer secret content is invalid"
                 ) from exc
-            return raw
+            return status, raw
+
+    def read_secret(self, *, slot_id: object) -> bytes:
+        """Return secret bytes only to an operator-side provider verifier."""
+
+        _, raw = self.read_secret_with_status(slot_id=slot_id)
+        return raw
 
 
 __all__ = [
     "SECRET_SLOTS",
     "InstallerSecretInputError",
+    "InstallerSecretNotAvailableError",
     "InstallerSecretSlotStatus",
     "InstallerSecretStore",
     "InstallerSecretStoreError",

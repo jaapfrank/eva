@@ -47,6 +47,10 @@ from eva.operations.installer_secret_store import (
     InstallerSecretStore,
     InstallerSecretStoreError,
 )
+from eva.operations.installer_secret_lifecycle import (
+    InstallerSecretLifecycle,
+    InstallerSecretLifecycleError,
+)
 
 
 def _loopback_host(value: str) -> str:
@@ -130,6 +134,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
     secret_store = None
     provider_verifier = None
     provider_configuration_store = None
+    secret_lifecycle = None
     if all(path is not None for path in identity_paths):
         assert args.identity_workspace is not None
         try:
@@ -176,6 +181,13 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
                 ),
                 probes=probes,
             )
+            secret_lifecycle = InstallerSecretLifecycle(
+                capability_workflow=capability_workflow,
+                secret_store=secret_store,
+                evidence_workspace=_private_workspace(
+                    args.provider_evidence_workspace
+                ),
+            )
         if args.provider_configuration_workspace is not None:
             provider_configuration_store = InstallerProviderConfigurationStore(
                 workspace=_private_workspace(args.provider_configuration_workspace)
@@ -196,6 +208,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
         InstallerSecretStoreError,
         InstallerProviderVerificationError,
         InstallerProviderConfigurationError,
+        InstallerSecretLifecycleError,
         ValueError,
         OSError,
     ):
@@ -218,6 +231,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
             secret_store=secret_store,
             provider_verifier=provider_verifier,
             provider_configuration_store=provider_configuration_store,
+            secret_lifecycle=secret_lifecycle,
         ),
         host=args.host,
         port=args.port,

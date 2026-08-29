@@ -14,6 +14,7 @@ from eva.operations.installer_provider_verification import (
     InstallerProviderVerificationError,
     InstallerProviderVerifier,
 )
+from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
 from eva.operations.installer_secret_store import InstallerSecretStore
 
 
@@ -246,6 +247,39 @@ def test_capability_race_leaves_receipt_but_never_commits_ready(
     assert workflow.status().step("telegram").state == "skipped"
     assert workflow.status().step("telegram").evidence_sha256 is None
     assert len(list(evidence_workspace.iterdir())) == 1
+
+
+def test_secret_rotation_during_probe_cannot_revalidate_old_generation(
+    private_tmp_path: Path,
+) -> None:
+    probe = Probe(
+        InstallerProviderProbeObservation("telegram.get_me", "ready", "verified")
+    )
+    workflow, store, verifier, evidence_workspace = _fixture(private_tmp_path, probe)
+    workflow.select(step_id="telegram", wanted=True)
+    store.store(slot_id="telegram", secret="synthetic-old-token-123456789")
+    lifecycle = InstallerSecretLifecycle(
+        capability_workflow=workflow,
+        secret_store=store,
+        evidence_workspace=evidence_workspace,
+        clock=lambda: "2026-08-29T05:00:30Z",
+    )
+    original = probe.read_only_probe
+
+    def racing_probe(*, secret: memoryview, timeout_seconds: float):
+        lifecycle.rotate(
+            slot_id="telegram", secret="synthetic-new-token-987654321"
+        )
+        return original(secret=secret, timeout_seconds=timeout_seconds)
+
+    probe.read_only_probe = racing_probe  # type: ignore[method-assign]
+    with pytest.raises(InstallerProviderVerificationError, match="state changed"):
+        verifier.verify(slot_id="telegram")
+
+    capability = workflow.status().step("telegram")
+    assert capability.state == "blocked"
+    assert store.read_secret(slot_id="telegram") == b"synthetic-new-token-987654321"
+    assert len(list(evidence_workspace.iterdir())) == 3
 
 
 def test_ready_capability_cannot_be_reprobed_after_restart(

@@ -30,6 +30,7 @@ from eva.operations.installer_capability_workflow import (
 from eva.operations.installer_identity_storage import write_private_once
 from eva.operations.installer_secret_store import (
     SECRET_SLOTS,
+    InstallerSecretNotAvailableError,
     InstallerSecretStore,
     InstallerSecretStoreError,
 )
@@ -287,7 +288,9 @@ class InstallerProviderVerifier:
             self, "configuration_sha256_by_slot", MappingProxyType(configuration)
         )
 
-    def _preflight(self, slot_id: str) -> tuple[str, int, InstallerProviderProbe]:
+    def _preflight(
+        self, slot_id: str
+    ) -> tuple[str, int, InstallerProviderProbe, bytes, int, str | None]:
         if slot_id not in SECRET_SLOTS or slot_id not in _CHECK_IDS:
             raise InstallerProviderVerificationError(
                 "provider verification slot is invalid"
@@ -298,9 +301,9 @@ class InstallerProviderVerifier:
                 "provider verification probe is unavailable"
             )
         try:
-            capability = self.capability_workflow.status().step(slot_id)
-            secrets = self.secret_store.status()
-        except (InstallerCapabilityWorkflowError, InstallerSecretStoreError) as exc:
+            capability_status = self.capability_workflow.status()
+            capability = capability_status.step(slot_id)
+        except InstallerCapabilityWorkflowError as exc:
             raise InstallerProviderVerificationError(
                 "provider verification preflight is unavailable"
             ) from exc
@@ -308,7 +311,18 @@ class InstallerProviderVerifier:
             raise InstallerProviderVerificationError(
                 "capability must be selected before provider verification"
             )
-        secret_status = next(item for item in secrets if item.slot_id == slot_id)
+        try:
+            secret_status, raw_secret = self.secret_store.read_secret_with_status(
+                slot_id=slot_id
+            )
+        except InstallerSecretNotAvailableError as exc:
+            raise InstallerProviderVerificationError(
+                "provider verification secret is not available"
+            ) from exc
+        except InstallerSecretStoreError as exc:
+            raise InstallerProviderVerificationError(
+                "provider verification secret is unavailable"
+            ) from exc
         expected_reference = f"installer-secret://{slot_id}/v1"
         if (
             secret_status.state != "present"
@@ -318,7 +332,14 @@ class InstallerProviderVerifier:
             raise InstallerProviderVerificationError(
                 "provider verification secret is not available"
             )
-        return expected_reference, secret_status.generation, probe
+        return (
+            expected_reference,
+            secret_status.generation,
+            probe,
+            raw_secret,
+            capability_status.revision,
+            capability_status.head_sha256,
+        )
 
     def verify(
         self, *, slot_id: object, timeout_seconds: object = 10.0
@@ -338,13 +359,14 @@ class InstallerProviderVerifier:
                 "provider verification timeout is invalid"
             )
         checked_timeout = float(timeout_seconds)
-        reference, secret_generation, probe = self._preflight(slot_id)
-        try:
-            raw_secret = self.secret_store.read_secret(slot_id=slot_id)
-        except InstallerSecretStoreError as exc:
-            raise InstallerProviderVerificationError(
-                "provider verification secret is unavailable"
-            ) from exc
+        (
+            reference,
+            secret_generation,
+            probe,
+            raw_secret,
+            capability_revision,
+            capability_head_sha256,
+        ) = self._preflight(slot_id)
 
         started_at = _timestamp(self.clock())
         started_monotonic = self.monotonic()
@@ -456,6 +478,8 @@ class InstallerProviderVerifier:
                 step_id=slot_id,
                 outcome=observation.outcome,
                 evidence_sha256=evidence_sha256,
+                expected_revision=capability_revision,
+                expected_head_sha256=capability_head_sha256,
             )
         except InstallerCapabilityWorkflowError as exc:
             raise InstallerProviderVerificationError(
