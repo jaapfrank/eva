@@ -1,4 +1,4 @@
-"""Fail closed before a separate real-Telegram test ingress is started."""
+"""Host-side fail-closed checks for the separate real-Telegram test ingress."""
 
 from __future__ import annotations
 

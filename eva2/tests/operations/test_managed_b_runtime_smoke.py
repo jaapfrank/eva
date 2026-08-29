@@ -5,7 +5,7 @@ import subprocess
 import pytest
 
 from eva.operations.managed_b_candidate_image import CandidateImage
-from eva.operations.managed_b_runtime_smoke import run_candidate_runtime_smoke
+from tests.support.managed_b_runtime_smoke import run_candidate_runtime_smoke
 
 
 IMAGE = "sha256:" + "a" * 64
@@ -19,7 +19,7 @@ def test_runs_only_an_ephemeral_networkless_nonroot_container(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(
-        "eva.operations.managed_b_runtime_smoke.validate_offline_candidate_image",
+        "tests.support.managed_b_runtime_smoke.validate_offline_candidate_image",
         lambda _candidate, *, runner: {"status": "built_local_candidate"},
     )
     commands: list[list[str]] = []
@@ -42,7 +42,7 @@ def test_runs_only_an_ephemeral_networkless_nonroot_container(
 
 def test_refuses_unexpected_output(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
-        "eva.operations.managed_b_runtime_smoke.validate_offline_candidate_image",
+        "tests.support.managed_b_runtime_smoke.validate_offline_candidate_image",
         lambda _candidate, *, runner: {},
     )
 

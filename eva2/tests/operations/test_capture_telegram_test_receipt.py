@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from eva.adapters.postgres.operational_timeline import CheckpointState, TimelineEvent
-from eva.operations.telegram_test_preflight import TelegramTestPlan
+from tools.telegram_test_preflight import TelegramTestPlan
 import tools.capture_telegram_test_receipt as capture
 from tools.capture_telegram_test_receipt import build_receipt, _write_new_receipt
 

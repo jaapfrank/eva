@@ -103,7 +103,7 @@ lokale parent-image, een netwerkbuild en een Dockerfile met package-installatie.
 
    ```bash
    cd /home/administrator/project/Bottie-candidates/v2/eva2
-   sudo env PYTHONPATH=src:. python3 -m eva.operations.telegram_test_launch \
+   sudo env PYTHONPATH=src:. python3 -m tools.telegram_test_launch \
      --env-file /run/eva2-test/telegram-test.env
    ```
 

@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 from typing import NoReturn
 
-from eva.operations.telegram_test_preflight import (
+from tools.telegram_test_preflight import (
     TelegramTestPlan,
     load_telegram_test_plan,
     preflight_telegram_test,
@@ -17,7 +17,7 @@ from eva.operations.telegram_test_preflight import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "deploy" / "living-core" / "telegram-test-ingress.compose.yml"
 SUPPORT_MANIFEST = ROOT / "deploy" / "living-core" / "telegram-test-support.compose.yml"
 PROJECT_NAME = "eva2-telegram-native-test"

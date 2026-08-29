@@ -221,7 +221,7 @@ def prepare_test_config(
         "status": "prepared",
         "trusted_account_count": len(binding["bindings"]),
         "next_command": (
-            "PYTHONPATH=src:. python3 -m eva.operations.telegram_test_launch "
+            "PYTHONPATH=src:. python3 -m tools.telegram_test_launch "
             f"--env-file {TEST_ROOT / 'telegram-test.env'}"
         ),
         "nonclaims": [

@@ -1,4 +1,4 @@
-"""Ephemeral, networkless non-root smoke for an untagged managed-B candidate."""
+"""Test support for an ephemeral, networkless managed-B candidate smoke."""
 
 from __future__ import annotations
 

@@ -24,7 +24,7 @@ import subprocess
 from typing import Iterable, NoReturn
 from uuid import UUID
 
-from eva.operations.telegram_test_preflight import (
+from tools.telegram_test_preflight import (
     TEST_INGRESS_COMMAND,
     TEST_RUN_LABEL,
     TEST_RUN_VALUE,

@@ -11,10 +11,9 @@ import yaml
 from eva.operations import (
     telegram_test_core,
     telegram_test_ingress,
-    telegram_test_launch,
-    telegram_test_preflight,
 )
-from eva.operations.telegram_test_preflight import (
+from tools import telegram_test_launch, telegram_test_preflight
+from tools.telegram_test_preflight import (
     load_telegram_test_plan,
     preflight_telegram_test,
 )
