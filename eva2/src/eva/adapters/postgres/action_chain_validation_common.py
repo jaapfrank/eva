@@ -17,8 +17,30 @@ from eva.application.action_chain import (
     action_chain_thread_id,
 )
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.connector_rpc import (
+    ConnectorErrorResponse,
+    ConnectorInvokeSuccess,
+    ConnectorProtocolFailure,
+)
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ValidatedPlan
+
+
+def parse_provider_result(
+    value: object, *, kind: Literal["read", "effect"]
+) -> ConnectorInvokeSuccess | ConnectorErrorResponse | ConnectorProtocolFailure:
+    if not isinstance(value, dict):
+        detail = "absent" if kind == "read" else "not an object"
+        raise ValueError(f"provider result is {detail}")
+    result_type = {
+        "ConnectorInvokeSuccess/v1": ConnectorInvokeSuccess,
+        "ConnectorErrorResponse/v1": ConnectorErrorResponse,
+        "ConnectorProtocolFailure/v1": ConnectorProtocolFailure,
+    }.get(value.get("contract"))
+    if result_type is None:
+        detail = "not allowed" if kind == "read" else "unsupported"
+        raise ValueError(f"provider result contract is {detail}")
+    return result_type.model_validate(value)
 
 
 def validate_prepared_claim(

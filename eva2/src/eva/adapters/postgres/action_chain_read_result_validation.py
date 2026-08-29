@@ -10,20 +10,17 @@ from uuid import UUID
 import sqlalchemy as sa
 
 from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.action_chain_validation_common import parse_provider_result
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorManifest
 from eva.contracts.connector_rpc import (
-    ConnectorErrorResponse,
     ConnectorInitializeRequest,
     ConnectorInvokeRequest,
-    ConnectorInvokeSuccess,
-    ConnectorProtocolFailure,
 )
 from eva.contracts.execution import ReadAttempt, ReadObservation
 from eva.operations.action_chain_read_results import (
     ProjectedActionChainReadResult,
-    ProviderReadResult,
     project_action_chain_read_result,
 )
 
@@ -69,7 +66,9 @@ def validate_action_chain_read_terminal(
         manifest = ConnectorManifest.model_validate(
             current_event_data.get("connector_manifest")
         )
-        result = _provider_result(current_event_data.get("provider_result"))
+        result = parse_provider_result(
+            current_event_data.get("provider_result"), kind="read"
+        )
         call_started_at = _parse_timestamp(
             str(current_event_data.get("provider_call_started_at"))
         )
@@ -220,20 +219,6 @@ def _validate_evidence(
         or row.retention_until != retention_until
     ):
         raise corrupt("terminal read observation binding differs")
-
-
-def _provider_result(value: object) -> ProviderReadResult:
-    if not isinstance(value, dict):
-        raise ValueError("provider result is absent")
-    contract = value.get("contract")
-    result_type = {
-        "ConnectorInvokeSuccess/v1": ConnectorInvokeSuccess,
-        "ConnectorErrorResponse/v1": ConnectorErrorResponse,
-        "ConnectorProtocolFailure/v1": ConnectorProtocolFailure,
-    }.get(contract)
-    if result_type is None:
-        raise ValueError("provider result contract is not allowed")
-    return result_type.model_validate(value)
 
 
 __all__ = ["validate_action_chain_read_terminal"]

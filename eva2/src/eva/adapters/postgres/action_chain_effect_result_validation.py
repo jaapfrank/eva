@@ -10,6 +10,7 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 
 from eva.adapters.postgres.catalog import metadata
+from eva.adapters.postgres.action_chain_validation_common import parse_provider_result
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
     validate_action_chain_effect_readback_preparation,
 )
@@ -25,11 +26,8 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorEnvelope, ConnectorManifest
 from eva.contracts.connector_rpc import (
-    ConnectorErrorResponse,
     ConnectorInitializeRequest,
     ConnectorInvokeRequest,
-    ConnectorInvokeSuccess,
-    ConnectorProtocolFailure,
 )
 from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.execution import (
@@ -45,7 +43,6 @@ from eva.contracts.planning import ValidatedPlan
 from eva.application.effect_verification import EffectVerificationProjection
 from eva.operations.action_chain_effect_results import (
     ProjectedActionChainEffectResult,
-    ProviderEffectResult,
     project_action_chain_effect_result,
 )
 
@@ -400,7 +397,9 @@ def validate_action_chain_effect_terminal(
             capability_grant=capability_grant,
             credential_grant=credential_grant,
         )
-        result = _provider_result(current_event_data.get("provider_result"))
+        result = parse_provider_result(
+            current_event_data.get("provider_result"), kind="effect"
+        )
         observed_at = _parse_timestamp(
             current_event_data.get("provider_result_observed_at")
         )
@@ -593,20 +592,6 @@ def _validate_evidence_and_receipt(
         != canonical_sha256(receipt)
     ):
         raise corrupt("terminal effect receipt differs")
-
-
-def _provider_result(value: object) -> ProviderEffectResult:
-    if not isinstance(value, dict):
-        raise ValueError("provider result is not an object")
-    contract = value.get("contract")
-    model = {
-        "ConnectorInvokeSuccess/v1": ConnectorInvokeSuccess,
-        "ConnectorErrorResponse/v1": ConnectorErrorResponse,
-        "ConnectorProtocolFailure/v1": ConnectorProtocolFailure,
-    }.get(contract)
-    if model is None:
-        raise ValueError("provider result contract is unsupported")
-    return model.model_validate(value)
 
 
 def _build_exchange(
