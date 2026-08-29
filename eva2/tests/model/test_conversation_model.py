@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import base64
+from contextlib import contextmanager
+import hashlib
 from io import BytesIO
 import json
 import os
@@ -43,9 +45,10 @@ from eva.application.repository_improvements import (
     RepositoryFile,
     RepositorySnapshot,
 )
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.memory import MemoryRecall, RecalledFact
 from eva.contracts.planning import ConfirmedFact
+from eva.contracts.runtime_budget import RuntimeResourceBudget
 
 
 NOW = "2026-08-23T14:00:00Z"
@@ -225,6 +228,115 @@ def _write_access_lease(path: Path, access_token: str = "access") -> None:
     path.chmod(0o640)
 
 
+def _runtime_budget(
+    *, max_input_tokens: int = 12_000, max_output_tokens: int = 1_200
+) -> RuntimeResourceBudget:
+    values = {
+        "background_reflections_per_installation_day": 40,
+        "background_reflections_per_person_day": 4,
+        "contract": "EvaInstallerBudget/v1",
+        "external_monthly_spend_cap_eur_cents": 0,
+        "max_input_tokens": max_input_tokens,
+        "max_output_tokens": max_output_tokens,
+        "memory_bytes_per_person": 20_971_520,
+        "memory_records_per_person": 2_000,
+        "profile_context_tokens": 800,
+        "recall_context_tokens": 3_000,
+        "retention_days": 365,
+        "retrieval_nodes": 50,
+        "unknown_cost_policy": "block_autonomous_spend",
+    }
+    return RuntimeResourceBudget(
+        tenant_id="tenant:test",
+        installation_id="installation:test",
+        source_budget_sha256=hashlib.sha256(
+            canonical_json_bytes(values)
+        ).hexdigest(),
+        recall_context_tokens=3_000,
+        retrieval_nodes=50,
+        max_input_tokens=max_input_tokens,
+        max_output_tokens=max_output_tokens,
+        profile_context_tokens=800,
+        memory_records_per_person=2_000,
+        memory_bytes_per_person=20_971_520,
+        retention_days=365,
+        background_reflections_per_person_day=4,
+        background_reflections_per_installation_day=40,
+        external_monthly_spend_cap_eur_cents=0,
+    )
+
+
+@contextmanager
+def _budget_provider(
+    frames: bytes,
+) -> Iterator[tuple[str, list[dict[str, Any]]]]:
+    requests: list[dict[str, Any]] = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, _format: str, *_args: object) -> None:
+            pass
+
+        def do_POST(self) -> None:  # noqa: N802
+            size = int(self.headers["Content-Length"])
+            requests.append(json.loads(self.rfile.read(size)))
+            self.send_response(200)
+            self.send_header("Content-Type", "text/event-stream")
+            self.send_header("Content-Length", str(len(frames)))
+            self.end_headers()
+            self.wfile.write(frames)
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        host, port = server.server_address
+        yield f"http://{host}:{port}/responses", requests
+    finally:
+        server.shutdown()
+        thread.join(timeout=5)
+        server.server_close()
+
+
+def _budget_frames(
+    *,
+    input_tokens: int = 100,
+    output_tokens: int = 20,
+    status: str = "completed",
+    error: object = None,
+    include_usage: bool = True,
+    trailing_data: bool = False,
+) -> bytes:
+    usage = (
+        {
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "total_tokens": input_tokens + output_tokens,
+        }
+        if include_usage
+        else None
+    )
+    completed = json.dumps(
+        {
+            "response": {"error": error, "status": status, "usage": usage},
+            "type": "response.completed",
+        },
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    suffix = (
+        'data: {"type":"response.output_text.delta","delta":"te laat"}\n\n'
+        if trailing_data
+        else "data: [DONE]\n\n"
+    )
+    return (
+        "event: response.output_text.delta\n"
+        'data: {"type":"response.output_text.delta","delta":"Binnen grens."}\n\n'
+        "event: response.completed\n"
+        f"data: {completed}\n\n"
+        f"{suffix}"
+    ).encode()
+
+
 @pytest.fixture
 def model_server() -> Iterator[tuple[str, list[dict[str, Any]]]]:
     requests: list[dict[str, Any]] = []
@@ -259,6 +371,110 @@ def model_server() -> Iterator[tuple[str, list[dict[str, Any]]]]:
         server.shutdown()
         thread.join(timeout=5)
         server.server_close()
+
+
+def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
+    tmp_path: Path,
+) -> None:
+    with _budget_provider(_budget_frames()) as (endpoint, requests):
+        model = CodexConversationModel(
+            auth_file=tmp_path / "missing-auth.json",
+            endpoint=endpoint,
+            resource_budget=_runtime_budget(max_input_tokens=4_000),
+        )
+
+        with pytest.raises(ConversationModelError, match="input budget"):
+            model._request(  # noqa: SLF001 - this is the provider admission boundary
+                {"input": [{"content": "x" * 4_000, "role": "user"}]}
+            )
+
+    assert requests == []
+
+
+def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(
+    tmp_path: Path,
+) -> None:
+    with _budget_provider(_budget_frames()) as (endpoint, requests):
+        model = CodexConversationModel(
+            auth_file=tmp_path / "missing-auth.json",
+            endpoint=endpoint,
+            resource_budget=_runtime_budget(),
+        )
+
+        with pytest.raises(ConversationModelError, match="no verified price"):
+            model._request_autonomous(  # noqa: SLF001
+                {"input": [{"content": "kleine taak", "role": "user"}]},
+            )
+
+    assert requests == []
+
+
+def test_runtime_budget_records_measured_terminal_provider_usage(
+    tmp_path: Path,
+) -> None:
+    auth_file = tmp_path / "auth.json"
+    _write_access_lease(auth_file)
+    with _budget_provider(_budget_frames()) as (endpoint, requests):
+        model = CodexConversationModel(
+            auth_file=auth_file,
+            endpoint=endpoint,
+            resource_budget=_runtime_budget(),
+        )
+
+        text, action, usage = model._request_conversation(  # noqa: SLF001
+            {"input": [{"content": "hoi", "role": "user"}]}
+        )
+
+    assert text == "Binnen grens."
+    assert action is None
+    assert usage.measurement == "measured"
+    assert usage.input_tokens == 100
+    assert usage.output_tokens == 20
+    assert usage.model_attempts == 1
+    assert usage.tool_calls == 0
+    assert len(requests) == 1
+
+
+@pytest.mark.parametrize(
+    ("frames", "message"),
+    (
+        (_budget_frames(output_tokens=1_201), "output budget"),
+        (_budget_frames(input_tokens=12_001), "input budget"),
+        (
+            _budget_frames(status="incomplete"),
+            "completion status is invalid",
+        ),
+        (_budget_frames(trailing_data=True), "data after completion"),
+        (
+            (
+                "event: response.output_text.delta\n"
+                'data: {"type":"response.output_text.delta","delta":"geen usage"}\n\n'
+                "data: [DONE]\n\n"
+            ).encode(),
+            "usage is missing",
+        ),
+    ),
+)
+def test_runtime_budget_withholds_unverifiable_or_over_budget_replies(
+    tmp_path: Path,
+    frames: bytes,
+    message: str,
+) -> None:
+    auth_file = tmp_path / "auth.json"
+    _write_access_lease(auth_file)
+    with _budget_provider(frames) as (endpoint, requests):
+        model = CodexConversationModel(
+            auth_file=auth_file,
+            endpoint=endpoint,
+            resource_budget=_runtime_budget(),
+        )
+
+        with pytest.raises(ConversationModelError, match=message):
+            model._request_conversation(  # noqa: SLF001
+                {"input": [{"content": "hoi", "role": "user"}]}
+            )
+
+    assert len(requests) == 1
 
 
 def _memory() -> PresenceMemory:

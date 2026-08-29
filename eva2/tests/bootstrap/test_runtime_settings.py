@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import hashlib
+import json
 from pathlib import Path
 from uuid import UUID
 
@@ -9,6 +11,52 @@ from eva.adapters.model.conversation import ConversationCredentialStatus
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime, RuntimeSettings
 from eva.contracts.workboard import WorkBoard
+from eva.contracts.canonical_json import canonical_json_bytes
+from eva.contracts.runtime_budget import RuntimeResourceBudget
+
+
+def _write_runtime_budget(
+    path: Path,
+    *,
+    tenant_id: str = "tenant:test",
+    installation_id: str = "installation:test",
+) -> RuntimeResourceBudget:
+    budget_values = {
+        "background_reflections_per_installation_day": 40,
+        "background_reflections_per_person_day": 4,
+        "contract": "EvaInstallerBudget/v1",
+        "external_monthly_spend_cap_eur_cents": 0,
+        "max_input_tokens": 12_000,
+        "max_output_tokens": 1_200,
+        "memory_bytes_per_person": 20_971_520,
+        "memory_records_per_person": 2_000,
+        "profile_context_tokens": 800,
+        "recall_context_tokens": 3_000,
+        "retention_days": 365,
+        "retrieval_nodes": 50,
+        "unknown_cost_policy": "block_autonomous_spend",
+    }
+    budget = RuntimeResourceBudget(
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+        source_budget_sha256=hashlib.sha256(
+            canonical_json_bytes(budget_values)
+        ).hexdigest(),
+        recall_context_tokens=3_000,
+        retrieval_nodes=50,
+        max_input_tokens=12_000,
+        max_output_tokens=1_200,
+        profile_context_tokens=800,
+        memory_records_per_person=2_000,
+        memory_bytes_per_person=20_971_520,
+        retention_days=365,
+        background_reflections_per_person_day=4,
+        background_reflections_per_installation_day=40,
+        external_monthly_spend_cap_eur_cents=0,
+    )
+    path.write_bytes(budget.to_bytes())
+    path.chmod(0o600)
+    return budget
 
 
 def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
@@ -44,12 +92,16 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE",
         "EVA_IDENTITY_PACK_FILE",
         "EVA_IDENTITY_PACK_TRUST_FILE",
+        "EVA_RUNTIME_RESOURCE_BUDGET_FILE",
     ):
         monkeypatch.delenv(name, raising=False)
     database = private_tmp_path / "database-dsn"
     database.write_text("postgresql://runtime\n")
     database.chmod(0o600)
     monkeypatch.setenv("EVA_DATABASE_DSN_FILE", str(database))
+    budget_file = private_tmp_path / "runtime-budget.json"
+    _write_runtime_budget(budget_file)
+    monkeypatch.setenv("EVA_RUNTIME_RESOURCE_BUDGET_FILE", str(budget_file))
 
 
 def test_runtime_reads_database_and_home_assistant_secrets_from_files(
@@ -129,6 +181,11 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
     monkeypatch.setenv(
         "EVA_RUNTIME_INSTALLATION_ID", "22222222-2222-2222-2222-222222222222"
     )
+    _write_runtime_budget(
+        private_tmp_path / "runtime-budget.json",
+        tenant_id="11111111-1111-1111-1111-111111111111",
+        installation_id="22222222-2222-2222-2222-222222222222",
+    )
     monkeypatch.setenv(
         "EVA_RUNTIME_PRINCIPAL_ID", "33333333-3333-3333-3333-333333333333"
     )
@@ -148,6 +205,11 @@ def test_dashboard_owner_binding_is_explicit_and_uuid_bound(
 
     monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "legacy-tenant")
     monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "legacy-installation")
+    _write_runtime_budget(
+        private_tmp_path / "runtime-budget.json",
+        tenant_id="legacy-tenant",
+        installation_id="legacy-installation",
+    )
     monkeypatch.setenv(
         "EVA_DASHBOARD_TENANT_ID", "11111111-1111-1111-1111-111111111111"
     )
@@ -179,6 +241,11 @@ def test_dashboard_access_token_is_file_only_and_required_for_owner_binding(
     monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "11111111-1111-1111-1111-111111111111")
     monkeypatch.setenv(
         "EVA_RUNTIME_INSTALLATION_ID", "22222222-2222-2222-8222-222222222222"
+    )
+    _write_runtime_budget(
+        private_tmp_path / "runtime-budget.json",
+        tenant_id="11111111-1111-1111-1111-111111111111",
+        installation_id="22222222-2222-2222-8222-222222222222",
     )
     monkeypatch.setenv(
         "EVA_RUNTIME_PRINCIPAL_ID", "33333333-3333-3333-8333-333333333333"
@@ -216,16 +283,25 @@ def test_runtime_reads_and_bounds_hindsight_recall_limits(
     private_tmp_path: Path,
 ) -> None:
     _minimum(monkeypatch, private_tmp_path)
+    defaults = RuntimeSettings.from_environment()
+    assert defaults.hindsight_recall_max_tokens == 3_000
+    assert defaults.hindsight_recall_node_budget == 50
+
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_BUDGET", "mid")
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "3000")
-    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "25")
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "50")
 
     settings = RuntimeSettings.from_environment()
 
     assert settings.hindsight_recall_budget == "mid"
     assert settings.hindsight_recall_max_tokens == 3000
-    assert settings.hindsight_recall_node_budget == 25
+    assert settings.hindsight_recall_node_budget == 50
 
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "25")
+    with pytest.raises(RuntimeError, match="differs from runtime budget"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "50")
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "4001")
     with pytest.raises(RuntimeError, match="RECALL_MAX_TOKENS"):
         RuntimeSettings.from_environment()
@@ -237,6 +313,43 @@ def test_runtime_reads_and_bounds_hindsight_recall_limits(
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_MAX_TOKENS", "3000")
     monkeypatch.setenv("EVA_HINDSIGHT_RECALL_NODE_BUDGET", "19")
     with pytest.raises(RuntimeError, match="RECALL_NODE_BUDGET"):
+        RuntimeSettings.from_environment()
+
+
+def test_runtime_requires_private_scoped_resource_budget(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    budget_file = private_tmp_path / "runtime-budget.json"
+
+    monkeypatch.delenv("EVA_RUNTIME_RESOURCE_BUDGET_FILE")
+    with pytest.raises(RuntimeError, match="resource budget file and scope are required"):
+        RuntimeSettings.from_environment()
+
+    monkeypatch.setenv("EVA_RUNTIME_RESOURCE_BUDGET_FILE", str(budget_file))
+    budget_file.chmod(0o644)
+    with pytest.raises(RuntimeError, match="resource budget is invalid"):
+        RuntimeSettings.from_environment()
+
+    _write_runtime_budget(budget_file)
+    monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "installation:other")
+    with pytest.raises(RuntimeError, match="resource budget is invalid"):
+        RuntimeSettings.from_environment()
+
+
+def test_runtime_rejects_tampered_resource_budget(
+    monkeypatch: pytest.MonkeyPatch,
+    private_tmp_path: Path,
+) -> None:
+    _minimum(monkeypatch, private_tmp_path)
+    budget_file = private_tmp_path / "runtime-budget.json"
+    payload = json.loads(budget_file.read_bytes())
+    payload["budget"]["max_input_tokens"] = 11_999
+    budget_file.write_bytes(canonical_json_bytes(payload))
+    budget_file.chmod(0o600)
+
+    with pytest.raises(RuntimeError, match="resource budget is invalid"):
         RuntimeSettings.from_environment()
 
 

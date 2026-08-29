@@ -124,6 +124,10 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverviewPort,
 )
 from eva.contracts.workboard import WorkBoard
+from eva.contracts.runtime_budget import (
+    RuntimeResourceBudget,
+    RuntimeResourceBudgetError,
+)
 from eva.application.telegram_group_consent import TelegramGroupConsentStorePort
 from eva.application.telegram_canary import (
     TelegramCanaryAdmission,
@@ -155,7 +159,11 @@ from eva.application.free_will import (
     SensoryDecisionWorker,
 )
 from eva.application.sensory import SensoryIngestionWorker
-from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
+from eva.bootstrap.secrets import (
+    environment_secret,
+    read_private_runtime_file_bytes,
+    read_runtime_secret_file,
+)
 from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 
 
@@ -176,6 +184,7 @@ class RuntimeSettings:
     conversation_auth_file: str = "/run/eva/codex/auth.json"
     conversation_model: str = "gpt-5.4-mini"
     conversation_reasoning_effort: str = "medium"
+    runtime_resource_budget: RuntimeResourceBudget | None = None
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
@@ -228,6 +237,14 @@ class RuntimeSettings:
             )
         except ValueError as error:
             raise RuntimeError("Eva Hindsight recall configuration is invalid") from error
+        if not 2_000 <= hindsight_recall_max_tokens <= 4_000:
+            raise RuntimeError(
+                "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
+            )
+        if not 20 <= hindsight_recall_node_budget <= 100:
+            raise RuntimeError(
+                "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
+            )
         identity_name = os.environ.get("EVA_IDENTITY_NAME", "Eva").strip()
         identity_description = os.environ.get(
             "EVA_IDENTITY_DESCRIPTION",
@@ -255,6 +272,40 @@ class RuntimeSettings:
         background_principal_id = (
             os.environ.get("EVA_RUNTIME_PRINCIPAL_ID", "").strip() or None
         )
+        runtime_resource_budget_file = os.environ.get(
+            "EVA_RUNTIME_RESOURCE_BUDGET_FILE", ""
+        ).strip()
+        if (
+            not runtime_resource_budget_file
+            or background_tenant_id is None
+            or background_installation_id is None
+        ):
+            raise RuntimeError(
+                "Eva runtime resource budget file and scope are required"
+            )
+        try:
+            runtime_resource_budget = RuntimeResourceBudget.from_bytes(
+                read_private_runtime_file_bytes(
+                    runtime_resource_budget_file,
+                    setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE",
+                ),
+                expected_tenant_id=background_tenant_id,
+                expected_installation_id=background_installation_id,
+            )
+        except (RuntimeError, RuntimeResourceBudgetError) as error:
+            raise RuntimeError("Eva runtime resource budget is invalid") from error
+        if "EVA_HINDSIGHT_RECALL_MAX_TOKENS" not in os.environ:
+            hindsight_recall_max_tokens = runtime_resource_budget.recall_context_tokens
+        if "EVA_HINDSIGHT_RECALL_NODE_BUDGET" not in os.environ:
+            hindsight_recall_node_budget = runtime_resource_budget.retrieval_nodes
+        if (
+            hindsight_recall_max_tokens
+            != runtime_resource_budget.recall_context_tokens
+            or hindsight_recall_node_budget != runtime_resource_budget.retrieval_nodes
+        ):
+            raise RuntimeError(
+                "Eva Hindsight recall configuration differs from runtime budget"
+            )
         dashboard_principal_binding_id = (
             os.environ.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID", "").strip() or None
         )
@@ -476,14 +527,6 @@ class RuntimeSettings:
             raise RuntimeError("EVA_HINDSIGHT_URL is required")
         if hindsight_recall_budget not in {"low", "mid", "high"}:
             raise RuntimeError("EVA_HINDSIGHT_RECALL_BUDGET is invalid")
-        if not 2_000 <= hindsight_recall_max_tokens <= 4_000:
-            raise RuntimeError(
-                "EVA_HINDSIGHT_RECALL_MAX_TOKENS must be within 2000..4000"
-            )
-        if not 20 <= hindsight_recall_node_budget <= 100:
-            raise RuntimeError(
-                "EVA_HINDSIGHT_RECALL_NODE_BUDGET must be within 20..100"
-            )
         if (
             not identity_name
             or not identity_description
@@ -538,6 +581,7 @@ class RuntimeSettings:
             conversation_auth_file=conversation_auth_file,
             conversation_model=conversation_model,
             conversation_reasoning_effort=conversation_reasoning_effort,
+            runtime_resource_budget=runtime_resource_budget,
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
@@ -1814,6 +1858,7 @@ def create_runtime_app() -> FastAPI:
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
+        resource_budget=settings.runtime_resource_budget,
     )
     home_assistant = (
         None

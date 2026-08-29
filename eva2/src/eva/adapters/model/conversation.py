@@ -47,6 +47,7 @@ from eva.application.repository_improvements import (
 )
 from eva.bootstrap.secrets import read_shared_runtime_file_bytes
 from eva.contracts.canonical_json import canonical_json_bytes
+from eva.contracts.runtime_budget import RuntimeResourceBudget
 from eva.adapters.model.openai_responses_transport import (
     OpenAIResponsesCredentialRejected,
     OpenAIResponsesTransport,
@@ -819,6 +820,7 @@ class CodexConversationModel:
         research_timeout_seconds: float = 90.0,
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
         transport_kind: Literal["legacy_urllib", "openai_sdk"] = "legacy_urllib",
+        resource_budget: RuntimeResourceBudget | None = None,
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -839,6 +841,7 @@ class CodexConversationModel:
         self._research_timeout_seconds = research_timeout_seconds
         self._reasoning_effort = reasoning_effort
         self._transport_kind = transport_kind
+        self._resource_budget = resource_budget
         self._openai_transport = (
             OpenAIResponsesTransport(
                 endpoint=endpoint,
@@ -1085,7 +1088,7 @@ class CodexConversationModel:
             "tool_choice": "none",
             "tools": [],
         }
-        text, action_call = self._request(body)
+        text, action_call = self._request_autonomous(body)
         if action_call is not None or not text.strip():
             raise ConversationModelError("personal exploration returned invalid output")
         if len(text.split()) > 180:
@@ -1156,7 +1159,7 @@ class CodexConversationModel:
             },
             "tools": [_REPOSITORY_PROPOSAL_TOOL],
         }
-        text, call = self._request(body)
+        text, call = self._request_autonomous(body)
         if text.strip() or call is None or call.name != _REPOSITORY_PROPOSAL_ACTION:
             raise ConversationModelError("repository improvement selection is invalid")
         try:
@@ -1342,7 +1345,7 @@ class CodexConversationModel:
             "tool_choice": {"name": _FREE_WILL_ACTION, "type": "function"},
             "tools": [_FREE_WILL_TOOL],
         }
-        text, action_call = self._request(body)
+        text, action_call = self._request_autonomous(body)
         if text.strip() or action_call is None or action_call.name != _FREE_WILL_ACTION:
             raise ConversationModelError("sensory decision response is invalid")
         arguments = action_call.arguments
@@ -1408,7 +1411,7 @@ class CodexConversationModel:
             "tool_choice": {"name": _PROTOTYPE_ACTION, "type": "function"},
             "tools": [_PROTOTYPE_TOOL],
         }
-        text, action_call = self._request(body)
+        text, action_call = self._request_autonomous(body)
         if text.strip() or action_call is None or action_call.name != _PROTOTYPE_ACTION:
             raise ConversationModelError("personal prototype response is invalid")
         arguments = action_call.arguments
@@ -1480,7 +1483,7 @@ class CodexConversationModel:
             "tool_choice": {"name": _LISTING_ACTION, "type": "function"},
             "tools": [_LISTING_TOOL],
         }
-        text, action_call = self._request(body)
+        text, action_call = self._request_autonomous(body)
         if text.strip() or action_call is None or action_call.name != _LISTING_ACTION:
             raise ConversationModelError("personal product listing response is invalid")
         arguments = action_call.arguments
@@ -1517,6 +1520,12 @@ class CodexConversationModel:
     ) -> tuple[str, ConversationActionCall | None]:
         return self._request_using(body, self._parse_sse)
 
+    def _request_autonomous(
+        self, body: dict[str, Any]
+    ) -> tuple[str, ConversationActionCall | None]:
+        self._admit_request(body, autonomous=True)
+        return self._request(body)
+
     def _request_conversation(
         self, body: dict[str, Any]
     ) -> tuple[
@@ -1527,9 +1536,18 @@ class CodexConversationModel:
         """Use the explicit candidate only for the ordinary conversation route."""
 
         if self._transport_kind == "legacy_urllib":
-            text, action_call = self._request(body)
-            return text, action_call, ConversationModelUsage.unmeasured()
+            if self._resource_budget is None:
+                text, action_call = self._request(body)
+                return text, action_call, ConversationModelUsage.unmeasured()
+            parsed, usage = self._request_using(
+                body,
+                self._parse_sse,
+                include_usage=True,
+            )
+            text, action_call = parsed
+            return text, action_call, usage
         assert self._openai_transport is not None
+        self._admit_request(body, autonomous=False)
         last_auth: tuple[str, str] | None = None
         for attempt in range(2):
             auth = self._load_auth()
@@ -1566,6 +1584,7 @@ class CodexConversationModel:
                     input_tokens=usage.input_tokens,
                     output_tokens=usage.output_tokens,
                 )
+            self._enforce_reported_usage(usage)
             return result.text, result.action_call, usage
         if last_auth is not None:
             with self._credential_lock:
@@ -1591,7 +1610,10 @@ class CodexConversationModel:
         parser: Any,
         *,
         timeout_seconds: float | None = None,
+        autonomous: bool = False,
+        include_usage: bool = False,
     ) -> Any:
+        self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
         for attempt in range(2):
             auth = self._load_auth()
@@ -1641,7 +1663,31 @@ class CodexConversationModel:
                 with self._credential_lock:
                     self._rejected_token_sha256 = None
                 try:
-                    return parser(response)
+                    terminal_usage: list[tuple[int, int]] = []
+                    parsed = parser(
+                        self._capture_terminal_usage(response, terminal_usage)
+                        if self._resource_budget is not None
+                        else response
+                    )
+                    if self._resource_budget is None:
+                        return parsed
+                    if len(terminal_usage) != 1:
+                        raise ConversationModelError(
+                            "conversation provider usage is missing"
+                        )
+                    tool_calls = int(
+                        isinstance(parsed, tuple)
+                        and len(parsed) >= 2
+                        and isinstance(parsed[1], ConversationActionCall)
+                    )
+                    usage = ConversationModelUsage.measured(
+                        model_attempts=attempt + 1,
+                        tool_calls=tool_calls,
+                        input_tokens=terminal_usage[0][0],
+                        output_tokens=terminal_usage[0][1],
+                    )
+                    self._enforce_reported_usage(usage)
+                    return (parsed, usage) if include_usage else parsed
                 except (TimeoutError, socket.timeout, urllib.error.URLError) as error:
                     raise ConversationModelError(
                         "conversation provider is unavailable"
@@ -1654,6 +1700,114 @@ class CodexConversationModel:
                     last_auth[0].encode()
                 ).hexdigest()
         raise ConversationModelError("conversation credentials were rejected")
+
+    def _admit_request(self, body: dict[str, Any], *, autonomous: bool) -> None:
+        budget = self._resource_budget
+        if budget is None:
+            return
+        if autonomous and budget.unknown_cost_policy == "block_autonomous_spend":
+            raise ConversationModelError(
+                "autonomous model spend has no verified price"
+            )
+        try:
+            conservative_input_tokens = len(canonical_json_bytes(body)) + 256
+        except (TypeError, ValueError) as error:
+            raise ConversationModelError(
+                "conversation request is not a bounded canonical payload"
+            ) from error
+        if conservative_input_tokens > budget.max_input_tokens:
+            raise ConversationModelError(
+                "conversation request exceeds the runtime input budget"
+            )
+
+    def _enforce_reported_usage(self, usage: ConversationModelUsage) -> None:
+        budget = self._resource_budget
+        if budget is None:
+            return
+        if (
+            usage.measurement != "measured"
+            or usage.input_tokens is None
+            or usage.output_tokens is None
+        ):
+            raise ConversationModelError("conversation provider usage is unmeasured")
+        if usage.input_tokens > budget.max_input_tokens:
+            raise ConversationModelError(
+                "conversation provider exceeded the runtime input budget"
+            )
+        if usage.output_tokens > budget.max_output_tokens:
+            raise ConversationModelError(
+                "conversation provider exceeded the runtime output budget"
+            )
+
+    @staticmethod
+    def _capture_terminal_usage(
+        response: Any, retained: list[tuple[int, int]]
+    ) -> Any:
+        completed = False
+        for raw in response:
+            if isinstance(raw, bytes):
+                try:
+                    line = raw.decode("utf-8").rstrip("\r\n")
+                    data = (
+                        json.loads(line[6:])
+                        if line.startswith("data: ") and line != "data: [DONE]"
+                        else None
+                    )
+                except (UnicodeDecodeError, json.JSONDecodeError):
+                    data = None
+                if completed:
+                    if (
+                        isinstance(data, dict)
+                        and data.get("type") == "response.completed"
+                    ):
+                        raise ConversationModelError(
+                            "conversation provider returned multiple completions"
+                        )
+                    if line not in {"", "data: [DONE]"}:
+                        raise ConversationModelError(
+                            "conversation provider returned data after completion"
+                        )
+                if isinstance(data, dict) and data.get("type") == "response.completed":
+                    completed = True
+                    completed_response = data.get("response")
+                    if (
+                        not isinstance(completed_response, dict)
+                        or completed_response.get("status") != "completed"
+                        or completed_response.get("error") is not None
+                    ):
+                        raise ConversationModelError(
+                            "conversation provider completion status is invalid"
+                        )
+                    usage = (
+                        completed_response.get("usage")
+                        if isinstance(completed_response, dict)
+                        else None
+                    )
+                    input_tokens = (
+                        usage.get("input_tokens") if isinstance(usage, dict) else None
+                    )
+                    output_tokens = (
+                        usage.get("output_tokens") if isinstance(usage, dict) else None
+                    )
+                    total_tokens = (
+                        usage.get("total_tokens") if isinstance(usage, dict) else None
+                    )
+                    if (
+                        not isinstance(input_tokens, int)
+                        or isinstance(input_tokens, bool)
+                        or input_tokens < 0
+                        or not isinstance(output_tokens, int)
+                        or isinstance(output_tokens, bool)
+                        or output_tokens < 0
+                        or not isinstance(total_tokens, int)
+                        or isinstance(total_tokens, bool)
+                        or total_tokens != input_tokens + output_tokens
+                    ):
+                        raise ConversationModelError(
+                            "conversation provider usage is invalid"
+                        )
+                    retained.append((input_tokens, output_tokens))
+            yield raw
 
     def _load_auth(self) -> tuple[str, str]:
         try:
