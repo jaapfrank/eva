@@ -1,4 +1,4 @@
-"""Connection-injected SQLAlchemy Core repository for tranche 4B."""
+"""Historical tranche-4B repository retained for PostgreSQL regressions."""
 
 from __future__ import annotations
 

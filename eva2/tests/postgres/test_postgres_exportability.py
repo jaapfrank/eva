@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import sqlalchemy as sa
 
-from eva.adapters.postgres.episode_repository import PostgresEpisodeRepository
+from tests.support.episode_repository import PostgresEpisodeRepository
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 if TYPE_CHECKING:

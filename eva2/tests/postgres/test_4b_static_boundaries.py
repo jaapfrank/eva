@@ -8,7 +8,7 @@ from pathlib import Path
 import sqlalchemy as sa
 from sqlalchemy.engine import Connection
 
-from eva.adapters.postgres.episode_repository import PostgresEpisodeRepository
+from tests.support.episode_repository import PostgresEpisodeRepository
 from eva.adapters.postgres.schema import episode_events, metadata
 
 
@@ -88,7 +88,7 @@ def test_postgres_adapter_does_not_import_dbos_or_alembic() -> None:
 
 
 def test_repository_contains_no_transaction_control() -> None:
-    source = (SOURCE_ROOT / "adapters/postgres/episode_repository.py").read_text(
+    source = (EVA2_ROOT / "tests/support/episode_repository.py").read_text(
         encoding="utf-8"
     )
 

@@ -401,6 +401,7 @@ _EXPECTED_TEST_PATHS = (
     "tests/subagents/test_tool_free_child.py",
     "tests/support/__init__.py",
     "tests/support/durable_goal_test_provider.py",
+    "tests/support/episode_repository.py",
     "tests/support/episode_transition_4c.py",
     "tests/support/fanout_test_sink.py",
     "tests/support/fixture_keys.py",

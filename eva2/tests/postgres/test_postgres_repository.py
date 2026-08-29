@@ -10,7 +10,7 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy.engine import Connection, Engine
 
-from eva.adapters.postgres.episode_repository import PostgresEpisodeRepository
+from tests.support.episode_repository import PostgresEpisodeRepository
 from eva.adapters.postgres.schema import episode_events, episodes
 from eva.application.episode_repository import (
     AppliedEpisodeTransition,
