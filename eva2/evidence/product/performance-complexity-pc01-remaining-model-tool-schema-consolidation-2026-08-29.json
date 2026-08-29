@@ -1,0 +1,70 @@
+{
+  "contract": "EvaPerformanceComplexityPc01RemainingModelToolSchemaConsolidation/v1",
+  "recordedAt": "2026-08-29T15:18:05Z",
+  "sourceCommit": "344f5023b2bf2b524c0765f5d73ed96693169f2b",
+  "status": "tested_pc01_still_red",
+  "change": {
+    "path": "src/eva/adapters/model/conversation.py",
+    "toolsMovedToExistingBuilders": [
+      "memory search and action selection",
+      "repository improvement proposal",
+      "personal prototype",
+      "personal product listing",
+      "passive sensory decision"
+    ],
+    "unchangedTopLevelAstNodesOutsideToolDefinitions": 64,
+    "netProductPhysicalLines": -74
+  },
+  "verification": {
+    "canonicalToolSha256": {
+      "memorySearch": "c49f5bfdd0ee75120eea4e39b46ef4521e4818000ba63df0898967249e0c01e9",
+      "repositoryProposal": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
+      "prototype": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
+      "listing": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
+      "sensoryDecision": "2959078dc6323da786622599f7631ec74de2f38693d9cb144475609030788895"
+    },
+    "realPinnedRuntimeImport": {
+      "image": "eva2/runtime35-official:087f57b",
+      "network": "none",
+      "rootFilesystem": "read-only",
+      "allFiveHashesMatchBefore": true,
+      "logSha256": "2eb5fe88d8947deacb8eca349c87e2ff03f8ddd1d90d17cb1b77fe6786c244d6"
+    },
+    "modelRegression": {
+      "passed": 44,
+      "skipped": 1,
+      "failed": 0,
+      "warnings": 2,
+      "warningReason": "The deliberately read-only project mount refused only pytest's optional cache writes.",
+      "logSha256": "366a80fb7ae61fc0b19ee71d99d9182f5824a66cb1b5b9f5f3f553cdbba29234"
+    },
+    "ruff": {
+      "passed": true
+    }
+  },
+  "pc01SourceMeasurement": {
+    "before": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87990,
+      "productManifestSha256": "c01272f2028410373d254cddc72fe5bd6d715c2183bf4aa178feb7406fb2dba8"
+    },
+    "after": {
+      "productFileCount": 238,
+      "productPhysicalLines": 87916,
+      "productManifestSha256": "60bc2558feb157c5a888a7c1db08cea15888365dfa75e8df0ef68304091c948e",
+      "livingCorePhysicalLines": 87323,
+      "unclassifiedSourcePaths": 0
+    },
+    "maximumProductPhysicalLines": 75000,
+    "remainingExcessProductPhysicalLines": 12916,
+    "violations": [
+      "product_physical_lines_budget_exceeded"
+    ]
+  },
+  "nonClaims": [
+    "PC01 is not complete or green.",
+    "No model tool or schema field was added, removed, renamed, relaxed, or promoted.",
+    "The managed-B release authority was not resealed.",
+    "No running Eva1 or Eva2 service, model call, route, image, database, secret, connector, or volume was changed."
+  ]
+}
