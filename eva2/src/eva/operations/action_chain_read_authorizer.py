@@ -10,18 +10,16 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
     StoredActionChain,
     read_intents,
 )
 from eva.operations.action_chain_provider_registry import (
     ReadProviderProfile,
-    SealedReadProviderRegistry,
 )
 from eva.operations.action_chain_dispatch_common import (
+    PostgresActionChainCatalogAuthorizer,
     build_dispatch_attempt_values,
     build_dispatch_authority_material,
     commit_dispatch_authorized,
@@ -34,7 +32,6 @@ from eva.adapters.postgres.action_chain_reads import (
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionToolCatalog,
     action_chain_step_operation_id,
@@ -61,25 +58,11 @@ class AuthorizedActionChainRead:
     attempt: ReadAttempt
 
 
-class PostgresActionChainReadAuthorizer(PostgresScopedRole):
+class PostgresActionChainReadAuthorizer(PostgresActionChainCatalogAuthorizer):
     """Resolve host authority and commit one fence before provider I/O."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedReadProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain read authorization requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._provider_registry = provider_registry
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
-        self._preparer = PostgresActionChainReadPreparer(engine, scope, role=role)
+    _preparer_factory = PostgresActionChainReadPreparer
+    _postgres_error = "action-chain read authorization requires PostgreSQL"
 
     def authorize_read(
         self,

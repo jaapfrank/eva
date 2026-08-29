@@ -10,19 +10,13 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.action_chain_effects import (
     ActionChainEffectConflict,
     EffectStepAuthority,
     PostgresActionChainEffectPreparer,
 )
-from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
-)
 from eva.adapters.postgres.catalog import metadata
-from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionToolCatalog,
     action_chain_step_operation_id,
@@ -32,6 +26,7 @@ from eva.contracts.execution import (
     EffectAttempt,
 )
 from eva.operations.action_chain_dispatch_common import (
+    PostgresActionChainCatalogAuthorizer,
     build_dispatch_attempt_values,
     commit_dispatch_authorized,
     resolve_dispatch_authorization,
@@ -41,9 +36,6 @@ from eva.operations.action_chain_effect_authority import (
     effect_dispatch_event_data,
     require_existing_action_chain_effect_attempt,
     validate_action_chain_effect_profile,
-)
-from eva.operations.action_chain_provider_registry import (
-    SealedActionProviderRegistry,
 )
 
 
@@ -59,25 +51,11 @@ class AuthorizedActionChainEffect:
     attempt: EffectAttempt
 
 
-class PostgresActionChainEffectAuthorizer(PostgresScopedRole):
+class PostgresActionChainEffectAuthorizer(PostgresActionChainCatalogAuthorizer):
     """Revalidate live authority and commit one effect dispatch permit."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedActionProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain effect authorization requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._provider_registry = provider_registry
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
-        self._preparer = PostgresActionChainEffectPreparer(engine, scope, role=role)
+    _preparer_factory = PostgresActionChainEffectPreparer
+    _postgres_error = "action-chain effect authorization requires PostgreSQL"
 
     def authorize_effect(
         self,

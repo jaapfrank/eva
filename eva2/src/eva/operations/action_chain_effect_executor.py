@@ -53,13 +53,9 @@ class PostgresActionChainEffectExecutor(PostgresActionChainConnectorExecutor):
         """Call once after a durable marker and atomically retain the outcome."""
 
         return ExecutedActionChainEffect(
-            *self._execute_connector_once(
+            *self._execute_catalog_connector_once(
                 effect_intent_id,
-                claim_provider=lambda: self._dispatcher.claim_provider_call(
-                    effect_intent_id,
-                    live_catalog=live_catalog,
-                    now=now,
-                ),
+                live_catalog=live_catalog,
                 now=now,
                 timeout_seconds=timeout_seconds,
                 runner=run_connector_process,

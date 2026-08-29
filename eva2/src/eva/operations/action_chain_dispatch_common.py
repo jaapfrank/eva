@@ -10,6 +10,7 @@ from uuid import UUID, uuid5
 import sqlalchemy as sa
 
 from eva.adapters.postgres.action_chain_ledger import (
+    PostgresActionChainLedger,
     StoredActionChain,
     capability_activations,
     capability_manifests,
@@ -40,6 +41,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
     transition_timeline_thread,
 )
+from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -118,6 +120,78 @@ class PostgresActionChainConnectorExecutor:
             claim_label=self._claim_label,
             recording_subject=self._recording_subject,
             runner=runner,
+        )
+
+    def _execute_catalog_connector_once(
+        self,
+        operation_id: UUID,
+        *,
+        live_catalog: ActionToolCatalog,
+        now: datetime,
+        timeout_seconds: float,
+        runner: Callable[..., Any],
+    ) -> tuple[Literal["executed", "already_started"], Any, Any | None]:
+        return self._execute_connector_once(
+            operation_id,
+            claim_provider=lambda: self._dispatcher.claim_provider_call(
+                operation_id, live_catalog=live_catalog, now=now
+            ),
+            now=now,
+            timeout_seconds=timeout_seconds,
+            runner=runner,
+        )
+
+
+class PostgresActionChainCatalogAuthorizer(PostgresScopedRole):
+    """Shared PostgreSQL and catalog-authority wiring for read/effect fences."""
+
+    _preparer_factory: Callable[..., Any]
+    _postgres_error: str
+
+    def __init__(
+        self,
+        engine: Any,
+        scope: TimelineScope,
+        *,
+        provider_registry: Any,
+        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
+    ) -> None:
+        if engine.url.get_backend_name() != "postgresql":
+            raise ValueError(self._postgres_error)
+        self._engine = engine
+        self._scope_value = scope
+        self._role = role
+        self._provider_registry = provider_registry
+        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
+        self._preparer = self._preparer_factory(engine, scope, role=role)
+
+
+class PostgresActionChainProviderDispatcher(PostgresScopedRole):
+    """Shared PostgreSQL wiring before a dispatcher commits call-start."""
+
+    _authorizer_factory: Callable[..., Any]
+    _postgres_error: str
+    _preparer_factory: Callable[..., Any] | None = None
+
+    def __init__(
+        self,
+        engine: Any,
+        scope: TimelineScope,
+        *,
+        provider_registry: Any,
+        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
+    ) -> None:
+        if engine.url.get_backend_name() != "postgresql":
+            raise ValueError(self._postgres_error)
+        self._engine = engine
+        self._scope_value = scope
+        self._role = role
+        self._provider_registry = provider_registry
+        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
+        if self._preparer_factory is not None:
+            self._preparer = self._preparer_factory(engine, scope, role=role)
+        self._authorizer = self._authorizer_factory(
+            engine, scope, provider_registry=provider_registry, role=role
         )
 
 

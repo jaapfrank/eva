@@ -9,17 +9,14 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
-from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.process import ConnectorProcessSpec
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
     StoredActionChain,
     read_intents,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -41,6 +38,7 @@ from eva.contracts.execution import (
     ReadIntent,
 )
 from eva.operations.action_chain_dispatch_common import (
+    PostgresActionChainProviderDispatcher,
     commit_provider_call_started,
     load_dispatch_authority_rows,
     load_latest_provider_event,
@@ -73,30 +71,11 @@ class ClaimedActionChainReadCall:
     invoke: ConnectorInvokeRequest | None
 
 
-class PostgresActionChainReadDispatcher(PostgresScopedRole):
+class PostgresActionChainReadDispatcher(PostgresActionChainProviderDispatcher):
     """Commit a one-way call-start marker before any provider process can run."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedReadProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain read dispatch requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._provider_registry = provider_registry
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
-        self._authorizer = PostgresActionChainReadAuthorizer(
-            engine,
-            scope,
-            provider_registry=provider_registry,
-            role=role,
-        )
+    _authorizer_factory = PostgresActionChainReadAuthorizer
+    _postgres_error = "action-chain read dispatch requires PostgreSQL"
 
     def claim_provider_call(
         self,

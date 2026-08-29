@@ -10,7 +10,6 @@ from typing import Literal
 from uuid import UUID
 
 import sqlalchemy as sa
-from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.process import ConnectorProcessSpec
 from eva.adapters.postgres.action_chain_effect_readback_validation import (
@@ -22,18 +21,15 @@ from eva.adapters.postgres.action_chain_effect_readbacks import (
     ActionChainEffectReadbackConflict,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
     plan_steps,
     read_intents,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
-    TimelineScope,
     operational_checkpoints,
     operational_events,
     transition_timeline_thread,
 )
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.connector import ConnectorManifest
 from eva.contracts.connector_rpc import (
     ConnectorInitializeRequest,
@@ -44,7 +40,9 @@ from eva.operations.action_chain_effect_readback_authorizer import (
     PostgresActionChainEffectReadbackAuthorizer,
     prepared_effect_readback_request_payload,
 )
-from eva.operations.action_chain_provider_registry import SealedReadProviderRegistry
+from eva.operations.action_chain_dispatch_common import (
+    PostgresActionChainProviderDispatcher,
+)
 from eva.operations.action_chain_read_authorizer import (
     build_action_chain_read_authority,
     require_existing_action_chain_read_attempt,
@@ -72,30 +70,13 @@ class ClaimedActionChainEffectReadbackCall:
     invoke: ConnectorInvokeRequest | None
 
 
-class PostgresActionChainEffectReadbackDispatcher(PostgresScopedRole):
+class PostgresActionChainEffectReadbackDispatcher(
+    PostgresActionChainProviderDispatcher
+):
     """Commit one call-start marker before releasing readback call material."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedReadProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("effect readback dispatch requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._provider_registry = provider_registry
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
-        self._authorizer = PostgresActionChainEffectReadbackAuthorizer(
-            engine,
-            scope,
-            provider_registry=provider_registry,
-            role=role,
-        )
+    _authorizer_factory = PostgresActionChainEffectReadbackAuthorizer
+    _postgres_error = "effect readback dispatch requires PostgreSQL"
 
     def claim_provider_call(
         self,

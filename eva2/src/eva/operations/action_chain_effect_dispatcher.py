@@ -9,7 +9,6 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
-from sqlalchemy.engine import Engine
 
 from eva.adapters.connectors.process import ConnectorProcessSpec
 from eva.adapters.postgres.action_chain_effects import (
@@ -18,12 +17,10 @@ from eva.adapters.postgres.action_chain_effects import (
     PostgresActionChainEffectPreparer,
 )
 from eva.adapters.postgres.action_chain_ledger import (
-    PostgresActionChainLedger,
     StoredActionChain,
 )
 from eva.adapters.postgres.catalog import metadata
 from eva.adapters.postgres.operational_timeline import TimelineScope
-from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.action_chain import (
     ActionChainValidationError,
     ActionToolCatalog,
@@ -45,6 +42,7 @@ from eva.contracts.execution import (
     EffectIntent,
 )
 from eva.operations.action_chain_dispatch_common import (
+    PostgresActionChainProviderDispatcher,
     commit_provider_call_started,
     load_dispatch_authority_rows,
     load_latest_provider_event,
@@ -79,31 +77,12 @@ class ClaimedActionChainEffectCall:
     invoke: ConnectorInvokeRequest | None
 
 
-class PostgresActionChainEffectDispatcher(PostgresScopedRole):
+class PostgresActionChainEffectDispatcher(PostgresActionChainProviderDispatcher):
     """Commit a one-way effect call-start marker before provider I/O."""
 
-    def __init__(
-        self,
-        engine: Engine,
-        scope: TimelineScope,
-        *,
-        provider_registry: SealedActionProviderRegistry,
-        role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
-    ) -> None:
-        if engine.url.get_backend_name() != "postgresql":
-            raise ValueError("action-chain effect dispatch requires PostgreSQL")
-        self._engine = engine
-        self._scope_value = scope
-        self._role = role
-        self._provider_registry = provider_registry
-        self._ledger = PostgresActionChainLedger(engine, scope, role=role)
-        self._preparer = PostgresActionChainEffectPreparer(engine, scope, role=role)
-        self._authorizer = PostgresActionChainEffectAuthorizer(
-            engine,
-            scope,
-            provider_registry=provider_registry,
-            role=role,
-        )
+    _authorizer_factory = PostgresActionChainEffectAuthorizer
+    _preparer_factory = PostgresActionChainEffectPreparer
+    _postgres_error = "action-chain effect dispatch requires PostgreSQL"
 
     def claim_provider_call(
         self,

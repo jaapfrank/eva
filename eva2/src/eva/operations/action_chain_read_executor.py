@@ -53,13 +53,9 @@ class PostgresActionChainReadExecutor(PostgresActionChainConnectorExecutor):
         """Call once after a durable marker and atomically retain the outcome."""
 
         return ExecutedActionChainRead(
-            *self._execute_connector_once(
+            *self._execute_catalog_connector_once(
                 read_intent_id,
-                claim_provider=lambda: self._dispatcher.claim_provider_call(
-                    read_intent_id,
-                    live_catalog=live_catalog,
-                    now=now,
-                ),
+                live_catalog=live_catalog,
                 now=now,
                 timeout_seconds=timeout_seconds,
                 runner=run_connector_process,
