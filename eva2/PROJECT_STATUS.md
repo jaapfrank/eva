@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 15:43 CEST
+Laatst bijgewerkt: 29 augustus 2026, 16:02 CEST
 
 ## Heel kort
 
@@ -60,6 +60,10 @@ praktijktest zijn nog niet klaar.
 - De nieuwe image ging groen 4→3, 3→4 en opnieuw 4→3. Het testfeit dat op slot 3
   was geschreven kwam exact terug op slot 4 en daarna weer op slot 3.
 - Eva1 is actief, heeft nul herstarts en alle vijf controles geven HTTP 200.
+- De lange Eva1-vastloper is gevonden en live hersteld. Eén oude bewijsquery
+  kostte 24,6 seconden op de Node-hoofdthread; dezelfde selectie kost nu circa
+  0,05-0,15 seconde en geeft exact dezelfde 40 regels terug. Na de herstart
+  bleven drie echte autonome modelbeurten bereikbaar.
 - Slot 3 is actief en gezond. De oude slot-4-kern staat stil; zijn databases
   blijven gezond beschikbaar voor een later gesynchroniseerde terugrol.
 - Oude proefproviders en de losse Telegram-testlauncher zitten niet meer in de
@@ -138,9 +142,9 @@ praktijktest zijn nog niet klaar.
 - De harde codeteller is nog rood, maar de eerste sanering is echt uitgevoerd:
   7.432 oude test- en proefregels zijn uit de runtime gehaald. Eva2 telt nu
   88.865 productregels en mag er maximaal 75.000 hebben.
-- Eva1 herstartte niet, maar blokkeerde tijdens een zelfstandige werkbeurt zes
-  keer achter elkaar langer dan drie seconden. Daarna antwoordden alle routes
-  weer snel. De oorzaak van deze event-loopblokkade moet nog worden gevonden.
+- De blokkade van 18-27 seconden is weg. In 140 korte controles miste nog één
+  verzoek de strenge grens van 0,4 seconde; de volgende controle was direct
+  weer groen. Een langere meting moet aantonen hoe vaak dit nog voorkomt.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -155,10 +159,10 @@ praktijktest zijn nog niet klaar.
 
 ## Waar ik nu aan werk
 
-1. De periodieke Eva1-event-loopblokkade tijdens zelfstandig werk meten en de
-   precieze synchrone codegrens vinden, zonder de live service blind te wijzigen.
-2. Nog minstens 13.865 productregels gericht verwijderen of vervangen zonder
+1. Nog minstens 13.865 productregels gericht verwijderen of vervangen zonder
    bewezen functies weg te laten of de meetgrens te versoepelen.
+2. De resterende korte Eva1-vertraging langer meten en alleen bij herhaling
+   verder verkleinen.
 3. Na een echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 4. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
@@ -177,6 +181,7 @@ praktijktest zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Eva1-vastloper gevonden en live van 24,6 seconden naar circa 0,05-0,15 seconde gebracht](evidence/living-core/eva1-autonomy-event-loop-responsiveness-2026-08-29.json)
 - [Verliesloze tweerichtings A/B-omschakeling](evidence/living-core/eva2-managed-b-quiescent-bidirectional-cutover-2026-08-29.json)
 - [Bewapende automatische controle voor de echte reboot](evidence/living-core/eva2-managed-b-postboot-proof-armed-2026-08-29.json)
 - [Actuele schone negen-dienstenproef](evidence/living-core/eva2-managed-b-resource-budget-semantic-tool-canary-2026-08-29.json)

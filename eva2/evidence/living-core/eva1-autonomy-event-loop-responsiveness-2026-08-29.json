@@ -1,0 +1,78 @@
+{
+  "contract": "Eva1AutonomyEventLoopResponsiveness/v1",
+  "recordedAt": "2026-08-29T16:02:01+02:00",
+  "sourceRepository": "/home/administrator/project/Bottie",
+  "sourceCommit": "40b05bdd89af0cc3e976ec8c6574f3e4b659f4c4",
+  "sourceFiles": {
+    "src/db.js": "f85b5652645c3924eebca364f967237299085223d28591eba900c3b389fcaba7",
+    "test/execution-ledger-main-schema.test.js": "38ab19a65951a1a6f594c332b71d611197d340adebb28c249da9d94c7ca887e2"
+  },
+  "diagnosis": {
+    "serviceRestartedDuringFailure": false,
+    "mainThreadStateDuringFailure": "running_cpu_bound",
+    "preFixHealthSamples": 75,
+    "preFixHttp200": 59,
+    "preFixFailures": 16,
+    "preFixConsecutiveFailureWindowSeconds": 18.26,
+    "preFixFailureWindowCpuTicks": 1825,
+    "isolatedDatabaseQuickCheck": "ok",
+    "isolatedDatabaseTables": 75,
+    "isolatedDatabaseBytes": 271831040,
+    "isolatedDatabaseSha256": "aab5d9d04dfa1525eae2a814f39d2284ed90639e184b4ac423ecad14dc69e918",
+    "slowFunction": "recentVerifiedTurnToolReceipts",
+    "slowFunctionMilliseconds": 24635.395,
+    "slowSqlMilliseconds": 28261.303,
+    "validationMilliseconds": 3.885,
+    "cause": "A correlated EXISTS rescanned the long-lived timeline for every completed tool execution on the synchronous Node event loop."
+  },
+  "change": {
+    "summary": "Materialize the small conversation-bound set of distinct turn IDs first, then join it to the indexed execution ledger.",
+    "schemaChanged": false,
+    "databaseDataChangedByFix": false,
+    "selectionBeforeCount": 40,
+    "selectionAfterCount": 40,
+    "selectionEqual": true,
+    "selectionSha256": "40f3f496d3488a245b51ec83c62a9448d9476dc5a03219e36457f84466be7ec4",
+    "equivalenceOldMilliseconds": 26869.338,
+    "equivalenceNewMilliseconds": 51.672
+  },
+  "verification": {
+    "targetedTestFiles": 3,
+    "targetedTests": 14,
+    "targetedPassed": 14,
+    "targetedFailed": 0,
+    "duplicateAuthorityRegressionPassed": true,
+    "syntaxChecksPassed": true,
+    "liveServiceRestartedOnce": true,
+    "liveServiceActive": true,
+    "liveServiceNRestarts": 0,
+    "postFixHealthSamples": 140,
+    "postFixHttp200": 139,
+    "postFixFailuresAt400MillisecondDeadline": 1,
+    "postFixLongestConsecutiveFailureSamples": 1,
+    "postFixRecoveredOnNextSample": true,
+    "postFixAutonomousModelTurnsObserved": 3,
+    "postFixEva1RoutesHttp200": 5,
+    "postFixEva2ReadyHttp200": true
+  },
+  "logs": {
+    "preFixCpuHealthSha256": "10617798fccb899939eb697306a238b1c117d794abfe10021a06607c617d7ad5",
+    "preModelProfileSha256": "1d6d01f836a2d6824290850b096930d95e4709f5cca4e7a6580644c2f91dc185",
+    "queryProfileSha256": "154a956185e94a735670f76166bb6636fba3b4cc688cfdf7440d759647c6da6b",
+    "queryEquivalenceSha256": "babc06dc7f129dc7483444df4a30600f1ad92f33f3ab8724e3879176b9f7370a",
+    "targetedTestsSha256": "ce968ad5a04cc730ebd92856097722d7d138529d2f3c9fad7188905c353df97f",
+    "postFixHealthMonitorSha256": "5e2e7e5130629c9e97df26500dc02590e0d8fa959ee21bb6555eeb2931e94c45",
+    "postFixEventsSha256": "38bf08360fdf092b53fdfa80f10aff3c30c3c2aa9e26274a0d6243ad1cadd891"
+  },
+  "excludedTestAttempt": {
+    "countedAsGreen": false,
+    "file": "test/autonomy-runtime-ingress.test.js",
+    "reason": "The isolated copy intentionally lacked Git repository metadata and hit its pre-existing fail-closed tracked-manifest branch before the query path. A following ingress assertion then inherited the interrupted test authority."
+  },
+  "nonClaims": [
+    "This is not a long-duration acceptance run.",
+    "One 400 ms health deadline was still missed, so sub-400 ms availability is not claimed.",
+    "No Telegram message, Home Assistant effect, or Eva2 deployment was performed by this fix.",
+    "The remaining deleted tracked documentation and deploy-source copies were not included in the checkpoint."
+  ]
+}
