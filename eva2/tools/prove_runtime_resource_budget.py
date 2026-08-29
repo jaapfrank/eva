@@ -256,6 +256,7 @@ def prove(
     database_dsn: str,
     *,
     focused_tests_passed: int,
+    model_auth_file: Path,
     source_commit: str,
 ) -> dict[str, object]:
     if focused_tests_passed < 1:
@@ -270,21 +271,8 @@ def prove(
         budget_file, budget_sha256 = _materialize(root)
         database_file = root / "database-dsn"
         _private_file(database_file, f"{database_dsn}\n".encode())
-        auth_file = root / "model-access.json"
-        _private_file(
-            auth_file,
-            canonical_json_bytes(
-                {
-                    "access_token": ACCESS_TOKEN,
-                    "account_id": ACCOUNT_ID,
-                    "contract": "EvaModelAccessLease/v1",
-                    "source_sha256": "a" * 64,
-                }
-            ),
-            mode=0o640,
-        )
         environment = {
-            "EVA_CONVERSATION_AUTH_FILE": str(auth_file),
+            "EVA_CONVERSATION_AUTH_FILE": str(model_auth_file),
             "EVA_DATABASE_DSN_FILE": str(database_file),
             "EVA_HINDSIGHT_URL": "http://hindsight.invalid:8888",
             "EVA_RUNTIME_INSTALLATION_ID": INSTALLATION_ID,
@@ -318,7 +306,7 @@ def prove(
                 )
             with _provider() as (endpoint, handler):
                 model = CodexConversationModel(
-                    auth_file=auth_file,
+                    auth_file=model_auth_file,
                     endpoint=endpoint,
                     resource_budget=policy,
                 )
@@ -478,6 +466,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--database-dsn-file", type=Path, required=True)
     parser.add_argument("--focused-tests-passed", type=int, required=True)
+    parser.add_argument("--model-auth-file", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)
     args = parser.parse_args()
@@ -489,6 +478,7 @@ def main() -> int:
     receipt = prove(
         database_dsn,
         focused_tests_passed=args.focused_tests_passed,
+        model_auth_file=args.model_auth_file,
         source_commit=args.source_commit,
     )
     args.output.write_bytes(canonical_json_bytes(receipt))
