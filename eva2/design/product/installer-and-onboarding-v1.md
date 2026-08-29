@@ -252,9 +252,9 @@ stil half-geconfigureerd.
   `pending`/`selected`/`skipped`/`ready`/`blocked`-status met een hashketen.
   De browser kan alleen kiezen of overslaan; uitsluitend een aparte
   providercontrole met receipthash mag `ready` of `blocked` schrijven. De
-  eenmalige secretflow plus de eerste Telegram- en Home Assistant-verifiers
-  bestaan nu; de echte providerproeven en de overige connectorflows ontbreken
-  nog. Daarom blijft IN02 als geheel open.
+  eenmalige secretflow plus model-, Telegram-, Home Assistant- en AgentMail-
+  verifiers bestaan nu; de echte providerproeven en de overige connectorflows
+  ontbreken nog. Daarom blijft IN02 als geheel open.
 - [x] IN03 — Identity-onboarding met staged `SOUL.md`-import/export,
   IdentityPack-diff, ondertekening, activatie en rollback.
   Na de eerdere read-only voorstelweergave doorliep een echte lokale
@@ -282,6 +282,16 @@ stil half-geconfigureerd.
   HTTP-contractproef bewees succes, afwijzing en herstart zonder tweede call;
   zij las geen bericht en bewaarde sleutel, inbox-ID en providermetadata niet.
   Ook deze proef was volledig synthetisch en bewijst nog geen live mailbox.
+  De verplichte modelstap heeft nu een afzonderlijke verifier voor Eva's
+  bestaande ChatGPT/Codex-route. Zij accepteert exact
+  `EvaModelAccessLease/v1` met alleen access-token, account-ID en bronhash; een
+  volledige login of refresh-token stopt vóór netwerkverkeer. De verifier doet
+  één toolvrije, niet-opgeslagen generatie en vereist gemeten tokengebruik. De
+  lokale SSE-contractproef mat 19 invoer- en 5 uitvoertokens, deed na `ready`
+  geen tweede call en bewaarde secret, account of modelantwoord niet. De
+  ChatGPT-route rapporteerde geen geldbedrag, dus het bewijs noemt de kosten
+  eerlijk onbekend. Dit is nog geen browserlogin, tokenrefresh of live
+  providerproef.
 - [ ] IN05 — Lokale one-time secretinvoer, private file/secretstore,
   kortlevende wizardauthenticatie, rotatie/verwijdering en expliciete
   nonleak-/CSRF-/DNS-rebindingtests.
@@ -290,8 +300,9 @@ stil half-geconfigureerd.
   ieder slot is write-once en de browser krijgt uitsluitend een vaste
   secretreferentie terug. Een halve bundle blijft `needs_help`; waarde, hash,
   lengte en hostpad staan niet in status of metadata. De aparte verifier geeft
-  het secret alleen aan een begrensde read-only adapter, bewaart een geschoonde
-  content-addressed receipt en wist zijn eigen mutabele buffer best-effort.
+  het secret alleen aan een begrensde connector-read of toolvrije modelproef,
+  bewaart een geschoonde content-addressed receipt en wist zijn eigen mutabele
+  buffer best-effort.
   De lokale operatorroute kan alle vier slots nu ook roteren of verwijderen.
   Eerst wordt de capability duurzaam geblokkeerd; pas daarna worden de bytes
   gewisseld of verwijderd. Iedere nieuwe invoer krijgt een hogere generatie,

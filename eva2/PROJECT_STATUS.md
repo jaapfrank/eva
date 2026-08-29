@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 29 augustus 2026, 03:06 CEST
+Laatst bijgewerkt: 29 augustus 2026, 03:20 CEST
 
 ## Heel kort
 
@@ -190,6 +190,11 @@ installatie zijn nog niet klaar.
   inboxgegevens en het providerantwoord niet. Na `ready` volgt bij een
   herstart geen tweede oproep. De proef gebruikte een lokale nabootsing en dus
   nog geen echte mailbox.
+- De verplichte modelkoppeling heeft nu ook een echte installercontrole. Zij
+  accepteert uitsluitend Eva's korte toegangspakket zonder refresh-token en
+  doet één kleine modelgeneratie zonder tools. De proef mat 19 invoer- en 5
+  uitvoertokens, bewaarde geen antwoord of login en deed na `ready` geen tweede
+  oproep. De provider gaf geen geldbedrag terug; Eva verzint daarom geen kosten.
 
 ## Wat nog niet klaar is
 
@@ -207,9 +212,9 @@ installatie zijn nog niet klaar.
   bewaard en opnieuw herbouwbaar worden bewezen.
 - De gewone gebruiker kan Eva2 nog niet zelf installeren, herstellen en
   bijwerken met één eenvoudige wizard.
-- De installer kan Telegram, Home Assistant en één AgentMail-inbox lokaal
-  veilig controleren, maar de echte providerproeven, modelcontrole en
-  bediening hiervan in de gewone gebruikerswizard zijn nog niet klaar.
+- De installer kan modeltoegang, Telegram, Home Assistant en één AgentMail-
+  inbox lokaal veilig controleren. De echte providerproeven en bediening
+  hiervan in de gewone gebruikerswizard zijn nog niet klaar.
 - De kernhelft van de beheerde negen-dienstenopstelling is nu de actieve
   `/eva2`-route. De aparte doelworker en Telegramingang zijn nog niet gestart:
   de gevonden doelprovider is alleen een testprovider en Telegram mag niet met
@@ -281,6 +286,7 @@ installatie zijn nog niet klaar.
 - [Home Assistant API-root verifier met lokale adrespinning en nul huisacties](evidence/living-core/eva2-installer-home-assistant-readonly-verification-2026-08-29.json)
 - [Veilig roteren, verwijderen en herstellen na een onderbreking](evidence/living-core/eva2-installer-secret-lifecycle-2026-08-29.json)
 - [AgentMail-inboxcontrole zonder berichten, mutaties of bewaarde providerdata](evidence/living-core/eva2-installer-agentmail-readonly-verification-2026-08-29.json)
+- [Begrensde modelcontrole zonder refresh-login, tools of verzonnen kosten](evidence/living-core/eva2-installer-codex-model-verification-2026-08-29.json)
 - [Live `/eva2`-koppeling](evidence/living-core/eva2-current-candidate-live-canary-2026-08-28.json) en [afgeschermde, vernieuwbare Codex-toegang](evidence/living-core/eva2-rotating-access-only-model-lease-live-2026-08-28.json)
 
 Meer details staan in [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

@@ -1,0 +1,71 @@
+{
+  "boundaries": {
+    "completeLoginAccepted": false,
+    "providerPayloadRetained": false,
+    "refreshTokenAccepted": false,
+    "secretReturned": false,
+    "toolAuthorityAvailable": false
+  },
+  "contract": "EvaInstallerCodexModelVerificationReceipt/v1",
+  "issuedAt": "2026-08-29T01:20:05+00:00",
+  "loopbackRun": {
+    "boundedModelGenerations": 1,
+    "measuredInputTokens": 19,
+    "measuredOutputTokens": 5,
+    "operatorCliInvocations": 3,
+    "providerRequests": 2,
+    "restartAttemptProviderRequests": 0,
+    "temporaryWorkspaceRemovedAfterRun": true,
+    "transport": "real_http_sse_on_127.0.0.1"
+  },
+  "networkBoundary": {
+    "method": "POST",
+    "officialOrigin": "https://chatgpt.com",
+    "path": "/backend-api/codex/responses",
+    "redirectFollowed": false
+  },
+  "nonclaims": [
+    "The proof used a synthetic access-only lease and loopback contract server; it did not contact OpenAI or consume live model access.",
+    "The verified ChatGPT access route reports token usage but no monetary charge, so the receipt does not invent a currency cost.",
+    "This proves the installer verification boundary, not browser login, token refresh, a real provider call or complete consumer installation."
+  ],
+  "source": {
+    "commit": "3e4afc6225606e7f86a1a2efb5180b0665c7ef87",
+    "files": [
+      {
+        "path": "src/eva/adapters/connectors/installer_codex_model_probe.py",
+        "sha256": "b44ccbccfc1ebec17394d87b81781986524d119352353f2c3216d6eae12f83fd"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification.py",
+        "sha256": "8b3ce4fdfe3efd1b8ec168fe67598a980f901c64ff46287504d7910a5823a540"
+      },
+      {
+        "path": "src/eva/operations/installer_provider_verification_cli.py",
+        "sha256": "90954bcd11c1039781fbfe927d933d253b0f7fb4f03f5cc83949d7adb63787c0"
+      },
+      {
+        "path": "tests/connectors/test_installer_codex_model_probe.py",
+        "sha256": "e32bf2e5f04cc7faf7ba9646c7728497292938e361607e4fba8185855c1e5ae1"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification.py",
+        "sha256": "d52ab59ed2c3e07ad70a3343dd9c52838b74450f3cfb25966e92198bba6fdd30"
+      },
+      {
+        "path": "tests/operations/test_installer_provider_verification_cli.py",
+        "sha256": "78f92f3e362cba7d0df0a38f645a0b549a11fecea6ce12fe70457e28de598981"
+      },
+      {
+        "path": "tools/prove_installer_codex_model_verification.py",
+        "sha256": "8fc939b03cc17dfd139a68fcfee3d8b8cf00e72cb6643104657a1d95e9463a0d"
+      }
+    ]
+  },
+  "status": "passed",
+  "verification": {
+    "broadInstallerReleaseTestsPassed": 128,
+    "focusedTestsPassed": 40,
+    "networkUsedOutsideLoopback": false
+  }
+}
