@@ -961,10 +961,15 @@ def test_direct_model_receives_recalled_memories_without_reflection(
         in (requests[0]["instructions"])
     )
     assert "temperament en humor als zichtbaar gedrag" in requests[0]["instructions"]
-    assert "één lichte, droge, speelse formulering" in requests[0]["instructions"]
-    assert "over de situatie of een voorwerp" in requests[0]["instructions"]
+    assert "opvallende tegenstelling" in requests[0]["instructions"]
+    assert "concreet detail dat al in de situatie zit" in requests[0]["instructions"]
+    assert "kort, droog en in gewone spreektaal" in requests[0]["instructions"]
     assert (
-        "geen aparte grap, extra slotzin of tweede beeldspraak"
+        "gemaakte woordspeling, verzonnen samenstelling, catchphrase"
+        in requests[0]["instructions"]
+    )
+    assert (
+        "duidelijkheid, warmte en bruikbaarheid gaan voor"
         in requests[0]["instructions"]
     )
     assert (
