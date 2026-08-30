@@ -1,0 +1,76 @@
+{
+  "contract": "Eva2GreenTextSealedImageLiveReceipt/v1",
+  "recordedAt": "2026-08-30T02:32:33Z",
+  "status": "passed_live_with_direct_rollback",
+  "sourceCommit": "a9dd457cb53d016c105815e66a2c43c4e100aef4",
+  "imageId": "sha256:4fb82bcc4ac300d793150a4841eb5a94fc27f5db8192096bc69f8338314346a0",
+  "build": {
+    "network": "none",
+    "sourceDateEpoch": 1788056468,
+    "user": "65532:65532",
+    "imageByteSize": 85526038
+  },
+  "runtimeCode": {
+    "fileCount": 463,
+    "treeSha256": "e05480954ad19302cdfa0ec140d57a902f23e09867d8d4eaca7d864fa3d13517",
+    "matchesPreviouslyTestedImage": "sha256:7e5e2bb906645f7ad3c630b18f5ffba35e1d89acfbfb3c9298789ca0b9482093"
+  },
+  "releaseInputs": {
+    "authoritySha256": "ed94cd91ff8f64f757eeec4725f4613fac5fbfb0174d5b0fc3871b9d0e42ed30",
+    "cockpitEvidenceSha256": "cf9de34ac71a7991ad1b1400b7556af3f26892d61f7d056ef8dbde209dccebdd",
+    "requiredInputCount": 250,
+    "requiredTestCount": 139
+  },
+  "scan": {
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "network": "none",
+    "high": 0,
+    "critical": 0
+  },
+  "candidateRuntime": {
+    "container": "eva2-pc03-sealed-a9dd457",
+    "port": 44716,
+    "state": "running",
+    "health": "healthy",
+    "restartCount": 0,
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": [
+      "ALL"
+    ],
+    "noNewPrivileges": true,
+    "readiness": {
+      "database": "ready",
+      "memoryProjection": "ready",
+      "modelProvider": "ready"
+    },
+    "modelReply": "SEALEDREADY",
+    "restartMemoryExpected": "zilverotter",
+    "restartMemoryActual": "zilverotter"
+  },
+  "cutover": {
+    "sourcePort": 44715,
+    "targetPort": 44716,
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "b93751fa9d1935ea5bf65e54c646eb58db8562c1a28c0c18831c6cadf1306986",
+    "previousDropinSha256": "ce924df47376acfb90a8bf405a7de2930a5d097882af359559ba569589ec0d72"
+  },
+  "liveChecks": {
+    "eva1Service": "active",
+    "eva1RestartCount": 0,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "rollbackPort": 44715,
+    "rollbackContainerState": "running_healthy"
+  },
+  "nonclaims": [
+    "This is the exact sealed text-runtime image and a live reversible canary, not the final full-product release.",
+    "The physical Windows/WSL reboot and the official seven-day acceptance run have not been performed.",
+    "Full-duplex physical voice, general browser control, broad home control and consumer installation remain open."
+  ]
+}

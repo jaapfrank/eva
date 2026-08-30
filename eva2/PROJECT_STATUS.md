@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 04:20 CEST
+Laatst bijgewerkt: 30 augustus 2026, 04:33 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op poort `44715` achter de gewone
+De nieuwe DBOS-loze Eva2 staat nu op poort `44716` achter de gewone
 `/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
 persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
 langetermijngeheugen.
@@ -17,7 +17,7 @@ testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
 staat op 74.810 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route op poort `44713` draait gezond en blijft de directe
+De vorige Eva2-route op poort `44715` draait gezond en blijft de directe
 terugval.
 
 De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
@@ -54,7 +54,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44715`.
+- `/eva2` gaat nu naar de verzegelde Eva2-image op poort `44716`.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -89,6 +89,10 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   terug.
 - De actuele bron-, dependency-, migratie-, cockpit- en testset is opnieuw
   verzegeld: 250 release-inputs en 139 tests sluiten op één schone commit.
+- Die exacte commit is daarna zonder bouwnetwerk tot een image gemaakt en
+  netwerkloos gescand: 0 kritisch en 0 hoog. Een echte Codex-beurt en
+  gesprekgeheugen na herstart waren groen. De A/B-route staat nu op poort
+  `44716`; poort `44715` blijft direct beschikbaar voor terugrol.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -416,6 +420,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 ## Laatste bewijs
 
 - [Actuele 250 release-inputs en 139 tests opnieuw verzegeld](evidence/living-core/eva2-green-text-release-inputs-bound-2026-08-30.json)
+- [Exact verzegelde image gebouwd, 0/0 gescand en live omgeschakeld](evidence/living-core/eva2-green-text-sealed-image-live-2026-08-30.json)
 - [Compacte tekstkern live: 200/200, p95 1,918 seconde en gezonde rollback](evidence/living-core/eva2-compact-prompt-canary-cutover-live-2026-08-30.json)
 - [Compacte promptkandidaat: 108 tests, image 0/0, HA en herstartgeheugen](evidence/product/performance-complexity-pc05-compact-prompt-candidate-2026-08-30.json)
 - [Ruwe groene 200-beurtenreeks met drie eerlijk gemarkeerde retries](evidence/product/performance-complexity-pc05-text-200-compact-prompt-candidate-2026-08-30.json)
