@@ -1,0 +1,95 @@
+{
+  "contract": "Eva2BroadLightControlLiveReceipt/v1",
+  "recordedAt": "2026-08-30T03:24:16Z",
+  "status": "passed_live_with_direct_rollback",
+  "source": {
+    "commit": "349e399cc77ceb3ff64e495ef031614dfe06f85d",
+    "archiveSha256": "02189481029cd1a3cee65b8752062171aa348200717e408368536c5f5eb7e3e0",
+    "releaseAuthoritySha256": "e7d778d6e6bda0e6f8f63358c7e7ae089e6578d2e7107d24b114d4fb8f41e915",
+    "releaseInputCount": 250,
+    "releaseTestCount": 139,
+    "focusedTestsPassed": 84,
+    "ruff": "passed"
+  },
+  "lightPolicy": {
+    "inventoryMode": "live_read_only_snapshot",
+    "reachableLightCount": 59,
+    "admittedRuleCount": 118,
+    "services": [
+      "turn_off",
+      "turn_on"
+    ],
+    "allowlistSha256": "e6335e46a92f90c09226b3559922d3b8326dcdfb2d678c908abc1da43b976628",
+    "excludedStates": [
+      "unavailable",
+      "unknown"
+    ],
+    "excludedEntityPrefix": "light.unifi_",
+    "authorizedPrincipalSha256Count": 1,
+    "rawPrincipalIdsInReceipt": 0
+  },
+  "image": {
+    "id": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "buildNetwork": "none",
+    "scanNetwork": "none",
+    "scanHigh": 0,
+    "scanCritical": 0,
+    "rejectedIntermediateImage": {
+      "id": "sha256:1284149046073d329e34a0be1467c50b473e155924096e878e5c142ecc35e7e3",
+      "scanHigh": 29,
+      "scanCritical": 5,
+      "promoted": false
+    }
+  },
+  "humanConversation": {
+    "ambiguousRequestInitialHttpStatus": 422,
+    "ambiguityFixAdded": true,
+    "ambiguousRequestFinalHttpStatus": 200,
+    "clarificationReply": "Welke lamp bedoel je precies? Noem de naam zoals die in Home Assistant staat.",
+    "ambiguousToolTimelineRows": 0,
+    "exactTargetReply": "De lamp in de schuur staat uit, en ik heb gecontroleerd dat hij echt uit staat.",
+    "verifiedEntityState": "off"
+  },
+  "authorityAndReplay": {
+    "unauthorizedTurnOnHttpStatus": 409,
+    "unauthorizedTimelineRows": 0,
+    "stateAfterUnauthorizedAttempt": "off",
+    "candidateRestarted": true,
+    "replayReplyMatched": true,
+    "timelineEventCountsAfterReplay": {
+      "STATE_VERIFIED": 1,
+      "TOOL_EXECUTED": 1,
+      "TOOL_PREPARED": 1,
+      "TOOL_REQUEST_ADMITTED": 1
+    },
+    "providerActionWasNotRepeated": true
+  },
+  "cutover": {
+    "sourcePort": 44718,
+    "targetPort": 44719,
+    "status": "switched",
+    "targetReady": true,
+    "preCutoverModelReply": "BROADREADY",
+    "postCutoverRouterReply": "BROADLIVE",
+    "newDropinSha256": "d9349d8c8f6e673a0de92c2f78aad4970bab6d923cc7ed49fe23b33a97d6e0f9",
+    "previousDropinSha256": "8901c78788c320721cd728e540723a0ec0744d5d5d0385b96062f0c48ad05339",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "liveContainer": "eva2-ha-lights-fix-349e399",
+    "rollbackContainer": "eva2-ha-principal-release-8b0b87f",
+    "rollbackPort": 44718,
+    "liveHealthy": true,
+    "rollbackHealthy": true
+  },
+  "nonclaims": [
+    "This receipt enables only the fixed snapshot of reachable light entities; switches, locks, covers, climate devices and automations are not enabled.",
+    "The live practice action used turn_off on an already-off light; turn_on is contract-tested and authority-blocked for other principals but was not physically exercised.",
+    "Lola is not granted house-effect authority until her current principal link is explicitly confirmed.",
+    "The Windows/WSL reboot, full-duplex voice and official seven-day acceptance run remain open."
+  ]
+}
