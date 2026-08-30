@@ -1,0 +1,51 @@
+{
+  "contract": "EvaPerformanceComplexityPc03LiveVisibleStreamDevelopmentReceipt/v1",
+  "createdAt": "2026-08-30T02:43:00+02:00",
+  "liveRoute": {
+    "port": 44711,
+    "imageId": "sha256:e2c302e584bf1d7f49774d0a8a7bdad03827a71587a6db26f5271cbba4169345",
+    "sourceCommit": "f39cc116af31677dc030b0847fba0abfb3428104",
+    "client": "Eva1 askEva2Canary with visible onDraft callback",
+    "promptReplyExact": "OK"
+  },
+  "firstSeries": {
+    "turns": 5,
+    "successfulTurns": 5,
+    "firstContentMilliseconds": [1212, 996, 1011, 1394, 1390],
+    "completeMilliseconds": [1223, 1008, 1021, 1407, 1406],
+    "firstContentP50Milliseconds": 1212,
+    "firstContentP95Milliseconds": 1394,
+    "allRepliesExact": true
+  },
+  "secondSeries": {
+    "turns": 10,
+    "successfulTurns": 10,
+    "failedTurns": 0,
+    "firstContentP50Milliseconds": 1090,
+    "firstContentP95Milliseconds": 2541,
+    "firstContentMaximumMilliseconds": 2541,
+    "turnsWithinTwoSeconds": 8,
+    "allRepliesExact": true
+  },
+  "separateAbortedSeries": {
+    "plannedTurns": 20,
+    "runnerStoppedOnClientTimeoutMilliseconds": 20000,
+    "completedPrefixRetained": false,
+    "countedInLatencyDistribution": false
+  },
+  "target": {
+    "firstContentP95Milliseconds": 2000,
+    "passed": false
+  },
+  "activeHealthAfterProbe": {
+    "readyHttpStatus": 200,
+    "dockerHealth": "healthy",
+    "restartCount": 0
+  },
+  "nonclaims": [
+    "Fifteen retained development turns are not the required 200-turn acceptance run.",
+    "The separate timeout is retained as a red observation and is not averaged away.",
+    "No external Telegram message was sent; Eva1's real streaming client function was exercised locally."
+  ],
+  "status": "tested_live_latency_gate_red"
+}

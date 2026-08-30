@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 02:39 CEST
+Laatst bijgewerkt: 30 augustus 2026, 02:43 CEST
 
 ## Heel kort
 
@@ -14,7 +14,8 @@ langetermijngeheugen.
 De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
-Ook de volledige omvangs- en imagepoort PC01 is nu groen: 74.819 productregels,
+Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
+staat op 74.733 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
 De vorige Eva2-route staat gestopt maar intact klaar voor de begrensde terugval.
 
@@ -39,6 +40,12 @@ route op poort `44710` blijft gezond als directe rollback.
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
 praktijktest zijn nog niet klaar.
+
+De eerste zichtbare streamreeks was 5/5 binnen 1,4 seconde. In de volgende tien
+echte beurten was de mediaan 1,09 seconde, maar p95 2,54 seconde en slechts
+8/10 bleef onder twee seconden. Een aparte grotere runner trof bovendien één
+clienttimeout na 20 seconden. De route werkt, maar de latency-eindpoort blijft
+dus eerlijk rood terwijl de uitschieter wordt onderzocht.
 
 ## Wat werkt al
 
@@ -349,8 +356,8 @@ praktijktest zijn nog niet klaar.
   geen gecontroleerde kopie buiten deze computer.
 - De harde broncodeteller is nu voor het eerst groen. In totaal zijn 15.369
   oude test-, proef-, operator- en dubbele regels uit de runtimewortels gehaald.
-  Eva2 telt 74.819 productregels bij een maximum van 75.000. De marge is dus
-  slechts 181 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
+  Eva2 telt nu 74.733 productregels bij een maximum van 75.000. De marge is dus
+  267 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
   live geschakeld; de volledige PC01-gate is daardoor groen.
 - De negen grootste runtimebestanden kunnen niet meer stil verder groeien.
   Ieder heeft nu een vaste eigenaar, contract en bovengrens; een nieuw
@@ -396,6 +403,7 @@ praktijktest zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Live zichtbare stream: mediaan groen, p95 en één time-out nog rood](evidence/product/performance-complexity-pc03-live-visible-stream-development-2026-08-30.json)
 - [Nieuwe uitgestelde tools live achter `/eva2`, met herstart en gezonde rollback](evidence/living-core/eva2-deferred-tools-canary-cutover-live-2026-08-30.json)
 - [Kandidaatbouw, 89 tests, regelbudget, scan en echte huisvraag](evidence/product/performance-complexity-pc03-deferred-tools-candidate-2026-08-30.json)
 - [Parallelle Luna-kandidaat: image 0/0, directe tekst snel, geïntegreerde latency nog rood](evidence/product/performance-complexity-pc03-parallel-luna-candidate-2026-08-30.json)
