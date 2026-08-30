@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import threading
+import time
 from dataclasses import replace
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any, Iterator
@@ -503,6 +504,27 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     assert retained["async"] is True
 
 
+def test_private_fast_recall_returns_immediately_then_reuses_scoped_refresh(
+    hindsight_server: tuple[str, _State],
+) -> None:
+    base_url, _state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    query = _query()
+
+    cold = engine.recall_for_presence_fast(query)
+    deadline = time.monotonic() + 2
+    warm = cold
+    while not warm.confirmed_facts and time.monotonic() < deadline:
+        time.sleep(0.01)
+        warm = engine.recall_for_presence_fast(query)
+
+    assert cold.confirmed_facts == ()
+    assert [fact.predicate for fact in warm.confirmed_facts] == [
+        "memory.world",
+        "memory.observation",
+    ]
+
+
 def test_hindsight_retention_deadline_and_exact_document_removal(
     hindsight_server: tuple[str, _State],
 ) -> None:
@@ -514,6 +536,11 @@ def test_hindsight_retention_deadline_and_exact_document_removal(
     principal_sha256 = hashlib.sha256(document.principal_id.encode("utf-8")).hexdigest()
     mental_model_id = f"eva-style-mirror-v1-{principal_sha256[:16]}"
     state.mental_models.add(mental_model_id)
+    engine._fast_presence_cache["stale"] = (  # noqa: SLF001
+        time.monotonic(),
+        engine._empty_presence(_query()),  # noqa: SLF001
+    )
+    cache_generation = engine._fast_presence_generation  # noqa: SLF001
     engine.remove_conversation_document(
         bank_id=receipt.bank_id,
         document_id=document.document_id,
@@ -537,6 +564,8 @@ def test_hindsight_retention_deadline_and_exact_document_removal(
         method == "DELETE" and path.endswith(f"/mental-models/{mental_model_id}")
         for method, path, _body in state.requests
     )
+    assert engine._fast_presence_cache == {}  # noqa: SLF001
+    assert engine._fast_presence_generation == cache_generation + 1  # noqa: SLF001
 
     # A crash after either provider delete can replay both exact DELETEs safely.
     engine.remove_conversation_document(

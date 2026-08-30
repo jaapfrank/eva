@@ -169,6 +169,10 @@ class HindsightMemoryEngine:
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
         self._cache_lock = threading.Lock()
+        self._fast_presence_cache: dict[str, tuple[float, PresenceMemory]] = {}
+        self._fast_presence_inflight: set[str] = set()
+        self._fast_presence_slots = threading.BoundedSemaphore(4)
+        self._fast_presence_generation = 0
         self._derivative_lock = threading.RLock()
         self._active_group_consent_resolver = active_group_consent_resolver
 
@@ -254,6 +258,71 @@ class HindsightMemoryEngine:
             confirmed_facts=(),
             style_mirror=None,
         )
+
+    @staticmethod
+    def _fast_presence_key(query: RecallCurrentFacts) -> str:
+        return canonical_sha256(
+            [
+                query.tenant_id,
+                query.installation_id,
+                query.principal_id,
+                query.audience.audience_id,
+            ]
+        )
+
+    def _refresh_fast_presence(
+        self, key: str, query: RecallCurrentFacts, generation: int
+    ) -> None:
+        try:
+            memory = self.recall_for_presence(query)
+            with self._cache_lock:
+                if generation == self._fast_presence_generation:
+                    self._fast_presence_cache[key] = (time.monotonic(), memory)
+                    while len(self._fast_presence_cache) > 128:
+                        self._fast_presence_cache.pop(
+                            next(iter(self._fast_presence_cache))
+                        )
+        except HindsightProjectionError:
+            pass
+        finally:
+            with self._cache_lock:
+                self._fast_presence_inflight.discard(key)
+            self._fast_presence_slots.release()
+
+    def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
+        """Return scoped warm context and refresh Hindsight outside first content."""
+
+        if query.audience.kind != "private_person" or query.project_id is not None:
+            return self.recall_for_presence(query)
+        if (
+            not query.subject_ids
+            or query.principal_id not in query.subject_ids
+            or "observation_binding_sha256" in query.scope
+        ):
+            return self.recall_for_presence(query)
+        key = self._fast_presence_key(query)
+        now = time.monotonic()
+        start_refresh = False
+        generation = 0
+        with self._cache_lock:
+            cached = self._fast_presence_cache.get(key)
+            if cached is not None and now - cached[0] <= 30:
+                return cached[1]
+            if (
+                key not in self._fast_presence_inflight
+                and self._fast_presence_slots.acquire(blocking=False)
+            ):
+                self._fast_presence_inflight.add(key)
+                start_refresh = True
+                generation = self._fast_presence_generation
+        if start_refresh:
+            threading.Thread(
+                target=self._refresh_fast_presence,
+                args=(key, query, generation),
+                name="eva-hindsight-prefetch",
+                daemon=True,
+            ).start()
+        return cached[1] if cached is not None else self._empty_presence(query)
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -852,6 +921,9 @@ class HindsightMemoryEngine:
                 raise HindsightProjectionProtocolError(
                     "Hindsight did not acknowledge derived-style removal"
                 )
+            with self._cache_lock:
+                self._fast_presence_generation += 1
+                self._fast_presence_cache.clear()
 
     def _wait_for_operation(self, bank_id: str, operation_id: str) -> None:
         deadline = time.monotonic() + self._config.timeout_seconds

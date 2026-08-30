@@ -112,6 +112,33 @@ class _Model:
         )
 
 
+class _FastMemory(_Memory):
+    def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
+        return super().recall_for_presence(query)
+
+    def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory:
+        raise AssertionError("direct conversation waited for cold memory")
+
+
+def test_direct_answer_uses_fast_memory_boundary_when_available() -> None:
+    memory = _FastMemory()
+    model = _Model()
+    conversation = LivingConversation(
+        memory,
+        model,
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+    )
+
+    conversation.respond(
+        ConversationTurn.private(
+            "tenant", "installation", "jaap", "conversation", "message", "Hoi", NOW
+        )
+    )
+
+    assert memory.query is not None
+    assert model.memory is not None
+
+
 def test_hot_path_recalls_then_lets_evas_model_answer() -> None:
     memory = _Memory()
     model = _Model()
@@ -363,6 +390,13 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
         def __init__(self) -> None:
             super().__init__()
             self.queries: list[str] = []
+            self.fast_queries: list[str] = []
+
+        def recall_for_presence_fast(
+            self, query: RecallCurrentFacts
+        ) -> PresenceMemory:
+            self.fast_queries.append(query.query_text)
+            return _Memory.recall_for_presence(self, query)
 
         def recall_for_presence(self, query: RecallCurrentFacts) -> PresenceMemory:
             self.queries.append(query.query_text)
@@ -406,8 +440,8 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
     )
 
     assert model.calls == 2
+    assert memory.fast_queries == [text]
     assert memory.queries == [
-        text,
         f"{text}\nSemantische zoekconcepten: veranda overkapping temperatuur voorkeur",
     ]
 

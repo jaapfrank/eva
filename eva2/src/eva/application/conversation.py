@@ -511,7 +511,7 @@ class LivingConversation:
         )
         memory_query_hints = hint_loader(turn) if callable(hint_loader) else ()
 
-        def recall(query_text: str) -> PresenceMemory:
+        def recall(query_text: str, *, fast: bool = False) -> PresenceMemory:
             grounded_query = query_text
             if turn.observation_binding is not None:
                 grounded_query = (
@@ -523,8 +523,7 @@ class LivingConversation:
                     grounded_query += "\nGebonden retrieval-ankers: " + ", ".join(
                         memory_query_hints
                     )
-            recalled = self._memory.recall_for_presence(
-                RecallCurrentFacts(
+            query = RecallCurrentFacts(
                     recall_id=f"conversation:{turn.message_id}",
                     installation_id=turn.installation_id,
                     tenant_id=turn.tenant_id,
@@ -573,6 +572,11 @@ class LivingConversation:
                     query_text=grounded_query,
                     maximum_facts=12,
                 )
+            fast_recall = getattr(self._memory, "recall_for_presence_fast", None)
+            recalled = (
+                fast_recall(query)
+                if fast and callable(fast_recall)
+                else self._memory.recall_for_presence(query)
             )
             return self._bound_observation_memory(turn, recalled)
 
@@ -586,7 +590,7 @@ class LivingConversation:
                 else self._actions.action_names
             )
         self_context = () if self._actions is None else self._actions.active_context(turn)
-        memory = recall(turn.text)
+        memory = recall(turn.text, fast=True)
         generated = self._model.generate(
             turn, self._identity, memory, recent_messages,
             available_actions=available_names, completed_action=completed,
