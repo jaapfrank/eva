@@ -1,0 +1,58 @@
+{
+  "contract": "EvaPc05TransientRetryCandidateReceipt/v1",
+  "recordedAt": "2026-08-30T01:53:39Z",
+  "status": "passed_reliability_candidate_latency_gate_red",
+  "sourceCommit": "db0cd42e3de564e134a9eb17a4533097c8ac5e6b",
+  "image": {
+    "id": "sha256:62ba72cab4d0c0b34e1d81ee7fc3571921de1d818593ba1c521b051af5537bfe",
+    "sizeBytes": 85526006,
+    "networkUsedDuringBuild": false,
+    "runsAs": "65532:65532",
+    "readOnlyRootFilesystem": true,
+    "criticalFindings": 0,
+    "highFindings": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 108,
+    "focusedTestsSkipped": 1,
+    "lint": "passed",
+    "productPhysicalLines": 74817,
+    "maximumProductPhysicalLines": 75000,
+    "candidatePort": 44713,
+    "candidateReady": true,
+    "candidateHealth": "healthy",
+    "candidateRestartCount": 0
+  },
+  "retryBoundary": {
+    "ordinaryConversationOnly": true,
+    "maximumAttempts": 2,
+    "maximumSecondsPerAttempt": 5,
+    "externalActionCanRunBeforeCompletedModelReply": false,
+    "usageAfterRetry": "unmeasured",
+    "nontransientErrorsRetried": false
+  },
+  "textDevelopmentRun": {
+    "turns": 200,
+    "successfulTurns": 200,
+    "failedTurns": 0,
+    "firstContentP50Milliseconds": 1001,
+    "firstContentP95Milliseconds": 2285,
+    "firstContentMaximumMilliseconds": 6757,
+    "completeP95Milliseconds": 2296,
+    "turnsWithinTwoSeconds": 188,
+    "durableRetryRepliesWithUnmeasuredUsage": 4,
+    "rawEvidence": "evidence/product/performance-complexity-pc05-text-200-retry-candidate-2026-08-30.json"
+  },
+  "regressions": {
+    "homeAssistantReadReply": "Uit.",
+    "deviceMutationRequested": false,
+    "candidateRestarted": true,
+    "restartMemoryExpectedReply": "granaatveer",
+    "restartMemoryActualReply": "granaatveer"
+  },
+  "nonclaims": [
+    "PC05 remains red because first-content p95 exceeds 2000 milliseconds.",
+    "This candidate was not promoted when this receipt was written.",
+    "This is not a Windows/WSL reboot, voice test, Telegram provider latency test, or seven-day practice run."
+  ]
+}
