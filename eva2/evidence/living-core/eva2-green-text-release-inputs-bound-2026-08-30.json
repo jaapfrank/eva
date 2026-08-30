@@ -1,0 +1,22 @@
+{
+  "contract": "Eva2GreenTextReleaseInputsBoundReceipt/v1",
+  "recordedAt": "2026-08-30T02:20:00Z",
+  "status": "passed_inputs_bound_not_rebuilt",
+  "sourceCommit": "a9dd457cb53d016c105815e66a2c43c4e100aef4",
+  "sourceArchiveSha256": "a88f51f74bf9d4100ff9fab5d966016583faf67688e9ce22c6b984b287a09465",
+  "authoritySha256": "ed94cd91ff8f64f757eeec4725f4613fac5fbfb0174d5b0fc3871b9d0e42ed30",
+  "cockpitEvidenceSha256": "cf9de34ac71a7991ad1b1400b7556af3f26892d61f7d056ef8dbde209dccebdd",
+  "requiredInputCount": 250,
+  "requiredTestCount": 139,
+  "checkerStatus": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed",
+  "liveRuntime": {
+    "sourceCommit": "9ecb619bd1f7fbc477e1ad3fe0857704287cddc4",
+    "imageId": "sha256:7e5e2bb906645f7ad3c630b18f5ffba35e1d89acfbfb3c9298789ca0b9482093",
+    "port": 44715
+  },
+  "nonclaims": [
+    "The release-input commit adds evidence and release metadata after the live runtime source; it does not change runtime code.",
+    "The exact release-input commit has not yet been rebuilt, scanned, deployed, rebooted, or frozen as the final image.",
+    "The pre-existing cockpit working-tree change was committed only after a clean detached worktree reproduced byte-identical output."
+  ]
+}

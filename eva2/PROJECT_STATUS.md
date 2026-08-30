@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 04:16 CEST
+Laatst bijgewerkt: 30 augustus 2026, 04:20 CEST
 
 ## Heel kort
 
@@ -87,6 +87,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - De live router antwoordde na de nieuwste omschakeling exact `COMPACTLIVE`. Na
   de kandidaat-herstart kwam het eerder opgeslagen woord `ambermeeuw` exact
   terug.
+- De actuele bron-, dependency-, migratie-, cockpit- en testset is opnieuw
+  verzegeld: 250 release-inputs en 139 tests sluiten op één schone commit.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -413,6 +415,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Actuele 250 release-inputs en 139 tests opnieuw verzegeld](evidence/living-core/eva2-green-text-release-inputs-bound-2026-08-30.json)
 - [Compacte tekstkern live: 200/200, p95 1,918 seconde en gezonde rollback](evidence/living-core/eva2-compact-prompt-canary-cutover-live-2026-08-30.json)
 - [Compacte promptkandidaat: 108 tests, image 0/0, HA en herstartgeheugen](evidence/product/performance-complexity-pc05-compact-prompt-candidate-2026-08-30.json)
 - [Ruwe groene 200-beurtenreeks met drie eerlijk gemarkeerde retries](evidence/product/performance-complexity-pc05-text-200-compact-prompt-candidate-2026-08-30.json)
