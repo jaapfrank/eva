@@ -99,7 +99,7 @@ def call_assist_effect(
         raise HomeAssistantMcpError("Home Assistant MCP effect result is invalid") from exc
     data = result.get("data") if isinstance(result, dict) else None
     success = data.get("success") if isinstance(data, dict) else None
-    if result.get("response_type") != "action_done" or data.get("failed") != [] or not isinstance(success, list) or len(success) != 1 or not isinstance(success[0], dict) or success[0].get("id") != entity_id:
+    if not isinstance(result, dict) or result.get("response_type") != "action_done" or not isinstance(data, dict) or data.get("failed") != [] or not isinstance(success, list) or len(success) != 1 or not isinstance(success[0], dict) or success[0].get("id") != entity_id:
         raise HomeAssistantMcpError("Home Assistant MCP effect was not exact")
     return {"entity_id": entity_id, "response_sha256": canonical_sha256(result), "tool_name": tool_name}
 

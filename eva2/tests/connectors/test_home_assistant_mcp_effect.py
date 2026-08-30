@@ -45,6 +45,7 @@ class _State:
     schema: dict[str, Any] = field(default_factory=lambda: dict(SCHEMA))
     result_id: str = "light.test"
     failed: list[dict[str, str]] = field(default_factory=list)
+    omit_data: bool = False
     calls: list[dict[str, Any]] = field(default_factory=list)
     rest_services_calls: int = 0
 
@@ -76,6 +77,8 @@ def _server(state: _State) -> Iterator[str]:
             elif method == "tools/call":
                 success = [] if state.failed else [{"id": state.result_id}]
                 effect = {"response_type": "action_done", "data": {"failed": state.failed, "success": success}}
+                if state.omit_data:
+                    effect.pop("data")
                 result = {"content": [{"type": "text", "text": json.dumps(effect)}]}
             else:
                 raise AssertionError(method)
@@ -119,15 +122,17 @@ def test_effect_uses_official_mcp_and_never_direct_rest_service() -> None:
     assert state.rest_services_calls == 0
 
 
-@pytest.mark.parametrize("failure", ["schema", "target", "provider"])
+@pytest.mark.parametrize("failure", ["schema", "target", "provider", "missing_data"])
 def test_effect_rejects_drift_wrong_target_and_provider_failure(failure: str) -> None:
     state = _State()
     if failure == "schema":
         state.schema = {"type": "object", "properties": {"other": {"type": "string"}}}
     elif failure == "target":
         state.result_id = "light.other"
-    else:
+    elif failure == "provider":
         state.failed = [{"id": "light.test"}]
+    else:
+        state.omit_data = True
     with _server(state) as origin:
         adapter = HomeAssistantToolAdapter(HomeAssistantConfig(origin, "token"))
         with pytest.raises(ToolExecutionRejected):
