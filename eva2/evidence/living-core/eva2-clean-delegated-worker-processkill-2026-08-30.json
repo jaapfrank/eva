@@ -1,0 +1,102 @@
+{
+  "contract": "EvaCleanDelegatedWorkerProcessKillEvidence/v1",
+  "observedAt": "2026-08-30T08:12:08Z",
+  "status": "tested",
+  "source": {
+    "baseCommit": "8eb0c6c",
+    "dockerfileSha256": "1feac5dd46dcdef3a8aac05dc9df9cc5d2a4aafc7ad9cbbc00dde7c8e9c5758d",
+    "imageTestSha256": "8b428962c49a4897b3ba6ced037fc0ba6108bc1e7536bc356abd1187fb846a7d",
+    "dependencyLockSha256": "0f270ccc6b4086ce7f5a5300563a74dfa53569d51109fb60f21958fb0acaa6a5",
+    "pythonBuilderDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "chainguardRuntimeDigest": "sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77",
+    "libcryptoSha256": "72db1b3de8b7dfbaba4c056135f408da555f9d5e137c82129478e07e769f8070",
+    "libsslSha256": "9aec161fdbc82d3e4280f5084843118939f1f4acc53c98ec963de03cfe812fad"
+  },
+  "rejectedOriginalImage": {
+    "imageId": "sha256:b9c25aa59a9832f2dc43f2a2eae14aeec088c036dcaf5935186eaee47480fc30",
+    "criticalFindings": 5,
+    "highFindings": 29,
+    "promoted": false
+  },
+  "cleanReleaseCandidate": {
+    "imageId": "sha256:170f9e6b0fdf01aba499c8820c581167b586c4e3e1c70609e85fc47f6c46ef36",
+    "runtimeUser": "65532:65532",
+    "layerCount": 18,
+    "imageSizeBytes": 72261538,
+    "dependencyWheelCount": 24,
+    "networkDuringImageBuild": "none",
+    "openaiVersion": "3.3.1",
+    "pydanticAiSlimVersion": "2.32.1",
+    "relevantTestsPassed": 49,
+    "ruff": "passed",
+    "criticalFindings": 0,
+    "highFindings": 0
+  },
+  "offlineScan": {
+    "scannerImageDigest": "sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "network": "none",
+    "databaseUpdatedAt": "2026-08-29T01:03:02.314831694Z",
+    "databaseNextUpdate": "2026-08-30T01:03:02.314831423Z",
+    "databaseMetadataSha256": "1935af6de5ed7c5a1fba311d4d9ef1554f9b2e576a8c0b94794fc3102af687c7",
+    "databaseSha256": "136e3dbd4976db93389a72115b723ac37708719f1645f0f011de45decfec6a30"
+  },
+  "processKill": {
+    "database": "new disposable PostgreSQL 16.13",
+    "schemaHead": "4e_0006_memory_outbox_erasure",
+    "specSha256": "e0e1d1a18375ceac65251fd239a5312a3e85c37d8735d404ac819fb948bf46ab",
+    "stateObservedBeforeSignal": "call_started",
+    "signal": "SIGKILL",
+    "workerExitCode": 137,
+    "oomKilled": false,
+    "storedStateAfterKill": "call_started",
+    "claimCountAfterKill": 1,
+    "callIdPresentAfterKill": true,
+    "revisionAfterKill": 3,
+    "updatedAtAfterKill": "2026-08-30T08:11:22Z",
+    "completedAtAfterKill": null,
+    "usageAfterKill": null,
+    "resultAfterKill": null
+  },
+  "freshWorkerReplay": {
+    "processDisposition": "completed",
+    "elapsedMilliseconds": 4753,
+    "storedState": "call_started",
+    "claimCount": 1,
+    "callIdStillPresent": true,
+    "revision": 3,
+    "updatedAtUnchanged": true,
+    "completedAtStillNull": true,
+    "usageStillNull": true,
+    "resultStillNull": true,
+    "secondDurableClaimCreated": false
+  },
+  "isolation": {
+    "workerRootFilesystem": "read-only",
+    "workerCapabilitiesDropped": ["ALL"],
+    "workerNoNewPrivileges": true,
+    "workerMemoryBytes": 536870912,
+    "workerCpuLimit": 1,
+    "workerPidLimit": 64,
+    "databaseDsnFileMountedReadOnly": true,
+    "accessOnlyModelLeaseMountedReadOnly": true,
+    "liveDatabaseMounted": false,
+    "homeAssistantSecretMounted": false,
+    "dockerSocketMounted": false,
+    "workspaceMounted": false
+  },
+  "complexityGate": {
+    "status": "passed",
+    "productPhysicalLines": 74867,
+    "maximumProductPhysicalLines": 75000,
+    "directCoreDependencies": 10,
+    "violations": 0
+  },
+  "conclusion": "The exact clean release-candidate worker was killed only after its durable call-start fence existed. A fresh worker did not claim, complete or replay that call.",
+  "nonClaims": [
+    "The killed external provider request may have completed outside Eva after the process disappeared; Eva intentionally retains the outcome as ambiguous.",
+    "No provider-side request log was available; no replay is proven by the unchanged durable claim, call ID, revision, timestamp, usage and result fields.",
+    "The offline vulnerability database snapshot had passed its stated next-update time when this scan ran; the receipt binds the exact database bytes and does not claim newer advisories.",
+    "The image is not yet signed, stored off-host or promoted into the managed nine-service graph.",
+    "This is not a benchmark or competitor-superiority result."
+  ]
+}
