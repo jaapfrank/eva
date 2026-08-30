@@ -19,6 +19,10 @@ REPAIR_RECEIPT = (
 REVIEWED_RECEIPT = (
     EVIDENCE / "agentbench-dbbench-eva-reviewed-fixed-cases-16-23-2026-08-30.json"
 )
+DIAGNOSTIC_RECEIPT = (
+    EVIDENCE
+    / "agentbench-dbbench-eva-review-failure-subtype-diagnostic-result-2026-08-30.json"
+)
 
 
 def _raw_path(case_index: int) -> Path:
@@ -169,3 +173,20 @@ def test_reviewed_fixed_set_keeps_correct_scores_and_boundary_failures() -> None
     assert aggregate["successfulToolFreeModelReplies"] == total_receipts
     assert aggregate["adapterValidationFailuresBeforeDatabaseIo"] == total_failures
     assert aggregate["sqlCalls"] == total_sql
+
+
+def test_case17_diagnostic_does_not_rewrite_the_original_fixed_failure() -> None:
+    receipt = json.loads(DIAGNOSTIC_RECEIPT.read_text(encoding="utf-8"))
+    path = (
+        EVIDENCE
+        / "agentbench-dbbench-eva-review-failure-subtype-diagnostic-case-17-2026-08-30.raw.json"
+    )
+    raw_bytes = path.read_bytes()
+    raw = json.loads(raw_bytes)
+
+    assert hashlib.sha256(raw_bytes).hexdigest() == receipt["result"]["rawSha256"]
+    assert raw["result"]["metric"]["score"] == receipt["result"]["score"] == 1
+    assert receipt["interpretation"]["originalFixedSetFailureChanged"] is False
+    assert receipt["interpretation"]["originalCase17FailureStillAuthoritative"] is True
+    assert receipt["interpretation"]["failureSubtypeReproduced"] is False
+    assert receipt["interpretation"]["furtherRepeatedProbingOfCase17Allowed"] is False

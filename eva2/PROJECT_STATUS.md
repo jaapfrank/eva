@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 08:13 CEST
+Laatst bijgewerkt: 30 augustus 2026, 08:25 CEST
 
 ## Heel kort
 
@@ -450,15 +450,19 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   calls werd geraakt. De kandidaat is daarom afgewezen als
   betrouwbaarheidsverbetering; zes goede antwoorden maken twee uitvallers niet
   ongedaan.
+- De privacyveilige diagnose van case 17 reproduceerde de uitval niet: dezelfde
+  case liep nu in vier calls door en scoorde goed. De eerdere uitval blijft
+  gewoon meetellen. Dit toont modelvariatie, maar bewijst niet welk fouttype
+  eerder optrad; daarom wordt deze case niet nogmaals bevraagd.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. Eerst privacyveilige foutsubtypen toevoegen zonder de afgewezen antwoordtekst
-   te bewaren. Pas na bewijs of het om getallen, lege waarden of een verkeerde
-   vorm gaat volgt een gerichte correctie. De volgende scoretoets gebruikt weer
-   vooraf gekozen, nog ongeziene cases; de huidige kandidaat blijft afgewezen.
+1. De reviewer begrenzen tot hoogstens twee controles en bij een ongeldige
+   reviewerreactie veilig terugvallen op het al geldige kandidaatantwoord. Zo
+   kan een optionele controle de beschikbaarheid niet meer door herhalen
+   verslechteren. Daarna volgt opnieuw een vooraf gekozen ongeziene reeks.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
