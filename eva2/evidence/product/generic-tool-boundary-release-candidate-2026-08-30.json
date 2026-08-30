@@ -1,0 +1,57 @@
+{
+  "contract": "EvaManagedCoreImageCandidateEvidence/v1",
+  "status": "passed_candidate_only",
+  "issuedAt": "2026-08-30T22:48:13+02:00",
+  "source": {
+    "commit": "205f696c578da943e92029f3997ca4d6ba4c9d30",
+    "archiveSha256": "ba2c23eaf4cd41ba93b1bc5334cfabd4a3313ea16ab74b85e85fbcf07ceeb339",
+    "releaseAuthoritySha256": "2f9a25f8a012a67dff785e6fd45a9f716658fba7f2dc3296eaf481a255606770",
+    "requiredInputCount": 259,
+    "requiredTestCount": 150
+  },
+  "candidate": {
+    "image": "eva2/generic-tool-boundary-release@sha256:98e086c6151c992bffe4cc56f355d16a927f22700005ef72c16979ff3ccbda0d",
+    "imageId": "sha256:98e086c6151c992bffe4cc56f355d16a927f22700005ef72c16979ff3ccbda0d",
+    "sizeBytes": 81644248,
+    "user": "65532:65532",
+    "rootFilesystemProbe": "read-only",
+    "providerWithoutConfiguration": "dormant",
+    "trivy": {
+      "critical": 0,
+      "high": 0,
+      "network": "none",
+      "databasePreparedAt": "2026-08-29",
+      "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+    }
+  },
+  "architecture": {
+    "homeAssistantIsExternalProvider": true,
+    "genericMcpBoundaryIsSourceBuilt": true,
+    "concreteMcpToolsRequirePrivateRuntimeCatalog": true,
+    "corePromotionRemovedFromHomeAssistantPolicyTool": true,
+    "providerNeutralCorePromotionOperator": "tools/persist_managed_core_image.py"
+  },
+  "tests": {
+    "focusedPassed": 42,
+    "focusedFailed": 0,
+    "openAiSdkTransportSkippedOnHostWithoutSdk": 1,
+    "staticReleaseInputsBound": 259,
+    "staticReleaseTestsBound": 150,
+    "allStaticTestFilesExecutedInOneHostEnvironment": false
+  },
+  "liveSafety": {
+    "quiescentCutoverPreflight": "passed",
+    "sourcePort": 44710,
+    "targetPort": 44711,
+    "trafficChanged": false,
+    "retainedEnvironmentChanged": false,
+    "liveEva1Changed": false,
+    "liveEva2Changed": false
+  },
+  "nonClaims": [
+    "This candidate has not been written into retained slot 4 or promoted to the /eva2 route.",
+    "The 150 static test paths are source inputs; they were not all executed in one host Python environment.",
+    "The generic MCP gateway and non-home time tool are proven separately but are not enabled in this dormant image probe.",
+    "This candidate does not prove superiority over OpenClaw, Hermes or Agent Zero."
+  ]
+}
