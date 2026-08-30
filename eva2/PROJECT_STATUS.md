@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 20:23 CEST
+Laatst bijgewerkt: 30 augustus 2026, 20:36 CEST
 
 ## Zo lees je dit bord
 
@@ -63,7 +63,7 @@ selling point.
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Gewone reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties lopen generiek; apparaatmigratie bevat nog oude providerpaden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 De codegrens is groen en een synthetische tweede provider werkt; een tweede echte dienst moet dit nog in de gebruikersroute bewijzen | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -71,11 +71,10 @@ Eva leest de beschikbare documentatie, kiest een onderhouden provider of
 officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
-De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 206 Home Assistant-/Tuya-specifieke identifiers in één kernbestand:
-de centrale runtimecompositie. Dat is 751 minder dan vóór de eerste
-verplaatsing. Applicatie, contracten, modeladapter en gesprekspersistence staan
-nu op nul. Gewone reads, aan/uit-acties,
+De codegrens is nu mechanisch groen. De verbeterde controle vindt nul Home
+Assistant-/Tuya-specifieke identifiers in Eva's applicatie, contracten,
+modeladapter, gesprekspersistence en runtime. Dat zijn er 957 minder dan bij de
+eerste meting. Gewone reads, aan/uit-acties,
 automatiseringen, het Tuya-migratieplan en de aparte HACS-repository- en
 pakketacties leveren hun schema, uitleg, validatie en providercommando vanuit
 tooladapters. Zij gebruiken dezelfde generieke PostgreSQL-route voor toelating,
@@ -85,9 +84,13 @@ procesinstantie herhaalde geen provideractie. Ook actuele toestand en historie
 liepen daarna door hetzelfde algemene toolpad en bleven na een nieuwe
 procesinstantie enkelvoudig. De oude directe effect-API en alle aparte Home
 Assistant-PostgreSQL-routes zijn verwijderd. Ook de volledige migratieplanning,
-validatie en opslag staan nu bij de provideradapter. Alleen de resterende
-runtimecompositie en beheer-API's moeten nog achter dezelfde providergrens
-verdwijnen.
+validatie, opslag, configuratie en runtime-opbouw staan nu bij de
+provideradapter. De oude losse beheer-API in de kern is verwijderd.
+
+Dit betekent nog niet dat iedere providerklus af is. Eén echte apparaatmigratie
+moet nog als gewone provider-tool door dezelfde voorstel-, toestemming-,
+uitvoer- en readbackroute lopen. Een tweede echte externe dienst moet daarnaast
+bewijzen dat zij zonder kernwijziging kan worden ingeplugd.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -185,7 +188,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties gebruiken één generieke duurzame route; alleen de centrale runtimecompositie bevat nog 206 providerspecifieke termen |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul providerspecifieke termen en alle huidige tools worden als bundel geladen; een echte apparaatmigratie en tweede echte externe provider ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

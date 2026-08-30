@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import asyncio
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
-import hashlib
 import json
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 from uuid import UUID, uuid4
 
 import sqlalchemy as sa
@@ -17,17 +15,6 @@ from fastapi import FastAPI
 from sqlalchemy.engine import Engine
 
 from eva.adapters.api.app import RuntimeHealth, create_app
-from eva.adapters.connectors.home_assistant import (
-    HomeAssistantConfig,
-    HomeAssistantToolAdapter,
-)
-from eva.adapters.connectors.home_assistant_events import HomeAssistantEventStream
-from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
-from eva.adapters.connectors.home_assistant_hacs import HomeAssistantHacsAdapter
-from eva.adapters.connectors.home_assistant_localtuya import (
-    HomeAssistantLocalTuyaAdapter,
-    LocalTuyaProbeSecret,
-)
 from eva.adapters.connectors.telegram import TelegramProactiveDelivery
 from eva.adapters.connectors.fanout_http import HttpFanoutDeliverySink
 from eva.adapters.connectors.agentmail import AgentMailConfig, AgentMailReadAdapter
@@ -44,25 +31,11 @@ from eva.adapters.connectors.stripe_webhook import (
     StripeWebhookConfig,
     StripeWebhookVerifier,
 )
-from eva.adapters.connectors.home_assistant_automations import (
-    HomeAssistantAutomationAdapter as ProviderAutomationAdapter,
-    HomeAssistantAutomationConfig as ProviderAutomationConfig,
-    HomeAssistantConversationAutomationPlanner as ProviderAutomationPlanner,
-)
-from eva.adapters.connectors.home_assistant_management import (
-    HomeAssistantConversationHacsPlanner as ProviderHacsPlanner,
-    HomeAssistantConversationMigrationPlanner as ProviderMigrationPlanner,
-    HomeAssistantHacsManagementAdapter as ProviderHacsManagementAdapter,
-    HomeAssistantMigrationPlanAdapter as ProviderMigrationPlanAdapter,
-)
 from eva.adapters.postgres.conversation_actions import (
     PostgresConversationActions,
     PostgresPersonalInterestStore,
     PostgresPersonalProductReleaseStore,
     PostgresPersonalPrototypeStore,
-)
-from eva.adapters.postgres.external_conversation_tools import (
-    PostgresExternalConversationTools,
 )
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
@@ -112,21 +85,10 @@ from eva.application.conversation import (
     RecentConversationMessage,
 )
 from eva.application.identity_verifier import load_identity_pack_trust_binding
-from eva.adapters.connectors.provider_management import (
-    AdvancedTaskApproval,
-    AdvancedTaskBlocked,
-    AdvancedTaskPackageApproval,
-    AdvancedTaskPlan,
-    AdvancedTaskRepositoryApproval,
-    LocalTuyaCanaryConfiguration,
-    LocalTuyaEntityConfiguration,
-    PostgresAdvancedTaskStore,
-    TuyaToLocalTuyaPlanner,
-    adopt_device_preflight,
-    advanced_plan_id,
-    require_current_package_preflight,
-    require_current_repository_preflight,
-    verify_localtuya_canary_readback,
+from eva.providers.runtime import (
+    ExternalProviderSettings,
+    build_external_provider_bundle,
+    load_external_provider_settings,
 )
 from eva.application.memory import (
     BudgetedConversationMemoryWriter,
@@ -271,12 +233,7 @@ class RuntimeSettings:
     portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
-    home_assistant_url: str | None = None
-    home_assistant_token: str | None = None
-    home_assistant_effects_enabled: bool = False
-    home_assistant_effect_allowlist: tuple[str, ...] = ()
-    home_assistant_effect_principal_sha256_allowlist: tuple[str, ...] = ()
-    home_assistant_event_domains: tuple[str, ...] = ("light",)
+    external_provider: ExternalProviderSettings | None = None
     agentmail_inbox_id: str | None = None
     agentmail_api_key_file: str | None = None
     telegram_proactive_chat_id: str | None = None
@@ -435,63 +392,7 @@ class RuntimeSettings:
             90,
             "EVA_PERSONAL_INTEREST_LEASE_SECONDS is invalid",
         )
-        home_assistant_url = _environment_optional("EVA_HOME_ASSISTANT_URL")
-        home_assistant_token = (
-            _file_only_environment_secret(
-                "EVA_HOME_ASSISTANT_TOKEN", "EVA_HOME_ASSISTANT_TOKEN_FILE"
-            )
-            or None
-        )
-        home_assistant_effects_enabled = _environment_bool(
-            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
-            False,
-            "EVA_HOME_ASSISTANT_EFFECTS_ENABLED is invalid",
-        )
-        home_assistant_effect_allowlist = _environment_items(
-            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", unique_sorted=True
-        )
-        home_assistant_effect_principal_sha256_allowlist = _environment_items(
-            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", unique_sorted=True
-        )
-        for value in home_assistant_effect_allowlist:
-            entity_id, separator, service = value.partition(":")
-            domain, dot, object_id = entity_id.partition(".")
-            if (
-                separator != ":"
-                or domain not in {"light", "switch"}
-                or dot != "."
-                or not object_id
-                or any(
-                    character not in "abcdefghijklmnopqrstuvwxyz0123456789_"
-                    for character in object_id
-                )
-                or service not in {"turn_on", "turn_off"}
-            ):
-                raise RuntimeError("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is invalid")
-        if home_assistant_effects_enabled and not home_assistant_effect_allowlist:
-            raise RuntimeError(
-                "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
-            )
-        if (
-            home_assistant_effects_enabled
-            and not home_assistant_effect_principal_sha256_allowlist
-        ):
-            raise RuntimeError(
-                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is required when effects are enabled"
-            )
-        if any(
-            len(value) != 64
-            or any(character not in "0123456789abcdef" for character in value)
-            for value in home_assistant_effect_principal_sha256_allowlist
-        ):
-            raise RuntimeError(
-                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is invalid"
-            )
-        home_assistant_event_domains = _environment_items(
-            "EVA_HOME_ASSISTANT_EVENT_DOMAINS",
-            "binary_sensor,light,person",
-            unique_sorted=True,
-        )
+        external_provider = load_external_provider_settings()
         agentmail_inbox_id = _environment_optional("EVA_AGENTMAIL_INBOX_ID")
         agentmail_api_key_file = _environment_optional("EVA_AGENTMAIL_API_KEY_FILE")
         telegram_proactive_chat_id = _environment_optional(
@@ -583,11 +484,6 @@ class RuntimeSettings:
         if background_tenant_id is None or background_installation_id is None:
             raise RuntimeError("Eva runtime tenant and installation scope are required")
         _require_complete_configuration(
-            "Eva external tool provider configuration is incomplete",
-            home_assistant_url,
-            home_assistant_token,
-        )
-        _require_complete_configuration(
             "Eva AgentMail configuration is incomplete",
             agentmail_inbox_id,
             agentmail_api_key_file,
@@ -608,8 +504,6 @@ class RuntimeSettings:
             background_tenant_id is None or background_installation_id is None
         ):
             raise RuntimeError("Eva Stripe webhook scope is incomplete")
-        if not home_assistant_event_domains:
-            raise RuntimeError("Eva external tool event domain set is empty")
         if not 1 <= cold_path_idle_seconds <= 86_400:
             raise RuntimeError("Eva cold-path idle period is outside 1..86400 seconds")
         if not 10 <= personal_interest_lease_seconds <= 600:
@@ -639,14 +533,7 @@ class RuntimeSettings:
             portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
-            home_assistant_url=home_assistant_url,
-            home_assistant_token=home_assistant_token,
-            home_assistant_effects_enabled=home_assistant_effects_enabled,
-            home_assistant_effect_allowlist=home_assistant_effect_allowlist,
-            home_assistant_effect_principal_sha256_allowlist=(
-                home_assistant_effect_principal_sha256_allowlist
-            ),
-            home_assistant_event_domains=home_assistant_event_domains,
+            external_provider=external_provider,
             agentmail_inbox_id=agentmail_inbox_id,
             agentmail_api_key_file=agentmail_api_key_file,
             telegram_proactive_chat_id=telegram_proactive_chat_id,
@@ -679,9 +566,9 @@ class PostgresHindsightMemoryRuntime:
         conversation_actions: PostgresConversationActions,
         sensory_worker: SensoryIngestionWorker | None = None,
         sensory_store: PostgresSensoryEventStore | None = None,
-        home_assistant_admin: HomeAssistantAdminAdapter | None = None,
-        home_assistant_hacs: HomeAssistantHacsAdapter | None = None,
-        home_assistant_localtuya: HomeAssistantLocalTuyaAdapter | None = None,
+        management_reader: Any = None,
+        management_writer: Any = None,
+        device_manager: Any = None,
         agentmail: AgentMailReadAdapter | None = None,
         conversation_model: CodexConversationModel | None = None,
         stripe_publication: StripePublicationAdapter | None = None,
@@ -710,9 +597,9 @@ class PostgresHindsightMemoryRuntime:
         self._conversation_actions = conversation_actions
         self._sensory_worker = sensory_worker
         self._sensory_store = sensory_store
-        self._home_assistant_admin = home_assistant_admin
-        self._home_assistant_hacs = home_assistant_hacs
-        self._home_assistant_localtuya = home_assistant_localtuya
+        self._management_reader = management_reader
+        self._management_writer = management_writer
+        self._device_manager = device_manager
         self._agentmail = agentmail
         self._conversation_model = conversation_model
         self._stripe_publication = stripe_publication
@@ -1379,329 +1266,6 @@ class PostgresHindsightMemoryRuntime:
         )
         return DigitalFulfillmentDownload(release.content, grant)
 
-    def _advanced_task_store(
-        self, tenant_id: str, installation_id: str
-    ) -> PostgresAdvancedTaskStore:
-        return PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
-
-    async def plan_tuya_to_localtuya(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        principal_id: str,
-        operation_id: str,
-    ) -> AdvancedTaskPlan:
-        if self._home_assistant_admin is None:
-            raise RuntimeError("advanced planning provider is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        plan_id = advanced_plan_id(operation_id=operation_id, requested_by=principal_id)
-        existing = store.find(plan_id)
-        if existing is not None:
-            return existing
-        inventory = await self._home_assistant_admin.inventory()
-        plan = TuyaToLocalTuyaPlanner().build(
-            inventory,
-            operation_id=operation_id,
-            requested_by=principal_id,
-        )
-        store.retain(plan)
-        return plan
-
-    async def refresh_tuya_to_localtuya_plan(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-    ) -> dict[str, object]:
-        """Re-read Home Assistant and append the next durable plan version."""
-
-        if self._home_assistant_admin is None:
-            raise RuntimeError("advanced planning provider is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        current = store.load(plan_id)
-        inventory = await self._home_assistant_admin.inventory()
-        refreshed = TuyaToLocalTuyaPlanner().build(
-            inventory,
-            operation_id=current.operation_id,
-            requested_by=current.requested_by,
-        )
-        if refreshed.plan_id != current.plan_id:
-            raise RuntimeError("advanced task refresh changed plan identity")
-        disposition = store.refresh(refreshed)
-        return {"disposition": disposition, "plan": store.load(plan_id).to_payload()}
-
-    def approve_tuya_to_localtuya_canary(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        plan_sha256: str,
-        inventory_sha256: str,
-        device_id: str,
-        approved_by: str,
-    ) -> AdvancedTaskApproval:
-        return self._advanced_task_store(tenant_id, installation_id).approve_canary(
-            plan_id=plan_id,
-            plan_sha256=plan_sha256,
-            inventory_sha256=inventory_sha256,
-            device_id=device_id,
-            approved_by=approved_by,
-            approved_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-
-    async def probe_localtuya_canary(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        plan_sha256: str,
-        inventory_sha256: str,
-        device_id: str,
-        config_entry_id: str,
-        friendly_name: str,
-        host: str,
-        local_device_id: str,
-        local_key: str,
-        protocol_version: str,
-    ) -> dict[str, object]:
-        """Prove one local connection; abort the HA flow before device creation."""
-
-        if self._home_assistant_localtuya is None or self._home_assistant_admin is None:
-            raise RuntimeError("local-device preflight provider is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        plan = store.load(plan_id)
-        if plan.sha256 != plan_sha256 or plan.inventory_sha256 != inventory_sha256:
-            raise RuntimeError("LocalTuya preflight has stale plan authority")
-        inventory = await self._home_assistant_admin.inventory()
-        current = TuyaToLocalTuyaPlanner().build(
-            inventory,
-            operation_id=plan.operation_id,
-            requested_by=plan.requested_by,
-        )
-        disposition = store.refresh(current)
-        if disposition == "refreshed":
-            raise RuntimeError("provider inventory changed; refresh approval authority")
-        local_entries = [
-            entry
-            for entry in inventory.integrations
-            if entry.domain == "localtuya" and entry.entry_id == config_entry_id
-        ]
-        if len(local_entries) != 1 or local_entries[0].state != "loaded":
-            raise RuntimeError("LocalTuya config entry is not loaded")
-        secret = LocalTuyaProbeSecret(
-            friendly_name=friendly_name,
-            host=host,
-            device_id=local_device_id,
-            local_key=local_key,
-            protocol_version=protocol_version,
-        )
-        proof = await self._home_assistant_localtuya.probe(
-            config_entry_id=config_entry_id,
-            secret=secret,
-        )
-        if not proof.flow_aborted or proof.next_step_id != "pick_entity_type":
-            raise RuntimeError(
-                "LocalTuya preflight did not stop before device creation"
-            )
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        preflight = adopt_device_preflight(
-            plan,
-            device_id=device_id,
-            config_entry_id=config_entry_id,
-            local_device_id_sha256=proof.device_id_sha256,
-            local_host_sha256=proof.host_sha256,
-            protocol_version=proof.protocol_version,
-            next_schema_sha256=proof.next_schema_sha256,
-            probed_at=now,
-        )
-        retained = store.retain_device_preflight(preflight)
-        return {"disposition": retained, "preflight": preflight.to_payload()}
-
-    async def prepare_localtuya_canary_execution(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        approval_sha256: str,
-        preflight_sha256: str,
-        configuration_sha256: str,
-    ) -> dict[str, object]:
-        """Commit the exact canary fence before any provider mutation."""
-
-        if self._home_assistant_admin is None:
-            raise RuntimeError("local-device execution provider is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        plan = store.load(plan_id)
-        approval, preflight = store.canary_authority(
-            plan_id=plan_id,
-            approval_sha256=approval_sha256,
-            preflight_sha256=preflight_sha256,
-        )
-        before = await self._home_assistant_admin.inventory()
-        current = TuyaToLocalTuyaPlanner().build(
-            before,
-            operation_id=plan.operation_id,
-            requested_by=plan.requested_by,
-        )
-        if store.refresh(current) == "refreshed":
-            raise RuntimeError("Home Assistant changed; canary approval is stale")
-        disposition = store.prepare_canary(
-            approval,
-            preflight,
-            configuration_sha256=configuration_sha256,
-            before_inventory=before,
-            occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-        return {
-            "approval_sha256": approval.sha256,
-            "configuration_sha256": configuration_sha256,
-            "device_id": approval.device_id,
-            "disposition": disposition,
-            "preflight_sha256": preflight.sha256,
-        }
-
-    async def reconcile_localtuya_canary_execution(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-    ) -> dict[str, object]:
-        """After call or crash, derive success only from the current HA registries."""
-
-        if self._home_assistant_admin is None:
-            raise RuntimeError("Home Assistant LocalTuya execution is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        approval, preflight, configuration_sha256, before = (
-            store.prepared_canary_context(plan_id=plan_id)
-        )
-        after = await self._home_assistant_admin.inventory()
-        proof = verify_localtuya_canary_readback(
-            store.load(plan_id),
-            approval,
-            preflight,
-            configuration_sha256=configuration_sha256,
-            before=before,
-            after=after,
-            observed_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-        disposition = store.record_canary_verified(proof)
-        return {"disposition": disposition, "proof": proof.to_payload()}
-
-    async def execute_prepared_localtuya_canary(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        friendly_name: str,
-        host: str,
-        local_device_id: str,
-        local_key: str,
-        protocol_version: str,
-        entities: tuple[LocalTuyaEntityConfiguration, ...],
-        readback_timeout_seconds: float = 10.0,
-    ) -> dict[str, object]:
-        """Run one prepared canary once, then poll independent HA readback."""
-
-        if self._home_assistant_localtuya is None:
-            raise RuntimeError("Home Assistant LocalTuya execution is unavailable")
-        configuration = LocalTuyaCanaryConfiguration(
-            friendly_name=friendly_name,
-            host=host,
-            device_id=local_device_id,
-            local_key=local_key,
-            protocol_version=protocol_version,
-            entities=entities,
-        )
-        store = self._advanced_task_store(tenant_id, installation_id)
-        _approval, preflight, expected_sha256, _before = store.prepared_canary_context(
-            plan_id=plan_id
-        )
-        if configuration.sha256 != expected_sha256:
-            raise RuntimeError(
-                "LocalTuya canary configuration differs from preparation"
-            )
-        if (
-            hashlib.sha256(local_device_id.encode()).hexdigest()
-            != preflight.local_device_id_sha256
-            or hashlib.sha256(host.encode()).hexdigest() != preflight.local_host_sha256
-            or protocol_version != preflight.protocol_version
-        ):
-            raise RuntimeError("LocalTuya canary differs from verified preflight")
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        opened = store.open_canary_call(
-            plan_id=plan_id,
-            configuration_sha256=configuration.sha256,
-            occurred_at=now,
-        )
-        if opened == "already_verified":
-            return await self.reconcile_localtuya_canary_execution(
-                tenant_id=tenant_id,
-                installation_id=installation_id,
-                plan_id=plan_id,
-            )
-        if opened != "opened":
-            raise RuntimeError(
-                "LocalTuya canary call was already opened; reconcile instead of replay"
-            )
-        try:
-            receipt = await self._home_assistant_localtuya.create_canary(
-                config_entry_id=preflight.config_entry_id,
-                configuration=configuration,
-            )
-        except Exception as error:
-            store.record_canary_call_failure(
-                plan_id=plan_id,
-                error_text=f"{type(error).__name__}:{error}",
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            raise
-        store.record_canary_call_result(
-            plan_id=plan_id,
-            configuration_sha256=configuration.sha256,
-            receipt=receipt.to_payload(),
-            occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-        loop = asyncio.get_running_loop()
-        deadline = loop.time() + readback_timeout_seconds
-        latest_error = "Home Assistant has not exposed the canary yet"
-        while True:
-            try:
-                result = await self.reconcile_localtuya_canary_execution(
-                    tenant_id=tenant_id,
-                    installation_id=installation_id,
-                    plan_id=plan_id,
-                )
-                return {"provider_receipt": receipt.to_payload(), **result}
-            except AdvancedTaskBlocked as error:
-                latest_error = str(error)
-                if not any(
-                    marker in latest_error
-                    for marker in (
-                        "did not create exactly one",
-                        "has no independently read",
-                        "is not loaded after canary",
-                    )
-                ):
-                    raise
-                if loop.time() >= deadline:
-                    return {
-                        "detail": latest_error,
-                        "disposition": "awaiting_readback",
-                        "provider_receipt": receipt.to_payload(),
-                    }
-                await asyncio.sleep(0.5)
-
     async def list_mail_messages(
         self, *, limit: int, page_token: str | None
     ) -> MailInboxPage:
@@ -1713,163 +1277,6 @@ class PostgresHindsightMemoryRuntime:
         if self._agentmail is None:
             raise RuntimeError("Eva mail connector is unavailable")
         return await self._agentmail.get_message(message_id)
-
-    def approve_localtuya_package(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        plan_sha256: str,
-        inventory_sha256: str,
-        repository_id: str,
-        version: str,
-        approved_by: str,
-    ) -> AdvancedTaskPackageApproval:
-        return self._advanced_task_store(
-            tenant_id, installation_id
-        ).approve_package_install(
-            plan_id=plan_id,
-            plan_sha256=plan_sha256,
-            inventory_sha256=inventory_sha256,
-            repository_id=repository_id,
-            version=version,
-            approved_by=approved_by,
-            approved_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-
-    def approve_localtuya_repository(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        plan_sha256: str,
-        inventory_sha256: str,
-        repository_full_name: str,
-        expected_version: str,
-        approved_by: str,
-    ) -> AdvancedTaskRepositoryApproval:
-        return self._advanced_task_store(
-            tenant_id, installation_id
-        ).approve_repository_registration(
-            plan_id=plan_id,
-            plan_sha256=plan_sha256,
-            inventory_sha256=inventory_sha256,
-            repository_full_name=repository_full_name,
-            expected_version=expected_version,
-            approved_by=approved_by,
-            approved_at=datetime.now(tz=UTC).replace(microsecond=0),
-        )
-
-    async def register_approved_localtuya_repository(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        approval_sha256: str,
-    ) -> dict[str, object]:
-        if self._home_assistant_hacs is None:
-            raise RuntimeError("Home Assistant HACS execution is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        approval = store.repository_approval(
-            plan_id=plan_id, approval_sha256=approval_sha256
-        )
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        if now >= approval.expires_at:
-            raise RuntimeError("LocalTuya repository approval expired")
-        if not store.repository_registration_started(plan_id):
-            if self._home_assistant_admin is None:
-                raise RuntimeError("Home Assistant preflight is unavailable")
-            inventory = await self._home_assistant_admin.inventory()
-            require_current_repository_preflight(store.load(plan_id), inventory)
-        store.prepare_repository_registration(approval, occurred_at=now)
-        try:
-            repository = await self._home_assistant_hacs.register_exact(
-                approval, now=now
-            )
-            disposition = store.record_repository_registered(
-                approval,
-                repository,
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-        except Exception as error:
-            store.record_repository_failure(
-                approval,
-                error_text=f"{type(error).__name__}:{error}",
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            raise
-        refreshed_plan = store.load(plan_id)
-        refresh_disposition = "not_refreshed"
-        if self._home_assistant_admin is not None:
-            inventory = await self._home_assistant_admin.inventory()
-            refreshed = TuyaToLocalTuyaPlanner().build(
-                inventory,
-                operation_id=refreshed_plan.operation_id,
-                requested_by=refreshed_plan.requested_by,
-            )
-            refresh_disposition = store.refresh(refreshed)
-            refreshed_plan = store.load(plan_id)
-        return {
-            "approval_sha256": approval.sha256,
-            "disposition": disposition,
-            "plan": refreshed_plan.to_payload(),
-            "plan_refresh_disposition": refresh_disposition,
-            "repository_full_name": repository.full_name,
-            "repository_id": repository.repository_id,
-            "repository_sha256": repository.sha256,
-            "version": repository.available_version,
-        }
-
-    async def install_approved_localtuya_package(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        plan_id: str,
-        approval_sha256: str,
-    ) -> dict[str, object]:
-        if self._home_assistant_hacs is None:
-            raise RuntimeError("Home Assistant HACS execution is unavailable")
-        store = self._advanced_task_store(tenant_id, installation_id)
-        approval = store.package_approval(
-            plan_id=plan_id, approval_sha256=approval_sha256
-        )
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        if now >= approval.expires_at:
-            raise RuntimeError("LocalTuya package approval expired")
-        if not store.package_install_started(plan_id):
-            if self._home_assistant_admin is None:
-                raise RuntimeError("Home Assistant preflight is unavailable")
-            inventory = await self._home_assistant_admin.inventory()
-            require_current_package_preflight(store.load(plan_id), inventory)
-        store.prepare_package_install(approval, occurred_at=now)
-        try:
-            repository = await self._home_assistant_hacs.install_exact(
-                approval, now=now
-            )
-            disposition = store.record_package_installed(
-                approval,
-                repository,
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-        except Exception as error:
-            store.record_package_failure(
-                approval,
-                error_text=f"{type(error).__name__}:{error}",
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            raise
-        return {
-            "approval_sha256": approval.sha256,
-            "disposition": disposition,
-            "installed_version": repository.installed_version,
-            "plan_id": plan_id,
-            "repository_id": repository.repository_id,
-            "repository_sha256": repository.sha256,
-        }
 
     def _journal(self, turn: ConversationTurn) -> PostgresConversationJournal:
         return PostgresConversationJournal(
@@ -1951,6 +1358,7 @@ def create_runtime_app() -> FastAPI:
         maximum_reply_words=110,
         identity_pack=identity_pack,
     )
+    provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
     model = CodexConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
@@ -1958,58 +1366,8 @@ def create_runtime_app() -> FastAPI:
         transport_kind="openai_sdk",
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
-            *HomeAssistantToolAdapter.conversation_tools(),
-            *ProviderAutomationPlanner.conversation_tools(),
-            *ProviderMigrationPlanner.conversation_tools(),
-            *ProviderHacsPlanner.conversation_tools(),
+            () if provider_bundle is None else provider_bundle.conversation_tools
         ),
-    )
-    home_assistant = (
-        None
-        if settings.home_assistant_url is None
-        else HomeAssistantToolAdapter(
-            HomeAssistantConfig(
-                settings.home_assistant_url,
-                settings.home_assistant_token or "",
-            )
-        )
-    )
-    automation_provider = (
-        None
-        if settings.home_assistant_url is None
-        or not settings.home_assistant_effects_enabled
-        else ProviderAutomationAdapter(
-            ProviderAutomationConfig(
-                settings.home_assistant_url,
-                settings.home_assistant_token or "",
-            )
-        )
-    )
-    management_inventory = (
-        None
-        if settings.home_assistant_url is None
-        or not settings.home_assistant_effects_enabled
-        else HomeAssistantAdminAdapter(
-            base_url=settings.home_assistant_url,
-            token=settings.home_assistant_token or "",
-        )
-    )
-    management_writer = (
-        None
-        if settings.home_assistant_url is None
-        or not settings.home_assistant_effects_enabled
-        else HomeAssistantHacsAdapter(
-            base_url=settings.home_assistant_url,
-            token=settings.home_assistant_token or "",
-        )
-    )
-    home_assistant_localtuya = (
-        None
-        if settings.home_assistant_url is None
-        else HomeAssistantLocalTuyaAdapter(
-            base_url=settings.home_assistant_url,
-            token=settings.home_assistant_token or "",
-        )
     )
     agentmail = None
     if (
@@ -2080,22 +1438,6 @@ def create_runtime_app() -> FastAPI:
             allow_insecure_http=settings.fanout_allow_insecure_http,
         )
     )
-    effect_allowlist = frozenset(
-        tuple(value.split(":", 1)) for value in settings.home_assistant_effect_allowlist
-    )
-    effect_principals = frozenset(
-        settings.home_assistant_effect_principal_sha256_allowlist
-    )
-    external_provider = home_assistant
-    def advanced_store_factory(
-        tenant_id: str, installation_id: str
-    ) -> PostgresAdvancedTaskStore:
-        return PostgresAdvancedTaskStore(
-            engine,
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        )
-
     conversation_actions = PostgresConversationActions(
         engine,
         research=model,
@@ -2109,71 +1451,7 @@ def create_runtime_app() -> FastAPI:
         durable_goal_provider=settings.durable_goal_provider,
         durable_goal_recipients=settings.durable_goal_recipients,
         external_tools=(
-            ()
-            if external_provider is None
-            else (
-                PostgresExternalConversationTools(
-                    engine,
-                    external_provider.conversation_read_planner(),
-                    external_provider,
-                ),
-                *(
-                    (
-                        PostgresExternalConversationTools(
-                            engine,
-                            external_provider.conversation_effect_planner(
-                                allowlist=effect_allowlist,
-                                principal_sha256_allowlist=effect_principals,
-                            ),
-                            external_provider,
-                        ),
-                    )
-                    if settings.home_assistant_effects_enabled
-                    else ()
-                ),
-                *(
-                    (
-                        PostgresExternalConversationTools(
-                            engine,
-                            ProviderAutomationPlanner(external_provider),
-                            automation_provider,
-                        ),
-                    )
-                    if automation_provider is not None
-                    else ()
-                ),
-                *(
-                    (
-                        PostgresExternalConversationTools(
-                            engine,
-                            ProviderMigrationPlanner(management_inventory),
-                            ProviderMigrationPlanAdapter(
-                                advanced_store_factory
-                            ),
-                        ),
-                    )
-                    if management_inventory is not None
-                    else ()
-                ),
-                *(
-                    (
-                        PostgresExternalConversationTools(
-                            engine,
-                            ProviderHacsPlanner(
-                                management_inventory, advanced_store_factory
-                            ),
-                            ProviderHacsManagementAdapter(
-                                management_writer,
-                                management_inventory,
-                                advanced_store_factory,
-                            ),
-                        ),
-                    )
-                    if management_inventory is not None
-                    and management_writer is not None
-                    else ()
-                ),
-            )
+            () if provider_bundle is None else provider_bundle.external_tools
         ),
     )
     conversation = LivingConversation(memory, model, identity, conversation_actions)
@@ -2189,13 +1467,9 @@ def create_runtime_app() -> FastAPI:
     )
     sensory_worker = (
         None
-        if settings.home_assistant_url is None or sensory_store is None
+        if provider_bundle is None or sensory_store is None
         else SensoryIngestionWorker(
-            HomeAssistantEventStream(
-                base_url=settings.home_assistant_url,
-                token=settings.home_assistant_token or "",
-                admitted_domains=settings.home_assistant_event_domains,
-            ),
+            provider_bundle.event_source,
             sensory_store,
         )
     )
@@ -2401,9 +1675,9 @@ def create_runtime_app() -> FastAPI:
             conversation_actions,
             sensory_worker,
             sensory_store,
-            management_inventory,
-            management_writer,
-            home_assistant_localtuya,
+            None if provider_bundle is None else provider_bundle.management_reader,
+            None if provider_bundle is None else provider_bundle.management_writer,
+            None if provider_bundle is None else provider_bundle.device_manager,
             agentmail,
             model,
             stripe_publication=stripe_publication,

@@ -51,7 +51,7 @@ from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantHacsManagementAdapter,
     HomeAssistantMigrationPlanAdapter,
 )
-from eva.adapters.connectors.home_assistant_advanced_store import (
+from eva.providers.home_assistant_advanced_store import (
     PostgresAdvancedTaskStore,
 )
 from eva.adapters.postgres.conversation_actions import PostgresConversationActions

@@ -134,8 +134,9 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
 
     settings = RuntimeSettings.from_environment()
     assert settings.database_dsn.endswith("@postgres/eva")
-    assert settings.home_assistant_token == "test-token"
-    assert settings.home_assistant_effects_enabled is False
+    assert settings.external_provider is not None
+    assert settings.external_provider.credential == "test-token"
+    assert settings.external_provider.effects_enabled is False
     assert settings.conversation_reasoning_effort == "medium"
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
@@ -147,14 +148,12 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     monkeypatch.setenv(
         "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", principal_sha256
     )
-    assert RuntimeSettings.from_environment().home_assistant_effects_enabled is True
-    assert RuntimeSettings.from_environment().home_assistant_effect_allowlist == (
+    provider = RuntimeSettings.from_environment().external_provider
+    assert provider is not None and provider.effects_enabled is True
+    assert provider.effect_allowlist == (
         "light.dimmable_light_1:turn_off",
     )
-    assert (
-        RuntimeSettings.from_environment().home_assistant_effect_principal_sha256_allowlist
-        == (principal_sha256,)
-    )
+    assert provider.effect_principal_sha256_allowlist == (principal_sha256,)
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
     with pytest.raises(RuntimeError, match="EFFECTS_ENABLED"):

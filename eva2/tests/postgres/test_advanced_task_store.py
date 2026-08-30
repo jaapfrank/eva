@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from eva.adapters.connectors.home_assistant_advanced_store import (
+from eva.providers.home_assistant_advanced_store import (
     PostgresAdvancedTaskStore,
 )
 from eva.adapters.connectors.home_assistant_advanced_tasks import (
