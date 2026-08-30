@@ -14,7 +14,7 @@
   },
   "categories": [
     {"id": "install_update_recovery", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
-    {"id": "conversation_persona", "partial_evidence": ["C01", "T02", "C04", "CONT01"], "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "conversation_persona", "partial_evidence": ["C01", "T02", "C04", "C04R", "CONT01"], "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "channels_cross_channel_identity", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "models_media_local_inference", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "skills_marketplaces", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
@@ -37,6 +37,11 @@
     {"id": "commerce_external_accounts", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}}
   ],
   "evidence_catalog": [
+    {
+      "id": "situational-humour-live-ab-2026-08-31",
+      "path": "eva2/evidence/product/situational-humour-live-ab-2026-08-31.json",
+      "sha256": "6b0a1840461ef7c5ea8cab30f20ac0b22f94a64fe73816ddbab8163de4a4e54a"
+    },
     {
       "id": "current-four-way-cont01-restart-continuity-2026-08-31",
       "path": "eva2/evidence/product/current-four-way-cont01-restart-continuity-2026-08-31.json",

@@ -1,0 +1,103 @@
+{
+  "candidate": {
+    "candidateEvidenceSha256": "cc120627ed1b1b8d6ad598141e3dd95c911f27b460289db3d0618ccb8c20290d",
+    "image": "eva2/situational-humour-release@sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "imageId": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "sourceCommit": "881be2c36004b499ac9538eb5a3fb29f9f9d2a72",
+    "trivyCritical": 0,
+    "trivyHigh": 0
+  },
+  "contract": "EvaSituationalHumourLiveAbEvidence/v1",
+  "issuedAt": "2026-08-31T01:21:02+02:00",
+  "liveRoute": {
+    "activePort": 44711,
+    "activeSlot": 4,
+    "coreHealth": "healthy",
+    "coreRestartCount": 0,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "eva1RestartCount": 0,
+    "ready": true,
+    "rollbackImageId": "sha256:5c77dd193554c65f5d848a3ea4784e9186e04f9b9914fe76a0d85e5e113974d6",
+    "rollbackPort": 44710,
+    "rollbackSlot": 3,
+    "rollbackWriters": "stopped_intact"
+  },
+  "managedConfiguration": {
+    "afterSha256": "84003d3d2080aae711a1727d347a9544c5c8af6c12b71c467f51aa633457fde3",
+    "beforeSha256": "29f801429df1ae34d38ea869d3415fe076cca342c13eb14263190124b4e7ca01",
+    "configurationSha256": "8004e73a2d6fcf61d93680db067135629a55daf7afa29deb07399c22af15de04",
+    "owner": "root:root",
+    "permissions": "0600"
+  },
+  "modelAndReplay": {
+    "eventCounts": {
+      "INGRESS_COMMITTED": 1,
+      "MEMORY_RETAIN_QUEUED": 1,
+      "REPLY_COMMITTED": 1
+    },
+    "eventsChangedAfterCoreRestart": false,
+    "firstAnswer": "HUMORLIVE",
+    "firstDurationMilliseconds": 2290,
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "replayAfterFinalForwardMilliseconds": 53,
+    "replayAfterOldImageRollbackMilliseconds": 64,
+    "replayAfterRestartMilliseconds": 53,
+    "replayAnswer": "HUMORLIVE",
+    "secondModelCall": false
+  },
+  "nonClaims": [
+    "No external Telegram message or Home Assistant effect was sent during this release proof.",
+    "The explicit Eva1/Eva2 Telegram boundary still awaits the two requested human turns after its live restart.",
+    "One corrected conversation case and one harmless humour probe do not prove general superiority over OpenClaw, Hermes or Agent Zero.",
+    "The retained rollback writers are intentionally stopped; the old containers, images, databases and private configuration remain available to the same cutover operator."
+  ],
+  "status": "passed_live",
+  "switches": [
+    {
+      "direction": "slot3_to_slot4",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "9001985a0bd8c6ac8f2c0dc4cad70645d1e2dcd01db29bd3939fdd9074934f4a",
+      "memoryDataDigest": "021122d36536df071f64ef60fd046b986b8f85ec6c828bc3dcfafe5f1e351a2b",
+      "operationalDataDigest": "6bf961d71daec80fa4734bc7744ce55682030b9eb693c91b4b1060eae4003e7b",
+      "status": "switched",
+      "targetReady": true
+    },
+    {
+      "direction": "slot4_to_slot3",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "9f4faf768f081b3d42cfa5af29c8709d9086e11fb75991fec4df07d127db75af",
+      "memoryDataDigest": "cc499e5720543d53f36f6c20bab5e30ab1971c2531c533010a8fecae659b26fd",
+      "operationalDataDigest": "af2e3c04eb4db962ba6bb3b8eee542d46257fad84145736bd4ba707e51ee456a",
+      "status": "switched",
+      "targetReady": true
+    },
+    {
+      "direction": "slot3_to_slot4",
+      "eva1BackupQuickCheck": "ok",
+      "eva1BackupSha256": "214e60d1989a1ba11e5a01f1d738bda29cdaa0ee993659648d6452c7a686b393",
+      "memoryDataDigest": "2384a83eaa98d8ba69e32bdf1452736461cf566ad88eeac9497ad5cd7a51dc5b",
+      "operationalDataDigest": "af2e3c04eb4db962ba6bb3b8eee542d46257fad84145736bd4ba707e51ee456a",
+      "status": "switched",
+      "targetReady": true
+    }
+  ],
+  "telegramBoundary": {
+    "lastHumanMessageAfterFix": null,
+    "liveSince": "2026-08-30T23:41:41+02:00",
+    "status": "awaiting_human_verification",
+    "targetRule": "Only a literal /eva2 prefix reaches Eva2; every Eva2 reply is visibly labelled."
+  },
+  "tests": {
+    "focusedModelAndReleaseInputsPassed": 80,
+    "focusedModelAndReleaseInputsFailed": 0,
+    "ruff": "passed",
+    "telegramBoundaryPassed": 12,
+    "telegramBoundaryFailed": 0
+  }
+}

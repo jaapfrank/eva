@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 00:15 CEST
+Laatst bijgewerkt: 31 augustus 2026, 01:21 CEST
 
 ## Zo lees je dit bord
 
@@ -20,10 +20,12 @@ vergelijking opnieuw geel.
 **Eerlijke conclusie nu:** Eva2 is al een bruikbare, veilige kandidaat naast
 Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. In de
 eerste twee gelijke gesprekstests was Eva het snelst en bondigst, maar won
-Hermes anoniem de eerste formulering en OpenClaw de tweede. In de nieuwe
-herstarttest gaven Eva2, OpenClaw en Hermes het vorige controlewoord exact
-terug. Agent Zero laadde dezelfde sessie wel, maar gaf na ruim drie minuten nog
-geen eindantwoord. Dat is één duidelijke praktijktest, geen algemene ranglijst.
+Hermes anoniem de eerste formulering en OpenClaw de tweede. De gecorrigeerde
+Eva2-reactie op de tweede vraag eindigde in vier labelwisselingen driemaal
+eerste en eenmaal tweede. Die correctie draait nu live, maar één verbeterde
+vraag is nog geen algemene overwinning. In de herstarttest gaven Eva2,
+OpenClaw en Hermes het vorige controlewoord exact terug. Agent Zero laadde
+dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 ## Praten met Eva
 
@@ -31,29 +33,28 @@ geen eindantwoord. Dat is één duidelijke praktijktest, geen algemene ranglijst
 |---|---|---|---|---|
 | Gewoon privé praten | ✅ Via `/eva2` op Telegram met een echt model | 📘 Meerdere chatkanalen | 📘 Meerdere chatkanalen | 📘 Eigen chat en webinterface |
 | Zeker weten welke Eva antwoordt | ✅ Alleen een letterlijk `/eva2`-bericht gaat naar Eva2. Haar antwoorden beginnen met `Eva2:` en fouten met `Eva2-fout:`. Een gewoon vervolg gaat altijd naar Eva1 | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route |
-| Een herkenbare, menselijke persoonlijkheid hebben | 🟡 Warme, jonge en eigenwijze identiteit staat; in C04 was haar humor nog niet zichtbaar. Een geïsoleerde correctie werkt, maar is nog niet live of blind herbeoordeeld | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
+| Een herkenbare, menselijke persoonlijkheid hebben | 🟡 De warmere, directere correctie draait live. In vier blinde labelwisselingen werd zij driemaal eerste en eenmaal tweede. Lichte humor verscheen alleen waar die natuurlijk paste; een echte Telegrambeoordeling door mensen ontbreekt nog | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
 | Het gesprek na een herstart voortzetten | ✅ Na een volledige coreherstart kwam het vorige controlewoord exact terug | ✅ Nieuwe CLI startte en gaf het woord exact terug | ✅ Nieuwe CLI startte en gaf het woord exact terug | 🟡 Dezelfde sessie werd na een containerherstart geladen, maar er kwam binnen ruim drie minuten geen eindantwoord |
 | Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
 | Dezelfde zichtbare vraag met hetzelfde model beantwoorden | ✅ C01 groen; 3,118 s en 77 woorden | ✅ C01 groen; 15,738 s en 130 woorden | ✅ C01 groen; 35,875 s en 153 woorden | ✅ C01 groen; 17,540 s en 119 woorden |
-| Warm maar zelfstandig tegenspreken in een alledaagse situatie | 🟡 C04 inhoudelijk groen en 2,368 s, maar anoniem vierde en zonder herkenbare humor | ✅ C04 groen; anoniem eerste | ✅ C04 groen; anoniem tweede | ✅ C04 groen; anoniem derde |
+| Warm maar zelfstandig tegenspreken in een alledaagse situatie | ✅ De nieuwe live C04-reactie haalde alle inhoudsgrenzen en werd bij vier labelwisselingen 1e, 1e, 1e en 2e | ✅ Eerdere C04-reactie groen | ✅ Eerdere C04-reactie groen | ✅ Eerdere C04-reactie groen |
 
 De eerdere verwarring was echt en is niet weggepoetst. Na één `/eva2`-bericht
 hield de oude Telegramrouter ongemerkt dertig minuten een Eva2-sessie vast.
 Daardoor konden gewone vervolgberichten bij Eva2 belanden. Ook stuurde Eva1
 stukken uit haar eigen Telegramgeschiedenis mee, terwijl Eva2 al haar eigen
-gespreksjournal heeft. Beide routes zijn verwijderd en draaien sinds 23:13 live.
-De gerichte proef telt 38 groene Telegramtests plus de verplichte
-beveiligingscontrole. Er is tijdens de operatorproef geen Telegrambericht namens
-Jaap of Lola verstuurd; de eerstvolgende menselijke beurt kan de zichtbare
-labels nog rechtstreeks bevestigen.
+gespreksjournal heeft. Beide routes zijn verwijderd en draaien sinds 23:41 live.
+De 12 gerichte routeringstests zijn groen. Er is tijdens de operatorproef geen
+Telegrambericht namens Jaap of Lola verstuurd; de eerstvolgende menselijke
+beurt moet de zichtbare labels nog rechtstreeks bevestigen.
 
 De fouten in het laatste Telegramgesprek waren daarnaast echte Eva2-fouten.
 Na de overstap op de officiële OpenAI-SDK was Eva's ene korte herstelpoging
 verdwenen. Die grens is nu hersteld: vóór het eerste tekststukje probeert Eva
 één korte providerstoring nog eenmaal; na begonnen tekst of een toolactie nooit.
-De scan-schone correctie draait via A/B live op `44710`. Een echte modelbeurt
-en gesprekcontinuïteit na een kernherstart zijn groen. Eén dubbele providerstall
-bleef eerlijk HTTP 503; de volgende beurt via de echte Eva1-client slaagde.
+De scan-schone correctie draait via A/B live op `44711`. Een echte modelbeurt,
+exacte replay na een kernherstart en een volledige nieuw→oud→nieuw-cyclus zijn
+groen. De vorige image en databases staan gestopt maar intact op `44710`.
 
 De herstartvergelijking gebruikte voor alle vier hetzelfde model, dezelfde twee
 berichten en geen externe actie. Eva2, OpenClaw en Hermes slaagden. Agent Zero
@@ -239,7 +240,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Op een nieuwe computer installeren met een eenvoudige wizard | ❌ Technische installer bestaat, consumentenwizard niet | 📘 Installatieroute beschikbaar | 📘 Installatie/setup beschikbaar | 📘 Dockerinstallatie en WebUI |
 | Koppelingen tijdens installatie controleren | 🟡 Model, chat, een toolprovider en e-mail kunnen apart worden beproefd | 📘 Setup/configuratie | 📘 Setupwizard | 📘 Webconfiguratie |
 | Back-up op een andere computer herstellen | 🟡 Kleine niet-lege restore werkt; volledige praktijkverplaatsing ontbreekt | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Veilig naar een nieuwe versie en terug | ✅ Ook de huidige providerneutrale image doorliep nieuw→oud→nieuw met gekopieerde data; hetzelfde testwoord kwam in beide versies terug | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
+| Veilig naar een nieuwe versie en terug | ✅ De huidige menselijke en providerneutrale image doorliep nieuw→oud→nieuw met gekopieerde data; hetzelfde antwoord kwam na iedere wissel en herstart exact terug | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
 | Zelf nieuwe dependencyversies voorstellen | 🟡 Renovate dry-run vindt alles; echte bot maakt nog geen voorstellen | 📘 Eigen updateroutes | 📘 Eigen updateroute | 📘 Docker-/bronupdates |
 | Alleen een geteste, scan-schone versie live zetten | ✅ OpenAI SDK `3.6.0` doorliep build, scan, data-upgrade en terugrol | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest |
 
@@ -281,7 +282,7 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 |---|---|
 | Actuele releases en commits vastgezet | ✅ OpenClaw, Hermes en Agent Zero |
 | Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, nul toolcalls | ✅ Alle vier uitgevoerd; alle drie inhoudsgates groen |
-| Antwoorden zonder productnaam laten beoordelen | ✅ C01: Hermes, OpenClaw, Eva2, Agent Zero. C04: OpenClaw, Hermes, Agent Zero, Eva2. Geen algemene ranglijst |
+| Antwoorden zonder productnaam laten beoordelen | ✅ C01: Hermes, OpenClaw, Eva2, Agent Zero. Oude C04: OpenClaw, Hermes, Agent Zero, Eva2. Gecorrigeerde live Eva2 C04: bij vier labelwisselingen 1e, 1e, 1e en 2e. Geen algemene ranglijst |
 | Hetzelfde gesprek na een nieuw proces hervatten | ✅ CONT01: Eva2, OpenClaw en Hermes exact groen; Agent Zero zonder eindantwoord na ruim drie minuten |
 | Alle begrijpelijke productonderdelen praktisch vergelijken | ❌ 22 categorieën staan nog op `no_run` |
 | Openbare AgentBench-, GAIA- en OSWorld-score | ❌ Nog niet uitgevoerd |
@@ -332,3 +333,8 @@ scheidingscontrole staan in
 De begrensde modelretry, scan-schone image, verliesloze live omschakeling en
 herstartproef staan in
 [het live herstelbewijs](evidence/product/conversation-retry-live-ab-2026-08-30.json).
+De nieuwe menselijke antwoordgrens, afgewezen tussenimages, scan-schone
+kandidaat, echte modelproeven en volledige heen→terug→heen-cyclus staan in
+[het kandidaatbewijs](evidence/product/situational-humour-release-candidate-2026-08-31.json)
+en
+[het live A/B-bewijs](evidence/product/situational-humour-live-ab-2026-08-31.json).
