@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 18:57 CEST
+Laatst bijgewerkt: 30 augustus 2026, 19:12 CEST
 
 ## Zo lees je dit bord
 
@@ -72,15 +72,19 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 931 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
-Dat is 26 minder dan vóór de eerste verplaatsing: de vier gewone lees/aan-uit-
-schemas én hun antwoordinstructies komen nu uit de tooladapter in plaats van uit
-de modeladapter. De resterende logica moet eveneens naar verwisselbare adapters
-verdwijnen.
+vindt nog 910 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
+Dat is 47 minder dan vóór de eerste verplaatsing. De vier gewone lees/aan-uit-
+schemas en hun antwoordinstructies komen nu uit de tooladapter. Ook de gewone
+leesuitvoering wordt via een generieke externe-toolpoort geregistreerd; de
+centrale gespreksdispatcher kent die twee leesopdrachten niet meer bij naam. De
+resterende effect-, beheer- en migratielogica moet eveneens naar verwisselbare
+adapters verdwijnen.
 
-Een tweede, synthetische agenda-provider kon daarna zonder nieuwe modelcode een
-eigen naam, schema en antwoordinstructie registreren. Dat bewijst de nieuwe
-modelgrens; echte uitvoering en readback via een tweede provider ontbreken nog.
+Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
+dispatchcode een eigen naam, schema en antwoordinstructie registreren, uitvoeren
+en als wachtend resultaat teruggeven. Dat bewijst de generieke registratie en
+dispatch; duurzame PostgreSQL-opslag en echte externe readback via die tweede
+provider ontbreken nog.
 
 ## Zelfstandig werk en subagents
 
@@ -171,7 +175,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ De eerste vier toolschemas en antwoordinstructies zijn uit de modeladapter; er resten 931 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ Schema, antwoordinstructie en gewone leesdispatch zijn generiek; er resten 910 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

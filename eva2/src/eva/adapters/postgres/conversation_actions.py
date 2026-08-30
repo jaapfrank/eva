@@ -20,11 +20,6 @@ from eva.application.home_automation import (
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.delivery import PostgresFanoutDeliveryStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
-from eva.adapters.postgres.home_assistant_reads import (
-    HOME_ASSISTANT_HISTORY_ACTION as _HOME_ASSISTANT_HISTORY_ACTION,
-    HOME_ASSISTANT_STATE_ACTION as _HOME_ASSISTANT_STATE_ACTION,
-    PostgresHomeAssistantConversationReads,
-)
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
     CheckpointState,
@@ -37,6 +32,7 @@ from eva.application.conversation import (
     ConversationActionReceipt,
     ConversationClarificationRequired,
     ConversationConflict,
+    ConversationExternalToolPort,
     ConversationTurn,
 )
 from eva.application.orchestration import (
@@ -346,6 +342,7 @@ class PostgresConversationActions:
         fanout_delivery: FanoutDeliverySinkPort | None = None,
         durable_goal_provider: str | None = None,
         durable_goal_recipients: tuple[str, ...] = (),
+        external_tools: tuple[ConversationExternalToolPort, ...] = (),
     ) -> None:
         self._engine = engine
         self._home_assistant = home_assistant
@@ -362,11 +359,24 @@ class PostgresConversationActions:
             and not self._home_assistant_effect_principal_sha256_allowlist
         ):
             raise ValueError("Home Assistant effect principal policy is required")
-        self._home_assistant_reads = (
-            None
-            if home_assistant is None
-            else PostgresHomeAssistantConversationReads(engine, home_assistant)
+        self._external_tools = external_tools
+        external_action_names = tuple(
+            action_name
+            for provider in external_tools
+            for action_name in provider.action_names
         )
+        if any(
+            not action_name or len(action_name) > 120
+            for action_name in external_action_names
+        ) or len(set(external_action_names)) != len(external_action_names):
+            raise ValueError(
+                "external conversation tool names are invalid or duplicated"
+            )
+        self._external_tool_by_action = {
+            action_name: provider
+            for provider in external_tools
+            for action_name in provider.action_names
+        }
         self._home_assistant_automations = home_assistant_automations
         self._home_assistant_admin = home_assistant_admin
         self._home_assistant_hacs = home_assistant_hacs
@@ -409,8 +419,7 @@ class PostgresConversationActions:
         if self._home_assistant is not None and self._home_assistant_effects_enabled:
             actions.append(_HOME_ASSISTANT_ACTION)
             actions.append(_HOME_ASSISTANT_SWITCH_ACTION)
-        if self._home_assistant_reads is not None:
-            actions.extend(self._home_assistant_reads.action_names)
+        actions.extend(self._external_tool_by_action)
         if self._home_assistant_automations is not None:
             actions.append(_HOME_ASSISTANT_AUTOMATION_ACTION)
             actions.append(_HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION)
@@ -479,6 +488,10 @@ class PostgresConversationActions:
         fanout_receipt = self._pending_fanout(turn)
         if fanout_receipt is not None:
             return fanout_receipt
+        for provider in self._external_tools:
+            external_receipt = provider.pending(turn)
+            if external_receipt is not None:
+                return external_receipt
         timeline = self._timeline(turn)
         correction_events = timeline.events(
             self._observation_identity_correction_thread_id(turn)
@@ -522,13 +535,6 @@ class PostgresConversationActions:
                 self._resume_research(turn, research_events)
                 research_events = timeline.events(self._research_thread_id(turn))
             return self._research_receipt(turn, research_events)
-        read_receipt = (
-            None
-            if self._home_assistant_reads is None
-            else self._home_assistant_reads.pending(turn)
-        )
-        if read_receipt is not None:
-            return read_receipt
         repository_events = timeline.events(self._localtuya_repository_thread_id(turn))
         if repository_events:
             if (
@@ -763,6 +769,9 @@ class PostgresConversationActions:
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt:
+        external_tool = self._external_tool_by_action.get(call.name)
+        if external_tool is not None:
+            return external_tool.execute(turn, call)
         if call.name == _OBSERVATION_IDENTITY_CORRECTION_ACTION:
             return self._execute_observation_identity_correction(turn, call)
         if call.name == _VALIDATED_FILE_EDIT_ACTION:
@@ -791,13 +800,6 @@ class PostgresConversationActions:
             return self._execute_automation(turn, call)
         if call.name == _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION:
             return self._execute_advanced_automation(turn, call)
-        if call.name in {
-            _HOME_ASSISTANT_HISTORY_ACTION,
-            _HOME_ASSISTANT_STATE_ACTION,
-        }:
-            if self._home_assistant_reads is None:
-                raise ConversationConflict("Home Assistant read action is unavailable")
-            return self._home_assistant_reads.execute(turn, call)
         if call.name in {_HOME_ASSISTANT_ACTION, _HOME_ASSISTANT_SWITCH_ACTION}:
             return self._execute_home_assistant(turn, call)
         if call.name != _ACTION:

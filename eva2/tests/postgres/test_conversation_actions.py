@@ -17,6 +17,9 @@ from eva.adapters.postgres.conversation_actions import (
     PostgresPersonalPrototypeStore,
     PostgresPersonalProductReleaseStore,
 )
+from eva.adapters.postgres.home_assistant_reads import (
+    PostgresHomeAssistantConversationReads,
+)
 from eva.adapters.postgres.operational_timeline import TimelineEvent
 from eva.application.conversation import (
     ConversationActionCall,
@@ -86,10 +89,15 @@ def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> Non
             assert target == "licht in de overkapping"
             raise ValueError("Home Assistant light target is unknown or ambiguous")
 
+    engine = sa.create_engine("sqlite://")
     actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=False,
+        engine,
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                engine,
+                HomeAssistant(),  # type: ignore[arg-type]
+            ),
+        ),
     )
     with pytest.raises(
         ConversationClarificationRequired,
@@ -123,9 +131,7 @@ def test_home_assistant_ambiguous_effect_requests_a_natural_clarification() -> N
         sa.create_engine("sqlite://"),
         home_assistant=HomeAssistant(),  # type: ignore[arg-type]
         home_assistant_effects_enabled=True,
-        home_assistant_effect_allowlist=frozenset(
-            {("light.schuur", "turn_off")}
-        ),
+        home_assistant_effect_allowlist=frozenset({("light.schuur", "turn_off")}),
         home_assistant_effect_principal_sha256_allowlist=frozenset(
             {hashlib.sha256(b"jaap").hexdigest()}
         ),
@@ -153,16 +159,21 @@ def test_home_assistant_ambiguous_effect_requests_a_natural_clarification() -> N
 
 
 def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> None:
+    engine = sa.create_engine("sqlite://")
     actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=object(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=False,
+        engine,
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                engine,
+                object(),  # type: ignore[arg-type]
+            ),
+        ),
     )
     assert "read_home_assistant_state" in actions.action_names
     assert "read_home_assistant_history" in actions.action_names
     assert "set_home_assistant_light" not in actions.action_names
     assert "set_home_assistant_switch" not in actions.action_names
-    with pytest.raises(Exception, match="effects are disabled"):
+    with pytest.raises(Exception, match="action is unavailable"):
         actions.execute(
             ConversationTurn.private(
                 "tenant",
@@ -178,6 +189,61 @@ def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> 
                 "set_home_assistant_light",
                 {"state": "on", "target": "woonkamer"},
             ),
+        )
+
+
+def test_external_tool_provider_registers_executes_and_resumes_without_core_branch() -> (
+    None
+):
+    receipts: dict[str, ConversationActionReceipt] = {}
+
+    class CalendarTools:
+        action_names = ("lookup_calendar_slot",)
+
+        def pending(self, turn):  # type: ignore[no-untyped-def]
+            return receipts.get(turn.message_id)
+
+        def execute(self, turn, call):  # type: ignore[no-untyped-def]
+            assert call.name == "lookup_calendar_slot"
+            receipt = ConversationActionReceipt(
+                call,
+                {
+                    "available": True,
+                    "contract": "EvaConversationActionReceipt/v1",
+                    "durable": True,
+                    "status": "observed",
+                },
+            )
+            receipts[turn.message_id] = receipt
+            return receipt
+
+    provider = CalendarTools()
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"), external_tools=(provider,)
+    )
+    turn = ConversationTurn.private(
+        "tenant",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:calendar",
+        "Kan ik morgen om tien uur?",
+        "2026-08-30T18:58:00Z",
+    )
+    call = ConversationActionCall(
+        "call:calendar",
+        "lookup_calendar_slot",
+        {"starts_at": "2026-08-31T10:00:00+02:00"},
+    )
+
+    assert "lookup_calendar_slot" in actions.action_names
+    receipt = actions.execute(turn, call)
+    assert receipt.output["available"] is True
+    assert actions.pending(turn) == receipt
+
+    with pytest.raises(ValueError, match="duplicated"):
+        PostgresConversationActions(
+            sa.create_engine("sqlite://"), external_tools=(provider, provider)
         )
 
 

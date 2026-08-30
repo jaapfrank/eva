@@ -563,6 +563,19 @@ class ConversationActionPort(Protocol):
     ) -> ConversationActionReceipt: ...
 
 
+class ConversationExternalToolPort(Protocol):
+    """Provider-owned conversation tools routed without provider names in core."""
+
+    @property
+    def action_names(self) -> tuple[str, ...]: ...
+
+    def pending(self, turn: ConversationTurn) -> ConversationActionReceipt | None: ...
+
+    def execute(
+        self, turn: ConversationTurn, call: ConversationActionCall
+    ) -> ConversationActionReceipt: ...
+
+
 class LivingConversation:
     """Recall memory, then let Eva's own model formulate one answer.
 
@@ -811,6 +824,7 @@ __all__ = [
     "ConversationActionCall",
     "ConversationActionPort",
     "ConversationActionReceipt",
+    "ConversationExternalToolPort",
     "ConversationToolDescriptor",
     "ConversationClarificationRequired",
     "ConversationConflict",

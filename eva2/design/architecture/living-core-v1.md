@@ -66,14 +66,17 @@ kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
 De bestaande bron voldoet hier nog niet aan. Acht bestanden in applicatie,
-modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 931
-Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en CamelCase. De
-eerste verplaatsing heeft 26 identifiers verwijderd en laat de vier gewone
-lees/aan-uit-schemas en hun antwoordinstructies nu uit de adapter komen. De architectuurchecker legt de
-resterende aantallen als uitsluitend dalende bovengrens vast: geen nieuw bestand
-en geen bestaand bestand mag meer providerspecifieke kernlogica krijgen. De gate
-wordt pas inhoudelijk groen wanneer alle acht bovengrenzen nul zijn en twee
-verschillende providers zonder kernwijziging dezelfde toolroute doorlopen.
+modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 910
+Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en
+CamelCase. De eerste verplaatsingen hebben 47 identifiers verwijderd. De vier
+gewone lees/aan-uit-schemas en hun antwoordinstructies komen nu uit de adapter.
+Gewone leestools registreren bovendien via `ConversationExternalToolPort`; de
+centrale dispatcher routeert alleen op de aangeboden toolnaam en kent de
+provider niet. De architectuurchecker legt de resterende aantallen als
+uitsluitend dalende bovengrens vast: geen nieuw bestand en geen bestaand bestand
+mag meer providerspecifieke kernlogica krijgen. De gate wordt pas inhoudelijk
+groen wanneer alle acht bovengrenzen nul zijn en twee verschillende providers
+zonder kernwijziging dezelfde duurzame tool- en readbackroute doorlopen.
 
 ## De drie geheugens
 

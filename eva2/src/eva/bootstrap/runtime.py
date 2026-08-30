@@ -54,6 +54,9 @@ from eva.adapters.postgres.conversation_actions import (
     PostgresPersonalProductReleaseStore,
     PostgresPersonalPrototypeStore,
 )
+from eva.adapters.postgres.home_assistant_reads import (
+    PostgresHomeAssistantConversationReads,
+)
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
@@ -1409,7 +1412,7 @@ class PostgresHindsightMemoryRuntime:
         operation_id: str,
     ) -> AdvancedTaskPlan:
         if self._home_assistant_admin is None:
-            raise RuntimeError("Home Assistant advanced planning is unavailable")
+            raise RuntimeError("advanced planning provider is unavailable")
         store = self._advanced_task_store(tenant_id, installation_id)
         plan_id = advanced_plan_id(operation_id=operation_id, requested_by=principal_id)
         existing = store.find(plan_id)
@@ -1434,7 +1437,7 @@ class PostgresHindsightMemoryRuntime:
         """Re-read Home Assistant and append the next durable plan version."""
 
         if self._home_assistant_admin is None:
-            raise RuntimeError("Home Assistant advanced planning is unavailable")
+            raise RuntimeError("advanced planning provider is unavailable")
         store = self._advanced_task_store(tenant_id, installation_id)
         current = store.load(plan_id)
         inventory = await self._home_assistant_admin.inventory()
@@ -1487,7 +1490,7 @@ class PostgresHindsightMemoryRuntime:
         """Prove one local connection; abort the HA flow before device creation."""
 
         if self._home_assistant_localtuya is None or self._home_assistant_admin is None:
-            raise RuntimeError("Home Assistant LocalTuya preflight is unavailable")
+            raise RuntimeError("local-device preflight provider is unavailable")
         store = self._advanced_task_store(tenant_id, installation_id)
         plan = store.load(plan_id)
         if plan.sha256 != plan_sha256 or plan.inventory_sha256 != inventory_sha256:
@@ -1500,7 +1503,7 @@ class PostgresHindsightMemoryRuntime:
         )
         disposition = store.refresh(current)
         if disposition == "refreshed":
-            raise RuntimeError("Home Assistant changed; refresh approval authority")
+            raise RuntimeError("provider inventory changed; refresh approval authority")
         local_entries = [
             entry
             for entry in inventory.integrations
@@ -1550,7 +1553,7 @@ class PostgresHindsightMemoryRuntime:
         """Commit the exact canary fence before any provider mutation."""
 
         if self._home_assistant_admin is None:
-            raise RuntimeError("Home Assistant LocalTuya execution is unavailable")
+            raise RuntimeError("local-device execution provider is unavailable")
         store = self._advanced_task_store(tenant_id, installation_id)
         plan = store.load(plan_id)
         approval, preflight = store.canary_authority(
@@ -2111,6 +2114,11 @@ def create_runtime_app() -> FastAPI:
         fanout_delivery=fanout_delivery,
         durable_goal_provider=settings.durable_goal_provider,
         durable_goal_recipients=settings.durable_goal_recipients,
+        external_tools=(
+            ()
+            if home_assistant is None
+            else (PostgresHomeAssistantConversationReads(engine, home_assistant),)
+        ),
     )
     conversation = LivingConversation(memory, model, identity, conversation_actions)
     sensory_store = (

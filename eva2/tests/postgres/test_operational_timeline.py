@@ -935,12 +935,14 @@ def test_conversation_content_erasure_is_physical_scoped_and_replay_safe(
     )
     assert receipt.redacted_event_count == 2
     assert receipt.replayed is False
-    assert receipt.principal_sha256 == hashlib.sha256(
-        turn.principal_id.encode("utf-8")
-    ).hexdigest()
-    assert receipt.message_sha256 == hashlib.sha256(
-        turn.message_id.encode("utf-8")
-    ).hexdigest()
+    assert (
+        receipt.principal_sha256
+        == hashlib.sha256(turn.principal_id.encode("utf-8")).hexdigest()
+    )
+    assert (
+        receipt.message_sha256
+        == hashlib.sha256(turn.message_id.encode("utf-8")).hexdigest()
+    )
     assert journal.recent(turn) == ()
     with pytest.raises(ConversationConflict, match="content was erased"):
         journal.committed_reply(turn)
@@ -995,9 +997,7 @@ def test_conversation_records_a_content_free_memory_quota_refusal(
     installation_id = "home"
     scope = TimelineScope(
         tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-        installation_id=uuid5(
-            NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
-        ),
+        installation_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"),
     )
     journal = PostgresConversationJournal(timeline_engine, scope)
     turn = ConversationTurn.private(
@@ -1202,9 +1202,7 @@ def test_hindsight_outbox_erasure_stops_replay_and_physically_redacts_content(
     assert outbox.pending() == ()
     scope = TimelineScope(
         tenant_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}"),
-        installation_id=uuid5(
-            NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"
-        ),
+        installation_id=uuid5(NAMESPACE_URL, f"eva2:{tenant_id}:{installation_id}"),
     )
     events = PostgresOperationalTimeline(timeline_engine, scope).events(
         queued.state.thread_id
@@ -1289,7 +1287,9 @@ def test_hindsight_outbox_rejects_legacy_group_payload_without_audience() -> Non
         "trust": "direct_user",
     }
 
-    with pytest.raises(RuntimeError, match="legacy Telegram group memory lacks an audience"):
+    with pytest.raises(
+        RuntimeError, match="legacy Telegram group memory lacks an audience"
+    ):
         PostgresMemoryOutbox._document_from_data(legacy_group_data)  # noqa: SLF001
 
 
@@ -1428,9 +1428,15 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
             "transition_to": "off",
         },
     )
+    provider = HomeAssistant()
     actions = PostgresConversationActions(
         timeline_engine,
-        HomeAssistant(),  # type: ignore[arg-type]
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                timeline_engine,
+                provider,  # type: ignore[arg-type]
+            ),
+        ),
     )
 
     receipt = actions.execute(turn, call)
@@ -1442,7 +1448,12 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
     assert len(calls) == 1
     restarted = PostgresConversationActions(
         timeline_engine,
-        HomeAssistant(),  # type: ignore[arg-type]
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                timeline_engine,
+                provider,  # type: ignore[arg-type]
+            ),
+        ),
     )
     assert restarted.pending(turn) == receipt
     assert len(calls) == 1
@@ -1501,9 +1512,15 @@ def test_home_assistant_current_state_read_is_durable_and_not_repeated(
         "read_home_assistant_state",
         {"entity_kind": "switch", "target": "verwarming in de overkapping"},
     )
+    provider = HomeAssistant()
     actions = PostgresConversationActions(
         timeline_engine,
-        HomeAssistant(),  # type: ignore[arg-type]
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                timeline_engine,
+                provider,  # type: ignore[arg-type]
+            ),
+        ),
     )
 
     receipt = actions.execute(turn, call)
@@ -1513,7 +1530,12 @@ def test_home_assistant_current_state_read_is_durable_and_not_repeated(
     assert calls == ["switch.heater_overkapping"]
     restarted = PostgresConversationActions(
         timeline_engine,
-        HomeAssistant(),  # type: ignore[arg-type]
+        external_tools=(
+            PostgresHomeAssistantConversationReads(
+                timeline_engine,
+                provider,  # type: ignore[arg-type]
+            ),
+        ),
     )
     assert restarted.pending(turn) == receipt
     assert calls == ["switch.heater_overkapping"]
@@ -1751,9 +1773,7 @@ def test_admitted_group_replay_after_consent_revoke_completes_without_core(
         tenant_id="telegram-group-replay-tenant",
         installation_id="telegram-group-replay-home",
     )
-    grant = TelegramGroupConsent(
-        "-100126", "person:jaap", NOW, NOW + timedelta(days=7)
-    )
+    grant = TelegramGroupConsent("-100126", "person:jaap", NOW, NOW + timedelta(days=7))
     consent.grant(grant, operation_id="telegram-group-consent:99001")
 
     assert ingress.admit(message, principal_id="person:jaap") is not None
