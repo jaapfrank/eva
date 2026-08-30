@@ -13,10 +13,6 @@ from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
 
-from eva.application.home_automation import (
-    advanced_automation,
-    state_action_automation,
-)
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.delivery import PostgresFanoutDeliveryStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
@@ -33,12 +29,6 @@ from eva.application.conversation import (
     ConversationConflict,
     ConversationExternalToolPort,
     ConversationTurn,
-)
-from eva.application.orchestration import (
-    AsyncToolPort,
-    ToolRequest,
-    VerifiedToolOrchestrator,
-    VerifiedToolResult,
 )
 from eva.application.delivery import (
     FanoutDeliveryRequest,
@@ -108,39 +98,6 @@ from eva.application.repository_improvements import (
 
 _ACTION = "adopt_personal_interest"
 _ARGUMENT_KEYS = {"motivation", "next_exploration", "title"}
-_HOME_ASSISTANT_AUTOMATION_ACTION = "create_home_assistant_state_automation"
-_HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION = (
-    "create_home_assistant_advanced_state_automation"
-)
-_HOME_ASSISTANT_AUTOMATION_ARGUMENT_KEYS = {
-    "action_entity_id",
-    "action_service",
-    "alias",
-    "trigger_entity_id",
-    "trigger_to",
-}
-_HOME_ASSISTANT_ADVANCED_AUTOMATION_ARGUMENT_KEYS = {
-    "actions",
-    "alias",
-    "condition_entity_id",
-    "condition_state",
-    "trigger_above",
-    "trigger_at",
-    "trigger_below",
-    "trigger_entity_id",
-    "trigger_from",
-    "trigger_kind",
-    "trigger_to",
-}
-_HOME_ASSISTANT_ADVANCED_AUTOMATION_LEGACY_ARGUMENT_KEYS = {
-    "actions",
-    "alias",
-    "condition_entity_id",
-    "condition_state",
-    "trigger_entity_id",
-    "trigger_from",
-    "trigger_to",
-}
 _TUYA_LOCAL_PLAN_ACTION = "plan_tuya_to_localtuya_migration"
 _TUYA_LOCAL_PLAN_ARGUMENT_KEYS = {"scope"}
 _LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
@@ -204,30 +161,6 @@ _REPOSITORY_IMPROVEMENT_TERMINAL_EVENTS = {
     "REPOSITORY_IMPROVEMENT_COMMITTED",
     "REPOSITORY_IMPROVEMENT_ROLLED_BACK",
 }
-_HOME_ASSISTANT_TERMINAL_EVENTS = {
-    "RECOVERY_FAILED",
-    "RECOVERY_NEEDS_HELP",
-    "STATE_VERIFICATION_CONFLICT",
-    "STATE_VERIFICATION_TIMED_OUT",
-    "STATE_VERIFIED",
-    "TOOL_REJECTED",
-}
-_AUTOMATION_TRIGGER_DOMAINS = (
-    "binary_sensor",
-    "input_boolean",
-    "light",
-    "person",
-    "sensor",
-    "switch",
-)
-_AUTOMATION_ACTION_DOMAINS = (
-    "automation",
-    "fan",
-    "input_boolean",
-    "light",
-    "scene",
-    "switch",
-)
 
 
 _TURN_ID_FIELDS = {
@@ -254,41 +187,6 @@ def _turn_id(
         **{field: getattr(turn, field) for field in _TURN_ID_FIELDS[scope]},
     }
     return prefix + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
-
-
-class _HomeAssistantLightPort(AsyncToolPort, Protocol):
-    async def resolve_light(self, target: str) -> dict[str, str]: ...
-
-    async def resolve_switch(self, target: str) -> dict[str, str]: ...
-
-    async def resolve_entities(
-        self,
-        requests: tuple[tuple[str, tuple[str, ...]], ...],
-    ) -> tuple[dict[str, str], ...]: ...
-
-    async def resolve_history_targets(
-        self, target: str, entity_kind: str
-    ) -> tuple[dict[str, str], ...]: ...
-
-    async def history(
-        self,
-        *,
-        entity_id: str,
-        period: str,
-        transition_to: str,
-        observed_at: datetime,
-    ) -> dict[str, JsonValue]: ...
-
-    async def state(self, *, entity_id: str) -> dict[str, JsonValue]: ...
-
-    async def history_group(
-        self,
-        *,
-        entity_ids: tuple[str, ...],
-        period: str,
-        transition_to: str,
-        observed_at: datetime,
-    ) -> dict[str, JsonValue]: ...
 
 
 class _HomeAssistantInventoryPort(Protocol):
@@ -323,8 +221,6 @@ class PostgresConversationActions:
     def __init__(
         self,
         engine: sa.Engine,
-        home_assistant: _HomeAssistantLightPort | None = None,
-        home_assistant_automations: AsyncToolPort | None = None,
         home_assistant_admin: _HomeAssistantInventoryPort | None = None,
         home_assistant_hacs: _HomeAssistantPackagePort | None = None,
         research: CurrentResearchPort | None = None,
@@ -338,7 +234,6 @@ class PostgresConversationActions:
         external_tools: tuple[ConversationExternalToolPort, ...] = (),
     ) -> None:
         self._engine = engine
-        self._home_assistant = home_assistant
         self._external_tools = external_tools
         external_action_names = tuple(
             action_name
@@ -357,7 +252,6 @@ class PostgresConversationActions:
             for provider in external_tools
             for action_name in provider.action_names
         }
-        self._home_assistant_automations = home_assistant_automations
         self._home_assistant_admin = home_assistant_admin
         self._home_assistant_hacs = home_assistant_hacs
         self._research = research
@@ -397,9 +291,6 @@ class PostgresConversationActions:
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
         actions.extend(self._external_tool_by_action)
-        if self._home_assistant_automations is not None:
-            actions.append(_HOME_ASSISTANT_AUTOMATION_ACTION)
-            actions.append(_HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION)
         if self._home_assistant_admin is not None:
             actions.append(_TUYA_LOCAL_PLAN_ACTION)
         if self._home_assistant_hacs is not None:
@@ -537,12 +428,6 @@ class PostgresConversationActions:
         plan_events = timeline.events(self._tuya_plan_thread_id(turn))
         if plan_events:
             return self._tuya_plan_receipt(turn, plan_events)
-        automation_events = timeline.events(self._automation_thread_id(turn))
-        if automation_events:
-            if automation_events[-1].event_type not in _HOME_ASSISTANT_TERMINAL_EVENTS:
-                self._resume_automation(turn, automation_events)
-                automation_events = timeline.events(self._automation_thread_id(turn))
-            return self._automation_receipt(turn, automation_events)
         events = timeline.events(self._intent_thread_id(turn))
         if not events:
             return None
@@ -763,10 +648,6 @@ class PostgresConversationActions:
             return self._execute_localtuya_repository(turn, call)
         if call.name == _LOCALTUYA_PACKAGE_INSTALL_ACTION:
             return self._execute_localtuya_package(turn, call)
-        if call.name == _HOME_ASSISTANT_AUTOMATION_ACTION:
-            return self._execute_automation(turn, call)
-        if call.name == _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION:
-            return self._execute_advanced_automation(turn, call)
         if call.name != _ACTION:
             raise ConversationConflict(f"unsupported conversation action {call.name!r}")
         arguments = self._validated_arguments(call.arguments)
@@ -2200,212 +2081,6 @@ class PostgresConversationActions:
             },
         )
 
-    async def execute_home_assistant_automation(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        automation_id: str,
-        config: dict[str, JsonValue],
-        admission_context: dict[str, JsonValue],
-    ) -> VerifiedToolResult:
-        if self._home_assistant_automations is None:
-            raise RuntimeError("Home Assistant automations are not configured")
-        request = ToolRequest(
-            thread_id=thread_id,
-            operation_id=operation_id,
-            checkpoint_prefix=(
-                "checkpoint:home-assistant-automation:"
-                + hashlib.sha256(operation_id.encode("utf-8")).hexdigest()[:32]
-            ),
-            tool_name="home_assistant.automation.create",
-            arguments={"automation_id": automation_id, "config": config},
-            expected_proof={
-                "automation_id": automation_id,
-                "config_sha256": hashlib.sha256(
-                    canonical_json_bytes(config)
-                ).hexdigest(),
-            },
-        )
-        timeline = self._timeline_for(tenant_id, installation_id)
-        admission: dict[str, JsonValue] = {
-            "arguments": request.arguments,
-            "context": admission_context,
-            "expected_proof": request.expected_proof,
-            "tool_name": request.tool_name,
-        }
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{request.checkpoint_prefix}:admitted",
-                occurred_at=now,
-                data=admission,
-                event_type="TOOL_REQUEST_ADMITTED",
-                phase="admitted",
-                status="active",
-                operation_id=operation_id,
-            )
-        except CheckpointConflict:
-            state = timeline.load(thread_id)
-            events = timeline.events(thread_id)
-            first_data = self._event_data(events[0]) if events else None
-            if state.operation_id != operation_id or first_data != admission:
-                raise ConversationConflict(
-                    "Home Assistant automation replay differs"
-                ) from None
-        return await VerifiedToolOrchestrator(
-            timeline, self._home_assistant_automations
-        ).run(request)
-
-    def _require_automation_ports(self) -> None:
-        if self._home_assistant_automations is None:
-            raise ConversationConflict(
-                "Home Assistant automation action is unavailable"
-            )
-        if self._home_assistant is None:
-            raise ConversationConflict(
-                "Home Assistant automation entity resolution is unavailable"
-            )
-
-    def _run_automation(
-        self,
-        turn: ConversationTurn,
-        call: ConversationActionCall,
-        arguments: dict[str, JsonValue],
-        resolved: tuple[dict[str, str], ...],
-        automation_id: str,
-        config: dict[str, JsonValue],
-    ) -> ConversationActionReceipt:
-        asyncio.run(
-            self.execute_home_assistant_automation(
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-                thread_id=self._automation_thread_id(turn),
-                operation_id=self._automation_operation_id(turn),
-                automation_id=automation_id,
-                config=config,
-                admission_context={
-                    "action_call_id": call.call_id,
-                    "action_name": call.name,
-                    "arguments": arguments,
-                    "conversation_id": turn.conversation_id,
-                    "principal_id": turn.principal_id,
-                    "resolved_entities": list(resolved),
-                    "source_message_id": turn.message_id,
-                },
-            )
-        )
-        events = self._timeline(turn).events(self._automation_thread_id(turn))
-        return self._automation_receipt(turn, events)
-
-    def _execute_automation(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        self._require_automation_ports()
-        assert self._home_assistant is not None
-        arguments = self._validated_automation_arguments(call.arguments)
-        resolved = asyncio.run(
-            self._home_assistant.resolve_entities(
-                (
-                    (arguments["trigger_entity_id"], _AUTOMATION_TRIGGER_DOMAINS),
-                    (arguments["action_entity_id"], _AUTOMATION_ACTION_DOMAINS),
-                )
-            )
-        )
-        automation_id = self._automation_id(turn)
-        config = state_action_automation(
-            automation_id=automation_id,
-            alias=arguments["alias"],
-            trigger_entity_id=resolved[0]["entity_id"],
-            trigger_to=arguments["trigger_to"],
-            action_entity_id=resolved[1]["entity_id"],
-            action_service=arguments["action_service"],
-        )
-        return self._run_automation(
-            turn, call, arguments, resolved, automation_id, config
-        )
-
-    def _execute_advanced_automation(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        self._require_automation_ports()
-        assert self._home_assistant is not None
-        arguments = self._validated_advanced_automation_arguments(call.arguments)
-        queries: list[tuple[str, tuple[str, ...]]] = []
-        if arguments["trigger_entity_id"] is not None:
-            queries.append(
-                (str(arguments["trigger_entity_id"]), _AUTOMATION_TRIGGER_DOMAINS)
-            )
-        if arguments["condition_entity_id"] is not None:
-            queries.append(
-                (str(arguments["condition_entity_id"]), _AUTOMATION_TRIGGER_DOMAINS)
-            )
-        actions = list(arguments["actions"])
-        queries.extend(
-            (str(action["entity_id"]), _AUTOMATION_ACTION_DOMAINS)
-            for action in actions
-            if isinstance(action, dict)
-        )
-        resolved = asyncio.run(self._home_assistant.resolve_entities(tuple(queries)))
-        resolved_index = 0
-        trigger_entity_id: str | None = None
-        if arguments["trigger_entity_id"] is not None:
-            trigger_entity_id = resolved[resolved_index]["entity_id"]
-            resolved_index += 1
-        condition_entity_id: str | None = None
-        if arguments["condition_entity_id"] is not None:
-            condition_entity_id = resolved[resolved_index]["entity_id"]
-            resolved_index += 1
-        resolved_actions: list[dict[str, JsonValue]] = []
-        for action, entity in zip(actions, resolved[resolved_index:], strict=True):
-            assert isinstance(action, dict)
-            resolved_actions.append({**action, "entity_id": entity["entity_id"]})
-        automation_id = self._automation_id(turn)
-        config = advanced_automation(
-            automation_id=automation_id,
-            alias=str(arguments["alias"]),
-            trigger_kind=str(arguments["trigger_kind"]),
-            trigger_entity_id=trigger_entity_id,
-            trigger_from=(
-                None
-                if arguments["trigger_from"] is None
-                else str(arguments["trigger_from"])
-            ),
-            trigger_to=(
-                None
-                if arguments["trigger_to"] is None
-                else str(arguments["trigger_to"])
-            ),
-            trigger_at=(
-                None
-                if arguments["trigger_at"] is None
-                else str(arguments["trigger_at"])
-            ),
-            trigger_above=(
-                arguments["trigger_above"]
-                if isinstance(arguments["trigger_above"], int)
-                else None
-            ),
-            trigger_below=(
-                arguments["trigger_below"]
-                if isinstance(arguments["trigger_below"], int)
-                else None
-            ),
-            condition_entity_id=condition_entity_id,
-            condition_state=(
-                None
-                if arguments["condition_state"] is None
-                else str(arguments["condition_state"])
-            ),
-            actions=resolved_actions,
-        )
-        return self._run_automation(
-            turn, call, arguments, resolved, automation_id, config
-        )
-
     def _pending_durable_goal(
         self, turn: ConversationTurn
     ) -> ConversationActionReceipt | None:
@@ -3060,112 +2735,6 @@ class PostgresConversationActions:
             operation_id=state.operation_id,
         )
 
-    def _resume_automation(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> None:
-        admission = self._event_data(events[0])
-        arguments = admission.get("arguments")
-        context = admission.get("context")
-        if not isinstance(arguments, dict) or not isinstance(context, dict):
-            raise ConversationConflict("Home Assistant automation resume is malformed")
-        automation_id = arguments.get("automation_id")
-        config = arguments.get("config")
-        if not isinstance(automation_id, str) or not isinstance(config, dict):
-            raise ConversationConflict("Home Assistant automation command is malformed")
-        asyncio.run(
-            self.execute_home_assistant_automation(
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-                thread_id=self._automation_thread_id(turn),
-                operation_id=self._automation_operation_id(turn),
-                automation_id=automation_id,
-                config=config,
-                admission_context=context,
-            )
-        )
-
-    def _automation_receipt(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> ConversationActionReceipt:
-        if not events or events[0].event_type != "TOOL_REQUEST_ADMITTED":
-            raise ConversationConflict("Home Assistant automation admission is missing")
-        admission = self._event_data(events[0])
-        context = admission.get("context")
-        arguments = admission.get("arguments")
-        expected = admission.get("expected_proof")
-        if not all(isinstance(value, dict) for value in (context, arguments, expected)):
-            raise ConversationConflict(
-                "Home Assistant automation admission is malformed"
-            )
-        assert isinstance(context, dict)
-        assert isinstance(arguments, dict)
-        assert isinstance(expected, dict)
-        raw_action_arguments = context.get("arguments")
-        if not isinstance(raw_action_arguments, dict):
-            raise ConversationConflict("Home Assistant automation context is malformed")
-        action_name = context.get("action_name")
-        if action_name == _HOME_ASSISTANT_AUTOMATION_ACTION:
-            action_arguments: dict[str, JsonValue] = (
-                self._validated_automation_arguments(raw_action_arguments)
-            )
-        elif action_name == _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION:
-            action_arguments = self._validated_advanced_automation_arguments(
-                raw_action_arguments
-            )
-        else:
-            raise ConversationConflict("Home Assistant automation action differs")
-        expected_scope = {
-            "conversation_id": turn.conversation_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        for key, value in expected_scope.items():
-            if context.get(key) != value:
-                raise ConversationConflict(
-                    "Home Assistant automation replay scope differs"
-                )
-        call_id = context.get("action_call_id")
-        automation_id = arguments.get("automation_id")
-        verified_config = arguments.get("config")
-        if (
-            not isinstance(call_id, str)
-            or not isinstance(automation_id, str)
-            or not isinstance(verified_config, dict)
-        ):
-            raise ConversationConflict("Home Assistant automation identity is invalid")
-        status, proof = self._home_assistant_terminal_proof(events, "automation")
-        return ConversationActionReceipt(
-            ConversationActionCall(call_id, str(action_name), action_arguments),
-            {
-                "alias": action_arguments["alias"],
-                "automation_id": automation_id,
-                "config_sha256": str(expected.get("config_sha256", "")),
-                "contract": "EvaConversationActionReceipt/v1",
-                "durable": True,
-                "proof": proof,
-                "status": status,
-                "verified_config": verified_config,
-            },
-        )
-
-    def _home_assistant_terminal_proof(
-        self, events: tuple[TimelineEvent, ...], kind: str
-    ) -> tuple[str, dict[str, JsonValue] | None]:
-        status = {
-            "STATE_VERIFIED": "verified",
-            "STATE_VERIFICATION_TIMED_OUT": "timed_out",
-            "STATE_VERIFICATION_CONFLICT": "failed",
-            "TOOL_REJECTED": "rejected",
-            "RECOVERY_FAILED": "failed",
-            "RECOVERY_NEEDS_HELP": "needs_help",
-        }.get(events[-1].event_type)
-        if status is None:
-            raise ConversationConflict(f"Home Assistant {kind} has no terminal receipt")
-        proof = self._event_data(events[-1]).get("proof")
-        if proof is not None and not isinstance(proof, dict):
-            raise ConversationConflict(f"Home Assistant {kind} proof is malformed")
-        return status, proof
-
     def _localtuya_package_receipt(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> ConversationActionReceipt:
@@ -3403,133 +2972,6 @@ class PostgresConversationActions:
         return {"corrected_name": corrected_name.strip()}
 
     @staticmethod
-    def _validated_automation_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, str]:
-        if set(raw) != _HOME_ASSISTANT_AUTOMATION_ARGUMENT_KEYS:
-            raise ConversationConflict("Home Assistant automation has wrong fields")
-        result: dict[str, str] = {}
-        for key in (
-            "action_entity_id",
-            "action_service",
-            "alias",
-            "trigger_entity_id",
-            "trigger_to",
-        ):
-            value = raw.get(key)
-            if not isinstance(value, str) or not value.strip() or len(value) > 160:
-                raise ConversationConflict(
-                    f"Home Assistant automation {key} is invalid"
-                )
-            result[key] = value.strip()
-        if result["action_service"] not in {"turn_on", "turn_off", "toggle"}:
-            raise ConversationConflict("Home Assistant automation service is invalid")
-        return result
-
-    @staticmethod
-    def _validated_advanced_automation_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, JsonValue]:
-        keys = set(raw)
-        if keys == _HOME_ASSISTANT_ADVANCED_AUTOMATION_LEGACY_ARGUMENT_KEYS:
-            raw = {
-                **raw,
-                "trigger_above": None,
-                "trigger_at": None,
-                "trigger_below": None,
-                "trigger_kind": "state",
-            }
-        elif keys != _HOME_ASSISTANT_ADVANCED_AUTOMATION_ARGUMENT_KEYS:
-            raise ConversationConflict(
-                "Home Assistant advanced automation has wrong fields"
-            )
-        result: dict[str, JsonValue] = {}
-        alias = raw.get("alias")
-        if not isinstance(alias, str) or not alias.strip() or len(alias) > 160:
-            raise ConversationConflict(
-                "Home Assistant advanced automation alias is invalid"
-            )
-        result["alias"] = alias.strip()
-        trigger_kind = raw.get("trigger_kind")
-        if trigger_kind not in {"state", "time", "numeric_state"}:
-            raise ConversationConflict(
-                "Home Assistant advanced automation trigger kind is invalid"
-            )
-        result["trigger_kind"] = str(trigger_kind)
-        for key in (
-            "trigger_entity_id",
-            "trigger_from",
-            "trigger_to",
-            "trigger_at",
-            "condition_entity_id",
-            "condition_state",
-        ):
-            value = raw.get(key)
-            if value is not None and (
-                not isinstance(value, str) or not value.strip() or len(value) > 160
-            ):
-                raise ConversationConflict(
-                    f"Home Assistant advanced automation {key} is invalid"
-                )
-            result[key] = None if value is None else value.strip()
-        for key in ("trigger_above", "trigger_below"):
-            value = raw.get(key)
-            if value is not None and (
-                isinstance(value, bool)
-                or not isinstance(value, int)
-                or not -100_000 <= value <= 100_000
-            ):
-                raise ConversationConflict(
-                    f"Home Assistant advanced automation {key} is invalid"
-                )
-            result[key] = value
-        if (result["condition_entity_id"] is None) != (
-            result["condition_state"] is None
-        ):
-            raise ConversationConflict(
-                "Home Assistant advanced automation condition is incomplete"
-            )
-        actions = raw.get("actions")
-        if not isinstance(actions, list) or not 1 <= len(actions) <= 6:
-            raise ConversationConflict(
-                "Home Assistant advanced automation actions are invalid"
-            )
-        validated_actions: list[JsonValue] = []
-        for item in actions:
-            if not isinstance(item, dict) or set(item) != {
-                "delay_after_seconds",
-                "entity_id",
-                "service",
-            }:
-                raise ConversationConflict(
-                    "Home Assistant advanced automation action is malformed"
-                )
-            entity_id = item.get("entity_id")
-            service = item.get("service")
-            delay = item.get("delay_after_seconds")
-            if (
-                not isinstance(entity_id, str)
-                or not entity_id.strip()
-                or len(entity_id) > 160
-                or service not in {"turn_on", "turn_off", "toggle"}
-                or isinstance(delay, bool)
-                or not isinstance(delay, int)
-                or not 0 <= delay <= 86400
-            ):
-                raise ConversationConflict(
-                    "Home Assistant advanced automation action is invalid"
-                )
-            validated_actions.append(
-                {
-                    "delay_after_seconds": delay,
-                    "entity_id": entity_id.strip(),
-                    "service": str(service),
-                }
-            )
-        result["actions"] = validated_actions
-        return result
-
-    @staticmethod
     def _validated_tuya_plan_arguments(
         raw: dict[str, JsonValue],
     ) -> dict[str, str]:
@@ -3681,23 +3123,6 @@ class PostgresConversationActions:
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
         return f"intent:{cls._intent_id(turn)}"
-
-    @staticmethod
-    def _automation_operation_id(turn: ConversationTurn) -> str:
-        return _turn_id(
-            turn,
-            "home_assistant_automation",
-            "home-assistant-automation:",
-        )
-
-    @classmethod
-    def _automation_thread_id(cls, turn: ConversationTurn) -> str:
-        return f"tool:{cls._automation_operation_id(turn)}"
-
-    @classmethod
-    def _automation_id(cls, turn: ConversationTurn) -> str:
-        digest = hashlib.sha256(cls._automation_operation_id(turn).encode()).hexdigest()
-        return f"eva2_{digest[:32]}"
 
     @staticmethod
     def _tuya_plan_operation_id(turn: ConversationTurn) -> str:

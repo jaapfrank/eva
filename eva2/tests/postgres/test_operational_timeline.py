@@ -41,6 +41,9 @@ from eva.adapters.postgres.home_assistant_reads import (
 from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
 )
+from eva.adapters.connectors.home_assistant_automations import (
+    HomeAssistantConversationAutomationPlanner,
+)
 from eva.adapters.postgres.conversation_actions import PostgresConversationActions
 from eva.application.conversation import (
     ConversationActionCall,
@@ -1438,6 +1441,75 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
     assert len(calls) == 1
 
 
+def test_provider_owned_automation_is_durable_and_not_repeated_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[str] = []
+
+    class Resolver:
+        async def resolve_entities(self, values):  # type: ignore[no-untyped-def]
+            assert [value[0] for value in values] == ["Jaap", "lamp in de hal"]
+            return (
+                {"entity_id": "person.jaap", "friendly_name": "Jaap"},
+                {"entity_id": "light.hal", "friendly_name": "Lamp in de hal"},
+            )
+
+    class Provider:
+        async def execute(self, request):  # type: ignore[no-untyped-def]
+            calls.append(request.operation_id)
+            return ToolDispatchResult(True, "automation:test", {"created": True})
+
+        async def observe(self, request, dispatch):  # type: ignore[no-untyped-def]
+            assert dispatch is not None and dispatch.accepted
+            return ToolProofObservation(
+                "verified",
+                request.expected_proof,
+                {"source": "automation_test_provider"},
+            )
+
+    turn = ConversationTurn.private(
+        "external-automation-routing",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:automation-effect",
+        "Als ik thuiskom, zet de lamp in de hal aan.",
+        "2026-08-30T19:45:00Z",
+    )
+    call = ConversationActionCall(
+        "call:automation-effect",
+        "create_home_assistant_state_automation",
+        {
+            "action_entity_id": "lamp in de hal",
+            "action_service": "turn_on",
+            "alias": "Hal aan bij thuiskomst",
+            "trigger_entity_id": "Jaap",
+            "trigger_to": "home",
+        },
+    )
+    provider = Provider()
+    planner = HomeAssistantConversationAutomationPlanner(Resolver())
+    tools = PostgresExternalConversationTools(
+        timeline_engine, planner, provider  # type: ignore[arg-type]
+    )
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "verified"
+    assert receipt.output["alias"] == "Hal aan bij thuiskomst"
+    assert receipt.output["verified_config"]["triggers"] == [
+        {"entity_id": "person.jaap", "to": "home", "trigger": "state"}
+    ]
+    assert len(calls) == 1
+    restarted_tools = PostgresExternalConversationTools(
+        timeline_engine, planner, provider  # type: ignore[arg-type]
+    )
+    restarted = PostgresConversationActions(
+        timeline_engine, external_tools=(restarted_tools,)
+    )
+    assert restarted.pending(turn) == receipt
+    assert len(calls) == 1
 def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
     timeline_engine: Engine,
 ) -> None:

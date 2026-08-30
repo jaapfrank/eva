@@ -8,13 +8,103 @@ import threading
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantAutomationAdapter,
     HomeAssistantAutomationConfig,
+    HomeAssistantConversationAutomationPlanner,
     acceptance_automation,
     advanced_automation,
     advanced_state_automation,
     state_action_automation,
 )
+from eva.application.conversation import ConversationActionCall, ConversationTurn
 from eva.application.orchestration import ToolRequest
 from eva.contracts.canonical_json import canonical_sha256
+
+
+def test_provider_planner_owns_resolution_schema_and_completion_guidance() -> None:
+    requests: list[tuple[tuple[str, tuple[str, ...]], ...]] = []
+
+    class Resolver:
+        async def resolve_entities(self, values):  # type: ignore[no-untyped-def]
+            requests.append(values)
+            return (
+                {"entity_id": "person.jaap", "friendly_name": "Jaap"},
+                {
+                    "entity_id": "input_boolean.nachtmodus",
+                    "friendly_name": "Nachtmodus",
+                },
+                {"entity_id": "light.hal", "friendly_name": "Lamp in de hal"},
+                {
+                    "entity_id": "switch.koffiehoek",
+                    "friendly_name": "Koffiehoek",
+                },
+            )
+
+    planner = HomeAssistantConversationAutomationPlanner(Resolver())
+    turn = ConversationTurn.private(
+        "tenant",
+        "installation",
+        "jaap",
+        "conversation",
+        "message",
+        "Als ik thuiskom en nachtmodus aan is, zet de hal aan en daarna koffie.",
+        "2026-08-23T14:00:00Z",
+    )
+    preparation = asyncio.run(
+        planner.prepare(
+            turn,
+            ConversationActionCall(
+                "call",
+                "create_home_assistant_advanced_state_automation",
+                {
+                    "actions": [
+                        {
+                            "delay_after_seconds": 30,
+                            "entity_id": "lamp in de hal",
+                            "service": "turn_on",
+                        },
+                        {
+                            "delay_after_seconds": 0,
+                            "entity_id": "koffiehoek",
+                            "service": "turn_on",
+                        },
+                    ],
+                    "alias": "Avondroute",
+                    "condition_entity_id": "nachtmodus",
+                    "condition_state": "on",
+                    "trigger_entity_id": "Jaap",
+                    "trigger_from": "not_home",
+                    "trigger_to": "home",
+                },
+            ),
+        )
+    )
+
+    assert [value[0] for value in requests[0]] == [
+        "Jaap",
+        "nachtmodus",
+        "lamp in de hal",
+        "koffiehoek",
+    ]
+    config = preparation.arguments["config"]
+    assert isinstance(config, dict)
+    assert config["conditions"] == [
+        {
+            "condition": "state",
+            "entity_id": "input_boolean.nachtmodus",
+            "state": "on",
+        }
+    ]
+    assert config["actions"] == [
+        {"action": "homeassistant.turn_on", "target": {"entity_id": "light.hal"}},
+        {"delay": {"seconds": 30}},
+        {
+            "action": "homeassistant.turn_on",
+            "target": {"entity_id": "switch.koffiehoek"},
+        },
+    ]
+    assert preparation.expected_proof["config_sha256"] == canonical_sha256(config)
+    tools = planner.conversation_tools()
+    assert {tool.name for tool in tools} == set(planner.action_names)
+    assert all(tool.completion_guidance for tool in tools)
 
 
 def test_state_action_builder_is_bounded() -> None:

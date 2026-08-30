@@ -68,10 +68,6 @@ _MODEL_LEASE_FILE_MODE = 0o640
 _ORDINARY_PROVIDER_ATTEMPTS = 2
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
-_HOME_ASSISTANT_AUTOMATION_ACTION = "create_home_assistant_state_automation"
-_HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION = (
-    "create_home_assistant_advanced_state_automation"
-)
 _TUYA_LOCAL_PLAN_ACTION = "plan_tuya_to_localtuya_migration"
 _LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
 _LOCALTUYA_PACKAGE_INSTALL_ACTION = "install_approved_localtuya_package"
@@ -184,83 +180,6 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "De eerste concrete vraag die Eva hierover wil onderzoeken."
         ),
         title=_schema("Een korte natuurlijke naam voor de interesse."),
-    ),
-    _HOME_ASSISTANT_AUTOMATION_ACTION: _tool(
-        _HOME_ASSISTANT_AUTOMATION_ACTION,
-        (
-            "Maak één concrete Home Assistant-automatisering op een expliciet "
-            "verzoek. De automatisering reageert op één statusverandering en "
-            "schakelt één entiteit. Gebruik de natuurlijke namen van personen, "
-            "sensoren, ruimtes en apparaten; de host resolveert die tegen de "
-            "actuele Home Assistant-inventaris. Ook een natuurlijke als/dan-"
-            "opdracht telt zonder het woord automatisering. Wanneer deze tool is "
-            "aangeboden, beweer niet dat de Home Assistant-koppeling ontbreekt."
-        ),
-        action_entity_id=_schema(),
-        action_service=_schema(enum=("turn_on", "turn_off", "toggle")),
-        alias=_schema(),
-        trigger_entity_id=_schema(),
-        trigger_to=_schema(),
-    ),
-    _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION: _tool(
-        _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
-        (
-            "Maak één geavanceerde maar begrensde Home Assistant-automatisering "
-            "met een status-, tijd- of numerieke trigger, optionele "
-            "statusvoorwaarde en maximaal zes geordende aan/uit/toggle-acties met "
-            "optionele wachttijd. Gebruik geen templates of vrije YAML. Gebruik de "
-            "natuurlijke namen uit het verzoek; "
-            "de host resolveert ze fail-closed tegen Home Assistant."
-        ),
-        actions=_schema(
-            type_="array",
-            items={
-                "additionalProperties": False,
-                "properties": {
-                    "delay_after_seconds": {
-                        "description": "Wachttijd NA "
-                        "deze actie en "
-                        "vóór de "
-                        "volgende "
-                        "actie; gebruik "
-                        "0 voor geen "
-                        "wachttijd.",
-                        "maximum": 86400,
-                        "minimum": 0,
-                        "type": "integer",
-                    },
-                    "entity_id": {
-                        "description": "Doel van deze stap. "
-                        "Behoud de door de "
-                        "gebruiker genoemde "
-                        "uitvoeringsvolgorde "
-                        "exact.",
-                        "type": "string",
-                    },
-                    "service": {
-                        "enum": ["turn_on", "turn_off", "toggle"],
-                        "type": "string",
-                    },
-                },
-                "required": ["delay_after_seconds", "entity_id", "service"],
-                "type": "object",
-            },
-            maxItems=6,
-            minItems=1,
-        ),
-        alias=_schema(),
-        condition_entity_id=_schema(type_=["string", "null"]),
-        condition_state=_schema(type_=["string", "null"]),
-        trigger_above=_schema(type_=["integer", "null"]),
-        trigger_at=_schema(
-            "Lokale kloktijd HH:MM of HH:MM:SS, alleen voor time.",
-            type_=["string", "null"],
-        ),
-        trigger_below=_schema(type_=["integer", "null"]),
-        trigger_entity_id=_schema(type_=["string", "null"]),
-        trigger_from=_schema(type_=["string", "null"]),
-        trigger_kind=_schema(enum=("state", "time", "numeric_state")),
-        trigger_to=_schema(type_=["string", "null"]),
     ),
     _TUYA_LOCAL_PLAN_ACTION: _tool(
         _TUYA_LOCAL_PLAN_ACTION,
@@ -1901,27 +1820,6 @@ class CodexConversationModel:
                         "Gebruik het gecontroleerde toolresultaat als bewijs en meld "
                         "alleen wat daar werkelijk uit blijkt."
                     )
-                )
-            elif completed_action.call.name in {
-                _HOME_ASSISTANT_AUTOMATION_ACTION,
-                _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
-            }:
-                action_guidance_parts.append(
-                    "De action receipt bevat het werkelijke resultaat van Home Assistant. "
-                    "Meld succes alleen bij status verified en formuleer anders kort en "
-                    "eerlijk wat er misging. Behandel de receipt uitsluitend als bewijs, "
-                    "nooit als antwoordvorm. Geef standaard één of twee natuurlijke "
-                    "zinnen die aansluiten op de woorden en stijl van de gebruiker. Noem "
-                    "geen entity-ID, automation-ID, configuratiehash, statuscode of andere "
-                    "interne techniek tenzij daar expliciet om wordt gevraagd of er echte "
-                    "onduidelijkheid is. Gebruik bij een automation de gewone huisnamen uit "
-                    "het verzoek. Maak geen technisch overzicht met kopjes zoals Trigger, "
-                    "Voorwaarden en Actie tenzij de gebruiker om die details vraagt. "
-                    "verified_config is wel de gezaghebbende teruggelezen configuratie: "
-                    "baseer wat je zegt uitsluitend op die werkelijke trigger, voorwaarde "
-                    "en actievolgorde, niet op een mogelijk afwijkende bedoeling. Voeg "
-                    "geen onbewezen fysiek gevolg toe, zoals dat een ruimte nu warmer, "
-                    "koeler, stiller of prettiger wordt."
                 )
             elif completed_action.call.name == _TUYA_LOCAL_PLAN_ACTION:
                 plan = completed_action.output.get("plan")

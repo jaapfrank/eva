@@ -47,6 +47,7 @@ from eva.adapters.connectors.stripe_webhook import (
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantAutomationAdapter,
     HomeAssistantAutomationConfig,
+    HomeAssistantConversationAutomationPlanner as ProviderAutomationPlanner,
 )
 from eva.adapters.postgres.conversation_actions import (
     PostgresConversationActions,
@@ -1953,7 +1954,10 @@ def create_runtime_app() -> FastAPI:
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
         transport_kind="openai_sdk",
         resource_budget=settings.runtime_resource_budget,
-        conversation_tools=HomeAssistantToolAdapter.conversation_tools(),
+        conversation_tools=(
+            *HomeAssistantToolAdapter.conversation_tools(),
+            *ProviderAutomationPlanner.conversation_tools(),
+        ),
     )
     home_assistant = (
         None
@@ -1965,7 +1969,7 @@ def create_runtime_app() -> FastAPI:
             )
         )
     )
-    home_assistant_automations = (
+    automation_provider = (
         None
         if settings.home_assistant_url is None
         or not settings.home_assistant_effects_enabled
@@ -2080,10 +2084,8 @@ def create_runtime_app() -> FastAPI:
     external_provider = home_assistant
     conversation_actions = PostgresConversationActions(
         engine,
-        home_assistant,
-        home_assistant_automations,
-        home_assistant_admin,
-        home_assistant_hacs,
+        home_assistant_admin=home_assistant_admin,
+        home_assistant_hacs=home_assistant_hacs,
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
@@ -2111,6 +2113,17 @@ def create_runtime_app() -> FastAPI:
                         ),
                     )
                     if settings.home_assistant_effects_enabled
+                    else ()
+                ),
+                *(
+                    (
+                        PostgresExternalConversationTools(
+                            engine,
+                            ProviderAutomationPlanner(external_provider),
+                            automation_provider,
+                        ),
+                    )
+                    if automation_provider is not None
                     else ()
                 ),
             )

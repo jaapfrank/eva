@@ -63,7 +63,7 @@ selling point.
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | ❌ Nog niet: `application/advanced_tasks.py`, de gesprekspersistence en runtime bevatten nog expliciete Home Assistant-/Tuya-paden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Gewone reads, effecten en automatiseringen lopen generiek; beheer en migratie bevatten nog oude providerpaden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -72,14 +72,14 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 803 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
-Dat is 154 minder dan vóór de eerste verplaatsing. De vier gewone lees/aan-uit-
-schemas en hun antwoordinstructies komen nu uit de tooladapter. De actuele
-kandidaat-runtime registreert zowel de gewone leesacties als de aan/uit-acties via een
-generieke externe-toolpoort. De centrale dispatcher kiest daarbij geen
-providernaam of opdrachtsoort. De oude directe Home Assistant-effect-API en de
-bijbehorende dubbele PostgreSQL-route zijn verwijderd. De beheer- en
-migratielogica staan nog wel in kernbestanden en moeten eveneens verdwijnen.
+vindt nog 719 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
+Dat is 238 minder dan vóór de eerste verplaatsing. Gewone reads, aan/uit-acties
+en automatiseringen leveren hun schema, uitleg, validatie en providercommando nu
+vanuit de tooladapter. Zij gebruiken dezelfde generieke PostgreSQL-route voor
+toelating, uitvoering, bewijs en hervatten. De centrale model- en databasecode
+kent die automatiseringsnamen niet meer. De oude directe Home Assistant-effect-
+API en de dubbele PostgreSQL-route zijn verwijderd. De beheer- en migratielogica
+staan nog wel in kernbestanden en moeten eveneens verdwijnen.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -177,7 +177,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ Schema, antwoordinstructie en de kandidaat voor gewone lees/effectdispatch zijn generiek; de dubbele directe effectroute is verwijderd en er resten 803 oudere Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten en automatiseringen gebruiken één generieke duurzame route; er resten 719 oudere Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

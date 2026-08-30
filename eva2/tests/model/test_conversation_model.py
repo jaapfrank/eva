@@ -16,6 +16,9 @@ import pytest
 
 import eva.adapters.model.conversation as conversation_module
 from eva.adapters.connectors.home_assistant import HomeAssistantToolAdapter
+from eva.adapters.connectors.home_assistant_automations import (
+    HomeAssistantConversationAutomationPlanner,
+)
 from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
@@ -87,9 +90,11 @@ def _home_tool_model(**kwargs: Any) -> CodexConversationModel:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "c2f9f6103abc6e8dd161be229f2b1b16d0a3784f122d4f3c69bf7f592ad9c255"
+        "54d367123edecb5c453f8e9efbcba7369fe62a8c74752273f1f406bdaa4ea0d4"
     )
     assert not {
+        "create_home_assistant_advanced_state_automation",
+        "create_home_assistant_state_automation",
         "set_home_assistant_light",
         "set_home_assistant_switch",
         "read_home_assistant_history",
@@ -106,6 +111,18 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     ]
     assert canonical_sha256(provider_tools) == (
         "2a14106fcc0b4a0a333f76f157a2dc129b37b763c1a7c9b259f888c2d03ae9b2"
+    )
+    automation_tools = [
+        {
+            "completion_guidance": descriptor.completion_guidance,
+            "description": descriptor.description,
+            "input_schema": descriptor.input_schema,
+            "name": descriptor.name,
+        }
+        for descriptor in HomeAssistantConversationAutomationPlanner.conversation_tools()
+    ]
+    assert canonical_sha256(automation_tools) == (
+        "1750683bef20a235a99e340d86b08ce814d02138b30b90f7328332b4ee733adc"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -576,8 +593,14 @@ def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
 
 def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -> None:
     budget = _runtime_budget()
+    provider_tools = (
+        *HomeAssistantToolAdapter.conversation_tools(),
+        *HomeAssistantConversationAutomationPlanner.conversation_tools(),
+    )
     model = CodexConversationModel(
-        auth_file=tmp_path / "missing-auth.json", resource_budget=budget
+        auth_file=tmp_path / "missing-auth.json",
+        resource_budget=budget,
+        conversation_tools=provider_tools,
     )
     catalog = [
         {"execution": "server", "type": "tool_search"},
@@ -587,7 +610,10 @@ def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -
         },
         *[
             {**tool, "defer_loading": True}
-            for tool in conversation_module._ACTION_TOOLS.values()
+            for tool in {
+                **conversation_module._ACTION_TOOLS,
+                **model._conversation_tools,  # noqa: SLF001
+            }.values()
         ],
     ]
     body = {"input": [{"content": "hoi", "role": "user"}], "tools": catalog}
@@ -1533,7 +1559,10 @@ def test_passive_house_event_is_forced_through_bounded_shadow_decision(
 def test_explicit_automation_request_uses_exact_bounded_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
+    )
     bodies: list[dict[str, Any]] = []
     call = ConversationActionCall(
         "automation-call-1",
@@ -1584,7 +1613,10 @@ def test_explicit_automation_request_uses_exact_bounded_action(
 def test_natural_if_then_request_does_not_require_the_word_automation(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
+    )
     bodies: list[dict[str, Any]] = []
     call = ConversationActionCall(
         "automation-call-natural-1",
@@ -1635,7 +1667,10 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
 def test_explicit_multistep_automation_uses_advanced_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
+    )
     call = ConversationActionCall(
         "advanced-automation-call-1",
         "create_home_assistant_advanced_state_automation",
@@ -1710,7 +1745,10 @@ def test_explicit_multistep_automation_uses_advanced_action(
 def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
+    )
     bodies: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, None]:
