@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 17:11 CEST
+Laatst bijgewerkt: 30 augustus 2026, 17:23 CEST
 
 Betekenis:
 
@@ -117,8 +117,9 @@ Betekenis:
 - ✅ De meeste antwoorden begonnen binnen twee seconden; p95 was 1,918 seconde.
 - ✅ De actuele Eva2-image heeft nul hoge en nul kritieke scanbevindingen.
 - ✅ Eva2 draait automatisch herstartbaar op poort `44710`.
-- ✅ Het vorige slot op `44711` en zijn databases staan intact als terugval.
-  Terugrollen kopieert eerst nieuwe data terug en schakelt daarna pas om.
+- ✅ De volledige nieuwe→oude→nieuwe A/B-proef is groen. Terugrollen kopieert
+  eerst de actuele data, gebruikt alleen een verliesloze databaseterugzetting
+  en schakelt pas daarna om.
 - ✅ Een nieuwe controle weigert omschakelen zolang een oude proefcontainer nog
   dezelfde database gebruikt.
 - ✅ De bron blijft met 74.979 regels onder de grens van 75.000 regels.
@@ -162,8 +163,8 @@ Betekenis:
 - ✅ De huidige OpenAI-SDK-kandidaat is vanaf exact dezelfde verzegelde commit
   opnieuw gebouwd en via de veilige A/B-route echt live gezet. De operator
   migreert een gekopieerde database voortaan vóór de nieuwe Eva start.
-- 🟡 Het vorige slot is behouden, maar de volledige terug→heen-proef met exact
-  deze SDK-versie moet nog worden uitgevoerd.
+- ✅ De volledige terug→heen-proef met exact deze SDK-versie is uitgevoerd.
+  Jaaps echte route herinnerde in beide versies exact `upgradevos`.
 - 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een
   echte automatische botrun en updatevoorstel zijn nog niet bewezen.
 - ✅ Een schrijfloze Renovate-proef met de vereiste Node-versie vond 99
@@ -198,20 +199,19 @@ Betekenis:
 
 ## Eerstvolgende stappen
 
-1. De volledige terug→heen-proef uitvoeren voor de nu live OpenAI-SDK-upgrade.
-2. De actuele Eva, OpenClaw, Hermes en Agent Zero onder exact gelijke
+1. De actuele Eva, OpenClaw, Hermes en Agent Zero onder exact gelijke
    voorwaarden vergelijken; pas daarna mag “beter” groen worden.
-3. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
+2. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
    gebruikersroute zetten en de dubbele Eva-code verwijderen.
-4. Renovate als echte updatebot aansluiten; hij mag alleen voorstellen maken,
+3. Renovate als echte updatebot aansluiten; hij mag alleen voorstellen maken,
    terwijl tests, scan, datakopie, A/B en terugrol de promotie beslissen.
-5. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
+4. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
    beschikbare tools kiezen, een voorstel en terugrol maken, toestemming
    vragen als het risico dat vereist, uitvoeren en controleren. Tuya,
    automatiseringen en updates zijn alleen praktijktests van diezelfde route.
-6. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
+5. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
    waar de gekozen dependencies hetzelfde werk beter doen.
-7. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
+6. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
    bevroren eindkandidaat uitvoeren.
 
 Technische details en bewijs staan in
@@ -225,3 +225,5 @@ De laatste releasecontrole en de live SDK-upgrade staan in
 [upstream-release-watch-live-2026-08-30.json](evidence/product/upstream-release-watch-live-2026-08-30.json)
 en
 [openai-sdk-3.6.0-live-ab-upgrade-2026-08-30.json](evidence/product/openai-sdk-3.6.0-live-ab-upgrade-2026-08-30.json).
+De volledige terugrolcyclus staat in
+[openai-sdk-3.6.0-live-ab-cycle-2026-08-30.json](evidence/product/openai-sdk-3.6.0-live-ab-cycle-2026-08-30.json).

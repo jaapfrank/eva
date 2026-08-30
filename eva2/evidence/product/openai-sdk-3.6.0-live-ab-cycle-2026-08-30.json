@@ -1,0 +1,57 @@
+{
+  "contract": "Eva2OpenAISdkLiveAbCycleReceipt/v1",
+  "issuedAt": "2026-08-30T17:22:47+02:00",
+  "status": "passed",
+  "candidate": {
+    "route": "http://127.0.0.1:44710",
+    "image": "eva2/sdk36-current-distroless@sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+    "openAiSdk": "3.6.0"
+  },
+  "rollback": {
+    "route": "http://127.0.0.1:44711",
+    "imageDigest": "sha256:25402e8ae3e5915d0a7dd519a9afd025c1c25a40081bd4d23c45efcf7411ab4d",
+    "sourceCommit": "dc80308df5c6759ed0b5cfb17153fa1eae616641"
+  },
+  "discoveredGap": {
+    "oldInstallerRejectedRevision": "4e_0007_delegated_private",
+    "oldExpectedRevision": "4e_0006_memory_outbox_erasure",
+    "routeChangedBeforeFailure": false,
+    "dataLost": false
+  },
+  "remediation": {
+    "operatorCommit": "8f50878",
+    "sourceImageMustOwnRestoredRevision": true,
+    "targetImageReportsItsOwnRevision": true,
+    "existingAlembicDowngradeUsed": true,
+    "downgradeRejectsUnrepresentableData": true,
+    "targetInstallerRechecksSchemaAfterDowngrade": true
+  },
+  "candidateToRollback": {
+    "status": "switched",
+    "sourcePort": 44710,
+    "targetPort": 44711,
+    "operationalDumpSha256": "7a9f521a1c42b613b1f91d572888ee03ecf5e727ed5b82e6474a77df7af8e830",
+    "memoryDumpSha256": "0bdd7c3e0e57a8c15f278096744f084129d3781025a73921955432a98abf2416",
+    "eva1HttpStatuses": [200, 200, 200, 200, 200],
+    "realOwnerRecall": "upgradevos"
+  },
+  "rollbackToCandidate": {
+    "status": "switched",
+    "sourcePort": 44711,
+    "targetPort": 44710,
+    "operationalDumpSha256": "5524f2c34929ca171944eaf9a4c50270a0be96b66ca12df998ef80a028936eda",
+    "memoryDumpSha256": "8acb1f8f9016eb1a01395770acb61ade0aba8068db29afdde76bf6c20279977c",
+    "eva1HttpStatuses": [200, 200, 200, 200, 200],
+    "realOwnerRecall": "upgradevos"
+  },
+  "finalState": {
+    "activeRoute": "http://127.0.0.1:44710",
+    "candidateReadyHttp": 200,
+    "eva1HttpStatuses": [200, 200, 200, 200, 200]
+  },
+  "nonClaims": [
+    "This cycle does not prove that every future schema change is downgradeable.",
+    "A migration that cannot represent new data in the old schema must still fail closed.",
+    "This cycle does not prove superiority over current competitors."
+  ]
+}

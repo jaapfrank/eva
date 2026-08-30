@@ -91,9 +91,12 @@ database-/Hindsight-/coreherstart klaar. De A/B-operator kopieerde daarna beide
 databases, voerde vóór de nieuwe writers de kandidaatmigratie uit en schakelde
 de echte `/eva2`-route van poort `44711` naar `44710`. Jaaps echte
 Telegrambinding antwoordde via de nieuwe SDK en herinnerde na een coreherstart
-exact hetzelfde testwoord. Het vorige slot en zijn databases zijn behouden.
-Een volledige terug→heen-proef met precies deze SDK-versie blijft nog een
-aparte gate; live promotie zelf is niet meer open.
+exact hetzelfde testwoord. Daarna liep ook de volledige terug→heen-proef. De
+operator ontdekte daarbij dat het oude schema-installatieprogramma een nieuwere
+versie terecht niet kende. De bestaande, transactionele Alembic-downgrade
+controleert nu eerst of de nieuwe data zonder verlies oud-representabel zijn;
+alleen dan start het oude slot. Beide omschakelingen hielden Eva1 groen en
+Jaaps herinnering bleef exact behouden.
 
 De Renovate-configuratie staat vanaf nu op de repositoryroot. Dat maakt haar
 vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de
