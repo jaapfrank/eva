@@ -1430,6 +1430,7 @@ class CodexConversationModel:
             raise ConversationModelError("autonomous model spend has no verified price")
         try:
             admission_body = body
+            deferred_catalog_tokens = 0
             tools = body.get("tools")
             tool_search = {"execution": "server", "type": "tool_search"}
             if isinstance(tools, list) and tools[:1] == [tool_search]:
@@ -1450,20 +1451,13 @@ class CodexConversationModel:
                     raise ConversationModelError(
                         "conversation deferred tool catalog is invalid"
                     )
-                admission_body = {
-                    **body,
-                    "tools": [
-                        tool_search,
-                        *[
-                            {
-                                "description": item["description"],
-                                "name": item["name"],
-                            }
-                            for item in deferred
-                        ],
-                    ],
-                }
-            conservative_input_tokens = len(canonical_json_bytes(admission_body)) + 256
+                admission_body = {**body, "tools": []}
+                deferred_catalog_tokens = 4_000
+            conservative_input_tokens = (
+                len(canonical_json_bytes(admission_body))
+                + deferred_catalog_tokens
+                + 256
+            )
         except (TypeError, ValueError) as error:
             raise ConversationModelError(
                 "conversation request is not a bounded canonical payload"
