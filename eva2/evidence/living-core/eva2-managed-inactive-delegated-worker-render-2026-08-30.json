@@ -1,0 +1,60 @@
+{
+  "contract": "EvaManagedInactiveDelegatedWorkerRenderEvidence/v1",
+  "observedAt": "2026-08-30T08:18:40Z",
+  "status": "tested",
+  "source": {
+    "baseCommit": "ac7d476",
+    "managedManifestSha256": "e17f1a1ce7d692838ba0c3500c0d13e161da7d5011912f2b746f56e99a9b3029",
+    "manifestTestSha256": "b2dcf6b45893549fe64ff028626de650b5b70c41fd56449d3b6fe143d8616cd7",
+    "runtimeEnvironmentExampleSha256": "e1802a9e35b7c94ebb3b1b76977c192932c5b0e07e5856e8f5a6ffad3899c644",
+    "hostContractSha256": "adc0850d1a86e824d15d1a3f6e465ddd2bab3a5a644d89762b560c45d6d3425f"
+  },
+  "compose": {
+    "version": "2.40.3-desktop.1",
+    "activeProfiles": ["schema-install"],
+    "activeServiceCount": 9,
+    "activeContainsDelegatedWorker": false,
+    "optInProfiles": ["schema-install", "delegated-work"],
+    "optInServiceCount": 10,
+    "optInContainsDelegatedWorker": true,
+    "containersCreated": 0,
+    "containersStarted": 0
+  },
+  "inactiveWorker": {
+    "profile": "delegated-work",
+    "defaultImage": "eva2/delegated-work-disabled@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "defaultImageIsIntentionallyAbsent": true,
+    "pullPolicy": "never",
+    "runtimeUser": "65532:65532",
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": ["ALL"],
+    "noNewPrivileges": true,
+    "mountTargets": ["/run/eva/model-lease", "/run/secrets/database_dsn"],
+    "databaseMountedReadOnly": true,
+    "accessLeaseMountedReadOnly": true,
+    "homeAssistantSecretMounted": false,
+    "dockerSocketMounted": false,
+    "workspaceMounted": false,
+    "dependsOn": ["core", "model-access-lease"]
+  },
+  "verification": {
+    "focusedTestsPassed": 86,
+    "ruff": "passed",
+    "complexityGate": "passed",
+    "productPhysicalLines": 74867,
+    "maximumProductPhysicalLines": 75000,
+    "directCoreDependencies": 10,
+    "violations": 0,
+    "liveManagedCoreStatus": "running",
+    "liveManagedCoreHealth": "healthy",
+    "liveManagedCoreRestartCount": 0
+  },
+  "conclusion": "The managed manifest can describe the delegated worker without adding it to the active nine-service graph. Enabling the profile without an explicitly supplied local image remains fail-closed.",
+  "nonClaims": [
+    "The delegated worker profile was rendered but not created, started or promoted.",
+    "The live slot configuration, live core, databases and traffic route were not changed.",
+    "There is not yet an owner-authenticated activation command or Telegram control for delegated work.",
+    "The all-zero default digest is an intentionally absent stop value, not a runnable image.",
+    "This is not a benchmark or competitor-superiority result."
+  ]
+}

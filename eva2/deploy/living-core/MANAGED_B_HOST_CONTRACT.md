@@ -83,8 +83,10 @@ geprovisioneerd root-owned `0600`-bestand direct en read-only; Docker
 gepinde upstream-image uit met een verse én herstartte tijdelijke volume en
 bewijst dat de initiële waarde werkt en een bestaande database niet reset.
 
-De tijdelijke kandidaatproef heeft de negen-dienstengrafiek gerenderd, beide
-databases gestart, het schema geïnstalleerd, een echte Codex-beurt uitgevoerd
+De tijdelijke kandidaatproef heeft de negen actieve diensten gerenderd. De
+tiende, aparte subagentworker staat uitsluitend achter het standaard gesloten
+Compose-profiel `delegated-work` en hoort niet bij die actieve grafiek. Daarna
+zijn beide databases gestart, het schema geïnstalleerd, een echte Codex-beurt uitgevoerd
 en database, Hindsight en core samen herstart. Dit bewijst de kandidaatgrafiek,
 niet de productieadoptie. Een gecontroleerde data-overdracht, A/B-omschakeling
 en terugrol op de echte B blijven afzonderlijke gates.

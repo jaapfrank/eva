@@ -50,11 +50,13 @@ def test_managed_b_has_exactly_one_telegram_first_service_graph() -> None:
         "hindsight",
         "core",
         "durable-goal-worker",
+        "delegated-work-worker",
         "telegram-ingress",
     }
     assert "profiles" not in services["durable-goal-worker"]
     assert "profiles" not in services["telegram-ingress"]
     assert services["schema-installer"]["profiles"] == ["schema-install"]
+    assert services["delegated-work-worker"]["profiles"] == ["delegated-work"]
     _assert_no_docker_secrets(document)
 
 
@@ -152,6 +154,7 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "hindsight-access-lease",
         "core",
         "durable-goal-worker",
+        "delegated-work-worker",
         "telegram-ingress",
     ):
         assert services[service_name]["entrypoint"] == ["/usr/local/bin/python"]
@@ -199,6 +202,23 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         services["durable-goal-worker"]["environment"]["EVA_DURABLE_GOAL_PROVIDER"]
         == "${EVA_DURABLE_GOAL_PROVIDER:?set the exact evidence provider}"
     )
+    delegated = services["delegated-work-worker"]
+    assert delegated["pull_policy"] == "never"
+    assert delegated["image"] == (
+        "${EVA_DELEGATED_WORK_IMAGE:-eva2/delegated-work-disabled@sha256:"
+        "0000000000000000000000000000000000000000000000000000000000000000}"
+    )
+    assert delegated["command"] == [
+        "-m",
+        "eva.bootstrap.delegated_work_service",
+    ]
+    assert delegated["environment"]["EVA_MODEL_ACCESS_LEASE_FILE"] == (
+        "/run/eva/model-lease/auth.json"
+    )
+    assert {volume["target"] for volume in _private_binds(delegated)} == {
+        "/run/eva/model-lease",
+        "/run/secrets/database_dsn",
+    }
 
     core_binds = {
         volume["target"]: volume for volume in _private_binds(services["core"])
@@ -229,6 +249,10 @@ def test_managed_b_dependency_order_and_sealed_volumes() -> None:
     }
     assert services["durable-goal-worker"]["depends_on"] == {
         "core": {"condition": "service_healthy"}
+    }
+    assert services["delegated-work-worker"]["depends_on"] == {
+        "core": {"condition": "service_healthy"},
+        "model-access-lease": {"condition": "service_started"},
     }
     assert services["telegram-ingress"]["depends_on"] == {
         "core": {"condition": "service_healthy"}

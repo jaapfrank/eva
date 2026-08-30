@@ -412,6 +412,48 @@ services:
       io.eva2.managed-by: eva2-explicit-b-manifest-v1
       io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
 
+  delegated-work-worker:
+    profiles: ["delegated-work"]
+    image: ${EVA_DELEGATED_WORK_IMAGE:-eva2/delegated-work-disabled@sha256:0000000000000000000000000000000000000000000000000000000000000000}
+    pull_policy: never
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    entrypoint: ["/usr/local/bin/python"]
+    command: ["-m", "eva.bootstrap.delegated_work_service"]
+    environment:
+      EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
+      EVA_DELEGATED_WORKER_ID: ${EVA_DELEGATED_WORKER_ID:-eva2-delegated-work}
+      EVA_DELEGATED_WORK_POLL_SECONDS: ${EVA_DELEGATED_WORK_POLL_SECONDS:-0.25}
+      EVA_MODEL_ACCESS_LEASE_FILE: /run/eva/model-lease/auth.json
+      EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
+      EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+    volumes:
+      - type: bind
+        source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
+        target: /run/secrets/database_dsn
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_MODEL_ACCESS_LEASE_DIR:?set the runtime-owned Eva model lease directory}
+        target: /run/eva/model-lease
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      core:
+        condition: service_healthy
+      model-access-lease:
+        condition: service_started
+    labels:
+      io.eva2.managed-by: eva2-explicit-b-manifest-v1
+      io.eva2.configuration-sha256: ${EVA_B_CONFIGURATION_SHA256:?set the sealed B configuration sha256}
+
   telegram-ingress:
     image: ${EVA_LIVING_CORE_IMAGE:?set the immutable Living Core image reference}
     pull_policy: never
