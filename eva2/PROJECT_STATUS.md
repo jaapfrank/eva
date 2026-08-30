@@ -47,6 +47,13 @@ echte beurten was de mediaan 1,09 seconde, maar p95 2,54 seconde en slechts
 clienttimeout na 20 seconden. De route werkt, maar de latency-eindpoort blijft
 dus eerlijk rood terwijl de uitschieter wordt onderzocht.
 
+De interne providertekst van dezelfde vijftien bewaarde beurten had wel een
+p95 van 1,34 seconde. Eva houdt die tekst nog veilig vast totdat de toolcapabele
+beurt helemaal klaar is; provider-voltooiing had p95 2,21 seconde. De officiële
+Responses-documentatie garandeert niet dat na een eerste tekstitem geen later
+toolitem meer kan volgen. Vroeg vrijgeven zou dus gereedschapstekst kunnen
+lekken en is afgewezen; de vervolgstap is transport-/modelstaart verkorten.
+
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.

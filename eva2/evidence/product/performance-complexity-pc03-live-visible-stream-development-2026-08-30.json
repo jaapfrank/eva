@@ -33,6 +33,22 @@
     "completedPrefixRetained": false,
     "countedInLatencyDistribution": false
   },
+  "durableProviderTimingForRetainedTurns": {
+    "turns": 15,
+    "firstContentMinimumMilliseconds": 624,
+    "firstContentP50Milliseconds": 809,
+    "firstContentP95Milliseconds": 1335,
+    "firstContentMaximumMilliseconds": 1335,
+    "completeMinimumMilliseconds": 767,
+    "completeP50Milliseconds": 942,
+    "completeP95Milliseconds": 2211,
+    "completeMaximumMilliseconds": 2211,
+    "diagnosis": "Initial tool-capable turns keep text private until the response proves that no tool call was returned; visible first content therefore follows safe completion rather than the earlier provider delta."
+  },
+  "officialApiBoundary": {
+    "documentation": "https://developers.openai.com/api/reference/typescript/resources/beta/subresources/responses/methods/create",
+    "observation": "The response output array can contain a variable number and order of output items; no documented early event proves that later output cannot contain a tool call."
+  },
   "target": {
     "firstContentP95Milliseconds": 2000,
     "passed": false
