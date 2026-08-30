@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 02:35 CEST
+Laatst bijgewerkt: 30 augustus 2026, 02:39 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu als beheerde slot-3-dienst op de gewone
+De nieuwe DBOS-loze Eva2 staat nu op poort `44711` achter de gewone
 `/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
 persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
 langetermijngeheugen.
@@ -27,12 +27,14 @@ tekststukjes binnen en was exact gelijk aan het eindantwoord. Een huisvraag
 koos eerst alleen de veilige leesactie en streamde pas daarna het antwoord.
 Daarbij zijn twee echte fouten in de Codex-toolplanner gevonden en hersteld.
 
-De nieuwe kandidaat gebruikt geen aparte plannerbeurt meer. Het model krijgt
+De nieuwe live canary gebruikt geen aparte plannerbeurt meer. Het model krijgt
 één vaste, uitgestelde gereedschapscatalogus en haalt alleen het passende
 gereedschap op wanneer dat nodig is. Een gewone echte beurt antwoordde exact
 `werkend`; een echte alleen-lezen huisvraag antwoordde terecht dat de spotjes
-overkapping uit staan. De kandidaatimage is zonder bouwnetwerk gemaakt, scant
-op 0 kritisch en 0 hoog en is nog niet live gezet.
+overkapping uit staan. De image is zonder bouwnetwerk gemaakt en scant op 0
+kritisch en 0 hoog. Na omschakeling antwoordde Eva1's echte `/eva2`-router
+exact `live`; na een herstart wist Eva2 nog exact `koraalvink`. De vorige
+route op poort `44710` blijft gezond als directe rollback.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -41,7 +43,7 @@ praktijktest zijn nog niet klaar.
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op slot 3, poort `44710`.
+- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44711`.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -64,12 +66,11 @@ praktijktest zijn nog niet klaar.
 - Andere lampen en `aanzetten` worden vóór Home Assistant geweigerd.
 - De kern, Hindsight en beide PostgreSQL 18-images zijn lokaal 0 kritisch en
   0 hoog gescand.
-- De huidige kern kiest per vraag maximaal vier passende tools. Een gewone
-  tekstvraag krijgt geen onnodige tools mee.
-- De nieuwe kandidaat vervangt die extra plannerbeurt door uitgestelde
-  gereedschappen. De volledige gesprekroute, echte Codex-beurt en echte
-  alleen-lezen Home Assistant-vraag zijn groen; de actieve route is nog niet
-  omgeschakeld.
+- De huidige kern gebruikt één verzegelde catalogus met uitgestelde
+  gereedschappen. Een gewone vraag doet geen aparte planneroproep; alleen een
+  passend gereedschap wordt opgehaald wanneer dat nodig is.
+- De volledige gesprekroute, echte Codex-beurt en echte alleen-lezen Home
+  Assistant-vraag zijn groen. Dezelfde route bleef na een kernherstart gezond.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -358,9 +359,9 @@ praktijktest zijn nog niet klaar.
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
-- De werkkandidaat kan antwoorden veilig doorgeven en gebruikt Luna alleen voor
-  een definitief toolvrij antwoord. De planner plus antwoordroute blijft met
-  mediaan 2,25 seconden nog boven de norm; daarom is zij niet live gezet.
+- De nieuwe live route vermijdt de extra plannerbeurt. De zichtbare
+  Telegram-stream moet nog over minstens 200 echte beurten worden gemeten om
+  de uiteindelijke p95-snelheidsclaim te sluiten.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -377,8 +378,8 @@ praktijktest zijn nog niet klaar.
 
 1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. De gemeten eerste modeltekst veilig als zichtbare stream naar de gebruiker
-   brengen en de echte tijd tot eerste inhoud meten; tooltekst mag niet lekken.
+2. De zichtbare Telegram-stream over minstens 200 echte beurten meten; tooltekst
+   mag niet lekken en p95 eerste inhoud moet binnen de productgrens blijven.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
 4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
@@ -395,6 +396,8 @@ praktijktest zijn nog niet klaar.
 
 ## Laatste bewijs
 
+- [Nieuwe uitgestelde tools live achter `/eva2`, met herstart en gezonde rollback](evidence/living-core/eva2-deferred-tools-canary-cutover-live-2026-08-30.json)
+- [Kandidaatbouw, 89 tests, regelbudget, scan en echte huisvraag](evidence/product/performance-complexity-pc03-deferred-tools-candidate-2026-08-30.json)
 - [Parallelle Luna-kandidaat: image 0/0, directe tekst snel, geïntegreerde latency nog rood](evidence/product/performance-complexity-pc03-parallel-luna-candidate-2026-08-30.json)
 - [Veilige echte tekststream; image 0/0, maar latencydoel nog rood](evidence/product/performance-complexity-pc03-safe-text-stream-2026-08-30.json)
 - [Eva1-vastloper gevonden en live van 24,6 seconden naar circa 0,05-0,15 seconde gebracht](evidence/living-core/eva1-autonomy-event-loop-responsiveness-2026-08-29.json)

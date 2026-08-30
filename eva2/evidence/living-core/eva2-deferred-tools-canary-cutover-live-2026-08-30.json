@@ -1,0 +1,47 @@
+{
+  "contract": "Eva2DeferredToolsCanaryCutoverLiveReceipt/v1",
+  "createdAt": "2026-08-30T02:39:20+02:00",
+  "sourceCommit": "f39cc116af31677dc030b0847fba0abfb3428104",
+  "imageId": "sha256:e2c302e584bf1d7f49774d0a8a7bdad03827a71587a6db26f5271cbba4169345",
+  "candidateProof": "evidence/product/performance-complexity-pc03-deferred-tools-candidate-2026-08-30.json",
+  "cutover": {
+    "contract": "Eva2CanaryCutoverReceipt/v1",
+    "sourcePort": 44710,
+    "targetPort": 44711,
+    "targetReady": true,
+    "status": "switched",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "newDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8"
+  },
+  "eva1": {
+    "serviceActive": true,
+    "restartCount": 0,
+    "httpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    }
+  },
+  "liveEva2": {
+    "dockerHealth": "healthy",
+    "readyHttpStatus": 200,
+    "eva1RouterReplyExact": "live",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "restartPerformed": true,
+    "replyAfterRestartExact": "koraalvink",
+    "preRestartStoreReplyExact": "opgeslagen"
+  },
+  "rollback": {
+    "previousPort": 44710,
+    "previousReadyHttpStatus": 200,
+    "previousContainerStopped": false
+  },
+  "nonclaims": [
+    "Eva1 remains the default route; only explicit /eva2 traffic uses this canary.",
+    "This is not a Windows/WSL reboot or long-duration acceptance result.",
+    "The visible Telegram streaming latency distribution still requires a separate measurement."
+  ],
+  "status": "passed_live_canary_with_ready_rollback"
+}
