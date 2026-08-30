@@ -1,0 +1,48 @@
+{
+  "contract": "EvaPc05CompactPromptCandidateReceipt/v1",
+  "recordedAt": "2026-08-30T02:12:00Z",
+  "status": "passed_text_development_candidate",
+  "sourceCommit": "9ecb619bd1f7fbc477e1ad3fe0857704287cddc4",
+  "image": {
+    "id": "sha256:7e5e2bb906645f7ad3c630b18f5ffba35e1d89acfbfb3c9298789ca0b9482093",
+    "networkUsedDuringBuild": false,
+    "criticalFindings": 0,
+    "highFindings": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 108,
+    "focusedTestsSkipped": 1,
+    "lint": "passed",
+    "productPhysicalLines": 74810,
+    "maximumProductPhysicalLines": 75000,
+    "guidanceBytesRemoved": 433,
+    "candidatePort": 44715,
+    "candidateReady": true
+  },
+  "textDevelopmentRun": {
+    "turns": 200,
+    "successfulTurns": 200,
+    "failedTurns": 0,
+    "firstContentP50Milliseconds": 986,
+    "firstContentP95Milliseconds": 1918,
+    "firstContentMaximumMilliseconds": 8274,
+    "completeP95Milliseconds": 1931,
+    "turnsWithinTwoSeconds": 190,
+    "durableRetryRepliesWithUnmeasuredUsage": 3,
+    "measuredInputTokenMinimum": 2752,
+    "measuredInputTokenMaximum": 2774,
+    "rawEvidence": "evidence/product/performance-complexity-pc05-text-200-compact-prompt-candidate-2026-08-30.json"
+  },
+  "regressions": {
+    "homeAssistantReadReply": "uit",
+    "deviceMutationRequested": false,
+    "candidateRestarted": true,
+    "restartMemoryExpectedReply": "ambermeeuw",
+    "restartMemoryActualReply": "ambermeeuw"
+  },
+  "nonclaims": [
+    "This closes the 200-turn text development target on this candidate, not full PC05 acceptance.",
+    "V07 voice, a frozen final image, Telegram provider latency, Windows/WSL reboot, and the seven-day practice run remain open.",
+    "The comparison is sequential provider traffic; it supports this exact candidate result but does not prove that prompt compaction alone caused every latency difference."
+  ]
+}
