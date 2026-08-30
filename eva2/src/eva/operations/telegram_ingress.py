@@ -30,6 +30,7 @@ from eva.application.telegram_ingress import (
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
 from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.bootstrap.secrets import required_environment as _required_environment
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
 
@@ -82,13 +83,6 @@ def load_principal_bindings(path_value: str) -> TelegramPrincipalBindings:
             )
         )
     return TelegramPrincipalBindings(tuple(bindings))
-
-
-def _required_environment(name: str) -> str:
-    value = os.environ.get(name, "").strip()
-    if not value:
-        raise RuntimeError(f"{name} is required")
-    return value
 
 
 def _delegated_commands(

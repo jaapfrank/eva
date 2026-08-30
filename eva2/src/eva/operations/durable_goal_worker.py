@@ -15,13 +15,7 @@ from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.application.durable_goals import DurableGoalWorker
 from eva.bootstrap.secrets import read_runtime_secret_file
-
-
-def _required_environment(name: str) -> str:
-    value = os.environ.get(name, "").strip()
-    if not value:
-        raise RuntimeError(f"{name} is required")
-    return value
+from eva.bootstrap.secrets import required_environment as _required_environment
 
 
 def _database_dsn() -> str:

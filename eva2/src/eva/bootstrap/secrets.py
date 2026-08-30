@@ -11,6 +11,13 @@ import stat
 MAX_RUNTIME_SECRET_BYTES = 64 * 1024
 
 
+def required_environment(name: str) -> str:
+    value = os.environ.get(name, "").strip()
+    if not value:
+        raise RuntimeError(f"{name} is required")
+    return value
+
+
 def _metadata_identity(metadata: os.stat_result) -> tuple[int, int, int, int, int, int]:
     return (
         metadata.st_dev,

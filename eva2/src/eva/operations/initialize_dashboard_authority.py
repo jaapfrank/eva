@@ -22,6 +22,7 @@ import sqlalchemy as sa
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.current_catalog import metadata
 from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.bootstrap.secrets import required_environment as _required_environment
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.evidence import EvidenceEnvelopeV2
 
@@ -321,13 +322,6 @@ def initialize_dashboard_authority(
         subject_sha256=subject_hash.hex(),
         tenant_id=str(tenant),
     )
-
-
-def _required_environment(name: str) -> str:
-    value = os.environ.get(name, "").strip()
-    if not value:
-        raise RuntimeError(f"{name} is required")
-    return value
 
 
 def main(argv: list[str] | None = None) -> int:
