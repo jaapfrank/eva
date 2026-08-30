@@ -1,0 +1,108 @@
+{
+  "candidate": {
+    "image": "eva2/situational-humour-release@sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "imageId": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "layers": 31,
+    "openAiSdk": "3.6.0",
+    "rootFilesystemProbe": "read-only",
+    "runtimeUser": "65532:65532",
+    "sizeBytes": 81669236,
+    "trivy": {
+      "critical": 0,
+      "databaseMetadataSha256": "1935af6de5ed7c5a1fba311d4d9ef1554f9b2e576a8c0b94794fc3102af687c7",
+      "databasePreparedAt": "2026-08-29",
+      "databaseSha256": "136e3dbd4976db93389a72115b723ac37708719f1645f0f011de45decfec6a30",
+      "high": 0,
+      "network": "none",
+      "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+    }
+  },
+  "comparison": {
+    "acceptedBlindReviewRotations": 4,
+    "candidateRanks": [
+      1,
+      1,
+      1,
+      2
+    ],
+    "c04CandidateScores": {
+      "concise": 4,
+      "dissent": 4,
+      "humour": 0,
+      "sceneSpecific": 4,
+      "warmth": 3
+    },
+    "invalidReviewerOutputsRejectedForSchemaOnly": 3,
+    "model": "gpt-5.4-mini",
+    "nonClaim": "Four label-balanced reviews of one development case are not a general superiority result."
+  },
+  "contract": "EvaManagedCoreImageCandidateEvidence/v1",
+  "issuedAt": "2026-08-31T01:15:00+02:00",
+  "nonClaims": [
+    "The candidate is running only in retained slot 4 and has not been promoted to the /eva2 user route.",
+    "No Telegram message or Home Assistant effect was sent by these candidate probes.",
+    "The fixed explicit Telegram routing has not yet received the two requested human verification turns.",
+    "The candidate does not prove superiority over OpenClaw, Hermes or Agent Zero.",
+    "Situational humour is intentionally absent from the serious health probe and was not forced into C04."
+  ],
+  "rejectedCandidates": [
+    {
+      "imageId": "sha256:5238df84f9e07b5944b3912db815384eb476d99becc2b1c7cada1b6b5ff50768",
+      "reason": "5 critical and 29 high scan findings",
+      "started": false
+    },
+    {
+      "imageId": "sha256:1a9bbbe9d480015896a7ed7466c8c545fc9bcb8a0ccf5dba10c9cf51d8187bcc",
+      "reason": "scan-clean base did not contain the required OpenAI SDK",
+      "started": true,
+      "promoted": false
+    }
+  ],
+  "runtimeProbes": {
+    "c04": {
+      "durationSeconds": 2.452,
+      "replySha256": "e28d97f0aca1f50beef5617908e6c0d6266b25f41a6847158df97ca3b8cc0b29",
+      "toolCalls": 0,
+      "words": 53
+    },
+    "harmlessSituationalHumour": {
+      "completedMilliseconds": 3487,
+      "durationSeconds": 3.572,
+      "firstContentMilliseconds": 715,
+      "inputTokens": 2572,
+      "modelAttempts": 1,
+      "outputTokens": 79,
+      "replySha256": "1a0a34cbbe427eef51539045dc51dbf0da5feae6f6b586cc5106e43c5810fb9e",
+      "toolCalls": 0,
+      "words": 60
+    },
+    "restartReplay": {
+      "durationSeconds": 0.012652,
+      "eventCountsUnchanged": true,
+      "exactReplyHashRetained": true,
+      "secondModelCall": false
+    },
+    "seriousHealthAdvice": {
+      "durationSeconds": 2.76,
+      "humourUsed": false,
+      "replySha256": "0f44f001da41cb0d6e76bfbe25ebb4c93451f2d18e1a8db0db5b44e3a19cf7c7",
+      "toolCalls": 0,
+      "words": 91
+    }
+  },
+  "source": {
+    "baseImageArchiveSha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "commit": "881be2c36004b499ac9538eb5a3fb29f9f9d2a72",
+    "conversationSourceSha256": "1e6316b131ffbbe92281f04935e52dcbfbea9cc92c2e062a718dee5ff2fa482b",
+    "distrolessRefreshDockerfileSha256": "175f0ec4cd9b6aa4d49b8d188c60faed9cb2164d7e257015f6f9efd68fa3480f",
+    "releaseAuthoritySha256": "6a38ccd94f1c7adf1b78553456a9e8163f0c77a9034fa4e8e09252c97ce3bc22",
+    "requiredInputCount": 259,
+    "requiredTestCount": 150
+  },
+  "status": "passed_candidate_only",
+  "tests": {
+    "failed": 0,
+    "focusedModelAndReleaseInputs": 80,
+    "ruff": "passed"
+  }
+}
