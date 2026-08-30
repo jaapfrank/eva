@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 03:56 CEST
+Laatst bijgewerkt: 30 augustus 2026, 04:16 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op poort `44713` achter de gewone
+De nieuwe DBOS-loze Eva2 staat nu op poort `44715` achter de gewone
 `/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
 persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
 langetermijngeheugen.
@@ -15,9 +15,9 @@ De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
-staat op 74.817 productregels,
+staat op 74.810 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route op poort `44712` draait gezond en blijft de directe
+De vorige Eva2-route op poort `44713` draait gezond en blijft de directe
 terugval.
 
 De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
@@ -43,17 +43,18 @@ Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
 praktijktest zijn nog niet klaar.
 
-De nieuwe geheugencache houdt een gewone privévraag niet meer onnodig op. De
-eerste volledige 200-beurtenproef vond daarna twee echte provider-time-outs.
-De live versie probeert zo'n gewone, nog effectvrije modelcall nu eenmaal kort
-opnieuw. De herhaalde proef gaf 200/200 antwoorden; vier herstelde pogingen
-kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
-2,285 seconde. Betrouwbaarheid is dus beter; de latencygate blijft rood.
+De nieuwe geheugencache houdt een gewone privévraag niet meer onnodig op. Een
+korte retry verhielp daarna twee echte provider-time-outs. De gedragsregels
+zijn vervolgens 433 bytes korter gemaakt zonder een geteste grens te verliezen.
+De nieuwste 200-beurtenproef gaf 200/200 antwoorden: mediaan 0,986 seconde,
+p95 1,918 seconde en compleet p95 1,931 seconde. Tien beurten waren nog boven
+twee seconden en de langzaamste duurde 8,274 seconde. De tekstontwikkelgrens is
+groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44713`.
+- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44715`.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -81,10 +82,10 @@ kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
   passend gereedschap wordt opgehaald wanneer dat nodig is.
 - De volledige gesprekroute, echte Codex-beurt en echte alleen-lezen Home
   Assistant-vraag zijn groen. Dezelfde route bleef na een kernherstart gezond.
-- Tweehonderd gewone beurten gaven 200/200 antwoorden. Vier providerstalls
-  werden eenmaal veilig hersteld; p95 eerste inhoud was nog 2,285 seconde.
-- De live router antwoordde na de nieuwste omschakeling exact `RETRYLIVE`. Na
-  de kandidaat-herstart kwam het eerder opgeslagen woord `granaatveer` exact
+- Tweehonderd gewone beurten gaven 200/200 antwoorden; p95 eerste inhoud was
+  1,918 seconde. Drie providerstalls werden eenmaal veilig hersteld.
+- De live router antwoordde na de nieuwste omschakeling exact `COMPACTLIVE`. Na
+  de kandidaat-herstart kwam het eerder opgeslagen woord `ambermeeuw` exact
   terug.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
@@ -364,8 +365,8 @@ kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
   geen gecontroleerde kopie buiten deze computer.
 - De harde broncodeteller is nu voor het eerst groen. In totaal zijn 15.369
   oude test-, proef-, operator- en dubbele regels uit de runtimewortels gehaald.
-  Eva2 telt nu 74.817 productregels bij een maximum van 75.000. De marge is dus
-  183 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
+  Eva2 telt nu 74.810 productregels bij een maximum van 75.000. De marge is dus
+  190 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
   live geschakeld; de volledige PC01-gate is daardoor groen.
 - De negen grootste runtimebestanden kunnen niet meer stil verder groeien.
   Ieder heeft nu een vaste eigenaar, contract en bovengrens; een nieuw
@@ -374,9 +375,10 @@ kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
-- De nieuwe live route vermijdt de extra plannerbeurt. De eerste volledige
-  200-beurtenmeting is foutloos, maar p95 eerste inhoud is met 2,285 seconde nog
-  285 milliseconden te langzaam. PC05 blijft daarom rood.
+- De nieuwe live route vermijdt de extra plannerbeurt. De nieuwste volledige
+  200-beurtenmeting is foutloos en p95 eerste inhoud is 1,918 seconde. De
+  tekstontwikkelgrens is groen; PC05 als geheel wacht nog op de bevroren
+  eindimage en V07-voice.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -393,8 +395,8 @@ kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
 
 1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. De gemeten providerstaart verkorten zonder tooltekst vrij te geven; daarna
-   dezelfde verzegelde 200-beurtenreeks opnieuw uitvoeren.
+2. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
+   zichtbare maximale staart blijven bewaken; V07-voice apart sluiten.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
 4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
@@ -411,6 +413,9 @@ kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
 
 ## Laatste bewijs
 
+- [Compacte tekstkern live: 200/200, p95 1,918 seconde en gezonde rollback](evidence/living-core/eva2-compact-prompt-canary-cutover-live-2026-08-30.json)
+- [Compacte promptkandidaat: 108 tests, image 0/0, HA en herstartgeheugen](evidence/product/performance-complexity-pc05-compact-prompt-candidate-2026-08-30.json)
+- [Ruwe groene 200-beurtenreeks met drie eerlijk gemarkeerde retries](evidence/product/performance-complexity-pc05-text-200-compact-prompt-candidate-2026-08-30.json)
 - [Betrouwbaardere modelroute live: 200/200 antwoorden, p95 nog rood](evidence/living-core/eva2-transient-retry-canary-cutover-live-2026-08-30.json)
 - [Retrykandidaat: image 0/0, 108 tests, HA en geheugen na herstart](evidence/product/performance-complexity-pc05-transient-retry-candidate-2026-08-30.json)
 - [Ruwe tweede 200-beurtenreeks met vier duurzaam gemarkeerde retries](evidence/product/performance-complexity-pc05-text-200-retry-candidate-2026-08-30.json)

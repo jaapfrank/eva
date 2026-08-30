@@ -1,0 +1,51 @@
+{
+  "contract": "Eva2CompactPromptCanaryCutoverLiveReceipt/v1",
+  "recordedAt": "2026-08-30T02:16:00Z",
+  "status": "passed_text_development_live",
+  "sourceCommit": "9ecb619bd1f7fbc477e1ad3fe0857704287cddc4",
+  "imageId": "sha256:7e5e2bb906645f7ad3c630b18f5ffba35e1d89acfbfb3c9298789ca0b9482093",
+  "container": "eva2-pc03-compact-prompt-9ecb619",
+  "cutover": {
+    "sourcePort": 44713,
+    "targetPort": 44715,
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "ce924df47376acfb90a8bf405a7de2930a5d097882af359559ba569589ec0d72",
+    "previousDropinSha256": "fbe0012df43e8e75d943d83912167740a98821e07acfe6073881579b8490bc69"
+  },
+  "checks": {
+    "eva1Active": true,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "targetContainer": "running",
+    "targetHealth": "healthy",
+    "targetRestartCount": 0,
+    "rollbackPort": 44713,
+    "rollbackReady": true,
+    "liveRouterExpectedReply": "COMPACTLIVE",
+    "liveRouterActualReply": "COMPACTLIVE",
+    "restartMemoryExpectedReply": "ambermeeuw",
+    "restartMemoryActualReply": "ambermeeuw"
+  },
+  "textDevelopmentRun": {
+    "turns": 200,
+    "successfulTurns": 200,
+    "failedTurns": 0,
+    "firstContentP50Milliseconds": 986,
+    "firstContentP95Milliseconds": 1918,
+    "firstContentMaximumMilliseconds": 8274,
+    "completeP95Milliseconds": 1931,
+    "targetMilliseconds": 2000
+  },
+  "candidateEvidence": "evidence/product/performance-complexity-pc05-compact-prompt-candidate-2026-08-30.json",
+  "nonclaims": [
+    "This closes the 200-turn text development target on the live canary, not full PC05 acceptance.",
+    "The ten over-target turns and 8274 millisecond maximum remain part of the evidence.",
+    "V07 voice, a frozen final image, Telegram provider latency, Windows/WSL reboot, and the seven-day practice gate remain open."
+  ]
+}
