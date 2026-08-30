@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 09:45 CEST
+Laatst bijgewerkt: 30 augustus 2026, 09:53 CEST
 
 ## Heel kort
 
@@ -23,6 +23,9 @@ terugval.
 Een aparte, begrensde subagent heeft nu ook echt één Codex-modelantwoord
 gemaakt. Zij had nul tools, nul huis- of databaserechten en geen werkmap. De
 proef bleef binnen 502 tokens en gaf precies de gevraagde drie punten terug.
+De eerste echte duurzame databaseworker liep daarna tegen zijn vaste
+30-secondenlimiet. Eva bewaarde dat eerlijk als onduidelijk; een volledig
+nieuwe worker pakte de call niet opnieuw op en veranderde geen enkele teller.
 
 De echte Windows/WSL-rebootproef blijft bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
@@ -96,6 +99,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Een losse onderzoeks-subagent heeft één echte modelrun uitgevoerd met een
   harde grens van één antwoord, 4.500 tokens en 30 seconden. Zij gebruikte nul
   tools en zag geen live database, huissecret, Docker-socket of werkmap.
+- Dezelfde route is door een nieuwe wegwerp-PostgreSQL gegaan. De echte call
+  bereikte de 30-secondenlimiet; na een verse workerstart bleven claim, call-ID,
+  revisie en foutbewijs exact gelijk en kwam er geen tweede claim.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -433,8 +439,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
   voorkomen. Berichten gaan nu via Eva1's expliciete `/eva2`-router.
-- De echte begrensde subagentprovider is groen. De duurzame databaseworker
-  blijft nog uit totdat toelating, crashherstel en replay ook echt zijn getest.
+- De echte begrensde subagentprovider is groen. Duurzame toelating en replay na
+  een echte time-out zijn ook groen; een succesvol duurzaam resultaat en een
+  echte proceskillproef ontbreken nog vóór promotie.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
@@ -500,6 +507,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Echte duurzame subagent-time-out blijft na verse workerstart zonder replay](evidence/living-core/eva2-real-durable-child-timeout-replay-2026-08-30.json)
 - [Echte begrensde subagent: één modelantwoord, nul tools en 502 tokens](evidence/living-core/eva2-real-bounded-delegated-child-2026-08-30.json)
 - [Beheerde eigenaaractie naar Home Assistant, onafhankelijke readback en replay zonder tweede actie](evidence/living-core/eva2-managed-owner-home-action-replay-2026-08-30.json)
 - [PC01-imagebinding: 10 dependencies, 23 lagen en 0/0 scan](evidence/product/performance-complexity-pc01-managed-current-2026-08-30.json)
