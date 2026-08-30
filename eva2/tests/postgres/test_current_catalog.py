@@ -55,8 +55,7 @@ def test_current_catalog_adds_only_delegated_work_authority() -> None:
     assert {constraint.name for constraint in work.constraints} >= {
         "ck_delegated_work_runs_state",
         "ck_delegated_work_runs_state_payload",
-        "fk_delegated_work_runs_attention",
-        "fk_delegated_work_runs_generation",
+        "ck_delegated_work_runs_lease",
         "fk_delegated_work_runs_owner",
         "fk_delegated_work_runs_binding",
     }

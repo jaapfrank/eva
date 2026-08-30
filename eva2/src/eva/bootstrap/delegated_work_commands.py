@@ -36,21 +36,13 @@ class DelegatedWorkConversationCommands:
         *,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
-        episode_id: UUID,
-        generation: int,
         clock: Callable[[], datetime] | None = None,
     ) -> None:
-        if not 1 <= generation <= 2_147_483_647:
-            raise ValueError("delegated command generation is invalid")
         self._store = store
         self._owner_principal_id = owner_principal_id
         self._principal_binding_id = principal_binding_id
-        self._episode_id = episode_id
-        self._generation = generation
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         self._store.validate_admission_authority(
-            episode_id=episode_id,
-            generation=generation,
             owner_principal_id=owner_principal_id,
             principal_binding_id=principal_binding_id,
         )
@@ -86,10 +78,11 @@ class DelegatedWorkConversationCommands:
             )
         occurred_at = _timestamp(turn.occurred_at)
         work_id = f"work:eva-chat:{uuid5(NAMESPACE_URL, self._work_key(turn))}"
+        context_id = uuid5(NAMESPACE_URL, self._context_key(turn))
         spec = build_unadmitted_delegated_work_spec(
             work_id=work_id,
-            episode_id=str(self._episode_id),
-            generation=self._generation,
+            episode_id=str(context_id),
+            generation=1,
             parent_task_id=f"chat:{uuid5(NAMESPACE_URL, self._work_key(turn))}",
             owner_principal_id=str(self._owner_principal_id),
             principal_binding_id=str(self._principal_binding_id),
@@ -190,6 +183,18 @@ class DelegatedWorkConversationCommands:
                 turn.principal_id,
                 turn.conversation_id,
                 turn.message_id,
+            )
+        )
+
+    @staticmethod
+    def _context_key(turn: ConversationTurn) -> str:
+        return ":".join(
+            (
+                "delegated-private-context-v1",
+                turn.tenant_id,
+                turn.installation_id,
+                turn.principal_id,
+                turn.conversation_id,
             )
         )
 

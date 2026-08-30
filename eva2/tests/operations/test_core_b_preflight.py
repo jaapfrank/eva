@@ -271,8 +271,6 @@ def test_plan_accepts_complete_delegated_work_owner_activation(
             "EVA_DELEGATED_WORK_IMAGE": "eva2/delegated-work@sha256:" + ("e" * 64),
             "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID": "55555555-5555-4555-8555-555555555555",
             "EVA_DELEGATED_WORK_OWNER_BINDING_ID": "66666666-6666-4666-8666-666666666666",
-            "EVA_DELEGATED_WORK_EPISODE_ID": "77777777-7777-4777-8777-777777777777",
-            "EVA_DELEGATED_WORK_GENERATION": "1",
         }
     )
 
@@ -281,7 +279,9 @@ def test_plan_accepts_complete_delegated_work_owner_activation(
         runtime_uid=os.geteuid(),
     )
 
-    assert plan.value("EVA_DELEGATED_WORK_GENERATION") == "1"
+    assert plan.value("EVA_DELEGATED_WORK_OWNER_BINDING_ID") == (
+        "66666666-6666-4666-8666-666666666666"
+    )
 
 
 @pytest.mark.parametrize(
@@ -289,7 +289,6 @@ def test_plan_accepts_complete_delegated_work_owner_activation(
     (
         ("EVA_DELEGATED_WORK_IMAGE", "eva2/delegated-work:latest", "exact sha256"),
         ("EVA_DELEGATED_WORK_OWNER_BINDING_ID", "not-a-uuid", "owner authority is invalid"),
-        ("EVA_DELEGATED_WORK_GENERATION", "0", "owner authority is invalid"),
     ),
 )
 def test_plan_refuses_invalid_delegated_work_owner_activation(
@@ -304,8 +303,6 @@ def test_plan_refuses_invalid_delegated_work_owner_activation(
             "EVA_DELEGATED_WORK_IMAGE": "eva2/delegated-work@sha256:" + ("e" * 64),
             "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID": "55555555-5555-4555-8555-555555555555",
             "EVA_DELEGATED_WORK_OWNER_BINDING_ID": "66666666-6666-4666-8666-666666666666",
-            "EVA_DELEGATED_WORK_EPISODE_ID": "77777777-7777-4777-8777-777777777777",
-            "EVA_DELEGATED_WORK_GENERATION": "1",
         }
     )
     values[setting_name] = value

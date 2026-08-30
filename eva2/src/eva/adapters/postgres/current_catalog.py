@@ -61,6 +61,12 @@ delegated_work_runs = sa.Table(
     sa.Column("worker_role", sa.Text(collation="C"), nullable=False),
     sa.Column("state", sa.Text(collation="C"), nullable=False),
     sa.Column("claim_count", sa.SmallInteger(), nullable=False),
+    sa.Column("lease_owner", sa.Text(collation="C"), nullable=True),
+    sa.Column(
+        "lease_expires_at",
+        postgresql.TIMESTAMP(timezone=True, precision=0),
+        nullable=True,
+    ),
     sa.Column("call_id", sa.Text(collation="C"), nullable=True),
     sa.Column("spec_payload", postgresql.JSONB(none_as_null=True), nullable=False),
     sa.Column("spec_sha256", postgresql.BYTEA(), nullable=False),
@@ -114,27 +120,6 @@ delegated_work_runs = sa.Table(
         name="uq_delegated_work_runs_attention",
     ),
     sa.ForeignKeyConstraint(
-        ["tenant_id", "installation_id", "attention_id"],
-        [
-            "eva_core.attention_items.tenant_id",
-            "eva_core.attention_items.installation_id",
-            "eva_core.attention_items.attention_id",
-        ],
-        name="fk_delegated_work_runs_attention",
-        ondelete="CASCADE",
-    ),
-    sa.ForeignKeyConstraint(
-        ["tenant_id", "installation_id", "storage_episode_id", "generation"],
-        [
-            "eva_core.episode_generations.tenant_id",
-            "eva_core.episode_generations.installation_id",
-            "eva_core.episode_generations.episode_id",
-            "eva_core.episode_generations.generation",
-        ],
-        name="fk_delegated_work_runs_generation",
-        ondelete="CASCADE",
-    ),
-    sa.ForeignKeyConstraint(
         ["tenant_id", "owner_principal_id"],
         ["eva_core.principals.tenant_id", "eva_core.principals.principal_id"],
         name="fk_delegated_work_runs_owner",
@@ -157,6 +142,13 @@ delegated_work_runs = sa.Table(
     sa.CheckConstraint(
         "claim_count BETWEEN 0 AND 3 AND generation >= 1 AND revision >= 1",
         name="ck_delegated_work_runs_counters",
+    ),
+    sa.CheckConstraint(
+        "(lease_owner IS NULL AND lease_expires_at IS NULL) OR "
+        "(state IN ('admitted','call_started') "
+        "AND length(lease_owner) BETWEEN 1 AND 192 "
+        "AND lease_expires_at IS NOT NULL)",
+        name="ck_delegated_work_runs_lease",
     ),
     sa.CheckConstraint(
         "length(work_id) BETWEEN 1 AND 192 "
@@ -225,7 +217,8 @@ delegated_work_runs = sa.Table(
         "AND (stop_requested_at IS NULL OR completed_at IS NULL "
         "OR completed_at >= stop_requested_at) "
         "AND (call_started_at IS NULL OR completed_at IS NULL "
-        "OR completed_at >= call_started_at)",
+        "OR completed_at >= call_started_at) "
+        "AND (lease_expires_at IS NULL OR lease_expires_at >= updated_at)",
         name="ck_delegated_work_runs_time",
     ),
     schema="eva_core",

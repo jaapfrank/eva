@@ -95,8 +95,6 @@ def _delegated_commands(
     names = (
         "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
         "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
-        "EVA_DELEGATED_WORK_EPISODE_ID",
-        "EVA_DELEGATED_WORK_GENERATION",
     )
     values = {name: os.environ.get(name, "").strip() for name in names}
     if not any(values.values()):
@@ -111,8 +109,6 @@ def _delegated_commands(
         )
         owner = UUID(values["EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID"])
         binding = UUID(values["EVA_DELEGATED_WORK_OWNER_BINDING_ID"])
-        episode = UUID(values["EVA_DELEGATED_WORK_EPISODE_ID"])
-        generation = int(values["EVA_DELEGATED_WORK_GENERATION"])
     except ValueError as error:
         raise RuntimeError("delegated Telegram command authority is invalid") from error
     if not bindings.contains_binding(
@@ -125,8 +121,6 @@ def _delegated_commands(
         PostgresDelegatedWorkStore(engine, scope),
         owner_principal_id=owner,
         principal_binding_id=binding,
-        episode_id=episode,
-        generation=generation,
     )
 
 

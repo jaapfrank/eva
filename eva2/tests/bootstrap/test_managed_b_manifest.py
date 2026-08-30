@@ -224,14 +224,10 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         for name in (
             "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
             "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
-            "EVA_DELEGATED_WORK_EPISODE_ID",
-            "EVA_DELEGATED_WORK_GENERATION",
         )
     } == {
         "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID": "${EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID:-}",
         "EVA_DELEGATED_WORK_OWNER_BINDING_ID": "${EVA_DELEGATED_WORK_OWNER_BINDING_ID:-}",
-        "EVA_DELEGATED_WORK_EPISODE_ID": "${EVA_DELEGATED_WORK_EPISODE_ID:-}",
-        "EVA_DELEGATED_WORK_GENERATION": "${EVA_DELEGATED_WORK_GENERATION:-}",
     }
 
     core_binds = {

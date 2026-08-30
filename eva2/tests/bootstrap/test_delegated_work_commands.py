@@ -9,7 +9,6 @@ from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationComma
 
 OWNER = UUID("33333333-3333-3333-3333-333333333333")
 BINDING = UUID("44444444-4444-4444-4444-444444444444")
-EPISODE = UUID("55555555-5555-5555-5555-555555555555")
 NOW = datetime(2026, 8, 26, 14, 0, tzinfo=UTC)
 
 
@@ -68,8 +67,6 @@ def _commands(store: FakeStore) -> DelegatedWorkConversationCommands:
         store,  # type: ignore[arg-type]
         owner_principal_id=OWNER,
         principal_binding_id=BINDING,
-        episode_id=EPISODE,
-        generation=7,
         clock=lambda: NOW,
     )
 
@@ -93,8 +90,8 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     assert first_values == replay_values
     spec = first_values["spec"]
     assert spec.work_id.startswith("work:eva-chat:")
-    assert spec.episode_id == str(EPISODE)
-    assert spec.generation == 7
+    assert UUID(spec.episode_id).version == 5
+    assert spec.generation == 1
     assert spec.owner_principal_id == str(OWNER)
     assert spec.principal_binding_id == str(BINDING)
     assert spec.task == "uitzoeken welke trein morgen het snelst is"
@@ -103,6 +100,12 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     assert spec.grant.maximum_model_runs == 1
     assert first_values["title"] == "Onderzoek vanuit Eva-chat"
     assert "trein" not in str(first_values["summary"])
+    assert store.validated == [
+        {
+            "owner_principal_id": OWNER,
+            "principal_binding_id": BINDING,
+        }
+    ]
 
 
 def test_owner_gets_board_counts_and_can_stop_latest_work_before_call() -> None:

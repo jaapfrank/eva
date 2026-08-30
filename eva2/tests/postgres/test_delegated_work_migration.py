@@ -118,7 +118,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     try:
         receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-        assert receipt.final_revision == "4e_0006_memory_outbox_erasure"
+        assert receipt.final_revision == "4e_0007_delegated_private"
         assert (
             receipt.drift_check
             == "no_new_upgrade_operations_and_exact_foreign_keys"
@@ -149,7 +149,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
         old_row = _row(engine, old_id)
 
         command.upgrade(config, "head")
-        assert _revision(engine) == "4e_0006_memory_outbox_erasure"
+        assert _revision(engine) == "4e_0007_delegated_private"
         assert "delegated_work" in _kind_check(engine)
         assert _row(engine, old_id) == old_row
 
@@ -161,7 +161,7 @@ def test_delegated_work_kind_upgrade_and_atomic_downgrade() -> None:
 
         with pytest.raises(sa.exc.IntegrityError):
             command.downgrade(config, "4e_0001_operational_timeline")
-        assert _revision(engine) == "4e_0006_memory_outbox_erasure"
+        assert _revision(engine) == "4e_0007_delegated_private"
         assert _row(engine, delegated_id)["kind"] == "delegated_work"
 
         with engine.begin() as connection:

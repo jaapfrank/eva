@@ -31,7 +31,10 @@ from eva.adapters.postgres.delegated_work import (
     DelegatedWorkStoreError,
     PostgresDelegatedWorkStore,
 )
-from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.postgres.operational_timeline import (
+    TimelineScope,
+    external_timeline_scope,
+)
 from eva.adapters.postgres.scope import set_local_scope
 from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
 from eva.adapters.subagents.tool_free_child import (
@@ -102,7 +105,7 @@ def delegated_engine() -> Engine:
             sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
         )
     receipt = install_schema(dsn, alembic_ini=ROOT / "alembic.ini")
-    assert receipt.final_revision == "4e_0006_memory_outbox_erasure"
+    assert receipt.final_revision == "4e_0007_delegated_private"
     try:
         yield engine
     finally:
@@ -113,7 +116,10 @@ def delegated_engine() -> Engine:
             # before the explicit test-only cleanup used for base teardown.
             with pytest.raises(
                 Exception,
-                match="must be empty before downgrade|stop requests must be empty",
+                    match=(
+                        "must be empty before downgrade|stop requests must be empty|"
+                        "delegated private contexts cannot be represented"
+                    ),
             ):
                 command.downgrade(config, "4e_0002_delegated_work")
             with engine.begin() as connection:
@@ -143,8 +149,11 @@ def _id(label: str, part: str) -> UUID:
 
 
 def _seed_authority(engine: Engine, label: str) -> tuple[TimelineScope, UUID, UUID]:
-    tenant = _id(label, "tenant")
-    installation = _id(label, "installation")
+    scope = external_timeline_scope(
+        f"tenant:{label}", f"installation:{label}", "test scope is required"
+    )
+    tenant = scope.tenant_id
+    installation = scope.installation_id
     episode = _id(label, "episode")
     principal = _id(label, "principal")
     binding = _id(label, "binding")
@@ -241,7 +250,7 @@ def _seed_authority(engine: Engine, label: str) -> tuple[TimelineScope, UUID, UU
                 connection.exec_driver_sql(
                     f"ALTER TABLE {table.schema}.{table.name} ENABLE TRIGGER ALL"
                 )
-    return TimelineScope(tenant, installation), episode, binding
+    return scope, episode, binding
 
 
 def _spec(
@@ -450,6 +459,7 @@ def _process_environment(
     *,
     dsn_file: Path,
     scope: TimelineScope,
+    scope_label: str,
     count_file: Path,
     mode: str,
     now: str = "2026-08-26T12:02:00Z",
@@ -460,6 +470,12 @@ def _process_environment(
     except ImportError:
         pytest.skip("the exact delegated worker environment is unavailable")
     worker_site_packages = str(Path(pydantic_ai.__file__).resolve().parents[1])
+    expected_scope = external_timeline_scope(
+        f"tenant:{scope_label}",
+        f"installation:{scope_label}",
+        "test scope is required",
+    )
+    assert scope == expected_scope
     environment = {
         name: os.environ[name]
         for name in ("LANG", "LC_ALL", "PATH", "PYTHONHASHSEED")
@@ -468,8 +484,8 @@ def _process_environment(
     environment.update(
         {
         "EVA_DATABASE_DSN_FILE": str(dsn_file),
-        "EVA_RUNTIME_TENANT_ID": str(scope.tenant_id),
-        "EVA_RUNTIME_INSTALLATION_ID": str(scope.installation_id),
+        "EVA_RUNTIME_TENANT_ID": f"tenant:{scope_label}",
+        "EVA_RUNTIME_INSTALLATION_ID": f"installation:{scope_label}",
         "EVA_DELEGATED_WORKER_ID": "subagent-worker:process-test",
         "EVA_DELEGATED_WORK_POLL_SECONDS": "0.05",
         "EVA_TEST_CALL_COUNTER": str(count_file),
@@ -488,6 +504,7 @@ def _official_process_environment(
     *,
     dsn_file: Path,
     scope: TimelineScope,
+    scope_label: str,
     count_file: Path,
     endpoint: str,
     lease_file: Path,
@@ -495,6 +512,7 @@ def _official_process_environment(
     environment = _process_environment(
         dsn_file=dsn_file,
         scope=scope,
+        scope_label=scope_label,
         count_file=count_file,
         mode="official_sdk",
     )
@@ -898,7 +916,7 @@ def test_owner_stop_wins_before_call_and_never_claims_again(
     )
     assert stopped.state == "stopped"
     assert stopped.call_id is None
-    assert stopped.attention.state == "completed"
+    assert stopped.lease_owner is None
     assert store.request_stop(
         spec.work_id,
         owner_principal_id=_id(label, "principal"),
@@ -1093,20 +1111,10 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
     scope, episode, binding = _seed_authority(delegated_engine, label)
     owner = _id(label, "principal")
     store = _store(delegated_engine, scope)
-    with pytest.raises(DelegatedWorkConflict):
-        DelegatedWorkConversationCommands(
-            store,
-            owner_principal_id=owner,
-            principal_binding_id=binding,
-            episode_id=episode,
-            generation=2,
-        )
     commands = DelegatedWorkConversationCommands(
         store,
         owner_principal_id=owner,
         principal_binding_id=binding,
-        episode_id=episode,
-        generation=1,
         clock=lambda: datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
     )
 
@@ -1187,8 +1195,6 @@ def test_private_telegram_owner_starts_follows_and_stops_postgres_work(
         store,
         owner_principal_id=owner,
         principal_binding_id=binding,
-        episode_id=episode,
-        generation=1,
         clock=lambda: now,
     )
     messages = (
@@ -1311,8 +1317,6 @@ def test_bot_api_and_ingress_ledger_replay_owner_delegation_exactly_once(
         delegated_store,
         owner_principal_id=owner,
         principal_binding_id=binding,
-        episode_id=episode,
-        generation=1,
         clock=lambda: now,
     )
     commands_text = (
@@ -1449,7 +1453,7 @@ def test_revocation_waits_for_atomic_call_start(
 
     checked = threading.Event()
     release = threading.Event()
-    original = store._validate_authority
+    original = store._validate_owner_binding
 
     def pause_after_locked_authority(*args: object, **kwargs: object) -> None:
         original(*args, **kwargs)  # type: ignore[arg-type]
@@ -1457,7 +1461,7 @@ def test_revocation_waits_for_atomic_call_start(
         if not release.wait(timeout=5):
             raise RuntimeError("revocation race test did not release")
 
-    monkeypatch.setattr(store, "_validate_authority", pause_after_locked_authority)
+    monkeypatch.setattr(store, "_validate_owner_binding", pause_after_locked_authority)
     outcomes: list[object] = []
 
     def start() -> None:
@@ -1824,7 +1828,7 @@ def test_owner_stop_cancels_active_worker_and_never_replays_it(
     assert loaded.usage == DelegatedWorkUsage.unmeasured()
     assert loaded.error_code is None
     assert loaded.error_fingerprint is None
-    assert loaded.attention.state == "completed"
+    assert loaded.lease_owner is None
     with pytest.raises(sa.exc.IntegrityError):
         with delegated_engine.begin() as connection:
             connection.execute(
@@ -1948,6 +1952,7 @@ def test_separate_process_executes_one_durable_pydantic_call(
     environment = _process_environment(
         dsn_file=dsn_file,
         scope=scope,
+        scope_label=label,
         count_file=count_file,
         mode="success",
     )
@@ -2002,6 +2007,7 @@ def test_separate_process_executes_official_sdk_from_postgres_to_result(
         environment = _official_process_environment(
             dsn_file=dsn_file,
             scope=scope,
+            scope_label=label,
             count_file=process_tmp_path / "unused-provider-counter",
             endpoint=endpoint,
             lease_file=lease_file,
@@ -2051,6 +2057,7 @@ def test_sigterm_during_official_sdk_call_is_ambiguous_and_never_replayed(
         environment = _official_process_environment(
             dsn_file=dsn_file,
             scope=scope,
+            scope_label=label,
             count_file=process_tmp_path / "unused-provider-counter",
             endpoint=endpoint,
             lease_file=lease_file,
@@ -2093,8 +2100,6 @@ def test_owner_chat_stop_cancels_official_sdk_call_and_never_replays(
         store,
         owner_principal_id=owner,
         principal_binding_id=binding,
-        episode_id=episode,
-        generation=1,
         clock=lambda: now,
     )
 
@@ -2102,6 +2107,7 @@ def test_owner_chat_stop_cancels_official_sdk_call_and_never_replays(
         environment = _official_process_environment(
             dsn_file=dsn_file,
             scope=scope,
+            scope_label=label,
             count_file=process_tmp_path / "unused-provider-counter",
             endpoint=endpoint,
             lease_file=lease_file,
@@ -2173,6 +2179,7 @@ def test_two_separate_processes_share_one_call_start_fence(
             delegated_engine, process_tmp_path / "database-dsn"
         ),
         scope=scope,
+        scope_label=label,
         count_file=process_tmp_path / "provider-calls",
         mode="success",
     )
@@ -2204,6 +2211,7 @@ def test_process_death_before_call_start_is_reclaimable(
     paused = _process_environment(
         dsn_file=dsn_file,
         scope=scope,
+        scope_label=label,
         count_file=count_file,
         mode="pause_after_claim",
         after_claim_marker=claimed_marker,
@@ -2217,7 +2225,7 @@ def test_process_death_before_call_start_is_reclaimable(
         principal_binding_id=binding,
     )
     assert claimed.state == "admitted"
-    assert claimed.attention.state == "claimed"
+    assert claimed.lease_owner is not None
     assert claimed.call_id is None
     first.kill()
     first.communicate(timeout=10)
@@ -2228,6 +2236,7 @@ def test_process_death_before_call_start_is_reclaimable(
         _process_environment(
             dsn_file=dsn_file,
             scope=scope,
+            scope_label=label,
             count_file=count_file,
             mode="success",
             now="2026-08-26T12:03:00Z",
@@ -2255,6 +2264,7 @@ def test_sigterm_during_model_call_is_recorded_ambiguous_and_never_replayed(
     environment = _process_environment(
         dsn_file=dsn_file,
         scope=scope,
+        scope_label=label,
         count_file=count_file,
         mode="slow",
     )
@@ -2301,6 +2311,7 @@ def test_sigkill_after_call_start_is_visible_and_never_replayed(
     environment = _process_environment(
         dsn_file=dsn_file,
         scope=scope,
+        scope_label=label,
         count_file=count_file,
         mode="slow",
     )

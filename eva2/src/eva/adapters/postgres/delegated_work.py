@@ -1,9 +1,6 @@
 """Durable PostgreSQL handoff and at-most-once fence for bounded child work."""
 
 from __future__ import annotations
-from eva.contracts.timestamps import (
-    format_normalized_utc_timestamp as _format_timestamp,
-)
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 
 import re
@@ -24,12 +21,8 @@ from eva.contracts.delegated_work import (
     DelegatedWorkSpec,
     DelegatedWorkUsage,
 )
-from eva.contracts.lifecycle import AttentionWakeV2
 from eva.contracts.workboard import WorkBoard
 
-attention_items = metadata.tables["eva_core.attention_items"]
-episode_generations = metadata.tables["eva_core.episode_generations"]
-episodes = metadata.tables["eva_core.episodes"]
 principal_bindings = metadata.tables["eva_core.principal_bindings"]
 principals = metadata.tables["eva_core.principals"]
 
@@ -85,14 +78,14 @@ class DelegatedWorkReleaseSelector:
 @dataclass(frozen=True, slots=True)
 class StoredDelegatedWork:
     spec: DelegatedWorkSpec
-    attention: AttentionWakeV2
-    attention_revision: int
     storage_episode_id: UUID
     title: str
     summary: str
     worker_role: str
     state: str
     claim_count: int
+    lease_owner: str | None
+    lease_expires_at: datetime | None
     call_id: str | None
     result: DelegatedWorkResult | None
     usage: DelegatedWorkUsage | None
@@ -119,7 +112,6 @@ class DelegatedWorkClaim:
     work_id: str
     attention_id: UUID
     lease_owner: str
-    attention_revision: int
     work_revision: int
     spec: DelegatedWorkSpec
 
@@ -151,8 +143,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
     def validate_admission_authority(
         self,
         *,
-        episode_id: UUID,
-        generation: int,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
     ) -> None:
@@ -162,10 +152,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             transaction = connection.begin()
             try:
                 self._scope(connection)
-                self._validate_authority(
+                self._validate_owner_binding(
                     connection,
-                    storage_episode_id=episode_id,
-                    generation=generation,
                     owner_principal_id=owner_principal_id,
                     principal_binding_id=principal_binding_id,
                 )
@@ -250,83 +238,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     )
                 return DelegatedWorkAdmission("already_present", loaded)
 
-            self._validate_authority(
+            self._validate_owner_binding(
                 connection,
-                storage_episode_id=storage_episode_id,
-                generation=spec.generation,
                 owner_principal_id=owner_principal_id,
                 principal_binding_id=principal_binding_id,
-            )
-            connection.execute(
-                sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
-                {
-                    "key": (
-                        f"delegated-attention-ordinal:{self._scope_value.tenant_id}:"
-                        f"{self._scope_value.installation_id}:{storage_episode_id}:"
-                        f"{spec.generation}"
-                    )
-                },
-            )
-            ordinal = (
-                int(
-                    connection.scalar(
-                        sa.select(
-                            sa.func.coalesce(sa.func.max(attention_items.c.ordinal), 0)
-                        ).where(
-                            attention_items.c.tenant_id == self._scope_value.tenant_id,
-                            attention_items.c.installation_id
-                            == self._scope_value.installation_id,
-                            attention_items.c.episode_id == storage_episode_id,
-                            attention_items.c.generation == spec.generation,
-                            attention_items.c.kind == "delegated_work",
-                        )
-                    )
-                    or 0
-                )
-                + 1
-            )
-            if ordinal > 1_000:
-                raise DelegatedWorkConflict("delegated work attention capacity is full")
-            attention = AttentionWakeV2(
-                contract="AttentionWake/v2",
-                schema_version=2,
-                attention_id=str(attention_id),
-                episode_id=spec.episode_id,
-                generation=spec.generation,
-                kind="delegated_work",
-                state="pending",
-                reason="voer een begrensde subagenttaak uit",
-                not_before=_format_timestamp(occurred_at),
-                deadline=spec.deadline,
-                lease_owner=None,
-                lease_expires_at=None,
-                ordinal=ordinal,
-            )
-            attention_payload = attention.model_dump(mode="json")
-            connection.execute(
-                sa.insert(attention_items).values(
-                    tenant_id=self._scope_value.tenant_id,
-                    installation_id=self._scope_value.installation_id,
-                    attention_id=attention_id,
-                    episode_id=storage_episode_id,
-                    generation=spec.generation,
-                    commitment_id=None,
-                    kind="delegated_work",
-                    state="pending",
-                    reason=attention.reason,
-                    not_before=occurred_at,
-                    deadline=deadline,
-                    lease_owner=None,
-                    lease_expires_at=None,
-                    ordinal=ordinal,
-                    payload=attention_payload,
-                    payload_sha256=bytes.fromhex(canonical_sha256(attention_payload)),
-                    revision=1,
-                    retention_policy_id=retention_policy_id,
-                    retention_until=retention_until,
-                    created_at=occurred_at,
-                    updated_at=occurred_at,
-                )
             )
             connection.execute(
                 sa.insert(delegated_work_runs).values(
@@ -345,6 +260,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     worker_role=worker_role,
                     state="admitted",
                     claim_count=0,
+                    lease_owner=None,
+                    lease_expires_at=None,
                     call_id=None,
                     spec_payload=spec_payload,
                     spec_sha256=bytes.fromhex(spec_sha256),
@@ -398,17 +315,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             row = (
                 connection.execute(
                     sa.select(delegated_work_runs)
-                    .join(
-                        attention_items,
-                        sa.and_(
-                            attention_items.c.tenant_id
-                            == delegated_work_runs.c.tenant_id,
-                            attention_items.c.installation_id
-                            == delegated_work_runs.c.installation_id,
-                            attention_items.c.attention_id
-                            == delegated_work_runs.c.attention_id,
-                        ),
-                    )
                     .where(
                         delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
                         delegated_work_runs.c.installation_id
@@ -436,22 +342,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                         ].as_string()
                         == release.output_schema_sha256,
                         sa.or_(
-                            sa.and_(
-                                attention_items.c.state == "pending",
-                                attention_items.c.not_before <= now,
-                            ),
-                            sa.and_(
-                                attention_items.c.state == "claimed",
-                                attention_items.c.lease_expires_at < now,
-                            ),
+                            delegated_work_runs.c.lease_owner.is_(None),
+                            delegated_work_runs.c.lease_expires_at < now,
                         ),
                     )
                     .order_by(
                         delegated_work_runs.c.created_at, delegated_work_runs.c.work_id
                     )
-                    .with_for_update(
-                        of=(delegated_work_runs, attention_items), skip_locked=True
-                    )
+                    .with_for_update(of=delegated_work_runs, skip_locked=True)
                     .limit(1)
                 )
                 .mappings()
@@ -470,10 +368,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 return None
             try:
-                self._validate_authority(
+                self._validate_owner_binding(
                     connection,
-                    storage_episode_id=loaded.storage_episode_id,
-                    generation=loaded.spec.generation,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
                     principal_binding_id=UUID(loaded.spec.principal_binding_id),
                 )
@@ -493,37 +389,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 return None
 
-            attention = loaded.attention.model_copy(
-                update={
-                    "state": "claimed",
-                    "lease_owner": lease_owner,
-                    "lease_expires_at": _format_timestamp(lease_expires_at),
-                }
-            )
-            attention_payload = attention.model_dump(mode="json")
-            attention_result = connection.execute(
-                sa.update(attention_items)
-                .where(
-                    attention_items.c.tenant_id == self._scope_value.tenant_id,
-                    attention_items.c.installation_id
-                    == self._scope_value.installation_id,
-                    attention_items.c.attention_id
-                    == UUID(loaded.attention.attention_id),
-                    attention_items.c.revision == loaded.attention_revision,
-                    attention_items.c.state.in_(("pending", "claimed")),
-                )
-                .values(
-                    state="claimed",
-                    lease_owner=lease_owner,
-                    lease_expires_at=lease_expires_at,
-                    payload=attention_payload,
-                    payload_sha256=bytes.fromhex(canonical_sha256(attention_payload)),
-                    revision=attention_items.c.revision + 1,
-                    updated_at=now,
-                )
-            )
-            if attention_result.rowcount != 1:
-                raise DelegatedWorkConflict("delegated attention claim raced")
             work_result = connection.execute(
                 sa.update(delegated_work_runs)
                 .where(
@@ -533,31 +398,25 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.work_id == loaded.spec.work_id,
                     delegated_work_runs.c.revision == loaded.revision,
                     delegated_work_runs.c.state == "admitted",
+                    sa.or_(
+                        delegated_work_runs.c.lease_owner.is_(None),
+                        delegated_work_runs.c.lease_expires_at < now,
+                    ),
                 )
                 .values(
                     claim_count=next_claim,
+                    lease_owner=lease_owner,
+                    lease_expires_at=lease_expires_at,
                     revision=loaded.revision + 1,
                     updated_at=now,
                 )
             )
             if work_result.rowcount != 1:
                 raise DelegatedWorkConflict("delegated work claim raced")
-            attention_revision = int(
-                connection.scalar(
-                    sa.select(attention_items.c.revision).where(
-                        attention_items.c.tenant_id == self._scope_value.tenant_id,
-                        attention_items.c.installation_id
-                        == self._scope_value.installation_id,
-                        attention_items.c.attention_id
-                        == UUID(loaded.attention.attention_id),
-                    )
-                )
-            )
             return DelegatedWorkClaim(
                 work_id=loaded.spec.work_id,
-                attention_id=UUID(loaded.attention.attention_id),
+                attention_id=UUID(str(row.attention_id)),
                 lease_owner=lease_owner,
-                attention_revision=attention_revision,
                 work_revision=loaded.revision + 1,
                 spec=loaded.spec,
             )
@@ -569,20 +428,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         call_id = f"child-call:{uuid4()}"
         with self._engine.begin() as connection:
             self._scope(connection)
-            attention = (
-                connection.execute(
-                    sa.select(attention_items)
-                    .where(
-                        attention_items.c.tenant_id == self._scope_value.tenant_id,
-                        attention_items.c.installation_id
-                        == self._scope_value.installation_id,
-                        attention_items.c.attention_id == claim.attention_id,
-                    )
-                    .with_for_update()
-                )
-                .mappings()
-                .one_or_none()
-            )
             row = (
                 connection.execute(
                     sa.select(delegated_work_runs)
@@ -597,7 +442,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 .mappings()
                 .one_or_none()
             )
-            if attention is None or row is None:
+            if row is None:
                 raise DelegatedWorkNotFound("delegated work claim is absent")
             if row.state != "admitted":
                 return None
@@ -608,10 +453,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 return None
             try:
-                self._validate_authority(
+                self._validate_owner_binding(
                     connection,
-                    storage_episode_id=loaded.storage_episode_id,
-                    generation=loaded.spec.generation,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
                     principal_binding_id=UUID(loaded.spec.principal_binding_id),
                 )
@@ -623,11 +466,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             if (
                 loaded.spec != claim.spec
                 or int(row.revision) != claim.work_revision
-                or int(attention.revision) != claim.attention_revision
-                or attention.state != "claimed"
-                or attention.lease_owner != claim.lease_owner
-                or attention.lease_expires_at is None
-                or attention.lease_expires_at < now
+                or row.attention_id != claim.attention_id
+                or row.lease_owner != claim.lease_owner
+                or row.lease_expires_at is None
+                or row.lease_expires_at < now
             ):
                 raise DelegatedWorkConflict("delegated work claim is stale")
             result = connection.execute(
@@ -640,6 +482,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.revision == claim.work_revision,
                     delegated_work_runs.c.state == "admitted",
                     delegated_work_runs.c.call_id.is_(None),
+                    delegated_work_runs.c.lease_owner == claim.lease_owner,
                 )
                 .values(
                     state="call_started",
@@ -795,10 +638,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             ):
                 raise DelegatedWorkNotFound("delegated work is absent")
             loaded = self._load_terminal_locked(
-                connection,
-                work_id=work_id,
-                attention_id=observed.attention_id,
-                missing_message="delegated work is absent",
+                connection, work_id=work_id, missing_message="delegated work is absent"
             )
             if loaded.spec.owner_principal_id != str(
                 owner_principal_id
@@ -822,6 +662,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     )
                     .values(
                         stop_requested_at=now,
+                        lease_owner=None,
+                        lease_expires_at=None,
                         revision=loaded.revision + 1,
                         updated_at=now,
                     )
@@ -831,14 +673,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 return self._load_locked(connection, work_id)
             if loaded.state != "admitted" or loaded.call_id is not None:
                 return loaded
-            stopped_attention = loaded.attention.model_copy(
-                update={
-                    "state": "completed",
-                    "lease_owner": None,
-                    "lease_expires_at": None,
-                }
-            )
-            attention_payload = stopped_attention.model_dump(mode="json")
             work_update = connection.execute(
                 sa.update(delegated_work_runs)
                 .where(
@@ -852,32 +686,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 .values(
                     state="stopped",
+                    lease_owner=None,
+                    lease_expires_at=None,
                     completed_at=now,
                     revision=loaded.revision + 1,
                     updated_at=now,
                 )
             )
-            attention_update = connection.execute(
-                sa.update(attention_items)
-                .where(
-                    attention_items.c.tenant_id == self._scope_value.tenant_id,
-                    attention_items.c.installation_id
-                    == self._scope_value.installation_id,
-                    attention_items.c.attention_id == observed.attention_id,
-                    attention_items.c.revision == loaded.attention_revision,
-                    attention_items.c.state.in_(("pending", "claimed")),
-                )
-                .values(
-                    state="completed",
-                    lease_owner=None,
-                    lease_expires_at=None,
-                    payload=attention_payload,
-                    payload_sha256=bytes.fromhex(canonical_sha256(attention_payload)),
-                    revision=loaded.attention_revision + 1,
-                    updated_at=now,
-                )
-            )
-            if work_update.rowcount != 1 or attention_update.rowcount != 1:
+            if work_update.rowcount != 1:
                 raise DelegatedWorkConflict("delegated stop raced")
             return self._load_locked(connection, work_id)
 
@@ -1074,7 +890,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             loaded = self._load_terminal_locked(
                 connection,
                 work_id=call.work_id,
-                attention_id=call.attention_id,
                 missing_message="delegated work call is absent",
             )
             if loaded.state != "call_started":
@@ -1123,6 +938,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                         if error_fingerprint is None
                         else bytes.fromhex(error_fingerprint)
                     ),
+                    lease_owner=None,
+                    lease_expires_at=None,
                     completed_at=now,
                     revision=loaded.revision + 1,
                     updated_at=now,
@@ -1130,36 +947,6 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             if work_update.rowcount != 1:
                 raise DelegatedWorkConflict("delegated outcome commit raced")
-            attention = loaded.attention.model_copy(
-                update={
-                    "state": "completed",
-                    "lease_owner": None,
-                    "lease_expires_at": None,
-                }
-            )
-            payload = attention.model_dump(mode="json")
-            attention_update = connection.execute(
-                sa.update(attention_items)
-                .where(
-                    attention_items.c.tenant_id == self._scope_value.tenant_id,
-                    attention_items.c.installation_id
-                    == self._scope_value.installation_id,
-                    attention_items.c.attention_id == call.attention_id,
-                    attention_items.c.state == "claimed",
-                    attention_items.c.lease_owner == loaded.attention.lease_owner,
-                )
-                .values(
-                    state="completed",
-                    lease_owner=None,
-                    lease_expires_at=None,
-                    payload=payload,
-                    payload_sha256=bytes.fromhex(canonical_sha256(payload)),
-                    revision=attention_items.c.revision + 1,
-                    updated_at=now,
-                )
-            )
-            if attention_update.rowcount != 1:
-                raise DelegatedWorkConflict("delegated attention outcome raced")
             return self._load_locked(connection, call.work_id)
 
     def _mark_needs_help(
@@ -1185,73 +972,23 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 state="needs_help",
                 error_code=error_code,
                 error_fingerprint=bytes.fromhex(fingerprint),
+                lease_owner=None,
+                lease_expires_at=None,
                 completed_at=now,
                 revision=work.revision + 1,
                 updated_at=now,
             )
         )
-        attention = work.attention.model_copy(
-            update={
-                "state": "dead_letter",
-                "lease_owner": None,
-                "lease_expires_at": None,
-            }
-        )
-        payload = attention.model_dump(mode="json")
         if work_result.rowcount != 1:
             raise DelegatedWorkConflict("delegated work help transition raced")
-        attention_result = connection.execute(
-            sa.update(attention_items)
-            .where(
-                attention_items.c.tenant_id == self._scope_value.tenant_id,
-                attention_items.c.installation_id == self._scope_value.installation_id,
-                attention_items.c.attention_id == UUID(work.attention.attention_id),
-            )
-            .values(
-                state="dead_letter",
-                lease_owner=None,
-                lease_expires_at=None,
-                payload=payload,
-                payload_sha256=bytes.fromhex(canonical_sha256(payload)),
-                revision=attention_items.c.revision + 1,
-                updated_at=now,
-            )
-        )
-        if attention_result.rowcount != 1:
-            raise DelegatedWorkConflict("delegated attention help transition raced")
 
-    def _validate_authority(
+    def _validate_owner_binding(
         self,
         connection: sa.Connection,
         *,
-        storage_episode_id: UUID,
-        generation: int,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
     ) -> None:
-        generation_exists = connection.scalar(
-            sa.select(episode_generations.c.episode_id)
-            .where(
-                episode_generations.c.tenant_id == self._scope_value.tenant_id,
-                episode_generations.c.installation_id
-                == self._scope_value.installation_id,
-                episode_generations.c.episode_id == storage_episode_id,
-                episode_generations.c.generation == generation,
-                episode_generations.c.state == "current",
-            )
-            .with_for_update(read=True)
-        )
-        episode_owner = connection.scalar(
-            sa.select(episodes.c.principal_id)
-            .where(
-                episodes.c.tenant_id == self._scope_value.tenant_id,
-                episodes.c.installation_id == self._scope_value.installation_id,
-                episodes.c.episode_id == storage_episode_id,
-                episodes.c.current_generation == generation,
-                episodes.c.state.not_in(("completed", "cancelled")),
-            )
-            .with_for_update(read=True)
-        )
         binding_owner = connection.scalar(
             sa.select(principal_bindings.c.principal_id)
             .where(
@@ -1270,33 +1007,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             .with_for_update(read=True)
         )
-        if (
-            not generation_exists
-            or episode_owner != owner_principal_id
-            or binding_owner != owner_principal_id
-            or principal_exists != owner_principal_id
-        ):
-            raise DelegatedWorkConflict("delegated work owner authority is not current")
-
-    def _validate_owner_binding(
-        self,
-        connection: sa.Connection,
-        *,
-        owner_principal_id: UUID,
-        principal_binding_id: UUID,
-    ) -> None:
-        binding_owner = connection.scalar(
-            sa.select(principal_bindings.c.principal_id)
-            .where(
-                principal_bindings.c.tenant_id == self._scope_value.tenant_id,
-                principal_bindings.c.principal_binding_id == principal_binding_id,
-                principal_bindings.c.principal_id == owner_principal_id,
-                principal_bindings.c.status == "verified",
-            )
-            .with_for_update(read=True)
-        )
-        if binding_owner != owner_principal_id:
-            raise DelegatedWorkStoreError("workboard owner binding is not current")
+        if binding_owner != owner_principal_id or principal_exists != owner_principal_id:
+            raise DelegatedWorkConflict("workboard owner binding is not current")
 
     def _load_locked(
         self, connection: sa.Connection, work_id: str
@@ -1322,23 +1034,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         connection: sa.Connection,
         *,
         work_id: str,
-        attention_id: UUID,
         missing_message: str,
     ) -> StoredDelegatedWork:
-        attention_row = (
-            connection.execute(
-                sa.select(attention_items)
-                .where(
-                    attention_items.c.tenant_id == self._scope_value.tenant_id,
-                    attention_items.c.installation_id
-                    == self._scope_value.installation_id,
-                    attention_items.c.attention_id == attention_id,
-                )
-                .with_for_update()
-            )
-            .mappings()
-            .one_or_none()
-        )
         row = (
             connection.execute(
                 sa.select(delegated_work_runs)
@@ -1353,17 +1050,16 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             .mappings()
             .one_or_none()
         )
-        if attention_row is None or row is None:
+        if row is None:
             raise DelegatedWorkNotFound(missing_message)
-        return self._validated(connection, row, attention_row=attention_row)
+        return self._validated(connection, row)
 
     def _validated(
         self,
         connection: sa.Connection,
         row: sa.RowMapping,
-        *,
-        attention_row: sa.RowMapping | None = None,
     ) -> StoredDelegatedWork:
+        del connection
         try:
             spec = DelegatedWorkSpec.model_validate(row.spec_payload)
             if bytes(row.spec_sha256).hex() != canonical_sha256(row.spec_payload):
@@ -1390,35 +1086,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 row.usage_sha256
             ).hex() != canonical_sha256(row.usage_payload):
                 raise ValueError("usage hash differs")
-            if attention_row is None:
-                attention_row = (
-                    connection.execute(
-                        sa.select(attention_items).where(
-                            attention_items.c.tenant_id
-                            == self._scope_value.tenant_id,
-                            attention_items.c.installation_id
-                            == self._scope_value.installation_id,
-                            attention_items.c.attention_id == row.attention_id,
-                        )
-                    )
-                    .mappings()
-                    .one()
-                )
-            attention = AttentionWakeV2.model_validate(attention_row.payload)
-            if bytes(attention_row.payload_sha256).hex() != canonical_sha256(
-                attention_row.payload
-            ):
-                raise ValueError("attention hash differs")
             if (
-                attention.attention_id != str(row.attention_id)
-                or attention.kind != "delegated_work"
-                or attention.episode_id != spec.episode_id
-                or attention.generation != spec.generation
-                or attention.state != attention_row.state
-                or attention.lease_owner != attention_row.lease_owner
-                or _parse_optional_timestamp(attention.lease_expires_at)
-                != attention_row.lease_expires_at
-                or row.work_id != spec.work_id
+                row.work_id != spec.work_id
                 or row.storage_episode_id != UUID(spec.episode_id)
                 or row.generation != spec.generation
                 or str(row.owner_principal_id) != spec.owner_principal_id
@@ -1429,23 +1098,23 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 or (result is not None and result.spec_sha256 != spec.sha256)
                 or (result is not None and result.call_id != row.call_id)
                 or (result is not None and usage != result.usage)
-                or attention_row.retention_policy_id != row.retention_policy_id
-                or attention_row.retention_until != row.retention_until
-                or not _states_agree(row.state, attention_row.state)
+                or (row.lease_owner is None) != (row.lease_expires_at is None)
+                or (row.state not in {"admitted", "call_started"}
+                    and row.lease_owner is not None)
             ):
                 raise ValueError("delegated work bindings differ")
         except (KeyError, TypeError, ValueError, sa.exc.NoResultFound) as error:
             raise DelegatedWorkStoreError("stored delegated work is corrupt") from error
         return StoredDelegatedWork(
             spec=spec,
-            attention=attention,
-            attention_revision=int(attention_row.revision),
             storage_episode_id=row.storage_episode_id,
             title=row.title,
             summary=row.summary,
             worker_role=row.worker_role,
             state=row.state,
             claim_count=int(row.claim_count),
+            lease_owner=row.lease_owner,
+            lease_expires_at=row.lease_expires_at,
             call_id=row.call_id,
             result=result,
             usage=usage,
@@ -1475,10 +1144,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         )
         state = work.state
         if state == "admitted":
-            active = (
-                work.attention.state == "claimed"
-                and _parse_optional_timestamp(work.attention.lease_expires_at) >= now
-            )
+            active = work.lease_expires_at is not None and work.lease_expires_at >= now
             column = "doing" if active else "todo"
             health = "active" if active else "waiting"
             result_status = "not_received"
@@ -1488,8 +1154,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 else "De taak wacht op een beschikbare worker."
             )
         elif state == "call_started":
-            lease = _parse_optional_timestamp(work.attention.lease_expires_at)
-            active = lease is not None and lease >= now
+            active = work.lease_expires_at is not None and work.lease_expires_at >= now
             column = "doing" if active else "attention"
             health = "active" if active else "contact_lost"
             result_status = "not_received" if active else "ambiguous"
@@ -1615,28 +1280,10 @@ def _validate_usage(
             raise DelegatedWorkConflict(f"delegated {label} budget exceeded")
 
 
-def _states_agree(work_state: str, attention_state: str) -> bool:
-    allowed = {
-        "admitted": {"pending", "claimed"},
-        "call_started": {"claimed"},
-        "succeeded": {"completed"},
-        "verified": {"completed"},
-        "failed": {"completed"},
-        "ambiguous": {"completed"},
-        "needs_help": {"dead_letter"},
-        "stopped": {"completed"},
-    }
-    return attention_state in allowed.get(work_state, set())
-
-
 def _whole_second(value: datetime, *, label: str) -> datetime:
     if value.tzinfo is None or value.utcoffset() is None or value.microsecond:
         raise ValueError(f"{label} must be an aware whole-second timestamp")
     return value.astimezone(UTC)
-
-
-def _parse_optional_timestamp(value: str | None) -> datetime | None:
-    return None if value is None else _parse_timestamp(value)
 
 
 __all__ = [

@@ -105,8 +105,6 @@ DELEGATED_WORK_ACTIVATION_CONFIGURATION = (
     "EVA_DELEGATED_WORK_IMAGE",
     "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
     "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
-    "EVA_DELEGATED_WORK_EPISODE_ID",
-    "EVA_DELEGATED_WORK_GENERATION",
 )
 
 # This value is derived from the exact private environment snapshot.  Keeping it
@@ -326,12 +324,8 @@ def _validate_configuration(values: dict[str, str]) -> None:
         try:
             UUID(delegated["EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID"])
             UUID(delegated["EVA_DELEGATED_WORK_OWNER_BINDING_ID"])
-            UUID(delegated["EVA_DELEGATED_WORK_EPISODE_ID"])
-            delegated_generation = int(delegated["EVA_DELEGATED_WORK_GENERATION"])
         except ValueError as error:
             raise RuntimeError("delegated work owner authority is invalid") from error
-        if not 1 <= delegated_generation <= 2_147_483_647:
-            raise RuntimeError("delegated work owner authority is invalid")
 
     if values["EVA_B_COMPOSE_PROJECT"] != "eva2-b-live":
         raise RuntimeError("EVA_B_COMPOSE_PROJECT must be exactly eva2-b-live")

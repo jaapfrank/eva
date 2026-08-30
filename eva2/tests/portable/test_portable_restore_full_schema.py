@@ -301,7 +301,7 @@ def _synthetic_memory_command(
 def test_fresh_full_schema_admits_the_complete_empty_portable_archive() -> None:
     sqlalchemy = pytest.importorskip("sqlalchemy")
     receipt = install_schema(POSTGRES_DSN, alembic_ini=ROOT / "alembic.ini")
-    assert receipt.final_revision == "4e_0006_memory_outbox_erasure"
+    assert receipt.final_revision == "4e_0007_delegated_private"
     records = {str(spec["table"]): [] for spec in CANONICAL_EXPORT_SPECS}
     engine = sqlalchemy.create_engine(POSTGRES_DSN, pool_pre_ping=False)
     try:

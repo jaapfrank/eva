@@ -42,7 +42,7 @@ _EXPECTED_INPUT_PATHS_SHA256 = (
     "acdfd5756991754118801f0d9a0a8f3db8f6d652aa8224121ebb40ee0d2e1110"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "dd68a5f76047cff598791688ef530ea8d508d71a6883cc7b9277efca2c0e9b08"
+    "2615f4fefccd35cee4aa76c69451759c27b399b82ce874ca6a7d63027efdb375"
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
@@ -209,6 +209,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0006_memory_outbox_erasure",
         "4e_0005_conversation_erasure",
         "migrations/versions/4e_0006_memory_outbox_erasure.py",
+    ),
+    (
+        "4e_0007_delegated_private",
+        "4e_0006_memory_outbox_erasure",
+        "migrations/versions/4e_0007_delegated_work_private_context.py",
     ),
 )
 

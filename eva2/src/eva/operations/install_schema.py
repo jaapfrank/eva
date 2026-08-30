@@ -52,8 +52,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4e_0004_delegated_work_stop",
     "4e_0005_conversation_erasure",
     "4e_0006_memory_outbox_erasure",
+    "4e_0007_delegated_private",
 }
-_HEAD_REVISION = "4e_0006_memory_outbox_erasure"
+_HEAD_REVISION = "4e_0007_delegated_private"
 
 
 @dataclass(frozen=True, slots=True)

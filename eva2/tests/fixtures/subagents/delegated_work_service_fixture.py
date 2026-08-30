@@ -16,7 +16,6 @@ from eva.adapters.postgres.delegated_work import (
     DelegatedWorkReleaseSelector,
     PostgresDelegatedWorkStore,
 )
-from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.subagents.tool_free_child import (
     OUTPUT_SCHEMA_SHA256,
     ClosedModelRegistry,
@@ -129,7 +128,7 @@ def _run_paused_after_claim(
         store = _PauseAfterClaimStore(
             PostgresDelegatedWorkStore(
                 engine,
-                TimelineScope(settings.tenant_id, settings.installation_id),
+                settings.scope,
             ),
             Path(_required("EVA_TEST_AFTER_CLAIM_MARKER")),
         )
