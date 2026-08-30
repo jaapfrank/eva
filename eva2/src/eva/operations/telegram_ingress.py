@@ -21,7 +21,7 @@ from eva.adapters.postgres.telegram_group_consent import (
 from eva.adapters.postgres.telegram_pairing import PostgresTelegramPairingStore
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
-from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.application.telegram_ingress import (
     TelegramIngressWorker,
     TelegramPrincipalBinding,
@@ -104,7 +104,11 @@ def _delegated_commands(
     if not all(values.values()):
         raise RuntimeError("delegated Telegram command authority is incomplete")
     try:
-        scope = TimelineScope(UUID(tenant_id), UUID(installation_id))
+        scope = external_timeline_scope(
+            tenant_id,
+            installation_id,
+            "delegated Telegram command scope is required",
+        )
         owner = UUID(values["EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID"])
         binding = UUID(values["EVA_DELEGATED_WORK_OWNER_BINDING_ID"])
         episode = UUID(values["EVA_DELEGATED_WORK_EPISODE_ID"])

@@ -10,7 +10,7 @@ import json
 import os
 from pathlib import Path
 from typing import TYPE_CHECKING
-from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
+from uuid import UUID, uuid4
 
 import sqlalchemy as sa
 from fastapi import FastAPI
@@ -73,7 +73,10 @@ from eva.adapters.postgres.telegram_group_consent import (
 from eva.adapters.postgres.telegram_group_observation import (
     PostgresTelegramGroupObservationStore,
 )
-from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.postgres.operational_timeline import (
+    TimelineScope,
+    external_timeline_scope,
+)
 from eva.bootstrap.action_chain_effect_controls import (
     DashboardActionChainEffectController,
     DashboardActionChainEffectStop,
@@ -1829,12 +1832,10 @@ class PostgresHindsightMemoryRuntime:
     def _journal(self, turn: ConversationTurn) -> PostgresConversationJournal:
         return PostgresConversationJournal(
             self._engine,
-            TimelineScope(
-                tenant_id=uuid5(NAMESPACE_URL, f"eva2:{turn.tenant_id}"),
-                installation_id=uuid5(
-                    NAMESPACE_URL,
-                    f"eva2:{turn.tenant_id}:{turn.installation_id}",
-                ),
+            external_timeline_scope(
+                turn.tenant_id,
+                turn.installation_id,
+                "conversation journal scope is required",
             ),
         )
 
@@ -2105,14 +2106,10 @@ def create_runtime_app() -> FastAPI:
         or settings.background_installation_id is None
         else PostgresConversationJournal(
             engine,
-            TimelineScope(
-                tenant_id=uuid5(NAMESPACE_URL, f"eva2:{settings.background_tenant_id}"),
-                installation_id=uuid5(
-                    NAMESPACE_URL,
-                    "eva2:"
-                    f"{settings.background_tenant_id}:"
-                    f"{settings.background_installation_id}",
-                ),
+            external_timeline_scope(
+                settings.background_tenant_id,
+                settings.background_installation_id,
+                "conversation erasure scope is required",
             ),
         )
     )

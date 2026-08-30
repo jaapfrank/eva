@@ -16,8 +16,6 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
-from uuid import UUID
-
 import sqlalchemy as sa
 
 from eva.adapters.postgres.delegated_work import (
@@ -25,7 +23,10 @@ from eva.adapters.postgres.delegated_work import (
     PostgresDelegatedWorkStore,
 )
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
-from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.postgres.operational_timeline import (
+    TimelineScope,
+    external_timeline_scope,
+)
 from eva.bootstrap.secrets import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
@@ -65,8 +66,7 @@ class DelegatedWorkServiceSettings:
     """Non-secret process settings plus one private DSN-file reference."""
 
     database_dsn_file: str
-    tenant_id: UUID
-    installation_id: UUID
+    scope: TimelineScope
     worker_id: str
     poll_interval_seconds: float = 0.25
 
@@ -95,15 +95,17 @@ class DelegatedWorkServiceSettings:
             return value
 
         try:
-            tenant_id = UUID(required("EVA_RUNTIME_TENANT_ID"))
-            installation_id = UUID(required("EVA_RUNTIME_INSTALLATION_ID"))
+            scope = external_timeline_scope(
+                required("EVA_RUNTIME_TENANT_ID"),
+                required("EVA_RUNTIME_INSTALLATION_ID"),
+                "delegated worker scope is required",
+            )
             interval = float(values.get("EVA_DELEGATED_WORK_POLL_SECONDS", "0.25"))
         except ValueError as error:
             raise RuntimeError("delegated worker process settings are invalid") from error
         return cls(
             database_dsn_file=required("EVA_DATABASE_DSN_FILE"),
-            tenant_id=tenant_id,
-            installation_id=installation_id,
+            scope=scope,
             worker_id=required("EVA_DELEGATED_WORKER_ID"),
             poll_interval_seconds=interval,
         )
@@ -231,7 +233,7 @@ async def serve_delegated_work_service(
         worker = DelegatedWorkWorker(
             PostgresDelegatedWorkStore(
                 engine,
-                TimelineScope(selected.tenant_id, selected.installation_id),
+                selected.scope,
             ),
             runner,
             worker_id=selected.worker_id,

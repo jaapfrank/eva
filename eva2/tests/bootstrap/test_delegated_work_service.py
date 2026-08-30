@@ -3,9 +3,8 @@ from __future__ import annotations
 import asyncio
 from contextlib import asynccontextmanager
 from pathlib import Path
-from uuid import UUID
-
 import pytest
+from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
 from eva.bootstrap import delegated_work_service as service_module
 from eva.bootstrap.delegated_work_service import (
@@ -39,9 +38,10 @@ def test_settings_are_closed_and_dsn_is_only_a_file_reference() -> None:
     }
     settings = DelegatedWorkServiceSettings.from_environment(environment)
     assert settings.database_dsn_file == "/run/eva/database-dsn"
-    assert settings.tenant_id == UUID(environment["EVA_RUNTIME_TENANT_ID"])
-    assert settings.installation_id == UUID(
-        environment["EVA_RUNTIME_INSTALLATION_ID"]
+    assert settings.scope == external_timeline_scope(
+        environment["EVA_RUNTIME_TENANT_ID"],
+        environment["EVA_RUNTIME_INSTALLATION_ID"],
+        "scope required",
     )
     assert settings.worker_id == "subagent-worker:one"
     assert settings.poll_interval_seconds == 0.2
@@ -50,7 +50,7 @@ def test_settings_are_closed_and_dsn_is_only_a_file_reference() -> None:
         environment | {"EVA_DATABASE_DSN_FILE": "postgresql://inline"},
         environment | {"EVA_DATABASE_DSN": "postgresql://inline"},
         environment | {"EVA_DELEGATED_WORK_POLL_SECONDS": "0.01"},
-        environment | {"EVA_RUNTIME_TENANT_ID": "invalid"},
+        environment | {"EVA_RUNTIME_TENANT_ID": ""},
         {
             key: value
             for key, value in environment.items()
