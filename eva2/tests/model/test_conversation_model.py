@@ -723,10 +723,16 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     assert "nieuwste betrouwbare bron" in requests[0]["instructions"]
     assert "Duurzame stijlspiegel" in requests[0]["instructions"]
     assert "Actief procedureel IdentityPack" in requests[0]["instructions"]
+    assert requests[0]["instructions"].count("Actief procedureel IdentityPack") == 1
     assert (
         "warm, practical, curious, concise, slightly_stubborn"
         in (requests[0]["instructions"])
     )
+    assert "temperament en humor als zichtbaar gedrag" in requests[0]["instructions"]
+    assert "één lichte, droge, speelse formulering" in requests[0]["instructions"]
+    assert "over de situatie of een voorwerp" in requests[0]["instructions"]
+    assert "Forceer nooit humor bij verdriet, gevaar of angst" in requests[0]["instructions"]
+    assert "concreet, beredeneerd eigen standpunt" in requests[0]["instructions"]
     assert "claim alleen wat aantoonbaar is gelukt" in requests[0]["instructions"]
     assert "Jaap wil korte, directe en warme antwoorden" in requests[0]["instructions"]
     assert "kopieer geen zinnen, typefouten of boosheid" in requests[0]["instructions"]

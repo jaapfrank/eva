@@ -38,6 +38,11 @@
   ],
   "evidence_catalog": [
     {
+      "id": "current-four-way-c04-development-2026-08-30",
+      "path": "eva2/evidence/product/current-four-way-c04-development-2026-08-30.json",
+      "sha256": "834b327c96f4baed8a036563c30fd0232adc76b1b015f3d528ddd4132acca96c"
+    },
+    {
       "id": "current-four-way-c01-development-2026-08-30",
       "path": "eva2/evidence/product/current-four-way-c01-development-2026-08-30.json",
       "sha256": "44e70d4ad35566583e92bb26a80bff9ec805cf65544cd5a95b36d26d2f29993f"

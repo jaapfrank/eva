@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 18:09 CEST
+Laatst bijgewerkt: 30 augustus 2026, 18:27 CEST
 
 ## Zo lees je dit bord
 
@@ -18,20 +18,23 @@ De huidige vergelijkingen zijn gebonden aan OpenClaw `v2026.7.1-2`, Hermes
 vergelijking opnieuw geel.
 
 **Eerlijke conclusie nu:** Eva2 is al een bruikbare, veilige kandidaat naast
-Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. De eerste
-nieuwe gelijke vierwegvergelijking is afgerond: alle vier slaagden inhoudelijk,
-Eva was het snelst en bondigst, maar Hermes kreeg voor dit ene anonieme antwoord
-de hoogste inhoudsvoorkeur. Eén vraag telt dus niet als algemene winst.
+Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. Twee
+nieuwe gelijke gesprekstests zijn uitgevoerd. Eva was beide keren het snelst en
+bondigst. Hermes won anoniem de eerste formulering; OpenClaw de tweede. Eva werd
+in de tweede test vierde en haar humor was niet merkbaar. Een geïsoleerde
+kandidaatcorrectie liet daarna wel lichte humor zien, maar is nog niet live en
+telt dus nog niet als gewonnen vergelijking.
 
 ## Praten met Eva
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Gewoon privé praten | ✅ Via `/eva2` op Telegram met een echt model | 📘 Meerdere chatkanalen | 📘 Meerdere chatkanalen | 📘 Eigen chat en webinterface |
-| Een herkenbare, menselijke persoonlijkheid hebben | ✅ Warme, jonge, nieuwsgierige, grappige en eigenwijze Eva-identiteit | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
+| Een herkenbare, menselijke persoonlijkheid hebben | 🟡 Warme, jonge en eigenwijze identiteit staat; in C04 was haar humor nog niet zichtbaar. Een geïsoleerde correctie werkt, maar is nog niet live of blind herbeoordeeld | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
 | Het gesprek na een herstart voortzetten | ✅ Gesprek blijft in PostgreSQL staan | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest |
 | Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
 | Dezelfde zichtbare vraag met hetzelfde model beantwoorden | ✅ C01 groen; 3,118 s en 77 woorden | ✅ C01 groen; 15,738 s en 130 woorden | ✅ C01 groen; 35,875 s en 153 woorden | ✅ C01 groen; 17,540 s en 119 woorden |
+| Warm maar zelfstandig tegenspreken in een alledaagse situatie | 🟡 C04 inhoudelijk groen en 2,368 s, maar anoniem vierde en zonder herkenbare humor | ✅ C04 groen; anoniem eerste | ✅ C04 groen; anoniem tweede | ✅ C04 groen; anoniem derde |
 
 ## Mensen, groepen, geheugen en privacy
 
@@ -44,22 +47,27 @@ de hoogste inhoudsvoorkeur. Eén vraag telt dus niet als algemene winst.
 | Laten zien, corrigeren en vergeten wat Eva weet | 🟡 Persoonsgebonden wissen werkt; een compleet eenvoudig geheugenscherm ontbreekt | ⚪ Niet gelijk getest | 📘 Geheugenbeheer beschreven | 📘 Geheugenbeheer beschreven |
 | Oud Eva1-geheugen veilig meenemen | ❌ Nog niet volledig overgezet | Niet van toepassing | Niet van toepassing | Niet van toepassing |
 
-## Home Assistant en het huis
+## Tools gebruiken — Home Assistant is één voorbeeld
+
+Home Assistant is geen onderdeel van Eva's kern en geen unique selling point.
+Het is één verwisselbare externe toolprovider waarmee de algemene Eva-route nu
+praktisch is getest. Dezelfde kernroute moet later ook e-mail, agenda, browser,
+bestanden en nieuwe MCP-tools kunnen kiezen, begrenzen, uitvoeren en controleren.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Begrijpen wat er in huis aan de hand is | ✅ Leest de echte Home Assistant-context via de officiële MCP-route | 📘 Smart-homekoppelingen | 📘 Smart-hometools | 📘 Via tools/MCP mogelijk |
-| Gewone apparaten bedienen zonder aparte code per soort | ✅ Algemene MCP-route; Jaap kan de bereikbare lampen bedienen | 📘 Algemene tools | 📘 Algemene tools | 📘 Algemene tools |
-| Bij twijfel vragen welk apparaat wordt bedoeld | ✅ Eva gokt niet bij een dubbele naam | ⚪ Niet gelijk in ons huis getest | ⚪ Niet gelijk in ons huis getest | ⚪ Niet gelijk in ons huis getest |
-| Controleren of een opdracht echt gelukt is | ✅ Aparte readback; herhalen bedient niet dubbel | ⚪ Geen gelijke fysieke proef | ⚪ Geen gelijke fysieke proef | ⚪ Geen gelijke fysieke proef |
-| Zelf een automatisering, integratie of update beheren | 🟡 Eén veilige automatiseringsproef werkt; de algemene beheerroute is nog niet af | 📘 Via tools/skills mogelijk | 📘 Via tools/skills mogelijk | 📘 Via tools/code mogelijk |
-| Voorstel, risico, toestemming en terugrol zelf regelen | 🟡 De bouwstenen bestaan, maar nog niet als één algemene gebruikersroute | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Zelf de passende beschikbare tool kiezen | 🟡 Voor gewone huisvragen kiest Eva de officiële Home Assistant-MCP; nog niet over meerdere soorten tools bewezen | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe MCP-tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Home Assistant-catalogus werkt generiek; de algemene plug-inroute is nog niet compleet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
+| Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
+| Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 
-Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn dus
-geen losse Eva-projecten meer. Het zijn praktijkgevallen voor één algemene
-beheerroute: Eva kiest zelf de onderhouden tool of officiële API, maakt een
-voorstel en terugrol, vraagt alleen toestemming wanneer het risico dat vereist,
-voert uit en controleert het resultaat.
+Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
+Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
+Eva leest de beschikbare documentatie, kiest een onderhouden provider of
+officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
+basis van risico, voert uit en controleert het resultaat.
 
 ## Zelfstandig werk en subagents
 
@@ -91,7 +99,7 @@ voert uit en controleert het resultaat.
 
 Eva gaat hiervoor geen volledig eigen webplatform bouwen. De kandidaat is een
 bestaand adminframework boven Eva's gesaneerde API; Eva houdt alleen de unieke
-schermen voor personen, privacy, bewijs, huisacties en terugrol.
+schermen voor personen, privacy, bewijs, toolacties en terugrol.
 
 ## Configuratie en koppelingen
 
@@ -150,7 +158,7 @@ schermen voor personen, privacy, bewijs, huisacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Home Assistant | Officiële Home Assistant MCP Server; beheer-MCP/API als aanvulling | ✅ Normale bediening live; 🟡 algemene beheerroute niet af |
+| Verwisselbare externe tools | MCP en de officiële API/SDK van de gekozen provider; Home Assistant is alleen de eerste live proefprovider | 🟡 Eén provider live; algemene keuze, uitvoering en controle over meerdere toolsoorten nog niet bewezen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -170,19 +178,19 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 |---|---|
 | Actuele releases en commits vastgezet | ✅ OpenClaw, Hermes en Agent Zero |
 | Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, nul toolcalls | ✅ Alle vier uitgevoerd; alle drie inhoudsgates groen |
-| Antwoorden zonder productnaam laten beoordelen | ✅ Eén antwoordcase: Hermes, OpenClaw, Eva2, Agent Zero; geen algemene ranglijst |
+| Antwoorden zonder productnaam laten beoordelen | ✅ C01: Hermes, OpenClaw, Eva2, Agent Zero. C04: OpenClaw, Hermes, Agent Zero, Eva2. Geen algemene ranglijst |
 | Alle begrijpelijke productonderdelen praktisch vergelijken | ❌ 22 categorieën staan nog op `no_run` |
 | Openbare AgentBench-, GAIA- en OSWorld-score | ❌ Nog niet uitgevoerd |
 | Geldige eindclaim “Eva is beter” | ❌ Nog niet toegestaan |
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, huisactie,
+1. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. De algemene Home Assistant-beheerroute afmaken; voorbeelden als Tuya of een
-   update worden daarna door Eva zelf gepland, uitgevoerd en gecontroleerd.
+3. Eén algemene toolroute afmaken en met verschillende providers beproeven;
+   Home Assistant, Tuya en updates zijn alleen testgevallen van die route.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
@@ -196,5 +204,6 @@ Technische details en bewijs staan in
 [TECHNISCHE_PRODUCTGATES.md](TECHNISCHE_PRODUCTGATES.md) en
 [evidence/](evidence/).
 
-De eerste actuele gelijke vierwegproef staat in
-[current-four-way-c01-development-2026-08-30.json](evidence/product/current-four-way-c01-development-2026-08-30.json).
+De eerste twee actuele gelijke vierwegproeven staan in
+[C01](evidence/product/current-four-way-c01-development-2026-08-30.json) en
+[C04](evidence/product/current-four-way-c04-development-2026-08-30.json).

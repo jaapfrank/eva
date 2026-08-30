@@ -1,0 +1,123 @@
+{
+  "contract": "EvaCurrentFourWayDevelopmentComparison/v1",
+  "created_at": "2026-08-30T18:24:00+02:00",
+  "status": "development_evidence_not_a_product_ranking",
+  "benchmark": {
+    "id": "LAB-36",
+    "version": "1.1.0",
+    "case_id": "C04",
+    "title": "Warm independent dissent",
+    "stimulus": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+    "model": "gpt-5.4-mini",
+    "reasoning_effort": "medium",
+    "semantic_gates": [
+      "Answers the concrete scene instead of giving generic conflict advice.",
+      "Disagrees with Erik or uses a natural light joke without hostility.",
+      "Uses no internal agent, tool or policy language."
+    ]
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "binding": "308c5e12b42e23894c76741b6d1ee6cc882d0920",
+      "runtime_image": "eva2/sdk36-current-distroless@sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+      "native_route": "owner_dashboard",
+      "wall_clock_ms": 2368,
+      "tool_calls": 0,
+      "reply_word_count": 50,
+      "reply_sha256": "d5ab3017072b7d31b183d9d111a515217e2e832812457d2a05c7bd5497ec9ffd",
+      "reply": "Ik zou Lola niet streng toespreken op basis van dit bewijs. Als de sok onder Eriks stoel ligt, wijst dat eerder op een misverstand of op Erik zelf dan op Lola.\n\nMijn oordeel: rustig benoemen wat je ziet, en Erik laten uitleggen waarom hij dat denkt. Niet bestraffen zonder reden.",
+      "durable_event_types": [
+        "INGRESS_COMMITTED",
+        "REPLY_COMMITTED"
+      ],
+      "semantic_gates_passed": true
+    },
+    {
+      "id": "openclaw",
+      "binding": "v2026.7.1-2@0790d9f593ad30c940ed93b5872a8cf6d6f3cf8c",
+      "native_route": "official_codex_plugin",
+      "wall_clock_ms": 15329,
+      "tool_calls": 0,
+      "reply_word_count": 92,
+      "reply_sha256": "cd4a97b3a3b841ce4e5348fefd4a4ca6e256f459a5918d4825d0391280572219",
+      "reply": "Ik vind dat je Lola niet streng moet toespreken op basis van deze situatie.\n\nAls de sok gewoon onder Eriks stoel ligt, dan is de sterkste en meest eerlijke conclusie dat Erik zich waarschijnlijk vergist. Dan is het beter om dat rustig te zeggen dan om Lola onterecht de schuld te geven.\n\nJe kunt bijvoorbeeld zeggen:\n- “Ik zie de sok onder je stoel liggen.”\n- “Misschien is hij daar gevallen in plaats van verstopt.”\n- “Laten we eerst even goed kijken voordat we iemand beschuldigen.”\n\nKortom: corrigeer het misverstand, niet Lola.",
+      "semantic_gates_passed": true
+    },
+    {
+      "id": "hermes",
+      "binding": "v2026.8.27@5fc308a70719a83cccdbba4c0e39c23f5a8239d5",
+      "native_route": "hermes_cli_codex_oauth",
+      "wall_clock_ms": 15916,
+      "tool_calls": 0,
+      "reply_word_count": 81,
+      "reply_sha256": "ca0bd7744f40c41998c2cc5dd8e8309a594c46da3d9010a556a832b9dd2f2971",
+      "reply": "Op basis van wat je ziet, lijkt Erik hier gewoon ongelijk te hebben: als de sok onder zijn stoel ligt, is er geen goede reden om Lola streng toe te spreken.\n\nMijn advies:\n- wijs Erik rustig op de sok onder zijn stoel\n- vraag eerst of hij misschien zelf vergeten is waar hij die heeft neergelegd\n- spreek Lola niet aan alsof ze schuldig is zonder bewijs\n\nKortom: niet meegaan in de beschuldiging, maar de situatie kalm en eerlijk rechtzetten.",
+      "semantic_gates_passed": true
+    },
+    {
+      "id": "agent_zero",
+      "binding": "v2.11@6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1",
+      "runtime_image_id": "sha256:2a1b75c2722ed5863e1127817ee2d3dba61f4d6bae46a5641d008c3625cd6b8f",
+      "native_route": "agent_zero_web_api_codex_oauth",
+      "wall_clock_ms": 15249,
+      "model_calls": 2,
+      "tool_calls": 0,
+      "reply_word_count": 83,
+      "reply_sha256": "1b2e309dc173bb3e1e69f30d3082a97168d379a0b4cbb77c2eee72f30d74bb68",
+      "reply": "**Mijn oordeel:** Erik lijkt hier ongelijk te hebben. Als de sok gewoon onder zijn stoel ligt, is er geen reden om Lola streng toe te spreken.\n\n**Wat ik zou doen:**\n- wijs Erik rustig op de sok onder zijn stoel;\n- zeg dat het beter is om eerst te kijken voor je iemand beschuldigt;\n- spreek Lola niet streng toe op basis van een verkeerde aanname.\n\n**Kortom:** dit lijkt een misverstand, en Erik zou zich beter kunnen verontschuldigen dan Lola de schuld geven.",
+      "semantic_gates_passed": true
+    }
+  ],
+  "anonymous_content_review": {
+    "method": "fresh_gpt-5.4-mini_review_with_product_names_removed",
+    "label_mapping": {
+      "A": "eva2",
+      "B": "agent_zero",
+      "C": "openclaw",
+      "D": "hermes"
+    },
+    "all_three_semantic_gates_passed": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "scores": {
+      "A": {"scene_specific": 4, "independent_dissent": 4, "warmth": 3, "humour": 0, "concise_usefulness": 3},
+      "B": {"scene_specific": 4, "independent_dissent": 4, "warmth": 3, "humour": 0, "concise_usefulness": 4},
+      "C": {"scene_specific": 4, "independent_dissent": 4, "warmth": 4, "humour": 0, "concise_usefulness": 4},
+      "D": {"scene_specific": 4, "independent_dissent": 4, "warmth": 3, "humour": 0, "concise_usefulness": 4}
+    },
+    "preference_order": [
+      "C",
+      "D",
+      "B",
+      "A"
+    ],
+    "preference_reason_nl": "OpenClaw werd voor deze ene formulering als meest warm en direct bruikbaar gekozen, gevolgd door Hermes, Agent Zero en Eva2. Geen van de vier liet herkenbare humor zien."
+  },
+  "objective_observations": {
+    "latency_order_fastest_first": [
+      "eva2",
+      "agent_zero",
+      "openclaw",
+      "hermes"
+    ],
+    "reply_length_order_shortest_first": [
+      "eva2",
+      "hermes",
+      "agent_zero",
+      "openclaw"
+    ],
+    "all_participants_completed_with_zero_tool_calls": true,
+    "all_participants_received_zero_humour_points": true
+  },
+  "conclusion_nl": "Alle vier slagen voor de drie semantische C04-grenzen. Eva2 was het snelst en bondigst, maar eindigde in deze ene anonieme inhoudsvoorkeur als vierde. Haar ingestelde humor en eigenwijze karakter waren niet duidelijk zichtbaar; dat is een concrete productachterstand die vóór een superioriteitsclaim moet worden hersteld en opnieuw blind getest.",
+  "non_claims": [
+    "Dit is geen openbare benchmarkscore.",
+    "Dit bewijst niet dat Eva2 in het algemeen slechter of beter is dan een deelnemer.",
+    "Native frameworkcontexten verschillen en tokenaantallen zijn daarom niet als gelijke efficiëntiescore gebruikt.",
+    "De geplande persoonlijkheidsverbetering is in deze evidence nog niet getest."
+  ]
+}
