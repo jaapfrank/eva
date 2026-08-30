@@ -1,0 +1,72 @@
+{
+  "contract": "EvaPerformanceComplexityPc03FastMemoryCandidateReceipt/v1",
+  "createdAt": "2026-08-30T03:14:07+02:00",
+  "source": {
+    "commit": "54c49a065bc29de0bd0f09f407ae275b1ccf975a",
+    "conversationApplicationSha256": "bee53100581e8143d432f25c1e9a9e5249f11b4c64747650b0f53412aa8f9f4c",
+    "conversationModelSha256": "776dcd00d0648633b3e03d3d0f2b0ce31d1a615d6fb3adabef77d9376650be71",
+    "hindsightAdapterSha256": "d242c48b422c612b744edb11016f64947c2a324cb35fd3a944cc4f71f2165bf1"
+  },
+  "candidateImage": {
+    "id": "sha256:7a3715b1a9c76696d333c0b84c5d6ca76281c7761ea46fb0eaa7bcb738d2a91c",
+    "sizeBytes": 85454386,
+    "networkUsedDuringBuild": false,
+    "criticalFindings": 0,
+    "highFindings": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 119,
+    "lint": "passed",
+    "productPhysicalLines": 74790,
+    "maximumProductPhysicalLines": 75000
+  },
+  "ordinaryVisibleStream": {
+    "turns": 20,
+    "successfulTurns": 20,
+    "failedTurns": 0,
+    "replyExact": "SNEL",
+    "firstContentMilliseconds": [1351, 954, 950, 1069, 986, 993, 1393, 1010, 1031, 970, 916, 1006, 994, 965, 957, 863, 990, 1255, 942, 1092],
+    "completeMilliseconds": [1362, 966, 964, 1083, 999, 1006, 1405, 1022, 1043, 981, 927, 1019, 1005, 976, 968, 875, 1001, 1266, 960, 1103],
+    "firstContentP50Milliseconds": 990,
+    "firstContentP95Milliseconds": 1351,
+    "firstContentMaximumMilliseconds": 1393,
+    "completeP95Milliseconds": 1362,
+    "turnsWithinTwoSeconds": 20,
+    "reportedInputTokensPerTurn": 2799
+  },
+  "memorySearch": {
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "visibleDeltaCount": 1,
+    "fabricatedPreference": false,
+    "reply": "Ik kan dat niet betrouwbaar terugvinden in het zichtbare persoonlijke geheugen. Ik ga het dus niet gokken."
+  },
+  "homeAssistantRead": {
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "visibleDeltaCount": 9,
+    "replyExact": "De spotjes overkapping staan uit.",
+    "deviceMutationRequested": false
+  },
+  "restartContinuity": {
+    "storeReplyExact": "opgeslagen",
+    "candidateCoreRestarted": true,
+    "replyAfterRestartExact": "zilverdistel"
+  },
+  "memoryBoundary": {
+    "privateOrdinaryTurnsUseScopedWarmContext": true,
+    "coldRefreshRunsOutsideFirstContent": true,
+    "explicitMemorySearchUsesExactHindsightRecall": true,
+    "groupsProjectsAndObservationBindingsRemainSynchronous": true,
+    "ownerErasureInvalidatesWarmContext": true,
+    "maximumWarmScopes": 128,
+    "warmSeconds": 30,
+    "maximumConcurrentRefreshes": 4
+  },
+  "nonclaims": [
+    "Twenty turns are development evidence, not the required 200-turn PC05 acceptance run.",
+    "The candidate was not yet promoted when this receipt was created.",
+    "This is not a Windows/WSL reboot, voice, browser or long-duration acceptance receipt."
+  ],
+  "status": "passed_candidate_not_promoted"
+}
