@@ -7,8 +7,9 @@ import json
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "renovate.json"
+EVA2_ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY_ROOT = EVA2_ROOT.parent
+CONFIG = REPOSITORY_ROOT / "renovate.json"
 
 
 def main() -> None:

@@ -160,6 +160,9 @@ Betekenis:
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.
+- ❌ “Beter dan de concurrentie” is daarom nog geen geldige eindclaim. Vanaf
+  nu moet iedere grote release de relevante vergelijking opnieuw doorlopen;
+  een concurrentiewinst van vorige maand is niet genoeg.
 
 ## Wat jij nu al kunt doen
 
@@ -173,16 +176,21 @@ Betekenis:
 ## Eerstvolgende stappen
 
 1. De bewapende Windows/WSL-herstartproef afronden.
-2. De gewone privé-Telegramturn aan Eva's canonieke episode koppelen en daarna
-   de beheerde onderzoekbediening echt in de gebruikersroute beproeven.
-3. Tuya veilig per apparaat naar LocalTuya of Matter omzetten, met één proef en
-   terugrolcontrole voordat de rest volgt.
-4. Veilig wijzigen van bestaande automatiseringen en doelgerichte updates met
-   voorstel, back-upbesluit, toestemming en terugrolcontrole afmaken.
-5. Echte voice met microfoon en speaker afmaken en daarna de zeven dagen lange
-   praktijktest uitvoeren.
+2. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
+   gebruikersroute zetten en de dubbele Eva-code verwijderen.
+3. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
+   beschikbare tools kiezen, een voorstel en terugrol maken, toestemming
+   vragen als het risico dat vereist, uitvoeren en controleren. Tuya,
+   automatiseringen en updates zijn alleen praktijktests van diezelfde route.
+4. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
+   waar de gekozen dependencies hetzelfde werk beter doen.
+5. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
+   bevroren eindkandidaat uitvoeren.
 
 Technische details en bewijs staan in
 [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [TECHNISCHE_PRODUCTGATES.md](TECHNISCHE_PRODUCTGATES.md) en
 [evidence/living-core/](evidence/living-core/).
+
+De actuele keuze en de eerlijke vervanglijst staan kort in
+[OPEN_SOURCE_COMPONENTEN.md](../OPEN_SOURCE_COMPONENTEN.md).

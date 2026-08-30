@@ -10,23 +10,37 @@
   "ignorePaths": [
     "**/build/**",
     "**/evidence/**",
-    "**/vendor/**"
+    "**/vendor/**",
+    "**/.venv/**"
+  ],
+  "enabledManagers": [
+    "docker-compose",
+    "dockerfile",
+    "github-actions",
+    "pep621",
+    "pip_requirements"
   ],
   "packageRules": [
     {
-      "description": "Eva updates are proposals; tests, scan and explicit promotion stay mandatory.",
-      "matchManagers": ["pip_requirements", "pep621", "dockerfile", "docker-compose"],
+      "description": "Eva updates are proposals; validation and A/B promotion stay mandatory.",
+      "matchManagers": [
+        "docker-compose",
+        "dockerfile",
+        "github-actions",
+        "pep621",
+        "pip_requirements"
+      ],
       "automerge": false,
       "labels": ["dependencies", "needs-eva-validation"]
     },
     {
-      "description": "Do not hide a breaking dependency change inside a mixed update.",
+      "description": "Never mix a breaking update into a routine proposal.",
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true,
       "separateMajorMinor": true
     },
     {
-      "description": "A container update must remain content-addressed.",
+      "description": "Container references remain content-addressed.",
       "matchDatasources": ["docker"],
       "pinDigests": true
     }

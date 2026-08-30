@@ -7,10 +7,11 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+REPOSITORY_ROOT = ROOT.parent
 
 
 def test_renovate_config_is_proposal_only_and_content_addressed() -> None:
-    config = json.loads((ROOT / "renovate.json").read_bytes())
+    config = json.loads((REPOSITORY_ROOT / "renovate.json").read_bytes())
 
     assert config["dependencyDashboard"] is True
     assert config["dependencyDashboardApproval"] is True
