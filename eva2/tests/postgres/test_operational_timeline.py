@@ -38,13 +38,18 @@ from eva.adapters.postgres.telegram_group_observation import (
 from eva.adapters.postgres.home_assistant_reads import (
     PostgresHomeAssistantConversationReads,
 )
+from eva.adapters.postgres.external_conversation_tools import (
+    PostgresExternalConversationTools,
+)
 from eva.adapters.postgres.conversation_actions import PostgresConversationActions
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationConflict,
+    ConversationToolPreparation,
     ConversationTurn,
     GroundedReply,
 )
+from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -1358,6 +1363,79 @@ def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
         for event in restarted_timeline.events(f"conversation:{turn.message_id}")
     ] == ["INGRESS_COMMITTED", "PERSONAL_INTENT_LINKED"]
     restarted_engine.dispose()
+
+
+def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[str] = []
+
+    class Planner:
+        action_names = ("reserve_calendar_slot",)
+
+        async def prepare(self, turn, call):  # type: ignore[no-untyped-def]
+            assert turn.principal_id == "jaap"
+            assert call.arguments == {"slot": "2026-08-31T10:00:00+02:00"}
+            return ConversationToolPreparation(
+                tool_name="calendar.reserve",
+                arguments={"slot": call.arguments["slot"]},
+                expected_proof={"reserved": True},
+                receipt_output={"slot": call.arguments["slot"]},
+            )
+
+    class Provider:
+        async def execute(self, request):  # type: ignore[no-untyped-def]
+            calls.append(request.operation_id)
+            return ToolDispatchResult(True, "calendar:42", {"accepted": True})
+
+        async def observe(self, request, dispatch):  # type: ignore[no-untyped-def]
+            assert dispatch is not None and dispatch.accepted
+            return ToolProofObservation(
+                "verified",
+                {"reserved": True},
+                {"source": "calendar_test_provider"},
+            )
+
+    turn = ConversationTurn.private(
+        "external-tool-routing",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:calendar-effect",
+        "Reserveer morgen tien uur",
+        "2026-08-30T19:16:00Z",
+    )
+    call = ConversationActionCall(
+        "call:calendar-effect",
+        "reserve_calendar_slot",
+        {"slot": "2026-08-31T10:00:00+02:00"},
+    )
+    provider = Provider()
+    tools = PostgresExternalConversationTools(timeline_engine, Planner(), provider)
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output == {
+        "contract": "EvaConversationActionReceipt/v1",
+        "durable": True,
+        "proof": {
+            "evidence": {"source": "calendar_test_provider"},
+            "expected": {"reserved": True},
+            "observed": {"reserved": True},
+        },
+        "slot": "2026-08-31T10:00:00+02:00",
+        "status": "verified",
+    }
+    assert len(calls) == 1
+    restarted_tools = PostgresExternalConversationTools(
+        timeline_engine, Planner(), provider
+    )
+    restarted = PostgresConversationActions(
+        timeline_engine, external_tools=(restarted_tools,)
+    )
+    assert restarted.pending(turn) == receipt
+    assert len(calls) == 1
 
 
 def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(

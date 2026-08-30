@@ -417,8 +417,9 @@ class PostgresConversationActions:
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
         if self._home_assistant is not None and self._home_assistant_effects_enabled:
-            actions.append(_HOME_ASSISTANT_ACTION)
-            actions.append(_HOME_ASSISTANT_SWITCH_ACTION)
+            for action_name in (_HOME_ASSISTANT_ACTION, _HOME_ASSISTANT_SWITCH_ACTION):
+                if action_name not in self._external_tool_by_action:
+                    actions.append(action_name)
         actions.extend(self._external_tool_by_action)
         if self._home_assistant_automations is not None:
             actions.append(_HOME_ASSISTANT_AUTOMATION_ACTION)

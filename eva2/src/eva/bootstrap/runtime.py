@@ -57,6 +57,9 @@ from eva.adapters.postgres.conversation_actions import (
 from eva.adapters.postgres.home_assistant_reads import (
     PostgresHomeAssistantConversationReads,
 )
+from eva.adapters.postgres.external_conversation_tools import (
+    PostgresExternalConversationTools,
+)
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
@@ -2090,6 +2093,13 @@ def create_runtime_app() -> FastAPI:
             allow_insecure_http=settings.fanout_allow_insecure_http,
         )
     )
+    effect_allowlist = frozenset(
+        tuple(value.split(":", 1)) for value in settings.home_assistant_effect_allowlist
+    )
+    effect_principals = frozenset(
+        settings.home_assistant_effect_principal_sha256_allowlist
+    )
+    external_provider = home_assistant
     conversation_actions = PostgresConversationActions(
         engine,
         home_assistant,
@@ -2097,13 +2107,8 @@ def create_runtime_app() -> FastAPI:
         home_assistant_admin,
         home_assistant_hacs,
         home_assistant_effects_enabled=settings.home_assistant_effects_enabled,
-        home_assistant_effect_allowlist=frozenset(
-            tuple(value.split(":", 1))
-            for value in settings.home_assistant_effect_allowlist
-        ),
-        home_assistant_effect_principal_sha256_allowlist=frozenset(
-            settings.home_assistant_effect_principal_sha256_allowlist
-        ),
+        home_assistant_effect_allowlist=effect_allowlist,
+        home_assistant_effect_principal_sha256_allowlist=effect_principals,
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
@@ -2116,8 +2121,24 @@ def create_runtime_app() -> FastAPI:
         durable_goal_recipients=settings.durable_goal_recipients,
         external_tools=(
             ()
-            if home_assistant is None
-            else (PostgresHomeAssistantConversationReads(engine, home_assistant),)
+            if external_provider is None
+            else (
+                PostgresHomeAssistantConversationReads(engine, external_provider),
+                *(
+                    (
+                        PostgresExternalConversationTools(
+                            engine,
+                            external_provider.conversation_effect_planner(
+                                allowlist=effect_allowlist,
+                                principal_sha256_allowlist=effect_principals,
+                            ),
+                            external_provider,
+                        ),
+                    )
+                    if settings.home_assistant_effects_enabled
+                    else ()
+                ),
+            )
         ),
     )
     conversation = LivingConversation(memory, model, identity, conversation_actions)

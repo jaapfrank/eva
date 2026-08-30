@@ -70,9 +70,13 @@ modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 910
 Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en
 CamelCase. De eerste verplaatsingen hebben 47 identifiers verwijderd. De vier
 gewone lees/aan-uit-schemas en hun antwoordinstructies komen nu uit de adapter.
-Gewone leestools registreren bovendien via `ConversationExternalToolPort`; de
-centrale dispatcher routeert alleen op de aangeboden toolnaam en kent de
-provider niet. De architectuurchecker legt de resterende aantallen als
+Gewone lees- en effecttools registreren bovendien via
+`ConversationExternalToolPort`; `PostgresExternalConversationTools` bewaart
+providerneutraal toelating, call-start, bewijs en hervatten. De centrale
+dispatcher routeert alleen op de aangeboden toolnaam en kent de provider niet.
+Een synthetische agendareservering doorliep dezelfde PostgreSQL- en readbackroute
+en werd na een nieuwe procesinstantie niet herhaald. De architectuurchecker legt
+de resterende aantallen als
 uitsluitend dalende bovengrens vast: geen nieuw bestand en geen bestaand bestand
 mag meer providerspecifieke kernlogica krijgen. De gate wordt pas inhoudelijk
 groen wanneer alle acht bovengrenzen nul zijn en twee verschillende providers

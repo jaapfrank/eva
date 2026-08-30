@@ -476,6 +476,25 @@ class ConversationToolDescriptor:
 
 
 @dataclass(frozen=True, slots=True)
+class ConversationToolPreparation:
+    """Provider-owned executable command plus safe receipt context."""
+
+    tool_name: str
+    arguments: dict[str, JsonValue]
+    expected_proof: dict[str, JsonValue]
+    receipt_output: dict[str, JsonValue]
+
+    def __post_init__(self) -> None:
+        if not self.tool_name.strip() or len(self.tool_name) > 240:
+            raise ValueError("prepared conversation tool name is invalid")
+        validate_json_value(self.arguments)
+        validate_json_value(self.expected_proof)
+        validate_json_value(self.receipt_output)
+        if set(self.receipt_output) & {"contract", "durable", "proof", "status"}:
+            raise ValueError("prepared conversation receipt uses reserved fields")
+
+
+@dataclass(frozen=True, slots=True)
 class ConversationActionReceipt:
     call: ConversationActionCall
     output: dict[str, JsonValue]
@@ -574,6 +593,17 @@ class ConversationExternalToolPort(Protocol):
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt: ...
+
+
+class ConversationExternalToolPlanner(Protocol):
+    """Provider-side validation and translation for conversation tool calls."""
+
+    @property
+    def action_names(self) -> tuple[str, ...]: ...
+
+    async def prepare(
+        self, turn: ConversationTurn, call: ConversationActionCall
+    ) -> ConversationToolPreparation: ...
 
 
 class LivingConversation:
@@ -825,7 +855,9 @@ __all__ = [
     "ConversationActionPort",
     "ConversationActionReceipt",
     "ConversationExternalToolPort",
+    "ConversationExternalToolPlanner",
     "ConversationToolDescriptor",
+    "ConversationToolPreparation",
     "ConversationClarificationRequired",
     "ConversationConflict",
     "ConversationObservationBinding",

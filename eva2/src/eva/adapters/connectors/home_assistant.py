@@ -6,6 +6,7 @@ import asyncio
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from decimal import Decimal
+import hashlib
 import json
 import re
 import unicodedata
@@ -17,7 +18,14 @@ from eva.adapters.connectors.home_assistant_mcp import (
     HomeAssistantMcpError,
     call_assist_effect,
 )
-from eva.application.conversation import ConversationToolDescriptor
+from eva.application.conversation import (
+    ConversationActionCall,
+    ConversationClarificationRequired,
+    ConversationConflict,
+    ConversationToolDescriptor,
+    ConversationToolPreparation,
+    ConversationTurn,
+)
 from eva.application.orchestration import (
     ToolDispatchResult,
     ToolExecutionRejected,
@@ -181,6 +189,93 @@ _CONVERSATION_TOOLS = (
 )
 
 
+class HomeAssistantConversationEffectPlanner:
+    """Keep provider-specific resolution and effect policy outside Eva's core."""
+
+    action_names = ("set_home_assistant_light", "set_home_assistant_switch")
+
+    def __init__(
+        self,
+        provider: HomeAssistantToolAdapter,
+        *,
+        allowlist: frozenset[tuple[str, str]] | None,
+        principal_sha256_allowlist: frozenset[str],
+    ) -> None:
+        if not principal_sha256_allowlist:
+            raise ValueError("effect principal policy is required")
+        self._provider = provider
+        self._allowlist = allowlist
+        self._principal_sha256_allowlist = principal_sha256_allowlist
+
+    async def prepare(
+        self, turn: ConversationTurn, call: ConversationActionCall
+    ) -> ConversationToolPreparation:
+        if call.name not in self.action_names:
+            raise ConversationConflict(f"unsupported provider action {call.name!r}")
+        if hashlib.sha256(turn.principal_id.encode()).hexdigest() not in (
+            self._principal_sha256_allowlist
+        ):
+            raise ConversationClarificationRequired(
+                "Met dit profiel mag je deze externe tool nog niet bedienen."
+            )
+        if set(call.arguments) != {"state", "target"}:
+            raise ConversationConflict("provider effect action has wrong fields")
+        state = call.arguments.get("state")
+        target = call.arguments.get("target")
+        if state not in {"on", "off"}:
+            raise ConversationConflict("provider effect state is invalid")
+        if not isinstance(target, str) or not target.strip() or len(target) > 160:
+            raise ConversationConflict("provider effect target is invalid")
+        domain = "switch" if call.name == "set_home_assistant_switch" else "light"
+        resolver = (
+            self._provider.resolve_switch
+            if domain == "switch"
+            else self._provider.resolve_light
+        )
+        try:
+            resolved = await resolver(target.strip())
+        except ValueError as error:
+            subject = "lamp" if domain == "light" else "apparaat"
+            raise ConversationClarificationRequired(
+                f"Welke {subject} bedoel je precies? Noem de naam zoals die in de tool staat."
+            ) from error
+        service = "turn_on" if state == "on" else "turn_off"
+        entity_id = resolved["entity_id"]
+        friendly_name = resolved["friendly_name"]
+        if self._allowlist is not None and (entity_id, service) not in self._allowlist:
+            allowed_services = {
+                admitted_service
+                for admitted_entity, admitted_service in self._allowlist
+                if admitted_entity == entity_id
+            }
+            if allowed_services == {"turn_off"}:
+                message = f"Ik mag {friendly_name} nu alleen uitzetten, niet aanzetten."
+            elif allowed_services == {"turn_on"}:
+                message = f"Ik mag {friendly_name} nu alleen aanzetten, niet uitzetten."
+            else:
+                message = (
+                    f"{friendly_name} mag ik nog niet bedienen. Alleen vooraf veilig "
+                    "vrijgegeven toolacties zijn nu beschikbaar."
+                )
+            raise ConversationClarificationRequired(message)
+        expected_state = "on" if service == "turn_on" else "off"
+        return ConversationToolPreparation(
+            tool_name=f"home_assistant.{domain}.{service}",
+            arguments={
+                "domain": domain,
+                "entity_id": entity_id,
+                "service": service,
+                "service_data": {},
+            },
+            expected_proof={"entity_id": entity_id, "state": expected_state},
+            receipt_output={
+                "entity_id": entity_id,
+                "friendly_name": friendly_name,
+                "requested_state": state,
+            },
+        )
+
+
 @dataclass(frozen=True, slots=True)
 class HomeAssistantConfig:
     base_url: str
@@ -208,6 +303,18 @@ class HomeAssistantToolAdapter:
         """Expose provider-owned model tools without teaching the model adapter HA."""
 
         return _CONVERSATION_TOOLS
+
+    def conversation_effect_planner(
+        self,
+        *,
+        allowlist: frozenset[tuple[str, str]] | None,
+        principal_sha256_allowlist: frozenset[str],
+    ) -> HomeAssistantConversationEffectPlanner:
+        return HomeAssistantConversationEffectPlanner(
+            self,
+            allowlist=allowlist,
+            principal_sha256_allowlist=principal_sha256_allowlist,
+        )
 
     async def health(self) -> bool:
         payload = await self._request_json("GET", "/api/")
@@ -896,4 +1003,8 @@ def _select_group_history(
     return result
 
 
-__all__ = ["HomeAssistantConfig", "HomeAssistantToolAdapter"]
+__all__ = [
+    "HomeAssistantConfig",
+    "HomeAssistantConversationEffectPlanner",
+    "HomeAssistantToolAdapter",
+]

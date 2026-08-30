@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from dataclasses import replace
 from datetime import timedelta
+import hashlib
 import json
 from urllib import parse
 from datetime import UTC, datetime
@@ -11,6 +12,7 @@ import pytest
 
 from eva.adapters.connectors.home_assistant import (
     HomeAssistantConfig,
+    HomeAssistantConversationEffectPlanner,
     HomeAssistantToolAdapter,
 )
 from eva.adapters.connectors.home_assistant_events import HomeAssistantEventStream
@@ -21,6 +23,78 @@ from eva.application.advanced_tasks import (
     AdvancedTaskRepositoryApproval,
     HomeAssistantRepository,
 )
+from eva.application.conversation import (
+    ConversationActionCall,
+    ConversationClarificationRequired,
+    ConversationTurn,
+)
+
+
+def _private_turn(principal_id: str = "jaap") -> ConversationTurn:
+    return ConversationTurn.private(
+        "tenant",
+        "installation",
+        principal_id,
+        "conversation",
+        "message:provider-effect",
+        "Zet de lamp uit",
+        "2026-08-30T19:15:00Z",
+    )
+
+
+def test_effect_planner_owns_resolution_policy_and_provider_command(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    adapter = HomeAssistantToolAdapter(HomeAssistantConfig("http://ha.test", "token"))
+    monkeypatch.setattr(
+        adapter,
+        "_light_catalog_sync",
+        lambda: [
+            {
+                "attributes": {"friendly_name": "Schuurlamp"},
+                "entity_id": "light.schuur",
+                "state": "on",
+            }
+        ],
+    )
+    planner = HomeAssistantConversationEffectPlanner(
+        adapter,
+        allowlist=frozenset({("light.schuur", "turn_off")}),
+        principal_sha256_allowlist=frozenset({hashlib.sha256(b"jaap").hexdigest()}),
+    )
+
+    prepared = asyncio.run(
+        planner.prepare(
+            _private_turn(),
+            ConversationActionCall(
+                "call:provider-effect",
+                "set_home_assistant_light",
+                {"state": "off", "target": "Schuurlamp"},
+            ),
+        )
+    )
+
+    assert prepared.tool_name == "home_assistant.light.turn_off"
+    assert prepared.arguments == {
+        "domain": "light",
+        "entity_id": "light.schuur",
+        "service": "turn_off",
+        "service_data": {},
+    }
+    assert prepared.expected_proof == {"entity_id": "light.schuur", "state": "off"}
+    assert prepared.receipt_output["friendly_name"] == "Schuurlamp"
+
+    with pytest.raises(ConversationClarificationRequired, match="dit profiel"):
+        asyncio.run(
+            planner.prepare(
+                _private_turn("lola"),
+                ConversationActionCall(
+                    "call:unauthorized",
+                    "set_home_assistant_light",
+                    {"state": "off", "target": "Schuurlamp"},
+                ),
+            )
+        )
 
 
 def test_light_resolution_ignores_unavailable_duplicate(
