@@ -28,6 +28,7 @@ def _environment(path: Path) -> None:
     path.write_text(
         "EVA_LIVING_CORE_IMAGE=eva2/old@sha256:" + "3" * 64 + "\n"
         "EVA_DASHBOARD_RELEASE_SHA256=" + "3" * 64 + "\n"
+        "EVA_B_MANAGED_MANIFEST_SHA256=" + "5" * 64 + "\n"
         "EVA_B_CONFIGURATION_SHA256=" + "4" * 64 + "\n"
     )
     path.chmod(0o600)
@@ -70,6 +71,10 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
     raw = path.read_text()
     assert f"EVA_LIVING_CORE_IMAGE={CORE}\n" in raw
     assert f"EVA_DASHBOARD_RELEASE_SHA256={'1' * 64}\n" in raw
+    assert (
+        "EVA_B_MANAGED_MANIFEST_SHA256="
+        "75a7f9f8574bd2a8ada3300ca796ee0fd073a583900a1e7383828f8f727f5afd\n"
+    ) in raw
     assert f"EVA_DELEGATED_WORK_IMAGE={WORKER}\n" in raw
     assert f"EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID={PRINCIPAL}\n" in raw
     assert f"EVA_DELEGATED_WORK_OWNER_BINDING_ID={BINDING}\n" in raw

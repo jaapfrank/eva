@@ -25,6 +25,10 @@ _MAX_ENVIRONMENT_BYTES = 64 * 1024
 _MAX_TELEGRAM_USER_ID = 9_007_199_254_740_991
 _CORE_IMAGE_KEY = "EVA_LIVING_CORE_IMAGE"
 _DASHBOARD_RELEASE_KEY = "EVA_DASHBOARD_RELEASE_SHA256"
+_MANIFEST_KEY = "EVA_B_MANAGED_MANIFEST_SHA256"
+_MANIFEST_PATH = (
+    Path(__file__).resolve().parents[1] / "deploy/living-core/managed-b.compose.yml"
+)
 _DELEGATED_KEYS = (
     "EVA_DELEGATED_WORK_IMAGE",
     "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
@@ -145,6 +149,7 @@ def _updated_environment(
     replacements = {
         _CORE_IMAGE_KEY: core_image,
         _DASHBOARD_RELEASE_KEY: core_image.rsplit("sha256:", 1)[-1],
+        _MANIFEST_KEY: _sha256(_MANIFEST_PATH.read_bytes()),
         _DELEGATED_KEYS[0]: worker_image,
         _DELEGATED_KEYS[1]: owner_principal_id,
         _DELEGATED_KEYS[2]: owner_binding_id,
@@ -163,7 +168,11 @@ def _updated_environment(
             result.append(f"{key}={replacements[key]}")
         else:
             result.append(line)
-    if counts[_CORE_IMAGE_KEY] != 1 or counts[_DASHBOARD_RELEASE_KEY] != 1:
+    if (
+        counts[_CORE_IMAGE_KEY] != 1
+        or counts[_DASHBOARD_RELEASE_KEY] != 1
+        or counts[_MANIFEST_KEY] != 1
+    ):
         raise DelegatedWorkActivationError("managed environment core keys differ")
     for key in _DELEGATED_KEYS:
         if counts[key] == 0:
