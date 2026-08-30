@@ -149,6 +149,7 @@ def test_returns_one_closed_agentrl_dbbench_tool_message(
     wrapped_history = json.loads(received[0]["text"].split("\n", 1)[1])
     assert '"database_transcript"' in wrapped_history[0]["content"]
     assert '"execute_sql"' in wrapped_history[0]["content"]
+    assert "database operation 1 of at most 2" in wrapped_history[0]["content"]
 
 
 @pytest.mark.parametrize(
@@ -188,6 +189,8 @@ def test_structured_and_legacy_calls_share_the_same_reserved_budget(
             client.inference(HISTORY)
 
     assert len(received) == 2
+    second_history = json.loads(received[1]["text"].split("\n", 1)[1])
+    assert "database operation 2 of at most 2" in second_history[0]["content"]
 
 
 def test_neutralizes_prior_tool_messages_before_calling_eva(

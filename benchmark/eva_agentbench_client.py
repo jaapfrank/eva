@@ -238,6 +238,8 @@ def dbbench_tool_message(
     tools: object,
     *,
     timeout_seconds: float = 120.0,
+    turn_limit: int = 2,
+    turn_number: int = 1,
 ) -> dict[str, object]:
     """Return one closed OpenAI-style tool message for upstream DBBench."""
 
@@ -253,6 +255,8 @@ def dbbench_tool_message(
         raise AgentBenchEvaError("AgentRL DBBench messages are invalid")
     if tools != _DBBENCH_TOOLS:
         raise AgentBenchEvaError("AgentRL DBBench tools differ from the sealed schemas")
+    if not 1 <= turn_number <= turn_limit <= _MAX_TURNS:
+        raise AgentBenchEvaError("AgentRL DBBench turn position is invalid")
     neutral_transcript: list[dict[str, object]] = []
     for message in messages:
         role = message["role"]
@@ -325,6 +329,12 @@ def dbbench_tool_message(
                 "content": (
                     "Act as the database agent for this DBBench development case. "
                     "Return plain JSON text only; never invoke an Eva function or memory. "
+                    f"This is database operation {turn_number} of at most {turn_limit}. "
+                    "Prefer one robust SQL statement that answers directly. Source values "
+                    "can use a different date or text display format than the human question; "
+                    "normalize or inspect them in SQL instead of blindly copying that display. "
+                    "On the final operation, commit only when the observed evidence is sufficient; "
+                    "never invent a missing answer. "
                     "Choose exactly one next database operation using either "
                     '{"name":"execute_sql","arguments":{"query":"SQL"}} or '
                     '{"name":"commit_final_answer","arguments":{"answers":["answer"]}}. '
@@ -400,13 +410,14 @@ class EvaAgentBenchClient:
         self._turns_used = 0
         self._turn_lock = Lock()
 
-    def _reserve_turn(self) -> None:
+    def _reserve_turn(self) -> int:
         with self._turn_lock:
             if self._turns_used >= self._turn_limit:
                 raise AgentBenchEvaError("AgentBench Eva turn budget is exhausted")
             # Reserve before network I/O: an interrupted request must not turn
             # an explicit model budget into an unbounded retry loop.
             self._turns_used += 1
+            return self._turns_used
 
     def inference(self, history: list[dict[str, str]]) -> str:
         self._reserve_turn()
@@ -415,11 +426,13 @@ class EvaAgentBenchClient:
     def inference_message(
         self, messages: object, tools: object
     ) -> dict[str, object]:
-        self._reserve_turn()
+        turn_number = self._reserve_turn()
         return dbbench_tool_message(
             messages,
             tools,
             timeout_seconds=self.timeout_seconds,
+            turn_limit=self._turn_limit,
+            turn_number=turn_number,
         )
 
 

@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 06:10 CEST
+Laatst bijgewerkt: 30 augustus 2026, 06:14 CEST
 
 ## Heel kort
 
@@ -372,7 +372,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Eva heeft nu zelf één echte AgentBench-DBBench-developmentcase uitgevoerd.
   Zij deed twee echte SQL-pogingen in de tijdelijke MySQL-database. De officiële
   ingebouwde vergelijking gaf eerlijk score 0 en `task limit reached`. Dit
-  bewijst de hele uitvoerketen, maar nog niet dat Eva goed scoort.
+  bewijst de hele uitvoerketen, maar nog niet dat Eva goed scoort. Een tweede,
+  antwoordblinde poging wist dat er maar twee beurten waren en normaliseerde de
+  datum beter, maar vond nog steeds geen rij en bleef dus eerlijk op score 0.
 
 ## Wat nog niet klaar is
 
@@ -441,6 +443,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Antwoordblinde DBBench-verbetering veranderde de SQL, maar score bleef eerlijk 0](evidence/living-core/agentbench-dbbench-eva-budget-aware-rerun-2026-08-30.json)
 - [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)
 - [59 persoonsgebonden lampen live, natuurlijke verduidelijking en replay](evidence/living-core/eva2-broad-light-control-live-2026-08-30.json)

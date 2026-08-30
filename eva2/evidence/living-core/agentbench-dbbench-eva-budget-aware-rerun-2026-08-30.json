@@ -1,0 +1,70 @@
+{
+  "artifact": "eva2-agentbench-dbbench-budget-aware-rerun",
+  "contract": "EvaAgentBenchDbBenchDevelopmentComparison/v1",
+  "date": "2026-08-30",
+  "change": {
+    "answerLabelLoadedByAdapter": false,
+    "description": "The adapter now tells Eva the exact operation position and gives a generic instruction to normalize or inspect source formatting instead of copying human display text blindly.",
+    "evaAdapterAfterSha256": "ff498ff1ff6bbbd53db7b420ade4a6636e62cef78190e9ca1c2ac22dca449fc2",
+    "evaAdapterBeforeSha256": "5fd63a9e49da84fed13012613e2edfe929334590125fd5ac80e778ccaee3262d",
+    "hiddenEvaluationFieldsSentToEva": false,
+    "modelTurnLimitChanged": false
+  },
+  "comparison": {
+    "baseline": {
+      "operations": [
+        "execute_sql",
+        "execute_sql"
+      ],
+      "rawSha256": "0556bc6d6f909bdaf3594f32e6a427f2090ce9f32a8b1a037140358ebf88d851",
+      "score": 0,
+      "secondOperationArgumentsSha256": "4260e224670a71382b2c39ad0f2caa54f035a5c108aa11527769c748aeef1a47",
+      "status": "task limit reached"
+    },
+    "budgetAwareRerun": {
+      "operations": [
+        "execute_sql",
+        "execute_sql"
+      ],
+      "rawSha256": "9dba1ee19f552a004b03c973fd24f4473b64ff66c00f3b4aa13de3a787d8a52f",
+      "score": 0,
+      "secondOperationArgumentsSha256": "596188dd4b8a838d5ab00d625cfcda48e15820cd111c92179ef5aa9deb68f288",
+      "status": "task limit reached"
+    },
+    "conclusion": "The second SQL changed to explicit date normalization, but still returned no row. The generic prompt improvement did not improve the evaluator result and is not claimed as a win."
+  },
+  "inputsUnchanged": {
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "caseIndex": 0,
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "modelTurnLimit": 2,
+    "task": "dbbench-dev-external-mysql"
+  },
+  "rawTrajectory": {
+    "bytes": 5542,
+    "mode": "0600",
+    "path": "evidence/living-core/agentbench-dbbench-eva-development-case-0-budget-aware-2026-08-30.raw.json",
+    "sha256": "9dba1ee19f552a004b03c973fd24f4473b64ff66c00f3b4aa13de3a787d8a52f"
+  },
+  "security": {
+    "internalThreeContainerNetwork": true,
+    "publishedPorts": 0,
+    "readOnlyRootFilesystems": 3,
+    "temporaryStackRemovedAfterRun": true,
+    "workerDockerSocket": false,
+    "workerHostMounts": 0
+  },
+  "status": "tested_no_improvement",
+  "verification": {
+    "adapterAndRunnerTests": "23 passed",
+    "liveEvaReadyAfterCleanup": true,
+    "ruff": "passed"
+  },
+  "nonClaims": [
+    "This remains a development run in the external-MySQL environment, not an official AgentBench score.",
+    "The unchanged zero score is not evidence of better benchmark quality.",
+    "The hidden label and evaluation object were not loaded into Eva's model request.",
+    "No competitor comparison or leaderboard claim follows from this rerun."
+  ]
+}
