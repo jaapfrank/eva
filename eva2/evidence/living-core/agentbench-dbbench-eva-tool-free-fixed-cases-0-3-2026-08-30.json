@@ -1,0 +1,89 @@
+{
+  "artifact": "EvaAgentBenchDbBenchToolFreeFixedDevelopmentSet/v1",
+  "date": "2026-08-30",
+  "selection": {
+    "caseIndices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cases2And3ChosenBeforeEitherResultWasKnown": true,
+    "split": "development"
+  },
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:aa7f30236791a94283f0d8c1e93539311225ac3907c2a914cd03f084967facbc",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "toolFreeClientSha256": {
+      "case0": "2c17b0b828ec5dac7b7c3a6750872b65c63f0d5d6ced45d6d478f75f8ae0a6f1",
+      "cases1Through3": "c91666264b973c9c81296ab316e3c1ae1ecd04ff0eac9c61156f454fa252a06c"
+    }
+  },
+  "cases": [
+    {
+      "caseIndex": 0,
+      "rawSha256": "7bb6d0abef0bc076dd89ad33c8905bfe2a6404865766ebed79244ea6c61a5ef9",
+      "score": 0,
+      "modelTurns": 8,
+      "sqlCalls": 6,
+      "providerFailuresBeforeDatabaseIo": 1,
+      "answerBlindDataAudit": "question year absent from every value in all 37 initialized rows"
+    },
+    {
+      "caseIndex": 1,
+      "rawSha256": "bb8f0579142bce5f0fed0e9a71bde1e9af03045c35b7e4549765b1bb7a05305b",
+      "score": 1,
+      "modelTurns": 2,
+      "sqlCalls": 1,
+      "providerFailuresBeforeDatabaseIo": 0
+    },
+    {
+      "caseIndex": 2,
+      "rawSha256": "33fd6d41f646c3a11e7184fc80045fa4cefe8d3c79ff8857e32eec3a0c2622ad",
+      "score": 1,
+      "modelTurns": 2,
+      "sqlCalls": 1,
+      "providerFailuresBeforeDatabaseIo": 0
+    },
+    {
+      "caseIndex": 3,
+      "rawSha256": "c4475943929b21d97b3a4203ebef038937c0eec6dff9069746749388540fba7d",
+      "score": 1,
+      "modelTurns": 2,
+      "sqlCalls": 1,
+      "providerFailuresBeforeDatabaseIo": 0
+    }
+  ],
+  "aggregate": {
+    "casesCompleted": 4,
+    "modelCallsReservedBeforeIo": 14,
+    "providerFailuresBeforeDatabaseIo": 1,
+    "rawCorrectCases": 3,
+    "rawScoreFraction": "3/4",
+    "rawScorePercent": 75,
+    "sqlCalls": 9,
+    "successfulToolFreeModelReplies": 13,
+    "toolsExposedByEvaModelBoundary": 0
+  },
+  "verification": {
+    "allInitialMessageKeySetsAnswerBlind": true,
+    "allRawTrajectoriesCreatedMode0600": true,
+    "hiddenAnswerFieldsLoadedByEvaAdapter": false,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
+    "toolExposureReceiptsAllZero": true
+  },
+  "status": "fixed_development_set_completed_three_of_four_correct",
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "Four development cases are too few to establish aggregate benchmark quality.",
+    "Case 0 remains scored as zero; the answer-blind data inconsistency is reported separately and is not used to inflate the raw score.",
+    "This run does not compare Eva directly with OpenClaw, Hermes or Agent Zero."
+  ]
+}

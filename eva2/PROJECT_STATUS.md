@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 07:11 CEST
+Laatst bijgewerkt: 30 augustus 2026, 07:14 CEST
 
 ## Heel kort
 
@@ -380,6 +380,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   welke kolom dan ook voorkomt. We gaan het verborgen label daarom niet raden.
   Op de volgende developmentcase werkte dezelfde geïsoleerde route wel direct:
   één SQL-query, één eindantwoord en de ingebouwde evaluator gaf score 1.
+  De vooraf vastgelegde cases 2 en 3 deden daarna exact hetzelfde. De ruwe stand
+  over cases 0 tot en met 3 is daardoor 3/4; case 0 blijft gewoon als fout tellen.
 
 ## Wat nog niet klaar is
 
@@ -419,16 +421,16 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
-- Twee echte AgentBench-developmentcases zijn nu uitgevoerd: de inconsistente
-  case 0 scoort 0 en case 1 scoort met één SQL-query 1. Een officiële
-  AgentBench-run en GAIA- en OSWorld-scores ontbreken nog.
+- Vier echte AgentBench-developmentcases zijn nu uitgevoerd. De ruwe stand is
+  3/4: case 0 scoort 0 en cases 1, 2 en 3 scoren ieder met één SQL-query 1.
+  Een officiële AgentBench-run en GAIA- en OSWorld-scores ontbreken nog.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. De verbeterde algemene database-aanpak op een kleine vaste reeks andere
-   developmentcases uitvoeren; case 0 niet op het verborgen label overtrainen.
+1. Vooraf een volgende vaste developmentreeks vastleggen en uitvoeren zonder
+   na iedere uitslag alleen makkelijke of groene cases te kiezen.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
@@ -452,6 +454,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
 - [Antwoordblinde audit: gevraagde jaarwaarde ontbreekt in alle 37 aangeboden rijen](evidence/living-core/agentbench-dbbench-case-0-answerblind-data-audit-2026-08-30.json)
 - [DBBench-case 1 correct met één SQL-query en twee toolvrije modelcalls](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-1-2026-08-30.json)
+- [Vaste DBBench-reeks 0–3: ruwe stand 3/4, zonder scorecorrectie voor case 0](evidence/living-core/agentbench-dbbench-eva-tool-free-fixed-cases-0-3-2026-08-30.json)
 - [Antwoordblinde DBBench-verbetering veranderde de SQL, maar score bleef eerlijk 0](evidence/living-core/agentbench-dbbench-eva-budget-aware-rerun-2026-08-30.json)
 - [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)
