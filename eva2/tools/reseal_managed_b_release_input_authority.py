@@ -48,6 +48,18 @@ def _arguments() -> argparse.Namespace:
         help="explicitly acknowledge one newly reviewed expected migration",
     )
     parser.add_argument(
+        "--admit-input",
+        action="append",
+        default=[],
+        help="explicitly add one reviewed static release input path",
+    )
+    parser.add_argument(
+        "--admit-test",
+        action="append",
+        default=[],
+        help="explicitly add one reviewed static release test path",
+    )
+    parser.add_argument(
         "--admit-cockpit-source",
         help="explicitly add CLAIM_ID=PATH to one existing cockpit claim",
     )
@@ -65,6 +77,18 @@ def main() -> int:
     arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
+    for field, admitted in (
+        ("requiredInputs", arguments.admit_input),
+        ("requiredTests", arguments.admit_test),
+    ):
+        rows = authority[field]
+        known = {row["path"] for row in rows}
+        for path in admitted:
+            if path in known or not path or path.startswith("/") or ".." in Path(path).parts:
+                raise RuntimeError("admitted managed-B authority path is invalid")
+            rows.append({"path": path, "sha256": _sha256(path)})
+            known.add(path)
+        rows.sort(key=lambda row: row["path"])
     input_paths = tuple(row["path"] for row in authority["requiredInputs"])
     test_paths = tuple(row["path"] for row in authority["requiredTests"])
     if _path_set_sha256(input_paths) != _EXPECTED_INPUT_PATHS_SHA256:
