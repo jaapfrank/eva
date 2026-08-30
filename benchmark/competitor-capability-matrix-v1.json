@@ -1,6 +1,6 @@
 {
   "contract": "EvaCompetitorCapabilityMatrix/v1",
-  "updated_at": "2026-08-30",
+  "updated_at": "2026-08-31",
   "claim_rule": {
     "enforced_by": "scripts/lab/check-competitor-capability-matrix.mjs",
     "general_superiority_requires": "every required category is won against every hard-coded competitor, has evidence refs and has no critical failure",
@@ -14,7 +14,7 @@
   },
   "categories": [
     {"id": "install_update_recovery", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
-    {"id": "conversation_persona", "partial_evidence": ["C01", "T02", "C04"], "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
+    {"id": "conversation_persona", "partial_evidence": ["C01", "T02", "C04", "CONT01"], "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "channels_cross_channel_identity", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "models_media_local_inference", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
     {"id": "skills_marketplaces", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},
@@ -37,6 +37,11 @@
     {"id": "commerce_external_accounts", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}}
   ],
   "evidence_catalog": [
+    {
+      "id": "current-four-way-cont01-restart-continuity-2026-08-31",
+      "path": "eva2/evidence/product/current-four-way-cont01-restart-continuity-2026-08-31.json",
+      "sha256": "a4c97634134903a0656898052b81efb86493768d4e514d63fd9db53fd36c4666"
+    },
     {
       "id": "current-four-way-c04-development-2026-08-30",
       "path": "eva2/evidence/product/current-four-way-c04-development-2026-08-30.json",

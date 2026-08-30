@@ -1,0 +1,166 @@
+{
+  "contract": "EvaCurrentFourWayRestartContinuityComparison/v1",
+  "createdAt": "2026-08-31T00:15:00+02:00",
+  "status": "development_evidence_not_a_product_ranking",
+  "releaseVerification": {
+    "checkedAt": "2026-08-31T00:18:00+02:00",
+    "source": "GitHub releases API",
+    "latestNonPrereleaseTags": {
+      "openclaw/openclaw": "v2026.7.1-2",
+      "NousResearch/hermes-agent": "v2026.8.27",
+      "agent0ai/agent-zero": "v2.11"
+    }
+  },
+  "case": {
+    "id": "CONT01",
+    "title": "Gesprek hervatten na een nieuw proces",
+    "model": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "turns": [
+      {
+        "ordinal": 1,
+        "text": "Onthoud alleen voor dit gesprek: het controlewoord is ivoorkristal-731. Antwoord exact met opgeslagen.",
+        "textSha256": "61de247c8f49de00fb887f015e7e382889b4d0a023b0909c4a1be23a22006816"
+      },
+      {
+        "ordinal": 2,
+        "text": "Welk controlewoord gaf ik je in mijn vorige bericht? Antwoord alleen met dat woord.",
+        "textSha256": "2b80030e0a62ecd7d81e0f70c84b85d1b6a6e7d873537499c4fd3006610f0f99"
+      }
+    ],
+    "gates": [
+      "De eerste beurt bevestigt opgeslagen zonder een ander controlewoord te verzinnen.",
+      "De tweede beurt draait in een nieuw proces of na een containerherstart met dezelfde duurzame sessie.",
+      "De tweede beurt antwoordt exact ivoorkristal-731.",
+      "Er vindt geen externe toolactie of ander extern effect plaats."
+    ]
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "binding": "f1b9f299aba803b807595d60d30e37fb4cf69754",
+      "runtimeImage": "eva2/conversation-retry-release@sha256:5c77dd193554c65f5d848a3ea4784e9186e04f9b9914fe76a0d85e5e113974d6",
+      "nativeRoute": "owner_dashboard",
+      "sessionId": "dashboard:44444444-4444-4444-8444-444444444444",
+      "restartBoundary": "full_core_container_restart",
+      "turn1": {
+        "wallClockMs": 1282,
+        "reply": "opgeslagen",
+        "replySha256": "ef011005457547038118d886fbc469905c211301b440d6134bfb4c6c3dc429ec",
+        "acknowledgementPassed": true
+      },
+      "turn2": {
+        "wallClockMs": 5873,
+        "reply": "ivoorkristal-731",
+        "replySha256": "793c0fb74f0b5d03fc79c43ec173c44dd1a6c8144856705593c1bfcd72882d9c",
+        "exactRecallPassed": true
+      },
+      "durableEvidence": {
+        "ingressCommitted": 2,
+        "replyCommitted": 2,
+        "memoryRetainQueued": 2,
+        "externalToolOrEffectEvents": 0
+      },
+      "passed": true
+    },
+    {
+      "id": "openclaw",
+      "binding": "v2026.7.1-2@0790d9f593ad30c940ed93b5872a8cf6d6f3cf8c",
+      "nativeRoute": "official_codex_plugin_cli",
+      "sessionId": "continuity-c05b-20260830",
+      "restartBoundary": "new_cli_process",
+      "turn1": {
+        "transcriptIntervalMs": 5176,
+        "reply": "opgeslagen.",
+        "replySha256": "fe6b271e76a8858194ccd5508cf652d846ce6c962b61075b5e0a33feb55aacdd",
+        "acknowledgementPassed": true
+      },
+      "turn2": {
+        "transcriptIntervalMs": 4171,
+        "reply": "ivoorkristal-731",
+        "replySha256": "793c0fb74f0b5d03fc79c43ec173c44dd1a6c8144856705593c1bfcd72882d9c",
+        "exactRecallPassed": true
+      },
+      "toolCalls": 0,
+      "passed": true
+    },
+    {
+      "id": "hermes",
+      "binding": "v2026.8.27@5fc308a70719a83cccdbba4c0e39c23f5a8239d5",
+      "nativeRoute": "hermes_cli_codex_oauth",
+      "sessionId": "20260830_235547_6d77e9",
+      "restartBoundary": "new_cli_process",
+      "turn1": {
+        "transcriptIntervalMs": 3304,
+        "reply": "opgeslagen",
+        "replySha256": "ef011005457547038118d886fbc469905c211301b440d6134bfb4c6c3dc429ec",
+        "acknowledgementPassed": true
+      },
+      "turn2": {
+        "transcriptIntervalMs": 2007,
+        "reply": "ivoorkristal-731",
+        "replySha256": "793c0fb74f0b5d03fc79c43ec173c44dd1a6c8144856705593c1bfcd72882d9c",
+        "exactRecallPassed": true
+      },
+      "durableMessageCount": 4,
+      "toolCalls": 0,
+      "passed": true
+    },
+    {
+      "id": "agent_zero",
+      "binding": "v2.11@6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1",
+      "runtimeImageId": "sha256:2a1b75c2722ed5863e1127817ee2d3dba61f4d6bae46a5641d008c3625cd6b8f",
+      "nativeRoute": "agent_zero_web_api_codex_oauth",
+      "sessionId": "LeoZD4gM",
+      "restartBoundary": "full_container_restart",
+      "turn1": {
+        "wallClockMs": 31562,
+        "reply": "opgeslagen",
+        "replySha256": "ef011005457547038118d886fbc469905c211301b440d6134bfb4c6c3dc429ec",
+        "acknowledgementPassed": true,
+        "frameworkToolCallsObserved": 2
+      },
+      "turn2": {
+        "minimumObservedWithoutFinalMs": 180000,
+        "sameContextLoaded": true,
+        "reply": null,
+        "exactRecallPassed": false,
+        "frameworkToolCallsObserved": 3,
+        "lastObservedState": "second model call still active after one empty model response"
+      },
+      "externalEffects": 0,
+      "containerExitAfterBoundedStop": 137,
+      "passed": false
+    }
+  ],
+  "objectiveObservations": {
+    "passedParticipants": [
+      "eva2",
+      "openclaw",
+      "hermes"
+    ],
+    "failedToCompleteParticipants": [
+      "agent_zero"
+    ],
+    "latencyRankingPublished": false,
+    "latencyRankingReason": "CLI transcript intervals and HTTP wall-clock intervals are not the same measurement boundary.",
+    "allExternalEffectsZero": true,
+    "eva1ServiceActiveAfterRun": true,
+    "eva1RestartCountAfterRun": 0
+  },
+  "observations": [
+    "OpenClaw and Hermes each resumed the same durable session from a newly started CLI process.",
+    "Eva2 resumed after its active core container was fully restarted; PostgreSQL and Hindsight remained running.",
+    "Agent Zero resumed the same context after a full container restart but did not produce a final answer within more than three minutes.",
+    "Agent Zero performed internal notify_user and memory_load calls during this simple conversation case; no external side effect was observed.",
+    "Agent Zero also attempted to prepare a large office runtime during startup and reported a dependency conflict after restart.",
+    "No Telegram message, Home Assistant action, browser action, e-mail action or other external effect was sent."
+  ],
+  "nonClaims": [
+    "This is not a public benchmark score.",
+    "This single development case does not prove that Eva2 is generally better than OpenClaw, Hermes or Agent Zero.",
+    "Agent Zero's failed completion in this run does not prove that it can never resume conversations.",
+    "The different native products have different system prompts and persistence implementations.",
+    "Latency is recorded for diagnosis but not ranked because the native measurement boundaries differ."
+  ]
+}
