@@ -16,9 +16,15 @@ WORKER = "eva2/worker@sha256:" + "2" * 64
 COMMIT = "a" * 40
 PRINCIPAL = "33333333-3333-3333-8333-333333333333"
 BINDING = "44444444-4444-4444-8444-444444444444"
+TELEGRAM_USER = 101
 
 
 def _environment(path: Path) -> None:
+    secrets = path.parent / "secrets"
+    secrets.mkdir()
+    bindings = secrets / "telegram-bindings"
+    bindings.write_text("{}\n")
+    bindings.chmod(0o600)
     path.write_text(
         "EVA_LIVING_CORE_IMAGE=eva2/old@sha256:" + "3" * 64 + "\n"
         "EVA_DASHBOARD_RELEASE_SHA256=" + "3" * 64 + "\n"
@@ -58,6 +64,7 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
         worker_image=WORKER,
         owner_principal_id=PRINCIPAL,
         owner_binding_id=BINDING,
+        telegram_user_id=TELEGRAM_USER,
         runner=_runner(),
     )
     raw = path.read_text()
@@ -68,13 +75,28 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
     assert f"EVA_DELEGATED_WORK_OWNER_BINDING_ID={BINDING}\n" in raw
     assert "EVA_B_CONFIGURATION_SHA256=" + "4" * 64 in raw
     assert first["ownerAuthorityFieldCount"] == 2
+    bindings = json.loads((path.parent / "secrets/telegram-bindings").read_text())
+    assert bindings == {
+        "bindings": [
+            {
+                "allowed_chat_ids": ["101"],
+                "principal_binding_id": BINDING,
+                "principal_id": PRINCIPAL,
+                "telegram_user_id": TELEGRAM_USER,
+            }
+        ],
+        "contract": "EvaTelegramPrincipalBindings/v2",
+    }
     assert set(first) == {
         "afterSha256",
         "beforeSha256",
+        "bindingsAfterSha256",
+        "bindingsBeforeSha256",
         "contract",
         "imageSourceCommit",
         "ownerAuthorityFieldCount",
         "status",
+        "telegramBindingCount",
     }
 
     second = persist_delegated_work_activation(
@@ -83,6 +105,7 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
         worker_image=WORKER,
         owner_principal_id=PRINCIPAL,
         owner_binding_id=BINDING,
+        telegram_user_id=TELEGRAM_USER,
         runner=_runner(),
     )
     assert second["beforeSha256"] == second["afterSha256"]
@@ -105,6 +128,7 @@ def test_activation_refuses_invalid_owner_authority(
             worker_image=WORKER,
             owner_principal_id=principal,
             owner_binding_id=binding,
+            telegram_user_id=TELEGRAM_USER,
             runner=_runner(),
         )
     assert path.read_bytes() == before
@@ -121,6 +145,7 @@ def test_activation_refuses_images_from_different_sources(tmp_path: Path) -> Non
             worker_image=WORKER,
             owner_principal_id=PRINCIPAL,
             owner_binding_id=BINDING,
+            telegram_user_id=TELEGRAM_USER,
             runner=_runner(worker_commit="b" * 40),
         )
     assert path.read_bytes() == before
@@ -139,6 +164,7 @@ def test_activation_refuses_duplicate_or_non_private_environment(
             worker_image=WORKER,
             owner_principal_id=PRINCIPAL,
             owner_binding_id=BINDING,
+            telegram_user_id=TELEGRAM_USER,
             runner=_runner(),
         )
     path.chmod(0o644)
@@ -149,5 +175,6 @@ def test_activation_refuses_duplicate_or_non_private_environment(
             worker_image=WORKER,
             owner_principal_id=PRINCIPAL,
             owner_binding_id=BINDING,
+            telegram_user_id=TELEGRAM_USER,
             runner=_runner(),
         )

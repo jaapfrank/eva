@@ -306,6 +306,7 @@ services:
       EVA_RUNTIME_INSTALLATION_ID: ${EVA_RUNTIME_INSTALLATION_ID:?set the installation identity}
       EVA_RUNTIME_PRINCIPAL_ID: ${EVA_RUNTIME_PRINCIPAL_ID:?set the principal identity}
       EVA_RUNTIME_TENANT_ID: ${EVA_RUNTIME_TENANT_ID:?set the tenant identity}
+      EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
     volumes:
       - type: bind
         source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}
@@ -340,6 +341,12 @@ services:
       - type: bind
         source: ${EVA_RUNTIME_RESOURCE_BUDGET_FILE_HOST:?set the confirmed runtime resource budget file}
         target: /run/eva/runtime-budget/current.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}
+        target: /run/secrets/telegram_principal_bindings
         read_only: true
         bind:
           create_host_path: false

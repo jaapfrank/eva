@@ -42,7 +42,7 @@ _EXPECTED_INPUT_PATHS_SHA256 = (
     "178655278e6edcbac7aeefdde5ab8540afa5c2bf45f893e5bf5625cd744d7fc7"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "a3e3f6857ba5991f0c0abf34ca12e6511f97fb16b7577d6cbd863a1cba9410be"
+    "ff72a3dc1f41920f612c701ecfa54f14a26fe4dcb484a8fd4fae4821e123d5e5"
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",

@@ -53,11 +53,7 @@ class DelegatedWorkConversationCommands:
         *,
         principal_binding_id: UUID | None,
     ) -> GroundedReply | None:
-        if (
-            turn.audience.kind != "private_person"
-            or turn.principal_id != str(self._owner_principal_id)
-            or principal_binding_id != self._principal_binding_id
-        ):
+        if not self.matches(turn, principal_binding_id=principal_binding_id):
             return None
         text = turn.text.strip()
         normalized = text.casefold().rstrip(".?! ")
@@ -66,9 +62,29 @@ class DelegatedWorkConversationCommands:
             return self._spawn(turn, match.group(1).strip())
         if normalized in _STATUS:
             return self._status(turn)
-        if normalized in _STOP:
-            return self._stop(turn)
-        return None
+        return self._stop(turn)
+
+    def matches(
+        self,
+        turn: ConversationTurn,
+        *,
+        principal_binding_id: UUID | None,
+    ) -> bool:
+        """Recognize one owner command without opening durable work."""
+
+        if (
+            turn.audience.kind != "private_person"
+            or turn.principal_id != str(self._owner_principal_id)
+            or principal_binding_id != self._principal_binding_id
+        ):
+            return False
+        text = turn.text.strip()
+        normalized = text.casefold().rstrip(".?! ")
+        return (
+            _SPAWN.fullmatch(text) is not None
+            or normalized in _STATUS
+            or normalized in _STOP
+        )
 
     def _spawn(self, turn: ConversationTurn, task: str) -> GroundedReply:
         if not task or len(task.encode("utf-8")) > 8_192:

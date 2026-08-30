@@ -142,6 +142,7 @@ from eva.application.telegram_canary import (
     TelegramCanaryAdmission,
     TelegramCanaryBridge,
 )
+from eva.application.telegram_ingress import TelegramPrincipalBindings
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
 from eva.application.mail import MailInboxPage, MailMessage
@@ -173,6 +174,8 @@ from eva.bootstrap.secrets import (
     read_private_runtime_file_bytes,
     read_runtime_secret_file,
 )
+from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
+from eva.operations.telegram_ingress import load_principal_bindings
 from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 from eva.operations.portable_restore_authority import PrivateRestoreAuthorityStore
 
@@ -269,6 +272,7 @@ class RuntimeSettings:
     agentmail_api_key_file: str | None = None
     telegram_proactive_chat_id: str | None = None
     telegram_bot_token: str | None = None
+    telegram_principal_bindings_file: str | None = None
     stripe_account_id: str | None = None
     stripe_secret_key: str | None = None
     stripe_webhook_secret: str | None = None
@@ -490,6 +494,9 @@ class RuntimeSettings:
             )
             or None
         )
+        telegram_principal_bindings_file = _environment_optional(
+            "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE"
+        )
         stripe_account_id = _environment_optional("EVA_STRIPE_ACCOUNT_ID")
         stripe_secret_key = (
             _file_only_environment_secret(
@@ -635,6 +642,7 @@ class RuntimeSettings:
             agentmail_api_key_file=agentmail_api_key_file,
             telegram_proactive_chat_id=telegram_proactive_chat_id,
             telegram_bot_token=telegram_bot_token,
+            telegram_principal_bindings_file=telegram_principal_bindings_file,
             stripe_account_id=stripe_account_id,
             stripe_secret_key=stripe_secret_key,
             stripe_webhook_secret=stripe_webhook_secret,
@@ -677,6 +685,8 @@ class PostgresHindsightMemoryRuntime:
         telegram_canary: TelegramCanaryBridge | None = None,
         people_memory_overview: PeopleMemoryOverviewPort | None = None,
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
+        telegram_principal_bindings: TelegramPrincipalBindings | None = None,
+        delegated_work_commands: DelegatedWorkConversationCommands | None = None,
         dashboard_effect_controller: DashboardActionChainEffectController | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
@@ -712,6 +722,8 @@ class PostgresHindsightMemoryRuntime:
         if (delegated_work_store is None) != (dashboard_principal_binding_id is None):
             raise ValueError("delegated work dashboard binding is incomplete")
         self._delegated_work_store = delegated_work_store
+        self._telegram_principal_bindings = telegram_principal_bindings
+        self._delegated_work_commands = delegated_work_commands
         self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
@@ -998,6 +1010,48 @@ class PostgresHindsightMemoryRuntime:
         recent = tuple((*recent_messages, *durable_recent)[-12:])
         candidate = self._conversation.respond(turn, recent)
         return journal.commit_reply(turn, candidate)
+
+    def respond_telegram_delegated_work(
+        self,
+        turn: ConversationTurn,
+        *,
+        telegram_user_id: int,
+        chat_id: str,
+    ) -> GroundedReply | None:
+        """Handle owner work commands on Eva1's existing private bridge."""
+
+        bindings = self._telegram_principal_bindings
+        commands = self._delegated_work_commands
+        if bindings is None or commands is None or turn.audience.kind != "private_person":
+            return None
+        authority_principal = bindings.resolve(telegram_user_id, chat_id)
+        authority_binding = bindings.resolve_binding_id(telegram_user_id, chat_id)
+        if authority_principal is None or authority_binding is None:
+            return None
+        authority_turn = ConversationTurn.private(
+            turn.tenant_id,
+            turn.installation_id,
+            authority_principal,
+            turn.conversation_id,
+            turn.message_id,
+            turn.text,
+            turn.occurred_at,
+        )
+        if not commands.matches(
+            authority_turn, principal_binding_id=authority_binding
+        ):
+            return None
+        journal = self._journal(turn)
+        journal.admit(turn)
+        committed = journal.committed_reply(turn)
+        if committed is not None:
+            return committed
+        reply = commands.handle(
+            authority_turn, principal_binding_id=authority_binding
+        )
+        if reply is None:
+            raise RuntimeError("delegated owner command disappeared after admission")
+        return journal.commit_reply(turn, reply)
 
     def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None:
         """Queue semantic retention only after the reply is durably committed."""
@@ -1857,6 +1911,11 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id,
         installation_id=settings.background_installation_id,
     )
+    telegram_principal_bindings = (
+        None
+        if settings.telegram_principal_bindings_file is None
+        else load_principal_bindings(settings.telegram_principal_bindings_file)
+    )
     telegram_canary = TelegramCanaryBridge(
         observations=PostgresTelegramGroupObservationStore(
             engine,
@@ -2217,6 +2276,7 @@ def create_runtime_app() -> FastAPI:
             deliver_one_proactive_expression,
         )
     delegated_work_store = None
+    delegated_work_commands = None
     dashboard_effect_controller = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
@@ -2233,6 +2293,19 @@ def create_runtime_app() -> FastAPI:
                 UUID(settings.dashboard_installation_id),
             ),
         )
+        if telegram_principal_bindings is not None:
+            if not telegram_principal_bindings.contains_binding(
+                principal_id=str(dashboard_owner_principal_id),
+                principal_binding_id=dashboard_principal_binding_id,
+            ):
+                raise RuntimeError(
+                    "delegated owner is absent from trusted Telegram bindings"
+                )
+            delegated_work_commands = DelegatedWorkConversationCommands(
+                delegated_work_store,
+                owner_principal_id=dashboard_owner_principal_id,
+                principal_binding_id=dashboard_principal_binding_id,
+            )
         dashboard_effect_controller = DashboardActionChainEffectController(
             engine,
             TimelineScope(
@@ -2277,6 +2350,8 @@ def create_runtime_app() -> FastAPI:
             telegram_canary=telegram_canary,
             people_memory_overview=people_memory_overview,
             delegated_work_store=delegated_work_store,
+            telegram_principal_bindings=telegram_principal_bindings,
+            delegated_work_commands=delegated_work_commands,
             dashboard_effect_controller=dashboard_effect_controller,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,

@@ -22,6 +22,7 @@ _MANAGED_ENVIRONMENT = re.compile(
 )
 _IMAGE_REFERENCE = re.compile(r"^[^\s@]+@sha256:[0-9a-f]{64}$")
 _MAX_ENVIRONMENT_BYTES = 64 * 1024
+_MAX_TELEGRAM_USER_ID = 9_007_199_254_740_991
 _CORE_IMAGE_KEY = "EVA_LIVING_CORE_IMAGE"
 _DASHBOARD_RELEASE_KEY = "EVA_DASHBOARD_RELEASE_SHA256"
 _DELEGATED_KEYS = (
@@ -68,6 +69,33 @@ def _private_environment(path: Path) -> tuple[bytes, os.stat_result]:
         raw = os.read(descriptor, _MAX_ENVIRONMENT_BYTES + 1)
         if len(raw) > _MAX_ENVIRONMENT_BYTES:
             raise DelegatedWorkActivationError("managed environment is too large")
+        return raw, metadata
+    finally:
+        os.close(descriptor)
+
+
+def _private_bindings(path: Path) -> tuple[bytes, os.stat_result]:
+    try:
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+    except OSError as error:
+        raise DelegatedWorkActivationError(
+            "Telegram bindings are inaccessible"
+        ) from error
+    try:
+        metadata = os.fstat(descriptor)
+        expected_owner = 65532 if os.geteuid() == 0 else os.geteuid()
+        expected_group = 65532 if os.geteuid() == 0 else os.getegid()
+        if (
+            not stat.S_ISREG(metadata.st_mode)
+            or metadata.st_nlink != 1
+            or stat.S_IMODE(metadata.st_mode) != 0o600
+            or metadata.st_uid != expected_owner
+            or metadata.st_gid != expected_group
+        ):
+            raise DelegatedWorkActivationError("Telegram bindings are not private")
+        raw = os.read(descriptor, _MAX_ENVIRONMENT_BYTES + 1)
+        if len(raw) > _MAX_ENVIRONMENT_BYTES:
+            raise DelegatedWorkActivationError("Telegram bindings are too large")
         return raw, metadata
     finally:
         os.close(descriptor)
@@ -173,8 +201,15 @@ def persist_delegated_work_activation(
     worker_image: str,
     owner_principal_id: str,
     owner_binding_id: str,
+    telegram_user_id: int,
     runner: Runner = _run,
 ) -> dict[str, object]:
+    if (
+        isinstance(telegram_user_id, bool)
+        or not isinstance(telegram_user_id, int)
+        or not 1 <= telegram_user_id <= _MAX_TELEGRAM_USER_ID
+    ):
+        raise DelegatedWorkActivationError("delegated Telegram identity is invalid")
     try:
         owner_principal_id = str(UUID(owner_principal_id))
         owner_binding_id = str(UUID(owner_binding_id))
@@ -185,6 +220,8 @@ def persist_delegated_work_activation(
     if core_source != worker_source:
         raise DelegatedWorkActivationError("managed images use different source commits")
     before, metadata = _private_environment(environment_path)
+    bindings_path = environment_path.parent / "secrets/telegram-bindings"
+    bindings_before, bindings_metadata = _private_bindings(bindings_path)
     after = _updated_environment(
         before,
         core_image=core_image,
@@ -192,14 +229,39 @@ def persist_delegated_work_activation(
         owner_principal_id=owner_principal_id,
         owner_binding_id=owner_binding_id,
     )
+    bindings_after = (
+        json.dumps(
+            {
+                "bindings": [
+                    {
+                        "allowed_chat_ids": [str(telegram_user_id)],
+                        "principal_binding_id": owner_binding_id,
+                        "principal_id": owner_principal_id,
+                        "telegram_user_id": telegram_user_id,
+                    }
+                ],
+                "contract": "EvaTelegramPrincipalBindings/v2",
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode("utf-8")
+        + b"\n"
+    )
+    if bindings_before.strip() not in {b"{}", bindings_after.strip()}:
+        raise DelegatedWorkActivationError("Telegram bindings already carry authority")
+    _atomic_write(bindings_path, bindings_after, bindings_metadata)
     _atomic_write(environment_path, after, metadata)
     return {
         "afterSha256": _sha256(after),
         "beforeSha256": _sha256(before),
+        "bindingsAfterSha256": _sha256(bindings_after),
+        "bindingsBeforeSha256": _sha256(bindings_before),
         "contract": "EvaManagedBDelegatedWorkActivationReceipt/v1",
         "imageSourceCommit": core_source,
         "ownerAuthorityFieldCount": 2,
         "status": "persisted",
+        "telegramBindingCount": 1,
     }
 
 
@@ -210,6 +272,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--worker-image", required=True)
     parser.add_argument("--owner-principal-id", required=True)
     parser.add_argument("--owner-binding-id", required=True)
+    parser.add_argument("--telegram-user-id", required=True, type=int)
     arguments = parser.parse_args(argv)
     if _MANAGED_ENVIRONMENT.fullmatch(str(arguments.environment)) is None:
         print(json.dumps({"error": "environment is not admitted", "status": "failed"}))
@@ -221,6 +284,7 @@ def main(argv: list[str] | None = None) -> int:
             worker_image=arguments.worker_image,
             owner_principal_id=arguments.owner_principal_id,
             owner_binding_id=arguments.owner_binding_id,
+            telegram_user_id=arguments.telegram_user_id,
         )
     except DelegatedWorkActivationError as error:
         print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))

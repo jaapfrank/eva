@@ -86,6 +86,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_TELEGRAM_PROACTIVE_CHAT_ID",
         "EVA_TELEGRAM_BOT_TOKEN",
         "EVA_TELEGRAM_BOT_TOKEN_FILE",
+        "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE",
         "EVA_STRIPE_ACCOUNT_ID",
         "EVA_STRIPE_SECRET_KEY",
         "EVA_STRIPE_SECRET_KEY_FILE",

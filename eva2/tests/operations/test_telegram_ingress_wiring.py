@@ -61,6 +61,8 @@ def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
         lambda path, *, setting_name: (
             "p" * 32
             if setting_name == "EVA_TELEGRAM_PAIRING_SECRET_FILE"
+            else "postgresql://eva:test@postgres/eva"
+            if setting_name == "EVA_DATABASE_DSN_FILE"
             else "test-value"
         ),
     )

@@ -56,6 +56,7 @@ from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationComma
 from eva.bootstrap.delegated_work_provider import (
     build_unadmitted_delegated_work_spec,
 )
+from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
 from eva.contracts.delegated_work import (
     DelegatedWorkGrant,
     DelegatedWorkResult,
@@ -1181,6 +1182,81 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
         release=_release(stored.spec),
         now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
     ) is None
+
+
+def test_eva1_private_bridge_binds_owner_work_without_changing_chat_identity(
+    delegated_engine: Engine,
+) -> None:
+    label = "eva1-private-owner-bridge"
+    scope, _episode, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = _store(delegated_engine, scope)
+    commands = DelegatedWorkConversationCommands(
+        store,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        clock=lambda: datetime(2026, 8, 26, 12, 0, 1, tzinfo=UTC),
+    )
+    bindings = TelegramPrincipalBindings(
+        (TelegramPrincipalBinding(101, str(owner), ("101",), str(binding)),)
+    )
+    runtime = PostgresHindsightMemoryRuntime(
+        delegated_engine,
+        object(),  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        None,  # type: ignore[arg-type]
+        runtime_tenant_id=str(scope.tenant_id),
+        runtime_installation_id=str(scope.installation_id),
+        delegated_work_store=store,
+        telegram_principal_bindings=bindings,
+        delegated_work_commands=commands,
+        dashboard_owner_principal_id=owner,
+        dashboard_principal_binding_id=binding,
+    )
+
+    def turn(message_id: int, text: str) -> ConversationTurn:
+        return ConversationTurn.private(
+            str(scope.tenant_id),
+            str(scope.installation_id),
+            "telegram:101",
+            "telegram:101",
+            f"telegram:101:{message_id}",
+            text,
+            "2026-08-26T12:00:00Z",
+        )
+
+    request = turn(1, "Laat een onderzoeker onze release controleren")
+    first = runtime.respond_telegram_delegated_work(
+        request, telegram_user_id=101, chat_id="101"
+    )
+    replay = runtime.respond_telegram_delegated_work(
+        request, telegram_user_id=101, chat_id="101"
+    )
+    assert first == replay
+    assert first is not None and "ingepland" in first.text
+    assert first.conversation_id == "telegram:101"
+    assert runtime.respond_telegram_delegated_work(
+        turn(2, "Gewoon gezellig praten"), telegram_user_id=101, chat_id="101"
+    ) is None
+    assert runtime.respond_telegram_delegated_work(
+        turn(3, "Stop mijn onderzoek"), telegram_user_id=999, chat_id="999"
+    ) is None
+    stopped = runtime.respond_telegram_delegated_work(
+        turn(4, "Stop mijn onderzoek"), telegram_user_id=101, chat_id="101"
+    )
+    assert stopped is not None and "Gestopt voordat" in stopped.text
+    work_id = store.latest_stoppable_work_id(
+        owner_principal_id=owner, principal_binding_id=binding
+    )
+    assert work_id is not None
+    assert store.load(
+        work_id,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    ).state == "stopped"
 
 
 def test_private_telegram_owner_starts_follows_and_stops_postgres_work(

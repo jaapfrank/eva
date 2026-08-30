@@ -1195,6 +1195,16 @@ def create_app(
                 }
             )
             runtime.admit_turn_audience(turn)
+            delegated_reply = None
+            delegated = getattr(runtime, "respond_telegram_delegated_work", None)
+            if delegated is not None:
+                delegated_reply = delegated(
+                    turn,
+                    telegram_user_id=telegram_user_id,
+                    chat_id=chat_id,
+                )
+            if delegated_reply is not None:
+                return grounded_reply_wire(delegated_reply)
             if "application/x-ndjson" in request.headers.get(
                 "accept", ""
             ) and not chat_id.startswith("-"):

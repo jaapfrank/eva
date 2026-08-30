@@ -115,6 +115,34 @@ def test_private_canary_derives_principal_server_side() -> None:
     assert response.json()["provider"] == "test-model"
 
 
+def test_private_canary_handles_owner_work_command_before_model_or_stream() -> None:
+    class CommandRuntime(_Runtime):
+        def respond_telegram_delegated_work(
+            self, turn, *, telegram_user_id, chat_id
+        ):  # type: ignore[no-untyped-def]
+            assert telegram_user_id == 7
+            assert chat_id == "7"
+            return GroundedReply(
+                turn.conversation_id,
+                turn.message_id,
+                "Onderzoek ingepland.",
+                (),
+                turn.occurred_at,
+                "eva-delegated-work-command",
+            )
+
+    runtime = CommandRuntime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/telegram/canary/respond",
+        headers={"accept": "application/x-ndjson"},
+        json=_payload(text="Laat een onderzoeker de release controleren"),
+    )
+    assert response.status_code == 200
+    assert response.json()["provider"] == "eva-delegated-work-command"
+    assert runtime.turns == []
+    assert runtime.after == []
+
+
 def test_private_canary_streams_safe_deltas_then_the_durable_final_reply() -> None:
     class StreamingRuntime(_Runtime):
         def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]

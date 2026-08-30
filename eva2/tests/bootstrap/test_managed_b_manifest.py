@@ -197,6 +197,9 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE": "/run/secrets/dashboard_access_token",
         "EVA_IDENTITY_PACK_FILE": "/run/eva/identity/current.json",
         "EVA_IDENTITY_PACK_TRUST_FILE": "/run/eva/identity/trust.json",
+        "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE": (
+            "/run/secrets/telegram_principal_bindings"
+        ),
     }.items() <= services["core"]["environment"].items()
     assert (
         services["durable-goal-worker"]["environment"]["EVA_DURABLE_GOAL_PROVIDER"]
@@ -238,6 +241,9 @@ def test_managed_b_binds_private_inputs_and_pins_all_service_labels() -> None:
     )
     assert core_binds["/run/eva/identity/trust.json"]["source"] == (
         "${EVA_IDENTITY_PACK_TRUST_FILE_HOST:?set the IdentityPack public trust binding}"
+    )
+    assert core_binds["/run/secrets/telegram_principal_bindings"]["source"] == (
+        "${EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST:?set a runtime-owned Telegram binding file}"
     )
 
 
