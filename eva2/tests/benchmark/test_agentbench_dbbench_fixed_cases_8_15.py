@@ -23,6 +23,9 @@ DIAGNOSTIC_RECEIPT = (
     EVIDENCE
     / "agentbench-dbbench-eva-review-failure-subtype-diagnostic-result-2026-08-30.json"
 )
+BOUNDED_RECEIPT = (
+    EVIDENCE / "agentbench-dbbench-eva-bounded-review-cases-24-31-2026-08-30.json"
+)
 
 
 def _raw_path(case_index: int) -> Path:
@@ -190,3 +193,65 @@ def test_case17_diagnostic_does_not_rewrite_the_original_fixed_failure() -> None
     assert receipt["interpretation"]["originalCase17FailureStillAuthoritative"] is True
     assert receipt["interpretation"]["failureSubtypeReproduced"] is False
     assert receipt["interpretation"]["furtherRepeatedProbingOfCase17Allowed"] is False
+
+
+def test_bounded_reviewer_is_rejected_with_all_failures_retained() -> None:
+    receipt = json.loads(BOUNDED_RECEIPT.read_text(encoding="utf-8"))
+    assert receipt["selection"]["caseIndices"] == list(range(24, 32))
+    assert receipt["selection"]["selectedBeforeAnyCaseResultWasKnown"] is True
+    assert receipt["decision"]["candidateAccepted"] is False
+    assert receipt["decision"]["reviewerMustBeRemovedFromActiveBenchmarkPath"] is True
+
+    scores: list[int] = []
+    boundary_failures = 0
+    provider_failures = 0
+    adapter_failures = 0
+    total_receipts = 0
+    total_reviews = 0
+    total_review_fallbacks = 0
+    total_sql = 0
+    for recorded in receipt["cases"]:
+        case_index = recorded["caseIndex"]
+        path = EVIDENCE / (
+            f"agentbench-dbbench-eva-bounded-review-case-{case_index}-2026-08-30.raw.json"
+        )
+        raw_bytes = path.read_bytes()
+        raw = json.loads(raw_bytes)
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+        assert hashlib.sha256(raw_bytes).hexdigest() == recorded["rawSha256"]
+        assert raw["commitReviewsUsed"] == recorded["commitReviews"]
+        assert all(item["toolsExposed"] == 0 for item in raw["modelReceipts"])
+        tool_names = _tool_names(raw)
+        assert tool_names.count("execute_sql") == recorded["sqlCalls"]
+        if recorded["outcome"] == "scored":
+            score = raw["result"]["metric"]["score"]
+            assert score == recorded["score"]
+            scores.append(score)
+        else:
+            assert recorded["outcome"] == "model_boundary_failure"
+            assert recorded["score"] is None
+            boundary_failures += 1
+        for failure in raw["modelFailures"]:
+            if failure["failure"] == "tool-free AgentBench request failed":
+                provider_failures += 1
+            else:
+                adapter_failures += 1
+        total_receipts += len(raw["modelReceipts"])
+        total_reviews += raw["commitReviewsUsed"]
+        total_review_fallbacks += len(raw["commitReviewFailures"])
+        total_sql += recorded["sqlCalls"]
+
+    aggregate = receipt["aggregate"]
+    assert scores.count(1) == aggregate["correctScoredCases"] == 2
+    assert scores.count(0) == aggregate["incorrectScoredCases"] == 4
+    assert boundary_failures == aggregate["modelBoundaryFailures"] == 2
+    assert total_receipts == aggregate["successfulToolFreeModelReplies"]
+    assert provider_failures == aggregate["providerFailuresBeforeDatabaseIo"]
+    assert adapter_failures == aggregate["adapterValidationFailuresBeforeDatabaseIo"]
+    assert total_reviews == aggregate["commitReviews"]
+    assert total_review_fallbacks == aggregate["invalidReviewFallbacks"]
+    assert total_sql == aggregate["sqlCalls"]
+    assert (
+        total_receipts + provider_failures
+        == aggregate["modelCallsReservedBeforeIo"]
+    )

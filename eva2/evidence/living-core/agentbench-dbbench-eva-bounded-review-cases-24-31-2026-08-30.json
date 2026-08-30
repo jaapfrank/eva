@@ -1,0 +1,64 @@
+{
+  "artifact": "EvaAgentBenchDbBenchBoundedReviewFixedDevelopmentSet/v1",
+  "date": "2026-08-30",
+  "selection": {
+    "caseIndices": [24, 25, 26, 27, 28, 29, 30, 31],
+    "selectionReceipt": "agentbench-dbbench-eva-bounded-review-cases-24-31-selection-2026-08-30.json",
+    "selectionCommit": "1751aaf",
+    "selectedBeforeAnyCaseResultWasKnown": true
+  },
+  "cases": [
+    {"caseIndex": 24, "outcome": "scored", "score": 0, "modelCalls": 4, "commitReviews": 1, "sqlCalls": 1, "rawSha256": "50ab06cb6c8355a5ea0274c0905dbe06c2fa6773a195d89afe37099dafcc2a63"},
+    {"caseIndex": 25, "outcome": "model_boundary_failure", "score": null, "modelCalls": 15, "commitReviews": 0, "sqlCalls": 10, "rawSha256": "c3f1b8f83bd8ec855153a7c996bc2c3148de38cf299a0d7833ab3c80c74c1590"},
+    {"caseIndex": 26, "outcome": "scored", "score": 0, "modelCalls": 8, "commitReviews": 1, "sqlCalls": 5, "rawSha256": "89fe56d295d0eefd6b87158c8600c0577cf70534f7155b59eb22459bee50b114"},
+    {"caseIndex": 27, "outcome": "model_boundary_failure", "score": null, "modelCalls": 15, "commitReviews": 1, "sqlCalls": 7, "rawSha256": "090927d4ca3cebb96cb4afeb369c7b61f13313e4932ae60e55e12217713b1a8a"},
+    {"caseIndex": 28, "outcome": "scored", "score": 0, "modelCalls": 3, "commitReviews": 1, "sqlCalls": 1, "rawSha256": "ff622c8ce5477d3c56797661ceaa96db58a377d4c6e2b09e9f643f135d23d6f0"},
+    {"caseIndex": 29, "outcome": "scored", "score": 1, "modelCalls": 5, "commitReviews": 1, "sqlCalls": 1, "rawSha256": "e8a20a760ab13a4831134e24355a713a77e40a82ab9a31faf223cea5007cb113"},
+    {"caseIndex": 30, "outcome": "scored", "score": 0, "modelCalls": 10, "commitReviews": 2, "sqlCalls": 5, "rawSha256": "270246aa48f9dadd4fdf05f130e71cabfd61a39df90aae4963220cd6dfd11823"},
+    {"caseIndex": 31, "outcome": "scored", "score": 1, "modelCalls": 4, "commitReviews": 1, "sqlCalls": 1, "rawSha256": "0419d39210000c48d1cd71c60b96b8008ee523a32aa4c2f81b65ff1fa17db295"}
+  ],
+  "aggregate": {
+    "casesSelected": 8,
+    "casesScored": 6,
+    "correctScoredCases": 2,
+    "incorrectScoredCases": 4,
+    "modelBoundaryFailures": 2,
+    "completionFraction": "6/8",
+    "scoredCaseFraction": "2/6",
+    "modelCallsReservedBeforeIo": 64,
+    "successfulToolFreeModelReplies": 63,
+    "providerFailuresBeforeDatabaseIo": 1,
+    "adapterValidationFailuresBeforeDatabaseIo": 18,
+    "commitReviews": 8,
+    "invalidReviewFallbacks": 1,
+    "sqlCalls": 31,
+    "toolsExposedByEvaModelBoundary": 0,
+    "usageMeasurement": "unmeasured"
+  },
+  "failureCategories": {
+    "nonJson": 6,
+    "finalAnswerCount": 8,
+    "finalAnswerEmptyItem": 2,
+    "invalidOperationShape": 2,
+    "providerRequest": 1,
+    "invalidReviewFallback": 1
+  },
+  "decision": {
+    "candidateAccepted": false,
+    "reviewerMustBeRemovedFromActiveBenchmarkPath": true,
+    "reason": "two unscored failures, four incorrect scores, high call use and only two correct scored cases"
+  },
+  "runtime": {
+    "modelSidecarHealth": "healthy",
+    "failedCasesRetried": 0,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true
+  },
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The bounded reviewer is rejected rather than promoted.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "No hidden label or standard answer SQL was used.",
+    "No superiority claim against another agent is made."
+  ]
+}

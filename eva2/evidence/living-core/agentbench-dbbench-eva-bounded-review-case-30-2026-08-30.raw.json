@@ -1,0 +1,439 @@
+{
+  "caseIndex": 30,
+  "commitReviewFailures": [],
+  "commitReviewsUsed": 2,
+  "contract": "EvaAgentBenchDbBenchDevelopmentRun/v1",
+  "controllerProtocol": "AgentRL structured messages with Session_id header",
+  "finishedAt": "2026-08-30T06:45:12Z",
+  "initialMessages": [
+    {
+      "content": "I will ask you a question, then you should help me operate a MySQL database with SQL to answer the question.\nYou have to explain the problem and your solution to me and write down your thoughts.\nAfter thinking and explaining thoroughly, every round you can choose to operate or to answer with the two specific tools provided.\nIf you should execute a SQL query, use the `execute_sql` function, Your SQL should be in one line.\nEvery time you can only execute one SQL statement. I will only execute the statement in the first SQL code block. Every time you write a SQL, I will execute it for you and give you the output.\nIf you are done operating, and you want to commit your final answer, then use the `commit_final_answer` function.\nDO NOT use this tool unless you are sure about your answer. I expect an accurate and correct answer.\nYour answer should be accurate. Your answer must be exactly the same as the correct answer.\nIf the question is about modifying the database, then after done operation, your answer field can be anything.\nIf your response cannot match any pattern I mentioned earlier, you will be judged as FAIL immediately.\nYou should always use the tools provided to submit your answer. Be careful not to write it in the content field.\nYour input will be raw MySQL response, you have to deal with it by yourself.",
+      "role": "system"
+    },
+    {
+      "content": "Additional table information about the question: The name of this table is Football Match Results, and the headers of this table are Date,Round,Opponents,H / A,Result F–A,Attendance.\nQuestion: On 8 March 2007, in the Round of 16 Second leg, the match result for Porto was 1–0, with an attendance of 41,000. The match was played away from home.\n",
+      "role": "user"
+    }
+  ],
+  "modelFailures": [
+    {
+      "failure": "Eva DBBench tool answer shape is invalid",
+      "turn": 4
+    },
+    {
+      "failure": "Eva DBBench tool answer shape is invalid",
+      "turn": 6
+    }
+  ],
+  "modelMinimumIntervalSeconds": 5.0,
+  "modelReceipts": [
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "1d3d499ceb0b59483ff2fabfd005ca07be0c501929165d60add623beb255e9ee",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 1,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "31727b819b6c2a632189353374e8299aad6334a622399246ae42724a8914b4d6",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 2,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "78c3b20c0ffd86f48190e34aa2db1e5a3fe88acb6146e027f0698ba5b7d0f88a",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 3,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "9f0671b08463f4911bf1f053de20d634736658cc6f90f38ffdb48a8b6b43cf58",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 4,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "2924198d2e4e7c43f0b89894dc6a97525231d81b861b18429cb5b126ba1b7b99",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 5,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "bc412c4bf33c8a063c24951d257f3c51d06945f31a9efa159c07fca2ab34a417",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 6,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "9f0671b08463f4911bf1f053de20d634736658cc6f90f38ffdb48a8b6b43cf58",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 7,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "2924198d2e4e7c43f0b89894dc6a97525231d81b861b18429cb5b126ba1b7b99",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 8,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "bc02150a40d661cf3108d395628de4ee63cd5015e3cee50ab5a34d8731adb644",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 9,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "textSha256": "2924198d2e4e7c43f0b89894dc6a97525231d81b861b18429cb5b126ba1b7b99",
+      "timing": {
+        "completed_ms": null,
+        "first_content_ms": null
+      },
+      "toolsExposed": 0,
+      "turn": 10,
+      "usage": {
+        "input_tokens": null,
+        "measurement": "unmeasured",
+        "model_attempts": null,
+        "output_tokens": null,
+        "tool_calls": null
+      }
+    }
+  ],
+  "modelRoute": "isolated_tool_free_sidecar",
+  "modelTurnLimit": 15,
+  "modelTurnsReservedBeforeIo": true,
+  "modelTurnsUsed": 10,
+  "nonClaims": [
+    "This is not an official AgentBench score.",
+    "The disposable external-MySQL environment differs from AgentBench's official Docker driver.",
+    "One development case does not establish benchmark quality or leaderboard rank.",
+    "The model sidecar has no Eva database, memory, house, Telegram, or connector mount."
+  ],
+  "result": {
+    "finish": true,
+    "metric": {
+      "score": 0
+    },
+    "reward": 0,
+    "status": "completed",
+    "taskResult": null
+  },
+  "sealedTools": [
+    {
+      "function": {
+        "description": "Executes a given SQL statement on the database and returns the result.",
+        "name": "execute_sql",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "query": {
+              "description": "The SQL query to be executed.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Commits the final answer after all operations are completed.",
+        "name": "commit_final_answer",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "answers": {
+              "description": "The list of final answers to commit.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "answers"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    }
+  ],
+  "sealedToolsSha256": "0d53b38f5641c975ad6760adf4e8168b65b34aa8b58918cf919acda610bd6e09",
+  "task": "dbbench-dev-external-mysql",
+  "trajectory": [
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"query\":\"SELECT Opponents FROM `Football Match Results` WHERE Date='8 March 2007' AND Round='Round of 16 Second leg' AND `Result F–A`='1–0' AND Attendance='41,000' AND `H / A`='A';\"}",
+              "name": "execute_sql"
+            },
+            "id": "call_cef1cb884103d6c8fbe544bb",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [
+        {
+          "content": "[]",
+          "role": "tool",
+          "tool_call_id": "call_cef1cb884103d6c8fbe544bb"
+        }
+      ],
+      "finish": false,
+      "metric": {},
+      "result": null,
+      "reward": 0,
+      "status": "running",
+      "turn": 1
+    },
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"query\":\"SELECT Date,Round,Opponents,`H / A`,`Result F–A`,Attendance FROM `Football Match Results` WHERE TRIM(Round)='Round of 16 Second leg' AND REPLACE(REPLACE(TRIM(`Result F–A`),'–','-'),'−','-')='1-0' AND REPLACE(Attendance,',','')='41000' AND LOWER(TRIM(`H / A`))='a';\"}",
+              "name": "execute_sql"
+            },
+            "id": "call_7e9d90a9c79297ce43f654ca",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [
+        {
+          "content": "[]",
+          "role": "tool",
+          "tool_call_id": "call_7e9d90a9c79297ce43f654ca"
+        }
+      ],
+      "finish": false,
+      "metric": {},
+      "result": null,
+      "reward": 0,
+      "status": "running",
+      "turn": 2
+    },
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"query\":\"SELECT Date,Round,Opponents,`H / A`,`Result F–A`,Attendance FROM `Football Match Results` WHERE Opponents LIKE '%Porto%' OR Date LIKE '%8 March 2007%' OR Round LIKE '%Round of 16%' OR Attendance LIKE '%41,000%' OR `Result F–A` LIKE '%1–0%' OR `Result F–A` LIKE '%1-0%';\"}",
+              "name": "execute_sql"
+            },
+            "id": "call_a124217ffe546ea0df814e5a",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [
+        {
+          "content": "[('20 February 2007', 'First knockout round First leg', 'Lille', 'A', '1–0', '41,000'), ('7 March 2007', 'First knockout round Second leg', 'Lille', 'H', '1–0', '75,182'), ('20 September 2007', 'Group stage Matchday 1', 'Porto', 'H', '1–1', '66,000'), ('12 December 2007', 'Group stage Matchday 6', 'Valencia', 'A', '1–0', '55,000'), ('19 February 2008', 'Round of 16 First leg', 'Arsenal', 'H', '2–2', '80,000'), ('4 March 2008', 'Round of 16 Second leg', 'Arsenal', 'A', '2–1', '60,000')]",
+          "role": "tool",
+          "tool_call_id": "call_a124217ffe546ea0df814e5a"
+        }
+      ],
+      "finish": false,
+      "metric": {},
+      "result": null,
+      "reward": 0,
+      "status": "running",
+      "turn": 3
+    },
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"query\":\"SELECT Opponents FROM `Football Match Results` WHERE REPLACE(REPLACE(TRIM(`Result F–A`),'–','-'),'−','-')='1-0' AND REPLACE(Attendance,',','')='41000' AND LOWER(TRIM(`H / A`))='a';\"}",
+              "name": "execute_sql"
+            },
+            "id": "call_83d93deb294061b9f69609ab",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [
+        {
+          "content": "[('Lille',)]",
+          "role": "tool",
+          "tool_call_id": "call_83d93deb294061b9f69609ab"
+        }
+      ],
+      "finish": false,
+      "metric": {},
+      "result": null,
+      "reward": 0,
+      "status": "running",
+      "turn": 5
+    },
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"query\":\"SELECT Opponents FROM `Football Match Results` WHERE REPLACE(REPLACE(TRIM(`Result F–A`),'–','-'),'−','-')='1-0' AND REPLACE(Attendance,',','')='41000' AND LOWER(TRIM(`H / A`))='a';\"}",
+              "name": "execute_sql"
+            },
+            "id": "call_cc3a1c580069289f0be1eabf",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [
+        {
+          "content": "[('Lille',)]",
+          "role": "tool",
+          "tool_call_id": "call_cc3a1c580069289f0be1eabf"
+        }
+      ],
+      "finish": false,
+      "metric": {},
+      "result": null,
+      "reward": 0,
+      "status": "running",
+      "turn": 7
+    },
+    {
+      "assistant": {
+        "content": null,
+        "role": "assistant",
+        "tool_calls": [
+          {
+            "function": {
+              "arguments": "{\"answers\":[\"Lille\"]}",
+              "name": "commit_final_answer"
+            },
+            "id": "call_7b43bfe6304342114debfc29",
+            "type": "function"
+          }
+        ]
+      },
+      "environment_messages": [],
+      "finish": true,
+      "metric": {
+        "score": 0
+      },
+      "result": null,
+      "reward": 0,
+      "status": "completed",
+      "turn": 8
+    }
+  ]
+}
