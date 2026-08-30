@@ -66,11 +66,12 @@ kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
 De bestaande bron voldoet hier nog niet aan. Acht bestanden in applicatie,
-modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 719
+modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 647
 Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en
-CamelCase. De eerste verplaatsingen hebben 238 identifiers verwijderd. Gewone
-lees-/aan-uittools en automatiseringen leveren schema, antwoordinstructie,
-validatie en providercommando nu vanuit adapters. Zij registreren via
+CamelCase. De eerste verplaatsingen hebben 310 identifiers verwijderd. Gewone
+lees-/aan-uittools, automatiseringen en read-only migratieplanning leveren
+schema, antwoordinstructie, validatie en providercommando nu vanuit adapters.
+Zij registreren via
 `ConversationExternalToolPort`; `PostgresExternalConversationTools` bewaart
 providerneutraal toelating, call-start, bewijs en hervatten. De centrale
 dispatcher routeert alleen op de aangeboden toolnaam en kent de provider niet.
@@ -79,7 +80,10 @@ en werd na een nieuwe procesinstantie niet herhaald. Een providergeplande
 automatisering doorliep dezelfde route in een echte wegwerp-PostgreSQL 16.13 en
 werd na een nieuwe procesinstantie evenmin herhaald. De vroegere aparte
 Home Assistant-effect-API, dispatcher, receipt en hervatroute zijn verwijderd;
-effecten mogen alleen nog via het externe-toolcontract binnenkomen. De architectuurchecker legt
+effecten mogen alleen nog via het externe-toolcontract binnenkomen. Ook het
+Tuya-migratieplan wordt nu door een provideradapter gemaakt, duurzaam via de
+generieke route toegelaten en exact teruggelezen; na een nieuwe procesinstantie
+werd de inventaris niet opnieuw opgehaald. De architectuurchecker legt
 de resterende aantallen als
 uitsluitend dalende bovengrens vast: geen nieuw bestand en geen bestaand bestand
 mag meer providerspecifieke kernlogica krijgen. De gate wordt pas inhoudelijk
@@ -539,7 +543,7 @@ zonder kernwijziging dezelfde duurzame tool- en readbackroute doorlopen.
 | Proactieve Telegram-uitgang | `src/eva/adapters/connectors/telegram.py`, `src/eva/application/free_will.py` en `deploy/living-core/telegram-proactive.compose.yml` | Outbound-only sendMessage buiten PostgreSQL, providerreceipt daarna committen; een verlopen claim zonder bewijs wordt `expression_ambiguous/needs_help` en nooit automatisch opnieuw verstuurd; secretbestand en één expliciet goedgekeurd chat-ID | Contractpad groen; echte Home Assistant-gaswaarschuwing bleef na een corecrash zowel direct als na lease-expiry gesloten en eindigde zonder resend in durable menselijke hulpstatus; echte Telegram-send staat uit tot bestemming en nieuw Eva 2-secret expliciet zijn goedgekeurd |
 | Duurzame fan-outlevering | `src/eva/application/delivery.py`, `src/eva/adapters/connectors/fanout_http.py`, `src/eva/adapters/postgres/delivery.py`, gesprekmodel en `conversation_actions.py` | Eén aanvraag wordt per ontvanger voorbereid, extern aangeboden en afzonderlijk teruggelezen; iedere ontvanger heeft een deterministische idempotency-key en eigen accepted/rejected-receipt; na een ambigu verzendvenster gaat providerreadback altijd vóór een nieuwe POST | Native P03 en X01 live groen op v43: twee acceptaties plus één afwijzing bleven afzonderlijk zichtbaar, en een echte exit 137 ná sink-a-acceptatie maar vóór HTTP-antwoord hervatte zonder tweede POST |
 | Duurzame doelen | `src/eva/application/durable_goals.py`, `src/eva/adapters/postgres/durable_goals.py`, `src/eva/adapters/connectors/durable_goal_http.py`, `src/eva/operations/durable_goal_worker.py`, gesprekmodel, `conversation_actions.py` en `deploy/living-core/durable-goals.compose.yml` | Modelgekozen begrensd doel, externe wakevoorwaarde, bewijsherlezing, optionele inhoudelijke pivot, precies-één effect en levering; expliciete cancellation, deadline-blocker en delivery failure zijn aparte terminale projecties | Native A01/A02/A03/F03/F04 live groen op v49 en duurzaam teruggelezen op v50; de v50-worker verwerkt bestaande terminale checkpoints stabiel zonder herstartlus |
-| Bewezen externe toolprovider (Home Assistant als praktijkfixture) | `src/eva/adapters/connectors/home_assistant.py`, `home_assistant_automations.py`, `src/eva/adapters/postgres/external_conversation_tools.py` en `deploy/living-core/home-assistant.compose.yml` | De adapter vertaalt natuurlijke namen naar zijn eigen catalogus en levert schema, uitvoering en readback aan Eva's algemene toolcontract. Home Assistant is hier verwisselbaar bewijs, geen Eva-onderdeel | Reads, effecten en automatiseringen zijn echt uitgevoerd en teruggelezen. De automatiseringsnamen, schemas, validatie en antwoorduitleg zijn uit model- en gesprekspersistence verwijderd; oude beheer-/migratiecode moet nog volgen |
+| Bewezen externe toolprovider (Home Assistant als praktijkfixture) | `src/eva/adapters/connectors/home_assistant.py`, `home_assistant_automations.py`, `home_assistant_management.py`, `src/eva/adapters/postgres/external_conversation_tools.py` en `deploy/living-core/home-assistant.compose.yml` | De adapters vertalen natuurlijke opdrachten naar hun eigen catalogus en leveren schema, uitvoering en readback aan Eva's algemene toolcontract. Home Assistant is hier verwisselbaar bewijs, geen Eva-onderdeel | Reads, effecten en automatiseringen zijn echt uitgevoerd en teruggelezen. Read-only Tuya-migratieplanning ging op dezelfde manier door PostgreSQL en werd na procesherstart niet herhaald. Schrijvende repository-, pakket- en apparaatmigratiepaden moeten nog uit de kern |
 | Geavanceerde opdrachten | `src/eva/application/advanced_tasks.py`, `src/eva/adapters/connectors/home_assistant_admin.py`, `home_assistant_hacs.py`, `home_assistant_localtuya.py`, `src/eva/adapters/postgres/advanced_tasks.py`, `src/eva/adapters/postgres/conversation_actions.py`, `src/eva/adapters/model/conversation.py`, `src/eva/adapters/api/app.py` en `src/eva/bootstrap/runtime.py` | Register- en HACS-inventaris, repository- en HA-versiegebonden compatibiliteit, retryvast plan; aparte hashgebonden goedkeuring, prepare, officiële addcall en exacte readback voor de onderhouden HACS-bron zonder pakketinstallatie; daarna afzonderlijke versie-exacte pakketinstallatie/readback/rollback en secretvrije canary met one-use call-fence | Echte Tuya/LocalTuya-inventaris, idempotent 12-apparatenplan en live planrefresh bewezen; v40 weigerde de oude bron vóór mutatie, draaide een echt modelgesprek en las vóór/na exact dezelfde HACS-inventaris terug. De onderhouden bron toevoegen, het pakket installeren en één apparaat migreren wachten ieder op hun eigen exacte eigenaarstoestemming |
 | Mail-read | `src/eva/application/mail.py` en `src/eva/adapters/connectors/agentmail.py` | Connectorneutrale hashes, begrensde AgentMail list/get en secretvrije API-output | Echte AgentMail-providerread via A bevestigd; Eva 2-adapter en HTTP-route groen, B wacht bewust op een nieuw uitgegeven Eva 2-secret |
 | Objectopslag | `src/eva/application/objects.py` en `src/eva/adapters/objects/` | Geauthenticeerde CAS-readback | Werkend als lokale adapter |

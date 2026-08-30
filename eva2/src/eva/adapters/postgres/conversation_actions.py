@@ -98,8 +98,6 @@ from eva.application.repository_improvements import (
 
 _ACTION = "adopt_personal_interest"
 _ARGUMENT_KEYS = {"motivation", "next_exploration", "title"}
-_TUYA_LOCAL_PLAN_ACTION = "plan_tuya_to_localtuya_migration"
-_TUYA_LOCAL_PLAN_ARGUMENT_KEYS = {"scope"}
 _LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
 _LOCALTUYA_REPOSITORY_REGISTER_ARGUMENT_KEYS = {
     "expected_version",
@@ -291,8 +289,6 @@ class PostgresConversationActions:
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
         actions.extend(self._external_tool_by_action)
-        if self._home_assistant_admin is not None:
-            actions.append(_TUYA_LOCAL_PLAN_ACTION)
         if self._home_assistant_hacs is not None:
             actions.append(_LOCALTUYA_REPOSITORY_REGISTER_ACTION)
             actions.append(_LOCALTUYA_PACKAGE_INSTALL_ACTION)
@@ -425,9 +421,6 @@ class PostgresConversationActions:
                     self._localtuya_package_thread_id(turn)
                 )
             return self._localtuya_package_receipt(turn, package_events)
-        plan_events = timeline.events(self._tuya_plan_thread_id(turn))
-        if plan_events:
-            return self._tuya_plan_receipt(turn, plan_events)
         events = timeline.events(self._intent_thread_id(turn))
         if not events:
             return None
@@ -642,8 +635,6 @@ class PostgresConversationActions:
             return self._execute_durable_goal_cancellation(turn, call)
         if call.name == _FANOUT_DELIVERY_ACTION:
             return self._execute_fanout(turn, call)
-        if call.name == _TUYA_LOCAL_PLAN_ACTION:
-            return self._execute_tuya_plan(turn, call)
         if call.name == _LOCALTUYA_REPOSITORY_REGISTER_ACTION:
             return self._execute_localtuya_repository(turn, call)
         if call.name == _LOCALTUYA_PACKAGE_INSTALL_ACTION:
@@ -2381,53 +2372,6 @@ class PostgresConversationActions:
             },
         )
 
-    def _execute_tuya_plan(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        if self._home_assistant_admin is None:
-            raise ConversationConflict(
-                "Home Assistant advanced planning is unavailable"
-            )
-        arguments = self._validated_tuya_plan_arguments(call.arguments)
-        inventory = asyncio.run(self._home_assistant_admin.inventory())
-        operation_id = self._tuya_plan_operation_id(turn)
-        plan = TuyaToLocalTuyaPlanner().build(
-            inventory,
-            operation_id=operation_id,
-            requested_by=turn.principal_id,
-        )
-        self._advanced_task_store(turn).retain(plan)
-        data: dict[str, JsonValue] = {
-            "action_call_id": call.call_id,
-            "action_name": call.name,
-            "arguments": arguments,
-            "conversation_id": turn.conversation_id,
-            "plan": plan.to_payload(),
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        timeline = self._timeline(turn)
-        thread_id = self._tuya_plan_thread_id(turn)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{thread_id}:planned",
-                occurred_at=plan.created_at,
-                data=data,
-                event_type="ADVANCED_PLAN_CREATED",
-                phase="advanced_planned",
-                status="completed",
-                operation_id=operation_id,
-            )
-        except CheckpointConflict:
-            events = timeline.events(thread_id)
-            durable = self._event_data(events[0]) if events else None
-            if durable != data:
-                raise ConversationConflict(
-                    "advanced task plan replay differs"
-                ) from None
-        return self._tuya_plan_receipt(turn, timeline.events(thread_id))
-
     def _admit_localtuya_conversation(
         self,
         turn: ConversationTurn,
@@ -2799,41 +2743,6 @@ class PostgresConversationActions:
             },
         )
 
-    def _tuya_plan_receipt(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> ConversationActionReceipt:
-        if len(events) != 1 or events[0].event_type != "ADVANCED_PLAN_CREATED":
-            raise ConversationConflict("advanced task plan event differs")
-        data = self._event_data(events[0])
-        expected = {
-            "action_name": _TUYA_LOCAL_PLAN_ACTION,
-            "conversation_id": turn.conversation_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        for key, value in expected.items():
-            if data.get(key) != value:
-                raise ConversationConflict("advanced task plan scope differs")
-        raw_arguments = data.get("arguments")
-        plan = data.get("plan")
-        call_id = data.get("action_call_id")
-        if (
-            not isinstance(raw_arguments, dict)
-            or not isinstance(plan, dict)
-            or not isinstance(call_id, str)
-        ):
-            raise ConversationConflict("advanced task plan receipt is malformed")
-        arguments = self._validated_tuya_plan_arguments(raw_arguments)
-        return ConversationActionReceipt(
-            ConversationActionCall(call_id, _TUYA_LOCAL_PLAN_ACTION, arguments),
-            {
-                "contract": "EvaConversationActionReceipt/v1",
-                "durable": True,
-                "plan": plan,
-                "status": "planned",
-            },
-        )
-
     def _link_to_conversation(
         self, turn: ConversationTurn, receipt: ConversationActionReceipt
     ) -> None:
@@ -2970,16 +2879,6 @@ class PostgresConversationActions:
         ):
             raise ConversationConflict("observation identity name is invalid")
         return {"corrected_name": corrected_name.strip()}
-
-    @staticmethod
-    def _validated_tuya_plan_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, str]:
-        if set(raw) != _TUYA_LOCAL_PLAN_ARGUMENT_KEYS:
-            raise ConversationConflict("Tuya migration plan has wrong fields")
-        if raw.get("scope") != "all_tuya_devices":
-            raise ConversationConflict("Tuya migration plan scope is invalid")
-        return {"scope": "all_tuya_devices"}
 
     @staticmethod
     def _validated_fanout_arguments(
@@ -3123,14 +3022,6 @@ class PostgresConversationActions:
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
         return f"intent:{cls._intent_id(turn)}"
-
-    @staticmethod
-    def _tuya_plan_operation_id(turn: ConversationTurn) -> str:
-        return _turn_id(turn, "tuya_to_localtuya_plan", "tuya-local-plan:")
-
-    @classmethod
-    def _tuya_plan_thread_id(cls, turn: ConversationTurn) -> str:
-        return f"advanced-conversation:{cls._tuya_plan_operation_id(turn)}"
 
     @staticmethod
     def _localtuya_package_thread_id(turn: ConversationTurn) -> str:

@@ -72,7 +72,6 @@ def test_durable_turn_identifiers_remain_byte_equal_after_shared_derivation() ->
         "_observation_identity_correction_thread_id": "memory:observation-identity:61d73df29f0600e5e60112d5f84e4897",
         "_repository_improvement_operation_id": "repository-improvement:40a7a9a340d3f0d09e717048738084c7",
         "_research_operation_id": "current-research:2420e50d0762dff9a05d63a67234616c",
-        "_tuya_plan_operation_id": "tuya-local-plan:3cb83441698f9057fb6aaa88fe1adc41",
         "_validated_file_edit_operation_id": "validated-file-edit:3f87371c0e0134708bd5a3c9e049b601",
     }
     assert {

@@ -19,6 +19,9 @@ from eva.adapters.connectors.home_assistant import HomeAssistantToolAdapter
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
 )
+from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationMigrationPlanner,
+)
 from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
@@ -90,7 +93,7 @@ def _home_tool_model(**kwargs: Any) -> CodexConversationModel:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "54d367123edecb5c453f8e9efbcba7369fe62a8c74752273f1f406bdaa4ea0d4"
+        "2e0f1f894ffb64dc315d920019314ea203ce3fc5aa33622eeee149d95073fb23"
     )
     assert not {
         "create_home_assistant_advanced_state_automation",
@@ -99,6 +102,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
         "set_home_assistant_switch",
         "read_home_assistant_history",
         "read_home_assistant_state",
+        "plan_tuya_to_localtuya_migration",
     } & set(conversation_module._ACTION_TOOLS)
     provider_tools = [
         {
@@ -123,6 +127,18 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     ]
     assert canonical_sha256(automation_tools) == (
         "1750683bef20a235a99e340d86b08ce814d02138b30b90f7328332b4ee733adc"
+    )
+    management_tools = [
+        {
+            "completion_guidance": descriptor.completion_guidance,
+            "description": descriptor.description,
+            "input_schema": descriptor.input_schema,
+            "name": descriptor.name,
+        }
+        for descriptor in HomeAssistantConversationMigrationPlanner.conversation_tools()
+    ]
+    assert canonical_sha256(management_tools) == (
+        "52cb6f8c8c041f02b88f5f1b9b4f9a9e32903ca3f819b3db49a0d80d6031c04e"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -1824,7 +1840,10 @@ def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
 def test_full_tuya_request_selects_read_only_advanced_plan_first(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationMigrationPlanner.conversation_tools(),
+    )
     call = ConversationActionCall(
         "tuya-plan-call-1",
         "plan_tuya_to_localtuya_migration",
@@ -1866,7 +1885,10 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
 def test_tuya_receipt_is_factual_input_not_a_robotic_script(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationMigrationPlanner.conversation_tools(),
+    )
     bodies: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, None]:
@@ -1913,8 +1935,8 @@ def test_tuya_receipt_is_factual_input_not_a_robotic_script(
 
     assert result.text == "Ik heb de inventaris bekeken; er is nog niets veranderd."
     instructions = bodies[0]["instructions"]
-    assert "feiten en grenzen, geen voorgeschreven tekst" in instructions
-    assert "som niet automatisch alles op" in instructions
+    assert "aantallen, routes en blokkades uit plan als feiten" in instructions
+    assert "nog niets is gemigreerd" in instructions
 
 
 def test_explicit_followup_can_select_exact_localtuya_package_install(

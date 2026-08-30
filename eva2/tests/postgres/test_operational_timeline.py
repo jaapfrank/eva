@@ -44,7 +44,19 @@ from eva.adapters.postgres.external_conversation_tools import (
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
 )
+from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationMigrationPlanner,
+    HomeAssistantMigrationPlanAdapter,
+)
+from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+from eva.application.advanced_tasks import (
+    AdvancedTaskPlan,
+    HomeAssistantDevice,
+    HomeAssistantEntity,
+    HomeAssistantIntegration,
+    HomeAssistantInventory,
+)
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationConflict,
@@ -1510,6 +1522,78 @@ def test_provider_owned_automation_is_durable_and_not_repeated_after_restart(
     )
     assert restarted.pending(turn) == receipt
     assert len(calls) == 1
+
+
+def test_provider_owned_tuya_plan_is_durable_and_not_repeated_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    inventory_calls = 0
+
+    class Inventory:
+        async def inventory(self):  # type: ignore[no-untyped-def]
+            nonlocal inventory_calls
+            inventory_calls += 1
+            return HomeAssistantInventory(
+                (HomeAssistantIntegration("tuya", "cloud", "loaded", "Tuya"),),
+                (
+                    HomeAssistantDevice(
+                        "device", "Schuur", "Tuya", "Lamp", ("cloud",)
+                    ),
+                ),
+                (
+                    HomeAssistantEntity(
+                        "light.schuur", "tuya", "cloud", "device", None
+                    ),
+                ),
+                datetime(2026, 8, 30, 19, 0, tzinfo=UTC),
+                (),
+                True,
+                "2026.8.1",
+            )
+
+    def store(tenant_id: str, installation_id: str) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            timeline_engine,
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+        )
+
+    planner = HomeAssistantConversationMigrationPlanner(Inventory())
+    provider = HomeAssistantMigrationPlanAdapter(store)
+    tools = PostgresExternalConversationTools(timeline_engine, planner, provider)
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+    turn = ConversationTurn.private(
+        "external-management-routing",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:tuya-plan",
+        "Maak een veilig plan om Tuya lokaal te maken.",
+        "2026-08-30T19:00:00Z",
+    )
+    call = ConversationActionCall(
+        "call:tuya-plan",
+        "plan_tuya_to_localtuya_migration",
+        {"scope": "all_tuya_devices"},
+    )
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "verified"
+    raw_plan = receipt.output["plan"]
+    plan = AdvancedTaskPlan.from_payload(raw_plan)
+    assert store(turn.tenant_id, turn.installation_id).load(plan.plan_id) == plan
+    assert inventory_calls == 1
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        external_tools=(
+            PostgresExternalConversationTools(timeline_engine, planner, provider),
+        ),
+    )
+    assert restarted.pending(turn) == receipt
+    assert inventory_calls == 1
+
+
 def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
     timeline_engine: Engine,
 ) -> None:

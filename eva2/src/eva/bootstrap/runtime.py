@@ -45,9 +45,13 @@ from eva.adapters.connectors.stripe_webhook import (
     StripeWebhookVerifier,
 )
 from eva.adapters.connectors.home_assistant_automations import (
-    HomeAssistantAutomationAdapter,
-    HomeAssistantAutomationConfig,
+    HomeAssistantAutomationAdapter as ProviderAutomationAdapter,
+    HomeAssistantAutomationConfig as ProviderAutomationConfig,
     HomeAssistantConversationAutomationPlanner as ProviderAutomationPlanner,
+)
+from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationMigrationPlanner as ProviderMigrationPlanner,
+    HomeAssistantMigrationPlanAdapter as ProviderMigrationPlanAdapter,
 )
 from eva.adapters.postgres.conversation_actions import (
     PostgresConversationActions,
@@ -1957,6 +1961,7 @@ def create_runtime_app() -> FastAPI:
         conversation_tools=(
             *HomeAssistantToolAdapter.conversation_tools(),
             *ProviderAutomationPlanner.conversation_tools(),
+            *ProviderMigrationPlanner.conversation_tools(),
         ),
     )
     home_assistant = (
@@ -1973,14 +1978,14 @@ def create_runtime_app() -> FastAPI:
         None
         if settings.home_assistant_url is None
         or not settings.home_assistant_effects_enabled
-        else HomeAssistantAutomationAdapter(
-            HomeAssistantAutomationConfig(
+        else ProviderAutomationAdapter(
+            ProviderAutomationConfig(
                 settings.home_assistant_url,
                 settings.home_assistant_token or "",
             )
         )
     )
-    home_assistant_admin = (
+    management_inventory = (
         None
         if settings.home_assistant_url is None
         or not settings.home_assistant_effects_enabled
@@ -2084,7 +2089,7 @@ def create_runtime_app() -> FastAPI:
     external_provider = home_assistant
     conversation_actions = PostgresConversationActions(
         engine,
-        home_assistant_admin=home_assistant_admin,
+        home_assistant_admin=management_inventory,
         home_assistant_hacs=home_assistant_hacs,
         research=model,
         file_batch=file_batch,
@@ -2124,6 +2129,25 @@ def create_runtime_app() -> FastAPI:
                         ),
                     )
                     if automation_provider is not None
+                    else ()
+                ),
+                *(
+                    (
+                        PostgresExternalConversationTools(
+                            engine,
+                            ProviderMigrationPlanner(management_inventory),
+                            ProviderMigrationPlanAdapter(
+                                lambda tenant_id, installation_id: (
+                                    PostgresAdvancedTaskStore(
+                                        engine,
+                                        tenant_id=tenant_id,
+                                        installation_id=installation_id,
+                                    )
+                                )
+                            ),
+                        ),
+                    )
+                    if management_inventory is not None
                     else ()
                 ),
             )
@@ -2354,7 +2378,7 @@ def create_runtime_app() -> FastAPI:
             conversation_actions,
             sensory_worker,
             sensory_store,
-            home_assistant_admin,
+            management_inventory,
             home_assistant_hacs,
             home_assistant_localtuya,
             agentmail,

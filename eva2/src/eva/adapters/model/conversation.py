@@ -68,7 +68,6 @@ _MODEL_LEASE_FILE_MODE = 0o640
 _ORDINARY_PROVIDER_ATTEMPTS = 2
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
-_TUYA_LOCAL_PLAN_ACTION = "plan_tuya_to_localtuya_migration"
 _LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
 _LOCALTUYA_PACKAGE_INSTALL_ACTION = "install_approved_localtuya_package"
 _FANOUT_DELIVERY_ACTION = "deliver_test_message_fanout"
@@ -180,14 +179,6 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "De eerste concrete vraag die Eva hierover wil onderzoeken."
         ),
         title=_schema("Een korte natuurlijke naam voor de interesse."),
-    ),
-    _TUYA_LOCAL_PLAN_ACTION: _tool(
-        _TUYA_LOCAL_PLAN_ACTION,
-        (
-            "Inventariseer alle echte Tuya/LocalTuya-apparaten en leg een veilig, "
-            "duurzaam migratieplan vast. Deze actie migreert nog niets."
-        ),
-        scope=_schema(const="all_tuya_devices"),
     ),
     _LOCALTUYA_REPOSITORY_REGISTER_ACTION: _tool(
         _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
@@ -1820,55 +1811,6 @@ class CodexConversationModel:
                         "Gebruik het gecontroleerde toolresultaat als bewijs en meld "
                         "alleen wat daar werkelijk uit blijkt."
                     )
-                )
-            elif completed_action.call.name == _TUYA_LOCAL_PLAN_ACTION:
-                plan = completed_action.output.get("plan")
-                devices = plan.get("devices") if isinstance(plan, dict) else None
-                blockers = plan.get("blockers") if isinstance(plan, dict) else None
-                if not isinstance(devices, list) or not isinstance(blockers, list):
-                    raise ConversationModelError("Tuya plan receipt is malformed")
-                routes = {
-                    route: sum(
-                        1
-                        for device in devices
-                        if isinstance(device, dict) and device.get("route") == route
-                    )
-                    for route in (
-                        "localtuya_candidate",
-                        "matter_review",
-                        "rebuild_scene",
-                    )
-                }
-                blocker_labels = {
-                    "localtuya_integration_missing": "LocalTuya ontbreekt in Home Assistant",
-                    "localtuya_integration_not_loaded": "LocalTuya is nog niet geladen",
-                    "localtuya_package_not_available": "er is geen geschikt LocalTuya-pakket gevonden",
-                    "localtuya_package_not_installed": "het LocalTuya-pakket is nog niet geïnstalleerd",
-                    "localtuya_maintained_repository_not_available": "de onderhouden LocalTuya-repository staat nog niet in HACS",
-                    "localtuya_package_incompatible_with_home_assistant": "de beschikbare LocalTuya-versie is niet compatibel met deze Home Assistant-versie",
-                    "local_device_credentials_not_collected": "de lokale apparaatgegevens ontbreken nog",
-                    "matter_devices_require_native_matter_review": "de Matter-apparaten moeten via hun lokale Matter-route worden beoordeeld",
-                    "tuya_scenes_require_explicit_rebuild": "de Tuya-scènes moeten lokaal opnieuw worden opgebouwd",
-                    "tuya_integration_missing": "de Tuya-integratie ontbreekt",
-                }
-                human_blockers = [
-                    blocker_labels.get(str(value), str(value).replace("_", " "))
-                    for value in blockers
-                ]
-                action_guidance_parts.append(
-                    "De action receipt bevat de werkelijk gelezen Tuya/LocalTuya-"
-                    "inventaris en het duurzaam vastgelegde plan. De door de host "
-                    f"gecontroleerde aantallen zijn exact: totaal {len(devices)}, "
-                    f"LocalTuya-kandidaten {routes['localtuya_candidate']}, Matter-review "
-                    f"{routes['matter_review']} en te herbouwen scènes "
-                    f"{routes['rebuild_scene']}. Er zijn exact {len(blockers)} actuele "
-                    f"blokkades: {'; '.join(human_blockers)}. Dit zijn feiten en grenzen, "
-                    "geen voorgeschreven tekst. Vertaal ze naar een kort, natuurlijk "
-                    "antwoord dat rechtstreeks past bij de vraag; som niet automatisch "
-                    "alles op. Zeg wel ondubbelzinnig dat nog niets is gemigreerd. Noem "
-                    "geen receipt, interne action, blocker-ID of andere systeemterm. Zeg "
-                    "niet dat je de volgende stap nu uitvoert; alleen het plan is werkelijk "
-                    "vastgelegd."
                 )
             elif completed_action.call.name == _LOCALTUYA_PACKAGE_INSTALL_ACTION:
                 action_guidance_parts.append(
