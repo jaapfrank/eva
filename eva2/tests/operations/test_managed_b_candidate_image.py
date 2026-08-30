@@ -21,6 +21,22 @@ BASE_ID = "sha256:" + "2" * 64
 IMAGE_ID = "sha256:" + "3" * 64
 ARCHIVE_SHA = "4" * 64
 REPO_DIGEST = f"docker.io/library/python@{BASE_DIGEST}"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
+    dockerfile = (PROJECT_ROOT / "deploy/living-core/Dockerfile").read_text(
+        encoding="utf-8"
+    )
+    install = "python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation ."
+    metadata_check = "metadata.entry_points().select(group='eva2.external_providers')"
+    remove_pip = "python -m pip uninstall -y pip wheel"
+
+    assert "COPY pyproject.toml ./pyproject.toml" in dockerfile
+    assert install in dockerfile
+    assert metadata_check in dockerfile
+    assert dockerfile.index(install) < dockerfile.index(metadata_check)
+    assert dockerfile.index(metadata_check) < dockerfile.index(remove_pip)
 
 
 @pytest.fixture
