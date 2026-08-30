@@ -13,6 +13,10 @@ from typing import Any
 from urllib import error, parse, request as urllib_request
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+from eva.adapters.connectors.home_assistant_mcp import (
+    HomeAssistantMcpError,
+    call_assist_effect,
+)
 from eva.application.orchestration import (
     ToolDispatchResult,
     ToolExecutionRejected,
@@ -280,23 +284,23 @@ class HomeAssistantToolAdapter:
         return [value for value in decoded if isinstance(value, dict)]
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
-        domain, service, entity_id, service_data = _command_fields(command)
-        body: dict[str, JsonValue] = {"entity_id": entity_id, **service_data}
+        domain, service, entity_id, _service_data = _command_fields(command)
         try:
-            response = await self._request_json(
-                "POST", f"/api/services/{domain}/{service}", body
+            details = await asyncio.to_thread(
+                call_assist_effect,
+                base_url=self._config.base_url,
+                token=self._config.token,
+                timeout=self._config.request_timeout_seconds,
+                domain=domain,
+                service=service,
+                entity_id=entity_id,
             )
-        except error.HTTPError as exc:
-            if 400 <= exc.code < 500:
-                raise ToolExecutionRejected(
-                    f"Home Assistant rejected {domain}.{service} ({exc.code})"
-                ) from exc
-            raise
-        provider_ref = _context_id(response)
+        except HomeAssistantMcpError as exc:
+            raise ToolExecutionRejected(str(exc)) from exc
         return ToolDispatchResult(
             accepted=True,
-            provider_ref=provider_ref,
-            details={"entity_id": entity_id, "service": f"{domain}.{service}"},
+            provider_ref=None,
+            details={**details, "service": f"{domain}.{service}"},
         )
 
     async def observe(
@@ -424,18 +428,6 @@ def _select_observed(
         }
     validate_json_value(observed)
     return observed
-
-
-def _context_id(response: JsonValue) -> str | None:
-    candidates = response if isinstance(response, list) else [response]
-    for candidate in candidates:
-        if not isinstance(candidate, dict):
-            continue
-        context = candidate.get("context")
-        if isinstance(context, dict) and isinstance(context.get("id"), str):
-            return context["id"]
-    return None
-
 
 def _text_or_none(value: Any) -> str | None:
     return value if isinstance(value, str) else None
