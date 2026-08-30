@@ -1,0 +1,70 @@
+{
+  "contract": "EvaHomeAssistantOfficialMcpEffectLive/v1",
+  "recordedAt": "2026-08-30T12:18:54+02:00",
+  "status": "passed_live_with_durable_replay",
+  "source": {
+    "parentCommit": "4fe30962b7cb46d95ffe6b95618a78de267188ac",
+    "candidateSha256": "7f29c87d1b1116e168403f559da85d8789bb8d656703bbee653fe21de98d0102",
+    "liveEffectProbeSha256": "6db4cc1e970ea19c3978401aa80ab924099ec645f6e5f9185168d087cbd6b26d",
+    "testsSha256": "f1d2494c2bd98330ce1ef9bb47981444291f63f3d7e2d4d8e60a88bf5247770c",
+    "testsPassed": 6,
+    "lintPassed": true
+  },
+  "homeAssistant": {
+    "version": "2026.8.1",
+    "officialEndpoint": "/api/mcp/assist",
+    "catalogSha256": "048a5028e5951d1b4ad944e7899a28d4420a6028a921d024dca6fef2c4dde8b4",
+    "toolSchemaSha256": "21499e66f4cf9309c45fcac873959cb1a136781415006767388010feb5776fc1",
+    "toolClass": "built_in_assist_effect",
+    "targetStored": false
+  },
+  "authority": {
+    "configuredPrincipalSha256Count": 1,
+    "matchedPreviouslyVerifiedOwnerAction": true,
+    "rawPrincipalStored": false,
+    "principalAuthorized": true
+  },
+  "safeEffect": {
+    "initialIndependentState": "off",
+    "requestedEffect": "turn_off",
+    "resultIndependentState": "off",
+    "readbackSource": "Home Assistant REST state endpoint",
+    "visibleStateChange": false,
+    "operationLabelSha256": "4b76dad37e69a8b56fc84868d37e7e3c8ab0c59c3eefba5e7102e4e927797ca5"
+  },
+  "durableTimeline": {
+    "firstStatus": "verified",
+    "freshProcessReplayStatus": "verified",
+    "eventCountsAfterFreshProcessReplay": {
+      "TOOL_REQUEST_ADMITTED": 1,
+      "TOOL_PREPARED": 1,
+      "TOOL_EXECUTED": 1,
+      "STATE_VERIFIED": 1
+    },
+    "providerActionRepeatedByReplay": false
+  },
+  "foundAndFixed": {
+    "firstOperationStatus": "TOOL_REJECTED",
+    "cause": "the first candidate accepted the official success/result read contract but not the official response_type/data intent contract",
+    "deviceWasAlreadyOff": true,
+    "automaticRetryAfterRejectedResponse": false,
+    "fix": "accept exact successful action_done/query_answer intent responses; reject error, partial, failed-target and empty-effect responses"
+  },
+  "changes": {
+    "homeAssistantMcpCallsAfterFix": 1,
+    "eva1Changes": 0,
+    "homeAssistantAdministrativeChanges": 0
+  },
+  "sources": [
+    "https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/components/mcp_server/server.py",
+    "https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/helpers/llm.py",
+    "https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/helpers/intent.py",
+    "https://www.home-assistant.io/integrations/mcp_server/"
+  ],
+  "nonClaims": [
+    "The managed Eva2 conversation image still uses its existing direct Home Assistant adapter.",
+    "The MCP effect adapter has not yet been exercised through a human Telegram message.",
+    "The stop boundary has not yet been exercised against the official MCP effect adapter.",
+    "The official MCP catalog is not an administrative Home Assistant API."
+  ]
+}

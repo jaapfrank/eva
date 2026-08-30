@@ -44,6 +44,7 @@ class _ServerState:
     calls: list[dict[str, Any]] = field(default_factory=list)
     auth_headers: list[str | None] = field(default_factory=list)
     light_state: str = "off"
+    turn_on_result: dict[str, Any] | None = None
 
 
 @contextmanager
@@ -91,20 +92,36 @@ def _server(state: _ServerState) -> Iterator[str]:
             if method == "tools/call":
                 name = payload["params"]["name"]
                 if name == "HassTurnOn":
-                    state.light_state = "on"
-                    result = "Done"
+                    if state.turn_on_result is None:
+                        state.light_state = "on"
+                        result = {
+                            "data": {
+                                "failed": [],
+                                "success": [
+                                    {
+                                        "id": "light.testlamp",
+                                        "name": "testlamp",
+                                        "type": "entity",
+                                    }
+                                ],
+                            },
+                            "response_type": "action_done",
+                            "speech": {"plain": {"speech": "Done"}},
+                        }
+                    else:
+                        result = state.turn_on_result
                 else:
-                    result = "Live Context: test light is off"
+                    result = {
+                        "result": "Live Context: test light is off",
+                        "success": True,
+                    }
                 self._json(
                     payload["id"],
                     {
                         "content": [
                             {
                                 "type": "text",
-                                "text": json.dumps(
-                                    {"success": True, "result": result},
-                                    separators=(",", ":"),
-                                ),
+                                "text": json.dumps(result, separators=(",", ":")),
                             }
                         ]
                     },
@@ -261,3 +278,23 @@ def test_unadmitted_tool_is_rejected_without_network() -> None:
     )
     with pytest.raises(Exception, match="not admitted"):
         asyncio.run(adapter.execute(command))
+
+
+def test_official_intent_error_is_rejected() -> None:
+    state = _ServerState(
+        turn_on_result={
+            "data": {"code": "no_valid_targets"},
+            "response_type": "error",
+            "speech": {"plain": {"speech": "Not found"}},
+        }
+    )
+    with _server(state) as origin:
+        client = _client(origin)
+        catalog = client.catalog()
+        with pytest.raises(HomeAssistantOfficialMcpError, match="rejected"):
+            client.call(
+                admission=_turn_on_admission(),
+                arguments={"name": "missing"},
+                expected_catalog_sha256=catalog.sha256,
+            )
+    assert state.light_state == "off"

@@ -175,7 +175,7 @@ class HomeAssistantOfficialMcpClient:
             "tools/call",
             {"name": admission.tool_name, "arguments": arguments},
         )
-        result = _tool_result(raw)
+        result = _tool_result(raw, admission.effect_class)
         return AssistCallResult(
             admission.tool_name,
             result,
@@ -545,7 +545,9 @@ def _matches_json_type(value: JsonValue, expected: object) -> bool:
     return False
 
 
-def _tool_result(result: Mapping[str, Any]) -> JsonValue:
+def _tool_result(
+    result: Mapping[str, Any], effect_class: Literal["read", "effect"]
+) -> JsonValue:
     if result.get("isError") is True:
         raise HomeAssistantOfficialMcpError("Home Assistant MCP tool reported an error")
     content = result.get("content")
@@ -565,19 +567,39 @@ def _tool_result(result: Mapping[str, Any]) -> JsonValue:
         raise HomeAssistantOfficialMcpError(
             "Home Assistant MCP tool result is not JSON"
         ) from exc
-    if not isinstance(payload, dict) or not isinstance(payload.get("success"), bool):
+    if not isinstance(payload, dict):
         raise HomeAssistantOfficialMcpError(
             "Home Assistant MCP tool result contract is invalid"
         )
-    if payload["success"] is not True:
-        raise HomeAssistantOfficialMcpError("Home Assistant rejected the Assist tool")
-    if "result" not in payload:
+    if isinstance(payload.get("success"), bool):
+        if payload["success"] is not True:
+            raise HomeAssistantOfficialMcpError("Home Assistant rejected the Assist tool")
+        if "result" not in payload:
+            raise HomeAssistantOfficialMcpError(
+                "Home Assistant MCP successful result is empty"
+            )
+        result_value = payload["result"]
+        validate_json_value(result_value)
+        return result_value
+
+    response_type = payload.get("response_type")
+    data = payload.get("data")
+    if response_type == "error":
+        raise HomeAssistantOfficialMcpError("Home Assistant rejected the Assist intent")
+    if (
+        response_type not in {"action_done", "query_answer"}
+        or not isinstance(data, dict)
+        or not isinstance(data.get("success"), list)
+        or not isinstance(data.get("failed"), list)
+        or data["failed"]
+        or (effect_class == "effect" and response_type != "action_done")
+        or (effect_class == "effect" and not data["success"])
+    ):
         raise HomeAssistantOfficialMcpError(
-            "Home Assistant MCP successful result is empty"
+            "Home Assistant MCP tool result contract is invalid"
         )
-    result_value = payload["result"]
-    validate_json_value(result_value)
-    return result_value
+    validate_json_value(payload)
+    return payload
 
 
 def _decode_response(raw: bytes, content_type: str) -> dict[str, Any]:
