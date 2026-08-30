@@ -88,7 +88,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
             "_FREE_WILL_TOOL",
         )
     } == {
-        "_MEMORY_SEARCH_TOOL": "a68ad57bd13e9cac1e86b4f996c93f26438cfaae0249f151233c02a2784dd13c",
+        "_MEMORY_SEARCH_TOOL": "3b283cb89ebf253f0650dd55739d24410566b6d1e34aaf76fbe9edd302586727",
         "_REPOSITORY_PROPOSAL_TOOL": "d19c74dcf7f7a81747448558dbf1f573d28ff8044c6250bd62ccba6a9ab2a34c",
         "_PROTOTYPE_TOOL": "fc225d60d8fa19d2a3542ff528cf5554f90f75d5404d137c642aa00df7a698af",
         "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
@@ -615,8 +615,8 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     result = model.generate(turn, identity, _memory(), ())
 
     assert result.text == "Dat klinkt echt rot."
-    assert result.provider == "chatgpt-codex:gpt-5.6-luna"
-    assert requests[0]["model"] == "gpt-5.6-luna"
+    assert result.provider == "chatgpt-codex:gpt-5.4-mini"
+    assert requests[0]["model"] == "gpt-5.4-mini"
     assert requests[0]["reasoning"]["effort"] == "none"
     assert requests[0]["input"][0]["content"] == turn.text
     assert "Jaap houdt niet van formele antwoorden" in requests[0]["instructions"]
@@ -762,7 +762,7 @@ def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
         available_actions=("read_home_assistant_state",),
     )
     assert requests[0]["reasoning"]["effort"] == "none"
-    assert requests[0]["model"] == "gpt-5.6-luna"
+    assert requests[0]["model"] == "gpt-5.4-mini"
 
     with pytest.raises(ValueError, match="reasoning effort"):
         CodexConversationModel(
@@ -802,7 +802,7 @@ def test_dynamic_catalog_defers_memory_and_available_actions(
 
     assert result.action_call is not None
     assert result.action_call.name == "search_personal_memory"
-    assert bodies[0]["model"] == "gpt-5.6-luna"
+    assert bodies[0]["model"] == "gpt-5.4-mini"
     assert bodies[0]["reasoning"]["effort"] == "none"
     assert bodies[0]["tool_choice"] == "auto"
     assert bodies[0]["tools"][0] == {"execution": "server", "type": "tool_search"}

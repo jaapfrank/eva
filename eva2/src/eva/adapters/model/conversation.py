@@ -64,7 +64,6 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
-_TOOL_FREE_MODEL = "gpt-5.6-luna"
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _HOME_ASSISTANT_LIGHT_ACTION = "set_home_assistant_light"
 _HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
@@ -133,7 +132,8 @@ _MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
         "afhangt van persoonlijke geschiedenis, voorkeuren, relaties, correcties of "
         "eerdere gebeurtenissen. Gebruik dit vóór een externe actie wanneer het doel "
         "daarvan afhangt. Geef een compacte Nederlandse zoekquery met ondubbelzinnige "
-        "synoniemen, maar verzin nooit het gezochte antwoord."
+        "synoniemen, maar verzin nooit het gezochte antwoord. Een vraag wat de gebruiker "
+        "eerder zelf vond, wilde, koos of zei verplicht deze zoeking als dat feit ontbreekt."
     ),
     query_text=_schema(maxLength=1_024),
 )
@@ -696,7 +696,7 @@ class CodexConversationModel:
             "include": ["reasoning.encrypted_content"],
             "input": input_items,
             "instructions": instructions,
-            "model": _TOOL_FREE_MODEL if offer_tools else self._model,
+            "model": self._model,
             "parallel_tool_calls": False,
             "prompt_cache_key": self._cache_key(turn),
             "reasoning": {
@@ -1846,8 +1846,10 @@ class CodexConversationModel:
                 "antwoord of een extern doel afhangt van persoonlijke geschiedenis, "
                 "voorkeuren, relaties, correcties of eerdere gebeurtenissen die niet al "
                 "in de zichtbare herinneringen staan. Geef dan nog geen antwoord en kies "
-                "eerst één compacte zoekquery. Voor gewone kennis, smalltalk en aanwezige "
-                "context antwoord je direct zonder tool."
+                "eerst één compacte zoekquery. Een vraag wat de gebruiker eerder zelf vond, "
+                "wilde, koos of zei verplicht dit als het feit ontbreekt; zeg niet eerst dat "
+                "je het niet weet. Voor gewone kennis, smalltalk en aanwezige context "
+                "antwoord je direct zonder tool."
             )
         if completed_action is not None:
             if completed_action.call.name == MEMORY_SEARCH_ACTION:
