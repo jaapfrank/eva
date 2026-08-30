@@ -255,14 +255,28 @@ def _measure_image(
     if container_raw.returncode != 0:
         raise Pc01Error("PC01 active core container is unavailable")
     container = json.loads(container_raw.stdout)[0]
-    manifest_raw = subprocess.run(
-        ["ctr", "-n", "moby", "content", "get", authority["manifestDigest"]],
-        capture_output=True,
-        check=False,
-    )
-    if manifest_raw.returncode != 0:
-        raise Pc01Error("PC01 OCI manifest is unavailable")
-    manifest = json.loads(manifest_raw.stdout)
+    def content(digest: str) -> dict[str, Any]:
+        result = subprocess.run(
+            ["ctr", "-n", "moby", "content", "get", digest],
+            capture_output=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            raise Pc01Error("PC01 OCI manifest is unavailable")
+        return json.loads(result.stdout)
+
+    manifest = content(authority["manifestDigest"])
+    if manifest.get("mediaType") == "application/vnd.oci.image.index.v1+json":
+        operating_system, architecture = authority["platform"].split("/", 1)
+        candidates = [
+            descriptor
+            for descriptor in manifest.get("manifests", [])
+            if descriptor.get("platform", {}).get("os") == operating_system
+            and descriptor.get("platform", {}).get("architecture") == architecture
+        ]
+        if len(candidates) != 1 or not _DIGEST.fullmatch(candidates[0].get("digest", "")):
+            raise Pc01Error("PC01 OCI platform manifest differs")
+        manifest = content(candidates[0]["digest"])
     compressed = sum(layer["size"] for layer in manifest["layers"])
     observed = {
         "activeContainer": authority["activeContainer"],

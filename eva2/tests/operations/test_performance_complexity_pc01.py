@@ -203,3 +203,36 @@ def test_pc01_detects_changed_oci_layer_bytes(
     _observed, violations = pc01._measure_image(project, authority)
 
     assert violations == ["core_image_compressed_bytes_differ"]
+
+
+def test_pc01_resolves_one_exact_platform_manifest_from_an_oci_index(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _repo, project, authority_path = _repository(tmp_path)
+    authority = json.loads(authority_path.read_text())["preVoiceBrowserCoreImageBaseline"]
+    platform_manifest = "sha256:" + "3" * 64
+
+    def fake_run(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
+        if arguments[:2] == ["docker", "inspect"]:
+            raw = [{"Image": DIGEST, "State": {"Running": True}}]
+        elif arguments[-1] == DIGEST:
+            raw = {
+                "mediaType": "application/vnd.oci.image.index.v1+json",
+                "manifests": [
+                    {
+                        "digest": platform_manifest,
+                        "platform": {"architecture": "amd64", "os": "linux"},
+                    }
+                ],
+            }
+        else:
+            assert arguments[-1] == platform_manifest
+            raw = {"config": {"digest": CONFIG}, "layers": [{"size": 5}, {"size": 7}]}
+        return SimpleNamespace(returncode=0, stdout=json.dumps(raw).encode())
+
+    monkeypatch.setattr(pc01.subprocess, "run", fake_run)
+
+    observed, violations = pc01._measure_image(project, authority)
+
+    assert violations == []
+    assert observed["compressedLayerBytes"] == 12
