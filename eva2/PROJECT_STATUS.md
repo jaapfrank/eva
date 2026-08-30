@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 05:24 CEST
+Laatst bijgewerkt: 30 augustus 2026, 05:38 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op poort `44719` achter de gewone
+De nieuwe DBOS-loze Eva2 staat nu op poort `44720` achter de gewone
 `/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
 persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
 langetermijngeheugen.
@@ -17,7 +17,7 @@ testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
 staat op 74.810 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route op poort `44718` draait gezond en blijft de directe
+De vorige Eva2-route op poort `44719` draait gezond en blijft de directe
 terugval.
 
 De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
@@ -55,7 +55,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 - Eva1 blijft de gewone standaardservice.
 - `/eva2` gaat nu naar de exact verzegelde persoonsgebonden Eva2-image op poort
-  `44719`; poort `44718` blijft gezond als directe terugval.
+  `44720`; poort `44719` blijft gezond als directe terugval.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -80,6 +80,10 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - De huidige kandidaat laat Jaap nu 59 op dit moment bereikbare lampen aan- en
   uitzetten. Onbereikbare dubbelen, netwerkapparaat-leds, schakelaars en andere
   apparaten blijven buiten de vaste lijst.
+- Dezelfde 118 concrete aan/uitregels en één gehashte persoonsgrens staan nu
+  ook atomair in de private configuratie van beide beheerde slots. Een nieuwe
+  container is echt uitsluitend uit de Compose-render van dat bestand gestart,
+  herstart en vervolgens live gezet.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -100,8 +104,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Die exacte commit is daarna zonder bouwnetwerk tot een image gemaakt en
   netwerkloos gescand: 0 kritisch en 0 hoog. Een echte Codex-beurt en
   gesprekgeheugen na herstart waren groen. De A/B-route staat nu op poort
-  `44719`; poort `44718` blijft direct beschikbaar voor terugrol. De echte
-  Eva1-router antwoordde na deze omschakeling exact `BROADLIVE`.
+  `44720`; poort `44719` blijft direct beschikbaar voor terugrol. De echte
+  Eva1-router antwoordde na deze omschakeling exact `POLICYLIVE`.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -430,6 +434,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)
 - [59 persoonsgebonden lampen live, natuurlijke verduidelijking en replay](evidence/living-core/eva2-broad-light-control-live-2026-08-30.json)
 - [Exacte persoonsgebonden release-image live, herstart/replay en A/B](evidence/living-core/eva2-home-principal-release-image-live-2026-08-30.json)
 - [Actuele 250 release-inputs en 139 tests opnieuw verzegeld](evidence/living-core/eva2-green-text-release-inputs-bound-2026-08-30.json)

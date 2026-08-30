@@ -1,0 +1,94 @@
+{
+  "contract": "Eva2ManagedHomeEffectPolicyLiveReceipt/v1",
+  "recordedAt": "2026-08-30T03:38:42Z",
+  "status": "passed_live_with_direct_rollback",
+  "problemFound": {
+    "runningContainerRuleCount": 118,
+    "storedSlotRuleCountBefore": 1,
+    "storedSlotPrincipalHashCountBefore": 0,
+    "risk": "a managed container recreation would have lost the live bounded light policy"
+  },
+  "implementation": {
+    "commit": "9460d76a0f5210c7263932140db91f51004f7324",
+    "operator": "tools/persist_home_effect_policy.py",
+    "operatorTestsPassed": 9,
+    "managedReleaseTestsPassed": 117,
+    "ruff": "passed",
+    "releaseAuthoritySha256": "34c799478def53140514211118900db22bbb3908e8210ef19717700cf731fd40",
+    "releaseInputCount": 251,
+    "releaseTestCount": 140,
+    "sourceArchiveSha256": "c74e09073924d09a80fde416cb9dca1be4d8c1c03d76c403e92ec7b69eaf8bf4"
+  },
+  "persistedPolicy": {
+    "allowlistSha256": "e6335e46a92f90c09226b3559922d3b8326dcdfb2d678c908abc1da43b976628",
+    "effectRuleCount": 118,
+    "principalHashCount": 1,
+    "rawPrincipalIdsInReceipt": 0,
+    "slot3": {
+      "beforeSha256": "fcf71ce12e52b7ee1bd05df59199187635edf91eabddcc7cf1735c6633783019",
+      "afterSha256": "5b73a964bf6c81109a865df44490f215b5e7529a31ac750b2c024a9f154c3051",
+      "secondRunBeforeEqualsAfter": true
+    },
+    "slot4": {
+      "beforeSha256": "f816fa326ca98cf1e1de92ff80290f0fa91d71898eeaaa9b0e6e4fbdb37ff1c0",
+      "afterSha256": "2e563ed0f5a8a4fdf9f60a626b72164001b31228b1e6a69ee99f69b4cd3e8abb"
+    },
+    "privateMode": "0600",
+    "slot3ComposeRender": "passed",
+    "slot4ComposeRender": "passed"
+  },
+  "recreationProof": {
+    "directEnvFileProbe": {
+      "status": "failed_closed",
+      "reason": "Compose container-path rendering was deliberately not bypassed",
+      "container": "eva2-ha-policy-file-probe-9460d76"
+    },
+    "composeRenderedProbe": {
+      "container": "eva2-ha-policy-rendered-probe-9460d76",
+      "imageId": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+      "healthy": true,
+      "restartCount": 0,
+      "loadedEffectRuleCount": 118,
+      "loadedPrincipalHashCount": 1,
+      "loadedAllowlistSha256": "e6335e46a92f90c09226b3559922d3b8326dcdfb2d678c908abc1da43b976628",
+      "modelReply": "POLICYFILE",
+      "unauthorizedTurnOnHttpStatus": 409,
+      "authorizedTurnOffStatus": "verified",
+      "authorizedRetryCount": 0,
+      "restarted": true,
+      "timelineEventCountsAfterReplay": {
+        "STATE_VERIFIED": 1,
+        "TOOL_EXECUTED": 1,
+        "TOOL_PREPARED": 1,
+        "TOOL_REQUEST_ADMITTED": 1
+      },
+      "providerActionWasNotRepeated": true
+    }
+  },
+  "cutover": {
+    "sourcePort": 44719,
+    "targetPort": 44720,
+    "status": "switched",
+    "targetReady": true,
+    "postCutoverRouterReply": "POLICYLIVE",
+    "newDropinSha256": "6b76ccb161354493470b2aa4d4d1868f731524772e1c51e403d30ab275c8f561",
+    "previousDropinSha256": "d9349d8c8f6e673a0de92c2f78aad4970bab6d923cc7ed49fe23b33a97d6e0f9",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "liveContainer": "eva2-ha-policy-rendered-probe-9460d76",
+    "rollbackContainer": "eva2-ha-lights-fix-349e399",
+    "rollbackPort": 44719,
+    "liveHealthy": true,
+    "rollbackHealthy": true
+  },
+  "nonclaims": [
+    "This proves recreation of the core container environment from the persisted Compose-rendered policy, not recreation of all eight managed services or their data volumes.",
+    "The failed direct env-file probe remains stopped and was never routed live.",
+    "The physical Windows/WSL reboot and official seven-day acceptance run remain open."
+  ]
+}
