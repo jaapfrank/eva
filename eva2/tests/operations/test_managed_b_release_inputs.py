@@ -156,7 +156,7 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
     assert receipt["dependency_alignment"]["status"] == (
         "version_matched_runtime_dependency_inputs"
     )
-    assert receipt["dependency_alignment"]["expected_wheel_count"] == 35
+    assert receipt["dependency_alignment"]["expected_wheel_count"] == 38
     assert receipt["current_contract_count"] == 71
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64

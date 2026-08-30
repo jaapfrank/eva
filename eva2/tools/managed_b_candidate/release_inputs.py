@@ -48,8 +48,8 @@ _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
     "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, another capability provider, or production readiness.",
     "The pinned test files are inputs only; this authority does not prove collection, execution, results, skips, xfails, environment, toolchain, or complete regression coverage.",
-    "The active amd64 dependency inputs are version-matched to the 35-package requirements-4d.lock compatibility path; the stock 38-wheel authority remains historical and is not a fallback build input.",
-    "The exact offline installer command, post-install attestations, physical 35-wheel wheelhouse, and runtime import remain separate open gates.",
+    "The active amd64 dependency inputs are version-matched to the 38-package DBOS-free requirements-4d.lock with the official OpenAI SDK; the stock 38-wheel authority remains historical and is not a fallback build input.",
+    "The exact offline installer command, post-install attestations, physical 38-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
     "The immutable 0/0-scanned core now serves the explicit /eva2 route from retained managed slot 4 after a lossless two-database cutover; reboot and resident acceptance remain open gates.",
 )
