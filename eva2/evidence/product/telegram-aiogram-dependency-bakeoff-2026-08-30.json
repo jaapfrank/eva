@@ -1,0 +1,57 @@
+{
+  "contract": "Eva2DependencyBakeoff/v1",
+  "decision": "NO_GO_FOR_CURRENT_TEXT_ROUTE",
+  "evaluatedAt": "2026-08-30T15:02:00+02:00",
+  "candidate": {
+    "name": "aiogram",
+    "release": "3.31.0",
+    "releaseRepository": "aiogram/aiogram"
+  },
+  "currentSource": {
+    "commit": "ee4aeab8194a0ed7d5fe9d9e232ffdd810ebf9d4",
+    "connectorPath": "eva2/src/eva/adapters/connectors/telegram.py",
+    "connectorSha256": "9d55eb5f683e211d786cf98779ae88161b54dbafd6163c3303361d5e0783bf73",
+    "operationPath": "eva2/src/eva/operations/telegram_ingress.py",
+    "operationSha256": "04463e263de655df364367fafb6259c0f4c6d24e42d544af8a0dedd4aeec8431",
+    "measuredCombinedLines": 504,
+    "runtimeLockPath": "eva2/requirements-4d.lock",
+    "runtimeLockSha256": "5b90b36192d9e977e659a44e8e569df9c150b7479782651e538ea52640c3fe63"
+  },
+  "candidateClosure": {
+    "distributionCount": 18,
+    "newDistributionCountAgainstCurrentRuntime": 12,
+    "newDistributions": [
+      "aiofiles",
+      "aiogram",
+      "aiohappyeyeballs",
+      "aiohttp",
+      "aiosignal",
+      "attrs",
+      "certifi",
+      "frozenlist",
+      "magic-filter",
+      "multidict",
+      "propcache",
+      "yarl"
+    ],
+    "candidatePydantic": "2.13.5",
+    "currentPydantic": "2.12.5"
+  },
+  "findings": [
+    "The current public ingress contract is synchronous; aiogram is asynchronous and requires an event-loop/session bridge.",
+    "Aiogram would replace Telegram object parsing and HTTP but not Eva's person binding, group consent, durable ingress or ambiguity-safe delivery ledger.",
+    "Aiogram's default HTTP session does not retain Eva's explicit one-megabyte provider-receipt limit without additional custom transport code.",
+    "The dependency also forces a core Pydantic upgrade, widening this change beyond Telegram.",
+    "The current connector and application boundary passed 12 focused tests unchanged."
+  ],
+  "reopenWhen": [
+    "Telegram media, webhooks, callback queries or rich message editing enter the product route.",
+    "Eva's ingress boundary becomes async-native without a compatibility bridge.",
+    "A candidate removes the durable provider layer while preserving response limits and receipts."
+  ],
+  "nonClaims": [
+    "This does not claim the custom connector is generally better than aiogram.",
+    "This does not approve permanent custom Telegram protocol growth.",
+    "No live service, token, database, route or container was changed."
+  ]
+}

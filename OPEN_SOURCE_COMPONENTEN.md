@@ -27,7 +27,7 @@ overlappende Eva-code is verwijderd.
 | Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | Pydantic AI wordt deels gebruikt, maar de gesprekroute bevat nog veel eigen model- en toolsturing | **Vervangen en verkleinen** |
 | Werk hervatten na een crash | [DBOS Transact](https://github.com/dbos-inc/dbos-transact-py) boven PostgreSQL | De actuele runtime heeft DBOS juist verwijderd en bevat eigen worker- en herstelcode | **Opnieuw toelaten of met cijfers afwijzen; huidige toestand is niet dependency-first** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
-| Telegram | [aiogram](https://github.com/aiogram/aiogram) | Eva gebruikt nog een eigen HTTP-adapter en poller | **Vervangen; alleen persoonsbinding, consent en deliverybewijs blijven Eva-code** |
+| Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
 | Home Assistant normaal bedienen | Home Assistants [officiële MCP Server](https://github.com/home-assistant/home-assistant.io/blob/current/source/_integrations/mcp_server.markdown) | De live route gebruikt deze al voor algemene Assist-gereedschappen | **Houden; geen functies per lamp of apparaatgroep bouwen** |
 | Home Assistant beheren | [ha-mcp](https://github.com/homeassistant-ai/ha-mcp) als afzonderlijke beheerprovider, plus officiële HA-API waar MCP iets niet aanbiedt | Alleen delen zijn beproefd; automatiseringen, updates en integratiemigraties zijn nog te veel als losse voorbeelden beschreven | **Eén algemene beheerroute bouwen, niet één Tuya- of updateroute per voorbeeld** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
@@ -42,20 +42,19 @@ overlappende Eva-code is verwijderd.
 De actuele Pythonkern telt ongeveer 74.000 regels. De grootste concrete
 verdubbelingskansen zijn:
 
-1. de eigen Telegramtransport- en pollerlaag vervangen door aiogram;
-2. de eigen algemene worker-, retry- en crashherstellaag vervangen door DBOS;
-3. de Hindsight-adapter terugbrengen tot persoons-/privacybinding en de
+1. de eigen algemene worker-, retry- en crashherstellaag vervangen door DBOS;
+2. de Hindsight-adapter terugbrengen tot persoons-/privacybinding en de
    officiële client de opslag laten doen;
-4. Pydantic AI de model-, tool- en streamingloop laten uitvoeren;
-5. Pipecat de voice-pipeline laten dragen;
-6. één browserprovider kiezen en alle alternatieve browserlijm verwijderen.
+3. Pydantic AI de model-, tool- en streamingloop laten uitvoeren;
+4. Pipecat de voice-pipeline laten dragen;
+5. één browserprovider kiezen en alle alternatieve browserlijm verwijderen.
 
 De eerste meting maakt dit concreet. Dit zijn te onderzoeken regels, niet
 regels die blind weg mogen:
 
 | Huidige eigen laag | Gemeten regels | Wat een dependency moet overnemen |
 |---|---:|---|
-| Telegram Bot API-adapter plus polleroperatie | 504 | HTTP, updates ophalen, Bot API-objecten en verzenden; Eva's persoonsbinding en deliverybewijs blijven |
+| Telegram Bot API-adapter plus polleroperatie | 504 | De aiogram-bake-off is nu `NO-GO`: twaalf nieuwe distributies en async-lijm leveren voor tekst geen nettowinst. Dit wordt heropend zodra media/webhooks de vergelijking veranderen |
 | Duurzame subagentstore, worker en service | 1.794 | queue, lease, retry, hervatten en workerlevenscyclus; grants en ambiguïteitsbewijs blijven |
 | Hindsight-projectieadapter | 1.485 | opslag, recall, clientprotocol en retries; persoon-/groep-/consentbinding blijft |
 | Modelgesprek plus eigen Responses-transport | 2.835 | providertransport, streaming, toolloop en usage; identiteit, mandaat en eindantwoordbeleid blijven |
