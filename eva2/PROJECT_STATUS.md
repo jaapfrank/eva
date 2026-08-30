@@ -1,12 +1,12 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 03:20 CEST
+Laatst bijgewerkt: 30 augustus 2026, 03:56 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op poort `44712` achter de gewone
+De nieuwe DBOS-loze Eva2 staat nu op poort `44713` achter de gewone
 `/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
 persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
 langetermijngeheugen.
@@ -15,9 +15,9 @@ De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
-staat op 74.790 productregels,
+staat op 74.817 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route op poort `44711` draait gezond en blijft de directe
+De vorige Eva2-route op poort `44712` draait gezond en blijft de directe
 terugval.
 
 De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
@@ -37,23 +37,23 @@ overkapping uit staan. De image is zonder bouwnetwerk gemaakt en scant op 0
 kritisch en 0 hoog. Na omschakeling antwoordde Eva1's echte `/eva2`-router
 exact `live`; na een herstart wist Eva2 nog exact `koraalvink`. De vorige
 route op poort `44710` bleef daarbij gezond. Na de nieuwste omschakeling is
-poort `44711` de directe rollback.
+poort `44712` de directe rollback.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
 praktijktest zijn nog niet klaar.
 
-De nieuwe geheugencache houdt een gewone privévraag niet meer onnodig op. In
-twintig echte koude beurten antwoordde Eva 20/20 keer binnen twee seconden;
-p95 eerste inhoud was 1,35 seconde. Een expliciete geheugenvraag blijft wel op
-Hindsight wachten en een huisvraag blijft haar veilige gereedschapscontrole
-doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
-200 echte, gemengde beurten heeft doorstaan.
+De nieuwe geheugencache houdt een gewone privévraag niet meer onnodig op. De
+eerste volledige 200-beurtenproef vond daarna twee echte provider-time-outs.
+De live versie probeert zo'n gewone, nog effectvrije modelcall nu eenmaal kort
+opnieuw. De herhaalde proef gaf 200/200 antwoorden; vier herstelde pogingen
+kregen eerlijk onbekend tokengebruik. De mediaan was 1,00 seconde, maar p95
+2,285 seconde. Betrouwbaarheid is dus beter; de latencygate blijft rood.
 
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44712`.
+- `/eva2` gaat nu naar de nieuwe 35-pakket-Eva2 op poort `44713`.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -81,10 +81,11 @@ doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
   passend gereedschap wordt opgehaald wanneer dat nodig is.
 - De volledige gesprekroute, echte Codex-beurt en echte alleen-lezen Home
   Assistant-vraag zijn groen. Dezelfde route bleef na een kernherstart gezond.
-- Twintig koude gewone beurten waren 20/20 binnen twee seconden; p95 eerste
-  inhoud was 1,35 seconde. Een echte geheugenvraag en huisvraag bleven werken.
-- De live router antwoordde na de omschakeling exact `ROUTEGOED`. Na de
-  herstart kwam het eerder opgeslagen woord `zilverdistel` exact terug.
+- Tweehonderd gewone beurten gaven 200/200 antwoorden. Vier providerstalls
+  werden eenmaal veilig hersteld; p95 eerste inhoud was nog 2,285 seconde.
+- De live router antwoordde na de nieuwste omschakeling exact `RETRYLIVE`. Na
+  de kandidaat-herstart kwam het eerder opgeslagen woord `granaatveer` exact
+  terug.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -363,8 +364,8 @@ doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
   geen gecontroleerde kopie buiten deze computer.
 - De harde broncodeteller is nu voor het eerst groen. In totaal zijn 15.369
   oude test-, proef-, operator- en dubbele regels uit de runtimewortels gehaald.
-  Eva2 telt nu 74.790 productregels bij een maximum van 75.000. De marge is dus
-  210 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
+  Eva2 telt nu 74.817 productregels bij een maximum van 75.000. De marge is dus
+  183 regels. De actuele imagebasis is ook gebouwd, gescand, herstart en
   live geschakeld; de volledige PC01-gate is daardoor groen.
 - De negen grootste runtimebestanden kunnen niet meer stil verder groeien.
   Ieder heeft nu een vaste eigenaar, contract en bovengrens; een nieuw
@@ -373,9 +374,9 @@ doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
   lokale gezondheidscontroles binnen 0,4 seconde. De drie missers waren los van
   elkaar; p95 was 11 ms, p99 286 ms en de langzaamste meting 401 ms. Dit bewijst
   de lokale event-loop, nog niet Telegram-, model- of antwoordlatency.
-- De nieuwe live route vermijdt de extra plannerbeurt. De zichtbare
-  Telegram-stream moet nog over minstens 200 echte beurten worden gemeten om
-  de uiteindelijke p95-snelheidsclaim te sluiten.
+- De nieuwe live route vermijdt de extra plannerbeurt. De eerste volledige
+  200-beurtenmeting is foutloos, maar p95 eerste inhoud is met 2,285 seconde nog
+  285 milliseconden te langzaam. PC05 blijft daarom rood.
 - De wizard kan nog niet zelf een volledige verse installatie, update en
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
@@ -392,9 +393,8 @@ doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
 
 1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. De nu snelle zichtbare Telegram-stream over minstens 200 echte gemengde
-   beurten meten; tooltekst mag niet lekken en p95 eerste inhoud moet binnen de
-   productgrens blijven.
+2. De gemeten providerstaart verkorten zonder tooltekst vrij te geven; daarna
+   dezelfde verzegelde 200-beurtenreeks opnieuw uitvoeren.
 3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
 4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
@@ -411,6 +411,9 @@ doorlopen. De uiteindelijke latencygate blijft open tot dezelfde route minstens
 
 ## Laatste bewijs
 
+- [Betrouwbaardere modelroute live: 200/200 antwoorden, p95 nog rood](evidence/living-core/eva2-transient-retry-canary-cutover-live-2026-08-30.json)
+- [Retrykandidaat: image 0/0, 108 tests, HA en geheugen na herstart](evidence/product/performance-complexity-pc05-transient-retry-candidate-2026-08-30.json)
+- [Ruwe tweede 200-beurtenreeks met vier duurzaam gemarkeerde retries](evidence/product/performance-complexity-pc05-text-200-retry-candidate-2026-08-30.json)
 - [Snelle geheugenkandidaat live op `/eva2`, met gezonde terugval en geheugen na herstart](evidence/living-core/eva2-fast-memory-canary-cutover-live-2026-08-30.json)
 - [Twintig koude beurten, geheugen- en huisregressie, image 0/0](evidence/product/performance-complexity-pc03-fast-memory-candidate-2026-08-30.json)
 - [Live zichtbare stream: mediaan groen, p95 en één time-out nog rood](evidence/product/performance-complexity-pc03-live-visible-stream-development-2026-08-30.json)

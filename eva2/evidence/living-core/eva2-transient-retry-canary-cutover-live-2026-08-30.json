@@ -1,0 +1,51 @@
+{
+  "contract": "Eva2TransientRetryCanaryCutoverLiveReceipt/v1",
+  "recordedAt": "2026-08-30T01:55:00Z",
+  "status": "passed_reliability_patch_latency_gate_red",
+  "sourceCommit": "db0cd42e3de564e134a9eb17a4533097c8ac5e6b",
+  "imageId": "sha256:62ba72cab4d0c0b34e1d81ee7fc3571921de1d818593ba1c521b051af5537bfe",
+  "container": "eva2-pc03-retry-db0cd42",
+  "cutover": {
+    "sourcePort": 44712,
+    "targetPort": 44713,
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "fbe0012df43e8e75d943d83912167740a98821e07acfe6073881579b8490bc69",
+    "previousDropinSha256": "225bb503e70f9f5c60c8df485bfa0e1966dedcfdfe40582ae731c45d55e58554"
+  },
+  "checks": {
+    "eva1Active": true,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "targetContainer": "running",
+    "targetHealth": "healthy",
+    "targetRestartCount": 0,
+    "rollbackPort": 44712,
+    "rollbackReady": true,
+    "liveRouterExpectedReply": "RETRYLIVE",
+    "liveRouterActualReply": "RETRYLIVE",
+    "restartMemoryExpectedReply": "granaatveer",
+    "restartMemoryActualReply": "granaatveer"
+  },
+  "developmentRun": {
+    "turns": 200,
+    "successfulTurns": 200,
+    "failedTurns": 0,
+    "durableRetryReplies": 4,
+    "firstContentP50Milliseconds": 1001,
+    "firstContentP95Milliseconds": 2285,
+    "firstContentMaximumMilliseconds": 6757,
+    "targetMilliseconds": 2000
+  },
+  "candidateEvidence": "evidence/product/performance-complexity-pc05-transient-retry-candidate-2026-08-30.json",
+  "nonclaims": [
+    "This promotion improves the observed no-reply rate from 3/200 to 0/200; it does not make PC05 green.",
+    "The 200-turn first-content p95 remains 285 milliseconds above the product target.",
+    "The Windows/WSL reboot, V07 voice, Telegram provider latency, and seven-day practice gates remain open."
+  ]
+}
