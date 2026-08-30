@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 21:20 CEST
+Laatst bijgewerkt: 30 augustus 2026, 21:25 CEST
 
 ## Zo lees je dit bord
 
@@ -54,6 +54,11 @@ kent alleen beschikbare tools met een beschrijving, invoerschema, rechten,
 risico, uitvoering en controle achteraf. Home Assistant is slechts de eerste
 echte proefprovider voor die algemene route, geen productonderdeel of unique
 selling point.
+
+De scheiding is hard: **Eva beslist en bewaakt**, de algemene **MCP-/toolroute
+verbindt**, en Home Assistant, e-mail, agenda of browser **voeren als
+verwisselbare providers uit**. Een nieuwe provider mag dus configuratie en een
+adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
@@ -215,7 +220,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | ContextForge als algemene MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 ContextForge `v1.0.8` is exact gepind, 0/0 gescand en intern/file-secret-only gestart. De live toolkoppeling en het verwijderen van de tijdelijke Python-entry-pointlijm ontbreken nog |
+| Algemene toolaansluiting | ContextForge als MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 ContextForge `v1.0.8` is exact gepind, 0/0 gescand en intern/file-secret-only gestart. De live toolkoppeling en het verwijderen van de tijdelijke Python-entry-pointlijm ontbreken nog. Home Assistant is hierbij alleen een aangesloten provider |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
