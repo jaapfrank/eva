@@ -1,0 +1,44 @@
+{
+  "contract": "EvaDelegatedWorkLiveAuthorityPreflight/v1",
+  "recordedAt": "2026-08-30T13:30:23+02:00",
+  "status": "tested_not_deployed",
+  "gitCommit": "7f5e6e555b960e737b84de48b70e366003adf320",
+  "scopeCorrection": {
+    "finding": "The managed runtime uses readable tenant and installation identifiers, while canonical PostgreSQL authority uses their deterministic external timeline scope.",
+    "workerSourceSha256": "3ddfd3f5e417086661d8f7d794509d7f6ff25b03bbe39a7b5ccf27e6e305ba3e",
+    "runtimeSourceSha256": "06115e9942a863bccd563915c81481bfb5592758b6b337a7754f61ac07d7fb43",
+    "telegramSourceSha256": "d234e8ba69aa856de0c4fa69286ea5a15973d9a67c4cd096cf601b01ca31a768",
+    "testSourceSha256": "ae998544f558ff68629dc4bbe1afb8ad7f2b5678c489b30b2d717840e4501b8e",
+    "result": "The worker, Telegram command adapter and ordinary conversation journal now derive exactly the same scope."
+  },
+  "liveReadOnlyInventory": {
+    "activePrincipals": 1,
+    "verifiedPrincipalBindings": 1,
+    "canonicalEpisodes": 0,
+    "canonicalEpisodeGenerations": 0,
+    "delegatedWorkRuns": 0,
+    "databaseWrites": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 46,
+    "ruff": "passed",
+    "diffCheck": "passed",
+    "productPhysicalLines": 74982,
+    "maximumProductPhysicalLines": 75000,
+    "sourceBudgetViolations": [],
+    "liveEva2Ready": true,
+    "eva1Active": true,
+    "eva1RestartCount": 0
+  },
+  "decision": {
+    "workerActivated": false,
+    "telegramCommandsActivated": false,
+    "reason": "The live installation has no canonical active episode and generation to bind owner delegation to. Startup must remain closed until the ordinary private Telegram turn is admitted through that canonical authority.",
+    "forbiddenShortcut": "Do not disable foreign keys or insert a synthetic episode directly into the live database."
+  },
+  "nonClaims": [
+    "This does not prove a live Telegram research command.",
+    "The corrected source is not yet in the active managed image.",
+    "The existing clean delegated worker image was not started against the live database."
+  ]
+}

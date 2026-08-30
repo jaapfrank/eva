@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 13:21 CEST
+Laatst bijgewerkt: 30 augustus 2026, 13:33 CEST
 
 Betekenis:
 
@@ -97,7 +97,14 @@ Betekenis:
 - ✅ Na een crash start Eva een onduidelijke modeloproep niet blind opnieuw.
 - 🟡 Starten, volgen en stoppen via Telegram is met de echte adapter tegen een
   lokale testprovider bewezen.
-- ❌ Deze bediening staat nog niet standaard aan in jouw gewone Telegramchat.
+- ✅ Een echte scopefout vóór live activering is hersteld: de worker en
+  Telegram gebruiken nu dezelfde servergebonden database-identiteit als het
+  gewone gesprek. De 46 gerichte controles zijn groen.
+- 🟡 De live voorcontrole vond wel Jaaps geverifieerde persoon en binding, maar
+  nog geen canonieke actieve gespreksepisode. Daarom blijft de bediening
+  terecht uit totdat de gewone privéturn via die bestaande kerncontracten is
+  toegelaten; er is niets handmatig in de database gezet.
+- ❌ Deze bediening staat dus nog niet aan in jouw gewone Telegramchat.
 
 ## Snelheid en betrouwbaarheid
 
@@ -166,8 +173,8 @@ Betekenis:
 ## Eerstvolgende stappen
 
 1. De bewapende Windows/WSL-herstartproef afronden.
-2. De beheerde Telegrambediening voor onderzoek echt in de gebruikersroute
-   beproeven.
+2. De gewone privé-Telegramturn aan Eva's canonieke episode koppelen en daarna
+   de beheerde onderzoekbediening echt in de gebruikersroute beproeven.
 3. Tuya veilig per apparaat naar LocalTuya of Matter omzetten, met één proef en
    terugrolcontrole voordat de rest volgt.
 4. Veilig wijzigen van bestaande automatiseringen en doelgerichte updates met
