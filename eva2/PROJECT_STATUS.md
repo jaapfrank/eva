@@ -116,8 +116,9 @@ Betekenis:
   weigert andere cases, herhaalt een mislukt geval niet en lekt geen ruwe
   modeltekst naar de samenvatting.
 - 🟡 De vier benodigde benchmarkdiensten zijn exact vastgezet. Alleen het
-  model krijgt internet; worker, database en controller blijven intern. De
-  configuratie is groen gerenderd maar nog niet gestart.
+  model krijgt internet; worker, database en controller blijven intern en
+  publiceren geen poorten. De echte registratie van alle 60 ontwikkelcases is
+  groen; de geselecteerde cases zijn nog niet uitgevoerd.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.

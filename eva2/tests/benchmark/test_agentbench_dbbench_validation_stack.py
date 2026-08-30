@@ -28,15 +28,13 @@ def test_all_images_are_digest_pinned_and_never_pulled() -> None:
         assert service["pull_policy"] == "never"
 
 
-def test_only_model_has_egress_and_only_controller_has_a_host_port() -> None:
+def test_only_model_has_egress_and_no_service_has_a_host_port() -> None:
     services = _services()
     assert services["controller"]["networks"] == ["task"]
     assert services["worker"]["networks"] == ["task"]
     assert services["mysql"]["networks"] == ["task"]
     assert services["model"]["networks"] == ["task", "model-egress"]
-    assert "ports" in services["controller"]
-    assert services["controller"]["ports"][0].startswith("127.0.0.1:")
-    assert all("ports" not in services[name] for name in ("worker", "mysql", "model"))
+    assert all("ports" not in service for service in services.values())
 
 
 def test_worker_has_no_socket_mount_and_uses_only_the_tool_free_model() -> None:

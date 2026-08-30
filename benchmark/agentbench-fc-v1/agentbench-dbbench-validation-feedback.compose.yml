@@ -6,8 +6,6 @@ services:
     cap_drop: ["ALL"]
     security_opt: ["no-new-privileges:true"]
     command: ["controller", "--dashboard=false", "--host", "0.0.0.0", "--port", "5020"]
-    ports:
-      - "127.0.0.1:${EVA_AGENTBENCH_CONTROLLER_PORT:?set a private controller port}:5020"
     networks: [task]
 
   mysql:

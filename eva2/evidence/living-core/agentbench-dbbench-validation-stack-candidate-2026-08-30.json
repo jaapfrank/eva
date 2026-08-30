@@ -1,14 +1,14 @@
 {
   "contract": "EvaAgentBenchDbBenchValidationStackCandidate/v1",
-  "observedAt": "2026-08-30T11:07:45+02:00",
-  "status": "rendered_not_started",
+  "observedAt": "2026-08-30T11:12:10+02:00",
+  "status": "runtime_registered_not_run",
   "services": ["controller", "model", "mysql", "worker"],
   "boundaries": {
     "allImagesDigestPinned": true,
     "pullPolicyNever": true,
     "taskNetworkInternal": true,
     "onlyModelHasEgress": true,
-    "onlyControllerHasLoopbackPort": true,
+    "hostPublishedPorts": 0,
     "workerDockerSocket": false,
     "workerHostMounts": 0,
     "onlyModelReceivesAccessLease": true,
@@ -19,16 +19,23 @@
     "composeConfigPassed": true,
     "focusedTestsPassed": 5,
     "ruffPassed": true,
-    "containersStarted": 0,
+    "containersStarted": 4,
+    "registeredDevelopmentCases": 60,
+    "workerRegistered": true,
+    "mysqlAlive": true,
+    "controllerPrivateHttpReachable": true,
+    "workerInternetEgressBlocked": true,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
     "modelCalls": 0,
     "benchmarkCasesRun": 0
   },
   "sourceSha256": {
-    "benchmark/agentbench-fc-v1/agentbench-dbbench-validation-feedback.compose.yml": "be44692024f263e8920d30c1b544a19608c8596b1cc358fc37a97b068da068d8",
-    "eva2/tests/benchmark/test_agentbench_dbbench_validation_stack.py": "5a859cd38ac2c7b392d594b54fe3c80d60cc18069b72e5cbab0f8e69fe2ae03a"
+    "benchmark/agentbench-fc-v1/agentbench-dbbench-validation-feedback.compose.yml": "27c615bc974d24df8d62e544cd6ec7c3b2044a94ffdfc767bbdee0d1fb6ee993",
+    "eva2/tests/benchmark/test_agentbench_dbbench_validation_stack.py": "db08814b4d330208d37de8b0fc268a4ff9f789be48fd8e438243c73aa2a60012"
   },
   "nonClaims": [
-    "The four-service stack has not been started.",
+    "The selected development cases have not been started.",
     "No benchmark result or official score was produced.",
     "No superiority claim is made."
   ]
