@@ -10,14 +10,17 @@ import sqlalchemy as sa
 
 import eva.adapters.postgres.conversation_actions as conversation_actions_module
 
+from eva.adapters.connectors.home_assistant import (
+    HomeAssistantConversationReadPlanner,
+)
 from eva.adapters.postgres.conversation_actions import (
     PostgresConversationActions,
     PostgresPersonalInterestStore,
     PostgresPersonalPrototypeStore,
     PostgresPersonalProductReleaseStore,
 )
-from eva.adapters.postgres.home_assistant_reads import (
-    PostgresHomeAssistantConversationReads,
+from eva.adapters.postgres.external_conversation_tools import (
+    PostgresExternalConversationTools,
 )
 from eva.adapters.postgres.operational_timeline import TimelineEvent
 from eva.application.conversation import (
@@ -87,9 +90,12 @@ def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> Non
     actions = PostgresConversationActions(
         engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 engine,
-                HomeAssistant(),  # type: ignore[arg-type]
+                HomeAssistantConversationReadPlanner(
+                    HomeAssistant(),  # type: ignore[arg-type]
+                ),
+                object(),  # type: ignore[arg-type]
             ),
         ),
     )
@@ -120,8 +126,11 @@ def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> 
     actions = PostgresConversationActions(
         engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 engine,
+                HomeAssistantConversationReadPlanner(
+                    object(),  # type: ignore[arg-type]
+                ),
                 object(),  # type: ignore[arg-type]
             ),
         ),

@@ -120,8 +120,7 @@
       "src/eva/adapters/model/conversation.py": 0,
       "src/eva/adapters/postgres/advanced_tasks.py": 13,
       "src/eva/adapters/postgres/conversation_actions.py": 0,
-      "src/eva/adapters/postgres/home_assistant_reads.py": 49,
-      "src/eva/bootstrap/runtime.py": 209,
+      "src/eva/bootstrap/runtime.py": 206,
       "src/eva/contracts/voice.py": 1
     }
   },

@@ -114,6 +114,8 @@ class PostgresExternalConversationTools:
             ),
             "source_message_id": turn.message_id,
         }
+        if preparation.observation_output_key is not None:
+            admission["observation_output_key"] = preparation.observation_output_key
         timeline = self._timeline(turn)
         try:
             timeline.create_thread(
@@ -189,12 +191,37 @@ class PostgresExternalConversationTools:
         proof = self._event_data(events[-1]).get("proof")
         if proof is not None and not isinstance(proof, dict):
             raise ConversationConflict("external tool proof is malformed")
+        observation_output: dict[str, JsonValue] = {}
+        observation_output_key = admission.get("observation_output_key")
+        if observation_output_key is not None:
+            if (
+                not isinstance(observation_output_key, str)
+                or not observation_output_key.isidentifier()
+                or len(observation_output_key) > 80
+                or observation_output_key in receipt_output
+                or observation_output_key
+                in {"contract", "durable", "proof", "status"}
+            ):
+                raise ConversationConflict(
+                    "external tool observation output key is malformed"
+                )
+            evidence = proof.get("evidence") if isinstance(proof, dict) else None
+            observation = (
+                evidence.get("observation") if isinstance(evidence, dict) else None
+            )
+            if status == "verified":
+                if not isinstance(observation, dict):
+                    raise ConversationConflict(
+                        "external tool verified observation is missing"
+                    )
+                observation_output[observation_output_key] = observation
         return ConversationActionReceipt(
             ConversationActionCall(call_id, str(action_name), arguments),
             {
                 "contract": "EvaConversationActionReceipt/v1",
                 "durable": True,
                 **receipt_output,
+                **observation_output,
                 "proof": proof,
                 "status": status,
             },

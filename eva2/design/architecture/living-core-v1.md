@@ -65,11 +65,11 @@ Zij kent geen Home Assistant, Tuya, agenda-, mail- of browsersemantiek. Zulke
 kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
-De bestaande bron voldoet hier nog niet aan. Acht bestanden in applicatie,
-applicatie, contracts, een gespecialiseerde PostgreSQL-adapter en bootstrap
-bevatten samen nog 509 Home Assistant-/Tuya-specifieke identifiers. De centrale
+De bestaande bron voldoet hier nog niet aan. Vijf bestanden in applicatie,
+contracts, een gespecialiseerde PostgreSQL-adapter en bootstrap
+bevatten samen nog 457 Home Assistant-/Tuya-specifieke identifiers. De centrale
 modeladapter en gesprekspersistence staan beide op nul. De teller herkent ook
-spaties en CamelCase. De eerste verplaatsingen hebben 448 identifiers verwijderd.
+spaties en CamelCase. De eerste verplaatsingen hebben 500 identifiers verwijderd.
 Gewone lees-/aan-uittools, automatiseringen, migratieplanning en HACS-repository-
 en pakketacties leveren schema, antwoordinstructie, validatie en
 providercommando nu vanuit adapters. Zij registreren via
@@ -87,11 +87,15 @@ generieke route toegelaten en exact teruggelezen; na een nieuwe procesinstantie
 werd de inventaris niet opnieuw opgehaald. Ook een repositoryregistratie en
 pakketinstallatie doorliepen in een echte wegwerp-PostgreSQL dezelfde route met
 expliciete versie-/planbinding en onafhankelijke readback; na procesherstart
-werd geen provideractie herhaald. De architectuurchecker legt
+werd geen provideractie herhaald. Actuele toestand en recorderhistorie lopen nu
+eveneens door dit contract. Twee echte PostgreSQL-proeven bewaarden hun
+waarneming duurzaam en een nieuwe procesinstantie las die terug zonder de
+provider opnieuw te benaderen; de aparte Home Assistant-readadapter is verwijderd.
+De architectuurchecker legt
 de resterende aantallen als
 uitsluitend dalende bovengrens vast: geen nieuw bestand en geen bestaand bestand
 mag meer providerspecifieke kernlogica krijgen. De gate wordt pas inhoudelijk
-groen wanneer alle acht bovengrenzen nul zijn en twee verschillende providers
+groen wanneer alle zeven bovengrenzen nul zijn en twee verschillende providers
 zonder kernwijziging dezelfde duurzame tool- en readbackroute doorlopen.
 
 ## De drie geheugens
@@ -641,8 +645,11 @@ zonder kernwijziging dezelfde duurzame tool- en readbackroute doorlopen.
   het betrof de echte connector tegen een geïsoleerd Bot API-contractendpoint.
   Bewijs:
   `evidence/living-core/live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json`.
-- Actuele toestand en recorderhistorie zijn uit de grote conversation-actions-
-  adapter gehaald naar `adapters/postgres/home_assistant_reads.py`. De echte
+- Actuele toestand en recorderhistorie zijn destijds uit de grote
+  conversation-actions-adapter gehaald. Die tijdelijke aparte readadapter is
+  inmiddels verwijderd; beide reads lopen nu door
+  `adapters/postgres/external_conversation_tools.py` met hun providerschema en
+  uitvoering in `adapters/connectors/home_assistant.py`. De oorspronkelijke echte
   vraag “Staat de verwarming in de overkapping nu aan?” liet het model zelf de
   state-read kiezen en antwoordde “Nee, die staat uit.” De apart uitgevoerde
   Home Assistant-GET gaf byte-inhoudelijk dezelfde `off`-toestand. De tijdlijn

@@ -61,9 +61,6 @@ from eva.adapters.postgres.conversation_actions import (
     PostgresPersonalProductReleaseStore,
     PostgresPersonalPrototypeStore,
 )
-from eva.adapters.postgres.home_assistant_reads import (
-    PostgresHomeAssistantConversationReads,
-)
 from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
 )
@@ -2115,7 +2112,11 @@ def create_runtime_app() -> FastAPI:
             ()
             if external_provider is None
             else (
-                PostgresHomeAssistantConversationReads(engine, external_provider),
+                PostgresExternalConversationTools(
+                    engine,
+                    external_provider.conversation_read_planner(),
+                    external_provider,
+                ),
                 *(
                     (
                         PostgresExternalConversationTools(

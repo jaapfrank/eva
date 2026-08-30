@@ -8,6 +8,7 @@ from eva.application.conversation import (
     ConversationClarificationRequired,
     ConversationModelResult,
     ConversationObservationBinding,
+    ConversationToolPreparation,
     ConversationTurn,
     IdentityProfile,
     LivingConversation,
@@ -26,6 +27,29 @@ from eva.contracts.planning import ConfirmedFact
 
 
 NOW = "2026-08-23T14:00:00Z"
+
+
+def test_external_tool_observation_output_key_is_fail_closed() -> None:
+    preparation = ConversationToolPreparation(
+        tool_name="calendar.read",
+        arguments={"day": "tomorrow"},
+        expected_proof={"day": "tomorrow"},
+        receipt_output={"calendar": "personal"},
+        observation_output_key="appointments",
+    )
+    assert preparation.observation_output_key == "appointments"
+
+    for invalid in ("status", "not-a-key", "calendar"):
+        with pytest.raises(
+            ValueError, match="prepared conversation observation output is invalid"
+        ):
+            ConversationToolPreparation(
+                tool_name="calendar.read",
+                arguments={"day": "tomorrow"},
+                expected_proof={"day": "tomorrow"},
+                receipt_output={"calendar": "personal"},
+                observation_output_key=invalid,
+            )
 
 
 def test_bundled_procedural_identity_is_the_exact_current_eva_pack() -> None:

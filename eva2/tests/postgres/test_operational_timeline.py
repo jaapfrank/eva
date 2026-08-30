@@ -35,11 +35,12 @@ from eva.adapters.postgres.telegram_group_consent import (
 from eva.adapters.postgres.telegram_group_observation import (
     PostgresTelegramGroupObservationStore,
 )
-from eva.adapters.postgres.home_assistant_reads import (
-    PostgresHomeAssistantConversationReads,
-)
 from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
+)
+from eva.adapters.connectors.home_assistant import (
+    HomeAssistantConversationReadPlanner,
+    HomeAssistantToolAdapter,
 )
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
@@ -1815,7 +1816,10 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
 ) -> None:
     calls: list[tuple[tuple[str, ...], str, str, datetime]] = []
 
-    class HomeAssistant:
+    class HomeAssistant(HomeAssistantToolAdapter):
+        def __init__(self) -> None:
+            pass
+
         async def resolve_history_targets(  # type: ignore[no-untyped-def]
             self, target, entity_kind
         ):
@@ -1882,16 +1886,17 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
     actions = PostgresConversationActions(
         timeline_engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 timeline_engine,
-                provider,  # type: ignore[arg-type]
+                HomeAssistantConversationReadPlanner(provider),
+                provider,
             ),
         ),
     )
 
     receipt = actions.execute(turn, call)
 
-    assert receipt.output["status"] == "observed"
+    assert receipt.output["status"] == "verified"
     assert receipt.output["history"]["matches"][0]["changed_at"] == (
         "2026-08-23T22:15:00+02:00"
     )
@@ -1899,9 +1904,10 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
     restarted = PostgresConversationActions(
         timeline_engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 timeline_engine,
-                provider,  # type: ignore[arg-type]
+                HomeAssistantConversationReadPlanner(provider),
+                provider,
             ),
         ),
     )
@@ -1914,12 +1920,14 @@ def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(
         ),
     )
     timeline = PostgresOperationalTimeline(timeline_engine, scope)
-    thread_id = PostgresHomeAssistantConversationReads.thread_id(
+    thread_id = PostgresExternalConversationTools._thread_id(
         turn, "read_home_assistant_history"
     )
     assert [event.event_type for event in timeline.events(thread_id)] == [
-        "READ_REQUEST_ADMITTED",
-        "READ_OBSERVED",
+        "TOOL_REQUEST_ADMITTED",
+        "TOOL_PREPARED",
+        "TOOL_EXECUTED",
+        "STATE_VERIFIED",
     ]
 
 
@@ -1928,7 +1936,10 @@ def test_home_assistant_current_state_read_is_durable_and_not_repeated(
 ) -> None:
     calls: list[str] = []
 
-    class HomeAssistant:
+    class HomeAssistant(HomeAssistantToolAdapter):
+        def __init__(self) -> None:
+            pass
+
         async def resolve_switch(self, target):  # type: ignore[no-untyped-def]
             assert target == "verwarming in de overkapping"
             return {
@@ -1966,24 +1977,26 @@ def test_home_assistant_current_state_read_is_durable_and_not_repeated(
     actions = PostgresConversationActions(
         timeline_engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 timeline_engine,
-                provider,  # type: ignore[arg-type]
+                HomeAssistantConversationReadPlanner(provider),
+                provider,
             ),
         ),
     )
 
     receipt = actions.execute(turn, call)
 
-    assert receipt.output["status"] == "observed"
+    assert receipt.output["status"] == "verified"
     assert receipt.output["state"]["state"] == "on"
     assert calls == ["switch.heater_overkapping"]
     restarted = PostgresConversationActions(
         timeline_engine,
         external_tools=(
-            PostgresHomeAssistantConversationReads(
+            PostgresExternalConversationTools(
                 timeline_engine,
-                provider,  # type: ignore[arg-type]
+                HomeAssistantConversationReadPlanner(provider),
+                provider,
             ),
         ),
     )

@@ -276,6 +276,76 @@ class HomeAssistantConversationEffectPlanner:
         )
 
 
+class HomeAssistantConversationReadPlanner:
+    """Resolve provider-owned read requests before generic durable execution."""
+
+    action_names = ("read_home_assistant_history", "read_home_assistant_state")
+
+    def __init__(self, provider: HomeAssistantToolAdapter) -> None:
+        self._provider = provider
+
+    async def prepare(
+        self, turn: ConversationTurn, call: ConversationActionCall
+    ) -> ConversationToolPreparation:
+        if call.name == "read_home_assistant_history":
+            arguments = _validated_history_arguments(call.arguments)
+            try:
+                resolved = await self._provider.resolve_history_targets(
+                    arguments["target"], arguments["entity_kind"]
+                )
+            except ValueError as error:
+                subject = (
+                    "lamp" if arguments["entity_kind"] == "light" else "apparaat"
+                )
+                raise ConversationClarificationRequired(
+                    f"Welke {subject} bedoel je precies?"
+                ) from error
+            entity_ids = [item["entity_id"] for item in resolved]
+            friendly_names = [item["friendly_name"] for item in resolved]
+            return ConversationToolPreparation(
+                tool_name="home_assistant.read_history",
+                arguments={
+                    "entity_ids": entity_ids,
+                    "observed_at": turn.occurred_at,
+                    "period": arguments["period"],
+                    "transition_to": arguments["transition_to"],
+                },
+                expected_proof={"entity_ids": entity_ids},
+                receipt_output={
+                    "friendly_name": (
+                        friendly_names[0]
+                        if len(friendly_names) == 1
+                        else friendly_names
+                    )
+                },
+                observation_output_key="history",
+            )
+        if call.name == "read_home_assistant_state":
+            arguments = _validated_state_arguments(call.arguments)
+            resolver = (
+                self._provider.resolve_light
+                if arguments["entity_kind"] == "light"
+                else self._provider.resolve_switch
+            )
+            try:
+                resolved = await resolver(arguments["target"])
+            except ValueError as error:
+                subject = (
+                    "lamp" if arguments["entity_kind"] == "light" else "apparaat"
+                )
+                raise ConversationClarificationRequired(
+                    f"Welke {subject} bedoel je precies?"
+                ) from error
+            return ConversationToolPreparation(
+                tool_name="home_assistant.read_state",
+                arguments={"entity_id": resolved["entity_id"]},
+                expected_proof={"entity_id": resolved["entity_id"]},
+                receipt_output={"friendly_name": resolved["friendly_name"]},
+                observation_output_key="state",
+            )
+        raise ConversationConflict(f"unsupported provider action {call.name!r}")
+
+
 @dataclass(frozen=True, slots=True)
 class HomeAssistantConfig:
     base_url: str
@@ -315,6 +385,9 @@ class HomeAssistantToolAdapter:
             allowlist=allowlist,
             principal_sha256_allowlist=principal_sha256_allowlist,
         )
+
+    def conversation_read_planner(self) -> HomeAssistantConversationReadPlanner:
+        return HomeAssistantConversationReadPlanner(self)
 
     async def health(self) -> bool:
         payload = await self._request_json("GET", "/api/")
@@ -534,6 +607,37 @@ class HomeAssistantToolAdapter:
         return [value for value in decoded if isinstance(value, dict)]
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
+        if command.tool_name == "home_assistant.read_state":
+            entity_id = _read_state_command(command)
+            observation = await self.state(entity_id=entity_id)
+            return ToolDispatchResult(
+                accepted=True,
+                provider_ref=None,
+                details={"observation": observation},
+            )
+        if command.tool_name == "home_assistant.read_history":
+            entity_ids, period, transition_to, observed_at = _read_history_command(
+                command
+            )
+            if len(entity_ids) == 1:
+                observation = await self.history(
+                    entity_id=entity_ids[0],
+                    period=period,
+                    transition_to=transition_to,
+                    observed_at=observed_at,
+                )
+            else:
+                observation = await self.history_group(
+                    entity_ids=entity_ids,
+                    period=period,
+                    transition_to=transition_to,
+                    observed_at=observed_at,
+                )
+            return ToolDispatchResult(
+                accepted=True,
+                provider_ref=None,
+                details={"observation": observation},
+            )
         domain, service, entity_id, _service_data = _command_fields(command)
         try:
             details = await asyncio.to_thread(
@@ -558,6 +662,38 @@ class HomeAssistantToolAdapter:
         command: ToolRequest,
         dispatch: ToolDispatchResult | None,
     ) -> ToolProofObservation:
+        if command.tool_name in {
+            "home_assistant.read_history",
+            "home_assistant.read_state",
+        }:
+            observation = (
+                dispatch.details.get("observation")
+                if dispatch is not None and dispatch.accepted
+                else None
+            )
+            if not isinstance(observation, dict):
+                raise RuntimeError("Home Assistant read lacks an observation")
+            expected = command.expected_proof
+            if command.tool_name == "home_assistant.read_state":
+                if observation.get("entity_id") != expected.get("entity_id"):
+                    raise RuntimeError("Home Assistant state observation differs")
+            else:
+                expected_ids = expected.get("entity_ids")
+                observed_ids = observation.get("entity_ids")
+                if (
+                    not isinstance(expected_ids, list)
+                    or (
+                        len(expected_ids) == 1
+                        and observation.get("entity_id") != expected_ids[0]
+                    )
+                    or (len(expected_ids) > 1 and observed_ids != expected_ids)
+                ):
+                    raise RuntimeError("Home Assistant history observation differs")
+            return ToolProofObservation(
+                "verified",
+                expected,
+                {"observation": observation, "source": "home_assistant_read"},
+            )
         _, _, entity_id, _ = _command_fields(command)
         expected = command.expected_proof
         if expected.get("entity_id") != entity_id:
@@ -655,6 +791,91 @@ def _command_fields(
     if not isinstance(service_data, dict):
         raise ValueError("Home Assistant service_data must be an object")
     return domain, service, entity_id, service_data
+
+
+def _validated_state_arguments(raw: dict[str, JsonValue]) -> dict[str, str]:
+    if set(raw) != {"entity_kind", "target"}:
+        raise ConversationConflict("provider state read has wrong fields")
+    return _validated_read_target(raw)
+
+
+def _validated_history_arguments(raw: dict[str, JsonValue]) -> dict[str, str]:
+    if set(raw) != {"entity_kind", "period", "target", "transition_to"}:
+        raise ConversationConflict("provider history read has wrong fields")
+    result = _validated_read_target(raw)
+    period = raw.get("period")
+    transition_to = raw.get("transition_to")
+    if period not in {"yesterday", "today", "last_24_hours"}:
+        raise ConversationConflict("provider history period is invalid")
+    if transition_to not in {"on", "off", "any"}:
+        raise ConversationConflict("provider history transition is invalid")
+    result.update({"period": str(period), "transition_to": str(transition_to)})
+    return result
+
+
+def _validated_read_target(raw: dict[str, JsonValue]) -> dict[str, str]:
+    target = raw.get("target")
+    entity_kind = raw.get("entity_kind")
+    if entity_kind not in {"light", "switch"}:
+        raise ConversationConflict("provider read entity kind is invalid")
+    if not isinstance(target, str) or not target.strip() or len(target) > 160:
+        raise ConversationConflict("provider read target is invalid")
+    return {"entity_kind": str(entity_kind), "target": target.strip()}
+
+
+def _read_state_command(command: ToolRequest) -> str:
+    if set(command.arguments) != {"entity_id"}:
+        raise ValueError("Home Assistant state read command has wrong fields")
+    entity_id = command.arguments.get("entity_id")
+    if not isinstance(entity_id, str) or _ENTITY.fullmatch(entity_id) is None:
+        raise ValueError("Home Assistant state read entity is invalid")
+    if command.expected_proof != {"entity_id": entity_id}:
+        raise ValueError("Home Assistant state read proof is invalid")
+    return entity_id
+
+
+def _read_history_command(
+    command: ToolRequest,
+) -> tuple[tuple[str, ...], str, str, datetime]:
+    if set(command.arguments) != {
+        "entity_ids",
+        "observed_at",
+        "period",
+        "transition_to",
+    }:
+        raise ValueError("Home Assistant history read command has wrong fields")
+    raw_entity_ids = command.arguments.get("entity_ids")
+    period = command.arguments.get("period")
+    transition_to = command.arguments.get("transition_to")
+    raw_observed_at = command.arguments.get("observed_at")
+    if (
+        not isinstance(raw_entity_ids, list)
+        or not 1 <= len(raw_entity_ids) <= 8
+        or len(set(str(value) for value in raw_entity_ids)) != len(raw_entity_ids)
+        or any(
+            not isinstance(value, str)
+            or _ENTITY.fullmatch(value) is None
+            or value.split(".", 1)[0] not in {"light", "switch"}
+            for value in raw_entity_ids
+        )
+    ):
+        raise ValueError("Home Assistant history read entities are invalid")
+    if period not in {"yesterday", "today", "last_24_hours"}:
+        raise ValueError("Home Assistant history read period is invalid")
+    if transition_to not in {"on", "off", "any"}:
+        raise ValueError("Home Assistant history read transition is invalid")
+    if not isinstance(raw_observed_at, str):
+        raise ValueError("Home Assistant history read time is invalid")
+    try:
+        observed_at = datetime.fromisoformat(raw_observed_at.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise ValueError("Home Assistant history read time is invalid") from error
+    if observed_at.tzinfo is None or observed_at.utcoffset() is None:
+        raise ValueError("Home Assistant history read time has no zone")
+    entity_ids = tuple(raw_entity_ids)
+    if command.expected_proof != {"entity_ids": list(entity_ids)}:
+        raise ValueError("Home Assistant history read proof is invalid")
+    return entity_ids, str(period), str(transition_to), observed_at
 
 
 def _select_observed(
@@ -1006,5 +1227,6 @@ def _select_group_history(
 __all__ = [
     "HomeAssistantConfig",
     "HomeAssistantConversationEffectPlanner",
+    "HomeAssistantConversationReadPlanner",
     "HomeAssistantToolAdapter",
 ]

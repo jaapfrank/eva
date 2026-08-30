@@ -485,6 +485,7 @@ class ConversationToolPreparation:
     receipt_output: dict[str, JsonValue]
     execution_timeout_seconds: int = 10
     verification_timeout_seconds: int = 10
+    observation_output_key: str | None = None
 
     def __post_init__(self) -> None:
         if not self.tool_name.strip() or len(self.tool_name) > 240:
@@ -498,6 +499,14 @@ class ConversationToolPreparation:
             raise ValueError("prepared conversation execution timeout is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:
             raise ValueError("prepared conversation verification timeout is invalid")
+        if self.observation_output_key is not None and (
+            not self.observation_output_key.isidentifier()
+            or len(self.observation_output_key) > 80
+            or self.observation_output_key in self.receipt_output
+            or self.observation_output_key
+            in {"contract", "durable", "proof", "status"}
+        ):
+            raise ValueError("prepared conversation observation output is invalid")
 
 
 @dataclass(frozen=True, slots=True)
