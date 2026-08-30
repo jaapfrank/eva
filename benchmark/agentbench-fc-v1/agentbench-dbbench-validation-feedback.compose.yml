@@ -1,0 +1,80 @@
+services:
+  controller:
+    image: eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33
+    pull_policy: never
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    command: ["controller", "--dashboard=false", "--host", "0.0.0.0", "--port", "5020"]
+    ports:
+      - "127.0.0.1:${EVA_AGENTBENCH_CONTROLLER_PORT:?set a private controller port}:5020"
+    networks: [task]
+
+  mysql:
+    image: mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb
+    pull_policy: never
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
+    volumes:
+      - type: bind
+        source: ${EVA_AGENTBENCH_MYSQL_SECRET_FILE:?set a private synthetic password file}
+        target: /run/secrets/mysql-root-password
+        read_only: true
+        bind:
+          create_host_path: false
+    tmpfs:
+      - /var/lib/mysql:rw,nosuid,nodev,noexec,size=1g
+      - /var/run/mysqld:rw,nosuid,nodev,noexec,size=16m
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    mem_limit: 1g
+    networks: [task]
+
+  model:
+    image: eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616
+    pull_policy: never
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      EVA_TOOL_FREE_AUTH_FILE: /run/eva/model-lease/auth.json
+      EVA_TOOL_FREE_MODEL: gpt-5.4-mini
+    volumes:
+      - type: bind
+        source: ${EVA_AGENTBENCH_MODEL_LEASE_DIR:?set the access-only model lease directory}
+        target: /run/eva/model-lease
+        read_only: true
+        bind:
+          create_host_path: false
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=32m
+    networks: [task, model-egress]
+
+  worker:
+    image: eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93
+    pull_policy: never
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    command:
+      - dbbench-dev-external-mysql
+      - --config
+      - /app/configs/tasks/dbbench-dev-external-mysql.yaml
+      - --controller
+      - http://controller:5020/api
+      - --self
+      - http://worker:5021/api
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5021"
+    environment:
+      EVA_AGENTBENCH_TOOL_FREE_ENDPOINT: http://model:8090/v1/generate
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=64m
+    depends_on: [controller, mysql, model]
+    networks: [task]
+
+networks:
+  task:
+    internal: true
+  model-egress: {}

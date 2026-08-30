@@ -115,6 +115,9 @@ Betekenis:
   geen resultaat van bekeken en de proef is nog niet gestart. De batchroute
   weigert andere cases, herhaalt een mislukt geval niet en lekt geen ruwe
   modeltekst naar de samenvatting.
+- 🟡 De vier benodigde benchmarkdiensten zijn exact vastgezet. Alleen het
+  model krijgt internet; worker, database en controller blijven intern. De
+  configuratie is groen gerenderd maar nog niet gestart.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.
