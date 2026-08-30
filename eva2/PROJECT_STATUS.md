@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 12:19 CEST
+Laatst bijgewerkt: 30 augustus 2026, 13:12 CEST
 
 Betekenis:
 
@@ -60,10 +60,24 @@ Betekenis:
 - ✅ Eén echte MCP-huisactie liep via Jaaps bestaande persoonsmandaat en Eva's
   duurzame actielogboek. REST controleerde apart dat de al uitstaande lamp uit
   bleef; een nieuw proces voerde dezelfde actie niet opnieuw uit.
-- 🟡 De gewone Telegramgesprekroute gebruikt voor huisacties nog de directe API.
-  De MCP-adapter en stopgrens moeten nog in de beheerde Eva2-image komen.
-- ❌ Apparaten, integraties of automatiseringen in Home Assistant toevoegen of
-  wijzigen blijft een aparte beheerroute met extra toestemming.
+- ✅ De gewone `/eva2`-route gebruikt voor huisacties nu ook de officiële MCP-
+  adapter. Jaaps persoonsgrens, het duurzame actielogboek, controle achteraf en
+  bescherming tegen dubbel uitvoeren zijn hetzelfde gebleven.
+- ✅ De schone MCP-image draait in beheerd slot 4. Beide databases zijn
+  verliesloos gekopieerd; Eva1 bleef gezond.
+- 🟡 Een al gestarte huisactie kan veilig als onzeker worden bewaard, maar een
+  gewone Telegramknop om zo'n lopende actie te stoppen is nog niet aangesloten.
+- ❌ Nieuwe automatiseringen maken, integraties wijzigen en Home Assistant
+  bijwerken blijft een aparte beheerroute. Eva moet daar eerst een voorstel en
+  controle van maken; pas na toestemming mag zij schrijven.
+- 🟡 Voor Tuya zijn 7 LocalTuya-kandidaten, 2 betere Matter-routes en 3 opnieuw
+  te bouwen scènes gevonden. Dit is een migratie per apparaat, geen tekstuele
+  zoek-en-vervangactie.
+- ✅ Eva heeft die inventaris na de MCP-omschakeling opnieuw gelezen en als
+  duurzaam, niet-schrijvend migratieplan vastgelegd.
+- ❌ LocalTuya is nog niet geïnstalleerd en geen Tuya-apparaat is al omgezet.
+  Eerst volgen expliciete toelating van `xZetsubou/hass-localtuya` release
+  `2026.7.0`, de lokale sleutels en één terugrolbare proef.
 
 ## Zelfstandig onderzoek doen
 
@@ -82,9 +96,12 @@ Betekenis:
 - ✅ De laatste proef gaf 200 van 200 gewone antwoorden.
 - ✅ De meeste antwoorden begonnen binnen twee seconden; p95 was 1,918 seconde.
 - ✅ De actuele Eva2-image heeft nul hoge en nul kritieke scanbevindingen.
-- ✅ Eva2 draait automatisch herstartbaar op poort `44710`.
-- ✅ De vorige gezonde route op `44720` blijft klaar als directe terugval.
-- ✅ De bron blijft met 74.867 regels onder de grens van 75.000 regels.
+- ✅ Eva2 draait automatisch herstartbaar op poort `44711`.
+- ✅ De oude route en oude proefcontainers staan intact maar stil. Terugrollen
+  kopieert eerst nieuwe data terug en schakelt daarna pas om.
+- ✅ Een nieuwe controle weigert omschakelen zolang een oude proefcontainer nog
+  dezelfde database gebruikt.
+- ✅ De bron blijft met 74.979 regels onder de grens van 75.000 regels.
 - 🟡 De echte Windows/WSL-herstartproef staat klaar.
 - ❌ De Windows-pc moet nog één keer volledig opnieuw worden opgestart om die
   proef af te ronden.
@@ -143,9 +160,12 @@ Betekenis:
 1. De bewapende Windows/WSL-herstartproef afronden.
 2. De beheerde Telegrambediening voor onderzoek echt in de gebruikersroute
    beproeven.
-3. De bewezen MCP-adapter en stopgrens in de beheerde Eva2-gesprekroute zetten.
-4. Echte voice met microfoon en speaker afmaken.
-5. Daarna de zeven dagen lange praktijktest uitvoeren.
+3. Tuya veilig per apparaat naar LocalTuya of Matter omzetten, met één proef en
+   terugrolcontrole voordat de rest volgt.
+4. Een aparte voorstel- en goedkeuringsroute voor automatiseringen en updates
+   maken.
+5. Echte voice met microfoon en speaker afmaken en daarna de zeven dagen lange
+   praktijktest uitvoeren.
 
 Technische details en bewijs staan in
 [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),

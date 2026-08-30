@@ -1,0 +1,99 @@
+{
+  "contract": "Eva2HomeAssistantOfficialMcpManagedLiveReceipt/v1",
+  "issuedAt": "2026-08-30T13:12:13+02:00",
+  "status": "live_managed_route",
+  "implementation": {
+    "firstCommit": "62bd4fb",
+    "imageSourceCommit": "dc80308df5c6759ed0b5cfb17153fa1eae616641",
+    "operatorSourceCommit": "da90887c3ee369ec4d61fe932feb0fc5f7b44444",
+    "transport": "Home Assistant official MCP Server at /api/mcp/assist",
+    "independentReadback": "Home Assistant REST state API",
+    "newRuntimeDependencies": 0
+  },
+  "tests": {
+    "homeAssistantAndConversationCasesPassed": 63,
+    "releaseRenderAndPreflightCasesPassed": 124,
+    "quiescentCutoverCasesPassed": 8,
+    "ruff": "passed"
+  },
+  "image": {
+    "id": "sha256:25402e8ae3e5915d0a7dd519a9afd025c1c25a40081bd4d23c45efcf7411ab4d",
+    "criticalVulnerabilities": 0,
+    "highVulnerabilities": 0,
+    "offlineBuild": true,
+    "runtimeUser": "nonroot",
+    "rejectedStandardCandidate": {
+      "criticalVulnerabilities": 5,
+      "highVulnerabilities": 29,
+      "promoted": false
+    }
+  },
+  "candidateEffectProbe": {
+    "entitySha256Prefix": "93e1ee",
+    "mcpTool": "HassTurnOff",
+    "readback": "off",
+    "resultSha256Prefix": "0a5bfa",
+    "replayDidNotRepeatEffect": true
+  },
+  "cutover": {
+    "firstAttempt": {
+      "routeChanged": false,
+      "sourceRestored": true,
+      "status": "rejected_source_changed_during_snapshot"
+    },
+    "foundCause": "nine stopped-after-diagnosis proof cores shared the retained slot-3 database secret mount",
+    "newGuard": "preflight rejects every additional running container with the exact retained database mount",
+    "finalAttempt": {
+      "eva1BackupQuickCheck": "ok",
+      "eva1HttpStatusCount": 5,
+      "memoryDatabaseTableCount": 23,
+      "operationalDatabaseTableCount": 48,
+      "sourcePort": 44710,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "targetPort": 44711,
+      "targetReady": true
+    }
+  },
+  "live": {
+    "eva1Active": true,
+    "eva1Restarts": 0,
+    "eva1ClientExactReply": "MCP-LIVE",
+    "managedCoreHealthy": true,
+    "managedCoreRestarts": 0,
+    "routePort": 44711
+  },
+  "tuyaLocalPlan": {
+    "blockers": [
+      "localtuya_integration_not_loaded",
+      "localtuya_maintained_repository_not_available",
+      "localtuya_package_incompatible_with_home_assistant",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ],
+    "deviceRouteCounts": {
+      "localtuya_candidate": 7,
+      "matter_review": 2,
+      "rebuild_scene": 3
+    },
+    "mutatedHomeAssistant": false,
+    "planSha256": "c9b52fee92adf6bcb42310eb932b058eefca1aecc3423abd2f29c68c6543c451",
+    "state": "blocked_preflight",
+    "stepCount": 9
+  },
+  "releaseAuthority": {
+    "authoritySha256": "eec11ca96982b9f114945908f3248637ca07884914671801ca8ffa297bb12667",
+    "requiredInputCount": 253,
+    "requiredTestCount": 141,
+    "sourceCommit": "da90887c3ee369ec4d61fe932feb0fc5f7b44444",
+    "status": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed"
+  },
+  "nonClaims": [
+    "This receipt does not claim that every Home Assistant MCP tool is safe for every person or context.",
+    "Creating or changing Home Assistant automations, integrations and platform updates remains a separate privileged management route.",
+    "No Tuya device was migrated to LocalTuya by this step.",
+    "The Windows/WSL reboot and seven-day resident acceptance remain open.",
+    "The retained source slot and old proof containers were stopped, not deleted; lossless rollback must synchronize data before changing the route."
+  ]
+}
