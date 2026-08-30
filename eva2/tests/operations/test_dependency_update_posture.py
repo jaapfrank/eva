@@ -23,6 +23,21 @@ def test_renovate_config_is_proposal_only_and_content_addressed() -> None:
         rule.get("matchDatasources") == ["docker"] and rule.get("pinDigests") is True
         for rule in config["packageRules"]
     )
+    assert any(
+        manager.get("datasourceTemplate") == "github-releases"
+        for manager in config["customManagers"]
+    )
+
+
+def test_component_watch_includes_all_comparison_targets() -> None:
+    watch = json.loads((REPOSITORY_ROOT / "component-watch.json").read_bytes())
+
+    assert {row["repository"] for row in watch["competitors"]} == {
+        "openclaw/openclaw",
+        "NousResearch/hermes-agent",
+        "agent0ai/agent-zero",
+    }
+    assert all(row["currentRelease"] for row in watch["components"])
 
 
 def test_dependency_update_posture_checker_is_green() -> None:

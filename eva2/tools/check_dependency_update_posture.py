@@ -10,6 +10,7 @@ from pathlib import Path
 EVA2_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = EVA2_ROOT.parent
 CONFIG = REPOSITORY_ROOT / "renovate.json"
+WATCH = REPOSITORY_ROOT / "component-watch.json"
 
 
 def main() -> None:
@@ -34,6 +35,25 @@ def main() -> None:
         for rule in rules
     ):
         raise SystemExit("Docker update proposals must pin an immutable digest")
+    managers = config.get("customManagers")
+    if not isinstance(managers, list) or not any(
+        isinstance(manager, dict)
+        and manager.get("datasourceTemplate") == "github-releases"
+        and manager.get("versioningTemplate") == "loose"
+        for manager in managers
+    ):
+        raise SystemExit("upstream component and competitor releases must be watched")
+    watch = json.loads(WATCH.read_bytes())
+    competitors = watch.get("competitors")
+    watched_competitors = {
+        row.get("repository") for row in competitors if isinstance(row, dict)
+    } if isinstance(competitors, list) else set()
+    if watched_competitors != {
+        "openclaw/openclaw",
+        "NousResearch/hermes-agent",
+        "agent0ai/agent-zero",
+    }:
+        raise SystemExit("the exact three Eva competitors must be release-watched")
     print("dependency update posture: proposal-only, approval-required, digest-pinned")
 
 

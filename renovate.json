@@ -14,11 +14,23 @@
     "**/.venv/**"
   ],
   "enabledManagers": [
+    "custom.regex",
     "docker-compose",
     "dockerfile",
     "github-actions",
     "pep621",
     "pip_requirements"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)component-watch\\.json$/"],
+      "matchStrings": [
+        "\\\"repository\\\":\\s*\\\"(?<depName>[^\\\"]+)\\\",\\s*\\\"currentRelease\\\":\\s*\\\"(?<currentValue>[^\\\"]+)\\\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
+    }
   ],
   "packageRules": [
     {
@@ -36,13 +48,24 @@
     {
       "description": "Never mix a breaking update into a routine proposal.",
       "matchUpdateTypes": ["major"],
-      "dependencyDashboardApproval": true,
-      "separateMajorMinor": true
+      "dependencyDashboardApproval": true
     },
     {
       "description": "Container references remain content-addressed.",
       "matchDatasources": ["docker"],
       "pinDigests": true
+    },
+    {
+      "description": "A new competitor release reopens the comparable benchmark gate.",
+      "matchFileNames": ["component-watch.json"],
+      "matchDepNames": [
+        "openclaw/openclaw",
+        "NousResearch/hermes-agent",
+        "agent0ai/agent-zero"
+      ],
+      "labels": ["competition", "benchmark-required"],
+      "dependencyDashboardApproval": true,
+      "automerge": false
     }
   ]
 }

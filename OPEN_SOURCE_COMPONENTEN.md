@@ -84,6 +84,11 @@ vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de
 GitHub Renovate App of een vaste Renovate-runner een echte dashboardissue en
 een testvoorstel heeft gemaakt.
 
+`component-watch.json` volgt daarnaast de releases van de gekozen componenten
+én van OpenClaw, Hermes en Agent Zero. Een nieuwe concurrentrelease krijgt het
+label `benchmark-required` en heropent dus de vergelijking in plaats van stil
+aan Eva voorbij te gaan.
+
 ## Altijd voorop blijven
 
 “Beter dan de concurrentie” is geen eenmalig vinkje. Iedere beoogde

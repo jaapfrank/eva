@@ -1,0 +1,21 @@
+{
+  "contract": "Eva2UpstreamReleaseWatch/v1",
+  "checkedAt": "2026-08-30T14:47:00+02:00",
+  "components": [
+    {"repository": "pydantic/pydantic-ai", "currentRelease": "v2.36.0", "role": "agent-runtime"},
+    {"repository": "dbos-inc/dbos-transact-py", "currentRelease": "2.31.0", "role": "durable-workflows"},
+    {"repository": "vectorize-io/hindsight", "currentRelease": "v0.9.2", "role": "long-term-memory"},
+    {"repository": "aiogram/aiogram", "currentRelease": "v3.31.0", "role": "telegram"},
+    {"repository": "pipecat-ai/pipecat", "currentRelease": "v1.8.1", "role": "voice-candidate"},
+    {"repository": "livekit/agents", "currentRelease": "livekit-agents@1.7.1", "role": "voice-transport-candidate"},
+    {"repository": "microsoft/playwright-mcp", "currentRelease": "v0.0.79", "role": "browser-candidate"},
+    {"repository": "browser-use/browser-use", "currentRelease": "0.13.8", "role": "browser-candidate"},
+    {"repository": "homeassistant-ai/ha-mcp", "currentRelease": "v8.4.0", "role": "home-assistant-admin-candidate"},
+    {"repository": "renovatebot/renovate", "currentRelease": "44.52.0", "role": "dependency-updates"}
+  ],
+  "competitors": [
+    {"repository": "openclaw/openclaw", "currentRelease": "v2026.7.1-2", "role": "competitor"},
+    {"repository": "NousResearch/hermes-agent", "currentRelease": "v2026.8.27", "role": "competitor"},
+    {"repository": "agent0ai/agent-zero", "currentRelease": "v2.11", "role": "competitor"}
+  ]
+}
