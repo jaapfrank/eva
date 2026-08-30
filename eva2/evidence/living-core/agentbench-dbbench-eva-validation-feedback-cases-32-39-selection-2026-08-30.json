@@ -1,0 +1,45 @@
+{
+  "contract": "EvaAgentBenchDbBenchValidationFeedbackSelection/v1",
+  "selectedAt": "2026-08-30T10:57:04+02:00",
+  "selectedBeforeAnyCase32Through39ResultWasKnown": true,
+  "selection": {
+    "split": "development",
+    "caseIndices": [32, 33, 34, 35, 36, 37, 38, 39],
+    "selectionRule": "next eight consecutive unused development cases after 24 through 31"
+  },
+  "candidate": {
+    "repositoryCommit": "761ede5716d2b448e2c983c88e92367c33229ea8",
+    "clientSha256": "6b2908a31e504968efc7666f6a9e59d3748820367dece7739071b4f0249b8c59",
+    "runnerSha256": "f40a13c100e5cd047476b58dbf8d9b03515d1008f2a34e3de511b15e24f62bb9",
+    "feedbackLifetime": "next_prepaid_call_only",
+    "rawInvalidModelOutputReturnedToModel": false,
+    "additionalReviewerCalls": 0,
+    "hardcodedCaseAnswers": false
+  },
+  "inputs": {
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb"
+  },
+  "limits": {
+    "maximumModelCallsPerCase": 15,
+    "minimumSecondsBetweenEveryModelCall": 5,
+    "toolsExposedAtModelBoundary": 0,
+    "hiddenAnswerReadByEva": false
+  },
+  "verificationBeforeSelection": {
+    "focusedTestsPassed": 43,
+    "releaseInputTestsPassed": 27,
+    "ruffPassed": true,
+    "priorResultsForSelectedCasesPresent": false
+  },
+  "nonClaims": [
+    "This selection is not a score.",
+    "The candidate has not yet been measured on these selected cases.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}
