@@ -695,7 +695,6 @@ class CodexConversationModel:
                 *[{**tool, "defer_loading": True} for tool in catalog],
             ]
         body = {
-            "include": ["reasoning.encrypted_content"],
             "input": input_items,
             "instructions": instructions,
             "model": self._model,
