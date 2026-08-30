@@ -530,7 +530,11 @@ def _project_events(
                     action_call = _action_call(item)
                 elif item_type == "message":
                     completed_parts.extend(_message_text_parts(item))
-                elif item_type not in {"reasoning", "tool_search_call"}:
+                elif item_type not in {
+                    "reasoning",
+                    "tool_search_call",
+                    "tool_search_output",
+                }:
                     safe_item_type = (
                         item_type
                         if isinstance(item_type, str)

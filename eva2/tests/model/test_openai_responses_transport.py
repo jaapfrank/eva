@@ -361,6 +361,10 @@ def test_sdk_projection_ignores_server_tool_search_before_function_call() -> Non
         ),
         SimpleNamespace(
             type="response.output_item.done",
+            item=SimpleNamespace(type="tool_search_output"),
+        ),
+        SimpleNamespace(
+            type="response.output_item.done",
             item=SimpleNamespace(
                 arguments='{"entity_kind":"light","target":"keuken"}',
                 call_id="call-after-search",
