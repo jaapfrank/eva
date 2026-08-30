@@ -1,0 +1,57 @@
+{
+  "candidate": {
+    "image": "eva2/conversation-retry-release@sha256:5c77dd193554c65f5d848a3ea4784e9186e04f9b9914fe76a0d85e5e113974d6",
+    "sourceCommit": "f1b9f299aba803b807595d60d30e37fb4cf69754",
+    "trivyCritical": 0,
+    "trivyHigh": 0
+  },
+  "contract": "Eva2ConversationRetryLiveAbEvidence/v1",
+  "cutover": {
+    "eva1BackupBytes": 283443200,
+    "eva1BackupQuickCheck": "ok",
+    "eva1BackupSha256": "083d0813b3bf0d4c597fe9ddd2bfacf1dba13f76634112ca321cd29aa309601d",
+    "memoryDataDigest": "308e3dcabab7c0d971d02ccfa016ff7b551e3780e6a54719cb3572a2141e7275",
+    "operationalDataDigest": "39dc643ae6ef425b1450ab8384c0de643d83189c177db377efb14d37c2a96d5c",
+    "sourcePort": 44711,
+    "sourceWritersStopped": true,
+    "targetPort": 44710,
+    "targetReady": true
+  },
+  "issuedAt": "2026-08-30T23:45:00+02:00",
+  "live": {
+    "activeDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "coreHealthyAfterRestart": true,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "eva1RestartCount": 0,
+    "modelReplyExact": true,
+    "modelReplySeconds": 2.436,
+    "previousReplyRecalledAfterRestartExact": true,
+    "previousReplyRecallSecondsViaEva1Client": 2.497,
+    "ready": true
+  },
+  "observations": [
+    "One direct recall probe still exhausted both bounded provider attempts and remained ingress-only with HTTP 503.",
+    "A new turn through Eva1's real Eva2 client then succeeded once and recalled the previous reply exactly.",
+    "The three probe messages produced three ingress commits and exactly two reply commits; no reply was invented for the failed turn.",
+    "No external Telegram message or external tool action was sent during these probes."
+  ],
+  "recovery": {
+    "maximumAttemptSeconds": 5,
+    "maximumTransientRetriesBeforeText": 1,
+    "retryAfterTextStarted": false,
+    "retryExternalToolEffect": false
+  },
+  "status": "passed_live_with_recorded_provider_stall",
+  "tests": {
+    "focusedModelStreamAndTelegram": 64,
+    "releaseAndWheelhouse": 47,
+    "sourceProductPhysicalLines": 74853,
+    "sourceProductPhysicalLinesLimit": 75000
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "candidate": {
+    "image": "eva2/conversation-retry-release@sha256:5c77dd193554c65f5d848a3ea4784e9186e04f9b9914fe76a0d85e5e113974d6",
+    "imageId": "sha256:5c77dd193554c65f5d848a3ea4784e9186e04f9b9914fe76a0d85e5e113974d6",
+    "rootFilesystemProbe": "read-only",
+    "runtimeUser": "65532:65532",
+    "sizeBytes": 81668284,
+    "trivy": {
+      "critical": 0,
+      "databasePreparedAt": "2026-08-29",
+      "high": 0,
+      "network": "none",
+      "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+    }
+  },
+  "contract": "EvaManagedCoreImageCandidateEvidence/v1",
+  "issuedAt": "2026-08-30T23:41:00+02:00",
+  "nonClaims": [
+    "The candidate has not yet been written into retained slot 3 or promoted to the /eva2 route.",
+    "No live database, model credential, Telegram update or external tool was used by this candidate probe.",
+    "The bounded retry does not retry after visible text starts and never retries an external tool effect."
+  ],
+  "recovery": {
+    "maximumOrdinaryAttemptSeconds": 5,
+    "maximumTransientRetriesBeforeText": 1,
+    "retryAfterTextStarted": false,
+    "retryExternalToolEffect": false
+  },
+  "source": {
+    "archiveSha256": "78000be90a72dc95ddeb1f405018d22d8b472cdf01f974a0adb3434f0b179417",
+    "commit": "f1b9f299aba803b807595d60d30e37fb4cf69754",
+    "distrolessRefreshDockerfileSha256": "175f0ec4cd9b6aa4d49b8d188c60faed9cb2164d7e257015f6f9efd68fa3480f",
+    "releaseAuthoritySha256": "14fb8488fd78a04d4fc0a79d9b4aa9e2767772a9fc882f98395c64525b02669f",
+    "requiredInputCount": 259,
+    "requiredTestCount": 150
+  },
+  "status": "passed_candidate_only",
+  "tests": {
+    "focusedModelStreamAndTelegram": 64,
+    "releaseAndWheelhouse": 47,
+    "ruff": "passed"
+  }
+}

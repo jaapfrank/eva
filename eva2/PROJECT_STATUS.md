@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 23:13 CEST
+Laatst bijgewerkt: 30 augustus 2026, 23:45 CEST
 
 ## Zo lees je dit bord
 
@@ -46,6 +46,14 @@ De gerichte proef telt 38 groene Telegramtests plus de verplichte
 beveiligingscontrole. Er is tijdens de operatorproef geen Telegrambericht namens
 Jaap of Lola verstuurd; de eerstvolgende menselijke beurt kan de zichtbare
 labels nog rechtstreeks bevestigen.
+
+De fouten in het laatste Telegramgesprek waren daarnaast echte Eva2-fouten.
+Na de overstap op de officiële OpenAI-SDK was Eva's ene korte herstelpoging
+verdwenen. Die grens is nu hersteld: vóór het eerste tekststukje probeert Eva
+één korte providerstoring nog eenmaal; na begonnen tekst of een toolactie nooit.
+De scan-schone correctie draait via A/B live op `44710`. Een echte modelbeurt
+en gesprekcontinuïteit na een kernherstart zijn groen. Eén dubbele providerstall
+bleef eerlijk HTTP 503; de volgende beurt via de echte Eva1-client slaagde.
 
 ## Mensen, groepen, geheugen en privacy
 
@@ -234,6 +242,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Snel een gewoon antwoord beginnen | ✅ 200/200 antwoorden; p95 eerste inhoud 1,918 seconde; gelijke C01-beurt 3,118 s compleet | 🟡 Eén actuele gelijke complete beurt: 15,738 s | 🟡 Eén actuele gelijke complete beurt: 35,875 s | 🟡 Eén actuele gelijke complete beurt: 17,540 s |
+| Een korte modelproviderstoring herstellen zonder dubbel antwoord of toolactie | ✅ Eén begrensde retry vóór het eerste tekststukje; 64 gerichte tests en de live A/B-route zijn groen. Twee opeenvolgende stalls blijven eerlijk een fout | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Na proces- en databasestop terugkomen | ✅ Meerdere echte herstartproeven groen | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Geen hoge of kritieke imagebevindingen | ✅ Huidige Eva-runtime 0 hoog / 0 kritisch | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest |
 | Secrets niet in logs of gewone containerinstellingen zetten | ✅ Access-only modellease; secrets als private bestanden | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd |
@@ -311,3 +320,6 @@ externe live read staan in
 De gevonden Telegramverwarring, verwijderde automatische sessie en live
 scheidingscontrole staan in
 [het Eva1/Eva2-routerbewijs](evidence/living-core/eva1-eva2-explicit-telegram-boundary-live-2026-08-30.json).
+De begrensde modelretry, scan-schone image, verliesloze live omschakeling en
+herstartproef staan in
+[het live herstelbewijs](evidence/product/conversation-retry-live-ab-2026-08-30.json).
