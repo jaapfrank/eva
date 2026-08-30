@@ -1,0 +1,38 @@
+{
+  "contract": "EvaPc05NoReasoningPayloadCandidateReceipt/v1",
+  "recordedAt": "2026-08-30T02:03:00Z",
+  "status": "no_go",
+  "sourceCommit": "48abc80ade97c7b34d3d788d2f92432cc7f898fb",
+  "candidateImageId": "sha256:c4bd30f0dac8ee0296e853b4586245f859aa1acc8e1d0bbbb4e4d9cff5bc7a78",
+  "candidatePort": 44714,
+  "change": "Removed the unused reasoning.encrypted_content include from the ordinary conversation request.",
+  "verification": {
+    "focusedTestsPassed": 108,
+    "focusedTestsSkipped": 1,
+    "lint": "passed",
+    "networkUsedDuringBuild": false
+  },
+  "firstProbe": {
+    "turns": 50,
+    "validTurns": 49,
+    "corpusIdentityCollision": 1,
+    "validTurnFirstContentP95Milliseconds": 2103,
+    "meaning": "The collision reused an earlier Home Assistant message ID with different text and was correctly rejected; it is not candidate behavior evidence."
+  },
+  "cleanProbe": {
+    "turns": 50,
+    "successfulTurns": 50,
+    "failedTurns": 0,
+    "firstContentP50Milliseconds": 1015,
+    "firstContentP95Milliseconds": 3935,
+    "firstContentMaximumMilliseconds": 6046,
+    "turnsWithinTwoSeconds": 45
+  },
+  "decision": {
+    "promoted": false,
+    "candidateStopped": true,
+    "candidateRemoved": false,
+    "livePortUnchanged": 44713,
+    "reason": "The change did not reduce the provider tail and therefore does not justify a new live image or scan."
+  }
+}

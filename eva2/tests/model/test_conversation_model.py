@@ -676,7 +676,6 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     assert result.text == "Dat klinkt echt rot."
     assert result.provider == "chatgpt-codex:gpt-5.4-mini"
     assert requests[0]["model"] == "gpt-5.4-mini"
-    assert "include" not in requests[0]
     assert requests[0]["reasoning"]["effort"] == "none"
     assert requests[0]["input"][0]["content"] == turn.text
     assert "Jaap houdt niet van formele antwoorden" in requests[0]["instructions"]
