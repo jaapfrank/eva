@@ -1,0 +1,54 @@
+{
+  "contract": "EvaPerformanceComplexityPc03DeferredToolsCandidateReceipt/v1",
+  "createdAt": "2026-08-30T02:34:56+02:00",
+  "source": {
+    "commit": "f39cc116af31677dc030b0847fba0abfb3428104",
+    "conversationSha256": "28c558ff5dcc4f46dc411222dbe84fcb70a598bd89dac4be5c4c028f9d573343",
+    "transportSha256": "70b4c3bd4ab698a7e1fdd08377dda755fffe49e938dafa6255cce26f3411538a",
+    "conversationTestSha256": "f33d60774442736154c3fe67833b8409f719485558a7a432fb5f503756280d9e"
+  },
+  "candidateImage": {
+    "id": "sha256:e2c302e584bf1d7f49774d0a8a7bdad03827a71587a6db26f5271cbba4169345",
+    "sizeBytes": 85454201,
+    "networkUsedDuringBuild": false,
+    "criticalFindings": 0,
+    "highFindings": 0
+  },
+  "verification": {
+    "focusedTestsPassed": 89,
+    "lint": "passed",
+    "performanceComplexityPc02TestsPassed": 5,
+    "productPhysicalLines": 74733,
+    "maximumProductPhysicalLines": 75000
+  },
+  "runtimeProbe": {
+    "temporaryPort": 44711,
+    "readyHttpStatus": 200,
+    "ordinaryText": {
+      "httpStatus": 200,
+      "replyExact": "werkend",
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "completeMilliseconds": 3600
+    },
+    "homeAssistantReadOnlyQuestion": {
+      "httpStatus": 200,
+      "replyExact": "De spotjes overkapping staan uit.",
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "completeMilliseconds": 6931
+    },
+    "temporaryContainerStopped": true
+  },
+  "activeRouteSafety": {
+    "eva1ServiceActive": true,
+    "eva1RestartCount": 0,
+    "eva1HttpRoutes200": 5,
+    "activeEva2ReadyHttpStatus": 200,
+    "activeEva2Replaced": false
+  },
+  "nonclaims": [
+    "The candidate has not been promoted to the active /eva2 route.",
+    "The Home Assistant probe was read-only and did not switch any device.",
+    "This receipt does not prove reboot, voice, browser or long-duration acceptance."
+  ],
+  "status": "passed_candidate_not_promoted"
+}

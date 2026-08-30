@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 00:52 CEST
+Laatst bijgewerkt: 30 augustus 2026, 02:35 CEST
 
 ## Heel kort
 
@@ -27,10 +27,12 @@ tekststukjes binnen en was exact gelijk aan het eindantwoord. Een huisvraag
 koos eerst alleen de veilige leesactie en streamde pas daarna het antwoord.
 Daarbij zijn twee echte fouten in de Codex-toolplanner gevonden en hersteld.
 
-De kandidaat is nog niet live gezet. Luna alleen gaf 5/5 eerste tekst binnen
-2,0 seconden, maar samen met de verplichte planner lukte dat slechts 1/5 keer;
-de mediaan was 2,25 en de langzaamste beurt 5,85 seconden. De exacte image is
-wel zonder bouwnetwerk gemaakt en scant op 0 kritisch en 0 hoog.
+De nieuwe kandidaat gebruikt geen aparte plannerbeurt meer. Het model krijgt
+één vaste, uitgestelde gereedschapscatalogus en haalt alleen het passende
+gereedschap op wanneer dat nodig is. Een gewone echte beurt antwoordde exact
+`werkend`; een echte alleen-lezen huisvraag antwoordde terecht dat de spotjes
+overkapping uit staan. De kandidaatimage is zonder bouwnetwerk gemaakt, scant
+op 0 kritisch en 0 hoog en is nog niet live gezet.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -64,6 +66,10 @@ praktijktest zijn nog niet klaar.
   0 hoog gescand.
 - De huidige kern kiest per vraag maximaal vier passende tools. Een gewone
   tekstvraag krijgt geen onnodige tools mee.
+- De nieuwe kandidaat vervangt die extra plannerbeurt door uitgestelde
+  gereedschappen. De volledige gesprekroute, echte Codex-beurt en echte
+  alleen-lezen Home Assistant-vraag zijn groen; de actieve route is nog niet
+  omgeschakeld.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
