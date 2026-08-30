@@ -1,229 +1,196 @@
-# Eva 2 — duidelijk projectbord
+# Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 17:23 CEST
+Laatst bijgewerkt: 30 augustus 2026, 17:49 CEST
 
-Betekenis:
+## Zo lees je dit bord
 
-- ✅ Werkt nu en is echt getest.
-- 🟡 Werkt deels of alleen binnen een veilige proefgrens.
-- ❌ Moet nog worden afgemaakt.
+- ✅ Werkt echt in de huidige route of is met de genoemde actuele concurrent
+  onder gelijke voorwaarden uitgevoerd.
+- 🟡 Werkt deels, staat nog alleen in een proef of mist de laatste praktijktest.
+- ❌ Ontbreekt nog.
+- 📘 De concurrent documenteert dit, maar wij hebben het nog niet zelf onder
+  dezelfde voorwaarden getest.
+- ⚪ Nog geen eerlijk bewijs. Dit betekent niet automatisch dat het product het
+  niet kan.
 
-## Praten met Eva2
+De huidige vergelijkingen zijn gebonden aan OpenClaw `v2026.7.1-2`, Hermes
+`v2026.8.27` en Agent Zero `v2.11`. Een nieuwe release maakt de bijbehorende
+vergelijking opnieuw geel.
 
-- ✅ Je kunt Eva2 via `/eva2` op Telegram gebruiken.
-- ✅ Gewone berichten zonder `/eva2` blijven naar Eva1 gaan.
-- ✅ Eva2 geeft echte antwoorden via de bestaande Codex-koppeling.
-- ✅ De actuele officiële OpenAI-SDK `3.6.0` draait nu echt op `/eva2`. De
-  minimale image is zonder bouwnetwerk gemaakt, scant 0/0 en is met gekopieerde
-  data en een vooraf uitgevoerde databasemigratie via A/B live gezet.
-- ✅ Jaaps echte Telegrambinding werkte na de upgrade. Na een coreherstart
-  herinnerde Eva exact het eerder opgeslagen testwoord.
-- ✅ Eva2 heeft haar eigen warme, jonge, nieuwsgierige, grappige en
-  eigenwijze persoonlijkheid.
-- ✅ Gesprekken blijven na een herstart bewaard.
-- 🟡 Antwoorden worden al in stukjes opgebouwd, maar Telegram toont nog niet
-  de volledige echte live tekststroom.
+**Eerlijke conclusie nu:** Eva2 is al een bruikbare, veilige kandidaat naast
+Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. De eerste
+nieuwe gelijke vergelijking loopt; oude of alleen gedocumenteerde resultaten
+tellen niet als winst.
 
-## Jaap, Lola en groepen
+## Praten met Eva
 
-- ✅ Jaap en Lola hebben ieder een eigen profiel en eigen geheugen.
-- ✅ Hun privégesprekken en herinneringen blijven van elkaar gescheiden.
-- ✅ Een echte Telegramgroep met Jaap, Lola en Eva is getest.
-- ✅ Groepsinformatie gaat vóór toestemming niet naar het model of iemands
-  privégeheugen.
-- ✅ Toestemming kan per persoon worden ingetrokken.
-- 🟡 De beheerde onderzoeksknoppen via Telegram zijn technisch getest, maar
-  staan normaal uit.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Gewoon privé praten | ✅ Via `/eva2` op Telegram met een echt model | 📘 Meerdere chatkanalen | 📘 Meerdere chatkanalen | 📘 Eigen chat en webinterface |
+| Een herkenbare, menselijke persoonlijkheid hebben | ✅ Warme, jonge, nieuwsgierige, grappige en eigenwijze Eva-identiteit | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
+| Het gesprek na een herstart voortzetten | ✅ Gesprek blijft in PostgreSQL staan | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest |
+| Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
+| Dezelfde zichtbare vraag met hetzelfde model beantwoorden | 🟡 Huidige Eva-run volgt nog | ✅ Eerste actuele C01-run vastgelegd, nog niet beoordeeld | ✅ Eerste actuele C01-run vastgelegd, nog niet beoordeeld | 🟡 Actuele v2.11-run wordt voorbereid |
 
-## Geheugen en privacy
+## Mensen, groepen, geheugen en privacy
 
-- ✅ PostgreSQL bewaart gesprekken.
-- ✅ Hindsight bewaart langetermijngeheugen.
-- ✅ Geheugen bleef bestaan na het stoppen en starten van Eva2, Hindsight en
-  beide databases.
-- ✅ Een persoon kan een eigen gekozen gesprek uit PostgreSQL en Hindsight
-  laten wissen.
-- ✅ Een ander persoon kan dat niet voor hem of haar doen.
-- ❌ Het oude geheugen van Eva1 is nog niet volledig naar Eva2 overgezet.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Jaap en Lola uit elkaar houden | ✅ Eigen profiel, gesprek en geheugen per persoon | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
+| Veilig in een Telegramgroep praten | ✅ Echte groepstest met aparte toestemming per persoon | 📘 Groepskanalen aanwezig | 📘 Groepskanalen aanwezig | ⚪ Geen gelijke Telegramgroepstest |
+| Privé-informatie niet naar de groep laten lekken | ✅ Voor toestemming gaat groepsinhoud niet naar model of privégeheugen | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Langetermijnherinneringen bewaren | ✅ Hindsight, ook na volledige herstart | 📘 Geheugen aanwezig | 📘 Geheugen en leren aanwezig | 📘 Geheugen aanwezig |
+| Laten zien, corrigeren en vergeten wat Eva weet | 🟡 Persoonsgebonden wissen werkt; een compleet eenvoudig geheugenscherm ontbreekt | ⚪ Niet gelijk getest | 📘 Geheugenbeheer beschreven | 📘 Geheugenbeheer beschreven |
+| Oud Eva1-geheugen veilig meenemen | ❌ Nog niet volledig overgezet | Niet van toepassing | Niet van toepassing | Niet van toepassing |
 
-## Het huis bedienen
+## Home Assistant en het huis
 
-- ✅ Eva2 kan Home Assistant lezen.
-- ✅ Bij een onduidelijke lampnaam vraagt Eva welke lamp je bedoelt.
-- ✅ Alleen Jaaps vertrouwde profiel mag een huisactie starten.
-- ✅ Jaap kan de 59 nu bereikbare lampen aan- en uitzetten.
-- ✅ Eva controleert na een actie apart of de lamp werkelijk goed staat.
-- ✅ Een herhaald bericht bedient dezelfde lamp niet per ongeluk opnieuw.
-- 🟡 Onbereikbare lampen en onveilige dubbelen staan bewust niet in de lijst.
-- 🟡 Algemene huisbediening hoeft niet per apparaatgroep te worden gebouwd.
-  De officiële Home Assistant MCP Server kan alle bewust aan Assist
-  blootgestelde apparaten en scripts als algemene tools aanbieden.
-- ✅ De officiële MCP/Assist-route is nu in dit huis geconfigureerd. Eva las de
-  echte catalogus met 25 tools en `GetLiveContext`; er is niets bediend.
-- ✅ De generieke kandidaat controleert catalogus, invoer en verplichte velden.
-  De zes grensproeven zijn groen.
-- ✅ Eén echte MCP-huisactie liep via Jaaps bestaande persoonsmandaat en Eva's
-  duurzame actielogboek. REST controleerde apart dat de al uitstaande lamp uit
-  bleef; een nieuw proces voerde dezelfde actie niet opnieuw uit.
-- ✅ De gewone `/eva2`-route gebruikt voor huisacties nu ook de officiële MCP-
-  adapter. Jaaps persoonsgrens, het duurzame actielogboek, controle achteraf en
-  bescherming tegen dubbel uitvoeren zijn hetzelfde gebleven.
-- ✅ De schone MCP-image draait in beheerd slot 4. Beide databases zijn
-  verliesloos gekopieerd; Eva1 bleef gezond.
-- 🟡 Een al gestarte huisactie kan veilig als onzeker worden bewaard, maar een
-  gewone Telegramknop om zo'n lopende actie te stoppen is nog niet aangesloten.
-- ✅ Eva kan een nieuwe begrensde automatisering maken. Home Assistant
-  valideert haar zelf, Eva leest de opgeslagen configuratie exact terug en kan
-  alleen diezelfde hashgebonden automatisering terugdraaien.
-- ✅ De huidige live image heeft één onbereikbare testautomatisering werkelijk
-  gemaakt, gecontroleerd en direct weer verwijderd. Er is niets fysieks
-  bediend en er bleef geen testautomatisering achter.
-- 🟡 Bestaande automatiseringen vrij aanpassen blijft apart: bij een bestaand
-  ID met andere inhoud weigert Eva nu te overschrijven.
-- 🟡 Eva ziet 31 Home Assistant-update-entiteiten; 5 bieden nu een update aan.
-  Er is niets geïnstalleerd. Installeren vereist per doel een back-upbesluit,
-  toestemming en een gezondheidscontrole achteraf.
-- 🟡 Voor Tuya zijn 7 LocalTuya-kandidaten, 2 betere Matter-routes en 3 opnieuw
-  te bouwen scènes gevonden. Dit is een migratie per apparaat, geen tekstuele
-  zoek-en-vervangactie.
-- ✅ Eva heeft die inventaris na de MCP-omschakeling opnieuw gelezen en als
-  duurzaam, niet-schrijvend migratieplan vastgelegd.
-- ❌ LocalTuya is nog niet geïnstalleerd en geen Tuya-apparaat is al omgezet.
-  Eerst volgen expliciete toelating van `xZetsubou/hass-localtuya` release
-  `2026.7.0`, de lokale sleutels en één terugrolbare proef.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Begrijpen wat er in huis aan de hand is | ✅ Leest de echte Home Assistant-context via de officiële MCP-route | 📘 Smart-homekoppelingen | 📘 Smart-hometools | 📘 Via tools/MCP mogelijk |
+| Gewone apparaten bedienen zonder aparte code per soort | ✅ Algemene MCP-route; Jaap kan de bereikbare lampen bedienen | 📘 Algemene tools | 📘 Algemene tools | 📘 Algemene tools |
+| Bij twijfel vragen welk apparaat wordt bedoeld | ✅ Eva gokt niet bij een dubbele naam | ⚪ Niet gelijk in ons huis getest | ⚪ Niet gelijk in ons huis getest | ⚪ Niet gelijk in ons huis getest |
+| Controleren of een opdracht echt gelukt is | ✅ Aparte readback; herhalen bedient niet dubbel | ⚪ Geen gelijke fysieke proef | ⚪ Geen gelijke fysieke proef | ⚪ Geen gelijke fysieke proef |
+| Zelf een automatisering, integratie of update beheren | 🟡 Eén veilige automatiseringsproef werkt; de algemene beheerroute is nog niet af | 📘 Via tools/skills mogelijk | 📘 Via tools/skills mogelijk | 📘 Via tools/code mogelijk |
+| Voorstel, risico, toestemming en terugrol zelf regelen | 🟡 De bouwstenen bestaan, maar nog niet als één algemene gebruikersroute | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 
-## Zelfstandig onderzoek doen
+Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn dus
+geen losse Eva-projecten meer. Het zijn praktijkgevallen voor één algemene
+beheerroute: Eva kiest zelf de onderhouden tool of officiële API, maakt een
+voorstel en terugrol, vraagt alleen toestemming wanneer het risico dat vereist,
+voert uit en controleert het resultaat.
 
-- ✅ Een begrensde hulpagent heeft een echte onderzoeksopdracht uitgevoerd.
-- ✅ Die hulpagent had geen toegang tot het huis, Docker, de live database of
-  bestanden.
-- ✅ Een geslaagde taak en een vastgelopen taak zijn allebei duurzaam en eerlijk
-  bewaard.
-- ✅ Na een crash start Eva een onduidelijke modeloproep niet blind opnieuw.
-- 🟡 Starten, volgen en stoppen via Telegram is met de echte adapter tegen een
-  lokale testprovider bewezen.
-- ✅ Een echte scopefout vóór live activering is hersteld: de worker en
-  Telegram gebruiken nu dezelfde servergebonden database-identiteit als het
-  gewone gesprek. De 46 gerichte controles zijn groen.
-- 🟡 De live voorcontrole vond wel Jaaps geverifieerde persoon en binding, maar
-  nog geen canonieke actieve gespreksepisode. Daarom blijft de bediening
-  terecht uit totdat de gewone privéturn via die bestaande kerncontracten is
-  toegelaten; er is niets handmatig in de database gezet.
-- ❌ Deze bediening staat dus nog niet aan in jouw gewone Telegramchat.
+## Zelfstandig werk en subagents
 
-## Snelheid en betrouwbaarheid
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Een onderzoekstaak zelfstandig uitvoeren | ✅ Eén begrensde echte modeltaak is uitgevoerd | 📘 Agent- en skilltaken | 📘 Sterke onderzoeks- en skillroute | 📘 Sterke algemene agentroute |
+| Werk aan een hulpagent geven | ✅ Begrensde worker zonder huis-, Docker- of databaserrechten | 📘 Subagents aanwezig | 📘 Subagents aanwezig | 📘 Hiërarchische agents aanwezig |
+| Na een crash niet blind dezelfde modelcall herhalen | ✅ Geslaagde en onduidelijke calls blijven duurzaam bewaard | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Vanuit Telegram starten, volgen en stoppen | 🟡 Met de echte adapter tegen een testprovider groen; gewone gebruikersroute nog uit | 📘 Kanaalbediening mogelijk | 📘 Kanaalbediening mogelijk | ⚪ Niet gelijk getest |
+| Meerdere taken begrijpelijk verdelen | 🟡 Duurzame taakstatus bestaat; complete gebruikerservaring ontbreekt | 📘 Taak- en agentbediening | 📘 Werkbord/Kanban beschreven | 📘 Meerdere agents en taken |
 
-- ✅ De laatste proef gaf 200 van 200 gewone antwoorden.
-- ✅ De meeste antwoorden begonnen binnen twee seconden; p95 was 1,918 seconde.
-- ✅ De actuele Eva2-image heeft nul hoge en nul kritieke scanbevindingen.
-- ✅ Eva2 draait automatisch herstartbaar op poort `44710`.
-- ✅ De volledige nieuwe→oude→nieuwe A/B-proef is groen. Terugrollen kopieert
-  eerst de actuele data, gebruikt alleen een verliesloze databaseterugzetting
-  en schakelt pas daarna om.
-- ✅ Een nieuwe controle weigert omschakelen zolang een oude proefcontainer nog
-  dezelfde database gebruikt.
-- ✅ De bron blijft met 74.979 regels onder de grens van 75.000 regels.
-- 🟡 De echte Windows/WSL-herstartproef staat klaar.
-- ❌ De Windows-pc moet nog één keer volledig opnieuw worden opgestart om die
-  proef af te ronden.
-- ❌ De lange praktijktest van zeven dagen moet nog worden uitgevoerd.
+## Kanban en werkbord
 
-## Praten met stem
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Zien wat wacht, bezig, gestopt of klaar is | 🟡 De vijf statussen en duurzame kaarten bestaan | 📘 Taakstatus in beheerinterface | 📘 Kanban/werkbord aanwezig | 📘 Taken zichtbaar in WebUI |
+| Een taak vanaf het bord starten of stoppen | ❌ Nog niet als normale eigenaarbediening | 📘 Beheerbediening aanwezig | 📘 Werkbordbediening aanwezig | 📘 Agentbediening aanwezig |
+| Bewijs, kosten en resultaat per kaart zien | 🟡 Resultaat en gebruik worden bewaard; het bord toont nog niet alles | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Na een herstart hetzelfde bord houden | ✅ Databasewerk blijft staan | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 
-- 🟡 Lokale spraakherkenning, spraakuitvoer en technisch onderbreken zijn in
-  losse proeven gelukt.
-- ❌ Een echt gesprek met microfoon en speaker is nog niet uitgevoerd.
-- ❌ Tegelijk luisteren en praten met snelle onderbreking is nog niet als
-  compleet product klaar.
+## Dashboard
+
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Gezondheid, versie en actieve route tonen | ✅ Eigenaarspagina is afgeschermd en geeft de kernstatus | 📘 Control UI | 📘 Dashboard | 📘 Uitgebreide WebUI |
+| Gesprekken, geheugen, taken en kosten op één plek tonen | 🟡 Losse gegevens bestaan; nog geen compleet scherm | 📘 Veel beheerfuncties | 📘 Brede beheerervaring | 📘 Brede agentinterface |
+| Direct pauzeren, stoppen en terugrollen | 🟡 Technische stop- en A/B-routes bestaan; nog geen eenvoudige knoppen | 📘 Bedieningsfuncties | 📘 Bedieningsfuncties | 📘 Bedieningsfuncties |
+| Op telefoon en computer eenvoudig werken | ❌ Nog geen af productdashboard | 📘 Webinterface | 📘 Webinterface | 📘 Webinterface |
+
+Eva gaat hiervoor geen volledig eigen webplatform bouwen. De kandidaat is een
+bestaand adminframework boven Eva's gesaneerde API; Eva houdt alleen de unieke
+schermen voor personen, privacy, bewijs, huisacties en terugrol.
+
+## Configuratie en koppelingen
+
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Persoonlijkheid zonder code aanpassen | ✅ Identiteit kan veilig worden voorgesteld, ondertekend en teruggezet | 📘 Configuratiebestanden/UI | 📘 Profielen en configuratie | 📘 Agentprofielen |
+| Telegram, Home Assistant, model en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
+| Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
+| Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
+| Nieuwe tools via MCP of plug-ins toevoegen | ✅ Home Assistant MCP is live; algemene plug-inroute is deels klaar | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
-- 🟡 Eva kan binnen een afgesloten proef één toegestane pagina lezen of één
-  toegestane klik uitvoeren.
-- ❌ De browseromgeving is nog niet veilig genoeg voor algemeen internetgebruik.
-- ❌ Zelfstandig brede computertaken uitvoeren en live door een mens laten
-  overnemen is nog niet klaar.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Een toegestane website lezen | 🟡 Alleen in een afgesloten proef | 📘 Browsertools | 📘 Browsertools | 📘 Sterke browser-/computerroute |
+| Klikken, typen, bestanden gebruiken en resultaat controleren | 🟡 Eén veilige klik met aparte controle; geen algemeen gebruik | 📘 Brede browserbediening | 📘 Brede tools | 📘 Breed computerwerk |
+| Accounts veilig gebruiken | ❌ Nog niet | 📘 Ondersteund via browserprofielen | 📘 Ondersteund via tools/browser | 📘 Ondersteund in werkomgeving |
+| Live meekijken en overnemen | ❌ Nog niet | 📘 Beheer/browserweergave | 📘 Dashboardweergave | 📘 WebUI/agentweergave |
+| Na een crash geen formulier of aankoop dubbel doen | 🟡 Eva's actielogboek kan dit dragen; nog geen brede browserproef | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+
+## Praten met stem en aanwezig zijn
+
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Luisteren en terugpraten | 🟡 Lokale spraakherkenning en spraakuitvoer werken los | 📘 Voicekanalen/bouwstenen | 📘 Voicefuncties | 📘 Spraak/mediafuncties |
+| Tijdens Eva's antwoord kunnen onderbreken | 🟡 Stoptechniek werkt; geen complete microfoon-/speakerproef | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Tegelijk luisteren en spreken met lage vertraging | ❌ Nog niet als product | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Zelf op een passend moment in huis iets zeggen | ❌ Eva2 nog niet; Eva1 kan dit deels | ⚪ Geen gelijke huisproef | ⚪ Geen gelijke huisproef | ⚪ Geen gelijke huisproef |
 
 ## Installeren, herstellen en bijwerken
 
-- ✅ De installatiewizard kan identiteit en basiskeuzes bewaren, activeren en
-  terugzetten.
-- ✅ Een kleine installatie kan veilig naar een lege database worden hersteld.
-- ✅ Eva2 kan veilig tussen de huidige en vorige versie omschakelen.
-- 🟡 De technische installatieonderdelen werken, maar zijn nog bedoeld voor de
-  beheerder.
-- ❌ Een gewone gebruiker kan Eva2 nog niet volledig met één eenvoudige wizard
-  installeren, herstellen en bijwerken.
-- ✅ Een centrale componentenlijst volgt nu ook nieuwe releases van Eva's
-  bouwstenen en van OpenClaw, Hermes en Agent Zero.
-- ✅ Die controle verloopt na maximaal dertig dagen. Een nieuwe release mag dan
-  niet door totdat de gebruikte bouwstenen en concurrenten opnieuw zijn bekeken.
-- ✅ Een dependencykandidaat kan nu vanuit één hashlock en wheelhouse opnieuw
-  worden gebouwd, gescand en tegen een volledige wegwerpstack worden getest.
-- ✅ De huidige OpenAI-SDK-kandidaat is vanaf exact dezelfde verzegelde commit
-  opnieuw gebouwd en via de veilige A/B-route echt live gezet. De operator
-  migreert een gekopieerde database voortaan vóór de nieuwe Eva start.
-- ✅ De volledige terug→heen-proef met exact deze SDK-versie is uitgevoerd.
-  Jaaps echte route herinnerde in beide versies exact `upgradevos`.
-- 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een
-  echte automatische botrun en updatevoorstel zijn nog niet bewezen.
-- ✅ Een schrijfloze Renovate-proef met de vereiste Node-versie vond 99
-  dependencies en precies alle 14 gevolgde bouwstenen en concurrenten.
-- ✅ Alle 11 gevolgde componenten en de gevolgde releases van OpenClaw, Hermes
-  en Agent Zero zijn vandaag rechtstreeks met GitHub gecontroleerd: 14 van 14
-  tags zijn actueel.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Op een nieuwe computer installeren met een eenvoudige wizard | ❌ Technische installer bestaat, consumentenwizard niet | 📘 Installatieroute beschikbaar | 📘 Installatie/setup beschikbaar | 📘 Dockerinstallatie en WebUI |
+| Koppelingen tijdens installatie controleren | 🟡 Model, Telegram, Home Assistant en e-mail kunnen apart worden beproefd | 📘 Setup/configuratie | 📘 Setupwizard | 📘 Webconfiguratie |
+| Back-up op een andere computer herstellen | 🟡 Kleine niet-lege restore werkt; volledige praktijkverplaatsing ontbreekt | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Veilig naar een nieuwe versie en terug | ✅ Volledige nieuwe→oude→nieuwe A/B-proef met gekopieerde data | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
+| Zelf nieuwe dependencyversies voorstellen | 🟡 Renovate dry-run vindt alles; echte bot maakt nog geen voorstellen | 📘 Eigen updateroutes | 📘 Eigen updateroute | 📘 Docker-/bronupdates |
+| Alleen een geteste, scan-schone versie live zetten | ✅ OpenAI SDK `3.6.0` doorliep build, scan, data-upgrade en terugrol | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest |
 
-## Vergelijken met andere assistenten
+## Snelheid, veiligheid en betrouwbaarheid
 
-- 🟡 Er zijn begrensde ontwikkelproeven voor AgentBench en GAIA.
-- 🟡 Eva heeft acht vooraf gekozen AgentBench-ontwikkelcases echt uitgevoerd:
-  drie waren goed en vijf fout. De foutgevallen laten vooral zien dat haar
-  gereedschap- en eindantwoordformaat nog robuuster moet worden.
-- ✅ De tijdelijke benchmarkomgeving is daarna volledig opgeruimd. Vragen,
-  antwoorden en verborgen beoordelingsgegevens staan niet in dit projectbord.
-- ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
-- ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
-  nog niet afgerond.
-- ❌ “Beter dan de concurrentie” is daarom nog geen geldige eindclaim. Vanaf
-  nu moet iedere grote release de relevante vergelijking opnieuw doorlopen;
-  een concurrentiewinst van vorige maand is niet genoeg.
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Snel een gewoon antwoord beginnen | ✅ 200/200 antwoorden; p95 eerste inhoud 1,918 seconde | 🟡 Eén actuele gelijke beurt gemeten | 🟡 Eén actuele gelijke beurt gemeten | ⚪ Actuele beurt volgt |
+| Na proces- en databasestop terugkomen | ✅ Meerdere echte herstartproeven groen | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Geen hoge of kritieke imagebevindingen | ✅ Huidige Eva-runtime 0 hoog / 0 kritisch | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest |
+| Secrets niet in logs of gewone containerinstellingen zetten | ✅ Access-only modellease; secrets als private bestanden | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd |
+| Zeven dagen stabiel blijven | ❌ Eindproef nog niet gestart | ⚪ Niet op onze taak getest | ⚪ Niet op onze taak getest | ⚪ Niet op onze taak getest |
+| Een volledige Windows/WSL-herstart overleven | 🟡 Proef staat klaar; pc-herstart ontbreekt | Niet van toepassing | Niet van toepassing | Niet van toepassing |
 
-## Wat jij nu al kunt doen
+## Welke open-source onderdelen dragen Eva werkelijk?
 
-- ✅ Privé met Eva2 praten via `/eva2`.
-- ✅ Met Jaap en Lola controleren dat hun gesprekken gescheiden blijven.
-- ✅ Eva vragen naar de toestand van Home Assistant.
-- ✅ Als Jaap een bereikbare lamp laten aan- of uitzetten.
-- 🟡 De pc volledig herstarten zodra de lopende wijzigingen veilig zijn
-  vastgelegd; daarna controleert Eva automatisch of alles goed terugkomt.
+| Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
+|---|---|---|
+| Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
+| Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
+| Home Assistant | Officiële Home Assistant MCP Server; beheer-MCP/API als aanvulling | ✅ Normale bediening live; 🟡 algemene beheerroute niet af |
+| Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
+| Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
+| Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
+| Dashboard en Kanban | Bestaand adminframework plus bordcomponent | ❌ Nog niet in de gebruikersroute |
+| Dependencyupdates | Renovate | 🟡 Volledige dry-run groen; echte bot nog niet actief |
+| Scan, SBOM en ondertekening | Trivy, Syft en Cosign/OCI-middelen | 🟡 Scan en signing werken; nog niet één complete automatische poort |
+| Database en herstel | PostgreSQL, Alembic en bestaande container-/back-uptools | ✅ Live en A/B-terugrol bewezen |
 
-## Eerstvolgende stappen
+Eva bouwt alleen zelf wat haar uniek moet maken: identiteit, personen en
+groepen, privacy, toestemming, kosten- en risicogrenzen, bewijs van acties en
+de controle of iets echt gelukt is. Een open-sourcekeuze telt pas als zij in de
+gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
-1. De actuele Eva, OpenClaw, Hermes en Agent Zero onder exact gelijke
-   voorwaarden vergelijken; pas daarna mag “beter” groen worden.
-2. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
-   gebruikersroute zetten en de dubbele Eva-code verwijderen.
-3. Renovate als echte updatebot aansluiten; hij mag alleen voorstellen maken,
-   terwijl tests, scan, datakopie, A/B en terugrol de promotie beslissen.
-4. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
-   beschikbare tools kiezen, een voorstel en terugrol maken, toestemming
-   vragen als het risico dat vereist, uitvoeren en controleren. Tuya,
-   automatiseringen en updates zijn alleen praktijktests van diezelfde route.
-5. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
-   waar de gekozen dependencies hetzelfde werk beter doen.
-6. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
-   bevroren eindkandidaat uitvoeren.
+## Stand van de eerlijke vergelijking
+
+| Stap | Status |
+|---|---|
+| Actuele releases en commits vastgezet | ✅ OpenClaw, Hermes en Agent Zero |
+| Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, geen tools | 🟡 OpenClaw en Hermes uitgevoerd; Eva en Agent Zero volgen |
+| Antwoorden zonder productnaam laten beoordelen | ❌ Nog niet gedaan |
+| Alle begrijpelijke productonderdelen praktisch vergelijken | ❌ 22 categorieën staan nog op `no_run` |
+| Openbare AgentBench-, GAIA- en OSWorld-score | ❌ Nog niet uitgevoerd |
+| Geldige eindclaim “Eva is beter” | ❌ Nog niet toegestaan |
+
+## Eerstvolgende zichtbare verbeteringen
+
+1. De actuele vierwegvergelijking afmaken en het eerste geblindeerde resultaat
+   hier invullen.
+2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
+   geheugen, kosten en Kanban in één eigenaarsscherm zetten.
+3. De algemene Home Assistant-beheerroute afmaken; voorbeelden als Tuya of een
+   update worden daarna door Eva zelf gepland, uitgevoerd en gecontroleerd.
+4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
+   test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
+5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
+   de overlappende eigen lijm verwijderen.
+6. De pc-herstart, fysieke voiceproef en zeven dagen praktijktest uitvoeren op
+   één bevroren eindkandidaat.
 
 Technische details en bewijs staan in
+[OPEN_SOURCE_COMPONENTEN.md](../OPEN_SOURCE_COMPONENTEN.md),
 [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [TECHNISCHE_PRODUCTGATES.md](TECHNISCHE_PRODUCTGATES.md) en
-[evidence/living-core/](evidence/living-core/).
-
-De actuele keuze en de eerlijke vervanglijst staan kort in
-[OPEN_SOURCE_COMPONENTEN.md](../OPEN_SOURCE_COMPONENTEN.md).
-De laatste releasecontrole en de live SDK-upgrade staan in
-[upstream-release-watch-live-2026-08-30.json](evidence/product/upstream-release-watch-live-2026-08-30.json)
-en
-[openai-sdk-3.6.0-live-ab-upgrade-2026-08-30.json](evidence/product/openai-sdk-3.6.0-live-ab-upgrade-2026-08-30.json).
-De volledige terugrolcyclus staat in
-[openai-sdk-3.6.0-live-ab-cycle-2026-08-30.json](evidence/product/openai-sdk-3.6.0-live-ab-cycle-2026-08-30.json).
+[evidence/](evidence/).
