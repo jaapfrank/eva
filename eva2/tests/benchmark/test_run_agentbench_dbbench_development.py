@@ -139,6 +139,41 @@ def _controller() -> Iterator[tuple[str, list[dict[str, object]]]]:
         server.server_close()
 
 
+@contextmanager
+def _failing_start_controller() -> Iterator[str]:
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, _format: str, *_args: object) -> None:
+            return
+
+        def do_POST(self) -> None:  # noqa: N802
+            size = int(self.headers["Content-Length"])
+            json.loads(self.rfile.read(size))
+            encoded = json.dumps(
+                {
+                    "error": "private upstream error detail",
+                    "finish": True,
+                    "messages": [],
+                    "result": {"ground_truth": "must-not-be-stored"},
+                    "status": "task error",
+                }
+            ).encode()
+            self.send_response(200)
+            self.send_header("Session_id", "9")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            self.wfile.write(encoded)
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_port}/api"
+    finally:
+        server.shutdown()
+        thread.join()
+        server.server_close()
+
+
 def test_runs_two_structured_turns_and_writes_a_private_complete_trace(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -192,6 +227,36 @@ def test_refuses_to_overwrite_an_existing_result(tmp_path: Path) -> None:
             )
 
     assert output.read_text(encoding="utf-8") == "existing"
+
+
+def test_writes_sanitized_artifact_when_task_initialization_fails(
+    tmp_path: Path,
+) -> None:
+    output = tmp_path / "start-failure.json"
+    with _failing_start_controller() as controller:
+        with pytest.raises(
+            runner.DbBenchDevelopmentError, match="task initialization failed"
+        ):
+            runner.run_one_case(
+                controller=controller,
+                case_index=5,
+                output=output,
+                client=FakeClient(),  # type: ignore[arg-type]
+            )
+
+    artifact = json.loads(output.read_text())
+    assert artifact["contract"] == "EvaAgentBenchDbBenchDevelopmentStartFailure/v1"
+    assert artifact["modelCalls"] == 0
+    assert artifact["status"] == "task error"
+    assert artifact["responseFields"] == [
+        "error",
+        "finish",
+        "messages",
+        "result",
+        "status",
+    ]
+    assert "ground_truth" not in output.read_text()
+    assert "must-not-be-stored" not in output.read_text()
 
 
 def test_writes_a_private_sanitized_failure_artifact(tmp_path: Path) -> None:

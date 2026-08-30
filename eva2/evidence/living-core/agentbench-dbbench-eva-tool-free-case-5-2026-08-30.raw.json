@@ -1,0 +1,19 @@
+{
+  "caseIndex": 5,
+  "contract": "EvaAgentBenchDbBenchDevelopmentStartFailure/v1",
+  "failedAt": "2026-08-30T05:17:47Z",
+  "failure": "AgentRL task initialization returned no usable messages",
+  "finish": null,
+  "modelCalls": 0,
+  "nonClaims": [
+    "No model call, SQL operation or DBBench score was produced.",
+    "The response body and hidden answer fields are not stored.",
+    "The external-MySQL environment is not the official Docker driver."
+  ],
+  "responseFields": [
+    "messages",
+    "tools"
+  ],
+  "status": null,
+  "task": "dbbench-dev-external-mysql"
+}

@@ -1,0 +1,66 @@
+{
+  "artifact": "EvaAgentBenchDbBenchToolFreeFixedDevelopmentSet/v1",
+  "date": "2026-08-30",
+  "selection": {
+    "caseIndices": [0, 1, 2, 3, 4, 5, 6, 7],
+    "cases4Through7ChosenBeforeAnyOfTheirResultsWereKnown": true,
+    "split": "development"
+  },
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:aa7f30236791a94283f0d8c1e93539311225ac3907c2a914cd03f084967facbc",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "runnerSha256": "d3fcc671c2621dfe4467e559c17a2ee513661457d19e7379b4417bd4bd8808f5",
+    "toolFreeClientSha256Cases1Through7": "c91666264b973c9c81296ab316e3c1ae1ecd04ff0eac9c61156f454fa252a06c"
+  },
+  "cases": [
+    {"caseIndex": 0, "outcome": "scored", "score": 0, "modelTurns": 8, "sqlCalls": 6, "rawSha256": "7bb6d0abef0bc076dd89ad33c8905bfe2a6404865766ebed79244ea6c61a5ef9"},
+    {"caseIndex": 1, "outcome": "scored", "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "bb8f0579142bce5f0fed0e9a71bde1e9af03045c35b7e4549765b1bb7a05305b"},
+    {"caseIndex": 2, "outcome": "scored", "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "33fd6d41f646c3a11e7184fc80045fa4cefe8d3c79ff8857e32eec3a0c2622ad"},
+    {"caseIndex": 3, "outcome": "scored", "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "c4475943929b21d97b3a4203ebef038937c0eec6dff9069746749388540fba7d"},
+    {"caseIndex": 4, "outcome": "scored", "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "bd7053504b41ad8e0a1cd0843467f77f08c705b67454e4911f128588fb5aed5a"},
+    {"caseIndex": 5, "outcome": "task_start_failure", "score": null, "modelTurns": 0, "sqlCalls": 0, "rawSha256": "408f93735ad8fb00c19b7cfb6108c5e1ec2a7dd47e30622f2cbdc53ad3fb5c41"},
+    {"caseIndex": 6, "outcome": "scored", "score": 1, "modelTurns": 3, "sqlCalls": 2, "rawSha256": "09668bb6d796a0103d7fac87374ebc962bd1e9116ba3d8abdec04f48c11c3bfe"},
+    {"caseIndex": 7, "outcome": "scored", "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "df495cf8ee70b786338ed401d5b227674ae99c547da9286c952de09d3713c8db"}
+  ],
+  "aggregate": {
+    "casesSelected": 8,
+    "casesScored": 7,
+    "correctScoredCases": 6,
+    "incorrectScoredCases": 1,
+    "modelCallsReservedBeforeIo": 21,
+    "providerFailuresBeforeDatabaseIo": 1,
+    "scoredCaseFraction": "6/7",
+    "sqlCalls": 13,
+    "successfulToolFreeModelReplies": 20,
+    "taskStartFailures": 1,
+    "toolsExposedByEvaModelBoundary": 0
+  },
+  "case5StartFailure": {
+    "modelCalls": 0,
+    "sqlCalls": 0,
+    "observedWorkerCategory": "MySQL rejected an empty column name during upstream table initialization",
+    "scoreAssigned": false,
+    "storedArtifactContainsUpstreamErrorBody": false
+  },
+  "verification": {
+    "allInitialMessageKeySetsAnswerBlindWhereAConversationStarted": true,
+    "hiddenAnswerFieldsLoadedByEvaAdapter": false,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
+    "tests": {"count": 102, "pytest": "passed", "ruff": "passed"},
+    "toolExposureReceiptsAllZero": true
+  },
+  "status": "fixed_development_set_six_correct_one_incorrect_one_start_failure",
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "Case 5 is unscored and is not counted as correct or silently omitted.",
+    "Seven scored development cases are too few to establish aggregate benchmark quality or superiority over another agent.",
+    "Case 0 remains score zero despite its separately documented answer-blind data inconsistency."
+  ]
+}

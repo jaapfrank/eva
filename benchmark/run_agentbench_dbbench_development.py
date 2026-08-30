@@ -178,7 +178,29 @@ def run_one_case(
     if not isinstance(session_header, str) or not session_header.isdecimal():
         raise DbBenchDevelopmentError("AgentRL did not bind a numeric session")
     session_id = int(session_header)
-    messages, tools = _messages_and_tools(initial)
+    try:
+        messages, tools = _messages_and_tools(initial)
+    except DbBenchDevelopmentError as error:
+        startup_artifact: dict[str, object] = {
+            "caseIndex": case_index,
+            "contract": "EvaAgentBenchDbBenchDevelopmentStartFailure/v1",
+            "failedAt": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "failure": "AgentRL task initialization returned no usable messages",
+            "finish": initial.get("finish"),
+            "modelCalls": 0,
+            "nonClaims": [
+                "No model call, SQL operation or DBBench score was produced.",
+                "The response body and hidden answer fields are not stored.",
+                "The external-MySQL environment is not the official Docker driver.",
+            ],
+            "responseFields": sorted(str(key) for key in initial),
+            "status": initial.get("status"),
+            "task": TASK_NAME,
+        }
+        _write_new_private_json(output, startup_artifact)
+        raise DbBenchDevelopmentError(
+            "AgentRL DBBench task initialization failed"
+        ) from error
     transcript: list[dict[str, Any]] = list(messages)
     trajectory: list[dict[str, object]] = []
     model_failures: list[dict[str, object]] = []
