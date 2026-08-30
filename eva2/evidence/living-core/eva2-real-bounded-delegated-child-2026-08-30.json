@@ -1,0 +1,82 @@
+{
+  "contract": "EvaRealBoundedDelegatedChildEvidence/v1",
+  "observedAt": "2026-08-30T07:45:18Z",
+  "status": "tested",
+  "source": {
+    "baseCommit": "c3d321c799ea53206b88da84115a26cea21b7671",
+    "workerDockerfileSha256": "7bc6183fa4ec6ce177b9628b8a20904beea07621f2caa86caa8ac2484aba6ff5",
+    "dependencyLockSha256": "0f270ccc6b4086ce7f5a5300563a74dfa53569d51109fb60f21958fb0acaa6a5",
+    "endpointModuleSha256": "0755b79541520be4d11b190e56899133685d8fbda85a14836fb2d952153403a4",
+    "childProviderSha256": "f930e2cc8fa3c109561714e09c92962ff3af66404dbf8c7916882d678d062bcc",
+    "conversationTransportSha256": "a30e91cb71c3c87fff25ed0ea53c3e3bda52b10dc03298d873103f519a1987dd"
+  },
+  "build": {
+    "dependencyWheelCount": 24,
+    "dependencyDownloadRequiredHashes": true,
+    "imageBuildNetwork": "none",
+    "imageId": "sha256:b9c25aa59a9832f2dc43f2a2eae14aeec088c036dcaf5935186eaee47480fc30",
+    "runtimeUser": "65532:65532",
+    "relevantTestsPassed": 48,
+    "ruff": "passed"
+  },
+  "isolation": {
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": ["ALL"],
+    "noNewPrivileges": true,
+    "memoryBytes": 536870912,
+    "cpuLimit": 1,
+    "pidLimit": 64,
+    "tmpfs": ["/tmp"],
+    "readOnlyMountDestinations": ["/probe.py", "/run/eva/model-lease"],
+    "databaseMounted": false,
+    "homeAssistantSecretMounted": false,
+    "dockerSocketMounted": false,
+    "workspaceMounted": false,
+    "networkMode": "bridge"
+  },
+  "grant": {
+    "maximumModelRuns": 1,
+    "maximumCompletedModelResponses": 1,
+    "maximumInputTokens": 4000,
+    "maximumOutputTokens": 500,
+    "maximumTotalTokens": 4500,
+    "maximumCostUsdMicros": 10000,
+    "timeoutSeconds": 30,
+    "capabilityCount": 0,
+    "contextReferenceCount": 0,
+    "workspaceReference": null,
+    "childNetworkAuthority": false
+  },
+  "result": {
+    "status": "succeeded",
+    "retryable": false,
+    "providerStatusCode": null,
+    "errorFingerprint": null,
+    "measurement": "measured",
+    "completedModelResponses": 1,
+    "toolCalls": 0,
+    "inputTokens": 241,
+    "outputTokens": 261,
+    "totalTokens": 502,
+    "costUsdMicros": 1356,
+    "outputBytes": 491,
+    "outputSha256": "871978c5e4a3d2ade656439965c74097d95c495c4d44984f797132336bc28751",
+    "outputHashRechecked": true,
+    "outputKeys": ["findings", "summary"],
+    "findingCount": 3,
+    "summaryNonempty": true,
+    "outputContentRetained": false
+  },
+  "findings": [
+    "The managed core image correctly failed closed because it does not contain the delegated-worker SDK dependencies.",
+    "The narrow worker image initially failed closed because a shared endpoint helper imported unrelated identity cryptography transitively.",
+    "Moving endpoint validation to a dependency-light module restored the narrow worker image; all 48 relevant tests and the real bounded provider run passed."
+  ],
+  "nonClaims": [
+    "This direct provider run does not prove durable PostgreSQL admission, worker crash recovery, or replay of delegated work.",
+    "The disposable container had ordinary Docker bridge egress for the fixed model endpoint; network egress was not hostname-allowlisted.",
+    "The worker image is a disposable locally built test image, not a scanned or promoted release image.",
+    "No live database, Home Assistant credential, Docker socket, workspace, child tool, or child capability was available.",
+    "This is not an AgentBench, GAIA, OSWorld, production, or competitor-superiority result."
+  ]
+}

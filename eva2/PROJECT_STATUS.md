@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 09:33 CEST
+Laatst bijgewerkt: 30 augustus 2026, 09:45 CEST
 
 ## Heel kort
 
@@ -19,6 +19,10 @@ staat op 74.864 productregels,
 10 directe dependencies, 23 imagelagen en nul hoge of kritieke scanbevindingen.
 De vorige Eva2-route op poort `44720` draait gezond en blijft de directe
 terugval.
+
+Een aparte, begrensde subagent heeft nu ook echt één Codex-modelantwoord
+gemaakt. Zij had nul tools, nul huis- of databaserechten en geen werkmap. De
+proef bleef binnen 502 tokens en gaf precies de gevraagde drie punten terug.
 
 De echte Windows/WSL-rebootproef blijft bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
@@ -89,6 +93,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   onbekend profiel schreef nul huisacties; Jaaps bestaande binding schreef
   precies één toelating, uitvoering en onafhankelijke controle. Exacte replay
   antwoordde in 35 ms en bediende Home Assistant niet opnieuw.
+- Een losse onderzoeks-subagent heeft één echte modelrun uitgevoerd met een
+  harde grens van één antwoord, 4.500 tokens en 30 seconden. Zij gebruikte nul
+  tools en zag geen live database, huissecret, Docker-socket of werkmap.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -426,7 +433,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   herstel op een tweede computer uitvoeren.
 - De aparte Eva2-Telegramingang staat uit om dubbel pollen naast Eva1 te
   voorkomen. Berichten gaan nu via Eva1's expliciete `/eva2`-router.
-- De duurzame doelworker staat uit totdat een echte provider is goedgekeurd.
+- De echte begrensde subagentprovider is groen. De duurzame databaseworker
+  blijft nog uit totdat toelating, crashherstel en replay ook echt zijn getest.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
@@ -492,6 +500,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Echte begrensde subagent: één modelantwoord, nul tools en 502 tokens](evidence/living-core/eva2-real-bounded-delegated-child-2026-08-30.json)
 - [Beheerde eigenaaractie naar Home Assistant, onafhankelijke readback en replay zonder tweede actie](evidence/living-core/eva2-managed-owner-home-action-replay-2026-08-30.json)
 - [PC01-imagebinding: 10 dependencies, 23 lagen en 0/0 scan](evidence/product/performance-complexity-pc01-managed-current-2026-08-30.json)
 - [Nieuwste kern in automatisch herstartend slot 3, echte modelbeurt, veilige omschakeling en bewapende rebootcontrole](evidence/living-core/eva2-current-core-managed-restart-route-2026-08-30.json)

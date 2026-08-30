@@ -3,18 +3,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from ipaddress import ip_address
 import json
 import os
 from queue import Empty, Full, Queue
 from threading import Event, Thread
 from time import monotonic
 from typing import Any, Callable, Iterator, cast
-from urllib.parse import urlsplit, urlunsplit
 from uuid import uuid4
 
 import httpx2
 
+from eva.adapters.model.openai_endpoint import responses_base_url
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationModelTiming,
@@ -405,30 +404,6 @@ def _remaining(deadline: float) -> float:
     if remaining <= 0:
         raise _DeadlineExceeded
     return remaining
-
-
-def responses_base_url(endpoint: str, *, invalid_error: str) -> str:
-    parsed = urlsplit(endpoint)
-    loopback_http = False
-    if parsed.scheme == "http" and parsed.hostname is not None:
-        try:
-            loopback_http = ip_address(parsed.hostname).is_loopback
-        except ValueError:
-            loopback_http = False
-    if (
-        parsed.scheme not in {"http", "https"}
-        or not parsed.netloc
-        or (parsed.scheme == "http" and not loopback_http)
-        or parsed.username is not None
-        or parsed.password is not None
-        or parsed.query
-        or parsed.fragment
-        or not parsed.path.endswith("/responses")
-    ):
-        raise ValueError(invalid_error)
-    return urlunsplit(
-        (parsed.scheme, parsed.netloc, parsed.path[: -len("responses")], "", "")
-    )
 
 
 def _sanitized_failure(

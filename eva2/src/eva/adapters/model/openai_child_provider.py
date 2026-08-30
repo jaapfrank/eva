@@ -22,7 +22,7 @@ from pydantic_ai.models import Model, ModelRequestParameters
 from pydantic_ai.settings import ModelSettings
 from pydantic_ai.usage import RequestUsage
 
-from eva.adapters.model.openai_responses_transport import responses_base_url
+from eva.adapters.model.openai_endpoint import responses_base_url
 from eva.contracts.canonical_json import canonical_json_bytes
 
 CredentialLoader = Callable[[], tuple[str, str]]
