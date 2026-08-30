@@ -20,8 +20,16 @@ geen MCP, registry, authenticatie, tooluitvoering of dashboard.
 
 De Compose-kandidaat is standaard uitgeschakeld, publiceert geen poort, kan
 niet naar internet, draait niet als root, heeft geen extra capabilities en
-weigert starten zonder drie expliciete private bronbestanden. Hij is nog niet
-aan Eva of een echte toolprovider gekoppeld.
+weigert starten zonder drie expliciete private bronbestanden.
+
+De volgende geïsoleerde proef koppelde de exact gepinde upstream
+`cfex-mcp-fast-time-server` als synthetische provider. ContextForge ontdekte
+zijn catalogus en Eva bond naam, invoerschema, toestand en zichtbaarheid aan
+één vaste hash. Eva voerde een echo-opdracht uit en las de uitkomst via een
+tweede gatewaycall onafhankelijk terug. PostgreSQL 16.13 bewaarde de
+`verified` receipt; een nieuw Eva-object gaf na herstart dezelfde receipt terug
+met nul nieuwe providercalls. De proef gebruikte alleen een intern
+Docker-netwerk; een tijdelijke loopbackpoort was uitsluitend voor diagnose.
 
 Docker MCP Gateway `v0.43.3` blijft de reservekandidaat. Zijn releasebinary is
 bytegelijk aan GitHubs gepubliceerde SHA-256 en biedt sterke container- en
@@ -34,7 +42,8 @@ upstream-RBAC-kwestie `#6015` blokkeert een direct multi-usergatewaydashboard.
 De eerste integratieproef is eigenaar-only; Eva controleert iedere
 persoonsbevoegdheid zelf vóór een gatewaycall.
 
-Dit is een kandidaatbesluit, geen live promotie. De volgende gate koppelt één
-synthetische MCP-toolserver via deze gateway aan Eva's bestaande generieke
-toolcontract en bewijst catalogus, call, readback, herstart en verwijdering van
-overlappende eigen plug-inlijm.
+Dit is nog geen live promotie. De algemene gatewaygrens is nu wel echt bewezen;
+de volgende gate zet een echte niet-huisgebonden provider achter dezelfde route
+in de gebruikersflow. Pas daarna kan de tijdelijke Python-entry-pointlijm
+worden verwijderd. Home Assistant is hierbij slechts één mogelijke toolserver,
+geen onderdeel van Eva's kern.

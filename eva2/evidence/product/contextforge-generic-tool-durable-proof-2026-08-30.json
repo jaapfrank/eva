@@ -1,0 +1,75 @@
+{
+  "contract": "Eva2GenericMcpToolDurableProofReceipt/v1",
+  "checkedAt": "2026-08-30T21:54:05+02:00",
+  "result": "passed",
+  "architectureBoundary": "Eva owns identity, authority, risk, durable evidence and proof comparison; ContextForge connects replaceable external tool providers.",
+  "gateway": {
+    "repository": "IBM/mcp-context-forge",
+    "release": "v1.0.8",
+    "sourceCommit": "a5b96fb4211dd931294be1e0882f861ca71ae792",
+    "image": "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "imageUser": "10001:10001",
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": "ALL",
+    "noNewPrivileges": true,
+    "scan": {
+      "critical": 0,
+      "high": 0,
+      "sourceReceipt": "mcp-gateway-bakeoff-2026-08-30.json"
+    }
+  },
+  "syntheticProvider": {
+    "image": "ghcr.io/ibm/cfex-mcp-fast-time-server@sha256:2f095509d535a0769449f3b9417858f5c233dc74b1e09de335b48b7591d995a1",
+    "tool": "eva-proof-echo-echo",
+    "catalogSha256": "ef7e130be7c0c0e3376ef77131d6c3f177c8706a5bae873acf08e065d5a4fc15",
+    "proofPhrase": "koperen kompas",
+    "catalogBoundFields": [
+      "annotations",
+      "deprecated",
+      "enabled",
+      "input_schema",
+      "integration_type",
+      "name",
+      "reachable",
+      "request_type",
+      "visibility"
+    ]
+  },
+  "durability": {
+    "databaseImage": "postgres:16.13@sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "serverVersionNum": 160013,
+    "gatewayCallsForEffectAndIndependentReadback": 2,
+    "receiptStatus": "verified",
+    "newEvaObjectsAfterEngineDispose": true,
+    "receiptByteEquivalentAfterRestart": true,
+    "gatewayCallsAfterRestartReplay": 0
+  },
+  "isolation": {
+    "dockerNetworkInternal": true,
+    "providerHostPorts": 0,
+    "databaseHostPorts": 0,
+    "gatewayDiagnosticPort": "loopback-only",
+    "clientUser": "65532:65532",
+    "clientReadOnlyRootFilesystem": true,
+    "clientCapabilitiesDropped": "ALL",
+    "liveEvaRouteChanged": false,
+    "homeAssistantCalled": false
+  },
+  "verification": {
+    "unitTests": {
+      "passed": 6,
+      "failed": 0
+    },
+    "ruff": "passed",
+    "adapterSha256": "44103a106df5e32d1012047b71df75e490f67b35d013b3a53fb73edb55c0731d",
+    "unitTestSha256": "16a9585c110e3852d66bb5cc1de399113d885de3c60ece6624d7b4baa3f66466",
+    "probeSha256": "1a4c0b32a09ae5207bdcab5b8ff8a3dc3c935157951a4ee25deddc69f78dc153"
+  },
+  "nonClaims": [
+    "ContextForge is not yet part of the live Eva2 user route.",
+    "This synthetic proof does not make Home Assistant or any other provider part of Eva's core.",
+    "The echo server proves a separate observation call and replay fence, not a real external state change.",
+    "The temporary Python entry-point provider route has not yet been removed.",
+    "The open upstream multi-user RBAC issue remains outside Eva's person-authority boundary."
+  ]
+}
