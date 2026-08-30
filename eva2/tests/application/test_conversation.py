@@ -446,6 +446,63 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
     ]
 
 
+def test_memory_only_answer_is_published_after_tool_capable_followup() -> None:
+    class Actions:
+        action_names = ("read_home_assistant_state",)
+
+        def pending(self, turn):  # type: ignore[no-untyped-def]
+            return None
+
+        def active_context(self, turn):  # type: ignore[no-untyped-def]
+            return ()
+
+        def execute(self, turn, call):  # type: ignore[no-untyped-def]
+            raise AssertionError("memory-only answer executed an external action")
+
+    class Model(_Model):
+        def __init__(self) -> None:
+            super().__init__()
+            self.calls = 0
+
+        def generate(self, *args, completed_action=None, **kwargs):  # type: ignore[no-untyped-def]
+            self.calls += 1
+            if self.calls == 1:
+                return ConversationModelResult(
+                    None,
+                    "model",
+                    ConversationActionCall(
+                        "memory-call",
+                        MEMORY_SEARCH_ACTION,
+                        {"query_text": "favoriete kleur"},
+                    ),
+                )
+            assert completed_action.call.name == MEMORY_SEARCH_ACTION
+            return ConversationModelResult("Die kleur kan ik niet vinden.", "model")
+
+    deltas: list[str] = []
+    conversation = LivingConversation(
+        _Memory(),
+        Model(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        Actions(),
+    )
+    with stream_conversation_text(deltas.append):
+        reply = conversation.respond(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:memory-stream",
+                "Wat is mijn favoriete kleur?",
+                NOW,
+            )
+        )
+
+    assert reply.text == "Die kleur kan ik niet vinden."
+    assert deltas == [reply.text]
+
+
 def test_direct_answer_uses_one_model_call_and_is_published() -> None:
     class DirectModel(_Model):
         def __init__(self) -> None:

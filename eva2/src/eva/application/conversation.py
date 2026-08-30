@@ -626,6 +626,8 @@ class LivingConversation:
             )
             usages.append(generated.usage)
             timings.append(generated.timing)
+            if generated.action_call is None and available_names:
+                publish_conversation_text(generated.text or "", tools_disabled=True)
         elif generated.action_call is None:
             publish_conversation_text(generated.text or "", tools_disabled=True)
         if generated.action_call is not None:
