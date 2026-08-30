@@ -4,8 +4,9 @@ import test from 'node:test';
 import {
   askEva2Canary,
   createEva2DraftSink,
-  eva2CanaryContinuation,
   eva2CanaryPrompt,
+  labelEva2TelegramFailure,
+  labelEva2TelegramReply,
 } from '../src/integrations/eva2canary.js';
 
 test('Telegramconcept gebruikt één draft-id, begrenst updates en faalt zacht', async () => {
@@ -31,52 +32,29 @@ test('alleen expliciete /eva2 berichten gaan naar de B-canary', () => {
   assert.equal(eva2CanaryPrompt('/eva2@EvaBot   Denk eens mee'), 'Denk eens mee');
 });
 
-test('een expliciete /eva2 beurt houdt korte vervolgen restartvast op B', () => {
-  const priorMessages = [{
-    content: '/eva2 Het is koud in de overkapping',
-    meta: { fromTelegramId: '7' },
-    role: 'user',
-    ts: '2026-08-23T17:47:04.000Z',
-  }];
-  assert.equal(eva2CanaryContinuation({
-    text: 'Doe maar', telegramDate: 1787507230, fromId: 7, priorMessages,
-  }), true);
-  assert.equal(eva2CanaryContinuation({
-    text: 'Doe maar', telegramDate: 1787507230, fromId: 8, priorMessages,
-  }), false);
-  assert.equal(eva2CanaryContinuation({
-    text: '/start', telegramDate: 1787507230, fromId: 7, priorMessages,
-  }), false);
-  assert.equal(eva2CanaryContinuation({
-    text: 'Doe maar', telegramDate: 1787510830, fromId: 7, priorMessages,
-  }), false);
-});
-
-test('een gewone vervolgzin wordt binnen een actieve sessie exact naar B gestuurd', async () => {
-  let captured;
+test('een gewone vervolgzin gaat ook na een /eva2-beurt nooit naar B', async () => {
+  let calls = 0;
   const result = await askEva2Canary({
     baseUrl: 'http://127.0.0.1:44674',
     chatId: 7,
     messageId: 9002,
     fromId: 7,
     text: 'Doe maar',
+    // Een oude caller mag de verwijderde continuationgrens niet heropenen.
     continuation: true,
     telegramDate: 1787486410,
-    fetchImpl: async (_url, options) => {
-      captured = JSON.parse(options.body);
-      return {
-        ok: true,
-        json: async () => ({
-          contract: 'EvaInternalGroundedReply/v1',
-          conversation_id: 'telegram:7',
-          message_id: 'telegram:7:9002',
-          text: 'Ik pak de bedoelde verwarming uit ons gesprek.',
-        }),
-      };
-    },
+    fetchImpl: async () => { calls += 1; throw new Error('mag niet worden aangeroepen'); },
   });
-  assert.equal(captured.text, 'Doe maar');
-  assert.equal(result.text, 'Ik pak de bedoelde verwarming uit ons gesprek.');
+  assert.equal(result, null);
+  assert.equal(calls, 0);
+});
+
+test('ieder zichtbaar Eva2-antwoord en iedere fout hebben een ondubbelzinnig label', () => {
+  assert.equal(labelEva2TelegramReply('Hoi Jaap.'), 'Eva2: Hoi Jaap.');
+  assert.equal(
+    labelEva2TelegramFailure('tijdelijk niet beschikbaar'),
+    'Eva2-fout: tijdelijk niet beschikbaar. Eva1 heeft dit bericht niet verwerkt.',
+  );
 });
 
 test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async () => {
@@ -116,7 +94,7 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
   assert.equal(captured.body.telegram_user_id, 7);
   assert.equal(captured.body.principal_id, undefined);
   assert.equal(captured.body.audience, undefined);
-  assert.equal(captured.body.recent_messages[0].text, 'We hadden het over een koersvlag.');
+  assert.deepEqual(captured.body.recent_messages, []);
   assert.equal(result.text, 'Eerlijk? Ik denk dat je vooral duidelijkheid zoekt.');
 });
 
@@ -197,6 +175,18 @@ test('een oudere Eva2 JSON-route blijft werken wanneer drafts al aanstaan', asyn
   });
   assert.deepEqual(drafts, []);
   assert.equal(result.text, 'Gewoon antwoord.');
+});
+
+test('een server-side streamfout wordt herkenbaar als Eva2-fout gemeld', async () => {
+  await assert.rejects(askEva2Canary({
+    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9203, fromId: 7,
+    text: '/eva2 Zet iets aan', telegramDate: 1787486400,
+    onDraft: async () => {},
+    fetchImpl: async () => new Response(
+      `${JSON.stringify({ contract: 'EvaTextStreamError/v1' })}\n`,
+      { headers: { 'content-type': 'application/x-ndjson' }, status: 200 },
+    ),
+  }), /Eva2 kon haar antwoord niet veilig afronden/u);
 });
 
 test('B-canary laat Eva2 de groepsconsent server-side bepalen', async () => {

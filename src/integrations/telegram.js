@@ -66,8 +66,9 @@ import { turnUnderstandingAuthorityRecord } from '../turnauthority.js';
 import {
   askEva2Canary,
   createEva2DraftSink,
-  eva2CanaryContinuation,
   eva2CanaryPrompt,
+  labelEva2TelegramFailure,
+  labelEva2TelegramReply,
 } from './eva2canary.js';
 
 const execFile = promisify(execFileCb);
@@ -2553,20 +2554,14 @@ export async function startTelegram() {
     const stop = typing(ctx);
     stamp('prep_ms', tPrep);
     try {
-      const eva2Prior = recentTelegramMessages({
-        chatId: ctx.chat.id,
-        beforeMessageId: ctx.message.message_id,
-        limit: 40,
-      });
-      const eva2Continuation = eva2CanaryContinuation({
-        text: ctx.message.text,
-        telegramDate: ctx.message.date,
-        fromId: ctx.from.id,
-        priorMessages: eva2Prior,
-      });
-      if (eva2CanaryPrompt(ctx.message.text) !== null || eva2Continuation) {
+      if (eva2CanaryPrompt(ctx.message.text) !== null) {
         const tCanary = performance.now();
         try {
+          const draftSink = createEva2DraftSink({
+            chatId: ctx.chat.id,
+            draftId: ctx.message.message_id,
+            sendDraft: bot?.api?.raw?.sendMessageDraft?.bind(bot.api.raw),
+          });
           const answer = await askEva2Canary({
             baseUrl: config.eva2CanaryUrl,
             chatId: ctx.chat.id,
@@ -2574,19 +2569,11 @@ export async function startTelegram() {
             fromId: ctx.from.id,
             text: ctx.message.text,
             telegramDate: ctx.message.date,
-            continuation: eva2Continuation,
-            recentMessages: eva2Prior.slice(-12).map((row) => ({
-              occurred_at: new Date(row.ts).toISOString().replace(/\.\d{3}Z$/u, 'Z'),
-              role: row.role === 'assistant' ? config.assistantName : (row.sender || naam),
-              text: String(row.content || '').trim(),
-            })).filter((row) => row.text),
-            onDraft: createEva2DraftSink({
-              chatId: ctx.chat.id,
-              draftId: ctx.message.message_id,
-              sendDraft: bot?.api?.raw?.sendMessageDraft?.bind(bot.api.raw),
-            }),
+            onDraft: draftSink
+              ? async (text) => draftSink(labelEva2TelegramReply(text))
+              : null,
           });
-          await sendTelegramText(ctx.chat.id, answer.text, {
+          await sendTelegramText(ctx.chat.id, labelEva2TelegramReply(answer.text), {
             replyToMessageId: ctx.message.message_id,
             dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary'),
           });
@@ -2595,7 +2582,7 @@ export async function startTelegram() {
         } catch (error) {
           await sendTelegramText(
             ctx.chat.id,
-            `De Eva B-test kon nu niet antwoorden: ${errMsg(error).slice(0, 160)}`,
+            labelEva2TelegramFailure(errMsg(error).slice(0, 160)),
             {
               replyToMessageId: ctx.message.message_id,
               dedupeKey: inboundReplyDedupeKey(ctx, 'eva2-canary-error'),

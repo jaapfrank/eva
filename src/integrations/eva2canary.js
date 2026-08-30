@@ -1,6 +1,4 @@
 const CANARY_PREFIX = /^\/eva2(?:@\w+)?(?:\s+|$)/iu;
-const OTHER_COMMAND = /^\/(?!eva2(?:@\w+)?(?:\s+|$))\S+/iu;
-const CANARY_SESSION_MS = 30 * 60_000;
 const DRAFT_MIN_GROWTH = 32;
 const DRAFT_MAX_INTERVAL_MS = 300;
 
@@ -31,35 +29,15 @@ export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.n
   };
 }
 
-/**
- * Keep a real Telegram conversation on Eva B after one explicit /eva2 turn.
- * The session is derived from the immutable Telegram archive, so a restart
- * cannot silently send the next short follow-up back to Eva A.
- */
-export function eva2CanaryContinuation({
-  text,
-  telegramDate,
-  fromId,
-  priorMessages = [],
-  sessionMs = CANARY_SESSION_MS,
-} = {}) {
+export function labelEva2TelegramReply(text) {
   const value = String(text || '').trim();
-  if (!value || OTHER_COMMAND.test(value)) return false;
-  const currentMs = Number(telegramDate) * 1000;
-  const sender = String(fromId || '');
-  if (!Number.isSafeInteger(Number(telegramDate)) || !sender
-    || !Number.isSafeInteger(sessionMs) || sessionMs < 1_000) return false;
-  for (let index = priorMessages.length - 1; index >= 0; index -= 1) {
-    const row = priorMessages[index];
-    if (row?.role !== 'user'
-      || String(row?.meta?.fromTelegramId || '') !== sender
-      || eva2CanaryPrompt(row?.content) === null) continue;
-    const activatedMs = Date.parse(String(row.ts || ''));
-    return Number.isFinite(activatedMs)
-      && currentMs >= activatedMs
-      && currentMs - activatedMs <= sessionMs;
-  }
-  return false;
+  if (!value) throw new Error('Eva2 gaf een leeg antwoord');
+  return `Eva2: ${value}`;
+}
+
+export function labelEva2TelegramFailure(reason) {
+  const value = String(reason || '').trim() || 'onbekende fout';
+  return `Eva2-fout: ${value}. Eva1 heeft dit bericht niet verwerkt.`;
 }
 
 function canonicalTelegramTimestamp(unixSeconds) {
@@ -99,7 +77,9 @@ async function readCanaryStream(response, onDraft) {
         cumulative += item.text;
         if (cumulative) await onDraft(cumulative);
       } else if (item?.contract === 'EvaInternalGroundedReply/v1') final = item;
-      else throw new Error('Eva B-canary tekststream is ongeldig');
+      else if (item?.contract === 'EvaTextStreamError/v1') {
+        throw new Error('Eva2 kon haar antwoord niet veilig afronden');
+      } else throw new Error('Eva2 gaf een onbekend tekststreambericht');
     }
     if (done) break;
   }
@@ -114,16 +94,11 @@ export async function askEva2Canary({
   fromId,
   text,
   telegramDate,
-  recentMessages = [],
-  continuation = false,
   fetchImpl = fetch,
   onDraft = null,
   timeoutMs = 20_000,
 }) {
-  const explicit = eva2CanaryPrompt(text);
-  const prompt = explicit === null && continuation
-    ? String(text || '').trim()
-    : explicit;
+  const prompt = eva2CanaryPrompt(text);
   if (prompt === null) return null;
   if (!prompt) throw new Error('Zet je vraag achter /eva2');
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');
@@ -135,7 +110,9 @@ export async function askEva2Canary({
     installation_id: 'live-test-installation',
     message_id: Number(messageId),
     occurred_at: canonicalTelegramTimestamp(telegramDate),
-    recent_messages: recentMessages,
+    // De Eva1-transportgeschiedenis is geen Eva2-gesprekscontext. Eva2 leest
+    // haar eigen duurzame gesprek uitsluitend server-side uit PostgreSQL.
+    recent_messages: [],
     telegram_user_id: identity.sender,
     tenant_id: 'live-test-tenant',
     text: prompt,
