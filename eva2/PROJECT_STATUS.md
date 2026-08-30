@@ -112,7 +112,9 @@ Betekenis:
   vaste foutcategorie terug. De ruwe modeltekst en het verborgen antwoord
   blijven buiten beeld; deze kandidaat is getest maar nog niet uitgevoerd.
 - 🟡 De nog ongebruikte ontwikkelcases 32–39 zijn vooraf vastgezet. Er is nog
-  geen resultaat van bekeken en de proef is nog niet gestart.
+  geen resultaat van bekeken en de proef is nog niet gestart. De batchroute
+  weigert andere cases, herhaalt een mislukt geval niet en lekt geen ruwe
+  modeltekst naar de samenvatting.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.

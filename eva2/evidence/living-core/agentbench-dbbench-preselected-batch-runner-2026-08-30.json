@@ -1,0 +1,31 @@
+{
+  "contract": "EvaAgentBenchDbBenchPreselectedBatchRunnerCandidate/v1",
+  "observedAt": "2026-08-30T11:03:26+02:00",
+  "selectionReceipt": "agentbench-dbbench-eva-validation-feedback-cases-32-39-selection-2026-08-30.json",
+  "selectionReceiptSha256": "5ca73540b466b2afbeb0f56a732fd1d044f71d4196ae1ec5ad3ed7e60198e57d",
+  "behavior": {
+    "acceptedCaseIndices": [32, 33, 34, 35, 36, 37, 38, 39],
+    "candidateSourceHashesRequired": true,
+    "existingOutputDirectoryRejected": true,
+    "caseRetriedAfterSealedFailure": false,
+    "continuedAfterSealedFailure": true,
+    "stoppedAfterUnsealedFailure": true,
+    "rawFailureTextCopiedToSummary": false,
+    "summaryContainsPromptsAnswersOrHiddenLabels": false
+  },
+  "verification": {
+    "focusedTestsPassed": 49,
+    "ruffPassed": true,
+    "modelCalls": 0,
+    "benchmarkCasesRun": 0
+  },
+  "sourceSha256": {
+    "benchmark/run_preselected_agentbench_dbbench_batch.py": "b6dd819b50d2b9975e5b55a6ac822064ceb7fa2a0d71de4790e28b8df4da9261",
+    "eva2/tests/benchmark/test_run_preselected_agentbench_dbbench_batch.py": "7b471b4c03108ab2d262bc75504d49c9787a4a2bfb4bee9920c0553505fa5c9f"
+  },
+  "nonClaims": [
+    "The selected cases have not been run.",
+    "No official benchmark score was produced.",
+    "No superiority claim is made."
+  ]
+}
