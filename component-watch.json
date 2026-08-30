@@ -15,6 +15,7 @@
     {"repository": "homeassistant-ai/ha-mcp", "currentRelease": "v8.4.0", "role": "external-tool-provider-candidate"},
     {"repository": "IBM/mcp-context-forge", "currentRelease": "v1.0.8", "role": "mcp-gateway-candidate"},
     {"repository": "docker/mcp-gateway", "currentRelease": "v0.43.3", "role": "mcp-gateway-reserve"},
+    {"repository": "marmelab/react-admin", "currentRelease": "v5.15.1", "role": "dashboard-candidate"},
     {"repository": "renovatebot/renovate", "currentRelease": "44.52.0", "role": "dependency-updates"}
   ],
   "competitors": [

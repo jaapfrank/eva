@@ -1,0 +1,15 @@
+:root { font-family: Inter, system-ui, sans-serif; color: #15231e; background: #f3f7f5; }
+body { margin: 0; }
+main { max-width: 1200px; margin: auto; padding: 2rem; }
+header { display: flex; align-items: center; justify-content: space-between; }
+h1 { margin: 0; font-size: 2.4rem; }
+.eyebrow { margin: 0; color: #557067; }
+.ready, .attention { border-radius: 999px; padding: .55rem .8rem; font-weight: 700; }
+.ready { background: #ccebdc; color: #14583b; }
+.attention { background: #ffe2ad; color: #6f4300; }
+.board { display: grid; grid-template-columns: repeat(5, minmax(12rem, 1fr)); gap: .8rem; overflow-x: auto; }
+article { min-height: 10rem; padding: .8rem; background: #e6eeea; border-radius: .8rem; }
+article h3 { text-transform: capitalize; }
+.card { padding: .7rem; margin-block: .6rem; background: white; border-radius: .6rem; box-shadow: 0 1px 3px #0002; }
+.card p { color: #52635d; }
+@media (max-width: 760px) { main { padding: 1rem; } .board { grid-template-columns: repeat(5, 85vw); } }

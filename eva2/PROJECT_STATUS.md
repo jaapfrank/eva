@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 01:21 CEST
+Laatst bijgewerkt: 31 augustus 2026, 01:44 CEST
 
 ## Zo lees je dit bord
 
@@ -199,10 +199,16 @@ Eva2-secret.
 | Gesprekken, geheugen, taken en kosten op één plek tonen | 🟡 Losse gegevens bestaan; nog geen compleet scherm | 📘 Veel beheerfuncties | 📘 Brede beheerervaring | 📘 Brede agentinterface |
 | Direct pauzeren, stoppen en terugrollen | 🟡 Technische stop- en A/B-routes bestaan; nog geen eenvoudige knoppen | 📘 Bedieningsfuncties | 📘 Bedieningsfuncties | 📘 Bedieningsfuncties |
 | Op telefoon en computer eenvoudig werken | ❌ Nog geen af productdashboard | 📘 Webinterface | 📘 Webinterface | 📘 Webinterface |
+| Een onderhouden dashboard gebruiken in plaats van alles zelf bouwen | 🟡 React-admin `5.15.1` is geselecteerd na een echte build-, dependency- en browserproef. De kandidaat leest gezondheid, identiteit en Kanban zonder externe calls of browseropslag, maar is nog niet live | 📘 Eigen onderhouden Control UI | 📘 Eigen onderhouden dashboard | 📘 Eigen onderhouden WebUI |
 
-Eva gaat hiervoor geen volledig eigen webplatform bouwen. De kandidaat is een
-bestaand adminframework boven Eva's gesaneerde API; Eva houdt alleen de unieke
-schermen voor personen, privacy, bewijs, toolacties en terugrol.
+Eva gaat hiervoor geen volledig eigen webplatform bouwen. React-admin won van
+Refine omdat de actuele volledige UI-lijn zonder dependencyconflict installeert.
+Refine was ongeveer half zo klein, maar zijn MUI-laag mengde onverenigbare
+MUI-versies en deed vóór uitschakeling een externe telemetrycall. React-admin
+is nog slechts een kandidaat: de oude 428 regels cockpitpresentatie moeten
+verdwijnen en de nieuwe assets moeten eerst via de gewone image-, scan- en
+A/B-route worden bewezen. Eva houdt alleen haar API en unieke schermlogica voor
+personen, privacy, bewijs, toolacties en terugrol.
 
 ## Configuratie en koppelingen
 
@@ -266,7 +272,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
-| Dashboard en Kanban | Bestaand adminframework plus bordcomponent | ❌ Nog niet in de gebruikersroute |
+| Dashboard en Kanban | React-admin `5.15.1`; pas bij echte bordbediening een onderhouden drag-and-dropcomponent toevoegen | 🟡 Exact gelockte kandidaat bouwt en doorstaat de eigenaar-/browsergrens; nog niet in de gebruikersroute en de oude cockpitpresentatie bestaat nog |
 | Dependencyupdates | Renovate | 🟡 Volledige dry-run groen; echte bot nog niet actief |
 | Scan, SBOM en ondertekening | Trivy, Syft en Cosign/OCI-middelen | 🟡 Scan en signing werken; nog niet één complete automatische poort |
 | Database en herstel | PostgreSQL, Alembic en bestaande container-/back-uptools | ✅ Live en A/B-terugrol bewezen |
@@ -292,8 +298,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 1. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
-2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
-   geheugen, kosten en Kanban in één eigenaarsscherm zetten.
+2. De geselecteerde React-admin-kandidaat uit dezelfde gesaneerde API serveren,
+   de oude cockpitpresentatie verwijderen en haar via image-scan en A/B live
+   bewijzen; daarna pas configuratie, geheugen, kosten en bediening toevoegen.
 3. ContextForge als optionele beheerde gateway configureren en daarna per
    provider aantonen welke resterende directe lijm werkelijk weg kan.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
@@ -314,6 +321,8 @@ De eerste drie actuele gelijke vierwegproeven staan in
 [C04](evidence/product/current-four-way-c04-development-2026-08-30.json). De
 herstart- en gesprekcontinuïteitsproef staat in
 [CONT01](evidence/product/current-four-way-cont01-restart-continuity-2026-08-31.json).
+De dashboardkeuze, dependencyvergelijking en echte browsergrens staan in
+[de React-admin/Refine-bake-off](evidence/product/dashboard-framework-bakeoff-2026-08-31.json).
 De tweede providerroute staat in
 [de duurzame e-mailtoolproef](evidence/living-core/external-email-provider-durable-tool-2026-08-30.json).
 De algemene laadgrens staat in

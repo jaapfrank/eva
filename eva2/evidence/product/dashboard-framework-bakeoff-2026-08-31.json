@@ -1,0 +1,156 @@
+{
+  "contract": "Eva2DashboardFrameworkBakeoffReceipt/v1",
+  "issuedAt": "2026-08-31T01:44:04+02:00",
+  "decision": {
+    "candidate": "marmelab/react-admin@5.15.1",
+    "liveRouteChanged": false,
+    "reason": "React-admin is the only tested full UI candidate that installed without peer overrides while supplying the admin, data, authentication, routing, form and access-control primitives required by later Eva dashboard slices.",
+    "status": "selected_for_isolated_integration"
+  },
+  "criteria": [
+    "maintained stable release and permissive license",
+    "custom adapter for Eva's existing API instead of a second backend",
+    "owner authentication without browser credential storage",
+    "no external browser requests or telemetry",
+    "read-only anonymous failure before identity or workboard data",
+    "dependency and license closure",
+    "future forms, access control and task-board support",
+    "eventual removal of Eva's duplicate presentation code"
+  ],
+  "reactAdmin": {
+    "repository": "https://github.com/marmelab/react-admin",
+    "release": "5.15.1",
+    "releaseCommit": "96efd8c",
+    "releaseUrl": "https://github.com/marmelab/react-admin/releases/tag/v5.15.1",
+    "license": "MIT",
+    "securityPolicyPresent": false,
+    "publishedSecurityAdvisoriesObserved": {
+      "count": 1,
+      "latestSeverity": "moderate",
+      "latestPublished": "2023-02-13"
+    },
+    "runtime": {
+      "react": "19.2.8",
+      "reactDom": "19.2.8"
+    },
+    "build": {
+      "vite": "8.2.2",
+      "lockedPackages": 200,
+      "peerInstallWarnings": 0,
+      "packageLockSha256": "0d047dc7e6ed303c4b9deb5f768577732072f2761919a483afcee7a8d2ff11f4",
+      "javascriptBytes": 798007,
+      "javascriptGzipBytes": 252024,
+      "javascriptSha256": "3a258475fbc15d993aae8f9e09fda63cfa98d7d17ae31ccf9fb70005d22ca590",
+      "cssBytes": 849,
+      "cssGzipBytes": 488,
+      "cssSha256": "2a91534a9eba22566770849ba36e4bea4cc22e7f969c2ac2f8d8d105253bba26",
+      "largeChunkWarning": true
+    },
+    "audit": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0
+    },
+    "licenses": {
+      "unknown": 0,
+      "MIT": 154,
+      "Apache-2.0": 23,
+      "ISC": 3,
+      "BSD": 1,
+      "BSD-2-Clause": 1,
+      "BSD-3-Clause": 4,
+      "MPL-2.0": 12,
+      "(MPL-2.0 OR Apache-2.0)": 1,
+      "0BSD": 1
+    },
+    "browserProof": {
+      "playwright": "1.59.1",
+      "chromium": "149.0.7827.55",
+      "authenticatedProtectedEndpoints": [
+        "/internal/v1/dashboard/status",
+        "/internal/v1/dashboard/identity",
+        "/internal/v1/dashboard/workboard"
+      ],
+      "anonymousIdentityRequests": 0,
+      "anonymousWorkboardRequests": 0,
+      "browserStorageEntries": 0,
+      "cookies": 0,
+      "externalRequests": 0,
+      "pageErrors": 0,
+      "telemetryDisabled": true,
+      "status": "passed"
+    },
+    "sourceBindings": {
+      "mainSha256": "4b2ffc7a237d22bfcbed31cc9aa4ebf813e3a76403d7367aebf5da39143d1958",
+      "styleSha256": "4cd144eb8d8ae26e7145997967b2d148469926ffc4ac4dc437b336e3474ee333",
+      "viteConfigSha256": "4175ed9e3d71a8818a3bdd3c33aedc0981aa3003a3e6409b5de5cbf02d3935dc",
+      "browserProofSha256": "80fc7d2774d86593559102173e6d0fbbf24d1ce4dcbf452634756fcfcdd9ef49"
+    }
+  },
+  "refine": {
+    "repository": "https://github.com/refinedev/refine",
+    "coreRelease": "5.0.12",
+    "muiRelease": "8.0.2",
+    "license": "MIT",
+    "securityPolicyPresent": true,
+    "securityPolicyVersionText": "> 4.x.x",
+    "runtime": {
+      "react": "18.3.1",
+      "mui": "6.5.0"
+    },
+    "build": {
+      "lockedPackages": 267,
+      "packageLockSha256": "9ee614b86286b3493e26f285d6cd7642f763d8acac714563a19f6bd9a00a3e61",
+      "javascriptBytes": 388888,
+      "javascriptGzipBytes": 125597,
+      "javascriptSha256": "2d03f549b1cc4a85ee19f0e272f109f6218f2ece8c3bd2ad0d9643db2480771b",
+      "npmLsExitCode": 1,
+      "peerConflict": "notistack 2.0.8 requires @mui/material ^5.0.0 while the current Refine MUI line installs @mui/material 6.5.0",
+      "deprecatedPackageWarning": "@mui/base 5.0.0-dev.20240529-082515-213b5e33ab"
+    },
+    "audit": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 0,
+      "low": 0
+    },
+    "browserProof": {
+      "externalTelemetryObservedBeforeConfiguration": "https://telemetry.refine.dev/telemetry",
+      "externalRequestsAfterDisableTelemetry": 0,
+      "browserStorageEntries": 0,
+      "pageErrors": 0,
+      "status": "functional_but_not_selected"
+    },
+    "decision": "not selected because the current supported UI stack is not peer-clean; smaller bundle size remains a documented advantage"
+  },
+  "appsmith": {
+    "repository": "https://github.com/appsmithorg/appsmith",
+    "license": "Apache-2.0",
+    "decision": "not taken to a bundle trial because it is a separately deployed low-code platform and would add a second application/runtime rather than replace Eva's presentation layer with a frontend library"
+  },
+  "candidateBoundary": {
+    "apiChanged": false,
+    "databaseChanged": false,
+    "dockerChanged": false,
+    "eva1Changed": false,
+    "liveEva2Changed": false,
+    "mutationsAvailable": false,
+    "secretsUsed": false
+  },
+  "promotionGates": [
+    "serve immutable built assets from the owner-protected Eva route with a strict CSP",
+    "validate every API response against Eva's versioned contracts",
+    "retain server-side person, consent and mutation authority",
+    "remove the old embedded cockpit presentation instead of running two dashboards",
+    "add targeted route, CSP, anonymous-access and browser tests",
+    "build and scan the complete candidate image",
+    "promote only through the managed A/B data-copy and rollback cycle"
+  ],
+  "nonClaims": [
+    "React-admin is not live in Eva2.",
+    "The current embedded cockpit has not yet been removed.",
+    "The candidate does not prove dashboard write actions, CSRF protection, mobile usability or a complete consumer installation.",
+    "Selection is not a permanent superiority claim; component-watch and Renovate must reopen it when the dependency line or competitors materially change."
+  ]
+}
