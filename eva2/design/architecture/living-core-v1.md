@@ -66,12 +66,14 @@ kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
 De doelroute gebruikt daarvoor geen eigen Eva-pakketbeheerder. ContextForge
-`v1.0.8` is de actuele eerste gatewaykandidaat: toolservers blijven losse
+`v1.0.8` is de actuele optionele gatewaykandidaat: toolservers blijven losse
 processen, de gateway levert registry/proxy/beheer en Eva houdt alleen haar
-persoon-, toestemming-, risico-, bewijs- en readbackgrens. De tijdelijke
-Python-entry-pointgroep blijft uitsluitend migratielijm tot één gatewaytool de
-duurzame route en herstartproef heeft gewonnen. ContextForge is in deze fase
-eigenaar-only; zijn eigen RBAC vervangt Eva's persoonsautoriteit niet.
+persoon-, toestemming-, risico-, bewijs- en readbackgrens. De algemene MCP-
+aansluiting zit als kleine transportgrens in de providerlaag en draait nu in de
+actieve image; concrete tools blijven runtimeconfiguratie. De Python-entry-
+pointgroep blijft alleen een aanvullende compatibiliteitsroute voor reeds
+geïnstalleerde providerpakketten. ContextForge is in deze fase eigenaar-only;
+zijn eigen RBAC vervangt Eva's persoonsautoriteit niet.
 
 De structurele codegrens is nu groen. Applicatie, contracten, modeladapter,
 gesprekspersistence en runtime bevatten nul Home Assistant-/Tuya-/AgentMail-specifieke
@@ -120,6 +122,14 @@ bestand en geen bestaand kernbestand mag providerspecifieke logica krijgen. De
 structurele gate is groen. De praktijkgate blijft geel totdat een echte
 apparaatmigratie en een live AgentMail-read met een afzonderlijk Eva2-secret
 dezelfde duurzame tool- en readbackroute doorlopen.
+
+De providerneutrale image van commit `205f696` draait inmiddels via de
+verliesloze beheerde A/B-route op poort `44711`. Een echte modelbeurt bleef na
+coreherstart beschikbaar. Een live Home Assistant-read werd daarbij uitsluitend
+als externe tool toegelaten, voorbereid, uitgevoerd en apart als
+`STATE_VERIFIED` opgeslagen. Dit bewijst de actieve algemene grens met één
+praktijkprovider; ContextForge en de niet-huisgebonden IBM-tijdtool blijven
+releasebewijs totdat de gateway expliciet als beheerde sidecar is geconfigureerd.
 
 ## De drie geheugens
 

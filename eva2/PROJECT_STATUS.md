@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 22:35 CEST
+Laatst bijgewerkt: 30 augustus 2026, 23:00 CEST
 
 ## Zo lees je dit bord
 
@@ -62,13 +62,13 @@ adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 Het model koos in een echte proef zelf een externe tijdtool; Home Assistant is daarnaast als gewone live provider gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 ContextForge `v1.0.8` leverde nu een echte niet-huisgebonden tijdtool. Naam, schema en provider kwamen uit de runtimecatalogus; de live gebruikersroute ontbreekt nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | ✅ De actieve Eva kiest uit een algemene toolcatalogus. Zij koos live Home Assistant als externe read-tool en in een aparte echte proef een niet-huisgebonden tijdtool | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 De algemene MCP-grens draait nu live. ContextForge `v1.0.8` leverde in de releaseproef een echte tijdtool uit runtimeconfiguratie, maar die gateway is in het beheerde slot nog niet aangezet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ De algemene route doet uitvoering en observatie apart en herstart zonder dubbel uitvoeren. Een echte toestandcontrole is met Home Assistant als verwisselbare praktijkprovider bewezen | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Dezelfde kern laadde Home Assistant, e-mail en een echte externe tijdtool. De gatewaykandidaat moet nog via A/B live | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | ✅ Dezelfde verzegelde kern laadde Home Assistant live en een externe tijdprovider in de releaseproef; alleen runtimeconfiguratie en de provider wisselden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -108,7 +108,7 @@ uitvoer- en readbackroute lopen. AgentMail moet daarnaast met een nieuw,
 afzonderlijk Eva2-secret één echte read in de gebruikersroute uitvoeren.
 
 De eindroute wordt geen eigen Eva-pakketbeheerder. Een actuele vergelijking
-koos IBM ContextForge `v1.0.8` als algemene, geïsoleerde MCP-gateway.
+koos IBM ContextForge `v1.0.8` als optionele, geïsoleerde MCP-gateway.
 De exacte niet-rootimage startte op een alleen-lezen bestandssysteem, werd
 gescand op 0 hoog/0 kritisch en weigerde tools en beheer zonder token. Drie private
 file-secrets worden door 41 regels begrensde startlijm ingelezen, omdat upstream
@@ -117,7 +117,8 @@ zijn binary klopt bytegelijk met de release, maar de release is prerelease en
 de Go-dependencyscan is nog niet sluitend. Geen van beide draait in de live
 Eva-route. De open ContextForge-RBAC-kwestie blokkeert bovendien een direct
 multi-userdashboard; Eva blijft zelf vóór iedere toolcall persoon en toestemming
-controleren.
+controleren. De providerneutrale MCP-grens zelf draait inmiddels wel in de
+actieve Eva-image; zonder een geconfigureerde gateway blijft zij stil.
 
 Een exact gepinde synthetische MCP-server liep inmiddels door die gateway en
 Eva's bestaande algemene toolcontract. Catalogus, zichtbaarheid en invoerschema
@@ -185,7 +186,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Chatkanalen, modellen, toolproviders en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
 | Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
 | Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
-| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 ContextForge `v1.0.8` is als gepinde, interne, scan-schone gatewaykandidaat groen. Eén toolserver via de gateway en het verwijderen van de tijdelijke Python-plug-inroute ontbreken nog | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
+| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 De algemene MCP-grens is live en de tijdelijke pakketafhankelijke route is weg. ContextForge `v1.0.8` plus een echte toolserver zijn scan-schoon bewezen, maar de gateway staat nog niet aan in het beheerde slot | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
@@ -234,7 +235,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | ContextForge als MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 Een echte tijdtool en een synthetische tool doorliepen catalogus, modelkeuze, call, aparte readback en PostgreSQL-replay op een 0/0-kandidaat. Live opname ontbreekt. Home Assistant is alleen één verwisselbare provider en staat daarom niet als Eva-component op dit bord |
+| Externe gereedschappen | Een algemene MCP-/toolgrens; ContextForge als optionele gateway; officiële provider-API's/SDK's achter toolservers | ✅ De 0/0-image met de algemene grens draait live. Model, herstartgeheugen en één externe read met aparte controle zijn groen. ContextForge en de niet-huisgebonden tijdtool zijn releasebewijs, maar nog geen geactiveerde live gateway. Home Assistant blijft slechts één verwisselbare provider |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -265,8 +266,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. De bewezen algemene ContextForge-route via A/B in de gebruikersroute zetten
-   en daarna overlappende directe providerlijm verwijderen.
+3. ContextForge als optionele beheerde gateway configureren en daarna per
+   provider aantonen welke resterende directe lijm werkelijk weg kan.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
@@ -293,3 +294,6 @@ De echte algemene catalogus-, call-, readback- en herstartproef staat in
 [het duurzame ContextForge-bewijs](evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json).
 De echte niet-huisgebonden model-/tijdtoolproef staat in
 [de scan-schone providerkandidaat](evidence/product/contextforge-real-non-home-provider-candidate-2026-08-30.json).
+De providerneutrale image, verliesloze A/B-omschakeling, modelherstart en echte
+externe live read staan in
+[het live toolgrensbewijs](evidence/product/generic-tool-boundary-live-ab-2026-08-30.json).

@@ -1,0 +1,67 @@
+{
+  "contract": "EvaGenericToolBoundaryLiveAbReceipt/v1",
+  "issuedAt": "2026-08-30T22:58:17+02:00",
+  "status": "live_candidate",
+  "sourceCommit": "205f696c578da943e92029f3997ca4d6ba4c9d30",
+  "image": "eva2/generic-tool-boundary-release@sha256:98e086c6151c992bffe4cc56f355d16a927f22700005ef72c16979ff3ccbda0d",
+  "imageBuild": {
+    "networkDuringBuild": false,
+    "runtimeUser": "65532:65532",
+    "sourceRefresh": "git-archive-v1",
+    "criticalVulnerabilities": 0,
+    "highVulnerabilities": 0
+  },
+  "releaseInputs": {
+    "authoritySha256": "2f9a25f8a012a67dff785e6fd45a9f716658fba7f2dc3296eaf481a255606770",
+    "candidateEvidenceSha256": "ac5d3d2cb14b90fc136fecdd8e8a9ba1a0bca85b9df7571218a51711c3a5127b",
+    "nonHomeProviderEvidenceSha256": "f1c3b9bc5ba85c64f600cf3f96691ff8039e036c8d0869270a456462b34c9b17"
+  },
+  "managedSlot": {
+    "sourceSlot": 3,
+    "sourcePort": 44710,
+    "targetSlot": 4,
+    "targetPort": 44711,
+    "configurationSha256": "5d4ae2e42c7a76d65b13b30f596fa0f8aceeadc7880c323f00f57844c855c7f7",
+    "environmentBeforeSha256": "28b9a55550b9d71e1322d7cbe476c619555bac09ae2ac9bd760f3f41296698f8",
+    "environmentAfterSha256": "29f801429df1ae34d38ea869d3415fe076cca342c13eb14263190124b4e7ca01",
+    "allSixRuntimeContainersShareConfiguration": true,
+    "sourceWritersStopped": true,
+    "targetReady": true,
+    "activeRoute": "http://127.0.0.1:44711",
+    "previousCoreRetainedStopped": true
+  },
+  "dataTransition": {
+    "operationalDumpSha256": "6ce640c3f09181d95cf0849fb95feb11cf7cd49b03352b382717b80d14ae6647",
+    "operationalDataDigest": "4c7d27a71e36093e9e067d1e74b2f520b6a4f0e7628d64dea81226a4cc5e98ed",
+    "operationalTableCount": 48,
+    "memoryDumpSha256": "8e2442e19ea3c7514ac1fad9ff345ecdd9913039277d72c20856f63174b493b1",
+    "memoryDataDigest": "a2ee226a85a2ffcfb87461a427c6affe08aa35fdb7248e7cb125c99d9dbc06d1",
+    "memoryTableCount": 23
+  },
+  "liveChecks": {
+    "eva1HttpStatuses": [200, 200, 200, 200, 200],
+    "eva1Restarts": 0,
+    "anonymousOwnerRouteHttp": 401,
+    "realModelReply": "kandidaat",
+    "preRestartReply": "opgeslagen",
+    "postRestartRecall": "granaatappelster",
+    "externalTool": "home_assistant.read_state",
+    "externalToolAnswer": "De spotjes overkapping staan aan.",
+    "toolRequestAdmitted": 1,
+    "toolPrepared": 1,
+    "toolExecuted": 1,
+    "stateVerified": 1
+  },
+  "architecture": {
+    "mcpIsGenericExternalProviderBoundary": true,
+    "homeAssistantIsCoreComponent": false,
+    "homeAssistantIsUniqueSellingPoint": false,
+    "providerSpecificToolConfigurationRemainsExternal": true
+  },
+  "nonClaims": [
+    "The IBM ContextForge gateway proved the same boundary with a non-home time tool, but that gateway is not enabled in the live managed slot.",
+    "This receipt does not prove that every MCP provider is safe or compatible.",
+    "This receipt does not prove superiority over OpenClaw, Hermes or Agent Zero.",
+    "The reverse-and-forward A/B cycle for this exact image and the seven-day practice run remain open."
+  ]
+}
