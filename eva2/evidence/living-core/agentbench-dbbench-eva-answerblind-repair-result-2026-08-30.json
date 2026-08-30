@@ -1,0 +1,51 @@
+{
+  "contract": "EvaAgentBenchDbBenchAnswerBlindRepairResult/v1",
+  "date": "2026-08-30",
+  "selectionReceipt": "agentbench-dbbench-eva-answerblind-repair-selection-2026-08-30.json",
+  "selectionCommit": "9149609",
+  "cases": [
+    {"caseIndex": 11, "originalScore": 0, "repairScore": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "4af4c8957b9e325a4492e680c320165a7aeda2f5d9081377beb81aadfbb7995f"},
+    {"caseIndex": 12, "originalScore": 0, "repairScore": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "0eb5bdfe8041edd5c01945dd2096ba5b3ffbb480da9f108de24953bf78330805"},
+    {"caseIndex": 13, "originalScore": 0, "repairScore": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "6248d98d4509fee48bb1f893cd24332736197b8a8ce04c8c423b8d7f035b3bab"},
+    {"caseIndex": 15, "originalScore": 0, "repairScore": 0, "modelTurns": 3, "sqlCalls": 1, "rawSha256": "30196936ee73e8a698391983f14ac4d5627b73f75a83093f8d4cab3ea98b44e8"}
+  ],
+  "aggregate": {
+    "cases": 4,
+    "improvedScores": 0,
+    "repairCorrect": 0,
+    "repairIncorrect": 4,
+    "modelCallsReservedBeforeIo": 9,
+    "adapterValidationFailuresBeforeDatabaseIo": 1,
+    "providerFailuresBeforeDatabaseIo": 0,
+    "sqlCalls": 4,
+    "successfulToolFreeModelReplies": 9,
+    "toolsExposedByEvaModelBoundary": 0,
+    "usageMeasurement": "unmeasured"
+  },
+  "answerBlindVisibleAudit": {
+    "case11": "Eva changed from a row name to the visibly largest Area cell, but the scorer still returned zero.",
+    "case12": "Eva still returned the Player cell although the question also names the Touchdowns column.",
+    "case13": "Eva returned all five selected row cells; the question asks for the match and the exact requested cell set remains ambiguous.",
+    "case15": "Eva returned the visible Try bonus value for the only row with Points 51, but the scorer still returned zero.",
+    "hiddenLabelsRead": false,
+    "standardAnswerSqlRead": false
+  },
+  "interpretation": {
+    "promptOnlyRepairAccepted": false,
+    "suspectedDatasetOrEvaluatorInconsistencyCases": [11, 15],
+    "suspectedIsNotClaimedAsProven": true,
+    "originalFixedScoresRemainAuthoritative": true,
+    "nextEvaluationMustUsePreviouslyUnseenCases": true
+  },
+  "runtime": {
+    "modelSidecarHealth": "healthy",
+    "temporaryContainersRemoved": true,
+    "temporaryNetworkRemoved": true
+  },
+  "nonClaims": [
+    "The repair did not improve any official case score.",
+    "This selected repair set is not an unbiased score.",
+    "No hidden label or standard answer SQL was used to tune the repair.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}

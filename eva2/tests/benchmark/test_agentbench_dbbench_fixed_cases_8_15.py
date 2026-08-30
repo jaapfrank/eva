@@ -13,6 +13,9 @@ SELECTION = (
     EVIDENCE
     / "agentbench-dbbench-eva-tool-free-fixed-cases-8-15-selection-2026-08-30.json"
 )
+REPAIR_RECEIPT = (
+    EVIDENCE / "agentbench-dbbench-eva-answerblind-repair-result-2026-08-30.json"
+)
 
 
 def _raw_path(case_index: int) -> Path:
@@ -79,3 +82,39 @@ def test_fixed_cases_8_through_15_receipt_matches_private_raw_artifacts() -> Non
     assert aggregate["sqlCalls"] == total_sql_calls
     assert aggregate["successfulToolFreeModelReplies"] == total_model_receipts
     assert aggregate["toolsExposedByEvaModelBoundary"] == 0
+
+
+def test_answerblind_repair_receipt_keeps_all_four_zero_scores() -> None:
+    receipt = json.loads(REPAIR_RECEIPT.read_text(encoding="utf-8"))
+    assert receipt["selectionCommit"] == "9149609"
+    assert receipt["interpretation"]["promptOnlyRepairAccepted"] is False
+    assert receipt["interpretation"]["originalFixedScoresRemainAuthoritative"] is True
+
+    total_turns = 0
+    total_model_failures = 0
+    total_model_receipts = 0
+    for recorded in receipt["cases"]:
+        case_index = recorded["caseIndex"]
+        path = EVIDENCE / (
+            f"agentbench-dbbench-eva-answerblind-repair-case-{case_index}-2026-08-30.raw.json"
+        )
+        raw_bytes = path.read_bytes()
+        raw = json.loads(raw_bytes)
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+        assert hashlib.sha256(raw_bytes).hexdigest() == recorded["rawSha256"]
+        assert recorded["originalScore"] == 0
+        assert recorded["repairScore"] == 0
+        assert raw["result"]["metric"]["score"] == 0
+        assert all(item["toolsExposed"] == 0 for item in raw["modelReceipts"])
+        total_turns += raw["modelTurnsUsed"]
+        total_model_failures += len(raw["modelFailures"])
+        total_model_receipts += len(raw["modelReceipts"])
+
+    aggregate = receipt["aggregate"]
+    assert aggregate["repairCorrect"] == 0
+    assert aggregate["repairIncorrect"] == 4
+    assert aggregate["improvedScores"] == 0
+    assert aggregate["modelCallsReservedBeforeIo"] == total_turns
+    assert aggregate["adapterValidationFailuresBeforeDatabaseIo"] == total_model_failures
+    assert aggregate["providerFailuresBeforeDatabaseIo"] == 0
+    assert aggregate["successfulToolFreeModelReplies"] == total_model_receipts
