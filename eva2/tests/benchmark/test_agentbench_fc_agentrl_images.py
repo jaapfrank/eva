@@ -8,6 +8,9 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[3]
+TOOL_FREE_MODEL_DOCKERFILE = (
+    ROOT / "benchmark" / "agentbench-fc-v1" / "eva-tool-free-model-v1.Dockerfile"
+)
 CONTROLLER = ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-pinned.Dockerfile"
 CONTROLLER_INPUTS = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-build-inputs-amd64.json"
@@ -155,6 +158,16 @@ DBBENCH_DEV_INPUTS = (
 DBBENCH_DEV_RECEIPT = (
     ROOT / "eva2" / "evidence" / "living-core" / "agentbench-fc-dbbench-dev-registration-2026-08-27.json"
 )
+
+
+def test_tool_free_model_has_a_non_model_calling_healthcheck() -> None:
+    dockerfile = TOOL_FREE_MODEL_DOCKERFILE.read_text(encoding="utf-8")
+    assert "HEALTHCHECK --interval=10s --timeout=3s" in dockerfile
+    assert "socket.create_connection(('127.0.0.1', 8090), 2)" in dockerfile
+    healthcheck = dockerfile.split("HEALTHCHECK", 1)[1].split("ENTRYPOINT", 1)[0]
+    assert "/v1/generate" not in healthcheck
+    assert "RUN " not in dockerfile
+    assert "ADD " not in dockerfile
 DBBENCH_DEV_READBACK = (
     ROOT
     / "eva2"

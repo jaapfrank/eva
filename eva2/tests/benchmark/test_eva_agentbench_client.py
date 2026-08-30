@@ -385,6 +385,12 @@ def test_neutralizes_prior_tool_messages_before_calling_eva(
     assert '"tool_calls"' not in model_prompt
     assert "schema and row count" in model_prompt
     assert "across every relevant text column" in model_prompt
+    assert "exact answer column or columns" in model_prompt
+    assert "Words such as name, tell, or give are verbs" in model_prompt
+    assert "Select only the requested answer columns" in model_prompt
+    assert "Use SUM, COUNT, or AVG only when" in model_prompt
+    assert "each selected answer cell as its own list item" in model_prompt
+    assert "add no labels, explanation, units, or prose" in model_prompt
 
 
 @pytest.mark.parametrize("turn_limit", ["0", "16", "nope"])

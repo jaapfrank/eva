@@ -1,0 +1,54 @@
+{
+  "contract": "EvaAgentBenchDbBenchAnswerBlindRepairSelection/v1",
+  "selectedAt": "2026-08-30T07:52:12+02:00",
+  "selection": {
+    "caseIndices": [11, 12, 13, 15],
+    "reason": "all incorrect cases in the precommitted fixed set 8 through 15",
+    "originalResultReceipt": "agentbench-dbbench-eva-tool-free-fixed-cases-8-15-2026-08-30.json",
+    "originalScores": [0, 0, 0, 0]
+  },
+  "answerBlindDiagnosis": {
+    "hiddenLabelsRead": false,
+    "standardAnswerSqlRead": false,
+    "visibleEvidenceUsed": [
+      "question supplied to the agent",
+      "table headers supplied to the agent",
+      "Eva's own SQL",
+      "database result returned to Eva",
+      "Eva's committed answer",
+      "official scorer's binary score"
+    ],
+    "sharedObservedPattern": "the SQL found a usable row but the committed answer selected the wrong field, combined fields into prose, or introduced an unsupported aggregation"
+  },
+  "generalRepair": {
+    "hardcodedCaseAnswers": false,
+    "clientSha256": "df4289ee40ddaf40b1cd0fae243d5a85ada70b263628d5811f52576b9f9750d7",
+    "rules": [
+      "identify the requested answer columns before writing SQL",
+      "treat name, tell and give as verbs unless an entity is explicitly requested",
+      "select helper columns only for filtering, grouping or ordering",
+      "aggregate only when the question explicitly combines multiple rows",
+      "commit one answer cell per list item without prose"
+    ]
+  },
+  "modelSidecar": {
+    "image": "eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616",
+    "dockerfileSha256": "062fa67971f2de32c07dfb61f88864c153d11309babd5626776a26313666bea2",
+    "buildNetwork": "none",
+    "criticalFindings": 0,
+    "highFindings": 0,
+    "healthProbe": "healthy",
+    "healthProbeModelCalls": 0,
+    "temporaryHealthProbeRemoved": true
+  },
+  "limits": {
+    "maximumModelCallsPerCase": 15,
+    "minimumSecondsBetweenModelCalls": 5,
+    "toolsExposedAtModelBoundary": 0
+  },
+  "nonClaims": [
+    "This repair set is deliberately selected from known failures and is not an unbiased score.",
+    "A successful rerun cannot replace or erase the original fixed-set scores.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}
