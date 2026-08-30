@@ -1,0 +1,76 @@
+{
+  "artifact": "EvaAgentBenchDbBenchToolFreeFixedDevelopmentSet/v1",
+  "date": "2026-08-30",
+  "selection": {
+    "caseIndices": [8, 9, 10, 11, 12, 13, 14, 15],
+    "selectionReceipt": "agentbench-dbbench-eva-tool-free-fixed-cases-8-15-selection-2026-08-30.json",
+    "selectionCommit": "c094bcf",
+    "selectedBeforeAnyCaseResultWasKnown": true,
+    "split": "development"
+  },
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:aa7f30236791a94283f0d8c1e93539311225ac3907c2a914cd03f084967facbc",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "runnerSha256": "d3fcc671c2621dfe4467e559c17a2ee513661457d19e7379b4417bd4bd8808f5",
+    "toolFreeClientSha256": "c91666264b973c9c81296ab316e3c1ae1ecd04ff0eac9c61156f454fa252a06c"
+  },
+  "cases": [
+    {"caseIndex": 8, "score": 1, "modelTurns": 5, "sqlCalls": 4, "rawSha256": "4abc156997cb9d61a84a427b573cc27b48a39d7cf5dc45052efc65e2d1c422af"},
+    {"caseIndex": 9, "score": 1, "modelTurns": 4, "sqlCalls": 3, "rawSha256": "92e5be7d751aa3648ead0be3abe447f2189697d05b8f9fdbed7960fb6fefcef8"},
+    {"caseIndex": 10, "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "74a184582318d6f9c0d072a5644fbed7889feed6faa8cb29e8584f9b6702f83a"},
+    {"caseIndex": 11, "score": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "ea67a72bfb48b47b955761dd058ce0fc80c50768a515c708fde32e7e811ee8b5"},
+    {"caseIndex": 12, "score": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "bdeb427633288c5e308f96753776c6a06c52d322b346776ea26b9a144e9e81c4"},
+    {"caseIndex": 13, "score": 0, "modelTurns": 3, "sqlCalls": 1, "rawSha256": "d090c1b3c53d997ec54bf76a0a673456fabf79ac9dfbc444c2dd99be623daf94"},
+    {"caseIndex": 14, "score": 1, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "ce79b2d0f2c13ab7c84fc572b6d0eb3a04f22d4debe4d85c4740632d8d5c0da6"},
+    {"caseIndex": 15, "score": 0, "modelTurns": 2, "sqlCalls": 1, "rawSha256": "4247a50d7a76e6e7f0bec1a85bd0d0f8d8fe98a3d382904d382d1977d72224d5"}
+  ],
+  "aggregate": {
+    "casesSelected": 8,
+    "casesScored": 8,
+    "correctScoredCases": 4,
+    "incorrectScoredCases": 4,
+    "modelCallsReservedBeforeIo": 22,
+    "providerFailuresBeforeDatabaseIo": 1,
+    "scoredCaseFraction": "4/8",
+    "sqlCalls": 13,
+    "successfulToolFreeModelReplies": 21,
+    "taskStartFailures": 0,
+    "toolsExposedByEvaModelBoundary": 0,
+    "usageMeasurement": "unmeasured"
+  },
+  "combinedFixedCases0Through15": {
+    "casesSelected": 16,
+    "casesScored": 15,
+    "correctScoredCases": 10,
+    "incorrectScoredCases": 5,
+    "taskStartFailures": 1,
+    "scoredCaseFraction": "10/15"
+  },
+  "verification": {
+    "allRawArtifactsMode": "0600",
+    "hiddenAnswerFieldsLoadedByEvaAdapter": false,
+    "modelSidecarCompletedAllRecordedReplies": true,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworkRemoved": true,
+    "toolExposureReceiptsAllZero": true
+  },
+  "observedIssue": {
+    "modelSidecarDockerHealth": "unhealthy",
+    "reason": "the inherited image healthcheck does not describe the benchmark server on port 8090",
+    "effectOnRecordedCalls": "none observed; all 21 recorded model replies completed",
+    "mustFixBeforeNextFixedSeries": true
+  },
+  "status": "fixed_development_set_four_correct_four_incorrect",
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "Sixteen selected development cases are too few to establish superiority over another agent.",
+    "The four incorrect results are retained without score correction or selective omission.",
+    "Token and timing usage were returned as unmeasured and are not represented as zero."
+  ]
+}
