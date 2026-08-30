@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DOCKERFILE = ROOT / "deploy/delegated-work/Dockerfile"
+SOURCE_REFRESH_DOCKERFILE = ROOT / "deploy/delegated-work/Dockerfile.source-refresh"
 
 
 def test_delegated_worker_image_is_narrow_offline_and_non_root() -> None:
@@ -41,3 +42,27 @@ def test_delegated_worker_image_is_narrow_offline_and_non_root() -> None:
         "EXPOSE",
     ):
         assert forbidden not in text
+
+
+def test_delegated_worker_source_refresh_only_replaces_sealed_source() -> None:
+    lines = tuple(
+        line.strip()
+        for line in SOURCE_REFRESH_DOCKERFILE.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    )
+    assert not any(
+        line.split(maxsplit=1)[0].upper() in {"ADD", "RUN"} for line in lines
+    )
+    assert (
+        "ARG PROVEN_WORKER_IMAGE=eva2/delegated-work-clean@sha256:"
+        "170f9e6b0fdf01aba499c8820c581167b586c4e3e1c70609e85fc47f6c46ef36"
+    ) in lines
+    assert "FROM ${PROVEN_WORKER_IMAGE}" in lines
+    assert "COPY --chown=65532:65532 src /opt/eva/src" in lines
+    assert "USER 65532:65532" in lines
+    text = "\n".join(lines)
+    assert "ARG SOURCE_COMMIT" in text
+    assert "ARG SOURCE_DATE_EPOCH" in text
+    assert "io.eva2.source-commit=${SOURCE_COMMIT}" in text
+    assert "io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH}" in text
+    assert 'io.eva2.source-refresh="git-archive-v1"' in text

@@ -1,0 +1,13 @@
+ARG PROVEN_WORKER_IMAGE=eva2/delegated-work-clean@sha256:170f9e6b0fdf01aba499c8820c581167b586c4e3e1c70609e85fc47f6c46ef36
+FROM ${PROVEN_WORKER_IMAGE}
+
+ARG SOURCE_COMMIT
+ARG SOURCE_DATE_EPOCH
+
+LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
+      io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH} \
+      io.eva2.source-refresh="git-archive-v1"
+
+COPY --chown=65532:65532 src /opt/eva/src
+
+USER 65532:65532
