@@ -25,7 +25,10 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.action_chain import (
     action_chain_step_operation_id,
 )
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import (
+    canonical_sha256,
+    is_lowercase_sha256 as _is_sha256,
+)
 from eva.contracts.connector import ConnectorEnvelope
 from eva.contracts.connector_rpc import (
     ConnectorInitializeRequest,
@@ -607,14 +610,6 @@ def _read_invoke_method(intent: ReadIntent) -> str:
         "effect.readback": "effect.readback",
         "connector.probe": "connector.probe",
     }.get(intent.operation, "resource.read")
-
-
-def _is_sha256(value: object) -> bool:
-    return (
-        isinstance(value, str)
-        and len(value) == 64
-        and all(character in "0123456789abcdef" for character in value)
-    )
 
 
 __all__ = [

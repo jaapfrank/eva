@@ -30,7 +30,10 @@ from eva.application.effect_verification import (
     EffectVerificationError,
     EffectVerificationProjection,
 )
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import (
+    canonical_sha256,
+    is_lowercase_sha256 as _is_sha256,
+)
 from eva.contracts.connector import ConnectorEnvelope
 from eva.contracts.execution import (
     CapabilityGrant,
@@ -702,14 +705,6 @@ def _worker_process_sha256(worker_id: str, *, corrupt: type[RuntimeError]) -> st
     if not _is_sha256(value):
         raise corrupt("authorized effect worker pin is invalid")
     return value
-
-
-def _is_sha256(value: object) -> bool:
-    return (
-        isinstance(value, str)
-        and len(value) == 64
-        and all(character in "0123456789abcdef" for character in value)
-    )
 
 
 __all__ = [

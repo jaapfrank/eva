@@ -44,7 +44,7 @@ from eva.application.action_chain import (
     validate_admitted_action_chain,
     validate_action_chain_requests,
 )
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import canonical_sha256, is_hex_sha256 as _is_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
 from eva.contracts.lifecycle import AttentionWake
 from eva.contracts.planning import ModelAttempt, ModelDecision, ValidatedPlan
@@ -1200,16 +1200,6 @@ def _latest_timeline_event(
     ):
         raise corrupt("cancelled action-chain timeline event differs")
     return event
-
-
-def _is_sha256(value: object) -> bool:
-    if not isinstance(value, str) or len(value) != 64:
-        return False
-    try:
-        bytes.fromhex(value)
-    except ValueError:
-        return False
-    return True
 
 
 def _plan_id(

@@ -37,7 +37,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_events,
 )
 from eva.application.action_chain import action_chain_step_operation_id
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import canonical_sha256, is_hex_sha256 as _is_sha256
 from eva.contracts.execution import EffectAttempt, EffectIntent
 
 
@@ -567,16 +567,6 @@ def _checkpoint_payload(
         },
         "data": data,
     }
-
-
-def _is_sha256(value: object) -> bool:
-    if not isinstance(value, str) or len(value) != 64:
-        return False
-    try:
-        bytes.fromhex(value)
-    except ValueError:
-        return False
-    return True
 
 
 __all__ = [
