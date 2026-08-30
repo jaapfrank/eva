@@ -214,7 +214,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Op een nieuwe computer installeren met een eenvoudige wizard | ❌ Technische installer bestaat, consumentenwizard niet | 📘 Installatieroute beschikbaar | 📘 Installatie/setup beschikbaar | 📘 Dockerinstallatie en WebUI |
 | Koppelingen tijdens installatie controleren | 🟡 Model, chat, een toolprovider en e-mail kunnen apart worden beproefd | 📘 Setup/configuratie | 📘 Setupwizard | 📘 Webconfiguratie |
 | Back-up op een andere computer herstellen | 🟡 Kleine niet-lege restore werkt; volledige praktijkverplaatsing ontbreekt | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Veilig naar een nieuwe versie en terug | ✅ Volledige nieuwe→oude→nieuwe A/B-proef met gekopieerde data | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
+| Veilig naar een nieuwe versie en terug | ✅ Ook de huidige providerneutrale image doorliep nieuw→oud→nieuw met gekopieerde data; hetzelfde testwoord kwam in beide versies terug | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
 | Zelf nieuwe dependencyversies voorstellen | 🟡 Renovate dry-run vindt alles; echte bot maakt nog geen voorstellen | 📘 Eigen updateroutes | 📘 Eigen updateroute | 📘 Docker-/bronupdates |
 | Alleen een geteste, scan-schone versie live zetten | ✅ OpenAI SDK `3.6.0` doorliep build, scan, data-upgrade en terugrol | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest | ⚪ Niet met onze poort getest |
 
@@ -235,7 +235,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Een algemene MCP-/toolgrens; ContextForge als optionele gateway; officiële provider-API's/SDK's achter toolservers | ✅ De 0/0-image met de algemene grens draait live. Model, herstartgeheugen en één externe read met aparte controle zijn groen. ContextForge en de niet-huisgebonden tijdtool zijn releasebewijs, maar nog geen geactiveerde live gateway. Home Assistant blijft slechts één verwisselbare provider |
+| Externe gereedschappen | Een algemene MCP-/toolgrens; ContextForge als optionele gateway; officiële provider-API's/SDK's achter toolservers | ✅ De 0/0-image met de algemene grens draait live en doorliep ook terug→heen. Model, herstartgeheugen en één externe read met aparte controle zijn groen. ContextForge en de niet-huisgebonden tijdtool zijn releasebewijs, maar nog geen geactiveerde live gateway. Home Assistant blijft slechts één verwisselbare provider |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

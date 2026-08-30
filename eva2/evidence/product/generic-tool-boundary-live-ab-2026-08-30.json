@@ -38,6 +38,17 @@
     "memoryDataDigest": "a2ee226a85a2ffcfb87461a427c6affe08aa35fdb7248e7cb125c99d9dbc06d1",
     "memoryTableCount": 23
   },
+  "fullAbCycle": {
+    "forwardToCandidate": "switched",
+    "rollbackToPrevious": "switched",
+    "forwardAgainToCandidate": "switched",
+    "previousImage": "sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+    "rollbackRecall": "granaatappelster",
+    "finalForwardRecall": "granaatappelster",
+    "finalActivePort": 44711,
+    "previousCoreRetainedStopped": true,
+    "eva1Restarts": 0
+  },
   "liveChecks": {
     "eva1HttpStatuses": [200, 200, 200, 200, 200],
     "eva1Restarts": 0,
@@ -50,7 +61,9 @@
     "toolRequestAdmitted": 1,
     "toolPrepared": 1,
     "toolExecuted": 1,
-    "stateVerified": 1
+    "stateVerified": 1,
+    "rollbackRecall": "granaatappelster",
+    "finalForwardRecall": "granaatappelster"
   },
   "architecture": {
     "mcpIsGenericExternalProviderBoundary": true,
@@ -62,6 +75,6 @@
     "The IBM ContextForge gateway proved the same boundary with a non-home time tool, but that gateway is not enabled in the live managed slot.",
     "This receipt does not prove that every MCP provider is safe or compatible.",
     "This receipt does not prove superiority over OpenClaw, Hermes or Agent Zero.",
-    "The reverse-and-forward A/B cycle for this exact image and the seven-day practice run remain open."
+    "The seven-day practice run remains open."
   ]
 }
