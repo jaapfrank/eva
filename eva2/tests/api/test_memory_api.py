@@ -24,7 +24,6 @@ from eva.application.memory import (
     RecallCurrentFacts,
 )
 from eva.application.memory_audience import MemoryAudience
-from eva.application.mail import MailInboxPage, MailMessage, MailMessageSummary
 from eva.application.personal_interests import (
     PersonalProductListing,
     PersonalProductRelease,
@@ -454,37 +453,6 @@ class _Runtime:
             "plan_id": request["plan_id"],
         }
 
-    async def list_mail_messages(
-        self, *, limit: int, page_token: str | None
-    ) -> MailInboxPage:
-        assert limit == 1
-        assert page_token is None
-        return MailInboxPage(
-            "eva@agentmail.to",
-            (
-                MailMessageSummary(
-                    "message-001",
-                    "thread-001",
-                    NOW,
-                    "Jaap <jaap@example.nl>",
-                    ("eva@agentmail.to",),
-                    "Even testen",
-                    "Hoi Eva",
-                    ("inbox",),
-                ),
-            ),
-            None,
-        )
-
-    async def get_mail_message(self, *, message_id: str) -> MailMessage:
-        assert message_id == "message-001"
-        return MailMessage(
-            (await self.list_mail_messages(limit=1, page_token=None)).messages[0],
-            "Hoi Eva, dit is de inhoud.",
-            "Hoi Eva, dit is de inhoud.",
-            0,
-        )
-
     def claim_proactive_expression(self) -> ProactiveExpressionClaim | None:
         claim = self.proactive_claim
         self.proactive_claim = None
@@ -732,33 +700,17 @@ def test_paid_download_returns_exact_hash_bound_release() -> None:
 
 
 
-def test_provider_specific_management_endpoints_are_not_part_of_eva_core() -> None:
+def test_provider_specific_endpoints_are_not_part_of_eva_core() -> None:
     client = TestClient(create_app(_Runtime()))
 
     for path in (
         "/internal/v1/advanced/home-assistant/tuya-local-plan",
         "/internal/v1/advanced/home-assistant/tuya-local-canary/execute",
         "/internal/v1/advanced/home-assistant/tuya-local-package/install",
+        "/internal/v1/mail/messages/list",
+        "/internal/v1/mail/messages/get",
     ):
         assert client.post(path, json={}).status_code == 404
-
-
-def test_mail_endpoints_return_hash_bound_connector_neutral_records() -> None:
-    client = TestClient(create_app(_Runtime()))
-
-    page = client.post(
-        "/internal/v1/mail/messages/list", json={"limit": 1, "page_token": None}
-    )
-    message = client.post(
-        "/internal/v1/mail/messages/get", json={"message_id": "message-001"}
-    )
-
-    assert page.status_code == 200
-    assert page.json()["messages"][0]["subject"] == "Even testen"
-    assert len(page.json()["page_sha256"]) == 64
-    assert message.status_code == 200
-    assert message.json()["text"] == "Hoi Eva, dit is de inhoud."
-    assert len(message.json()["message_sha256"]) == 64
 
 
 def test_readiness_and_recall_input_fail_closed() -> None:

@@ -83,6 +83,8 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
         "EVA_HOME_ASSISTANT_TOKEN_FILE",
         "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
+        "EVA_AGENTMAIL_INBOX_ID",
+        "EVA_AGENTMAIL_API_KEY_FILE",
         "EVA_TELEGRAM_PROACTIVE_CHAT_ID",
         "EVA_TELEGRAM_BOT_TOKEN",
         "EVA_TELEGRAM_BOT_TOKEN_FILE",
@@ -135,8 +137,9 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     settings = RuntimeSettings.from_environment()
     assert settings.database_dsn.endswith("@postgres/eva")
     assert settings.external_provider is not None
-    assert settings.external_provider.credential == "test-token"
-    assert settings.external_provider.effects_enabled is False
+    assert settings.external_provider.home_automation is not None
+    assert settings.external_provider.home_automation.credential == "test-token"
+    assert settings.external_provider.home_automation.effects_enabled is False
     assert settings.conversation_reasoning_effort == "medium"
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
@@ -149,11 +152,14 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
         "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", principal_sha256
     )
     provider = RuntimeSettings.from_environment().external_provider
-    assert provider is not None and provider.effects_enabled is True
-    assert provider.effect_allowlist == (
+    assert provider is not None and provider.home_automation is not None
+    assert provider.home_automation.effects_enabled is True
+    assert provider.home_automation.effect_allowlist == (
         "light.dimmable_light_1:turn_off",
     )
-    assert provider.effect_principal_sha256_allowlist == (principal_sha256,)
+    assert provider.home_automation.effect_principal_sha256_allowlist == (
+        principal_sha256,
+    )
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
     with pytest.raises(RuntimeError, match="EFFECTS_ENABLED"):

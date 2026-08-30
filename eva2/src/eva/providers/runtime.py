@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import os
 from typing import Any
 
@@ -29,6 +29,7 @@ from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantHacsManagementAdapter,
     HomeAssistantMigrationPlanAdapter,
 )
+from eva.adapters.connectors.agentmail import AgentMailConfig, AgentMailReadAdapter
 from eva.providers.home_assistant_advanced_store import (
     PostgresAdvancedTaskStore,
 )
@@ -39,7 +40,7 @@ from eva.application.conversation import (
     ConversationExternalToolPort,
     ConversationToolDescriptor,
 )
-from eva.bootstrap.secrets import environment_secret
+from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
 
 
 def _value(name: str, default: str = "") -> str:
@@ -58,13 +59,25 @@ def _boolean(name: str, default: bool = False) -> bool:
 
 
 @dataclass(frozen=True, slots=True)
-class ExternalProviderSettings:
+class HomeAutomationProviderSettings:
     endpoint_url: str
-    credential: str
+    credential: str = field(repr=False)
     effects_enabled: bool
     effect_allowlist: tuple[str, ...]
     effect_principal_sha256_allowlist: tuple[str, ...]
     event_domains: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class EmailProviderSettings:
+    inbox_id: str
+    credential: str = field(repr=False)
+
+
+@dataclass(frozen=True, slots=True)
+class ExternalProviderSettings:
+    home_automation: HomeAutomationProviderSettings | None = None
+    email: EmailProviderSettings | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -80,6 +93,14 @@ class ExternalProviderBundle:
 def load_external_provider_settings() -> ExternalProviderSettings | None:
     """Load the current provider without leaking its vocabulary into bootstrap."""
 
+    home_automation = _load_home_automation_settings()
+    email = _load_email_settings()
+    if home_automation is None and email is None:
+        return None
+    return ExternalProviderSettings(home_automation=home_automation, email=email)
+
+
+def _load_home_automation_settings() -> HomeAutomationProviderSettings | None:
     endpoint = _value("EVA_HOME_ASSISTANT_URL")
     if "EVA_HOME_ASSISTANT_TOKEN" in os.environ:
         raise RuntimeError(
@@ -135,7 +156,7 @@ def load_external_provider_settings() -> ExternalProviderSettings | None:
         if effects_enabled or effect_allowlist or principals:
             raise RuntimeError("Eva external tool provider configuration is incomplete")
         return None
-    return ExternalProviderSettings(
+    return HomeAutomationProviderSettings(
         endpoint_url=endpoint,
         credential=credential,
         effects_enabled=effects_enabled,
@@ -145,12 +166,83 @@ def load_external_provider_settings() -> ExternalProviderSettings | None:
     )
 
 
+def _load_email_settings() -> EmailProviderSettings | None:
+    if "EVA_AGENTMAIL_API_KEY" in os.environ:
+        raise RuntimeError(
+            "EVA_AGENTMAIL_API_KEY is forbidden; use EVA_AGENTMAIL_API_KEY_FILE"
+        )
+    inbox_id = _value("EVA_AGENTMAIL_INBOX_ID")
+    credential_file = _value("EVA_AGENTMAIL_API_KEY_FILE")
+    if bool(inbox_id) != bool(credential_file):
+        raise RuntimeError("Eva external e-mail provider configuration is incomplete")
+    if not inbox_id:
+        return None
+    credential = read_runtime_secret_file(
+        credential_file,
+        setting_name="EVA_AGENTMAIL_API_KEY_FILE",
+    )
+    return EmailProviderSettings(inbox_id=inbox_id, credential=credential)
+
+
 def build_external_provider_bundle(
     settings: ExternalProviderSettings | None,
     engine: sa.Engine,
 ) -> ExternalProviderBundle | None:
     if settings is None:
         return None
+    conversation_tools: list[ConversationToolDescriptor] = []
+    external_tools: list[ConversationExternalToolPort] = []
+    event_source = None
+    management_reader = None
+    management_writer = None
+    device_manager = None
+    if settings.home_automation is not None:
+        (
+            home_tools,
+            home_external_tools,
+            event_source,
+            management_reader,
+            management_writer,
+            device_manager,
+        ) = _build_home_automation_bundle(settings.home_automation, engine)
+        conversation_tools.extend(home_tools)
+        external_tools.extend(home_external_tools)
+    if settings.email is not None:
+        email = AgentMailReadAdapter(
+            AgentMailConfig(
+                inbox_id=settings.email.inbox_id,
+                api_key=settings.email.credential,
+            )
+        )
+        conversation_tools.extend(email.conversation_tools())
+        external_tools.append(
+            PostgresExternalConversationTools(
+                engine,
+                email.conversation_read_planner(),
+                email,
+            )
+        )
+    return ExternalProviderBundle(
+        conversation_tools=tuple(conversation_tools),
+        external_tools=tuple(external_tools),
+        event_source=event_source,
+        management_reader=management_reader,
+        management_writer=management_writer,
+        device_manager=device_manager,
+    )
+
+
+def _build_home_automation_bundle(
+    settings: HomeAutomationProviderSettings,
+    engine: sa.Engine,
+) -> tuple[
+    tuple[ConversationToolDescriptor, ...],
+    tuple[ConversationExternalToolPort, ...],
+    Any,
+    Any,
+    Any,
+    Any,
+]:
     provider = HomeAssistantToolAdapter(
         HomeAssistantConfig(settings.endpoint_url, settings.credential)
     )
@@ -244,28 +336,30 @@ def build_external_provider_bundle(
                 ),
             )
         )
-    return ExternalProviderBundle(
-        conversation_tools=(
+    return (
+        (
             *HomeAssistantToolAdapter.conversation_tools(),
             *HomeAssistantConversationAutomationPlanner.conversation_tools(),
             *HomeAssistantConversationMigrationPlanner.conversation_tools(),
             *HomeAssistantConversationHacsPlanner.conversation_tools(),
         ),
-        external_tools=tuple(external_tools),
-        event_source=HomeAssistantEventStream(
+        tuple(external_tools),
+        HomeAssistantEventStream(
             base_url=settings.endpoint_url,
             token=settings.credential,
             admitted_domains=settings.event_domains,
         ),
-        management_reader=management_reader,
-        management_writer=management_writer,
-        device_manager=device_manager,
+        management_reader,
+        management_writer,
+        device_manager,
     )
 
 
 __all__ = [
     "ExternalProviderBundle",
     "ExternalProviderSettings",
+    "EmailProviderSettings",
+    "HomeAutomationProviderSettings",
     "build_external_provider_bundle",
     "load_external_provider_settings",
 ]

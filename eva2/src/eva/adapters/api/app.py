@@ -49,7 +49,6 @@ from eva.application.memory_audience import (
 from eva.application.telegram_canary import TelegramCanaryAdmission
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.workboard import WorkBoard
-from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.personal_interests import (
     PersonalProductReleaseArtifact,
     PersonalPrototypeArtifact,
@@ -255,8 +254,6 @@ _ADVANCED_REPOSITORY_REGISTER_KEYS = {
     "plan_id",
     "tenant_id",
 }
-_MAIL_LIST_KEYS = {"limit", "page_token"}
-_MAIL_GET_KEYS = {"message_id"}
 _PROACTIVE_ACK_KEYS = {
     "channel",
     "provider_message_id",
@@ -1263,54 +1260,6 @@ def create_app(
             raise HTTPException(status_code=409, detail=str(error)) from error
         return {"contract": "EvaProactiveExpressionReceipt/v1", "status": "accepted"}
 
-
-    @app.post("/internal/v1/mail/messages/list")
-    async def list_mail_messages(payload: dict[str, Any]) -> dict[str, object]:
-        loader = getattr(runtime, "list_mail_messages", None)
-        if not callable(loader):
-            raise HTTPException(status_code=501, detail="mail connector unavailable")
-        if set(payload) != _MAIL_LIST_KEYS:
-            raise HTTPException(
-                status_code=422, detail="mail list has unknown or missing fields"
-            )
-        limit = payload.get("limit")
-        page_token = payload.get("page_token")
-        if (
-            isinstance(limit, bool)
-            or not isinstance(limit, int)
-            or not 1 <= limit <= 20
-        ):
-            raise HTTPException(status_code=422, detail="mail list limit is invalid")
-        if page_token is not None and (
-            not isinstance(page_token, str)
-            or not page_token
-            or len(page_token) > 2048
-            or not page_token.isascii()
-        ):
-            raise HTTPException(status_code=422, detail="mail page token is invalid")
-        try:
-            page: MailInboxPage = await loader(limit=limit, page_token=page_token)
-        except (RuntimeError, ValueError) as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        return {**page.to_payload(), "page_sha256": page.sha256}
-
-    @app.post("/internal/v1/mail/messages/get")
-    async def get_mail_message(payload: dict[str, Any]) -> dict[str, object]:
-        loader = getattr(runtime, "get_mail_message", None)
-        if not callable(loader):
-            raise HTTPException(status_code=501, detail="mail connector unavailable")
-        if set(payload) != _MAIL_GET_KEYS:
-            raise HTTPException(
-                status_code=422, detail="mail get has unknown or missing fields"
-            )
-        message_id = payload.get("message_id")
-        if not isinstance(message_id, str) or not message_id or len(message_id) > 240:
-            raise HTTPException(status_code=422, detail="mail message ID is invalid")
-        try:
-            message: MailMessage = await loader(message_id=message_id)
-        except (RuntimeError, ValueError) as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        return {**message.to_payload(), "message_sha256": message.sha256}
 
     @app.post("/internal/v1/commerce/publications/plan")
     def plan_product_publication(payload: dict[str, Any]) -> dict[str, object]:

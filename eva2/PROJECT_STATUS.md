@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 20:36 CEST
+Laatst bijgewerkt: 30 augustus 2026, 20:45 CEST
 
 ## Zo lees je dit bord
 
@@ -57,13 +57,13 @@ selling point.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 Met één echte MCP-provider bewezen; nog niet over meerdere soorten tools | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Eén dynamische toolcatalogus werkt; de algemene plug-inroute is nog niet compleet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | 🟡 Huis- en e-mailtools staan samen in de catalogus; alleen de huisroute is al live gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Twee providerfamilies laden zonder kernbranch; een volledig dynamische plug-ininstallatie ontbreekt nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 De codegrens is groen en een synthetische tweede provider werkt; een tweede echte dienst moet dit nog in de gebruikersroute bewijzen | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 De codegrens is groen; de echte AgentMail-adapter doorliep HTTP en PostgreSQL zonder kernwijziging, maar mist nog een eigen Eva2-secret voor een live read | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -72,7 +72,7 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De codegrens is nu mechanisch groen. De verbeterde controle vindt nul Home
-Assistant-/Tuya-specifieke identifiers in Eva's applicatie, contracten,
+Assistant-/Tuya-/AgentMail-specifieke identifiers in Eva's applicatie, contracten,
 modeladapter, gesprekspersistence en runtime. Dat zijn er 957 minder dan bij de
 eerste meting. Gewone reads, aan/uit-acties,
 automatiseringen, het Tuya-migratieplan en de aparte HACS-repository- en
@@ -85,19 +85,25 @@ liepen daarna door hetzelfde algemene toolpad en bleven na een nieuwe
 procesinstantie enkelvoudig. De oude directe effect-API en alle aparte Home
 Assistant-PostgreSQL-routes zijn verwijderd. Ook de volledige migratieplanning,
 validatie, opslag, configuratie en runtime-opbouw staan nu bij de
-provideradapter. De oude losse beheer-API in de kern is verwijderd.
+provideradapter. De oude losse beheer-API en de aparte mail-API in de kern zijn
+verwijderd.
 
 Dit betekent nog niet dat iedere providerklus af is. Eén echte apparaatmigratie
 moet nog als gewone provider-tool door dezelfde voorstel-, toestemming-,
-uitvoer- en readbackroute lopen. Een tweede echte externe dienst moet daarnaast
-bewijzen dat zij zonder kernwijziging kan worden ingeplugd.
+uitvoer- en readbackroute lopen. AgentMail moet daarnaast met een nieuw,
+afzonderlijk Eva2-secret één echte read in de gebruikersroute uitvoeren.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
 agendareservering liep echt door dezelfde generieke uitvoering, PostgreSQL-
 tijdlijn en onafhankelijke readback. Een nieuw proces las het resultaat terug
-zonder de provider nogmaals aan te roepen. Dit bewijst de algemene route; een
-tweede echte externe dienst in de gebruikersroute ontbreekt nog.
+zonder de provider nogmaals aan te roepen. De bestaande read-only
+AgentMail-adapter levert nu daarnaast zelf twee e-mailtools. Zijn echte
+HTTP-protocol liep tegen een lokale contractserver; een verse PostgreSQL 16.13
+bewaarde één e-maillijstread en gaf die na een nieuwe runtime-instantie terug
+zonder tweede providercall. Er is niets verzonden en geen echte berichttekst in
+het bewijs opgeslagen. Een echte AgentMail-netwerkread wacht op een nieuw
+Eva2-secret.
 
 ## Zelfstandig werk en subagents
 
@@ -139,7 +145,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Chatkanalen, modellen, toolproviders en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
 | Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
 | Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
-| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Eén MCP-provider is live; kernonafhankelijk toevoegen en vervangen is nog niet af | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
+| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Home Assistant en AgentMail laden buiten de kern; installatie van willekeurige nieuwe plug-ins is nog niet af | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
@@ -188,7 +194,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul providerspecifieke termen en alle huidige tools worden als bundel geladen; een echte apparaatmigratie en tweede echte externe provider ontbreken nog |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul gevolgde providertermen; huis- en e-mailtools laden samen. Een echte apparaatmigratie en live AgentMail-read ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -219,9 +225,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. Alle providerlogica uit applicatie, modelroute, gesprekspersistence en
-   runtime halen; daarna dezelfde algemene toolroute met meerdere willekeurige
-   providers beproeven.
+3. De live AgentMail-read met een eigen Eva2-secret uitvoeren en daarna een
+   provider via de installer toevoegen zonder kern- of imagerebuild.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna

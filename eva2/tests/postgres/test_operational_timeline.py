@@ -42,6 +42,13 @@ from eva.adapters.connectors.home_assistant import (
     HomeAssistantConversationReadPlanner,
     HomeAssistantToolAdapter,
 )
+from eva.adapters.connectors.agentmail import (
+    AgentMailConfig,
+    AgentMailConversationReadPlanner,
+    AgentMailReadAdapter,
+    MailInboxPage,
+    MailMessageSummary,
+)
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
 )
@@ -2279,3 +2286,80 @@ def test_admitted_group_replay_after_consent_revoke_completes_without_core(
         "TELEGRAM_INGRESS_REJECTED_AFTER_ADMISSION",
     ]
     assert events[-1].payload["data"]["reason"] == "group_consent_required"
+
+
+def test_email_provider_read_is_durable_and_not_repeated_after_restart(
+    timeline_engine: Engine,
+) -> None:
+    calls: list[int] = []
+    inbox_id = "eva@example.invalid"
+
+    class EmailProvider(AgentMailReadAdapter):
+        def __init__(self) -> None:
+            super().__init__(AgentMailConfig(inbox_id, "synthetic-test-secret"))
+
+        async def list_messages(
+            self, *, limit: int = 10, page_token: str | None = None
+        ) -> MailInboxPage:
+            assert limit == 1
+            assert page_token is None
+            calls.append(limit)
+            return MailInboxPage(
+                inbox_id,
+                (
+                    MailMessageSummary(
+                        "message-001",
+                        "thread-001",
+                        "2026-08-30T20:45:00Z",
+                        "Lola <lola@example.invalid>",
+                        (inbox_id,),
+                        "Planning",
+                        "Kunnen we morgen...",
+                        ("inbox",),
+                    ),
+                ),
+                None,
+            )
+
+    turn = ConversationTurn.private(
+        "external-email-read",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:email-list",
+        "Welke nieuwe e-mail heb ik?",
+        "2026-08-30T20:45:00Z",
+    )
+    call = ConversationActionCall(
+        "call:email-list",
+        "list_email_messages",
+        {"limit": 1},
+    )
+    provider = EmailProvider()
+    planner = AgentMailConversationReadPlanner(
+        hashlib.sha256(inbox_id.encode()).hexdigest()
+    )
+    actions = PostgresConversationActions(
+        timeline_engine,
+        external_tools=(
+            PostgresExternalConversationTools(timeline_engine, planner, provider),
+        ),
+    )
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "verified"
+    inbox = receipt.output["inbox"]
+    assert isinstance(inbox, dict)
+    messages = inbox["messages"]
+    assert isinstance(messages, list)
+    assert messages[0]["subject"] == "Planning"
+    assert calls == [1]
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        external_tools=(
+            PostgresExternalConversationTools(timeline_engine, planner, provider),
+        ),
+    )
+    assert restarted.pending(turn) == receipt
+    assert calls == [1]

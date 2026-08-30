@@ -66,7 +66,7 @@ kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
 De structurele codegrens is nu groen. Applicatie, contracten, modeladapter,
-gesprekspersistence en runtime bevatten nul Home Assistant-/Tuya-specifieke
+gesprekspersistence en runtime bevatten nul Home Assistant-/Tuya-/AgentMail-specifieke
 identifiers. De teller herkent ook spaties en CamelCase; sinds de eerste meting
 zijn alle 957 identifiers uit die kernscope verwijderd.
 Gewone lees-/aan-uittools, automatiseringen, migratieplanning en HACS-repository-
@@ -94,11 +94,14 @@ De volledige migratieplanning, configuratievalidatie en providergebonden
 PostgreSQL-opslag zijn eveneens uit applicatie en persistence verplaatst naar
 de verwisselbare adapterbundel. Ook instellingen, toolregistratie, eventbron en
 beheerpoorten worden als één generieke providerbundel aan bootstrap geleverd;
-de oude losse beheerfuncties zijn uit de runtime verwijderd.
+de oude losse beheerfuncties en mail-API zijn uit de runtime verwijderd. De
+read-only e-mailadapter levert nu zelf zijn catalogus, invoerschema, uitvoering
+en readback. Zijn HTTP-contract en eenmalige PostgreSQL-read na procesherstart
+zijn groen zonder kernbranch.
 De architectuurchecker houdt alle vier bovengrenzen vanaf nu op nul: geen nieuw
 bestand en geen bestaand kernbestand mag providerspecifieke logica krijgen. De
 structurele gate is groen. De praktijkgate blijft geel totdat een echte
-apparaatmigratie en een tweede echte externe provider zonder kernwijziging
+apparaatmigratie en een live AgentMail-read met een afzonderlijk Eva2-secret
 dezelfde duurzame tool- en readbackroute doorlopen.
 
 ## De drie geheugens
@@ -479,10 +482,10 @@ dezelfde duurzame tool- en readbackroute doorlopen.
   publiceren; die polling gebeurt buiten een SQL-transactie. Bij timeout meldt
   Eva `awaiting_readback`. Na een crash of een al geopende call mag zij alleen
   opnieuw inventariseren en nooit dezelfde optionsflow blind herhalen.
-- Mail is een connectorgrens en geen onderdeel van het gespreksmodel of het
-  geheugen. De Living Core kent alleen connectorneutrale, begrensde
-  `MailInboxPage`- en `MailMessage`-records met canonieke hashes. De huidige
-  AgentMail-adapter is read-only, gebruikt de gedocumenteerde list/get-routes,
+- Mail is een toolprovidergrens en geen onderdeel van het gespreksmodel, de
+  runtime-API of het geheugen. Alleen de AgentMail-adapter kent zijn begrensde
+  `MailInboxPage`- en `MailMessage`-payloads en vertaalt die naar Eva's algemene
+  toolreceipt. De adapter is read-only, gebruikt de gedocumenteerde list/get-routes,
   begrenst pagina-, bericht- en responsegrootte en geeft de API-key nooit weer.
   Eva 1-accountmetadata mag als vergelijking dienen, maar Eva 1-secretbytes
   worden niet overgenomen: B blijft fail-closed totdat een nieuw uitgegeven
@@ -554,9 +557,9 @@ dezelfde duurzame tool- en readbackroute doorlopen.
 | Proactieve Telegram-uitgang | `src/eva/adapters/connectors/telegram.py`, `src/eva/application/free_will.py` en `deploy/living-core/telegram-proactive.compose.yml` | Outbound-only sendMessage buiten PostgreSQL, providerreceipt daarna committen; een verlopen claim zonder bewijs wordt `expression_ambiguous/needs_help` en nooit automatisch opnieuw verstuurd; secretbestand en één expliciet goedgekeurd chat-ID | Contractpad groen; echte Home Assistant-gaswaarschuwing bleef na een corecrash zowel direct als na lease-expiry gesloten en eindigde zonder resend in durable menselijke hulpstatus; echte Telegram-send staat uit tot bestemming en nieuw Eva 2-secret expliciet zijn goedgekeurd |
 | Duurzame fan-outlevering | `src/eva/application/delivery.py`, `src/eva/adapters/connectors/fanout_http.py`, `src/eva/adapters/postgres/delivery.py`, gesprekmodel en `conversation_actions.py` | Eén aanvraag wordt per ontvanger voorbereid, extern aangeboden en afzonderlijk teruggelezen; iedere ontvanger heeft een deterministische idempotency-key en eigen accepted/rejected-receipt; na een ambigu verzendvenster gaat providerreadback altijd vóór een nieuwe POST | Native P03 en X01 live groen op v43: twee acceptaties plus één afwijzing bleven afzonderlijk zichtbaar, en een echte exit 137 ná sink-a-acceptatie maar vóór HTTP-antwoord hervatte zonder tweede POST |
 | Duurzame doelen | `src/eva/application/durable_goals.py`, `src/eva/adapters/postgres/durable_goals.py`, `src/eva/adapters/connectors/durable_goal_http.py`, `src/eva/operations/durable_goal_worker.py`, gesprekmodel, `conversation_actions.py` en `deploy/living-core/durable-goals.compose.yml` | Modelgekozen begrensd doel, externe wakevoorwaarde, bewijsherlezing, optionele inhoudelijke pivot, precies-één effect en levering; expliciete cancellation, deadline-blocker en delivery failure zijn aparte terminale projecties | Native A01/A02/A03/F03/F04 live groen op v49 en duurzaam teruggelezen op v50; de v50-worker verwerkt bestaande terminale checkpoints stabiel zonder herstartlus |
-| Bewezen externe toolprovider (Home Assistant als praktijkfixture) | `src/eva/adapters/connectors/home_assistant.py`, `home_assistant_automations.py`, `home_assistant_management.py`, `src/eva/adapters/postgres/external_conversation_tools.py`, `src/eva/providers/runtime.py` en `deploy/living-core/home-assistant.compose.yml` | De adapters vertalen natuurlijke opdrachten naar hun eigen catalogus en leveren schema, uitvoering en readback aan Eva's algemene toolcontract. Home Assistant is hier verwisselbaar bewijs, geen Eva-onderdeel | Reads, effecten, automatiseringen, Tuya-migratieplanning, HACS-repositoryregistratie en pakketinstallatie lopen door de generieke route. De laatste drie zijn met echte PostgreSQL en procesherstart beproefd. De kernscope bevat nul providertermen; apparaatmigratie en een tweede echte provider blijven praktijkproeven |
+| Bewezen externe toolproviders | `src/eva/adapters/connectors/home_assistant.py`, `agentmail.py`, `home_assistant_automations.py`, `home_assistant_management.py`, `src/eva/adapters/postgres/external_conversation_tools.py`, `src/eva/providers/runtime.py` en `deploy/living-core/home-assistant.compose.yml` | Iedere adapter vertaalt natuurlijke opdrachten naar zijn eigen catalogus en levert schema, uitvoering en readback aan Eva's algemene toolcontract. Home Assistant en AgentMail zijn verwisselbare praktijkproviders, geen Eva-onderdelen | Huisreads/-effecten/-beheer en e-mailreads lopen door de generieke route. Een e-maillijstread bleef na runtimeherstart enkelvoudig in PostgreSQL. De kernscope bevat nul gevolgde providertermen; apparaatmigratie en live AgentMail-read blijven praktijkproeven |
 | Geavanceerde provideropdrachten | `src/eva/adapters/connectors/home_assistant_advanced_tasks.py`, `home_assistant_admin.py`, `home_assistant_hacs.py`, `home_assistant_localtuya.py`, `src/eva/providers/home_assistant_advanced_store.py` en `src/eva/providers/runtime.py` | Register- en HACS-inventaris, repository- en providerversiegebonden compatibiliteit, retryvast plan; aparte hashgebonden goedkeuring, prepare, officiële addcall en exacte readback voor de onderhouden bron zonder pakketinstallatie; daarna afzonderlijke versie-exacte pakketinstallatie/readback/rollback en secretvrije canary met one-use call-fence | Echte Tuya/LocalTuya-inventaris, idempotent 12-apparatenplan en live planrefresh bewezen; v40 weigerde de oude bron vóór mutatie, draaide een echt modelgesprek en las vóór/na exact dezelfde HACS-inventaris terug. De losse kern-API is verwijderd; één apparaatmigratie moet nog als gewone provider-tool door de algemene route |
-| Mail-read | `src/eva/application/mail.py` en `src/eva/adapters/connectors/agentmail.py` | Connectorneutrale hashes, begrensde AgentMail list/get en secretvrije API-output | Echte AgentMail-providerread via A bevestigd; Eva 2-adapter en HTTP-route groen, B wacht bewust op een nieuw uitgegeven Eva 2-secret |
+| E-mailtool | `src/eva/adapters/connectors/agentmail.py`, `src/eva/adapters/postgres/external_conversation_tools.py` en `src/eva/providers/runtime.py` | Provider-eigen lijst-/leescatalogus, begrensde AgentMail list/get, algemene duurzame uitvoering en observation-readback; geen losse kern-API | Echte AgentMail-providerread via A bevestigd; Eva2's HTTP-contract en verse PostgreSQL-herstartproef zijn groen. De live Eva2-read wacht bewust op een nieuw uitgegeven secret |
 | Objectopslag | `src/eva/application/objects.py` en `src/eva/adapters/objects/` | Geauthenticeerde CAS-readback | Werkend als lokale adapter |
 | Connectors | `src/eva/adapters/connectors/` en `connectors/` | Proces- en providergrens | Fixturepad en live Home Assistant-lichtadapter bewezen |
 | A/B-installatie | `src/eva/operations/ab_slots.py` | Stage, cutover, rollback zonder datarollback | Bestandsstate bewezen; live B volgt |

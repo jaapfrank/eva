@@ -17,7 +17,6 @@ from sqlalchemy.engine import Engine
 from eva.adapters.api.app import RuntimeHealth, create_app
 from eva.adapters.connectors.telegram import TelegramProactiveDelivery
 from eva.adapters.connectors.fanout_http import HttpFanoutDeliverySink
-from eva.adapters.connectors.agentmail import AgentMailConfig, AgentMailReadAdapter
 from eva.adapters.connectors.local_files import LocalMarkdownBatchAdapter
 from eva.adapters.connectors.validated_edits import LocalValidatedTextEditAdapter
 from eva.adapters.connectors.repository_improvements import (
@@ -117,7 +116,6 @@ from eva.application.telegram_canary import (
 from eva.application.telegram_ingress import TelegramPrincipalBindings
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.application.memory_background import HindsightColdPathWorker
-from eva.application.mail import MailInboxPage, MailMessage
 from eva.application.personal_interests import (
     PersonalInterestWorker,
     PersonalProductReleaseArtifact,
@@ -143,7 +141,6 @@ from eva.application.sensory import SensoryIngestionWorker
 from eva.bootstrap.secrets import (
     environment_secret,
     read_private_runtime_file_bytes,
-    read_runtime_secret_file,
 )
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 from eva.operations.telegram_ingress import load_principal_bindings
@@ -234,8 +231,6 @@ class RuntimeSettings:
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
     external_provider: ExternalProviderSettings | None = None
-    agentmail_inbox_id: str | None = None
-    agentmail_api_key_file: str | None = None
     telegram_proactive_chat_id: str | None = None
     telegram_bot_token: str | None = None
     telegram_principal_bindings_file: str | None = None
@@ -393,8 +388,6 @@ class RuntimeSettings:
             "EVA_PERSONAL_INTEREST_LEASE_SECONDS is invalid",
         )
         external_provider = load_external_provider_settings()
-        agentmail_inbox_id = _environment_optional("EVA_AGENTMAIL_INBOX_ID")
-        agentmail_api_key_file = _environment_optional("EVA_AGENTMAIL_API_KEY_FILE")
         telegram_proactive_chat_id = _environment_optional(
             "EVA_TELEGRAM_PROACTIVE_CHAT_ID"
         )
@@ -484,11 +477,6 @@ class RuntimeSettings:
         if background_tenant_id is None or background_installation_id is None:
             raise RuntimeError("Eva runtime tenant and installation scope are required")
         _require_complete_configuration(
-            "Eva AgentMail configuration is incomplete",
-            agentmail_inbox_id,
-            agentmail_api_key_file,
-        )
-        _require_complete_configuration(
             "Eva proactive Telegram configuration is incomplete",
             telegram_proactive_chat_id,
             telegram_bot_token,
@@ -534,8 +522,6 @@ class RuntimeSettings:
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
             external_provider=external_provider,
-            agentmail_inbox_id=agentmail_inbox_id,
-            agentmail_api_key_file=agentmail_api_key_file,
             telegram_proactive_chat_id=telegram_proactive_chat_id,
             telegram_bot_token=telegram_bot_token,
             telegram_principal_bindings_file=telegram_principal_bindings_file,
@@ -569,7 +555,6 @@ class PostgresHindsightMemoryRuntime:
         management_reader: Any = None,
         management_writer: Any = None,
         device_manager: Any = None,
-        agentmail: AgentMailReadAdapter | None = None,
         conversation_model: CodexConversationModel | None = None,
         stripe_publication: StripePublicationAdapter | None = None,
         stripe_webhook: StripeWebhookVerifier | None = None,
@@ -600,7 +585,6 @@ class PostgresHindsightMemoryRuntime:
         self._management_reader = management_reader
         self._management_writer = management_writer
         self._device_manager = device_manager
-        self._agentmail = agentmail
         self._conversation_model = conversation_model
         self._stripe_publication = stripe_publication
         self._stripe_webhook = stripe_webhook
@@ -1266,18 +1250,6 @@ class PostgresHindsightMemoryRuntime:
         )
         return DigitalFulfillmentDownload(release.content, grant)
 
-    async def list_mail_messages(
-        self, *, limit: int, page_token: str | None
-    ) -> MailInboxPage:
-        if self._agentmail is None:
-            raise RuntimeError("Eva mail connector is unavailable")
-        return await self._agentmail.list_messages(limit=limit, page_token=page_token)
-
-    async def get_mail_message(self, *, message_id: str) -> MailMessage:
-        if self._agentmail is None:
-            raise RuntimeError("Eva mail connector is unavailable")
-        return await self._agentmail.get_message(message_id)
-
     def _journal(self, turn: ConversationTurn) -> PostgresConversationJournal:
         return PostgresConversationJournal(
             self._engine,
@@ -1369,21 +1341,6 @@ def create_runtime_app() -> FastAPI:
             () if provider_bundle is None else provider_bundle.conversation_tools
         ),
     )
-    agentmail = None
-    if (
-        settings.agentmail_inbox_id is not None
-        and settings.agentmail_api_key_file is not None
-    ):
-        api_key = read_runtime_secret_file(
-            settings.agentmail_api_key_file,
-            setting_name="EVA_AGENTMAIL_API_KEY_FILE",
-        )
-        agentmail = AgentMailReadAdapter(
-            AgentMailConfig(
-                inbox_id=settings.agentmail_inbox_id,
-                api_key=api_key,
-            )
-        )
     stripe_publication = (
         None
         if settings.stripe_account_id is None or settings.stripe_secret_key is None
@@ -1678,7 +1635,6 @@ def create_runtime_app() -> FastAPI:
             None if provider_bundle is None else provider_bundle.management_reader,
             None if provider_bundle is None else provider_bundle.management_writer,
             None if provider_bundle is None else provider_bundle.device_manager,
-            agentmail,
             model,
             stripe_publication=stripe_publication,
             stripe_webhook=stripe_webhook,

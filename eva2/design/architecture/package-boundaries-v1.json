@@ -109,7 +109,8 @@
       "homeassistant",
       "home assistant",
       "localtuya",
-      "tuya"
+      "tuya",
+      "agentmail"
     ],
     "scopedPaths": [
       "src/eva/application",

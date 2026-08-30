@@ -8,6 +8,8 @@ import threading
 import pytest
 
 from eva.adapters.connectors.agentmail import AgentMailConfig, AgentMailReadAdapter
+from eva.application.conversation import ConversationActionCall, ConversationTurn
+from eva.application.orchestration import ToolRequest
 
 
 MESSAGE = {
@@ -96,6 +98,56 @@ def test_agentmail_lists_and_gets_bounded_messages_without_exposing_key() -> Non
     assert "agentmail-test-secret" not in repr(config)
     assert len(page.sha256) == 64
     assert len(message.sha256) == 64
+
+
+def test_agentmail_exposes_provider_owned_read_tools_with_verified_observations() -> None:
+    with _Server() as server:
+        adapter = AgentMailReadAdapter(
+            AgentMailConfig(
+                inbox_id="eva@agentmail.to",
+                api_key="agentmail-test-secret",
+                base_url=server.url,
+            )
+        )
+        planner = adapter.conversation_read_planner()
+        preparation = asyncio.run(
+            planner.prepare(
+                ConversationTurn.private(
+                    "tenant",
+                    "installation",
+                    "jaap",
+                    "conversation",
+                    "message",
+                    "Welke nieuwe e-mail heb ik?",
+                    "2026-08-30T20:45:00Z",
+                ),
+                ConversationActionCall(
+                    "call:list-email",
+                    "list_email_messages",
+                    {"limit": 1},
+                ),
+            )
+        )
+        request = ToolRequest(
+            thread_id="thread:list-email",
+            operation_id="operation:list-email",
+            checkpoint_prefix="checkpoint:list-email",
+            tool_name=preparation.tool_name,
+            arguments=preparation.arguments,
+            expected_proof=preparation.expected_proof,
+        )
+        dispatch = asyncio.run(adapter.execute(request))
+        proof = asyncio.run(adapter.observe(request, dispatch))
+
+    assert {tool.name for tool in adapter.conversation_tools()} == {
+        "list_email_messages",
+        "read_email_message",
+    }
+    assert proof.disposition == "verified"
+    observation = proof.evidence["observation"]
+    assert isinstance(observation, dict)
+    assert observation["messages"][0]["subject"] == "Even testen"
+    assert server.paths == ["/v0/inboxes/eva@agentmail.to/messages?limit=1&include_spam=false"]
 
 
 def test_agentmail_rejects_unbounded_reads_and_public_plain_http() -> None:
