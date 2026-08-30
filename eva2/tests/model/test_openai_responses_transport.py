@@ -10,6 +10,7 @@ import sys
 import threading
 from time import monotonic as wall_monotonic, sleep
 import traceback
+from types import SimpleNamespace
 from typing import Any, Callable, Iterator
 
 import pytest
@@ -27,6 +28,7 @@ from eva.adapters.model.openai_responses_transport import (
     OpenAIResponsesTransport,
     OpenAIResponsesTransportError,
     OpenAIResponsesUnavailable,
+    _project_events,
 )
 from eva.application.conversation import (
     ConversationModelUsage,
@@ -349,6 +351,55 @@ def test_sdk_route_returns_one_tool_request_without_executing_it(tmp_path: Path)
         "target": "keuken",
     }
     assert result.usage.tool_calls == 1
+
+
+def test_sdk_projection_ignores_server_tool_search_before_function_call() -> None:
+    events = (
+        SimpleNamespace(
+            type="response.output_item.done",
+            item=SimpleNamespace(type="tool_search_call"),
+        ),
+        SimpleNamespace(
+            type="response.output_item.done",
+            item=SimpleNamespace(
+                arguments='{"entity_kind":"light","target":"keuken"}',
+                call_id="call-after-search",
+                name="read_home_assistant_state",
+                type="function_call",
+            ),
+        ),
+        SimpleNamespace(
+            type="response.completed",
+            response=SimpleNamespace(
+                error=None,
+                status="completed",
+                usage=SimpleNamespace(
+                    input_tokens=11,
+                    output_tokens=7,
+                    total_tokens=18,
+                ),
+            ),
+        ),
+    )
+
+    result = _project_events(iter(events))
+
+    assert result.action_call is not None
+    assert result.action_call.call_id == "call-after-search"
+    assert result.usage.tool_calls == 1
+
+
+def test_unknown_sdk_output_item_reports_only_its_safe_type() -> None:
+    event = SimpleNamespace(
+        type="response.output_item.done",
+        item=SimpleNamespace(type="future_call"),
+    )
+
+    with pytest.raises(
+        OpenAIResponsesTransportError,
+        match=r"unsupported output item \(future_call\)",
+    ):
+        _project_events(iter((event,)))
 
 
 def test_sdk_route_reloads_one_rotated_atomic_lease_pair_after_401(

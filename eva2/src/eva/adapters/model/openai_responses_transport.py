@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import json
 import os
 from queue import Empty, Full, Queue
+import re
 from threading import Event, Thread
 from time import monotonic
 from typing import Any, Callable, Iterator, cast
@@ -27,6 +28,7 @@ _ALLOWED_BODY_FIELDS = frozenset({
     "include", "input", "instructions", "model", "parallel_tool_calls",
     "prompt_cache_key", "reasoning", "store", "tool_choice", "tools",
 })
+_SAFE_OUTPUT_ITEM_TYPE = re.compile(r"[a-z][a-z0-9_.-]{0,79}")
 
 
 class OpenAIResponsesTransportError(RuntimeError):
@@ -528,9 +530,16 @@ def _project_events(
                     action_call = _action_call(item)
                 elif item_type == "message":
                     completed_parts.extend(_message_text_parts(item))
-                elif item_type != "reasoning":
+                elif item_type not in {"reasoning", "tool_search_call"}:
+                    safe_item_type = (
+                        item_type
+                        if isinstance(item_type, str)
+                        and _SAFE_OUTPUT_ITEM_TYPE.fullmatch(item_type)
+                        else "unknown"
+                    )
                     raise OpenAIResponsesTransportError(
-                        "OpenAI SDK returned an unsupported output item"
+                        "OpenAI SDK returned an unsupported output item "
+                        f"({safe_item_type})"
                     )
                 continue
             if kind == "response.completed":
