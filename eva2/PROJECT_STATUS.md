@@ -243,3 +243,5 @@ Technische details en bewijs staan in
 De eerste twee actuele gelijke vierwegproeven staan in
 [C01](evidence/product/current-four-way-c01-development-2026-08-30.json) en
 [C04](evidence/product/current-four-way-c04-development-2026-08-30.json).
+De tweede providerroute staat in
+[de duurzame e-mailtoolproef](evidence/living-core/external-email-provider-durable-tool-2026-08-30.json).

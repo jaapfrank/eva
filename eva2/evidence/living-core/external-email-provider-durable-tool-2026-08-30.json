@@ -1,0 +1,71 @@
+{
+  "contract": "Eva2ExternalEmailProviderDurableToolReceipt/v1",
+  "capturedAt": "2026-08-30T20:48:51+02:00",
+  "source": {
+    "commit": "cf3e38f463893b7582defd039a229108a304c4e5",
+    "files": {
+      "src/eva/adapters/connectors/agentmail.py": "89480f4812591cf1636b1092d582965f9092cefda3c71f15def21add1e2e645c",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "8f5e6a382a9c3cf454bbb5cb2ef6600a4d7bdf6a454575d0a0a1e7c0c1b5bae4",
+      "src/eva/providers/runtime.py": "822e2a3451d67f71edc5b0c61ed09067514b36debc00fb910da8ff0b6a2e84ac",
+      "tests/connectors/test_agentmail.py": "63ca9a7bc5992bc14287d5d01fd801e6d2d5f3a489135adce33f046028a53f6f",
+      "tests/postgres/test_operational_timeline.py": "0e5330f1f5264cff17b88cf3c7c2db7e2f391bc62396dd8e1838a6e3721751ad",
+      "design/architecture/package-boundaries-v1.json": "866ad327cca2f4e221aa32bb567ca2ab39310356d5072697c79f088d540aaaea"
+    }
+  },
+  "providerBoundary": {
+    "provider": "AgentMail",
+    "providerOwnedToolNames": [
+      "list_email_messages",
+      "read_email_message"
+    ],
+    "providerSpecificCoreDebt": 0,
+    "separateCoreMailApiRemoved": true,
+    "applicationMailModuleRemoved": true,
+    "inlineCredentialRejected": true
+  },
+  "httpContractVerification": {
+    "adapter": "real AgentMail HTTP adapter",
+    "origin": "local loopback contract server",
+    "operations": [
+      "bounded list",
+      "bounded get",
+      "tool execute and observation readback"
+    ],
+    "authorizationHeaderUsed": true,
+    "credentialPrinted": false,
+    "externalNetworkUsed": false
+  },
+  "durabilityVerification": {
+    "databaseImage": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "databaseVersion": "PostgreSQL 16.13",
+    "databaseWasFreshAndDisposable": true,
+    "syntheticMessageCount": 1,
+    "providerCallsBeforeRestart": 1,
+    "providerCallsAfterRestart": 1,
+    "receiptReadBackEqual": true,
+    "providerCallRepeatedAfterRestart": false,
+    "containerRemovedAfterTest": true
+  },
+  "verification": {
+    "focusedTestsPassed": 133,
+    "disposablePostgresTestsPassed": 1,
+    "ruff": "passed",
+    "compileall": "passed",
+    "providerArchitectureViolations": 0,
+    "newRelevantPackageBoundaryViolations": 0
+  },
+  "privacy": {
+    "realAgentMailCredentialRead": false,
+    "realInboxRead": false,
+    "realMessageContentRecorded": false,
+    "syntheticCredentialRecorded": false,
+    "databaseDsnRecorded": false
+  },
+  "nonClaims": [
+    "This proves the real AgentMail adapter contract and durable generic tool path against synthetic local provider data, not a live AgentMail network read.",
+    "A live Eva2 AgentMail read remains closed until a separately issued Eva2 read-only credential is mounted.",
+    "No e-mail was sent, changed or deleted.",
+    "This source commit is not yet built into or promoted as the live Eva2 image."
+  ],
+  "status": "passed"
+}
