@@ -108,6 +108,9 @@ Betekenis:
 ## Vergelijken met andere assistenten
 
 - 🟡 Er zijn begrensde ontwikkelproeven voor AgentBench en GAIA.
+- 🟡 Een misvormd AgentBench-antwoord krijgt in de volgende proef één korte,
+  vaste foutcategorie terug. De ruwe modeltekst en het verborgen antwoord
+  blijven buiten beeld; deze kandidaat is getest maar nog niet uitgevoerd.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.

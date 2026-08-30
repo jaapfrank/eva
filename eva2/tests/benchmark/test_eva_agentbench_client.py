@@ -392,6 +392,43 @@ def test_reports_private_final_answer_failure_subtypes(
             )
 
 
+def test_fixed_validation_feedback_is_used_once_and_never_accepts_raw_text(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    answer = '{"name":"commit_final_answer","arguments":{"answers":["done"]}}'
+    with _core(answer=answer) as (endpoint, received):
+        _environment(monkeypatch, endpoint)
+        client = adapter.EvaAgentBenchClient(timeout_seconds=10)
+        client.note_validation_failure(
+            "Eva DBBench final-answer count is invalid"
+        )
+        client.inference_message(
+            [{"role": "user", "content": "Finish."}], adapter._DBBENCH_TOOLS
+        )
+        client.inference_message(
+            [{"role": "user", "content": "Finish."}], adapter._DBBENCH_TOOLS
+        )
+
+    first_prompt = json.loads(received[0]["text"].split("\n", 1)[1])[0]["content"]
+    second_prompt = json.loads(received[1]["text"].split("\n", 1)[1])[0]["content"]
+    assert "final-answer count is invalid" in first_prompt
+    assert "final-answer count is invalid" not in second_prompt
+
+    client = adapter.EvaAgentBenchClient(timeout_seconds=10)
+    client.note_validation_failure("raw provider body must never be echoed")
+    assert client._validation_feedback is None
+
+
+def test_dbbench_message_rejects_unregistered_validation_feedback() -> None:
+    with pytest.raises(adapter.AgentBenchEvaError, match="feedback is invalid"):
+        adapter.dbbench_tool_message(
+            [{"role": "user", "content": "Finish."}],
+            adapter._DBBENCH_TOOLS,
+            validation_feedback="raw model output",
+            answer_provider=lambda _prompt, _timeout: "unused",
+        )
+
+
 def test_structured_and_legacy_calls_share_the_same_reserved_budget(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

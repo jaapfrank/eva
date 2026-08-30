@@ -211,6 +211,9 @@ def run_one_case(
             assistant = agent.inference_message(transcript, tools)
         except AgentBenchEvaError as error:
             model_failures.append({"failure": str(error), "turn": turn_number})
+            validation_notifier = getattr(agent, "note_validation_failure", None)
+            if callable(validation_notifier):
+                validation_notifier(str(error))
             if getattr(agent, "turns_used", MAX_MODEL_TURNS) < MAX_MODEL_TURNS:
                 # No AgentRL interact or SQL call has happened. A new provider
                 # attempt is therefore safe, remains inside the prepaid call

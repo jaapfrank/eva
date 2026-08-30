@@ -405,6 +405,23 @@ def _decode_dbbench_operation(answer: str) -> dict[str, object]:
     return requested
 
 
+_DBBENCH_VALIDATION_FEEDBACK = frozenset(
+    {
+        "Eva DBBench tool answer is not exact JSON",
+        "Eva DBBench tool answer shape is invalid",
+        "Eva DBBench SQL arguments are invalid",
+        "Eva DBBench final-answer shape is invalid",
+        "Eva DBBench final-answer list is invalid",
+        "Eva DBBench final-answer count is invalid",
+        "Eva DBBench final-answer numeric item is invalid",
+        "Eva DBBench final-answer item type is invalid",
+        "Eva DBBench final-answer empty item is invalid",
+        "Eva DBBench final-answer item is too large",
+        "Eva selected an unsealed DBBench tool",
+    }
+)
+
+
 def dbbench_tool_message(
     messages: object,
     tools: object,
@@ -413,6 +430,7 @@ def dbbench_tool_message(
     turn_limit: int = 2,
     turn_number: int = 1,
     answer_provider: Callable[[str, float], str] | None = None,
+    validation_feedback: str | None = None,
 ) -> dict[str, object]:
     """Return one closed OpenAI-style tool message for upstream DBBench."""
 
@@ -430,6 +448,11 @@ def dbbench_tool_message(
         raise AgentBenchEvaError("AgentRL DBBench tools differ from the sealed schemas")
     if not 1 <= turn_number <= turn_limit <= _MAX_TURNS:
         raise AgentBenchEvaError("AgentRL DBBench turn position is invalid")
+    if (
+        validation_feedback is not None
+        and validation_feedback not in _DBBENCH_VALIDATION_FEEDBACK
+    ):
+        raise AgentBenchEvaError("AgentRL DBBench validation feedback is invalid")
     neutral_transcript: list[dict[str, object]] = []
     for message in messages:
         role = message["role"]
@@ -525,7 +548,14 @@ def dbbench_tool_message(
         '{"name":"execute_sql","arguments":{"query":"SQL"}} or '
         '{"name":"commit_final_answer","arguments":{"answers":["answer"]}}. '
         "Use only the neutral transcript below.\n"
-        f"{neutral}"
+        + (
+            "Your previous response was rejected before database I/O: "
+            f"{validation_feedback}. Correct only that format error; the database "
+            "transcript has not changed.\n"
+            if validation_feedback is not None
+            else ""
+        )
+        + f"{neutral}"
     )
     answer = (
         answer_provider(prompt, timeout_seconds)
@@ -579,6 +609,7 @@ class EvaAgentBenchClient:
         self._turns_used = 0
         self._turn_lock = Lock()
         self._last_call_started: float | None = None
+        self._validation_feedback: str | None = None
 
     @property
     def turns_used(self) -> int:
@@ -612,12 +643,22 @@ class EvaAgentBenchClient:
         self, messages: object, tools: object
     ) -> dict[str, object]:
         turn_number = self._reserve_turn()
-        return dbbench_tool_message(
+        message = dbbench_tool_message(
             messages,
             tools,
             timeout_seconds=self.timeout_seconds,
             turn_limit=self._turn_limit,
             turn_number=turn_number,
+            validation_feedback=self._validation_feedback,
+        )
+        self._validation_feedback = None
+        return message
+
+    def note_validation_failure(self, failure: str) -> None:
+        """Remember only one fixed parser category for the next prepaid call."""
+
+        self._validation_feedback = (
+            failure if failure in _DBBENCH_VALIDATION_FEEDBACK else None
         )
 
 
@@ -643,14 +684,17 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
         def provide(prompt: str, timeout_seconds: float) -> str:
             return request(prompt, timeout_seconds, turn_number)
 
-        return dbbench_tool_message(
+        message = dbbench_tool_message(
             messages,
             tools,
             timeout_seconds=self.timeout_seconds,
             turn_limit=self._turn_limit,
             turn_number=turn_number,
             answer_provider=provide,
+            validation_feedback=self._validation_feedback,
         )
+        self._validation_feedback = None
+        return message
 
 
 __all__ = [

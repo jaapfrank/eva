@@ -59,6 +59,7 @@ class TransientFailingClient(FakeClient):
     def __init__(self) -> None:
         super().__init__()
         self.reservations = 0
+        self.validation_feedback: list[str] = []
 
     @property
     def turns_used(self) -> int:
@@ -71,6 +72,9 @@ class TransientFailingClient(FakeClient):
         if self.reservations == 1:
             raise adapter.AgentBenchEvaError("tool-free AgentBench request failed")
         return super().inference_message(messages, tools)
+
+    def note_validation_failure(self, failure: str) -> None:
+        self.validation_feedback.append(failure)
 
 
 @contextmanager
@@ -301,6 +305,7 @@ def test_retries_before_interact_within_the_same_hard_model_budget(
     assert artifact["modelFailures"] == [
         {"failure": "tool-free AgentBench request failed", "turn": 1}
     ]
+    assert client.validation_feedback == ["tool-free AgentBench request failed"]
     assert [item["turn"] for item in artifact["trajectory"]] == [2, 3]
 
 

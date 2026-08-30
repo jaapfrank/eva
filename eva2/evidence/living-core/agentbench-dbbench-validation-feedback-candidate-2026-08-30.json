@@ -1,0 +1,50 @@
+{
+  "contract": "EvaAgentBenchDbBenchValidationFeedbackCandidate/v1",
+  "observedAt": "2026-08-30T10:50:21+02:00",
+  "baseCommit": "cc4f64b",
+  "status": "tested_not_run",
+  "purpose": "Give one bounded retry a fixed validation category without exposing raw invalid model output.",
+  "fixedValidationCategories": [
+    "empty_response",
+    "invalid_json",
+    "invalid_operation",
+    "missing_arguments",
+    "missing_database",
+    "missing_sql",
+    "missing_table",
+    "non_object_response",
+    "unknown_database",
+    "unknown_table",
+    "unsupported_arguments"
+  ],
+  "limits": {
+    "feedbackLifetime": "next_prepaid_call_only",
+    "feedbackClearedAfterValidOperation": true,
+    "maximumModelCallsPerCase": 15,
+    "additionalReviewerCalls": 0,
+    "toolsExposedAtModelBoundary": 0
+  },
+  "privacy": {
+    "rawInvalidModelOutputStored": false,
+    "rawInvalidModelOutputReturnedToModel": false,
+    "hiddenAnswerRead": false
+  },
+  "verification": {
+    "focusedTestsPassed": 43,
+    "ruffPassed": true,
+    "pythonCompilePassed": true,
+    "modelCalls": 0,
+    "benchmarkCasesRun": 0
+  },
+  "sourceSha256": {
+    "benchmark/eva_agentbench_client.py": "6b2908a31e504968efc7666f6a9e59d3748820367dece7739071b4f0249b8c59",
+    "benchmark/run_agentbench_dbbench_development.py": "f40a13c100e5cd047476b58dbf8d9b03515d1008f2a34e3de511b15e24f62bb9",
+    "eva2/tests/benchmark/test_eva_agentbench_client.py": "5eaf1fc2c519fd07f69c8091709b4244d8af5853fa258c372aac45fde60ea6d4",
+    "eva2/tests/benchmark/test_run_agentbench_dbbench_development.py": "1314ad5e18df8974bffcdbee4237a6b073dc2dfceda4f5bc46d19e7bc567de71"
+  },
+  "nonClaims": [
+    "No benchmark case was run.",
+    "No official score was produced.",
+    "No superiority claim is made."
+  ]
+}
