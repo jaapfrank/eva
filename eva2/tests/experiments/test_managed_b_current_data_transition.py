@@ -56,13 +56,17 @@ def test_count_parser_is_closed_and_digest_is_order_independent() -> None:
 def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     source = PROBE_PATH.read_text(encoding="utf-8")
 
-    assert 'CURRENT_ROUTE_CORE = "eva2-managed-b-slot3-core"' in source
-    assert 'CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot3-postgres-1"' in source
+    assert 'CURRENT_ROUTE_CORE = "eva2-managed-b-slot4-core"' in source
+    assert 'CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot4-postgres-1"' in source
     assert (
-        'CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot3-hindsight-postgres-1"'
+        'CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot4-hindsight-postgres-1"'
         in source
     )
-    assert 'CURRENT_ROUTE_PORT = "44710"' in source
+    assert 'CURRENT_ROUTE_PORT = "44711"' in source
+    assert '"/var/lib/eva2/managed-b-slot4/secrets/home-assistant-token"' in source
+    assert '"/var/lib/eva2/managed-b-slot4/secrets/dashboard-token"' in source
+    assert 'Path("/var/lib/eva2/managed-b-slot4/candidate.env")' in source
+    assert '"EvaTelegramPrincipalBindings/v2"' in source
     assert "--format=custom" in source
     assert '"--exit-on-error"' in source
     assert '"--no-owner"' in source

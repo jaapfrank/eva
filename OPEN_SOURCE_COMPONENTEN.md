@@ -24,7 +24,7 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex-pariteit en warme latencypariteit bewezen en is nu kandidaatstandaard; Pydantic AI en de toolloop moeten nog verder worden bijgewerkt en verkleind | **SDK-kandidaat in bouw; daarna Pydantic/toolloop verkleinen** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex- en latencypariteit, een netwerkloze 38-wheelbuild, 0/0-scan en volledige wegwerp-runtimeherstart bewezen; A/B en terugrol blijven open | **SDK-kandidaat technisch groen; daarna A/B en Pydantic/toolloop verkleinen** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
@@ -78,6 +78,13 @@ Renovate mag alleen kleine updatevoorstellen maken. Iedere kandidaat doorloopt
 daarna automatisch tests, imagebouw, SBOM, scan en een tijdelijke
 upgrade-/downgradeproef. Productiepromotie blijft A/B en gebeurt nooit door de
 dependencybot zelf.
+
+De eerste echte uitvoering van die keten is nu groen voor OpenAI SDK `3.6.0`:
+één hashlock maakte alle dependencymetadata, 38 wheels en de netwerkloze build;
+de brede bouwimage werd met 5 kritieke en 29 hoge bevindingen afgewezen, waarna
+de minimale runtime 0/0 scoorde en een echte Codex-beurt plus gezamenlijke
+herstart doorstond. Daardoor is dit een werkende upgradepoort en geen papieren
+afspraak. Live A/B-promotie en terugrol blijven bewust apart.
 
 De Renovate-configuratie staat vanaf nu op de repositoryroot. Dat maakt haar
 vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de

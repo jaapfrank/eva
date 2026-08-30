@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2OpenAISdkOfflineRuntimeCandidateEvidence/v1",
+  "issuedAt": "2026-08-30T15:58:29+02:00",
+  "source": {
+    "commit": "7771484203c287c5cf088a1848d1a87836905883",
+    "archiveSha256": "2a82aba8e86d91bc418e9f189c4a0f3f045eeeaa3368bc19d871037a5bd7724d",
+    "requirementsLockSha256": "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f",
+    "wheelhouseTreeSha256": "3644c6f96e676f43b2738faa0eff84d5068baa002d09bab4eaa65ee3ccff3642",
+    "wheelCount": 38,
+    "openaiVersion": "3.6.0"
+  },
+  "build": {
+    "network": "none",
+    "standardImageId": "sha256:3665170114b069928d4019837aa02b1a65ce3a235d85ff5989c37f9ac300ddf3",
+    "standardImageSizeBytes": 106165799,
+    "standardBaseImage": "python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "standardBaseScanRejected": {
+      "critical": 5,
+      "high": 29
+    },
+    "distrolessDockerfileSha256": "175f0ec4cd9b6aa4d49b8d188c60faed9cb2164d7e257015f6f9efd68fa3480f",
+    "distrolessBaseImage": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+    "distrolessImage": "eva2/sdk36-distroless-candidate@sha256:a713abb250ea1d7bcae6e5df8b4f63d87b9326280a3f4c42ad930108ff91644d",
+    "distrolessImageId": "sha256:a713abb250ea1d7bcae6e5df8b4f63d87b9326280a3f4c42ad930108ff91644d",
+    "distrolessImageSizeBytes": 81640191,
+    "runtimeUser": "65532:65532"
+  },
+  "scan": {
+    "critical": 0,
+    "high": 0,
+    "network": "none",
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "databaseMetadataSha256": "1935af6de5ed7c5a1fba311d4d9ef1554f9b2e576a8c0b94794fc3102af687c7"
+  },
+  "runtime": {
+    "renderedServiceCount": 9,
+    "postgresVersion": "18.6",
+    "pgvectorVersion": "0.8.6",
+    "separateOperationalAndMemoryDatabases": true,
+    "hindsightDatabaseFileSecret": true,
+    "dashboardOwnerAuthenticated": true,
+    "dashboardAnonymousRejected": true,
+    "realAccessOnlyCodexReplyExact": true,
+    "coreReadyBeforeRestart": true,
+    "coreReadyAfterDatabaseAndServiceRestart": true,
+    "eva1HttpBeforeAndAfter": 200,
+    "currentEva2HttpBeforeAndAfter": 200,
+    "temporaryResourcesRemoved": true
+  },
+  "probeRepairs": {
+    "probeSha256": "08f3ead0063256b487525aa5cac7856e25a065048b338c10224849d204ce837f",
+    "testsPassed": 8,
+    "observations": [
+      "The retained probe still targeted managed slot 3 on port 44710 while the active route was managed slot 4 on port 44711.",
+      "The retained probe supplied an obsolete empty Telegram binding payload; the current runtime correctly rejected it.",
+      "The probe now uses the active slot-4 inputs and one synthetic v2 binding without weakening the runtime contract."
+    ]
+  },
+  "status": "passed_candidate_only",
+  "nonclaims": [
+    "The official OpenAI SDK candidate has not replaced the live Eva2 route.",
+    "The candidate has not completed an A/B cutover, rollback, host reboot or seven-day resident run.",
+    "A zero-finding scan does not prove the absence of exploitable defects.",
+    "This evidence does not by itself prove that Eva is better than every competitor."
+  ]
+}

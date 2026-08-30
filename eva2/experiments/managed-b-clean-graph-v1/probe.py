@@ -60,19 +60,19 @@ EXPECTED_SERVICES = {
     "schema-installer",
     "telegram-ingress",
 }
-CURRENT_ROUTE_CORE = "eva2-managed-b-slot3-core"
-CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot3-postgres-1"
-CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-managed-b-slot3-operational"
-CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot3-hindsight-postgres-1"
-CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-managed-b-slot3-memory"
-CURRENT_ROUTE_PORT = "44710"
+CURRENT_ROUTE_CORE = "eva2-managed-b-slot4-core"
+CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot4-postgres-1"
+CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-managed-b-slot4-operational"
+CURRENT_ROUTE_HINDSIGHT = "eva2-managed-b-slot4-hindsight-postgres-1"
+CURRENT_ROUTE_HINDSIGHT_VOLUME = "eva2-managed-b-slot4-memory"
+CURRENT_ROUTE_PORT = "44711"
 CURRENT_ROUTE_HA_TOKEN = Path(
-    "/var/lib/eva2/managed-b-slot3/secrets/home-assistant-token"
+    "/var/lib/eva2/managed-b-slot4/secrets/home-assistant-token"
 )
 CURRENT_ROUTE_DASHBOARD_TOKEN = Path(
-    "/var/lib/eva2/managed-b-slot3/secrets/dashboard-token"
+    "/var/lib/eva2/managed-b-slot4/secrets/dashboard-token"
 )
-CURRENT_ROUTE_ENVIRONMENT = Path("/var/lib/eva2/managed-b-slot3/candidate.env")
+CURRENT_ROUTE_ENVIRONMENT = Path("/var/lib/eva2/managed-b-slot4/candidate.env")
 CURRENT_ROUTE_HINDSIGHT_NAMESPACE = "eva2_candidate_be70ec4"
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
@@ -804,7 +804,18 @@ def main(
         _write_private(
             secrets_dir / "telegram-token", b"probe-only", uid=65532, gid=65532
         )
-        _write_private(secrets_dir / "telegram-bindings", b"{}", uid=65532, gid=65532)
+        _write_private(
+            secrets_dir / "telegram-bindings",
+            (
+                b'{"bindings":[{"allowed_chat_ids":["900000001"],'
+                b'"principal_binding_id":"44444444-4444-4444-8444-444444444444",'
+                b'"principal_id":"33333333-3333-3333-8333-333333333333",'
+                b'"telegram_user_id":900000001}],'
+                b'"contract":"EvaTelegramPrincipalBindings/v2"}'
+            ),
+            uid=65532,
+            gid=65532,
+        )
         _write_private(
             secrets_dir / "telegram-pairing",
             secrets.token_urlsafe(32).encode(),
