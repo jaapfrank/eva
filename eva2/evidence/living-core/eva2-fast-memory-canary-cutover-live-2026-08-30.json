@@ -1,0 +1,43 @@
+{
+  "contract": "Eva2FastMemoryCanaryCutoverLiveReceipt/v1",
+  "recordedAt": "2026-08-30T01:20:22Z",
+  "status": "passed",
+  "runtimeSourceCommit": "54c49a0",
+  "evidenceCommitBeforeCutover": "ff71e67a686366b9290b1c4d229ef903f92c97b4",
+  "imageId": "sha256:7a3715b1a9c76696d333c0b84c5d6ca76281c7761ea46fb0eaa7bcb738d2a91c",
+  "container": "eva2-pc03-fast-memory-54c49a0-live",
+  "sourcePort": 44711,
+  "targetPort": 44712,
+  "cutover": {
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "225bb503e70f9f5c60c8df485bfa0e1966dedcfdfe40582ae731c45d55e58554",
+    "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8"
+  },
+  "checks": {
+    "eva1Active": true,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    },
+    "targetContainer": "running",
+    "targetHealth": "healthy",
+    "targetRestartCount": 0,
+    "targetReady": true,
+    "rollbackPort": 44711,
+    "rollbackReady": true,
+    "liveRouterExpectedReply": "ROUTEGOED",
+    "liveRouterActualReply": "ROUTEGOED",
+    "restartMemoryExpectedReply": "zilverdistel",
+    "restartMemoryActualReply": "zilverdistel"
+  },
+  "candidateEvidence": "evidence/product/performance-complexity-pc03-fast-memory-candidate-2026-08-30.json",
+  "boundaries": [
+    "This promotes the 20-turn development candidate; it does not complete the required 200-turn latency gate.",
+    "The retained route on port 44711 remains the immediate rollback.",
+    "The Windows/WSL reboot and seven-day practice gates remain open."
+  ]
+}
