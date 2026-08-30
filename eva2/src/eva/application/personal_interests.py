@@ -8,7 +8,7 @@ import base64
 import hashlib
 import io
 import json
-from typing import Protocol
+from typing import Generic, Protocol, TypeVar
 import zipfile
 
 from eva.application.memory import ConversationMemoryDocument
@@ -213,18 +213,20 @@ class PersonalInterestMemory(Protocol):
     ) -> object: ...
 
 
-class PersonalInterestWorker:
-    """Finish or project one durable interest without blocking conversation."""
+_StoreT = TypeVar("_StoreT")
 
+
+class _PersonalWorkerBase(Generic[_StoreT]):
     def __init__(
-        self,
-        store: PersonalInterestStore,
-        model: PersonalInterestModel,
-        memory: PersonalInterestMemory,
+        self, store: _StoreT, model: PersonalInterestModel, memory: PersonalInterestMemory
     ) -> None:
         self._store = store
         self._model = model
         self._memory = memory
+
+
+class PersonalInterestWorker(_PersonalWorkerBase[PersonalInterestStore]):
+    """Finish or project one durable interest without blocking conversation."""
 
     def run_once(self, *, tenant_id: str, installation_id: str, now: datetime) -> str:
         completed = self._store.completed_unprojected(
@@ -309,18 +311,8 @@ class PersonalPrototypeStore(Protocol):
     ) -> None: ...
 
 
-class PersonalPrototypeWorker:
+class PersonalPrototypeWorker(_PersonalWorkerBase[PersonalPrototypeStore]):
     """Build one actual downloadable artifact after exploration is durable."""
-
-    def __init__(
-        self,
-        store: PersonalPrototypeStore,
-        model: PersonalInterestModel,
-        memory: PersonalInterestMemory,
-    ) -> None:
-        self._store = store
-        self._model = model
-        self._memory = memory
 
     def run_once(self, *, tenant_id: str, installation_id: str, now: datetime) -> str:
         completed = self._store.completed_unprojected(
@@ -403,18 +395,8 @@ class PersonalProductReleaseStore(Protocol):
     ) -> None: ...
 
 
-class PersonalProductReleaseWorker:
+class PersonalProductReleaseWorker(_PersonalWorkerBase[PersonalProductReleaseStore]):
     """Turn a durable prototype into a deterministic channel-neutral bundle."""
-
-    def __init__(
-        self,
-        store: PersonalProductReleaseStore,
-        model: PersonalInterestModel,
-        memory: PersonalInterestMemory,
-    ) -> None:
-        self._store = store
-        self._model = model
-        self._memory = memory
 
     def run_once(self, *, tenant_id: str, installation_id: str, now: datetime) -> str:
         completed = self._store.completed_unprojected(
