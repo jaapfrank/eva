@@ -28,6 +28,7 @@ _POLICY_KEYS = (
     "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST",
 )
 _CORE_IMAGE_KEY = "EVA_LIVING_CORE_IMAGE"
+_DASHBOARD_RELEASE_KEY = "EVA_DASHBOARD_RELEASE_SHA256"
 _MAX_ENVIRONMENT_BYTES = 64 * 1024
 
 
@@ -153,6 +154,7 @@ def _updated_environment(
     replacements = dict(zip(_POLICY_KEYS, (allowlist, principals), strict=True))
     if image_reference is not None:
         replacements[_CORE_IMAGE_KEY] = image_reference
+        replacements[_DASHBOARD_RELEASE_KEY] = image_reference.rsplit("sha256:", 1)[-1]
     counts = {key: 0 for key in replacements}
     result: list[str] = []
     for line in lines:
@@ -164,7 +166,7 @@ def _updated_environment(
             result.append(line)
     if counts[_POLICY_KEYS[0]] != 1 or counts[_POLICY_KEYS[1]] not in {0, 1}:
         raise HomeEffectPolicyError("managed environment policy keys differ")
-    if image_reference is not None and counts[_CORE_IMAGE_KEY] != 1:
+    if image_reference is not None and any(counts[key] != 1 for key in (_CORE_IMAGE_KEY, _DASHBOARD_RELEASE_KEY)):
         raise HomeEffectPolicyError("managed environment core image key differs")
     if counts[_POLICY_KEYS[1]] == 0:
         result.append(f"{_POLICY_KEYS[1]}={principals}")

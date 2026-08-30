@@ -87,6 +87,7 @@ def test_can_atomically_promote_the_exact_healthy_source_image(
     path = _environment(private_tmp_path / "candidate.env")
     with path.open("a") as environment:
         environment.write("EVA_LIVING_CORE_IMAGE=eva2/old@sha256:" + "c" * 64 + "\n")
+        environment.write("EVA_DASHBOARD_RELEASE_SHA256=" + "c" * 64 + "\n")
 
     receipt = persist_home_effect_policy(
         path,
@@ -96,6 +97,7 @@ def test_can_atomically_promote_the_exact_healthy_source_image(
     )
 
     assert f"EVA_LIVING_CORE_IMAGE={IMAGE_REFERENCE}\n" in path.read_text()
+    assert f"EVA_DASHBOARD_RELEASE_SHA256={IMAGE.removeprefix('sha256:')}\n" in path.read_text()
     assert receipt["sourceImage"] == IMAGE
     assert receipt["sourceImagePromoted"] is True
 
