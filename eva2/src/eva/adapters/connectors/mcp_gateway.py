@@ -102,8 +102,35 @@ class McpGatewayToolSpec:
         ):
             raise ValueError("MCP gateway tool specification is invalid")
         properties = self.descriptor.input_schema["properties"]
+        required = self.descriptor.input_schema["required"]
         if any(item.argument_name not in properties for item in self.proof_bindings):
             raise ValueError("MCP gateway proof input is absent from the tool schema")
+        if any(item.argument_name not in required for item in self.proof_bindings):
+            raise ValueError("MCP gateway proof input must be required")
+
+    @property
+    def configuration_sha256(self) -> str:
+        return canonical_sha256(
+            {
+                "completion_guidance": self.descriptor.completion_guidance,
+                "description": self.descriptor.description,
+                "eva_name": self.descriptor.name,
+                "execute_catalog_name": self.execute_catalog_name,
+                "execute_catalog_sha256": self.execute_catalog_sha256,
+                "execute_tool_name": self.execute_tool_name,
+                "input_schema": self.descriptor.input_schema,
+                "observe_catalog_name": self.observe_catalog_name,
+                "observe_catalog_sha256": self.observe_catalog_sha256,
+                "observe_tool_name": self.observe_tool_name,
+                "proof_bindings": [
+                    {
+                        "argument_name": item.argument_name,
+                        "observed_name": item.observed_name,
+                    }
+                    for item in self.proof_bindings
+                ],
+            }
+        )
 
 
 class McpGatewayToolPlanner:
@@ -135,6 +162,7 @@ class McpGatewayToolPlanner:
             expected_proof=expected,
             receipt_output={
                 "catalog_sha256": spec.execute_catalog_sha256,
+                "tool_configuration_sha256": spec.configuration_sha256,
                 "transport": "mcp_gateway",
             },
         )

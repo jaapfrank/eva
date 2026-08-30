@@ -214,6 +214,11 @@ def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
     )
     assert preparation.tool_name == "proof-echo"
     assert preparation.expected_proof == {"text": "hoi"}
+    assert preparation.receipt_output == {
+        "catalog_sha256": _spec().execute_catalog_sha256,
+        "tool_configuration_sha256": _spec().configuration_sha256,
+        "transport": "mcp_gateway",
+    }
 
     with pytest.raises(ConversationConflict, match="fields"):
         asyncio.run(
