@@ -27,6 +27,10 @@ from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
 )
+from eva.adapters.model.openai_responses_transport import (
+    OpenAIResponsesResult,
+    OpenAIResponsesUnavailable,
+)
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -739,6 +743,71 @@ def test_ordinary_conversation_retries_one_transient_provider_failure(
     assert usage == ConversationModelUsage.unmeasured()
     assert timing.first_content_ms is not None and timing.first_content_ms >= 80
     assert timing.completed_ms is not None and timing.completed_ms >= 100
+
+
+def test_openai_sdk_conversation_retries_one_bounded_transient_failure(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused.json",
+        resource_budget=_runtime_budget(),
+        transport_kind="openai_sdk",
+    )
+    assert model._openai_transport is not None  # noqa: SLF001
+    assert model._openai_transport._timeout_seconds == 5.0  # noqa: SLF001
+    monkeypatch.setattr(model, "_load_auth", lambda: ("access", "account"))
+    calls = 0
+
+    def request(*_args: object, **_kwargs: object) -> OpenAIResponsesResult:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise OpenAIResponsesUnavailable("tijdelijk")
+        return OpenAIResponsesResult(
+            "hersteld",
+            None,
+            ConversationModelUsage.measured(
+                tool_calls=0, input_tokens=100, output_tokens=2
+            ),
+            0.08,
+            0.1,
+        )
+
+    monkeypatch.setattr(model._openai_transport, "request", request)  # noqa: SLF001
+    text, action, usage, timing = model._request_conversation(  # noqa: SLF001
+        {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
+    )
+
+    assert (text, action, calls) == ("hersteld", None, 2)
+    assert usage == ConversationModelUsage.unmeasured()
+    assert timing.first_content_ms is not None and timing.first_content_ms >= 80
+    assert timing.completed_ms is not None and timing.completed_ms >= 100
+
+
+def test_openai_sdk_conversation_does_not_retry_after_text_started(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused.json",
+        resource_budget=_runtime_budget(),
+        transport_kind="openai_sdk",
+    )
+    assert model._openai_transport is not None  # noqa: SLF001
+    monkeypatch.setattr(model, "_load_auth", lambda: ("access", "account"))
+    calls = 0
+
+    def request(*_args: object, **_kwargs: object) -> OpenAIResponsesResult:
+        nonlocal calls
+        calls += 1
+        raise OpenAIResponsesUnavailable("tijdelijk", retry_safe=False)
+
+    monkeypatch.setattr(model._openai_transport, "request", request)  # noqa: SLF001
+    with pytest.raises(ConversationModelError, match="provider is unavailable"):
+        model._request_conversation(  # noqa: SLF001
+            {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
+        )
+
+    assert calls == 1
 
 
 def test_ordinary_conversation_does_not_retry_nontransient_failure(

@@ -42,6 +42,10 @@ class OpenAIResponsesCredentialRejected(OpenAIResponsesTransportError):
 class OpenAIResponsesUnavailable(OpenAIResponsesTransportError):
     """The provider or optional SDK dependency is unavailable."""
 
+    def __init__(self, message: str, *, retry_safe: bool = True) -> None:
+        super().__init__(message)
+        self.retry_safe = retry_safe
+
 
 class ConversationSseError(ValueError):
     """The ordinary conversation stream is malformed."""
@@ -108,6 +112,12 @@ class _ResponseTooLarge(RuntimeError):
 
 class _DeadlineExceeded(RuntimeError):
     pass
+
+
+class _StreamInterrupted(RuntimeError):
+    def __init__(self, *, retry_safe: bool) -> None:
+        super().__init__()
+        self.retry_safe = retry_safe
 
 
 @dataclass(frozen=True, slots=True)
@@ -416,14 +426,21 @@ def _sanitized_failure(
     api_status_error: type[Exception],
     api_timeout_error: type[Exception],
 ) -> OpenAIResponsesTransportError:
+    if isinstance(error, OpenAIResponsesUnavailable):
+        return OpenAIResponsesUnavailable(
+            str(error), retry_safe=error.retry_safe
+        )
     if isinstance(error, OpenAIResponsesTransportError):
         return type(error)(str(error))
     if _caused_by(error, (_RequestTooLarge, _ResponseTooLarge)):
         return OpenAIResponsesTransportError(
             "OpenAI SDK request or response exceeded its byte limit")
+    retry_safe = _interrupted_retry_safe(error)
     if _caused_by(error, (_DeadlineExceeded,)):
         return OpenAIResponsesUnavailable(
-            "OpenAI SDK provider exceeded its total deadline")
+            "OpenAI SDK provider exceeded its total deadline",
+            retry_safe=retry_safe,
+        )
     if isinstance(error, api_status_error):
         status_code = getattr(error, "status_code", None)
         if status_code in {401, 403}:
@@ -433,11 +450,24 @@ def _sanitized_failure(
             return OpenAIResponsesTransportError(
                 f"OpenAI SDK provider returned HTTP {status_code}")
     if isinstance(error, (api_timeout_error, api_connection_error)):
-        return OpenAIResponsesUnavailable("OpenAI SDK provider is unavailable")
+        return OpenAIResponsesUnavailable(
+            "OpenAI SDK provider is unavailable", retry_safe=retry_safe
+        )
     if isinstance(error, api_error):
         return OpenAIResponsesTransportError(
             "OpenAI SDK response protocol is invalid")
     return OpenAIResponsesTransportError("OpenAI SDK transport failed closed")
+
+
+def _interrupted_retry_safe(error: BaseException) -> bool:
+    current: BaseException | None = error
+    seen: set[int] = set()
+    while current is not None and id(current) not in seen:
+        if isinstance(current, _StreamInterrupted):
+            return current.retry_safe
+        seen.add(id(current))
+        current = current.__cause__ or current.__context__
+    return True
 
 
 def _caused_by(error: BaseException, kinds: tuple[type[BaseException], ...]) -> bool:
@@ -572,6 +602,8 @@ def _project_events(
         raise OpenAIResponsesTransportError(
             "OpenAI SDK response projection is invalid"
         ) from error
+    except Exception as error:
+        raise _StreamInterrupted(retry_safe=not bool(deltas)) from error
     if not completed:
         raise OpenAIResponsesTransportError(
             "OpenAI SDK stream ended without completion"

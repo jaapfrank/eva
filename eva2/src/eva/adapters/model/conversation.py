@@ -440,7 +440,7 @@ class CodexConversationModel:
         self._openai_transport = (
             OpenAIResponsesTransport(
                 endpoint=endpoint,
-                timeout_seconds=timeout_seconds,
+                timeout_seconds=min(timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS),
                 maximum_request_bytes=_MAX_STREAM_BYTES,
                 maximum_response_bytes=_MAX_STREAM_BYTES,
             )
@@ -1172,14 +1172,20 @@ class CodexConversationModel:
         assert self._openai_transport is not None
         self._admit_request(body, autonomous=False)
         last_auth: tuple[str, str] | None = None
-        for attempt in range(2):
+        started_at = monotonic()
+        provider_attempts = 0
+        transient_retried = retry_same_auth = False
+        for attempt in range(3):
             auth = self._load_auth()
             expires_at = self._jwt_expiry(auth[0])
             if expires_at is not None and expires_at <= datetime.now(tz=UTC):
                 raise ConversationModelError("conversation access token is expired")
-            if attempt and auth == last_auth:
+            if attempt and auth == last_auth and not retry_same_auth:
                 break
             last_auth = auth
+            retry_same_auth = False
+            provider_attempts += 1
+            offset_ms = round((monotonic() - started_at) * 1000)
             try:
                 result = self._openai_transport.request(
                     body,
@@ -1189,32 +1195,38 @@ class CodexConversationModel:
             except OpenAIResponsesCredentialRejected:
                 continue
             except OpenAIResponsesUnavailable as error:
-                raise ConversationModelError(
-                    "conversation provider is unavailable"
-                ) from error
+                if transient_retried or not error.retry_safe:
+                    raise ConversationModelError(
+                        "conversation provider is unavailable"
+                    ) from error
+                transient_retried = retry_same_auth = True
+                continue
             except OpenAIResponsesTransportError as error:
                 raise ConversationModelError(str(error)) from error
             with self._credential_lock:
                 self._rejected_token_sha256 = None
             usage = result.usage
-            if usage.measurement == "measured":
+            if transient_retried:
+                usage = ConversationModelUsage.unmeasured()
+            elif usage.measurement == "measured":
                 assert usage.tool_calls is not None
                 assert usage.input_tokens is not None
                 assert usage.output_tokens is not None
                 usage = ConversationModelUsage.measured(
-                    model_attempts=attempt + 1,
+                    model_attempts=provider_attempts,
                     tool_calls=usage.tool_calls,
                     input_tokens=usage.input_tokens,
                     output_tokens=usage.output_tokens,
                 )
-            self._enforce_reported_usage(usage)
+            if not transient_retried:
+                self._enforce_reported_usage(usage)
             timing = ConversationModelTiming(
                 None
                 if result.first_text_delta_seconds is None
-                else round(result.first_text_delta_seconds * 1000),
+                else offset_ms + round(result.first_text_delta_seconds * 1000),
                 None
                 if result.completed_seconds is None
-                else round(result.completed_seconds * 1000),
+                else offset_ms + round(result.completed_seconds * 1000),
             )
             return result.text, result.action_call, usage, timing
         if last_auth is not None:
