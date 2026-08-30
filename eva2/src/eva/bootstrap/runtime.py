@@ -260,6 +260,7 @@ class RuntimeSettings:
     home_assistant_token: str | None = None
     home_assistant_effects_enabled: bool = False
     home_assistant_effect_allowlist: tuple[str, ...] = ()
+    home_assistant_effect_principal_sha256_allowlist: tuple[str, ...] = ()
     home_assistant_event_domains: tuple[str, ...] = ("light",)
     agentmail_inbox_id: str | None = None
     agentmail_api_key_file: str | None = None
@@ -310,9 +311,7 @@ class RuntimeSettings:
             "Je bent een warme, nuchtere en capabele digitale huisgenoot.",
         )
         identity_pack_file = _environment_optional("EVA_IDENTITY_PACK_FILE")
-        identity_pack_trust_file = _environment_optional(
-            "EVA_IDENTITY_PACK_TRUST_FILE"
-        )
+        identity_pack_trust_file = _environment_optional("EVA_IDENTITY_PACK_TRUST_FILE")
         conversation_auth_file = _environment_value(
             "EVA_CONVERSATION_AUTH_FILE", "/run/eva/codex/auth.json"
         )
@@ -386,12 +385,11 @@ class RuntimeSettings:
         portable_restore_authority_file = _environment_optional(
             "EVA_PORTABLE_RESTORE_AUTHORITY_FILE"
         )
-        if portable_restore_authority_file is not None and not Path(
-            portable_restore_authority_file
-        ).is_absolute():
-            raise RuntimeError(
-                "EVA_PORTABLE_RESTORE_AUTHORITY_FILE must be absolute"
-            )
+        if (
+            portable_restore_authority_file is not None
+            and not Path(portable_restore_authority_file).is_absolute()
+        ):
+            raise RuntimeError("EVA_PORTABLE_RESTORE_AUTHORITY_FILE must be absolute")
         if dashboard_principal_binding_id is not None:
             if background_principal_id is None:
                 raise RuntimeError(
@@ -422,9 +420,12 @@ class RuntimeSettings:
             "EVA_PERSONAL_INTEREST_LEASE_SECONDS is invalid",
         )
         home_assistant_url = _environment_optional("EVA_HOME_ASSISTANT_URL")
-        home_assistant_token = _file_only_environment_secret(
-            "EVA_HOME_ASSISTANT_TOKEN", "EVA_HOME_ASSISTANT_TOKEN_FILE"
-        ) or None
+        home_assistant_token = (
+            _file_only_environment_secret(
+                "EVA_HOME_ASSISTANT_TOKEN", "EVA_HOME_ASSISTANT_TOKEN_FILE"
+            )
+            or None
+        )
         home_assistant_effects_enabled = _environment_bool(
             "EVA_HOME_ASSISTANT_EFFECTS_ENABLED",
             False,
@@ -432,6 +433,9 @@ class RuntimeSettings:
         )
         home_assistant_effect_allowlist = _environment_items(
             "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", unique_sorted=True
+        )
+        home_assistant_effect_principal_sha256_allowlist = _environment_items(
+            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", unique_sorted=True
         )
         for value in home_assistant_effect_allowlist:
             entity_id, separator, service = value.partition(":")
@@ -452,6 +456,21 @@ class RuntimeSettings:
             raise RuntimeError(
                 "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
             )
+        if (
+            home_assistant_effects_enabled
+            and not home_assistant_effect_principal_sha256_allowlist
+        ):
+            raise RuntimeError(
+                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is required when effects are enabled"
+            )
+        if any(
+            len(value) != 64
+            or any(character not in "0123456789abcdef" for character in value)
+            for value in home_assistant_effect_principal_sha256_allowlist
+        ):
+            raise RuntimeError(
+                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is invalid"
+            )
         home_assistant_event_domains = _environment_items(
             "EVA_HOME_ASSISTANT_EVENT_DOMAINS",
             "binary_sensor,light,person",
@@ -462,19 +481,26 @@ class RuntimeSettings:
         telegram_proactive_chat_id = _environment_optional(
             "EVA_TELEGRAM_PROACTIVE_CHAT_ID"
         )
-        telegram_bot_token = _file_only_environment_secret(
-            "EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE"
-        ) or None
-        stripe_account_id = _environment_optional("EVA_STRIPE_ACCOUNT_ID")
-        stripe_secret_key = _file_only_environment_secret(
-            "EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE"
-        ) or None
-        stripe_webhook_secret = _file_only_environment_secret(
-            "EVA_STRIPE_WEBHOOK_SECRET", "EVA_STRIPE_WEBHOOK_SECRET_FILE"
-        ) or None
-        commerce_public_base_url = _environment_optional(
-            "EVA_COMMERCE_PUBLIC_BASE_URL"
+        telegram_bot_token = (
+            _file_only_environment_secret(
+                "EVA_TELEGRAM_BOT_TOKEN", "EVA_TELEGRAM_BOT_TOKEN_FILE"
+            )
+            or None
         )
+        stripe_account_id = _environment_optional("EVA_STRIPE_ACCOUNT_ID")
+        stripe_secret_key = (
+            _file_only_environment_secret(
+                "EVA_STRIPE_SECRET_KEY", "EVA_STRIPE_SECRET_KEY_FILE"
+            )
+            or None
+        )
+        stripe_webhook_secret = (
+            _file_only_environment_secret(
+                "EVA_STRIPE_WEBHOOK_SECRET", "EVA_STRIPE_WEBHOOK_SECRET_FILE"
+            )
+            or None
+        )
+        commerce_public_base_url = _environment_optional("EVA_COMMERCE_PUBLIC_BASE_URL")
         stripe_live_mode = _environment_bool("EVA_STRIPE_LIVE_MODE")
         file_batch_root = _environment_optional("EVA_FILE_BATCH_ROOT")
         fanout_raw = _environment_value("EVA_FANOUT_RECIPIENT_ENDPOINTS_JSON")
@@ -503,9 +529,7 @@ class RuntimeSettings:
                 str(key).strip(): str(value).strip()
                 for key, value in decoded_fanout.items()
             }
-        fanout_allow_insecure_http = _environment_bool(
-            "EVA_FANOUT_ALLOW_INSECURE_HTTP"
-        )
+        fanout_allow_insecure_http = _environment_bool("EVA_FANOUT_ALLOW_INSECURE_HTTP")
         durable_goal_provider = _environment_optional("EVA_DURABLE_GOAL_PROVIDER")
         durable_goal_recipients = _environment_items("EVA_DURABLE_GOAL_RECIPIENTS")
         _require_complete_configuration(
@@ -600,6 +624,9 @@ class RuntimeSettings:
             home_assistant_token=home_assistant_token,
             home_assistant_effects_enabled=home_assistant_effects_enabled,
             home_assistant_effect_allowlist=home_assistant_effect_allowlist,
+            home_assistant_effect_principal_sha256_allowlist=(
+                home_assistant_effect_principal_sha256_allowlist
+            ),
             home_assistant_event_domains=home_assistant_event_domains,
             agentmail_inbox_id=agentmail_inbox_id,
             agentmail_api_key_file=agentmail_api_key_file,
@@ -1293,6 +1320,7 @@ class PostgresHindsightMemoryRuntime:
         installation_id: str,
         thread_id: str,
         operation_id: str,
+        principal_id: str,
         entity_id: str,
         service: str,
     ) -> VerifiedToolResult:
@@ -1301,6 +1329,7 @@ class PostgresHindsightMemoryRuntime:
             installation_id=installation_id,
             thread_id=thread_id,
             operation_id=operation_id,
+            principal_id=principal_id,
             entity_id=entity_id,
             service=service,
         )
@@ -1373,9 +1402,7 @@ class PostgresHindsightMemoryRuntime:
         device_id: str,
         approved_by: str,
     ) -> AdvancedTaskApproval:
-        return self._advanced_task_store(
-            tenant_id, installation_id
-        ).approve_canary(
+        return self._advanced_task_store(tenant_id, installation_id).approve_canary(
             plan_id=plan_id,
             plan_sha256=plan_sha256,
             inventory_sha256=inventory_sha256,
@@ -2008,6 +2035,9 @@ def create_runtime_app() -> FastAPI:
         home_assistant_effect_allowlist=frozenset(
             tuple(value.split(":", 1))
             for value in settings.home_assistant_effect_allowlist
+        ),
+        home_assistant_effect_principal_sha256_allowlist=frozenset(
+            settings.home_assistant_effect_principal_sha256_allowlist
         ),
         research=model,
         file_batch=file_batch,

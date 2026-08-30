@@ -183,9 +183,7 @@ class _Runtime:
         occurred_at: datetime,
     ) -> DurableGoalState:
         current = self.goals[(goal_id, owner_id)]
-        state = DurableGoalState(
-            current.spec, "cancelled", cancellation_reason=reason
-        )
+        state = DurableGoalState(current.spec, "cancelled", cancellation_reason=reason)
         self.goals[(goal_id, owner_id)] = state
         return state
 
@@ -276,9 +274,7 @@ class _Runtime:
             "plan_sha256": "b" * 64,
         }
 
-    def approve_product_publication(
-        self, **request: str
-    ) -> ProductPublicationApproval:
+    def approve_product_publication(self, **request: str) -> ProductPublicationApproval:
         self.commerce_calls.append(("approve", request))
         now = datetime(2026, 8, 24, 10, 0, tzinfo=UTC)
         return ProductPublicationApproval(
@@ -292,9 +288,7 @@ class _Runtime:
             datetime(2026, 8, 24, 10, 15, tzinfo=UTC),
         )
 
-    async def publish_approved_product(
-        self, **request: str
-    ) -> dict[str, object]:
+    async def publish_approved_product(self, **request: str) -> dict[str, object]:
         self.commerce_calls.append(("publish", request))
         return {
             "disposition": "verified",
@@ -664,9 +658,10 @@ def test_latest_current_research_is_a_reopenable_markdown_download() -> None:
     assert response.headers["content-type"].startswith("text/markdown")
     assert response.headers["x-eva-research-source-count"] == "3"
     assert response.headers["x-eva-researched-at"] == NOW
-    assert response.headers["etag"].strip('"') == hashlib.sha256(
-        response.content
-    ).hexdigest()
+    assert (
+        response.headers["etag"].strip('"')
+        == hashlib.sha256(response.content).hexdigest()
+    )
 
 
 def test_commerce_api_keeps_plan_approval_and_external_publication_separate() -> None:
@@ -744,9 +739,7 @@ def test_stripe_webhook_preserves_exact_body_and_requires_signature() -> None:
 
 def test_paid_download_returns_exact_hash_bound_release() -> None:
     client = TestClient(create_app(_Runtime()))
-    response = client.get(
-        "/public/v1/commerce/orders/cs_test_12345678/download"
-    )
+    response = client.get("/public/v1/commerce/orders/cs_test_12345678/download")
 
     assert response.status_code == 200
     assert response.content == b"PK\x03\x04paid-release"
@@ -754,9 +747,10 @@ def test_paid_download_returns_exact_hash_bound_release() -> None:
     assert response.headers["content-disposition"] == (
         'attachment; filename="rustig-weekmenu-bundel.zip"'
     )
-    assert response.headers["etag"].strip('"') == hashlib.sha256(
-        response.content
-    ).hexdigest()
+    assert (
+        response.headers["etag"].strip('"')
+        == hashlib.sha256(response.content).hexdigest()
+    )
     assert len(response.headers["x-eva-fulfillment-grant"]) == 64
 
 
@@ -1159,9 +1153,7 @@ def test_generic_turn_endpoint_rejects_untrusted_group_audience() -> None:
     )
 
     assert response.status_code == 422
-    assert response.json()["detail"] == (
-        "Telegram group turn requires active consent"
-    )
+    assert response.json()["detail"] == ("Telegram group turn requires active consent")
 
 
 def test_trusted_group_turn_propagates_exact_audience_to_runtime() -> None:
@@ -1316,6 +1308,7 @@ def test_home_assistant_light_action_returns_independent_proof() -> None:
             "entity_id": "light.kantoor_rechts",
             "installation_id": "live-installation",
             "operation_id": "operation:live-light:on",
+            "principal_id": "telegram:123",
             "service": "turn_on",
             "tenant_id": "live-tenant",
             "thread_id": "thread:live-light:on",
@@ -1333,6 +1326,7 @@ def test_home_assistant_light_action_returns_independent_proof() -> None:
             "entity_id": "light.kantoor_rechts",
             "installation_id": "live-installation",
             "operation_id": "operation:live-light:on",
+            "principal_id": "telegram:123",
             "service": "turn_on",
             "tenant_id": "live-tenant",
             "thread_id": "thread:live-light:on",
@@ -1347,6 +1341,7 @@ def test_home_assistant_route_rejects_non_light_or_non_reversible_action() -> No
         "entity_id": "lock.voordeur",
         "installation_id": "live-installation",
         "operation_id": "operation:unsafe",
+        "principal_id": "telegram:123",
         "service": "unlock",
         "tenant_id": "live-tenant",
         "thread_id": "thread:unsafe",
@@ -1357,12 +1352,18 @@ def test_home_assistant_route_rejects_non_light_or_non_reversible_action() -> No
         == 422
     )
     assert runtime.tool_calls == []
+
+
 def test_durable_goal_api_admits_reads_and_cancels_distinctly() -> None:
     runtime = _Runtime()
     client = TestClient(create_app(runtime))
     admitted = client.post(
         "/internal/v1/goals/admit",
-        json={"goal": _goal_payload(), "installation_id": INSTALLATION, "tenant_id": TENANT},
+        json={
+            "goal": _goal_payload(),
+            "installation_id": INSTALLATION,
+            "tenant_id": TENANT,
+        },
     )
     assert admitted.status_code == 200
     assert admitted.json()["status"] == "waiting"

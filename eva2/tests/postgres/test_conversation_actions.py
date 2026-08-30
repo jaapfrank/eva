@@ -142,13 +142,27 @@ def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> 
         )
 
 
-def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service() -> None:
+def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service() -> (
+    None
+):
+    with pytest.raises(ValueError, match="principal policy is required"):
+        PostgresConversationActions(
+            sa.create_engine("sqlite://"),
+            home_assistant=object(),  # type: ignore[arg-type]
+            home_assistant_effects_enabled=True,
+            home_assistant_effect_allowlist=frozenset(
+                {("light.dimmable_light_1", "turn_off")}
+            ),
+        )
     actions = PostgresConversationActions(
         sa.create_engine("sqlite://"),
         home_assistant=object(),  # type: ignore[arg-type]
         home_assistant_effects_enabled=True,
         home_assistant_effect_allowlist=frozenset(
             {("light.dimmable_light_1", "turn_off")}
+        ),
+        home_assistant_effect_principal_sha256_allowlist=frozenset(
+            {hashlib.sha256(b"jaap").hexdigest()}
         ),
     )
 
@@ -159,7 +173,20 @@ def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service()
                 installation_id="installation",
                 thread_id="thread",
                 operation_id="operation",
+                principal_id="jaap",
                 entity_id="light.other",
+                service="turn_off",
+            )
+        )
+    with pytest.raises(RuntimeError, match="principal is not authorized"):
+        asyncio.run(
+            actions.execute_home_assistant_light(
+                tenant_id="tenant",
+                installation_id="installation",
+                thread_id="thread:other-person",
+                operation_id="operation:other-person",
+                principal_id="lola",
+                entity_id="light.dimmable_light_1",
                 service="turn_off",
             )
         )
@@ -181,6 +208,9 @@ def test_home_assistant_effect_policy_answers_a_forbidden_request_naturally() ->
         home_assistant_effects_enabled=True,
         home_assistant_effect_allowlist=frozenset(
             {("light.dimmable_light_1", "turn_off")}
+        ),
+        home_assistant_effect_principal_sha256_allowlist=frozenset(
+            {hashlib.sha256(b"jaap").hexdigest()}
         ),
     )
     with pytest.raises(
@@ -210,16 +240,57 @@ def test_home_assistant_effect_policy_answers_a_forbidden_request_naturally() ->
                 installation_id="installation",
                 thread_id="thread",
                 operation_id="operation",
+                principal_id="jaap",
                 entity_id="light.dimmable_light_1",
                 service="turn_on",
             )
         )
 
 
+def test_home_assistant_effect_rejects_person_before_provider_resolution() -> None:
+    calls: list[str] = []
+
+    class HomeAssistant:
+        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
+            calls.append(target)
+            raise AssertionError("unauthorized person reached Home Assistant")
+
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=True,
+        home_assistant_effect_allowlist=frozenset(
+            {("light.dimmable_light_1", "turn_off")}
+        ),
+        home_assistant_effect_principal_sha256_allowlist=frozenset(
+            {hashlib.sha256(b"jaap").hexdigest()}
+        ),
+    )
+    with pytest.raises(ConversationClarificationRequired, match="Met dit profiel"):
+        actions.execute(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "lola",
+                "conversation",
+                "message:unauthorized",
+                "Zet de lamp uit.",
+                "2026-08-30T02:40:00Z",
+            ),
+            ConversationActionCall(
+                "call:unauthorized",
+                "set_home_assistant_light",
+                {"state": "off", "target": "spotjes overkapping"},
+            ),
+        )
+    assert calls == []
+
+
 def test_validated_file_edit_action_requires_its_bounded_adapter() -> None:
     unavailable = PostgresConversationActions(sa.create_engine("sqlite://"))
     available = PostgresConversationActions(
-        sa.create_engine("sqlite://"), validated_file_edit=object()  # type: ignore[arg-type]
+        sa.create_engine("sqlite://"),
+        validated_file_edit=object(),  # type: ignore[arg-type]
     )
     action = "edit_text_file_with_focused_validation"
 
@@ -262,7 +333,8 @@ def test_repository_improvement_requires_both_snapshot_adapter_and_chooser() -> 
 def test_localtuya_repository_action_requires_hacs_and_has_exact_fields() -> None:
     unavailable = PostgresConversationActions(sa.create_engine("sqlite://"))
     available = PostgresConversationActions(
-        sa.create_engine("sqlite://"), home_assistant_hacs=object()  # type: ignore[arg-type]
+        sa.create_engine("sqlite://"),
+        home_assistant_hacs=object(),  # type: ignore[arg-type]
     )
     action = "register_approved_localtuya_repository"
 
@@ -399,7 +471,11 @@ def test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it(
             return self.state_value
 
         def waiting(self, **_values):  # type: ignore[no-untyped-def]
-            return () if self.goal is None or self.state_value.status != "waiting" else (self.goal,)
+            return (
+                ()
+                if self.goal is None or self.state_value.status != "waiting"
+                else (self.goal,)
+            )
 
         def cancel(self, goal_id, owner_id, reason, at):  # type: ignore[no-untyped-def]
             assert self.goal is not None
@@ -441,9 +517,7 @@ def test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it(
     }
     receipt = actions.execute(
         turn,
-        ConversationActionCall(
-            "call-goal", "create_bounded_durable_goal", arguments
-        ),
+        ConversationActionCall("call-goal", "create_bounded_durable_goal", arguments),
     )
 
     assert receipt.output["disposition"] == "scheduled"
@@ -983,7 +1057,9 @@ def test_personal_completed_work_uses_the_exact_shared_checkpoint_selection(
     assert "limit" not in captured
 
 
-def test_personal_latest_artifacts_share_selection_without_cross_principal_leak() -> None:
+def test_personal_latest_artifacts_share_selection_without_cross_principal_leak() -> (
+    None
+):
     jaap_events = _personal_work_events()
     lola_events = _personal_work_events("lola")
     states = (
@@ -1024,14 +1100,17 @@ def test_personal_latest_artifacts_share_selection_without_cross_principal_leak(
     )
     assert prototype is not None and prototype.intent_id == "personal-interest:income"
     assert release is not None and release.intent_id == "personal-interest:income"
-    assert release_store.exact(
-        tenant_id="tenant",
-        installation_id="installation",
-        principal_id="jaap",
-        intent_id=release.intent_id,
-        release_sha256=release.release.content_sha256,
-        now=NOW,
-    ) == release
+    assert (
+        release_store.exact(
+            tenant_id="tenant",
+            installation_id="installation",
+            principal_id="jaap",
+            intent_id=release.intent_id,
+            release_sha256=release.release.content_sha256,
+            now=NOW,
+        )
+        == release
+    )
     assert calls[0]["phases"] == (
         "prototype_completed",
         "prototype_projected",
@@ -1226,9 +1305,10 @@ def test_personal_work_claim_stages_recover_their_exact_expired_lease(
     store._lease_seconds = 90
     monkeypatch.setattr(store_type, source_method, staticmethod(lambda *args: source))
 
-    assert store.claim_next(
-        tenant_id="tenant", installation_id="installation", now=NOW
-    ) is not None
+    assert (
+        store.claim_next(tenant_id="tenant", installation_id="installation", now=NOW)
+        is not None
+    )
     recovery = captured["recovery"]
     assert recovery["checkpoint_id"] == f"{interest.thread_id}:{expired_marker}:9"
     assert recovery["error_text"] == error_text
@@ -1341,7 +1421,6 @@ def test_personal_work_stages_keep_complete_projection_and_failure_contracts() -
         assert failures[0]["expected_revision"] == 8
         assert failures[0]["operation_id"] == interest.intent_id
         assert failures[0]["error_text"] == "RuntimeError: test failure"
-
 
 
 def test_retry_claim_preserves_error_fingerprint_until_third_identical_failure(

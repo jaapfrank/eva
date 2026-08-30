@@ -149,6 +149,7 @@ def _configuration(private_tmp_path: Path) -> dict[str, str]:
         "EVA_HOME_ASSISTANT_URL": "http://home-assistant:8123",
         "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "false",
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": "",
+        "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST": "",
         "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": str(home_assistant_token),
         "EVA_DASHBOARD_ACCESS_TOKEN_FILE_HOST": str(dashboard_access_token),
         "EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111",
@@ -474,6 +475,11 @@ def test_plan_requires_a_bounded_home_assistant_effect_allowlist(
 
     values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = "light.dimmable_light_1:turn_off"
     environment = _environment_file(private_tmp_path, values)
+    with pytest.raises(RuntimeError, match="PRINCIPAL_SHA256_ALLOWLIST is required"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+    values["EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST"] = "e" * 64
+    environment = _environment_file(private_tmp_path, values)
     assert load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid()).value(
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"
     ) == ("light.dimmable_light_1:turn_off")
@@ -481,6 +487,12 @@ def test_plan_requires_a_bounded_home_assistant_effect_allowlist(
     values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = "light.dimmable_light_1:toggle"
     environment = _environment_file(private_tmp_path, values)
     with pytest.raises(RuntimeError, match="EFFECT_ALLOWLIST is invalid"):
+        load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
+
+    values["EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"] = "light.dimmable_light_1:turn_off"
+    values["EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST"] = "not-a-hash"
+    environment = _environment_file(private_tmp_path, values)
+    with pytest.raises(RuntimeError, match="PRINCIPAL_SHA256_ALLOWLIST is invalid"):
         load_core_b_plan(environment.as_posix(), runtime_uid=os.geteuid())
 
 

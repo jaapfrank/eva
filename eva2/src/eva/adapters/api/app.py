@@ -164,6 +164,7 @@ _HOME_ASSISTANT_LIGHT_KEYS = {
     "entity_id",
     "installation_id",
     "operation_id",
+    "principal_id",
     "service",
     "tenant_id",
     "thread_id",
@@ -365,6 +366,7 @@ class MemoryRecallRuntime(Protocol):
         installation_id: str,
         thread_id: str,
         operation_id: str,
+        principal_id: str,
         entity_id: str,
         service: str,
     ) -> VerifiedToolResult: ...
@@ -1193,7 +1195,9 @@ def create_app(
                 }
             )
             runtime.admit_turn_audience(turn)
-            if "application/x-ndjson" in request.headers.get("accept", "") and not chat_id.startswith("-"):
+            if "application/x-ndjson" in request.headers.get(
+                "accept", ""
+            ) and not chat_id.startswith("-"):
                 return conversation_stream_response(runtime, turn, recent)
             reply = runtime.respond(turn, recent)
         except ConversationConflict as error:
@@ -1410,7 +1414,8 @@ def create_app(
         payload: dict[str, Any],
     ) -> dict[str, object]:
         return _advanced_approval(
-            runtime, payload,
+            runtime,
+            payload,
             method_name="approve_tuya_to_localtuya_canary",
             keys=_ADVANCED_CANARY_APPROVAL_KEYS,
             mode="approve_canary_only",
@@ -1550,7 +1555,8 @@ def create_app(
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-package/approve")
     def approve_localtuya_package(payload: dict[str, Any]) -> dict[str, object]:
         return _advanced_approval(
-            runtime, payload,
+            runtime,
+            payload,
             method_name="approve_localtuya_package",
             keys=_ADVANCED_PACKAGE_APPROVAL_KEYS,
             mode="approve_install_only",
@@ -1563,7 +1569,8 @@ def create_app(
     @app.post("/internal/v1/advanced/home-assistant/tuya-local-repository/approve")
     def approve_localtuya_repository(payload: dict[str, Any]) -> dict[str, object]:
         return _advanced_approval(
-            runtime, payload,
+            runtime,
+            payload,
             method_name="approve_localtuya_repository",
             keys=_ADVANCED_REPOSITORY_APPROVAL_KEYS,
             mode="approve_registration_only",

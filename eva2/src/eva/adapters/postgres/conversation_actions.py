@@ -335,8 +335,9 @@ class PostgresConversationActions:
         home_assistant_automations: AsyncToolPort | None = None,
         home_assistant_admin: _HomeAssistantInventoryPort | None = None,
         home_assistant_hacs: _HomeAssistantPackagePort | None = None,
-        home_assistant_effects_enabled: bool = True,
+        home_assistant_effects_enabled: bool = False,
         home_assistant_effect_allowlist: frozenset[tuple[str, str]] | None = None,
+        home_assistant_effect_principal_sha256_allowlist: frozenset[str] | None = None,
         research: CurrentResearchPort | None = None,
         file_batch: TextBatchPort | None = None,
         validated_file_edit: ValidatedTextEditPort | None = None,
@@ -352,6 +353,15 @@ class PostgresConversationActions:
             raise TypeError("Home Assistant effect policy must be boolean")
         self._home_assistant_effects_enabled = home_assistant_effects_enabled
         self._home_assistant_effect_allowlist = home_assistant_effect_allowlist
+        self._home_assistant_effect_principal_sha256_allowlist = (
+            home_assistant_effect_principal_sha256_allowlist or frozenset()
+        )
+        if (
+            home_assistant is not None
+            and home_assistant_effects_enabled
+            and not self._home_assistant_effect_principal_sha256_allowlist
+        ):
+            raise ValueError("Home Assistant effect principal policy is required")
         self._home_assistant_reads = (
             None
             if home_assistant is None
@@ -379,9 +389,7 @@ class PostgresConversationActions:
         self._durable_goal_provider = durable_goal_provider
         self._durable_goal_recipients = durable_goal_recipients
 
-    def _advanced_task_store(
-        self, turn: ConversationTurn
-    ) -> PostgresAdvancedTaskStore:
+    def _advanced_task_store(self, turn: ConversationTurn) -> PostgresAdvancedTaskStore:
         return PostgresAdvancedTaskStore(
             self._engine,
             tenant_id=turn.tenant_id,
@@ -2232,6 +2240,7 @@ class PostgresConversationActions:
         installation_id: str,
         thread_id: str,
         operation_id: str,
+        principal_id: str,
         entity_id: str,
         service: str,
         admission_context: dict[str, JsonValue] | None = None,
@@ -2241,6 +2250,7 @@ class PostgresConversationActions:
             installation_id=installation_id,
             thread_id=thread_id,
             operation_id=operation_id,
+            principal_id=principal_id,
             domain="light",
             entity_id=entity_id,
             service=service,
@@ -2254,6 +2264,7 @@ class PostgresConversationActions:
         installation_id: str,
         thread_id: str,
         operation_id: str,
+        principal_id: str,
         domain: str,
         entity_id: str,
         service: str,
@@ -2263,6 +2274,12 @@ class PostgresConversationActions:
             raise RuntimeError("Home Assistant is not configured")
         if not self._home_assistant_effects_enabled:
             raise RuntimeError("Home Assistant effects are disabled")
+        principal_sha256 = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
+        if (
+            principal_sha256
+            not in self._home_assistant_effect_principal_sha256_allowlist
+        ):
+            raise RuntimeError("Home Assistant effect principal is not authorized")
         if (
             domain not in {"light", "switch"}
             or service not in {"turn_on", "turn_off"}
@@ -2391,6 +2408,14 @@ class PostgresConversationActions:
             raise ConversationConflict("Home Assistant action is unavailable")
         if not self._home_assistant_effects_enabled:
             raise ConversationConflict("Home Assistant effects are disabled")
+        principal_sha256 = hashlib.sha256(turn.principal_id.encode("utf-8")).hexdigest()
+        if (
+            principal_sha256
+            not in self._home_assistant_effect_principal_sha256_allowlist
+        ):
+            raise ConversationClarificationRequired(
+                "Met dit profiel mag je het huis nog niet bedienen."
+            )
         arguments = self._validated_home_assistant_arguments(call.arguments)
         domain = "switch" if call.name == _HOME_ASSISTANT_SWITCH_ACTION else "light"
 
@@ -2432,6 +2457,7 @@ class PostgresConversationActions:
                 installation_id=turn.installation_id,
                 thread_id=self._home_assistant_thread_id(turn),
                 operation_id=self._home_assistant_operation_id(turn),
+                principal_id=turn.principal_id,
                 domain=domain,
                 entity_id=resolved["entity_id"],
                 service=service,
@@ -3090,7 +3116,10 @@ class PostgresConversationActions:
     def _resume_localtuya_repository(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> None:
-        if events and events[-1].event_type == "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED":
+        if (
+            events
+            and events[-1].event_type == "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED"
+        ):
             return
         store, approval, now = self._localtuya_resume_context(
             turn, events, "repository"
@@ -3178,16 +3207,16 @@ class PostgresConversationActions:
             raise ConversationConflict(f"LocalTuya {kind} resume is malformed")
         store = self._advanced_task_store(turn)
         approval = (
-            store.package_approval(
-                plan_id=plan_id, approval_sha256=approval_sha256
-            )
+            store.package_approval(plan_id=plan_id, approval_sha256=approval_sha256)
             if kind == "package"
             else store.repository_approval(
                 plan_id=plan_id, approval_sha256=approval_sha256
             )
         )
         if store.status(plan_id) == "needs_help":
-            action = "package install" if kind == "package" else "repository registration"
+            action = (
+                "package install" if kind == "package" else "repository registration"
+            )
             raise ConversationConflict(f"LocalTuya {action} needs owner help")
         now = datetime.now(tz=UTC).replace(microsecond=0)
         if now >= approval.expires_at:
@@ -3197,16 +3226,16 @@ class PostgresConversationActions:
     def _resume_localtuya_package(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> None:
-        store, approval, now = self._localtuya_resume_context(
-            turn, events, "package"
-        )
+        store, approval, now = self._localtuya_resume_context(turn, events, "package")
         approval = cast(AdvancedTaskPackageApproval, approval)
         if not store.package_install_started(approval.plan_id):
             if self._home_assistant_admin is None:
                 raise ConversationConflict("LocalTuya package preflight is unavailable")
             inventory = asyncio.run(self._home_assistant_admin.inventory())
             try:
-                require_current_package_preflight(store.load(approval.plan_id), inventory)
+                require_current_package_preflight(
+                    store.load(approval.plan_id), inventory
+                )
             except AdvancedTaskError as error:
                 raise ConversationConflict(str(error)) from error
         store.prepare_package_install(approval, occurred_at=now)
@@ -3442,9 +3471,7 @@ class PostgresConversationActions:
             "RECOVERY_NEEDS_HELP": "needs_help",
         }.get(events[-1].event_type)
         if status is None:
-            raise ConversationConflict(
-                f"Home Assistant {kind} has no terminal receipt"
-            )
+            raise ConversationConflict(f"Home Assistant {kind} has no terminal receipt")
         proof = self._event_data(events[-1]).get("proof")
         if proof is not None and not isinstance(proof, dict):
             raise ConversationConflict(f"Home Assistant {kind} proof is malformed")

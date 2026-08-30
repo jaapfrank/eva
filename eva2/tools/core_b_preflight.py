@@ -422,6 +422,26 @@ def _validate_configuration(values: dict[str, str]) -> None:
         raise RuntimeError(
             "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST is required when effects are enabled"
         )
+    principal_allowlist = tuple(
+        value.strip()
+        for value in values.get(
+            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", ""
+        ).split(",")
+        if value.strip()
+    )
+    if any(
+        re.fullmatch(r"[0-9a-f]{64}", value) is None for value in principal_allowlist
+    ):
+        raise RuntimeError(
+            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is invalid"
+        )
+    if (
+        values["EVA_HOME_ASSISTANT_EFFECTS_ENABLED"] == "true"
+        and not principal_allowlist
+    ):
+        raise RuntimeError(
+            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST is required when effects are enabled"
+        )
     if not any(
         recipient.strip()
         for recipient in values["EVA_DURABLE_GOAL_RECIPIENTS"].split(",")

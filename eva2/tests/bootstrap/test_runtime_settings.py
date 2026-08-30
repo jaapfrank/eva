@@ -142,9 +142,17 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
         "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
         "light.dimmable_light_1:turn_off",
     )
+    principal_sha256 = hashlib.sha256(b"telegram:123").hexdigest()
+    monkeypatch.setenv(
+        "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", principal_sha256
+    )
     assert RuntimeSettings.from_environment().home_assistant_effects_enabled is True
     assert RuntimeSettings.from_environment().home_assistant_effect_allowlist == (
         "light.dimmable_light_1:turn_off",
+    )
+    assert (
+        RuntimeSettings.from_environment().home_assistant_effect_principal_sha256_allowlist
+        == (principal_sha256,)
     )
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
@@ -169,6 +177,18 @@ def test_runtime_requires_a_strict_effect_allowlist(
         monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", invalid)
         with pytest.raises(RuntimeError, match="EFFECT_ALLOWLIST is invalid"):
             RuntimeSettings.from_environment()
+
+    monkeypatch.setenv(
+        "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST", "light.dimmable_light_1:turn_off"
+    )
+    monkeypatch.delenv(
+        "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", raising=False
+    )
+    with pytest.raises(RuntimeError, match="PRINCIPAL_SHA256_ALLOWLIST is required"):
+        RuntimeSettings.from_environment()
+    monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", "z" * 64)
+    with pytest.raises(RuntimeError, match="PRINCIPAL_SHA256_ALLOWLIST is invalid"):
+        RuntimeSettings.from_environment()
 
 
 def test_runtime_requires_custom_identity_pack_and_trust_together(
