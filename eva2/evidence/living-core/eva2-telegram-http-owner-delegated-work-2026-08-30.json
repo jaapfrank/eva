@@ -1,0 +1,47 @@
+{
+  "contract": "EvaTelegramHttpOwnerDelegatedWorkReceipt/v1",
+  "observedAt": "2026-08-30T10:44:43+02:00",
+  "status": "tested",
+  "source": {
+    "baseCommit": "c0fd9cd",
+    "testPath": "tests/postgres/test_delegated_work_store.py",
+    "testSha256": "7c1bd1b87174f6da18c8c44393fd56ab97a1873df6d8ba1cd101deaa2d25ab2f"
+  },
+  "runtime": {
+    "coreImage": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "postgresImage": "postgres@sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "postgresVersion": "16.13",
+    "databaseStorage": "tmpfs",
+    "publishedPorts": 0,
+    "testContainersRemaining": 0,
+    "testNetworksRemaining": 0
+  },
+  "telegram": {
+    "adapter": "TelegramBotApiAdapter",
+    "ingressStore": "PostgresTelegramIngressStore",
+    "provider": "local HTTP Bot API contract server",
+    "firstPollOffset": 0,
+    "secondPollOffset": 4,
+    "updatesAccepted": 3,
+    "repliesAccepted": 3,
+    "duplicateRepliesAfterReplay": 0,
+    "normalCoreFallbackCalls": 0
+  },
+  "delegatedWork": {
+    "admissions": 1,
+    "statusObservedWaiting": 1,
+    "terminalState": "stopped",
+    "modelCalls": 0
+  },
+  "verification": {
+    "disposablePostgresHttpIntegrationTestsPassed": 1,
+    "ruff": "passed"
+  },
+  "nonClaims": [
+    "No real Telegram bot, account, token, identifier, or message was used.",
+    "No internet route or published test port existed.",
+    "No delegated model call was started in this stop-before-call proof.",
+    "A human Telegram trial still requires a newly issued, non-shared test token."
+  ],
+  "conclusion": "The real Telegram HTTP adapter and durable PostgreSQL ingress ledger admitted, reported, delivered, stopped, and replayed one owner-bound delegated task without duplicate replies."
+}

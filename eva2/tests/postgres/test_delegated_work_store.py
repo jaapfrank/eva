@@ -23,6 +23,7 @@ import pytest
 import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
+from eva.adapters.connectors.telegram import TelegramBotApiAdapter
 from eva.adapters.postgres.current_catalog import metadata
 from eva.adapters.postgres.delegated_work import (
     DelegatedWorkConflict,
@@ -32,6 +33,7 @@ from eva.adapters.postgres.delegated_work import (
 )
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.adapters.postgres.scope import set_local_scope
+from eva.adapters.postgres.telegram_ingress import PostgresTelegramIngressStore
 from eva.adapters.subagents.tool_free_child import (
     OUTPUT_SCHEMA_SHA256,
     ClosedModelRegistry,
@@ -1295,6 +1297,138 @@ def test_private_telegram_owner_starts_follows_and_stops_postgres_work(
     )
     assert len(board.cards) == 1
     assert board.cards[0].column == "done"
+
+
+def test_bot_api_and_ingress_ledger_replay_owner_delegation_exactly_once(
+    delegated_engine: Engine,
+) -> None:
+    label = "telegram-http-owner-control"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    delegated_store = _store(delegated_engine, scope)
+    now = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
+    commands = DelegatedWorkConversationCommands(
+        delegated_store,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        episode_id=episode,
+        generation=1,
+        clock=lambda: now,
+    )
+    commands_text = (
+        "Laat een onderzoeker de onderhoudsstatus samenvatten",
+        "Hoe staat mijn onderzoek?",
+        "Stop mijn onderzoek",
+    )
+    updates = [
+        {
+            "message": {
+                "chat": {"id": 101},
+                "date": int(now.timestamp()),
+                "from": {"id": 101},
+                "message_id": 100 + update_id,
+                "text": text,
+            },
+            "update_id": update_id,
+        }
+        for update_id, text in enumerate(commands_text, start=1)
+    ]
+    received: list[tuple[str, dict[str, object]]] = []
+    sent: list[dict[str, object]] = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self) -> None:  # noqa: N802
+            length = int(self.headers["Content-Length"])
+            payload = json.loads(self.rfile.read(length))
+            received.append((self.path, payload))
+            if self.path.endswith("/getUpdates"):
+                offset = payload["offset"]
+                response = {
+                    "ok": True,
+                    "result": [item for item in updates if item["update_id"] >= offset],
+                }
+            elif self.path.endswith("/sendMessage"):
+                sent.append(payload)
+                response = {
+                    "ok": True,
+                    "result": {"message_id": 9000 + len(sent)},
+                }
+            else:
+                response = {"ok": False}
+            encoded = json.dumps(response).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            self.wfile.write(encoded)
+
+        def log_message(self, _format: str, *_args: object) -> None:
+            return
+
+    class Core:
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, principal_id, audience))
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        ingress_store = PostgresTelegramIngressStore(
+            delegated_engine,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+        worker = TelegramIngressWorker(  # type: ignore[arg-type]
+            TelegramBotApiAdapter(
+                bot_token="123456:synthetic-owner-test",
+                api_base_url=f"http://127.0.0.1:{server.server_port}",
+                timeout_seconds=2,
+            ),
+            Core(),
+            ingress_store,
+            TelegramPrincipalBindings(
+                (
+                    TelegramPrincipalBinding(
+                        101,
+                        str(owner),
+                        ("101",),
+                        str(binding),
+                    ),
+                )
+            ),
+            delegated_work_commands=commands,
+            tenant_id=str(scope.tenant_id),
+            installation_id=str(scope.installation_id),
+        )
+
+        assert worker.run_once() == "processed"
+        assert ingress_store.next_offset() == 4
+        assert len(sent) == 3
+        assert "ingepland" in str(sent[0]["text"])
+        assert "1 wachtend" in str(sent[1]["text"])
+        assert "Gestopt voordat" in str(sent[2]["text"])
+        assert worker.run_once() == "idle"
+        assert len(sent) == 3
+        assert [
+            payload["offset"]
+            for path, payload in received
+            if path.endswith("/getUpdates")
+        ] == [0, 4]
+    finally:
+        server.shutdown()
+        thread.join(timeout=5)
+        server.server_close()
+
+    work_id = delegated_store.latest_stoppable_work_id(
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    )
+    assert work_id is not None
+    assert delegated_store.load(
+        work_id,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    ).state == "stopped"
 
 
 def test_revocation_waits_for_atomic_call_start(

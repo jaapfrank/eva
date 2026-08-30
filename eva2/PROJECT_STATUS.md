@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 10:40 CEST
+Laatst bijgewerkt: 30 augustus 2026, 10:45 CEST
 
 ## Heel kort
 
@@ -41,6 +41,9 @@ bindingen bij het starten opnieuw in PostgreSQL.
 Een lokale Telegramprovider heeft daarna echt drie privécommando's door die
 route gestuurd: onderzoek starten, status vragen en stoppen. PostgreSQL hield
 één taak over als gestopt; de gewone gesprekscore en het model werden niet geraakt.
+Dezelfde proef liep vervolgens ook door Eva's echte Telegram-HTTP-adapter en
+het echte PostgreSQL-ingresslogboek. Een tweede poll begon bij offset 4, gaf
+`idle` terug en stuurde geen enkel antwoord dubbel.
 
 De echte Windows/WSL-rebootproef blijft bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
@@ -132,6 +135,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - De start-, status- en stopcommando's liepen samen door een verse PostgreSQL
   16.13-database en een lokale Telegramtestprovider. Drie antwoorden kwamen
   terug en de taak eindigde vóór modelstart duurzaam als gestopt.
+- Ook de echte Bot-API-adapter en het duurzame Telegram-ingresslogboek zijn nu
+  groen. Na de drie commando's begon replay bij offset 4 en bleef de teller van
+  uitgaande antwoorden exact drie.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -543,6 +549,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - [Subagentworker staat veilig uit in de beheerde opstelling](evidence/living-core/eva2-managed-inactive-delegated-worker-render-2026-08-30.json)
 - [Eigenaarsbediening compleet of volledig uit in de beheerde opstelling](evidence/living-core/eva2-managed-owner-delegated-work-wiring-2026-08-30.json)
 - [Lokale Telegramroute start, volgt en stopt één duurzame onderzoekstaak](evidence/living-core/eva2-local-telegram-owner-delegated-work-2026-08-30.json)
+- [Echte Telegram-HTTP-adapter en PostgreSQL-ledger zonder dubbele replay](evidence/living-core/eva2-telegram-http-owner-delegated-work-2026-08-30.json)
 - [Schone 0/0-subagentworker en echte SIGKILL zonder replay](evidence/living-core/eva2-clean-delegated-worker-processkill-2026-08-30.json)
 - [Echt duurzaam subagentresultaat blijft na verse workerstart zonder replay](evidence/living-core/eva2-real-durable-child-success-replay-2026-08-30.json)
 - [Echte duurzame subagent-time-out blijft na verse workerstart zonder replay](evidence/living-core/eva2-real-durable-child-timeout-replay-2026-08-30.json)
