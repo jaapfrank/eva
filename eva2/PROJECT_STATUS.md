@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 10:33 CEST
+Laatst bijgewerkt: 30 augustus 2026, 10:40 CEST
 
 ## Heel kort
 
@@ -38,6 +38,9 @@ Ook de eigenaarbediening is nu beheerd aangesloten. Image, persoon, vertrouwde
 Telegrambinding, actieve episode en generatie moeten allemaal compleet zijn;
 een halve of ongeldige set stopt al vóór Docker. De runtime controleert die
 bindingen bij het starten opnieuw in PostgreSQL.
+Een lokale Telegramprovider heeft daarna echt drie privécommando's door die
+route gestuurd: onderzoek starten, status vragen en stoppen. PostgreSQL hield
+één taak over als gestopt; de gewone gesprekscore en het model werden niet geraakt.
 
 De echte Windows/WSL-rebootproef blijft bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
@@ -126,6 +129,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - De Telegrambediening voor onderzoek staat standaard uit. Activeren vereist
   tegelijk de exacte workerimage en vier geldige eigenaarsvelden. Privéchat,
   persoon, accountbinding en actieve episode worden daarna opnieuw gecontroleerd.
+- De start-, status- en stopcommando's liepen samen door een verse PostgreSQL
+  16.13-database en een lokale Telegramtestprovider. Drie antwoorden kwamen
+  terug en de taak eindigde vóór modelstart duurzaam als gestopt.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -465,8 +471,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   voorkomen. Berichten gaan nu via Eva1's expliciete `/eva2`-router.
 - De echte begrensde subagentprovider, duurzame toelating, succesopslag, replay,
   schone workerimage, proceskill en standaard uitgeschakelde beheerde Compose-
-  route zijn groen. De eigenaarbediening is fail-closed bedraad; de echte
-  Telegramproef met een veilig token ontbreekt nog.
+  route zijn groen. De eigenaarbediening is fail-closed bedraad en lokaal met
+  PostgreSQL beproefd; alleen de echte Telegramproef met een veilig token ontbreekt nog.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
@@ -510,8 +516,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Waar ik nu aan werk
 
-1. De start-, volg- en stoproute eerst tegen een lokale Telegramtestprovider
-   beproeven en daarna pas met een nieuw, niet gedeeld testbottoken.
+1. De start-, volg- en stoproute pas met echt Telegram beproeven zodra er een
+   nieuw, niet in chat gedeeld testbottoken beschikbaar is.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. Een andere, vooraf begrensde DBBench-aanpak kiezen zonder opnieuw dezelfde
@@ -536,6 +542,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 - [Subagentworker staat veilig uit in de beheerde opstelling](evidence/living-core/eva2-managed-inactive-delegated-worker-render-2026-08-30.json)
 - [Eigenaarsbediening compleet of volledig uit in de beheerde opstelling](evidence/living-core/eva2-managed-owner-delegated-work-wiring-2026-08-30.json)
+- [Lokale Telegramroute start, volgt en stopt één duurzame onderzoekstaak](evidence/living-core/eva2-local-telegram-owner-delegated-work-2026-08-30.json)
 - [Schone 0/0-subagentworker en echte SIGKILL zonder replay](evidence/living-core/eva2-clean-delegated-worker-processkill-2026-08-30.json)
 - [Echt duurzaam subagentresultaat blijft na verse workerstart zonder replay](evidence/living-core/eva2-real-durable-child-success-replay-2026-08-30.json)
 - [Echte duurzame subagent-time-out blijft na verse workerstart zonder replay](evidence/living-core/eva2-real-durable-child-timeout-replay-2026-08-30.json)

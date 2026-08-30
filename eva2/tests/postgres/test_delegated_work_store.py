@@ -40,6 +40,13 @@ from eva.adapters.subagents.tool_free_child import (
     ToolFreeChildProfile,
 )
 from eva.application.conversation import ConversationTurn
+from eva.application.telegram_ingress import (
+    TelegramInboundMessage,
+    TelegramIngressJob,
+    TelegramIngressWorker,
+    TelegramPrincipalBinding,
+    TelegramPrincipalBindings,
+)
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 from eva.bootstrap.delegated_work_provider import (
     build_unadmitted_delegated_work_spec,
@@ -1164,6 +1171,130 @@ def test_owner_chat_spawns_reports_and_stops_durable_postgres_work(
         release=_release(stored.spec),
         now=datetime(2026, 8, 26, 12, 0, 2, tzinfo=UTC),
     ) is None
+
+
+def test_private_telegram_owner_starts_follows_and_stops_postgres_work(
+    delegated_engine: Engine,
+) -> None:
+    label = "telegram-owner-control"
+    scope, episode, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = _store(delegated_engine, scope)
+    now = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
+    commands = DelegatedWorkConversationCommands(
+        store,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        episode_id=episode,
+        generation=1,
+        clock=lambda: now,
+    )
+    messages = (
+        TelegramInboundMessage(
+            1,
+            "101",
+            101,
+            101,
+            now,
+            "Laat een onderzoeker de onderhoudsstatus samenvatten",
+        ),
+        TelegramInboundMessage(2, "101", 102, 101, now, "Hoe staat mijn onderzoek?"),
+        TelegramInboundMessage(3, "101", 103, 101, now, "Stop mijn onderzoek"),
+    )
+    delivered: list[str] = []
+
+    class Provider:
+        def poll(self, *, offset: int):  # type: ignore[no-untyped-def]
+            assert offset == 0
+            return messages
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            delivered.append(text)
+            return f"telegram:{message.chat_id}:receipt:{message.update_id}"
+
+    class Core:
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, principal_id, audience))
+
+    class IngressStore:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, message, *, reason):  # type: ignore[no-untyped-def]
+            raise AssertionError((message, reason))
+
+        def admit(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            assert principal_id == str(owner)
+            return TelegramIngressJob(message, principal_id, "ingress_admitted", 1)
+
+        def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message,
+                job.principal_id,
+                "reply_prepared",
+                2,
+                reply,
+            )
+
+        def fail_processing(self, job, error, *, now):  # type: ignore[no-untyped-def]
+            raise AssertionError((job, error, now))
+
+        def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message,
+                job.principal_id,
+                "delivery_claimed",
+                3,
+                job.reply,
+            )
+
+        def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
+            assert receipt.endswith(str(job.message.update_id))
+
+        def mark_delivery_ambiguous(self, job, error, *, now):  # type: ignore[no-untyped-def]
+            raise AssertionError((job, error, now))
+
+    worker = TelegramIngressWorker(  # type: ignore[arg-type]
+        Provider(),
+        Core(),
+        IngressStore(),
+        TelegramPrincipalBindings(
+            (
+                TelegramPrincipalBinding(
+                    101,
+                    str(owner),
+                    ("101",),
+                    str(binding),
+                ),
+            )
+        ),
+        delegated_work_commands=commands,
+        tenant_id=str(scope.tenant_id),
+        installation_id=str(scope.installation_id),
+    )
+
+    assert worker.run_once() == "processed"
+    assert len(delivered) == 3
+    assert "ingepland" in delivered[0]
+    assert "1 wachtend" in delivered[1]
+    assert "Gestopt voordat" in delivered[2]
+    work_id = store.latest_stoppable_work_id(
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    )
+    assert work_id is not None
+    assert store.load(
+        work_id,
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+    ).state == "stopped"
+    board = store.workboard(
+        owner_principal_id=owner,
+        principal_binding_id=binding,
+        now=now,
+    )
+    assert len(board.cards) == 1
+    assert board.cards[0].column == "done"
 
 
 def test_revocation_waits_for_atomic_call_start(
