@@ -19,6 +19,7 @@ DOCKER = "/usr/bin/docker"
 _CONTAINER = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$")
 _EFFECT = re.compile(r"^(?:light|switch)\.[a-z0-9_]+:turn_(?:on|off)$")
 _DIGEST = re.compile(r"^sha256:[0-9a-f]{64}$")
+_IMAGE_REFERENCE = re.compile(r"^[^\s@]+@sha256:[0-9a-f]{64}$")
 _MANAGED_ENVIRONMENT = re.compile(
     r"^/var/lib/eva2/managed-b-slot[34]/candidate\.env$"
 )
@@ -26,6 +27,7 @@ _POLICY_KEYS = (
     "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST",
     "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST",
 )
+_CORE_IMAGE_KEY = "EVA_LIVING_CORE_IMAGE"
 _MAX_ENVIRONMENT_BYTES = 64 * 1024
 
 
@@ -117,13 +119,41 @@ def _policy(container: str, runner: Runner) -> tuple[str, str, str]:
     return image, allowlist, principals
 
 
-def _updated_environment(raw: bytes, allowlist: str, principals: str) -> bytes:
+def _source_image_reference(image: str, runner: Runner) -> str:
+    try:
+        inspected = json.loads(runner((DOCKER, "image", "inspect", image)))
+        references = inspected[0]["RepoDigests"]
+    except (IndexError, KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise HomeEffectPolicyError("source image reference is unavailable") from error
+    matching = sorted(
+        {
+            reference
+            for reference in references
+            if isinstance(reference, str)
+            and _IMAGE_REFERENCE.fullmatch(reference) is not None
+            and reference.rsplit("@", 1)[1] == image
+        }
+    )
+    if len(matching) != 1:
+        raise HomeEffectPolicyError("source image reference is not unique and exact")
+    return matching[0]
+
+
+def _updated_environment(
+    raw: bytes,
+    allowlist: str,
+    principals: str,
+    *,
+    image_reference: str | None = None,
+) -> bytes:
     try:
         lines = raw.decode("utf-8").splitlines()
     except UnicodeDecodeError as error:
         raise HomeEffectPolicyError("managed environment is not UTF-8") from error
     replacements = dict(zip(_POLICY_KEYS, (allowlist, principals), strict=True))
-    counts = {key: 0 for key in _POLICY_KEYS}
+    if image_reference is not None:
+        replacements[_CORE_IMAGE_KEY] = image_reference
+    counts = {key: 0 for key in replacements}
     result: list[str] = []
     for line in lines:
         key = line.split("=", 1)[0] if "=" in line else ""
@@ -134,6 +164,8 @@ def _updated_environment(raw: bytes, allowlist: str, principals: str) -> bytes:
             result.append(line)
     if counts[_POLICY_KEYS[0]] != 1 or counts[_POLICY_KEYS[1]] not in {0, 1}:
         raise HomeEffectPolicyError("managed environment policy keys differ")
+    if image_reference is not None and counts[_CORE_IMAGE_KEY] != 1:
+        raise HomeEffectPolicyError("managed environment core image key differs")
     if counts[_POLICY_KEYS[1]] == 0:
         result.append(f"{_POLICY_KEYS[1]}={principals}")
     return ("\n".join(result) + "\n").encode("utf-8")
@@ -166,11 +198,17 @@ def persist_home_effect_policy(
     environment_path: Path,
     source_container: str,
     *,
+    promote_source_image: bool = False,
     runner: Runner = _run,
 ) -> dict[str, object]:
     before, metadata = _private_environment(environment_path)
     image, allowlist, principals = _policy(source_container, runner)
-    after = _updated_environment(before, allowlist, principals)
+    image_reference = (
+        _source_image_reference(image, runner) if promote_source_image else None
+    )
+    after = _updated_environment(
+        before, allowlist, principals, image_reference=image_reference
+    )
     _atomic_write(environment_path, after, metadata)
     return {
         "allowlistSha256": _sha256(allowlist.encode()),
@@ -180,6 +218,7 @@ def persist_home_effect_policy(
         "effectRuleCount": len(allowlist.split(",")),
         "principalHashCount": len(principals.split(",")),
         "sourceImage": image,
+        "sourceImagePromoted": image_reference is not None,
         "status": "persisted",
     }
 
@@ -188,6 +227,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--environment", type=Path, required=True)
     parser.add_argument("--source-container", required=True)
+    parser.add_argument("--promote-source-image", action="store_true")
     arguments = parser.parse_args(argv)
     if _MANAGED_ENVIRONMENT.fullmatch(str(arguments.environment)) is None:
         print(
@@ -199,7 +239,9 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     try:
         receipt = persist_home_effect_policy(
-            arguments.environment, arguments.source_container
+            arguments.environment,
+            arguments.source_container,
+            promote_source_image=arguments.promote_source_image,
         )
     except HomeEffectPolicyError as error:
         print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))

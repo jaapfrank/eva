@@ -14,6 +14,7 @@ from tools.persist_home_effect_policy import (
 
 
 IMAGE = "sha256:" + "a" * 64
+IMAGE_REFERENCE = "eva2/test-core@" + IMAGE
 
 
 @pytest.fixture
@@ -29,6 +30,8 @@ def _runner(
     health: str = "healthy",
 ):
     def run(_arguments: tuple[str, ...]) -> bytes:
+        if _arguments[1:3] == ("image", "inspect"):
+            return json.dumps([{"RepoDigests": [IMAGE_REFERENCE]}]).encode()
         return json.dumps(
             [
                 {
@@ -76,6 +79,50 @@ def test_persists_policy_atomically_without_returning_policy_values(
     assert "light.hal" not in json.dumps(receipt)
     assert "b" * 64 not in json.dumps(receipt)
     assert path.stat().st_mode & 0o777 == 0o600
+
+
+def test_can_atomically_promote_the_exact_healthy_source_image(
+    private_tmp_path: Path,
+) -> None:
+    path = _environment(private_tmp_path / "candidate.env")
+    with path.open("a") as environment:
+        environment.write("EVA_LIVING_CORE_IMAGE=eva2/old@sha256:" + "c" * 64 + "\n")
+
+    receipt = persist_home_effect_policy(
+        path,
+        "eva2-candidate",
+        promote_source_image=True,
+        runner=_runner(),
+    )
+
+    assert f"EVA_LIVING_CORE_IMAGE={IMAGE_REFERENCE}\n" in path.read_text()
+    assert receipt["sourceImage"] == IMAGE
+    assert receipt["sourceImagePromoted"] is True
+
+
+def test_image_promotion_rejects_an_ambiguous_digest_reference(
+    private_tmp_path: Path,
+) -> None:
+    path = _environment(private_tmp_path / "candidate.env")
+    with path.open("a") as environment:
+        environment.write("EVA_LIVING_CORE_IMAGE=eva2/old@sha256:" + "c" * 64 + "\n")
+
+    base_runner = _runner()
+
+    def ambiguous_runner(arguments: tuple[str, ...]) -> bytes:
+        if arguments[1:3] == ("image", "inspect"):
+            return json.dumps(
+                [{"RepoDigests": [IMAGE_REFERENCE, "eva2/other@" + IMAGE]}]
+            ).encode()
+        return base_runner(arguments)
+
+    with pytest.raises(HomeEffectPolicyError, match="not unique"):
+        persist_home_effect_policy(
+            path,
+            "eva2-candidate",
+            promote_source_image=True,
+            runner=ambiguous_runner,
+        )
 
 
 @pytest.mark.parametrize(
