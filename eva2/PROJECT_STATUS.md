@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 05:38 CEST
+Laatst bijgewerkt: 30 augustus 2026, 06:10 CEST
 
 ## Heel kort
 
@@ -369,6 +369,10 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   operator-tools. De vijf versleutel/open/tamper/no-overwrite-tests, CLI-smoke
   en samen 43 releasechecks zijn groen. Bron en test zijn nu als release-inputs
   gepind.
+- Eva heeft nu zelf één echte AgentBench-DBBench-developmentcase uitgevoerd.
+  Zij deed twee echte SQL-pogingen in de tijdelijke MySQL-database. De officiële
+  ingebouwde vergelijking gaf eerlijk score 0 en `task limit reached`. Dit
+  bewijst de hele uitvoerketen, maar nog niet dat Eva goed scoort.
 
 ## Wat nog niet klaar is
 
@@ -408,19 +412,22 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
-- Officiële AgentBench-, GAIA- en OSWorld-scores zijn nog niet uitgevoerd.
+- De eerste echte AgentBench-developmentcase is uitgevoerd maar scoorde 0.
+  Een officiële AgentBench-run en GAIA- en OSWorld-scores ontbreken nog.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+1. De fout beantwoorde DBBench-case onderzoeken en daarna meer begrensde
+   developmentcases draaien zonder het antwoordlabel aan Eva te geven.
+2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
-2. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
+3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
    zichtbare maximale staart blijven bewaken; V07-voice apart sluiten.
-3. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
+4. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei
    bewaken.
-4. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
+5. De begrensde huisbediening stap voor stap uitbreiden zonder de aparte
    controle en herstartveiligheid kwijt te raken.
 
 ## Belangrijk verschil
@@ -434,6 +441,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)
 - [59 persoonsgebonden lampen live, natuurlijke verduidelijking en replay](evidence/living-core/eva2-broad-light-control-live-2026-08-30.json)
 - [Exacte persoonsgebonden release-image live, herstart/replay en A/B](evidence/living-core/eva2-home-principal-release-image-live-2026-08-30.json)

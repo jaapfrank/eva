@@ -35,7 +35,9 @@ def _environment(monkeypatch: pytest.MonkeyPatch, endpoint: str) -> None:
 
 @contextmanager
 def _core(
-    *, evidence_memory_ids: list[str] | None = None
+    *,
+    answer: str = 'browser_navigate({"url":"https://example.test"})',
+    evidence_memory_ids: list[str] | None = None,
 ) -> Iterator[tuple[str, list[dict[str, object]]]]:
     received: list[dict[str, object]] = []
 
@@ -46,7 +48,6 @@ def _core(
         def do_POST(self) -> None:  # noqa: N802
             size = int(self.headers["Content-Length"])
             received.append(json.loads(self.rfile.read(size)))
-            answer = "browser_navigate({\"url\":\"https://example.test\"})"
             body = json.dumps(
                 {
                     "contract": "EvaInternalGroundedReply/v1",
@@ -120,6 +121,109 @@ def test_client_reserves_a_hard_turn_budget_before_calling_eva(
             client.inference(HISTORY)
 
     assert len(received) == 2
+
+
+def test_returns_one_closed_agentrl_dbbench_tool_message(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    tools = adapter._DBBENCH_TOOLS
+    messages = [
+        {"role": "system", "content": "Use the supplied database tools."},
+        {"role": "user", "content": "Return the number of rows."},
+    ]
+    answer = '{"name":"execute_sql","arguments":{"query":"SELECT COUNT(*) FROM t"}}'
+    with _core(answer=answer) as (endpoint, received):
+        _environment(monkeypatch, endpoint)
+        result = adapter.EvaAgentBenchClient(timeout_seconds=10).inference_message(
+            messages, tools
+        )
+
+    assert result["role"] == "assistant"
+    assert result["content"] is None
+    tool_call = result["tool_calls"][0]
+    assert tool_call["type"] == "function"
+    assert tool_call["function"] == {
+        "name": "execute_sql",
+        "arguments": '{"query":"SELECT COUNT(*) FROM t"}',
+    }
+    wrapped_history = json.loads(received[0]["text"].split("\n", 1)[1])
+    assert '"database_transcript"' in wrapped_history[0]["content"]
+    assert '"execute_sql"' in wrapped_history[0]["content"]
+
+
+@pytest.mark.parametrize(
+    "answer,error",
+    [
+        ('```json\n{"name":"execute_sql","arguments":{"query":"SELECT 1"}}\n```', "not exact JSON"),
+        ('{"name":"drop_database","arguments":{}}', "unsealed DBBench tool"),
+        ('{"name":"execute_sql","arguments":{"query":"SELECT 1","extra":true}}', "SQL arguments are invalid"),
+    ],
+)
+def test_rejects_nonexact_or_unsealed_dbbench_tool_answers(
+    monkeypatch: pytest.MonkeyPatch, answer: str, error: str
+) -> None:
+    with _core(answer=answer) as (endpoint, _received):
+        _environment(monkeypatch, endpoint)
+        with pytest.raises(adapter.AgentBenchEvaError, match=error):
+            adapter.EvaAgentBenchClient(timeout_seconds=10).inference_message(
+                [{"role": "user", "content": "Do the task."}],
+                adapter._DBBENCH_TOOLS,
+            )
+
+
+def test_structured_and_legacy_calls_share_the_same_reserved_budget(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    answer = '{"name":"commit_final_answer","arguments":{"answers":["one"]}}'
+    with _core(answer=answer) as (endpoint, received):
+        _environment(monkeypatch, endpoint)
+        client = adapter.EvaAgentBenchClient(timeout_seconds=10)
+        client.inference_message(
+            [{"role": "user", "content": "Finish."}], adapter._DBBENCH_TOOLS
+        )
+        client.inference_message(
+            [{"role": "user", "content": "Finish."}], adapter._DBBENCH_TOOLS
+        )
+        with pytest.raises(adapter.AgentBenchEvaError, match="turn budget is exhausted"):
+            client.inference(HISTORY)
+
+    assert len(received) == 2
+
+
+def test_neutralizes_prior_tool_messages_before_calling_eva(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    answer = '{"name":"commit_final_answer","arguments":{"answers":["done"]}}'
+    messages = [
+        {"role": "system", "content": "Use the database."},
+        {"role": "user", "content": "Find the value."},
+        {
+            "role": "assistant",
+            "content": None,
+            "tool_calls": [
+                {
+                    "id": "call_one",
+                    "type": "function",
+                    "function": {
+                        "name": "execute_sql",
+                        "arguments": '{"query":"SELECT 1"}',
+                    },
+                }
+            ],
+        },
+        {"role": "tool", "tool_call_id": "call_one", "content": "[[1]]"},
+    ]
+    with _core(answer=answer) as (endpoint, received):
+        _environment(monkeypatch, endpoint)
+        adapter.EvaAgentBenchClient(timeout_seconds=10).inference_message(
+            messages, adapter._DBBENCH_TOOLS
+        )
+
+    wrapped_history = json.loads(received[0]["text"].split("\n", 1)[1])
+    model_prompt = wrapped_history[0]["content"]
+    assert '"kind":"database_operation"' in model_prompt
+    assert '"kind":"database_result"' in model_prompt
+    assert '"tool_calls"' not in model_prompt
 
 
 @pytest.mark.parametrize("turn_limit", ["0", "9", "nope"])

@@ -1,0 +1,104 @@
+{
+  "artifact": "eva2-agentbench-dbbench-development-case-0",
+  "contract": "EvaAgentBenchDbBenchDevelopmentEvidence/v1",
+  "date": "2026-08-30",
+  "inputs": {
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "dbBenchConfigSha256": "d264dc80a21cdb19b25010dde60f51cbdbf075aa6299f6b8e716a8f01c9fbf47",
+    "dbBenchExternalAdapterSha256": "4ba16d2db40b08f6005e82219c7d28c9e5e537a86849cf9555bd1ea24b458331",
+    "evaAdapterSha256": "5fd63a9e49da84fed13012613e2edfe929334590125fd5ac80e778ccaee3262d",
+    "evaRunnerSha256": "3c9c31769d9133fd23b5a232b21ea14f17db1b7109808747b18970d7160caabc",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "workerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:b0f2ac1f20ecb9927a76dffc76f4ad93a590d20e359cf8fe0196f5d573c6e026"
+  },
+  "modelBoundary": {
+    "hiddenAnswerColumnsSentToEva": false,
+    "initialMessageCount": 2,
+    "initialMessageSha256": [
+      "c4a4d85d5e3362f42ff3c5a1b57653fd62fc5d236bde84d5adc5eb8a0a435b40",
+      "6096b1126a942aeba98be860d2955813feb0a11683e71c787d6ccac9b3b65fa5"
+    ],
+    "modelTurnLimit": 2,
+    "modelTurnsReservedBeforeIo": true,
+    "modelTurnsUsed": 2,
+    "observedWireKeysExcluded": [
+      "answer",
+      "evaluation",
+      "label"
+    ],
+    "toolSchemas": [
+      "execute_sql",
+      "commit_final_answer"
+    ]
+  },
+  "observed": {
+    "caseIndex": 0,
+    "environmentMessageCountPerTurn": [
+      1,
+      1
+    ],
+    "finish": true,
+    "officialBuiltInComparisonReached": true,
+    "operations": [
+      "execute_sql",
+      "execute_sql"
+    ],
+    "reward": 0,
+    "score": 0,
+    "status": "task limit reached"
+  },
+  "preRunFindings": [
+    "The historical AgentBench TaskClient used AgentOutput.content while the retained AgentRL worker requires structured AgentOutput.messages.",
+    "The current AgentRL HTTP protocol binds the session through the Session_id header and may omit unchanged tool schemas after start_sample.",
+    "Two development attempts that embedded raw prior tool-call JSON reached the first SQL operation but received HTTP 503 on the second Eva turn. A neutral, information-preserving database transcript completed; this observation does not by itself prove the provider-side cause."
+  ],
+  "rawTrajectory": {
+    "bytes": 5539,
+    "mode": "0600",
+    "path": "evidence/living-core/agentbench-dbbench-eva-development-case-0-rerun-2026-08-30.raw.json",
+    "sha256": "0556bc6d6f909bdaf3594f32e6a427f2090ce9f32a8b1a037140358ebf88d851"
+  },
+  "security": {
+    "controller": {
+      "memoryBytes": 268435456,
+      "nonRootUidGid": "65532:65532",
+      "readOnlyRootFilesystem": true
+    },
+    "database": {
+      "hostPorts": 0,
+      "memoryBytes": 1073741824,
+      "persistentVolumes": 0,
+      "readOnlyRootFilesystem": true,
+      "storage": "bounded tmpfs"
+    },
+    "network": {
+      "containers": 3,
+      "internal": true,
+      "publishedPorts": 0
+    },
+    "temporaryStackRemovedAfterRun": true,
+    "worker": {
+      "dockerSocket": false,
+      "hostBinds": 0,
+      "memoryBytes": 1073741824,
+      "nonRootUidGid": "65532:65532",
+      "readOnlyRootFilesystem": true
+    }
+  },
+  "status": "tested",
+  "verification": {
+    "adapterAndRunnerTests": "23 passed",
+    "builtInEvaluatorSourceContainsDbResultProcessorCompareResults": true,
+    "liveEvaReadyAfterCleanup": true,
+    "ruff": "passed"
+  },
+  "nonClaims": [
+    "This is not an official AgentBench score because the external-MySQL environment differs from AgentBench's official Docker driver.",
+    "A score of zero is recorded as a real failed development case, not renamed as success.",
+    "One case does not establish Eva's benchmark quality or superiority over OpenClaw, Hermes or Agent Zero.",
+    "No leaderboard submission was made."
+  ]
+}

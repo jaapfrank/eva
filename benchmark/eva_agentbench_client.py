@@ -33,6 +33,45 @@ MAX_RESPONSE_BYTES = 256 * 1024
 _RUN_ID = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
 _LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
 _MAX_TURNS = 8
+_DBBENCH_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "execute_sql",
+            "description": "Executes a given SQL statement on the database and returns the result.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The SQL query to be executed.",
+                    }
+                },
+                "required": ["query"],
+                "additionalProperties": False,
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "commit_final_answer",
+            "description": "Commits the final answer after all operations are completed.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "answers": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "The list of final answers to commit.",
+                    }
+                },
+                "required": ["answers"],
+                "additionalProperties": False,
+            },
+        },
+    },
+]
 
 
 class AgentBenchEvaError(ValueError):
@@ -194,6 +233,163 @@ def answer_for_history(history: object, *, timeout_seconds: float = 120.0) -> st
     return answer
 
 
+def dbbench_tool_message(
+    messages: object,
+    tools: object,
+    *,
+    timeout_seconds: float = 120.0,
+) -> dict[str, object]:
+    """Return one closed OpenAI-style tool message for upstream DBBench."""
+
+    if (
+        not isinstance(messages, list)
+        or not 1 <= len(messages) <= MAX_HISTORY_MESSAGES
+        or any(
+            not isinstance(message, dict)
+            or message.get("role") not in {"system", "user", "assistant", "tool"}
+            for message in messages
+        )
+    ):
+        raise AgentBenchEvaError("AgentRL DBBench messages are invalid")
+    if tools != _DBBENCH_TOOLS:
+        raise AgentBenchEvaError("AgentRL DBBench tools differ from the sealed schemas")
+    neutral_transcript: list[dict[str, object]] = []
+    for message in messages:
+        role = message["role"]
+        content = message.get("content")
+        if role in {"system", "user"}:
+            if not isinstance(content, str) or not content:
+                raise AgentBenchEvaError("AgentRL DBBench message content is invalid")
+            neutral_transcript.append(
+                {
+                    "kind": "task_instruction" if role == "system" else "task_question",
+                    "text": content,
+                }
+            )
+        elif role == "assistant":
+            calls = message.get("tool_calls")
+            if content not in (None, "") or not isinstance(calls, list) or len(calls) != 1:
+                raise AgentBenchEvaError("AgentRL DBBench assistant message is invalid")
+            call = calls[0]
+            function = call.get("function") if isinstance(call, dict) else None
+            if (
+                not isinstance(function, dict)
+                or set(function) != {"arguments", "name"}
+                or function.get("name") not in {"execute_sql", "commit_final_answer"}
+                or not isinstance(function.get("arguments"), str)
+            ):
+                raise AgentBenchEvaError("AgentRL DBBench operation is invalid")
+            try:
+                operation_arguments = json.loads(function["arguments"])
+            except json.JSONDecodeError as error:
+                raise AgentBenchEvaError(
+                    "AgentRL DBBench operation arguments are not JSON"
+                ) from error
+            neutral_transcript.append(
+                {
+                    "arguments": operation_arguments,
+                    "kind": "database_operation",
+                    "name": function["name"],
+                }
+            )
+        else:
+            if not isinstance(content, str):
+                raise AgentBenchEvaError("AgentRL DBBench result is invalid")
+            neutral_transcript.append(
+                {"kind": "database_result", "result": content}
+            )
+    try:
+        canonical = json.dumps(
+            {"messages": messages, "tools": tools},
+            ensure_ascii=False,
+            allow_nan=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    except (TypeError, ValueError) as error:
+        raise AgentBenchEvaError("AgentRL DBBench transcript is not JSON") from error
+    neutral = json.dumps(
+        {"database_transcript": neutral_transcript},
+        ensure_ascii=False,
+        allow_nan=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    if max(len(canonical.encode("utf-8")), len(neutral.encode("utf-8"))) > MAX_MESSAGE_BYTES:
+        raise AgentBenchEvaError("AgentRL DBBench transcript is too large")
+
+    answer = answer_for_history(
+        [
+            {
+                "role": "user",
+                "content": (
+                    "Act as the database agent for this DBBench development case. "
+                    "Return plain JSON text only; never invoke an Eva function or memory. "
+                    "Choose exactly one next database operation using either "
+                    '{"name":"execute_sql","arguments":{"query":"SQL"}} or '
+                    '{"name":"commit_final_answer","arguments":{"answers":["answer"]}}. '
+                    "Use only the neutral transcript below.\n"
+                    f"{neutral}"
+                ),
+            }
+        ],
+        timeout_seconds=timeout_seconds,
+    )
+    try:
+        requested = json.loads(answer)
+    except json.JSONDecodeError as error:
+        raise AgentBenchEvaError("Eva DBBench tool answer is not exact JSON") from error
+    if not isinstance(requested, dict) or set(requested) != {"arguments", "name"}:
+        raise AgentBenchEvaError("Eva DBBench tool answer shape is invalid")
+    name = requested["name"]
+    arguments = requested["arguments"]
+    if name == "execute_sql":
+        if (
+            not isinstance(arguments, dict)
+            or set(arguments) != {"query"}
+            or not isinstance(arguments["query"], str)
+            or not arguments["query"].strip()
+            or len(arguments["query"].encode("utf-8")) > 64 * 1024
+        ):
+            raise AgentBenchEvaError("Eva DBBench SQL arguments are invalid")
+    elif name == "commit_final_answer":
+        if (
+            not isinstance(arguments, dict)
+            or set(arguments) != {"answers"}
+            or not isinstance(arguments["answers"], list)
+            or not 1 <= len(arguments["answers"]) <= 64
+            or any(
+                not isinstance(item, str)
+                or not item
+                or len(item.encode("utf-8")) > 16 * 1024
+                for item in arguments["answers"]
+            )
+        ):
+            raise AgentBenchEvaError("Eva DBBench final-answer arguments are invalid")
+    else:
+        raise AgentBenchEvaError("Eva selected an unsealed DBBench tool")
+
+    argument_json = json.dumps(
+        arguments,
+        ensure_ascii=False,
+        allow_nan=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    call_seed = f"{canonical}\n{answer}".encode("utf-8")
+    return {
+        "role": "assistant",
+        "content": None,
+        "tool_calls": [
+            {
+                "id": f"call_{hashlib.sha256(call_seed).hexdigest()[:24]}",
+                "type": "function",
+                "function": {"name": name, "arguments": argument_json},
+            }
+        ],
+    }
+
+
 class EvaAgentBenchClient:
     """Duck-typed upstream AgentBench client, configured only by environment."""
 
@@ -204,14 +400,32 @@ class EvaAgentBenchClient:
         self._turns_used = 0
         self._turn_lock = Lock()
 
-    def inference(self, history: list[dict[str, str]]) -> str:
+    def _reserve_turn(self) -> None:
         with self._turn_lock:
             if self._turns_used >= self._turn_limit:
                 raise AgentBenchEvaError("AgentBench Eva turn budget is exhausted")
             # Reserve before network I/O: an interrupted request must not turn
             # an explicit model budget into an unbounded retry loop.
             self._turns_used += 1
+
+    def inference(self, history: list[dict[str, str]]) -> str:
+        self._reserve_turn()
         return answer_for_history(history, timeout_seconds=self.timeout_seconds)
 
+    def inference_message(
+        self, messages: object, tools: object
+    ) -> dict[str, object]:
+        self._reserve_turn()
+        return dbbench_tool_message(
+            messages,
+            tools,
+            timeout_seconds=self.timeout_seconds,
+        )
 
-__all__ = ["AgentBenchEvaError", "EvaAgentBenchClient", "answer_for_history"]
+
+__all__ = [
+    "AgentBenchEvaError",
+    "EvaAgentBenchClient",
+    "answer_for_history",
+    "dbbench_tool_message",
+]
