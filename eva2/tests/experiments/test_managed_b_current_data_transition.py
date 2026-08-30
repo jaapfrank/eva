@@ -66,6 +66,8 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert '"/var/lib/eva2/managed-b-slot4/secrets/home-assistant-token"' in source
     assert '"/var/lib/eva2/managed-b-slot4/secrets/dashboard-token"' in source
     assert 'Path("/var/lib/eva2/managed-b-slot4/candidate.env")' in source
+    assert '"EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"' in source
+    assert '"EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST"' in source
     assert '"EvaTelegramPrincipalBindings/v2"' in source
     assert "--format=custom" in source
     assert '"--exit-on-error"' in source

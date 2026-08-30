@@ -777,6 +777,12 @@ def main(
                 gid=65532,
             )
             home_assistant_url = _current_environment_value("EVA_HOME_ASSISTANT_URL")
+            home_effect_allowlist = _current_environment_value(
+                "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST"
+            )
+            home_effect_principals = _current_environment_value(
+                "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST"
+            )
             if not re.fullmatch(r"https?://[^\s]{1,2048}", home_assistant_url):
                 raise ProbeError("current Home Assistant URL is invalid")
         else:
@@ -787,6 +793,8 @@ def main(
                 gid=65532,
             )
             home_assistant_url = "http://127.0.0.1:9"
+            home_effect_allowlist = ""
+            home_effect_principals = ""
         if clone_current_route:
             _copy_private(
                 CURRENT_ROUTE_DASHBOARD_TOKEN,
@@ -913,9 +921,8 @@ def main(
             "EVA_HINDSIGHT_DATABASE_DSN_FILE_HOST": memory_dsn_file.as_posix(),
             "EVA_HOME_ASSISTANT_URL": home_assistant_url,
             "EVA_HOME_ASSISTANT_EFFECTS_ENABLED": "true" if retain_slot else "false",
-            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": (
-                "light.dimmable_light_1:turn_off" if retain_slot else ""
-            ),
+            "EVA_HOME_ASSISTANT_EFFECT_ALLOWLIST": home_effect_allowlist,
+            "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST": home_effect_principals,
             "EVA_HOME_ASSISTANT_TOKEN_FILE_HOST": (
                 secrets_dir / "home-assistant-token"
             ).as_posix(),
