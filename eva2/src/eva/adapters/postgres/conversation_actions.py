@@ -2425,7 +2425,14 @@ class PostgresConversationActions:
                 if domain == "switch"
                 else self._home_assistant.resolve_light
             )
-            resolved = await resolver(arguments["target"])
+            try:
+                resolved = await resolver(arguments["target"])
+            except ValueError as error:
+                target_kind = "lamp" if domain == "light" else "schakelaar"
+                raise ConversationClarificationRequired(
+                    f"Welke {target_kind} bedoel je precies? "
+                    "Noem de naam zoals die in Home Assistant staat."
+                ) from error
             service = "turn_on" if arguments["state"] == "on" else "turn_off"
             if (
                 self._home_assistant_effect_allowlist is not None

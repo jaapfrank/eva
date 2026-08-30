@@ -113,6 +113,45 @@ def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> Non
         )
 
 
+def test_home_assistant_ambiguous_effect_requests_a_natural_clarification() -> None:
+    class HomeAssistant:
+        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
+            assert target == "lamp in de schuur"
+            raise ValueError("Home Assistant light target is unknown or ambiguous")
+
+    actions = PostgresConversationActions(
+        sa.create_engine("sqlite://"),
+        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
+        home_assistant_effects_enabled=True,
+        home_assistant_effect_allowlist=frozenset(
+            {("light.schuur", "turn_off")}
+        ),
+        home_assistant_effect_principal_sha256_allowlist=frozenset(
+            {hashlib.sha256(b"jaap").hexdigest()}
+        ),
+    )
+    with pytest.raises(
+        ConversationClarificationRequired,
+        match=r"Welke lamp bedoel je precies\?",
+    ):
+        actions.execute(
+            ConversationTurn.private(
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:ambiguous-light-effect",
+                "Zet de lamp in de schuur uit",
+                "2026-08-23T14:00:00Z",
+            ),
+            ConversationActionCall(
+                "call:ambiguous-light-effect",
+                "set_home_assistant_light",
+                {"state": "off", "target": "lamp in de schuur"},
+            ),
+        )
+
+
 def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> None:
     actions = PostgresConversationActions(
         sa.create_engine("sqlite://"),
