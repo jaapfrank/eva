@@ -1,0 +1,47 @@
+{
+  "contract": "Eva2HomeAssistantAutomationManagementLiveReceipt/v1",
+  "issuedAt": "2026-08-30T13:20:38+02:00",
+  "status": "create_readback_delete_verified",
+  "homeAssistant": {
+    "state": "RUNNING",
+    "version": "2026.8.1",
+    "officialSource": "https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/components/config/automation.py",
+    "automationConfigRoute": "/api/config/automation/config/{automation_id}",
+    "serverSideValidator": "async_validate_config_item"
+  },
+  "eva": {
+    "adapterSha256": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7",
+    "imageId": "sha256:25402e8ae3e5915d0a7dd519a9afd025c1c25a40081bd4d23c45efcf7411ab4d",
+    "imageSourceCommit": "dc80308df5c6759ed0b5cfb17153fa1eae616641",
+    "routePort": 44711
+  },
+  "liveAcceptance": {
+    "automationIdSha256": "08c8cf61fa44a7e10300345ffdceb631af323778de279caba16a19ba8eb30317",
+    "configSha256": "7431cbd224bdd35aed546db360c284d2591a4f67be263019fc42852561c84056",
+    "created": true,
+    "readback": "verified",
+    "deleted": true,
+    "triggerFired": false,
+    "physicalDeviceChanges": 0
+  },
+  "focusedVerification": {
+    "automationConnectorAndLedgerCasesPassed": 8,
+    "automationModelCasesPassed": 4,
+    "ruff": "passed"
+  },
+  "updateInventory": {
+    "readOnly": true,
+    "entityCount": 31,
+    "updateAvailableCount": 5,
+    "upToDateCount": 25,
+    "unavailableCount": 1,
+    "installed": 0
+  },
+  "nonClaims": [
+    "This receipt proves creation of a new bounded automation, not arbitrary editing of every existing automation.",
+    "No existing automation was changed or deleted.",
+    "No Home Assistant, integration, firmware, add-on or operating-system update was installed.",
+    "Update installation still requires an exact target, compatibility and backup decision, explicit authority, and independent post-update health readback.",
+    "No Tuya or LocalTuya configuration was changed."
+  ]
+}

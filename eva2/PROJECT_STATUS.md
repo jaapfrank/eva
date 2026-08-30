@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 13:12 CEST
+Laatst bijgewerkt: 30 augustus 2026, 13:21 CEST
 
 Betekenis:
 
@@ -67,9 +67,17 @@ Betekenis:
   verliesloos gekopieerd; Eva1 bleef gezond.
 - 🟡 Een al gestarte huisactie kan veilig als onzeker worden bewaard, maar een
   gewone Telegramknop om zo'n lopende actie te stoppen is nog niet aangesloten.
-- ❌ Nieuwe automatiseringen maken, integraties wijzigen en Home Assistant
-  bijwerken blijft een aparte beheerroute. Eva moet daar eerst een voorstel en
-  controle van maken; pas na toestemming mag zij schrijven.
+- ✅ Eva kan een nieuwe begrensde automatisering maken. Home Assistant
+  valideert haar zelf, Eva leest de opgeslagen configuratie exact terug en kan
+  alleen diezelfde hashgebonden automatisering terugdraaien.
+- ✅ De huidige live image heeft één onbereikbare testautomatisering werkelijk
+  gemaakt, gecontroleerd en direct weer verwijderd. Er is niets fysieks
+  bediend en er bleef geen testautomatisering achter.
+- 🟡 Bestaande automatiseringen vrij aanpassen blijft apart: bij een bestaand
+  ID met andere inhoud weigert Eva nu te overschrijven.
+- 🟡 Eva ziet 31 Home Assistant-update-entiteiten; 5 bieden nu een update aan.
+  Er is niets geïnstalleerd. Installeren vereist per doel een back-upbesluit,
+  toestemming en een gezondheidscontrole achteraf.
 - 🟡 Voor Tuya zijn 7 LocalTuya-kandidaten, 2 betere Matter-routes en 3 opnieuw
   te bouwen scènes gevonden. Dit is een migratie per apparaat, geen tekstuele
   zoek-en-vervangactie.
@@ -162,8 +170,8 @@ Betekenis:
    beproeven.
 3. Tuya veilig per apparaat naar LocalTuya of Matter omzetten, met één proef en
    terugrolcontrole voordat de rest volgt.
-4. Een aparte voorstel- en goedkeuringsroute voor automatiseringen en updates
-   maken.
+4. Veilig wijzigen van bestaande automatiseringen en doelgerichte updates met
+   voorstel, back-upbesluit, toestemming en terugrolcontrole afmaken.
 5. Echte voice met microfoon en speaker afmaken en daarna de zeven dagen lange
    praktijktest uitvoeren.
 
