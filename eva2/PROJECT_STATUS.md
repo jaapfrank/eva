@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 09:04 CEST
+Laatst bijgewerkt: 30 augustus 2026, 09:18 CEST
 
 ## Heel kort
 
@@ -15,8 +15,8 @@ De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
-staat op 74.810 productregels,
-10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
+staat op 74.894 productregels,
+10 directe dependencies, 23 imagelagen en nul hoge of kritieke scanbevindingen.
 De vorige Eva2-route op poort `44720` draait gezond en blijft de directe
 terugval.
 
@@ -488,6 +488,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Actuele PC01-poort: 74.894 regels, 10 dependencies, 23 lagen en 0/0 scan](evidence/product/performance-complexity-pc01-managed-current-2026-08-30.json)
 - [Nieuwste kern in automatisch herstartend slot 3, echte modelbeurt, veilige omschakeling en bewapende rebootcontrole](evidence/living-core/eva2-current-core-managed-restart-route-2026-08-30.json)
 - [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
 - [Antwoordblinde audit: gevraagde jaarwaarde ontbreekt in alle 37 aangeboden rijen](evidence/living-core/agentbench-dbbench-case-0-answerblind-data-audit-2026-08-30.json)

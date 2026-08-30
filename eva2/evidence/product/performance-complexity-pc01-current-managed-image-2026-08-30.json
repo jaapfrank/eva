@@ -1,0 +1,55 @@
+{
+  "contract": "EvaPerformanceComplexityPc01CurrentImageLiveReceipt/v1",
+  "issuedAt": "2026-08-30T09:17:42+02:00",
+  "status": "passed",
+  "build": {
+    "sourceCommit": "349e399cc77ceb3ff64e495ef031614dfe06f85d",
+    "network": "none",
+    "sourceEvidence": "evidence/living-core/eva2-broad-light-control-live-2026-08-30.json",
+    "sourceEvidenceSha256": "83f928cf3ce38a0e8801011b3ae8be4d2aa741c942fb195379177b80f192e19b"
+  },
+  "image": {
+    "id": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "platformManifestDigest": "sha256:80606567266b1cbbdc94cd5f8e7163899b6e6d17140903c2de18630f1e739036",
+    "configDigest": "sha256:a1533c808d2f428c6c4de7f71ab041531ef96251b7757daf79cf4d2caa62ec56",
+    "compressedLayerBytes": 75086463,
+    "layerCount": 23,
+    "sizeBytes": 75098210,
+    "platform": "linux/amd64"
+  },
+  "runtime": {
+    "activeContainer": "eva2-managed-b-slot3-core",
+    "activePort": 44710,
+    "restartPolicy": "unless-stopped",
+    "restartCount": 0,
+    "readOnlyRootFilesystem": true,
+    "runsAs": "65532:65532",
+    "capabilitiesDropped": ["ALL"],
+    "ready": true,
+    "modelProbeExact": true
+  },
+  "scan": {
+    "critical": 0,
+    "high": 0,
+    "network": "none",
+    "evidenceSha256": "83f928cf3ce38a0e8801011b3ae8be4d2aa741c942fb195379177b80f192e19b"
+  },
+  "cutover": {
+    "status": "switched",
+    "managedRouteEvidence": "evidence/living-core/eva2-current-core-managed-restart-route-2026-08-30.json",
+    "managedRouteEvidenceSha256": "7f5288905a88f56864314b03924893f24b39a01bae6082c205b4a49a14def00c",
+    "directRollbackPort": 44720,
+    "eva1RestartCount": 0
+  },
+  "gate": {
+    "implementationCommit": "0ef21e8e36235f42f09e7a982ba93bbd77acdb47",
+    "checkerSha256": "684bebfc50b5ac6b116896200a945d7b90b859e56461d54d546f510ad5c3ad49",
+    "checkerTestSha256": "8bd78bed47fcd83e62ff6efd4880ac7c184db53d849eec09571be956eb78639a",
+    "checkerTestsPassed": 8,
+    "ociIndexPlatformSelection": "exactly_one_linux_amd64_manifest"
+  },
+  "nonclaims": [
+    "This rebinds PC01 to the currently active managed core image; it does not complete voice, browser, installer, benchmark, or seven-day acceptance.",
+    "No Windows or WSL reboot was initiated by this run."
+  ]
+}

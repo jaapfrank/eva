@@ -1,0 +1,47 @@
+{
+  "contract": "EvaPerformanceComplexityPc01Receipt/v1",
+  "recordedAt": "2026-08-30T09:17:42+02:00",
+  "status": "passed",
+  "gitCommit": "0ef21e8e36235f42f09e7a982ba93bbd77acdb47",
+  "authoritySha256": "86c833c8896833221113c0e0af0b21a4f71573d3c4a495bbda4d1aa964933aaf",
+  "source": {
+    "productPhysicalLines": 74894,
+    "maximumProductPhysicalLines": 75000,
+    "remainingMarginPhysicalLines": 106,
+    "productFileCount": 211,
+    "productManifestSha256": "7ab09d56b9f2bfee07d27ba49b786e73ba18a7f5fd66c461395c7bf626b7869d",
+    "livingCorePhysicalLines": 74301,
+    "livingCoreFileCount": 204,
+    "livingCoreManifestSha256": "dc50d41df0bd4037835fa6167d44aad23b5d5e40949a9e638ff74cff5ebd192a",
+    "unclassifiedSourcePathCount": 0
+  },
+  "dependencies": {
+    "count": 10,
+    "maximum": 12,
+    "sourceSha256": "7c42baf3ad4bb9cbdffb7afa748c22e5681aa2bc0520c08f50981e1dbe5fca39"
+  },
+  "imageBaseline": {
+    "activeContainer": "eva2-managed-b-slot3-core",
+    "activeContainerRunning": true,
+    "manifestDigest": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "configDigest": "sha256:a1533c808d2f428c6c4de7f71ab041531ef96251b7757daf79cf4d2caa62ec56",
+    "compressedLayerBytes": 75086463,
+    "layerCount": 23,
+    "platform": "linux/amd64",
+    "scanCritical": 0,
+    "scanHigh": 0
+  },
+  "verification": {
+    "checkerExitCode": 0,
+    "violations": [],
+    "checkerTestsPassed": 8,
+    "consolidationContractAndApplicationTestsPassed": 53,
+    "consolidationDisposablePostgresTestsPassed": 34,
+    "environmentConsolidationTestsPassed": 32,
+    "ruff": "passed"
+  },
+  "nonClaims": [
+    "The hard 75000-line gate is green but only 106 physical lines remain; further product growth still requires consolidation.",
+    "This PC01 receipt does not close voice, browser, installer, benchmarks, reboot, or seven-day acceptance."
+  ]
+}
