@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "b7582a90ec5f1e63725c1047c1e9d2009bba32f071e11d515e445e083b445e7c"
+    "ea420f1ad49da791e011deb9f8763fb096841aaeeb8ecf72b39cb254942d7a37"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "2af7fa98b55ce07fbcca5e423e363690ad234d26b38366d96fdc77020df4a5a1"
+    "9bd1fcb01e2ce00b61c6e393ce3eda5cb7834aed40d3ab4c24ab77f2aa5cacd7"
 )
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
