@@ -1,15 +1,15 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 08:53 CEST
+Laatst bijgewerkt: 30 augustus 2026, 09:04 CEST
 
 ## Heel kort
 
 Eva2 werkt echt naast Eva1. Alleen een bericht met `/eva2` gaat naar Eva2.
 
-De nieuwe DBOS-loze Eva2 staat nu op poort `44720` achter de gewone
-`/eva2`-route. Zij praat via de bestaande Codex-koppeling, heeft haar eigen
-persoonlijkheid, bewaart gesprekken in PostgreSQL en gebruikt Hindsight voor
-langetermijngeheugen.
+De nieuwe DBOS-loze Eva2 draait nu in het beheerde, automatisch herstartende
+slot 3 op poort `44710` achter de gewone `/eva2`-route. Zij praat via de
+bestaande Codex-koppeling, heeft haar eigen persoonlijkheid, bewaart gesprekken
+in PostgreSQL en gebruikt Hindsight voor langetermijngeheugen.
 
 De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
@@ -17,10 +17,10 @@ testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
 staat op 74.810 productregels,
 10 directe dependencies, 31 imagelagen en nul hoge of kritieke scanbevindingen.
-De vorige Eva2-route op poort `44719` draait gezond en blijft de directe
+De vorige Eva2-route op poort `44720` draait gezond en blijft de directe
 terugval.
 
-De echte Windows/WSL-rebootproef is opnieuw bewapend op deze beheerde route.
+De echte Windows/WSL-rebootproef blijft bewapend op deze beheerde route.
 De eerste marker kwam pas na ongeveer 94 seconden in Hindsight; met de begrensde
 wachttijd van 180 seconden werd de nieuwe marker wel aantoonbaar gevonden.
 
@@ -29,15 +29,15 @@ tekststukjes binnen en was exact gelijk aan het eindantwoord. Een huisvraag
 koos eerst alleen de veilige leesactie en streamde pas daarna het antwoord.
 Daarbij zijn twee echte fouten in de Codex-toolplanner gevonden en hersteld.
 
-De nieuwe live canary gebruikt geen aparte plannerbeurt meer. Het model krijgt
+De eerdere losse live canary gebruikt geen aparte plannerbeurt meer. Het model krijgt
 één vaste, uitgestelde gereedschapscatalogus en haalt alleen het passende
 gereedschap op wanneer dat nodig is. Een gewone echte beurt antwoordde exact
 `werkend`; een echte alleen-lezen huisvraag antwoordde terecht dat de spotjes
 overkapping uit staan. De image is zonder bouwnetwerk gemaakt en scant op 0
 kritisch en 0 hoog. Na omschakeling antwoordde Eva1's echte `/eva2`-router
 exact `live`; na een herstart wist Eva2 nog exact `koraalvink`. De vorige
-route op poort `44710` bleef daarbij gezond. Na de nieuwste omschakeling is
-poort `44712` de directe rollback.
+route op poort `44710` bleef daarbij gezond. Deze tussenstappen zijn inmiddels
+opgenomen in het beheerde slot dat bovenaan staat.
 
 Eva2 is nog geen volledige vervanger voor Eva1. Brede huisbediening, volledige
 voice, algemene browserbediening, een consumenteninstallatie en de lange
@@ -54,8 +54,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 ## Wat werkt al
 
 - Eva1 blijft de gewone standaardservice.
-- `/eva2` gaat nu naar de exact verzegelde persoonsgebonden Eva2-image op poort
-  `44720`; poort `44719` blijft gezond als directe terugval.
+- `/eva2` gaat nu naar de exact verzegelde persoonsgebonden Eva2-image in het
+  automatisch herstartende slot op poort `44710`; poort `44720` blijft gezond
+  als directe terugval.
 - Eva2 gebruikt alleen een korte, vernieuwbare toegang uit Eva1's Codex-login.
   Zij krijgt de volledige login en refresh-token niet.
 - Eva2 heeft een warme, jonge, nieuwsgierige, grappige en eigenwijze identiteit.
@@ -103,9 +104,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   verzegeld: 250 release-inputs en 139 tests sluiten op één schone commit.
 - Die exacte commit is daarna zonder bouwnetwerk tot een image gemaakt en
   netwerkloos gescand: 0 kritisch en 0 hoog. Een echte Codex-beurt en
-  gesprekgeheugen na herstart waren groen. De A/B-route staat nu op poort
-  `44720`; poort `44719` blijft direct beschikbaar voor terugrol. De echte
-  Eva1-router antwoordde na deze omschakeling exact `POLICYLIVE`.
+  gesprekgeheugen na herstart waren groen. Deze image draait nu in het beheerde
+  slot op poort `44710`; poort `44720` blijft direct beschikbaar voor terugrol.
+  De echte Eva1-router antwoordde vóór deze beheerde promotie exact `POLICYLIVE`.
 - Een aparte kandidaat kan een toolvrij antwoord veilig stukje voor stukje
   doorgeven. De 32 stukjes vormden exact hetzelfde uiteindelijke antwoord.
 - Een echte Home Assistant-vraag hield tekst dicht tijdens de toolkeuze en gaf
@@ -487,6 +488,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [Nieuwste kern in automatisch herstartend slot 3, echte modelbeurt, veilige omschakeling en bewapende rebootcontrole](evidence/living-core/eva2-current-core-managed-restart-route-2026-08-30.json)
 - [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
 - [Antwoordblinde audit: gevraagde jaarwaarde ontbreekt in alle 37 aangeboden rijen](evidence/living-core/agentbench-dbbench-case-0-answerblind-data-audit-2026-08-30.json)
 - [DBBench-case 1 correct met één SQL-query en twee toolvrije modelcalls](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-1-2026-08-30.json)

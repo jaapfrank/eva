@@ -1,0 +1,70 @@
+{
+  "contract": "Eva2CurrentCoreManagedRestartRouteReceipt/v1",
+  "recordedAt": "2026-08-30T09:03:51+02:00",
+  "status": "passed_live_with_direct_rollback",
+  "source": {
+    "commit": "c36c3dbb13e2f927a2bc46853c0eaf3b3785ccd8",
+    "operatorSha256": "67b44d31861af67c8cd77885b06f17158f98db35001223a857b821e1ad49f634",
+    "operatorTestSha256": "6c649fffb5580bc29c6be1557b6fbbd2065265418e77ac789edbca1e3e1c9be1",
+    "composeSha256": "13cd2086b31f832364da44e41869f922d6091774887619e16d5acec3434f2216"
+  },
+  "managedEnvironment": {
+    "slot": 3,
+    "environmentSha256": "3ffbd3bfbe501a6d69c07a1bda06b32d1f28ca4f2a6c9f17edc466b67d762c77",
+    "sourceImagePromoted": true,
+    "effectRuleCount": 118,
+    "principalHashCount": 1
+  },
+  "core": {
+    "container": "eva2-managed-b-slot3-core",
+    "containerId": "bac931ed9853262d0b32c3a7bd1b576ff1e8e08917e51115e79ccb77e4126788",
+    "image": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "restartPolicy": "unless-stopped",
+    "restartCount": 0,
+    "runtimeStatus": "running",
+    "healthStatus": "healthy",
+    "readyz": {
+      "database": "ready",
+      "memoryProjection": "ready",
+      "modelProvider": "ready"
+    },
+    "modelProbe": {
+      "requestedExactReply": true,
+      "replyMatched": true,
+      "replySha256": "5c42aca47c47a88081e1acac7d7944262cf6cf626a7c8774ac9f3cee83193691"
+    }
+  },
+  "cutover": {
+    "status": "switched",
+    "sourcePort": 44720,
+    "targetPort": 44710,
+    "targetReady": true,
+    "eva1HttpRouteCount": 5,
+    "eva1RestartCount": 0,
+    "routeDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "directRollbackContainer": "eva2-ha-policy-rendered-probe-9460d76",
+    "directRollbackPort": 44720,
+    "directRollbackHealthy": true
+  },
+  "rebootProof": {
+    "armContract": "Eva2ManagedBRebootArm/v1",
+    "stateMode": "0600",
+    "stateOwner": "root:root",
+    "requiredRestart": "windows_host_reboot",
+    "prebootVerificationExitCode": 1,
+    "prebootResult": "required_windows_host_reboot_not_observed",
+    "postbootReceiptAbsent": true
+  },
+  "verification": {
+    "targetedTestsPassed": 24,
+    "ruff": "passed",
+    "sourceImageScanEvidence": "eva2-broad-light-control-live-2026-08-30.json",
+    "sourceImageScanCritical": 0,
+    "sourceImageScanHigh": 0
+  },
+  "nonClaims": [
+    "No Windows, WSL, Linux kernel, Docker daemon, or host reboot was initiated by this run.",
+    "The postboot proof remains open until the owner performs the already required external Windows restart.",
+    "The retained container on port 44720 is a direct live rollback, not an automatically restarting managed service."
+  ]
+}
