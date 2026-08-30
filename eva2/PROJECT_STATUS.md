@@ -455,10 +455,10 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Waar ik nu aan werk
 
-1. De nieuwe eindantwoordcontrole pas opnieuw beoordelen nadat veilige
-   getal-naar-tekstnormalisatie de twee aangetoonde uitvallers voorkomt. De
-   volgende toets gebruikt opnieuw uitsluitend vooraf gekozen, nog ongeziene
-   cases; de huidige kandidaat blijft afgewezen.
+1. Eerst privacyveilige foutsubtypen toevoegen zonder de afgewezen antwoordtekst
+   te bewaren. Pas na bewijs of het om getallen, lege waarden of een verkeerde
+   vorm gaat volgt een gerichte correctie. De volgende scoretoets gebruikt weer
+   vooraf gekozen, nog ongeziene cases; de huidige kandidaat blijft afgewezen.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de

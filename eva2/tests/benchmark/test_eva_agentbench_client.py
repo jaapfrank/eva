@@ -379,6 +379,44 @@ def test_rejects_nonexact_or_unsealed_dbbench_tool_answers(
             )
 
 
+@pytest.mark.parametrize(
+    "answer,error",
+    [
+        ('{"name":"commit_final_answer","arguments":[]}', "shape is invalid"),
+        (
+            '{"name":"commit_final_answer","arguments":{"answers":"7"}}',
+            "list is invalid",
+        ),
+        (
+            '{"name":"commit_final_answer","arguments":{"answers":[]}}',
+            "count is invalid",
+        ),
+        (
+            '{"name":"commit_final_answer","arguments":{"answers":[7]}}',
+            "numeric item is invalid",
+        ),
+        (
+            '{"name":"commit_final_answer","arguments":{"answers":[true]}}',
+            "item type is invalid",
+        ),
+        (
+            '{"name":"commit_final_answer","arguments":{"answers":[""]}}',
+            "empty item is invalid",
+        ),
+    ],
+)
+def test_reports_private_final_answer_failure_subtypes(
+    monkeypatch: pytest.MonkeyPatch, answer: str, error: str
+) -> None:
+    with _core(answer=answer) as (endpoint, _received):
+        _environment(monkeypatch, endpoint)
+        with pytest.raises(adapter.AgentBenchEvaError, match=error):
+            adapter.EvaAgentBenchClient(timeout_seconds=10).inference_message(
+                [{"role": "user", "content": "Do the task."}],
+                adapter._DBBENCH_TOOLS,
+            )
+
+
 def test_structured_and_legacy_calls_share_the_same_reserved_budget(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

@@ -379,19 +379,27 @@ def _decode_dbbench_operation(answer: str) -> dict[str, object]:
         ):
             raise AgentBenchEvaError("Eva DBBench SQL arguments are invalid")
     elif name == "commit_final_answer":
-        if (
-            not isinstance(arguments, dict)
-            or set(arguments) != {"answers"}
-            or not isinstance(arguments["answers"], list)
-            or not 1 <= len(arguments["answers"]) <= 64
-            or any(
-                not isinstance(item, str)
-                or not item
-                or len(item.encode("utf-8")) > 16 * 1024
-                for item in arguments["answers"]
-            )
-        ):
-            raise AgentBenchEvaError("Eva DBBench final-answer arguments are invalid")
+        if not isinstance(arguments, dict) or set(arguments) != {"answers"}:
+            raise AgentBenchEvaError("Eva DBBench final-answer shape is invalid")
+        answers = arguments["answers"]
+        if not isinstance(answers, list):
+            raise AgentBenchEvaError("Eva DBBench final-answer list is invalid")
+        if not 1 <= len(answers) <= 64:
+            raise AgentBenchEvaError("Eva DBBench final-answer count is invalid")
+        for item in answers:
+            if isinstance(item, bool) or not isinstance(item, str):
+                category = (
+                    "numeric item"
+                    if isinstance(item, (int, float)) and not isinstance(item, bool)
+                    else "item type"
+                )
+                raise AgentBenchEvaError(
+                    f"Eva DBBench final-answer {category} is invalid"
+                )
+            if not item:
+                raise AgentBenchEvaError("Eva DBBench final-answer empty item is invalid")
+            if len(item.encode("utf-8")) > 16 * 1024:
+                raise AgentBenchEvaError("Eva DBBench final-answer item is too large")
     else:
         raise AgentBenchEvaError("Eva selected an unsealed DBBench tool")
     return requested

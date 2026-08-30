@@ -1,0 +1,33 @@
+{
+  "contract": "EvaAgentBenchDbBenchReviewFailureSubtypeDiagnosticSelection/v1",
+  "selectedAt": "2026-08-30T08:19:23+02:00",
+  "caseIndex": 17,
+  "reason": "case 17 previously exhausted the call budget with generic final-answer validation failures",
+  "candidate": {
+    "repositoryCommitBeforeDiagnosticCheckpoint": "3b9481ea02244c29bbff8cbb0ee780e3a0eb0f52",
+    "toolFreeClientSha256": "5e9946656df7022d9280b3428b4e5def5fd39df78dc82d4038d350a34e5f1334",
+    "behaviorChange": "none; only privacy-safe validation categories were split",
+    "rejectedReplyBodiesStored": false,
+    "hardcodedAnswer": false
+  },
+  "allowedDiagnosticCategories": [
+    "shape",
+    "list",
+    "count",
+    "numeric_item",
+    "item_type",
+    "empty_item",
+    "item_too_large",
+    "non_json"
+  ],
+  "limits": {
+    "maximumModelCalls": 15,
+    "minimumSecondsBetweenModelCalls": 5,
+    "toolsExposedAtModelBoundary": 0
+  },
+  "nonClaims": [
+    "This selected rerun is diagnostic and cannot change the original case score or failure.",
+    "No hidden label, standard answer SQL or rejected reply body will be inspected.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}

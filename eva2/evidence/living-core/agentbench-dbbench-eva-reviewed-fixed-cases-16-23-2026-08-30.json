@@ -37,7 +37,8 @@
     "nonJsonReplies": 1,
     "invalidReplyShapes": 1,
     "turnBudgetExhaustions": 1,
-    "dominantCause": "the reviewer frequently returned numeric answer values while the sealed DBBench tool schema requires strings",
+    "dominantCause": "23 reviewer replies reached commit_final_answer but did not satisfy the sealed non-empty string-list schema",
+    "exactInvalidArgumentSubtype": "unknown because rejected reply bodies are intentionally not stored",
     "candidateAccepted": false,
     "reason": "perfect accuracy among completed cases does not compensate for two unscored boundary failures and materially higher model-call use"
   },
