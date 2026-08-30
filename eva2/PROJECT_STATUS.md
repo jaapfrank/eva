@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 18:27 CEST
+Laatst bijgewerkt: 30 augustus 2026, 18:37 CEST
 
 ## Zo lees je dit bord
 
@@ -62,12 +62,18 @@ bestanden en nieuwe MCP-tools kunnen kiezen, begrenzen, uitvoeren en controleren
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | ❌ Nog niet: `application/advanced_tasks.py`, de gesprekspersistence en runtime bevatten nog expliciete Home Assistant-/Tuya-paden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
 Eva leest de beschikbare documentatie, kiest een onderhouden provider of
 officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
+
+De huidige code voldoet nog niet volledig aan die grens. De controle vond 203
+Home Assistant-/Tuya-verwijzingen in `application/advanced_tasks.py` alleen al;
+ook gesprekspersistence en runtime bevatten providerspecifieke bedrading. Dat
+is oude productcode die naar een verwisselbare tooladapter moet verdwijnen.
 
 ## Zelfstandig werk en subagents
 
@@ -158,7 +164,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Verwisselbare externe tools | MCP en de officiële API/SDK van de gekozen provider; Home Assistant is alleen de eerste live proefprovider | 🟡 Eén provider live; algemene keuze, uitvoering en controle over meerdere toolsoorten nog niet bewezen |
+| Verwisselbare externe tools | MCP en de officiële API/SDK van de gekozen provider; Home Assistant is alleen de eerste live proefprovider | ❌ Eén provider werkt, maar providerspecifieke Home Assistant-/Tuya-code zit nog in applicatie, persistence en runtime en moet uit de kern |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -189,8 +195,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. Eén algemene toolroute afmaken en met verschillende providers beproeven;
-   Home Assistant, Tuya en updates zijn alleen testgevallen van die route.
+3. Home Assistant-/Tuya-logica uit applicatie, gesprekspersistence en runtime
+   halen; daarna dezelfde algemene toolroute met meerdere providers beproeven.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
