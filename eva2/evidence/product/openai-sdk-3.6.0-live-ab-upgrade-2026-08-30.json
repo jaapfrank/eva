@@ -1,0 +1,40 @@
+{
+  "contract": "Eva2OpenAISdkLiveUpgradeReceipt/v1",
+  "issuedAt": "2026-08-30T17:10:59+02:00",
+  "status": "live_candidate",
+  "sourceRoute": "http://127.0.0.1:44711",
+  "targetRoute": "http://127.0.0.1:44710",
+  "activeRoute": "http://127.0.0.1:44710",
+  "image": "eva2/sdk36-current-distroless@sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+  "candidateSourceCommit": "308c5e12b42e23894c76741b6d1ee6cc882d0920",
+  "openAiSdk": "3.6.0",
+  "build": {"lockedWheels": 38, "networkDuringImageBuild": false},
+  "scan": {"critical": 0, "high": 0},
+  "dataTransition": {
+    "operationalDumpSha256": "21beae897fa45aaa362c0ef0501c25b29560a91ef46c76bdd8c9d670aa3ef8c2",
+    "memoryDumpSha256": "2ec38fbada13069e44914f1bd3b2cdc21864a9af0241d34b9bada66600506f9b",
+    "candidateSchemaAppliedBeforeWriters": true
+  },
+  "liveChecks": {
+    "targetReadyHttp": 200,
+    "ownerDashboardHttp": 200,
+    "anonymousDashboardHttp": 401,
+    "eva1RoutesHttp": [200, 200, 200, 200, 200],
+    "realOwnerBindingUsed": true,
+    "ownerBindingIdentifierRecorded": false,
+    "preRestartReply": "opgeslagen",
+    "postRestartRecall": "upgradevos"
+  },
+  "restartRecovery": {
+    "maximumRetryCount": 1,
+    "retryOnlyOnHttp503": true,
+    "sameDurableMessageId": true,
+    "sameRequestBody": true
+  },
+  "rollback": {"previousSlotRetained": true, "fullReverseAndForwardCycleForThisCandidate": false},
+  "nonClaims": [
+    "This receipt does not prove superiority over OpenClaw, Hermes or Agent Zero.",
+    "The seven-day practice run is still open.",
+    "A complete reverse-and-forward A/B cycle for this exact candidate is still open."
+  ]
+}

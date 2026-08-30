@@ -24,7 +24,7 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex- en latencypariteit. De actuele volledig verzegelde commit is opnieuw uit 38 vaste wheels zonder bouwnetwerk gebouwd, scant 0/0 en doorstond de complete tijdelijke negen-dienstenopstelling; de A/B-voorcontrole is groen, omschakeling en terugrol blijven open | **SDK-kandidaat technisch groen; daarna A/B en Pydantic/toolloop verkleinen** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` draait nu op de echte `/eva2`-route. De verzegelde image is uit 38 vaste wheels zonder bouwnetwerk gebouwd, scant 0/0 en is met gekopieerde data en een vooraf uitgevoerde schemamigratie via A/B gepromoveerd. Jaaps echte binding, modelantwoord en geheugen na een coreherstart zijn groen | **SDK live; nu Pydantic de toolloop laten overnemen en dubbele transportcode verwijderen** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
@@ -87,9 +87,13 @@ herstart doorstond. Daardoor is dit een werkende upgradepoort en geen papieren
 afspraak. Dezelfde route is daarna opnieuw vanaf de volledig verzegelde actuele
 commit uitgevoerd. De minimale image bleef 0/0, gaf in de volledige tijdelijke
 negen-dienstengrafiek een exact echt modelantwoord en bleef na de gezamenlijke
-database-/Hindsight-/coreherstart klaar. Ook de alleen-lezen A/B-voorcontrole
-van poort `44711` naar `44710` is groen. Live A/B-promotie en terugrol blijven
-bewust apart.
+database-/Hindsight-/coreherstart klaar. De A/B-operator kopieerde daarna beide
+databases, voerde vóór de nieuwe writers de kandidaatmigratie uit en schakelde
+de echte `/eva2`-route van poort `44711` naar `44710`. Jaaps echte
+Telegrambinding antwoordde via de nieuwe SDK en herinnerde na een coreherstart
+exact hetzelfde testwoord. Het vorige slot en zijn databases zijn behouden.
+Een volledige terug→heen-proef met precies deze SDK-versie blijft nog een
+aparte gate; live promotie zelf is niet meer open.
 
 De Renovate-configuratie staat vanaf nu op de repositoryroot. Dat maakt haar
 vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de
@@ -114,6 +118,12 @@ de dependencycheck iedere nieuwe releasekandidaat rood, ook wanneer de Renovate-
 runner zelf stil zou zijn gevallen. Een nieuwe concurrentversie maakt bovendien
 de oude 22-categorievergelijking direct ongeldig totdat alle gehashte resultaten
 opnieuw aan die exacte tag en commit zijn gebonden.
+
+Op 30 augustus 2026 zijn alle elf gevolgde componentreleases en de gevolgde
+releases van OpenClaw, Hermes en Agent Zero rechtstreeks met GitHubs actuele
+releasegegevens vergeleken. Alle veertien tags kwamen overeen. Dat bewijst dat
+de vergelijking actueel is voorbereid; het bewijst nog niet dat Eva de drie
+concurrenten verslaat.
 
 ## Altijd voorop blijven
 
