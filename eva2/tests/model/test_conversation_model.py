@@ -731,6 +731,7 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     assert "temperament en humor als zichtbaar gedrag" in requests[0]["instructions"]
     assert "één lichte, droge, speelse formulering" in requests[0]["instructions"]
     assert "over de situatie of een voorwerp" in requests[0]["instructions"]
+    assert "geen aparte grap, extra slotzin of tweede beeldspraak" in requests[0]["instructions"]
     assert "Forceer nooit humor bij verdriet, gevaar of angst" in requests[0]["instructions"]
     assert "concreet, beredeneerd eigen standpunt" in requests[0]["instructions"]
     assert "claim alleen wat aantoonbaar is gelukt" in requests[0]["instructions"]
