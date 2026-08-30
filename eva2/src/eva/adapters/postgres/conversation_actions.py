@@ -8,12 +8,11 @@ from datetime import UTC, datetime, timedelta
 import hashlib
 import re
 import time
-from typing import Any, Callable, Protocol, cast
+from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
 
-from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.delivery import PostgresFanoutDeliveryStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.operational_timeline import (
@@ -40,17 +39,6 @@ from eva.application.durable_goals import (
     DurableGoalSpec,
     DurableGoalState,
     GoalWakeCondition,
-)
-from eva.application.advanced_tasks import (
-    AdvancedTaskPlan,
-    AdvancedTaskPackageApproval,
-    AdvancedTaskRepositoryApproval,
-    AdvancedTaskError,
-    HomeAssistantInventory,
-    HomeAssistantRepository,
-    TuyaToLocalTuyaPlanner,
-    require_current_package_preflight,
-    require_current_repository_preflight,
 )
 from eva.contracts.base import JsonValue
 from eva.contracts.canonical_json import canonical_json_bytes
@@ -98,13 +86,6 @@ from eva.application.repository_improvements import (
 
 _ACTION = "adopt_personal_interest"
 _ARGUMENT_KEYS = {"motivation", "next_exploration", "title"}
-_LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
-_LOCALTUYA_REPOSITORY_REGISTER_ARGUMENT_KEYS = {
-    "expected_version",
-    "repository_full_name",
-}
-_LOCALTUYA_PACKAGE_INSTALL_ACTION = "install_approved_localtuya_package"
-_LOCALTUYA_PACKAGE_INSTALL_ARGUMENT_KEYS = {"version"}
 _FANOUT_DELIVERY_ACTION = "deliver_test_message_fanout"
 _FANOUT_DELIVERY_ARGUMENT_KEYS = {"message", "recipients"}
 _DURABLE_GOAL_ACTION = "create_bounded_durable_goal"
@@ -187,40 +168,12 @@ def _turn_id(
     return prefix + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()[:32]
 
 
-class _HomeAssistantInventoryPort(Protocol):
-    async def inventory(
-        self, *, admitted_domains: tuple[str, ...] = ("localtuya", "tuya")
-    ) -> HomeAssistantInventory: ...
-
-
-class _HomeAssistantPackagePort(Protocol):
-    async def register_exact(
-        self,
-        approval: AdvancedTaskRepositoryApproval,
-        *,
-        now: datetime,
-        poll_interval_seconds: float = 0.5,
-        timeout_seconds: float = 20.0,
-    ) -> HomeAssistantRepository: ...
-
-    async def install_exact(
-        self,
-        approval: AdvancedTaskPackageApproval,
-        *,
-        now: datetime,
-        poll_interval_seconds: float = 0.5,
-        timeout_seconds: float = 15.0,
-    ) -> HomeAssistantRepository: ...
-
-
 class PostgresConversationActions:
     """Persist Eva's chosen interest before the final conversational claim."""
 
     def __init__(
         self,
         engine: sa.Engine,
-        home_assistant_admin: _HomeAssistantInventoryPort | None = None,
-        home_assistant_hacs: _HomeAssistantPackagePort | None = None,
         research: CurrentResearchPort | None = None,
         file_batch: TextBatchPort | None = None,
         validated_file_edit: ValidatedTextEditPort | None = None,
@@ -250,8 +203,6 @@ class PostgresConversationActions:
             for provider in external_tools
             for action_name in provider.action_names
         }
-        self._home_assistant_admin = home_assistant_admin
-        self._home_assistant_hacs = home_assistant_hacs
         self._research = research
         self._file_batch = file_batch
         self._validated_file_edit = validated_file_edit
@@ -271,13 +222,6 @@ class PostgresConversationActions:
         self._durable_goal_provider = durable_goal_provider
         self._durable_goal_recipients = durable_goal_recipients
 
-    def _advanced_task_store(self, turn: ConversationTurn) -> PostgresAdvancedTaskStore:
-        return PostgresAdvancedTaskStore(
-            self._engine,
-            tenant_id=turn.tenant_id,
-            installation_id=turn.installation_id,
-        )
-
     def _durable_goal_store(self, turn: ConversationTurn) -> PostgresDurableGoalStore:
         return PostgresDurableGoalStore(
             self._engine,
@@ -289,9 +233,6 @@ class PostgresConversationActions:
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
         actions.extend(self._external_tool_by_action)
-        if self._home_assistant_hacs is not None:
-            actions.append(_LOCALTUYA_REPOSITORY_REGISTER_ACTION)
-            actions.append(_LOCALTUYA_PACKAGE_INSTALL_ACTION)
         if self._research is not None:
             actions.append(_CURRENT_RESEARCH_ACTION)
         if self._file_batch is not None:
@@ -399,28 +340,6 @@ class PostgresConversationActions:
                 self._resume_research(turn, research_events)
                 research_events = timeline.events(self._research_thread_id(turn))
             return self._research_receipt(turn, research_events)
-        repository_events = timeline.events(self._localtuya_repository_thread_id(turn))
-        if repository_events:
-            if (
-                repository_events[-1].event_type
-                != "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED"
-            ):
-                self._resume_localtuya_repository(turn, repository_events)
-                repository_events = timeline.events(
-                    self._localtuya_repository_thread_id(turn)
-                )
-            return self._localtuya_repository_receipt(turn, repository_events)
-        package_events = timeline.events(self._localtuya_package_thread_id(turn))
-        if package_events:
-            if (
-                package_events[-1].event_type
-                != "ADVANCED_PACKAGE_CONVERSATION_VERIFIED"
-            ):
-                self._resume_localtuya_package(turn, package_events)
-                package_events = timeline.events(
-                    self._localtuya_package_thread_id(turn)
-                )
-            return self._localtuya_package_receipt(turn, package_events)
         events = timeline.events(self._intent_thread_id(turn))
         if not events:
             return None
@@ -541,22 +460,10 @@ class PostgresConversationActions:
             context.append(summary)
             if len(context) == 2:
                 break
-        if self._home_assistant_hacs is not None:
-            plan = self._advanced_task_store(turn).latest(
-                requested_by=turn.principal_id
-            )
-            if plan is not None:
-                repositories = ", ".join(
-                    f"{item.full_name} {item.available_version or 'onbekend'} "
-                    f"({'installed' if item.installed else 'niet geïnstalleerd'})"
-                    for item in plan.repositories
-                )
-                context.append(
-                    f"Actueel duurzaam Tuya→LocalTuya-plan {plan.plan_id}, SHA-256 "
-                    f"{plan.sha256}. Pakket: {repositories or 'geen gebonden pakket'}. "
-                    f"Blokkades: {', '.join(plan.blockers) or 'geen'}. Een pakketinstallatie "
-                    "migreert nog geen apparaat."
-                )
+        for provider in self._external_tools:
+            provider_context = getattr(provider, "active_context", None)
+            if provider_context is not None:
+                context.extend(provider_context(turn))
         if self._durable_goal_provider is not None:
             goals = self._durable_goal_store(turn).waiting(
                 observed_before=self._timestamp(turn), limit=32
@@ -635,10 +542,6 @@ class PostgresConversationActions:
             return self._execute_durable_goal_cancellation(turn, call)
         if call.name == _FANOUT_DELIVERY_ACTION:
             return self._execute_fanout(turn, call)
-        if call.name == _LOCALTUYA_REPOSITORY_REGISTER_ACTION:
-            return self._execute_localtuya_repository(turn, call)
-        if call.name == _LOCALTUYA_PACKAGE_INSTALL_ACTION:
-            return self._execute_localtuya_package(turn, call)
         if call.name != _ACTION:
             raise ConversationConflict(f"unsupported conversation action {call.name!r}")
         arguments = self._validated_arguments(call.arguments)
@@ -2372,377 +2275,6 @@ class PostgresConversationActions:
             },
         )
 
-    def _admit_localtuya_conversation(
-        self,
-        turn: ConversationTurn,
-        call: ConversationActionCall,
-        approval_sha256: str,
-        arguments: dict[str, str],
-        plan: AdvancedTaskPlan,
-        kind: str,
-        occurred_at: datetime,
-    ) -> tuple[TimelineEvent, ...]:
-        thread_id = (
-            self._localtuya_package_thread_id(turn)
-            if kind == "package"
-            else self._localtuya_repository_thread_id(turn)
-        )
-        phase = "package_install" if kind == "package" else "repository_registration"
-        data: dict[str, JsonValue] = {
-            "action_call_id": call.call_id,
-            "action_name": call.name,
-            "approval_sha256": approval_sha256,
-            "arguments": arguments,
-            "conversation_id": turn.conversation_id,
-            "plan_id": plan.plan_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        timeline = self._timeline(turn)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{thread_id}:admitted",
-                occurred_at=occurred_at,
-                data=data,
-                event_type=f"ADVANCED_{kind.upper()}_CONVERSATION_ADMITTED",
-                phase=f"{phase}_admitted",
-                status="waiting_for_proof",
-                operation_id=plan.operation_id,
-            )
-        except CheckpointConflict:
-            events = timeline.events(thread_id)
-            if not events or self._event_data(events[0]) != data:
-                raise ConversationConflict(
-                    f"LocalTuya {kind} request replay differs"
-                ) from None
-        return timeline.events(thread_id)
-
-    def _execute_localtuya_package(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        if self._home_assistant_hacs is None:
-            raise ConversationConflict("LocalTuya package action is unavailable")
-        arguments = self._validated_localtuya_package_arguments(call.arguments)
-        request_text = turn.text.casefold()
-        if (
-            "localtuya" not in request_text.replace(" ", "")
-            or not any(
-                word in request_text
-                for word in ("installeer", "installeren", "installatie goed")
-            )
-            or arguments["version"].casefold() not in request_text
-        ):
-            raise ConversationConflict(
-                "LocalTuya package installation requires an explicit versioned request"
-            )
-        store = self._advanced_task_store(turn)
-        plan = store.latest(requested_by=turn.principal_id)
-        if plan is None:
-            raise ConversationConflict("Maak eerst een actueel Tuya-migratieplan")
-        repository = next(
-            (
-                item
-                for item in plan.repositories
-                if item.domain == "localtuya"
-                and item.available_version == arguments["version"]
-            ),
-            None,
-        )
-        if repository is None:
-            raise ConversationConflict(
-                "De gevraagde LocalTuya-versie staat niet in het actuele plan"
-            )
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        approval = store.approve_package_install(
-            plan_id=plan.plan_id,
-            plan_sha256=plan.sha256,
-            inventory_sha256=plan.inventory_sha256,
-            repository_id=repository.repository_id,
-            version=arguments["version"],
-            approved_by=turn.principal_id,
-            approved_at=now,
-        )
-        thread_id = self._localtuya_package_thread_id(turn)
-        events = self._admit_localtuya_conversation(
-            turn, call, approval.sha256, arguments, plan, "package", now
-        )
-        self._resume_localtuya_package(turn, events)
-        return self._localtuya_package_receipt(
-            turn, self._timeline(turn).events(thread_id)
-        )
-
-    def _execute_localtuya_repository(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        if self._home_assistant_hacs is None or self._home_assistant_admin is None:
-            raise ConversationConflict("LocalTuya repository action is unavailable")
-        arguments = self._validated_localtuya_repository_arguments(call.arguments)
-        request_text = turn.text.casefold()
-        normalized_repository = arguments["repository_full_name"].casefold()
-        if (
-            normalized_repository not in request_text
-            or arguments["expected_version"].casefold() not in request_text
-            or "hacs" not in request_text
-            or not any(word in request_text for word in ("repository", "repo"))
-            or not any(
-                word in request_text for word in ("voeg", "toevoegen", "registreer")
-            )
-        ):
-            raise ConversationConflict(
-                "LocalTuya repository registration requires an explicit source and version"
-            )
-        store = self._advanced_task_store(turn)
-        plan = store.latest(requested_by=turn.principal_id)
-        if plan is None:
-            raise ConversationConflict("Maak eerst een actueel Tuya-migratieplan")
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        approval = store.approve_repository_registration(
-            plan_id=plan.plan_id,
-            plan_sha256=plan.sha256,
-            inventory_sha256=plan.inventory_sha256,
-            repository_full_name=arguments["repository_full_name"],
-            expected_version=arguments["expected_version"],
-            approved_by=turn.principal_id,
-            approved_at=now,
-        )
-        thread_id = self._localtuya_repository_thread_id(turn)
-        events = self._admit_localtuya_conversation(
-            turn, call, approval.sha256, arguments, plan, "repository", now
-        )
-        self._resume_localtuya_repository(turn, events)
-        return self._localtuya_repository_receipt(
-            turn, self._timeline(turn).events(thread_id)
-        )
-
-    def _resume_localtuya_repository(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> None:
-        if (
-            events
-            and events[-1].event_type == "ADVANCED_REPOSITORY_CONVERSATION_VERIFIED"
-        ):
-            return
-        store, approval, now = self._localtuya_resume_context(
-            turn, events, "repository"
-        )
-        approval = cast(AdvancedTaskRepositoryApproval, approval)
-        if not store.repository_registration_started(approval.plan_id):
-            if self._home_assistant_admin is None:
-                raise ConversationConflict(
-                    "LocalTuya repository preflight is unavailable"
-                )
-            inventory = asyncio.run(self._home_assistant_admin.inventory())
-            try:
-                require_current_repository_preflight(
-                    store.load(approval.plan_id), inventory
-                )
-            except AdvancedTaskError as error:
-                raise ConversationConflict(str(error)) from error
-        store.prepare_repository_registration(approval, occurred_at=now)
-        try:
-            repository = asyncio.run(
-                self._home_assistant_hacs.register_exact(approval, now=now)
-            )
-            disposition = store.record_repository_registered(
-                approval,
-                repository,
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            plan = store.load(approval.plan_id)
-            if self._home_assistant_admin is not None:
-                inventory = asyncio.run(self._home_assistant_admin.inventory())
-                refreshed = TuyaToLocalTuyaPlanner().build(
-                    inventory,
-                    operation_id=plan.operation_id,
-                    requested_by=plan.requested_by,
-                )
-                store.refresh(refreshed)
-                plan = store.load(approval.plan_id)
-        except Exception as error:
-            store.record_repository_failure(
-                approval,
-                error_text=f"{type(error).__name__}:{error}",
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            raise ConversationConflict(str(error)) from error
-        timeline = self._timeline(turn)
-        state = timeline.load(self._localtuya_repository_thread_id(turn))
-        result: dict[str, JsonValue] = {
-            "approval_sha256": approval.sha256,
-            "disposition": disposition,
-            "package_installed": repository.installed,
-            "plan": plan.to_payload(),
-            "repository_full_name": repository.full_name,
-            "repository_id": repository.repository_id,
-            "repository_sha256": repository.sha256,
-            "version": repository.available_version,
-        }
-        timeline.transition(
-            thread_id=self._localtuya_repository_thread_id(turn),
-            expected_revision=state.revision,
-            checkpoint_id=f"{self._localtuya_repository_thread_id(turn)}:verified",
-            phase="repository_registration_verified",
-            status="completed",
-            event_type="ADVANCED_REPOSITORY_CONVERSATION_VERIFIED",
-            occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            data=result,
-            operation_id=state.operation_id,
-        )
-
-    def _localtuya_resume_context(
-        self,
-        turn: ConversationTurn,
-        events: tuple[TimelineEvent, ...],
-        kind: str,
-    ) -> tuple[
-        PostgresAdvancedTaskStore,
-        AdvancedTaskPackageApproval | AdvancedTaskRepositoryApproval,
-        datetime,
-    ]:
-        if self._home_assistant_hacs is None or not events:
-            raise ConversationConflict(f"LocalTuya {kind} resume is unavailable")
-        admission = self._event_data(events[0])
-        plan_id = admission.get("plan_id")
-        approval_sha256 = admission.get("approval_sha256")
-        if not isinstance(plan_id, str) or not isinstance(approval_sha256, str):
-            raise ConversationConflict(f"LocalTuya {kind} resume is malformed")
-        store = self._advanced_task_store(turn)
-        approval = (
-            store.package_approval(plan_id=plan_id, approval_sha256=approval_sha256)
-            if kind == "package"
-            else store.repository_approval(
-                plan_id=plan_id, approval_sha256=approval_sha256
-            )
-        )
-        if store.status(plan_id) == "needs_help":
-            action = (
-                "package install" if kind == "package" else "repository registration"
-            )
-            raise ConversationConflict(f"LocalTuya {action} needs owner help")
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        if now >= approval.expires_at:
-            raise ConversationConflict(f"LocalTuya {kind} approval expired")
-        return store, approval, now
-
-    def _resume_localtuya_package(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> None:
-        store, approval, now = self._localtuya_resume_context(turn, events, "package")
-        approval = cast(AdvancedTaskPackageApproval, approval)
-        if not store.package_install_started(approval.plan_id):
-            if self._home_assistant_admin is None:
-                raise ConversationConflict("LocalTuya package preflight is unavailable")
-            inventory = asyncio.run(self._home_assistant_admin.inventory())
-            try:
-                require_current_package_preflight(
-                    store.load(approval.plan_id), inventory
-                )
-            except AdvancedTaskError as error:
-                raise ConversationConflict(str(error)) from error
-        store.prepare_package_install(approval, occurred_at=now)
-        try:
-            repository = asyncio.run(
-                self._home_assistant_hacs.install_exact(approval, now=now)
-            )
-            disposition = store.record_package_installed(
-                approval,
-                repository,
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-        except Exception as error:
-            store.record_package_failure(
-                approval,
-                error_text=f"{type(error).__name__}:{error}",
-                occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            )
-            raise ConversationConflict(str(error)) from error
-        timeline = self._timeline(turn)
-        state = timeline.load(self._localtuya_package_thread_id(turn))
-        result: dict[str, JsonValue] = {
-            "approval_sha256": approval.sha256,
-            "disposition": disposition,
-            "installed_version": repository.installed_version,
-            "plan_id": approval.plan_id,
-            "repository_id": repository.repository_id,
-            "repository_sha256": repository.sha256,
-        }
-        timeline.transition(
-            thread_id=self._localtuya_package_thread_id(turn),
-            expected_revision=state.revision,
-            checkpoint_id=f"{self._localtuya_package_thread_id(turn)}:verified",
-            phase="package_install_verified",
-            status="completed",
-            event_type="ADVANCED_PACKAGE_CONVERSATION_VERIFIED",
-            occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
-            data=result,
-            operation_id=state.operation_id,
-        )
-
-    def _localtuya_package_receipt(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> ConversationActionReceipt:
-        return self._localtuya_verified_receipt(
-            turn,
-            events,
-            action_name=_LOCALTUYA_PACKAGE_INSTALL_ACTION,
-            event_name="PACKAGE",
-            label="LocalTuya package",
-            validate_arguments=self._validated_localtuya_package_arguments,
-        )
-
-    def _localtuya_repository_receipt(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> ConversationActionReceipt:
-        return self._localtuya_verified_receipt(
-            turn,
-            events,
-            action_name=_LOCALTUYA_REPOSITORY_REGISTER_ACTION,
-            event_name="REPOSITORY",
-            label="LocalTuya repository",
-            validate_arguments=self._validated_localtuya_repository_arguments,
-        )
-
-    def _localtuya_verified_receipt(
-        self,
-        turn: ConversationTurn,
-        events: tuple[TimelineEvent, ...],
-        *,
-        action_name: str,
-        event_name: str,
-        label: str,
-        validate_arguments: Callable[[dict[str, JsonValue]], dict[str, str]],
-    ) -> ConversationActionReceipt:
-        if len(events) != 2 or tuple(event.event_type for event in events) != (
-            f"ADVANCED_{event_name}_CONVERSATION_ADMITTED",
-            f"ADVANCED_{event_name}_CONVERSATION_VERIFIED",
-        ):
-            raise ConversationConflict(f"{label} receipt differs")
-        admission = self._event_data(events[0])
-        expected = {
-            "action_name": action_name,
-            "conversation_id": turn.conversation_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        for key, value in expected.items():
-            if admission.get(key) != value:
-                raise ConversationConflict(f"{label} receipt scope differs")
-        raw_arguments = admission.get("arguments")
-        call_id = admission.get("action_call_id")
-        if not isinstance(raw_arguments, dict) or not isinstance(call_id, str):
-            raise ConversationConflict(f"{label} receipt is malformed")
-        arguments = validate_arguments(raw_arguments)
-        result = self._event_data(events[1])
-        return ConversationActionReceipt(
-            ConversationActionCall(call_id, action_name, arguments),
-            {
-                "contract": "EvaConversationActionReceipt/v1",
-                "durable": True,
-                **result,
-            },
-        )
-
     def _link_to_conversation(
         self, turn: ConversationTurn, receipt: ConversationActionReceipt
     ) -> None:
@@ -2906,39 +2438,6 @@ class PostgresConversationActions:
         return {"message": message.strip(), "recipients": normalized}
 
     @staticmethod
-    def _validated_localtuya_package_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, str]:
-        if set(raw) != _LOCALTUYA_PACKAGE_INSTALL_ARGUMENT_KEYS:
-            raise ConversationConflict("LocalTuya package action has wrong fields")
-        version = raw.get("version")
-        if not isinstance(version, str) or not version.strip() or len(version) > 80:
-            raise ConversationConflict("LocalTuya package version is invalid")
-        return {"version": version.strip()}
-
-    @staticmethod
-    def _validated_localtuya_repository_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, str]:
-        if set(raw) != _LOCALTUYA_REPOSITORY_REGISTER_ARGUMENT_KEYS:
-            raise ConversationConflict("LocalTuya repository action has wrong fields")
-        repository = raw.get("repository_full_name")
-        version = raw.get("expected_version")
-        if (
-            not isinstance(repository, str)
-            or not repository.strip()
-            or len(repository) > 160
-            or not isinstance(version, str)
-            or not version.strip()
-            or len(version) > 80
-        ):
-            raise ConversationConflict("LocalTuya repository arguments are invalid")
-        return {
-            "expected_version": version.strip(),
-            "repository_full_name": repository.strip(),
-        }
-
-    @staticmethod
     def _validated_research_arguments(
         raw: dict[str, JsonValue],
     ) -> dict[str, JsonValue]:
@@ -3022,22 +2521,6 @@ class PostgresConversationActions:
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
         return f"intent:{cls._intent_id(turn)}"
-
-    @staticmethod
-    def _localtuya_package_thread_id(turn: ConversationTurn) -> str:
-        return _turn_id(
-            turn,
-            "localtuya_package_install",
-            "advanced-package-conversation:",
-        )
-
-    @staticmethod
-    def _localtuya_repository_thread_id(turn: ConversationTurn) -> str:
-        return _turn_id(
-            turn,
-            "localtuya_repository_registration",
-            "advanced-repository-conversation:",
-        )
 
     @staticmethod
     def _fanout_operation_id(turn: ConversationTurn) -> str:

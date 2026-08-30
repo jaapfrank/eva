@@ -483,6 +483,8 @@ class ConversationToolPreparation:
     arguments: dict[str, JsonValue]
     expected_proof: dict[str, JsonValue]
     receipt_output: dict[str, JsonValue]
+    execution_timeout_seconds: int = 10
+    verification_timeout_seconds: int = 10
 
     def __post_init__(self) -> None:
         if not self.tool_name.strip() or len(self.tool_name) > 240:
@@ -492,6 +494,10 @@ class ConversationToolPreparation:
         validate_json_value(self.receipt_output)
         if set(self.receipt_output) & {"contract", "durable", "proof", "status"}:
             raise ValueError("prepared conversation receipt uses reserved fields")
+        if not 1 <= self.execution_timeout_seconds <= 60:
+            raise ValueError("prepared conversation execution timeout is invalid")
+        if not 1 <= self.verification_timeout_seconds <= 60:
+            raise ValueError("prepared conversation verification timeout is invalid")
 
 
 @dataclass(frozen=True, slots=True)

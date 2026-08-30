@@ -20,6 +20,7 @@ from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
 )
 from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationHacsPlanner,
     HomeAssistantConversationMigrationPlanner,
 )
 from eva.adapters.model.conversation import (
@@ -93,7 +94,7 @@ def _home_tool_model(**kwargs: Any) -> CodexConversationModel:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "2e0f1f894ffb64dc315d920019314ea203ce3fc5aa33622eeee149d95073fb23"
+        "3c4ec23c565e108f74396b7406e93d35ddfb8bee4a5d581cddd5b63051a0f6b8"
     )
     assert not {
         "create_home_assistant_advanced_state_automation",
@@ -103,6 +104,8 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
         "read_home_assistant_history",
         "read_home_assistant_state",
         "plan_tuya_to_localtuya_migration",
+        "register_approved_localtuya_repository",
+        "install_approved_localtuya_package",
     } & set(conversation_module._ACTION_TOOLS)
     provider_tools = [
         {
@@ -139,6 +142,18 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     ]
     assert canonical_sha256(management_tools) == (
         "52cb6f8c8c041f02b88f5f1b9b4f9a9e32903ca3f819b3db49a0d80d6031c04e"
+    )
+    hacs_tools = [
+        {
+            "completion_guidance": descriptor.completion_guidance,
+            "description": descriptor.description,
+            "input_schema": descriptor.input_schema,
+            "name": descriptor.name,
+        }
+        for descriptor in HomeAssistantConversationHacsPlanner.conversation_tools()
+    ]
+    assert canonical_sha256(hacs_tools) == (
+        "9e9740cb5b32560fdf313334c2672783b07b8ef5f43c3d9c4365f53fd57a289d"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -1942,7 +1957,10 @@ def test_tuya_receipt_is_factual_input_not_a_robotic_script(
 def test_explicit_followup_can_select_exact_localtuya_package_install(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationHacsPlanner.conversation_tools(),
+    )
     call = ConversationActionCall(
         "localtuya-package-call-1",
         "install_approved_localtuya_package",
@@ -1976,7 +1994,7 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "install_approved_localtuya_package")
     assert (
-        "expliciet toestemming geeft"
+        "expliciet verzoek met de exacte versie"
         in _deferred_tool(bodies[0], "install_approved_localtuya_package")[
             "description"
         ]
@@ -1986,7 +2004,10 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
 def test_explicit_followup_can_register_only_exact_localtuya_repository(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=HomeAssistantConversationHacsPlanner.conversation_tools(),
+    )
     call = ConversationActionCall(
         "localtuya-repository-call-1",
         "register_approved_localtuya_repository",
@@ -2026,7 +2047,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "register_approved_localtuya_repository")
     assert (
-        "registreert alleen de repository"
+        "Dit installeert niets"
         in _deferred_tool(bodies[0], "register_approved_localtuya_repository")[
             "description"
         ]

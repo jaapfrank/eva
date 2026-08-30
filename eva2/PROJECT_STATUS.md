@@ -63,7 +63,7 @@ selling point.
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Gewone reads, effecten, automatiseringen en read-only migratieplanning lopen generiek; schrijvende beheerstappen bevatten nog oude providerpaden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Gewone reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties lopen generiek; apparaatmigratie bevat nog oude providerpaden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -72,17 +72,17 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 647 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
-Dat is 310 minder dan vóór de eerste verplaatsing. Gewone reads, aan/uit-acties,
-automatiseringen en het read-only Tuya-migratieplan leveren hun schema, uitleg,
-validatie en providercommando nu vanuit tooladapters. Zij gebruiken dezelfde
-generieke PostgreSQL-route voor toelating, uitvoering, bewijs en hervatten. De
-centrale model- en databasecode kent het migratieplan niet meer. Een echte
-wegwerp-PostgreSQL-proef las de inventaris één keer, bewaarde het providerplan
-en hervatte na een nieuwe procesinstantie zonder Home Assistant opnieuw te
-lezen. De oude directe effect-API en dubbele PostgreSQL-route zijn verwijderd.
-De schrijvende repository-, pakket- en apparaatmigratiestappen staan nog deels
-in kernbestanden en moeten eveneens achter provider-tools verdwijnen.
+vindt nog 509 Home Assistant-/Tuya-specifieke identifiers in zes kernbestanden.
+Dat is 448 minder dan vóór de eerste verplaatsing. De centrale modeladapter en
+gesprekspersistence staan nu allebei op nul. Gewone reads, aan/uit-acties,
+automatiseringen, het Tuya-migratieplan en de aparte HACS-repository- en
+pakketacties leveren hun schema, uitleg, validatie en providercommando vanuit
+tooladapters. Zij gebruiken dezelfde generieke PostgreSQL-route voor toelating,
+uitvoering, bewijs en hervatten. Drie echte wegwerp-PostgreSQL-proeven bewezen
+planopslag, repositoryregistratie en pakketinstallatie; een nieuwe
+procesinstantie herhaalde geen provideractie. De oude directe effect-API en
+dubbele PostgreSQL-routes zijn verwijderd. De apparaatmigratie en resterende
+beheer-API's moeten nog achter dezelfde providergrens verdwijnen.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -180,7 +180,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten, automatiseringen en read-only migratieplanning gebruiken één generieke duurzame route; er resten 647 oudere Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties gebruiken één generieke duurzame route; de modeladapter en gesprekspersistence staan op nul providerspecifieke termen, zes andere kernbestanden bevatten er nog 509 |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

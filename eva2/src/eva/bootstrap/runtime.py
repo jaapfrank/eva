@@ -50,7 +50,9 @@ from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner as ProviderAutomationPlanner,
 )
 from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationHacsPlanner as ProviderHacsPlanner,
     HomeAssistantConversationMigrationPlanner as ProviderMigrationPlanner,
+    HomeAssistantHacsManagementAdapter as ProviderHacsManagementAdapter,
     HomeAssistantMigrationPlanAdapter as ProviderMigrationPlanAdapter,
 )
 from eva.adapters.postgres.conversation_actions import (
@@ -1962,6 +1964,7 @@ def create_runtime_app() -> FastAPI:
             *HomeAssistantToolAdapter.conversation_tools(),
             *ProviderAutomationPlanner.conversation_tools(),
             *ProviderMigrationPlanner.conversation_tools(),
+            *ProviderHacsPlanner.conversation_tools(),
         ),
     )
     home_assistant = (
@@ -1994,7 +1997,7 @@ def create_runtime_app() -> FastAPI:
             token=settings.home_assistant_token or "",
         )
     )
-    home_assistant_hacs = (
+    management_writer = (
         None
         if settings.home_assistant_url is None
         or not settings.home_assistant_effects_enabled
@@ -2087,10 +2090,17 @@ def create_runtime_app() -> FastAPI:
         settings.home_assistant_effect_principal_sha256_allowlist
     )
     external_provider = home_assistant
+    def advanced_store_factory(
+        tenant_id: str, installation_id: str
+    ) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            engine,
+            tenant_id=tenant_id,
+            installation_id=installation_id,
+        )
+
     conversation_actions = PostgresConversationActions(
         engine,
-        home_assistant_admin=management_inventory,
-        home_assistant_hacs=home_assistant_hacs,
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
@@ -2137,17 +2147,29 @@ def create_runtime_app() -> FastAPI:
                             engine,
                             ProviderMigrationPlanner(management_inventory),
                             ProviderMigrationPlanAdapter(
-                                lambda tenant_id, installation_id: (
-                                    PostgresAdvancedTaskStore(
-                                        engine,
-                                        tenant_id=tenant_id,
-                                        installation_id=installation_id,
-                                    )
-                                )
+                                advanced_store_factory
                             ),
                         ),
                     )
                     if management_inventory is not None
+                    else ()
+                ),
+                *(
+                    (
+                        PostgresExternalConversationTools(
+                            engine,
+                            ProviderHacsPlanner(
+                                management_inventory, advanced_store_factory
+                            ),
+                            ProviderHacsManagementAdapter(
+                                management_writer,
+                                management_inventory,
+                                advanced_store_factory,
+                            ),
+                        ),
+                    )
+                    if management_inventory is not None
+                    and management_writer is not None
                     else ()
                 ),
             )
@@ -2379,7 +2401,7 @@ def create_runtime_app() -> FastAPI:
             sensory_worker,
             sensory_store,
             management_inventory,
-            home_assistant_hacs,
+            management_writer,
             home_assistant_localtuya,
             agentmail,
             model,

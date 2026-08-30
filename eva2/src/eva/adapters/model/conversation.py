@@ -68,8 +68,6 @@ _MODEL_LEASE_FILE_MODE = 0o640
 _ORDINARY_PROVIDER_ATTEMPTS = 2
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
-_LOCALTUYA_REPOSITORY_REGISTER_ACTION = "register_approved_localtuya_repository"
-_LOCALTUYA_PACKAGE_INSTALL_ACTION = "install_approved_localtuya_package"
 _FANOUT_DELIVERY_ACTION = "deliver_test_message_fanout"
 _DURABLE_GOAL_ACTION = "create_bounded_durable_goal"
 _DURABLE_GOAL_CANCEL_ACTION = "cancel_active_durable_goal"
@@ -179,27 +177,6 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "De eerste concrete vraag die Eva hierover wil onderzoeken."
         ),
         title=_schema("Een korte natuurlijke naam voor de interesse."),
-    ),
-    _LOCALTUYA_REPOSITORY_REGISTER_ACTION: _tool(
-        _LOCALTUYA_REPOSITORY_REGISTER_ACTION,
-        (
-            "Voeg uitsluitend de exact genoemde onderhouden LocalTuya-bron aan "
-            "HACS toe, na een actueel duurzaam migratieplan en een expliciet "
-            "verzoek met bron en versie. Dit registreert alleen de repository en "
-            "installeert niets."
-        ),
-        expected_version=_schema(),
-        repository_full_name=_schema(),
-    ),
-    _LOCALTUYA_PACKAGE_INSTALL_ACTION: _tool(
-        _LOCALTUYA_PACKAGE_INSTALL_ACTION,
-        (
-            "Installeer één exact door het actuele duurzame plan gebonden "
-            "LocalTuya-pakket. Gebruik dit uitsluitend wanneer de gebruiker na "
-            "het plan expliciet toestemming geeft voor de pakketinstallatie; dit "
-            "migreert nog geen apparaat."
-        ),
-        version=_schema(),
     ),
     _FANOUT_DELIVERY_ACTION: _tool(
         _FANOUT_DELIVERY_ACTION,
@@ -1811,19 +1788,6 @@ class CodexConversationModel:
                         "Gebruik het gecontroleerde toolresultaat als bewijs en meld "
                         "alleen wat daar werkelijk uit blijkt."
                     )
-                )
-            elif completed_action.call.name == _LOCALTUYA_PACKAGE_INSTALL_ACTION:
-                action_guidance_parts.append(
-                    "De action receipt is de onafhankelijke HACS-readback. Meld de pakket-"
-                    "installatie alleen als disposition verified/already_verified is en zeg "
-                    "expliciet dat nog geen Tuya-apparaat is gemigreerd."
-                )
-            elif completed_action.call.name == _LOCALTUYA_REPOSITORY_REGISTER_ACTION:
-                action_guidance_parts.append(
-                    "De action receipt is de onafhankelijke HACS-readback van precies de "
-                    "gevraagde repository en versie. Zeg kort dat alleen de bron is "
-                    "toegevoegd; het pakket is niet geïnstalleerd en er is niets "
-                    "gemigreerd. Noem geen receipt of intern event."
                 )
             elif completed_action.call.name == _FANOUT_DELIVERY_ACTION:
                 accepted = completed_action.output.get("accepted_count")

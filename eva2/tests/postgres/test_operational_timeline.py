@@ -45,7 +45,9 @@ from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
 )
 from eva.adapters.connectors.home_assistant_management import (
+    HomeAssistantConversationHacsPlanner,
     HomeAssistantConversationMigrationPlanner,
+    HomeAssistantHacsManagementAdapter,
     HomeAssistantMigrationPlanAdapter,
 )
 from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
@@ -56,6 +58,8 @@ from eva.application.advanced_tasks import (
     HomeAssistantEntity,
     HomeAssistantIntegration,
     HomeAssistantInventory,
+    HomeAssistantRepository,
+    TuyaToLocalTuyaPlanner,
 )
 from eva.application.conversation import (
     ConversationActionCall,
@@ -1592,6 +1596,218 @@ def test_provider_owned_tuya_plan_is_durable_and_not_repeated_after_restart(
     )
     assert restarted.pending(turn) == receipt
     assert inventory_calls == 1
+
+
+def test_provider_owned_repository_registration_is_verified_and_not_repeated(
+    timeline_engine: Engine,
+) -> None:
+    repository = HomeAssistantRepository(
+        "maintained",
+        "xZetsubou/hass-localtuya",
+        "localtuya",
+        False,
+        None,
+        "2026.7.0",
+        True,
+        "2025.1.0",
+        True,
+    )
+    registered = False
+    provider_calls = 0
+
+    def inventory() -> HomeAssistantInventory:
+        return _management_inventory((repository,) if registered else ())
+
+    class Inventory:
+        async def inventory(self):  # type: ignore[no-untyped-def]
+            return inventory()
+
+    class Hacs:
+        async def register_exact(self, approval, **_kwargs):  # type: ignore[no-untyped-def]
+            nonlocal registered, provider_calls
+            provider_calls += 1
+            assert approval.repository_full_name == repository.full_name
+            registered = True
+            return repository
+
+        async def repository_by_full_name(self, full_name):  # type: ignore[no-untyped-def]
+            assert full_name == repository.full_name
+            return repository if registered else None
+
+        async def repository(self, repository_id):  # type: ignore[no-untyped-def]
+            raise AssertionError(repository_id)
+
+        async def install_exact(self, approval, **_kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(approval)
+
+    def store(tenant: str, installation: str) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            timeline_engine, tenant_id=tenant, installation_id=installation
+        )
+
+    tenant = "external-hacs-repository"
+    installation = "installation"
+    initial = TuyaToLocalTuyaPlanner().build(
+        inventory(), operation_id="operation:repository", requested_by="jaap"
+    )
+    store(tenant, installation).retain(initial)
+    planner = HomeAssistantConversationHacsPlanner(Inventory(), store)
+    provider = HomeAssistantHacsManagementAdapter(Hacs(), Inventory(), store)
+    tools = PostgresExternalConversationTools(timeline_engine, planner, provider)
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+    turn = ConversationTurn.private(
+        tenant,
+        installation,
+        "jaap",
+        "conversation",
+        "message:repository",
+        "Voeg xZetsubou/hass-localtuya 2026.7.0 als HACS-repository toe.",
+        "2026-08-30T19:10:00Z",
+    )
+    call = ConversationActionCall(
+        "call:repository",
+        "register_approved_localtuya_repository",
+        {
+            "expected_version": "2026.7.0",
+            "repository_full_name": "xZetsubou/hass-localtuya",
+        },
+    )
+
+    assert "Tuya→LocalTuya-plan" in actions.active_context(turn)[0]
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "verified"
+    assert receipt.output["proof"]["observed"] == {
+        "available_version": "2026.7.0",
+        "custom": True,
+        "registered": True,
+        "repository_full_name": "xZetsubou/hass-localtuya",
+    }
+    assert provider_calls == 1
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        external_tools=(
+            PostgresExternalConversationTools(timeline_engine, planner, provider),
+        ),
+    )
+    assert restarted.pending(turn) == receipt
+    assert provider_calls == 1
+
+
+def test_provider_owned_package_install_is_verified_and_not_repeated(
+    timeline_engine: Engine,
+) -> None:
+    available = HomeAssistantRepository(
+        "maintained",
+        "xZetsubou/hass-localtuya",
+        "localtuya",
+        False,
+        None,
+        "2026.7.0",
+        True,
+        "2025.1.0",
+        True,
+    )
+    installed = HomeAssistantRepository(
+        "maintained",
+        "xZetsubou/hass-localtuya",
+        "localtuya",
+        True,
+        "2026.7.0",
+        "2026.7.0",
+        True,
+        "2025.1.0",
+        True,
+    )
+    package_installed = False
+    provider_calls = 0
+
+    class Inventory:
+        async def inventory(self):  # type: ignore[no-untyped-def]
+            return _management_inventory((available,))
+
+    class Hacs:
+        async def install_exact(self, approval, **_kwargs):  # type: ignore[no-untyped-def]
+            nonlocal package_installed, provider_calls
+            provider_calls += 1
+            assert approval.repository_id == available.repository_id
+            package_installed = True
+            return installed
+
+        async def repository(self, repository_id):  # type: ignore[no-untyped-def]
+            assert repository_id == available.repository_id
+            return installed if package_installed else available
+
+        async def repository_by_full_name(self, full_name):  # type: ignore[no-untyped-def]
+            raise AssertionError(full_name)
+
+        async def register_exact(self, approval, **_kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError(approval)
+
+    def store(tenant: str, installation: str) -> PostgresAdvancedTaskStore:
+        return PostgresAdvancedTaskStore(
+            timeline_engine, tenant_id=tenant, installation_id=installation
+        )
+
+    tenant = "external-hacs-package"
+    installation = "installation"
+    initial = TuyaToLocalTuyaPlanner().build(
+        _management_inventory((available,)),
+        operation_id="operation:package",
+        requested_by="jaap",
+    )
+    store(tenant, installation).retain(initial)
+    planner = HomeAssistantConversationHacsPlanner(Inventory(), store)
+    provider = HomeAssistantHacsManagementAdapter(Hacs(), Inventory(), store)
+    tools = PostgresExternalConversationTools(timeline_engine, planner, provider)
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+    turn = ConversationTurn.private(
+        tenant,
+        installation,
+        "jaap",
+        "conversation",
+        "message:package",
+        "Ik geef toestemming: installeer LocalTuya 2026.7.0.",
+        "2026-08-30T19:20:00Z",
+    )
+    call = ConversationActionCall(
+        "call:package",
+        "install_approved_localtuya_package",
+        {"version": "2026.7.0"},
+    )
+
+    receipt = actions.execute(turn, call)
+
+    assert receipt.output["status"] == "verified"
+    assert receipt.output["proof"]["observed"] == {
+        "installed": True,
+        "installed_version": "2026.7.0",
+        "repository_id": "maintained",
+    }
+    assert provider_calls == 1
+    restarted = PostgresConversationActions(
+        timeline_engine,
+        external_tools=(
+            PostgresExternalConversationTools(timeline_engine, planner, provider),
+        ),
+    )
+    assert restarted.pending(turn) == receipt
+    assert provider_calls == 1
+
+
+def _management_inventory(
+    repositories: tuple[HomeAssistantRepository, ...],
+) -> HomeAssistantInventory:
+    return HomeAssistantInventory(
+        (HomeAssistantIntegration("tuya", "cloud", "loaded", "Tuya"),),
+        (HomeAssistantDevice("device", "Schuur", "Tuya", "Lamp", ("cloud",)),),
+        (HomeAssistantEntity("light.schuur", "tuya", "cloud", "device", None),),
+        datetime(2026, 8, 30, 19, 0, tzinfo=UTC),
+        repositories,
+        True,
+        "2026.8.1",
+    )
 
 
 def test_home_assistant_history_read_is_durable_and_not_repeated_after_restart(

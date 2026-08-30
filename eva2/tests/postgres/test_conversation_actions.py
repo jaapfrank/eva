@@ -67,8 +67,6 @@ def test_durable_turn_identifiers_remain_byte_equal_after_shared_derivation() ->
         "_fanout_operation_id": "fanout-delivery:197936a99e2b5f2c2cf6aef1757bc4fc",
         "_file_batch_operation_id": "file-batch:2953c51ce77caee25034e51065c8a96a",
         "_intent_id": "personal-interest:eadd7f2b068d9fd4987faa479286bc3d",
-        "_localtuya_package_thread_id": "advanced-package-conversation:b5dd954412f97c5c6393a80935562395",
-        "_localtuya_repository_thread_id": "advanced-repository-conversation:717b95f2be6caed2854380f8eeea19f9",
         "_observation_identity_correction_thread_id": "memory:observation-identity:61d73df29f0600e5e60112d5f84e4897",
         "_repository_improvement_operation_id": "repository-improvement:40a7a9a340d3f0d09e717048738084c7",
         "_research_operation_id": "current-research:2420e50d0762dff9a05d63a67234616c",
@@ -248,35 +246,6 @@ def test_repository_improvement_requires_both_snapshot_adapter_and_chooser() -> 
         repository_improvement_model=object(),  # type: ignore[arg-type]
     )
     assert action in available.action_names
-
-
-def test_localtuya_repository_action_requires_hacs_and_has_exact_fields() -> None:
-    unavailable = PostgresConversationActions(sa.create_engine("sqlite://"))
-    available = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant_hacs=object(),  # type: ignore[arg-type]
-    )
-    action = "register_approved_localtuya_repository"
-
-    assert action not in unavailable.action_names
-    assert action in available.action_names
-    assert available._validated_localtuya_repository_arguments(  # noqa: SLF001
-        {
-            "expected_version": "2026.7.0",
-            "repository_full_name": "xZetsubou/hass-localtuya",
-        }
-    ) == {
-        "expected_version": "2026.7.0",
-        "repository_full_name": "xZetsubou/hass-localtuya",
-    }
-    with pytest.raises(Exception, match="wrong fields"):
-        available._validated_localtuya_repository_arguments(  # noqa: SLF001
-            {
-                "expected_version": "2026.7.0",
-                "repository_full_name": "xZetsubou/hass-localtuya",
-                "install": True,
-            }
-        )
 
 
 def test_fanout_action_reports_each_sink_without_resending_successes(

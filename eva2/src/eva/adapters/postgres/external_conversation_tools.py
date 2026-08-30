@@ -67,6 +67,18 @@ class PostgresExternalConversationTools:
     def action_names(self) -> tuple[str, ...]:
         return self._action_names
 
+    def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
+        provider_context = getattr(self._planner, "active_context", None)
+        if provider_context is None:
+            return ()
+        context = provider_context(turn)
+        if (
+            not isinstance(context, tuple)
+            or any(not isinstance(value, str) or not value.strip() for value in context)
+        ):
+            raise ConversationConflict("external tool context is malformed")
+        return context
+
     def pending(self, turn: ConversationTurn) -> ConversationActionReceipt | None:
         timeline = self._timeline(turn)
         for action_name in self.action_names:
@@ -95,7 +107,11 @@ class PostgresExternalConversationTools:
             "receipt_output": preparation.receipt_output,
             "request_arguments": request.arguments,
             "request_expected_proof": request.expected_proof,
+            "request_execution_timeout_seconds": request.execution_timeout_seconds,
             "request_tool_name": request.tool_name,
+            "request_verification_timeout_seconds": (
+                request.verification_timeout_seconds
+            ),
             "source_message_id": turn.message_id,
         }
         timeline = self._timeline(turn)
@@ -193,11 +209,19 @@ class PostgresExternalConversationTools:
         tool_name = admission.get("request_tool_name")
         arguments = admission.get("request_arguments")
         expected_proof = admission.get("request_expected_proof")
+        execution_timeout = admission.get("request_execution_timeout_seconds", 10)
+        verification_timeout = admission.get(
+            "request_verification_timeout_seconds", 10
+        )
         if (
             admission.get("action_name") != action_name
             or not isinstance(tool_name, str)
             or not isinstance(arguments, dict)
             or not isinstance(expected_proof, dict)
+            or not isinstance(execution_timeout, int)
+            or isinstance(execution_timeout, bool)
+            or not isinstance(verification_timeout, int)
+            or isinstance(verification_timeout, bool)
             or admission.get("conversation_id") != turn.conversation_id
             or admission.get("principal_id") != turn.principal_id
             or admission.get("source_message_id") != turn.message_id
@@ -210,6 +234,8 @@ class PostgresExternalConversationTools:
             tool_name=tool_name,
             arguments=arguments,
             expected_proof=expected_proof,
+            execution_timeout_seconds=execution_timeout,
+            verification_timeout_seconds=verification_timeout,
         )
 
     def _request(
@@ -225,6 +251,8 @@ class PostgresExternalConversationTools:
             tool_name=preparation.tool_name,
             arguments=preparation.arguments,
             expected_proof=preparation.expected_proof,
+            execution_timeout_seconds=preparation.execution_timeout_seconds,
+            verification_timeout_seconds=preparation.verification_timeout_seconds,
         )
 
     @staticmethod

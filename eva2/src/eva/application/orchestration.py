@@ -89,10 +89,10 @@ class ToolRequest:
                 raise ValueError(f"{field} must contain 1..240 characters")
         validate_json_value(self.arguments)
         validate_json_value(self.expected_proof)
-        if not 1 <= self.verification_timeout_seconds <= 10:
-            raise ValueError("verification timeout must be within 1..10 seconds")
-        if not 1 <= self.execution_timeout_seconds <= 10:
-            raise ValueError("execution timeout must be within 1..10 seconds")
+        if not 1 <= self.verification_timeout_seconds <= 60:
+            raise ValueError("verification timeout must be within 1..60 seconds")
+        if not 1 <= self.execution_timeout_seconds <= 60:
+            raise ValueError("execution timeout must be within 1..60 seconds")
         if not 25 <= self.poll_interval_milliseconds <= 2_000:
             raise ValueError("poll interval must be within 25..2000 milliseconds")
 
