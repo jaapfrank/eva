@@ -1,6 +1,7 @@
 """Authorize one provider-bound action-chain read without provider I/O."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_required_utc_timestamp as _format_timestamp
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
@@ -305,11 +306,6 @@ def read_dispatch_event_data(
         "read_intent_id": attempt.read_intent_id,
         "request_sha256": attempt.request_sha256,
     }
-
-
-def _format_timestamp(value: datetime) -> str:
-    _require_utc_second(value, "timestamp")
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [

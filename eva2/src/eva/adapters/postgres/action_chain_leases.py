@@ -1,6 +1,7 @@
 """Crash-safe worker leases for admitted action chains; no capability execution."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_required_utc_timestamp as _format_timestamp
 from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
 from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
@@ -467,11 +468,6 @@ def _require_worker(worker_id: str) -> None:
         )
     ):
         raise ValueError("worker_id is not a valid identifier")
-
-
-def _format_timestamp(value: datetime) -> str:
-    _require_utc_second(value, "timestamp")
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 __all__ = [

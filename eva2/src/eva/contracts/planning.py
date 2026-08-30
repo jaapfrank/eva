@@ -401,6 +401,13 @@ class OutcomeView(Version1Contract):
         return self
 
 
+def _require_exact_context_hash(
+    presence_context: PresenceContext, context_sha256: str
+) -> None:
+    if canonical_sha256(presence_context) != context_sha256:
+        raise ValueError("context selection hash must bind the complete PresenceContext")
+
+
 class PlanModelInput(Version1Contract):
     contract: Literal["PlanModelInput/v1"]
     purpose: Literal["plan"]
@@ -413,13 +420,9 @@ class PlanModelInput(Version1Contract):
 
     @model_validator(mode="after")
     def _context_hash_is_exact(self) -> "PlanModelInput":
-        if (
-            canonical_sha256(self.presence_context)
-            != self.context_selection.context_sha256
-        ):
-            raise ValueError(
-                "context selection hash must bind the complete PresenceContext"
-            )
+        _require_exact_context_hash(
+            self.presence_context, self.context_selection.context_sha256
+        )
         return self
 
 
@@ -439,13 +442,9 @@ class DocumentDraftModelInput(Version1Contract):
 
     @model_validator(mode="after")
     def _context_hash_is_exact(self) -> "DocumentDraftModelInput":
-        if (
-            canonical_sha256(self.presence_context)
-            != self.context_selection.context_sha256
-        ):
-            raise ValueError(
-                "context selection hash must bind the complete PresenceContext"
-            )
+        _require_exact_context_hash(
+            self.presence_context, self.context_selection.context_sha256
+        )
         return self
 
 
@@ -461,13 +460,9 @@ class ReplyModelInput(Version1Contract):
 
     @model_validator(mode="after")
     def _context_hash_is_exact(self) -> "ReplyModelInput":
-        if (
-            canonical_sha256(self.presence_context)
-            != self.context_selection.context_sha256
-        ):
-            raise ValueError(
-                "context selection hash must bind the complete PresenceContext"
-            )
+        _require_exact_context_hash(
+            self.presence_context, self.context_selection.context_sha256
+        )
         return self
 
 

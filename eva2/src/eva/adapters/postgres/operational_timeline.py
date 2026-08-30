@@ -1,6 +1,7 @@
 """Append-only PostgreSQL timeline and rebuildable checkpoint projection."""
 
 from __future__ import annotations
+from eva.contracts.timestamps import format_required_utc_timestamp as _canonical_timestamp
 from eva.contracts.timestamps import require_utc_second as _require_utc_second
 
 from dataclasses import dataclass
@@ -746,11 +747,6 @@ def _require_identifier(value: str, field: str) -> None:
     if not isinstance(value, str) or not 1 <= len(value) <= 240:
         raise ValueError(f"{field} must contain 1..240 characters")
     validate_json_value(value)
-
-
-def _canonical_timestamp(value: datetime) -> str:
-    _require_utc_second(value, "timestamp")
-    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _state_from_row(row: Any) -> CheckpointState:

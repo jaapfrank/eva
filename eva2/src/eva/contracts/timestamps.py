@@ -24,5 +24,10 @@ def format_utc_timestamp(value: datetime) -> str:
     return value.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def format_required_utc_timestamp(value: datetime) -> str:
+    require_utc_second(value, "timestamp")
+    return format_utc_timestamp(value)
+
+
 def format_normalized_utc_timestamp(value: datetime) -> str:
     return value.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
