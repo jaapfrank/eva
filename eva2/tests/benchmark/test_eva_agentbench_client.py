@@ -383,6 +383,8 @@ def test_neutralizes_prior_tool_messages_before_calling_eva(
     assert '"kind":"database_operation"' in model_prompt
     assert '"kind":"database_result"' in model_prompt
     assert '"tool_calls"' not in model_prompt
+    assert "schema and row count" in model_prompt
+    assert "across every relevant text column" in model_prompt
 
 
 @pytest.mark.parametrize("turn_limit", ["0", "16", "nope"])

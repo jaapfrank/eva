@@ -1,0 +1,32 @@
+{
+  "artifact": "EvaAgentBenchDbBenchAnswerBlindDataAudit/v1",
+  "date": "2026-08-30",
+  "caseIndex": 0,
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "workerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb"
+  },
+  "observed": {
+    "allFiveColumnsAreText": true,
+    "allColumnSearchForQuestionDateMatches": 0,
+    "allColumnSearchForQuestionYearMatches": 0,
+    "questionYear": 2000,
+    "rowCount": 37,
+    "upstreamInitializationUsesTheCaseTableRowsDirectly": true
+  },
+  "privacy": {
+    "groundTruthRead": false,
+    "hiddenLabelRead": false,
+    "standardAnswerSqlRead": false
+  },
+  "conclusion": "The answer requested by the question is not derivable from any visible value in the initialized table. Guessing the hidden expected answer would be benchmark leakage, so the generic strategy is improved instead of overfitting this case.",
+  "status": "answerblind_case_data_inconsistent_with_question",
+  "nonClaims": [
+    "This audit does not prove that the hidden benchmark label is wrong.",
+    "This audit is not an official AgentBench validity ruling or score.",
+    "The diagnostic queries did not inspect the hidden label, evaluation field or standard answer SQL."
+  ]
+}

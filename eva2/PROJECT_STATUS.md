@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 07:03 CEST
+Laatst bijgewerkt: 30 augustus 2026, 07:08 CEST
 
 ## Heel kort
 
@@ -375,7 +375,9 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   SQL-pogingen en leverde daarna een eindantwoord. Eén tijdelijke modelstoring
   werd vóór SQL opgevangen zonder de case opnieuw te starten. De officiële
   ingebouwde vergelijking gaf nog steeds eerlijk score 0. De uitvoer- en
-  herstelketen werkt dus; Eva's databaseantwoord moet inhoudelijk beter.
+  herstelketen werkt dus. De antwoordblinde nacontrole vond bovendien dat de
+  aangeboden tabel 37 rijen heeft en dat het gevraagde jaar 2000 nergens in
+  welke kolom dan ook voorkomt. We gaan het verborgen label daarom niet raden.
 
 ## Wat nog niet klaar is
 
@@ -423,8 +425,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Waar ik nu aan werk
 
-1. De zes SQL-pogingen van de fout beantwoorde DBBench-case antwoordblind
-   analyseren en de algemene database-aanpak verbeteren voordat meer cases lopen.
+1. De verbeterde algemene database-aanpak op andere begrensde developmentcases
+   uitvoeren; case 0 niet op het verborgen antwoordlabel overtrainen.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
@@ -446,6 +448,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 ## Laatste bewijs
 
 - [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
+- [Antwoordblinde audit: gevraagde jaarwaarde ontbreekt in alle 37 aangeboden rijen](evidence/living-core/agentbench-dbbench-case-0-answerblind-data-audit-2026-08-30.json)
 - [Antwoordblinde DBBench-verbetering veranderde de SQL, maar score bleef eerlijk 0](evidence/living-core/agentbench-dbbench-eva-budget-aware-rerun-2026-08-30.json)
 - [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)
