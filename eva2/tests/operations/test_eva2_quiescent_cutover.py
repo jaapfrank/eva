@@ -75,6 +75,55 @@ def test_start_writers_refuses_a_stale_core_container(
         SystemBackend().start_writers(slot)
 
 
+def test_migrate_schema_uses_the_target_image_before_writers_start(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    slot = _slot(3)
+    commands: list[tuple[list[str], int | None]] = []
+    monkeypatch.setattr(
+        SystemBackend, "_is_running", staticmethod(lambda _container: False)
+    )
+    monkeypatch.setattr(
+        SystemBackend,
+        "_run",
+        staticmethod(
+            lambda command, **kwargs: commands.append(
+                (command, kwargs.get("timeout"))
+            )
+            or ""
+        ),
+    )
+
+    SystemBackend().migrate_schema(slot)
+
+    assert len(commands) == 1
+    command, timeout = commands[0]
+    assert command[-5:] == [
+        "--profile",
+        "schema-install",
+        "run",
+        "--rm",
+        "schema-installer",
+    ]
+    assert str(slot.environment) in command
+    assert slot.project in command
+    assert timeout == 300
+
+
+def test_migrate_schema_refuses_running_target_writers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    slot = _slot(3)
+    monkeypatch.setattr(
+        SystemBackend,
+        "_is_running",
+        staticmethod(lambda container: container == slot.hindsight),
+    )
+
+    with pytest.raises(QuiescentCutoverError, match="stopped target writers"):
+        SystemBackend().migrate_schema(slot)
+
+
 def _container(
     name: str,
     *,
@@ -232,6 +281,9 @@ class FakeBackend:
         marker = "reverse" if snapshot is self.reverse else "forward"
         self._call(f"restore:{slot.number}:{marker}")
 
+    def migrate_schema(self, slot: SlotSpec) -> None:
+        self._call(f"migrate:{slot.number}")
+
     def verify_runtime(self, slot: SlotSpec) -> None:
         self._call(f"verify:{slot.number}")
 
@@ -264,6 +316,7 @@ def test_quiesces_copies_attests_and_only_then_switches(tmp_path: Path) -> None:
         "stop:4",
         "snapshot:3:forward",
         "restore:4:forward",
+        "migrate:4",
         "start:4",
         "verify:4",
         "route:44711",
@@ -293,6 +346,25 @@ def test_failure_before_route_restores_source_without_reversing_data(
     assert backend.calls[-4:] == ["stop:4", "start:3", "verify:3", "start-eva1:3"]
     assert not any("automatic-rollback" in call for call in backend.calls)
     assert "route:44710" not in backend.calls
+
+
+def test_schema_migration_failure_never_starts_or_routes_target(
+    tmp_path: Path,
+) -> None:
+    backend = FakeBackend(tmp_path, fail_at="migrate:4")
+
+    with pytest.raises(QuiescentCutoverError, match="failed at migrate:4"):
+        quiescent_cutover(
+            source_slot=3,
+            target_slot=4,
+            backend=backend,
+            dropin=tmp_path / "dropin",
+            workspace=tmp_path,
+        )
+
+    assert "start:4" not in backend.calls
+    assert "route:44711" not in backend.calls
+    assert backend.calls[-3:] == ["start:3", "verify:3", "start-eva1:3"]
 
 
 def test_partial_target_start_is_stopped_before_source_recovery(tmp_path: Path) -> None:

@@ -144,6 +144,8 @@ class CutoverBackend(Protocol):
 
     def restore(self, slot: SlotSpec, snapshot: DatabaseSnapshot) -> None: ...
 
+    def migrate_schema(self, slot: SlotSpec) -> None: ...
+
     def verify_runtime(self, slot: SlotSpec) -> None: ...
 
     def write_route(self, dropin: Path, content: bytes) -> None: ...
@@ -510,6 +512,32 @@ class SystemBackend:
             raise QuiescentCutoverError(
                 "retained slot core image differs from its environment"
             )
+
+    def migrate_schema(self, slot: SlotSpec) -> None:
+        """Let the target image upgrade its private restored database once."""
+
+        if self._is_running(slot.core) or self._is_running(slot.hindsight):
+            raise QuiescentCutoverError(
+                "schema migration requires stopped target writers"
+            )
+        self._run(
+            [
+                DOCKER,
+                "compose",
+                "--env-file",
+                str(slot.environment),
+                "--project-name",
+                slot.project,
+                "--file",
+                str(MANIFEST),
+                "--profile",
+                "schema-install",
+                "run",
+                "--rm",
+                "schema-installer",
+            ],
+            timeout=300,
+        )
 
     @staticmethod
     def _database_counts(container: str, database: str) -> dict[str, int]:
@@ -893,6 +921,7 @@ def quiescent_cutover(
         backend.stop_writers(target)
         snapshot = backend.snapshot(source, workspace, "forward")
         backend.restore(target, snapshot)
+        backend.migrate_schema(target)
         target_started = True
         backend.start_writers(target)
         backend.verify_runtime(target)
