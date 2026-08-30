@@ -94,7 +94,7 @@ def test_migrate_schema_uses_the_target_image_before_writers_start(
         ),
     )
 
-    SystemBackend().migrate_schema(slot)
+    SystemBackend().migrate_schema(_slot(4), slot)
 
     assert len(commands) == 1
     command, timeout = commands[0]
@@ -121,7 +121,110 @@ def test_migrate_schema_refuses_running_target_writers(
     )
 
     with pytest.raises(QuiescentCutoverError, match="stopped target writers"):
-        SystemBackend().migrate_schema(slot)
+        SystemBackend().migrate_schema(_slot(4), slot)
+
+
+def test_migrate_schema_uses_source_migration_for_a_safe_release_rollback(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    source = _slot(3)
+    target = _slot(4)
+    source_image = "eva2/new@sha256:" + "a" * 64
+    target_image = "eva2/old@sha256:" + "b" * 64
+    calls: list[tuple[list[str], dict[str, object]]] = []
+    installer_attempts = 0
+
+    monkeypatch.setattr(
+        SystemBackend, "_is_running", staticmethod(lambda _container: False)
+    )
+    monkeypatch.setattr(
+        SystemBackend,
+        "_environment",
+        staticmethod(
+            lambda path: {
+                "EVA_LIVING_CORE_IMAGE": (
+                    source_image if path == source.environment else target_image
+                )
+            }
+        ),
+    )
+
+    def fake_run(command: list[str], **kwargs: object) -> str:
+        nonlocal installer_attempts
+        calls.append((command, kwargs))
+        if command[-1] == "schema-installer":
+            installer_attempts += 1
+            if installer_attempts == 1:
+                raise QuiescentCutoverError(
+                    "command failed closed: schema-installer: "
+                    "database has an unknown Eva schema revision"
+                )
+            return ""
+        if command[:2] == ["/usr/bin/docker", "run"]:
+            return (
+                "4e_0007_delegated_private\n"
+                if source_image in command
+                else "4e_0006_memory_outbox_erasure\n"
+            )
+        if "SELECT version_num FROM public.eva_alembic_version;" in command:
+            return "4e_0007_delegated_private\n"
+        if "--entrypoint" in command and "schema-installer" in command:
+            assert kwargs["extra_env"] == {"EVA_LIVING_CORE_IMAGE": source_image}
+            assert command[-1] == "4e_0006_memory_outbox_erasure"
+            return ""
+        raise AssertionError(command)
+
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(fake_run))
+
+    SystemBackend().migrate_schema(source, target)
+
+    assert installer_attempts == 2
+    assert len(calls) == 6
+
+
+def test_migrate_schema_never_downgrades_an_unattributed_revision(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    source = _slot(3)
+    target = _slot(4)
+    source_image = "eva2/new@sha256:" + "a" * 64
+    target_image = "eva2/old@sha256:" + "b" * 64
+
+    monkeypatch.setattr(
+        SystemBackend, "_is_running", staticmethod(lambda _container: False)
+    )
+    monkeypatch.setattr(
+        SystemBackend,
+        "_environment",
+        staticmethod(
+            lambda path: {
+                "EVA_LIVING_CORE_IMAGE": (
+                    source_image if path == source.environment else target_image
+                )
+            }
+        ),
+    )
+
+    def fake_run(command: list[str], **_kwargs: object) -> str:
+        if command[-1] == "schema-installer":
+            raise QuiescentCutoverError(
+                "command failed closed: schema-installer: "
+                "database has an unknown Eva schema revision"
+            )
+        if command[:2] == ["/usr/bin/docker", "run"]:
+            return (
+                "4e_0007_delegated_private\n"
+                if source_image in command
+                else "4e_0006_memory_outbox_erasure\n"
+            )
+        if "SELECT version_num FROM public.eva_alembic_version;" in command:
+            return "future_untrusted_revision\n"
+        raise AssertionError(command)
+
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(fake_run))
+
+    with pytest.raises(QuiescentCutoverError, match="cannot be attributed"):
+        SystemBackend().migrate_schema(source, target)
 
 
 def _container(
@@ -281,8 +384,8 @@ class FakeBackend:
         marker = "reverse" if snapshot is self.reverse else "forward"
         self._call(f"restore:{slot.number}:{marker}")
 
-    def migrate_schema(self, slot: SlotSpec) -> None:
-        self._call(f"migrate:{slot.number}")
+    def migrate_schema(self, source: SlotSpec, target: SlotSpec) -> None:
+        self._call(f"migrate:{source.number}:{target.number}")
 
     def verify_runtime(self, slot: SlotSpec) -> None:
         self._call(f"verify:{slot.number}")
@@ -316,7 +419,7 @@ def test_quiesces_copies_attests_and_only_then_switches(tmp_path: Path) -> None:
         "stop:4",
         "snapshot:3:forward",
         "restore:4:forward",
-        "migrate:4",
+        "migrate:3:4",
         "start:4",
         "verify:4",
         "route:44711",
@@ -351,9 +454,9 @@ def test_failure_before_route_restores_source_without_reversing_data(
 def test_schema_migration_failure_never_starts_or_routes_target(
     tmp_path: Path,
 ) -> None:
-    backend = FakeBackend(tmp_path, fail_at="migrate:4")
+    backend = FakeBackend(tmp_path, fail_at="migrate:3:4")
 
-    with pytest.raises(QuiescentCutoverError, match="failed at migrate:4"):
+    with pytest.raises(QuiescentCutoverError, match="failed at migrate:3:4"):
         quiescent_cutover(
             source_slot=3,
             target_slot=4,

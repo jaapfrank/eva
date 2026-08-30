@@ -50,6 +50,23 @@ MANIFEST = (
     Path(__file__).resolve().parents[1] / "deploy/living-core/managed-b.compose.yml"
 )
 
+_SCHEMA_HEAD_SCRIPT = (
+    "from eva.operations.install_schema import _HEAD_REVISION; "
+    "print(_HEAD_REVISION)"
+)
+_SCHEMA_DOWNGRADE_SCRIPT = (
+    "import sys; "
+    "from alembic import command; "
+    "from alembic.config import Config; "
+    "from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn; "
+    "from eva.bootstrap.secrets import read_runtime_secret_file; "
+    "dsn=sqlalchemy_postgres_dsn(read_runtime_secret_file("
+    "'/run/secrets/database_dsn',setting_name='EVA_DATABASE_DSN_FILE')); "
+    "config=Config('/opt/eva/alembic.ini'); "
+    "config.set_main_option('sqlalchemy.url',dsn.replace('%','%%')); "
+    "command.downgrade(config,sys.argv[1])"
+)
+
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
        (xpath('/row/c/text()', query_to_xml(
@@ -144,7 +161,7 @@ class CutoverBackend(Protocol):
 
     def restore(self, slot: SlotSpec, snapshot: DatabaseSnapshot) -> None: ...
 
-    def migrate_schema(self, slot: SlotSpec) -> None: ...
+    def migrate_schema(self, source: SlotSpec, target: SlotSpec) -> None: ...
 
     def verify_runtime(self, slot: SlotSpec) -> None: ...
 
@@ -238,7 +255,19 @@ class SystemBackend:
         self.owner_uid = owner_uid
 
     @staticmethod
-    def _run(command: list[str], *, timeout: int = 180) -> str:
+    def _run(
+        command: list[str],
+        *,
+        timeout: int = 180,
+        extra_env: dict[str, str] | None = None,
+    ) -> str:
+        process_environment = {
+            "HOME": "/root",
+            "LC_ALL": "C",
+            "PATH": os.environ["PATH"],
+        }
+        if extra_env:
+            process_environment.update(extra_env)
         try:
             completed = subprocess.run(
                 command,
@@ -246,7 +275,7 @@ class SystemBackend:
                 capture_output=True,
                 text=True,
                 timeout=timeout,
-                env={"HOME": "/root", "LC_ALL": "C", "PATH": os.environ["PATH"]},
+                env=process_environment,
             )
         except subprocess.CalledProcessError as exc:
             diagnostic = _sanitize("\n".join((exc.stdout or "", exc.stderr or "")))
@@ -513,31 +542,146 @@ class SystemBackend:
                 "retained slot core image differs from its environment"
             )
 
-    def migrate_schema(self, slot: SlotSpec) -> None:
-        """Let the target image upgrade its private restored database once."""
+    @staticmethod
+    def _schema_installer_command(slot: SlotSpec) -> list[str]:
+        return [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(slot.environment),
+            "--project-name",
+            slot.project,
+            "--file",
+            str(MANIFEST),
+            "--profile",
+            "schema-install",
+            "run",
+            "--rm",
+            "schema-installer",
+        ]
 
-        if self._is_running(slot.core) or self._is_running(slot.hindsight):
+    @classmethod
+    def _image_schema_head(cls, image: str) -> str:
+        output = cls._run(
+            [
+                DOCKER,
+                "run",
+                "--rm",
+                "--network",
+                "none",
+                "--read-only",
+                "--cap-drop",
+                "ALL",
+                "--security-opt",
+                "no-new-privileges:true",
+                "--entrypoint",
+                "/usr/local/bin/python",
+                image,
+                "-c",
+                _SCHEMA_HEAD_SCRIPT,
+            ]
+        ).strip()
+        if not re.fullmatch(r"[a-z0-9_]{8,96}", output):
+            raise QuiescentCutoverError("candidate image schema head is invalid")
+        return output
+
+    @classmethod
+    def _database_revision(cls, slot: SlotSpec) -> str:
+        output = cls._run(
+            [
+                DOCKER,
+                "exec",
+                "-u",
+                "postgres",
+                slot.operational_postgres,
+                "/usr/bin/psql",
+                "-X",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-U",
+                "postgres",
+                "-d",
+                "eva2",
+                "-Atc",
+                "SELECT version_num FROM public.eva_alembic_version;",
+            ]
+        ).strip()
+        if not re.fullmatch(r"[a-z0-9_]{8,96}", output):
+            raise QuiescentCutoverError("restored database schema head is invalid")
+        return output
+
+    def _downgrade_to_target_head(
+        self,
+        *,
+        source: SlotSpec,
+        target: SlotSpec,
+        source_image: str,
+        target_head: str,
+    ) -> None:
+        command = [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(target.environment),
+            "--project-name",
+            target.project,
+            "--file",
+            str(MANIFEST),
+            "--profile",
+            "schema-install",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--entrypoint",
+            "/usr/local/bin/python",
+            "schema-installer",
+            "-c",
+            _SCHEMA_DOWNGRADE_SCRIPT,
+            target_head,
+        ]
+        self._run(
+            command,
+            timeout=300,
+            extra_env={"EVA_LIVING_CORE_IMAGE": source_image},
+        )
+
+    def migrate_schema(self, source: SlotSpec, target: SlotSpec) -> None:
+        """Upgrade normally or losslessly downgrade one retained release."""
+
+        if self._is_running(target.core) or self._is_running(target.hindsight):
             raise QuiescentCutoverError(
                 "schema migration requires stopped target writers"
             )
-        self._run(
-            [
-                DOCKER,
-                "compose",
-                "--env-file",
-                str(slot.environment),
-                "--project-name",
-                slot.project,
-                "--file",
-                str(MANIFEST),
-                "--profile",
-                "schema-install",
-                "run",
-                "--rm",
-                "schema-installer",
-            ],
-            timeout=300,
+        installer = self._schema_installer_command(target)
+        try:
+            self._run(installer, timeout=300)
+            return
+        except QuiescentCutoverError as exc:
+            if "database has an unknown Eva schema revision" not in str(exc):
+                raise
+
+        source_environment = self._environment(source.environment)
+        target_environment = self._environment(target.environment)
+        source_image = source_environment.get("EVA_LIVING_CORE_IMAGE", "")
+        target_image = target_environment.get("EVA_LIVING_CORE_IMAGE", "")
+        if not source_image or not target_image or source_image == target_image:
+            raise QuiescentCutoverError(
+                "schema rollback images are missing or identical"
+            )
+        source_head = self._image_schema_head(source_image)
+        target_head = self._image_schema_head(target_image)
+        database_head = self._database_revision(target)
+        if database_head != source_head or target_head == source_head:
+            raise QuiescentCutoverError(
+                "restored schema cannot be attributed to the source release"
+            )
+        self._downgrade_to_target_head(
+            source=source,
+            target=target,
+            source_image=source_image,
+            target_head=target_head,
         )
+        self._run(installer, timeout=300)
 
     @staticmethod
     def _database_counts(container: str, database: str) -> dict[str, int]:
@@ -921,7 +1065,7 @@ def quiescent_cutover(
         backend.stop_writers(target)
         snapshot = backend.snapshot(source, workspace, "forward")
         backend.restore(target, snapshot)
-        backend.migrate_schema(target)
+        backend.migrate_schema(source, target)
         target_started = True
         backend.start_writers(target)
         backend.verify_runtime(target)
