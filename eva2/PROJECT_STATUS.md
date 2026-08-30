@@ -118,7 +118,9 @@ Betekenis:
 - 🟡 De vier benodigde benchmarkdiensten zijn exact vastgezet. Alleen het
   model krijgt internet; worker, database en controller blijven intern en
   publiceren geen poorten. De echte registratie van alle 60 ontwikkelcases is
-  groen; de geselecteerde cases zijn nog niet uitgevoerd.
+  groen. De eerste start van cases 32–39 vond een ontbrekende interne
+  database-alias en stopte vóór vraagtekst, modelcall, SQL of score; de kleine
+  correctie is getest maar nog niet opnieuw gestart.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.

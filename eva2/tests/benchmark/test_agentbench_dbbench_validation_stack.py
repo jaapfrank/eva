@@ -32,7 +32,9 @@ def test_only_model_has_egress_and_no_service_has_a_host_port() -> None:
     services = _services()
     assert services["controller"]["networks"] == ["task"]
     assert services["worker"]["networks"] == ["task"]
-    assert services["mysql"]["networks"] == ["task"]
+    assert services["mysql"]["networks"] == {
+        "task": {"aliases": ["dbbench-mysql"]}
+    }
     assert services["model"]["networks"] == ["task", "model-egress"]
     assert all("ports" not in service for service in services.values())
 
@@ -65,3 +67,4 @@ def test_mysql_is_ephemeral_and_memory_bounded() -> None:
     assert mysql["environment"] == {
         "MYSQL_ROOT_PASSWORD_FILE": "/run/secrets/mysql-root-password"
     }
+    assert mysql["networks"]["task"]["aliases"] == ["dbbench-mysql"]

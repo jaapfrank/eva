@@ -1,0 +1,45 @@
+{
+  "contract": "EvaAgentBenchDbBenchZeroWorkStartupFailure/v1",
+  "observedAt": "2026-08-30T11:17:24+02:00",
+  "selectionReceipt": "agentbench-dbbench-eva-validation-feedback-cases-32-39-selection-2026-08-30.json",
+  "caseIndices": [32, 33, 34, 35, 36, 37, 38, 39],
+  "outcome": {
+    "startupFailures": 8,
+    "taskMessagesReturned": 0,
+    "modelCalls": 0,
+    "sqlCalls": 0,
+    "scoresProduced": 0,
+    "hiddenAnswersRead": false,
+    "failureCategory": "mysql_internal_dns_alias_missing"
+  },
+  "diagnosis": {
+    "configuredMySqlHost": "dbbench-mysql",
+    "composeServiceNameBeforeCorrection": "mysql",
+    "workerError": "temporary_failure_in_name_resolution",
+    "correction": "add only the dbbench-mysql alias to the internal task network"
+  },
+  "privateArtifacts": {
+    "locationPublished": false,
+    "batchSummarySha256": "1cb4c92432e724c9a39cb5a2316be03482b45e5b70ce71ed318750cc677c8949",
+    "caseArtifactSha256": {
+      "32": "e8044bb2326d72dd4980c21a9e96cb01b5ab5fd441d0d5f7faa77b94a7a4f5e7",
+      "33": "743646cc275ddb90adec2bc0b4c1f58b9b58160037f38e77e94a50cecff46b95",
+      "34": "7689ad79c944d92e90f0c3a71e0c29a11bb65aa8c311b6538ae20f9667c617c1",
+      "35": "3aac29fbc0992b43ab5fc02d16d6b1e61935a3c665f66780484220788bb19c19",
+      "36": "35fe96634fb9e3e9954cdd78d23d2ebbba31ec46c16e61aedfa968e298287ba8",
+      "37": "4e5d659826160c951dec980cf3c235cfbc333297c82964a0358690604c379da0",
+      "38": "eb08173b011b38e47cb1f7c64c6c884ca4e541196778d6605a58dd106a2b9c1a",
+      "39": "f3ab7b23d9f5d526de12c4bf0fdd826e375cd2a8cc292bb4ec4a92e2d1456e1a"
+    }
+  },
+  "decision": {
+    "countsAsBenchmarkResult": false,
+    "sameSelectionMayResumeAfterCommittedInfrastructureCorrection": true,
+    "reason": "No task message, model call, SQL call, score or hidden answer existed."
+  },
+  "nonClaims": [
+    "This is not a model or benchmark failure.",
+    "No official score was produced.",
+    "No superiority claim is made."
+  ]
+}

@@ -25,7 +25,9 @@ services:
       - /var/run/mysqld:rw,nosuid,nodev,noexec,size=16m
       - /tmp:rw,nosuid,nodev,noexec,size=32m
     mem_limit: 1g
-    networks: [task]
+    networks:
+      task:
+        aliases: ["dbbench-mysql"]
 
   model:
     image: eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616
