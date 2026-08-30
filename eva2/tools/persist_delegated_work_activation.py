@@ -203,6 +203,123 @@ def _atomic_write(path: Path, raw: bytes, metadata: os.stat_result) -> None:
         os.close(directory)
 
 
+def _replaceable_owner_binding(
+    raw: bytes, *, owner_principal_id: str, owner_binding_id: str
+) -> bool:
+    try:
+        document = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return False
+    if (
+        not isinstance(document, dict)
+        or set(document) != {"bindings", "contract"}
+        or document.get("contract") != "EvaTelegramPrincipalBindings/v2"
+        or not isinstance(document.get("bindings"), list)
+        or len(document["bindings"]) != 1
+    ):
+        return False
+    binding = document["bindings"][0]
+    if (
+        not isinstance(binding, dict)
+        or set(binding)
+        != {
+            "allowed_chat_ids",
+            "principal_binding_id",
+            "principal_id",
+            "telegram_user_id",
+        }
+        or binding.get("principal_id") != owner_principal_id
+        or binding.get("principal_binding_id") != owner_binding_id
+        or isinstance(binding.get("telegram_user_id"), bool)
+        or not isinstance(binding.get("telegram_user_id"), int)
+    ):
+        return False
+    telegram_user_id = binding["telegram_user_id"]
+    return (
+        1 <= telegram_user_id <= _MAX_TELEGRAM_USER_ID
+        and binding.get("allowed_chat_ids") == [str(telegram_user_id)]
+    )
+
+
+def _owner_binding_payload(
+    *, telegram_user_id: int, owner_principal_id: str, owner_binding_id: str
+) -> bytes:
+    return (
+        json.dumps(
+            {
+                "bindings": [
+                    {
+                        "allowed_chat_ids": [str(telegram_user_id)],
+                        "principal_binding_id": owner_binding_id,
+                        "principal_id": owner_principal_id,
+                        "telegram_user_id": telegram_user_id,
+                    }
+                ],
+                "contract": "EvaTelegramPrincipalBindings/v2",
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode("utf-8")
+        + b"\n"
+    )
+
+
+def rebind_owner_telegram_account(
+    environment_path: Path, *, telegram_user_id: int
+) -> dict[str, object]:
+    """Replace only the private Telegram account for the same sealed owner."""
+
+    if (
+        isinstance(telegram_user_id, bool)
+        or not isinstance(telegram_user_id, int)
+        or not 1 <= telegram_user_id <= _MAX_TELEGRAM_USER_ID
+    ):
+        raise DelegatedWorkActivationError("delegated Telegram identity is invalid")
+    environment, _ = _private_environment(environment_path)
+    values: dict[str, str] = {}
+    try:
+        lines = environment.decode("utf-8").splitlines()
+    except UnicodeDecodeError as error:
+        raise DelegatedWorkActivationError("managed environment is not UTF-8") from error
+    for line in lines:
+        key, separator, value = line.partition("=")
+        if not separator or not key:
+            continue
+        if key in values:
+            raise DelegatedWorkActivationError("managed environment repeats a key")
+        values[key] = value
+    try:
+        owner_principal_id = str(UUID(values["EVA_RUNTIME_PRINCIPAL_ID"]))
+        owner_binding_id = str(UUID(values["EVA_DASHBOARD_PRINCIPAL_BINDING_ID"]))
+    except (KeyError, ValueError) as error:
+        raise DelegatedWorkActivationError(
+            "managed owner authority is invalid"
+        ) from error
+    bindings_path = environment_path.parent / "secrets/telegram-bindings"
+    before, metadata = _private_bindings(bindings_path)
+    if not _replaceable_owner_binding(
+        before,
+        owner_principal_id=owner_principal_id,
+        owner_binding_id=owner_binding_id,
+    ):
+        raise DelegatedWorkActivationError("Telegram bindings carry other authority")
+    after = _owner_binding_payload(
+        telegram_user_id=telegram_user_id,
+        owner_principal_id=owner_principal_id,
+        owner_binding_id=owner_binding_id,
+    )
+    _atomic_write(bindings_path, after, metadata)
+    return {
+        "beforeSha256": _sha256(before),
+        "afterSha256": _sha256(after),
+        "contract": "EvaManagedBOwnerTelegramRebindingReceipt/v1",
+        "ownerAuthorityChanged": False,
+        "status": "persisted",
+        "telegramBindingCount": 1,
+    }
+
+
 def persist_delegated_work_activation(
     environment_path: Path,
     *,
@@ -211,6 +328,7 @@ def persist_delegated_work_activation(
     owner_principal_id: str,
     owner_binding_id: str,
     telegram_user_id: int,
+    replace_existing_owner_binding: bool = False,
     runner: Runner = _run,
 ) -> dict[str, object]:
     if (
@@ -238,26 +356,17 @@ def persist_delegated_work_activation(
         owner_principal_id=owner_principal_id,
         owner_binding_id=owner_binding_id,
     )
-    bindings_after = (
-        json.dumps(
-            {
-                "bindings": [
-                    {
-                        "allowed_chat_ids": [str(telegram_user_id)],
-                        "principal_binding_id": owner_binding_id,
-                        "principal_id": owner_principal_id,
-                        "telegram_user_id": telegram_user_id,
-                    }
-                ],
-                "contract": "EvaTelegramPrincipalBindings/v2",
-            },
-            ensure_ascii=False,
-            separators=(",", ":"),
-            sort_keys=True,
-        ).encode("utf-8")
-        + b"\n"
+    bindings_after = _owner_binding_payload(
+        telegram_user_id=telegram_user_id,
+        owner_principal_id=owner_principal_id,
+        owner_binding_id=owner_binding_id,
     )
-    if bindings_before.strip() not in {b"{}", bindings_after.strip()}:
+    replaceable = replace_existing_owner_binding and _replaceable_owner_binding(
+        bindings_before,
+        owner_principal_id=owner_principal_id,
+        owner_binding_id=owner_binding_id,
+    )
+    if bindings_before.strip() not in {b"{}", bindings_after.strip()} and not replaceable:
         raise DelegatedWorkActivationError("Telegram bindings already carry authority")
     _atomic_write(bindings_path, bindings_after, bindings_metadata)
     _atomic_write(environment_path, after, metadata)
@@ -269,6 +378,7 @@ def persist_delegated_work_activation(
         "contract": "EvaManagedBDelegatedWorkActivationReceipt/v1",
         "imageSourceCommit": core_source,
         "ownerAuthorityFieldCount": 2,
+        "ownerBindingReplaced": replaceable,
         "status": "persisted",
         "telegramBindingCount": 1,
     }
@@ -282,6 +392,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--owner-principal-id", required=True)
     parser.add_argument("--owner-binding-id", required=True)
     parser.add_argument("--telegram-user-id", required=True, type=int)
+    parser.add_argument("--replace-existing-owner-binding", action="store_true")
     arguments = parser.parse_args(argv)
     if _MANAGED_ENVIRONMENT.fullmatch(str(arguments.environment)) is None:
         print(json.dumps({"error": "environment is not admitted", "status": "failed"}))
@@ -294,6 +405,7 @@ def main(argv: list[str] | None = None) -> int:
             owner_principal_id=arguments.owner_principal_id,
             owner_binding_id=arguments.owner_binding_id,
             telegram_user_id=arguments.telegram_user_id,
+            replace_existing_owner_binding=arguments.replace_existing_owner_binding,
         )
     except DelegatedWorkActivationError as error:
         print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
