@@ -101,6 +101,14 @@ REQUIRED_CONFIGURATION = (
     "EVA_HINDSIGHT_ACCESS_DIR",
 )
 
+DELEGATED_WORK_ACTIVATION_CONFIGURATION = (
+    "EVA_DELEGATED_WORK_IMAGE",
+    "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
+    "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
+    "EVA_DELEGATED_WORK_EPISODE_ID",
+    "EVA_DELEGATED_WORK_GENERATION",
+)
+
 # This value is derived from the exact private environment snapshot.  Keeping it
 # in that snapshot would make its own hash self-referential and unverifiable.
 DERIVED_CONFIGURATION = ("EVA_B_CONFIGURATION_SHA256",)
@@ -303,6 +311,27 @@ def _validate_configuration(values: dict[str, str]) -> None:
     for required in REQUIRED_CONFIGURATION:
         if not values.get(required):
             raise RuntimeError(f"{required} is required for capability preservation")
+
+    delegated = {
+        name: values.get(name, "").strip()
+        for name in DELEGATED_WORK_ACTIVATION_CONFIGURATION
+    }
+    if any(delegated.values()) and not all(delegated.values()):
+        raise RuntimeError(
+            "delegated work activation requires the image and complete owner authority"
+        )
+    if all(delegated.values()):
+        if not re.fullmatch(r".+@sha256:[0-9a-f]{64}", delegated["EVA_DELEGATED_WORK_IMAGE"]):
+            raise RuntimeError("EVA_DELEGATED_WORK_IMAGE must use an exact sha256 digest")
+        try:
+            UUID(delegated["EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID"])
+            UUID(delegated["EVA_DELEGATED_WORK_OWNER_BINDING_ID"])
+            UUID(delegated["EVA_DELEGATED_WORK_EPISODE_ID"])
+            delegated_generation = int(delegated["EVA_DELEGATED_WORK_GENERATION"])
+        except ValueError as error:
+            raise RuntimeError("delegated work owner authority is invalid") from error
+        if not 1 <= delegated_generation <= 2_147_483_647:
+            raise RuntimeError("delegated work owner authority is invalid")
 
     if values["EVA_B_COMPOSE_PROJECT"] != "eva2-b-live":
         raise RuntimeError("EVA_B_COMPOSE_PROJECT must be exactly eva2-b-live")

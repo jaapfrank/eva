@@ -474,6 +474,10 @@ services:
       EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
       EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE: /run/secrets/telegram_principal_bindings
       EVA_TELEGRAM_PAIRING_SECRET_FILE: /run/secrets/telegram_pairing_secret
+      EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID: ${EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID:-}
+      EVA_DELEGATED_WORK_OWNER_BINDING_ID: ${EVA_DELEGATED_WORK_OWNER_BINDING_ID:-}
+      EVA_DELEGATED_WORK_EPISODE_ID: ${EVA_DELEGATED_WORK_EPISODE_ID:-}
+      EVA_DELEGATED_WORK_GENERATION: ${EVA_DELEGATED_WORK_GENERATION:-}
     volumes:
       - type: bind
         source: ${EVA_DATABASE_DSN_FILE_HOST:?set a runtime-owned PostgreSQL DSN file}

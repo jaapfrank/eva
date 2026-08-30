@@ -89,6 +89,12 @@ Compose-profiel `delegated-work` en hoort niet bij die actieve grafiek. Daarna
 zijn beide databases gestart, het schema geïnstalleerd, een echte Codex-beurt uitgevoerd
 en database, Hindsight en core samen herstart. Dit bewijst de kandidaatgrafiek,
 niet de productieadoptie. Een gecontroleerde data-overdracht, A/B-omschakeling
+
+De worker kan alleen samen met een exact digest en vier complete
+eigenaarsvelden worden voorbereid. Een halve set stopt vóór Docker. Ook met een
+complete set blijft de worker uit totdat de operator expliciet het profiel
+`delegated-work` kiest. Telegram controleert daarna privéchat, persoon,
+vertrouwde accountbinding en de nog actieve episode opnieuw in PostgreSQL.
 en terugrol op de echte B blijven afzonderlijke gates.
 
 ## Herstartbewijs zonder zelfonderbreking

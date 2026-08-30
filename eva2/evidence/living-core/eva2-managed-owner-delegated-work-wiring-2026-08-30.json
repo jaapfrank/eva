@@ -1,0 +1,47 @@
+{
+  "contract": "EvaManagedOwnerDelegatedWorkWiringReceipt/v1",
+  "observedAt": "2026-08-30T10:31:29+02:00",
+  "status": "tested",
+  "source": {
+    "baseCommit": "c9799ab",
+    "files": {
+      "deploy/living-core/MANAGED_B_HOST_CONTRACT.md": "eb9c10df5b66bc75801b29c5727f1ee74a02ee8ae4a5ed8001cbc520c984be7f",
+      "deploy/living-core/managed-b.compose.yml": "959bfd48a3cc096e9b78022d30811cc05ac7660a8190a4cae7d9abc38943ddb8",
+      "deploy/living-core/runtime.env.example": "42f8277418acb85dd0d6406193fabdc2eb8698e2950a199c9a8fd3ba5a629055",
+      "tests/bootstrap/test_managed_b_manifest.py": "9e2810b7d88101b1867ef84ba569c92f6ced69e74bf60e9a63d1748873b1d02f",
+      "tests/operations/test_core_b_preflight.py": "d84bdfdea5f18a11e54f7cda9feee98d212a5d2cdc7c80d46f66497986ddc4d9",
+      "tools/core_b_preflight.py": "b1e0711529f0d9321efb9f945b02fec24ce966816ee087a434a99258ff863d06"
+    }
+  },
+  "activation": {
+    "defaultActiveServiceCount": 9,
+    "defaultContainsDelegatedWorker": false,
+    "optInServiceCount": 10,
+    "optInContainsDelegatedWorker": true,
+    "requiredProfile": "delegated-work",
+    "completeAuthorityFieldCount": 4,
+    "workerImageMustUseExactDigest": true,
+    "partialConfigurationRejectedBeforeDocker": true,
+    "runtimeRevalidatesPrivateChat": true,
+    "runtimeRevalidatesOwnerPrincipal": true,
+    "runtimeRevalidatesTelegramBinding": true,
+    "runtimeRevalidatesCurrentEpisode": true
+  },
+  "verification": {
+    "composeVersion": "2.40.3-desktop.1",
+    "focusedTestsPassed": 66,
+    "ruff": "passed",
+    "readOnlyComposeRenders": 3,
+    "containersCreated": 0,
+    "containersStarted": 0,
+    "liveEva1Modified": false,
+    "liveEva2Modified": false
+  },
+  "nonClaims": [
+    "No real owner identifiers were written to this receipt.",
+    "No delegated worker was started.",
+    "No Telegram message or model call was sent.",
+    "This proves fail-closed managed wiring, not the later live Telegram trial."
+  ],
+  "conclusion": "The managed runtime now exposes delegated research only through an explicit profile, an immutable local image, and a complete owner authority; its default graph remains unchanged."
+}
