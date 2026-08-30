@@ -17,6 +17,7 @@ from eva.adapters.connectors.home_assistant_mcp import (
     HomeAssistantMcpError,
     call_assist_effect,
 )
+from eva.application.conversation import ConversationToolDescriptor
 from eva.application.orchestration import (
     ToolDispatchResult,
     ToolExecutionRejected,
@@ -44,6 +45,115 @@ _GENERIC_ENTITY_WORDS = frozenset(
 )
 
 
+def _conversation_schema(
+    description: str | None = None,
+    *,
+    enum: tuple[str, ...] = (),
+) -> dict[str, JsonValue]:
+    schema: dict[str, JsonValue] = {"type": "string"}
+    if description is not None:
+        schema["description"] = description
+    if enum:
+        schema["enum"] = list(enum)
+    return schema
+
+
+def _conversation_tool(
+    name: str,
+    description: str,
+    properties: dict[str, dict[str, JsonValue]],
+) -> ConversationToolDescriptor:
+    return ConversationToolDescriptor(
+        name=name,
+        description=description,
+        input_schema={
+            "additionalProperties": False,
+            "properties": properties,
+            "required": list(properties),
+            "type": "object",
+        },
+    )
+
+
+_CONVERSATION_TOOLS = (
+    _conversation_tool(
+        "set_home_assistant_light",
+        (
+            "Zet precies één bestaand licht in huis aan of uit. Gebruik de naam "
+            "die de gebruiker noemt; de provideradapter resolveert die fail-closed "
+            "en geeft pas een resultaat na onafhankelijke statuscontrole."
+        ),
+        {
+            "state": _conversation_schema(enum=("on", "off")),
+            "target": _conversation_schema(
+                "De letterlijke lamp- of ruimtenaam uit het verzoek."
+            ),
+        },
+    ),
+    _conversation_tool(
+        "set_home_assistant_switch",
+        (
+            "Zet precies één bestaand aan/uit-apparaat aan of uit, bijvoorbeeld "
+            "een verwarming of slim stopcontact. Gebruik de natuurlijke naam uit "
+            "het gesprek; de provideradapter resolveert uitsluitend toegestane "
+            "schakelaars en claimt pas succes na onafhankelijke statuscontrole. "
+            "Gebruik dit niet voor lampen, sloten of alarmsystemen. Een korte "
+            "bevestiging neemt het concrete apparaat en de richting uit het direct "
+            "voorafgaande voorstel over; vraag daar niet opnieuw naar."
+        ),
+        {
+            "state": _conversation_schema(enum=("on", "off")),
+            "target": _conversation_schema(
+                "De natuurlijke apparaat- of ruimtenaam uit het gesprek."
+            ),
+        },
+    ),
+    _conversation_tool(
+        "read_home_assistant_history",
+        (
+            "Lees de echte providerhistorie van één genoemde lamp, schakelaar of "
+            "een natuurlijk genoemde lichtgroep om te beantwoorden wanneer die aan "
+            "of uit ging. Dit is een alleen-lezen actie met bronbewijs; gok niet "
+            "vanuit gesprek of herinneringen."
+        ),
+        {
+            "entity_kind": _conversation_schema(
+                "light voor een lamp; switch voor een aan/uit-apparaat.",
+                enum=("light", "switch"),
+            ),
+            "period": _conversation_schema(
+                enum=("yesterday", "today", "last_24_hours")
+            ),
+            "target": _conversation_schema(
+                "De natuurlijke lamp-, apparaat- of gebiedsnaam uit de vraag; "
+                "behoud bijvoorbeeld 'licht in de overkapping' als groepstaal."
+            ),
+            "transition_to": _conversation_schema(
+                "De gevraagde toestand; any bij een algemene wijziging.",
+                enum=("on", "off", "any"),
+            ),
+        },
+    ),
+    _conversation_tool(
+        "read_home_assistant_state",
+        (
+            "Lees de actuele echte toestand van precies één lamp of schakelaar bij "
+            "de toolprovider. Gebruik dit voor vragen of een apparaat nu aan, uit "
+            "of onbeschikbaar is; baseer dit niet op oude gesprekscontext."
+        ),
+        {
+            "entity_kind": _conversation_schema(
+                "light voor een lamp; switch voor een aan/uit-apparaat.",
+                enum=("light", "switch"),
+            ),
+            "target": _conversation_schema(
+                "De natuurlijke lamp- of apparaatnaam uit de vraag."
+            ),
+        },
+    ),
+)
+
+
 @dataclass(frozen=True, slots=True)
 class HomeAssistantConfig:
     base_url: str
@@ -65,6 +175,12 @@ class HomeAssistantConfig:
 class HomeAssistantToolAdapter:
     def __init__(self, config: HomeAssistantConfig) -> None:
         self._config = config
+
+    @staticmethod
+    def conversation_tools() -> tuple[ConversationToolDescriptor, ...]:
+        """Expose provider-owned model tools without teaching the model adapter HA."""
+
+        return _CONVERSATION_TOOLS
 
     async def health(self) -> bool:
         payload = await self._request_json("GET", "/api/")
@@ -428,6 +544,7 @@ def _select_observed(
         }
     validate_json_value(observed)
     return observed
+
 
 def _text_or_none(value: Any) -> str | None:
     return value if isinstance(value, str) else None

@@ -41,7 +41,10 @@ class ConversationClarificationRequired(RuntimeError):
 
 
 _SHA256 = re.compile(r"[0-9a-f]{64}")
-_TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar("eva_conversation_text_delta_sink", default=None)
+_TOOL_NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,63}")
+_TEXT_DELTA_SINK: ContextVar[Callable[[str], None] | None] = ContextVar(
+    "eva_conversation_text_delta_sink", default=None
+)
 
 
 @contextmanager
@@ -70,22 +73,35 @@ class ConversationModelUsage:
     output_tokens: int | None
 
     def __post_init__(self) -> None:
-        values = (self.model_attempts, self.tool_calls, self.input_tokens, self.output_tokens)
+        values = (
+            self.model_attempts,
+            self.tool_calls,
+            self.input_tokens,
+            self.output_tokens,
+        )
         if self.measurement == "unmeasured":
             if any(value is not None for value in values):
                 raise ValueError("unmeasured model usage cannot carry values")
             return
         if self.measurement != "measured" or any(value is None for value in values):
             raise ValueError("measured model usage is incomplete")
-        if any(not isinstance(value, int) or isinstance(value, bool) for value in values):
+        if any(
+            not isinstance(value, int) or isinstance(value, bool) for value in values
+        ):
             raise ValueError("measured model usage is invalid")
         attempts, tools, inputs, outputs = (int(value) for value in values)
         if attempts < 1 or min(tools, inputs, outputs) < 0:
             raise ValueError("measured model usage is invalid")
 
     @classmethod
-    def measured(cls, *, model_attempts: int = 1, tool_calls: int,
-                 input_tokens: int, output_tokens: int) -> "ConversationModelUsage":
+    def measured(
+        cls,
+        *,
+        model_attempts: int = 1,
+        tool_calls: int,
+        input_tokens: int,
+        output_tokens: int,
+    ) -> "ConversationModelUsage":
         return cls("measured", model_attempts, tool_calls, input_tokens, output_tokens)
 
     @classmethod
@@ -93,26 +109,45 @@ class ConversationModelUsage:
         return cls("unmeasured", None, None, None, None)
 
     @classmethod
-    def aggregate(cls, usages: tuple["ConversationModelUsage", ...]) -> "ConversationModelUsage":
+    def aggregate(
+        cls, usages: tuple["ConversationModelUsage", ...]
+    ) -> "ConversationModelUsage":
         if not usages or any(usage.measurement == "unmeasured" for usage in usages):
             return cls.unmeasured()
-        return cls.measured(model_attempts=sum(usage.model_attempts or 0 for usage in usages),
-                            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
-                            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
-                            output_tokens=sum(usage.output_tokens or 0 for usage in usages))
+        return cls.measured(
+            model_attempts=sum(usage.model_attempts or 0 for usage in usages),
+            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
+            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
+            output_tokens=sum(usage.output_tokens or 0 for usage in usages),
+        )
 
     def to_wire(self) -> dict[str, str | int | None]:
-        return {"input_tokens": self.input_tokens, "measurement": self.measurement,
-                "model_attempts": self.model_attempts, "output_tokens": self.output_tokens,
-                "tool_calls": self.tool_calls}
+        return {
+            "input_tokens": self.input_tokens,
+            "measurement": self.measurement,
+            "model_attempts": self.model_attempts,
+            "output_tokens": self.output_tokens,
+            "tool_calls": self.tool_calls,
+        }
 
     @classmethod
     def from_wire(cls, value: object) -> "ConversationModelUsage":
-        fields = {"input_tokens", "measurement", "model_attempts", "output_tokens", "tool_calls"}
+        fields = {
+            "input_tokens",
+            "measurement",
+            "model_attempts",
+            "output_tokens",
+            "tool_calls",
+        }
         if not isinstance(value, dict) or set(value) != fields:
             raise ValueError("model usage payload is invalid")
         measurement = value["measurement"]
-        numeric = (value["model_attempts"], value["tool_calls"], value["input_tokens"], value["output_tokens"])
+        numeric = (
+            value["model_attempts"],
+            value["tool_calls"],
+            value["input_tokens"],
+            value["output_tokens"],
+        )
         if measurement not in {"measured", "unmeasured"} or any(
             item is not None and (not isinstance(item, int) or isinstance(item, bool))
             for item in numeric
@@ -130,7 +165,10 @@ class ConversationModelTiming:
 
     def __post_init__(self) -> None:
         values = (self.first_content_ms, self.completed_ms)
-        if any(value is not None and (type(value) is not int or value < 0) for value in values):
+        if any(
+            value is not None and (type(value) is not int or value < 0)
+            for value in values
+        ):
             raise ValueError("model timing is invalid")
         if self.first_content_ms is not None and (
             self.completed_ms is None or self.first_content_ms > self.completed_ms
@@ -149,15 +187,25 @@ class ConversationModelTiming:
             return cls.unmeasured()
         completed = sum(item.completed_ms or 0 for item in timings)
         final_first = timings[-1].first_content_ms
-        first = None if final_first is None else completed - (timings[-1].completed_ms or 0) + final_first
+        first = (
+            None
+            if final_first is None
+            else completed - (timings[-1].completed_ms or 0) + final_first
+        )
         return cls(first, completed)
 
     def to_wire(self) -> dict[str, int | None]:
-        return {"completed_ms": self.completed_ms, "first_content_ms": self.first_content_ms}
+        return {
+            "completed_ms": self.completed_ms,
+            "first_content_ms": self.first_content_ms,
+        }
 
     @classmethod
     def from_wire(cls, value: object) -> "ConversationModelTiming":
-        if not isinstance(value, dict) or set(value) != {"completed_ms", "first_content_ms"}:
+        if not isinstance(value, dict) or set(value) != {
+            "completed_ms",
+            "first_content_ms",
+        }:
             raise ValueError("model timing payload is invalid")
         return cls(value["first_content_ms"], value["completed_ms"])  # type: ignore[arg-type]
 
@@ -393,6 +441,38 @@ class ConversationActionCall:
 
 
 @dataclass(frozen=True, slots=True)
+class ConversationToolDescriptor:
+    """Provider-owned model description for one externally executable tool."""
+
+    name: str
+    description: str
+    input_schema: dict[str, JsonValue]
+
+    def __post_init__(self) -> None:
+        if _TOOL_NAME.fullmatch(self.name) is None:
+            raise ValueError("conversation tool name is invalid")
+        if (
+            not self.description.strip()
+            or len(self.description.encode("utf-8")) > 4_096
+        ):
+            raise ValueError("conversation tool description is invalid")
+        validate_json_value(self.input_schema)
+        if (
+            self.input_schema.get("type") != "object"
+            or self.input_schema.get("additionalProperties") is not False
+            or not isinstance(self.input_schema.get("properties"), dict)
+            or not isinstance(self.input_schema.get("required"), list)
+            or any(
+                not isinstance(value, str)
+                for value in self.input_schema.get("required", [])
+            )
+            or len(json.dumps(self.input_schema, ensure_ascii=False).encode("utf-8"))
+            > 16_384
+        ):
+            raise ValueError("conversation tool input schema is invalid")
+
+
+@dataclass(frozen=True, slots=True)
 class ConversationActionReceipt:
     call: ConversationActionCall
     output: dict[str, JsonValue]
@@ -524,54 +604,54 @@ class LivingConversation:
                         memory_query_hints
                     )
             query = RecallCurrentFacts(
-                    recall_id=f"conversation:{turn.message_id}",
-                    installation_id=turn.installation_id,
-                    tenant_id=turn.tenant_id,
-                    principal_id=turn.principal_id,
-                    audience=turn.audience,
-                    conversation_id=turn.conversation_id,
-                    query_purpose="conversation_reply",
-                    requested_valid_at=turn.occurred_at,
-                    project_id=turn.project_id,
-                    scope=(
-                        {
-                            "kind": "telegram_group",
-                            "group_chat_id": turn.audience.group_chat_id,
-                        }
-                        if turn.audience.kind == "telegram_group"
-                        else {
-                            "kind": "person",
-                            "principal_id": turn.principal_id,
-                            **(
-                                {}
-                                if turn.observation_binding is None
-                                else {
-                                    "observation_binding_sha256": (
-                                        turn.observation_binding.binding_sha256
-                                    )
-                                }
-                            ),
-                        }
-                        if turn.project_id is None
-                        else {
-                            "kind": "person_project",
-                            "principal_id": turn.principal_id,
-                            "project_id": turn.project_id,
-                            **(
-                                {}
-                                if turn.observation_binding is None
-                                else {
-                                    "observation_binding_sha256": (
-                                        turn.observation_binding.binding_sha256
-                                    )
-                                }
-                            ),
-                        }
-                    ),
-                    subject_ids=(turn.principal_id,),
-                    query_text=grounded_query,
-                    maximum_facts=12,
-                )
+                recall_id=f"conversation:{turn.message_id}",
+                installation_id=turn.installation_id,
+                tenant_id=turn.tenant_id,
+                principal_id=turn.principal_id,
+                audience=turn.audience,
+                conversation_id=turn.conversation_id,
+                query_purpose="conversation_reply",
+                requested_valid_at=turn.occurred_at,
+                project_id=turn.project_id,
+                scope=(
+                    {
+                        "kind": "telegram_group",
+                        "group_chat_id": turn.audience.group_chat_id,
+                    }
+                    if turn.audience.kind == "telegram_group"
+                    else {
+                        "kind": "person",
+                        "principal_id": turn.principal_id,
+                        **(
+                            {}
+                            if turn.observation_binding is None
+                            else {
+                                "observation_binding_sha256": (
+                                    turn.observation_binding.binding_sha256
+                                )
+                            }
+                        ),
+                    }
+                    if turn.project_id is None
+                    else {
+                        "kind": "person_project",
+                        "principal_id": turn.principal_id,
+                        "project_id": turn.project_id,
+                        **(
+                            {}
+                            if turn.observation_binding is None
+                            else {
+                                "observation_binding_sha256": (
+                                    turn.observation_binding.binding_sha256
+                                )
+                            }
+                        ),
+                    }
+                ),
+                subject_ids=(turn.principal_id,),
+                query_text=grounded_query,
+                maximum_facts=12,
+            )
             fast_recall = getattr(self._memory, "recall_for_presence_fast", None)
             recalled = (
                 fast_recall(query)
@@ -589,12 +669,19 @@ class LivingConversation:
                 if callable(action_selector)
                 else self._actions.action_names
             )
-        self_context = () if self._actions is None else self._actions.active_context(turn)
+        self_context = (
+            () if self._actions is None else self._actions.active_context(turn)
+        )
         memory = recall(turn.text, fast=True)
         generated = self._model.generate(
-            turn, self._identity, memory, recent_messages,
-            available_actions=available_names, completed_action=completed,
-            self_context=self_context)
+            turn,
+            self._identity,
+            memory,
+            recent_messages,
+            available_actions=available_names,
+            completed_action=completed,
+            self_context=self_context,
+        )
         usages = [generated.usage]
         timings = [generated.timing]
         if (
@@ -610,13 +697,14 @@ class LivingConversation:
                 or len(query_text.encode("utf-8")) > 1_024
             ):
                 raise RuntimeError("conversation memory search request is invalid")
-            expanded = recall(
-                f"{turn.text}\nSemantische zoekconcepten: {query_text}"
-            )
+            expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
             if expanded.confirmed_facts:
                 memory = expanded
             generated = self._model.generate(
-                turn, self._identity, memory, recent_messages,
+                turn,
+                self._identity,
+                memory,
+                recent_messages,
                 available_actions=available_names,
                 completed_action=ConversationActionReceipt(
                     call=generated.action_call,
@@ -720,6 +808,7 @@ __all__ = [
     "ConversationActionCall",
     "ConversationActionPort",
     "ConversationActionReceipt",
+    "ConversationToolDescriptor",
     "ConversationClarificationRequired",
     "ConversationConflict",
     "ConversationObservationBinding",

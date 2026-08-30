@@ -574,7 +574,7 @@ class RuntimeSettings:
         if background_tenant_id is None or background_installation_id is None:
             raise RuntimeError("Eva runtime tenant and installation scope are required")
         _require_complete_configuration(
-            "Eva Home Assistant configuration is incomplete",
+            "Eva external tool provider configuration is incomplete",
             home_assistant_url,
             home_assistant_token,
         )
@@ -600,7 +600,7 @@ class RuntimeSettings:
         ):
             raise RuntimeError("Eva Stripe webhook scope is incomplete")
         if not home_assistant_event_domains:
-            raise RuntimeError("Eva Home Assistant event domain set is empty")
+            raise RuntimeError("Eva external tool event domain set is empty")
         if not 1 <= cold_path_idle_seconds <= 86_400:
             raise RuntimeError("Eva cold-path idle period is outside 1..86400 seconds")
         if not 10 <= personal_interest_lease_seconds <= 600:
@@ -1022,7 +1022,11 @@ class PostgresHindsightMemoryRuntime:
 
         bindings = self._telegram_principal_bindings
         commands = self._delegated_work_commands
-        if bindings is None or commands is None or turn.audience.kind != "private_person":
+        if (
+            bindings is None
+            or commands is None
+            or turn.audience.kind != "private_person"
+        ):
             return None
         authority_principal = bindings.resolve(telegram_user_id, chat_id)
         authority_binding = bindings.resolve_binding_id(telegram_user_id, chat_id)
@@ -1037,18 +1041,14 @@ class PostgresHindsightMemoryRuntime:
             turn.text,
             turn.occurred_at,
         )
-        if not commands.matches(
-            authority_turn, principal_binding_id=authority_binding
-        ):
+        if not commands.matches(authority_turn, principal_binding_id=authority_binding):
             return None
         journal = self._journal(turn)
         journal.admit(turn)
         committed = journal.committed_reply(turn)
         if committed is not None:
             return committed
-        reply = commands.handle(
-            authority_turn, principal_binding_id=authority_binding
-        )
+        reply = commands.handle(authority_turn, principal_binding_id=authority_binding)
         if reply is None:
             raise RuntimeError("delegated owner command disappeared after admission")
         return journal.commit_reply(turn, reply)
@@ -1969,6 +1969,7 @@ def create_runtime_app() -> FastAPI:
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
         transport_kind="openai_sdk",
         resource_budget=settings.runtime_resource_budget,
+        conversation_tools=HomeAssistantToolAdapter.conversation_tools(),
     )
     home_assistant = (
         None

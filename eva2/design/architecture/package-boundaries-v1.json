@@ -99,7 +99,13 @@
     }
   },
   "providerSpecificCoreDebt": {
-    "patterns": ["home_assistant", "localtuya", "tuya"],
+    "patterns": [
+      "home_assistant",
+      "homeassistant",
+      "home assistant",
+      "localtuya",
+      "tuya"
+    ],
     "scopedPaths": [
       "src/eva/application",
       "src/eva/contracts",
@@ -109,12 +115,13 @@
       "src/eva/bootstrap"
     ],
     "fileCeilings": {
-      "src/eva/application/advanced_tasks.py": 197,
-      "src/eva/adapters/model/conversation.py": 75,
-      "src/eva/adapters/postgres/advanced_tasks.py": 6,
-      "src/eva/adapters/postgres/conversation_actions.py": 281,
-      "src/eva/adapters/postgres/home_assistant_reads.py": 19,
-      "src/eva/bootstrap/runtime.py": 188,
+      "src/eva/application/advanced_tasks.py": 234,
+      "src/eva/application/home_automation.py": 3,
+      "src/eva/adapters/model/conversation.py": 77,
+      "src/eva/adapters/postgres/advanced_tasks.py": 13,
+      "src/eva/adapters/postgres/conversation_actions.py": 346,
+      "src/eva/adapters/postgres/home_assistant_reads.py": 49,
+      "src/eva/bootstrap/runtime.py": 222,
       "src/eva/contracts/voice.py": 1
     }
   },

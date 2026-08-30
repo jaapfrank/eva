@@ -15,6 +15,7 @@ from typing import Any, Iterator
 import pytest
 
 import eva.adapters.model.conversation as conversation_module
+from eva.adapters.connectors.home_assistant import HomeAssistantToolAdapter
 from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
@@ -76,9 +77,33 @@ def _deferred_tool(body: dict[str, Any], name: str) -> dict[str, Any]:
     return matches[0]
 
 
+def _home_tool_model(**kwargs: Any) -> CodexConversationModel:
+    return CodexConversationModel(
+        conversation_tools=HomeAssistantToolAdapter.conversation_tools(),
+        **kwargs,
+    )
+
+
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "9d3624047ef4be866f9196a25dbf40c700e7f038ba34d51c60bd672fdb4b4131"
+        "c2f9f6103abc6e8dd161be229f2b1b16d0a3784f122d4f3c69bf7f592ad9c255"
+    )
+    assert not {
+        "set_home_assistant_light",
+        "set_home_assistant_switch",
+        "read_home_assistant_history",
+        "read_home_assistant_state",
+    } & set(conversation_module._ACTION_TOOLS)
+    provider_tools = [
+        {
+            "description": descriptor.description,
+            "input_schema": descriptor.input_schema,
+            "name": descriptor.name,
+        }
+        for descriptor in HomeAssistantToolAdapter.conversation_tools()
+    ]
+    assert canonical_sha256(provider_tools) == (
+        "755c4c9f6db76656389ef2444fde7e15fc4818298f7b4140e01e487896560957"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -141,9 +166,12 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "record_observation_identity_correction")
     assert binding.binding_sha256 in bodies[0]["input"][0]["content"]
-    assert "Leid zelf geen gezicht of naam" in _deferred_tool(
-        bodies[0], "record_observation_identity_correction"
-    )["description"]
+    assert (
+        "Leid zelf geen gezicht of naam"
+        in _deferred_tool(bodies[0], "record_observation_identity_correction")[
+            "description"
+        ]
+    )
 
 
 def test_validated_file_edit_is_a_closed_model_action(
@@ -188,9 +216,12 @@ def test_validated_file_edit_is_a_closed_model_action(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")
-    assert "uitsluitend deze wijziging terug" in _deferred_tool(
-        bodies[0], "edit_text_file_with_focused_validation"
-    )["description"]
+    assert (
+        "uitsluitend deze wijziging terug"
+        in _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")[
+            "description"
+        ]
+    )
 
 
 def test_tool_free_text_generation_exposes_no_model_tools(
@@ -731,11 +762,19 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     assert "temperament en humor als zichtbaar gedrag" in requests[0]["instructions"]
     assert "één lichte, droge, speelse formulering" in requests[0]["instructions"]
     assert "over de situatie of een voorwerp" in requests[0]["instructions"]
-    assert "geen aparte grap, extra slotzin of tweede beeldspraak" in requests[0]["instructions"]
-    assert "Forceer nooit humor bij verdriet, gevaar of angst" in requests[0]["instructions"]
+    assert (
+        "geen aparte grap, extra slotzin of tweede beeldspraak"
+        in requests[0]["instructions"]
+    )
+    assert (
+        "Forceer nooit humor bij verdriet, gevaar of angst"
+        in requests[0]["instructions"]
+    )
     assert "concreet, beredeneerd eigen standpunt" in requests[0]["instructions"]
     assert "natuurlijk hedendaags spreektaal" in requests[0]["instructions"]
-    assert "niet stijver of langer om identiteit te tonen" in requests[0]["instructions"]
+    assert (
+        "niet stijver of langer om identiteit te tonen" in requests[0]["instructions"]
+    )
     assert "claim alleen wat aantoonbaar is gelukt" in requests[0]["instructions"]
     assert "Jaap wil korte, directe en warme antwoorden" in requests[0]["instructions"]
     assert "kopieer geen zinnen, typefouten of boosheid" in requests[0]["instructions"]
@@ -845,9 +884,10 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
 
     assert _deferred_tool(requests[0], "checkpoint_document_task")
     instructions = requests[0]["instructions"]
-    assert "direct actieve taak uit dit gesprek" in _deferred_tool(
-        requests[0], "checkpoint_document_task"
-    )["description"]
+    assert (
+        "direct actieve taak uit dit gesprek"
+        in _deferred_tool(requests[0], "checkpoint_document_task")["description"]
+    )
     assert "Direct actieve documenttaak in dit gesprek" in instructions
 
 
@@ -857,7 +897,7 @@ def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
     endpoint, requests = model_server
     auth_file = tmp_path / "auth.json"
     _write_access_lease(auth_file)
-    model = CodexConversationModel(
+    model = _home_tool_model(
         auth_file=auth_file, endpoint=endpoint, reasoning_effort="high"
     )
     model.generate(
@@ -883,7 +923,7 @@ def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
 def test_dynamic_catalog_defers_memory_and_available_actions(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
     bodies: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
@@ -896,8 +936,13 @@ def test_dynamic_catalog_defers_memory_and_available_actions(
 
     monkeypatch.setattr(model, "_request", request)
     turn = ConversationTurn.private(
-        "tenant", "installation", "jaap", "conversation", "message-memory-query",
-        "Welke kant moet de temperatuur onder de overkapping volgens mij op?", NOW,
+        "tenant",
+        "installation",
+        "jaap",
+        "conversation",
+        "message-memory-query",
+        "Welke kant moet de temperatuur onder de overkapping volgens mij op?",
+        NOW,
     )
 
     result = model.generate(
@@ -927,7 +972,7 @@ def test_full_dynamic_conversation_body_passes_the_existing_input_budget(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     bodies: list[dict[str, Any]] = []
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
 
     def request(body: dict[str, Any]) -> tuple[str, None]:
         bodies.append(body)
@@ -1084,7 +1129,7 @@ def test_stream_read_timeout_is_a_bounded_provider_error(
 def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
     captured: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
@@ -1124,9 +1169,9 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
     assert result.action_call is not None
     assert result.action_call.name == "set_home_assistant_switch"
     assert _deferred_tool(captured[0], "set_home_assistant_switch")
-    switch_description = _deferred_tool(
-        captured[0], "set_home_assistant_switch"
-    )["description"]
+    switch_description = _deferred_tool(captured[0], "set_home_assistant_switch")[
+        "description"
+    ]
     assert "sloten of alarmsystemen" in switch_description
     assert "Een korte bevestiging" in switch_description
     assert "vraag daar niet opnieuw naar" in switch_description
@@ -1135,7 +1180,7 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
 def test_model_can_choose_bounded_home_assistant_history_read(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
     captured: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
@@ -1171,14 +1216,16 @@ def test_model_can_choose_bounded_home_assistant_history_read(
     assert result.action_call is not None
     assert result.action_call.arguments["period"] == "yesterday"
     assert _deferred_tool(captured[0], "read_home_assistant_history")
-    assert "gok niet vanuit gesprek of herinneringen" in _deferred_tool(
-        captured[0], "read_home_assistant_history"
-    )["description"]
+    assert (
+        "gok niet vanuit gesprek of herinneringen"
+        in _deferred_tool(captured[0], "read_home_assistant_history")["description"]
+    )
     assert (
         "behoud bijvoorbeeld 'licht in de overkapping'"
         in (
-            _deferred_tool(captured[0], "read_home_assistant_history")
-            ["parameters"]["properties"]["target"]["description"]
+            _deferred_tool(captured[0], "read_home_assistant_history")["parameters"][
+                "properties"
+            ]["target"]["description"]
         )
     )
 
@@ -1186,7 +1233,7 @@ def test_model_can_choose_bounded_home_assistant_history_read(
 def test_model_can_choose_current_home_assistant_state_read(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
     captured: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
@@ -1217,9 +1264,10 @@ def test_model_can_choose_current_home_assistant_state_read(
     assert result.action_call is not None
     assert result.action_call.arguments["entity_kind"] == "switch"
     assert _deferred_tool(captured[0], "read_home_assistant_state")
-    assert "niet op oude gesprekscontext" in _deferred_tool(
-        captured[0], "read_home_assistant_state"
-    )["description"]
+    assert (
+        "niet op oude gesprekscontext"
+        in _deferred_tool(captured[0], "read_home_assistant_state")["description"]
+    )
 
 
 def test_dutch_identity_retries_an_accidental_foreign_script(
@@ -1502,9 +1550,9 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
     )
 
     assert result.action_call == call
-    description = _deferred_tool(
-        bodies[0], "create_home_assistant_state_automation"
-    )["description"]
+    description = _deferred_tool(bodies[0], "create_home_assistant_state_automation")[
+        "description"
+    ]
     assert "zonder het woord automatisering" in description
     assert "beweer niet dat de Home Assistant-koppeling ontbreekt" in description
 
@@ -1696,9 +1744,10 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")
-    assert "migreert nog niets" in _deferred_tool(
-        bodies[0], "plan_tuya_to_localtuya_migration"
-    )["description"]
+    assert (
+        "migreert nog niets"
+        in _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")["description"]
+    )
 
 
 def test_tuya_receipt_is_factual_input_not_a_robotic_script(
@@ -1791,9 +1840,12 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "install_approved_localtuya_package")
-    assert "expliciet toestemming geeft" in _deferred_tool(
-        bodies[0], "install_approved_localtuya_package"
-    )["description"]
+    assert (
+        "expliciet toestemming geeft"
+        in _deferred_tool(bodies[0], "install_approved_localtuya_package")[
+            "description"
+        ]
+    )
 
 
 def test_explicit_followup_can_register_only_exact_localtuya_repository(
@@ -1838,9 +1890,12 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "register_approved_localtuya_repository")
-    assert "registreert alleen de repository" in _deferred_tool(
-        bodies[0], "register_approved_localtuya_repository"
-    )["description"]
+    assert (
+        "registreert alleen de repository"
+        in _deferred_tool(bodies[0], "register_approved_localtuya_repository")[
+            "description"
+        ]
+    )
 
 
 def test_explicit_fanout_request_selects_one_multi_recipient_action(
@@ -1882,9 +1937,10 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "deliver_test_message_fanout")
-    assert "acceptatie of afwijzing apart" in _deferred_tool(
-        bodies[0], "deliver_test_message_fanout"
-    )["description"]
+    assert (
+        "acceptatie of afwijzing apart"
+        in _deferred_tool(bodies[0], "deliver_test_message_fanout")["description"]
+    )
 
 
 def test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt(
@@ -1987,9 +2043,10 @@ def test_future_condition_selects_bounded_durable_goal_action(
         "cancel_active_durable_goal",
     ]
     assert "vraag de gebruiker niet om later opnieuw" not in bodies[0]["instructions"]
-    assert "precies één deadline" in _deferred_tool(
-        bodies[0], "create_bounded_durable_goal"
-    )["description"]
+    assert (
+        "precies één deadline"
+        in _deferred_tool(bodies[0], "create_bounded_durable_goal")["description"]
+    )
 
 
 def test_durable_goal_receipt_does_not_claim_work_already_finished(

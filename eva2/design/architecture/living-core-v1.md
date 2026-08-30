@@ -65,12 +65,14 @@ Zij kent geen Home Assistant, Tuya, agenda-, mail- of browsersemantiek. Zulke
 kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
-De bestaande bron voldoet hier nog niet aan. Zeven bestanden in applicatie,
-modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen 767
-`home_assistant`-/`localtuya`-/`tuya`-identifiers. De architectuurchecker legt
-die aantallen nu als uitsluitend dalende bovengrens vast: geen nieuw bestand en
-geen bestaand bestand mag meer providerspecifieke kernlogica krijgen. De gate
-wordt pas inhoudelijk groen wanneer alle zeven bovengrenzen nul zijn en twee
+De bestaande bron voldoet hier nog niet aan. Acht bestanden in applicatie,
+modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 945
+Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en CamelCase. De
+eerste verplaatsing heeft twaalf identifiers verwijderd en laat de vier gewone
+lees/aan-uit-schemas nu uit de adapter komen. De architectuurchecker legt de
+resterende aantallen als uitsluitend dalende bovengrens vast: geen nieuw bestand
+en geen bestaand bestand mag meer providerspecifieke kernlogica krijgen. De gate
+wordt pas inhoudelijk groen wanneer alle acht bovengrenzen nul zijn en twee
 verschillende providers zonder kernwijziging dezelfde toolroute doorlopen.
 
 ## De drie geheugens

@@ -25,6 +25,7 @@ from eva.application.conversation import (
     ConversationModelResult,
     ConversationModelTiming,
     ConversationModelUsage,
+    ConversationToolDescriptor,
     ConversationTurn,
     IdentityProfile,
     MEMORY_SEARCH_ACTION,
@@ -88,6 +89,8 @@ _VALIDATED_FILE_EDIT_ACTION = "edit_text_file_with_focused_validation"
 _REPOSITORY_IMPROVEMENT_ACTION = "improve_isolated_repository"
 _REPOSITORY_PROPOSAL_ACTION = "submit_repository_improvement"
 _OBSERVATION_IDENTITY_CORRECTION_ACTION = "record_observation_identity_correction"
+
+
 def _schema(
     description: str | None = None,
     *,
@@ -122,6 +125,16 @@ def _tool(
             "required": list(properties) if required is None else list(required),
             "type": "object",
         },
+        "strict": True,
+        "type": "function",
+    }
+
+
+def _descriptor_tool(descriptor: ConversationToolDescriptor) -> dict[str, Any]:
+    return {
+        "description": descriptor.description,
+        "name": descriptor.name,
+        "parameters": descriptor.input_schema,
         "strict": True,
         "type": "function",
     }
@@ -175,67 +188,6 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "De eerste concrete vraag die Eva hierover wil onderzoeken."
         ),
         title=_schema("Een korte natuurlijke naam voor de interesse."),
-    ),
-    _HOME_ASSISTANT_LIGHT_ACTION: _tool(
-        _HOME_ASSISTANT_LIGHT_ACTION,
-        (
-            "Zet precies één bestaand licht in huis aan of uit. Gebruik de naam "
-            "die de gebruiker noemt; de host resolveert die fail-closed naar Home "
-            "Assistant en geeft pas een receipt na onafhankelijke statuscontrole."
-        ),
-        state=_schema(enum=("on", "off")),
-        target=_schema("De letterlijke lamp- of ruimtenaam uit het verzoek."),
-    ),
-    _HOME_ASSISTANT_SWITCH_ACTION: _tool(
-        _HOME_ASSISTANT_SWITCH_ACTION,
-        (
-            "Zet precies één bestaand aan/uit-apparaat in Home Assistant aan of "
-            "uit, bijvoorbeeld een verwarming of slim stopcontact. Gebruik de "
-            "natuurlijke naam uit het gesprek; de host resolveert uitsluitend "
-            "binnen switch.* en claimt pas succes na onafhankelijke "
-            "statuscontrole. Gebruik dit niet voor lampen, sloten of alarmsystemen. "
-            "Een korte bevestiging neemt het concrete apparaat en de richting uit "
-            "het direct voorafgaande voorstel over; vraag daar niet opnieuw naar."
-        ),
-        state=_schema(enum=("on", "off")),
-        target=_schema("De natuurlijke apparaat- of ruimtenaam uit het gesprek."),
-    ),
-    _HOME_ASSISTANT_HISTORY_ACTION: _tool(
-        _HOME_ASSISTANT_HISTORY_ACTION,
-        (
-            "Lees de echte Home Assistant-recordergeschiedenis van één genoemde "
-            "lamp, schakelaar of een natuurlijk genoemde lichtgroep om te "
-            "beantwoorden wanneer die aan of uit ging. Dit is een alleen-lezen "
-            "actie met bronbewijs; gok niet vanuit gesprek of herinneringen."
-        ),
-        entity_kind=_schema(
-            "light voor een lamp; switch voor een aan/uit-apparaat.",
-            enum=("light", "switch"),
-        ),
-        period=_schema(enum=("yesterday", "today", "last_24_hours")),
-        target=_schema(
-            (
-                "De natuurlijke lamp-, apparaat- of gebiedsnaam uit de vraag; behoud "
-                "bijvoorbeeld 'licht in de overkapping' als groepstaal."
-            )
-        ),
-        transition_to=_schema(
-            "De gevraagde toestand; any bij een algemene wijziging.",
-            enum=("on", "off", "any"),
-        ),
-    ),
-    _HOME_ASSISTANT_STATE_ACTION: _tool(
-        _HOME_ASSISTANT_STATE_ACTION,
-        (
-            "Lees de actuele echte toestand van precies één lamp of schakelaar in "
-            "Home Assistant. Gebruik dit voor vragen of een apparaat nu aan, uit "
-            "of onbeschikbaar is; baseer dit niet op oude gesprekscontext."
-        ),
-        entity_kind=_schema(
-            "light voor een lamp; switch voor een aan/uit-apparaat.",
-            enum=("light", "switch"),
-        ),
-        target=_schema("De natuurlijke lamp- of apparaatnaam uit de vraag."),
     ),
     _HOME_ASSISTANT_AUTOMATION_ACTION: _tool(
         _HOME_ASSISTANT_AUTOMATION_ACTION,
@@ -566,6 +518,7 @@ class CodexConversationModel:
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
         transport_kind: Literal["legacy_urllib", "openai_sdk"] = "legacy_urllib",
         resource_budget: RuntimeResourceBudget | None = None,
+        conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -579,6 +532,13 @@ class CodexConversationModel:
             raise ValueError("conversation reasoning effort is invalid")
         if transport_kind not in {"legacy_urllib", "openai_sdk"}:
             raise ValueError("conversation model transport is invalid")
+        external_names = [descriptor.name for descriptor in conversation_tools]
+        if (
+            len(set(external_names)) != len(external_names)
+            or MEMORY_SEARCH_ACTION in external_names
+            or set(external_names) & set(_ACTION_TOOLS)
+        ):
+            raise ValueError("conversation tool catalog contains duplicate names")
         self._auth_file = auth_file
         self._model = model
         self._endpoint = endpoint
@@ -587,6 +547,10 @@ class CodexConversationModel:
         self._reasoning_effort = reasoning_effort
         self._transport_kind = transport_kind
         self._resource_budget = resource_budget
+        self._conversation_tools = {
+            descriptor.name: _descriptor_tool(descriptor)
+            for descriptor in conversation_tools
+        }
         self._openai_transport = (
             OpenAIResponsesTransport(
                 endpoint=endpoint,
@@ -652,7 +616,9 @@ class CodexConversationModel:
         }
         text, action_call, usage, timing = self._request_conversation(body)
         if action_call is not None or not text.strip():
-            raise ConversationModelError("tool-free conversation returned invalid output")
+            raise ConversationModelError(
+                "tool-free conversation returned invalid output"
+            )
         return ConversationModelResult(
             text=text.strip(),
             provider=f"chatgpt-codex:{self._model}",
@@ -671,7 +637,8 @@ class CodexConversationModel:
         completed_action: ConversationActionReceipt | None = None,
         self_context: tuple[str, ...] = (),
     ) -> ConversationModelResult:
-        unknown = set(available_actions) - set(_ACTION_TOOLS)
+        action_tools = {**_ACTION_TOOLS, **self._conversation_tools}
+        unknown = set(available_actions) - set(action_tools)
         if unknown:
             raise ValueError(f"unknown conversation actions: {sorted(unknown)!r}")
         memory_completed = (
@@ -726,10 +693,9 @@ class CodexConversationModel:
             )
         dynamic_tools = []
         if offer_tools:
-            catalog = (
-                ([] if memory_completed else [_MEMORY_SEARCH_TOOL])
-                + [_ACTION_TOOLS[name] for name in available_actions]
-            )
+            catalog = ([] if memory_completed else [_MEMORY_SEARCH_TOOL]) + [
+                action_tools[name] for name in available_actions
+            ]
             dynamic_tools = [
                 {"type": "tool_search", "execution": "server"},
                 *[{**tool, "defer_loading": True} for tool in catalog],
@@ -1501,9 +1467,15 @@ class CodexConversationModel:
             tools = body.get("tools")
             tool_search = {"execution": "server", "type": "tool_search"}
             if isinstance(tools, list) and tools[:1] == [tool_search]:
-                expected = {MEMORY_SEARCH_ACTION: _MEMORY_SEARCH_TOOL, **_ACTION_TOOLS}
+                expected = {
+                    MEMORY_SEARCH_ACTION: _MEMORY_SEARCH_TOOL,
+                    **_ACTION_TOOLS,
+                    **self._conversation_tools,
+                }
                 deferred = tools[1:]
-                names = [item.get("name") for item in deferred if isinstance(item, dict)]
+                names = [
+                    item.get("name") for item in deferred if isinstance(item, dict)
+                ]
                 if (
                     len(names) != len(deferred)
                     or len(names) > len(expected)
@@ -1686,9 +1658,7 @@ class CodexConversationModel:
             return None
 
     @staticmethod
-    def _iter_sse_events(
-        response: Any, label: str
-    ) -> Iterator[tuple[Any, Any]]:
+    def _iter_sse_events(response: Any, label: str) -> Iterator[tuple[Any, Any]]:
         total = 0
         event_type: str | None = None
         for raw in response:
@@ -1737,9 +1707,7 @@ class CodexConversationModel:
         completed_parts: list[str] = []
         cited: dict[str, str] = {}
         consulted: dict[str, str] = {}
-        for kind, data in CodexConversationModel._iter_sse_events(
-            response, "research"
-        ):
+        for kind, data in CodexConversationModel._iter_sse_events(response, "research"):
             if kind in {"response.output_text.delta", "response.text.delta"}:
                 delta = data.get("delta")
                 if not isinstance(delta, str):
