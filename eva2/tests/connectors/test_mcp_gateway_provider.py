@@ -133,6 +133,8 @@ def test_gateway_provider_rejects_inline_or_incomplete_authority(
         "EVA_MCP_GATEWAY_URL",
     ):
         monkeypatch.delenv(name, raising=False)
+    assert McpGatewayProviderFactory.load_settings() is None
+    monkeypatch.setenv("EVA_MCP_GATEWAY_URL", "https://gateway.example.invalid")
     with pytest.raises(RuntimeError, match="incomplete"):
         McpGatewayProviderFactory.load_settings()
     monkeypatch.setenv("EVA_MCP_GATEWAY_TOKEN", "forbidden")

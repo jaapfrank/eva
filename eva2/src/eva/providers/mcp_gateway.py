@@ -148,7 +148,7 @@ class McpGatewayProviderFactory:
     provider_id = "mcp_gateway"
 
     @staticmethod
-    def load_settings() -> McpGatewayProviderSettings:
+    def load_settings() -> McpGatewayProviderSettings | None:
         if "EVA_MCP_GATEWAY_TOKEN" in os.environ:
             raise RuntimeError(
                 "EVA_MCP_GATEWAY_TOKEN is forbidden; use EVA_MCP_GATEWAY_TOKEN_FILE"
@@ -156,7 +156,10 @@ class McpGatewayProviderFactory:
         base_url = _environment_value("EVA_MCP_GATEWAY_URL")
         token_file = _environment_value("EVA_MCP_GATEWAY_TOKEN_FILE")
         catalog_file = _environment_value("EVA_MCP_GATEWAY_CATALOG_FILE")
-        if not base_url or not token_file or not catalog_file:
+        configured = (bool(base_url), bool(token_file), bool(catalog_file))
+        if not any(configured):
+            return None
+        if not all(configured):
             raise RuntimeError("MCP gateway provider configuration is incomplete")
         allow_plain_raw = _environment_value(
             "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP"

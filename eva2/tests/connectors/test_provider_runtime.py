@@ -23,7 +23,9 @@ def test_provider_settings_stay_outside_core_and_fail_closed(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     for name in tuple(provider_runtime.os.environ):
-        if name.startswith(("EVA_HOME_ASSISTANT_", "EVA_AGENTMAIL_")):
+        if name.startswith(
+            ("EVA_HOME_ASSISTANT_", "EVA_AGENTMAIL_", "EVA_MCP_GATEWAY_")
+        ):
             monkeypatch.delenv(name, raising=False)
     monkeypatch.delenv("EVA_EXTERNAL_PROVIDER_PLUGINS", raising=False)
     assert load_external_provider_settings() is None
@@ -48,7 +50,9 @@ def test_email_provider_settings_are_file_only_and_live_outside_core(
     private_tmp_path: Path,
 ) -> None:
     for name in tuple(provider_runtime.os.environ):
-        if name.startswith(("EVA_HOME_ASSISTANT_", "EVA_AGENTMAIL_")):
+        if name.startswith(
+            ("EVA_HOME_ASSISTANT_", "EVA_AGENTMAIL_", "EVA_MCP_GATEWAY_")
+        ):
             monkeypatch.delenv(name, raising=False)
     monkeypatch.delenv("EVA_EXTERNAL_PROVIDER_PLUGINS", raising=False)
     key = private_tmp_path / "agentmail-key"
@@ -77,6 +81,9 @@ def test_provider_bundle_registers_tools_without_core_branch(
 ) -> None:
     principal = hashlib.sha256(b"person:owner").hexdigest()
     monkeypatch.delenv("EVA_EXTERNAL_PROVIDER_PLUGINS", raising=False)
+    for name in tuple(provider_runtime.os.environ):
+        if name.startswith("EVA_MCP_GATEWAY_"):
+            monkeypatch.delenv(name, raising=False)
     monkeypatch.setattr(
         provider_runtime,
         "_load_home_automation_settings",
@@ -194,6 +201,10 @@ def test_provider_registry_rejects_missing_plugins_and_duplicate_tools(
         lambda: EmptyEntryPoints(),
     )
     with pytest.raises(RuntimeError, match="not installed"):
+        load_external_provider_settings()
+
+    monkeypatch.setenv("EVA_EXTERNAL_PROVIDER_PLUGINS", "mcp_gateway")
+    with pytest.raises(RuntimeError, match="built-in provider"):
         load_external_provider_settings()
 
     class Port:

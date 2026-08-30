@@ -176,7 +176,6 @@ def _configure_provider(base_url: str, token: str, row: dict[str, object]) -> st
     )
     os.environ.update(
         {
-            "EVA_EXTERNAL_PROVIDER_PLUGINS": "mcp_gateway",
             "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true",
             "EVA_MCP_GATEWAY_CATALOG_FILE": str(catalog_path),
             "EVA_MCP_GATEWAY_TOKEN_FILE": str(token_path),
@@ -335,7 +334,7 @@ def main() -> int:
                 "final_answer": completed.text,
                 "gateway_calls_after_restart_replay": 0,
                 "gateway_calls_for_execution_and_readback": 2,
-                "installed_provider_id": "mcp_gateway",
+                "runtime_provider_id": "mcp_gateway",
                 "model_action": call.name,
                 "model_provider": completed.provider,
                 "postgres_version_num": 160013,

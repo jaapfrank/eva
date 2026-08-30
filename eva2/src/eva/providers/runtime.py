@@ -302,13 +302,22 @@ class _EmailFactory:
 
 
 def _provider_factories() -> tuple[RuntimeProviderFactory, ...]:
+    # Import lazily because the generic gateway returns ProviderContribution.
+    # The transport belongs to Eva's small provider boundary; every concrete
+    # tool behind it remains external and file-configured.
+    from eva.providers.mcp_gateway import McpGatewayProviderFactory
+
     builtins: tuple[RuntimeProviderFactory, ...] = (
         _HomeAutomationFactory(),
         _EmailFactory(),
+        McpGatewayProviderFactory(),
     )
     requested = _items("EVA_EXTERNAL_PROVIDER_PLUGINS")
     if any(_PROVIDER_ID.fullmatch(provider_id) is None for provider_id in requested):
         raise RuntimeError("EVA_EXTERNAL_PROVIDER_PLUGINS is invalid")
+    builtin_ids = {factory.provider_id for factory in builtins}
+    if builtin_ids.intersection(requested):
+        raise RuntimeError("a built-in provider must not be requested as a plugin")
     discovered = _entry_point_factories(requested)
     factories = (*builtins, *discovered)
     ids = [factory.provider_id for factory in factories]
