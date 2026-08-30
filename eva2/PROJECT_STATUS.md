@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 18:37 CEST
+Laatst bijgewerkt: 30 augustus 2026, 18:43 CEST
 
 ## Zo lees je dit bord
 
@@ -47,17 +47,18 @@ telt dus nog niet als gewonnen vergelijking.
 | Laten zien, corrigeren en vergeten wat Eva weet | 🟡 Persoonsgebonden wissen werkt; een compleet eenvoudig geheugenscherm ontbreekt | ⚪ Niet gelijk getest | 📘 Geheugenbeheer beschreven | 📘 Geheugenbeheer beschreven |
 | Oud Eva1-geheugen veilig meenemen | ❌ Nog niet volledig overgezet | Niet van toepassing | Niet van toepassing | Niet van toepassing |
 
-## Tools gebruiken — Home Assistant is één voorbeeld
+## Externe tools gebruiken
 
-Home Assistant is geen onderdeel van Eva's kern en geen unique selling point.
-Het is één verwisselbare externe toolprovider waarmee de algemene Eva-route nu
-praktisch is getest. Dezelfde kernroute moet later ook e-mail, agenda, browser,
-bestanden en nieuwe MCP-tools kunnen kiezen, begrenzen, uitvoeren en controleren.
+Eva's kern kent geen Home Assistant, Tuya, e-maildienst of browsermerk. Zij
+kent alleen beschikbare tools met een beschrijving, invoerschema, rechten,
+risico, uitvoering en controle achteraf. Home Assistant is slechts de eerste
+echte proefprovider voor die algemene route, geen productonderdeel of unique
+selling point.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 Voor gewone huisvragen kiest Eva de officiële Home Assistant-MCP; nog niet over meerdere soorten tools bewezen | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe MCP-tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Home Assistant-catalogus werkt generiek; de algemene plug-inroute is nog niet compleet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | 🟡 Met één echte MCP-provider bewezen; nog niet over meerdere soorten tools | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Eén dynamische toolcatalogus werkt; de algemene plug-inroute is nog niet compleet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
@@ -112,10 +113,10 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Persoonlijkheid zonder code aanpassen | ✅ Identiteit kan veilig worden voorgesteld, ondertekend en teruggezet | 📘 Configuratiebestanden/UI | 📘 Profielen en configuratie | 📘 Agentprofielen |
-| Telegram, Home Assistant, model en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
+| Chatkanalen, modellen, toolproviders en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
 | Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
 | Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
-| Nieuwe tools via MCP of plug-ins toevoegen | ✅ Home Assistant MCP is live; algemene plug-inroute is deels klaar | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
+| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Eén MCP-provider is live; kernonafhankelijk toevoegen en vervangen is nog niet af | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
@@ -141,7 +142,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Op een nieuwe computer installeren met een eenvoudige wizard | ❌ Technische installer bestaat, consumentenwizard niet | 📘 Installatieroute beschikbaar | 📘 Installatie/setup beschikbaar | 📘 Dockerinstallatie en WebUI |
-| Koppelingen tijdens installatie controleren | 🟡 Model, Telegram, Home Assistant en e-mail kunnen apart worden beproefd | 📘 Setup/configuratie | 📘 Setupwizard | 📘 Webconfiguratie |
+| Koppelingen tijdens installatie controleren | 🟡 Model, chat, een toolprovider en e-mail kunnen apart worden beproefd | 📘 Setup/configuratie | 📘 Setupwizard | 📘 Webconfiguratie |
 | Back-up op een andere computer herstellen | 🟡 Kleine niet-lege restore werkt; volledige praktijkverplaatsing ontbreekt | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Veilig naar een nieuwe versie en terug | ✅ Volledige nieuwe→oude→nieuwe A/B-proef met gekopieerde data | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest | ⚪ Niet gelijk met data getest |
 | Zelf nieuwe dependencyversies voorstellen | 🟡 Renovate dry-run vindt alles; echte bot maakt nog geen voorstellen | 📘 Eigen updateroutes | 📘 Eigen updateroute | 📘 Docker-/bronupdates |
@@ -164,7 +165,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Verwisselbare externe tools | MCP en de officiële API/SDK van de gekozen provider; Home Assistant is alleen de eerste live proefprovider | ❌ Eén provider werkt, maar providerspecifieke Home Assistant-/Tuya-code zit nog in applicatie, persistence en runtime en moet uit de kern |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ Eén provider werkt, maar providerspecifieke namen en beslissingen zitten nog in applicatie, modelroute, persistence en runtime |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -195,8 +196,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. Home Assistant-/Tuya-logica uit applicatie, gesprekspersistence en runtime
-   halen; daarna dezelfde algemene toolroute met meerdere providers beproeven.
+3. Alle providerlogica uit applicatie, modelroute, gesprekspersistence en
+   runtime halen; daarna dezelfde algemene toolroute met meerdere willekeurige
+   providers beproeven.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna

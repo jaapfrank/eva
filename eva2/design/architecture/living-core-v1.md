@@ -6,7 +6,7 @@ wordt bij iedere afgeronde verticale stap bijgewerkt.
 ```mermaid
 flowchart TD
     TG[Telegram] --> IN[Connectorneutrale ingress]
-    HA[Home Assistant events] --> IN
+    TP[Toolprovider-events] --> IN
     MAIL[Mail en overige connectors] --> IN
 
     IN --> ES[(PostgreSQL append-only tijdlijn)]
@@ -56,6 +56,22 @@ flowchart TD
 
     ES -. echte events zonder effecten .-> SHADOW[Geïsoleerde B-slot]
 ```
+
+## Harde grens: externe tools zijn geen Eva-onderdelen
+
+Eva's kern kent uitsluitend generieke toolbeschrijvingen, invoerschema's,
+persoonlijke bevoegdheid, risico, idempotency, uitvoering, bewijs en readback.
+Zij kent geen Home Assistant, Tuya, agenda-, mail- of browsersemantiek. Zulke
+kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
+MCP of een gelijkwaardig generiek providercontract.
+
+De bestaande bron voldoet hier nog niet aan. Zeven bestanden in applicatie,
+modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen 767
+`home_assistant`-/`localtuya`-/`tuya`-identifiers. De architectuurchecker legt
+die aantallen nu als uitsluitend dalende bovengrens vast: geen nieuw bestand en
+geen bestaand bestand mag meer providerspecifieke kernlogica krijgen. De gate
+wordt pas inhoudelijk groen wanneer alle zeven bovengrenzen nul zijn en twee
+verschillende providers zonder kernwijziging dezelfde toolroute doorlopen.
 
 ## De drie geheugens
 

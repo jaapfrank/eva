@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,6 +46,92 @@ def _matches(module: str, prefixes: list[str]) -> bool:
     return any(
         module == prefix or module.startswith(f"{prefix}.") for prefix in prefixes
     )
+
+
+def _provider_specific_debt_violations(
+    root: Path, policy_path: Path, raw_policy: object
+) -> list[Violation]:
+    if raw_policy is None:
+        return []
+    if not isinstance(raw_policy, dict):
+        return [
+            Violation(
+                str(policy_path),
+                1,
+                "policy_provider_debt",
+                "providerSpecificCoreDebt must be an object",
+            )
+        ]
+
+    patterns = raw_policy.get("patterns")
+    scoped_paths = raw_policy.get("scopedPaths")
+    ceilings = raw_policy.get("fileCeilings")
+    if (
+        not isinstance(patterns, list)
+        or not patterns
+        or not all(isinstance(value, str) and value for value in patterns)
+        or not isinstance(scoped_paths, list)
+        or not scoped_paths
+        or not all(isinstance(value, str) and value for value in scoped_paths)
+        or not isinstance(ceilings, dict)
+        or not all(
+            isinstance(path, str)
+            and isinstance(limit, int)
+            and not isinstance(limit, bool)
+            and limit >= 0
+            for path, limit in ceilings.items()
+        )
+    ):
+        return [
+            Violation(
+                str(policy_path),
+                1,
+                "policy_provider_debt",
+                "invalid patterns, scopedPaths, or fileCeilings",
+            )
+        ]
+
+    matcher = re.compile(
+        "|".join(re.escape(value) for value in sorted(patterns, key=len, reverse=True)),
+        re.IGNORECASE,
+    )
+    violations: list[Violation] = []
+    checked: set[Path] = set()
+    for relative_scope in scoped_paths:
+        scope = root / relative_scope
+        if not scope.is_dir():
+            violations.append(
+                Violation(str(scope), 1, "missing_provider_debt_scope", relative_scope)
+            )
+            continue
+        for py_file in sorted(scope.rglob("*.py")):
+            if py_file in checked:
+                continue
+            checked.add(py_file)
+            count = len(matcher.findall(py_file.read_text(encoding="utf-8")))
+            if count == 0:
+                continue
+            relative_file = py_file.relative_to(root).as_posix()
+            ceiling = ceilings.get(relative_file)
+            if ceiling is None:
+                violations.append(
+                    Violation(
+                        str(py_file),
+                        1,
+                        "provider_specific_core_debt_new_file",
+                        f"{count} provider-specific identifiers",
+                    )
+                )
+            elif count > ceiling:
+                violations.append(
+                    Violation(
+                        str(py_file),
+                        1,
+                        "provider_specific_core_debt_increase",
+                        f"{count}>{ceiling} provider-specific identifiers",
+                    )
+                )
+    return violations
 
 
 def _imports(path: Path, module_name: str) -> list[tuple[int, str]]:
@@ -136,6 +223,12 @@ def check(root: Path, policy_path: Path) -> list[Violation]:
                 str(policy_path), 1, "policy_forbidden", "invalid forbidden prefixes"
             )
         ]
+
+    violations.extend(
+        _provider_specific_debt_violations(
+            root, policy_path, policy.get("providerSpecificCoreDebt")
+        )
+    )
 
     eva_root = root / "src/eva"
     declared_package_paths = {

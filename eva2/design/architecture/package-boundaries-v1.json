@@ -98,6 +98,26 @@
       "forbiddenImports": ["eva"]
     }
   },
+  "providerSpecificCoreDebt": {
+    "patterns": ["home_assistant", "localtuya", "tuya"],
+    "scopedPaths": [
+      "src/eva/application",
+      "src/eva/contracts",
+      "src/eva/domain",
+      "src/eva/adapters/model",
+      "src/eva/adapters/postgres",
+      "src/eva/bootstrap"
+    ],
+    "fileCeilings": {
+      "src/eva/application/advanced_tasks.py": 197,
+      "src/eva/adapters/model/conversation.py": 75,
+      "src/eva/adapters/postgres/advanced_tasks.py": 6,
+      "src/eva/adapters/postgres/conversation_actions.py": 281,
+      "src/eva/adapters/postgres/home_assistant_reads.py": 19,
+      "src/eva/bootstrap/runtime.py": 188,
+      "src/eva/contracts/voice.py": 1
+    }
+  },
   "forbiddenImportPrefixes": [
     "<dynamic-import>",
     "mind",

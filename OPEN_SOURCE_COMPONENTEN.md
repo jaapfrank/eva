@@ -11,7 +11,7 @@ Eva bouwt alleen zelf wat haar Eva maakt: identiteit, personen en groepen,
 privacy, toestemming, budgetten, persoonlijkheid, het bewijs van een actie en
 de controle of die actie echt is gelukt.
 
-Modelverkeer, chattransport, workflows, geheugenopslag, huisgereedschap,
+Modelverkeer, chattransport, workflows, geheugenopslag, externe tools,
 spraak, browserbediening, dashboards, installatie en dependencyupdates horen
 zoveel mogelijk uit actieve open-sourceprojecten te komen. Een eigen vervanger
 mag alleen blijven na een gemeten vergelijking waarin hij aantoonbaar beter is.
@@ -28,7 +28,7 @@ overlappende Eva-code is verwijderd.
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
-| Verwisselbare externe tools | MCP plus de officiële API/SDK van iedere gekozen provider; Home Assistants [officiële MCP Server](https://github.com/home-assistant/home-assistant.io/blob/current/source/_integrations/mcp_server.markdown) is alleen de eerste live proefprovider en [ha-mcp](https://github.com/homeassistant-ai/ha-mcp) een mogelijke aanvullende tool | De provider werkt live, maar `application/advanced_tasks.py`, gesprekspersistence en runtime bevatten nog expliciete Home Assistant-/Tuya-logica | **Architectuurgrens nu rood: verplaats die logica naar een vervangbare adapter en laat de kern alleen generieke toolcontracten, toestemming, risico en bewijs kennen** |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek catalogus-, uitvoer- en readbackcontract | Eén echte MCP-provider werkt live, maar zeven kernbestanden bevatten samen nog 767 providerspecifieke identifiers | **Architectuurgrens rood: adapters mogen providers kennen; Eva's applicatie, modelroute, persistence en runtime niet** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
 | Browser en computer | [Playwright MCP](https://github.com/microsoft/playwright-mcp) tegenover [Browser Use](https://github.com/browser-use/browser-use); daarna precies één motor | Functionele proeven bestaan, maar de geteste images voldeden niet aan de releasepoort | **Eén veilige brongebouwde winnaar kiezen; geen eigen browserengine** |
 | Subagents en onderzoek | Pydantic AI voor agentruns; een bewezen workflowmotor voor duurzame uitvoering | De actuele kandidaat heeft een grote eigen databaseworker en commandolaag; DBOS won de gemeten vervanging niet | **Bevroren tot een actuele kandidaat netto code verwijdert en de eenmalige-call/crashproef wint** |
@@ -152,6 +152,10 @@ De architectuur blijft daarom verwisselbaar:
 - terugrollen gebruikt het vorige artifact en een vooraf geteste
   data-downgrade of forward-fix;
 - nooit twee concurrerende frameworks tegelijk in de productroute houden.
+
+Home Assistant is binnen dit bord dus geen gekozen Eva-component. Het is
+alleen één huidige testadapter. Dezelfde Eva-kern moet zonder bronwijziging een
+agenda-, mail-, browser-, bestands- of andere MCP-provider kunnen laden.
 
 Hiermee wordt “top of the edge” een terugkerende releasepoort in plaats van een
 marketingclaim van vandaag.

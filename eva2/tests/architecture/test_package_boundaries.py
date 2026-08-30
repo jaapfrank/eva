@@ -236,3 +236,48 @@ def test_unlisted_pep420_namespace_module_is_rejected(tmp_path: Path) -> None:
     assert [(item.code, item.detail) for item in violations] == [
         ("undeclared_python_namespace", "src/eva/domain/unreviewed")
     ]
+
+
+def test_new_provider_specific_core_file_is_rejected(tmp_path: Path) -> None:
+    checker = _checker()
+    policy = json.loads(
+        (ROOT / "design/architecture/package-boundaries-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    _seed_policy_tree(tmp_path, policy)
+    (tmp_path / "src/eva/application/new_provider.py").write_text(
+        'PROVIDER = "home_assistant"\n', encoding="utf-8"
+    )
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+
+    violations = checker.check(tmp_path, policy_path)
+
+    assert [(item.code, item.detail) for item in violations] == [
+        ("provider_specific_core_debt_new_file", "1 provider-specific identifiers")
+    ]
+
+
+def test_provider_specific_core_debt_can_only_decrease(tmp_path: Path) -> None:
+    checker = _checker()
+    policy = json.loads(
+        (ROOT / "design/architecture/package-boundaries-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    _seed_policy_tree(tmp_path, policy)
+    debt = policy["providerSpecificCoreDebt"]
+    assert isinstance(debt, dict)
+    debt["fileCeilings"] = {"src/eva/application/advanced_tasks.py": 1}
+    (tmp_path / "src/eva/application/advanced_tasks.py").write_text(
+        'A = "home_assistant"\nB = "localtuya"\n', encoding="utf-8"
+    )
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+
+    violations = checker.check(tmp_path, policy_path)
+
+    assert [(item.code, item.detail) for item in violations] == [
+        ("provider_specific_core_debt_increase", "2>1 provider-specific identifiers")
+    ]

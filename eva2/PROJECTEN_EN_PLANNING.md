@@ -44,7 +44,7 @@ herhaald.
 | Live bewezen oplevering | Wat jij daarvan terugziet | Bewijsgrens |
 |---|---|---|
 | Bestaande live kernreeks | Vijftien afgesproken kerntaken zijn werkelijk geslaagd | **15/15 live bewezen**; herhaling op de uiteindelijke alles-in-één-versie blijft verplicht |
-| Eerste complete skill: Home Assistant | Eva kan toestand en historie lezen, apparaten bedienen, automatiseringen maken en het resultaat opnieuw controleren | Live bewezen op meerdere echte taken; Home Assistant is een verwisselbare skill, niet Eva's unieke hoofdfeature |
+| Eerste complete toolprovider-proef | Eva kan een externe toolcatalogus lezen, een tool kiezen, uitvoeren en het resultaat opnieuw controleren | Met Home Assistant als tijdelijke proefadapter bewezen; de providerspecifieke kerncode moet nog verdwijnen |
 | Persoons- en projectgeheugen | Feiten, voorkeuren en correcties blijven na herstart bewaard zonder personen en projecten samen te voegen | Live bewezen; de echte Telegram-groepproef is een apart open project |
 | Duurzame doelen | Lopende doelen, wachten, hervatten en verschillende eindstatussen blijven na een herstart begrijpelijk | Meerdere native praktijkscenario's live bewezen |
 | Historische native reeks | Fan-out, herstel, doelen, cross-channelgeheugen en één zelfgekozen verbetering hebben echt gewerkt | **9/9 historisch live bewezen**, verdeeld over meerdere versies; eindversie moet ze gezamenlijk herhalen |
