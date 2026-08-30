@@ -153,7 +153,8 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
         (
             "Leg een expliciete correctie van de identiteit van de persoon in de "
             "door de connector gebonden foto en onderwerpregio vast. Deze actie "
-            "wordt alleen aangeboden wanneer die cryptografische binding bestaat."
+            "wordt alleen aangeboden wanneer die cryptografische binding bestaat. "
+            "Leid zelf geen gezicht of naam uit beeld, stem of losse tekst af."
         ),
         corrected_name=_schema(
             "De persoonsnaam die de gebruiker expliciet corrigeert."
@@ -190,7 +191,9 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "uit, bijvoorbeeld een verwarming of slim stopcontact. Gebruik de "
             "natuurlijke naam uit het gesprek; de host resolveert uitsluitend "
             "binnen switch.* en claimt pas succes na onafhankelijke "
-            "statuscontrole."
+            "statuscontrole. Gebruik dit niet voor lampen, sloten of alarmsystemen. "
+            "Een korte bevestiging neemt het concrete apparaat en de richting uit "
+            "het direct voorafgaande voorstel over; vraag daar niet opnieuw naar."
         ),
         state=_schema(enum=("on", "off")),
         target=_schema("De natuurlijke apparaat- of ruimtenaam uit het gesprek."),
@@ -201,7 +204,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "Lees de echte Home Assistant-recordergeschiedenis van één genoemde "
             "lamp, schakelaar of een natuurlijk genoemde lichtgroep om te "
             "beantwoorden wanneer die aan of uit ging. Dit is een alleen-lezen "
-            "actie met bronbewijs."
+            "actie met bronbewijs; gok niet vanuit gesprek of herinneringen."
         ),
         entity_kind=_schema(
             "light voor een lamp; switch voor een aan/uit-apparaat.",
@@ -224,7 +227,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
         (
             "Lees de actuele echte toestand van precies één lamp of schakelaar in "
             "Home Assistant. Gebruik dit voor vragen of een apparaat nu aan, uit "
-            "of onbeschikbaar is; dit verandert niets."
+            "of onbeschikbaar is; baseer dit niet op oude gesprekscontext."
         ),
         entity_kind=_schema(
             "light voor een lamp; switch voor een aan/uit-apparaat.",
@@ -239,7 +242,9 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "verzoek. De automatisering reageert op één statusverandering en "
             "schakelt één entiteit. Gebruik de natuurlijke namen van personen, "
             "sensoren, ruimtes en apparaten; de host resolveert die tegen de "
-            "actuele Home Assistant-inventaris."
+            "actuele Home Assistant-inventaris. Ook een natuurlijke als/dan-"
+            "opdracht telt zonder het woord automatisering. Wanneer deze tool is "
+            "aangeboden, beweer niet dat de Home Assistant-koppeling ontbreekt."
         ),
         action_entity_id=_schema(),
         action_service=_schema(enum=("turn_on", "turn_off", "toggle")),
@@ -253,7 +258,8 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "Maak één geavanceerde maar begrensde Home Assistant-automatisering "
             "met een status-, tijd- of numerieke trigger, optionele "
             "statusvoorwaarde en maximaal zes geordende aan/uit/toggle-acties met "
-            "optionele wachttijd. Gebruik de natuurlijke namen uit het verzoek; "
+            "optionele wachttijd. Gebruik geen templates of vrije YAML. Gebruik de "
+            "natuurlijke namen uit het verzoek; "
             "de host resolveert ze fail-closed tegen Home Assistant."
         ),
         actions=_schema(
@@ -354,7 +360,7 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "Leg één begrensde gebruikersafspraak vast die buiten het gesprek "
             "blijft wachten op één expliciete providerconditie, daarna bewijs "
             "opnieuw leest, één resultaat maakt en dat één keer aan een "
-            "geconfigureerde ontvanger aanbiedt."
+            "geconfigureerde ontvanger aanbiedt. Gebruik precies één deadline."
         ),
         delivery_recipient=_schema(),
         description=_schema(),
@@ -630,13 +636,16 @@ class CodexConversationModel:
             completed_action is not None
             and completed_action.call.name == MEMORY_SEARCH_ACTION
         )
+        offer_tools = completed_action is None or (
+            memory_completed and bool(available_actions)
+        )
         if completed_action is not None and available_actions and not memory_completed:
             raise ValueError("completed conversation action cannot offer more actions")
         instructions = self._instructions(
             identity,
             memory,
             recent_messages,
-            available_actions=available_actions,
+            available_actions=() if offer_tools else available_actions,
             completed_action=completed_action,
             self_context=self_context,
         )
@@ -673,9 +682,6 @@ class CodexConversationModel:
                     },
                 ]
             )
-        offer_tools = completed_action is None or (
-            memory_completed and bool(available_actions)
-        )
         dynamic_tools = []
         if offer_tools:
             catalog = (
@@ -1450,10 +1456,8 @@ class CodexConversationModel:
                         tool_search,
                         *[
                             {
-                                "defer_loading": True,
                                 "description": item["description"],
                                 "name": item["name"],
-                                "type": "function",
                             }
                             for item in deferred
                         ],
@@ -1844,184 +1848,6 @@ class CodexConversationModel:
                 "in de zichtbare herinneringen staan. Geef dan nog geen antwoord en kies "
                 "eerst één compacte zoekquery. Voor gewone kennis, smalltalk en aanwezige "
                 "context antwoord je direct zonder tool."
-            )
-        if _OBSERVATION_IDENTITY_CORRECTION_ACTION in available_actions:
-            action_guidance_parts.append(
-                "De connector heeft exact één foto en onderwerpregio aan deze beurt "
-                "gebonden. Als de gebruiker de identiteit van die afgebeelde persoon "
-                "expliciet corrigeert, leg je uitsluitend de genoemde naam vast met de "
-                "aangeboden correctieactie. Leid zelf geen gezicht of naam uit beeld, "
-                "stem of losse gesprekstekst af. Noem hashes of interne bindings niet."
-            )
-        if _PERSONAL_INTEREST_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Je kunt één eigen blijvende interesse operationeel vastleggen met de "
-                "aangeboden actie. Gebruik die alleen wanneer je zelf werkelijk een "
-                "persoonlijke interesse of onderzoeksthema kiest. Roep de actie dan eerst "
-                "aan en geef nog geen zichtbaar antwoord; na de duurzame receipt formuleer "
-                "je natuurlijk wat je werkelijk hebt gekozen."
-            )
-        if _HOME_ASSISTANT_LIGHT_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een duidelijk verzoek om één lamp aan of uit te zetten roep je de "
-                "lichtactie aan met de naam uit het verzoek. Zeg vóór de action receipt "
-                "nooit dat het gelukt is. Vraag niet om een entity-ID en verzin er geen."
-            )
-        if _HOME_ASSISTANT_SWITCH_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een duidelijk verzoek om één aan/uit-apparaat zoals een verwarming "
-                "of slim stopcontact te schakelen gebruik je de switchactie met de "
-                "natuurlijke naam uit het gesprek. Een korte bevestiging zoals 'ja' of "
-                "'doe maar' neemt het concrete apparaat en de richting over uit het "
-                "direct voorafgaande voorstel; laat de gebruiker die woorden dan niet "
-                "herhalen. Laat de host bepalen of de Home Assistant-naam werkelijk uniek "
-                "is. Gebruik deze actie niet voor lampen, sloten of alarmsystemen. Claim "
-                "pas succes na de onafhankelijke readback."
-            )
-        if _HOME_ASSISTANT_HISTORY_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een vraag wanneer een lamp of schakelaar vandaag, gisteren of in "
-                "de afgelopen 24 uur van toestand veranderde, gebruik je de history-actie. "
-                "Gok niet vanuit herinneringen en vraag niet om een entity-ID. Gebruik "
-                "entity_kind light voor een lamp en switch voor een ander aan/uit-apparaat. "
-                "Behoud een natuurlijke gebiedsaanduiding zoals 'licht in de overkapping' "
-                "in target; de host bepaalt begrensd of dit één lamp of een groep is. "
-                "transition_to off voor 'uitging', on voor 'aanging' en any alleen als de "
-                "richting niet is gevraagd."
-            )
-        if _HOME_ASSISTANT_STATE_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een vraag of één lamp of schakelaar nu aan of uit staat, gebruik je "
-                "de state-actie. Baseer het antwoord niet op oude gesprekscontext of "
-                "herinnering. Gebruik entity_kind light voor een lamp en switch voor een "
-                "ander aan/uit-apparaat; vraag niet om een entity-ID."
-            )
-        if _HOME_ASSISTANT_AUTOMATION_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een duidelijke wens dat één aan/uit/toggle-actie automatisch gebeurt "
-                "zodra een status verandert, gebruik je de automation-actie. De gebruiker "
-                "hoeft het woord automatisering niet te noemen; een zin als 'laat X "
-                "aangaan zodra Y opengaat' is een volledig automatiseringsverzoek als "
-                "trigger, doel en actie duidelijk zijn. Gebruik de natuurlijke namen uit "
-                "het verzoek; de host zoekt de exacte Home Assistant-entiteiten op. Als "
-                "deze actie is aangeboden, beweer dan niet dat de Home Assistant-koppeling "
-                "ontbreekt zonder de actie te proberen. Gebruik de actie niet als trigger, "
-                "doeltoestand of actie nog onduidelijk is. Claim pas succes na de "
-                "onafhankelijke readback-receipt."
-            )
-        if _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Voor een expliciete meerstapsautomatisering met een voorwaarde, meerdere "
-                "acties, een wachttijd, een kloktijd of een numerieke sensordrempel gebruik "
-                "je de geavanceerde automation-actie. Kies precies één trigger_kind: state "
-                "gebruikt entity/from/to, time alleen trigger_at, numeric_state een "
-                "sensor en minstens één van trigger_above/trigger_below. Zet alle velden "
-                "van andere triggertypen op null. "
-                "Zet de actions in exact dezelfde volgorde als de gebruiker ze noemt; "
-                "delay_after_seconds betekent wachten na die actie en vóór de volgende. "
-                "Gebruik de natuurlijke namen uit het verzoek en laat de host die exact "
-                "tegen Home Assistant oplossen. De actie laat "
-                "geen templates, willekeurige services, sloten of alarmsystemen toe. "
-                "Vraag om ontbrekende essentiële details in plaats van ze te verzinnen."
-            )
-        if _TUYA_LOCAL_PLAN_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Als iemand expliciet vraagt alle Tuya-apparaten naar LocalTuya over te "
-                "zetten of daarvoor een plan te maken, gebruik je eerst de Tuya-planactie. "
-                "Die leest de echte registers en legt een plan vast maar verandert nog "
-                "geen apparaat. Presenteer de receipt als actuele stand, inclusief echte "
-                "blokkades; beweer niet dat de migratie al is uitgevoerd."
-            )
-        if _LOCALTUYA_PACKAGE_INSTALL_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Er bestaat een duurzaam Tuya→LocalTuya-plan met een exact beschikbare "
-                "pakketversie. Gebruik de pakketinstallatie-actie alleen als de gebruiker "
-                "nu expliciet zegt dat dat LocalTuya-pakket geïnstalleerd mag worden. Een "
-                "algemene vraag, planvraag of 'wat is nodig' is geen toestemming. De actie "
-                "installeert alleen het pakket en migreert nog geen apparaten."
-            )
-        if _LOCALTUYA_REPOSITORY_REGISTER_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Gebruik de HACS-repositoryactie alleen als de gebruiker de volledige "
-                "repositorynaam én releaseversie letterlijk noemt en expliciet vraagt "
-                "die bron toe te voegen of te registreren. Dit voegt alleen de bron toe: "
-                "het pakket wordt niet geïnstalleerd en geen apparaat wordt gemigreerd."
-            )
-        if _FANOUT_DELIVERY_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Gebruik fan-out delivery alleen wanneer de gebruiker één concreet "
-                "testbericht aan twee of meer letterlijk genoemde, vooraf ingestelde "
-                "sinkontvangers wil sturen. Behoud bericht en ontvangers exact. Claim "
-                "geen algemeen succes: baseer de eindtekst per ontvanger op de duurzame "
-                "providerreceipt."
-            )
-        if _DURABLE_GOAL_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Gebruik het duurzame doel alleen wanneer de gebruiker werkelijk vraagt "
-                "om na één expliciet benoemde toekomstige conditie zelfstandig één "
-                "begrensd resultaat te maken en te bezorgen. Leg precies één deadline en "
-                "één wake-resource vast. wake_resource is alleen het letterlijke resource-"
-                "ID, zonder providernaam of omringende woorden. Een gewone vraag, "
-                "vrijblijvende wens of taak die "
-                "nu direct kan worden uitgevoerd is geen duurzaam doel. Vul pivotvelden "
-                "alle drie met een concreet veilig alternatief of alle drie met null."
-            )
-        if _DURABLE_GOAL_CANCEL_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Gebruik annuleren alleen als de gebruiker de actieve duurzame afspraak "
-                "expliciet intrekt. Een tussenvraag of gesprekseinde annuleert haar niet."
-            )
-        if _CURRENT_RESEARCH_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Wanneer de gebruiker actuele opties wil vergelijken, recente feiten "
-                "wil laten uitzoeken of expliciet een brongebaseerd herbruikbaar document "
-                "vraagt, gebruik je de researchactie. Neem de volledige vraag en criteria "
-                "op in question. Raad actuele feiten niet uit modelkennis en zeg niet dat "
-                "je bronnen hebt bekeken vóór de duurzame receipt."
-            )
-        if _DOCUMENT_TASK_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Als de gebruiker vraagt een checklist, dashboardontwerp of ander "
-                "Markdown-werkdocument werkelijk te maken of bestaand documentwerk "
-                "voort te zetten, gebruik je de documenttaakactie en lever je de "
-                "volledige actuele inhoud. Gebruik continue_current bij een verwijzing "
-                "als 'ga hiermee door': de host bindt die uitsluitend aan de direct "
-                "actieve taak van dit gesprek en weigert een oudere globale taak. Voeg bij "
-                "continue_current aantoonbaar nieuwe bruikbare inhoud toe; een ongewijzigd "
-                "checkpoint is geen voortgang en wordt geweigerd. Gebruik "
-                "replace_current wanneer de gebruiker de huidige scope expliciet stopt "
-                "en vervangt. Verzin geen actieve taak als de duurzame context er geen "
-                "toont. Bij status completed moet iedere Markdown-sectie werkelijk "
-                "bruikbare inhoud bevatten; alleen lege kopjes toevoegen is nooit "
-                "afronding. Gebruik deze actie niet voor gewone uitleg of een losse vraag."
-            )
-        if _FILE_BATCH_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een expliciet verzoek om de tekstbestanden in twee genoemde "
-                "werkdirectory's naar Markdown om te zetten gebruik je de batchactie. "
-                "De host begrenst paden en bestandsgrootte en controleert ieder resultaat "
-                "apart. Claim bij één fout nooit dat alles gelukt of alles mislukt is."
-            )
-        if _VALIDATED_FILE_EDIT_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Bij een expliciet verzoek om één exact tekstfragment in een genoemd "
-                "werkbestand te vervangen en een genoemd focused-testmanifest te draaien, "
-                "gebruik je de validated-editactie. Neem oude en nieuwe tekst letterlijk "
-                "over; verzin geen pad of test. De host controleert vóór de edit dat de "
-                "test groen is, leest de wijziging terug, voert de test uit en rolt alleen "
-                "de eigen edit terug als die faalt. Claim pas na de receipt wat de "
-                "uiteindelijke bestandstoestand is."
-            )
-        if _REPOSITORY_IMPROVEMENT_ACTION in available_actions:
-            action_guidance_parts.append(
-                "Als de gebruiker vraagt om in een genoemde geïsoleerde fixture-"
-                "repository zelf één kleine nuttige verbetering te vinden én af te "
-                "ronden, gebruik je de repositoryverbeteringsactie met alleen de "
-                "letterlijke relatieve directory. Vraag niet om een voorgeschreven fix "
-                "en verzin vooraf niet welk probleem er staat: de host geeft daarna de "
-                "begrensde repositorybytes en kwaliteitschecks aan een aparte eigen "
-                "keuzestap. Gebruik dit niet op de productierepository of zonder een "
-                "expliciet geïsoleerde fixture."
             )
         if completed_action is not None:
             if completed_action.call.name == MEMORY_SEARCH_ACTION:

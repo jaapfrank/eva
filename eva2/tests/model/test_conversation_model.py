@@ -76,7 +76,7 @@ def _deferred_tool(body: dict[str, Any], name: str) -> dict[str, Any]:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "d18321b297be48d2a44dd42366e1552361ffcbf7838bb4d7cf53d58cba76e61b"
+        "9d3624047ef4be866f9196a25dbf40c700e7f038ba34d51c60bd672fdb4b4131"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -139,7 +139,9 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "record_observation_identity_correction")
     assert binding.binding_sha256 in bodies[0]["input"][0]["content"]
-    assert "Leid zelf geen gezicht of naam" in bodies[0]["instructions"]
+    assert "Leid zelf geen gezicht of naam" in _deferred_tool(
+        bodies[0], "record_observation_identity_correction"
+    )["description"]
 
 
 def test_validated_file_edit_is_a_closed_model_action(
@@ -184,7 +186,9 @@ def test_validated_file_edit_is_a_closed_model_action(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")
-    assert "rolt alleen de eigen edit terug" in bodies[0]["instructions"]
+    assert "uitsluitend deze wijziging terug" in _deferred_tool(
+        bodies[0], "edit_text_file_with_focused_validation"
+    )["description"]
 
 
 def test_repository_improvement_is_self_chosen_from_a_bounded_snapshot(
@@ -733,7 +737,9 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
 
     assert _deferred_tool(requests[0], "checkpoint_document_task")
     instructions = requests[0]["instructions"]
-    assert "oudere globale taak" in instructions
+    assert "direct actieve taak uit dit gesprek" in _deferred_tool(
+        requests[0], "checkpoint_document_task"
+    )["description"]
     assert "Direct actieve documenttaak in dit gesprek" in instructions
 
 
@@ -807,6 +813,33 @@ def test_dynamic_catalog_defers_memory_and_available_actions(
     ]
     assert all(tool["defer_loading"] is True for tool in bodies[0]["tools"][1:])
     assert set(bodies[0]["tools"][1]["parameters"]["properties"]) == {"query_text"}
+
+
+def test_full_dynamic_conversation_body_passes_the_existing_input_budget(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    bodies: list[dict[str, Any]] = []
+    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+
+    def request(body: dict[str, Any]) -> tuple[str, None]:
+        bodies.append(body)
+        return "Binnen grens.", None
+
+    monkeypatch.setattr(model, "_request", request)
+    model.generate(
+        ConversationTurn.private(
+            "tenant", "installation", "jaap", "conversation", "message", "Hoi", NOW
+        ),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        _memory(),
+        (),
+        available_actions=tuple(conversation_module._ACTION_TOOLS),
+    )
+
+    guarded = CodexConversationModel(
+        auth_file=tmp_path / "missing-auth.json", resource_budget=_runtime_budget()
+    )
+    guarded._admit_request(bodies[0], autonomous=False)  # noqa: SLF001
 
 
 def test_model_reports_an_expired_access_lease_without_provider_call(
@@ -983,12 +1016,12 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
     assert result.action_call is not None
     assert result.action_call.name == "set_home_assistant_switch"
     assert _deferred_tool(captured[0], "set_home_assistant_switch")
-    assert "sloten of alarmsystemen" in captured[0]["instructions"]
-    assert (
-        "neemt het concrete apparaat en de richting over"
-        in (captured[0]["instructions"])
-    )
-    assert "geen nieuwe raadselvraag" in captured[0]["instructions"]
+    switch_description = _deferred_tool(
+        captured[0], "set_home_assistant_switch"
+    )["description"]
+    assert "sloten of alarmsystemen" in switch_description
+    assert "Een korte bevestiging" in switch_description
+    assert "vraag daar niet opnieuw naar" in switch_description
 
 
 def test_model_can_choose_bounded_home_assistant_history_read(
@@ -1030,7 +1063,9 @@ def test_model_can_choose_bounded_home_assistant_history_read(
     assert result.action_call is not None
     assert result.action_call.arguments["period"] == "yesterday"
     assert _deferred_tool(captured[0], "read_home_assistant_history")
-    assert "Gok niet vanuit herinneringen" in captured[0]["instructions"]
+    assert "gok niet vanuit gesprek of herinneringen" in _deferred_tool(
+        captured[0], "read_home_assistant_history"
+    )["description"]
     assert (
         "behoud bijvoorbeeld 'licht in de overkapping'"
         in (
@@ -1074,7 +1109,9 @@ def test_model_can_choose_current_home_assistant_state_read(
     assert result.action_call is not None
     assert result.action_call.arguments["entity_kind"] == "switch"
     assert _deferred_tool(captured[0], "read_home_assistant_state")
-    assert "niet op oude gesprekscontext" in captured[0]["instructions"]
+    assert "niet op oude gesprekscontext" in _deferred_tool(
+        captured[0], "read_home_assistant_state"
+    )["description"]
 
 
 def test_dutch_identity_retries_an_accidental_foreign_script(
@@ -1306,8 +1343,11 @@ def test_explicit_automation_request_uses_exact_bounded_action(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "create_home_assistant_state_automation")
-    assert "natuurlijke namen" in bodies[0]["instructions"]
-    assert "exacte Home Assistant-entiteiten" in bodies[0]["instructions"]
+    automation_description = _deferred_tool(
+        bodies[0], "create_home_assistant_state_automation"
+    )["description"]
+    assert "natuurlijke namen" in automation_description
+    assert "actuele Home Assistant-inventaris" in automation_description
 
 
 def test_natural_if_then_request_does_not_require_the_word_automation(
@@ -1354,9 +1394,11 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
     )
 
     assert result.action_call == call
-    instructions = bodies[0]["instructions"]
-    assert "hoeft het woord automatisering niet te noemen" in instructions
-    assert "beweer dan niet dat de Home Assistant-koppeling ontbreekt" in instructions
+    description = _deferred_tool(
+        bodies[0], "create_home_assistant_state_automation"
+    )["description"]
+    assert "zonder het woord automatisering" in description
+    assert "beweer niet dat de Home Assistant-koppeling ontbreekt" in description
 
 
 def test_explicit_multistep_automation_uses_advanced_action(
@@ -1426,9 +1468,12 @@ def test_explicit_multistep_automation_uses_advanced_action(
         "numeric_state",
     ]
     assert properties["trigger_at"]["type"] == ["string", "null"]
-    assert "geen templates" in bodies[0]["instructions"]
-    assert "wachten na die actie" in bodies[0]["instructions"]
-    assert "natuurlijke namen" in bodies[0]["instructions"]
+    advanced_description = _deferred_tool(
+        bodies[0], "create_home_assistant_advanced_state_automation"
+    )["description"]
+    assert "geen templates" in advanced_description
+    assert "optionele wachttijd" in advanced_description
+    assert "natuurlijke namen" in advanced_description
 
 
 def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
@@ -1543,7 +1588,9 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")
-    assert "verandert nog geen apparaat" in bodies[0]["instructions"]
+    assert "migreert nog niets" in _deferred_tool(
+        bodies[0], "plan_tuya_to_localtuya_migration"
+    )["description"]
 
 
 def test_tuya_receipt_is_factual_input_not_a_robotic_script(
@@ -1636,7 +1683,9 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "install_approved_localtuya_package")
-    assert "expliciet zegt" in bodies[0]["instructions"]
+    assert "expliciet toestemming geeft" in _deferred_tool(
+        bodies[0], "install_approved_localtuya_package"
+    )["description"]
 
 
 def test_explicit_followup_can_register_only_exact_localtuya_repository(
@@ -1681,7 +1730,9 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "register_approved_localtuya_repository")
-    assert "alleen de bron toe" in bodies[0]["instructions"]
+    assert "registreert alleen de repository" in _deferred_tool(
+        bodies[0], "register_approved_localtuya_repository"
+    )["description"]
 
 
 def test_explicit_fanout_request_selects_one_multi_recipient_action(
@@ -1723,7 +1774,9 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
 
     assert result.action_call == call
     assert _deferred_tool(bodies[0], "deliver_test_message_fanout")
-    assert "geen algemeen succes" in bodies[0]["instructions"]
+    assert "acceptatie of afwijzing apart" in _deferred_tool(
+        bodies[0], "deliver_test_message_fanout"
+    )["description"]
 
 
 def test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt(
@@ -1826,7 +1879,9 @@ def test_future_condition_selects_bounded_durable_goal_action(
         "cancel_active_durable_goal",
     ]
     assert "vraag de gebruiker niet om later opnieuw" not in bodies[0]["instructions"]
-    assert "precies één deadline" in bodies[0]["instructions"]
+    assert "precies één deadline" in _deferred_tool(
+        bodies[0], "create_bounded_durable_goal"
+    )["description"]
 
 
 def test_durable_goal_receipt_does_not_claim_work_already_finished(
