@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 07:20 CEST
+Laatst bijgewerkt: 30 augustus 2026, 07:27 CEST
 
 ## Heel kort
 
@@ -426,15 +426,19 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
 - Acht vaste AgentBench-developmentcases zijn nu geprobeerd: zes correct, één
-  fout en één technische startfout zonder score. Een officiële AgentBench-run
-  en GAIA- en OSWorld-scores ontbreken nog.
+  fout en één technische startfout zonder score. De controle van alle zestig
+  officiële ontwikkelcases vond precies dezelfde ene kapotte startomgeving:
+  case 5 bevat vanuit AgentBench zelf een lege kolomnaam. De andere 59 starten
+  volgens deze voorafcontrole wel geldig. Een officiële AgentBench-run en
+  GAIA- en OSWorld-scores ontbreken nog.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. De technische tabelstartfout apart reproduceren tegen de officiële
-   AgentBench-omgeving en daarna vooraf de volgende vaste reeks vastleggen.
+1. Vooraf de volgende vaste reeks uit de 59 geldig startende AgentBench-cases
+   vastleggen. Case 5 blijft zichtbaar als technische startfout en krijgt geen
+   verzonnen score.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
@@ -460,6 +464,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - [DBBench-case 1 correct met één SQL-query en twee toolvrije modelcalls](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-1-2026-08-30.json)
 - [Vaste DBBench-reeks 0–3: ruwe stand 3/4, zonder scorecorrectie voor case 0](evidence/living-core/agentbench-dbbench-eva-tool-free-fixed-cases-0-3-2026-08-30.json)
 - [Vaste DBBench-reeks 0–7: zes correct, één fout en één startfout zonder score](evidence/living-core/agentbench-dbbench-eva-tool-free-fixed-cases-0-7-2026-08-30.json)
+- [Alle 60 DBBench-ontwikkelomgevingen vooraf gecontroleerd; alleen upstream-case 5 is ongeldig](evidence/living-core/agentbench-dbbench-environment-preflight-2026-08-30.json)
 - [Antwoordblinde DBBench-verbetering veranderde de SQL, maar score bleef eerlijk 0](evidence/living-core/agentbench-dbbench-eva-budget-aware-rerun-2026-08-30.json)
 - [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)

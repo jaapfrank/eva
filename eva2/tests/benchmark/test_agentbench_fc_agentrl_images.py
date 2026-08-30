@@ -143,6 +143,12 @@ DBBENCH_UPSTREAM_ROUNDS_DOCKERFILE = (
     / "agentbench-fc-v1"
     / "agentbench-dbbench-dev-worker-external-mysql-round15-v1.Dockerfile"
 )
+DBBENCH_AUDITED_DOCKERFILE = (
+    ROOT
+    / "benchmark"
+    / "agentbench-fc-v1"
+    / "agentbench-dbbench-dev-worker-audited-v1.Dockerfile"
+)
 DBBENCH_DEV_INPUTS = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-inputs-amd64-py314.json"
 )
@@ -517,6 +523,27 @@ def test_dbbench_upstream_round_worker_changes_only_the_explicit_round_budget() 
         in dockerfile
     )
     assert "agentbench-dbbench-dev-external-mysql-upstream-rounds.yaml" in dockerfile
+    assert "RUN " not in dockerfile
+    assert "ADD " not in dockerfile
+
+
+def test_dbbench_audited_worker_adds_only_the_environment_auditor() -> None:
+    dockerfile = DBBENCH_AUDITED_DOCKERFILE.read_text(encoding="utf-8")
+    assert (
+        "expected-local-base-id: "
+        "sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93"
+        in dockerfile
+    )
+    assert (
+        "FROM eva2/agentbench-dbbench-dev-worker-chainguard-offline:"
+        "20260830-external-mysql-round15"
+        in dockerfile
+    )
+    assert (
+        "COPY benchmark/audit_agentbench_dbbench_environment.py "
+        "/app/audit_agentbench_dbbench_environment.py"
+        in dockerfile
+    )
     assert "RUN " not in dockerfile
     assert "ADD " not in dockerfile
 

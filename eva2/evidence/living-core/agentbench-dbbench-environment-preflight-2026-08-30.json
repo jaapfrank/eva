@@ -1,0 +1,60 @@
+{
+  "contract": "EvaAgentBenchDbBenchEnvironmentPreflight/v1",
+  "capturedAt": "2026-08-30T07:27:34+02:00",
+  "status": "passed_with_one_upstream_environment_rejection",
+  "scope": {
+    "benchmark": "AgentBench DBBench development",
+    "casesAudited": 60,
+    "modelCalls": 0,
+    "sqlCalls": 0,
+    "providerCalls": 0
+  },
+  "inputs": {
+    "repositoryCommitBeforeAuditCheckpoint": "36c2cce3e8c1951f9ee6948e35f737e72d66b6d3",
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "baseImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "auditedImage": "eva2/agentbench-dbbench-dev-worker-audited@sha256:619a88f248d4611d7e6d14598815049294fd763e4b1df409403d07e26fa7d795",
+    "auditorSha256": "e0b6505bda6d23df8e4dc9457b2bc56d6dccf41f41d7e48102612357fdd9512a",
+    "dockerfileSha256": "bd5ea6ae89c58caacc8a97b264711a53da2a01fd4e8bbd5712745e8c863d3adc"
+  },
+  "build": {
+    "network": "none",
+    "cache": false,
+    "baseImageIdMatched": true,
+    "newImageAddsOnlyAuditor": true
+  },
+  "audit": {
+    "validCaseCount": 59,
+    "invalidCaseCount": 1,
+    "invalidCases": [
+      {
+        "caseIndex": 5,
+        "issues": [
+          "empty_column_name"
+        ],
+        "upstreamCreateSqlSha256": "a75d211de82afed502e469fbcd9f7860110a644114b2ff4b3e426abb888d6c6d"
+      }
+    ],
+    "case5ExternalAdapterCausedFailure": false,
+    "case5FailureStage": "upstream_environment_initialization_before_model_or_sql_tool_use"
+  },
+  "securityScan": {
+    "critical": 0,
+    "high": 0
+  },
+  "privacy": {
+    "questionEmitted": false,
+    "rowContentEmitted": false,
+    "hiddenLabelEmitted": false,
+    "answerSqlEmitted": false,
+    "secretsRead": false
+  },
+  "interpretation": {
+    "case5Treatment": "technical task-start failure without score",
+    "officialScoreClaimed": false,
+    "superiorityClaimed": false,
+    "nextFixedSeriesMayUseOnlyPreflightValidCases": true
+  }
+}
