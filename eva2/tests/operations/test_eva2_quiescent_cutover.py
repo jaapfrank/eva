@@ -295,6 +295,27 @@ def test_failure_before_route_restores_source_without_reversing_data(
     assert "route:44710" not in backend.calls
 
 
+def test_partial_target_start_is_stopped_before_source_recovery(tmp_path: Path) -> None:
+    backend = FakeBackend(tmp_path, fail_at="start:4")
+
+    with pytest.raises(QuiescentCutoverError, match="failed at start:4"):
+        quiescent_cutover(
+            source_slot=3,
+            target_slot=4,
+            backend=backend,
+            dropin=tmp_path / "dropin",
+            workspace=tmp_path,
+        )
+
+    assert backend.calls[-5:] == [
+        "start:4",
+        "stop:4",
+        "start:3",
+        "verify:3",
+        "start-eva1:3",
+    ]
+
+
 def test_failure_after_eva1_start_attempt_reverses_new_writes_before_rollback(
     tmp_path: Path,
 ) -> None:

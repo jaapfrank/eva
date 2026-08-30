@@ -893,8 +893,8 @@ def quiescent_cutover(
         backend.stop_writers(target)
         snapshot = backend.snapshot(source, workspace, "forward")
         backend.restore(target, snapshot)
-        backend.start_writers(target)
         target_started = True
+        backend.start_writers(target)
         backend.verify_runtime(target)
         route_write_attempted = True
         backend.write_route(dropin, replacement)
