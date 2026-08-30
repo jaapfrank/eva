@@ -1,0 +1,68 @@
+{
+  "contract": "Eva2OpenAiSdkCurrentCommitCandidate/v1",
+  "issuedAt": "2026-08-30T16:21:44+02:00",
+  "source": {
+    "commit": "308c5e12b42e23894c76741b6d1ee6cc882d0920",
+    "archiveSha256": "282505c6e50ef0b4459566ec123bb5b0e30f81e3059ec6401da24d9ae82a91c3",
+    "releaseAuthoritySha256": "affe619dfb0465fe3c2fa955b428b1dfaefd7aa705ed835f003a244cd70decb1",
+    "requiredInputCount": 255,
+    "requiredTestCount": 145
+  },
+  "dependencies": {
+    "requirementsLockSha256": "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f",
+    "wheelCount": 38,
+    "wheelhouseTreeSha256": "3644c6f96e676f43b2738faa0eff84d5068baa002d09bab4eaa65ee3ccff3642",
+    "openai": "3.6.0",
+    "cryptography": "50.0.1",
+    "psycopg": "3.3.4"
+  },
+  "build": {
+    "contextTreeSha256": "564d8363c819b50bdb7b1330c62984150dd7c4fa7be0c4b73a7b6eff8253c7aa",
+    "networkUsed": false,
+    "intermediateImage": {
+      "imageId": "sha256:d2cb311a9532a259b6baa4fdeac726a03b96cc4840cd705b1fbaed00192cb1ba",
+      "sizeBytes": 106166002,
+      "role": "build-input-only"
+    },
+    "runtimeImage": {
+      "reference": "eva2/sdk36-current-distroless@sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+      "imageId": "sha256:51ec630de8e8b6f04ecad1649911f69dc89e721a4b772ae9aa422bb453cd3efc",
+      "sizeBytes": 81640136,
+      "user": "65532:65532",
+      "criticalFindings": 0,
+      "highFindings": 0
+    }
+  },
+  "runtimeProbe": {
+    "status": "passed",
+    "renderedServiceCount": 9,
+    "realCodexReplyExact": true,
+    "dashboardOwnerAuthenticated": true,
+    "dashboardAnonymousRejected": true,
+    "separateOperationalAndMemoryDatabases": true,
+    "postgresVersion": "18.6",
+    "pgvectorVersion": "0.8.6",
+    "hindsightDatabaseFileSecret": true,
+    "coreReadyBeforeRestart": true,
+    "coreReadyAfterDatabaseAndServiceRestart": true,
+    "temporaryResourcesRemoved": true
+  },
+  "liveSafety": {
+    "eva1HttpBeforeAndAfter": 200,
+    "currentEva2HttpBeforeAndAfter": 200,
+    "trafficChanged": false
+  },
+  "abPreflight": {
+    "status": "passed",
+    "sourcePort": 44711,
+    "targetPort": 44710,
+    "executed": false
+  },
+  "status": "current_commit_candidate_green_not_promoted",
+  "nonClaims": [
+    "The candidate has not replaced the current /eva2 route.",
+    "No retained A/B database was overwritten and no rollback slot was removed.",
+    "This proves one dependency upgrade candidate, not overall superiority over OpenClaw, Hermes or Agent Zero.",
+    "The broad intermediate image is build input only and is not a release candidate."
+  ]
+}

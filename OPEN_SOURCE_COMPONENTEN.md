@@ -24,7 +24,7 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex- en latencypariteit, een netwerkloze 38-wheelbuild, 0/0-scan en volledige wegwerp-runtimeherstart bewezen; A/B en terugrol blijven open | **SDK-kandidaat technisch groen; daarna A/B en Pydantic/toolloop verkleinen** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex- en latencypariteit. De actuele volledig verzegelde commit is opnieuw uit 38 vaste wheels zonder bouwnetwerk gebouwd, scant 0/0 en doorstond de complete tijdelijke negen-dienstenopstelling; de A/B-voorcontrole is groen, omschakeling en terugrol blijven open | **SDK-kandidaat technisch groen; daarna A/B en Pydantic/toolloop verkleinen** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
@@ -84,7 +84,12 @@ De eerste echte uitvoering van die keten is nu groen voor OpenAI SDK `3.6.0`:
 de brede bouwimage werd met 5 kritieke en 29 hoge bevindingen afgewezen, waarna
 de minimale runtime 0/0 scoorde en een echte Codex-beurt plus gezamenlijke
 herstart doorstond. Daardoor is dit een werkende upgradepoort en geen papieren
-afspraak. Live A/B-promotie en terugrol blijven bewust apart.
+afspraak. Dezelfde route is daarna opnieuw vanaf de volledig verzegelde actuele
+commit uitgevoerd. De minimale image bleef 0/0, gaf in de volledige tijdelijke
+negen-dienstengrafiek een exact echt modelantwoord en bleef na de gezamenlijke
+database-/Hindsight-/coreherstart klaar. Ook de alleen-lezen A/B-voorcontrole
+van poort `44711` naar `44710` is groen. Live A/B-promotie en terugrol blijven
+bewust apart.
 
 De Renovate-configuratie staat vanaf nu op de repositoryroot. Dat maakt haar
 vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de

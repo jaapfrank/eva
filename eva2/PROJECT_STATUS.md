@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 16:09 CEST
+Laatst bijgewerkt: 30 augustus 2026, 16:22 CEST
 
 Betekenis:
 
@@ -14,9 +14,11 @@ Betekenis:
 - ✅ Gewone berichten zonder `/eva2` blijven naar Eva1 gaan.
 - ✅ Eva2 geeft echte antwoorden via de bestaande Codex-koppeling.
 - 🟡 De actuele officiële OpenAI-SDK `3.6.0` geeft dezelfde echte Codex-
-  antwoorden, is warm even snel en meet tokens wel. De netwerkloos gebouwde
-  minimale image scant 0/0 en doorstond een echte Codex-beurt plus gezamenlijke
-  database-/Hindsight-/coreherstart. Alleen A/B en terugrol zijn nog niet gedaan.
+  antwoorden, is warm even snel en meet tokens wel. De minimale image is nu
+  opnieuw vanaf de volledig verzegelde actuele commit zonder bouwnetwerk
+  gemaakt. Zij scant 0/0 en doorstond de complete tijdelijke negen-diensten-
+  opstelling, een echt Codex-antwoord en een gezamenlijke herstart. De A/B-
+  voorcontrole is groen; de echte omschakeling en terugrol zijn nog niet gedaan.
 - ✅ Eva2 heeft haar eigen warme, jonge, nieuwsgierige, grappige en
   eigenwijze persoonlijkheid.
 - ✅ Gesprekken blijven na een herstart bewaard.
@@ -158,6 +160,8 @@ Betekenis:
   niet door totdat de gebruikte bouwstenen en concurrenten opnieuw zijn bekeken.
 - ✅ Een dependencykandidaat kan nu vanuit één hashlock en wheelhouse opnieuw
   worden gebouwd, gescand en tegen een volledige wegwerpstack worden getest.
+- ✅ De huidige OpenAI-SDK-kandidaat is vanaf exact dezelfde verzegelde commit
+  opnieuw gebouwd; de veilige A/B-route naar de andere sleuf is vooraf groen.
 - 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een
   echte automatische botrun en updatevoorstel zijn nog niet bewezen.
 - ✅ Een schrijfloze Renovate-proef met de vereiste Node-versie vond 99
@@ -189,16 +193,18 @@ Betekenis:
 
 ## Eerstvolgende stappen
 
-1. De bewapende Windows/WSL-herstartproef afronden.
-2. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
+1. De OpenAI-SDK-kandidaat via A/B omschakelen, echt beproeven en verliesloos
+   terugrollen voordat zij de huidige modeltransportlaag mag vervangen.
+2. De bewapende Windows/WSL-herstartproef afronden.
+3. Per onderdeel de beste actieve open-sourcemotor werkelijk in de
    gebruikersroute zetten en de dubbele Eva-code verwijderen.
-3. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
+4. Eva één algemene Home Assistant-beheerroute geven: zelf documentatie en
    beschikbare tools kiezen, een voorstel en terugrol maken, toestemming
    vragen als het risico dat vereist, uitvoeren en controleren. Tuya,
    automatiseringen en updates zijn alleen praktijktests van diezelfde route.
-4. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
+5. De eigen Telegram-, workflow-, geheugen-, voice- en browserlijm vervangen
    waar de gekozen dependencies hetzelfde werk beter doen.
-5. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
+6. Daarna de pc-herstart, echte voice en zeven dagen lange praktijktest op één
    bevroren eindkandidaat uitvoeren.
 
 Technische details en bewijs staan in
