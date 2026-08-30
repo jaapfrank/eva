@@ -1,6 +1,7 @@
 {
   "contract": "Eva2UpstreamReleaseWatch/v1",
   "checkedAt": "2026-08-30T14:47:00+02:00",
+  "reviewValidUntil": "2026-09-29T14:47:00+02:00",
   "components": [
     {"repository": "openai/openai-python", "currentRelease": "v3.6.0", "role": "model-provider-sdk"},
     {"repository": "pydantic/pydantic-ai", "currentRelease": "v2.36.0", "role": "agent-runtime"},

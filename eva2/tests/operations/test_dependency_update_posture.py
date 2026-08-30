@@ -38,6 +38,7 @@ def test_component_watch_includes_all_comparison_targets() -> None:
         "agent0ai/agent-zero",
     }
     assert all(row["currentRelease"] for row in watch["components"])
+    assert watch["checkedAt"] < watch["reviewValidUntil"]
 
 
 def test_dependency_update_posture_checker_is_green() -> None:
@@ -50,5 +51,6 @@ def test_dependency_update_posture_checker_is_green() -> None:
     )
 
     assert completed.stdout.strip() == (
-        "dependency update posture: proposal-only, approval-required, digest-pinned"
+        "dependency update posture: proposal-only, approval-required, "
+        "digest-pinned, freshness-bounded"
     )

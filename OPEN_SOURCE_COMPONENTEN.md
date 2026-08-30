@@ -96,6 +96,12 @@ een testvoorstel heeft gemaakt.
 label `benchmark-required` en heropent dus de vergelijking in plaats van stil
 aan Eva voorbij te gaan.
 
+De handmatige upstreamcontrole is hoogstens dertig dagen geldig. Daarna maakt
+de dependencycheck iedere nieuwe releasekandidaat rood, ook wanneer de Renovate-
+runner zelf stil zou zijn gevallen. Een nieuwe concurrentversie maakt bovendien
+de oude 22-categorievergelijking direct ongeldig totdat alle gehashte resultaten
+opnieuw aan die exacte tag en commit zijn gebonden.
+
 ## Altijd voorop blijven
 
 “Beter dan de concurrentie” is geen eenmalig vinkje. Iedere beoogde

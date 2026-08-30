@@ -154,6 +154,8 @@ Betekenis:
   installeren, herstellen en bijwerken.
 - ✅ Een centrale componentenlijst volgt nu ook nieuwe releases van Eva's
   bouwstenen en van OpenClaw, Hermes en Agent Zero.
+- ✅ Die controle verloopt na maximaal dertig dagen. Een nieuwe release mag dan
+  niet door totdat de gebruikte bouwstenen en concurrenten opnieuw zijn bekeken.
 - ✅ Een dependencykandidaat kan nu vanuit één hashlock en wheelhouse opnieuw
   worden gebouwd, gescand en tegen een volledige wegwerpstack worden getest.
 - 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een

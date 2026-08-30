@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 
@@ -44,6 +45,16 @@ def main() -> None:
     ):
         raise SystemExit("upstream component and competitor releases must be watched")
     watch = json.loads(WATCH.read_bytes())
+    try:
+        checked_at = datetime.fromisoformat(watch["checkedAt"]).astimezone(UTC)
+        valid_until = datetime.fromisoformat(watch["reviewValidUntil"]).astimezone(UTC)
+    except (KeyError, TypeError, ValueError) as error:
+        raise SystemExit("upstream release review window is invalid") from error
+    now = datetime.now(UTC)
+    if checked_at > now or valid_until <= now:
+        raise SystemExit("upstream release review is absent, future-dated or expired")
+    if valid_until - checked_at > timedelta(days=30):
+        raise SystemExit("upstream release review window may not exceed 30 days")
     competitors = watch.get("competitors")
     watched_competitors = {
         row.get("repository") for row in competitors if isinstance(row, dict)
@@ -54,7 +65,10 @@ def main() -> None:
         "agent0ai/agent-zero",
     }:
         raise SystemExit("the exact three Eva competitors must be release-watched")
-    print("dependency update posture: proposal-only, approval-required, digest-pinned")
+    print(
+        "dependency update posture: proposal-only, approval-required, "
+        "digest-pinned, freshness-bounded"
+    )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 {
   "contract": "EvaCompetitorCapabilityMatrix/v1",
-  "updated_at": "2026-08-24",
+  "updated_at": "2026-08-30",
   "claim_rule": {
     "enforced_by": "scripts/lab/check-competitor-capability-matrix.mjs",
     "general_superiority_requires": "every required category is won against every hard-coded competitor, has evidence refs and has no critical failure",
@@ -8,9 +8,9 @@
   },
   "pinned_participants": {
     "eva2": "living-core B candidate; final image not frozen",
-    "openclaw": "2026.8.1@bca206d794bd7c1edb608820ff8612fa5ce45638",
-    "hermes": "0.20.5@f293e7206b4ddd66042329442c6afebc19a8808d",
-    "agent_zero": "2.10@b22a144bf59f15b1516084c9e7b88133ba92c8a9"
+    "openclaw": "v2026.7.1-2@0790d9f593ad30c940ed93b5872a8cf6d6f3cf8c",
+    "hermes": "v2026.8.27@5fc308a70719a83cccdbba4c0e39c23f5a8239d5",
+    "agent_zero": "v2.11@6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1"
   },
   "categories": [
     {"id": "install_update_recovery", "comparisons": {"openclaw": {"status": "no_run", "critical_failures": []}, "hermes": {"status": "no_run", "critical_failures": []}, "agent_zero": {"status": "no_run", "critical_failures": []}}},

@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import { loadAndEvaluate } from '../scripts/lab/check-competitor-capability-matrix.mjs';
 
 const source = JSON.parse(fs.readFileSync('benchmark/competitor-capability-matrix-v1.json', 'utf8'));
+const releaseWatch = fs.readFileSync('component-watch.json');
 
 function capabilityClaim(matrix, categoryId, competitor, result, claimId) {
   return {
@@ -29,6 +30,7 @@ function withFixture(matrix, claims, assertion, { corruptHash = false } = {}) {
     const evidenceDir = path.join(fixtureRoot, 'evidence');
     fs.mkdirSync(benchmarkDir);
     fs.mkdirSync(evidenceDir);
+    fs.writeFileSync(path.join(fixtureRoot, 'component-watch.json'), releaseWatch);
     const receipt = JSON.stringify({
       contract: 'EvaCompetitorCapabilityReceipt/v1',
       competitor_capability_claims: claims,
@@ -127,4 +129,26 @@ test('rejects receipt bytes that do not match the catalog hash', () => {
   withFixture(structuredClone(source), [], (matrixPath) => {
     assert.throws(() => loadAndEvaluate(matrixPath), /evidencehash wijkt af/u);
   }, { corruptHash: true });
+});
+
+test('rejects a superiority matrix after any watched competitor release changes', () => {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'eva-competitor-watch-'));
+  try {
+    const benchmarkDir = path.join(fixtureRoot, 'benchmark');
+    fs.mkdirSync(benchmarkDir);
+    fs.writeFileSync(
+      path.join(benchmarkDir, 'matrix.json'),
+      JSON.stringify({ ...structuredClone(source), evidence_catalog: [] }),
+    );
+    const watch = JSON.parse(releaseWatch.toString('utf8'));
+    watch.competitors.find((row) => row.repository === 'openclaw/openclaw').currentRelease =
+      'v9999.1.0';
+    fs.writeFileSync(path.join(fixtureRoot, 'component-watch.json'), JSON.stringify(watch));
+    assert.throws(
+      () => loadAndEvaluate(path.join(benchmarkDir, 'matrix.json')),
+      /loopt achter op releasewatch/u,
+    );
+  } finally {
+    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+  }
 });

@@ -5,6 +5,11 @@ import { pathToFileURL } from 'node:url';
 
 const DEFAULT_PATH = 'benchmark/competitor-capability-matrix-v1.json';
 const REQUIRED_COMPETITORS = ['openclaw', 'hermes', 'agent_zero'];
+const WATCHED_REPOSITORIES = {
+  openclaw: 'openclaw/openclaw',
+  hermes: 'NousResearch/hermes-agent',
+  agent_zero: 'agent0ai/agent-zero',
+};
 const ALLOWED_STATUSES = new Set(['won', 'tied', 'lost', 'no_run']);
 const REQUIRED_CATEGORIES = [
   'install_update_recovery',
@@ -63,7 +68,26 @@ function assertClaimBinding(matrix, verifiedClaims, category, competitor, result
   }
 }
 
-function evaluateCompetitorMatrix(matrix, verifiedClaims) {
+function assertCurrentCompetitorBindings(matrix, matrixPath) {
+  const root = path.resolve(path.dirname(matrixPath), '..');
+  const watchPath = path.join(root, 'component-watch.json');
+  const watch = JSON.parse(fs.readFileSync(watchPath, 'utf8'));
+  const releases = new Map(
+    (watch.competitors ?? []).map((row) => [row.repository, row.currentRelease]),
+  );
+  for (const competitor of REQUIRED_COMPETITORS) {
+    const repository = WATCHED_REPOSITORIES[competitor];
+    const release = releases.get(repository);
+    const binding = matrix?.pinned_participants?.[competitor];
+    if (typeof release !== 'string'
+      || !new RegExp(`^${release.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}@[a-f0-9]{40}$`, 'u')
+        .test(binding ?? '')) {
+      throw new Error(`concurrentbinding loopt achter op releasewatch: ${competitor}`);
+    }
+  }
+}
+
+function evaluateCompetitorMatrix(matrix, verifiedClaims, matrixPath) {
   if (!Array.isArray(matrix?.categories) || matrix.categories.length === 0) {
     throw new Error('categories ontbreekt');
   }
@@ -73,6 +97,7 @@ function evaluateCompetitorMatrix(matrix, verifiedClaims) {
       throw new Error(`pinned_participants mist ${participant}`);
     }
   }
+  assertCurrentCompetitorBindings(matrix, matrixPath);
 
   const blockers = [];
   const seen = new Set();
@@ -155,7 +180,7 @@ function readVerifiedClaims(matrix, matrixPath) {
 export function loadAndEvaluate(filePath = DEFAULT_PATH) {
   const matrix = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   const verifiedClaims = readVerifiedClaims(matrix, filePath);
-  return evaluateCompetitorMatrix(matrix, verifiedClaims);
+  return evaluateCompetitorMatrix(matrix, verifiedClaims, filePath);
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
