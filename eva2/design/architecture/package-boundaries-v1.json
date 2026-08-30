@@ -115,13 +115,10 @@
       "src/eva/bootstrap"
     ],
     "fileCeilings": {
-      "src/eva/application/advanced_tasks.py": 234,
-      "src/eva/application/home_automation.py": 3,
       "src/eva/adapters/model/conversation.py": 0,
-      "src/eva/adapters/postgres/advanced_tasks.py": 13,
       "src/eva/adapters/postgres/conversation_actions.py": 0,
       "src/eva/bootstrap/runtime.py": 206,
-      "src/eva/contracts/voice.py": 1
+      "src/eva/contracts/voice.py": 0
     }
   },
   "forbiddenImportPrefixes": [

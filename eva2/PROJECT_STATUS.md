@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 20:17 CEST
+Laatst bijgewerkt: 30 augustus 2026, 20:23 CEST
 
 ## Zo lees je dit bord
 
@@ -72,9 +72,10 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 457 Home Assistant-/Tuya-specifieke identifiers in vijf kernbestanden.
-Dat is 500 minder dan vóór de eerste verplaatsing. De centrale modeladapter en
-gesprekspersistence staan nu allebei op nul. Gewone reads, aan/uit-acties,
+vindt nog 206 Home Assistant-/Tuya-specifieke identifiers in één kernbestand:
+de centrale runtimecompositie. Dat is 751 minder dan vóór de eerste
+verplaatsing. Applicatie, contracten, modeladapter en gesprekspersistence staan
+nu op nul. Gewone reads, aan/uit-acties,
 automatiseringen, het Tuya-migratieplan en de aparte HACS-repository- en
 pakketacties leveren hun schema, uitleg, validatie en providercommando vanuit
 tooladapters. Zij gebruiken dezelfde generieke PostgreSQL-route voor toelating,
@@ -83,8 +84,10 @@ planopslag, repositoryregistratie en pakketinstallatie; een nieuwe
 procesinstantie herhaalde geen provideractie. Ook actuele toestand en historie
 liepen daarna door hetzelfde algemene toolpad en bleven na een nieuwe
 procesinstantie enkelvoudig. De oude directe effect-API en alle aparte Home
-Assistant-PostgreSQL-routes zijn verwijderd. De apparaatmigratie en resterende
-beheer-API's moeten nog achter dezelfde providergrens verdwijnen.
+Assistant-PostgreSQL-routes zijn verwijderd. Ook de volledige migratieplanning,
+validatie en opslag staan nu bij de provideradapter. Alleen de resterende
+runtimecompositie en beheer-API's moeten nog achter dezelfde providergrens
+verdwijnen.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -182,7 +185,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties gebruiken één generieke duurzame route; de modeladapter en gesprekspersistence staan op nul providerspecifieke termen, vijf andere kernbestanden bevatten er nog 457 |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 Reads, effecten, automatiseringen, migratieplanning en twee pakketbeheeracties gebruiken één generieke duurzame route; alleen de centrale runtimecompositie bevat nog 206 providerspecifieke termen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

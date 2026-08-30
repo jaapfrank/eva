@@ -9,7 +9,7 @@ from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantConversationMigrationPlanner,
     HomeAssistantMigrationPlanAdapter,
 )
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskPlan,
     HomeAssistantDevice,
     HomeAssistantEntity,

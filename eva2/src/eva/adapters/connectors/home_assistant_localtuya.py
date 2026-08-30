@@ -11,7 +11,7 @@ import re
 from typing import Any, Literal
 from urllib import error, parse, request as urllib_request
 
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskError,
     LocalTuyaCanaryConfiguration,
     LocalTuyaEntityConfiguration,

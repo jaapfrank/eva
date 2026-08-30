@@ -75,7 +75,6 @@ from eva.adapters.postgres.people_memory_overview import (
     PostgresPeopleMemoryOverview,
 )
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
-from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
@@ -113,7 +112,7 @@ from eva.application.conversation import (
     RecentConversationMessage,
 )
 from eva.application.identity_verifier import load_identity_pack_trust_binding
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.provider_management import (
     AdvancedTaskApproval,
     AdvancedTaskBlocked,
     AdvancedTaskPackageApproval,
@@ -121,6 +120,7 @@ from eva.application.advanced_tasks import (
     AdvancedTaskRepositoryApproval,
     LocalTuyaCanaryConfiguration,
     LocalTuyaEntityConfiguration,
+    PostgresAdvancedTaskStore,
     TuyaToLocalTuyaPlanner,
     adopt_device_preflight,
     advanced_plan_id,

@@ -1,4 +1,4 @@
-"""Connector-neutral construction of bounded Home Assistant automations."""
+"""Provider-owned construction of bounded Home Assistant automations."""
 
 from __future__ import annotations
 

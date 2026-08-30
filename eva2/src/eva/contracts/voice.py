@@ -83,7 +83,7 @@ class VoiceSession(_VoiceContract):
     principal_id: Identifier
     conversation_id: Identifier
     audience: Literal["private"]
-    channel: Literal["local_test", "home_assistant_assist", "telegram_mini_app"]
+    channel: Literal["local_test", "local_assist", "telegram_mini_app"]
     device_binding_id: Identifier
     identity_id: Identifier
     identity_pack_version: int = Field(ge=1, le=2_147_483_647)

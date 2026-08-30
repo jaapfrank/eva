@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 import hashlib
 from typing import Callable, Protocol
 
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskPlan,
     AdvancedTaskPackageApproval,
     AdvancedTaskRepositoryApproval,

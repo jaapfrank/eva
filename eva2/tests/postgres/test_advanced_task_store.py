@@ -5,8 +5,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from eva.adapters.postgres.advanced_tasks import PostgresAdvancedTaskStore
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_store import (
+    PostgresAdvancedTaskStore,
+)
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskCanaryProof,
     AdvancedTaskDevice,
     AdvancedTaskDevicePreflight,

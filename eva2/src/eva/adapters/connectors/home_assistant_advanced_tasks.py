@@ -1,4 +1,4 @@
-"""Deterministic planning for risky, multi-step household changes."""
+"""Provider-owned planning for risky, multi-step Home Assistant changes."""
 
 from __future__ import annotations
 

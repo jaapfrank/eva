@@ -18,7 +18,7 @@ from eva.adapters.connectors.home_assistant import (
 from eva.adapters.connectors.home_assistant_events import HomeAssistantEventStream
 from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
 from eva.adapters.connectors.home_assistant_hacs import HomeAssistantHacsAdapter
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskPackageApproval,
     AdvancedTaskRepositoryApproval,
     HomeAssistantRepository,

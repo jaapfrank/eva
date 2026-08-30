@@ -10,7 +10,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from websockets.sync.client import connect
 
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskError,
     AdvancedTaskPackageApproval,
     AdvancedTaskRepositoryApproval,

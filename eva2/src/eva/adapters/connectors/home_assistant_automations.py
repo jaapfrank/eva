@@ -24,7 +24,7 @@ from eva.application.conversation import (
     ConversationToolPreparation,
     ConversationTurn,
 )
-from eva.application.home_automation import (
+from eva.adapters.connectors.home_assistant_automation_config import (
     advanced_automation,
     advanced_state_automation,
     state_action_automation,

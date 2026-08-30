@@ -1,4 +1,4 @@
-"""Durable admission of advanced task plans before any side effect."""
+"""Provider-owned durable admission of Home Assistant management plans."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from eva.adapters.postgres.operational_timeline import (
     PostgresOperationalTimeline,
     TimelineScope,
 )
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskApproval,
     AdvancedTaskCanaryProof,
     AdvancedTaskDevicePreflight,

@@ -50,7 +50,7 @@ from eva.application.telegram_canary import TelegramCanaryAdmission
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.workboard import WorkBoard
 from eva.application.mail import MailInboxPage, MailMessage
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskBlocked,
     AdvancedTaskError,
     AdvancedTaskPlan,

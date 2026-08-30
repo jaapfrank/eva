@@ -11,7 +11,7 @@ from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
 )
-from eva.application.advanced_tasks import (
+from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskBlocked,
     AdvancedTaskPackageApproval,
     AdvancedTaskPlan,
