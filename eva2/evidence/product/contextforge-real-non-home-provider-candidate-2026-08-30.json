@@ -1,0 +1,67 @@
+{
+  "contract": "EvaRealNonHomeMcpProviderCandidateEvidence/v1",
+  "status": "passed",
+  "recordedAt": "2026-08-30T22:35:00+02:00",
+  "source": {
+    "commit": "94792b726701d9fb554fa5fe69c1c7f54a695462",
+    "archiveBuild": true,
+    "buildNetwork": "none"
+  },
+  "candidate": {
+    "imageId": "sha256:5369f11cfabc34ee9c28023bb416442fb5a6e8b1b6d9321ba9a9a6f4f3a8f337",
+    "base": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+    "runsAs": "65532:65532",
+    "rootFilesystem": "read-only",
+    "trivy": {
+      "databasePreparedAt": "2026-08-29",
+      "critical": 0,
+      "high": 0,
+      "network": "none"
+    }
+  },
+  "openSourceRuntime": {
+    "gateway": "IBM ContextForge v1.0.8",
+    "gatewayImage": "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "toolServer": "IBM MCP Fast Time Server",
+    "toolServerImage": "ghcr.io/ibm/cfex-mcp-fast-time-server@sha256:2f095509d535a0769449f3b9417858f5c233dc74b1e09de335b48b7591d995a1",
+    "database": "PostgreSQL 16.13"
+  },
+  "proof": {
+    "providerId": "mcp_gateway",
+    "evaToolName": "convert_time_zone",
+    "providerToolName": "eva-proof-echo-convert-time",
+    "catalogSha256": "a63e0dc2224e53d3db5679bbacf3310a633e280701905f91211602e40af0eafa",
+    "model": "chatgpt-codex:gpt-5.4-mini",
+    "modelSelectedExactToolAndArguments": true,
+    "verifiedFinalAnswer": "2026-08-30T12:34:56+02:00",
+    "providerCallsForExecutionAndIndependentReadback": 2,
+    "providerCallsAfterNewEngineSettingsBundleAndReplay": 0,
+    "receiptStatus": "verified",
+    "receiptSha256": "c3b73ff5ffa223d36cb76e0a5bb51db2f6fdf5a5c450ff458a3c6c9952e79245"
+  },
+  "architecture": {
+    "homeAssistantInCore": false,
+    "concreteToolDefinedByRuntimeCatalog": true,
+    "genericGatewayAvailableWithoutPythonPackageMetadata": true,
+    "externalPackageEntryPointsStillSupported": true
+  },
+  "rejectedIntermediate": {
+    "imageId": "sha256:cd3b1e50108fda6a5ad56192428e5984497b1e369b58d5572ac3b3d24aa7827d",
+    "critical": 5,
+    "high": 29,
+    "promoted": false
+  },
+  "isolation": {
+    "liveEva1Changed": false,
+    "liveEva2Changed": false,
+    "homeAssistantConnected": false,
+    "onlyModelHadInternetEgress": true,
+    "disposableDatabase": true
+  },
+  "nonClaims": [
+    "The generic MCP gateway candidate is not yet promoted to the live user route.",
+    "This proves a real non-home read-only tool, not an arbitrary effect provider.",
+    "ContextForge does not replace Eva's person, permission, risk or evidence authority.",
+    "The current managed release-input authority has not yet been resealed for this candidate."
+  ]
+}

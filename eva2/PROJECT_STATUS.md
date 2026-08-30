@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 21:55 CEST
+Laatst bijgewerkt: 30 augustus 2026, 22:35 CEST
 
 ## Zo lees je dit bord
 
@@ -62,13 +62,13 @@ adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 Huis- en e-mailtools staan samen in de catalogus; alleen de huisroute is al live gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 ContextForge `v1.0.8` heeft nu echt één synthetische MCP-provider ontdekt en via Eva uitgevoerd. De live gebruikersroute en verwijdering van tijdelijke Python-lijm ontbreken nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | 🟡 Het model koos in een echte proef zelf een externe tijdtool; Home Assistant is daarnaast als gewone live provider gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 ContextForge `v1.0.8` leverde nu een echte niet-huisgebonden tijdtool. Naam, schema en provider kwamen uit de runtimecatalogus; de live gebruikersroute ontbreekt nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ De algemene route doet uitvoering en observatie apart en herstart zonder dubbel uitvoeren. Een echte toestandcontrole is met Home Assistant als verwisselbare praktijkprovider bewezen | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 De codegrens, AgentMail-proef en algemene MCP-proef zijn groen. Een tweede echte provider moet nog via dezelfde gateway in de gebruikersroute draaien | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder Eva's kern te wijzigen | 🟡 Dezelfde kern laadde Home Assistant, e-mail en een echte externe tijdtool. De gatewaykandidaat moet nog via A/B live | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -95,12 +95,12 @@ verwijderd.
 
 Ook het samenvoegen van providers is nu algemeen. Eva loopt over provider-
 bijdragen en heeft daar geen `als Home Assistant`- of `als AgentMail`-tak meer.
-Een expliciet toegelaten, geïnstalleerde proefprovider werd via de standaard
-Python-entry-pointgroep `eva2.external_providers` geladen en voegde een
-agendatool toe zonder compositorwijziging. Een ontbrekende plug-in, dubbele
-provider-ID, dubbele toolnaam of verschil tussen catalogus en uitvoerroute
-stopt gesloten. Dit bewijst nog geen veilige installatie van een nieuw pakket,
-versiepinning, scan, imagepromotie of live derde provider.
+De algemene MCP-grens zit nu als kleine, brongebouwde transportaansluiting in
+de providerlaag en heeft geen Python-pakketmetadata nodig. Concrete tools
+blijven uitsluitend uit de private runtimecatalogus komen. Los geïnstalleerde
+providerpakketten kunnen daarnaast via de standaard entry-pointgroep
+`eva2.external_providers` laden. Een ontbrekende plug-in, dubbele provider-ID,
+dubbele toolnaam of verschil tussen catalogus en uitvoerroute stopt gesloten.
 
 Dit betekent nog niet dat iedere providerklus af is. Eén echte apparaatmigratie
 moet nog als gewone provider-tool door dezelfde voorstel-, toestemming-,
@@ -125,6 +125,13 @@ waren hashgebonden. Uitvoering en aparte readback schreven een `verified`
 receipt in een verse PostgreSQL 16.13; nieuwe Eva-objecten lazen die na
 herstart terug met nul extra providercalls. Dit bewijst de algemene route, niet
 een echte toestandswijziging of een nieuw Home Assistant-onderdeel.
+
+Daarna koos `gpt-5.4-mini` in een schone, minimale kandidaat zelfstandig een
+echte externe tijdtool van IBM. ContextForge voerde haar uit, Eva las het
+resultaat apart terug en PostgreSQL voorkwam na een nieuwe runtime-instantie
+een tweede providercall. Deze niet-huisgebonden proef draaide zonder Home
+Assistant en de kandidaat scande op 0 hoog/0 kritisch. De brede tussenimage
+met 5 kritieke en 29 hoge bevindingen is afgewezen en niet gepromoveerd.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -227,7 +234,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Algemene toolaansluiting | ContextForge als MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 ContextForge `v1.0.8` is exact gepind, 0/0 gescand en heeft catalogus, call, aparte readback en PostgreSQL-herstart bewezen. Live opname en verwijdering van tijdelijke Python-lijm ontbreken. Home Assistant blijft slechts één provider |
+| Externe gereedschappen | ContextForge als MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 Een echte tijdtool en een synthetische tool doorliepen catalogus, modelkeuze, call, aparte readback en PostgreSQL-replay op een 0/0-kandidaat. Live opname ontbreekt. Home Assistant is alleen één verwisselbare provider en staat daarom niet als Eva-component op dit bord |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -258,8 +265,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. Een echte niet-huisgebonden provider via ContextForge in de gebruikersroute
-   zetten en daarna de bewezen overbodige Python-entry-pointlijm verwijderen.
+3. De bewezen algemene ContextForge-route via A/B in de gebruikersroute zetten
+   en daarna overlappende directe providerlijm verwijderen.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
@@ -284,3 +291,5 @@ De gatewaykeuze en de nog geldende grenzen staan in
 [de actuele MCP-gatewayvergelijking](evidence/product/mcp-gateway-bakeoff-2026-08-30.json).
 De echte algemene catalogus-, call-, readback- en herstartproef staat in
 [het duurzame ContextForge-bewijs](evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json).
+De echte niet-huisgebonden model-/tijdtoolproef staat in
+[de scan-schone providerkandidaat](evidence/product/contextforge-real-non-home-provider-candidate-2026-08-30.json).

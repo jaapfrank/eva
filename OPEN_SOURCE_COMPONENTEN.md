@@ -28,7 +28,7 @@ overlappende Eva-code is verwijderd.
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
-| Algemene toolaansluiting | [IBM ContextForge](https://github.com/IBM/mcp-context-forge) als algemene MCP-gateway; officiële provider-API's/SDK's achter losse toolservers | `v1.0.8` is exact gepind, niet-root, read-only en 0 hoog/0 kritisch gescand. Eén gepinde MCP-server doorliep nu echt cataloguscontrole, uitvoering, aparte readback en PostgreSQL-herstart; replay deed nul providercalls. De huidige Python-entry-pointgrens blijft tijdelijk tot een echte provider dezelfde route live gebruikt. Home Assistant, e-mail, agenda en browser zijn providers, geen Eva-componenten | **ContextForge wint de eerste algemene integratieproef; Docker MCP Gateway blijft reserve. Nog niet live en geen direct multi-usergezag zolang upstream-RBAC-issue 6015 openstaat** |
+| Externe gereedschappen | [IBM ContextForge](https://github.com/IBM/mcp-context-forge) als algemene MCP-gateway; officiële provider-API's/SDK's achter losse toolservers | `v1.0.8` is exact gepind, niet-root, read-only en 0 hoog/0 kritisch gescand. `gpt-5.4-mini` koos echt een IBM-tijdtool; uitvoering, aparte readback en PostgreSQL-replay waren groen op een minimale 0/0-Evakandidaat. Concrete tools komen uit de runtimecatalogus. Home Assistant, e-mail, agenda en browser zijn providers, geen Eva-componenten | **ContextForge wint de algemene integratieproef; Docker MCP Gateway blijft reserve. Nog niet live en geen direct multi-usergezag zolang upstream-RBAC-issue 6015 openstaat** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
 | Browser en computer | [Playwright MCP](https://github.com/microsoft/playwright-mcp) tegenover [Browser Use](https://github.com/browser-use/browser-use); daarna precies één motor | Functionele proeven bestaan, maar de geteste images voldeden niet aan de releasepoort | **Eén veilige brongebouwde winnaar kiezen; geen eigen browserengine** |
 | Subagents en onderzoek | Pydantic AI voor agentruns; een bewezen workflowmotor voor duurzame uitvoering | De actuele kandidaat heeft een grote eigen databaseworker en commandolaag; DBOS won de gemeten vervanging niet | **Bevroren tot een actuele kandidaat netto code verwijdert en de eenmalige-call/crashproef wint** |
@@ -170,6 +170,14 @@ runtime-instantie las dezelfde receipt terug zonder de provider opnieuw aan te
 roepen. Dit bewijst de gatewaygrens, nog niet de live gebruikersroute.
 ContextForge wordt eerst eigenaar-only gebruikt; de open upstreamkwestie `#6015` verhindert
 dat zijn eigen RBAC nu al Eva's persoonsgrens vervangt.
+
+De scheiding is daarna ook zonder Home Assistant bewezen. Op een minimale,
+scan-schone kandidaat koos het echte model zelfstandig een externe IBM-
+tijdtool uit de catalogus. ContextForge voerde haar uit, Eva deed een aparte
+readback en een nieuwe runtime-instantie deed bij replay nul providercalls. De
+generieke MCP-aansluiting is broncode in Eva's providergrens; de concrete tools
+en hun aanbieders zijn runtimeconfiguratie. Externe Python-providerpakketten
+blijven optioneel via entry points laadbaar.
 
 Hiermee wordt “top of the edge” een terugkerende releasepoort in plaats van een
 marketingclaim van vandaag.
