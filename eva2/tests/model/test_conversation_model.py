@@ -734,6 +734,8 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     assert "geen aparte grap, extra slotzin of tweede beeldspraak" in requests[0]["instructions"]
     assert "Forceer nooit humor bij verdriet, gevaar of angst" in requests[0]["instructions"]
     assert "concreet, beredeneerd eigen standpunt" in requests[0]["instructions"]
+    assert "natuurlijk hedendaags spreektaal" in requests[0]["instructions"]
+    assert "niet stijver of langer om identiteit te tonen" in requests[0]["instructions"]
     assert "claim alleen wat aantoonbaar is gelukt" in requests[0]["instructions"]
     assert "Jaap wil korte, directe en warme antwoorden" in requests[0]["instructions"]
     assert "kopieer geen zinnen, typefouten of boosheid" in requests[0]["instructions"]
