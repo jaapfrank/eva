@@ -360,6 +360,43 @@ def tool_free_answer(
     return text, receipt
 
 
+def _decode_dbbench_operation(answer: str) -> dict[str, object]:
+    try:
+        requested = json.loads(answer)
+    except json.JSONDecodeError as error:
+        raise AgentBenchEvaError("Eva DBBench tool answer is not exact JSON") from error
+    if not isinstance(requested, dict) or set(requested) != {"arguments", "name"}:
+        raise AgentBenchEvaError("Eva DBBench tool answer shape is invalid")
+    name = requested["name"]
+    arguments = requested["arguments"]
+    if name == "execute_sql":
+        if (
+            not isinstance(arguments, dict)
+            or set(arguments) != {"query"}
+            or not isinstance(arguments["query"], str)
+            or not arguments["query"].strip()
+            or len(arguments["query"].encode("utf-8")) > 64 * 1024
+        ):
+            raise AgentBenchEvaError("Eva DBBench SQL arguments are invalid")
+    elif name == "commit_final_answer":
+        if (
+            not isinstance(arguments, dict)
+            or set(arguments) != {"answers"}
+            or not isinstance(arguments["answers"], list)
+            or not 1 <= len(arguments["answers"]) <= 64
+            or any(
+                not isinstance(item, str)
+                or not item
+                or len(item.encode("utf-8")) > 16 * 1024
+                for item in arguments["answers"]
+            )
+        ):
+            raise AgentBenchEvaError("Eva DBBench final-answer arguments are invalid")
+    else:
+        raise AgentBenchEvaError("Eva selected an unsealed DBBench tool")
+    return requested
+
+
 def dbbench_tool_message(
     messages: object,
     tools: object,
@@ -368,6 +405,7 @@ def dbbench_tool_message(
     turn_limit: int = 2,
     turn_number: int = 1,
     answer_provider: Callable[[str, float], str] | None = None,
+    commit_review_provider: Callable[[str, float], str] | None = None,
 ) -> dict[str, object]:
     """Return one closed OpenAI-style tool message for upstream DBBench."""
 
@@ -490,39 +528,37 @@ def dbbench_tool_message(
             timeout_seconds=timeout_seconds,
         )
     )
-    try:
-        requested = json.loads(answer)
-    except json.JSONDecodeError as error:
-        raise AgentBenchEvaError("Eva DBBench tool answer is not exact JSON") from error
-    if not isinstance(requested, dict) or set(requested) != {"arguments", "name"}:
-        raise AgentBenchEvaError("Eva DBBench tool answer shape is invalid")
+    requested = _decode_dbbench_operation(answer)
     name = requested["name"]
     arguments = requested["arguments"]
-    if name == "execute_sql":
-        if (
-            not isinstance(arguments, dict)
-            or set(arguments) != {"query"}
-            or not isinstance(arguments["query"], str)
-            or not arguments["query"].strip()
-            or len(arguments["query"].encode("utf-8")) > 64 * 1024
-        ):
-            raise AgentBenchEvaError("Eva DBBench SQL arguments are invalid")
-    elif name == "commit_final_answer":
-        if (
-            not isinstance(arguments, dict)
-            or set(arguments) != {"answers"}
-            or not isinstance(arguments["answers"], list)
-            or not 1 <= len(arguments["answers"]) <= 64
-            or any(
-                not isinstance(item, str)
-                or not item
-                or len(item.encode("utf-8")) > 16 * 1024
-                for item in arguments["answers"]
-            )
-        ):
-            raise AgentBenchEvaError("Eva DBBench final-answer arguments are invalid")
-    else:
-        raise AgentBenchEvaError("Eva selected an unsealed DBBench tool")
+    if name == "commit_final_answer" and commit_review_provider is not None:
+        review_context = json.dumps(
+            {
+                "database_transcript": neutral_transcript,
+                "proposed_operation": requested,
+            },
+            ensure_ascii=False,
+            allow_nan=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        if len(review_context.encode("utf-8")) > MAX_MESSAGE_BYTES:
+            raise AgentBenchEvaError("Eva DBBench review context is too large")
+        review_prompt = (
+            "Review one proposed DBBench final answer using only the visible question, "
+            "headers, prior SQL and database results below. Never infer or request a "
+            "hidden label or standard answer SQL. Check that the proposed answer uses "
+            "exactly the field or fields asked for, one database cell per list item, "
+            "with no helper columns or prose. If it is correct, return the identical "
+            "commit_final_answer operation. If it is not sufficiently supported, "
+            "return one execute_sql operation that selects only the required answer "
+            "cells. Return exact plain JSON in the same sealed operation format.\n"
+            f"{review_context}"
+        )
+        answer = commit_review_provider(review_prompt, timeout_seconds)
+        requested = _decode_dbbench_operation(answer)
+        name = requested["name"]
+        arguments = requested["arguments"]
 
     argument_json = json.dumps(
         arguments,
@@ -618,12 +654,18 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
     ) -> dict[str, object]:
         turn_number = self._reserve_turn()
 
-        def provide(prompt: str, timeout_seconds: float) -> str:
+        def request(prompt: str, timeout_seconds: float, reserved_turn: int) -> str:
             answer, receipt = tool_free_answer(
                 prompt, timeout_seconds=timeout_seconds
             )
-            self.model_receipts.append({"turn": turn_number, **receipt})
+            self.model_receipts.append({"turn": reserved_turn, **receipt})
             return answer
+
+        def provide(prompt: str, timeout_seconds: float) -> str:
+            return request(prompt, timeout_seconds, turn_number)
+
+        def review(prompt: str, timeout_seconds: float) -> str:
+            return request(prompt, timeout_seconds, self._reserve_turn())
 
         return dbbench_tool_message(
             messages,
@@ -632,6 +674,7 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
             turn_limit=self._turn_limit,
             turn_number=turn_number,
             answer_provider=provide,
+            commit_review_provider=review,
         )
 
 

@@ -81,9 +81,10 @@ def _core(
 
 @contextmanager
 def _tool_free_core(
-    *, answer: str, measured_usage: bool = True
+    *, answer: str | list[str], measured_usage: bool = True
 ) -> Iterator[tuple[str, list[dict[str, object]]]]:
     received: list[dict[str, object]] = []
+    answers = [answer] if isinstance(answer, str) else answer
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, _format: str, *_args: object) -> None:
@@ -92,12 +93,13 @@ def _tool_free_core(
         def do_POST(self) -> None:  # noqa: N802
             size = int(self.headers["Content-Length"])
             received.append(json.loads(self.rfile.read(size)))
+            selected_answer = answers[min(len(received) - 1, len(answers) - 1)]
             body = json.dumps(
                 {
                     "contract": "EvaToolFreeModelReply/v1",
                     "provider": "chatgpt-codex:test-model",
-                    "text": answer,
-                    "text_sha256": hashlib.sha256(answer.encode()).hexdigest(),
+                    "text": selected_answer,
+                    "text_sha256": hashlib.sha256(selected_answer.encode()).hexdigest(),
                     "timing": {"completed_ms": 20, "first_content_ms": 10},
                     "tools_exposed": 0,
                     "usage": (
@@ -276,6 +278,55 @@ def test_tool_free_client_uses_private_sidecar_and_records_usage(
             },
         }
     ]
+
+
+def test_tool_free_client_reviews_a_commit_inside_the_same_call_budget(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    messages = [
+        {"role": "user", "content": "Which value is largest?"},
+        {
+            "role": "assistant",
+            "content": None,
+            "tool_calls": [
+                {
+                    "id": "call_one",
+                    "type": "function",
+                    "function": {
+                        "name": "execute_sql",
+                        "arguments": '{"query":"SELECT name, value FROM t"}',
+                    },
+                }
+            ],
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call_one",
+            "content": "[('row name', '42')]",
+        },
+    ]
+    proposed = '{"name":"commit_final_answer","arguments":{"answers":["row name"]}}'
+    corrected = (
+        '{"name":"execute_sql","arguments":'
+        '{"query":"SELECT value FROM t ORDER BY value DESC LIMIT 1"}}'
+    )
+    with _tool_free_core(answer=[proposed, corrected]) as (endpoint, received):
+        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        client = adapter.EvaToolFreeAgentBenchClient(
+            minimum_interval_seconds=0, timeout_seconds=10
+        )
+        result = client.inference_message(messages, adapter._DBBENCH_TOOLS)
+
+    assert result["tool_calls"][0]["function"] == {
+        "name": "execute_sql",
+        "arguments": '{"query":"SELECT value FROM t ORDER BY value DESC LIMIT 1"}',
+    }
+    assert len(received) == 2
+    assert "proposed_operation" in received[1]["prompt"]
+    assert "hidden label" in received[1]["prompt"]
+    assert client.turns_used == 2
+    assert [item["turn"] for item in client.model_receipts] == [1, 2]
 
 
 @pytest.mark.parametrize(

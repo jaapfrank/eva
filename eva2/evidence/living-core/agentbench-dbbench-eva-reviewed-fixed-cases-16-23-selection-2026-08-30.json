@@ -1,0 +1,48 @@
+{
+  "contract": "EvaAgentBenchDbBenchReviewedFixedDevelopmentSelection/v1",
+  "selectedAt": "2026-08-30T08:03:07+02:00",
+  "selectedBeforeAnyCase16Through23ResultWasKnown": true,
+  "selection": {
+    "split": "development",
+    "caseIndices": [16, 17, 18, 19, 20, 21, 22, 23],
+    "selectionRule": "next eight consecutive preflight-valid cases after the fixed set 8 through 15"
+  },
+  "candidate": {
+    "repositoryCommitBeforeCandidateCheckpoint": "ca349de7a1cffe3d01962d677c69f34cb7c83e9c",
+    "toolFreeClientSha256": "67429c4bc41e1115abed47cab680031f1e0f06e8ad575ffb4b4b50fca19d5a8e",
+    "commitReviewEnabled": true,
+    "commitReviewUsesHiddenLabel": false,
+    "commitReviewMayReturn": [
+      "the identical supported commit_final_answer",
+      "one corrective execute_sql operation"
+    ],
+    "hardcodedCaseAnswers": false
+  },
+  "inputs": {
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb"
+  },
+  "limits": {
+    "maximumModelCallsPerCaseIncludingReview": 15,
+    "minimumSecondsBetweenEveryModelCall": 5,
+    "toolsExposedAtModelBoundary": 0,
+    "reviewOccursOnlyForProposedFinalCommits": true
+  },
+  "verificationBeforeSelection": {
+    "focusedTestsPassed": 35,
+    "ruffPassed": true,
+    "modelSidecarHealth": "healthy",
+    "modelSidecarCriticalFindings": 0,
+    "modelSidecarHighFindings": 0
+  },
+  "nonClaims": [
+    "This selection is not a score.",
+    "The reviewer has not yet been measured on these unseen cases.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}
