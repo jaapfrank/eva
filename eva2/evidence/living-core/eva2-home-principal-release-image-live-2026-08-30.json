@@ -1,0 +1,66 @@
+{
+  "contract": "Eva2HomePrincipalReleaseImageLiveReceipt/v1",
+  "recordedAt": "2026-08-30T03:05:09Z",
+  "status": "passed_live_with_direct_rollback",
+  "source": {
+    "commit": "8b0b87fc617816d37b8c1b503c0983a9fc24c717",
+    "archiveSha256": "ca98fe63e0d44fab960aaefb10a3d3eb5575fc7a132765391b546b325ac16d00",
+    "authoritySha256": "e7d778d6e6bda0e6f8f63358c7e7ae089e6578d2e7107d24b114d4fb8f41e915",
+    "cockpitSha256": "c6cdf1abfd8406b450f6b44cd7fd1aa77b490bd5b42e384a0948d04d740efc01",
+    "releaseInputCount": 250,
+    "releaseTestCount": 139
+  },
+  "image": {
+    "id": "sha256:0fa10a1aff78bfbe166be9e380335a87dd1d1a84ce56a2a1d621fc81cd98de97",
+    "buildNetwork": "none",
+    "runtimeTreeSha256": "11aed09d18646ed177333bebf87792325aa314b0c7611b3df9ccd4bd29047006",
+    "runtimeTreeFileCount": 463,
+    "runtimeTreeMatchesReviewedCandidate": true,
+    "scanNetwork": "none",
+    "scanHigh": 0,
+    "scanCritical": 0
+  },
+  "liveVerification": {
+    "modelReply": "AUTHRELEASE",
+    "postCutoverRouterReply": "ABCUTOVER",
+    "unauthorizedEffectHttpStatus": 409,
+    "unauthorizedEffectDetail": "Home Assistant effect principal is not authorized",
+    "unauthorizedTimelineRows": 0,
+    "authorizedEffectStatus": "verified",
+    "authorizedEffectRetryCount": 0,
+    "candidateRestarted": true,
+    "replayTimelineEventCounts": {
+      "STATE_VERIFIED": 1,
+      "TOOL_EXECUTED": 1,
+      "TOOL_PREPARED": 1,
+      "TOOL_REQUEST_ADMITTED": 1
+    },
+    "providerActionWasNotRepeated": true,
+    "candidateHealthy": true,
+    "candidateRestartCount": 0
+  },
+  "cutover": {
+    "sourcePort": 44717,
+    "targetPort": 44718,
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "8901c78788c320721cd728e540723a0ec0744d5d5d0385b96062f0c48ad05339",
+    "previousDropinSha256": "113393910b1f3c1b3337b9afdcbf487b514273cdfd01aaa13f6ed21d86e72363",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "liveContainer": "eva2-ha-principal-release-8b0b87f",
+    "rollbackContainer": "eva2-ha-principal-e2b1585",
+    "rollbackPort": 44717,
+    "rollbackHealthy": true
+  },
+  "nonclaims": [
+    "The effect allowlist still contains only light.dimmable_light_1:turn_off; this receipt does not enable broad household control.",
+    "Lola is not granted house-effect authority until her current principal link is explicitly confirmed.",
+    "The Windows/WSL reboot, full-duplex voice and official seven-day acceptance run remain open."
+  ]
+}
