@@ -1,0 +1,59 @@
+{
+  "contract": "Eva2ExternalProviderEntryPointRegistryReceipt/v1",
+  "capturedAt": "2026-08-30T21:00:41+02:00",
+  "source": {
+    "commit": "aff1f44036a00918d5240291bc3c50b7f6fec50c",
+    "files": {
+      "src/eva/providers/runtime.py": "0db5a50d4e8889faa1883ba11a9fd4a2ba98d9fd966c593da9af70ee3bd6b7cc",
+      "src/eva/bootstrap/runtime.py": "bbf3d0aaac7415361491c27e0a48daf1689bb11a28890ac31e097e8d0b71b569",
+      "tests/connectors/test_provider_runtime.py": "433eacc6ccabedf6feab24c23fe8868b93baa5fc1e00089ca1c535769e07abc3",
+      "PROJECT_STATUS.md": "4b37d82eb2e9e387d07485dacdc9cf45d1adca7d5806242769278613a78a1ea3",
+      "../OPEN_SOURCE_COMPONENTEN.md": "6c56e09ff42de0da13df7e6858b09388765bbad7a75a1a3c12aa99c07c08a4b9",
+      "design/architecture/living-core-v1.md": "d27cfc934b54951db5fe1c5722ee00d6e82fe0ff46857a31b25699e541ddd3fc"
+    }
+  },
+  "registry": {
+    "discoveryMechanism": "Python importlib.metadata entry points",
+    "entryPointGroup": "eva2.external_providers",
+    "explicitAllowlistSetting": "EVA_EXTERNAL_PROVIDER_PLUGINS",
+    "compositorProviderBranches": 0,
+    "syntheticCalendarProviderLoaded": true,
+    "coreOrCompositorChangeNeededForSyntheticProvider": false,
+    "missingPluginRejected": true,
+    "duplicateProviderIdentityRejected": true,
+    "duplicateToolNameRejected": true,
+    "catalogExecutionMismatchRejected": true,
+    "multipleSensorySourcesRejectedUntilFanInExists": true
+  },
+  "durabilityVerification": {
+    "databaseImage": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "databaseVersion": "PostgreSQL 16.13",
+    "databaseWasFreshAndDisposable": true,
+    "providerCallsBeforeRuntimeRestart": 1,
+    "providerCallsAfterRuntimeRestart": 1,
+    "providerCallRepeatedAfterRuntimeRestart": false,
+    "containerRemovedAfterTest": true
+  },
+  "verification": {
+    "providerRegistryTestsPassed": 5,
+    "focusedTestsPassed": 94,
+    "disposablePostgresTestsPassed": 1,
+    "ruff": "passed",
+    "compileall": "passed",
+    "providerSpecificCoreDebtViolations": 0,
+    "changedRuntimePathArchitectureViolations": 0,
+    "preExistingRepositoryBoundaryViolations": 62
+  },
+  "testEnvironmentLimits": [
+    "The unmanaged host Python environment lacks httpx2, so the model adapter test module could not be collected here.",
+    "The bootstrap settings test module also depends on packages absent from the unmanaged host; the changed files did compile successfully.",
+    "The repository-wide architecture aggregate remains red on 62 pre-existing installer import-boundary findings; none points at the changed runtime files and provider-specific core debt remains zero."
+  ],
+  "nonClaims": [
+    "The calendar provider was a synthetic entry-point contract fixture, not an installed third-party wheel or live calendar service.",
+    "This does not prove safe plug-in download, dependency resolution, version pinning, SBOM, vulnerability scanning or installer integration.",
+    "This source commit has not been built into or promoted as the live Eva2 image.",
+    "Home Assistant and AgentMail remain built-in provider adapters in the current package even though the compositor no longer branches on their identities."
+  ],
+  "status": "passed_with_explicit_nonclaims"
+}

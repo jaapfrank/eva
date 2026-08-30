@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 20:55 CEST
+Laatst bijgewerkt: 30 augustus 2026, 21:00 CEST
 
 ## Zo lees je dit bord
 
@@ -255,3 +255,5 @@ De eerste twee actuele gelijke vierwegproeven staan in
 [C04](evidence/product/current-four-way-c04-development-2026-08-30.json).
 De tweede providerroute staat in
 [de duurzame e-mailtoolproef](evidence/living-core/external-email-provider-durable-tool-2026-08-30.json).
+De algemene laadgrens staat in
+[de entry-pointregistryproef](evidence/living-core/external-provider-entry-point-registry-2026-08-30.json).
