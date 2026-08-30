@@ -1,0 +1,57 @@
+{
+  "contract": "Eva2RenovateLocalDryRunEvidence/v1",
+  "issuedAt": "2026-08-30T16:09:22+02:00",
+  "toolchain": {
+    "node": "24.11.0",
+    "renovate": "44.52.0",
+    "renovateConfigSha256": "fb60fced714dc935a063aa93df09631bbc71cf96ca4bcf55f2976608a242ab1f",
+    "componentWatchSha256": "b6472e2fc99d5bbe424f9164eabf87e10b537d00963caef0c82b33f0d5eff2ca"
+  },
+  "fullRepositoryDryRun": {
+    "dryRun": "full",
+    "platform": "local",
+    "fileCount": 34,
+    "dependencyCount": 99,
+    "managers": {
+      "dockerfile": {"fileCount": 28, "dependencyCount": 49},
+      "pep621": {"fileCount": 1, "dependencyCount": 13},
+      "pip_requirements": {"fileCount": 4, "dependencyCount": 23},
+      "regex": {"fileCount": 1, "dependencyCount": 14}
+    },
+    "observations": [
+      "All eleven selected components and all three competitors were extracted from component-watch.json.",
+      "Unauthenticated Docker Hub lookups for local-only eva2/* image names returned 401 and are not update sources."
+    ]
+  },
+  "releaseWatchOnlyDryRun": {
+    "dryRun": "full",
+    "platform": "local",
+    "githubReadTokenUsed": true,
+    "fileCount": 1,
+    "dependencyCount": 14,
+    "manager": "custom.regex",
+    "warnings": 0,
+    "errors": 0,
+    "exitCode": 0
+  },
+  "githubAutomation": {
+    "dependencyDashboardFound": false,
+    "renovatePullRequestFound": false,
+    "renovateSecretFound": false,
+    "defaultWorkflowPermission": "read",
+    "canApprovePullRequests": false,
+    "status": "not_active"
+  },
+  "writes": {
+    "issues": 0,
+    "branches": 0,
+    "pullRequests": 0,
+    "repositoryFiles": 0
+  },
+  "status": "passed_local_dry_run_only",
+  "nonclaims": [
+    "No Renovate App, scheduled runner, dependency dashboard, branch or pull request is active.",
+    "The dry-run proves extraction and lookup configuration, not automatic GitHub execution.",
+    "Dependency candidates still require Eva's tests, offline image build, scan, disposable runtime and A/B gates."
+  ]
+}

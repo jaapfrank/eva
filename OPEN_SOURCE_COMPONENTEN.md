@@ -91,6 +91,14 @@ vindbaar, maar bewijst nog geen actieve bot. De status wordt pas groen nadat de
 GitHub Renovate App of een vaste Renovate-runner een echte dashboardissue en
 een testvoorstel heeft gemaakt.
 
+De configuratie is inmiddels wel echt met Renovate `44.52.0` onder de vereiste
+Node `24.11.0` uitgevoerd in volledige dry-run. De brede scan vond 99
+dependencies in 34 bestanden; de smalle releasewatch vond exact alle 14
+componenten en concurrenten zonder waarschuwing of fout. Er is niets geschreven.
+GitHub heeft op dit moment geen Renovate App, tokensecret, dashboard of Renovate-
+PR en Actions heeft alleen leesrecht. Automatische voorstelvorming blijft dus
+eerlijk geel totdat die externe runner bewust is geactiveerd.
+
 `component-watch.json` volgt daarnaast de releases van de gekozen componenten
 én van OpenClaw, Hermes en Agent Zero. Een nieuwe concurrentrelease krijgt het
 label `benchmark-required` en heropent dus de vergelijking in plaats van stil

@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 15:58 CEST
+Laatst bijgewerkt: 30 augustus 2026, 16:09 CEST
 
 Betekenis:
 
@@ -160,6 +160,8 @@ Betekenis:
   worden gebouwd, gescand en tegen een volledige wegwerpstack worden getest.
 - 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een
   echte automatische botrun en updatevoorstel zijn nog niet bewezen.
+- ✅ Een schrijfloze Renovate-proef met de vereiste Node-versie vond 99
+  dependencies en precies alle 14 gevolgde bouwstenen en concurrenten.
 
 ## Vergelijken met andere assistenten
 
