@@ -13,8 +13,66 @@ from tools.eva2_quiescent_cutover import (
     DatabaseSnapshot,
     QuiescentCutoverError,
     SlotSpec,
+    SystemBackend,
+    _slot,
     quiescent_cutover,
 )
+
+
+def test_start_writers_recreates_services_and_checks_exact_core_image(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    slot = _slot(3)
+    commands: list[list[str]] = []
+    image = "sha256:" + "a" * 64
+    monkeypatch.setattr(
+        SystemBackend,
+        "_environment",
+        staticmethod(lambda _path: {"EVA_LIVING_CORE_IMAGE": f"eva2/core@{image}"}),
+    )
+    monkeypatch.setattr(
+        SystemBackend,
+        "_run",
+        staticmethod(lambda command, **_kwargs: commands.append(command) or ""),
+    )
+    monkeypatch.setattr(
+        SystemBackend, "_wait_container", staticmethod(lambda _container: None)
+    )
+    monkeypatch.setattr(
+        SystemBackend, "_inspect", staticmethod(lambda _container: {"Image": image})
+    )
+
+    SystemBackend().start_writers(slot)
+
+    assert [command[-1] for command in commands] == ["hindsight", "core"]
+    assert all("up" in command and "--no-deps" in command for command in commands)
+
+
+def test_start_writers_refuses_a_stale_core_container(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    slot = _slot(3)
+    monkeypatch.setattr(
+        SystemBackend,
+        "_environment",
+        staticmethod(
+            lambda _path: {"EVA_LIVING_CORE_IMAGE": "eva2/core@sha256:" + "a" * 64}
+        ),
+    )
+    monkeypatch.setattr(
+        SystemBackend, "_run", staticmethod(lambda _command, **_kwargs: "")
+    )
+    monkeypatch.setattr(
+        SystemBackend, "_wait_container", staticmethod(lambda _container: None)
+    )
+    monkeypatch.setattr(
+        SystemBackend,
+        "_inspect",
+        staticmethod(lambda _container: {"Image": "sha256:" + "b" * 64}),
+    )
+
+    with pytest.raises(QuiescentCutoverError, match="core image differs"):
+        SystemBackend().start_writers(slot)
 
 
 def _container(

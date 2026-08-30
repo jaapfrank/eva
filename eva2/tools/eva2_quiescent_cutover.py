@@ -46,6 +46,9 @@ LOCK = Path("/run/lock/eva2-quiescent-cutover.lock")
 WORK_PARENT = Path("/var/lib/eva2/quiescent-cutover")
 EVA1_DATABASE = Path("/home/administrator/project/Bottie/data/eva.db")
 EVA1_BACKUPS = Path("/var/lib/eva2/eva1-cutover-backups")
+MANIFEST = (
+    Path(__file__).resolve().parents[1] / "deploy/living-core/managed-b.compose.yml"
+)
 
 _COUNT_SQL = """
 SELECT stats.schemaname || '.' || stats.relname || '=' ||
@@ -484,10 +487,29 @@ class SystemBackend:
         raise QuiescentCutoverError("retained slot service did not become healthy")
 
     def start_writers(self, slot: SlotSpec) -> None:
-        self._run([DOCKER, "start", slot.hindsight])
+        environment = self._environment(slot.environment)
+        compose = [
+            DOCKER,
+            "compose",
+            "--env-file",
+            str(slot.environment),
+            "--project-name",
+            slot.project,
+            "--file",
+            str(MANIFEST),
+            "up",
+            "--detach",
+            "--no-deps",
+        ]
+        self._run([*compose, "hindsight"])
         self._wait_container(slot.hindsight)
-        self._run([DOCKER, "start", slot.core])
+        self._run([*compose, "core"])
         self._wait_container(slot.core)
+        expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
+        if self._inspect(slot.core).get("Image") != expected:
+            raise QuiescentCutoverError(
+                "retained slot core image differs from its environment"
+            )
 
     @staticmethod
     def _database_counts(container: str, database: str) -> dict[str, int]:
