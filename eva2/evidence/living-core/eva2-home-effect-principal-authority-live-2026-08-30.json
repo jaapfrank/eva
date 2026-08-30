@@ -1,0 +1,74 @@
+{
+  "contract": "Eva2HomeEffectPrincipalAuthorityLiveReceipt/v1",
+  "recordedAt": "2026-08-30T03:00:00Z",
+  "status": "passed_live_with_direct_rollback",
+  "sourceCommit": "e2b1585dbbd3d001678f3cad0d64e1ecd89c38b4",
+  "imageId": "sha256:b310171a6e6d49b2e5fe0b201e6be464bab614683df165545cbabd28eca0669d",
+  "sourceBudget": {
+    "productPhysicalLines": 74874,
+    "maximumProductPhysicalLines": 75000,
+    "violations": []
+  },
+  "verification": {
+    "focusedTestsPassed": 178,
+    "ruff": "passed",
+    "imageBuildNetwork": "none",
+    "scanNetwork": "none",
+    "scanHigh": 0,
+    "scanCritical": 0,
+    "candidateReady": true,
+    "candidateRestartCount": 0
+  },
+  "principalAuthority": {
+    "configuredPrincipalSha256Count": 1,
+    "rawPrincipalIdsInContainerConfiguration": 0,
+    "unauthorizedDirectRequestHttpStatus": 409,
+    "unauthorizedConversationReply": "Met dit profiel mag je het huis nog niet bedienen.",
+    "unauthorizedTimelineRows": 0,
+    "authorizedProfile": "Jaap",
+    "authorizedAction": "light.dimmable_light_1:turn_off",
+    "authorizedProviderStatus": "verified",
+    "authorizedObservedState": "off",
+    "authorizedRetryCount": 0
+  },
+  "restartAndReplay": {
+    "candidateRestarted": true,
+    "replayStatus": "verified",
+    "replayObservedState": "off",
+    "timelineEventCounts": {
+      "STATE_VERIFIED": 1,
+      "TOOL_EXECUTED": 1,
+      "TOOL_PREPARED": 1,
+      "TOOL_REQUEST_ADMITTED": 1
+    },
+    "providerActionWasNotRepeated": true
+  },
+  "conversationProof": {
+    "reply": "De spotjes overkapping staan uit, en ik heb gecontroleerd dat ze echt uit staan.",
+    "stateVerifiedDelta": 1,
+    "postCutoverReply": "AUTHLIVE"
+  },
+  "cutover": {
+    "sourcePort": 44716,
+    "targetPort": 44717,
+    "status": "switched",
+    "targetReady": true,
+    "newDropinSha256": "113393910b1f3c1b3337b9afdcbf487b514273cdfd01aaa13f6ed21d86e72363",
+    "previousDropinSha256": "b93751fa9d1935ea5bf65e54c646eb58db8562c1a28c0c18831c6cadf1306986",
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "liveContainer": "eva2-ha-principal-e2b1585",
+    "rollbackContainer": "eva2-pc03-sealed-a9dd457",
+    "rollbackPort": 44716
+  },
+  "nonclaims": [
+    "The live effect allowlist still contains only one light and turn_off; broad household control is not enabled by this receipt.",
+    "Lola is not added to the live house-effect authority without a current explicit principal link.",
+    "The physical Windows/WSL reboot, full-duplex voice and official seven-day acceptance run remain open."
+  ]
+}
