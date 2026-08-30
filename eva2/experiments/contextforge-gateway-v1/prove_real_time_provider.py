@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prove one real non-home MCP provider through Eva's installed plugin route."""
+"""Prove one real non-home tool through Eva's generic provider boundary."""
 
 from __future__ import annotations
 
@@ -256,7 +256,7 @@ def main() -> int:
     settings = load_external_provider_settings()
     bundle = build_external_provider_bundle(settings, engine)
     if bundle is None or [item.name for item in bundle.conversation_tools] != [EVA_TOOL_NAME]:
-        raise RuntimeError("installed MCP provider did not contribute the sealed tool")
+        raise RuntimeError("MCP provider did not contribute the sealed tool")
     model = CodexConversationModel(
         auth_file=Path("/run/eva/model-lease/auth.json"),
         transport_kind="openai_sdk",
@@ -310,7 +310,7 @@ def main() -> int:
         restarted_settings, restarted_engine
     )
     if restarted_bundle is None:
-        raise RuntimeError("restarted installed MCP provider is absent")
+        raise RuntimeError("restarted MCP provider is absent")
     restarted_route = next(
         item
         for item in restarted_bundle.external_tools
