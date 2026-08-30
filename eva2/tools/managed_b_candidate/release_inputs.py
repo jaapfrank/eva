@@ -51,7 +51,7 @@ _NONCLAIMS = (
     "The active amd64 dependency inputs are version-matched to the 38-package DBOS-free requirements-4d.lock with the official OpenAI SDK; the stock 38-wheel authority remains historical and is not a fallback build input.",
     "The exact offline installer command, post-install attestations, physical 38-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
-    "The immutable 0/0-scanned core now serves the explicit /eva2 route from retained managed slot 4 after a lossless two-database cutover; reboot and resident acceptance remain open gates.",
+    "An immutable 0/0-scanned core serves the explicit /eva2 route from one retained managed slot after a lossless two-database cutover; the slot identity is live state and is not claimed by this static authority, while resident acceptance remains open.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (
     "The cockpit index is a release-bound evidence projection, not a new live run.",
