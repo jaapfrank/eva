@@ -1,0 +1,54 @@
+{
+  "contract": "Eva1Eva2ExplicitTelegramBoundaryLiveReceipt/v1",
+  "issuedAt": "2026-08-30T23:13:15+02:00",
+  "status": "live",
+  "incident": {
+    "confusionWasReal": true,
+    "cause": "After one explicit /eva2 turn, the Eva1 Telegram router kept an implicit thirty-minute Eva2 continuation session.",
+    "ordinaryFollowupsCouldReachEva2": true,
+    "eva1TelegramHistoryWasForwardedToEva2": true,
+    "eva2StreamErrorsWereNotIdentifiedClearly": true
+  },
+  "correction": {
+    "eva1SourceCommit": "a2d9456016871b5906ea5187ac6bf71b9218e6a8",
+    "onlyLiteralEva2CommandRoutesToEva2": true,
+    "implicitContinuationRemoved": true,
+    "eva1HistoryForwardedToEva2": false,
+    "eva2ReplyPrefix": "Eva2:",
+    "eva2FailurePrefix": "Eva2-fout:",
+    "failureStatesEva1DidNotProcessMessage": true
+  },
+  "verification": {
+    "mandatoryOuterBootstrapChecks": 1,
+    "eva2CanaryTests": 12,
+    "telegramTransportTests": 19,
+    "telegramArchiveTests": 6,
+    "allFocusedTestsPassed": true,
+    "lintWarnings": 0,
+    "lintErrors": 0,
+    "loadedOrdinaryPrompt": "Eva1?",
+    "loadedOrdinaryResult": null,
+    "loadedOrdinaryEva2ProviderCalls": 0,
+    "loadedExplicitPromptRecognized": true,
+    "externalTelegramMessageSentByOperatorProbe": false
+  },
+  "safety": {
+    "eva1Backup": "eva-2026-08-30-21-11-59.db",
+    "eva1BackupSha256": "d1d13e4966113cfdaf1bab63afa66f462749ad560b5d3a2baff10648d4b0b257",
+    "eva1BackupMode": "0600",
+    "eva1BackupQuickCheck": "ok",
+    "eva1BackupForeignKeyErrors": 0
+  },
+  "liveAfterRestart": {
+    "eva1Active": true,
+    "eva1Restarts": 0,
+    "eva1HttpStatuses": [200, 200, 200],
+    "eva2ActivePort": 44711,
+    "eva2ReadyHttp": 200,
+    "warningOrErrorLogEntries": 0
+  },
+  "nonClaims": [
+    "No new human Telegram message was sent during the operator probe.",
+    "The next visible human confirmation should use one explicit /eva2 message followed by one ordinary message."
+  ]
+}

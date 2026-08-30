@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 23:00 CEST
+Laatst bijgewerkt: 30 augustus 2026, 23:13 CEST
 
 ## Zo lees je dit bord
 
@@ -30,11 +30,22 @@ telt dus nog niet als gewonnen vergelijking.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Gewoon privé praten | ✅ Via `/eva2` op Telegram met een echt model | 📘 Meerdere chatkanalen | 📘 Meerdere chatkanalen | 📘 Eigen chat en webinterface |
+| Zeker weten welke Eva antwoordt | ✅ Alleen een letterlijk `/eva2`-bericht gaat naar Eva2. Haar antwoorden beginnen met `Eva2:` en fouten met `Eva2-fout:`. Een gewoon vervolg gaat altijd naar Eva1 | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route |
 | Een herkenbare, menselijke persoonlijkheid hebben | 🟡 Warme, jonge en eigenwijze identiteit staat; in C04 was haar humor nog niet zichtbaar. Een geïsoleerde correctie werkt, maar is nog niet live of blind herbeoordeeld | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
 | Het gesprek na een herstart voortzetten | ✅ Gesprek blijft in PostgreSQL staan | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest |
 | Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
 | Dezelfde zichtbare vraag met hetzelfde model beantwoorden | ✅ C01 groen; 3,118 s en 77 woorden | ✅ C01 groen; 15,738 s en 130 woorden | ✅ C01 groen; 35,875 s en 153 woorden | ✅ C01 groen; 17,540 s en 119 woorden |
 | Warm maar zelfstandig tegenspreken in een alledaagse situatie | 🟡 C04 inhoudelijk groen en 2,368 s, maar anoniem vierde en zonder herkenbare humor | ✅ C04 groen; anoniem eerste | ✅ C04 groen; anoniem tweede | ✅ C04 groen; anoniem derde |
+
+De eerdere verwarring was echt en is niet weggepoetst. Na één `/eva2`-bericht
+hield de oude Telegramrouter ongemerkt dertig minuten een Eva2-sessie vast.
+Daardoor konden gewone vervolgberichten bij Eva2 belanden. Ook stuurde Eva1
+stukken uit haar eigen Telegramgeschiedenis mee, terwijl Eva2 al haar eigen
+gespreksjournal heeft. Beide routes zijn verwijderd en draaien sinds 23:13 live.
+De gerichte proef telt 38 groene Telegramtests plus de verplichte
+beveiligingscontrole. Er is tijdens de operatorproef geen Telegrambericht namens
+Jaap of Lola verstuurd; de eerstvolgende menselijke beurt kan de zichtbare
+labels nog rechtstreeks bevestigen.
 
 ## Mensen, groepen, geheugen en privacy
 
@@ -297,3 +308,6 @@ De echte niet-huisgebonden model-/tijdtoolproef staat in
 De providerneutrale image, verliesloze A/B-omschakeling, modelherstart en echte
 externe live read staan in
 [het live toolgrensbewijs](evidence/product/generic-tool-boundary-live-ab-2026-08-30.json).
+De gevonden Telegramverwarring, verwijderde automatische sessie en live
+scheidingscontrole staan in
+[het Eva1/Eva2-routerbewijs](evidence/living-core/eva1-eva2-explicit-telegram-boundary-live-2026-08-30.json).
