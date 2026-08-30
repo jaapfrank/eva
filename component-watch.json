@@ -2,6 +2,7 @@
   "contract": "Eva2UpstreamReleaseWatch/v1",
   "checkedAt": "2026-08-30T14:47:00+02:00",
   "components": [
+    {"repository": "openai/openai-python", "currentRelease": "v3.6.0", "role": "model-provider-sdk"},
     {"repository": "pydantic/pydantic-ai", "currentRelease": "v2.36.0", "role": "agent-runtime"},
     {"repository": "dbos-inc/dbos-transact-py", "currentRelease": "2.31.0", "role": "durable-workflows"},
     {"repository": "vectorize-io/hindsight", "currentRelease": "v0.9.2", "role": "long-term-memory"},

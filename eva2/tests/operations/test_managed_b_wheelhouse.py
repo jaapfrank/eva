@@ -204,25 +204,25 @@ def _committed_alignment_inputs() -> tuple[bytes, bytes, bytes, bytes, bytes, by
     )
 
 
-def test_committed_v2_manifest_is_the_exact_dbos_free_runtime_delta() -> None:
+def test_committed_v2_manifest_is_the_exact_dbos_free_sdk_runtime_delta() -> None:
     inputs = _committed_alignment_inputs()
 
     receipt = inspect_runtime_dependency_alignment(*inputs)
 
     assert receipt == {
         "contract": "EvaManagedBRuntimeDependencyAlignmentReceipt/v1",
-        "expected_wheel_count": 35,
+        "expected_wheel_count": 38,
         "network_used": False,
         "requirements_lock_path": "requirements-4d.lock",
         "requirements_lock_sha256": (
-            "5b90b36192d9e977e659a44e8e569df9c150b7479782651e538ea52640c3fe63"
+            "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f"
         ),
         "selected_manifest_sha256": (
-            "2f0a9ec67ea8b41fde854391d276d901dd325b80c24f20b8cc4ee1c57d435135"
+            "6923ade82d6bf0c68d53bbadfdda77220ccde3c1a7951a7eb359993263e9485e"
         ),
         "status": "version_matched_runtime_dependency_inputs",
         "wheelhouse_tree_sha256": (
-            "b255a2673909261c6a15970b9b78dfacfe5e402a4e96c8ae6000b9eaef41d89a"
+            "3644c6f96e676f43b2738faa0eff84d5068baa002d09bab4eaa65ee3ccff3642"
         ),
     }
     assert hashlib.sha256(inputs[3]).hexdigest() == (
@@ -252,7 +252,7 @@ def test_historical_39_wheel_install_receipt_is_not_current_release_input() -> N
         "wheelhouse_tree_sha256"
     ]
     assert receipt["observed"]["wheel_count"] == 39
-    assert alignment["expected_wheel_count"] == 35
+    assert alignment["expected_wheel_count"] == 38
     assert receipt["observed"]["runtime_distribution_count"] == 39
     assert receipt["observed"]["runtime_has_pip"] is False
     assert receipt["observed"]["runtime_has_wheel"] is False
@@ -269,7 +269,7 @@ def _assert_historical_39_wheel_binding(
     ]
     assert bound["wheelhouse_tree_sha256"] != alignment["wheelhouse_tree_sha256"]
     assert bound["wheel_count"] == 39
-    assert alignment["expected_wheel_count"] == 35
+    assert alignment["expected_wheel_count"] == 38
 
 
 def test_historical_candidate_image_receipt_is_not_current_release_input() -> None:
@@ -483,7 +483,7 @@ def test_runtime_alignment_refuses_stock_dbos_or_an_unrelated_wheel_change() -> 
     changed_coverage = _canonical(coverage)
     manifest = json.loads(active_manifest)
     manifest["coverageSha256"] = hashlib.sha256(changed_coverage).hexdigest()
-    with pytest.raises(RuntimeError, match="exact 38-to-35 delta"):
+    with pytest.raises(RuntimeError, match="exact sealed SDK delta"):
         inspect_runtime_dependency_alignment(
             _canonical(manifest),
             changed_coverage,

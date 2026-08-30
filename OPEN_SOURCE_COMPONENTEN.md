@@ -24,15 +24,15 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | Pydantic AI wordt deels gebruikt, maar de gesprekroute bevat nog veel eigen model- en toolsturing | **Vervangen en verkleinen** |
-| Werk hervatten na een crash | [DBOS Transact](https://github.com/dbos-inc/dbos-transact-py) boven PostgreSQL | De actuele runtime heeft DBOS juist verwijderd en bevat eigen worker- en herstelcode | **Opnieuw toelaten of met cijfers afwijzen; huidige toestand is niet dependency-first** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` heeft echte Codex-pariteit en warme latencypariteit bewezen en is nu kandidaatstandaard; Pydantic AI en de toolloop moeten nog verder worden bijgewerkt en verkleind | **SDK-kandidaat in bouw; daarna Pydantic/toolloop verkleinen** |
+| Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
 | Home Assistant normaal bedienen | Home Assistants [officiële MCP Server](https://github.com/home-assistant/home-assistant.io/blob/current/source/_integrations/mcp_server.markdown) | De live route gebruikt deze al voor algemene Assist-gereedschappen | **Houden; geen functies per lamp of apparaatgroep bouwen** |
 | Home Assistant beheren | [ha-mcp](https://github.com/homeassistant-ai/ha-mcp) als afzonderlijke beheerprovider, plus officiële HA-API waar MCP iets niet aanbiedt | Alleen delen zijn beproefd; automatiseringen, updates en integratiemigraties zijn nog te veel als losse voorbeelden beschreven | **Eén algemene beheerroute bouwen, niet één Tuya- of updateroute per voorbeeld** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
 | Browser en computer | [Playwright MCP](https://github.com/microsoft/playwright-mcp) tegenover [Browser Use](https://github.com/browser-use/browser-use); daarna precies één motor | Functionele proeven bestaan, maar de geteste images voldeden niet aan de releasepoort | **Eén veilige brongebouwde winnaar kiezen; geen eigen browserengine** |
-| Subagents en onderzoek | Pydantic AI voor agentruns; DBOS voor duurzame uitvoering | De actuele kandidaat heeft opnieuw een grote eigen databaseworker en commandolaag | **Bevroren tot de DBOS/Pydantic-vervanging netto code verwijdert** |
+| Subagents en onderzoek | Pydantic AI voor agentruns; een bewezen workflowmotor voor duurzame uitvoering | De actuele kandidaat heeft een grote eigen databaseworker en commandolaag; DBOS won de gemeten vervanging niet | **Bevroren tot een actuele kandidaat netto code verwijdert en de eenmalige-call/crashproef wint** |
 | Dashboard | Een bestaand web-/adminframework boven Eva's API | De cockpit bevat nog veel eigen presentatiecode | **Bestaande UI hergebruiken; Eva houdt alleen haar API en unieke schermlogica** |
 | Installatie en updates | Bestaande packaging, Compose en A/B; [Renovate](https://github.com/renovatebot/renovate) voor voorstellen | A/B werkt, maar Renovate stond alleen in een submap en er is nog geen bewijs dat een Renovate-runner actief is | **Configuratie naar repositoryroot; pas ‘automatisch bijgehouden’ na een echte botrun** |
 | SBOM en veiligheid | Trivy voor CVE's, Syft voor SBOM en Cosign voor ondertekening | Trivy en ondertekening worden gebruikt; SBOM- en updateketen zijn nog niet één automatische poort | **Samenvoegen tot één releasepoort; geen eigen scanner bouwen** |
@@ -42,7 +42,8 @@ overlappende Eva-code is verwijderd.
 De actuele Pythonkern telt ongeveer 74.000 regels. De grootste concrete
 verdubbelingskansen zijn:
 
-1. de eigen algemene worker-, retry- en crashherstellaag vervangen door DBOS;
+1. de eigen algemene worker-, retry- en crashherstellaag tegen actuele
+   workflowmotoren uitspelen; DBOS is voor deze route al gemeten `NO-GO`;
 2. de Hindsight-adapter terugbrengen tot persoons-/privacybinding en de
    officiële client de opslag laten doen;
 3. Pydantic AI de model-, tool- en streamingloop laten uitvoeren;

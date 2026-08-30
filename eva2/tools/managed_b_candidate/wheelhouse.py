@@ -44,6 +44,20 @@ PYNACL_AMD64_ARTIFACT = (
     "8a66d6fb6ae7661c58995f9c6435bda2b1e68b54b598a6a10247bfcdadac996c",
     1437614,
 )
+OPENAI_SDK_WHEELS = {
+    "jiter-0.16.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": (
+        "46add52f4ad47a08bfb1219f3e673da972191489a33016edefdb5ea55bfa8c48",
+        343805,
+    ),
+    "openai-3.6.0-py3-none-any.whl": (
+        "508e2158bf971687f953b62e44b02f207792c815aac306816386d7ba34d37f5f",
+        1699841,
+    ),
+    "sniffio-1.3.1-py3-none-any.whl": (
+        "2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2",
+        10235,
+    ),
+}
 CRYPTOGRAPHY50_AMD64_ARTIFACT = (
     "51afcfceb15597cf2635068e4ac9a56b2abde622edde17f37d85fd7b5306497a",
     4746230,
@@ -216,7 +230,7 @@ def _expected_wheels(
             or coverage.get("requirementsLockSha256")
             != manifest["requirementsLockSha256"]
             or coverage.get("status")
-            != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_no_install_or_execution"
+            != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_and_openai_sdk_no_install_or_execution"
         ):
             raise RuntimeError("managed B aligned wheel coverage authority differs")
         _require_sha256(
@@ -334,7 +348,7 @@ def inspect_runtime_dependency_alignment(
     baseline_lock_raw: bytes,
     dependency_binding_raw: bytes,
 ) -> dict[str, object]:
-    """Prove the exact 38-to-35 dependency-input transformation without wheel I/O."""
+    """Prove the exact DBOS-free SDK dependency transformation without wheel I/O."""
 
     active_manifest = _manifest(active_manifest_raw)
     if active_manifest["contract"] != ACTIVE_MANIFEST_CONTRACT:
@@ -367,9 +381,10 @@ def inspect_runtime_dependency_alignment(
         raise RuntimeError("managed B historical wheel set omits cryptography 46")
     expected_active[CRYPTOGRAPHY50_AMD64_WHEEL] = CRYPTOGRAPHY50_AMD64_ARTIFACT
     expected_active[PYNACL_AMD64_WHEEL] = PYNACL_AMD64_ARTIFACT
+    expected_active.update(OPENAI_SDK_WHEELS)
     expected_active = dict(sorted(expected_active.items()))
-    if len(baseline) != 38 or len(active) != 35 or active != expected_active:
-        raise RuntimeError("managed B aligned wheel set is not the exact 38-to-35 delta")
+    if len(baseline) != 38 or len(active) != 38 or active != expected_active:
+        raise RuntimeError("managed B aligned wheel set is not the exact sealed SDK delta")
     binding = _json_object(dependency_binding_raw, label="runtime dependency binding")
     standalone = binding.get("standaloneLock")
     dependencies = binding.get("dependencies")
@@ -379,17 +394,20 @@ def inspect_runtime_dependency_alignment(
         or not isinstance(standalone, dict)
         or standalone.get("path") != "eva2/requirements-4d.lock"
         or standalone.get("sha256") != active_manifest["requirementsLockSha256"]
-        or standalone.get("packageCount") != 35
+        or standalone.get("packageCount") != 38
         or not isinstance(dependencies, dict)
         or not isinstance(protocol, dict)
     ):
         raise RuntimeError("managed B runtime dependency authority differs")
     pynacl = dependencies.get("pynacl")
     websockets = dependencies.get("websockets")
+    openai = dependencies.get("openai")
     if (
-        set(dependencies) != {"pynacl", "websockets"}
+        set(dependencies) != {"openai", "pynacl", "websockets"}
+        or not isinstance(openai, dict)
         or not isinstance(pynacl, dict)
         or not isinstance(websockets, dict)
+        or openai.get("version") != "3.6.0"
         or pynacl.get("version") != "1.6.2"
         or websockets.get("version") != "17.0.1"
         or binding.get("removedDistributions")
@@ -397,14 +415,14 @@ def inspect_runtime_dependency_alignment(
     ):
         raise RuntimeError("managed B runtime selected dependency differs")
     if (
-        protocol.get("wheelCount") != 35
+        protocol.get("wheelCount") != 38
         or protocol.get("selectedManifestSha256")
         != active_manifest["selectedManifestSha256"]
     ):
         raise RuntimeError("managed B runtime selected manifest authority differs")
     return {
         "contract": "EvaManagedBRuntimeDependencyAlignmentReceipt/v1",
-        "expected_wheel_count": 35,
+        "expected_wheel_count": 38,
         "network_used": False,
         "requirements_lock_sha256": active_manifest["requirementsLockSha256"],
         "requirements_lock_path": active_manifest["requirementsLockPath"],

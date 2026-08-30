@@ -40,7 +40,7 @@ MODEL_MAXIMUM_RESPONSE_BYTES = 256 * 1024
 INPUT_PRICE_USD_MICROS_PER_MILLION = 750_000
 OUTPUT_PRICE_USD_MICROS_PER_MILLION = 4_500_000
 PYDANTIC_AI_VERSION = "2.32.1"
-OPENAI_SDK_VERSION = "3.3.1"
+OPENAI_SDK_VERSION = "3.6.0"
 WORKER_INSTRUCTIONS = (
     "Werk als een afgeschermde onderzoeker voor Eva. Gebruik geen tools of externe "
     "bronnen. Scheid controleerbare bevindingen van aannames, blijf bij de gegeven "
@@ -76,7 +76,7 @@ WORKER_PROFILE_RELEASE_SHA256 = canonical_sha256(
 )
 _EVA_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 DEPENDENCY_LOCK_SHA256 = (
-    "0f270ccc6b4086ce7f5a5300563a74dfa53569d51109fb60f21958fb0acaa6a5"
+    "24b2ac80e15e33dab5368fe79d255cb1bf23fe947c9e151b5056412f31f556fb"
 )
 
 

@@ -1967,6 +1967,7 @@ def create_runtime_app() -> FastAPI:
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
+        transport_kind="openai_sdk",
         resource_budget=settings.runtime_resource_budget,
     )
     home_assistant = (

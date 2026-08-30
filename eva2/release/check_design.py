@@ -47,6 +47,7 @@ DIRECT_PINS = {
     "alembic": "1.19.1",
     "cryptography": "50.0.1",
     "fastapi": "0.141.1",
+    "openai": "3.6.0",
     "psycopg": "3.3.4",
     "pydantic": "2.12.5",
     "pydantic-ai-slim": "2.32.1",
@@ -97,9 +98,11 @@ LOCKED_PINS = {
     "httpcore2": "2.12.0",
     "httpx2": "2.12.0",
     "idna": "3.19",
+    "jiter": "0.16.0",
     "logfire-api": "4.41.0",
     "mako": "1.4.1",
     "markupsafe": "3.0.3",
+    "openai": "3.6.0",
     "opentelemetry-api": "1.44.0",
     "psycopg": "3.3.4",
     "psycopg-binary": "3.3.4",
@@ -109,6 +112,7 @@ LOCKED_PINS = {
     "pydantic-core": "2.41.5",
     "pydantic-graph": "2.32.1",
     "pynacl": "1.6.2",
+    "sniffio": "1.3.1",
     "setuptools": "84.0.0",
     "sqlalchemy": "2.0.52",
     "starlette": "1.6.0",
@@ -934,7 +938,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 "role": "application_and_contract_runtime",
                 "path": "eva2/requirements-4d.lock",
                 "sha256": sha256_file(lock_path),
-                "packageCount": 35,
+                "packageCount": 38,
             },
             {
                 "role": "design_gate_build_frontend_and_independent_schema_consumer",
@@ -1042,7 +1046,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 )
     if (
         inventory.get("contract") != "Eva2PythonLicenseInventory/v1"
-        or inventory.get("packageCount") != 35
+        or inventory.get("packageCount") != 38
         or inventory_pins != LOCKED_PINS
         or inventory.get("claims", {}).get("legalApprovalComplete") is not False
     ):
@@ -1050,7 +1054,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
             errors,
             "license_inventory",
             Path("eva2/release/license-inventory.json"),
-            "inventory must cover all 35 locked packages without legal-release claim",
+            "inventory must cover all 38 locked packages without legal-release claim",
         )
 
     bindings = safe_load(
@@ -1299,7 +1303,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
         != hashlib.sha256(lock_text.encode("utf-8")).hexdigest()
         or wheels.get("onlyBinary") is not True
         or wheels.get("status")
-        != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_no_install_or_execution"
+        != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_and_openai_sdk_no_install_or_execution"
     ):
         issue(
             errors,
@@ -1343,7 +1347,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
         if (
             target.get("os") != "Ubuntu Server 24.04.4 LTS"
             or target.get("pythonVersion") != "3.12.14"
-            or target.get("resolvedWheelCount") != 35
+            or target.get("resolvedWheelCount") != 38
             or target.get("allArtifactsMatchedRequirementsLockHashes") is not True
             or artifact_pins != LOCKED_PINS
         ):
@@ -1351,7 +1355,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 errors,
                 "wheel_target",
                 Path(wheel_path),
-                f"{arch} does not resolve all 35 locked wheels",
+                f"{arch} does not resolve all 38 locked wheels",
             )
     if any(
         wheels.get("claims", {}).get(field) is True

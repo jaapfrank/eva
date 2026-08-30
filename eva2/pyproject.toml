@@ -12,6 +12,7 @@ dependencies = [
   "alembic==1.19.1",
   "cryptography==50.0.1",
   "fastapi==0.141.1",
+  "openai==3.6.0",
   "psycopg[binary]==3.3.4",
   "PyNaCl==1.6.2",
   "pydantic==2.12.5",

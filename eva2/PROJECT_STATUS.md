@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 13:33 CEST
+Laatst bijgewerkt: 30 augustus 2026, 15:36 CEST
 
 Betekenis:
 
@@ -13,6 +13,9 @@ Betekenis:
 - ✅ Je kunt Eva2 via `/eva2` op Telegram gebruiken.
 - ✅ Gewone berichten zonder `/eva2` blijven naar Eva1 gaan.
 - ✅ Eva2 geeft echte antwoorden via de bestaande Codex-koppeling.
+- 🟡 De actuele officiële OpenAI-SDK `3.6.0` geeft dezelfde echte Codex-
+  antwoorden, is warm even snel en meet tokens wel. Zij is getest maar nog niet
+  live gezet; eerst volgen offline image, scan, herstart en terugrol.
 - ✅ Eva2 heeft haar eigen warme, jonge, nieuwsgierige, grappige en
   eigenwijze persoonlijkheid.
 - ✅ Gesprekken blijven na een herstart bewaard.
@@ -148,6 +151,10 @@ Betekenis:
   beheerder.
 - ❌ Een gewone gebruiker kan Eva2 nog niet volledig met één eenvoudige wizard
   installeren, herstellen en bijwerken.
+- ✅ Een centrale componentenlijst volgt nu ook nieuwe releases van Eva's
+  bouwstenen en van OpenClaw, Hermes en Agent Zero.
+- 🟡 Renovate heeft een geldige configuratie op de repositoryroot, maar een
+  echte automatische botrun en updatevoorstel zijn nog niet bewezen.
 
 ## Vergelijken met andere assistenten
 

@@ -70,7 +70,7 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
         {
             "contract": "EvaDelegatedEngineRelease/v1",
             "dependency_lock_sha256": lock_sha256,
-            "openai_sdk": "3.3.1",
+            "openai_sdk": "3.6.0",
             "pydantic_ai": "2.32.1",
         }
     )
@@ -86,14 +86,14 @@ def test_isolated_worker_lock_has_only_its_narrow_direct_roots() -> None:
     assert {
         line for line in roots.splitlines() if line and not line.startswith("#")
     } == {
-        "openai==3.3.1",
+        "openai==3.6.0",
         "psycopg[binary]==3.3.4",
         "pydantic==2.12.5",
         "pydantic-ai-slim==2.32.1",
         "SQLAlchemy==2.0.52",
     }
     for required in (
-        "openai==3.3.1 \\\n",
+        "openai==3.6.0 \\\n",
         "psycopg==3.3.4 \\\n",
         "psycopg-binary==3.3.4 \\\n",
         "pydantic-ai-slim==2.32.1 \\\n",
@@ -105,7 +105,7 @@ def test_isolated_worker_lock_has_only_its_narrow_direct_roots() -> None:
 
 
 def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
-    installed = {"openai": "3.3.1", "pydantic-ai-slim": "2.32.1"}
+    installed = {"openai": "3.6.0", "pydantic-ai-slim": "2.32.1"}
     monkeypatch.setattr(provider_module, "version", installed.__getitem__)
     verify_delegated_provider_dependencies()
 
@@ -194,7 +194,7 @@ def test_factory_uses_only_the_sealed_provider_profile(
     monkeypatch.setattr(
         provider_module,
         "version",
-        {"openai": "3.3.1", "pydantic-ai-slim": "2.32.1"}.__getitem__,
+        {"openai": "3.6.0", "pydantic-ai-slim": "2.32.1"}.__getitem__,
     )
     monkeypatch.setattr(provider_module, "OpenAIChildProvider", Provider)
 

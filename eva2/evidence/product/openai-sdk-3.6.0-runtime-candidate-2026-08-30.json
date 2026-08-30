@@ -1,0 +1,55 @@
+{
+  "contract": "EvaDependencyReplacementEvidence/v1",
+  "component": "model-provider-transport",
+  "candidate": {
+    "name": "openai-python",
+    "repository": "https://github.com/openai/openai-python",
+    "version": "3.6.0"
+  },
+  "decision": "candidate_go_not_promoted",
+  "dependencyDelta": {
+    "newDistributions": ["jiter", "openai", "sniffio"],
+    "unrelatedVersionUpdatesAccepted": []
+  },
+  "realCodexProbe": {
+    "expectedAnswer": "SDK36",
+    "exactAnswerMatched": true,
+    "inputTokens": 28,
+    "outputTokens": 23,
+    "toolCalls": 0,
+    "attempts": 1,
+    "firstContentMilliseconds": 2929,
+    "completeMilliseconds": 3285
+  },
+  "warmAlternatingProbe": {
+    "sdkCompleteMilliseconds": [2445, 1475, 1363],
+    "legacyCompleteMilliseconds": [1332, 1466, 2145],
+    "sdkMedianMilliseconds": 1475,
+    "legacyMedianMilliseconds": 1466,
+    "allExactAnswersMatched": true,
+    "sdkUsageMeasured": true,
+    "legacyUsageMeasured": false
+  },
+  "focusedTests": {
+    "passed": 97,
+    "failed": 0,
+    "areas": [
+      "official-sdk-transport",
+      "conversation-model",
+      "access-only-lease",
+      "delegated-worker-provider",
+      "owner-dashboard"
+    ]
+  },
+  "sourceSha256": {
+    "eva2/requirements-4d.lock": "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f",
+    "eva2/requirements-delegated-work.lock": "24b2ac80e15e33dab5368fe79d255cb1bf23fe947c9e151b5056412f31f556fb",
+    "eva2/src/eva/adapters/model/openai_responses_transport.py": "a30e91cb71c3c87fff25ed0ea53c3e3bda52b10dc03298d873103f519a1987dd",
+    "eva2/src/eva/bootstrap/runtime.py": "868b448cac799718d32fe3b56943836dd58a6826dfd3f06e521e0969fde356e1"
+  },
+  "nonClaims": [
+    "The live Eva1 service and live Eva2 route were not changed.",
+    "The candidate is not a release until its exact offline wheelhouse, image, SBOM, vulnerability scan, restart proof and A/B rollback are green.",
+    "The legacy transport remains available until the promoted SDK route proves safe rollback; therefore this checkpoint does not yet claim a net source-line reduction."
+  ]
+}
