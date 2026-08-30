@@ -1,0 +1,61 @@
+{
+  "contract": "Eva2ManagedOwnerHomeActionReplayReceipt/v1",
+  "recordedAt": "2026-08-30T09:32:44+02:00",
+  "status": "passed_live_with_direct_rollback",
+  "observationCommit": "0317a6f1f9780f4f58a62b9c235e894b20b63a57",
+  "runtime": {
+    "container": "eva2-managed-b-slot3-core",
+    "port": 44710,
+    "image": "sha256:7de640c338a0dbd6ae8db24ef054c8b4b190ac0df56734914382f1f72efdbd8f",
+    "restartPolicy": "unless-stopped",
+    "restartCount": 0,
+    "ready": true,
+    "directRollbackPort": 44720,
+    "eva1RestartCount": 0
+  },
+  "unboundPrincipal": {
+    "requestedNaturalTurnOff": true,
+    "deniedBeforeHomeAssistant": true,
+    "reply": "Met dit profiel mag je het huis nog niet bedienen.",
+    "toolRequestAdmittedBefore": 7,
+    "toolRequestAdmittedAfter": 7,
+    "toolExecutedBefore": 7,
+    "toolExecutedAfter": 7,
+    "stateVerifiedBefore": 7,
+    "stateVerifiedAfter": 7
+  },
+  "boundOwner": {
+    "bindingCount": 1,
+    "principalExternalIdSha256": "dd313debe81862356fa168d6ac1233621e0a4e47ae978b28461875c36d836eed",
+    "requestedNaturalTurnOff": true,
+    "replySha256": "88d14959b1814d73edf86361bb7c89425a17459b2a24a343a2022be37839b163",
+    "replyConfirmedIndependentReadback": true,
+    "toolRequestAdmittedBefore": 7,
+    "toolRequestAdmittedAfter": 8,
+    "toolExecutedBefore": 7,
+    "toolExecutedAfter": 8,
+    "stateVerifiedBefore": 7,
+    "stateVerifiedAfter": 8
+  },
+  "independentHomeAssistantReadback": {
+    "matchingFriendlyTargetCount": 1,
+    "entityIdSha256": "0661e59a1cb7095fb0e9627bb45966a7079f3b7c25efd0a63e11007200513412",
+    "stateBefore": "off",
+    "stateAfter": "off"
+  },
+  "exactReplay": {
+    "httpStatus": 200,
+    "contract": "EvaInternalGroundedReply/v1",
+    "replySha256": "88d14959b1814d73edf86361bb7c89425a17459b2a24a343a2022be37839b163",
+    "elapsedMilliseconds": 35,
+    "toolRequestAdmittedAfterReplay": 8,
+    "toolExecutedAfterReplay": 8,
+    "stateVerifiedAfterReplay": 8,
+    "secondHomeAssistantAction": false
+  },
+  "nonClaims": [
+    "The target was already off; this proves authorization, one provider action, independent readback, durable verification and replay safety, not a visible light-state transition.",
+    "No switch, lock, climate, curtain, automation, browser, voice, or unrelated Home Assistant entity was changed.",
+    "This is a direct managed-core canary using the existing owner binding, not a new incoming Telegram provider message."
+  ]
+}

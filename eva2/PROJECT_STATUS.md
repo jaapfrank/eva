@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 09:18 CEST
+Laatst bijgewerkt: 30 augustus 2026, 09:33 CEST
 
 ## Heel kort
 
@@ -15,7 +15,7 @@ De route is verliesloos heen, terug en opnieuw heen geschakeld. Een nieuw
 testfeit kwam na iedere databasekopie exact terug. Eva1 bleef gezond.
 
 Ook de volledige omvangs- en imagepoort PC01 is groen. De actuele bronteller
-staat op 74.894 productregels,
+staat op 74.864 productregels,
 10 directe dependencies, 23 imagelagen en nul hoge of kritieke scanbevindingen.
 De vorige Eva2-route op poort `44720` draait gezond en blijft de directe
 terugval.
@@ -85,6 +85,10 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   ook atomair in de private configuratie van beide beheerde slots. Een nieuwe
   container is echt uitsluitend uit de Compose-render van dat bestand gestart,
   herstart en vervolgens live gezet.
+- De beheerde slot-3-route heeft die keten nu opnieuw live uitgevoerd. Een
+  onbekend profiel schreef nul huisacties; Jaaps bestaande binding schreef
+  precies één toelating, uitvoering en onafhankelijke controle. Exacte replay
+  antwoordde in 35 ms en bediende Home Assistant niet opnieuw.
 - Een dubbelzinnige lampnaam geeft nu gewoon een vervolgvraag. Een exacte
   schuur­lamp werd echt via Eva uitgeschakeld en daarna apart als `off`
   teruggelezen; replay na herstart deed dat niet opnieuw.
@@ -488,7 +492,8 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
-- [Actuele PC01-poort: 74.894 regels, 10 dependencies, 23 lagen en 0/0 scan](evidence/product/performance-complexity-pc01-managed-current-2026-08-30.json)
+- [Beheerde eigenaaractie naar Home Assistant, onafhankelijke readback en replay zonder tweede actie](evidence/living-core/eva2-managed-owner-home-action-replay-2026-08-30.json)
+- [PC01-imagebinding: 10 dependencies, 23 lagen en 0/0 scan](evidence/product/performance-complexity-pc01-managed-current-2026-08-30.json)
 - [Nieuwste kern in automatisch herstartend slot 3, echte modelbeurt, veilige omschakeling en bewapende rebootcontrole](evidence/living-core/eva2-current-core-managed-restart-route-2026-08-30.json)
 - [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
 - [Antwoordblinde audit: gevraagde jaarwaarde ontbreekt in alle 37 aangeboden rijen](evidence/living-core/agentbench-dbbench-case-0-answerblind-data-audit-2026-08-30.json)
