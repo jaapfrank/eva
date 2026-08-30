@@ -1,0 +1,59 @@
+{
+  "artifact": "EvaAgentBenchDbBenchReviewedFixedDevelopmentSet/v1",
+  "date": "2026-08-30",
+  "selection": {
+    "caseIndices": [16, 17, 18, 19, 20, 21, 22, 23],
+    "selectionReceipt": "agentbench-dbbench-eva-reviewed-fixed-cases-16-23-selection-2026-08-30.json",
+    "selectionCommit": "25d1c4a",
+    "selectedBeforeAnyCaseResultWasKnown": true
+  },
+  "cases": [
+    {"caseIndex": 16, "outcome": "scored", "score": 1, "modelCalls": 3, "sqlCalls": 1, "rawSha256": "ea8e99a564d3b349504db035e15c890a0009893e704994b7613a5afef00ec01f"},
+    {"caseIndex": 17, "outcome": "model_boundary_failure", "score": null, "modelCalls": 15, "sqlCalls": 2, "rawSha256": "5e1247dba35b59e5f4779b26b559fffc44709ed1f18a4669c93506ce35b5e0d7"},
+    {"caseIndex": 18, "outcome": "scored", "score": 1, "modelCalls": 3, "sqlCalls": 1, "rawSha256": "43095772da589d0b3e192f409d5a8e2c011cb79b930b6498d463026f62289b94"},
+    {"caseIndex": 19, "outcome": "model_boundary_failure", "score": null, "modelCalls": 15, "sqlCalls": 7, "rawSha256": "e2bf65a1ae6eaca6b9be0c516fd5da4ab07749c7cec0d6fcb50e0730376b804b"},
+    {"caseIndex": 20, "outcome": "scored", "score": 1, "modelCalls": 4, "sqlCalls": 1, "rawSha256": "2148674e08223f5159325b019923f21b44f6f6439b789c560116efdb678837b0"},
+    {"caseIndex": 21, "outcome": "scored", "score": 1, "modelCalls": 6, "sqlCalls": 1, "rawSha256": "1dad840cbcd9cc768e82c109f652e3bf4f07602115e9b7e59df99b7d61f6f482"},
+    {"caseIndex": 22, "outcome": "scored", "score": 1, "modelCalls": 6, "sqlCalls": 1, "rawSha256": "2e5543c5c4f6cdcc77caaefe464eeffebbc028cddf73e83565abbfabc6674a8c"},
+    {"caseIndex": 23, "outcome": "scored", "score": 1, "modelCalls": 7, "sqlCalls": 1, "rawSha256": "3717ec3f146f7ce1870985881a67493896e4aff0877361f62840b06bf73f5af3"}
+  ],
+  "aggregate": {
+    "casesSelected": 8,
+    "casesScored": 6,
+    "correctScoredCases": 6,
+    "incorrectScoredCases": 0,
+    "modelBoundaryFailures": 2,
+    "completionFraction": "6/8",
+    "scoredCaseFraction": "6/6",
+    "modelCallsReservedBeforeIo": 59,
+    "successfulToolFreeModelReplies": 59,
+    "adapterValidationFailuresBeforeDatabaseIo": 26,
+    "sqlCalls": 15,
+    "toolsExposedByEvaModelBoundary": 0,
+    "usageMeasurement": "unmeasured"
+  },
+  "failureAnalysis": {
+    "invalidFinalAnswerArguments": 23,
+    "nonJsonReplies": 1,
+    "invalidReplyShapes": 1,
+    "turnBudgetExhaustions": 1,
+    "dominantCause": "the reviewer frequently returned numeric answer values while the sealed DBBench tool schema requires strings",
+    "candidateAccepted": false,
+    "reason": "perfect accuracy among completed cases does not compensate for two unscored boundary failures and materially higher model-call use"
+  },
+  "runtime": {
+    "modelSidecarHealth": "healthy",
+    "stacksRestartedAfterFailedCases": 2,
+    "failedCasesRetried": 0,
+    "temporaryContainersRemoved": true,
+    "temporaryNetworksRemoved": true,
+    "setupIncidentBeforeAnyCase": "one wrong model-lease mount destination was detected by fail-closed startup and corrected before cases 20 through 23"
+  },
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The six correct scored cases do not erase the two model-boundary failures.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "This candidate is not accepted as a reliability improvement.",
+    "No comparison or superiority claim against another agent is made."
+  ]
+}

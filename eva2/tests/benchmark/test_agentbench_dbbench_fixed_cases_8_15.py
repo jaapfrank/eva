@@ -16,6 +16,9 @@ SELECTION = (
 REPAIR_RECEIPT = (
     EVIDENCE / "agentbench-dbbench-eva-answerblind-repair-result-2026-08-30.json"
 )
+REVIEWED_RECEIPT = (
+    EVIDENCE / "agentbench-dbbench-eva-reviewed-fixed-cases-16-23-2026-08-30.json"
+)
 
 
 def _raw_path(case_index: int) -> Path:
@@ -118,3 +121,51 @@ def test_answerblind_repair_receipt_keeps_all_four_zero_scores() -> None:
     assert aggregate["adapterValidationFailuresBeforeDatabaseIo"] == total_model_failures
     assert aggregate["providerFailuresBeforeDatabaseIo"] == 0
     assert aggregate["successfulToolFreeModelReplies"] == total_model_receipts
+
+
+def test_reviewed_fixed_set_keeps_correct_scores_and_boundary_failures() -> None:
+    receipt = json.loads(REVIEWED_RECEIPT.read_text(encoding="utf-8"))
+    assert receipt["selection"]["caseIndices"] == list(range(16, 24))
+    assert receipt["selection"]["selectedBeforeAnyCaseResultWasKnown"] is True
+    assert receipt["failureAnalysis"]["candidateAccepted"] is False
+
+    scores: list[int] = []
+    boundary_failures = 0
+    total_calls = 0
+    total_receipts = 0
+    total_failures = 0
+    total_sql = 0
+    for recorded in receipt["cases"]:
+        case_index = recorded["caseIndex"]
+        path = EVIDENCE / (
+            f"agentbench-dbbench-eva-reviewed-case-{case_index}-2026-08-30.raw.json"
+        )
+        raw_bytes = path.read_bytes()
+        raw = json.loads(raw_bytes)
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+        assert hashlib.sha256(raw_bytes).hexdigest() == recorded["rawSha256"]
+        assert all(item["toolsExposed"] == 0 for item in raw["modelReceipts"])
+        tool_names = _tool_names(raw)
+        assert tool_names.count("execute_sql") == recorded["sqlCalls"]
+        if recorded["outcome"] == "scored":
+            assert raw["result"]["metric"]["score"] == recorded["score"] == 1
+            scores.append(recorded["score"])
+            total_calls += raw["modelTurnsUsed"]
+        else:
+            assert recorded["outcome"] == "model_boundary_failure"
+            assert recorded["score"] is None
+            assert raw["contract"] == "EvaAgentBenchDbBenchDevelopmentFailure/v1"
+            boundary_failures += 1
+            total_calls += len(raw["modelReceipts"])
+        total_receipts += len(raw["modelReceipts"])
+        total_failures += len(raw["modelFailures"])
+        total_sql += recorded["sqlCalls"]
+
+    aggregate = receipt["aggregate"]
+    assert aggregate["correctScoredCases"] == len(scores) == 6
+    assert aggregate["incorrectScoredCases"] == 0
+    assert aggregate["modelBoundaryFailures"] == boundary_failures == 2
+    assert aggregate["modelCallsReservedBeforeIo"] == total_calls
+    assert aggregate["successfulToolFreeModelReplies"] == total_receipts
+    assert aggregate["adapterValidationFailuresBeforeDatabaseIo"] == total_failures
+    assert aggregate["sqlCalls"] == total_sql
