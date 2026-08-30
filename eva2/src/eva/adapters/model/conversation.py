@@ -68,10 +68,6 @@ _MODEL_LEASE_FILE_MODE = 0o640
 _ORDINARY_PROVIDER_ATTEMPTS = 2
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
-_HOME_ASSISTANT_LIGHT_ACTION = "set_home_assistant_light"
-_HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
-_HOME_ASSISTANT_HISTORY_ACTION = "read_home_assistant_history"
-_HOME_ASSISTANT_STATE_ACTION = "read_home_assistant_state"
 _HOME_ASSISTANT_AUTOMATION_ACTION = "create_home_assistant_state_automation"
 _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION = (
     "create_home_assistant_advanced_state_automation"
@@ -547,6 +543,9 @@ class CodexConversationModel:
         self._reasoning_effort = reasoning_effort
         self._transport_kind = transport_kind
         self._resource_budget = resource_budget
+        self._conversation_tool_descriptors = {
+            descriptor.name: descriptor for descriptor in conversation_tools
+        }
         self._conversation_tools = {
             descriptor.name: _descriptor_tool(descriptor)
             for descriptor in conversation_tools
@@ -1790,8 +1789,8 @@ class CodexConversationModel:
         )
         return "eva-conversation-" + hashlib.sha256(value.encode()).hexdigest()[:32]
 
-    @staticmethod
     def _instructions(
+        self,
         identity: IdentityProfile,
         memory: PresenceMemory,
         recent_messages: tuple[RecentConversationMessage, ...],
@@ -1892,31 +1891,18 @@ class CodexConversationModel:
                     "natuurlijk. Generaliseer niet naar andere foto's of personen en "
                     "noem geen hashes, action, receipt of interne techniek."
                 )
-            elif completed_action.call.name == _HOME_ASSISTANT_STATE_ACTION:
+            elif completed_action.call.name in self._conversation_tool_descriptors:
+                guidance = self._conversation_tool_descriptors[
+                    completed_action.call.name
+                ].completion_guidance
                 action_guidance_parts.append(
-                    "De action receipt bevat de actuele, echte Home Assistant-toestand. "
-                    "Vertaal on naar aan en off naar uit in één natuurlijk antwoord. Zeg "
-                    "bij unavailable of unknown eerlijk dat het apparaat nu geen "
-                    "betrouwbare toestand geeft. Noem geen entity-ID, receipt of interne "
-                    "techniek tenzij daar expliciet om wordt gevraagd."
-                )
-            elif completed_action.call.name == _HOME_ASSISTANT_HISTORY_ACTION:
-                action_guidance_parts.append(
-                    "De action receipt bevat een echte alleen-lezen waarneming uit Home "
-                    "Assistant. De matches zijn bewezen statusovergangen in de genoemde "
-                    "lokale tijdzone. Geef de laatste passende tijd kort en natuurlijk. "
-                    "Bij aggregation any_member_on_all_members_off betekent een off-match "
-                    "dat alle gebonden lampen minstens de vermelde minimumduur uit waren; "
-                    "beantwoord dan de toestand van de hele genoemde lichtgroep. "
-                    "Vraagt de gebruiker in het enkelvoud hoe laat iets gebeurde zonder "
-                    "om alle momenten te vragen, geef dan alleen de laatste passende tijd. "
-                    "Als matches leeg is, zeg eerlijk dat Home Assistant in dat tijdvak "
-                    "geen passende overgang toont; verzin geen tijd. Noem geen entity-ID "
-                    "of interne techniek tenzij daar expliciet om wordt gevraagd."
+                    guidance
+                    or (
+                        "Gebruik het gecontroleerde toolresultaat als bewijs en meld "
+                        "alleen wat daar werkelijk uit blijkt."
+                    )
                 )
             elif completed_action.call.name in {
-                _HOME_ASSISTANT_LIGHT_ACTION,
-                _HOME_ASSISTANT_SWITCH_ACTION,
                 _HOME_ASSISTANT_AUTOMATION_ACTION,
                 _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION,
             }:

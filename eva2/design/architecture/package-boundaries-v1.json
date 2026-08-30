@@ -117,7 +117,7 @@
     "fileCeilings": {
       "src/eva/application/advanced_tasks.py": 234,
       "src/eva/application/home_automation.py": 3,
-      "src/eva/adapters/model/conversation.py": 77,
+      "src/eva/adapters/model/conversation.py": 63,
       "src/eva/adapters/postgres/advanced_tasks.py": 13,
       "src/eva/adapters/postgres/conversation_actions.py": 346,
       "src/eva/adapters/postgres/home_assistant_reads.py": 49,

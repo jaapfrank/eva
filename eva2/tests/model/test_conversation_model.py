@@ -26,6 +26,7 @@ from eva.application.conversation import (
     ConversationModelTiming,
     ConversationModelUsage,
     ConversationObservationBinding,
+    ConversationToolDescriptor,
     ConversationTurn,
     IdentityProfile,
     RecentConversationMessage,
@@ -96,6 +97,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     } & set(conversation_module._ACTION_TOOLS)
     provider_tools = [
         {
+            "completion_guidance": descriptor.completion_guidance,
             "description": descriptor.description,
             "input_schema": descriptor.input_schema,
             "name": descriptor.name,
@@ -103,7 +105,7 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
         for descriptor in HomeAssistantToolAdapter.conversation_tools()
     ]
     assert canonical_sha256(provider_tools) == (
-        "755c4c9f6db76656389ef2444fde7e15fc4818298f7b4140e01e487896560957"
+        "2a14106fcc0b4a0a333f76f157a2dc129b37b763c1a7c9b259f888c2d03ae9b2"
     )
     assert {
         name: canonical_sha256(getattr(conversation_module, name))
@@ -121,6 +123,79 @@ def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
         "_LISTING_TOOL": "401df39c0d1c0bc41fc1a35c3c008cfbcd4ece9bf9c3b7f1e406b9e3b25de7cb",
         "_FREE_WILL_TOOL": "2959078dc6323da786622599f7631ec74de2f38693d9cb144475609030788895",
     }
+
+
+def test_external_provider_catalog_needs_no_model_specific_code(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    descriptor = ConversationToolDescriptor(
+        name="lookup_calendar_slot",
+        description="Lees één beschikbaar tijdvak uit de gekoppelde agenda.",
+        input_schema={
+            "additionalProperties": False,
+            "properties": {"day": {"type": "string"}},
+            "required": ["day"],
+            "type": "object",
+        },
+        completion_guidance=(
+            "Meld alleen het tijdvak dat uit het gecontroleerde toolresultaat blijkt."
+        ),
+    )
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused-auth.json",
+        conversation_tools=(descriptor,),
+    )
+    bodies: list[dict[str, Any]] = []
+    responses = iter(
+        (
+            (
+                "",
+                ConversationActionCall(
+                    "calendar-call-1", "lookup_calendar_slot", {"day": "morgen"}
+                ),
+            ),
+            ("Morgen is 10:00 vrij.", None),
+        )
+    )
+
+    def request(body: dict[str, Any]):  # type: ignore[no-untyped-def]
+        bodies.append(body)
+        return next(responses)
+
+    monkeypatch.setattr(model, "_request", request)
+    turn = ConversationTurn.private(
+        "tenant",
+        "installation",
+        "jaap",
+        "conversation",
+        "message-calendar",
+        "Wanneer kan ik morgen?",
+        NOW,
+    )
+    selected = model.generate(
+        turn,
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        _memory(),
+        (),
+        available_actions=("lookup_calendar_slot",),
+    )
+    assert selected.action_call is not None
+    completed = model.generate(
+        turn,
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80),
+        _memory(),
+        (),
+        completed_action=ConversationActionReceipt(
+            selected.action_call, {"available": True, "start": "10:00"}
+        ),
+    )
+
+    assert completed.text == "Morgen is 10:00 vrij."
+    assert _deferred_tool(bodies[0], "lookup_calendar_slot")["parameters"] == (
+        descriptor.input_schema
+    )
+    assert descriptor.completion_guidance in bodies[1]["instructions"]
+    assert "lookup_calendar_slot" not in conversation_module._ACTION_TOOLS
 
 
 def test_bound_photo_correction_uses_closed_action_without_face_inference(

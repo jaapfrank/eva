@@ -62,6 +62,7 @@ def _conversation_tool(
     name: str,
     description: str,
     properties: dict[str, dict[str, JsonValue]],
+    completion_guidance: str,
 ) -> ConversationToolDescriptor:
     return ConversationToolDescriptor(
         name=name,
@@ -72,6 +73,7 @@ def _conversation_tool(
             "required": list(properties),
             "type": "object",
         },
+        completion_guidance=completion_guidance,
     )
 
 
@@ -89,6 +91,12 @@ _CONVERSATION_TOOLS = (
                 "De letterlijke lamp- of ruimtenaam uit het verzoek."
             ),
         },
+        (
+            "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
+            "Meld succes alleen bij status verified en formuleer anders kort en "
+            "eerlijk wat er misging. Noem geen interne ID, statuscode, receipt of "
+            "techniek tenzij daar expliciet om wordt gevraagd."
+        ),
     ),
     _conversation_tool(
         "set_home_assistant_switch",
@@ -107,6 +115,12 @@ _CONVERSATION_TOOLS = (
                 "De natuurlijke apparaat- of ruimtenaam uit het gesprek."
             ),
         },
+        (
+            "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
+            "Meld succes alleen bij status verified en formuleer anders kort en "
+            "eerlijk wat er misging. Noem geen interne ID, statuscode, receipt of "
+            "techniek tenzij daar expliciet om wordt gevraagd."
+        ),
     ),
     _conversation_tool(
         "read_home_assistant_history",
@@ -133,6 +147,13 @@ _CONVERSATION_TOOLS = (
                 enum=("on", "off", "any"),
             ),
         },
+        (
+            "Het toolresultaat bevat echte alleen-lezen historie in de genoemde "
+            "lokale tijdzone. Geef bij een enkelvoudige tijdsvraag alleen de laatste "
+            "passende tijd. Een groepsmeting met all_members_off geldt voor de hele "
+            "genoemde groep. Als matches leeg is, zeg dan eerlijk dat er geen passende "
+            "overgang is gevonden. Noem geen interne ID of techniek."
+        ),
     ),
     _conversation_tool(
         "read_home_assistant_state",
@@ -150,6 +171,12 @@ _CONVERSATION_TOOLS = (
                 "De natuurlijke lamp- of apparaatnaam uit de vraag."
             ),
         },
+        (
+            "Het toolresultaat bevat de actuele, echte toestand. Vertaal on naar aan "
+            "en off naar uit. Zeg bij unavailable of unknown eerlijk dat er nu geen "
+            "betrouwbare toestand is. Noem geen interne ID, receipt of techniek tenzij "
+            "daar expliciet om wordt gevraagd."
+        ),
     ),
 )
 

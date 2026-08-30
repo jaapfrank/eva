@@ -447,6 +447,7 @@ class ConversationToolDescriptor:
     name: str
     description: str
     input_schema: dict[str, JsonValue]
+    completion_guidance: str = ""
 
     def __post_init__(self) -> None:
         if _TOOL_NAME.fullmatch(self.name) is None:
@@ -456,6 +457,8 @@ class ConversationToolDescriptor:
             or len(self.description.encode("utf-8")) > 4_096
         ):
             raise ValueError("conversation tool description is invalid")
+        if len(self.completion_guidance.encode("utf-8")) > 4_096:
+            raise ValueError("conversation tool completion guidance is invalid")
         validate_json_value(self.input_schema)
         if (
             self.input_schema.get("type") != "object"
