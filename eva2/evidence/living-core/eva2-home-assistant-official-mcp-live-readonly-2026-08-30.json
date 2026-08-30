@@ -1,0 +1,61 @@
+{
+  "contract": "EvaHomeAssistantOfficialMcpLiveReadOnly/v1",
+  "observedAt": "2026-08-30T12:08:20+02:00",
+  "homeAssistant": {
+    "version": "2026.8.1",
+    "officialIntegration": "mcp_server",
+    "endpoint": "/api/mcp/assist",
+    "transport": "Streamable HTTP",
+    "entryCountAfterProbe": 1,
+    "entryIdSha256": "ec054427bc4c61a97e99265add1023ddd176baef62b8b71b412adb4a744ace1d",
+    "urlStored": false,
+    "tokenStored": false
+  },
+  "firstProbe": {
+    "configuredByProbe": true,
+    "status": "ready_read_only",
+    "toolCount": 25,
+    "catalogSha256": "048a5028e5951d1b4ad944e7899a28d4420a6028a921d024dca6fef2c4dde8b4",
+    "getLiveContextInputSchemaSha256": "7dcfc6f4217a567634006fda72b1fa65569e468d82c0679a5d149a03c0371146",
+    "getLiveContextResultSha256": "b50f8d0cf05d1e5c5a9ebb8154214b622e210325f681cb7d8448b7573d0fe28d"
+  },
+  "secondProbe": {
+    "configuredByProbe": false,
+    "sameEntry": true,
+    "sameCatalog": true,
+    "sameReadResult": true,
+    "status": "ready_read_only"
+  },
+  "candidate": {
+    "candidateSha256": "8971c16d82994046beab909d3a549b75c8d028bf32f72d79c879106fb5a3cf7e",
+    "liveProbeSha256": "17d91c46090bca0727bd5b92a53a7c7cdc809f7137e68bd75d9004693d13ac61",
+    "testsSha256": "7462e000bf959ae189e6c11c19c632cc2f0645e5b5dd2d227691c85aca97d4c7",
+    "testsPassed": 5,
+    "lintPassed": true,
+    "locallyBindsRequiredArguments": true,
+    "independentStateReadbackBoundaryTested": true
+  },
+  "changes": {
+    "mcpServerEntriesCreated": 1,
+    "homeAssistantDeviceActions": 0,
+    "eva1Changes": 0,
+    "eva2DatabaseChanges": 0
+  },
+  "knownBoundary": {
+    "homeAssistantRequiredSchemaIssue": "https://github.com/home-assistant/core/issues/178032",
+    "administrativeChangesUseSeparateAuthorization": true,
+    "nextGate": "one reversible owner-bound MCP action through Eva ledger with independent REST state readback"
+  },
+  "sources": [
+    "https://www.home-assistant.io/integrations/mcp_server/",
+    "https://developers.home-assistant.io/docs/core/llm/",
+    "https://developers.home-assistant.io/docs/api/rest/",
+    "https://developers.home-assistant.io/docs/api/websocket/",
+    "https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/components/mcp_server/server.py"
+  ],
+  "nonClaims": [
+    "No Home Assistant device, script, automation or integration other than the MCP Server entry was changed.",
+    "The candidate is not connected to Eva's live owner-bound action ledger yet.",
+    "The MCP catalog is not an administrative Home Assistant API."
+  ]
+}

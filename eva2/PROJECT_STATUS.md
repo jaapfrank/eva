@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 11:55 CEST
+Laatst bijgewerkt: 30 augustus 2026, 12:08 CEST
 
 Betekenis:
 
@@ -53,8 +53,12 @@ Betekenis:
 - 🟡 Algemene huisbediening hoeft niet per apparaatgroep te worden gebouwd.
   De officiële Home Assistant MCP Server kan alle bewust aan Assist
   blootgestelde apparaten en scripts als algemene tools aanbieden.
-- ❌ Eva's eigenaar-, stop- en controlegrenzen zijn nog niet op die officiële
-  MCP/Assist-route aangesloten en in dit huis getest.
+- ✅ De officiële MCP/Assist-route is nu in dit huis geconfigureerd. Eva las de
+  echte catalogus met 25 tools en `GetLiveContext`; er is niets bediend.
+- 🟡 De generieke kandidaat controleert catalogus, invoer en verplichte velden
+  en kan een resultaat apart teruglezen. De vijf grensproeven zijn groen.
+- ❌ Eva's persoonsmandaat, stop en actielogboek moeten nog rond één echte,
+  omkeerbare MCP-huisactie worden aangesloten en beproefd.
 - ❌ Apparaten, integraties of automatiseringen in Home Assistant toevoegen of
   wijzigen blijft een aparte beheerroute met extra toestemming.
 
@@ -136,8 +140,8 @@ Betekenis:
 1. De bewapende Windows/WSL-herstartproef afronden.
 2. De beheerde Telegrambediening voor onderzoek echt in de gebruikersroute
    beproeven.
-3. Eva generiek aansluiten op Home Assistant via de officiële MCP Server, met de
-   bestaande persoonscontrole en onafhankelijke state-readback eromheen.
+3. Eén omkeerbare MCP-huisactie door Eva's bestaande persoonscontrole,
+   actielogboek en onafhankelijke state-readback laten lopen.
 4. Echte voice met microfoon en speaker afmaken.
 5. Daarna de zeven dagen lange praktijktest uitvoeren.
 
