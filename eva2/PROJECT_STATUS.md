@@ -1,6 +1,6 @@
 # Eva 2 — duidelijk projectbord
 
-Laatst bijgewerkt: 30 augustus 2026, 10:52 CEST
+Laatst bijgewerkt: 30 augustus 2026, 11:55 CEST
 
 Betekenis:
 
@@ -50,8 +50,13 @@ Betekenis:
 - ✅ Eva controleert na een actie apart of de lamp werkelijk goed staat.
 - ✅ Een herhaald bericht bedient dezelfde lamp niet per ongeluk opnieuw.
 - 🟡 Onbereikbare lampen en onveilige dubbelen staan bewust niet in de lijst.
-- ❌ Schakelaars, verwarming, apparaten en automatiseringen zijn nog niet
-  algemeen beschikbaar.
+- 🟡 Algemene huisbediening hoeft niet per apparaatgroep te worden gebouwd.
+  De officiële Home Assistant MCP Server kan alle bewust aan Assist
+  blootgestelde apparaten en scripts als algemene tools aanbieden.
+- ❌ Eva's eigenaar-, stop- en controlegrenzen zijn nog niet op die officiële
+  MCP/Assist-route aangesloten en in dit huis getest.
+- ❌ Apparaten, integraties of automatiseringen in Home Assistant toevoegen of
+  wijzigen blijft een aparte beheerroute met extra toestemming.
 
 ## Zelfstandig onderzoek doen
 
@@ -108,19 +113,11 @@ Betekenis:
 ## Vergelijken met andere assistenten
 
 - 🟡 Er zijn begrensde ontwikkelproeven voor AgentBench en GAIA.
-- 🟡 Een misvormd AgentBench-antwoord krijgt in de volgende proef één korte,
-  vaste foutcategorie terug. De ruwe modeltekst en het verborgen antwoord
-  blijven buiten beeld; deze kandidaat is getest maar nog niet uitgevoerd.
-- 🟡 De nog ongebruikte ontwikkelcases 32–39 zijn vooraf vastgezet. Er is nog
-  geen resultaat van bekeken en de proef is nog niet gestart. De batchroute
-  weigert andere cases, herhaalt een mislukt geval niet en lekt geen ruwe
-  modeltekst naar de samenvatting.
-- 🟡 De vier benodigde benchmarkdiensten zijn exact vastgezet. Alleen het
-  model krijgt internet; worker, database en controller blijven intern en
-  publiceren geen poorten. De echte registratie van alle 60 ontwikkelcases is
-  groen. De eerste start van cases 32–39 vond een ontbrekende interne
-  database-alias en stopte vóór vraagtekst, modelcall, SQL of score; de kleine
-  correctie is getest maar nog niet opnieuw gestart.
+- 🟡 Eva heeft acht vooraf gekozen AgentBench-ontwikkelcases echt uitgevoerd:
+  drie waren goed en vijf fout. De foutgevallen laten vooral zien dat haar
+  gereedschap- en eindantwoordformaat nog robuuster moet worden.
+- ✅ De tijdelijke benchmarkomgeving is daarna volledig opgeruimd. Vragen,
+  antwoorden en verborgen beoordelingsgegevens staan niet in dit projectbord.
 - ❌ Er zijn nog geen officiële AgentBench-, GAIA- of OSWorld-eindscores.
 - ❌ De volledige eerlijke vergelijking met OpenClaw, Hermes en Agent Zero is
   nog niet afgerond.
@@ -139,7 +136,8 @@ Betekenis:
 1. De bewapende Windows/WSL-herstartproef afronden.
 2. De beheerde Telegrambediening voor onderzoek echt in de gebruikersroute
    beproeven.
-3. Huisbediening veilig uitbreiden naar andere begrijpelijke apparaatgroepen.
+3. Eva generiek aansluiten op Home Assistant via de officiële MCP Server, met de
+   bestaande persoonscontrole en onafhankelijke state-readback eromheen.
 4. Echte voice met microfoon en speaker afmaken.
 5. Daarna de zeven dagen lange praktijktest uitvoeren.
 

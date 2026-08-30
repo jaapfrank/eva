@@ -1,0 +1,42 @@
+{
+  "contract": "EvaHomeAssistantOfficialMcpReadiness/v1",
+  "observedAt": "2026-08-30T11:51:00+02:00",
+  "liveHomeAssistant": {
+    "version": "2026.8.1",
+    "configReadOnly": true,
+    "conversationComponentLoaded": true,
+    "llmComponentLoaded": true,
+    "mcpServerComponentLoaded": false,
+    "urlStored": false,
+    "tokenStored": false
+  },
+  "officialCapability": {
+    "mcpEndpoint": "/api/mcp/assist",
+    "transport": "Streamable HTTP",
+    "controlsAssistExposedEntities": true,
+    "liveContextAvailable": true,
+    "administrativeTasksAllowed": false,
+    "entityExposureIsOwnerControlled": true
+  },
+  "decision": {
+    "primaryRuntimeRoute": "Home Assistant official MCP Server with built-in Assist API",
+    "directApiRoles": [
+      "independent exact state readback",
+      "event subscriptions",
+      "separately authorized Home Assistant administration"
+    ],
+    "perDeviceGroupEvaCodeRequired": false,
+    "nextGate": "configure MCP Server, then prove one owner-bound state-to-action-to-independent-state chain"
+  },
+  "sources": [
+    "https://www.home-assistant.io/integrations/mcp_server/",
+    "https://developers.home-assistant.io/docs/core/llm/",
+    "https://developers.home-assistant.io/docs/api/rest/",
+    "https://developers.home-assistant.io/docs/api/websocket/"
+  ],
+  "changesToHomeAssistant": 0,
+  "nonClaims": [
+    "The MCP Server integration is not configured in the live Home Assistant yet.",
+    "No MCP tool or Home Assistant action was invoked by this readiness check."
+  ]
+}

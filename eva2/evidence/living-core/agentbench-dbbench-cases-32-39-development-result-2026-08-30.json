@@ -1,0 +1,64 @@
+{
+  "contract": "EvaAgentBenchDbBenchDevelopmentBatchResult/v1",
+  "observedAt": "2026-08-30T11:55:00+02:00",
+  "selection": {
+    "split": "development",
+    "caseIndexes": [32, 33, 34, 35, 36, 37, 38, 39],
+    "precommittedSelectionCommit": "e661ec6"
+  },
+  "execution": {
+    "batchStatus": "complete",
+    "completedCases": 8,
+    "technicalBatchFailures": 0,
+    "modelTurnsReservedBeforeIo": 47,
+    "modelReceipts": 37,
+    "modelFailures": 18,
+    "trajectoryTurns": 29
+  },
+  "evaluation": {
+    "correct": 3,
+    "incorrect": 5,
+    "developmentAccuracy": 0.375,
+    "failureCategories": {
+      "tool-free AgentBench request failed": 10,
+      "Eva DBBench tool answer is not exact JSON": 5,
+      "Eva DBBench final-answer empty item is invalid": 1,
+      "Eva DBBench final-answer count is invalid": 2
+    }
+  },
+  "artifacts": {
+    "locationStoredInReceipt": false,
+    "rawTaskOrAnswerTextStoredInReceipt": false,
+    "sha256": {
+      "case-32.json": "1f39a485fc50929fedca748ace8c994c84df6cbdc4163315fb2d3c484c4c09cf",
+      "case-33.json": "d322b2696a0e6c204712a3592666b27e72b84c58de9253a452f9f6c2e2bdc4a5",
+      "case-34.json": "179b6e9e7e2c4d58267cdb97b08f1833ad9b98cc761d1777f01966e63b8edf0d",
+      "case-35.json": "ce7c7403a4089d0d750db363d511fef4d7ec1f7c19508c285f26d8e4407bd871",
+      "case-36.json": "2ff44fe33d03f7877f074ed5dbbfa514808cceea7d0c508d998cac266d412416",
+      "case-37.json": "2bb9876492ec6e2ecc9b974a4c9a1cbfae996473d6a546f24839a395a7d0972d",
+      "case-38.json": "c17d64e09bb62d1f79b81f7886578fa1e56c35322a75b608d5b8dd375730b58d",
+      "case-39.json": "52ae7aaab84e53689960e2ada1b4dbbe8e4a1201d960ddac470c3072779903ce"
+    }
+  },
+  "isolation": {
+    "disposableStackRemoved": true,
+    "temporarySecretRemoved": true,
+    "eva2Port44710HealthyAfterRun": true,
+    "eva2RollbackPort44720HealthyAfterRun": true,
+    "eva1ServiceActiveAfterRun": true,
+    "eva1ServiceRestarts": 0
+  },
+  "priorZeroWorkAttempt": {
+    "receipt": "agentbench-dbbench-cases-32-39-zero-work-startup-failure-2026-08-30.json",
+    "taskTextExposed": false,
+    "modelCalls": 0,
+    "sqlCalls": 0,
+    "scoresProduced": 0,
+    "rerunReason": "missing internal database alias was fixed before any case content or scoring was exposed"
+  },
+  "nonClaims": [
+    "This is a bounded development result, not an official AgentBench score.",
+    "The eight cases are not a representative estimate for all 60 DBBench development cases.",
+    "No leaderboard or competitor-quality claim is made."
+  ]
+}
