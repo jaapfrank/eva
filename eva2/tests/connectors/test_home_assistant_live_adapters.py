@@ -46,16 +46,22 @@ def test_effect_planner_owns_resolution_policy_and_provider_command(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     adapter = HomeAssistantToolAdapter(HomeAssistantConfig("http://ha.test", "token"))
-    monkeypatch.setattr(
-        adapter,
-        "_light_catalog_sync",
-        lambda: [
+    catalog_calls: list[str] = []
+
+    def catalog() -> list[dict[str, object]]:
+        catalog_calls.append("read")
+        return [
             {
                 "attributes": {"friendly_name": "Schuurlamp"},
                 "entity_id": "light.schuur",
                 "state": "on",
             }
-        ],
+        ]
+
+    monkeypatch.setattr(
+        adapter,
+        "_light_catalog_sync",
+        catalog,
     )
     planner = HomeAssistantConversationEffectPlanner(
         adapter,
@@ -83,6 +89,22 @@ def test_effect_planner_owns_resolution_policy_and_provider_command(
     }
     assert prepared.expected_proof == {"entity_id": "light.schuur", "state": "off"}
     assert prepared.receipt_output["friendly_name"] == "Schuurlamp"
+    assert catalog_calls == ["read"]
+
+    with pytest.raises(
+        ConversationClarificationRequired,
+        match="alleen uitzetten, niet aanzetten",
+    ):
+        asyncio.run(
+            planner.prepare(
+                _private_turn(),
+                ConversationActionCall(
+                    "call:forbidden-direction",
+                    "set_home_assistant_light",
+                    {"state": "on", "target": "Schuurlamp"},
+                ),
+            )
+        )
 
     with pytest.raises(ConversationClarificationRequired, match="dit profiel"):
         asyncio.run(
@@ -95,6 +117,7 @@ def test_effect_planner_owns_resolution_policy_and_provider_command(
                 ),
             )
         )
+    assert catalog_calls == ["read", "read"]
 
 
 def test_light_resolution_ignores_unavailable_duplicate(

@@ -66,16 +66,18 @@ kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
 De bestaande bron voldoet hier nog niet aan. Acht bestanden in applicatie,
-modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 910
+modeladapter, PostgreSQL-adapter, contracts en bootstrap bevatten samen nog 803
 Home Assistant-/Tuya-specifieke identifiers. De teller herkent ook spaties en
-CamelCase. De eerste verplaatsingen hebben 47 identifiers verwijderd. De vier
+CamelCase. De eerste verplaatsingen hebben 154 identifiers verwijderd. De vier
 gewone lees/aan-uit-schemas en hun antwoordinstructies komen nu uit de adapter.
 Gewone lees- en effecttools registreren bovendien via
 `ConversationExternalToolPort`; `PostgresExternalConversationTools` bewaart
 providerneutraal toelating, call-start, bewijs en hervatten. De centrale
 dispatcher routeert alleen op de aangeboden toolnaam en kent de provider niet.
 Een synthetische agendareservering doorliep dezelfde PostgreSQL- en readbackroute
-en werd na een nieuwe procesinstantie niet herhaald. De architectuurchecker legt
+en werd na een nieuwe procesinstantie niet herhaald. De vroegere aparte
+Home Assistant-effect-API, dispatcher, receipt en hervatroute zijn verwijderd;
+effecten mogen alleen nog via het externe-toolcontract binnenkomen. De architectuurchecker legt
 de resterende aantallen als
 uitsluitend dalende bovengrens vast: geen nieuw bestand en geen bestaand bestand
 mag meer providerspecifieke kernlogica krijgen. De gate wordt pas inhoudelijk

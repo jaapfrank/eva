@@ -38,7 +38,6 @@ from eva.application.commerce import (
     DigitalFulfillmentGrant,
     ProductPublicationApproval,
 )
-from eva.application.orchestration import VerifiedToolResult
 from eva.application.free_will import ProactiveExpressionClaim
 from eva.application.durable_goals import DurableGoalSpec, DurableGoalState
 from eva.contracts.canonical_json import canonical_sha256
@@ -81,7 +80,6 @@ class _Runtime:
         self.documents: list[ConversationMemoryDocument] = []
         self.turns: list[ConversationTurn] = []
         self.after: list[tuple[ConversationTurn, GroundedReply]] = []
-        self.tool_calls: list[dict[str, str]] = []
         self.localtuya_probe_called = False
         self.proactive_claim: ProactiveExpressionClaim | None = None
         self.proactive_acks: list[dict[str, object]] = []
@@ -323,27 +321,6 @@ class _Runtime:
                 len(content),
                 datetime(2026, 8, 24, 14, 0, tzinfo=UTC),
             ),
-        )
-
-    async def execute_home_assistant_light(self, **command: str) -> VerifiedToolResult:
-        self.tool_calls.append(command)
-        expected_state = "on" if command["service"] == "turn_on" else "off"
-        return VerifiedToolResult(
-            status="verified",
-            operation_id=command["operation_id"],
-            checkpoint_id="checkpoint:verified",
-            proof={
-                "evidence": {"source": "home_assistant"},
-                "expected": {
-                    "entity_id": command["entity_id"],
-                    "state": expected_state,
-                },
-                "observed": {
-                    "entity_id": command["entity_id"],
-                    "state": expected_state,
-                },
-            },
-            retry_count=0,
         )
 
     async def plan_tuya_to_localtuya(self, **request: str) -> AdvancedTaskPlan:
@@ -1297,61 +1274,6 @@ def test_unavailable_conversation_model_is_not_exposed_as_http_500() -> None:
         "Eva's conversation model is tijdelijk unavailable"
     )
     assert "secret provider detail" not in response.text
-
-
-def test_home_assistant_light_action_returns_independent_proof() -> None:
-    runtime = _Runtime()
-    client = TestClient(create_app(runtime))
-    response = client.post(
-        "/internal/v1/tools/home-assistant/light",
-        json={
-            "entity_id": "light.kantoor_rechts",
-            "installation_id": "live-installation",
-            "operation_id": "operation:live-light:on",
-            "principal_id": "telegram:123",
-            "service": "turn_on",
-            "tenant_id": "live-tenant",
-            "thread_id": "thread:live-light:on",
-        },
-    )
-
-    assert response.status_code == 200
-    assert response.json()["status"] == "verified"
-    assert response.json()["proof"]["observed"] == {
-        "entity_id": "light.kantoor_rechts",
-        "state": "on",
-    }
-    assert runtime.tool_calls == [
-        {
-            "entity_id": "light.kantoor_rechts",
-            "installation_id": "live-installation",
-            "operation_id": "operation:live-light:on",
-            "principal_id": "telegram:123",
-            "service": "turn_on",
-            "tenant_id": "live-tenant",
-            "thread_id": "thread:live-light:on",
-        }
-    ]
-
-
-def test_home_assistant_route_rejects_non_light_or_non_reversible_action() -> None:
-    runtime = _Runtime()
-    client = TestClient(create_app(runtime))
-    base = {
-        "entity_id": "lock.voordeur",
-        "installation_id": "live-installation",
-        "operation_id": "operation:unsafe",
-        "principal_id": "telegram:123",
-        "service": "unlock",
-        "tenant_id": "live-tenant",
-        "thread_id": "thread:unsafe",
-    }
-
-    assert (
-        client.post("/internal/v1/tools/home-assistant/light", json=base).status_code
-        == 422
-    )
-    assert runtime.tool_calls == []
 
 
 def test_durable_goal_api_admits_reads_and_cancels_distinctly() -> None:

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from datetime import UTC, datetime, timedelta
 import hashlib
 from types import SimpleNamespace
@@ -68,7 +67,6 @@ def test_durable_turn_identifiers_remain_byte_equal_after_shared_derivation() ->
         "_document_task_id": "document-task:0c1b5c743efe2ef443e09ba4944290b0",
         "_fanout_operation_id": "fanout-delivery:197936a99e2b5f2c2cf6aef1757bc4fc",
         "_file_batch_operation_id": "file-batch:2953c51ce77caee25034e51065c8a96a",
-        "_home_assistant_operation_id": "home-assistant-light:f9681b0df36bd7a1be3376c21a4f90d1",
         "_intent_id": "personal-interest:eadd7f2b068d9fd4987faa479286bc3d",
         "_localtuya_package_thread_id": "advanced-package-conversation:b5dd954412f97c5c6393a80935562395",
         "_localtuya_repository_thread_id": "advanced-repository-conversation:717b95f2be6caed2854380f8eeea19f9",
@@ -121,43 +119,6 @@ def test_home_assistant_ambiguous_read_requests_a_natural_clarification() -> Non
         )
 
 
-def test_home_assistant_ambiguous_effect_requests_a_natural_clarification() -> None:
-    class HomeAssistant:
-        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
-            assert target == "lamp in de schuur"
-            raise ValueError("Home Assistant light target is unknown or ambiguous")
-
-    actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=True,
-        home_assistant_effect_allowlist=frozenset({("light.schuur", "turn_off")}),
-        home_assistant_effect_principal_sha256_allowlist=frozenset(
-            {hashlib.sha256(b"jaap").hexdigest()}
-        ),
-    )
-    with pytest.raises(
-        ConversationClarificationRequired,
-        match=r"Welke lamp bedoel je precies\?",
-    ):
-        actions.execute(
-            ConversationTurn.private(
-                "tenant",
-                "installation",
-                "jaap",
-                "conversation",
-                "message:ambiguous-light-effect",
-                "Zet de lamp in de schuur uit",
-                "2026-08-23T14:00:00Z",
-            ),
-            ConversationActionCall(
-                "call:ambiguous-light-effect",
-                "set_home_assistant_light",
-                {"state": "off", "target": "lamp in de schuur"},
-            ),
-        )
-
-
 def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> None:
     engine = sa.create_engine("sqlite://")
     actions = PostgresConversationActions(
@@ -173,7 +134,7 @@ def test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects() -> 
     assert "read_home_assistant_history" in actions.action_names
     assert "set_home_assistant_light" not in actions.action_names
     assert "set_home_assistant_switch" not in actions.action_names
-    with pytest.raises(Exception, match="action is unavailable"):
+    with pytest.raises(Exception, match="unsupported conversation action"):
         actions.execute(
             ConversationTurn.private(
                 "tenant",
@@ -245,150 +206,6 @@ def test_external_tool_provider_registers_executes_and_resumes_without_core_bran
         PostgresConversationActions(
             sa.create_engine("sqlite://"), external_tools=(provider, provider)
         )
-
-
-def test_home_assistant_effect_allowlist_refuses_every_other_target_or_service() -> (
-    None
-):
-    with pytest.raises(ValueError, match="principal policy is required"):
-        PostgresConversationActions(
-            sa.create_engine("sqlite://"),
-            home_assistant=object(),  # type: ignore[arg-type]
-            home_assistant_effects_enabled=True,
-            home_assistant_effect_allowlist=frozenset(
-                {("light.dimmable_light_1", "turn_off")}
-            ),
-        )
-    actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=object(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=True,
-        home_assistant_effect_allowlist=frozenset(
-            {("light.dimmable_light_1", "turn_off")}
-        ),
-        home_assistant_effect_principal_sha256_allowlist=frozenset(
-            {hashlib.sha256(b"jaap").hexdigest()}
-        ),
-    )
-
-    with pytest.raises(RuntimeError, match="outside the configured allowlist"):
-        asyncio.run(
-            actions.execute_home_assistant_light(
-                tenant_id="tenant",
-                installation_id="installation",
-                thread_id="thread",
-                operation_id="operation",
-                principal_id="jaap",
-                entity_id="light.other",
-                service="turn_off",
-            )
-        )
-    with pytest.raises(RuntimeError, match="principal is not authorized"):
-        asyncio.run(
-            actions.execute_home_assistant_light(
-                tenant_id="tenant",
-                installation_id="installation",
-                thread_id="thread:other-person",
-                operation_id="operation:other-person",
-                principal_id="lola",
-                entity_id="light.dimmable_light_1",
-                service="turn_off",
-            )
-        )
-
-
-def test_home_assistant_effect_policy_answers_a_forbidden_request_naturally() -> None:
-    class HomeAssistant:
-        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
-            assert target == "spotjes overkapping"
-            return {
-                "entity_id": "light.dimmable_light_1",
-                "friendly_name": "Spotjes overkapping",
-                "state": "off",
-            }
-
-    actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=True,
-        home_assistant_effect_allowlist=frozenset(
-            {("light.dimmable_light_1", "turn_off")}
-        ),
-        home_assistant_effect_principal_sha256_allowlist=frozenset(
-            {hashlib.sha256(b"jaap").hexdigest()}
-        ),
-    )
-    with pytest.raises(
-        ConversationClarificationRequired,
-        match="Ik mag Spotjes overkapping nu alleen uitzetten, niet aanzetten",
-    ):
-        actions.execute(
-            ConversationTurn.private(
-                "tenant",
-                "installation",
-                "jaap",
-                "conversation",
-                "message:forbidden-on",
-                "Zet de spotjes overkapping aan.",
-                "2026-08-28T13:15:00Z",
-            ),
-            ConversationActionCall(
-                "call:forbidden-on",
-                "set_home_assistant_light",
-                {"state": "on", "target": "spotjes overkapping"},
-            ),
-        )
-    with pytest.raises(RuntimeError, match="outside the configured allowlist"):
-        asyncio.run(
-            actions.execute_home_assistant_light(
-                tenant_id="tenant",
-                installation_id="installation",
-                thread_id="thread",
-                operation_id="operation",
-                principal_id="jaap",
-                entity_id="light.dimmable_light_1",
-                service="turn_on",
-            )
-        )
-
-
-def test_home_assistant_effect_rejects_person_before_provider_resolution() -> None:
-    calls: list[str] = []
-
-    class HomeAssistant:
-        async def resolve_light(self, target):  # type: ignore[no-untyped-def]
-            calls.append(target)
-            raise AssertionError("unauthorized person reached Home Assistant")
-
-    actions = PostgresConversationActions(
-        sa.create_engine("sqlite://"),
-        home_assistant=HomeAssistant(),  # type: ignore[arg-type]
-        home_assistant_effects_enabled=True,
-        home_assistant_effect_allowlist=frozenset(
-            {("light.dimmable_light_1", "turn_off")}
-        ),
-        home_assistant_effect_principal_sha256_allowlist=frozenset(
-            {hashlib.sha256(b"jaap").hexdigest()}
-        ),
-    )
-    with pytest.raises(ConversationClarificationRequired, match="Met dit profiel"):
-        actions.execute(
-            ConversationTurn.private(
-                "tenant",
-                "installation",
-                "lola",
-                "conversation",
-                "message:unauthorized",
-                "Zet de lamp uit.",
-                "2026-08-30T02:40:00Z",
-            ),
-            ConversationActionCall(
-                "call:unauthorized",
-                "set_home_assistant_light",
-                {"state": "off", "target": "spotjes overkapping"},
-            ),
-        )
-    assert calls == []
 
 
 def test_validated_file_edit_action_requires_its_bounded_adapter() -> None:

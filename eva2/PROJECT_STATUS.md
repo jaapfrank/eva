@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 19:31 CEST
+Laatst bijgewerkt: 30 augustus 2026, 19:52 CEST
 
 ## Zo lees je dit bord
 
@@ -72,13 +72,14 @@ officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
 De huidige code voldoet nog niet volledig aan die grens. De verbeterde controle
-vindt nog 910 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
-Dat is 47 minder dan vóór de eerste verplaatsing. De vier gewone lees/aan-uit-
+vindt nog 803 Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden.
+Dat is 154 minder dan vóór de eerste verplaatsing. De vier gewone lees/aan-uit-
 schemas en hun antwoordinstructies komen nu uit de tooladapter. De actuele
 kandidaat-runtime registreert zowel de gewone leesacties als de aan/uit-acties via een
 generieke externe-toolpoort. De centrale dispatcher kiest daarbij geen
-providernaam of opdrachtsoort. De oudere directe effectfallback en de beheer-
-en migratielogica staan nog wel in kernbestanden en moeten eveneens verdwijnen.
+providernaam of opdrachtsoort. De oude directe Home Assistant-effect-API en de
+bijbehorende dubbele PostgreSQL-route zijn verwijderd. De beheer- en
+migratielogica staan nog wel in kernbestanden en moeten eveneens verdwijnen.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -176,7 +177,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ Schema, antwoordinstructie en de kandidaat voor gewone lees/effectdispatch zijn generiek; er resten 910 oudere Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | ❌ Schema, antwoordinstructie en de kandidaat voor gewone lees/effectdispatch zijn generiek; de dubbele directe effectroute is verwijderd en er resten 803 oudere Home Assistant-/Tuya-specifieke identifiers in acht kernbestanden |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |

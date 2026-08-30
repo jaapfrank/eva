@@ -66,7 +66,6 @@ from eva.application.commerce import (
     DigitalFulfillmentDownload,
     ProductPublicationApproval,
 )
-from eva.application.orchestration import VerifiedToolResult
 from eva.application.free_will import ProactiveExpressionClaim
 from eva.application.durable_goals import (
     DurableGoalError,
@@ -160,15 +159,6 @@ _DURABLE_GOAL_WAKE_KEYS = {
 }
 _DASHBOARD_EFFECT_STOP_KEYS = {"effect_intent_id"}
 _DASHBOARD_CONVERSATION_ERASE_KEYS = {"message_id"}
-_HOME_ASSISTANT_LIGHT_KEYS = {
-    "entity_id",
-    "installation_id",
-    "operation_id",
-    "principal_id",
-    "service",
-    "tenant_id",
-    "thread_id",
-}
 _TUYA_LOCAL_PLAN_KEYS = {
     "installation_id",
     "mode",
@@ -358,18 +348,6 @@ class MemoryRecallRuntime(Protocol):
     def latest_current_research(
         self, tenant_id: str, installation_id: str, principal_id: str
     ) -> ResearchArtifact | None: ...
-
-    async def execute_home_assistant_light(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        principal_id: str,
-        entity_id: str,
-        service: str,
-    ) -> VerifiedToolResult: ...
 
     def admit_durable_goal(
         self,
@@ -572,22 +550,6 @@ def _durable_goal_payload(state: DurableGoalState) -> dict[str, Any]:
         "selected_instruction": state.selected_instruction,
         "status": state.status,
     }
-
-
-def _home_assistant_light_from_wire(payload: dict[str, Any]) -> dict[str, str]:
-    if set(payload) != _HOME_ASSISTANT_LIGHT_KEYS:
-        raise ValueError("Home Assistant light request has unknown or missing fields")
-    values: dict[str, str] = {}
-    for key in _HOME_ASSISTANT_LIGHT_KEYS:
-        value = payload[key]
-        if not isinstance(value, str) or not value.strip() or len(value) > 240:
-            raise ValueError(f"Home Assistant light {key} is invalid")
-        values[key] = value.strip()
-    if not values["entity_id"].startswith("light."):
-        raise ValueError("only Home Assistant light entities are admitted")
-    if values["service"] not in {"turn_on", "turn_off"}:
-        raise ValueError("only reversible Home Assistant light services are admitted")
-    return values
 
 
 def _bounded_string_fields(
@@ -1290,29 +1252,6 @@ def create_app(
         if state is None:
             raise HTTPException(status_code=404, detail="durable goal not found")
         return _durable_goal_payload(state)
-
-    @app.post("/internal/v1/tools/home-assistant/light")
-    async def execute_home_assistant_light(
-        payload: dict[str, Any],
-    ) -> dict[str, Any]:
-        executor = getattr(runtime, "execute_home_assistant_light", None)
-        if not callable(executor):
-            raise HTTPException(status_code=501, detail="Home Assistant unavailable")
-        try:
-            command = _home_assistant_light_from_wire(payload)
-            result = await executor(**command)
-        except ValueError as error:
-            raise HTTPException(status_code=422, detail=str(error)) from error
-        except RuntimeError as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-        return {
-            "checkpoint_id": result.checkpoint_id,
-            "contract": "EvaVerifiedToolResult/v1",
-            "operation_id": result.operation_id,
-            "proof": result.proof,
-            "retry_count": result.retry_count,
-            "status": result.status,
-        }
 
     @app.post("/internal/v1/proactive/outbox/claim")
     def claim_proactive_expression(response: Response) -> dict[str, Any] | None:

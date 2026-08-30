@@ -30,7 +30,6 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
-    ConversationClarificationRequired,
     ConversationConflict,
     ConversationExternalToolPort,
     ConversationTurn,
@@ -109,9 +108,6 @@ from eva.application.repository_improvements import (
 
 _ACTION = "adopt_personal_interest"
 _ARGUMENT_KEYS = {"motivation", "next_exploration", "title"}
-_HOME_ASSISTANT_ACTION = "set_home_assistant_light"
-_HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
-_HOME_ASSISTANT_ARGUMENT_KEYS = {"state", "target"}
 _HOME_ASSISTANT_AUTOMATION_ACTION = "create_home_assistant_state_automation"
 _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION = (
     "create_home_assistant_advanced_state_automation"
@@ -331,9 +327,6 @@ class PostgresConversationActions:
         home_assistant_automations: AsyncToolPort | None = None,
         home_assistant_admin: _HomeAssistantInventoryPort | None = None,
         home_assistant_hacs: _HomeAssistantPackagePort | None = None,
-        home_assistant_effects_enabled: bool = False,
-        home_assistant_effect_allowlist: frozenset[tuple[str, str]] | None = None,
-        home_assistant_effect_principal_sha256_allowlist: frozenset[str] | None = None,
         research: CurrentResearchPort | None = None,
         file_batch: TextBatchPort | None = None,
         validated_file_edit: ValidatedTextEditPort | None = None,
@@ -346,19 +339,6 @@ class PostgresConversationActions:
     ) -> None:
         self._engine = engine
         self._home_assistant = home_assistant
-        if not isinstance(home_assistant_effects_enabled, bool):
-            raise TypeError("Home Assistant effect policy must be boolean")
-        self._home_assistant_effects_enabled = home_assistant_effects_enabled
-        self._home_assistant_effect_allowlist = home_assistant_effect_allowlist
-        self._home_assistant_effect_principal_sha256_allowlist = (
-            home_assistant_effect_principal_sha256_allowlist or frozenset()
-        )
-        if (
-            home_assistant is not None
-            and home_assistant_effects_enabled
-            and not self._home_assistant_effect_principal_sha256_allowlist
-        ):
-            raise ValueError("Home Assistant effect principal policy is required")
         self._external_tools = external_tools
         external_action_names = tuple(
             action_name
@@ -416,10 +396,6 @@ class PostgresConversationActions:
     @property
     def action_names(self) -> tuple[str, ...]:
         actions = [_ACTION, _DOCUMENT_TASK_ACTION]
-        if self._home_assistant is not None and self._home_assistant_effects_enabled:
-            for action_name in (_HOME_ASSISTANT_ACTION, _HOME_ASSISTANT_SWITCH_ACTION):
-                if action_name not in self._external_tool_by_action:
-                    actions.append(action_name)
         actions.extend(self._external_tool_by_action)
         if self._home_assistant_automations is not None:
             actions.append(_HOME_ASSISTANT_AUTOMATION_ACTION)
@@ -567,16 +543,6 @@ class PostgresConversationActions:
                 self._resume_automation(turn, automation_events)
                 automation_events = timeline.events(self._automation_thread_id(turn))
             return self._automation_receipt(turn, automation_events)
-        home_assistant_events = timeline.events(self._home_assistant_thread_id(turn))
-        if home_assistant_events:
-            if home_assistant_events[-1].event_type not in (
-                _HOME_ASSISTANT_TERMINAL_EVENTS
-            ):
-                self._resume_home_assistant(turn, home_assistant_events)
-                home_assistant_events = timeline.events(
-                    self._home_assistant_thread_id(turn)
-                )
-            return self._home_assistant_receipt(turn, home_assistant_events)
         events = timeline.events(self._intent_thread_id(turn))
         if not events:
             return None
@@ -801,8 +767,6 @@ class PostgresConversationActions:
             return self._execute_automation(turn, call)
         if call.name == _HOME_ASSISTANT_ADVANCED_AUTOMATION_ACTION:
             return self._execute_advanced_automation(turn, call)
-        if call.name in {_HOME_ASSISTANT_ACTION, _HOME_ASSISTANT_SWITCH_ACTION}:
-            return self._execute_home_assistant(turn, call)
         if call.name != _ACTION:
             raise ConversationConflict(f"unsupported conversation action {call.name!r}")
         arguments = self._validated_arguments(call.arguments)
@@ -2236,114 +2200,6 @@ class PostgresConversationActions:
             },
         )
 
-    async def execute_home_assistant_light(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        principal_id: str,
-        entity_id: str,
-        service: str,
-        admission_context: dict[str, JsonValue] | None = None,
-    ) -> VerifiedToolResult:
-        return await self._execute_home_assistant_binary(
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-            thread_id=thread_id,
-            operation_id=operation_id,
-            principal_id=principal_id,
-            domain="light",
-            entity_id=entity_id,
-            service=service,
-            admission_context=admission_context,
-        )
-
-    async def _execute_home_assistant_binary(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        principal_id: str,
-        domain: str,
-        entity_id: str,
-        service: str,
-        admission_context: dict[str, JsonValue] | None,
-    ) -> VerifiedToolResult:
-        if self._home_assistant is None:
-            raise RuntimeError("Home Assistant is not configured")
-        if not self._home_assistant_effects_enabled:
-            raise RuntimeError("Home Assistant effects are disabled")
-        principal_sha256 = hashlib.sha256(principal_id.encode("utf-8")).hexdigest()
-        if (
-            principal_sha256
-            not in self._home_assistant_effect_principal_sha256_allowlist
-        ):
-            raise RuntimeError("Home Assistant effect principal is not authorized")
-        if (
-            domain not in {"light", "switch"}
-            or service not in {"turn_on", "turn_off"}
-            or not entity_id.startswith(f"{domain}.")
-        ):
-            raise ValueError("Home Assistant binary command is invalid")
-        if (
-            self._home_assistant_effect_allowlist is not None
-            and (entity_id, service) not in self._home_assistant_effect_allowlist
-        ):
-            raise RuntimeError(
-                "Home Assistant effect is outside the configured allowlist"
-            )
-        expected_state = "on" if service == "turn_on" else "off"
-        request = ToolRequest(
-            thread_id=thread_id,
-            operation_id=operation_id,
-            checkpoint_prefix=(
-                "checkpoint:home-assistant:"
-                + hashlib.sha256(operation_id.encode("utf-8")).hexdigest()[:32]
-            ),
-            tool_name=f"home_assistant.{domain}.{service}",
-            arguments={
-                "domain": domain,
-                "entity_id": entity_id,
-                "service": service,
-                "service_data": {},
-            },
-            expected_proof={"entity_id": entity_id, "state": expected_state},
-        )
-        timeline = self._timeline_for(tenant_id, installation_id)
-        admission: dict[str, JsonValue] = {
-            "arguments": request.arguments,
-            "context": admission_context or {},
-            "expected_proof": request.expected_proof,
-            "tool_name": request.tool_name,
-        }
-        now = datetime.now(tz=UTC).replace(microsecond=0)
-        try:
-            timeline.create_thread(
-                thread_id=thread_id,
-                checkpoint_id=f"{request.checkpoint_prefix}:admitted",
-                occurred_at=now,
-                data=admission,
-                event_type="TOOL_REQUEST_ADMITTED",
-                phase="admitted",
-                status="active",
-                operation_id=operation_id,
-            )
-        except CheckpointConflict:
-            state = timeline.load(thread_id)
-            events = timeline.events(thread_id)
-            first_data = self._event_data(events[0]) if events else None
-            if state.operation_id != operation_id or first_data != admission:
-                raise ConversationConflict(
-                    "Home Assistant operation replay differs"
-                ) from None
-        return await VerifiedToolOrchestrator(timeline, self._home_assistant).run(
-            request
-        )
-
     async def execute_home_assistant_automation(
         self,
         *,
@@ -2403,89 +2259,6 @@ class PostgresConversationActions:
         return await VerifiedToolOrchestrator(
             timeline, self._home_assistant_automations
         ).run(request)
-
-    def _execute_home_assistant(
-        self, turn: ConversationTurn, call: ConversationActionCall
-    ) -> ConversationActionReceipt:
-        if self._home_assistant is None:
-            raise ConversationConflict("Home Assistant action is unavailable")
-        if not self._home_assistant_effects_enabled:
-            raise ConversationConflict("Home Assistant effects are disabled")
-        principal_sha256 = hashlib.sha256(turn.principal_id.encode("utf-8")).hexdigest()
-        if (
-            principal_sha256
-            not in self._home_assistant_effect_principal_sha256_allowlist
-        ):
-            raise ConversationClarificationRequired(
-                "Met dit profiel mag je het huis nog niet bedienen."
-            )
-        arguments = self._validated_home_assistant_arguments(call.arguments)
-        domain = "switch" if call.name == _HOME_ASSISTANT_SWITCH_ACTION else "light"
-
-        async def execute() -> None:
-            resolver = (
-                self._home_assistant.resolve_switch
-                if domain == "switch"
-                else self._home_assistant.resolve_light
-            )
-            try:
-                resolved = await resolver(arguments["target"])
-            except ValueError as error:
-                target_kind = "lamp" if domain == "light" else "schakelaar"
-                raise ConversationClarificationRequired(
-                    f"Welke {target_kind} bedoel je precies? "
-                    "Noem de naam zoals die in Home Assistant staat."
-                ) from error
-            service = "turn_on" if arguments["state"] == "on" else "turn_off"
-            if (
-                self._home_assistant_effect_allowlist is not None
-                and (resolved["entity_id"], service)
-                not in self._home_assistant_effect_allowlist
-            ):
-                allowed_services = {
-                    allowed_service
-                    for allowed_entity, allowed_service in self._home_assistant_effect_allowlist
-                    if allowed_entity == resolved["entity_id"]
-                }
-                friendly_name = resolved["friendly_name"]
-                if allowed_services == {"turn_off"}:
-                    prompt = (
-                        f"Ik mag {friendly_name} nu alleen uitzetten, niet aanzetten."
-                    )
-                elif allowed_services == {"turn_on"}:
-                    prompt = (
-                        f"Ik mag {friendly_name} nu alleen aanzetten, niet uitzetten."
-                    )
-                else:
-                    prompt = (
-                        f"{friendly_name} mag ik nog niet bedienen. Alleen vooraf veilig "
-                        "vrijgegeven huisacties zijn nu beschikbaar."
-                    )
-                raise ConversationClarificationRequired(prompt)
-            await self._execute_home_assistant_binary(
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-                thread_id=self._home_assistant_thread_id(turn),
-                operation_id=self._home_assistant_operation_id(turn),
-                principal_id=turn.principal_id,
-                domain=domain,
-                entity_id=resolved["entity_id"],
-                service=service,
-                admission_context={
-                    "action_call_id": call.call_id,
-                    "action_name": call.name,
-                    "conversation_id": turn.conversation_id,
-                    "friendly_name": resolved["friendly_name"],
-                    "principal_id": turn.principal_id,
-                    "requested_state": arguments["state"],
-                    "requested_target": arguments["target"],
-                    "source_message_id": turn.message_id,
-                },
-            )
-
-        asyncio.run(execute())
-        events = self._timeline(turn).events(self._home_assistant_thread_id(turn))
-        return self._home_assistant_receipt(turn, events)
 
     def _require_automation_ports(self) -> None:
         if self._home_assistant_automations is None:
@@ -3311,100 +3084,6 @@ class PostgresConversationActions:
             )
         )
 
-    def _resume_home_assistant(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> None:
-        admission = self._event_data(events[0])
-        arguments = admission.get("arguments")
-        context = admission.get("context")
-        if not isinstance(arguments, dict) or not isinstance(context, dict):
-            raise ConversationConflict("Home Assistant resume authority is malformed")
-        if set(arguments) != {"domain", "entity_id", "service", "service_data"}:
-            raise ConversationConflict("Home Assistant resume arguments differ")
-        entity_id = arguments.get("entity_id")
-        domain = arguments.get("domain")
-        service = arguments.get("service")
-        if (
-            domain not in {"light", "switch"}
-            or not isinstance(entity_id, str)
-            or not isinstance(service, str)
-        ):
-            raise ConversationConflict("Home Assistant resume command is malformed")
-        operation_id = (
-            self._timeline(turn).load(self._home_assistant_thread_id(turn)).operation_id
-        )
-        if operation_id is None:
-            raise ConversationConflict("Home Assistant resume operation is missing")
-        asyncio.run(
-            self._execute_home_assistant_binary(
-                tenant_id=turn.tenant_id,
-                installation_id=turn.installation_id,
-                thread_id=self._home_assistant_thread_id(turn),
-                operation_id=operation_id,
-                domain=domain,
-                entity_id=entity_id,
-                service=service,
-                admission_context=context,
-            )
-        )
-
-    def _home_assistant_receipt(
-        self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
-    ) -> ConversationActionReceipt:
-        if not events or events[0].event_type != "TOOL_REQUEST_ADMITTED":
-            raise ConversationConflict("Home Assistant action admission is missing")
-        admission = self._event_data(events[0])
-        context = admission.get("context")
-        expected = admission.get("expected_proof")
-        if not isinstance(context, dict) or not isinstance(expected, dict):
-            raise ConversationConflict("Home Assistant action admission is malformed")
-        required_context = {
-            "action_call_id",
-            "action_name",
-            "conversation_id",
-            "friendly_name",
-            "principal_id",
-            "requested_state",
-            "requested_target",
-            "source_message_id",
-        }
-        if set(context) != required_context:
-            raise ConversationConflict("Home Assistant action context differs")
-        action_name = context.get("action_name")
-        if action_name not in {_HOME_ASSISTANT_ACTION, _HOME_ASSISTANT_SWITCH_ACTION}:
-            raise ConversationConflict("Home Assistant action kind differs")
-        expected_scope = {
-            "action_name": action_name,
-            "conversation_id": turn.conversation_id,
-            "principal_id": turn.principal_id,
-            "source_message_id": turn.message_id,
-        }
-        for key, value in expected_scope.items():
-            if context.get(key) != value:
-                raise ConversationConflict("Home Assistant action replay scope differs")
-        arguments = self._validated_home_assistant_arguments(
-            {
-                "state": context.get("requested_state"),
-                "target": context.get("requested_target"),
-            }
-        )
-        call_id = context.get("action_call_id")
-        if not isinstance(call_id, str) or not call_id:
-            raise ConversationConflict("Home Assistant action call ID is invalid")
-        status, proof = self._home_assistant_terminal_proof(events, "action")
-        return ConversationActionReceipt(
-            ConversationActionCall(call_id, str(action_name), arguments),
-            {
-                "contract": "EvaConversationActionReceipt/v1",
-                "durable": True,
-                "entity_id": str(expected.get("entity_id", "")),
-                "friendly_name": str(context["friendly_name"]),
-                "proof": proof,
-                "requested_state": arguments["state"],
-                "status": status,
-            },
-        )
-
     def _automation_receipt(
         self, turn: ConversationTurn, events: tuple[TimelineEvent, ...]
     ) -> ConversationActionReceipt:
@@ -3724,20 +3403,6 @@ class PostgresConversationActions:
         return {"corrected_name": corrected_name.strip()}
 
     @staticmethod
-    def _validated_home_assistant_arguments(
-        raw: dict[str, JsonValue],
-    ) -> dict[str, str]:
-        if set(raw) != _HOME_ASSISTANT_ARGUMENT_KEYS:
-            raise ConversationConflict("Home Assistant light action has wrong fields")
-        target = raw.get("target")
-        state = raw.get("state")
-        if not isinstance(target, str) or not target.strip() or len(target) > 160:
-            raise ConversationConflict("Home Assistant light target is invalid")
-        if state not in {"on", "off"}:
-            raise ConversationConflict("Home Assistant light state is invalid")
-        return {"state": str(state), "target": target.strip()}
-
-    @staticmethod
     def _validated_automation_arguments(
         raw: dict[str, JsonValue],
     ) -> dict[str, str]:
@@ -4016,14 +3681,6 @@ class PostgresConversationActions:
     @classmethod
     def _intent_thread_id(cls, turn: ConversationTurn) -> str:
         return f"intent:{cls._intent_id(turn)}"
-
-    @staticmethod
-    def _home_assistant_operation_id(turn: ConversationTurn) -> str:
-        return _turn_id(turn, "home_assistant_light", "home-assistant-light:")
-
-    @classmethod
-    def _home_assistant_thread_id(cls, turn: ConversationTurn) -> str:
-        return f"tool:{cls._home_assistant_operation_id(turn)}"
 
     @staticmethod
     def _automation_operation_id(turn: ConversationTurn) -> str:

@@ -168,7 +168,6 @@ from eva.application.commerce import (
     ProductPublicationReceipt,
     publication_plan,
 )
-from eva.application.orchestration import VerifiedToolResult
 from eva.application.free_will import (
     ProactiveExpressionClaim,
     ProactiveExpressionWorker,
@@ -1376,27 +1375,6 @@ class PostgresHindsightMemoryRuntime:
         )
         return DigitalFulfillmentDownload(release.content, grant)
 
-    async def execute_home_assistant_light(
-        self,
-        *,
-        tenant_id: str,
-        installation_id: str,
-        thread_id: str,
-        operation_id: str,
-        principal_id: str,
-        entity_id: str,
-        service: str,
-    ) -> VerifiedToolResult:
-        return await self._conversation_actions.execute_home_assistant_light(
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-            thread_id=thread_id,
-            operation_id=operation_id,
-            principal_id=principal_id,
-            entity_id=entity_id,
-            service=service,
-        )
-
     def _advanced_task_store(
         self, tenant_id: str, installation_id: str
     ) -> PostgresAdvancedTaskStore:
@@ -2106,9 +2084,6 @@ def create_runtime_app() -> FastAPI:
         home_assistant_automations,
         home_assistant_admin,
         home_assistant_hacs,
-        home_assistant_effects_enabled=settings.home_assistant_effects_enabled,
-        home_assistant_effect_allowlist=effect_allowlist,
-        home_assistant_effect_principal_sha256_allowlist=effect_principals,
         research=model,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
