@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from importlib import metadata
 import os
-from typing import Any
+import re
+from typing import Any, Protocol
 
 import sqlalchemy as sa
 
@@ -20,9 +22,6 @@ from eva.adapters.connectors.home_assistant_automations import (
 )
 from eva.adapters.connectors.home_assistant_events import HomeAssistantEventStream
 from eva.adapters.connectors.home_assistant_hacs import HomeAssistantHacsAdapter
-from eva.adapters.connectors.home_assistant_localtuya import (
-    HomeAssistantLocalTuyaAdapter,
-)
 from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantConversationHacsPlanner,
     HomeAssistantConversationMigrationPlanner,
@@ -40,6 +39,7 @@ from eva.application.conversation import (
     ConversationExternalToolPort,
     ConversationToolDescriptor,
 )
+from eva.application.sensory import SensoryEventSourcePort
 from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
 
 
@@ -56,6 +56,10 @@ def _boolean(name: str, default: bool = False) -> bool:
     if raw not in {"false", "true"}:
         raise RuntimeError(f"{name} is invalid")
     return raw == "true"
+
+
+_PROVIDER_ID = re.compile(r"^[a-z][a-z0-9_.-]{1,63}$")
+_ENTRY_POINT_GROUP = "eva2.external_providers"
 
 
 @dataclass(frozen=True, slots=True)
@@ -76,28 +80,50 @@ class EmailProviderSettings:
 
 @dataclass(frozen=True, slots=True)
 class ExternalProviderSettings:
-    home_automation: HomeAutomationProviderSettings | None = None
-    email: EmailProviderSettings | None = None
+    providers: tuple[LoadedProvider, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class LoadedProvider:
+    provider_id: str
+    factory: RuntimeProviderFactory = field(repr=False)
+    settings: Any = field(repr=False)
+
+
+@dataclass(frozen=True, slots=True)
+class ProviderContribution:
+    provider_id: str
+    conversation_tools: tuple[ConversationToolDescriptor, ...]
+    external_tools: tuple[ConversationExternalToolPort, ...]
+    event_source: SensoryEventSourcePort | None = None
+
+
+class RuntimeProviderFactory(Protocol):
+    provider_id: str
+
+    def load_settings(self) -> Any | None: ...
+
+    def build(self, settings: Any, engine: sa.Engine) -> ProviderContribution: ...
 
 
 @dataclass(frozen=True, slots=True)
 class ExternalProviderBundle:
     conversation_tools: tuple[ConversationToolDescriptor, ...]
     external_tools: tuple[ConversationExternalToolPort, ...]
-    event_source: Any
-    management_reader: Any
-    management_writer: Any
-    device_manager: Any
+    event_source: SensoryEventSourcePort | None
 
 
 def load_external_provider_settings() -> ExternalProviderSettings | None:
-    """Load the current provider without leaking its vocabulary into bootstrap."""
+    """Load explicit provider factories without teaching bootstrap their semantics."""
 
-    home_automation = _load_home_automation_settings()
-    email = _load_email_settings()
-    if home_automation is None and email is None:
+    loaded: list[LoadedProvider] = []
+    for factory in _provider_factories():
+        settings = factory.load_settings()
+        if settings is not None:
+            loaded.append(LoadedProvider(factory.provider_id, factory, settings))
+    if not loaded:
         return None
-    return ExternalProviderSettings(home_automation=home_automation, email=email)
+    return ExternalProviderSettings(tuple(loaded))
 
 
 def _load_home_automation_settings() -> HomeAutomationProviderSettings | None:
@@ -192,57 +218,141 @@ def build_external_provider_bundle(
         return None
     conversation_tools: list[ConversationToolDescriptor] = []
     external_tools: list[ConversationExternalToolPort] = []
-    event_source = None
-    management_reader = None
-    management_writer = None
-    device_manager = None
-    if settings.home_automation is not None:
-        (
-            home_tools,
-            home_external_tools,
-            event_source,
-            management_reader,
-            management_writer,
-            device_manager,
-        ) = _build_home_automation_bundle(settings.home_automation, engine)
-        conversation_tools.extend(home_tools)
-        external_tools.extend(home_external_tools)
-    if settings.email is not None:
-        email = AgentMailReadAdapter(
-            AgentMailConfig(
-                inbox_id=settings.email.inbox_id,
-                api_key=settings.email.credential,
-            )
-        )
-        conversation_tools.extend(email.conversation_tools())
-        external_tools.append(
-            PostgresExternalConversationTools(
-                engine,
-                email.conversation_read_planner(),
-                email,
-            )
-        )
+    event_sources: list[SensoryEventSourcePort] = []
+    provider_ids: set[str] = set()
+    for loaded in settings.providers:
+        if loaded.provider_id in provider_ids:
+            raise RuntimeError("external provider ID is duplicated")
+        contribution = loaded.factory.build(loaded.settings, engine)
+        if contribution.provider_id != loaded.provider_id:
+            raise RuntimeError("external provider contribution identity differs")
+        provider_ids.add(loaded.provider_id)
+        conversation_tools.extend(contribution.conversation_tools)
+        external_tools.extend(contribution.external_tools)
+        if contribution.event_source is not None:
+            event_sources.append(contribution.event_source)
+    _require_unique_tool_names(conversation_tools, external_tools)
+    if len(event_sources) > 1:
+        raise RuntimeError("multiple external sensory providers require a sidecar fan-in")
     return ExternalProviderBundle(
         conversation_tools=tuple(conversation_tools),
         external_tools=tuple(external_tools),
-        event_source=event_source,
-        management_reader=management_reader,
-        management_writer=management_writer,
-        device_manager=device_manager,
+        event_source=None if not event_sources else event_sources[0],
     )
+
+
+def _require_unique_tool_names(
+    descriptors: list[ConversationToolDescriptor],
+    external_tools: list[ConversationExternalToolPort],
+) -> None:
+    descriptor_names = [descriptor.name for descriptor in descriptors]
+    action_names = [
+        name for external_tool in external_tools for name in external_tool.action_names
+    ]
+    if len(descriptor_names) != len(set(descriptor_names)):
+        raise RuntimeError("external provider tool descriptor is duplicated")
+    if len(action_names) != len(set(action_names)):
+        raise RuntimeError("external provider action route is duplicated")
+    if set(descriptor_names) != set(action_names):
+        raise RuntimeError("external provider catalog and action routes differ")
+
+
+class _HomeAutomationFactory:
+    provider_id = "home_assistant"
+
+    @staticmethod
+    def load_settings() -> HomeAutomationProviderSettings | None:
+        return _load_home_automation_settings()
+
+    @staticmethod
+    def build(
+        settings: HomeAutomationProviderSettings, engine: sa.Engine
+    ) -> ProviderContribution:
+        return _build_home_automation_bundle(settings, engine)
+
+
+class _EmailFactory:
+    provider_id = "agentmail"
+
+    @staticmethod
+    def load_settings() -> EmailProviderSettings | None:
+        return _load_email_settings()
+
+    @staticmethod
+    def build(
+        settings: EmailProviderSettings, engine: sa.Engine
+    ) -> ProviderContribution:
+        email = AgentMailReadAdapter(
+            AgentMailConfig(
+                inbox_id=settings.inbox_id,
+                api_key=settings.credential,
+            )
+        )
+        return ProviderContribution(
+            provider_id="agentmail",
+            conversation_tools=email.conversation_tools(),
+            external_tools=(
+                PostgresExternalConversationTools(
+                    engine,
+                    email.conversation_read_planner(),
+                    email,
+                ),
+            ),
+        )
+
+
+def _provider_factories() -> tuple[RuntimeProviderFactory, ...]:
+    builtins: tuple[RuntimeProviderFactory, ...] = (
+        _HomeAutomationFactory(),
+        _EmailFactory(),
+    )
+    requested = _items("EVA_EXTERNAL_PROVIDER_PLUGINS")
+    if any(_PROVIDER_ID.fullmatch(provider_id) is None for provider_id in requested):
+        raise RuntimeError("EVA_EXTERNAL_PROVIDER_PLUGINS is invalid")
+    discovered = _entry_point_factories(requested)
+    factories = (*builtins, *discovered)
+    ids = [factory.provider_id for factory in factories]
+    if (
+        any(_PROVIDER_ID.fullmatch(provider_id) is None for provider_id in ids)
+        or len(ids) != len(set(ids))
+    ):
+        raise RuntimeError("external provider registry contains invalid identities")
+    return factories
+
+
+def _entry_point_factories(
+    requested: tuple[str, ...],
+) -> tuple[RuntimeProviderFactory, ...]:
+    if not requested:
+        return ()
+    matches = [
+        entry_point
+        for entry_point in metadata.entry_points().select(group=_ENTRY_POINT_GROUP)
+        if entry_point.name in requested
+    ]
+    if len({entry_point.name for entry_point in matches}) != len(matches):
+        raise RuntimeError("an admitted external provider plugin is duplicated")
+    selected = {entry_point.name: entry_point for entry_point in matches}
+    if set(selected) != set(requested):
+        raise RuntimeError("an admitted external provider plugin is not installed")
+    factories: list[RuntimeProviderFactory] = []
+    for provider_id in requested:
+        loaded = selected[provider_id].load()
+        factory = loaded() if isinstance(loaded, type) else loaded
+        if (
+            getattr(factory, "provider_id", None) != provider_id
+            or not callable(getattr(factory, "load_settings", None))
+            or not callable(getattr(factory, "build", None))
+        ):
+            raise RuntimeError("external provider plugin contract is invalid")
+        factories.append(factory)
+    return tuple(factories)
 
 
 def _build_home_automation_bundle(
     settings: HomeAutomationProviderSettings,
     engine: sa.Engine,
-) -> tuple[
-    tuple[ConversationToolDescriptor, ...],
-    tuple[ConversationExternalToolPort, ...],
-    Any,
-    Any,
-    Any,
-    Any,
-]:
+) -> ProviderContribution:
     provider = HomeAssistantToolAdapter(
         HomeAssistantConfig(settings.endpoint_url, settings.credential)
     )
@@ -272,11 +382,6 @@ def _build_home_automation_bundle(
         if settings.effects_enabled
         else None
     )
-    device_manager = HomeAssistantLocalTuyaAdapter(
-        base_url=settings.endpoint_url,
-        token=settings.credential,
-    )
-
     def store_factory(tenant_id: str, installation_id: str) -> PostgresAdvancedTaskStore:
         return PostgresAdvancedTaskStore(
             engine,
@@ -336,22 +441,28 @@ def _build_home_automation_bundle(
                 ),
             )
         )
-    return (
-        (
-            *HomeAssistantToolAdapter.conversation_tools(),
-            *HomeAssistantConversationAutomationPlanner.conversation_tools(),
-            *HomeAssistantConversationMigrationPlanner.conversation_tools(),
-            *HomeAssistantConversationHacsPlanner.conversation_tools(),
+    available_actions = {
+        name for external_tool in external_tools for name in external_tool.action_names
+    }
+    all_descriptors = (
+        *HomeAssistantToolAdapter.conversation_tools(),
+        *HomeAssistantConversationAutomationPlanner.conversation_tools(),
+        *HomeAssistantConversationMigrationPlanner.conversation_tools(),
+        *HomeAssistantConversationHacsPlanner.conversation_tools(),
+    )
+    return ProviderContribution(
+        provider_id="home_assistant",
+        conversation_tools=tuple(
+            descriptor
+            for descriptor in all_descriptors
+            if descriptor.name in available_actions
         ),
-        tuple(external_tools),
-        HomeAssistantEventStream(
+        external_tools=tuple(external_tools),
+        event_source=HomeAssistantEventStream(
             base_url=settings.endpoint_url,
             token=settings.credential,
             admitted_domains=settings.event_domains,
         ),
-        management_reader,
-        management_writer,
-        device_manager,
     )
 
 
@@ -360,6 +471,9 @@ __all__ = [
     "ExternalProviderSettings",
     "EmailProviderSettings",
     "HomeAutomationProviderSettings",
+    "LoadedProvider",
+    "ProviderContribution",
+    "RuntimeProviderFactory",
     "build_external_provider_bundle",
     "load_external_provider_settings",
 ]

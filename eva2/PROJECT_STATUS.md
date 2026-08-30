@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 20:45 CEST
+Laatst bijgewerkt: 30 augustus 2026, 20:55 CEST
 
 ## Zo lees je dit bord
 
@@ -58,7 +58,7 @@ selling point.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Zelf de passende beschikbare tool kiezen | 🟡 Huis- en e-mailtools staan samen in de catalogus; alleen de huisroute is al live gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Twee providerfamilies laden zonder kernbranch; een volledig dynamische plug-ininstallatie ontbreekt nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Een expliciet toegelaten, al geïnstalleerde Python-provider laadt nu via een standaard entry point zonder nieuwe kern- of compositortak. Veilige installatie en versiepinning ontbreken nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
@@ -87,6 +87,15 @@ Assistant-PostgreSQL-routes zijn verwijderd. Ook de volledige migratieplanning,
 validatie, opslag, configuratie en runtime-opbouw staan nu bij de
 provideradapter. De oude losse beheer-API en de aparte mail-API in de kern zijn
 verwijderd.
+
+Ook het samenvoegen van providers is nu algemeen. Eva loopt over provider-
+bijdragen en heeft daar geen `als Home Assistant`- of `als AgentMail`-tak meer.
+Een expliciet toegelaten, geïnstalleerde proefprovider werd via de standaard
+Python-entry-pointgroep `eva2.external_providers` geladen en voegde een
+agendatool toe zonder compositorwijziging. Een ontbrekende plug-in, dubbele
+provider-ID, dubbele toolnaam of verschil tussen catalogus en uitvoerroute
+stopt gesloten. Dit bewijst nog geen veilige installatie van een nieuw pakket,
+versiepinning, scan, imagepromotie of live derde provider.
 
 Dit betekent nog niet dat iedere providerklus af is. Eén echte apparaatmigratie
 moet nog als gewone provider-tool door dezelfde voorstel-, toestemming-,
@@ -145,7 +154,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Chatkanalen, modellen, toolproviders en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
 | Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
 | Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
-| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Home Assistant en AgentMail laden buiten de kern; installatie van willekeurige nieuwe plug-ins is nog niet af | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
+| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Een expliciet toegelaten, al geïnstalleerde provider kan zonder nieuwe compositorcode laden. Veilige pakketinstallatie, pinning, scan en live promotie ontbreken nog | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
@@ -194,7 +203,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul gevolgde providertermen; huis- en e-mailtools laden samen. Een echte apparaatmigratie en live AgentMail-read ontbreken nog |
+| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul gevolgde providertermen. Providerbijdragen worden generiek samengevoegd en een toegelaten Python-entry point laadt zonder compositortak. Veilige installatie/pinning en live praktijkproviders ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -225,8 +234,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. De live AgentMail-read met een eigen Eva2-secret uitvoeren en daarna een
-   provider via de installer toevoegen zonder kern- of imagerebuild.
+3. Een echt providerpakket via de installer vastzetten, scannen en als expliciet
+   toegelaten entry point laden; daarna ook AgentMail met een eigen Eva2-secret
+   live beproeven. Pas dan is toevoegen zonder kernwijziging praktisch bewezen.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna

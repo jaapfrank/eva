@@ -137,9 +137,9 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     settings = RuntimeSettings.from_environment()
     assert settings.database_dsn.endswith("@postgres/eva")
     assert settings.external_provider is not None
-    assert settings.external_provider.home_automation is not None
-    assert settings.external_provider.home_automation.credential == "test-token"
-    assert settings.external_provider.home_automation.effects_enabled is False
+    home = settings.external_provider.providers[0].settings
+    assert home.credential == "test-token"
+    assert home.effects_enabled is False
     assert settings.conversation_reasoning_effort == "medium"
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "true")
@@ -152,12 +152,13 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
         "EVA_HOME_ASSISTANT_EFFECT_PRINCIPAL_SHA256_ALLOWLIST", principal_sha256
     )
     provider = RuntimeSettings.from_environment().external_provider
-    assert provider is not None and provider.home_automation is not None
-    assert provider.home_automation.effects_enabled is True
-    assert provider.home_automation.effect_allowlist == (
+    assert provider is not None
+    home = provider.providers[0].settings
+    assert home.effects_enabled is True
+    assert home.effect_allowlist == (
         "light.dimmable_light_1:turn_off",
     )
-    assert provider.home_automation.effect_principal_sha256_allowlist == (
+    assert home.effect_principal_sha256_allowlist == (
         principal_sha256,
     )
 

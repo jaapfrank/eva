@@ -7,7 +7,7 @@ from datetime import UTC, datetime, timedelta
 import json
 import os
 from pathlib import Path
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
 import sqlalchemy as sa
@@ -552,9 +552,6 @@ class PostgresHindsightMemoryRuntime:
         conversation_actions: PostgresConversationActions,
         sensory_worker: SensoryIngestionWorker | None = None,
         sensory_store: PostgresSensoryEventStore | None = None,
-        management_reader: Any = None,
-        management_writer: Any = None,
-        device_manager: Any = None,
         conversation_model: CodexConversationModel | None = None,
         stripe_publication: StripePublicationAdapter | None = None,
         stripe_webhook: StripeWebhookVerifier | None = None,
@@ -582,9 +579,6 @@ class PostgresHindsightMemoryRuntime:
         self._conversation_actions = conversation_actions
         self._sensory_worker = sensory_worker
         self._sensory_store = sensory_store
-        self._management_reader = management_reader
-        self._management_writer = management_writer
-        self._device_manager = device_manager
         self._conversation_model = conversation_model
         self._stripe_publication = stripe_publication
         self._stripe_webhook = stripe_webhook
@@ -1424,7 +1418,9 @@ def create_runtime_app() -> FastAPI:
     )
     sensory_worker = (
         None
-        if provider_bundle is None or sensory_store is None
+        if provider_bundle is None
+        or provider_bundle.event_source is None
+        or sensory_store is None
         else SensoryIngestionWorker(
             provider_bundle.event_source,
             sensory_store,
@@ -1632,9 +1628,6 @@ def create_runtime_app() -> FastAPI:
             conversation_actions,
             sensory_worker,
             sensory_store,
-            None if provider_bundle is None else provider_bundle.management_reader,
-            None if provider_bundle is None else provider_bundle.management_writer,
-            None if provider_bundle is None else provider_bundle.device_manager,
             model,
             stripe_publication=stripe_publication,
             stripe_webhook=stripe_webhook,
