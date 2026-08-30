@@ -313,6 +313,7 @@ def test_tool_free_client_reviews_a_commit_inside_the_same_call_budget(
     with _tool_free_core(answer=[proposed, corrected]) as (endpoint, received):
         _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
         monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "3")
         client = adapter.EvaToolFreeAgentBenchClient(
             minimum_interval_seconds=0, timeout_seconds=10
         )
@@ -327,6 +328,61 @@ def test_tool_free_client_reviews_a_commit_inside_the_same_call_budget(
     assert "hidden label" in received[1]["prompt"]
     assert client.turns_used == 2
     assert [item["turn"] for item in client.model_receipts] == [1, 2]
+    assert client.commit_reviews_used == 1
+    assert client.review_failures == []
+
+
+def test_invalid_commit_review_falls_back_to_the_valid_candidate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    candidate = '{"name":"commit_final_answer","arguments":{"answers":["42"]}}'
+    with _tool_free_core(answer=[candidate, "not json"]) as (endpoint, received):
+        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "3")
+        client = adapter.EvaToolFreeAgentBenchClient(
+            minimum_interval_seconds=0, timeout_seconds=10
+        )
+        result = client.inference_message(
+            [{"role": "user", "content": "Return the observed value."}],
+            adapter._DBBENCH_TOOLS,
+        )
+
+    assert result["tool_calls"][0]["function"] == {
+        "name": "commit_final_answer",
+        "arguments": '{"answers":["42"]}',
+    }
+    assert len(received) == 2
+    assert client.turns_used == 2
+    assert client.commit_reviews_used == 1
+    assert client.review_failures == [
+        {"failure": "Eva DBBench tool answer is not exact JSON", "turn": 2}
+    ]
+
+
+def test_commit_review_is_limited_to_two_calls_per_case(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    candidate = '{"name":"commit_final_answer","arguments":{"answers":["42"]}}'
+    with _tool_free_core(answer=candidate) as (endpoint, received):
+        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "6")
+        client = adapter.EvaToolFreeAgentBenchClient(
+            minimum_interval_seconds=0, timeout_seconds=10
+        )
+        for _ in range(3):
+            result = client.inference_message(
+                [{"role": "user", "content": "Return the observed value."}],
+                adapter._DBBENCH_TOOLS,
+            )
+            assert result["tool_calls"][0]["function"]["name"] == (
+                "commit_final_answer"
+            )
+
+    assert len(received) == 5
+    assert client.turns_used == 5
+    assert client.commit_reviews_used == 2
 
 
 @pytest.mark.parametrize(

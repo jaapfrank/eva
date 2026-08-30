@@ -280,6 +280,8 @@ def test_writes_a_private_sanitized_failure_artifact(tmp_path: Path) -> None:
     assert artifact["modelFailures"] == [
         {"failure": "answer is not exact JSON", "turn": 1}
     ]
+    assert artifact["commitReviewFailures"] == []
+    assert artifact["commitReviewsUsed"] == 0
     assert "label" not in output.read_text(encoding="utf-8").lower()
 
 
@@ -301,6 +303,8 @@ def test_retries_before_interact_within_the_same_hard_model_budget(
     assert artifact["modelFailures"] == [
         {"failure": "tool-free AgentBench request failed", "turn": 1}
     ]
+    assert artifact["commitReviewFailures"] == []
+    assert artifact["commitReviewsUsed"] == 0
     assert [item["turn"] for item in artifact["trajectory"]] == [2, 3]
 
 

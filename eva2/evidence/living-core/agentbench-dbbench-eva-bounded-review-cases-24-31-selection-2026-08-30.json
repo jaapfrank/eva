@@ -1,0 +1,44 @@
+{
+  "contract": "EvaAgentBenchDbBenchBoundedReviewSelection/v1",
+  "selectedAt": "2026-08-30T08:25:11+02:00",
+  "selectedBeforeAnyCase24Through31ResultWasKnown": true,
+  "selection": {
+    "split": "development",
+    "caseIndices": [24, 25, 26, 27, 28, 29, 30, 31],
+    "selectionRule": "next eight consecutive preflight-valid cases after 16 through 23"
+  },
+  "candidate": {
+    "repositoryCommitBeforeCandidateCheckpoint": "de1f7c3b3021a03d13a3ad4064cf75f24ae264a2",
+    "toolFreeClientSha256": "9ef42414d33c708bac4c98329a72b25a10513944d8ffcdebf7a48a7699397d66",
+    "runnerSha256": "abb89bc825e1772d636287440a7db622da985661cdc8fe8de6a41b94f04ee862",
+    "maximumCommitReviewsPerCase": 2,
+    "invalidReviewFallsBackToValidCandidate": true,
+    "reviewSkippedWhenFutureCommitBudgetWouldBeLost": true,
+    "reviewFailureBodyStored": false,
+    "hardcodedCaseAnswers": false
+  },
+  "inputs": {
+    "agentBenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentRlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:1610ed4b2f42708adb31014b5bf677fdc0c1cda98659dec23e6d471b63630616",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb"
+  },
+  "limits": {
+    "maximumModelCallsPerCaseIncludingReview": 15,
+    "minimumSecondsBetweenEveryModelCall": 5,
+    "toolsExposedAtModelBoundary": 0
+  },
+  "verificationBeforeSelection": {
+    "focusedTestsPassed": 43,
+    "ruffPassed": true,
+    "priorUnboundedReviewerAccepted": false
+  },
+  "nonClaims": [
+    "This selection is not a score.",
+    "The bounded fallback has not yet been measured on these unseen cases.",
+    "This is not an official AgentBench or leaderboard run."
+  ]
+}
