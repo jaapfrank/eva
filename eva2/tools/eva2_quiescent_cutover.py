@@ -183,6 +183,49 @@ def _sanitize(value: str) -> str:
     return " ".join(value.split())[-1200:]
 
 
+def _shared_database_consumers(
+    *,
+    retained_core: str,
+    inspected: Iterable[dict[str, Any]],
+) -> list[str]:
+    """Return running sibling containers that mount the retained core database."""
+
+    documents = list(inspected)
+    core = next(
+        (
+            document
+            for document in documents
+            if str(document.get("Name", "")).lstrip("/") == retained_core
+        ),
+        None,
+    )
+    if core is None:
+        raise QuiescentCutoverError("retained slot core inspection is missing")
+    sources = {
+        str(mount.get("Source", ""))
+        for mount in core.get("Mounts", [])
+        if mount.get("Destination") == "/run/secrets/database_dsn"
+        and mount.get("Source")
+    }
+    if len(sources) != 1:
+        raise QuiescentCutoverError("retained slot database mount is invalid")
+    source = next(iter(sources))
+    consumers: list[str] = []
+    for document in documents:
+        name = str(document.get("Name", "")).lstrip("/")
+        if not name or name == retained_core:
+            continue
+        if document.get("State", {}).get("Running") is not True:
+            continue
+        if any(
+            mount.get("Destination") == "/run/secrets/database_dsn"
+            and mount.get("Source") == source
+            for mount in document.get("Mounts", [])
+        ):
+            consumers.append(name)
+    return sorted(consumers)
+
+
 class SystemBackend:
     """Strict local implementation for the two retained host slots."""
 
@@ -264,6 +307,23 @@ class SystemBackend:
             )
         return document[0]
 
+    @staticmethod
+    def _inspect_all() -> list[dict[str, Any]]:
+        names = SystemBackend._run(
+            [DOCKER, "ps", "-a", "--format", "{{.Names}}"]
+        ).splitlines()
+        if not names:
+            return []
+        try:
+            documents = json.loads(SystemBackend._run([DOCKER, "inspect", *names]))
+        except (ValueError, TypeError) as exc:
+            raise QuiescentCutoverError("Docker inspection was invalid") from exc
+        if not isinstance(documents, list) or any(
+            not isinstance(document, dict) for document in documents
+        ):
+            raise QuiescentCutoverError("Docker inspection was invalid")
+        return documents
+
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
         expected = {
@@ -342,6 +402,15 @@ class SystemBackend:
         previous = _read_exact_dropin(dropin, source.url, owner_uid=self.owner_uid)
         source_environment = self._verify_slot(source, source=True)
         target_environment = self._verify_slot(target, source=False)
+        inspected = self._inspect_all()
+        for slot in (source, target):
+            if _shared_database_consumers(
+                retained_core=slot.core,
+                inspected=inspected,
+            ):
+                raise QuiescentCutoverError(
+                    "another retained-slot database consumer is still running"
+                )
         for key in ("EVA_POSTGRES_IMAGE", "EVA_HINDSIGHT_POSTGRES_IMAGE"):
             if source_environment.get(key) != target_environment.get(key):
                 raise QuiescentCutoverError("retained slot database images differ")

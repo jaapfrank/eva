@@ -1,18 +1,69 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from tools.eva2_canary_cutover import EVA1_PATHS, canonical_dropin
 from tools.eva2_quiescent_cutover import (
     _dump_content_digest,
+    _shared_database_consumers,
     DatabaseAttestation,
     DatabaseSnapshot,
     QuiescentCutoverError,
     SlotSpec,
     quiescent_cutover,
 )
+
+
+def _container(
+    name: str,
+    *,
+    source: str,
+    running: bool = True,
+    destination: str = "/run/secrets/database_dsn",
+) -> dict[str, Any]:
+    return {
+        "Mounts": [{"Destination": destination, "Source": source}],
+        "Name": f"/{name}",
+        "State": {"Running": running},
+    }
+
+
+def test_shared_database_consumers_find_only_running_exact_mount_siblings() -> None:
+    inspected = [
+        _container("retained-core", source="/private/slot3-dsn"),
+        _container("old-probe", source="/private/slot3-dsn"),
+        _container("stopped-probe", source="/private/slot3-dsn", running=False),
+        _container("other-slot", source="/private/slot4-dsn"),
+        _container(
+            "different-destination",
+            source="/private/slot3-dsn",
+            destination="/run/secrets/another_file",
+        ),
+    ]
+
+    assert _shared_database_consumers(
+        retained_core="retained-core",
+        inspected=inspected,
+    ) == ["old-probe"]
+
+
+def test_shared_database_consumers_require_exact_retained_core_mount() -> None:
+    with pytest.raises(QuiescentCutoverError, match="inspection is missing"):
+        _shared_database_consumers(retained_core="missing", inspected=[])
+    with pytest.raises(QuiescentCutoverError, match="mount is invalid"):
+        _shared_database_consumers(
+            retained_core="retained-core",
+            inspected=[
+                _container(
+                    "retained-core",
+                    source="/private/slot3-dsn",
+                    destination="/wrong",
+                )
+            ],
+        )
 
 
 def _snapshot(tmp_path: Path, name: str, marker: str) -> DatabaseSnapshot:
