@@ -120,6 +120,41 @@ test('B-canary bindt de echte Telegram-beurt en valideert het antwoord', async (
   assert.equal(result.text, 'Eerlijk? Ik denk dat je vooral duidelijkheid zoekt.');
 });
 
+test('B-canary herhaalt één identieke duurzame beurt na een tijdelijke 503', async () => {
+  const bodies = [];
+  const result = await askEva2Canary({
+    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9010, fromId: 7,
+    text: '/eva2 Hoi na de herstart', telegramDate: 1787486400,
+    fetchImpl: async (_url, options) => {
+      bodies.push(options.body);
+      if (bodies.length === 1) {
+        return new Response('{"detail":"tijdelijk niet beschikbaar"}', { status: 503 });
+      }
+      return new Response(JSON.stringify({
+        contract: 'EvaInternalGroundedReply/v1', conversation_id: 'telegram:7',
+        message_id: 'telegram:7:9010', text: 'Ik ben er weer.',
+      }), { headers: { 'content-type': 'application/json' }, status: 200 });
+    },
+  });
+
+  assert.equal(bodies.length, 2);
+  assert.equal(bodies[0], bodies[1]);
+  assert.equal(result.text, 'Ik ben er weer.');
+});
+
+test('B-canary stopt gesloten na twee tijdelijke 503-antwoorden', async () => {
+  let calls = 0;
+  await assert.rejects(askEva2Canary({
+    baseUrl: 'http://127.0.0.1:44674', chatId: 7, messageId: 9011, fromId: 7,
+    text: '/eva2 Hoi', telegramDate: 1787486400,
+    fetchImpl: async () => {
+      calls += 1;
+      return new Response('', { status: 503 });
+    },
+  }), /HTTP 503/u);
+  assert.equal(calls, 2);
+});
+
 test('een privébeurt verwerkt tekstchunks als één oplopend Telegramconcept', async () => {
   const drafts = [];
   let accept;

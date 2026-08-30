@@ -129,24 +129,32 @@ export async function askEva2Canary({
   if (!baseUrl) throw new Error('Eva B-canary is niet geconfigureerd');
   const identity = telegramCanaryIdentity({ chatId, fromId });
   const streaming = identity.chat === String(identity.sender) && typeof onDraft === 'function';
-  const response = await fetchImpl(`${baseUrl}/internal/v1/telegram/canary/respond`, {
-    method: 'POST',
-    headers: {
-      Accept: streaming ? 'application/x-ndjson' : 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      chat_id: identity.chat,
-      installation_id: 'live-test-installation',
-      message_id: Number(messageId),
-      occurred_at: canonicalTelegramTimestamp(telegramDate),
-      recent_messages: recentMessages,
-      telegram_user_id: identity.sender,
-      tenant_id: 'live-test-tenant',
-      text: prompt,
-    }),
-    signal: AbortSignal.timeout(timeoutMs),
+  const url = `${baseUrl}/internal/v1/telegram/canary/respond`;
+  const body = JSON.stringify({
+    chat_id: identity.chat,
+    installation_id: 'live-test-installation',
+    message_id: Number(messageId),
+    occurred_at: canonicalTelegramTimestamp(telegramDate),
+    recent_messages: recentMessages,
+    telegram_user_id: identity.sender,
+    tenant_id: 'live-test-tenant',
+    text: prompt,
   });
+  let response;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    response = await fetchImpl(url, {
+      method: 'POST',
+      headers: {
+        Accept: streaming ? 'application/x-ndjson' : 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (response.status !== 503 || attempt > 0) break;
+    try { await response.arrayBuffer?.(); } catch { /* discard the bounded error */ }
+  }
+  if (!response) throw new Error('Eva B-canary gaf geen antwoord');
   if (!response.ok) {
     throw new Error(`Eva B-canary antwoordde met HTTP ${response.status}`);
   }
