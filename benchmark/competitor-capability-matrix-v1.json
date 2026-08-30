@@ -38,6 +38,11 @@
   ],
   "evidence_catalog": [
     {
+      "id": "current-four-way-c01-development-2026-08-30",
+      "path": "eva2/evidence/product/current-four-way-c01-development-2026-08-30.json",
+      "sha256": "44e70d4ad35566583e92bb26a80bff9ec805cf65544cd5a95b36d26d2f29993f"
+    },
+    {
       "id": "four-framework-visible-c01-t02",
       "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json",
       "sha256": "d4424895c56a2ae2834bc73630317fa3258c8b6fdf0d5c245efacb763ab8b870"

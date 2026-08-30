@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 17:49 CEST
+Laatst bijgewerkt: 30 augustus 2026, 18:09 CEST
 
 ## Zo lees je dit bord
 
@@ -19,8 +19,9 @@ vergelijking opnieuw geel.
 
 **Eerlijke conclusie nu:** Eva2 is al een bruikbare, veilige kandidaat naast
 Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. De eerste
-nieuwe gelijke vergelijking loopt; oude of alleen gedocumenteerde resultaten
-tellen niet als winst.
+nieuwe gelijke vierwegvergelijking is afgerond: alle vier slaagden inhoudelijk,
+Eva was het snelst en bondigst, maar Hermes kreeg voor dit ene anonieme antwoord
+de hoogste inhoudsvoorkeur. Eén vraag telt dus niet als algemene winst.
 
 ## Praten met Eva
 
@@ -30,7 +31,7 @@ tellen niet als winst.
 | Een herkenbare, menselijke persoonlijkheid hebben | ✅ Warme, jonge, nieuwsgierige, grappige en eigenwijze Eva-identiteit | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
 | Het gesprek na een herstart voortzetten | ✅ Gesprek blijft in PostgreSQL staan | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest | ⚪ Nog niet gelijk getest |
 | Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
-| Dezelfde zichtbare vraag met hetzelfde model beantwoorden | 🟡 Huidige Eva-run volgt nog | ✅ Eerste actuele C01-run vastgelegd, nog niet beoordeeld | ✅ Eerste actuele C01-run vastgelegd, nog niet beoordeeld | 🟡 Actuele v2.11-run wordt voorbereid |
+| Dezelfde zichtbare vraag met hetzelfde model beantwoorden | ✅ C01 groen; 3,118 s en 77 woorden | ✅ C01 groen; 15,738 s en 130 woorden | ✅ C01 groen; 35,875 s en 153 woorden | ✅ C01 groen; 17,540 s en 119 woorden |
 
 ## Mensen, groepen, geheugen en privacy
 
@@ -136,7 +137,7 @@ schermen voor personen, privacy, bewijs, huisacties en terugrol.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Snel een gewoon antwoord beginnen | ✅ 200/200 antwoorden; p95 eerste inhoud 1,918 seconde | 🟡 Eén actuele gelijke beurt gemeten | 🟡 Eén actuele gelijke beurt gemeten | ⚪ Actuele beurt volgt |
+| Snel een gewoon antwoord beginnen | ✅ 200/200 antwoorden; p95 eerste inhoud 1,918 seconde; gelijke C01-beurt 3,118 s compleet | 🟡 Eén actuele gelijke complete beurt: 15,738 s | 🟡 Eén actuele gelijke complete beurt: 35,875 s | 🟡 Eén actuele gelijke complete beurt: 17,540 s |
 | Na proces- en databasestop terugkomen | ✅ Meerdere echte herstartproeven groen | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Geen hoge of kritieke imagebevindingen | ✅ Huidige Eva-runtime 0 hoog / 0 kritisch | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest |
 | Secrets niet in logs of gewone containerinstellingen zetten | ✅ Access-only modellease; secrets als private bestanden | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd |
@@ -168,16 +169,16 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 | Stap | Status |
 |---|---|
 | Actuele releases en commits vastgezet | ✅ OpenClaw, Hermes en Agent Zero |
-| Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, geen tools | 🟡 OpenClaw en Hermes uitgevoerd; Eva en Agent Zero volgen |
-| Antwoorden zonder productnaam laten beoordelen | ❌ Nog niet gedaan |
+| Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, nul toolcalls | ✅ Alle vier uitgevoerd; alle drie inhoudsgates groen |
+| Antwoorden zonder productnaam laten beoordelen | ✅ Eén antwoordcase: Hermes, OpenClaw, Eva2, Agent Zero; geen algemene ranglijst |
 | Alle begrijpelijke productonderdelen praktisch vergelijken | ❌ 22 categorieën staan nog op `no_run` |
 | Openbare AgentBench-, GAIA- en OSWorld-score | ❌ Nog niet uitgevoerd |
 | Geldige eindclaim “Eva is beter” | ❌ Nog niet toegestaan |
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De actuele vierwegvergelijking afmaken en het eerste geblindeerde resultaat
-   hier invullen.
+1. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, huisactie,
+   zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
 3. De algemene Home Assistant-beheerroute afmaken; voorbeelden als Tuya of een
@@ -194,3 +195,6 @@ Technische details en bewijs staan in
 [PROJECTEN_EN_PLANNING.md](PROJECTEN_EN_PLANNING.md),
 [TECHNISCHE_PRODUCTGATES.md](TECHNISCHE_PRODUCTGATES.md) en
 [evidence/](evidence/).
+
+De eerste actuele gelijke vierwegproef staat in
+[current-four-way-c01-development-2026-08-30.json](evidence/product/current-four-way-c01-development-2026-08-30.json).
