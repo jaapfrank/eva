@@ -1,0 +1,65 @@
+services:
+  contextforge:
+    image: ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd
+    pull_policy: never
+    profiles: [mcp-gateway-candidate]
+    command: ["/bin/sh", "/run/eva2/start-contextforge.sh"]
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    init: true
+    pids_limit: 256
+    mem_limit: 768m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256m,uid=10001,gid=10001,mode=0700
+    environment:
+      EVA_CONTEXTFORGE_JWT_SECRET_FILE: /run/secrets/contextforge-jwt
+      EVA_CONTEXTFORGE_ENCRYPTION_SECRET_FILE: /run/secrets/contextforge-encryption
+      EVA_CONTEXTFORGE_ADMIN_PASSWORD_FILE: /run/secrets/contextforge-admin-password
+      HOST: 0.0.0.0
+      DATABASE_URL: sqlite:////tmp/contextforge.db
+      MCPGATEWAY_SKIP_MIGRATIONS: "false"
+      ENVIRONMENT: production
+      AUTH_REQUIRED: "true"
+      REQUIRE_STRONG_SECRETS: "true"
+      ENABLE_METRICS: "false"
+      LOG_TO_FILE: "false"
+      GUNICORN_WORKERS: "1"
+      GUNICORN_PRELOAD_APP: "true"
+      MCPGATEWAY_UI_AIRGAPPED: "true"
+      MCPGATEWAY_STDIO_TRANSPORT_ENABLED: "false"
+      PLUGINS_CAN_OVERRIDE_RBAC: "false"
+      SSRF_ALLOW_LOCALHOST: "false"
+      SSRF_ALLOW_PRIVATE_NETWORKS: "false"
+      SSRF_DNS_FAIL_CLOSED: "true"
+      UAID_ALLOWED_DOMAINS: "[]"
+      CACHE_TYPE: memory
+    volumes:
+      - type: bind
+        source: ./start-contextforge.sh
+        target: /run/eva2/start-contextforge.sh
+        read_only: true
+      - type: bind
+        source: ${EVA_CONTEXTFORGE_JWT_SECRET_SOURCE:?private JWT secret file required}
+        target: /run/secrets/contextforge-jwt
+        read_only: true
+      - type: bind
+        source: ${EVA_CONTEXTFORGE_ENCRYPTION_SECRET_SOURCE:?private encryption secret file required}
+        target: /run/secrets/contextforge-encryption
+        read_only: true
+      - type: bind
+        source: ${EVA_CONTEXTFORGE_ADMIN_PASSWORD_SOURCE:?private admin password file required}
+        target: /run/secrets/contextforge-admin-password
+        read_only: true
+    networks: [contextforge-internal]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import json,urllib.request; data=json.load(urllib.request.urlopen('http://127.0.0.1:4444/health', timeout=3)); raise SystemExit(0 if data.get('status') == 'healthy' else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 60s
+
+networks:
+  contextforge-internal:
+    internal: true

@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 30 augustus 2026, 21:00 CEST
+Laatst bijgewerkt: 30 augustus 2026, 21:20 CEST
 
 ## Zo lees je dit bord
 
@@ -58,7 +58,7 @@ selling point.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Zelf de passende beschikbare tool kiezen | 🟡 Huis- en e-mailtools staan samen in de catalogus; alleen de huisroute is al live gebruikt | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 Een expliciet toegelaten, al geïnstalleerde Python-provider laadt nu via een standaard entry point zonder nieuwe kern- of compositortak. Veilige installatie en versiepinning ontbreken nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 De tijdelijke Python-plug-inroute werkt. De actuele algemene MCP-gatewaykandidaat is nu ContextForge `v1.0.8`; koppeling aan Eva en verwijdering van die tijdelijke lijm ontbreken nog | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ Met Home Assistant bewezen via aparte readback; herhalen voert niet dubbel uit | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
@@ -101,6 +101,18 @@ Dit betekent nog niet dat iedere providerklus af is. Eén echte apparaatmigratie
 moet nog als gewone provider-tool door dezelfde voorstel-, toestemming-,
 uitvoer- en readbackroute lopen. AgentMail moet daarnaast met een nieuw,
 afzonderlijk Eva2-secret één echte read in de gebruikersroute uitvoeren.
+
+De eindroute wordt geen eigen Eva-pakketbeheerder. Een actuele vergelijking
+koos IBM ContextForge `v1.0.8` als eerste algemene, geïsoleerde MCP-gatewayproef.
+De exacte niet-rootimage startte op een alleen-lezen bestandssysteem, werd
+gescand op 0 hoog/0 kritisch en weigerde tools en beheer zonder token. Drie private
+file-secrets worden door 41 regels begrensde startlijm ingelezen, omdat upstream
+die file-invoer nog niet zelf heeft. Docker MCP Gateway `v0.43.3` blijft reserve:
+zijn binary klopt bytegelijk met de release, maar de release is prerelease en
+de Go-dependencyscan is nog niet sluitend. Geen van beide draait in de live
+Eva-route. De open ContextForge-RBAC-kwestie blokkeert bovendien een direct
+multi-userdashboard; Eva blijft zelf vóór iedere toolcall persoon en toestemming
+controleren.
 
 Een tweede, synthetische agenda-provider kon daarna zonder nieuwe model- of
 dispatchcode een eigen naam, schema en antwoordinstructie registreren. Een
@@ -154,7 +166,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 | Chatkanalen, modellen, toolproviders en e-mail koppelen | 🟡 Veilige afzonderlijke controles bestaan; gewone wizard is niet compleet | 📘 Veel connectoren | 📘 Veel connectoren | 📘 Providers en tools |
 | Rechten per persoon en koppeling instellen | 🟡 Eva's servergebonden persoonsgrenzen werken; eenvoudige bediening ontbreekt | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef | ⚪ Geen gelijke gezinsproef |
 | Alles instellen zonder YAML, JSON of terminal | ❌ Nog niet | 📘 Veel via UI/CLI | 📘 Veel via dashboard/CLI | 📘 Veel via WebUI |
-| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 Een expliciet toegelaten, al geïnstalleerde provider kan zonder nieuwe compositorcode laden. Veilige pakketinstallatie, pinning, scan en live promotie ontbreken nog | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
+| Nieuwe tools via MCP of plug-ins toevoegen | 🟡 ContextForge `v1.0.8` is als gepinde, interne, scan-schone gatewaykandidaat groen. Eén toolserver via de gateway en het verwijderen van de tijdelijke Python-plug-inroute ontbreken nog | 📘 Sterk plug-in/MCP-aanbod | 📘 Sterk tool-/skillaanbod | 📘 Plug-ins, tools en MCP |
 
 ## Browser en computer bedienen
 
@@ -203,7 +215,7 @@ schermen voor personen, privacy, bewijs, toolacties en terugrol.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Tool- en plug-insysteem | MCP plus officiële provider-API's/SDK's achter één generiek toolcontract | 🟡 De kern staat op nul gevolgde providertermen. Providerbijdragen worden generiek samengevoegd en een toegelaten Python-entry point laadt zonder compositortak. Veilige installatie/pinning en live praktijkproviders ontbreken nog |
+| Tool- en plug-insysteem | ContextForge als algemene MCP-gateway; officiële provider-API's/SDK's blijven achter toolservers | 🟡 ContextForge `v1.0.8` is exact gepind, 0/0 gescand en intern/file-secret-only gestart. De live toolkoppeling en het verwijderen van de tijdelijke Python-entry-pointlijm ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -234,9 +246,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 2. Het bestaande dashboardframework kiezen en gezondheid, configuratie,
    geheugen, kosten en Kanban in één eigenaarsscherm zetten.
-3. Een echt providerpakket via de installer vastzetten, scannen en als expliciet
-   toegelaten entry point laden; daarna ook AgentMail met een eigen Eva2-secret
-   live beproeven. Pas dan is toevoegen zonder kernwijziging praktisch bewezen.
+3. Eén synthetische toolserver via de ContextForge-kandidaat aan Eva koppelen,
+   dezelfde duurzame call/readback na herstart bewijzen en daarna de tijdelijke
+   Python-entry-pointlijm verwijderen. AgentMail volgt als echte providerproef.
 4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
@@ -257,3 +269,5 @@ De tweede providerroute staat in
 [de duurzame e-mailtoolproef](evidence/living-core/external-email-provider-durable-tool-2026-08-30.json).
 De algemene laadgrens staat in
 [de entry-pointregistryproef](evidence/living-core/external-provider-entry-point-registry-2026-08-30.json).
+De gatewaykeuze en de nog geldende grenzen staan in
+[de actuele MCP-gatewayvergelijking](evidence/product/mcp-gateway-bakeoff-2026-08-30.json).

@@ -1,7 +1,7 @@
 {
   "contract": "Eva2UpstreamReleaseWatch/v1",
-  "checkedAt": "2026-08-30T14:47:00+02:00",
-  "reviewValidUntil": "2026-09-29T14:47:00+02:00",
+  "checkedAt": "2026-08-30T21:20:00+02:00",
+  "reviewValidUntil": "2026-09-29T21:20:00+02:00",
   "components": [
     {"repository": "openai/openai-python", "currentRelease": "v3.6.0", "role": "model-provider-sdk"},
     {"repository": "pydantic/pydantic-ai", "currentRelease": "v2.36.0", "role": "agent-runtime"},
@@ -12,7 +12,9 @@
     {"repository": "livekit/agents", "currentRelease": "livekit-agents@1.7.1", "role": "voice-transport-candidate"},
     {"repository": "microsoft/playwright-mcp", "currentRelease": "v0.0.79", "role": "browser-candidate"},
     {"repository": "browser-use/browser-use", "currentRelease": "0.13.8", "role": "browser-candidate"},
-    {"repository": "homeassistant-ai/ha-mcp", "currentRelease": "v8.4.0", "role": "home-assistant-admin-candidate"},
+    {"repository": "homeassistant-ai/ha-mcp", "currentRelease": "v8.4.0", "role": "external-tool-provider-candidate"},
+    {"repository": "IBM/mcp-context-forge", "currentRelease": "v1.0.8", "role": "mcp-gateway-candidate"},
+    {"repository": "docker/mcp-gateway", "currentRelease": "v0.43.3", "role": "mcp-gateway-reserve"},
     {"repository": "renovatebot/renovate", "currentRelease": "44.52.0", "role": "dependency-updates"}
   ],
   "competitors": [

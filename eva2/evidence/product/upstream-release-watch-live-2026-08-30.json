@@ -1,9 +1,9 @@
 {
   "contract": "Eva2UpstreamReleaseWatchReceipt/v1",
-  "checkedAt": "2026-08-30T14:47:00+02:00",
-  "source": "GitHub releases/latest API",
-  "watchManifestSha256": "b6472e2fc99d5bbe424f9164eabf87e10b537d00963caef0c82b33f0d5eff2ca",
-  "reviewValidUntil": "2026-09-29T14:47:00+02:00",
+  "checkedAt": "2026-08-30T21:20:00+02:00",
+  "source": "GitHub releases API",
+  "watchManifestSha256": "79fb6e9e2aae6ca882d573dea274e88ad9c211ea02cd3c029ddf00730435b111",
+  "reviewValidUntil": "2026-09-29T21:20:00+02:00",
   "components": [
     {"repository": "openai/openai-python", "expected": "v3.6.0", "observed": "v3.6.0", "status": "match"},
     {"repository": "pydantic/pydantic-ai", "expected": "v2.36.0", "observed": "v2.36.0", "status": "match"},
@@ -15,6 +15,8 @@
     {"repository": "microsoft/playwright-mcp", "expected": "v0.0.79", "observed": "v0.0.79", "status": "match"},
     {"repository": "browser-use/browser-use", "expected": "0.13.8", "observed": "0.13.8", "status": "match"},
     {"repository": "homeassistant-ai/ha-mcp", "expected": "v8.4.0", "observed": "v8.4.0", "status": "match"},
+    {"repository": "IBM/mcp-context-forge", "expected": "v1.0.8", "observed": "v1.0.8", "status": "match"},
+    {"repository": "docker/mcp-gateway", "expected": "v0.43.3", "observed": "v0.43.3", "status": "match"},
     {"repository": "renovatebot/renovate", "expected": "44.52.0", "observed": "44.52.0", "status": "match"}
   ],
   "competitors": [
@@ -22,7 +24,7 @@
     {"repository": "NousResearch/hermes-agent", "expected": "v2026.8.27", "observed": "v2026.8.27", "status": "match"},
     {"repository": "agent0ai/agent-zero", "expected": "v2.11", "observed": "v2.11", "status": "match"}
   ],
-  "summary": {"matched": 14, "mismatched": 0, "errors": 0},
+  "summary": {"matched": 16, "mismatched": 0, "errors": 0},
   "nonClaims": [
     "A current release tag is not proof that a component is best for Eva.",
     "A current competitor tag is not a competitive benchmark result.",

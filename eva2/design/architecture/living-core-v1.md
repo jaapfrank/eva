@@ -65,6 +65,14 @@ Zij kent geen Home Assistant, Tuya, agenda-, mail- of browsersemantiek. Zulke
 kennis hoort volledig in een vervangbare adapter of sidecar en bereikt Eva via
 MCP of een gelijkwaardig generiek providercontract.
 
+De doelroute gebruikt daarvoor geen eigen Eva-pakketbeheerder. ContextForge
+`v1.0.8` is de actuele eerste gatewaykandidaat: toolservers blijven losse
+processen, de gateway levert registry/proxy/beheer en Eva houdt alleen haar
+persoon-, toestemming-, risico-, bewijs- en readbackgrens. De tijdelijke
+Python-entry-pointgroep blijft uitsluitend migratielijm tot één gatewaytool de
+duurzame route en herstartproef heeft gewonnen. ContextForge is in deze fase
+eigenaar-only; zijn eigen RBAC vervangt Eva's persoonsautoriteit niet.
+
 De structurele codegrens is nu groen. Applicatie, contracten, modeladapter,
 gesprekspersistence en runtime bevatten nul Home Assistant-/Tuya-/AgentMail-specifieke
 identifiers. De teller herkent ook spaties en CamelCase; sinds de eerste meting

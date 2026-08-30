@@ -1,0 +1,71 @@
+{
+  "contract": "Eva2McpGatewayBakeoffReceipt/v1",
+  "checkedAt": "2026-08-30T21:13:00+02:00",
+  "selectedForNextTrial": "IBM/mcp-context-forge@v1.0.8",
+  "architectureDecision": "External services run behind replaceable MCP sidecars or gateways; Eva retains only person, consent, risk, durable evidence and independent readback.",
+  "contextForge": {
+    "repository": "IBM/mcp-context-forge",
+    "release": "v1.0.8",
+    "releaseStable": true,
+    "sourceCommit": "a5b96fb4211dd931294be1e0882f861ca71ae792",
+    "license": "Apache-2.0",
+    "amd64Image": "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "imageUser": "10001:10001",
+    "scan": {
+      "critical": 0,
+      "high": 0
+    },
+    "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "probe": {
+      "readOnlyRootFilesystem": true,
+      "network": "isolated bridge with loopback-only temporary health port",
+      "healthStatus": 200,
+      "restartCount": 0
+    },
+    "unauthenticated": {
+      "adminStatus": 401,
+      "toolsStatus": 401
+    },
+    "openMultiUserRbacIssue": 6015,
+    "openMultiUserRbacIssueUrl": "https://github.com/IBM/mcp-context-forge/issues/6015",
+    "secretFileSupportUpstream": false,
+    "decision": "next isolated owner-only integration trial"
+  },
+  "dockerMcpGateway": {
+    "repository": "docker/mcp-gateway",
+    "release": "v0.43.3",
+    "releasePrerelease": true,
+    "sourceCommit": "8b5d526aef123f49aae07fe95036109c315177b3",
+    "license": "MIT",
+    "linuxAmd64AssetSha256": "d39702b4c150d5e96e59cf3d90a28b9bb2a85ca81ddd05d87126be0849232049",
+    "observedAssetSha256": "d39702b4c150d5e96e59cf3d90a28b9bb2a85ca81ddd05d87126be0849232049",
+    "binaryVersion": "v0.43.3",
+    "binarySha256": "23d33c3b8a988ac7bf7231785b5dca23189a5145c15cec8b7fa2ae08e888cc14",
+    "dependencyScanConclusive": false,
+    "decision": "reserve"
+  },
+  "candidateBoundary": {
+    "profileDisabledByDefault": true,
+    "hostPorts": 0,
+    "outboundNetwork": false,
+    "containerUser": "10001:10001",
+    "readOnlyRootFilesystem": true,
+    "capabilities": [],
+    "secrets": "three owner-bound mode-0400 files loaded only by a bounded deployment wrapper",
+    "wrapperProbe": {
+      "health": "healthy",
+      "configuredWorkers": 1,
+      "memoryLimitBytes": 805306368,
+      "secretValuesInContainerConfig": 0,
+      "restartCount": 0
+    }
+  },
+  "liveRouteChanged": false,
+  "providerCalled": false,
+  "nonClaims": [
+    "ContextForge is not yet connected to Eva or a real toolprovider.",
+    "The open upstream RBAC issue prevents using its UI as direct multi-user authority.",
+    "Docker MCP Gateway has not passed a conclusive dependency vulnerability scan.",
+    "This bake-off does not prove that either gateway is better than every future alternative."
+  ]
+}
