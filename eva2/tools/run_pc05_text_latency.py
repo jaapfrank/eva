@@ -73,7 +73,10 @@ def first_complete_token(text: str) -> bool:
 
 
 def normalized_exact_reply(text: str) -> str:
-    return text.strip().removesuffix(".")
+    normalized = text.strip().removesuffix(".")
+    if len(normalized) >= 2 and normalized[0] == normalized[-1] == '"':
+        normalized = normalized[1:-1]
+    return normalized
 
 
 def percentile(values: list[int], quantile: float) -> int | None:
@@ -233,6 +236,7 @@ def main() -> int:
     parser.add_argument("--image-id", required=True)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--run-seed", required=True, type=int)
+    parser.add_argument("--runner-commit", required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--turns", type=int, default=200)
     parser.add_argument("--timeout-seconds", type=float, default=20.0)
@@ -284,6 +288,7 @@ def main() -> int:
         "completedAt": datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "status": "passed" if passed else "failed",
         "sourceCommit": args.source_commit,
+        "runnerCommit": args.runner_commit,
         "imageId": args.image_id,
         "baseUrl": args.base_url,
         "runSeed": args.run_seed,

@@ -44,6 +44,7 @@ def test_first_complete_token_requires_a_boundary() -> None:
 def test_exact_reply_allows_only_one_terminal_period() -> None:
     assert MODULE.normalized_exact_reply("SNEL klaar") == "SNEL klaar"
     assert MODULE.normalized_exact_reply("SNEL klaar.") == "SNEL klaar"
+    assert MODULE.normalized_exact_reply('"SNEL klaar"') == "SNEL klaar"
     assert MODULE.normalized_exact_reply("SNEL klaar!") != "SNEL klaar"
     assert MODULE.normalized_exact_reply("SNEL klaar..") != "SNEL klaar"
 

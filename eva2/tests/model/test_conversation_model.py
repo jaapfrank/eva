@@ -22,6 +22,8 @@ from eva.adapters.model.conversation import (
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
+    ConversationModelTiming,
+    ConversationModelUsage,
     ConversationObservationBinding,
     ConversationTurn,
     IdentityProfile,
@@ -501,6 +503,63 @@ def test_runtime_budget_records_measured_terminal_provider_usage(
     assert 0 <= timing.first_content_ms <= timing.completed_ms
     assert "".join(chunks) == text
     assert len(requests) == 1
+
+
+def test_ordinary_conversation_retries_one_transient_provider_failure(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused.json",
+        resource_budget=_runtime_budget(),
+    )
+    timeouts: list[float] = []
+
+    def request_using(*_args: object, **kwargs: object) -> object:
+        timeouts.append(float(kwargs["timeout_seconds"]))
+        if len(timeouts) == 1:
+            raise ConversationModelError("conversation provider is unavailable")
+        return (
+            ("hersteld", None, ConversationModelTiming(80, 100)),
+            ConversationModelUsage.measured(
+                tool_calls=0, input_tokens=100, output_tokens=2
+            ),
+        )
+
+    monkeypatch.setattr(model, "_request_using", request_using)
+
+    text, action, usage, timing = model._request_conversation(  # noqa: SLF001
+        {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
+    )
+
+    assert (text, action) == ("hersteld", None)
+    assert timeouts == [5.0, 5.0]
+    assert usage == ConversationModelUsage.unmeasured()
+    assert timing.first_content_ms is not None and timing.first_content_ms >= 80
+    assert timing.completed_ms is not None and timing.completed_ms >= 100
+
+
+def test_ordinary_conversation_does_not_retry_nontransient_failure(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(
+        auth_file=tmp_path / "unused.json",
+        resource_budget=_runtime_budget(),
+    )
+    calls = 0
+
+    def request_using(*_args: object, **_kwargs: object) -> object:
+        nonlocal calls
+        calls += 1
+        raise ConversationModelError("invalid response")
+
+    monkeypatch.setattr(model, "_request_using", request_using)
+
+    with pytest.raises(ConversationModelError, match="invalid response"):
+        model._request_conversation(  # noqa: SLF001
+            {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
+        )
+
+    assert calls == 1
 
 
 @pytest.mark.parametrize(

@@ -64,6 +64,8 @@ _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
+_ORDINARY_PROVIDER_ATTEMPTS = 2
+_ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _HOME_ASSISTANT_LIGHT_ACTION = "set_home_assistant_light"
 _HOME_ASSISTANT_SWITCH_ACTION = "set_home_assistant_switch"
@@ -1242,14 +1244,39 @@ class CodexConversationModel:
                     ConversationModelUsage.unmeasured(),
                     ConversationModelTiming.unmeasured(),
                 )
-            parsed, usage = self._request_using(
-                body,
-                self._parse_sse,
-                include_usage=True,
-                include_timing=True,
-            )
-            text, action_call, timing = parsed
-            return text, action_call, usage, timing
+            started_at = monotonic()
+            for transient_attempt in range(_ORDINARY_PROVIDER_ATTEMPTS):
+                offset_ms = round((monotonic() - started_at) * 1000)
+                try:
+                    parsed, usage = self._request_using(
+                        body,
+                        self._parse_sse,
+                        timeout_seconds=min(
+                            self._timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
+                        ),
+                        include_usage=True,
+                        include_timing=True,
+                    )
+                except ConversationModelError as error:
+                    if (
+                        str(error) != "conversation provider is unavailable"
+                        or transient_attempt
+                    ):
+                        raise
+                    continue
+                text, action_call, timing = parsed
+                if transient_attempt:
+                    usage = ConversationModelUsage.unmeasured()
+                    timing = ConversationModelTiming(
+                        None
+                        if timing.first_content_ms is None
+                        else offset_ms + timing.first_content_ms,
+                        None
+                        if timing.completed_ms is None
+                        else offset_ms + timing.completed_ms,
+                    )
+                return text, action_call, usage, timing
+            raise AssertionError("ordinary provider attempts exhausted")
         assert self._openai_transport is not None
         self._admit_request(body, autonomous=False)
         last_auth: tuple[str, str] | None = None
