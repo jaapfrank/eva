@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 08:43 CEST
+Laatst bijgewerkt: 30 augustus 2026, 08:53 CEST
 
 ## Heel kort
 
@@ -457,19 +457,18 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Ook de begrensde reviewer is op acht nieuwe, vooraf gekozen cases rood. Zes
   cases kregen een score: twee goed en vier fout. Twee andere vielen vóór een
   score uit. De meeste fouten zaten al in het eerste modelantwoord, dus de
-  reviewer kon ze niet veilig herstellen. Deze route wordt verwijderd uit het
-  actieve benchmarkpad; alle slechte resultaten blijven bewaard.
+  reviewer kon ze niet veilig herstellen. Deze reviewer is daarom weer uit het
+  actieve benchmarkpad verwijderd. Eva gebruikt daar opnieuw één modelcall per
+  databasebewerking; de foutsoorten en alle slechte resultaten blijven bewaard.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. De afgewezen reviewer uit het actieve benchmarkpad halen en teruggaan naar
-   één modelcall per databasebewerking. De foutsubtypen en alle rode receipts
-   blijven behouden; verdere DBBench-verbetering moet een andere, vooraf
-   geteste aanpak gebruiken.
-2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
+1. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
+2. Een andere, vooraf begrensde DBBench-aanpak kiezen zonder opnieuw dezelfde
+   cases te gebruiken of verborgen antwoorden te bekijken.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
    zichtbare maximale staart blijven bewaken; V07-voice apart sluiten.
 4. Daarna de langere praktijktest starten en fouten, vertraging en geheugengroei

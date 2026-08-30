@@ -280,66 +280,13 @@ def test_tool_free_client_uses_private_sidecar_and_records_usage(
     ]
 
 
-def test_tool_free_client_reviews_a_commit_inside_the_same_call_budget(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    messages = [
-        {"role": "user", "content": "Which value is largest?"},
-        {
-            "role": "assistant",
-            "content": None,
-            "tool_calls": [
-                {
-                    "id": "call_one",
-                    "type": "function",
-                    "function": {
-                        "name": "execute_sql",
-                        "arguments": '{"query":"SELECT name, value FROM t"}',
-                    },
-                }
-            ],
-        },
-        {
-            "role": "tool",
-            "tool_call_id": "call_one",
-            "content": "[('row name', '42')]",
-        },
-    ]
-    proposed = '{"name":"commit_final_answer","arguments":{"answers":["row name"]}}'
-    corrected = (
-        '{"name":"execute_sql","arguments":'
-        '{"query":"SELECT value FROM t ORDER BY value DESC LIMIT 1"}}'
-    )
-    with _tool_free_core(answer=[proposed, corrected]) as (endpoint, received):
-        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
-        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
-        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "3")
-        client = adapter.EvaToolFreeAgentBenchClient(
-            minimum_interval_seconds=0, timeout_seconds=10
-        )
-        result = client.inference_message(messages, adapter._DBBENCH_TOOLS)
-
-    assert result["tool_calls"][0]["function"] == {
-        "name": "execute_sql",
-        "arguments": '{"query":"SELECT value FROM t ORDER BY value DESC LIMIT 1"}',
-    }
-    assert len(received) == 2
-    assert "proposed_operation" in received[1]["prompt"]
-    assert "hidden label" in received[1]["prompt"]
-    assert client.turns_used == 2
-    assert [item["turn"] for item in client.model_receipts] == [1, 2]
-    assert client.commit_reviews_used == 1
-    assert client.review_failures == []
-
-
-def test_invalid_commit_review_falls_back_to_the_valid_candidate(
+def test_tool_free_client_uses_one_provider_call_for_a_valid_commit(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     candidate = '{"name":"commit_final_answer","arguments":{"answers":["42"]}}'
-    with _tool_free_core(answer=[candidate, "not json"]) as (endpoint, received):
+    with _tool_free_core(answer=candidate) as (endpoint, received):
         _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
         monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
-        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "3")
         client = adapter.EvaToolFreeAgentBenchClient(
             minimum_interval_seconds=0, timeout_seconds=10
         )
@@ -352,37 +299,9 @@ def test_invalid_commit_review_falls_back_to_the_valid_candidate(
         "name": "commit_final_answer",
         "arguments": '{"answers":["42"]}',
     }
-    assert len(received) == 2
-    assert client.turns_used == 2
-    assert client.commit_reviews_used == 1
-    assert client.review_failures == [
-        {"failure": "Eva DBBench tool answer is not exact JSON", "turn": 2}
-    ]
-
-
-def test_commit_review_is_limited_to_two_calls_per_case(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    candidate = '{"name":"commit_final_answer","arguments":{"answers":["42"]}}'
-    with _tool_free_core(answer=candidate) as (endpoint, received):
-        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
-        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
-        monkeypatch.setenv("EVA_AGENTBENCH_MAX_TURNS", "6")
-        client = adapter.EvaToolFreeAgentBenchClient(
-            minimum_interval_seconds=0, timeout_seconds=10
-        )
-        for _ in range(3):
-            result = client.inference_message(
-                [{"role": "user", "content": "Return the observed value."}],
-                adapter._DBBENCH_TOOLS,
-            )
-            assert result["tool_calls"][0]["function"]["name"] == (
-                "commit_final_answer"
-            )
-
-    assert len(received) == 5
-    assert client.turns_used == 5
-    assert client.commit_reviews_used == 2
+    assert len(received) == 1
+    assert "proposed_operation" not in received[0]["prompt"]
+    assert client.turns_used == 1
 
 
 @pytest.mark.parametrize(

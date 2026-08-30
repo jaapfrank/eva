@@ -35,7 +35,6 @@ MAX_RESPONSE_BYTES = 256 * 1024
 _RUN_ID = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
 _LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
 _MAX_TURNS = 15
-_MAX_COMMIT_REVIEWS = 2
 _DBBENCH_TOOLS = [
     {
         "type": "function",
@@ -414,8 +413,6 @@ def dbbench_tool_message(
     turn_limit: int = 2,
     turn_number: int = 1,
     answer_provider: Callable[[str, float], str] | None = None,
-    commit_review_provider: Callable[[str, float], str] | None = None,
-    commit_review_failure_recorder: Callable[[str], None] | None = None,
 ) -> dict[str, object]:
     """Return one closed OpenAI-style tool message for upstream DBBench."""
 
@@ -541,42 +538,6 @@ def dbbench_tool_message(
     requested = _decode_dbbench_operation(answer)
     name = requested["name"]
     arguments = requested["arguments"]
-    if name == "commit_final_answer" and commit_review_provider is not None:
-        original_answer = answer
-        original_requested = requested
-        review_context = json.dumps(
-            {
-                "database_transcript": neutral_transcript,
-                "proposed_operation": requested,
-            },
-            ensure_ascii=False,
-            allow_nan=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        )
-        if len(review_context.encode("utf-8")) > MAX_MESSAGE_BYTES:
-            raise AgentBenchEvaError("Eva DBBench review context is too large")
-        review_prompt = (
-            "Review one proposed DBBench final answer using only the visible question, "
-            "headers, prior SQL and database results below. Never infer or request a "
-            "hidden label or standard answer SQL. Check that the proposed answer uses "
-            "exactly the field or fields asked for, one database cell per list item, "
-            "with no helper columns or prose. If it is correct, return the identical "
-            "commit_final_answer operation. If it is not sufficiently supported, "
-            "return one execute_sql operation that selects only the required answer "
-            "cells. Return exact plain JSON in the same sealed operation format.\n"
-            f"{review_context}"
-        )
-        try:
-            answer = commit_review_provider(review_prompt, timeout_seconds)
-            requested = _decode_dbbench_operation(answer)
-        except AgentBenchEvaError as error:
-            if commit_review_failure_recorder is not None:
-                commit_review_failure_recorder(str(error))
-            answer = original_answer
-            requested = original_requested
-        name = requested["name"]
-        arguments = requested["arguments"]
 
     argument_json = json.dumps(
         arguments,
@@ -666,18 +627,11 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
     def __init__(self, **kwargs: object) -> None:
         super().__init__(**kwargs)
         self.model_receipts: list[dict[str, object]] = []
-        self.review_failures: list[dict[str, object]] = []
-        self._commit_reviews_used = 0
-
-    @property
-    def commit_reviews_used(self) -> int:
-        return self._commit_reviews_used
 
     def inference_message(
         self, messages: object, tools: object
     ) -> dict[str, object]:
         turn_number = self._reserve_turn()
-        review_turn_number = 0
 
         def request(prompt: str, timeout_seconds: float, reserved_turn: int) -> str:
             answer, receipt = tool_free_answer(
@@ -689,22 +643,6 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
         def provide(prompt: str, timeout_seconds: float) -> str:
             return request(prompt, timeout_seconds, turn_number)
 
-        def review(prompt: str, timeout_seconds: float) -> str:
-            nonlocal review_turn_number
-            review_turn_number = self._reserve_turn()
-            self._commit_reviews_used += 1
-            return request(prompt, timeout_seconds, review_turn_number)
-
-        def record_review_failure(failure: str) -> None:
-            self.review_failures.append(
-                {"failure": failure, "turn": review_turn_number}
-            )
-
-        review_available = (
-            self._commit_reviews_used < _MAX_COMMIT_REVIEWS
-            and self.turns_used <= self._turn_limit - 2
-        )
-
         return dbbench_tool_message(
             messages,
             tools,
@@ -712,10 +650,6 @@ class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
             turn_limit=self._turn_limit,
             turn_number=turn_number,
             answer_provider=provide,
-            commit_review_provider=review if review_available else None,
-            commit_review_failure_recorder=(
-                record_review_failure if review_available else None
-            ),
         )
 
 
