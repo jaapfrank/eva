@@ -1,0 +1,44 @@
+# Development-only external-MySQL configuration.  The task, 60-case dev data,
+# tools, evaluator and upstream max_round=15 stay unchanged; only the Docker
+# environment driver remains replaced by the separately provisioned no-socket
+# MySQL boundary.  This is still not an official AgentBench score setup.
+dbbench-dev-external-mysql:
+  module: dbbench_external_task.ExternalMySqlDbBenchTask
+  parameters:
+    name: dbbench-dev-external-mysql
+    data_file: data/dbbench/dev.jsonl
+    concurrency: 1
+    max_round: 15
+    external_mysql_host: dbbench-mysql
+    db_password: dbbench-dev-only
+    env_driver: manual
+    tools:
+      - type: function
+        function:
+          name: execute_sql
+          description: Executes a given SQL statement on the database and returns the result.
+          parameters:
+            type: object
+            properties:
+              query:
+                type: string
+                description: The SQL query to be executed.
+            required:
+              - query
+            additionalProperties: false
+      - type: function
+        function:
+          name: commit_final_answer
+          description: Commits the final answer after all operations are completed.
+          parameters:
+            type: object
+            properties:
+              answers:
+                type: array
+                items:
+                  type: string
+                description: The list of final answers to commit.
+            required:
+              - answers
+            additionalProperties: false
+

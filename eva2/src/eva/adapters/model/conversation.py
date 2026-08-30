@@ -620,6 +620,46 @@ class CodexConversationModel:
             return ConversationCredentialStatus(False, "expired", expires_at)
         return ConversationCredentialStatus(True, "ready", expires_at)
 
+    def generate_tool_free_text(
+        self, *, prompt: str, instructions: str
+    ) -> ConversationModelResult:
+        """Generate one bounded text result without exposing any model tool."""
+
+        if (
+            not isinstance(prompt, str)
+            or not prompt.strip()
+            or len(prompt.encode("utf-8")) > 128 * 1024
+            or not isinstance(instructions, str)
+            or not instructions.strip()
+            or len(instructions.encode("utf-8")) > 32 * 1024
+        ):
+            raise ValueError("tool-free conversation input is invalid")
+        cache_seed = hashlib.sha256(
+            f"{instructions}\n{prompt}".encode("utf-8")
+        ).hexdigest()[:32]
+        body = {
+            "include": ["reasoning.encrypted_content"],
+            "input": [{"content": prompt, "role": "user", "type": "message"}],
+            "instructions": instructions,
+            "model": self._model,
+            "parallel_tool_calls": False,
+            "prompt_cache_key": f"eva-tool-free-{cache_seed}",
+            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
+            "store": False,
+            "stream": True,
+            "tool_choice": "none",
+            "tools": [],
+        }
+        text, action_call, usage, timing = self._request_conversation(body)
+        if action_call is not None or not text.strip():
+            raise ConversationModelError("tool-free conversation returned invalid output")
+        return ConversationModelResult(
+            text=text.strip(),
+            provider=f"chatgpt-codex:{self._model}",
+            usage=usage,
+            timing=timing,
+        )
+
     def generate(
         self,
         turn: ConversationTurn,

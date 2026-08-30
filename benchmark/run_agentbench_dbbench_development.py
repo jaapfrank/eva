@@ -20,12 +20,17 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
-from eva_agentbench_client import AgentBenchEvaError, EvaAgentBenchClient
+from eva_agentbench_client import (
+    AgentBenchEvaError,
+    EvaAgentBenchClient,
+    EvaToolFreeAgentBenchClient,
+)
 
 
 TASK_NAME = "dbbench-dev-external-mysql"
 MAX_HTTP_BYTES = 2 * 1024 * 1024
-MAX_MODEL_TURNS = 2
+MAX_MODEL_TURNS = 15
+MODEL_MINIMUM_INTERVAL_SECONDS = 5.0
 
 
 class DbBenchDevelopmentError(ValueError):
@@ -164,7 +169,10 @@ def run_one_case(
         raise DbBenchDevelopmentError("case index is outside the sealed dev split")
     _validated_output_parent(output)
     base = _controller_base(controller)
-    agent = client or EvaAgentBenchClient(timeout_seconds=120.0)
+    agent = client or EvaToolFreeAgentBenchClient(
+        minimum_interval_seconds=MODEL_MINIMUM_INTERVAL_SECONDS,
+        timeout_seconds=120.0,
+    )
     initial, headers = _post(base, "start_sample", {"name": TASK_NAME, "index": case_index})
     session_header = headers.get("Session_id")
     if not isinstance(session_header, str) or not session_header.isdecimal():
@@ -173,13 +181,51 @@ def run_one_case(
     messages, tools = _messages_and_tools(initial)
     transcript: list[dict[str, Any]] = list(messages)
     trajectory: list[dict[str, object]] = []
+    model_failures: list[dict[str, object]] = []
     final: dict[str, Any] | None = None
 
     for turn_number in range(1, MAX_MODEL_TURNS + 1):
         try:
             assistant = agent.inference_message(transcript, tools)
         except AgentBenchEvaError as error:
-            raise DbBenchDevelopmentError("Eva failed the sealed DBBench turn") from error
+            model_failures.append({"failure": str(error), "turn": turn_number})
+            if getattr(agent, "turns_used", MAX_MODEL_TURNS) < MAX_MODEL_TURNS:
+                # No AgentRL interact or SQL call has happened. A new provider
+                # attempt is therefore safe, remains inside the prepaid call
+                # budget, and is recorded rather than hidden.
+                continue
+            failure_artifact: dict[str, object] = {
+                "caseIndex": case_index,
+                "contract": "EvaAgentBenchDbBenchDevelopmentFailure/v1",
+                "failedAt": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "failedTurn": turn_number,
+                "failure": str(error),
+                "initialMessages": messages,
+                "modelFailures": model_failures,
+                "modelReceipts": getattr(agent, "model_receipts", []),
+                "modelTurnLimit": MAX_MODEL_TURNS,
+                "modelTurnsCompleted": len(trajectory),
+                "nonClaims": [
+                    "No DBBench score was produced.",
+                    "This failure artifact contains no hidden answer key.",
+                    "The external-MySQL development environment is not the official Docker driver.",
+                ],
+                "sealedToolsSha256": hashlib.sha256(
+                    json.dumps(
+                        tools,
+                        ensure_ascii=False,
+                        allow_nan=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                ).hexdigest(),
+                "task": TASK_NAME,
+                "trajectory": trajectory,
+            }
+            _write_new_private_json(output, failure_artifact)
+            raise DbBenchDevelopmentError(
+                f"Eva failed the sealed DBBench turn: {error}"
+            ) from error
         response, _response_headers = _post(
             base,
             "interact",
@@ -212,20 +258,29 @@ def run_one_case(
             break
 
     if final is None or final.get("finish") is not True:
-        raise DbBenchDevelopmentError("DBBench exceeded the two-turn model budget")
+        raise DbBenchDevelopmentError("DBBench exceeded the sealed model-turn budget")
     artifact: dict[str, object] = {
         "caseIndex": case_index,
         "contract": "EvaAgentBenchDbBenchDevelopmentRun/v1",
         "controllerProtocol": "AgentRL structured messages with Session_id header",
         "finishedAt": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "initialMessages": messages,
+        "modelFailures": model_failures,
         "modelTurnLimit": MAX_MODEL_TURNS,
+        "modelMinimumIntervalSeconds": MODEL_MINIMUM_INTERVAL_SECONDS,
+        "modelRoute": (
+            "isolated_tool_free_sidecar"
+            if isinstance(agent, EvaToolFreeAgentBenchClient)
+            else "injected_test_client"
+        ),
+        "modelReceipts": getattr(agent, "model_receipts", []),
         "modelTurnsReservedBeforeIo": True,
-        "modelTurnsUsed": len(trajectory),
+        "modelTurnsUsed": getattr(agent, "turns_used", len(trajectory)),
         "nonClaims": [
             "This is not an official AgentBench score.",
             "The disposable external-MySQL environment differs from AgentBench's official Docker driver.",
             "One development case does not establish benchmark quality or leaderboard rank.",
+            "The model sidecar has no Eva database, memory, house, Telegram, or connector mount.",
         ],
         "result": {
             "finish": final.get("finish"),

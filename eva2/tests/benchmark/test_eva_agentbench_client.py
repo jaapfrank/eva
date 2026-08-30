@@ -79,6 +79,63 @@ def _core(
         server.server_close()
 
 
+@contextmanager
+def _tool_free_core(
+    *, answer: str, measured_usage: bool = True
+) -> Iterator[tuple[str, list[dict[str, object]]]]:
+    received: list[dict[str, object]] = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, _format: str, *_args: object) -> None:
+            return
+
+        def do_POST(self) -> None:  # noqa: N802
+            size = int(self.headers["Content-Length"])
+            received.append(json.loads(self.rfile.read(size)))
+            body = json.dumps(
+                {
+                    "contract": "EvaToolFreeModelReply/v1",
+                    "provider": "chatgpt-codex:test-model",
+                    "text": answer,
+                    "text_sha256": hashlib.sha256(answer.encode()).hexdigest(),
+                    "timing": {"completed_ms": 20, "first_content_ms": 10},
+                    "tools_exposed": 0,
+                    "usage": (
+                        {
+                            "input_tokens": 12,
+                            "measurement": "measured",
+                            "model_attempts": 1,
+                            "output_tokens": 8,
+                            "tool_calls": 0,
+                        }
+                        if measured_usage
+                        else {
+                            "input_tokens": None,
+                            "measurement": "unmeasured",
+                            "model_attempts": None,
+                            "output_tokens": None,
+                            "tool_calls": None,
+                        }
+                    ),
+                }
+            ).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_port}/v1/generate", received
+    finally:
+        server.shutdown()
+        thread.join()
+        server.server_close()
+
+
 def test_submits_complete_history_in_a_fresh_isolated_turn(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -123,6 +180,34 @@ def test_client_reserves_a_hard_turn_budget_before_calling_eva(
     assert len(received) == 2
 
 
+def test_client_spaces_reserved_provider_starts_without_retrying(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+    ticks = iter([100.0, 100.0, 102.0, 105.0])
+    sleeps: list[float] = []
+    monkeypatch.setattr(adapter.time, "monotonic", lambda: next(ticks))
+    monkeypatch.setattr(adapter.time, "sleep", sleeps.append)
+    client = adapter.EvaAgentBenchClient(
+        minimum_interval_seconds=5.0, timeout_seconds=10
+    )
+
+    assert client._reserve_turn() == 1
+    assert client._reserve_turn() == 2
+    assert sleeps == [3.0]
+
+
+@pytest.mark.parametrize("interval", [-0.1, 60.1])
+def test_rejects_an_invalid_provider_call_interval(
+    monkeypatch: pytest.MonkeyPatch, interval: float
+) -> None:
+    _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+    with pytest.raises(adapter.AgentBenchEvaError, match="call interval is invalid"):
+        adapter.EvaAgentBenchClient(
+            minimum_interval_seconds=interval, timeout_seconds=10
+        )
+
+
 def test_returns_one_closed_agentrl_dbbench_tool_message(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -149,7 +234,78 @@ def test_returns_one_closed_agentrl_dbbench_tool_message(
     wrapped_history = json.loads(received[0]["text"].split("\n", 1)[1])
     assert '"database_transcript"' in wrapped_history[0]["content"]
     assert '"execute_sql"' in wrapped_history[0]["content"]
-    assert "database operation 1 of at most 2" in wrapped_history[0]["content"]
+    assert "database operation 1; provider call 1 of at most 2" in wrapped_history[0]["content"]
+
+
+def test_tool_free_client_uses_private_sidecar_and_records_usage(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    tools = adapter._DBBENCH_TOOLS
+    messages = [
+        {"role": "system", "content": "Use the supplied database tools."},
+        {"role": "user", "content": "Return the number of rows."},
+    ]
+    answer = '{"name":"execute_sql","arguments":{"query":"SELECT COUNT(*) FROM t"}}'
+    with _tool_free_core(answer=answer) as (endpoint, received):
+        _environment(monkeypatch, "http://127.0.0.1:1/internal/v1/turns/respond")
+        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        client = adapter.EvaToolFreeAgentBenchClient(timeout_seconds=10)
+        result = client.inference_message(messages, tools)
+
+    assert result["tool_calls"][0]["function"]["name"] == "execute_sql"
+    assert received == [
+        {
+            "contract": "EvaToolFreeModelRequest/v1",
+            "prompt": received[0]["prompt"],
+        }
+    ]
+    assert "database_transcript" in received[0]["prompt"]
+    assert client.model_receipts == [
+        {
+            "provider": "chatgpt-codex:test-model",
+            "textSha256": hashlib.sha256(answer.encode()).hexdigest(),
+            "timing": {"completed_ms": 20, "first_content_ms": 10},
+            "toolsExposed": 0,
+            "turn": 1,
+            "usage": {
+                "input_tokens": 12,
+                "measurement": "measured",
+                "model_attempts": 1,
+                "output_tokens": 8,
+                "tool_calls": 0,
+            },
+        }
+    ]
+
+
+@pytest.mark.parametrize(
+    "endpoint",
+    [
+        "https://127.0.0.1:8090/v1/generate",
+        "http://example.com:8090/v1/generate",
+        "http://127.0.0.1:8090/wrong",
+    ],
+)
+def test_tool_free_client_rejects_non_private_or_wrong_route(
+    monkeypatch: pytest.MonkeyPatch, endpoint: str
+) -> None:
+    monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+    with pytest.raises(adapter.AgentBenchEvaError, match="TOOL_FREE_ENDPOINT"):
+        adapter.tool_free_answer("valid prompt", timeout_seconds=10)
+
+
+def test_tool_free_client_accepts_honestly_unmeasured_usage(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    answer = '{"name":"commit_final_answer","arguments":{"answers":["7"]}}'
+    with _tool_free_core(answer=answer, measured_usage=False) as (endpoint, _received):
+        monkeypatch.setenv("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT", endpoint)
+        text, receipt = adapter.tool_free_answer("valid prompt", timeout_seconds=10)
+
+    assert text == answer
+    assert receipt["toolsExposed"] == 0
+    assert receipt["usage"]["measurement"] == "unmeasured"
+    assert receipt["usage"]["tool_calls"] is None
 
 
 @pytest.mark.parametrize(
@@ -190,7 +346,7 @@ def test_structured_and_legacy_calls_share_the_same_reserved_budget(
 
     assert len(received) == 2
     second_history = json.loads(received[1]["text"].split("\n", 1)[1])
-    assert "database operation 2 of at most 2" in second_history[0]["content"]
+    assert "database operation 1; provider call 2 of at most 2" in second_history[0]["content"]
 
 
 def test_neutralizes_prior_tool_messages_before_calling_eva(
@@ -229,7 +385,7 @@ def test_neutralizes_prior_tool_messages_before_calling_eva(
     assert '"tool_calls"' not in model_prompt
 
 
-@pytest.mark.parametrize("turn_limit", ["0", "9", "nope"])
+@pytest.mark.parametrize("turn_limit", ["0", "16", "nope"])
 def test_rejects_an_invalid_turn_budget(
     monkeypatch: pytest.MonkeyPatch, turn_limit: str
 ) -> None:

@@ -1,0 +1,95 @@
+{
+  "artifact": "EvaAgentBenchDbBenchToolFreeDevelopmentReceipt/v1",
+  "date": "2026-08-30",
+  "inputs": {
+    "agentbenchCommit": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+    "agentrlCommit": "6a73409d31ba695d383b978a8ad3ef400d90c054",
+    "controllerImage": "eva2/agentbench-agentrl-controller-chainguard-offline@sha256:a285b87088d35736188635baea4f885d5922b90fd007a4a6abb1bfe4cdee3f33",
+    "datasetSha256": "eb941c58a7a5651357b19e46aa05070f6cd5a7d83ce70cefd24aa3581e1e1130",
+    "dbbenchConfigSha256": "9d1aa7aca41767ecc20c1cdefdd469b007ba50b0ffb3d6a0263a3198185cf883",
+    "dbbenchWorkerDockerfileSha256": "4e5a0b1c0c97450492aa43ebdbe828bf947e8c796363097f7bfced54640c66e5",
+    "dbbenchWorkerImage": "eva2/agentbench-dbbench-dev-worker-chainguard-offline@sha256:18251c8749e53f3762e683e3ab9d954eb704faf3939e9fcec9c0b0ec75430c93",
+    "modelSidecarDockerfileSha256": "2b3c74a4ea1c64583a9c876e9d5ca20e3140f34c0c8d696eae216c6a484d3ddd",
+    "modelSidecarImage": "eva2/agentbench-tool-free-model@sha256:aa7f30236791a94283f0d8c1e93539311225ac3907c2a914cd03f084967facbc",
+    "mysqlImage": "mysql@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "rawTrajectory": {
+      "path": "evidence/living-core/agentbench-dbbench-eva-tool-free-recovering-case-0-2026-08-30.raw.json",
+      "sha256": "7bb6d0abef0bc076dd89ad33c8905bfe2a6404865766ebed79244ea6c61a5ef9"
+    },
+    "runnerSha256": "50827b9f47713927fd91843bed5b4fb4e03c694d31db62fb160d1295df99f58b",
+    "toolFreeClientSha256": "2c17b0b828ec5dac7b7c3a6750872b65c63f0d5d6ced45d6d478f75f8ae0a6f1",
+    "toolFreeModelBoundarySha256": "1115fb8fb3a80d7d40abcab413e7fb29b57312edb9b093e9ed30188dac4007ea",
+    "toolFreeServerSha256": "ee1a7c235cbee75931e6a32d4069a76c97682c69c96e5fbc1bca68f6cb2fb79e"
+  },
+  "isolation": {
+    "controllerMountCount": 0,
+    "databaseFilesystem": "read-only root with tmpfs data only",
+    "databaseNetwork": "temporary internal Docker network",
+    "modelSidecarMounts": [
+      "/run/eva/model-lease:ro"
+    ],
+    "modelSidecarUnavailableCapabilities": [
+      "Eva PostgreSQL",
+      "Hindsight",
+      "Home Assistant",
+      "Telegram",
+      "connector credentials"
+    ],
+    "modelSidecarRootFilesystemReadOnly": true,
+    "workerDockerSocket": false,
+    "workerMountCount": 0,
+    "workerRootFilesystemReadOnly": true
+  },
+  "observed": {
+    "caseIndex": 0,
+    "databaseInteractions": 7,
+    "finished": true,
+    "modelFailures": [
+      {
+        "databaseInteractionStarted": false,
+        "failure": "tool-free AgentBench request failed",
+        "providerCall": 6
+      }
+    ],
+    "modelTurnLimit": 15,
+    "modelTurnsUsed": 8,
+    "operations": {
+      "commit_final_answer": 1,
+      "execute_sql": 6
+    },
+    "reward": 0,
+    "score": 0,
+    "status": "completed",
+    "successfulModelReplies": 7,
+    "toolsExposedByEvaModelBoundary": 0
+  },
+  "verification": {
+    "answerBlindInitialMessageFields": true,
+    "hiddenAnswerFieldsLoadedByEvaAdapter": false,
+    "modelSidecarScan": {
+      "critical": 0,
+      "high": 0
+    },
+    "rawTrajectoryCreationMode": "0600",
+    "tests": {
+      "count": 101,
+      "pytest": "passed",
+      "pythonCompile": "passed",
+      "ruff": "passed"
+    },
+    "toolExposureReceipts": 7,
+    "toolExposureReceiptsAllZero": true,
+    "workerScan": {
+      "critical": 0,
+      "high": 0
+    }
+  },
+  "status": "completed_development_case_score_zero",
+  "nonClaims": [
+    "This is not an official AgentBench or leaderboard score.",
+    "The external-MySQL environment differs from AgentBench's official Docker driver.",
+    "A completed case with score 0 proves the execution and evaluation path, not Eva's database quality.",
+    "One development case cannot establish superiority over OpenClaw, Hermes or Agent Zero.",
+    "No Eva database, Hindsight memory, Home Assistant state, Telegram data or hidden benchmark answer was supplied to the model sidecar."
+  ]
+}

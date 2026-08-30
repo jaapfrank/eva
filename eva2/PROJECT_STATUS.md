@@ -1,6 +1,6 @@
 # Eva 2 — korte projectstatus
 
-Laatst bijgewerkt: 30 augustus 2026, 06:14 CEST
+Laatst bijgewerkt: 30 augustus 2026, 07:03 CEST
 
 ## Heel kort
 
@@ -369,12 +369,13 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
   operator-tools. De vijf versleutel/open/tamper/no-overwrite-tests, CLI-smoke
   en samen 43 releasechecks zijn groen. Bron en test zijn nu als release-inputs
   gepind.
-- Eva heeft nu zelf één echte AgentBench-DBBench-developmentcase uitgevoerd.
-  Zij deed twee echte SQL-pogingen in de tijdelijke MySQL-database. De officiële
-  ingebouwde vergelijking gaf eerlijk score 0 en `task limit reached`. Dit
-  bewijst de hele uitvoerketen, maar nog niet dat Eva goed scoort. Een tweede,
-  antwoordblinde poging wist dat er maar twee beurten waren en normaliseerde de
-  datum beter, maar vond nog steeds geen rij en bleef dus eerlijk op score 0.
+- Eva heeft nu dezelfde echte AgentBench-DBBench-developmentcase ook met de
+  normale grens van vijftien beurten afgerond. Het model draaide in een aparte
+  schone container zonder Eva-geheugen, huis- of Telegramtoegang. Eva deed zes
+  SQL-pogingen en leverde daarna een eindantwoord. Eén tijdelijke modelstoring
+  werd vóór SQL opgevangen zonder de case opnieuw te starten. De officiële
+  ingebouwde vergelijking gaf nog steeds eerlijk score 0. De uitvoer- en
+  herstelketen werkt dus; Eva's databaseantwoord moet inhoudelijk beter.
 
 ## Wat nog niet klaar is
 
@@ -414,15 +415,16 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 - Een echte Windows/WSL-rebootproef moet nog door iemand buiten Codex worden
   gestart.
 - De volledige zevendaagse praktijktest moet nog.
-- De eerste echte AgentBench-developmentcase is uitgevoerd maar scoorde 0.
-  Een officiële AgentBench-run en GAIA- en OSWorld-scores ontbreken nog.
+- De eerste echte AgentBench-developmentcase rondt nu de normale vijftien-
+  beurtenroute af, maar scoort nog 0. Een officiële AgentBench-run en GAIA- en
+  OSWorld-scores ontbreken nog.
 - De volledige eindvergelijking met OpenClaw, Hermes en Agent Zero is nog niet
   groen.
 
 ## Waar ik nu aan werk
 
-1. De fout beantwoorde DBBench-case onderzoeken en daarna meer begrensde
-   developmentcases draaien zonder het antwoordlabel aan Eva te geven.
+1. De zes SQL-pogingen van de fout beantwoorde DBBench-case antwoordblind
+   analyseren en de algemene database-aanpak verbeteren voordat meer cases lopen.
 2. Na de al bewapende echte Windows/WSL-reboot controleren of Eva1, Eva2, beide databases,
    geheugen, dashboard en de terugvalroute vanzelf gezond terugkomen.
 3. De groene tekstmeting op de uiteindelijke bevroren image herhalen en de
@@ -443,6 +445,7 @@ groen; volledige PC05 wacht nog op eindfreeze en V07.
 
 ## Laatste bewijs
 
+- [DBBench met vijftien beurten, toolvrije sidecar en herstel binnen dezelfde case; eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-tool-free-development-case-0-2026-08-30.json)
 - [Antwoordblinde DBBench-verbetering veranderde de SQL, maar score bleef eerlijk 0](evidence/living-core/agentbench-dbbench-eva-budget-aware-rerun-2026-08-30.json)
 - [Eerste echte Eva→DBBench→MySQL→evaluator-case, eerlijk score 0](evidence/living-core/agentbench-dbbench-eva-development-case-0-2026-08-30.json)
 - [Lampenpolicy duurzaam in beide slots en daaruit live herbouwd](evidence/living-core/eva2-managed-home-effect-policy-live-2026-08-30.json)

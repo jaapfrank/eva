@@ -16,11 +16,13 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import hashlib
+import ipaddress
 import json
 import os
 import re
 from threading import Lock
-from typing import Any
+import time
+from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -32,7 +34,7 @@ MAX_MESSAGE_BYTES = 128 * 1024
 MAX_RESPONSE_BYTES = 256 * 1024
 _RUN_ID = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
 _LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
-_MAX_TURNS = 8
+_MAX_TURNS = 15
 _DBBENCH_TOOLS = [
     {
         "type": "function",
@@ -99,6 +101,30 @@ def _turn_endpoint() -> str:
     ):
         raise AgentBenchEvaError(
             "EVA_AGENTBENCH_TURN_ENDPOINT is not an isolated Eva turn route"
+        )
+    return endpoint
+
+
+def _tool_free_endpoint() -> str:
+    endpoint = _required_environment("EVA_AGENTBENCH_TOOL_FREE_ENDPOINT")
+    parsed = urlsplit(endpoint)
+    try:
+        address = ipaddress.ip_address(parsed.hostname or "")
+    except ValueError as error:
+        raise AgentBenchEvaError(
+            "EVA_AGENTBENCH_TOOL_FREE_ENDPOINT must use a literal IP address"
+        ) from error
+    if (
+        parsed.scheme != "http"
+        or not (address.is_loopback or address.is_private)
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+        or parsed.fragment
+        or parsed.path != "/v1/generate"
+    ):
+        raise AgentBenchEvaError(
+            "EVA_AGENTBENCH_TOOL_FREE_ENDPOINT is not an isolated model route"
         )
     return endpoint
 
@@ -233,6 +259,107 @@ def answer_for_history(history: object, *, timeout_seconds: float = 120.0) -> st
     return answer
 
 
+def tool_free_answer(
+    prompt: str, *, timeout_seconds: float = 120.0
+) -> tuple[str, dict[str, object]]:
+    """Call the isolated tool-free model sidecar and validate its receipt."""
+
+    if (
+        not isinstance(prompt, str)
+        or not prompt.strip()
+        or len(prompt.encode("utf-8")) > MAX_MESSAGE_BYTES
+        or not 1.0 <= timeout_seconds <= 3_600.0
+    ):
+        raise AgentBenchEvaError("tool-free AgentBench request is invalid")
+    body = json.dumps(
+        {"contract": "EvaToolFreeModelRequest/v1", "prompt": prompt},
+        ensure_ascii=False,
+        allow_nan=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    request = Request(
+        _tool_free_endpoint(),
+        data=body,
+        method="POST",
+        headers={"Accept": "application/json", "Content-Type": "application/json"},
+    )
+    try:
+        with urlopen(request, timeout=timeout_seconds) as response:  # noqa: S310 -- private literal IP is validated above.
+            if response.status != 200:
+                raise AgentBenchEvaError("tool-free AgentBench request was rejected")
+            raw = response.read(MAX_RESPONSE_BYTES + 1)
+    except (HTTPError, URLError, TimeoutError, OSError) as error:
+        raise AgentBenchEvaError("tool-free AgentBench request failed") from error
+    if len(raw) > MAX_RESPONSE_BYTES:
+        raise AgentBenchEvaError("tool-free AgentBench response is too large")
+    try:
+        payload: Any = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise AgentBenchEvaError("tool-free AgentBench response is not JSON") from error
+    expected = {
+        "contract",
+        "provider",
+        "text",
+        "text_sha256",
+        "timing",
+        "tools_exposed",
+        "usage",
+    }
+    if not isinstance(payload, dict) or set(payload) != expected:
+        raise AgentBenchEvaError("tool-free AgentBench response shape is invalid")
+    text = payload.get("text")
+    usage = payload.get("usage")
+    timing = payload.get("timing")
+    if (
+        payload.get("contract") != "EvaToolFreeModelReply/v1"
+        or not isinstance(payload.get("provider"), str)
+        or not payload["provider"].startswith("chatgpt-codex:")
+        or not isinstance(text, str)
+        or not text.strip()
+        or len(text.encode("utf-8")) > MAX_RESPONSE_BYTES
+        or payload.get("text_sha256")
+        != hashlib.sha256(text.encode("utf-8")).hexdigest()
+        or not isinstance(usage, dict)
+        or set(usage)
+        != {
+            "input_tokens",
+            "measurement",
+            "model_attempts",
+            "output_tokens",
+            "tool_calls",
+        }
+        or payload.get("tools_exposed") != 0
+        or (
+            usage.get("measurement") == "measured"
+            and usage.get("tool_calls") != 0
+        )
+        or (
+            usage.get("measurement") == "unmeasured"
+            and any(
+                usage.get(field) is not None
+                for field in (
+                    "input_tokens",
+                    "model_attempts",
+                    "output_tokens",
+                    "tool_calls",
+                )
+            )
+        )
+        or usage.get("measurement") not in {"measured", "unmeasured"}
+        or not isinstance(timing, dict)
+        or set(timing) != {"completed_ms", "first_content_ms"}
+    ):
+        raise AgentBenchEvaError("tool-free AgentBench response is invalid")
+    receipt = {
+        "provider": payload["provider"],
+        "textSha256": payload["text_sha256"],
+        "timing": timing,
+        "toolsExposed": 0,
+        "usage": usage,
+    }
+    return text, receipt
+
+
 def dbbench_tool_message(
     messages: object,
     tools: object,
@@ -240,6 +367,7 @@ def dbbench_tool_message(
     timeout_seconds: float = 120.0,
     turn_limit: int = 2,
     turn_number: int = 1,
+    answer_provider: Callable[[str, float], str] | None = None,
 ) -> dict[str, object]:
     """Return one closed OpenAI-style tool message for upstream DBBench."""
 
@@ -322,28 +450,32 @@ def dbbench_tool_message(
     if max(len(canonical.encode("utf-8")), len(neutral.encode("utf-8"))) > MAX_MESSAGE_BYTES:
         raise AgentBenchEvaError("AgentRL DBBench transcript is too large")
 
-    answer = answer_for_history(
-        [
-            {
-                "role": "user",
-                "content": (
-                    "Act as the database agent for this DBBench development case. "
-                    "Return plain JSON text only; never invoke an Eva function or memory. "
-                    f"This is database operation {turn_number} of at most {turn_limit}. "
-                    "Prefer one robust SQL statement that answers directly. Source values "
-                    "can use a different date or text display format than the human question; "
-                    "normalize or inspect them in SQL instead of blindly copying that display. "
-                    "On the final operation, commit only when the observed evidence is sufficient; "
-                    "never invent a missing answer. "
-                    "Choose exactly one next database operation using either "
-                    '{"name":"execute_sql","arguments":{"query":"SQL"}} or '
-                    '{"name":"commit_final_answer","arguments":{"answers":["answer"]}}. '
-                    "Use only the neutral transcript below.\n"
-                    f"{neutral}"
-                ),
-            }
-        ],
-        timeout_seconds=timeout_seconds,
+    operation_number = 1 + sum(
+        message.get("role") == "assistant" for message in messages
+    )
+    prompt = (
+        "Act as the database agent for this DBBench development case. "
+        "Return plain JSON text only; never invoke an Eva function or memory. "
+        f"This is database operation {operation_number}; provider call "
+        f"{turn_number} of at most {turn_limit}. "
+        "Prefer one robust SQL statement that answers directly. Source values "
+        "can use a different date or text display format than the human question; "
+        "normalize or inspect them in SQL instead of blindly copying that display. "
+        "On the final operation, commit only when the observed evidence is sufficient; "
+        "never invent a missing answer. "
+        "Choose exactly one next database operation using either "
+        '{"name":"execute_sql","arguments":{"query":"SQL"}} or '
+        '{"name":"commit_final_answer","arguments":{"answers":["answer"]}}. '
+        "Use only the neutral transcript below.\n"
+        f"{neutral}"
+    )
+    answer = (
+        answer_provider(prompt, timeout_seconds)
+        if answer_provider is not None
+        else answer_for_history(
+            [{"role": "user", "content": prompt}],
+            timeout_seconds=timeout_seconds,
+        )
     )
     try:
         requested = json.loads(answer)
@@ -403,12 +535,29 @@ def dbbench_tool_message(
 class EvaAgentBenchClient:
     """Duck-typed upstream AgentBench client, configured only by environment."""
 
-    def __init__(self, *, timeout_seconds: float = 120.0, **_unused: object) -> None:
+    def __init__(
+        self,
+        *,
+        minimum_interval_seconds: float = 0.0,
+        timeout_seconds: float = 120.0,
+        **_unused: object,
+    ) -> None:
+        if not 0.0 <= minimum_interval_seconds <= 60.0:
+            raise AgentBenchEvaError("AgentBench Eva call interval is invalid")
+        self.minimum_interval_seconds = minimum_interval_seconds
         self.timeout_seconds = timeout_seconds
         self.model_name = "eva2-isolated-candidate"
         self._turn_limit = _turn_limit()
         self._turns_used = 0
         self._turn_lock = Lock()
+        self._last_call_started: float | None = None
+
+    @property
+    def turns_used(self) -> int:
+        """Return the number of provider calls reserved before I/O."""
+
+        with self._turn_lock:
+            return self._turns_used
 
     def _reserve_turn(self) -> int:
         with self._turn_lock:
@@ -417,6 +566,14 @@ class EvaAgentBenchClient:
             # Reserve before network I/O: an interrupted request must not turn
             # an explicit model budget into an unbounded retry loop.
             self._turns_used += 1
+            now = time.monotonic()
+            if self._last_call_started is not None:
+                remaining = self.minimum_interval_seconds - (
+                    now - self._last_call_started
+                )
+                if remaining > 0:
+                    time.sleep(remaining)
+            self._last_call_started = time.monotonic()
             return self._turns_used
 
     def inference(self, history: list[dict[str, str]]) -> str:
@@ -436,9 +593,40 @@ class EvaAgentBenchClient:
         )
 
 
+class EvaToolFreeAgentBenchClient(EvaAgentBenchClient):
+    """AgentBench client backed by the isolated no-tools model sidecar."""
+
+    def __init__(self, **kwargs: object) -> None:
+        super().__init__(**kwargs)
+        self.model_receipts: list[dict[str, object]] = []
+
+    def inference_message(
+        self, messages: object, tools: object
+    ) -> dict[str, object]:
+        turn_number = self._reserve_turn()
+
+        def provide(prompt: str, timeout_seconds: float) -> str:
+            answer, receipt = tool_free_answer(
+                prompt, timeout_seconds=timeout_seconds
+            )
+            self.model_receipts.append({"turn": turn_number, **receipt})
+            return answer
+
+        return dbbench_tool_message(
+            messages,
+            tools,
+            timeout_seconds=self.timeout_seconds,
+            turn_limit=self._turn_limit,
+            turn_number=turn_number,
+            answer_provider=provide,
+        )
+
+
 __all__ = [
     "AgentBenchEvaError",
     "EvaAgentBenchClient",
+    "EvaToolFreeAgentBenchClient",
     "answer_for_history",
     "dbbench_tool_message",
+    "tool_free_answer",
 ]

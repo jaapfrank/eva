@@ -193,6 +193,46 @@ def test_validated_file_edit_is_a_closed_model_action(
     )["description"]
 
 
+def test_tool_free_text_generation_exposes_no_model_tools(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    bodies: list[dict[str, Any]] = []
+
+    def request(body: dict[str, Any]):
+        bodies.append(body)
+        return (
+            "exact text",
+            None,
+            ConversationModelUsage.measured(
+                model_attempts=1, tool_calls=0, input_tokens=12, output_tokens=2
+            ),
+            ConversationModelTiming(20, 30),
+        )
+
+    monkeypatch.setattr(model, "_request_conversation", request)
+    result = model.generate_tool_free_text(
+        prompt="Return exact text.",
+        instructions="You are Eva in a bounded benchmark run.",
+    )
+
+    assert result.text == "exact text"
+    assert result.action_call is None
+    assert result.usage.tool_calls == 0
+    assert bodies[0]["tool_choice"] == "none"
+    assert bodies[0]["tools"] == []
+    assert bodies[0]["store"] is False
+
+
+@pytest.mark.parametrize("prompt,instructions", [("", "valid"), ("valid", "")])
+def test_tool_free_text_generation_rejects_empty_inputs(
+    tmp_path: Path, prompt: str, instructions: str
+) -> None:
+    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    with pytest.raises(ValueError, match="tool-free conversation input is invalid"):
+        model.generate_tool_free_text(prompt=prompt, instructions=instructions)
+
+
 def test_repository_improvement_is_self_chosen_from_a_bounded_snapshot(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

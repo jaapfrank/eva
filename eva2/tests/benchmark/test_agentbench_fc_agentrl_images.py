@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[3]
 CONTROLLER = ROOT / "benchmark" / "agentbench-fc-v1" / "agentrl-controller-pinned.Dockerfile"
@@ -129,6 +131,18 @@ DBBENCH_EXTERNAL_CONFIG = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-external-mysql.yaml"
 )
 DBBENCH_EXTERNAL_TASK = ROOT / "benchmark" / "agentbench-fc-v1" / "dbbench_external_task.py"
+DBBENCH_UPSTREAM_ROUNDS_CONFIG = (
+    ROOT
+    / "benchmark"
+    / "agentbench-fc-v1"
+    / "agentbench-dbbench-dev-external-mysql-upstream-rounds.yaml"
+)
+DBBENCH_UPSTREAM_ROUNDS_DOCKERFILE = (
+    ROOT
+    / "benchmark"
+    / "agentbench-fc-v1"
+    / "agentbench-dbbench-dev-worker-external-mysql-round15-v1.Dockerfile"
+)
 DBBENCH_DEV_INPUTS = (
     ROOT / "benchmark" / "agentbench-fc-v1" / "agentbench-dbbench-dev-worker-inputs-amd64-py314.json"
 )
@@ -478,6 +492,33 @@ def test_dbbench_external_mysql_smoke_adapter_cannot_be_mistaken_for_an_official
     assert "must never be called" in config
     assert "agentbench-dbbench-dev-registration.yaml" not in dockerfile
     assert "agentbench-dbbench-dev-external-mysql.yaml" in dockerfile
+
+
+def test_dbbench_upstream_round_worker_changes_only_the_explicit_round_budget() -> None:
+    smoke = yaml.safe_load(DBBENCH_EXTERNAL_CONFIG.read_text(encoding="utf-8"))
+    upstream_rounds = yaml.safe_load(
+        DBBENCH_UPSTREAM_ROUNDS_CONFIG.read_text(encoding="utf-8")
+    )
+    smoke_parameters = smoke["dbbench-dev-external-mysql"]["parameters"]
+    upstream_parameters = upstream_rounds["dbbench-dev-external-mysql"]["parameters"]
+    assert smoke_parameters["max_round"] == 2
+    assert upstream_parameters["max_round"] == 15
+    assert {**smoke_parameters, "max_round": 15} == upstream_parameters
+
+    dockerfile = DBBENCH_UPSTREAM_ROUNDS_DOCKERFILE.read_text(encoding="utf-8")
+    assert (
+        "expected-local-base-id: "
+        "sha256:b0f2ac1f20ecb9927a76dffc76f4ad93a590d20e359cf8fe0196f5d573c6e026"
+        in dockerfile
+    )
+    assert (
+        "FROM eva2/agentbench-dbbench-dev-worker-chainguard-offline:"
+        "20260827-external-mysql-v2"
+        in dockerfile
+    )
+    assert "agentbench-dbbench-dev-external-mysql-upstream-rounds.yaml" in dockerfile
+    assert "RUN " not in dockerfile
+    assert "ADD " not in dockerfile
 
 
 def test_dbbench_external_mysql_smoke_records_real_task_execution_but_no_eva_score() -> None:
