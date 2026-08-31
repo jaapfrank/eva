@@ -111,9 +111,11 @@ zonder nieuwe bevestiging per vondst of actie zelf:
 4. de werkelijk beschikbare MCP-, OpenAPI-, SDK- en HTTP-routes vergelijken;
 5. de kleinste route kiezen die het doel kan uitvoeren; MCP heeft voorkeur als
    het voldoende bereik en bewijs levert, maar is geen hardgecodeerde winnaar;
-6. alleen wanneer een dienst menselijke authenticatie afdwingt in gewone taal
-   om die login-, 2FA-, CAPTCHA- of secretstap vragen en daarna zelfstandig
-   doorgaan;
+6. alleen wanneer een dienst menselijke authenticatie afdwingt de bestaande
+   browsersessie tijdelijk aan de eigenaar overdragen voor login, 2FA, CAPTCHA
+   of wettelijk vereiste persoonlijke verklaring en daarna zelfstandig vanaf
+   hetzelfde checkpoint doorgaan. Eva automatiseert of omzeilt zulke externe
+   menscontroles niet en gebruikt daarvoor geen CAPTCHA-oplosdienst;
 7. de gevonden tools tijdens runtime aan het agentframework aanbieden, zonder
    nieuwe Eva-kerncode of een herbouw van de core-image;
 8. een actie uitvoeren en via een onafhankelijk gevonden readpad controleren.

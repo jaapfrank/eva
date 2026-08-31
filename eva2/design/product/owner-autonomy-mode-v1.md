@@ -40,6 +40,10 @@ intrekt. Eva vraagt alleen menselijke hulp wanneer de buitenwereld die technisch
 vereist, bijvoorbeeld voor een nog ontbrekende login, 2FA, CAPTCHA, fysiek
 contact of wettelijk vereiste persoonlijke verklaring. Dat is geen nieuwe
 Eva-toestemming: na die menselijke stap gaat zij binnen hetzelfde mandaat door.
+Bij een browsertaak gebeurt dit als tijdelijke overname van precies dezelfde
+sessie. Eva bewaart het duurzame taakcheckpoint, toont wat de mens moet
+afronden en hervat daarna zonder een nieuwe opdracht of toestemmingsvraag. Zij
+automatiseert of omzeilt de externe CAPTCHA- of identiteitscontrole zelf niet.
 
 ## Wat het mandaat minimaal bindt
 

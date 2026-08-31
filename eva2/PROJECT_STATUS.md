@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 12:08 CEST
+Laatst bijgewerkt: 31 augustus 2026, 12:17 CEST
 
 ## Zo lees je dit bord
 
@@ -244,6 +244,7 @@ personen, privacy, bewijs, toolacties en terugrol.
 | Klikken, typen, bestanden gebruiken en resultaat controleren | 🟡 Eén veilige klik met aparte controle; geen algemeen gebruik | 📘 Brede browserbediening | 📘 Brede tools | 📘 Breed computerwerk |
 | Accounts veilig gebruiken | ❌ Nog niet | 📘 Ondersteund via browserprofielen | 📘 Ondersteund via tools/browser | 📘 Ondersteund in werkomgeving |
 | Live meekijken en overnemen | ❌ Nog niet | 📘 Beheer/browserweergave | 📘 Dashboardweergave | 📘 WebUI/agentweergave |
+| Na login, 2FA of CAPTCHA vanzelf doorgaan | ❌ Nog niet. Eva moet de bestaande browsersessie tijdelijk aan de mens geven en daarna binnen hetzelfde installatiemandaat exact verdergaan. Zij vraagt dus geen nieuwe toestemming voor de taak. Eva automatiseert of omzeilt de CAPTCHA zelf niet | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Na een crash geen formulier of aankoop dubbel doen | 🟡 Eva's actielogboek kan dit dragen; nog geen brede browserproef | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 
 ## Praten met stem en aanwezig zijn
