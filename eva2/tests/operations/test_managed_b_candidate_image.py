@@ -21,6 +21,8 @@ BASE_ID = "sha256:" + "2" * 64
 IMAGE_ID = "sha256:" + "3" * 64
 ARCHIVE_SHA = "4" * 64
 REPO_DIGEST = f"docker.io/library/python@{BASE_DIGEST}"
+SOURCE_COMMIT = "a" * 40
+SOURCE_DATE_EPOCH = 1787480000
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -30,13 +32,18 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
     )
     install = "python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation ."
     metadata_check = "metadata.entry_points().select(group='eva2.external_providers')"
+    dependency_check = "python -m pip check"
     remove_pip = "python -m pip uninstall -y pip wheel"
 
     assert "COPY pyproject.toml ./pyproject.toml" in dockerfile
     assert install in dockerfile
     assert metadata_check in dockerfile
     assert dockerfile.index(install) < dockerfile.index(metadata_check)
-    assert dockerfile.index(metadata_check) < dockerfile.index(remove_pip)
+    assert dockerfile.index(metadata_check) < dockerfile.index(dependency_check)
+    assert dockerfile.index(dependency_check) < dockerfile.index(remove_pip)
+    assert "io.eva2.source-commit=${SOURCE_COMMIT}" in dockerfile
+    assert "io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH}" in dockerfile
+    assert 'io.eva2.source-refresh="git-archive-v1"' in dockerfile
 
 
 @pytest.fixture
@@ -58,6 +65,8 @@ def _receipts() -> tuple[dict[str, object], dict[str, object]]:
             "base_image_archive_sha256": ARCHIVE_SHA,
             "base_image_digest": BASE_DIGEST,
             "context_tree_sha256": "5" * 64,
+            "candidate_source_commit": SOURCE_COMMIT,
+            "candidate_source_date_epoch": SOURCE_DATE_EPOCH,
         },
         {
             "archive_sha256": ARCHIVE_SHA,
@@ -80,7 +89,7 @@ def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
-def _runner(*, candidate_tags: object = None):
+def _runner(*, candidate_tags: object = None, candidate_labels: object = None):
     commands: list[list[str]] = []
 
     def run(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
@@ -90,7 +99,17 @@ def _runner(*, candidate_tags: object = None):
             if reference == REPO_DIGEST:
                 value = [{"Architecture": "amd64", "Id": BASE_ID, "Os": "linux", "RepoDigests": [REPO_DIGEST]}]
             elif reference == IMAGE_ID:
-                value = [{"Id": IMAGE_ID, "RepoTags": candidate_tags, "Size": 123}]
+                labels = candidate_labels if candidate_labels is not None else {
+                    "io.eva2.source-commit": SOURCE_COMMIT,
+                    "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
+                    "io.eva2.source-refresh": "git-archive-v1",
+                }
+                value = [{
+                    "Config": {"Labels": labels},
+                    "Id": IMAGE_ID,
+                    "RepoTags": candidate_tags,
+                    "Size": 123,
+                }]
             else:
                 raise AssertionError(f"unexpected inspected image: {reference}")
             return subprocess.CompletedProcess(command, 0, stdout=json.dumps(value), stderr="")
@@ -122,6 +141,9 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     assert "--pull=false" in build
     assert "--no-cache" in build
     assert "--load" in build
+    assert build[build.index("--build-arg") + 1] == f"SOURCE_COMMIT={SOURCE_COMMIT}"
+    second_build_arg = build.index("--build-arg", build.index("--build-arg") + 1)
+    assert build[second_build_arg + 1] == f"SOURCE_DATE_EPOCH={SOURCE_DATE_EPOCH}"
     assert build[build.index("--file") + 1].endswith("deploy/living-core/Dockerfile")
     assert "--tag" not in build and "--push" not in build
     assert list(output.iterdir()) == []
@@ -160,6 +182,25 @@ def test_refuses_a_candidate_that_receives_a_tag(
     _commands, runner = _runner(candidate_tags=["unexpected:latest"])
 
     with pytest.raises(RuntimeError, match="must not receive a tag"):
+        build_offline_candidate_image(context, base, output, runner=runner)
+
+    assert list(output.iterdir()) == []
+
+
+def test_refuses_a_candidate_with_different_source_identity(
+    monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
+) -> None:
+    _stub_validators(monkeypatch)
+    context, base = _inputs(native_tmp_path)
+    output = native_tmp_path / "output"
+    output.mkdir(mode=0o700)
+    _commands, runner = _runner(candidate_labels={
+        "io.eva2.source-commit": "b" * 40,
+        "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
+        "io.eva2.source-refresh": "git-archive-v1",
+    })
+
+    with pytest.raises(RuntimeError, match="source identity differs"):
         build_offline_candidate_image(context, base, output, runner=runner)
 
     assert list(output.iterdir()) == []

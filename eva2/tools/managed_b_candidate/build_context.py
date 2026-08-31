@@ -287,6 +287,7 @@ def materialize_build_context(
         "candidate_dockerfile_sha256": candidate.dockerfile_sha256,
         "candidate_source_archive_sha256": candidate.source_archive_sha256,
         "candidate_source_commit": candidate.source_commit,
+        "candidate_source_date_epoch": candidate.source_date_epoch,
         "context_files": entries,
         "context_tree_sha256": expected_hash,
         "contract": "EvaManagedBBuildContextReceipt/v1",
@@ -313,6 +314,15 @@ def validate_materialized_build_context(context: MaterializedBuildContext) -> di
         receipt.get("contract") != "EvaManagedBBuildContextReceipt/v1"
         or receipt.get("status") != "materialized"
         or receipt.get("network_used") is not False
+        or not isinstance(receipt.get("candidate_source_commit"), str)
+        or len(receipt["candidate_source_commit"]) != 40
+        or any(
+            character not in "0123456789abcdef"
+            for character in receipt["candidate_source_commit"]
+        )
+        or isinstance(receipt.get("candidate_source_date_epoch"), bool)
+        or not isinstance(receipt.get("candidate_source_date_epoch"), int)
+        or receipt["candidate_source_date_epoch"] <= 0
         or not isinstance(expected, list)
         or not all(isinstance(item, dict) for item in expected)
     ):

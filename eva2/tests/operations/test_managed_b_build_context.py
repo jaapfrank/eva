@@ -192,6 +192,8 @@ def test_materializes_only_sealed_source_and_wheels(tmp_path: Path, native_tmp_p
     receipt = validate_materialized_build_context(context)
     assert receipt["status"] == "materialized"
     assert receipt["network_used"] is False
+    assert receipt["candidate_source_commit"] == "a" * 40
+    assert receipt["candidate_source_date_epoch"] == 1
     assert not (context.path / "base.oci.tar").exists()
     assert (context.path / "wheelhouse" / "one-1.0-py3-none-any.whl").read_bytes() == b"one-wheel"
     assert context.path.stat().st_mode & 0o222 == 0

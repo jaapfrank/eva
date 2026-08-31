@@ -1,6 +1,8 @@
-ARG SOURCE_DATE_EPOCH=1787480000
+ARG SOURCE_COMMIT
+ARG SOURCE_DATE_EPOCH
 FROM docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134
 
+ARG SOURCE_COMMIT
 ARG SOURCE_DATE_EPOCH
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/opt/eva/src:/opt/eva \
@@ -10,6 +12,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /opt/eva
 
+LABEL io.eva2.source-commit=${SOURCE_COMMIT} \
+      io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH} \
+      io.eva2.source-refresh="git-archive-v1"
+
 COPY requirements-4d.lock ./requirements-4d.lock
 COPY wheelhouse ./wheelhouse
 COPY pyproject.toml ./pyproject.toml
@@ -18,6 +24,7 @@ COPY connector_sdk ./connector_sdk
 RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock \
     && python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation . \
     && python -c "from importlib import metadata; points=metadata.entry_points().select(group='eva2.external_providers'); assert any(point.name == 'mcp_gateway' for point in points)" \
+    && python -m pip check \
     && python -m pip uninstall -y pip wheel \
     && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None"
 

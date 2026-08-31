@@ -131,7 +131,28 @@ def _read_iid(path: Path) -> str:
         raise RuntimeError("managed B candidate image ID file is not ASCII") from error
 
 
-def _verify_untagged_candidate(image_id: str, runner: Runner) -> dict[str, Any]:
+def _source_identity(receipt: dict[str, object]) -> tuple[str, int]:
+    source_commit = receipt.get("candidate_source_commit")
+    source_date_epoch = receipt.get("candidate_source_date_epoch")
+    if (
+        not isinstance(source_commit, str)
+        or len(source_commit) != 40
+        or any(character not in "0123456789abcdef" for character in source_commit)
+        or isinstance(source_date_epoch, bool)
+        or not isinstance(source_date_epoch, int)
+        or source_date_epoch <= 0
+    ):
+        raise RuntimeError("managed B candidate source identity is invalid")
+    return source_commit, source_date_epoch
+
+
+def _verify_untagged_candidate(
+    image_id: str,
+    runner: Runner,
+    *,
+    source_commit: str,
+    source_date_epoch: int,
+) -> dict[str, Any]:
     inspection = _inspect(image_id, runner)
     if _image_id(str(inspection.get("Id", "")), label="candidate") != image_id:
         raise RuntimeError("managed B candidate inspection ID differs")
@@ -141,6 +162,15 @@ def _verify_untagged_candidate(image_id: str, runner: Runner) -> dict[str, Any]:
     size = inspection.get("Size")
     if isinstance(size, bool) or not isinstance(size, int) or size <= 0:
         raise RuntimeError("managed B candidate image size is invalid")
+    config = inspection.get("Config")
+    labels = config.get("Labels") if isinstance(config, dict) else None
+    if (
+        not isinstance(labels, dict)
+        or labels.get("io.eva2.source-commit") != source_commit
+        or labels.get("io.eva2.source-date-epoch") != str(source_date_epoch)
+        or labels.get("io.eva2.source-refresh") != "git-archive-v1"
+    ):
+        raise RuntimeError("managed B candidate image source identity differs")
     return inspection
 
 
@@ -159,6 +189,7 @@ def build_offline_candidate_image(
         raise RuntimeError("managed B context base digest differs from the sealed local export")
     if context_receipt["base_image_archive_sha256"] != base_receipt["archive_sha256"]:
         raise RuntimeError("managed B context base archive differs from the sealed local export")
+    source_commit, source_date_epoch = _source_identity(context_receipt)
     _verify_current_base(base_receipt, runner)
     _private_parent(output_parent)
     temporary_root = Path(tempfile.mkdtemp(prefix="eva2-candidate-image-", dir=output_parent))
@@ -174,6 +205,10 @@ def build_offline_candidate_image(
                 "--pull=false",
                 "--no-cache",
                 "--load",
+                "--build-arg",
+                f"SOURCE_COMMIT={source_commit}",
+                "--build-arg",
+                f"SOURCE_DATE_EPOCH={source_date_epoch}",
                 "--file",
                 str(context.path / "deploy/living-core/Dockerfile"),
                 "--iidfile",
@@ -183,7 +218,12 @@ def build_offline_candidate_image(
             600,
         )
         image_id = _read_iid(iidfile)
-        candidate_inspection = _verify_untagged_candidate(image_id, runner)
+        candidate_inspection = _verify_untagged_candidate(
+            image_id,
+            runner,
+            source_commit=source_commit,
+            source_date_epoch=source_date_epoch,
+        )
     finally:
         temporary_root.chmod(0o700)
         if iidfile.exists() or iidfile.is_symlink():
@@ -194,6 +234,8 @@ def build_offline_candidate_image(
         "base_image_digest": base_receipt["base_image_digest"],
         "candidate_image_id": image_id,
         "candidate_image_size": candidate_inspection["Size"],
+        "candidate_source_commit": source_commit,
+        "candidate_source_date_epoch": source_date_epoch,
         "context_tree_sha256": context_receipt["context_tree_sha256"],
         "contract": "EvaManagedBOfflineCandidateImageReceipt/v1",
         "network_used": False,
@@ -219,7 +261,13 @@ def validate_offline_candidate_image(
         or receipt.get("candidate_image_id") != candidate.image_id
     ):
         raise RuntimeError("managed B candidate image receipt differs")
-    inspection = _verify_untagged_candidate(candidate.image_id, runner)
+    source_commit, source_date_epoch = _source_identity(receipt)
+    inspection = _verify_untagged_candidate(
+        candidate.image_id,
+        runner,
+        source_commit=source_commit,
+        source_date_epoch=source_date_epoch,
+    )
     if inspection["Size"] != receipt.get("candidate_image_size"):
         raise RuntimeError("managed B candidate image receipt no longer matches")
     return receipt
