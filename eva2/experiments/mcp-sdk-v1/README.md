@@ -63,9 +63,11 @@ Een tijdelijke, daarna verwijderde kandidaat gebruikte de publieke
 `jsonrpc_message_adapter`, `validate_client_request` en `parse_server_result`
 voor versie `2025-06-18`. JSON en SSE, exacte vier-POST-route, verkeerd ID,
 callback en paginering waren samen met de bestaande regressies 22/22 groen.
-De productdiff was echter `+87` regels en verwijderde geen transportcode. Dat
-faalt de vooraf gestelde netto-eenvoudgrens; de kandidaatcode is daarom niet in
-de repository gebleven.
+De productdiff was echter `+87` regels en verwijderde geen transportcode. Dit
+was volgens het toenmalige netto-eenvoudcriterium een afwijzing; dat criterium
+is inmiddels ingetrokken. De actuele afwijzingsgrond is de onverklaarde dubbele
+verantwoordelijkheid: er kwam een laag bij zonder dat zij de transporttaak
+overnam of de oude route verwijderde. Het aantal regels is alleen observatie.
 
 ## Reproduceerbaarheid en bewijsgrens
 

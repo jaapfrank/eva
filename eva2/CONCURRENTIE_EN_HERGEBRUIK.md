@@ -198,14 +198,15 @@ bouwen**:
 | Langlopende achtergrondtaken | Huidige DBOS-route; eerst een kleine rebase naar `2.31.0+eva.1` | Betekenis van de taak, toestemming en wat te doen na een onduidelijke externe actie; stock 2.31 is hiervoor afgewezen |
 | Geheugenscherm | De bestaande lokale Hindsight Control Plane | Bepalen van wie een herinnering is en wie haar mag zien, corrigeren of vergeten |
 | Dashboard en Kanban | React-Admin OSS plus `dnd-kit` | Alleen Eva's gesaneerde API tonen; iedere bordwijziging blijft een gecontroleerde Eva-opdracht |
-| Home Assistant-hulpmiddelen | De ingebouwde HA MCP Server en eventueel HA-MCP `8.3.0` | Veilige doelkeuze en onafhankelijke controle achteraf; HA-MCP vervangt de huidige route pas bij echte nettokrimp |
+| Home Assistant-hulpmiddelen | De ingebouwde HA MCP Server en eventueel HA-MCP `8.3.0` | Veilige doelkeuze en onafhankelijke controle achteraf; HA-MCP vervangt de huidige route pas bij semantische dekking, duidelijk eigenaarschap en verwijdering van de overlappende oude route |
 | Updates en beveiligingsscan | Renovate, Trivy en bestaande OCI-/SBOM-middelen | Alleen geteste upgrades promoveren en altijd kunnen terugrollen |
 
 Een dependency wint dus niet op sterren of een mooie demo. Zij wint pas wanneer
-dezelfde Eva-taak slaagt en er aantoonbaar eigen code en beheerlast verdwijnen.
-De eerste diepe HA-MCP-controle is daar een goed voorbeeld van: het project is
-sterk, maar een simpele wissel verwijdert nu naar schatting slechts 174–192
-regels. Dat is te weinig voor een productieomschakeling, dus die gebeurt niet.
+dezelfde Eva-taak slaagt, zij een duidelijke verantwoordelijkheid overneemt en
+onverklaarde dubbele routes verdwijnen. De eerste diepe HA-MCP-controle is daar
+een goed voorbeeld van: de geschatte 174–192 vervangbare regels zijn alleen een
+observatie. De omschakeling wordt beslist op semantische dekking, beheerlast,
+actief upstreamonderhoud, eigenaarschap en tests — nooit op dat aantal regels.
 
 ## Wanneer we eerlijk mogen zeggen dat Eva beter is
 

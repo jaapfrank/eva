@@ -258,7 +258,9 @@ Na drie herstartfouten op hetzelfde checkpoint gaat het checkpoint naar
 1. De groene actuele Pydantic AI/MCP-client in één vervangingsdiff achter
    dezelfde duurzame ledger-, identiteit- en readbackgrens zetten. De 3.342
    gemeten overlappende regels zijn onderzoeksscope, geen automatische
-   verwijderclaim; pas de werkelijke nettodiff beslist over promotie.
+   verwijderclaim. De vervangingsdiff moet eigenaarschap, doel, tests,
+   documentatie en verwijdering van onverklaarde overlap bewijzen; netto omvang
+   beslist niet over promotie.
 2. De native MCP-toolset met één echte dienst uitvoeren, zonder de oude model-
    of MCP-loop ernaast te behouden.
 3. Een tweede echte providersoort met dezelfde image uitvoeren; daarna de

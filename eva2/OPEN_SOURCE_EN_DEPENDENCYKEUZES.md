@@ -184,7 +184,8 @@ De exacte bron/imagebinding en herhaalbare smoke staan in
 `experiments/ha-mcp-sidecar-v1/`. De gesloten bron-, mapping- en
 tooldescriptorgrens staat in `experiments/ha-mcp-parity-v1/`. Het vervolg mag
 alleen een kleine state→service→aparte-stateproef zijn; pas bij echte
-semantische pariteit en nettokrimp mag productcode verdwijnen. De onafhankelijke
+semantische pariteit, expliciete verantwoordelijkheidsoverdracht en verwijdering
+van de overlappende oude route mag productcode verdwijnen. De onafhankelijke
 herreview staat in `reviews/ha-mcp-parity-contract-c03942d.md`.
 
 ### Eerste echte subagentkandidaat: Harness neemt de generieke motor over
@@ -342,9 +343,11 @@ upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
 De volgorde is bewust: eerst de officiële OpenAI- en MCP-SDK's in twee kleine
 echte routes, daarna Home Assistant via zijn eigen MCP-server en pas daarna de
 grotere worker- en UI-vereenvoudiging. Lagere Pydantic-primitives komen alleen
-tussen Eva en de OpenAI-SDK als een diff bewijst dat zij meer code verwijderen.
-Zo wordt "dependency-first" zichtbaar als verwijderbare code, niet alleen als
-een lijst GitHub-links.
+tussen Eva en de OpenAI-SDK als een diff bewijst dat zij een duidelijke
+verantwoordelijkheid beter overnemen en de overlappende oude route verdwijnt.
+Zo wordt "dependency-first" zichtbaar als echte verantwoordelijkheidsoverdracht
+met minder dubbel onderhoud, niet alleen als een lijst GitHub-links. Totale LOC
+mag daarbij groeien voor aantoonbaar afzonderlijk nut.
 
 ## Kleine dependency-first gates
 

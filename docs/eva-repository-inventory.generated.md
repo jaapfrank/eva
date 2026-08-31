@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e7c0deb300d411be5f3f21b993f7dbd8359`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `d3034372759197ada4cccd66a32e1cdce5e9c17cf3b2954892ff600b73f5b299`.
 
 ## Samenvatting
 
@@ -153,7 +153,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `.c8rc.json` | tracked | repository-config | included-tracked-critical | keep | 290 |
 | `.env.example` | tracked | repository-config | included-tracked-critical | keep | 1911 |
 | `.gitignore` | tracked | repository-config | included-tracked-critical | keep | 1283 |
-| `OPEN_SOURCE_COMPONENTEN.md` | tracked | repository-config | included-tracked-critical | keep | 16807 |
+| `OPEN_SOURCE_COMPONENTEN.md` | tracked | repository-config | included-tracked-critical | keep | 17031 |
 | `README.md` | tracked | repository-config | included-tracked-critical | keep | 7582 |
 | `benchmark/agentbench-fc-v1/Dockerfile` | tracked | benchmark | included-tracked-critical | keep | 1746 |
 | `benchmark/agentbench-fc-v1/agentbench-dbbench-dev-external-mysql-upstream-rounds.yaml` | tracked | benchmark | included-tracked-critical | keep | 1541 |
@@ -254,14 +254,14 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `docs/repository-inventory-disposition-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 10233 |
 | `eslint.complexity.config.js` | tracked | repository-config | included-tracked-critical | keep | 858 |
 | `eslint.config.js` | tracked | repository-config | included-tracked-critical | keep | 1430 |
-| `eva2/CONCURRENTIE_EN_HERGEBRUIK.md` | tracked | documentation | included-tracked-noncritical | keep | 21722 |
+| `eva2/CONCURRENTIE_EN_HERGEBRUIK.md` | tracked | documentation | included-tracked-noncritical | keep | 21881 |
 | `eva2/DOCUMENTATIE_EN_ONDERHOUD.md` | tracked | documentation | included-tracked-noncritical | keep | 10268 |
-| `eva2/EVA2_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 7976 |
+| `eva2/EVA2_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 8118 |
 | `eva2/OPENBOT_VERGELIJKING.md` | tracked | documentation | included-tracked-noncritical | keep | 8258 |
-| `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 36216 |
+| `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 36476 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
-| `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22263 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 41611 |
+| `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22347 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 42222 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -313,9 +313,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `eva2/deploy/living-core/telegram-test-support.compose.yml` | tracked | deployment | included-tracked-critical | keep | 3868 |
 | `eva2/deploy/living-core/telegram-test.example` | tracked | deployment | included-tracked-critical | keep | 1427 |
 | `eva2/design/architecture/component-catalog-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 20716 |
-| `eva2/design/architecture/ecosystem-bridge-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 15737 |
+| `eva2/design/architecture/ecosystem-bridge-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 15849 |
 | `eva2/design/architecture/evidence-tool-registry-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 3772 |
-| `eva2/design/architecture/living-core-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 133010 |
+| `eva2/design/architecture/living-core-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 132946 |
 | `eva2/design/architecture/package-boundaries-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 5150 |
 | `eva2/design/platform/platform-design-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 3937 |
 | `eva2/design/platform/process-budgets-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 2540 |
@@ -325,7 +325,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6501 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
-| `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12313 |
+| `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
 | `eva2/design/product/performance-and-complexity-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 7828 |
 | `eva2/design/product/tiered-memory-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 10759 |
@@ -791,7 +791,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `eva2/experiments/ha-mcp-parity-v1/check_parity_contract.py` | tracked | experimental | included-tracked-noncritical | keep | 11674 |
 | `eva2/experiments/ha-mcp-parity-v1/parity-contract.json` | tracked | experimental | included-tracked-noncritical | keep | 3792 |
 | `eva2/experiments/ha-mcp-parity-v1/test_parity_contract.py` | tracked | experimental | included-tracked-noncritical | keep | 1429 |
-| `eva2/experiments/ha-mcp-sidecar-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5474 |
+| `eva2/experiments/ha-mcp-sidecar-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5646 |
 | `eva2/experiments/ha-mcp-sidecar-v1/check_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 2980 |
 | `eva2/experiments/ha-mcp-sidecar-v1/receipt.json` | tracked | experimental | included-tracked-noncritical | keep | 2150 |
 | `eva2/experiments/ha-mcp-sidecar-v1/smoke_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 6397 |
@@ -807,7 +807,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `8ed5e2d93c6c213c4ec41e52428e2e
 | `eva2/experiments/home-assistant-official-mcp-v1/test_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 10455 |
 | `eva2/experiments/managed-b-clean-graph-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2227 |
 | `eva2/experiments/managed-b-clean-graph-v1/probe.py` | tracked | experimental | included-tracked-noncritical | keep | 50395 |
-| `eva2/experiments/mcp-sdk-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4332 |
+| `eva2/experiments/mcp-sdk-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4540 |
 | `eva2/experiments/mcp-sdk-v1/check_bakeoff.py` | tracked | experimental | included-tracked-noncritical | keep | 3556 |
 | `eva2/experiments/mcp-sdk-v1/receipt.json` | tracked | experimental | included-tracked-noncritical | keep | 1417 |
 | `eva2/experiments/mcp-sdk-v1/requirements.in` | tracked | experimental | included-tracked-noncritical | keep | 341 |

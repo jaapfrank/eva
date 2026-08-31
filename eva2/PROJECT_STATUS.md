@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 17:39 CEST
+Laatst bijgewerkt: 31 augustus 2026, 18:17 CEST
 
 ## Zo lees je dit bord
 
@@ -32,15 +32,16 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 | Controle | Eerlijke stand nu |
 |---|---|
+| Is er een maximum aantal regels code? | ✅ Nee. Omvang wordt gemeten om veranderingen te begrijpen, maar een groot getal is nooit op zichzelf fout. Ook 100 miljoen regels zijn toegestaan als het product die aantoonbaar nodig heeft en de onderdelen beheersbaar blijven |
 | Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 1.972 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
-| Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
+| Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | 🟡 De huidige gevolgde product-, deploy-, migratie- en testpaden vallen in de laatst gegenereerde inventaris onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap, maar vertrouwt nog op die momentopname en analyseert Python-gebruik niet volledig. Inventarisversheid en runtimebereikbaarheid moeten nog onderdeel van dezelfde poort worden |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
 | Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is exact aan een receipt gebonden en controleerde 34 van 34 gevolgde projecten via hun officiële releases. Dit dekt alle 11 directe runtime-dependencies, belangrijke kandidaten, bouw-/securitytools, vier base images en drie concurrenten. Een echte Renovate-voorstelbot draait nog niet |
 | Heeft iedere dependency of eigen regel een eigen taak? | 🟡 Iedere gevolgde component heeft nu exact één eigenaar en doel; dit is nog geen regel-voor-regelaudit. De brede Pydantic/MCP-kandidaat met 46 extra distributies en een tweede HTTP-stack is afgewezen. De minimale kandidaat vervangt nu alleen twee al aanwezige Pydantic-packages en houdt het totaal op 38. Zij mag pas live wanneer de oude verantwoordelijkheid in dezelfde wijziging verdwijnt |
-| Is er nu wel iets echt verwijderd? | ✅ Een ongebruikte LocalTuya-adapter van 357 productregels en zijn 212-regelige geïsoleerde test zijn verwijderd. De algemene providerroute blijft; 92 gerichte regressies en Ruff zijn groen |
+| Is er nu wel iets echt verwijderd? | ✅ Eén ongebruikte LocalTuya-route en haar uitsluitend daarbij horende test zijn verwijderd; de algemene providerroute bleef eigenaar van die verantwoordelijkheid en 92 gerichte regressies plus Ruff zijn groen. De gemeten omvang was 357 productregels en 212 testregels, maar dat getal was niet de reden voor verwijdering |
 | Is de providercode al beheersbaar en verwisselbaar? | 🟡 De algemene runtimecompositor ging reproduceerbaar van 491 naar 162 fysieke regels en bevat geen Home Assistant-, Tuya- of AgentMail-kennis meer. Neutrale contracten en concrete providers staan nu in afzonderlijke modules zonder importcirkel en gebruiken dezelfde ene uitvoerroute. De extra modulegrenzen en tests laten het totale bronvolume bewust iets groeien; dit is dus alleen modularisatie, geen codevermindering. De nog aanwezige duizenden regels directe providerlogica moeten tegen runtime-MCP en onderhouden upstreamsoftware worden bewezen of verwijderd |
-| Is de architectuurcontrole groen? | ✅ Ja. Alle 62 gevonden pakketschendingen zijn structureel opgelost zonder het beleid te versoepelen. HTTP-adapters gebruiken neutrale poorten, cryptografie zit achter een adapter, secretbestands-I/O zit in de credentialsadapter en pure resultaatlogica staat in de applicatielaag. De checker vond 822 Pythonbestanden, controleert de 303 bestanden binnen haar vastgelegde architectuurscope — nu inclusief actieve beheertools — en meldt 0 overtredingen |
+| Is de architectuurcontrole groen? | 🟡 De packagegrenscontrole zelf meldt 0 overtredingen over haar vastgelegde scope. De bredere beheersbaarheidsclaim is nog niet groen: inventarisversheid, Python-reachability, echte testdekking per component en bewijsbinding zitten nog niet samen in één verplichte releasepoort |
 
 Het aantal regels is geen doel en geen maximum. Ook 100 miljoen regels mogen
 als iedere regel aantoonbaar een producttaak heeft en beheersbaar blijft. De
@@ -50,11 +51,13 @@ Ook het laatste oude plafond in de PC02-checker is verwijderd: grote bestanden
 moeten nu worden geclassificeerd met eigenaar en contract, maar mogen daarna
 groeien wanneer die groei aantoonbaar iets toevoegt. De checker meet de groei
 wel en keurt ontbrekende classificatie af; hij keurt geen getal meer af.
-De machineleesbare componentcatalogus en exact-één-ownerchecker zijn groen
-voor alle gevolgde product-, deploy-, migratie- en testpaden. Regels, packages
-en imageomvang blijven zichtbaar zodat groei verklaard moet worden, maar groei
-op zichzelf is niet fout. De 88 nog open inventarisbesluiten staan afzonderlijk
-en controleerbaar in
+De machineleesbare componentcatalogus en exact-één-ownerchecker zijn groen voor
+de laatst gegenereerde gevolgde product-, deploy-, migratie- en testpaden. De
+volledige repositorypoort blijft rood door 88 bekende inventarisbesluiten en
+doordat gebruiks- en bewijsbinding nog niet volledig zijn afgedwongen. Regels,
+packages en imageomvang blijven zichtbaar zodat groei verklaard moet worden,
+maar groei op zichzelf is niet fout. De 88 open inventarisbesluiten staan
+afzonderlijk en controleerbaar in
 [repository-inventory-disposition-v1.json](../docs/repository-inventory-disposition-v1.json).
 
 De eerste vervangingsgrens is nu ook onafhankelijk uitvoerbaar. Pydantic AI

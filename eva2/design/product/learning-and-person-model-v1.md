@@ -181,7 +181,8 @@ vectorindexgroei, cold-compaction en betekenisbehoud aantoonbaar begrensd zijn.
   stopknop en éénstapsrollback van iedere geleerde procedure.
 - [ ] LG07 — Zevendaagse persoons- en skillproef bewijst betere herhaaltaken,
   correcte personenscheiding, nul stille drift en groene geheugen-, token-,
-  kosten-, latency- en codebudgetten.
+  kosten- en latencybudgetten plus verklaarde codegroei met aantoonbaar nut,
+  eigenaarschap en actuele tests.
 
 LG01-LG06 sluiten vóór freeze; LG07 draait op dezelfde eindimage als de andere
 zevendaagse acceptatieproeven.

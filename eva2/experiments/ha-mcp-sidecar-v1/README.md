@@ -88,8 +88,10 @@ De kandidaat wordt alleen productonderdeel wanneer één gecontroleerde diff:
 7. p95-latency, responsebytes en tokens meet en geen onbegrensde groei toont;
 8. exact dezelfde image-digest kan terugrollen.
 
-Worden er geen honderden regels verwijderd, dan blijft de huidige kleine
-directe adapter beter dan een extra platform.
+Dit was het historische selectiecriterium van deze proef. Het is ingetrokken:
+regelaantal is alleen meetinformatie. De actuele poort vergelijkt semantische
+dekking, beheerlast, upstreamonderhoud, eigenaarschap, tests en verwijdering van
+onverklaarde overlap; totale codeomvang beslist niet.
 
 ## Belangrijke grenzen
 
